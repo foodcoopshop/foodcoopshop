@@ -90,15 +90,15 @@ if (!empty($manufacturer['Products'])) {
 }
 
     echo '<div class="imprint">';
-    
+
         echo '<h2>'.__('Imprint').'</h2>';
         echo $this->Html->getManufacturerImprint($manufacturer, 'html', false);
-        
+
         if (!empty($manufacturer->modified)) {
             echo '<p><i>';
             echo __('Modified_on') . ' ' . $manufacturer->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
             echo '</i></p>';
         }
-        
+
     echo '</div>';
 ?>

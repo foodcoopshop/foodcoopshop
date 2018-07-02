@@ -25,7 +25,7 @@ class AppTcpdf extends TCPDF
     public $headerRight;
 
     public $table = '';
-    
+
     public $infoTextForFooter = '';
 
     public function renderTable()
@@ -45,7 +45,7 @@ class AppTcpdf extends TCPDF
         $this->table .= '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
 
         $isOrderList = $this->isOrderList($headers);
-        
+
         // Header
         $num_headers = count($headers);
         for ($i = 0; $i < $num_headers; ++ $i) {
@@ -88,7 +88,7 @@ class AppTcpdf extends TCPDF
             $priceInclSum += $priceIncl;
             $priceExclSum += $priceExcl;
             $taxSum += $tax;
-            
+
             if ($result['OrderDetailUnitQuantityInUnits'] != '') {
                 @$unitSum[$result['OrderDetailUnitUnitName']] += $result['OrderDetailUnitProductQuantityInUnits'];
             }
@@ -104,7 +104,7 @@ class AppTcpdf extends TCPDF
                 $this->table .= '<td style="' . $amountStyle . '" align="right" width="' . $widths[$indexForWidth] . '">' . $amount . 'x</td>';
 
                 $indexForWidth ++;
-                
+
                 $unity = '';
                 if ($result['OrderDetailUnitQuantityInUnits'] > 0) {
                     if ($isOrderList) {
@@ -121,7 +121,7 @@ class AppTcpdf extends TCPDF
                         $unity = Configure::read('app.numberHelper')->formatUnitAsDecimal($result['OrderDetailUnitProductQuantityInUnits']) . ' ' . $result['OrderDetailUnitUnitName'];
                     }
                 }
-                
+
                 if ($unity != '') {
                     $unity = ', ' . $unity;
                 }
@@ -163,7 +163,7 @@ class AppTcpdf extends TCPDF
             $lastCustomerName = $customerName;
             $lastTaxRate = $taxRate;
             $lastUnitSum = $unitSum;
-            
+
             $i ++;
         }
     }
@@ -230,7 +230,7 @@ class AppTcpdf extends TCPDF
             $this->table .= '<tr border="0"><td></td></tr>';
         }
     }
-    
+
     public function isOrderList($headers)
     {
         return $this->getCorrectColspan($headers) == 3;
@@ -256,7 +256,7 @@ class AppTcpdf extends TCPDF
         if ($colspan == 2) {
             $detailsHidden = true;
         }
-        
+
         if ($detailsHidden) {
             $this->table .= '<tr><td></td></tr>';
         }
@@ -335,7 +335,7 @@ class AppTcpdf extends TCPDF
         $this->drawLine();
         $this->SetFontSize(10);
         $this->Cell(0, 10, $this->infoTextForFooter, 0, false, 'L', 0, '', 0, false, 'T', 'M');
-        $textForFooterRight = 'Seite ' . $this->getAliasNumPage() . ' von ' . $this->getAliasNbPages();
+        $textForFooterRight = __('Page_{0}_of_{1}', [$this->getAliasNumPage(), $this->getAliasNbPages()]);
         $this->Cell(0, 10, $textForFooterRight, 0, false, 'R', 0, '', 0, false, 'T', 'M');
         $this->SetFontSize(12);
     }

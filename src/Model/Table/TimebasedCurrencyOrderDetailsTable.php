@@ -30,7 +30,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         ]);
         $this->setPrimaryKey('id_order_detail');
     }
-    
+
     /**
      * @param OrderDetail $orderDetail
      * @param float $price
@@ -38,13 +38,13 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
      */
     public function changePrice($orderDetail, $price, $amount)
     {
-        
+
         $manufacturerTable = TableRegistry::getTableLocator()->get('Manufacturers');
-        
+
         $maxPercentage = $orderDetail->timebased_currency_order_detail->max_percentage;
         $grossProductPricePerUnit = $price / (100 - $maxPercentage) * 100 / $amount;
         $netProductPricePerUnit = $this->OrderDetails->Products->getNetPrice($orderDetail->product_id, $grossProductPricePerUnit);
-        
+
         $this->save(
             $this->patchEntity(
                 $orderDetail->timebased_currency_order_detail,
@@ -56,7 +56,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
             )
         );
     }
-    
+
     /**
      * @param int $manufacturerId
      * @return array
@@ -78,7 +78,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         $result = array_unique($result);
         return $result;
     }
-    
+
     /**
      * @param array $results
      * @return array
@@ -86,9 +86,9 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
     public function addTimebasedCurrencyDataToInvoiceData($results)
     {
         $timebasedCurrencyAwareResults = [];
-        
+
         $this->Product = TableRegistry::getTableLocator()->get('Products');
-        
+
         foreach($results as $result) {
             $timebasedCurrencyAwareResult = $result;
             $timebasedCurrencyOrderDetail = $this->find('all', [
@@ -99,7 +99,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
             if (!empty($timebasedCurrencyOrderDetail)) {
                 $timebasedCurrencyAwareResult['OrderDetailPriceExcl'] = $result['OrderDetailPriceExcl'] + $timebasedCurrencyOrderDetail->money_excl;
                 $timebasedCurrencyAwareResult['OrderDetailPriceIncl'] = $result['OrderDetailPriceIncl'] + $timebasedCurrencyOrderDetail->money_incl;
-                $timebasedCurrencyAwareResult['OrderDetailTaxAmount'] = $this->Product->getUnitTax($timebasedCurrencyAwareResult['OrderDetailPriceIncl'], $timebasedCurrencyAwareResult['OrderDetailPriceExcl'] / $result['OrderDetailAmount'], $result['OrderDetailAmount']) * $result['OrderDetailAmount']; 
+                $timebasedCurrencyAwareResult['OrderDetailTaxAmount'] = $this->Product->getUnitTax($timebasedCurrencyAwareResult['OrderDetailPriceIncl'], $timebasedCurrencyAwareResult['OrderDetailPriceExcl'] / $result['OrderDetailAmount'], $result['OrderDetailAmount']) * $result['OrderDetailAmount'];
                 $timebasedCurrencyAwareResult['OrderDetailTimebasedCurrencyPriceInclAmount'] = $timebasedCurrencyOrderDetail->money_incl;
                 $timebasedCurrencyAwareResult['HasTimebasedCurrency'] = true;
             }
@@ -108,7 +108,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         }
         return $timebasedCurrencyAwareResults;
     }
-    
+
     /**
      * @param int $customerId
      * @return array manufacturers where $customerId has ordered with timebased currency
@@ -124,14 +124,14 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
                 'OrderDetails.Products.Manufacturers'
             ]
         ]);
-        
+
         $manufacturers = [];
         foreach($query as $orderDetail) {
             $manufacturers[$orderDetail->order_detail->product->id_manufacturer] = $orderDetail->order_detail->product->manufacturer->name;
         }
         return $manufacturers;
     }
-    
+
     /**
      * @param int $manufacturerId
      * @param int $customerId
@@ -146,14 +146,14 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
                 'Products.id_manufacturer' => $manufacturerId
             ]);
         }
-        
+
         $conditions = [];
         $conditions[] = $this->OrderDetails->Orders->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStateIds());
-        
+
         if ($customerId) {
             $conditions['Orders.id_customer'] = $customerId;
         }
-        
+
         $query = $this->find('all', [
             'conditions' => $conditions,
             'contain' => [
@@ -163,7 +163,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         ]);
         return $query;
     }
-    
+
     /**
      * @param int $manufacturerId
      * @param int $customerId
@@ -180,7 +180,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         }
         return $orders;
     }
-    
+
     /**
      * @param int $manufacturerId
      * @param int $customerId
@@ -192,7 +192,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         $creditBalance = $this->getSum($manufacturerId, $customerId) - $timebasedCurrencyPayment->getSum($manufacturerId, $customerId);
         return $creditBalance;
     }
-    
+
     /**
      * @param int $manufacturerId
      * @param int $customerId
@@ -204,8 +204,8 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         $query->select(
             ['SumSeconds' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds')]
         );
-        
+
         return $query->toArray()[0]['SumSeconds'];
     }
-    
+
 }

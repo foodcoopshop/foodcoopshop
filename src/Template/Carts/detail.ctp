@@ -13,6 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
@@ -37,7 +38,7 @@ if (!$appAuth->termsOfUseAccepted()) {
         <p class="deposit-sum-wrapper"><b>+ <?php echo __('Deposit_sum'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
     <?php } ?>
     
-    <?php if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
+    <?php if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
     	<p class="timebased-currency-sum-wrapper"><b><?php echo __('From_which_in'); ?> <?php echo Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'); ?></b><span class="sum"><?php echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($appAuth->Cart->getTimebasedCurrencySecondsSum()); ?></span></p>
     <?php } ?>
 
@@ -51,7 +52,7 @@ if (!$appAuth->termsOfUseAccepted()) {
                 'url' => $this->Slug->getCartFinish()
             ]);
 
-            if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer() && $appAuth->Cart->getTimebasedCurrencySecondsSum() > 0) {
+            if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer() && $appAuth->Cart->getTimebasedCurrencySecondsSum() > 0) {
                 echo $this->Form->control('timebased_currency_order.seconds_sum_tmp', [
                     'label' => __('How_much_of_it_do_i_want_to_pay_in_{0}?', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]),
                     'type' => 'select',
@@ -88,17 +89,17 @@ if (!$appAuth->termsOfUseAccepted()) {
     
     	<?php
             echo '<div id="general-terms-and-conditions" class="featherlight-overlay">';
-                echo $this->element('legal/generalTermsAndConditions');
+                echo $this->element('legal/'.I18n::getLocale().'/generalTermsAndConditions');
             echo '</div>';
-            $generalTermsOfUseLink = '<a href="#general-terms-and-conditions">'.__('general_terms_of_use').'</a>';
+            $generalTermsOfUseLink = '<a href="#general-terms-and-conditions">'.__('general_terms_and_conditions').'</a>';
             echo $this->Form->control('Orders.general_terms_and_conditions_accepted', [
                 'label' => __('I_accept_the_{0}', [$generalTermsOfUseLink]),
                 'type' => 'checkbox',
                 'escape' => false
             ]);
-            
+
             echo '<div id="cancellation-terms" class="featherlight-overlay">';
-                echo $this->element('legal/cancellationTerms');
+                echo $this->element('legal/'.I18n::getLocale().'/rightOfWithdrawalTerms');
             echo '</div>';
             $cancellationTermsLink = '<a href="#cancellation-terms">'.__('right_of_withdrawal').'</a>';
             echo $this->Form->control('Orders.cancellation_terms_accepted', [

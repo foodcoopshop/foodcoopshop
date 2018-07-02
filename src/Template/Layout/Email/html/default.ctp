@@ -56,7 +56,7 @@ use Cake\Core\Configure;
                         echo '<a href="'.Configure::read('app.cakeServerName').'">'.preg_replace('/http(s)?\:\/\//', '', Configure::read('app.cakeServerName')).'</a>';
                     ?>
                     <?php if (isset($appAuth) && $appAuth->user()) { ?>
-                        <br /><br /><?php echo __('Signed_in'); ?>
+                        <br /><br /><?php echo __('Signed_in'); ?>: 
                             <?php
                             if ($appAuth->isManufacturer()) {
                                 echo $appAuth->getManufacturerName();

@@ -15,8 +15,6 @@
 String.prototype.replaceI18n = function(object, replace) {
     var regExp = new RegExp('\\{' + object + '\\}', 'g');
     return this.replace(regExp, replace);
-    
-    // code
 };
 
 foodcoopshop.Helper = {
@@ -31,7 +29,7 @@ foodcoopshop.Helper = {
             this.showContent();
         }
     },
-    
+
     getJqueryUiNoButton : function() {
         return this.getJqueryUiCloseDialogButton(foodcoopshop.LocalizedJs.helper.no);
     },
@@ -39,7 +37,7 @@ foodcoopshop.Helper = {
     getJqueryUiCancelButton : function() {
         return this.getJqueryUiCloseDialogButton(foodcoopshop.LocalizedJs.helper.cancel);
     },
-    
+
     getJqueryUiCloseDialogButton : function(label) {
         return {
             text: label,
@@ -48,7 +46,7 @@ foodcoopshop.Helper = {
             }
         };
     },
-    
+
     initBlogPostCarousel: function () {
 
         var container = $('.blog-wrapper');
@@ -303,14 +301,21 @@ foodcoopshop.Helper = {
     },
 
     formatFloatAsCurrency: function (float) {
-        return this.formatFloatAsString(float) + '&nbsp;' + foodcoopshop.LocalizedJs.helper.CurrencySymbol;
+        var currency = this.formatFloatAsString(float) + '&nbsp;' + foodcoopshop.LocalizedJs.helper.CurrencySymbol;
+        if (foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47 == 'en-US') {
+            currency = foodcoopshop.LocalizedJs.helper.CurrencySymbol + this.formatFloatAsString(float);
+        }
+        return currency;
     },
-      
+
     getCurrencyAsFloat: function (string) {
         var currencyRegExp = new RegExp('&nbsp;\\' + foodcoopshop.LocalizedJs.helper.CurrencySymbol);
+        if (foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47 == 'en-US') {
+            currencyRegExp = new RegExp('\\' + foodcoopshop.LocalizedJs.helper.CurrencySymbol);
+        }
         return this.getStringAsFloat(string.replace(currencyRegExp, ''));
     },
-    
+
     formatFloatAsString: function(float) {
         var floatAsString = float.toLocaleString(
             foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47,
@@ -321,7 +326,7 @@ foodcoopshop.Helper = {
         );
         return floatAsString;
     },
-    
+
     getStringAsFloat: function (string) {
         // german uses , as decimal separator and not as thousand separator
         if (foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47 == 'de-DE') {
@@ -383,7 +388,7 @@ foodcoopshop.Helper = {
 
     initLogoutButton: function () {
         $('a.logout-button').on('click', function () {
-            
+
             var buttons = {};
             buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
             buttons['yes'] = {
@@ -394,7 +399,7 @@ foodcoopshop.Helper = {
                     document.location.href = '/' + foodcoopshop.LocalizedJs.helper.routeLogout;
                 }
             };
-            
+
             $('<div></div>').appendTo('body')
                 .html('<p>' + foodcoopshop.LocalizedJs.helper.logoutInfoText + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
@@ -409,8 +414,8 @@ foodcoopshop.Helper = {
         });
     },
 
-    initLogoutShopOrderCustomerButton: function () {
-        $('#cart .shop-order-customer-info a.btn').on('click', function () {
+    initLogoutInstantOrderCustomerButton: function () {
+        $('#cart .instant-order-customer-info a.btn').on('click', function () {
             var buttons = {};
             buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
             buttons['yes'] = {
@@ -419,7 +424,7 @@ foodcoopshop.Helper = {
                     $('.ui-dialog .ajax-loader').show();
                     $('.ui-dialog button').attr('disabled', 'disabled');
                     foodcoopshop.Helper.ajaxCall(
-                        '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxDeleteShopOrderCustomer',
+                        '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxDeleteInstantOrderCustomer',
                         {},
                         {
                             onOk: function (data) {
@@ -433,12 +438,12 @@ foodcoopshop.Helper = {
                     );
                 }
             };
-            
+
             $('<div></div>').appendTo('body')
-                .html('<p>' + foodcoopshop.LocalizedJs.helper.ReallyCancelShopOrder + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p>' + foodcoopshop.LocalizedJs.helper.ReallyCancelInstantOrder + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
-                    title: foodcoopshop.LocalizedJs.helper.CancelShopOrder,
+                    title: foodcoopshop.LocalizedJs.helper.CancelInstantOrder,
                     autoOpen: true,
                     width: 400,
                     resizable: false,

@@ -170,7 +170,7 @@ foodcoopshop.Mobile = {
         var cartButton = $('#cart .inner .btn-success');
         cartButton.addClass('responsive-cart');
         cartButton.removeClass('btn btn-success');
-        cartButton.html('<span class="sum">0,00&nbsp;' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</span><i class="fa fa-shopping-cart fa-2x"></i>');
+        cartButton.html('<span class="sum">' + foodcoopshop.Helper.formatFloatAsCurrency(0) + '</span><i class="fa fa-shopping-cart fa-2x"></i>');
         $('#' + headerId).append(cartButton);
 
         var shoppingLimitReachedInfo = $('#cart .inner .credit-balance-wrapper .negative:not(.payment)').length;
@@ -194,15 +194,14 @@ foodcoopshop.Mobile = {
 
         // add credit balance info and shop order info to cart page
         var cartPage = $('body.carts.detail #inner-content h1:first');
-        cartPage.after($('#cart p.shop-order-customer-info'));
+        cartPage.after($('#cart p.instant-order-customer-info'));
         cartPage.after($('#cart div.credit-balance-wrapper'));
 
         var loadLastOrderDetailsDropdown = $('#cart .inner #load-last-order-details');
         if (loadLastOrderDetailsDropdown.length > 0) {
             cartPage.after(loadLastOrderDetailsDropdown.closest('div.input'));
         }
-        
-        
+
         // move flash message into header
         $('#' + headerId).append($('#flashMessage'));
 

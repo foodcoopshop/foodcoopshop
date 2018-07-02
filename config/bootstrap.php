@@ -43,6 +43,7 @@ use Cake\Log\Log;
 use Cake\Mailer\Email;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Security;
+use App\Lib\Error\Exception\InvalidParameterException;
 
 /*
  * Read configuration file and inject configuration into various
@@ -84,12 +85,6 @@ date_default_timezone_set('UTC');
  * Configure the mbstring extension to use the correct encoding.
  */
 mb_internal_encoding(Configure::read('App.encoding'));
-
-/*
- * Set the default locale. This controls how dates, number and currency is
- * formatted and sets the default language to use for translations.
- */
-ini_set('intl.default_locale', Configure::read('App.defaultLocale'));
 
 /*
  * Register application error and exception handlers.
@@ -202,13 +197,14 @@ Plugin::load('Admin', [
 mb_internal_encoding('UTF-8');
 date_default_timezone_set('Europe/Berlin');
 
-if (in_array(Configure::read('App.defaultLocale'), array_keys(Configure::read('app.implementedLocales')))) {
-    locale_set_default(Configure::read('App.defaultLocale'));
-    setlocale(LC_ALL, Configure::read('App.defaultLocale').'.UTF-8');
-    I18n::setLocale(Configure::read('App.defaultLocale'));
+TableRegistry::getTableLocator()->get('Configurations')->loadConfigurations();
+if (in_array(Configure::read('appDb.FCS_DEFAULT_LOCALE'), Configure::read('app.implementedLocales'))) {
+    ini_set('intl.default_locale', Configure::read('appDb.FCS_DEFAULT_LOCALE'));
+    locale_set_default(Configure::read('appDb.FCS_DEFAULT_LOCALE'));
+    setlocale(LC_ALL, Configure::read('appDb.FCS_DEFAULT_LOCALE').'.UTF-8');
+    I18n::setLocale(Configure::read('appDb.FCS_DEFAULT_LOCALE'));
 }
 
-TableRegistry::getTableLocator()->get('Configurations')->loadConfigurations();
 if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
     Plugin::load('Network', [
         'routes' => true,

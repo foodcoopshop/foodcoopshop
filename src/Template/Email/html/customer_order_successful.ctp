@@ -28,7 +28,7 @@ use Cake\Core\Configure;
             </td>
         </tr>
     </tbody>
-</table>
+<?php echo $this->element('email/tableFoot'); ?>
 
 <?php echo $this->element('email/tableHead', ['cellpadding' => 6]); ?>
     <?php echo $this->element('email/orderedProductsTable', [
@@ -38,7 +38,7 @@ use Cake\Core\Configure;
         'productSum' => $appAuth->Cart->getProductSum(),
         'productAndDepositSum' => $appAuth->Cart->getProductAndDepositSum()
     ]); ?>
-</table>
+<?php echo $this->element('email/tableFoot'); ?>
 
 <?php echo $this->element('email/tableHead'); ?>
     <tbody>
@@ -85,4 +85,4 @@ use Cake\Core\Configure;
         </td></tr>
         
     </tbody>
-</table>
+<?php echo $this->element('email/tableFoot'); ?>

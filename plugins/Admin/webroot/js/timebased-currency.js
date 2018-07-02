@@ -14,7 +14,7 @@
 foodcoopshop.TimebasedCurrency = {
 
     shortcode: '',
-    
+
     setShortcode: function(shortcode) {
         this.shortcode = shortcode;
     },
@@ -22,11 +22,11 @@ foodcoopshop.TimebasedCurrency = {
     getTimebasedCurrencyPrice: function(originalPrice, percentage) {
         return originalPrice * (100 - percentage) / 100;
     },
-    
+
     getTimebasedCurrencyOriginalPrice: function(timebasedCurrencyPrice, percentage) {
         return timebasedCurrencyPrice / (100 - percentage) * 100;
     },
-    
+
     bindOrderDetailProductPriceField: function(productPriceField, timebasedCurrencyData, productTimebasedCurrencyPriceField) {
         var appliedPercentage = timebasedCurrencyData.money_incl / foodcoopshop.Helper.getStringAsFloat(productPriceField.val()) * 100;
         productPriceField.off('keyup');
@@ -39,7 +39,7 @@ foodcoopshop.TimebasedCurrency = {
             productTimebasedCurrencyPriceField.val(foodcoopshop.Helper.formatFloatAsString(updatedTimebasedCurrencyPrice));
         });
     },
-    
+
     bindOrderDetailProductTimebasedCurrencyPriceField : function(productTimebasedCurrencyPriceField, timebasedCurrencyData, productPriceField) {
         var appliedPercentage = timebasedCurrencyData.money_incl / foodcoopshop.Helper.getStringAsFloat(productPriceField.val()) * 100;
         productTimebasedCurrencyPriceField.off('keyup');
@@ -56,24 +56,24 @@ foodcoopshop.TimebasedCurrency = {
     formatFloatAsTimebasedCurrency: function(float) {
         return foodcoopshop.Helper.formatFloatAsString(float) + '&nbsp;' + this.shortcode;
     },
-    
+
     getTimebasedCurrencyAsFloat: function(timebasedCurrency) {
         var regexAsString = '&nbsp;' + this.shortcode;
         var regex = new RegExp(regexAsString, 'g');
         var result = foodcoopshop.Helper.getStringAsFloat(timebasedCurrency.replace(regex, ''));
         return result;
     },
-        
+
     updateHoursSumDropdown: function(maxSeconds, selectedIndex) {
-        
+
         maxSeconds = Math.floor(parseFloat(maxSeconds) * 3600);
         var dropdown = $('#timebased-currency-order-seconds-sum-tmp');
-        
+
         if (selectedIndex === undefined || selectedIndex > maxSeconds) {
             selectedIndex = maxSeconds;
         }
         foodcoopshop.Helper.disableButton(dropdown);
-        
+
         foodcoopshop.Helper.ajaxCall('/' + foodcoopshop.LocalizedJs.timebasedCurrency.routeCart + '/ajaxGetTimebasedCurrencyHoursDropdown/' + maxSeconds, {
         }, {
             onOk: function (data) {
@@ -95,9 +95,9 @@ foodcoopshop.TimebasedCurrency = {
                 alert(data.msg);
             }
         });
-        
+
     },
-        
+
     initDeletePayment: function () {
 
         $('.delete-payment-button').on('click',function () {
@@ -161,6 +161,6 @@ foodcoopshop.TimebasedCurrency = {
                 });
         });
 
-    }    
+    }
 
 };

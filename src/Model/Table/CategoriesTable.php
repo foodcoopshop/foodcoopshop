@@ -36,7 +36,7 @@ class CategoriesTable extends AppTable
 
     public function validationDefault(Validator $validator)
     {
-        $validator->notEmpty('name', 'Bitte gib einen Namen an.');
+        $validator->notEmpty('name', __('Please_enter_a_name.'));
         return $validator;
     }
 
@@ -47,7 +47,7 @@ class CategoriesTable extends AppTable
         foreach ($array as $item) {
             $statusString = '';
             if (! $item->active) {
-                $statusString = ' (offline)';
+                $statusString = ' ('.__('offline').')';
             }
             $this->flattenedArray[$item->id_category] = $separator . $item->name . $statusString;
             if (! empty($item['children'])) {

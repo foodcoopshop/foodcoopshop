@@ -35,8 +35,8 @@ class ActionLogsTable extends AppTable
      * ),
      */
     public $types;
-    
-    
+
+
     public function initialize(array $config)
     {
         parent::initialize($config);
@@ -69,7 +69,7 @@ class ActionLogsTable extends AppTable
         ]);
         $this->initTypes();
     }
-    
+
     private function initTypes()
     {
         $this->types = [
@@ -187,14 +187,14 @@ class ActionLogsTable extends AppTable
                     'manufacturer'
                 ]
             ],
-    
+
             'product_remotely_changed' => [
                 'name' => __('Action_Log_Network_module_product_synchronized'),
                 'access' => [
                     'manufacturer'
                 ]
             ],
-    
+
             'orders_state_changed' => [
                 'name' => __('Action_Log_Order_status_changed')
             ],
@@ -208,7 +208,7 @@ class ActionLogsTable extends AppTable
                 'name' => __('Action_Log_Order_date_changed')
             ],
             'orders_shop_added' => [
-                'name' => __('Action_Log_Order_shop_order_placed')
+                'name' => __('Action_Log_Order_instant_order_placed')
             ],
             'order_detail_product_price_changed' => [
                 'name' => __('Action_Log_Order_detail_product_price_changed'),
@@ -234,7 +234,7 @@ class ActionLogsTable extends AppTable
                     'manufacturer'
                 ]
             ],
-    
+
             'payment_product_added' => [
                 'name' => __('Action_Log_Member_credit_upload_added')
             ],
@@ -280,7 +280,7 @@ class ActionLogsTable extends AppTable
             'payment_member_fee_deleted' => [
                 'name' => __('Action_Log_Member_member_fee_deleted')
             ],
-    
+
             'blog_post_added' => [
                 'name' => __('Action_Log_Blog_post_added')
             ],
@@ -296,7 +296,7 @@ class ActionLogsTable extends AppTable
                     'manufacturer'
                 ]
             ],
-    
+
             'page_added' => [
                 'name' => __('Action_Log_Page_added')
             ],
@@ -306,7 +306,7 @@ class ActionLogsTable extends AppTable
             'page_deleted' => [
                 'name' => __('Action_Log_Page_deleted')
             ],
-    
+
             'category_added' => [
                 'name' => __('Action_Log_Category_added')
             ],
@@ -316,7 +316,7 @@ class ActionLogsTable extends AppTable
             'category_deleted' => [
                 'name' => __('Action_Log_Category_deleted')
             ],
-    
+
             'remote_foodcoop_added' => [
                 'name' => __('Action_Log_Remote_food_coop_added')
             ],
@@ -326,7 +326,7 @@ class ActionLogsTable extends AppTable
             'remote_foodcoop_deleted' => [
                 'name' => __('Action_Log_Remote_food_coop_deleted')
             ],
-    
+
             'slider_added' => [
                 'name' => __('Action_Log_Slider_added')
             ],
@@ -336,7 +336,7 @@ class ActionLogsTable extends AppTable
             'slider_deleted' => [
                 'name' => __('Action_Log_Slider_deleted')
             ],
-    
+
             'tax_added' => [
                 'name' => __('Action_Log_Tax_rate_added')
             ],
@@ -346,7 +346,7 @@ class ActionLogsTable extends AppTable
             'tax_deleted' => [
                 'name' => __('Action_Log_Tax_rate_deleted')
             ],
-    
+
             'customer_registered' => [
                 'name' => __('Action_Log_Member_account_created')
             ],
@@ -392,7 +392,7 @@ class ActionLogsTable extends AppTable
                     'manufacturer'
                 ]
             ],
-    
+
             'timebased_currency_payment_added' => [
                 'name' => __('Action_Log_Paying_with_time_time_upload_added')
             ],
@@ -402,7 +402,7 @@ class ActionLogsTable extends AppTable
             'timebased_currency_payment_deleted' => [
                 'name' => __('Action_Log_Paying_with_time_time_upload_deleted')
             ],
-            
+
             'cronjob_backup_database' => [
                 'name' => __('Action_Log_Cronjob_database_backup_done')
             ],
@@ -433,7 +433,7 @@ class ActionLogsTable extends AppTable
                     'fail',
                 ],
             ],
-    
+
             'attribute_added' => [
                 'name' => __('Action_Log_Attribute_added')
             ],
@@ -443,13 +443,13 @@ class ActionLogsTable extends AppTable
             'attribute_deleted' => [
                 'name' => __('Action_Log_Attribute_deleted')
             ],
-    
+
             'configuration_changed' => [
                 'name' => __('Action_Log_Setting_changed')
             ]
         ];
     }
-    
+
     public function removeCustomerNameFromAllActionLogs($customerName) {
         $query = 'UPDATE '.$this->getTable().' SET text = REPLACE(text, \'' . $customerName . '\', \''.Configure::read('app.htmlHelper')->getDeletedCustomerName().'\')';
         $statement = $this->getConnection()->prepare($query);
@@ -460,7 +460,7 @@ class ActionLogsTable extends AppTable
         $statement = $this->getConnection()->prepare($query);
         return $statement->execute();
     }
-    
+
     public function customSave($type, $customerId, $objectId, $objectType, $text)
     {
         $data2save = [

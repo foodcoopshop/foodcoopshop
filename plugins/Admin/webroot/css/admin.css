@@ -232,7 +232,7 @@ span.is-declaration-ok-wrapper .fa-close {
 }
 .filter-container-not-fixed {
   float: left;
-  width: 975px;
+  width: 1035px;
 }
 .filter-container .right,
 .filter-container-not-fixed .right {
@@ -508,8 +508,9 @@ form div.error-message {
     padding: 10px;
     width: 100%;
 }
+.add-payment-form.featherlight-inner,
 .categories-checkboxes.featherlight-inner {
-  max-width: 450px;
+  max-width: 400px;
 }
 .tax-dropdown-wrapper.featherlight-inner label {
     width: 100%;
@@ -528,7 +529,7 @@ form div.error-message {
 }
 #labelUnity span {
     font-weight: normal;
-    font-size: 12px;	
+    font-size: 12px;
 }
 .product-description-rename-info {
     position: absolute;
@@ -603,7 +604,7 @@ body.orders.index td span.customer-is-new {
     width: 100%;
 }
 .featherlight-content .add-payment-form .radio-wrapper {
-    width: 185px;
+    width: 100%;
     float: left;
     margin-bottom: 10px;
 }
@@ -825,8 +826,7 @@ body.payments .bottom-button-container {
 #customer-group-edit-form {
     margin-top: 10px;
 }
-#order-detail-product-price-edit-form input[type="text"],
-#order-detail-product-quantity-edit-form input[type="text"],
+#order-detail-product-price-edit-form input[type="number"],
 #order-detail-product-quantity-edit-form input[type="number"],
 #product-price-edit-form input[type="text"],
 #product-price-edit-form input[type="number"],
@@ -935,7 +935,7 @@ body.customers .delete-customer-button {
     float:right;
     clear:both;
     margin-bottom: 15px;
-    margin-top: 15px; 
+    margin-top: 15px;
 }
 body.configurations.index td.first {
     vertical-align: top;
@@ -978,7 +978,7 @@ form.fcs-form .small {
 form.fcs-form .checkbox .small {
     line-height: 16px;
     float: left;
-    max-width: 600px;
+    max-width: 280px;
     margin-top: 7px;
 }
 form.fcs-form .checkbox .small.multiple-lines {
@@ -1110,6 +1110,9 @@ body.payments .payment-approval-comment-wrapper,
 body.reports.payment .payment-approval-comment-wrapper {
     float: left;
     margin-right: 2px;
+}
+body.payments.edit form {
+	width: 530px;
 }
 body.payments.edit .email-template-info {
     float: left;

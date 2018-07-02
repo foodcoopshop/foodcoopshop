@@ -129,7 +129,7 @@ class ManufacturersController extends AdminAppController
             // keep original data for getCustomerRecord - clone does not work on nested objects
             $unchangedManufacturerAddress = clone $manufacturer->address_manufacturer;
         }
-        
+
         $manufacturer = $this->Manufacturer->patchEntity(
             $manufacturer,
             $this->getRequest()->getData(),
@@ -278,7 +278,7 @@ class ManufacturersController extends AdminAppController
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
             $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
         }
-        
+
         foreach ($manufacturers as $manufacturer) {
             $manufacturer->product_count = $this->Product->getCountByManufacturerId($manufacturer->id_manufacturer);
             $sumDepositDelivered = $this->OrderDetail->getDepositSum($manufacturer->id_manufacturer, false);
@@ -300,11 +300,11 @@ class ManufacturersController extends AdminAppController
 
     public function sendInvoice()
     {
-        
+
         $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
         $dateFrom = $this->getRequest()->getQuery('dateFrom');
         $dateTo = $this->getRequest()->getQuery('dateTo');
-        
+
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
@@ -346,7 +346,7 @@ class ManufacturersController extends AdminAppController
             $invoicePdfUrl = Configure::read('app.htmlHelper')->getInvoiceLink($manufacturer->name, $manufacturerId, date('Y-m-d'), $newInvoiceNumber);
             $invoicePdfFile = $invoicePdfUrl;
 
-            $this->Flash->success('Rechnung für Hersteller "' . $manufacturer->name . '" erfolgreich versendet an ' . $manufacturer->address_manufacturer->email . '.</a>');
+            $this->Flash->success(__d('admin', 'Invoice_for_manufacturer_{0}_successfully_sent_to_{1}.', ['<b>' . $manufacturer->name . '</b>', $manufacturer->address_manufacturer->email]));
 
             $invoice2save = [
                 'id_manufacturer' => $manufacturerId,
@@ -368,7 +368,7 @@ class ManufacturersController extends AdminAppController
                     ->setAttachments([
                     $invoicePdfFile
                     ])
-                    ->setSubject('Rechnung Nr. ' . $newInvoiceNumber . ', ' . $invoicePeriodMonthAndYear)
+                    ->setSubject(__d('admin', 'Invoice_number_abbreviataion_{1}_{2}', [$newInvoiceNumber, $invoicePeriodMonthAndYear]))
                     ->setViewVars([
                     'manufacturer' => $manufacturer,
                     'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
@@ -405,11 +405,11 @@ class ManufacturersController extends AdminAppController
 
     public function sendOrderList()
     {
-        
+
         $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
         $dateFrom = $this->getRequest()->getQuery('dateFrom');
         $dateTo = $this->getRequest()->getQuery('dateTo');
-        
+
         Configure::read('app.timeHelper')->recalcDeliveryDayDelta();
 
         $manufacturer = $this->Manufacturer->find('all', [
@@ -447,10 +447,10 @@ class ManufacturersController extends AdminAppController
             $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
             $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
 
-            $flashMessage = 'Bestelllisten für Hersteller "' . $manufacturer->name . '" erfolgreich generiert';
+            $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}.', ['<b>'.$manufacturer->name.'</b>']);
 
             if ($sendEmail) {
-                $flashMessage .= ' und an ' . $manufacturer->address_manufacturer->email . ' versendet';
+                $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{0}.', ['<b>'.$manufacturer->name.'</b>'. $manufacturer->address_manufacturer->email]);
                 $email = new AppEmail();
                 $email->setTemplate('Admin.send_order_list')
                 ->setTo($manufacturer->address_manufacturer->email)
@@ -458,7 +458,7 @@ class ManufacturersController extends AdminAppController
                     $productPdfFile,
                     $customerPdfFile
                 ])
-                ->setSubject('Bestellungen für den ' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')))
+                ->setSubject(__d('admin', 'Order_lists_for_the_day') . ' ' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')))
                 ->setViewVars([
                 'manufacturer' => $manufacturer,
                 'appAuth' => $this->AppAuth,
@@ -522,8 +522,8 @@ class ManufacturersController extends AdminAppController
         if (!$this->AppAuth->isManufacturer() && is_null($manufacturer->bulk_orders_allowed)) {
             $manufacturer->bulk_orders_allowed = Configure::read('app.defaultBulkOrdersAllowed');
         }
-        if (is_null($manufacturer->send_shop_order_notification)) {
-            $manufacturer->send_shop_order_notification = Configure::read('app.defaultSendShopOrderNotification');
+        if (is_null($manufacturer->send_instant_order_notification)) {
+            $manufacturer->send_instant_order_notification = Configure::read('app.defaultSendInstantOrderNotification');
         }
         if (is_null($manufacturer->send_ordered_product_deleted_notification)) {
             $manufacturer->send_ordered_product_deleted_notification = Configure::read('app.defaultSendOrderedProductDeletedNotification');
@@ -534,9 +534,9 @@ class ManufacturersController extends AdminAppController
         if (is_null($manufacturer->send_ordered_product_amount_changed_notification)) {
             $manufacturer->send_ordered_product_amount_changed_notification = Configure::read('app.defaultSendOrderedProductAmountChangedNotification');
         }
-        
+
         $manufacturer->timebased_currency_max_credit_balance /= 3600;
-        
+
         if (!$this->AppAuth->isManufacturer()) {
             $this->Customer = TableRegistry::getTableLocator()->get('Customers');
             $this->set('customersForDropdown', $this->Customer->getForDropdown());
@@ -562,10 +562,10 @@ class ManufacturersController extends AdminAppController
         if ($this->AppAuth->isManufacturer()) {
             $this->setRequest($this->getRequest()->withData('Manufacturers.active', $manufacturer->active));
         }
-        
+
         if (!empty($this->getRequest()->getData('Manufacturers.holiday_from'))) {
             $this->setRequest($this->getRequest()->withData('Manufacturers.holiday_from', new Time($this->getRequest()->getData('Manufacturers.holiday_from'))));
-            
+
         }
         if (!empty($this->getRequest()->getData('Manufacturers.holiday_to'))) {
             $this->setRequest($this->getRequest()->withData('Manufacturers.holiday_to', new Time($this->getRequest()->getData('Manufacturers.holiday_to'))));
@@ -585,7 +585,7 @@ class ManufacturersController extends AdminAppController
         if (!empty($this->getRequest()->getData('Manufacturers.timebased_currency_max_credit_balance'))) {
             $this->setRequest($this->getRequest()->withData('Manufacturers.timebased_currency_max_credit_balance', $this->getRequest()->getData('Manufacturers.timebased_currency_max_credit_balance') * 3600));
         }
-        
+
         if (!empty($manufacturer->getErrors())) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             if (!empty($this->getRequest()->getData('Manufacturers.timebased_currency_max_credit_balance'))) {
@@ -613,8 +613,8 @@ class ManufacturersController extends AdminAppController
             if (!$this->AppAuth->isManufacturer() && $this->getRequest()->getData('Manufacturers.bulk_orders_allowed') == Configure::read('app.defaultBulkOrdersAllowed')) {
                 $this->setRequest($this->getRequest()->withData('Manufacturers.bulk_orders_allowed', null));
             }
-            if ($this->getRequest()->getData('Manufacturers.send_shop_order_notification') == Configure::read('app.defaultSendShopOrderNotification')) {
-                $this->setRequest($this->getRequest()->withData('Manufacturers.send_shop_order_notification', null));
+            if ($this->getRequest()->getData('Manufacturers.send_instant_order_notification') == Configure::read('app.defaultSendInstantOrderNotification')) {
+                $this->setRequest($this->getRequest()->withData('Manufacturers.send_instant_order_notification', null));
             }
             if ($this->getRequest()->getData('Manufacturers.send_ordered_product_deleted_notification') == Configure::read('app.defaultSendOrderedProductDeletedNotification')) {
                 $this->setRequest($this->getRequest()->withData('Manufacturers.send_ordered_product_deleted_notification', null));
@@ -676,10 +676,10 @@ class ManufacturersController extends AdminAppController
             // do not throw exception because no debug mails wanted
             die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }
-        
+
         $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
         $results = $this->TimebasedCurrencyOrderDetail->addTimebasedCurrencyDataToInvoiceData($results);
-        
+
         $this->set('results_' . $groupType, $results);
         $this->set('manufacturerId', $manufacturerId);
         $this->set('dateFrom', date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(str_replace('/', '-', $dateFrom))));
@@ -708,7 +708,7 @@ class ManufacturersController extends AdminAppController
         $this->set('sumPriceIncl', $sumPriceIncl);
         $this->set('sumAmount', $sumAmount);
         $this->set('sumTimebasedCurrencyPriceIncl', $sumTimebasedCurrencyPriceIncl);
-        
+
         $this->set('variableMemberFee', $this->getOptionVariableMemberFee($manufacturerId));
         $this->set('bulkOrdersAllowed', $this->getOptionBulkOrdersAllowed($manufacturerId));
 
@@ -721,7 +721,7 @@ class ManufacturersController extends AdminAppController
         $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
         $dateFrom = $this->getRequest()->getQuery('dateFrom');
         $dateTo = $this->getRequest()->getQuery('dateTo');
-        
+
         $results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, [
             ORDER_STATE_OPEN,
             ORDER_STATE_CASH,

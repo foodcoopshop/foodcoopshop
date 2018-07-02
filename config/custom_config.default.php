@@ -52,7 +52,7 @@ return [
     'Security' => [
         'salt' => ''
     ],
-    
+
     /**
      * locale can be overriden here, attention: "App" namespace (not "app")
      * since v2.1 FoodCoopShop is multilingual
@@ -105,6 +105,6 @@ return [
         'paymentMethods' => [
             'cashless'
         ]
-        
+
     ]
 ];

@@ -19,7 +19,7 @@ use Cake\Core\Configure;
 
     <?php
     $this->element('addScript', [
-        'script' => 
+        'script' =>
             Configure::read('app.jsNamespace') . ".Admin.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initAddPayment('#add-payment-button-wrapper .btn-success');" .
             Configure::read('app.jsNamespace') . ".Admin.initDeletePayment();"
@@ -33,7 +33,7 @@ use Cake\Core\Configure;
         </div>
     </div>
 
-	<p><b>Kontodaten: </b><?php echo $extraInfo; ?></p>
+	<p><b><?php echo __d('admin', 'Bank_account_data'); ?>: </b><?php echo $extraInfo; ?></p>
 
 <?php
 
@@ -43,10 +43,10 @@ echo $this->Html->link('<i class="fa ' . $icon . ' fa-lg"></i> ' . $buttonText, 
     'escape' => false
 ]);
 echo '<div id="add-payment-form" class="add-payment-form">';
-echo '<h3>Neue Zahlung eintragen</h3>';
-echo '<p>Bitte trage hier den Betrag ein, den du <br />soeben auf unser Konto überwiesen hast.</p>';
+echo '<h3>'.__d('admin', 'Add_new_payment').'</h3>';
+echo '<p>'.__d('admin', 'Please_enter_the_amount_that_you_just_transfered_to_our_bank_account.').'</p>';
 echo $this->Form->control('Payments.amount', [
-    'label' => 'Betrag in ' . Configure::read('appDb.FCS_CURRENCY_SYMBOL'),
+    'label' => __d('admin', 'Amount_in_{0}', [Configure::read('appDb.FCS_CURRENCY_SYMBOL')]),
     'type' => 'number',
     'step' => '0.01'
 ]);
@@ -55,7 +55,7 @@ echo $this->Form->hidden('Payments.customerId', [
 ]);
 
 if ($paymentType == 'product' && $appAuth->isSuperadmin()) {
-    echo '<p style="margin-top: 10px;">Wenn es sich um eine Rückzahlung handelt,<br />trage bitte ein, wie viel du dem Mitgiled zurücküberwiesen hast.</p>';
+    echo '<p style="margin-top: 10px;">'.__d('admin', 'If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member.').'</p>';
     $i = 0;
     foreach ($this->Html->getSuperadminProductPaymentTexts($appAuth) as $paymentTextKey => $paymentText) {
         echo '<div class="radio-wrapper">';
@@ -76,7 +76,7 @@ if ($paymentType == 'product' && $appAuth->isSuperadmin()) {
 if ($paymentType == 'member_fee') {
     echo '<div class="multiple-checkbox-wrapper">';
 
-    echo '<label for="PaymentMonthsRange">Bitte wähle die Monate aus, für die deine Zahlung gedacht ist.</label>';
+    echo '<label for="PaymentMonthsRange">'.__d('admin', 'Please_chose_the_months_for_your_payment.').'</label>';
 
     $currentYear = date('Y');
 

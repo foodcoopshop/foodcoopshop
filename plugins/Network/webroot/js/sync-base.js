@@ -26,7 +26,7 @@ foodcoopshop.SyncBase = {
         foodcoopshop.Admin.setMenuFixed();
         foodcoopshop.Admin.adaptContentMargin();
     },
-    
+
     /**
      * tooltipster plugin from foodcoopshop.Helper.initTooltip messes up comparison of name attribute
      * because it removes the title
@@ -41,7 +41,7 @@ foodcoopshop.SyncBase = {
             position: position
         });
     },
-    
+
     resetForm : function () {
         this.resetButton($('.sync-button-wrapper a'), 'fa-refresh');
     },

@@ -41,4 +41,4 @@ use Cake\Core\Configure;
         </tr>
         
     </tbody>
-</table>
+<?php echo $this->element('email/tableFoot'); ?>

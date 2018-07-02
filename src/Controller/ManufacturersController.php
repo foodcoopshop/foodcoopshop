@@ -81,7 +81,7 @@ class ManufacturersController extends FrontendController
         }
 
         $this->set('manufacturers', $manufacturers);
-        $this->set('title_for_layout', 'Hersteller');
+        $this->set('title_for_layout', __('Manufacturer'));
     }
 
     public function detail()

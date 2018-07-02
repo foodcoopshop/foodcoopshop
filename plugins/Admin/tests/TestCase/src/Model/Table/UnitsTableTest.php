@@ -20,7 +20,7 @@ class UnitsTableTest extends AppCakeTestCase
 {
 
     public $Units;
-    
+
     public $productId = 346;
     public $productAttributeId = 0;
     public $pricePerUnitEnabled = true;
@@ -28,14 +28,14 @@ class UnitsTableTest extends AppCakeTestCase
     public $name = 'kg';
     public $amount = 2;
     public $quantityInUnits = 9.323;
-    
+
 
     public function setUp()
     {
         parent::setUp();
         $this->Unit = TableRegistry::getTableLocator()->get('Units');
     }
-    
+
     /**
      * @expectedException App\Lib\Error\Exception\InvalidParameterException
      * @expectedExceptionMessage Der Preis nach Gewicht muss eine Zahl sein. Der Preis nach Gewicht muss größer als 0 sein.
@@ -45,7 +45,7 @@ class UnitsTableTest extends AppCakeTestCase
         $this->priceInclPerUnit = 'random-string';
         $this->doSave();
     }
-    
+
     /**
      * @expectedException App\Lib\Error\Exception\InvalidParameterException
      * @expectedExceptionMessage Der Preis nach Gewicht muss größer als 0 sein.
@@ -55,7 +55,7 @@ class UnitsTableTest extends AppCakeTestCase
         $this->priceInclPerUnit = 0;
         $this->doSave();
     }
-    
+
     /**
      * @expectedException App\Lib\Error\Exception\InvalidParameterException
      * @expectedExceptionMessage Der Name ist nicht erlaubt.
@@ -65,7 +65,7 @@ class UnitsTableTest extends AppCakeTestCase
         $this->name = 'l';
         $this->doSave();
     }
-    
+
     /**
      * @expectedException App\Lib\Error\Exception\InvalidParameterException
      * @expectedExceptionMessage Der Name muss angegeben sein.
@@ -75,7 +75,7 @@ class UnitsTableTest extends AppCakeTestCase
         $this->name = '';
         $this->doSave();
     }
-    
+
     /**
      * @expectedException App\Lib\Error\Exception\InvalidParameterException
      * @expectedExceptionMessage Die Anzahl muss eine Zahl sein. Die Anzahl muss größer als 0 sein.
@@ -85,7 +85,7 @@ class UnitsTableTest extends AppCakeTestCase
         $this->amount = 'random-string';
         $this->doSave();
     }
-    
+
     /**
      * @expectedException App\Lib\Error\Exception\InvalidParameterException
      * @expectedExceptionMessage Die Anzahl muss größer als 0 sein.
@@ -95,7 +95,7 @@ class UnitsTableTest extends AppCakeTestCase
         $this->amount = 0;
         $this->doSave();
     }
-    
+
     /**
      * @expectedException App\Lib\Error\Exception\InvalidParameterException
      * @expectedExceptionMessage Das ungefähre Liefergewicht muss eine Zahl sein.
@@ -105,7 +105,7 @@ class UnitsTableTest extends AppCakeTestCase
         $this->quantityInUnits = 'random-string';
         $this->doSave();
     }
-    
+
     /**
      * @expectedException App\Lib\Error\Exception\InvalidParameterException
      * @expectedExceptionMessage Das ungefähre Liefergewicht muss eine positive Zahl sein.
@@ -115,14 +115,14 @@ class UnitsTableTest extends AppCakeTestCase
         $this->quantityInUnits = -1;
         $this->doSave();
     }
-    
+
     public function testSaveProductNoValidationIfDisabled()
     {
         $this->pricePerUnitEnabled = false;
         $result = $this->doSave();
         $this->assertNotEmpty($result);
     }
-    
+
     public function testSaveProductOK()
     {
         $result = $this->doSave();
@@ -140,7 +140,7 @@ class UnitsTableTest extends AppCakeTestCase
         $this->assertEquals($this->amount, $unit->amount, 'amount not saved correctly');
         $this->assertEquals($this->quantityInUnits, $unit->quantity_in_units, 'quantity_in_units not saved correctly');
     }
-    
+
     private function doSave()
     {
         return $this->Unit->saveUnits(

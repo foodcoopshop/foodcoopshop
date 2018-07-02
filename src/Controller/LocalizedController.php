@@ -21,7 +21,7 @@ use Cake\I18n\I18n;
 
 class LocalizedController extends Controller
 {
-    
+
     private function getStrings()
     {
         $strings = [
@@ -34,8 +34,8 @@ class LocalizedController extends Controller
                 'dateFormat' => Configure::read('DateFormat.'.I18n::getLocale().'.DateForDatepicker')
             ],
             'helper' => [
-                'defaultLocale' => Configure::read('App.defaultLocale'),
-                'defaultLocaleInBCP47' => str_replace('_', '-', Configure::read('App.defaultLocale')),
+                'defaultLocale' => Configure::read('appDb.FCS_DEFAULT_LOCALE'),
+                'defaultLocaleInBCP47' => str_replace('_', '-', Configure::read('appDb.FCS_DEFAULT_LOCALE')),
                 'logoutInfoText' => __('Really_sign_out?'),
                 'logout' => __('Sign_out?'),
                 'routeLogout' => __('route_sign_out'),
@@ -44,8 +44,8 @@ class LocalizedController extends Controller
                 'yes' => __('Yes'),
                 'save' => __('Save'),
                 'cancel' => __('Cancel'),
-                'CancelShopOrder' => __('Cancel_shop_order?'),
-                'ReallyCancelShopOrder' => __('Really_cancel_shop_order?'),
+                'CancelInstantOrder' => __('Cancel_instant_order?'),
+                'ReallyCancelInstantOrder' => __('Really_cancel_instant_order?'),
                 'January' => __('January'),
                 'February' => __('February'),
                 'March' => __('March'),
@@ -117,8 +117,8 @@ class LocalizedController extends Controller
             ],
             'admin' => [
                 'routeCartFinished' => '/'.__('route_cart') . '/' . __('route_cart_finished'), //! careful, without $orderId argument,
-                'PlaceShopOrderFor' => __('Place_shop_order_for'),
-                'ShopOrderDateIsSetBackAfterPlacingIt' => __('Shop_order_date_is_set_back_after_placing_it.'),
+                'PlaceInstantOrderFor' => __('Place_instant_order_for'),
+                'InstantOrderDateIsSetBackAfterPlacingIt' => __('Instant_order_date_is_set_back_after_placing_it.'),
                 'CloseAllOrders' => __('Close_all_orders?'),
                 'ReallyCloseAllOrders' => __('Really_close_all_orders?'),
                 'GenerateOrdersAsPdf' => __('Generate_orders_as_pdf?'),
@@ -175,13 +175,46 @@ class LocalizedController extends Controller
                 'ReallyDoNotShowProduct0AsNew' => __('Really_do_not_show_product_{0}_as_new?'),
                 'ActivateProduct' => __('Activate_product'),
                 'DeactivateProduct' => __('Deactivate_product'),
+                'ActivateMember' => __('Activate_member?'),
+                'DeactivateMember' => __('Deactivate_member?'),
+                'ReallyActivateMember0' => __('Really_activate_member_{0}_?'),
+                'ReallyDeactivateMember0' => __('Really_deactivate_member_{0}?'),
+                'YesInfoMailWillBeSent' => _('Yes_info_mail_will_be_sent'),
                 'ReallyActivateProduct0' => __('Really_activate_product_{0}_?'),
-                'ReallyDeactivateProduct0' => __('Really_deactivate_product_{0}_?'),
+                'ReallyDeactivateProduct0' => __('Really_deactivate_product_{0}?'),
+                'DeleteAttribute' => __('Delete_attribute'),
+                'ReallyDeleteAttribute0' => __('Really_delete_attribute_{0}?'),
+                'PleaseChoseIfPaybackOrCreditUpload' => __('Please_chose_if_it_is_a_payback_or_a_credit_upload.'),
+                'PleaseChoseTypeOfPayment' => __('Please_chose_the_type_of_your_payment.'),
+                'DeletePayment' => __('Delete_payment'),
+                'ReallyDeletePayment' => __('Really_delete_payment?'),
+                'Date' => __('Date'),
+                'Amount' => __('Amount'),
+                'PleaseChoseAtLeastOneMonth' => __('Please_chose_at_least_one_month.'),
+                'DeleteMember' => __('Delete_member?'),
+                'ReallyDeleteMember' => __('Really_delete_member?'),
+                'BeCarefulNoWayBack' => __('Be_careful_there_is_no_way_back!'),
+                'ErrorsOcurredWhileMemberWasDeleted' => __('Errors_occurred_while_member_was_deleted'),
+                'AddComment' => __('Add_comment'),
+                'PleaseCancelAllOrderedProductsBeforeCancellingTheOrder' => __('Please_cancel_all_ordered_products_before_cancelling_the_order.'),
+                'AddNewProduct' => __('Add_new_product?'),
+                'ReallyAddNewProduct' => __('Really_add_new_product?'),
+                'ThisFunctionIsNotAvailableToday' => __('This_function_is_not_available_today.'),
+                'ManuallySendOrderList' => __('Manually_send_order_list?'),
+                'ReallyManuallySendOrderList' => __('Really_manually_send_order_list_to_{0}?'),
+                'OrderPeriod' => __('Order_period'),
+                'AnExistingOrderListWillBeOverwritten' => __('An_existing_order_list_will_be_overwritten!'),
+                'ChangeGroupFor' => __('Change_group_for'),
+                'TheMemberNeedsToSignInAgain' => __('The_member_needs_to_sign_again.'),
             ],
             'dialogOrder' => [
                 'ChangeCommentOfOrder' => __('Change_comment_of_order'),
                 'SetDateOfOrderBackTo' => __('Set_date_of_order_back_to'),
                 'SetDateOfOrderBack' => __('Set_date_of_order_back')
+            ],
+            'dialogCustomer' => [
+                'ChangeMemberComment' => __('Change_member_comment'),
+                'ChangeGroup' => __('Change_group')
             ],
             'dialogProduct' => [
                 'ChangeAmount' => __('Change_amount'),
@@ -203,17 +236,24 @@ class LocalizedController extends Controller
                 'ChangeNameAndDescription' => __('Change_name_and_description'),
                 'Deposit' => __('Deposit'),
                 'EnterZeroForDelete' => __('Enter_zero_for_delete')
+            ],
+            'upload' => [
+                'delete' => __('delete'),
+                'DeleteImage' => __('Delete_image?'),
+                'ReallyDeleteImage' => __('Really_delete_image?'),
+                'rotateAntiClockwise' => __('rotate_anti_clockwise?'),
+                'rotateClockwise' => __('rotate_clockwise?')
             ]
-            
+
         ];
         return $strings;
     }
-    
+
     public function renderAsJsFile() {
         $this->viewBuilder()->setLayout('ajax');
         $this->set('localizedJs', $this->getStrings());
     }
-    
+
 }
 
 ?>

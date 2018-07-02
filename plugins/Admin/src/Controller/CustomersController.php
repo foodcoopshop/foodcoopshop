@@ -102,7 +102,7 @@ class CustomersController extends AdminAppController
 
     public function changePassword()
     {
-        $this->set('title_for_layout', 'Passwort ändern');
+        $this->set('title_for_layout', __d('admin', 'Change_password'));
 
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
@@ -139,47 +139,46 @@ class CustomersController extends AdminAppController
             );
 
             if ($this->AppAuth->isManufacturer()) {
-                $message = 'Der Hersteller <b>' . $this->AppAuth->getManufacturerName();
+                $message = __d('admin', 'The_manufacturer_{0}_has_changed_his_password.', ['<b>' . $this->AppAuth->getManufacturerName() . '</b>']);
                 $actionLogType = 'manufacturer_password_changed';
                 $actionLogId = $this->AppAuth->getManufacturerId();
                 $actionLogModel = 'manufacturers';
             } else {
-                $message = 'Das Mitglied <b>' . $this->AppAuth->getUsername();
+                $message = __d('admin', 'The_member_{0}_has_changed_his_password.', ['<b>' . $this->AppAuth->getUsername() . '</b>']);
                 $actionLogType = 'customer_password_changed';
                 $actionLogId = $this->AppAuth->getUserId();
                 $actionLogModel = 'customers';
             }
-            $message .= '</b> hat sein Passwort geändert.';
 
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $actionLogId, $actionLogModel, $message);
-            $this->Flash->success('Dein neues Passwort wurde erfolgreich gespeichert.');
+            $this->Flash->success(__d('admin', 'Your_new_password_has_been_saved_successfully.'));
             $this->redirect($this->referer());
         }
 
         $this->set('customer', $customer);
     }
-    
-    
+
+
     public function delete($customerId)
     {
         $this->RequestHandler->renderAs($this, 'json');
-        
+
         $isOwnProfile = $this->AppAuth->getUserId() == $customerId;
-        
+
         if (!$isOwnProfile && !$this->AppAuth->isSuperadmin()) {
             throw new ForbiddenException('deleting user ' . $customerId . 'denied');
         }
-        
+
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
-        
+
         try {
-            
+
             $activeOrdersAssociation = $this->Customer->getAssociation('ActiveOrders')->setConditions([
                 'DATE_FORMAT(ActiveOrders.date_add, \'%Y-%m-%d\') > DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 2 MONTH), \'%Y-%m-%d\')',
                 'ActiveOrders.current_state <> ' . ORDER_STATE_CANCELLED
             ]);
-                
+
             $customer = $this->Customer->find('all', [
                 'conditions' => [
                     'Customers.id_customer' => $customerId
@@ -189,83 +188,83 @@ class CustomersController extends AdminAppController
                     'ActiveOrders'
                 ]
             ])->first();
-            
+
             if (empty($customer)) {
                 throw new RecordNotFoundException('customer ' . $customerId . ' not found');
             }
-            
+
             $errors = [];
             $openOrders = count($customer->active_orders);
             if ($openOrders > 0) {
-                $errors[] = 'Anzahl der Bestellungen, die noch nicht vor mindestens zwei Monaten getätigt worden sind: '. $openOrders . '.';
+                $errors[] = __d('admin', 'Amount_of_orders_that_have_not_been_placed_before_two_months:'). ' '. $openOrders . '.';
             }
-            
+
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
                 $creditBalance = $this->Customer->getCreditBalance($customerId);
                 if ($creditBalance != 0) {
-                    $errors[] = 'Das Guthaben beträgt ' . Configure::read('app.numberHelper')->formatAsCurrency($creditBalance) . '. Es muss 0 betragen.';
+                    $errors[] = __d('admin', 'The_credit_is') . ' ' . Configure::read('app.numberHelper')->formatAsCurrency($creditBalance) . ' ' . __d('admin', 'It_needs_to_be_zero.');
                 }
             }
-            
+
             $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
             $timebasedCurrencyCreditBalance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customerId);
             if ($timebasedCurrencyCreditBalance != 0) {
-                $errors[] = 'Das Guthaben des Stundenkontos beträgt ' . Configure::read('app.timebasedCurrencyHelper')->formatSecondsToTimebasedCurrency($timebasedCurrencyCreditBalance).'. Es muss 0 betragen.';
+                $errors[] = __d('admin', 'The_credit_of_the_paying_with_time_account_is:') . ' ' . Configure::read('app.timebasedCurrencyHelper')->formatSecondsToTimebasedCurrency($timebasedCurrencyCreditBalance).'. ' . __d('admin', 'It_needs_to_be_zero.');
             }
-            
+
             if (!empty($customer->manufacturers)) {
                 $manufacturerNames = [];
                 foreach($customer->manufacturers as $manufacturer) {
                     $manufacturerNames[] = $manufacturer->name;
                 }
-                $errors[] = 'Das Mitglied ist noch folgenden Herstellern als Ansprechperson zugeordnet: ' . join(', ', $manufacturerNames);
+                $errors[] = __d('admin', 'The_member_is_still_associated_to_the_following_manufacturers:') . ' ' . join(', ', $manufacturerNames);
             }
-            
+
             if (!empty($errors)) {
                 $errorString = '<ul><li>' . join('</li><li>', $errors) . '</li></ul>';
-                $this->log('Fehler bei Mitgliedskonto löschen (' . $customer->name . '): <br />' . $errorString);
+                $this->log('error while trying to delete an account: (' . $customer->name . '): <br />' . $errorString);
                 throw new Exception($errorString);
             }
         } catch (Exception $e) {
             $this->sendAjaxError($e);
         }
-        
+
         $this->Customer->deleteAll(['id_customer' => $customerId]);
         $this->Customer->AddressCustomers->deleteAll(['id_customer' => $customerId]);
-        
+
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->removeCustomerNameFromAllActionLogs($customer->firstname . ' ' . $customer->lastname);
         $this->ActionLog->removeCustomerNameFromAllActionLogs($customer->lastname . ' ' . $customer->firstname);
         $this->ActionLog->removeCustomerEmailFromAllActionLogs($customer->email);
-        
+
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         if ($isOwnProfile) {
-            $message = 'Dein Mitgliedskonto wurde erfolgreich gelöscht.';
+            $message = __d('admin', 'Your_account_has_been_deleted_successfully.');
             $redirectUrl = Configure::read('app.slugHelper')->getHome();
         } else {
-            $message = $this->AppAuth->getUsername() .  ' hat ein Mitgliedskonto gelöscht.';
+            $message = __d('admin', '{0}_has_deleted_an_account.', [$this->AppAuth->getUsername()]);
             $redirectUrl = $this->getRequest()->getData('referer');
         }
         $this->ActionLog->customSave('customer_deleted', $this->AppAuth->getUserId(), $customer->id_customer, 'customers', $message);
         $this->Flash->success($message);
-        
+
         if ($isOwnProfile) {
             $this->AppAuth->logout();
         }
-        
+
         $this->set('data', [
             'status' => 1,
             'msg' => 'ok',
             'redirectUrl' => $redirectUrl
         ]);
-        
+
         $this->set('_serialize', 'data');
-        
+
     }
 
     public function profile()
     {
-        $this->set('title_for_layout', 'Mein Profil bearbeiten');
+        $this->set('title_for_layout', __d('admin', 'Edit_my_profile'));
         $this->_processForm($this->AppAuth->getUserId());
         if (empty($this->getRequest()->getData())) {
             $this->render('edit');
@@ -277,7 +276,7 @@ class CustomersController extends AdminAppController
         if ($customerId === null) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', 'Profil bearbeiten');
+        $this->set('title_for_layout', __d('admin', 'Edit_profile'));
         $this->_processForm($customerId);
         if (empty($this->getRequest()->getData())) {
             $this->render('edit');
@@ -289,7 +288,7 @@ class CustomersController extends AdminAppController
 
         $isOwnProfile = $this->AppAuth->getUserId() == $customerId;
         $this->set('isOwnProfile', $isOwnProfile);
-        
+
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
@@ -299,8 +298,7 @@ class CustomersController extends AdminAppController
                 'AddressCustomers'
             ]
         ])->first();
-        
-        
+
         $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
         $timebasedCurrencyCreditBalance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customerId) * -1;
         $this->set('timebasedCurrencyCreditBalance', $timebasedCurrencyCreditBalance);
@@ -348,9 +346,9 @@ class CustomersController extends AdminAppController
 
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             if ($isOwnProfile) {
-                $message = 'Dein Profil wurde geändert.';
+                $message = __d('admin', 'Your_profile_was_changed.');
             } else {
-                $message = 'Das Profil von <b>' . $customer->name . '</b> wurde geändert.';
+                $message = __d('admin', 'The_profile_of_{0}_was_changed.', ['<b>' . $customer->name . '</b>']);
             }
             $this->ActionLog->customSave('customer_profile_changed', $this->AppAuth->getUserId(), $customer->id_customer, 'customers', $message);
             $this->Flash->success($message);
@@ -404,13 +402,12 @@ class CustomersController extends AdminAppController
         );
 
         $statusText = 'deaktiviert';
+        $message = __d('admin', 'The_member_{0}_has_been_deactivated_succesfully.', ['<b>' . $customer->name . '</b>']);
         $actionLogType = 'customer_set_inactive';
         if ($status) {
-            $statusText = 'aktiviert';
+            $message = __d('admin', 'The_member_{0}_has_been_activated_succesfully.', ['<b>' . $customer->name . '</b>']);
             $actionLogType = 'customer_set_active';
         }
-
-        $message = 'Das Mitglied <b>' . $customer->name . '</b> wurde erfolgreich ' . $statusText;
 
         if ($sendEmail) {
             $newPassword = $this->Customer->setNewPassword($customer->id_customer);
@@ -418,20 +415,18 @@ class CustomersController extends AdminAppController
             $email = new AppEmail();
             $email->setTemplate('customer_activated')
                 ->setTo($customer->email)
-                ->setSubject('Dein Mitgliedskonto wurde aktiviert.')
+                ->setSubject(__d('admin', 'The_account_was_activated'))
                 ->setViewVars([
                 'appAuth' => $this->AppAuth,
                 'data' => $customer,
                 'newPassword' => $newPassword
                 ]);
 
-            $email->addAttachments(['Nutzungsbedingungen.pdf' => ['data' => $this->generateTermsOfUsePdf($customer), 'mimetype' => 'application/pdf']]);
+            $email->addAttachments([__d('admin', 'Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf($customer), 'mimetype' => 'application/pdf']]);
             $email->send();
 
-            $message .= ' und wurde per E-Mail darüber informiert';
+            $message = __d('admin', 'The_member_{0}_has_been_activated_succesfully_and_the_member_was_notified_by_email.', ['<b>' . $customer->name . '</b>']);
         }
-
-        $message .= '.';
 
         $this->Flash->success($message);
 
@@ -467,17 +462,17 @@ class CustomersController extends AdminAppController
             )
         );
 
-        $this->Flash->success('Der Kommentar wurde erfolgreich geändert.');
+        $this->Flash->success(__d('admin', 'The_comment_was_changed_successfully.'));
 
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('customer_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', 'Der Kommentar des Mitglieds <b>' . $oldCustomer->name . '</b> wurde geändert: <div class="changed">' . $customerComment . ' </div>');
+        $this->ActionLog->customSave('customer_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', __d('admin', 'The_comment_of_the_member_{0}_was_changed:', ['<b>' . $oldCustomer->name . '</b>']) . ' <div class="changed">' . $customerComment . ' </div>');
 
         die(json_encode([
             'status' => 1,
             'msg' => 'ok'
         ]));
     }
-    
+
     public function creditBalanceSum()
     {
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
@@ -485,52 +480,52 @@ class CustomersController extends AdminAppController
             $dateFrom = $this->getRequest()->getQuery('dateFrom');
         }
         $this->set('dateFrom', $dateFrom);
-        
+
         $dateTo = Configure::read('app.timeHelper')->getLastDayOfThisYear();
         if (! empty($this->getRequest()->getQuery('dateTo'))) {
             $dateTo = $this->getRequest()->getQuery('dateTo');
         }
         $this->set('dateTo', $dateTo);
-        
+
         $this->Payment = TableRegistry::getTableLocator()->get('Payments');
-        
+
         $paymentProductDelta = $this->Customer->getProductBalanceForCustomers(APP_ON);
         $paymentDepositDelta = $this->Customer->getDepositBalanceForCustomers(APP_ON);
         $customers[] = [
-            'customer_type' => 'Summe der Guthaben <b>aktivierter</b> Mitglieder',
+            'customer_type' => __d('admin', 'Sum_of_credits_of_activated_members'),
             'count' => count($this->Customer->getCustomerIdsWithStatus(APP_ON)),
-            'credit_balance' => $paymentProductDelta + $paymentDepositDelta, 
+            'credit_balance' => $paymentProductDelta + $paymentDepositDelta,
             'payment_deposit_delta' => $paymentDepositDelta
         ];
-        
+
         $paymentProductDelta = $this->Customer->getProductBalanceForCustomers(APP_OFF);
         $paymentDepositDelta = $this->Customer->getDepositBalanceForCustomers(APP_OFF);
         $customers[] = [
-            'customer_type' => 'Summe der Guthaben <b>deaktivierter</b> Mitglieder',
+            'customer_type' => __d('admin', 'Sum_of_credits_of_deactivated_members'),
             'count' => count($this->Customer->getCustomerIdsWithStatus(APP_OFF)),
             'credit_balance' => $paymentProductDelta + $paymentDepositDelta,
             'payment_deposit_delta' => $paymentDepositDelta
         ];
-        
+
         $paymentProductDelta = $this->Customer->getProductBalanceForDeletedCustomers();
         $paymentDepositDelta = $this->Customer->getDepositBalanceForDeletedCustomers();
         $customers[] = [
-            'customer_type' => 'Summe der Guthaben <b>gelöschter</b> Mitglieder',
+            'customer_type' => __d('admin', 'Sum_of_credits_of_deleted_members'),
             'count' => 0,
             'credit_balance' => $paymentProductDelta + $paymentDepositDelta,
             'payment_deposit_delta' => $paymentDepositDelta
         ];
-        
+
         $paymentDepositDelta = $this->Payment->getManufacturerDepositMoneySum();
         $customers[] = [
-            'customer_type' => 'Summe der geleisteten Pfand-Rückzahlungen für Hersteller',
+            'customer_type' => __d('admin', 'Sum_of_deposit_compensation_payments_for_manufactures'),
             'count' => 0,
             'credit_balance' => 0,
             'payment_deposit_delta' => $paymentDepositDelta
         ];
-        
+
         $this->set('customers', $customers);
-        
+
         $sums = [];
         foreach($customers as $customer) {
             @$sums['credit_balance'] += $customer['credit_balance'];
@@ -538,8 +533,8 @@ class CustomersController extends AdminAppController
             @$sums['product_delta'] += $customer['payment_product_delta'];
         }
         $this->set('sums', $sums);
-        
-        $this->set('title_for_layout', 'Guthaben- und Pfand-Saldo');
+
+        $this->set('title_for_layout', __d('admin', 'Credit_and_deposit'));
     }
 
     public function index()
@@ -562,7 +557,7 @@ class CustomersController extends AdminAppController
         }
         $this->set('validOrdersCountTo', $validOrdersCountTo);
 
-        $dateFrom = '01.01.2014';
+        $dateFrom = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime('01/01/2014'));
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
             $dateFrom = $this->getRequest()->getQuery('dateFrom');
         }
@@ -573,7 +568,7 @@ class CustomersController extends AdminAppController
             $dateTo = $this->getRequest()->getQuery('dateTo');
         }
         $this->set('dateTo', $dateTo);
-        
+
         $conditions = [];
         if ($active != 'all') {
             $conditions = [
@@ -582,9 +577,9 @@ class CustomersController extends AdminAppController
         }
 
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
-        
+
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
-        
+
         $this->Customer->dropManufacturersInNextFind();
         $query = $this->Customer->find('all', [
             'conditions' => $conditions,
@@ -603,15 +598,15 @@ class CustomersController extends AdminAppController
                 'Customers.' . Configure::read('app.customerMainNamePart') => 'ASC'
             ]
         ])->toArray();
-        
+
         $i = 0;
         $this->Payment = TableRegistry::getTableLocator()->get('Payments');
         $this->Order = TableRegistry::getTableLocator()->get('Orders');
-        
+
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
             $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
         }
-        
+
         foreach ($customers as $customer) {
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
                 $customer->credit_balance = $this->Customer->getCreditBalance($customer->id_customer);
@@ -665,9 +660,9 @@ class CustomersController extends AdminAppController
 
             $i ++;
         }
-        
+
         $this->set('customers', $customers);
 
-        $this->set('title_for_layout', 'Mitglieder');
+        $this->set('title_for_layout', __d('admin', 'Members'));
     }
 }

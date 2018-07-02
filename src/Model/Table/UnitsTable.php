@@ -37,12 +37,12 @@ class UnitsTable extends AppTable
         $validator->greaterThanOrEqual('quantity_in_units', 0, 'Das ungefähre Liefergewicht muss eine positive Zahl sein.');
         return $validator;
     }
-    
+
     public function isValidName($value, array $context)
     {
         return in_array($value, ['kg', 'g'], true);
     }
-    
+
     /**
      * @param int $productId
      * @param int $productAttributeId
@@ -55,26 +55,26 @@ class UnitsTable extends AppTable
      * @return $result
      */
     public function saveUnits($productId, $productAttributeId, $pricePerUnitEnabled, $priceInclPerUnit, $name, $amount, $quantityInUnits) {
-        
+
         if ($productAttributeId > 0) {
             $productId = 0;
         }
-        
+
         $idCondition = [
             'id_product' => $productId,
             'id_product_attribute' => $productAttributeId
         ];
-        
+
         $entity = $this->find('all', [
             'conditions' => $idCondition
         ])->first();
-        
+
         if (empty($entity)) {
             $entity = $this->newEntity($idCondition);
         }
-        
+
         $pricePerUnitEnabled = (int) $pricePerUnitEnabled;
-        
+
         $patchedEntity = $this->patchEntity($entity, [
             'price_per_unit_enabled' => $pricePerUnitEnabled,
             'price_incl_per_unit' => $priceInclPerUnit,
@@ -86,13 +86,13 @@ class UnitsTable extends AppTable
                 'validate' => $pricePerUnitEnabled ? 'default' : false
             ]
         );
-        
+
         if (!empty($entity->getErrors())) {
             throw new InvalidParameterException(join(' ', $this->getAllValidationErrors($entity)));
         }
-        
+
         $result = $this->save($patchedEntity);
-        
+
         return $result;
     }
 

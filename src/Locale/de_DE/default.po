@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-22 17:31+0200\n"
-"PO-Revision-Date: 2018-06-22 17:33+0200\n"
+"POT-Creation-Date: 2018-07-02 11:01+0200\n"
+"PO-Revision-Date: 2018-07-02 11:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -17,6 +17,9 @@ msgstr ""
 
 msgid "You_have_been_signed_out."
 msgstr "Du hast dich erfolgreich abgemeldet."
+
+msgid "News"
+msgstr "Aktuelles"
 
 msgid "You_are_not_signed_in."
 msgstr "Du bist nicht angemeldet."
@@ -30,7 +33,7 @@ msgstr "Dein Warenkorb"
 msgid "Order_confirmation"
 msgstr "Bestellbestätigung"
 
-msgid "Filename_Cancellation-information-and-form"
+msgid "Filename_Right-of-withdrawal-information-and-form"
 msgstr "Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular"
 
 msgid "Filename_Order-confirmation"
@@ -69,13 +72,16 @@ msgstr "Das Produkt {0} ist leider nicht mehr aktiviert und somit nicht mehr bes
 msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
 msgstr "Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar."
 
+msgid "Errors_occurred."
+msgstr "Es sind Fehler aufgetreten."
+
 msgid "Your_order_has_been_placed_succesfully."
 msgstr "Deine Bestellung wurde erfolgreich abgeschlossen."
 
 msgid "{0}_has_placed_a_new_order_({1})."
 msgstr "{0} hat eine neue Bestellung getätigt ({1})."
 
-msgid "Notification_about_shop_order_order_number_{0}"
+msgid "Notification_about_instant_order_order_number_{0}"
 msgstr "Benachrichtigung über Sofort-Bestellung Nr. {0}"
 
 msgid "Your_order_has_been_placed"
@@ -201,10 +207,10 @@ msgstr "Speichern"
 msgid "Cancel"
 msgstr "Abbrechen"
 
-msgid "Cancel_shop_order?"
+msgid "Cancel_instant_order?"
 msgstr "Sofort-Bestellung abbrechen?"
 
-msgid "Really_cancel_shop_order?"
+msgid "Really_cancel_instant_order?"
 msgstr "Möchtest du die Sofort-Bestellung wirklich abbrechen?"
 
 msgid "January"
@@ -343,8 +349,7 @@ msgid "Load_past_order"
 msgstr "Vergangene Bestellungen laden"
 
 msgid "Load_past_order_dialog_description_html"
-msgstr ""
-"<p>Die ausgewählte Bestellung wird geladen, der <b>aktuelle Warenkorb wird dadurch geleert</b>.</p><p>Du kannst weitere Produkte im Nachhinein hinzufügen.</p>"
+msgstr "<p>Die ausgewählte Bestellung wird geladen, der <b>aktuelle Warenkorb wird dadurch geleert</b>.</p><p>Du kannst weitere Produkte im Nachhinein hinzufügen.</p>"
 
 msgid "Remove_from_cart?"
 msgstr "Aus dem Warenkorb löschen?"
@@ -367,9 +372,6 @@ msgstr "Hersteller"
 msgid "route_news_list"
 msgstr "aktuelles"
 
-msgid "News"
-msgstr "Aktuelles"
-
 msgid "Pages"
 msgstr "Seiten"
 
@@ -385,10 +387,10 @@ msgstr "Alle Produkte anzeigen"
 msgid "route_cart_finished"
 msgstr "abgeschlossen"
 
-msgid "Place_shop_order_for"
+msgid "Place_instant_order_for"
 msgstr "Sofort-Bestellung tätigen für"
 
-msgid "Shop_order_date_is_set_back_after_placing_it."
+msgid "Instant_order_date_is_set_back_after_placing_it."
 msgstr "Nach dem Abschließen der Bestellung wird sie automatisch rückdatiert."
 
 msgid "Close_all_orders?"
@@ -437,9 +439,7 @@ msgid "ordered_by"
 msgstr "bestellt von"
 
 msgid "Explaination_text_apdapt_price_form_apapt_weight."
-msgstr ""
-"Um das Gewicht anzupassen, ändere bitte den Wert \"Gewicht\" zwei Spalten weiter rechts. Der Preis wird dann automatisch angepasst und das tatsächlich "
-"gelieferte Gewicht scheint auf der Rechnung auf."
+msgstr "Um das Gewicht anzupassen, ändere bitte den Wert \"Gewicht\" zwei Spalten weiter rechts. Der Preis wird dann automatisch angepasst und das tatsächlich gelieferte Gewicht scheint auf der Rechnung auf."
 
 msgid "Why_is_price_adapted_(mandatory_field)?"
 msgstr "Warum wird der Preis angepasst (Pflichtfeld)?"
@@ -561,11 +561,95 @@ msgstr "Produkt aktivieren"
 msgid "Deactivate_product"
 msgstr "Produkt deaktivieren"
 
+msgid "Activate_member?"
+msgstr "Mitglied aktivieren?"
+
+msgid "Deactivate_member?"
+msgstr "Mitglied deaktivieren?"
+
+msgid "Really_activate_member_{0}_?"
+msgstr "Möchtest du das Mitglied {0} wirklich aktivieren?"
+
+msgid "Really_deactivate_member_{0}?"
+msgstr "Möchtest du das Mitglied {0} wirklich deaktivieren?"
+
 msgid "Really_activate_product_{0}_?"
 msgstr "Möchtest du das Produkt {0} wirklich aktivieren?"
 
-msgid "Really_deactivate_product_{0}_?"
+msgid "Really_deactivate_product_{0}?"
 msgstr "Möchtest du das Produkt {0} wirklich deaktivieren?"
+
+msgid "Delete_attribute"
+msgstr "Variante löschen"
+
+msgid "Really_delete_attribute_{0}?"
+msgstr "Möchtest du die Variante {0} wirklich löschen?"
+
+msgid "Please_chose_if_it_is_a_payback_or_a_credit_upload."
+msgstr "Bitte wähle aus, ob es sich um eine Aufladung oder ein Rückzahlung handelt."
+
+msgid "Please_chose_the_type_of_your_payment."
+msgstr "Bitte wähle die Art der Pfand-Rücknahme aus."
+
+msgid "Delete_payment"
+msgstr "Zahlung löschen?"
+
+msgid "Really_delete_payment?"
+msgstr "Möchtest du die Zahlung wirklich löschen?"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Amount"
+msgstr "Anzahl"
+
+msgid "Please_chose_at_least_one_month."
+msgstr "Bitte wähle zumindest einen Monat aus."
+
+msgid "Delete_member?"
+msgstr "Mitglied löschen?"
+
+msgid "Really_delete_member?"
+msgstr "Möchtest du das Mitglied wirklich löschen?"
+
+msgid "Be_careful_there_is_no_way_back!"
+msgstr "Achtung: Es gibt <b>keine Möglichkeit</b>, das rückgängig zu machen!"
+
+msgid "Errors_occurred_while_member_was_deleted"
+msgstr "Beim Löschen des Mitgliedskontos sind Fehler aufgetreten"
+
+msgid "Add_comment"
+msgstr "Kommentar hinzufügen"
+
+msgid "Please_cancel_all_ordered_products_before_cancelling_the_order."
+msgstr "Bevor du die Bestellung stornieren kannst, storniere bitte alle bestellten Produkte."
+
+msgid "Add_new_product?"
+msgstr "Neues Produkt erstellen?"
+
+msgid "Really_add_new_product?"
+msgstr "Möchtest du wirklich ein neues Produkt erstellen?"
+
+msgid "This_function_is_not_available_today."
+msgstr "Diese Funktion steht heute nicht zur Verfügung."
+
+msgid "Manually_send_order_list?"
+msgstr "Bestellliste manuell versenden?"
+
+msgid "Really_manually_send_order_list_to_{0}?"
+msgstr "Willst du wirklich eine aktuelle Bestellliste an {0} versenden?"
+
+msgid "Order_period"
+msgstr "Bestellzeitraum"
+
+msgid "An_existing_order_list_will_be_overwritten!"
+msgstr "Eine bereits bestehende Bestellliste wird überschrieben!"
+
+msgid "Change_group_for"
+msgstr "Gruppe ändern für"
+
+msgid "The_member_needs_to_sign_again."
+msgstr "Das Mitglied muss sich nach der Änderung neu einloggen."
 
 msgid "Change_comment_of_order"
 msgstr "Kommentar zu Bestellung ändern"
@@ -575,6 +659,12 @@ msgstr "Bestellung rückdatieren auf"
 
 msgid "Set_date_of_order_back"
 msgstr "Bestellung rückdatieren"
+
+msgid "Change_member_comment"
+msgstr "Mitglieder-Kommentar ändern"
+
+msgid "Change_group"
+msgstr "Gruppe ändern"
 
 msgid "Change_amount"
 msgstr "Anzahl ändern"
@@ -633,6 +723,33 @@ msgstr "Pfand"
 msgid "Enter_zero_for_delete"
 msgstr "zum Löschen 0 eintragen"
 
+msgid "delete"
+msgstr "löschen"
+
+msgid "Delete_image?"
+msgstr "Bild löschen?"
+
+msgid "Really_delete_image?"
+msgstr "Möchtest du das Bild wirklich löschen?"
+
+msgid "rotate_anti_clockwise?"
+msgstr "gegen den Uhrzeigersinn drehen?"
+
+msgid "rotate_clockwise?"
+msgstr "im Uhrzeigersinn drehen?"
+
+msgid "Manufacturer"
+msgstr "Hersteller"
+
+msgid "Terms_of_use"
+msgstr "Nutzungsbedingungen"
+
+msgid "Privacy_policy"
+msgstr "Datenschutzerklärung"
+
+msgid "List_of_allergens"
+msgstr "Allergenliste"
+
 msgid "Price_excl."
 msgstr "Preis exkl."
 
@@ -644,6 +761,9 @@ msgstr "Mitglied"
 
 msgid "Total_sum"
 msgstr "Gesamtsumme"
+
+msgid "Page_{0}_of_{1}"
+msgstr "Seite {0} von {1}"
 
 msgid "Action_Log_Product_added"
 msgstr "Produkt: erstellt"
@@ -717,7 +837,7 @@ msgstr "Bestellung: Kommentar geändert"
 msgid "Action_Log_Order_date_changed"
 msgstr "Bestellung: rückdatiert"
 
-msgid "Action_Log_Order_shop_order_placed"
+msgid "Action_Log_Order_instant_order_placed"
 msgstr "Bestellung: Sofort-Bestellung getätigt"
 
 msgid "Action_Log_Order_detail_product_price_changed"
@@ -883,7 +1003,7 @@ msgid "Action_Log_Cronjob_invoices_sent"
 msgstr "Cronjob: Rechnungen verschickt"
 
 msgid "Action_Log_Cronjob_email_order_reminder_sent"
-msgstr "Cronjob: E-Mail-Bestellerinnerung"
+msgstr "Cronjob: Bestell-Erinnerung"
 
 msgid "Action_Log_Cronjob_check_credit_balance"
 msgstr "Cronjob: Guthaben überprüfen"
@@ -906,11 +1026,134 @@ msgstr "Variante: gelöscht"
 msgid "Action_Log_Setting_changed"
 msgstr "Einstellung: geändert"
 
+msgid "Please_enter_your_email_address."
+msgstr "Bitte gib deine E-Mail-Adresse an."
+
+msgid "The_email_address_is_not_valid."
+msgstr "Die E-Mail-Adresse ist nicht gültig."
+
+msgid "The_email_address_is_already_used_by_another_member_or_manufacturer."
+msgstr "Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits."
+
+msgid "Please_enter_your_street."
+msgstr "Bitte gib deine Straße an."
+
+msgid "Please_enter_your_city."
+msgstr "Bitte gib deinen Ort an."
+
+msgid "Please_enter_your_zip."
+msgstr "Bitte gib deine PLZ an."
+
+msgid "The_zip_is_not_valid."
+msgstr "Die PLZ ist nicht gültig."
+
+msgid "Please_enter_your_mobile_number."
+msgstr "Bitte gib deine Handynummer an."
+
+msgid "The_mobile_number_is_not_valid."
+msgstr "Die Handynummer ist nicht gültig."
+
+msgid "The_phone_number_is_not_valid."
+msgstr "Die Telefonnummer ist nicht gültig."
+
+msgid "Please_enter_the_first_name_of_the_invoice_holder."
+msgstr "Bitte gib den Vornamen des Rechnungsempfängers an."
+
+msgid "Please_enter_the_last_name_of_the_invoice_holder."
+msgstr "Bitte gib den Nachnamen des Rechnungsempfängers an."
+
+msgid "Please_enter_an_email_address."
+msgstr "Bitte gib eine E-Mail-Adresse an."
+
+msgid "Please_enter_a_number_between_{0}_and_{1}."
+msgstr "Bitte gib eine Zahl zwischen {0} und {1} an."
+
+msgid "Please_enter_a_name."
+msgstr "Bitte gib einen Namen ein."
+
+msgid "An_attribute_with_this_name_already_exists."
+msgstr "Eine Variante mit dem Namen existiert bereits."
+
+msgid "Please_enter_a_title."
+msgstr "Bitte gib einen Titel ein."
+
+msgid "Please_enter_at_least_{0}_characters."
+msgstr "Bitte gib mindestens {0} Zeichen ein."
+
+msgid "Please_enter_max_{0}_characters."
+msgstr "Bitte gib maximal {0} Zeichen ein."
+
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr "Die gewünschte Anzahl {0} ist nicht gültig."
 
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "Das Produkt mit der ID {0} ist nicht vorhanden."
+
+msgid "The_attribute_does_not_exist:_{0}"
+msgstr "Die Variante existiert nicht: {0}"
+
+msgid "offline"
+msgstr "offline"
+
+msgid "Please_enter_a_valid_internet_address."
+msgstr "Bitte gibt eine gültige Internet-Adresse an."
+
+msgid "Decimals_are_not_allowed."
+msgstr "Kommastellen sind nicht zulässig."
+
+msgid "Please_enter_the_name_of_the_foodcoop."
+msgstr "Bitte gib den Namen der Foodcoop an."
+
+msgid "Please_enter_the_paying_with_time_module_name."
+msgstr "Bitte gib den Namen der Stundenabrechnung an."
+
+msgid "Please_enter_the_abbreviation_of_the_paying_with_time_module."
+msgstr "Bitte gib die Abkürzung des Namens der Stundenabrechnung an."
+
+msgid "Please_enter_the_exchange_rate_for_the_paying_with_time_module_in_{0}."
+msgstr "Bitte gib den Umrechnungskurs für die Stundenabrechnung in {0} an."
+
+msgid "Please_enter_exactly_2_decimals."
+msgstr "Bitte trage genau 2 Kommastellen ein."
+
+msgid "Please_provide_a_value."
+msgstr "Bitte gib einen Wert an."
+
+msgid "The_following_values_are_valid:"
+msgstr "Folgende Werte sind gültig:"
+
+msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
+msgstr "Die Anzahl der Zeichen muss zwischen {0} und {1} liegen."
+
+msgid "Please_enter_your_first_name."
+msgstr "Bitte gib deinen Vornamen an."
+
+msgid "Please_enter_your_last_name."
+msgstr "Bitte gib deinen Nachnamen an."
+
+msgid "Please_enter_your_old_password."
+msgstr "Bitte gib dein altes Passwort ein."
+
+msgid "Your_old_password_is_wrong."
+msgstr "Dein altes Passwort ist leider falsch."
+
+msgid "Please_enter_a_new_password."
+msgstr "Bitte gib dein neues Passwort ein."
+
+msgid "The_password_needs_to_be_at_least_8_characters_long."
+msgstr "Das Passwort muss aus mindestens 8 Zeichen bestehen."
+
+msgid "The_passwords_do_not_match."
+msgstr "Die Passwörter stimmen nicht überein."
+
+msgid "We_did_not_find_this_email_address."
+msgstr "Wir haben diese E-Mail-Adresse nicht gefunden."
+
+msgid "Your_account_is_not_active_any_more._If_you_want_to_reactivate_it_please_write_an_email."
+msgstr "Dein Mitgliedskonto ist nicht mehr aktiv. Falls du es wieder aktivieren möchtest, schreib uns bitte eine E-Mail."
+
+msgid "Please_accept_the_terms_of_use."
+msgstr "Bitte akzeptiere die Nutzungsbedingungen."
 
 msgid "Members:_active"
 msgstr "Mitglieder: aktiv"
@@ -927,11 +1170,35 @@ msgstr "Hersteller: inaktiv"
 msgid "Members:_inactive"
 msgstr "Mitglieder: inaktiv"
 
+msgid "Please_enter_between_{0}_and_{1}_characters."
+msgstr "Bitte gib zwischen {0} und {1} Zeichen ein."
+
+msgid "Please_enter_a_valid_IBAN."
+msgstr "Bitte gib einen gültigen IBAN ein."
+
+msgid "Please_enter_a_valid_BIC."
+msgstr "Bitte gib einen gültigen BIC ein."
+
+msgid "At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space."
+msgstr "Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen)."
+
+msgid "Delivery_break"
+msgstr "Lieferpause"
+
+msgid "online"
+msgstr "online"
+
 msgid "Pick_up_day"
 msgstr "Abholtag"
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{1 Produkt} other{# Produkte}}"
+
+msgid "Please_accept_the_information_about_right_of_withdrawal."
+msgstr "Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss."
+
+msgid "Please_accept_the_general_terms_and_conditions."
+msgstr "Bitte akzeptiere die AGB."
 
 msgid "Please_enter_a_correct_number."
 msgstr "Bitte gib eine korrekte Zahl ein."
@@ -939,11 +1206,44 @@ msgstr "Bitte gib eine korrekte Zahl ein."
 msgid "The_amount_needs_to_be_greater_than_0."
 msgstr "Der Betrag muss größer als 0 sein."
 
+msgid "New_product_of"
+msgstr "Neues Produkt von"
+
+msgid "Please_upload_an_image."
+msgstr "Bitte lade ein Bild hoch."
+
+msgid "Please_enter_a_tax_rate."
+msgstr "Bitte gib einen Steuersatz ein."
+
+msgid "This_tax_rate_is_already_being_used."
+msgstr "Dieser Steuersatz wird bereits verwendet."
+
 msgid "Runtime"
 msgstr "Laufzeit"
 
 msgid "seconds"
 msgstr "Sekunden"
+
+msgid "Database_backup_successful"
+msgstr "Datenbank-Backup erfolgreich"
+
+msgid "Your_credit_is_used_up"
+msgstr "Dein Guthaben ist aufgebraucht"
+
+msgid "Sum"
+msgstr "Summe"
+
+msgid "Sent_emails"
+msgstr "Versendete E-Mails"
+
+msgid "Order_reminder"
+msgstr "Bestell-Erinnerung"
+
+msgid "today"
+msgstr "heute"
+
+msgid "tomorrow"
+msgstr "Der Rechnungsbetrag wird in den nächsten Tagen auf dein Konto überwiesen."
 
 msgid "to_(time_context)"
 msgstr "bis"
@@ -953,9 +1253,6 @@ msgstr "Rechnungen für {0} wurden verschickt"
 
 msgid "Sent_invoices"
 msgstr "Verschickte Rechnungen"
-
-msgid "Order_period"
-msgstr "Bestellzeitraum"
 
 msgid "Sent_order_lists"
 msgstr "Verschickte Bestelllisten"
@@ -971,6 +1268,9 @@ msgstr "von"
 
 msgid "Edit"
 msgstr "Bearbeiten"
+
+msgid "Further_news"
+msgstr "Weitere Beiträge"
 
 msgid "found"
 msgstr "gefunden"
@@ -1008,7 +1308,7 @@ msgstr "Den Betrag bitte bei der Abholung in bar bezahlen."
 msgid "Please_pick_up_your_products_on_{0}_at_{1}."
 msgstr "Bitte hole deine Produkte am {0} bei uns ({1}) ab. Die genaue Uhrzeit steht in der Box rechts."
 
-msgid "general_terms_of_use"
+msgid "general_terms_and_conditions"
 msgstr "AGB"
 
 msgid "I_accept_the_{0}"
@@ -1101,6 +1401,24 @@ msgstr "Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden?"
 msgid "terms_of_use"
 msgstr "Nutzungsbedingungen"
 
+msgid "Please_enter_your_email_address_and_click_on_send_button."
+msgstr "Bitte gib deine E-Mail-Adresse an und klicke dann auf \"Senden\"."
+
+msgid "You_will_then_get_a_link_to_change_your_password."
+msgstr "Wir senden dir dann einen Link zu, mit dem du das neue Passwort generieren kannst."
+
+msgid "Send"
+msgstr "Senden"
+
+msgid "The_confirmation_of_your_registration_was_sent_to_you_by_email."
+msgstr "Die Bestätigung deiner Registrierung wurde per E-Mail an dich versendet."
+
+msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
+msgstr "Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert. Das heißt, du kannst dich noch nicht einloggen!"
+
+msgid "You_will_get_an_email_as_soon_as_we_activated_you."
+msgstr "Du wirst per E-Mail benachrichtigt, sobald wir dich aktiviert haben."
+
 msgid "Hello"
 msgstr "Hallo"
 
@@ -1131,23 +1449,11 @@ msgstr "Du hast das Bestelllimit von {0} erreicht. Bitte lade vor dem Bestellen 
 msgid "Add_credit"
 msgstr "Guthaben aufladen"
 
-msgid "Sum"
-msgstr "Summe"
-
 msgid "Value_added_tax"
 msgstr "Umsatzsteuer"
 
 msgid "Show_cart_button"
 msgstr "Warenkorb anzeigen"
-
-msgid "Terms_of_use"
-msgstr "Nutzungsbedingungen"
-
-msgid "Privacy_policy"
-msgstr "Datenschutzerklärung"
-
-msgid "List_of_allergens"
-msgstr "Allergenliste"
 
 msgid "Information"
 msgstr "Informationen"
@@ -1163,6 +1469,18 @@ msgstr "Kontodaten (Mitgliedsbeitrag)"
 
 msgid "Help?"
 msgstr "Hilfe?"
+
+msgid "Replace_existing_image"
+msgstr "Bestehendes Bild überschreiben"
+
+msgid "Upload_new_image"
+msgstr "Neues Bild hochladen"
+
+msgid "Please_only_use_self_made_images_(not_from_the_internet)."
+msgstr "Bitte nur selbstgemachte Bilder verwenden<br />(keine aus dem Internet)."
+
+msgid "Search_PC"
+msgstr "PC durchsuchen"
 
 msgid "DELIVERY_DAY"
 msgstr "ABHOLTAG"
@@ -1182,20 +1500,14 @@ msgstr "Admin-Bereich"
 msgid "Manufacturer_area"
 msgstr "Hersteller-Bereich"
 
-msgid "To_change_your_profile_please_stop_the_shop_order_mode."
+msgid "To_change_your_profile_please_stop_the_instant_order_mode."
 msgstr "Um dein Profil zu ändern, beende bitte den Sofort-Bestellungsmodus."
 
 msgid "Signed_in"
 msgstr "Eingeloggt"
 
-msgid "Amount"
-msgstr "Anzahl"
-
 msgid "Product"
 msgstr "Produkt"
-
-msgid "Manufacturer"
-msgstr "Hersteller"
 
 msgid "Price"
 msgstr "Preis"
@@ -1243,18 +1555,10 @@ msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
 
 msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
-msgstr ""
-"Eine detaillierte Auflistung deiner Bestellung findest du in der angehängten Bestellübersicht (PDF). Die Informationen zum Rücktrittsrecht sind gesetzlich "
-"vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen."
+msgstr "Eine detaillierte Auflistung deiner Bestellung findest du in der angehängten Bestellübersicht (PDF). Die Informationen zum Rücktrittsrecht sind gesetzlich vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen."
 
 msgid "Your_registration_at_{0}_has_just_been_successful!"
 msgstr "Deine Registrierung bei {0} war erfolgreich!"
-
-msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
-msgstr "Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert. Das heißt, du kannst dich noch nicht einloggen!"
-
-msgid "You_will_get_an_email_as_soon_as_we_activated_you."
-msgstr "Du wirst per E-Mail benachrichtigt, sobald wir dich aktiviert haben."
 
 msgid "Dear_responsible_person_for_new_members,"
 msgstr "Lieber Verantwortliche für neue Mitglieder,"
@@ -1268,6 +1572,12 @@ msgstr "Hier kannst du das neue Mitglied aktivieren und die Daten einsehen"
 msgid "Here_you_can_see_the_data_of_the_new_member"
 msgstr "Hier kannst du die Daten des neuen Mitglieds einsehen"
 
+msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1}_(order_number_{2})."
+msgstr "Soeben wurde von {1} eine Sofort-Bestellung für {0} getätigt (Bestellung Nr. {2})."
+
+msgid "You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists."
+msgstr "Du erhältst diese Nachricht, weil diese Bestellung automatisch in die Vorwoche rückdatiert wurde und sie daher nicht in deinen Bestelllisten aufscheint."
+
 msgid "please_click_on_this_link_to_generate_a_new_password"
 msgstr "bitte klicke auf folgenden Link, um dein neues Passwort zu generieren"
 
@@ -1279,13 +1589,6 @@ msgstr "Du kannst dich hier anmelden und das Passwort gleich ändern"
 
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."
 msgstr "Das ist der Text der E-Mail (mit FoodCoopShop-Logo als Anhang)."
-
-msgid "There_has_been_placed_a_shop_order_for_{0}_by_{1}_(order_number_{2})."
-msgstr "Soeben wurde von {1} eine Sofort-Bestellung für {0} getätigt (Bestellung Nr. {2})."
-
-msgid "You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists."
-msgstr ""
-"Du erhältst diese Nachricht, weil diese Bestellung automatisch in die Vorwoche rückdatiert wurde und sie daher nicht in deinen Bestelllisten aufscheint."
 
 msgid "route_search"
 msgstr "suche"
@@ -1311,6 +1614,60 @@ msgstr "Aktuelles von"
 msgid "Imprint"
 msgstr "Impressum"
 
+msgid "Terms_and_conditions"
+msgstr "Nutzungsbedingungen"
+
+msgid "Order_overview"
+msgstr "Bestellübersicht"
+
+msgid "Order_of"
+msgstr "Bestellung vom"
+
+msgid "placed_on"
+msgstr "getätigt am"
+
+msgid "Prices_are_including_vat."
+msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+msgid "Information_about_right_of_withdrawal"
+msgstr "Informationen-ueber-Ruecktrittsrecht"
+
+msgid "Withdrawal_form"
+msgstr "Rücktrittsformular"
+
+msgid "If_you_want_to_cancel_the_contract_please_fill_out_this_form_and_send_it_back."
+msgstr "Wenn Sie den Vertrag widerrufen wollen, dann füllen Sie bitte dieses Formular aus und senden Sie es zurück."
+
+msgid "Hereby_I_cancel_the_contract_about_the_purchase_of_following_goods_or_service."
+msgstr "Hiermit widerrufe(n) ich/wir (*) den von mir/uns (*) abgeschlossenen Vertrag über den Kauf der folgenden Waren (*)/die Erbringung der folgenden Dienstleistung (*)"
+
+msgid "Ordered_on"
+msgstr "Bestellt am"
+
+msgid "Received_on"
+msgstr "Erhalten am"
+
+msgid "Name_of_consumer(s)"
+msgstr "Name des/der Verbraucher(s)"
+
+msgid "Address_of_consumer(s)"
+msgstr "Anschrift des/der Verbraucher(s)"
+
+msgid "Signature_of_consumer_only_if_transmitted_on_paper."
+msgstr "Unterschrift des/der Verbraucher(s) (nur bei Mitteilung auf Papier)"
+
+msgid "Strike_out_unnecessary_items."
+msgstr "Unzutreffendes streichen"
+
+msgid "Filename_Information-about-right-of-withdrawal"
+msgstr "Informationen-ueber-Ruecktrittsrecht"
+
+msgid "yes"
+msgstr "ja"
+
+msgid "no"
+msgstr "nein"
+
 msgid "Sign_out"
 msgstr "Abmelden"
 
@@ -1319,6 +1676,24 @@ msgstr "Guthaben"
 
 msgid "Member_fee"
 msgstr "Mitgliedsbeitrag"
+
+msgid "Deleted_Member"
+msgstr "Gelöschtes Mitglied"
+
+msgid "Deleted_Email_Address"
+msgstr "Gelöschte E-Mail-Adresse"
+
+msgid "delivery_break_since_holiday_active"
+msgstr "seit"
+
+msgid "delivery_break_since_holiday_not_active"
+msgstr "von"
+
+msgid "delivery_break_until"
+msgstr "bis"
+
+msgid "The_manufacturer_{0}_has_{1}_delivery_break."
+msgstr "Der Hersteller {0} hat {1} Lieferpause."
 
 msgid "Website"
 msgstr "Homepage"
@@ -1337,6 +1712,33 @@ msgstr "Aufsichtsbehörde"
 
 msgid "Chamber"
 msgstr "Kammer"
+
+msgid "Header_(top)"
+msgstr "Header (oben)"
+
+msgid "Footer_(bottom)"
+msgstr "Footer (unten)"
+
+msgid "Admin"
+msgstr "Admin"
+
+msgid "Superadmin"
+msgstr "Superadmin"
+
+msgid "credit_and_deposit"
+msgstr "Guthaben und Pfand-Saldo"
+
+msgid "Payment_type_credit_upload"
+msgstr "Guthaben-Aufladung"
+
+msgid "Payment_type_payback"
+msgstr "Rückzahlung"
+
+msgid "Payment_type_deposit_return"
+msgstr "Pfand-Rückgabe"
+
+msgid "Payment_type_member_fee"
+msgstr "Mitgliedsbeitrag"
 
 msgid "Empty_glasses"
 msgstr "Leergebinde"
@@ -1451,6 +1853,15 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "general_terms_of_use"
+#~ msgstr "AGB"
+
+#~ msgid "More_news"
+#~ msgstr "Weitere Beiträge"
+
+#~ msgid "until"
+#~ msgstr "bis"
 
 #~ msgid "Euro"
 #~ msgstr "Euro"

@@ -61,7 +61,7 @@ class ApiController extends Controller
         $this->setResponse($this->getResponse()->withHeader('Access-Control-Allow-Origin', '*'));
         $this->setResponse($this->getResponse()->withHeader('Access-Control-Allow-Methods', '*'));
         $this->setResponse($this->getResponse()->withHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'));
-        
+
         if ($this->getRequest()->is('options')) {
             return $this->getResponse();
         }
@@ -105,11 +105,11 @@ class ApiController extends Controller
     {
 
         $productsData = $this->getRequest()->getData('data.data');
-        
+
         if (empty($productsData)) {
             throw new InvalidParameterException('Keine Produkte vorhanden.');
         }
-        
+
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->Product = TableRegistry::getTableLocator()->get('Products');
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
@@ -124,7 +124,7 @@ class ApiController extends Controller
         $attributes = [];
 
         foreach ($productsData as $product) {
-            
+
             $productIds = $this->Product->getProductIdAndAttributeId($product['remoteProductId']);
 
             $manufacturerIsOwner = $this->Product->find('all', [

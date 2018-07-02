@@ -21,7 +21,7 @@ class Customer extends Entity
 {
 
     protected $_virtual = ['name'];
-    
+
     protected function _getName()
     {
 

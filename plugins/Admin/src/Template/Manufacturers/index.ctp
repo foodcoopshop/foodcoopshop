@@ -18,11 +18,11 @@ use Cake\Core\Configure;
 <div id="manufacturers-list">
     <?php
     $this->element('addScript', [
-        'script' => 
+        'script' =>
             Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
             $('input.datepicker').datepicker();".
-            Configure::read('app.jsNamespace') . ".Admin.init();" . 
-            Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" . 
+            Configure::read('app.jsNamespace') . ".Admin.init();" .
+            Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" .
             Configure::read('app.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');" .
             Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" .
             Configure::read('app.cakeServerName') . "');".
@@ -30,7 +30,7 @@ use Cake\Core\Configure;
     ]);
     if (Configure::read('app.allowManualOrderListSending')) {
         $this->element('addScript', [
-            'script' => 
+            'script' =>
                 Configure::read('app.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery()) . "');" .
                 Configure::read('app.jsNamespace') . ".Admin.initManualOrderListSend('#manufacturers-list .manual-order-list-send-link', " . date('N', time()) . ");"
         ]);
@@ -130,11 +130,11 @@ foreach ($manufacturers as $manufacturer) {
         echo '<b>' . $manufacturer->name . '</b><br />';
         echo $manufacturer->address_manufacturer->city;
         echo '<br /><span class="email">' . $manufacturer->address_manufacturer->email . '</span>';
-        
+
         if (!empty($manufacturer->customer)) {
             echo '<br /><i class="fa fa-fw fa-male" title="' . __d('admin', 'Contact_person') . '"></i>' . $manufacturer->customer->firstname . ' ' . $manufacturer->customer->lastname;
         }
-        
+
     echo '</td>';
 
     echo '<td style="width:140px;">';
@@ -169,18 +169,18 @@ foreach ($manufacturers as $manufacturer) {
         );
     }
     echo '</td>';
-    
+
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
         echo '<td>';
             if ($manufacturer->timebased_currency_enabled) {
                 $sumTimebasedCurrency += $manufacturer->timebased_currency_credit_balance;
-                
+
                 $timebasedCurrencyCreditBalanceClasses = [];
                 if ($manufacturer->timebased_currency_credit_balance < 0) {
                     $timebasedCurrencyCreditBalanceClasses[] = 'negative';
                 }
                 $timebasedCurrencyCreditBalanceHtml = '<span class="'.implode(' ', $timebasedCurrencyCreditBalanceClasses).'">' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($manufacturer->timebased_currency_credit_balance);
-                
+
                 if ($appAuth->isSuperadmin()) {
                     echo $this->Html->getJqueryUiIcon(
                         $timebasedCurrencyCreditBalanceHtml,
@@ -196,7 +196,7 @@ foreach ($manufacturers as $manufacturer) {
             }
         echo '</td>';
     }
-    
+
     echo '<td style="text-align:center;width:42px;">';
     if ($manufacturer->iban != '') {
         echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));

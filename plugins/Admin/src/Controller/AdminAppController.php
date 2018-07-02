@@ -3,8 +3,6 @@
 namespace Admin\Controller;
 
 use App\Controller\AppController;
-use Cake\Event\Event;
-use Cake\Utility\Inflector;
 use Intervention\Image\ImageManagerStatic as Image;
 
 /**

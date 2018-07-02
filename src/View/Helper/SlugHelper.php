@@ -67,7 +67,7 @@ class SlugHelper extends Helper
     {
         return '/'.__('route_privacy_policy');
     }
-    
+
     public function getListOfAllergens()
     {
         return '/'.__('route_list_of_allergens');
@@ -105,7 +105,7 @@ class SlugHelper extends Helper
         }
         return $url;
     }
-    
+
     public function getCreditBalanceSum()
     {
         return '/admin/customers/credit_balance_sum';
@@ -140,7 +140,7 @@ class SlugHelper extends Helper
     {
         return '/' . __('route_new_products');
     }
-    
+
     public function getAllProducts()
     {
         return $this->getCategoryDetail(Configure::read('app.categoryAllProducts'), __('route_all_products'));
@@ -165,7 +165,7 @@ class SlugHelper extends Helper
     {
         return '/'.__('route_registration_successful');
     }
-    
+
     public function getRegistration()
     {
         return '/'.__('route_registration');
@@ -175,12 +175,12 @@ class SlugHelper extends Helper
     {
         return '/admin/timebased-currency-payments/my-payments-manufacturer';
     }
-    
+
     public function getTimebasedCurrencyBalanceForManufacturers($manufacturerId)
     {
         return '/admin/timebased-currency-payments/payments-manufacturer/' . $manufacturerId;
     }
-    
+
     public function getMyTimebasedCurrencyBalanceForCustomers($manufacturerId = null)
     {
         $url = '/admin/timebased-currency-payments/my-payments-customer';
@@ -189,12 +189,12 @@ class SlugHelper extends Helper
         }
         return $url;
     }
-    
+
     public function getTimebasedCurrencyPaymentDetailsForManufacturers($customerId)
     {
         return '/admin/timebased-currency-payments/my-payment-details-manufacturer/'.$customerId;
     }
-    
+
     public function getTimebasedCurrencyPaymentDetailsForSuperadmins($manufacturerId, $customerId)
     {
         $url = '/admin/timebased-currency-payments/payment-details-superadmin/' . $customerId;
@@ -203,7 +203,7 @@ class SlugHelper extends Helper
         }
         return $url;
     }
-    
+
     public function getTimebasedCurrencyPaymentEdit($paymentId)
     {
         return '/admin/timebased-currency-payments/edit/'.$paymentId;
@@ -212,12 +212,12 @@ class SlugHelper extends Helper
     {
         return '/admin/timebased-currency-payments/add/' . $customerId;
     }
-    
+
     public function getMyMemberFeeBalance()
     {
         return '/admin/payments/myMemberFee';
     }
-    
+
     public function getMyCreditBalance()
     {
         return '/admin/payments/overview';
@@ -265,7 +265,7 @@ class SlugHelper extends Helper
 
     public function getNewPasswordRequest()
     {
-        return '/'.__('route_request_new_password'); 
+        return '/'.__('route_request_new_password');
     }
 
     public function getReport($paymentType)

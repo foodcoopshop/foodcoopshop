@@ -62,7 +62,7 @@ class CheckCreditBalanceShell extends AppShell
                 $email = new AppEmail();
                 $email->setTemplate('Admin.check_credit_balance')
                     ->setTo($customer->email)
-                    ->setSubject('Dein Guthaben ist aufgebraucht')
+                    ->setSubject(__('Your_credit_is_used_up'))
                     ->setViewVars([
                     'customer' => $customer,
                     'delta' => $delta
@@ -71,8 +71,8 @@ class CheckCreditBalanceShell extends AppShell
             }
         }
 
-        $outString .= 'Summe: ' . Configure::read('app.numberHelper')->formatAsCurrency($deltaSum * - 1) . '<br />';
-        $outString .= 'Verschickte E-Mails: ' . $i;
+        $outString .= __('Sum') . ': ' . Configure::read('app.numberHelper')->formatAsCurrency($deltaSum * - 1) . '<br />';
+        $outString .= __('Sent_emails') . ': ' . $i;
 
         $this->stopTimeLogging();
 

@@ -56,7 +56,7 @@ class ProductsTableTest extends AppCakeTestCase
                 'result' => '80-9',
             ]
         ];
-        
+
         foreach ($tests as $test) {
             $result = $this->Product->getCompositeProductIdAndAttributeId($test['ids']['productId'], $test['ids']['attributeId']);
             $this->assertEquals($test['result'], $result);
@@ -559,7 +559,7 @@ class ProductsTableTest extends AppCakeTestCase
             } else {
                 $resultEntity = $changedProduct->product_attributes[0]->deposit_product_attribute;
             }
-            $this->assertEquals($expectedDeposit, $this->Product->getStringAsFloat($resultEntity->deposit), 'changing the deposit did not work');
+            $this->assertEquals($expectedDeposit, $resultEntity->deposit, 'changing the deposit did not work');
         }
     }
 

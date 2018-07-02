@@ -31,14 +31,14 @@ class ConfigurationHelper extends Helper
             case 'FCS_ORDER_COMMENT_ENABLED':
             case 'FCS_TIMEBASED_CURRENCY_ENABLED':
                 return [
-                    APP_ON => 'ja',
-                    APP_OFF => 'nein'
+                    APP_ON => __('yes'),
+                    APP_OFF => __('no')
                 ];
                 break;
             case 'FCS_LOCALE':
                 return Configure::read('app.implementedLocales');
                 break;
-            case 'FCS_SHOP_ORDER_DEFAULT_STATE':
+            case 'FCS_INSTANT_ORDER_DEFAULT_STATE':
                 return Configure::read('app.htmlHelper')->getVisibleOrderStates();
                 break;
             case 'FCS_CUSTOMER_GROUP':

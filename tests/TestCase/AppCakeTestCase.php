@@ -65,18 +65,18 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-        
+
         self::resetTestDatabaseData();
-        
+
     }
 
     protected static function resetTestDatabaseData()
     {
-        
+
         self::$dbConnection = ConnectionManager::get('test');
         self::$testDumpDir = ROOT . DS .  'tests' . DS . 'config' . DS . 'sql' . DS;
         self::importDump(self::$testDumpDir . 'test-db-data.sql');
-        
+
         // regenerate password hashes
         $ph = new AppPasswordHasher();
         $query = 'UPDATE fcs_customer SET passwd = :passwd;';
@@ -85,7 +85,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         ];
         $statement = self::$dbConnection->prepare($query);
         $statement->execute($params);
-        
+
     }
 
     public function initSimpleBrowser()
@@ -323,15 +323,15 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
                 'cancellation_terms_accepted' => $cancellation_terms_accepted
             ]
         ];
-        
+
         if ($comment != '') {
             $data['Orders']['comment'] = $comment;
         }
-        
+
         if ($timebaseCurrencyTimeSum !== null) {
             $data['timebased_currency_order']['seconds_sum_tmp'] = $timebaseCurrencyTimeSum;
         }
-        
+
         $this->browser->post(
             $this->Slug->getCartFinish(), $data
         );
@@ -371,7 +371,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $statement = self::$dbConnection->prepare($query);
         return $statement->execute($params);
     }
-    
+
     protected function changeCustomer($customerId, $field, $value)
     {
         $query = 'UPDATE ' . $this->Customer->getTable().' SET '.$field.' = :value WHERE id_customer = :customerId';
@@ -382,7 +382,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $statement = self::$dbConnection->prepare($query);
         return $statement->execute($params);
     }
-    
+
     protected function logout()
     {
         $this->browser->doFoodCoopShopLogout();
@@ -417,7 +417,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->browser->loginEmail = Configure::read('test.loginEmailVegetableManufacturer');
         $this->browser->doFoodCoopShopLogin();
     }
-    
+
     protected function prepareTimebasedCurrencyConfiguration($reducedMaxPercentage)
     {
         $this->changeConfiguration('FCS_TIMEBASED_CURRENCY_ENABLED', 1);
@@ -428,5 +428,5 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->changeManufacturer(4, 'timebased_currency_enabled', 1);
         $this->changeManufacturer(4, 'timebased_currency_max_percentage', $reducedMaxPercentage);
     }
-    
+
 }

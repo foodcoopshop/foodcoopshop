@@ -116,7 +116,7 @@ header('Pragma: no-cache');
 <?php
     echo $this->element('localizedJavascript');
     echo $this->element('renderJs', ['configs' => ['frontend']]);
-    
+
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
         echo $this->Html->scriptBlock(
             $this->Html->wrapJavascriptBlock(
@@ -125,11 +125,11 @@ header('Pragma: no-cache');
             ['inline' => true]
         );
     }
-    
+
     if ($isMobile) {
         echo '<div class="is-mobile-detector"></div>';
         echo $this->Html->script(['/node_modules/slidebars/dist/slidebars']);
-    
+
         // add script BEFORE all scripts that are loaded in views (block)
         echo $this->MyHtml->scriptBlock(
             $this->Html->wrapJavascriptBlock(
@@ -138,12 +138,12 @@ header('Pragma: no-cache');
             ['inline' => true]
         );
     }
-    
+
     $scripts = $this->fetch('script');
     if ($scripts != '') {
         echo $this->Html->wrapJavascriptBlock($scripts);
     }
-    
+
 ?>
 
 </body>

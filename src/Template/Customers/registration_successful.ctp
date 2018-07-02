@@ -23,11 +23,11 @@ $this->element('addScript', ['script' =>
 
 <ul>
 
-    <li>Die Bestätigung deiner Registrierung wurde per E-Mail an dich versendet.</li>
+    <li><?php echo __('The_confirmation_of_your_registration_was_sent_to_you_by_email.'); ?></li>
 
     <?php if (!Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) { ?>
-    <li><b>Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert. Das heißt, du kannst dich noch nicht einloggen!</b><br />
-        Du wirst per E-Mail benachrichtigt, sobald wir dein Konto aktiviert haben.</li>
+    <li><b><?php echo __('Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!'); ?></b><br />
+        <?php echo __('You_will_get_an_email_as_soon_as_we_activated_you.'); ?>.</li>
     <?php } ?>
 </ul>
 

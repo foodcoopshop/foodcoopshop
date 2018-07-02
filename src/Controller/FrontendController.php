@@ -47,7 +47,7 @@ class FrontendController extends AppController
             $product['tax'] = $grossPrice - $product['price'];
             $product['is_new'] = $this->Product->isNew($product['created']);
             $product['attributes'] = [];
-            
+
             if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
                 if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($product['timebased_currency_enabled'])) {
                     $product['timebased_currency_money_incl'] = $this->Manufacturer->getTimebasedCurrencyMoney($product['gross_price'], $product['timebased_currency_max_percentage']);
@@ -55,7 +55,7 @@ class FrontendController extends AppController
                     $product['timebased_currency_seconds'] = $this->Manufacturer->getCartTimebasedCurrencySeconds($product['gross_price'], $product['timebased_currency_max_percentage']);
                 }
             }
-            
+
             $attributes = $this->ProductAttribute->find('all', [
                 'conditions' => [
                     'ProductAttributes.id_product' => $product['id_product']
@@ -98,7 +98,7 @@ class FrontendController extends AppController
                     'unit_amount' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->amount : 0,
                     'quantity_in_units' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->quantity_in_units : 0
                 ];
-                
+
                 if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
                     if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($product['timebased_currency_enabled'])) {
                         $preparedAttributes['timebased_currency_money_incl'] = $this->Manufacturer->getTimebasedCurrencyMoney($grossPrice, $product['timebased_currency_max_percentage']);
@@ -106,7 +106,7 @@ class FrontendController extends AppController
                         $preparedAttributes['timebased_currency_seconds'] = $this->Manufacturer->getCartTimebasedCurrencySeconds($grossPrice, $product['timebased_currency_max_percentage']);
                     }
                 }
-                
+
                 $product['attributes'][] = $preparedAttributes;
             }
         }
@@ -120,9 +120,9 @@ class FrontendController extends AppController
         }
     }
 
-    protected function destroyShopOrderCustomer()
+    protected function destroyInstantOrderCustomer()
     {
-        $this->getRequest()->getSession()->delete('Auth.shopOrderCustomer');
+        $this->getRequest()->getSession()->delete('Auth.instantOrderCustomer');
         $this->getRequest()->getSession()->delete('Auth.originalLoggedCustomer');
     }
 
@@ -202,13 +202,13 @@ class FrontendController extends AppController
         }
 
         /*
-         * changed the acutally logged in customer to the desired shopOrderCustomer
+         * changed the acutally logged in customer to the desired instantOrderCustomer
          * but only in controller beforeFilter(), beforeRender() sets the customer back to the original one
-         * this means, in views $appAuth ALWAYS returns the original customer, in controllers ALWAYS the desired shopOrderCustomer
+         * this means, in views $appAuth ALWAYS returns the original customer, in controllers ALWAYS the desired instantOrderCustomer
          */
-        if ($this->getRequest()->getSession()->check('Auth.shopOrderCustomer')) {
+        if ($this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
             $this->getRequest()->getSession()->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
-            $this->AppAuth->setUser($this->getRequest()->getSession()->read('Auth.shopOrderCustomer'));
+            $this->AppAuth->setUser($this->getRequest()->getSession()->read('Auth.instantOrderCustomer'));
         }
         if (!empty($this->AppAuth->user()) && Configure::read('app.htmlHelper')->paymentIsCashless()) {
             $creditBalance = $this->AppAuth->getCreditBalance();

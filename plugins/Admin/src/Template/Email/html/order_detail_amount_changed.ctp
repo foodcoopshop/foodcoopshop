@@ -18,42 +18,35 @@ use Cake\Core\Configure;
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
     
-        <?php echo $this->element('email/greeting', ['data' => $oldOrderDetail->order->customer]); ?>
-        
-        <tr>
+    <?php echo $this->element('email/greeting', ['data' => $oldOrderDetail->order->customer]); ?>
+    
+    <tr>
         <td>
 
             <p>
-                Die Anzahl des Produktes <b><?php echo $oldOrderDetail->product_name; ?></b> wurde angepasst. Du hast am <?php echo $oldOrderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')); ?> beim Hersteller <b><?php echo $oldOrderDetail->product->manufacturer->name; ?></b>
-                bestellt.
+            	<?php echo __d('admin', 'The_amount_of_the_product_{0}_has_been_adapted.', ['<b>'.$oldOrderDetail->product_name.'</b>']); ?> <?php echo __d('admin', 'You_have_ordered_it_on_{0}_at_manufacturer_{1}.', [
+            	    $oldOrderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')),
+            	    '<b>'.$oldOrderDetail->product->manufacturer->name.'</b>'
+            	]); ?>
             </p>
 
             <ul style="padding-left: 10px;">
-                <li>Alte Anzahl: <b><?php echo $oldOrderDetail->product_amount; ?></b></li>
-                <li>Neue Anzahl: <b><?php echo $newOrderDetail->product_amount; ?></b></li>
+                <li><?php echo __d('admin', 'Old_amount'); ?>: <b><?php echo $oldOrderDetail->product_amount; ?></b></li>
+                <li><?php echo __d('admin', 'New_amount'); ?>: <b><?php echo $newOrderDetail->product_amount; ?></b></li>
             </ul>
 
             <p>
-                Warum wurde die Anzahl angepasst?<br />
-                <b>
-                <?php
-
-                if ($editAmountReason != '') {
-                    echo '"' . $editAmountReason . '"';
-                } else {
-                    echo 'Kein Grund angegeben.';
-                }
-                ?>
-                </b>
+                <?php echo __d('admin', 'Why_has_the_amount_been_adpated?'); ?><br />
+                <b><?php echo '"' . $editAmountReason . '"'; ?></b>
             </p>
                 
-                <?php if ($this->MyHtml->paymentIsCashless()) { ?>
-                    <p>PS: Dein Guthaben wurde automatisch angepasst.</p>
-                <?php } ?>
+            <?php if ($this->MyHtml->paymentIsCashless()) { ?>
+                <p><?php echo __d('admin', 'PS:_Your_credit_has_been_adapted_automatically.'); ?></p>
+            <?php } ?>
 
-            </td>
+        </td>
 
     </tr>
 
 </tbody>
-</table>
+<?php echo $this->element('email/tableFoot'); ?>

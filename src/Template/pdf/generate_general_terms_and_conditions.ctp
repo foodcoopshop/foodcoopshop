@@ -15,18 +15,19 @@
 
 use App\Controller\Component\StringComponent;
 use App\Lib\Pdf\AppTcpdf;
+use Cake\I18n\I18n;
 
 $pdf = new AppTcpdf();
 $pdf->SetLeftMargin(12);
 $pdf->SetRightMargin(12);
 
-$title = 'Allgemeine Geschäftsbedingungen';
+$title = __('Terms_and_conditions');
 $pdf->SetTitle($title);
 $pdf->infoTextForFooter = $title;
 
 $pdf->AddPage();
 
-$html = $this->element('legal/generalTermsAndConditions');
+$html = $this->element('legal/'.I18n::getLocale().'/generalTermsAndConditions');
 $pdf->writeHTML($html, true, false, true, false, '');
 
 echo $pdf->Output(StringComponent::createRandomString().'.pdf', $saveParam);

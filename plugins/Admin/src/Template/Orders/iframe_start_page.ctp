@@ -20,4 +20,4 @@ $this->element('addScript', [
     "
 ]);
 ?>
-<h4><?php echo __d('admin', 'Please_chose_member_in_above_dropdown_for_placing_shop_order.')?></h4>
+<h4><?php echo __d('admin', 'Please_chose_member_in_above_dropdown_for_placing_instant_order.')?></h4>

@@ -20,9 +20,9 @@ use Cake\View\Helper;
  */
 class TimebasedCurrencyHelper extends Helper
 {
-    
+
     public $helpers = ['MyTime', 'MyHtml', 'MyNumber'];
-    
+
     /**
      * @param boolean $showText
      * @return string
@@ -35,7 +35,7 @@ class TimebasedCurrencyHelper extends Helper
         }
         return $text;
     }
-    
+
     /**
      * @return string
      */
@@ -43,7 +43,7 @@ class TimebasedCurrencyHelper extends Helper
     {
         return __('Paying_with_time_account_name_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]);
     }
-    
+
     /**
      * @param int $seconds
      * @return string
@@ -53,7 +53,7 @@ class TimebasedCurrencyHelper extends Helper
         $hours = round($seconds / 3600, 2);
         return $this->MyNumber->formatAsUnit($hours, Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE'));
     }
-    
+
     /**
      * @param int $maxSeconds
      * @param float $exchangeRate
@@ -75,14 +75,14 @@ class TimebasedCurrencyHelper extends Helper
         $maxHoursValue = $this->formatSecondsToTimebasedCurrency($maxSeconds);
         $maxHoursValue .= ' (' . $this->getCartTimebasedCurrencySecondsAsCurrencyForDropdown($maxSeconds, $exchangeRate) . ')';
         $maxHoursValue = str_replace('&nbsp;', ' ', $maxHoursValue);
-        
+
         if (!isset($usedValues[$maxHoursValue])) {
             $dropdown[$this->MyNumber->parseFloatRespectingLocale((string) $maxSeconds)] = $maxHoursValue;
         }
         $dropdown = array_reverse($dropdown, true);
         return $dropdown;
     }
-    
+
     /**
      * @param int $seconds
      * @param float $exchangeRate
@@ -95,5 +95,5 @@ class TimebasedCurrencyHelper extends Helper
             $this->MyNumber->parseFloatRespectingLocale($exchangeRate)
         ));
     }
-    
+
 }

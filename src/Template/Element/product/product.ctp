@@ -136,7 +136,7 @@ if ($product['description'] != '') {
                 if (!empty($attribute['DepositProductAttributes']['deposit'])) {
                     echo '<div class="deposit">+ <b>'. $this->Number->formatAsCurrency($attribute['DepositProductAttributes']['deposit']) . '</b> '.__('deposit').'</div>';
                 }
-                if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && !empty($attribute['timebased_currency_money_incl'])) {
+                if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && !empty($attribute['timebased_currency_money_incl'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
                         'class' => 'timebased-currency-product-info',
                         'money' => $attribute['timebased_currency_money_incl'],
@@ -161,7 +161,7 @@ if ($product['description'] != '') {
 
         // radio buttons for changing attributes
         foreach ($preparedProductAttributes as $attribute) {
-            
+
             $radioButtonLabel = $this->PricePerUnit->getQuantityInUnitsStringForAttributes(
                 $attribute['ProductAttributeCombinations']['Attributes']['name'],
                 $attribute['ProductAttributeCombinations']['Attributes']['can_be_used_as_unit'],
@@ -169,14 +169,14 @@ if ($product['description'] != '') {
                 $attribute['Units']['quantity_in_units'],
                 $attribute['Units']['unit_name']
             );
-            
+
             echo '<div class="radio">
                       <label class="attribute-button" id="'.'attribute-button-'.$attribute['ProductAttributes']['id_product_attribute'].'">
                           <input type="radio" name="product-'.$product['id_product'].'" '.($attribute['checked'] ? 'checked' : '').'>'.
                                $radioButtonLabel.'
                       </label>
                   </div>';
-           
+
         }
     } else {
         // PRODUCT WITHOUT ATTRIBUTES
@@ -194,7 +194,7 @@ if ($product['description'] != '') {
                     echo '<div class="deposit">+ <b>' . $this->Number->formatAsCurrency($product['deposit']).'</b> '.__('deposit').'</div>';
                 }
                 echo '</div>';
-                if (!$this->request->getSession()->read('Auth.shopOrderCustomer') && !empty($product['timebased_currency_money_incl'])) {
+                if (!$this->request->getSession()->read('Auth.instantOrderCustomer') && !empty($product['timebased_currency_money_incl'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
                         'class' => 'timebased-currency-product-info',
                         'money' => $product['timebased_currency_money_incl'],
@@ -215,7 +215,7 @@ if ($product['description'] != '') {
         }
         echo '</div>';
 
-        $unityStrings = []; 
+        $unityStrings = [];
         if ($product['unity'] != '') {
             $unityStrings[] = $product['unity'];
         }

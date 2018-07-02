@@ -23,14 +23,14 @@ use App\Controller\Component\StringComponent;
  */
 class MyHtmlHelper extends HtmlHelper
 {
-    
+
     public function __construct(View $View, array $config = [])
     {
         $this->_defaultConfig['templates']['javascriptblock'] = "{{content}}";
         $this->helpers[] = 'MyNumber';
         parent::__construct($View, $config);
     }
-    
+
     function wrapJavascriptBlock($content) {
         return "<script>
             //<![CDATA[
@@ -40,7 +40,7 @@ class MyHtmlHelper extends HtmlHelper
             //]]>
         </script>";
     }
-    
+
     public function getCurrencyName($currencySymbol)
     {
         switch($currencySymbol) {
@@ -55,14 +55,14 @@ class MyHtmlHelper extends HtmlHelper
                 break;
         }
     }
-    
+
     public function getDocsUrl($page)
     {
         $languageCode = substr(I18n::getLocale(), 0, 2);
         $url = 'https://foodcoopshop.github.io/' . $languageCode . '/' . $page;
         return $url;
     }
-    
+
     public function getNameRespectingIsDeleted($customer)
     {
         if (empty($customer)) {
@@ -70,17 +70,17 @@ class MyHtmlHelper extends HtmlHelper
         }
         return $customer->name;
     }
-    
+
     public function getDeletedCustomerName()
     {
-        return 'Gelöschtes Mitglied';
+        return __('Deleted_Member');
     }
-    
+
     public function getDeletedCustomerEmail()
     {
-        return 'Gelöschte E-Mail-Adresse';
+        return __('Deleted_Email_Address');
     }
-    
+
     /**
      * converts eg. months with only one digit with leading zero
      * @param int $number
@@ -114,29 +114,29 @@ class MyHtmlHelper extends HtmlHelper
             return $result;
         }
 
-        if ($long) {
-            $result .= 'Der Hersteller <b>' . $name . '</b> hat ';
-        }
+        $shortResult = '';
         if (!Configure::read('app.timeHelper')->isDatabaseDateNotSet($dateFrom)) {
             if ($isHolidayActive) {
-                $result .= 'seit';
+                $shortResult .=  __('delivery_break_since_holiday_active');
             } else {
-                $result .= 'von';
+                $shortResult .=  __('delivery_break_since_holiday_not_active');
             }
-            $result .= ' ' . Configure::read('app.timeHelper')->formatToDateShort($dateFrom);
+            $shortResult .= ' ' . Configure::read('app.timeHelper')->formatToDateShort($dateFrom);
         }
         if (!Configure::read('app.timeHelper')->isDatabaseDateNotSet($dateTo)) {
-            $result .= ' bis ' . Configure::read('app.timeHelper')->formatToDateShort($dateTo);
+            $shortResult .= ' ' . __('delivery_break_until') . ' ' . Configure::read('app.timeHelper')->formatToDateShort($dateTo);
         }
-        if ($long && $result != '') {
-            $result .= ' Lieferpause.';
+
+        $result = $shortResult;
+        if ($long) {
+            $result = __('The_manufacturer_{0}_has_{1}_delivery_break.', ['<b>' . $name . '</b>', $shortResult]);
         }
 
         $result = str_replace('  ', ' ', $result);
 
         return $result;
     }
-    
+
     public function getCustomerAddress($customer)
     {
         if (empty($customer->address_customer)) {
@@ -147,7 +147,7 @@ class MyHtmlHelper extends HtmlHelper
             $details .= '<br />' . $customer->address_customer->address2;
         }
         $details .= '<br />' . $customer->address_customer->postcode . ' ' . $customer->address_customer->city;
-        
+
         if ($customer->address_customer->phone_mobile != '') {
             $details .= '<br />Tel.: ' . $customer->address_customer->phone_mobile;
         }
@@ -236,8 +236,8 @@ class MyHtmlHelper extends HtmlHelper
     public function getMenuTypes()
     {
         return [
-            'header' => 'Header (oben)',
-            'footer' => 'Footer (unten)'
+            'header' => __('Header_(top)'),
+            'footer' => __('Footer_(bottom)'),
         ];
     }
 
@@ -270,9 +270,9 @@ class MyHtmlHelper extends HtmlHelper
     public function getGroups()
     {
         return [
-            CUSTOMER_GROUP_MEMBER => 'Mitglied',
-            CUSTOMER_GROUP_ADMIN => 'Admin',
-            CUSTOMER_GROUP_SUPERADMIN => 'Superadmin'
+            CUSTOMER_GROUP_MEMBER => __('Member'),
+            CUSTOMER_GROUP_ADMIN => __('Admin'),
+            CUSTOMER_GROUP_SUPERADMIN => __('Superadmin')
         ];
     }
 
@@ -363,22 +363,22 @@ class MyHtmlHelper extends HtmlHelper
             ];
         }
         $tabs[] = [
-            'name' => 'Guthaben- und Pfand-Saldo',
+            'name' => __('credit_and_deposit'),
             'url' => Configure::read('app.slugHelper')->getCreditBalanceSum(),
             'key' => 'credit_balance_sum'
         ];
         return $tabs;
     }
-    
+
     public function getPaymentTexts()
     {
         $paymentTexts = [
-            'product' => 'Guthaben-Aufladung',
-            'payback' => 'Rückzahlung',
-            'deposit' => 'Pfand-Rückgabe'
+            'product' => __('Payment_type_credit_upload'),
+            'payback' => __('Payment_type_payback'),
+            'deposit' => __('Payment_type_deposit_return')
         ];
         if (Configure::read('app.memberFeeEnabled')) {
-            $paymentTexts['member_fee'] = 'Mitgliedsbeitrag';
+            $paymentTexts['member_fee'] = __('Payment_type_member_fee');
         }
         return $paymentTexts;
     }

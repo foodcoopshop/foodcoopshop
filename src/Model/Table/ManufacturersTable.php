@@ -23,7 +23,7 @@ use Cake\Validation\Validator;
 
 class ManufacturersTable extends AppTable
 {
-    
+
     public function initialize(array $config)
     {
         $this->setTable('manufacturer');
@@ -43,53 +43,54 @@ class ManufacturersTable extends AppTable
         ]);
         $this->addBehavior('Timestamp');
     }
-    
+
     public function validationDefault(Validator $validator)
     {
-        $validator->notEmpty('name', 'Bitte gib einen Namen an.');
-        $validator->lengthBetween('name', [3, 64], 'Bitte gib zwischen 3 und 64 Zeichen ein.');
+        $validator->notEmpty('name', __('Please_enter_a_name.'));
+        $range = [3, 64];
+        $validator->lengthBetween('name', $range, __('Please_enter_between_{0}_and_{1}_characters.', $range));
         $validator->allowEmpty('iban');
         $validator->add('iban', 'validFormat', [
             'rule' => array('custom', IBAN_REGEX),
-            'message' => 'Bitte gib einen gültigen IBAN ein.'
+            'message' => __('Please_enter_a_valid_IBAN.')
         ]);
         $validator->allowEmpty('bic');
         $validator->add('bic', 'validFormat', [
             'rule' => array('custom', BIC_REGEX),
-            'message' => 'Bitte gib einen gültigen BIC ein.'
+            'message' => __('Please_enter_a_valid_BIC.')
         ]);
         $validator->allowEmpty('homepage');
-        $validator->urlWithProtocol('homepage', 'Bitte gibt eine gültige Internet-Adresse an.');
+        $validator->urlWithProtocol('homepage', __('Please_enter_a_valid_internet_address.'));
         return $validator;
     }
-    
+
     public function validationEditOptions(Validator $validator)
     {
         $validator->allowEmpty('send_order_list_cc');
         $validator->add('send_order_list_cc', 'multipleEmails', [
             'rule' => 'ruleMultipleEmails',
             'provider' => 'table',
-            'message' => 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).'
+            'message' => __('At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space.')
         ]);
-        $validator->numeric('timebased_currency_max_percentage', 'Kommastellen sind nicht zulässig.');
+        $validator->numeric('timebased_currency_max_percentage', __('Decimals_are_not_allowed.'));
         $validator = $this->getNumberRangeValidator($validator, 'timebased_currency_max_percentage', 0, 100);
-        $validator->numeric('timebased_currency_max_credit_balance', 'Kommastellen sind nicht zulässig.');
+        $validator->numeric('timebased_currency_max_credit_balance', __('Decimals_are_not_allowed.'));
         $validator = $this->getNumberRangeValidator($validator, 'timebased_currency_max_credit_balance', 0, 400);
         return $validator;
     }
-    
+
     public function getTimebasedCurrencyMoney($price, $percentage)
     {
         return $price * $percentage / 100;
     }
-    
+
     public function getCartTimebasedCurrencySeconds($price, $percentage)
     {
         $result = $this->getTimebasedCurrencyMoney($price, $percentage) * (int) Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE') / 100 * 3600;
         $result = round($result, 0);
         return $result;
     }
-    
+
     /**
      * @param $boolean $sendOrderedProductDeletedNotification
      * @return boolean
@@ -102,7 +103,7 @@ class ManufacturersTable extends AppTable
         }
         return (boolean) $result;
     }
-    
+
     /**
      * @param $boolean $sendOrderedProductPriceChangedNotification
      * @return boolean
@@ -115,7 +116,7 @@ class ManufacturersTable extends AppTable
         }
         return (boolean) $result;
     }
-    
+
     /**
      * @param $boolean $sendOrderedProductAmountChangedNotification
      * @return boolean
@@ -128,20 +129,20 @@ class ManufacturersTable extends AppTable
         }
         return (boolean) $result;
     }
-    
+
     /**
      * @param $boolean $sendInvoice
      * @return boolean
      */
-    public function getOptionSendShopOrderNotification($sendShopOrderNotification)
+    public function getOptionSendInstantOrderNotification($sendInstantOrderNotification)
     {
-        $result = $sendShopOrderNotification;
-        if (is_null($sendShopOrderNotification)) {
-            $result = Configure::read('app.defaultSendShopOrderNotification');
+        $result = $sendInstantOrderNotification;
+        if (is_null($sendInstantOrderNotification)) {
+            $result = Configure::read('app.defaultSendInstantOrderNotification');
         }
         return (boolean) $result;
     }
-    
+
     /**
      * @param $boolean $sendInvoice
      * @return boolean
@@ -154,7 +155,7 @@ class ManufacturersTable extends AppTable
         }
         return (boolean) $result;
     }
-    
+
     /**
      * @param $boolean $bulkOrdersAllowed
      * @return boolean
@@ -167,7 +168,7 @@ class ManufacturersTable extends AppTable
         }
         return $result;
     }
-    
+
     /**
      * @param int $defaultTaxId
      * @return int
@@ -192,7 +193,7 @@ class ManufacturersTable extends AppTable
         }
         return $result;
     }
-    
+
     /**
      * @param int $variableMemberFee
      * @return int
@@ -205,7 +206,7 @@ class ManufacturersTable extends AppTable
         }
         return $result;
     }
-    
+
     /**
      * @param $boolean $sendOrderList
      * @return boolean
@@ -218,7 +219,7 @@ class ManufacturersTable extends AppTable
         }
         return $result;
     }
-    
+
     /**
      * @param $string $sendOrderListCc
      * @return array
@@ -229,46 +230,45 @@ class ManufacturersTable extends AppTable
         if (is_null($sendOrderListCc) || $sendOrderListCc == '') {
             return $ccRecipients;
         }
-        
+
         $ccs = explode(',', $sendOrderListCc);
         foreach ($ccs as $cc) {
             $ccRecipients[] = $cc;
         }
         return $ccRecipients;
     }
-    
+
     /**
      * @param string $email
-     * @return Customer array
      */
     public function getCustomerRecord($email)
     {
         $cm = TableRegistry::getTableLocator()->get('Customers');
-        
+
         if (empty($email)) {
             return [];
         }
-        
+
         $customer = $cm->find('all', [
             'conditions' => [
                 'Customers.email' => $email
             ]
         ])->first();
-        
+
         if (empty($customer->address_customer->id_address)) {
             return $customer;
         }
-        
+
         if (!empty($customer->address_customer)) {
             return [];
         }
-        
+
         return $customer;
     }
-    
+
     public function getForMenu($appAuth)
     {
-        
+
         if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             $productModel = TableRegistry::getTableLocator()->get('Products');
         }
@@ -278,7 +278,7 @@ class ManufacturersTable extends AppTable
         if (! $appAuth->user()) {
             $conditions['Manufacturers.is_private'] = APP_OFF;
         }
-        
+
         $manufacturers = $this->find('all', [
             'fields' => [
                 'Manufacturers.id_manufacturer',
@@ -292,7 +292,7 @@ class ManufacturersTable extends AppTable
             ],
             'conditions' => $conditions
         ]);
-        
+
         $manufacturersForMenu = [];
         foreach ($manufacturers as $manufacturer) {
             $manufacturerName = $manufacturer->name;
@@ -302,7 +302,7 @@ class ManufacturersTable extends AppTable
             }
             $holidayInfo = Configure::read('app.htmlHelper')->getManufacturerHolidayString($manufacturer->holiday_from, $manufacturer->holiday_to, $manufacturer->is_holiday_active);
             if ($holidayInfo != '') {
-                $holidayInfo = 'Lieferpause ' . $holidayInfo;
+                $holidayInfo = __('Delivery_break') . ' ' . $holidayInfo;
                 if ($manufacturer->iss_holiday_active) {
                     $additionalInfo = $holidayInfo;
                 } else {
@@ -322,7 +322,7 @@ class ManufacturersTable extends AppTable
         }
         return $manufacturersForMenu;
     }
-    
+
     /**
      * @param float $price
      * @param integer $variableMemberFee
@@ -332,7 +332,7 @@ class ManufacturersTable extends AppTable
     {
         return $price + $this->getVariableMemberFeeAsFloat($price, $variableMemberFee);
     }
-    
+
     /**
      * @param float $price
      * @param integer $variableMemberFee
@@ -342,7 +342,7 @@ class ManufacturersTable extends AppTable
     {
         return $price - $this->getVariableMemberFeeAsFloat($price, $variableMemberFee);
     }
-    
+
     /**
      * @param float $price
      * @param integer $variableMemberFee
@@ -352,7 +352,7 @@ class ManufacturersTable extends AppTable
     {
         return round($price * $variableMemberFee / 100, 2);
     }
-    
+
     public function getTimebasedCurrencyManufacturersForDropdown()
     {
         $manufacturers = $this->find('all', [
@@ -369,7 +369,7 @@ class ManufacturersTable extends AppTable
         }
         return $result;
     }
-    
+
     public function getForDropdown()
     {
         $manufacturers = $this->find('all', [
@@ -377,7 +377,7 @@ class ManufacturersTable extends AppTable
                 'Manufacturers.name' => 'ASC'
             ]
         ]);
-        
+
         $offlineManufacturers = [];
         $onlineManufacturers = [];
         foreach ($manufacturers as $manufacturer) {
@@ -390,15 +390,15 @@ class ManufacturersTable extends AppTable
         }
         $manufacturersForDropdown = [];
         if (! empty($onlineManufacturers)) {
-            $manufacturersForDropdown['online'] = $onlineManufacturers;
+            $manufacturersForDropdown[__('online')] = $onlineManufacturers;
         }
         if (! empty($offlineManufacturers)) {
-            $manufacturersForDropdown['offline'] = $offlineManufacturers;
+            $manufacturersForDropdown[__('offline')] = $offlineManufacturers;
         }
-        
+
         return $manufacturersForDropdown;
     }
-    
+
     public function getProductsByManufacturerId($manufacturerId)
     {
         $sql = "SELECT ";
@@ -408,7 +408,7 @@ class ManufacturersTable extends AppTable
         $sql .= $this->getConditionsForProductListQuery();
         $sql .= "AND Manufacturers.id_manufacturer = :manufacturerId";
         $sql .= $this->getOrdersForProductListQuery();
-        
+
         $params = [
             'manufacturerId' => $manufacturerId,
             'active' => APP_ON,
@@ -417,14 +417,14 @@ class ManufacturersTable extends AppTable
         if (! $this->getLoggedUser()) {
             $params['isPrivate'] = APP_OFF;
         }
-        
+
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $products = $statement->fetchAll('assoc');
-        
+
         return $products;
     }
-    
+
     /**
      * turns eg 24 into 0024
      *
@@ -434,7 +434,7 @@ class ManufacturersTable extends AppTable
     {
         return str_pad($invoiceNumber, 4, '0', STR_PAD_LEFT);
     }
-    
+
     public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState)
     {
         switch ($order) {
@@ -445,9 +445,9 @@ class ManufacturersTable extends AppTable
                 $orderClause = Configure::read('app.htmlHelper')->getCustomerNameForSql() . ' ASC, od.product_name ASC';
                 break;
         }
-        
+
         $customerNameAsSql = Configure::read('app.htmlHelper')->getCustomerNameForSql();
-        
+
         $sql = "SELECT
         m.id_manufacturer ManufacturerId,
         m.name AS ManufacturerName,
@@ -485,14 +485,14 @@ class ManufacturersTable extends AppTable
             AND ma.id_manufacturer > 0
             AND o.current_state IN (" . join(',', $orderState) . ")
             ORDER BY {$orderClause}, DATE_FORMAT (o.date_add, '%d.%m.%Y, %H:%i') DESC;";
-        
+
         // do not use params for $orderState, it will result in IN ('3,2,1') which is wrong
         $params = [
             'manufacturerId' => $manufacturerId,
             'dateFrom' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom),
             'dateTo' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo),
         ];
-        
+
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $result = $statement->fetchAll('assoc');

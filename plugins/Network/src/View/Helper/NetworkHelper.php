@@ -23,9 +23,9 @@ use Cake\View\Helper;
 
 class NetworkHelper extends Helper
 {
-    
+
     public $helpers = ['MyHtml'];
-    
+
     public function getSyncProducts()
     {
         return '/network/syncs/products';

@@ -18,28 +18,19 @@ use Cake\Core\Configure;
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
     
-        <?php echo $this->element('email/greeting', ['data' => $customer]); ?>
-        
-        <tr>
+    <?php echo $this->element('email/greeting', ['data' => $customer]); ?>
+    
+    <tr>
         <td>
 
-            <p>
-                dein Guthaben ist aufgebraucht und beträgt <b
-                    style="color: #f3515c;"><?php echo $delta; ?></b>.
-            </p>
+            <p><?php echo __d('admin', 'your_credit_is_used_up_and_equals_{0}.', ['<b style="color: #f3515c;">'.$delta.'</b>']); ?></p>
+            
+            <p><?php echo __d('admin', 'Please_soon_transfer_new_credit_(eg_100_{0})_to_our_bank_account.', [Configure::read('appDb.FCS_CURRENCY_SYMBOL')]); ?></p>
 
-            <p>Bitte überweise bald wieder ein neues Guthaben (z.B. 100,00 <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?>) auf
-                unser Konto.</p>
+            <p><?php echo __d('admin', 'Do_not_forget_to_add_it_to_our_credit_system_after_the_bank_transfer.'); ?></p>
 
-            <p>
-                Vergiss bitte nicht, diesen Betrag <b>in unser Guthaben-System
-                    einzutragen</b>, da es ansonsten zwar auf unserem Bankkonto
-                gutgeschrieben ist, aber nicht in deinem Guthaben-System aufscheint.
-            </p>
-
-            <p>
-                Hier der Link zum Eintragen:<br /> <a
-                    href="<?php echo Configure::read('app.cakeServerName').'/admin/payments/product'; ?>"><?php echo Configure::read('app.cakeServerName').'/admin/payments/product'; ?></a>
+            <p><?php echo __d('admin', 'Here_you_find_the_link_to_add_the_credit:'); ?><br />
+                <a href="<?php echo Configure::read('app.cakeServerName').'/admin/payments/product'; ?>"><?php echo Configure::read('app.cakeServerName').'/admin/payments/product'; ?></a>
             </p>
 
         </td>
@@ -47,4 +38,4 @@ use Cake\Core\Configure;
     </tr>
 
 </tbody>
-</table>
+<?php echo $this->element('email/tableFoot'); ?>

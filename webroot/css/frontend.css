@@ -528,7 +528,7 @@ body.superadmin .product-wrapper .heading h4 {
 .product-wrapper span.not-available-info {
     display: block;
     margin-top: 10px;
-    line-height: 17px;    
+    line-height: 17px;
 }
 body.manufacturers.detail .manufacturer-infos {
     width: 100%;
@@ -676,12 +676,12 @@ body.manufacturers.detail .imprint {
 #cart {
     min-height: 150px;
 }
-#cart .shop-order-customer-info {
+#cart .instant-order-customer-info {
     color: #fff;
     background-color: #f3515c;
     padding-bottom: 5px ! important;
 }
-#cart .shop-order-customer-info a {
+#cart .instant-order-customer-info a {
     margin-top: 3px;
 }
 #cart p.products span.product span:not(:first-of-type) {

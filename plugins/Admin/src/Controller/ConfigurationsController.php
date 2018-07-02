@@ -98,8 +98,8 @@ class ConfigurationsController extends AdminAppController
         } else {
             $configuration = $this->Configuration->save($configuration);
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-            $this->Flash->success('Die Einstellung wurde erfolgreich geändert.');
-            $this->ActionLog->customSave('configuration_changed', $this->AppAuth->getUserId(), $configuration->id_configuration, 'configurations', 'Die Einstellung "' . $configuration->name . '" wurde geändert in <i>"' . $configuration->value . '"</i>');
+            $this->Flash->success(__d('admin', 'The_setting_has_been_changed_successfully.'));
+            $this->ActionLog->customSave('configuration_changed', $this->AppAuth->getUserId(), $configuration->id_configuration, 'configurations', __d('admin', 'The_setting_{0}_has_been_changed_to_{1}.', ['"' . $configuration->name . '"', '<i>"' . $configuration->value . '"</i>']));
             $this->redirect($this->getRequest()->getData('referer'));
         }
 
@@ -124,13 +124,16 @@ class ConfigurationsController extends AdminAppController
                     $template = 'customer_registered_inactive';
                 }
                 $email->setTemplate($template);
+                $data = (object) [
+                    'firstname' => 'Vorname',
+                    'lastname' => 'Nachname',
+                ];
+                $data->address_customer = (object) [
+                    'email' => 'vorname.nachname@example.com'
+                ];
                 $email->setViewVars([
-                    'data' => (object) [
-                        'firstname' => 'Vorname',
-                        'lastname' => 'Nachname',
-                        'email' => 'vorname.nachname@example.com'
-                    ],
-                    'newPassword' => 'DeinNeuesPasswort'
+                    'data' => $data,
+                    'newPassword' => 'password'
                 ]);
                 break;
         }
@@ -170,15 +173,15 @@ class ConfigurationsController extends AdminAppController
         } catch (\PDOException  $e) {
         }
 
-        $this->set('title_for_layout', 'Einstellungen');
+        $this->set('title_for_layout', __d('admin', 'Settings'));
     }
 
     public function sendTestEmail()
     {
-        $this->set('title_for_layout', 'Test E-Mail versenden');
+        $this->set('title_for_layout', __d('admin', 'Send_test_email'));
         $email = new AppEmail(false);
         $success = $email->setTo(Configure::read('app.hostingEmail'))
-            ->setSubject('Test E-Mail')
+        ->setSubject(__d('admin', 'Test_email'))
             ->setTemplate('send_test_email_template')
             ->setAttachments([
                 WWW_ROOT . DS . 'files' . DS . 'images' . DS. 'logo.jpg'

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -18,9 +18,9 @@ use Cake\ORM\TableRegistry;
 
 class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
 {
-    
+
     public $EmailLog;
-    
+
     public function setUp()
     {
         parent::setUp();
@@ -28,20 +28,20 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         $this->prepareTimebasedCurrencyConfiguration($reducedMaxPercentage);
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
     }
-    
+
     public function testAddPaymentLoggedOut()
     {
         $this->addPayment(Configure::read('test.customerId'), 1800, 0);
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
-    
+
     public function testAddPaymentAsManufacturer()
     {
         $this->loginAsMeatManufacturer();
         $this->addPayment(Configure::read('test.customerId'), 1800, 0);
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
-    
+
     public function testAddPaymentAsCustomer()
     {
         $this->loginAsCustomer();
@@ -52,10 +52,10 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('3,20&nbsp;h', $this->browser->getContent());
         $this->assertRegExpWithUnquotedString('<b>3,70&nbsp;h</b>', $this->browser->getContent());
     }
-    
+
     public function testEditPaymentAsWrongManufacturer()
     {
-        
+
         $this->loginAsCustomer();
         $this->createPayment(0.5);
 
@@ -63,13 +63,13 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         $this->browser->get($this->Slug->getTimebasedCurrencyPaymentEdit(1));
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
-    
+
     public function testEditPaymentAsCorrectManufacturer()
     {
-        
+
         $this->loginAsCustomer();
         $this->createPayment(0.5);
-        
+
         $comment = 'this is the comment';
         $hours = 0.25;
         $this->loginAsMeatManufacturer();
@@ -79,7 +79,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
             'approval' => APP_DEL
         ]);
         $this->assert200OkHeader();
-        
+
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEmailLogs(
             $emailLogs[0],
@@ -93,9 +93,9 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
                 Configure::read('test.loginEmailCustomer')
             ]
         );
-        
+
     }
-    
+
     public function testUrlsAsCustomer()
     {
         $this->loginAsCustomer();
@@ -105,7 +105,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         ];
         $this->assertPagesForErrors($testUrls);
     }
-    
+
     public function testUrlsAsManufacturer()
     {
         $this->loginAsVegetableManufacturer();
@@ -115,13 +115,13 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         ];
         $this->assertPagesForErrors($testUrls);
     }
-    
+
     private function createPayment($hours)
     {
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
         $this->addPayment(Configure::read('test.customerId'), $hours * 3600, $manufacturerId);
     }
-    
+
     /**
      * @param int $customerId
      * @param int $seconds
@@ -138,7 +138,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         ]);
         return $this->browser->getContent();
     }
-    
+
 }
 
 ?>

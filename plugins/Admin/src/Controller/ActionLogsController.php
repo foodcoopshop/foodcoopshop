@@ -137,7 +137,7 @@ class ActionLogsController extends AdminAppController
             $this->set('customersForDropdown', $this->Customer->getForDropdown(true));
         }
 
-        $titleForLayout = 'Aktivitäten';
+        $titleForLayout = __d('admin', 'Activities');
         if (isset($this->ActionLog->types[$type])) {
             $titleForLayout .= ' | ' . $this->ActionLog->types[$type]['name'];
         }

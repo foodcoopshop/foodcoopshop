@@ -79,7 +79,7 @@ class PagesController extends FrontendController
         $this->Slider = TableRegistry::getTableLocator()->get('Sliders');
         $sliders = $this->Slider->getForHome();
         $this->set('sliders', $sliders);
-        
+
     }
 
     public function detail()
@@ -133,16 +133,16 @@ class PagesController extends FrontendController
 
     public function termsOfUse()
     {
-        $this->set('title_for_layout', 'Nutzungsbedingungen');
+        $this->set('title_for_layout', __('Terms_of_use'));
     }
 
     public function privacyPolicy()
     {
-        $this->set('title_for_layout', 'Datenschutzerklärung');
+        $this->set('title_for_layout', __('Privacy_policy'));
     }
-    
+
     public function listOfAllergens()
     {
-        $this->set('title_for_layout', 'Allergenliste');
+        $this->set('title_for_layout', __('List_of_allergens'));
     }
 }

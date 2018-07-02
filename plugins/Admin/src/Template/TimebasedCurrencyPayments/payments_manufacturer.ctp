@@ -44,23 +44,23 @@ echo '<table class="list">';
     echo '</tr>';
 
     foreach($payments as $payment) {
-        
+
         echo '<tr>';
-            
+
             echo '<td>';
-                
+
                 $details = $this->Html->getCustomerAddress($payment['customer']);
                 $details .= '<br />' . (empty($payment['customer']) ? '' : $payment['customer']->email);
-                
+
                 echo '<span style="float: left;margin-right: 5px;">';
                     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('telephone.png')), [
                         'class' => 'customer-detail',
                         'title' => $details
                     ], 'javascript:void(0);');
                 echo '</span>';
-                
+
                 echo '<span style="float: left;">' . $this->Html->getNameRespectingIsDeleted($payment['customer']).'</span>';
-                
+
                 if ($appAuth->isManufacturer()) {
                     $detailLink = $this->Slug->getTimebasedCurrencyPaymentDetailsForManufacturers($payment['customerId']);
                 } else {
@@ -74,23 +74,23 @@ echo '<table class="list">';
                     ],
                     $detailLink
                 ).'</span>';
-                    
+
             echo '</td>';
-            
+
             echo '<td align="right">';
                 if ($payment['unapprovedCount'] > 0) {
                     echo '<b>'.$payment['unapprovedCount'].'</b>';
                 }
             echo '</td>';
-            
+
             echo '<td class="negative" align="right">';
                 echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($payment['secondsDone']);
             echo '</td>';
-            
+
             echo '<td align="right">';
                 echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($payment['secondsOpen']);
             echo '</td>';
-            
+
             $creditBalanceClass = '';
             if ($payment['creditBalance'] < 0) {
                 $creditBalanceClass = 'negative';
@@ -98,16 +98,16 @@ echo '<table class="list">';
             echo '<td class="'.$creditBalanceClass.'" align="right">';
                 echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($payment['creditBalance']);
             echo '</td>';
-            
+
         echo '</tr>';
-        
+
     }
-    
-    
+
+
     echo '<tr class="fake-th">';
         echo str_replace('th', 'td', $tableColumnHead);
     echo '</tr>';
-    
+
     $sumNumberClass = '';
     if ($creditBalance < 0) {
         $sumNumberClass = ' class="negative"';
@@ -119,7 +119,7 @@ echo '<table class="list">';
         echo '<td align="right"><b>' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($sumOrders) . '</b></td>';
         echo '<td align="right" ' . $sumNumberClass . '><b>' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($creditBalance) . '</b></td>';
     echo '</tr>';
-    
+
     echo '<tr>';
         echo '<td align="right" ' . $sumNumberClass . '><b style="font-size: 16px;">' .$paymentBalanceTitle . ': ' .  $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($creditBalance) . '</b></td>';
         echo '<td></td>';
@@ -127,6 +127,6 @@ echo '<table class="list">';
         echo '<td></td>';
         echo '<td></td>';
     echo '</tr>';
-    
+
 echo '</table>';
-    
+

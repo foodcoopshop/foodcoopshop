@@ -139,6 +139,6 @@ class BlogPostsController extends FrontendController
         ]);
 
         $this->set('blogPosts', $blogPosts);
-        $this->set('title_for_layout', 'Aktuelles');
+        $this->set('title_for_layout', __('News'));
     }
 }

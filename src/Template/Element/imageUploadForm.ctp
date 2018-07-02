@@ -16,17 +16,17 @@
 <form data-object-id="<?php echo $id; ?>" id="mini-upload-form-<?php echo $id ?>" class="hide mini-upload-form" method="post" action="<?php echo $action; ?>" enctype="multipart/form-data">
         <p class="heading">
             <?php if ($imageExists) { ?>
-                Bestehendes Bild überschreiben
+                <?php echo __('Replace_existing_image'); ?>
             <?php } else { ?>
-                Neues Bild hochladen
+                <?php echo __('Upload_new_image'); ?>
             <?php } ?>
         </p>
     <div class="drop">
         <?php if ($imageExists) { ?>
             <?php echo '<img class="existingImage loading" src="/img/ajax-loader.gif" data-src="' . $existingImageSrc . '" />'; ?>
         <?php } ?>
-        <p style="font-size:13px;">Bitte nur selbstgemachte Bilder verwenden<br />(keine aus dem Internet).</p>
-        <a class="upload-button">PC durchsuchen</a>
+        <p style="font-size:13px;"><?php echo __('Please_only_use_self_made_images_(not_from_the_internet).'); ?></p>
+        <a class="upload-button"><?php echo __('Search_PC'); ?></a>
         <input type="file" name="upload"  accept="image/jpeg" />
     </div>
     <ul><!-- The file uploads will be shown here --></ul>

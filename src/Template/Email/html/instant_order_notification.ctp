@@ -24,13 +24,13 @@
 
         <tr>
             <td>
-                <p><?php echo __('There_has_been_placed_a_shop_order_for_{0}_by_{1}_(order_number_{2}).', ['<b>'.$appAuth->getUsername().'</b>', '<b>'.$originalLoggedCustomer['name'].'</b>', $order->id_order]); ?></p>
+                <p><?php echo __('There_has_been_placed_a_instant_order_for_{0}_by_{1}_(order_number_{2}).', ['<b>'.$appAuth->getUsername().'</b>', '<b>'.$originalLoggedCustomer['name'].'</b>', $order->id_order]); ?></p>
                 <p><?php echo __('You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists.')?></p>
             </td>
         </tr>
         
     </tbody>
-</table>
+<?php echo $this->element('email/tableFoot'); ?>
 
 <?php echo $this->element('email/tableHead', ['cellpadding' => 6]); ?>
     <?php echo $this->element('email/orderedProductsTable', [
@@ -40,4 +40,4 @@
         'productSum' => $productSum,
         'productAndDepositSum' => $productAndDepositSum
     ]); ?>
-</table>
+<?php echo $this->element('email/tableFoot'); ?>

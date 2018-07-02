@@ -18,42 +18,36 @@ use Cake\Core\Configure;
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
     
-        <?php echo $this->element('email/greeting', ['data' => $oldOrderDetail->order->customer]); ?>
-        
-        <tr>
+    <?php echo $this->element('email/greeting', ['data' => $oldOrderDetail->order->customer]); ?>
+    
+    <tr>
         <td>
 
             <p>
-                Der Preis des Produktes <b><?php echo $oldOrderDetail->product_name; ?></b> wurde angepasst. Du hast <?php echo $oldOrderDetail->product_amount; ?> Stück davon am <?php echo $oldOrderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')); ?> beim Hersteller <b><?php echo $oldOrderDetail->product->manufacturer->name; ?></b>
-                bestellt.
+            	<?php echo __d('admin', 'The_price_of_the_product_{0}_has_been_adapted.', ['<b>'.$oldOrderDetail->product_name.'</b>']); ?> <?php echo __d('admin', 'You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}.', [
+            	    $oldOrderDetail->product_amount,
+            	    $oldOrderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')),
+            	    '<b>'.$oldOrderDetail->product->manufacturer->name.'</b>'
+            	]); ?>
             </p>
 
             <ul style="padding-left: 10px;">
-                <li>Alter Preis: <b><?php echo $this->MyNumber->formatAsDecimal($oldOrderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
-                <li>Neuer Preis: <b><?php echo $this->MyNumber->formatAsDecimal($newOrderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
+                <li><?php echo __d('admin', 'Old_price'); ?>: <b><?php echo $this->MyNumber->formatAsDecimal($oldOrderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
+                <li><?php echo __d('admin', 'New_price'); ?>: <b><?php echo $this->MyNumber->formatAsDecimal($newOrderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
             </ul>
 
             <p>
-                Warum wurde der Preis angepasst?<br />
-                <b>
-                <?php
-
-                if ($editPriceReason != '') {
-                    echo '"' . $editPriceReason . '"';
-                } else {
-                    echo 'Kein Grund angegeben.';
-                }
-                ?>
-                </b>
+                <?php echo __d('admin', 'Why_has_the_price_been_adpated?'); ?><br />
+                <b><?php echo '"' . $editPriceReason . '"'; ?></b>
             </p>
-                
-                <?php if ($this->MyHtml->paymentIsCashless()) { ?>
-                    <p>PS: Dein Guthaben wurde automatisch angepasst.</p>
-                <?php } ?>
+            
+            <?php if ($this->MyHtml->paymentIsCashless()) { ?>
+                <p><?php echo __d('admin', 'PS:_Your_credit_has_been_adapted_automatically.'); ?></p>
+            <?php } ?>
 
-            </td>
+        </td>
 
     </tr>
 
 </tbody>
-</table>
+<?php echo $this->element('email/tableFoot'); ?>

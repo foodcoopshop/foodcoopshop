@@ -17,7 +17,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.init();".
-    Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');"
+    Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');"
 ]);
 ?>
 
@@ -36,9 +36,9 @@ echo $this->element('reportNavTabs', [
 
 echo '<table class="list">';
 echo '<tr class="sort">';
-    echo '<th>Mitglieder</th>';
-    echo '<th>Guthaben gesamt</th>';
-    echo '<th>Saldo Pfand</th>';
+    echo '<th>'.__d('admin', 'Members').'</th>';
+    echo '<th>'.__d('admin', 'Sum_of_credits').'</th>';
+    echo '<th>'.__d('admin', 'Included_deposit').'</th>';
 echo '</tr>';
 
 foreach($customers as $customer) {
@@ -68,6 +68,8 @@ echo '</tr>';
 echo '</table>';
 
 echo '<p style="padding:5px;">
-          * Von den '.$this->Number->formatAsCurrency($sums['credit_balance']).' auf dem Guthaben-Konto sind '.$this->Number->formatAsCurrency($sums['deposit_delta']).' für Pfand-Rückzahlungen reserviert. Solange der Pfand-Betrag negativ ist, ist Geld für die Rückzahlungen vorhanden.
-      </p>';
+          * '.__d('admin', 'Of_the_{0}_on_the_credit_account_{1}_are_reserved_for_deposit_compensation_payments._As_long_as_this_amount_is_negative_money_for_deposit_compensation_payments_is_available.', [
+            $this->Number->formatAsCurrency($sums['credit_balance']),
+            $this->Number->formatAsCurrency($sums['deposit_delta'])
+      ]).'</p>';
 ?>

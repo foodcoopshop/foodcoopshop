@@ -24,52 +24,53 @@ foodcoopshop.Admin = {
         this.adaptContentMargin();
         foodcoopshop.Helper.initScrolltopButton();
     },
-    
+
     bindDeleteCustomerButton : function(customerId) {
-        
+
+        var buttons = {};
+        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+        buttons['yes'] = {
+            text: foodcoopshop.LocalizedJs.helper.yes,
+            click: function() {
+                $('#delete-customer-dialog .ajax-loader').show();
+                $('.ui-dialog button').attr('disabled', 'disabled');
+                foodcoopshop.Helper.ajaxCall(
+                    '/admin/customers/delete/' + customerId,
+                    {
+                        referer: $('input[name="referer"]').val()
+                    },
+                    {
+                        onOk: function (data) {
+                            document.location.href = data.redirectUrl;
+                        },
+                        onError: function (data) {
+                            var form = $('#delete-customer-dialog');
+                            form.find('.ajax-loader').hide();
+                            var message = '<p><b>' + foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileMemberWasDeleted + ':</b> </p>';
+                            foodcoopshop.Admin.appendFlashMessageToDialog(form, message + data.msg);
+                        }
+                    });
+            }
+        };
+
         $('.delete-customer-button').on('click', function() {
             $('<div id="delete-customer-dialog"></div>').appendTo('body')
-                .html('<p style="margin-top: 10px;">Mitgliedskonto wirklich unwiderruflich löschen?<p><p>Achtung: Es gibt <b>keine Möglichkeit</b>, das rückgängig zu machen!</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p style="margin-top: 10px;">' + foodcoopshop.LocalizedJs.admin.ReallyDeleteMember + '<p><p>' + foodcoopshop.LocalizedJs.admin.BeCarefulNoWayBack + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
-                    title: 'Mitgliedskonto löschen?',
+                    title: foodcoopshop.LocalizedJs.admin.DeleteMember,
                     autoOpen: true,
                     width: 500,
                     height: 300,
                     resizable: false,
-                    buttons: {
-                        'Abbrechen': function () {
-                            $(this).dialog('close');
-                        },
-                        'Ja': function () {
-                            
-                            $('#delete-customer-dialog .ajax-loader').show();
-                            $('.ui-dialog button').attr('disabled', 'disabled');
-                            foodcoopshop.Helper.ajaxCall(
-                                '/admin/customers/delete/' + customerId,
-                                {
-                                    referer: $('input[name="referer"]').val()
-                                },
-                                {
-                                    onOk: function (data) {
-                                        document.location.href = data.redirectUrl;
-                                    },
-                                    onError: function (data) {
-                                        var form = $('#delete-customer-dialog');
-                                        form.find('.ajax-loader').hide();
-                                        var message = '<p><b>Beim Löschen des Mitgliedskontos sind Fehler aufgetreten:</b> </p>';
-                                        foodcoopshop.Admin.appendFlashMessageToDialog(form, message + data.msg);
-                                    }
-                                });
-                        }
-                    },
+                    buttons: buttons,
                     close: function (event, ui) {
                         $(this).remove();
                     }
                 });
         });
-    }, 
-    
+    },
+
     appendFlashMessageToDialog : function(element, message) {
         foodcoopshop.Helper.showErrorMessage(message);
         var flashMessage = $('#flashMessage');
@@ -78,7 +79,7 @@ foodcoopshop.Admin = {
             flashMessage.css('left', left + 'px');
         }
         element.prepend(flashMessage);
-    }, 
+    },
 
     addWrappersAndLoaderToDialogHtml : function(title, dialogId, dialogHtml) {
         var html = '<div id="' + dialogId + '" class="dialog" title="' + title + '">';
@@ -187,7 +188,7 @@ foodcoopshop.Admin = {
         filterContainer.find('input:text, input:checkbox, select:not(.do-not-submit)').on('change', function () {
             foodcoopshop.Admin.triggerFilter();
         });
-        
+
         filterContainer.find('select').each(function () {
             var options = {
                 liveSearch: true,
@@ -202,7 +203,7 @@ foodcoopshop.Admin = {
             }
             $(this).selectpicker(options);
         });
-        
+
         this.setSelectPickerMultipleDropdowns('.filter-container select[multiple="multiple"]');
     },
 
@@ -280,7 +281,7 @@ foodcoopshop.Admin = {
 
             }
         };
-        
+
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
@@ -310,7 +311,7 @@ foodcoopshop.Admin = {
             foodcoopshop.Helper.initCkeditor('dialogCustomerComment');
 
             var text = $(this).attr('originalTitle');
-            if (text == 'Kommentar hinzufügen') {
+            if (text == foodcoopshop.LocalizedJs.admin.AddComment) {
                 text = '';
             }
             CKEDITOR.instances['dialogCustomerComment'].setData(text); // attr title is deleted after toolbar init
@@ -351,7 +352,7 @@ foodcoopshop.Admin = {
                 );
             }
         };
-        
+
         var dialog = $('#' + dialogId).dialog({
             autoOpen: false,
             height: 460,
@@ -378,7 +379,7 @@ foodcoopshop.Admin = {
             foodcoopshop.Helper.initCkeditor('dialogOrderComment');
 
             var text = $(this).attr('originalTitle');
-            if (text == 'Kommentar hinzufügen') {
+            if (text == foodcoopshop.LocalizedJs.admin.AddComment) {
                 text = '';
             }
             CKEDITOR.instances['dialogOrderComment'].setData(text);
@@ -426,7 +427,7 @@ foodcoopshop.Admin = {
                 );
             }
         };
-        
+
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
@@ -522,7 +523,7 @@ foodcoopshop.Admin = {
             text: foodcoopshop.LocalizedJs.helper.save,
             click: function() {
                 var pricePerUnitEnabled = $('input[name="dialogPricePricePerUnitEnabled"]:checked').val() == 'price-per-unit' ? 1 : 0;
-                
+
                 var priceInclPerUnit = $('#dialogPricePriceInclPerUnit').val();
                 var quantityInUnits = $('#dialogPriceQuantityInUnits').val();
 
@@ -554,10 +555,10 @@ foodcoopshop.Admin = {
                             foodcoopshop.Admin.appendFlashMessageToDialog(form, data.msg);
                         }
                     }
-                );                
+                );
             }
         };
-        
+
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
@@ -579,7 +580,7 @@ foodcoopshop.Admin = {
 
             buttons: buttons
         });
-        
+
         $('#' + dialogId + ' input[name="dialogPricePricePerUnitEnabled"]').on('change', function() {
             var priceAsUnitWrapper = $('#' + dialogId + ' .price-per-unit-wrapper');
             var priceWrapper = $('#' + dialogId + ' .price-wrapper');
@@ -593,10 +594,10 @@ foodcoopshop.Admin = {
         });
 
         $('.product-price-edit-button').on('click', function () {
-            
+
             var row = $(this).closest('tr');
             var productId = row.find('td:nth-child(1)').html();
-            
+
             var radioMainSelector = '#' + dialogId + ' input[name="dialogPricePricePerUnitEnabled"]';
             var radio;
             var unitData = {};
@@ -617,7 +618,7 @@ foodcoopshop.Admin = {
             }
             radio.prop('checked', true);
             radio.trigger('change');
-            
+
             var price = foodcoopshop.Helper.getCurrencyAsFloat(row.find('span.price-for-dialog').html());
             $('#' + dialogId + ' #dialogPricePrice').val(price);
             $('#' + dialogId + ' #dialogPriceProductId').val(productId);
@@ -638,9 +639,9 @@ foodcoopshop.Admin = {
             quantityInUnitsField.attr('min', minValue);
             $('#' + dialogId + ' span.unit-name-placeholder').html($(this).val());
         }).trigger('change');
-        
+
     },
-    
+
     getProductNameForDialog : function(row) {
         var label = row.find('span.name-for-dialog').html();
         // show name of main product
@@ -688,10 +689,10 @@ foodcoopshop.Admin = {
                             foodcoopshop.Helper.showErrorMessage(data.msg);
                         }
                     }
-                );                
+                );
             }
         };
-        
+
         var dialog = $('#' + dialogId).dialog({
             autoOpen: false,
             height: 660,
@@ -821,7 +822,7 @@ foodcoopshop.Admin = {
 
             }
         };
-        
+
         var dialog = $('#' + dialogId).dialog({
             autoOpen: false,
             height: 250,
@@ -923,17 +924,17 @@ foodcoopshop.Admin = {
             buttons['cancelled'] = {
                 text: foodcoopshop.LocalizedJs.admin.orderStateCancelled,
                 click: function () {
-            
+
                     $('.ui-dialog .ajax-loader').show();
                     $('.ui-dialog button').attr('disabled', 'disabled');
-    
+
                     if (totalSum != '0,00&nbsp;' + foodcoopshop.LocalizedJs.helper.CurrencySymbol) {
                         $('.ui-dialog .ajax-loader').hide();
-                        alert('Bevor du die Bestellung stornieren kannst, storniere bitte alle bestellten Produkte.');
+                        alert(foodcoopshop.LocalizedJs.admin.PleaseCancelAllOrderedProductsBeforeCancellingTheOrder);
                         $('.ui-dialog button').attr('disabled', false);
                         return;
                     }
-    
+
                     foodcoopshop.Helper.ajaxCall(
                         '/admin/orders/changeOrderState/',
                         {
@@ -960,7 +961,7 @@ foodcoopshop.Admin = {
 
                 $('.ui-dialog .ajax-loader').show();
                 $('.ui-dialog button').attr('disabled', 'disabled');
-    
+
                 foodcoopshop.Helper.ajaxCall(
                     '/admin/orders/changeOrderState/',
                     {
@@ -1064,8 +1065,7 @@ foodcoopshop.Admin = {
                 );
             }
         };
-        
-        
+
         $('<div></div>').appendTo('body')
             .html(dialogHtml)
             .dialog({
@@ -1096,7 +1096,7 @@ foodcoopshop.Admin = {
 
             var customerName = dataRow.find('td:nth-child(4) a').html();
             var manufacturerName = dataRow.find('td:nth-child(5) a').html();
-            
+
             if (foodcoopshop.Helper.isManufacturer) {
                 infoText = '<p>' + foodcoopshop.LocalizedJs.admin.DoYouReallyWantToCancelProduct0.replace(/\{0\}/, '<b>' + customerName + '</b>') + '</p>';
             } else {
@@ -1137,7 +1137,7 @@ foodcoopshop.Admin = {
                     document.location.href = '/admin/products/changeNewStatus/' + productId + '/' + newState;
                 }
             };
-            
+
             var dataRow = $('#change-new-state-' + productId).parent().parent().parent().parent();
             $('<div></div>').appendTo('body')
                 .html('<p>' + reallyNewStateText.replaceI18n(0,  '<b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b>') + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
@@ -1163,28 +1163,30 @@ foodcoopshop.Admin = {
             var productId = splittedProductId[0];
             var productAttributeId = splittedProductId[1];
 
-            var dataRow = $(this).parent().parent().parent().parent().parent();
-            var htmlCode = '<p>Die Variante <b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b> wirklich löschen?</p>';
+            var dataRow = $(this).closest('tr');
+            var htmlCode = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyDeleteAttribute0.replaceI18n(0, '<b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b>');
             htmlCode += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
+
+            var buttons = {};
+            buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+            buttons['yes'] = {
+                text: foodcoopshop.LocalizedJs.helper.yes,
+                click: function() {
+                    $('.ui-dialog .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+                    document.location.href = '/admin/products/deleteProductAttribute/' + productId + '/' + productAttributeId;
+                }
+            };
 
             $('<div></div>').appendTo('body')
                 .html(htmlCode)
                 .dialog({
                     modal: true,
-                    title: 'Variante löschen',
+                    title: foodcoopshop.LocalizedJs.admin.DeleteAttribute,
                     autoOpen: true,
                     width: 450,
                     resizable: false,
-                    buttons: {
-                        'Abbrechen': function () {
-                            $(this).dialog('close');
-                        },
-                        'Löschen': function () {
-                            $('.ui-dialog .ajax-loader').show();
-                            $('.ui-dialog button').attr('disabled', 'disabled');
-                            document.location.href = '/admin/products/deleteProductAttribute/' + productId + '/' + productAttributeId;
-                        }
-                    },
+                    buttons: buttons,
                     close: function (event, ui) {
                         $(this).remove();
                     }
@@ -1214,7 +1216,7 @@ foodcoopshop.Admin = {
             htmlCode += '<select class="product-attributes-dropdown">' + productAttributesDropdown.html() + '</select>';
 
             htmlCode += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-            
+
             var buttons = {};
             buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
             buttons['save'] = {
@@ -1225,7 +1227,7 @@ foodcoopshop.Admin = {
                     document.location.href = '/admin/products/addProductAttribute/' + productId + '/' + $('.product-attributes-dropdown').val();
                 }
             };
-            
+
             $('<div></div>').appendTo('body')
                 .html(htmlCode)
                 .dialog({
@@ -1251,7 +1253,7 @@ foodcoopshop.Admin = {
             var productIdString = row.attr('id').replace(/product-/, '').split('-');
             var productId = productIdString[0];
             var attributeId = productIdString[1];
-            
+
             var label = foodcoopshop.Admin.getProductNameForDialog(row);
             var htmlCode = foodcoopshop.LocalizedJs.admin.ChangingDefaultAttributeInfoText0Html.replaceI18n(0, '<b>' + label + '</b>');
             htmlCode += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
@@ -1266,7 +1268,7 @@ foodcoopshop.Admin = {
                     document.location.href = '/admin/products/changeDefaultAttributeId/' + productId + '/' + attributeId;
                 }
             };
-            
+
             $('<div></div>').appendTo('body')
                 .html(htmlCode)
                 .dialog({
@@ -1288,24 +1290,26 @@ foodcoopshop.Admin = {
 
         $(container).find('#add-product-button-wrapper a').on('click', function () {
 
+            var buttons = {};
+            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
+            buttons['yes'] = {
+                text: foodcoopshop.LocalizedJs.helper.yes,
+                click: function() {
+                    $('.ui-dialog .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+                    document.location.href = '/admin/products/add/' + $(container).find('#manufacturerid').val();
+                }
+            };
+
             $('<div></div>').appendTo('body')
-                .html('<p>Möchtest du wirklich ein neues Produkt erstellen?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p>' + foodcoopshop.LocalizedJs.admin.ReallyAddNewProduct + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
-                    title: 'Neues Produkt erstellen',
+                    title: foodcoopshop.LocalizedJs.admin.AddNewProduct,
                     autoOpen: true,
                     width: 400,
                     resizable: false,
-                    buttons: {
-                        'Nein': function () {
-                            $(this).dialog('close');
-                        },
-                        'Ja': function () {
-                            $('.ui-dialog .ajax-loader').show();
-                            $('.ui-dialog button').attr('disabled', 'disabled');
-                            document.location.href = '/admin/products/add/' + $(container).find('#manufacturerid').val();
-                        }
-                    },
+                    buttons: buttons,
                     close: function (event, ui) {
                         $(this).remove();
                     }
@@ -1317,34 +1321,45 @@ foodcoopshop.Admin = {
     initManualOrderListSend: function (container, weekday) {
 
         $(container).on('click', function () {
-            if ($.inArray(foodcoopshop.Helper.cakeServerName, ['http://www.foodcoopshop.test', 'https://demo.foodcoopshop.com']) == -1 &&
+            if ($.inArray(foodcoopshop.Helper.cakeServerName, [
+                'http://www.foodcoopshop.test',
+                'https://demo-de.foodcoopshop.com',
+                'https://demo-en.foodcoopshop.com'
+            ]) == -1 &&
                 $.inArray(weekday, foodcoopshop.Admin.weekdaysBetweenOrderSendAndDelivery) == -1) {
-                alert('Diese Funktion steht heute nicht zur Verfügung.');
+                alert(foodcoopshop.LocalizedJs.admin.ThisFunctionIsNotAvailableToday);
                 return;
             }
 
-            var manufacturerId = $(this).parent().parent().parent().parent().attr('id').replace(/manufacturer-/, '');
+            var manufacturerId = $(this).closest('tr').attr('id').replace(/manufacturer-/, '');
             var dataRow = $('#manufacturer-' + manufacturerId);
 
+            var buttons = {};
+            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
+            buttons['yes'] = {
+                text: foodcoopshop.LocalizedJs.helper.yes,
+                click: function() {
+                    $('.ui-dialog .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+                    var url = '/admin/manufacturers/sendOrderList/' + manufacturerId + '/' + $('#dateFrom').val() + '/' + $('#dateTo').val();
+                    document.location.href = url;
+                }
+            };
+
+            var html = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyManuallySendOrderList.replaceI18n(0, '<b>' + dataRow.find('td:nth-child(4) b').html() + '</b>') + '</p>';
+            html += '<p>' + foodcoopshop.LocalizedJs.admin.OrderPeriod + ': <b>' + $('#dateFrom').val() + ' - ' + $('#dateTo').val() + ' </b></p>';
+            html += '<p>' + foodcoopshop.LocalizedJs.admin.AnExistingOrderListWillBeOverwritten + '</p>';
+            html += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
+
             $('<div></div>').appendTo('body')
-                .html('<p>Willst du wirklich eine aktuelle Bestellliste an <b>' + dataRow.find('td:nth-child(3) b').html() + '</b> versenden?</p><p>Bestellzeitraum: <b>' + $('#dateFrom').val() + ' bis ' + $('#dateTo').val() + ' </b></p><p>Eine bereits bestehende Bestellliste wird überschrieben!</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html(html)
                 .dialog({
                     modal: true,
-                    title: 'Bestellliste manuell versenden?',
+                    title: foodcoopshop.LocalizedJs.admin.ManuallySendOrderList,
                     autoOpen: true,
                     width: 400,
                     resizable: false,
-                    buttons: {
-                        'Nein': function () {
-                            $(this).dialog('close');
-                        },
-                        'Ja': function () {
-                            $('.ui-dialog .ajax-loader').show();
-                            $('.ui-dialog button').attr('disabled', 'disabled');
-                            var url = '/admin/manufacturers/sendOrderList/' + manufacturerId + '/' + $('#dateFrom').val() + '/' + $('#dateTo').val();
-                            document.location.href = url;
-                        }
-                    },
+                    buttons: buttons,
                     close: function (event, ui) {
                         $(this).remove();
                     }
@@ -1407,7 +1422,7 @@ foodcoopshop.Admin = {
         // copy save and cancel button below form
         var form = $('form.fcs-form');
         form.after('<div class="form-buttons"></div>');
-        $('#content .form-buttons').append($('.filter-container .right > a').clone(true)); // true clones events
+        $('#content .form-buttons').append($('.filter-container .right > a.submit, .filter-container .right > a.cancel').clone(true)); // true clones events
 
         // submit form on enter in text fields
         form.find('input[type=text], input[type=number], input[type=password], input[type="tel"]').keypress(function (e) {
@@ -1589,13 +1604,13 @@ foodcoopshop.Admin = {
     setOrderDetailTimebasedCurrencyData : function(elementToAttach, timebasedCurrencyObject) {
         elementToAttach.data('timebased-currency-object', $.parseJSON(timebasedCurrencyObject));
     },
-    
+
     setProductUnitData : function(elementToAttach, productUnitObject) {
         elementToAttach.data('product-unit-object', $.parseJSON(productUnitObject));
     },
-    
+
     initOrderDetailProductQuantityEditDialog: function(container) {
-        
+
         var dialogId = 'order-detail-product-quantity-edit-form';
         var dialogHtml = foodcoopshop.DialogOrderDetail.getHtmlForOrderDetailProductQuantityEdit(dialogId);
         $(container).append(dialogHtml);
@@ -1610,14 +1625,14 @@ foodcoopshop.Admin = {
                     alert(foodcoopshop.LocalizedJs.admin.DeliveredWeightNeedsToBeGreaterThan0);
                     return false;
                 }
-                
+
                 if ($('#dialogOrderDetailProductQuantityOrderDetailId').val() == '') {
                     return false;
                 }
-                
+
                 $('#order-detail-product-quantity-edit-form .ajax-loader').show();
                 $('.ui-dialog button').attr('disabled', 'disabled');
-                
+
                 foodcoopshop.Helper.ajaxCall(
                     '/admin/order-details/editProductQuantity/',
                     {
@@ -1652,20 +1667,20 @@ foodcoopshop.Admin = {
             },
             buttons: buttons
         });
-        
+
         $('.order-detail-product-quantity-edit-button').on('click', function () {
-            
+
             var row = $(this).closest('tr');
             var orderDetailId = row.find('td:nth-child(2)').html();
             var unitName = row.find('td:nth-child(8) span.unit-name').html().trim();
             var quantity = row.find('td:nth-child(8) span.quantity-in-units').html();
             var quantityInUnitsField = $('#' + dialogId + ' #dialogOrderDetailProductQuantityQuantity');
-            
+
             quantityInUnitsField.val(foodcoopshop.Helper.getStringAsFloat(quantity));
-            
+
             $('#' + dialogId + ' b').html(unitName);
             $('#' + dialogId + ' #dialogOrderDetailProductQuantityOrderDetailId').val(orderDetailId);
-            
+
             var amount = row.find('td:nth-child(3) .product-amount-for-dialog').html();
             var label = row.find('td:nth-child(4) a.name-for-dialog').html();
             label += ' <span style="font-weight:normal;">(';
@@ -1682,7 +1697,7 @@ foodcoopshop.Admin = {
             quantityString.html(newHtml);
             label += foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td:nth-child(10)').html() + ')';
             $('#' + dialogId + ' label[for="dialogOrderDetailProductQuantityQuantity"]').html(label);
-            
+
             var stepValue = '0.001';
             var minValue = '0.001';
             switch(unitName) {
@@ -1692,13 +1707,13 @@ foodcoopshop.Admin = {
             }
             quantityInUnitsField.attr('step', stepValue);
             quantityInUnitsField.attr('min', minValue);
-            
-            var pricePerUnitBaseInfo = row.find('td:nth-child(8) span.price-per-unit-base-info').html(); 
+
+            var pricePerUnitBaseInfo = row.find('td:nth-child(8) span.price-per-unit-base-info').html();
             $('#' + dialogId + ' li.price-per-unit-base-info').html(foodcoopshop.LocalizedJs.admin.BasePrice + ': ' + pricePerUnitBaseInfo);
-            
+
             dialog.dialog('open');
-        });        
-        
+        });
+
     },
 
     initOrderDetailProductPriceEditDialog: function (container) {
@@ -1723,13 +1738,13 @@ foodcoopshop.Admin = {
                     alert(foodcoopshop.LocalizedJs.admin.AdaptPriceReasonIsMandatory);
                     return;
                 }
-                
+
                 var productPrice = $('#dialogOrderDetailProductPricePrice').val();
                 var timebasedCurrencyPriceObject = $('#dialogOrderDetailProductPriceTimebasedCurrencyPrice');
                 if (timebasedCurrencyPriceObject.length > 0) {
                     productPrice = timebasedCurrencyPriceObject.val();
                 }
-                
+
                 $('#order-detail-product-price-edit-form .ajax-loader').show();
                 $('.ui-dialog button').attr('disabled', 'disabled');
 
@@ -1752,7 +1767,7 @@ foodcoopshop.Admin = {
                     }
                 );
 
-            }                
+            }
         };
 
         var dialog = $('#' + dialogId).dialog({
@@ -1772,22 +1787,22 @@ foodcoopshop.Admin = {
         });
 
         $('.order-detail-product-price-edit-button').on('click', function () {
-            
+
             var row = $(this).closest('tr');
             var orderDetailId = row.find('td:nth-child(2)').html();
-            var price = row.find('td:nth-child(6) span.product-price-for-dialog').html();
+            var price = foodcoopshop.Helper.getCurrencyAsFloat(row.find('td:nth-child(6) span.product-price-for-dialog').html());
             var productPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPricePrice');
-            
+
             $('#' + dialogId + ' #dialogOrderDetailProductPriceOrderDetailId').val(orderDetailId);
             $('#' + dialogId + ' label[for="dialogOrderDetailProductPricePrice"]').html(row.find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td:nth-child(10)').html() + ')');
-            
+
             var productTimebasedCurrencyPriceField;
-            
+
             $('#' + dialogId + ' .price-per-unit-info-text').remove();
             if (row.find('td:nth-child(8)').html() != '') {
                 productTimebasedCurrencyPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPricePrice').before('<b class="price-per-unit-info-text">' + foodcoopshop.LocalizedJs.admin.ExplainationTextApdaptPriceFormApaptWeight + '</b>');
             }
-            
+
             $('#' + dialogId + ' span.timebased-currency-wrapper').remove();
             var timebasedCurrencyObject = $('#timebased-currency-object-' + orderDetailId);
             if (timebasedCurrencyObject.length > 0 && $('#' + dialogId + ' #dialogOrderDetailProductPriceTimebasedCurrencyPrice').length == 0) {
@@ -1800,7 +1815,7 @@ foodcoopshop.Admin = {
                 additionalDialogHtml += '</span>';
                 $('#' + dialogId + ' .textarea-wrapper').before(additionalDialogHtml);
             }
-            
+
             if (timebasedCurrencyObject.length > 0) {
                 var newPrice = foodcoopshop.Helper.getStringAsFloat(price) + timebasedCurrencyData.money_incl;
                 productTimebasedCurrencyPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPriceTimebasedCurrencyPrice');
@@ -1808,11 +1823,11 @@ foodcoopshop.Admin = {
                 productTimebasedCurrencyPriceField.val(price);
                 foodcoopshop.TimebasedCurrency.bindOrderDetailProductPriceField(productPriceField, timebasedCurrencyData, productTimebasedCurrencyPriceField);
                 foodcoopshop.TimebasedCurrency.bindOrderDetailProductTimebasedCurrencyPriceField(productTimebasedCurrencyPriceField, timebasedCurrencyData, productPriceField);
-                
+
             } else {
                 productPriceField.val(price);
             }
-        
+
             dialog.dialog('open');
         });
 
@@ -1837,7 +1852,7 @@ foodcoopshop.Admin = {
         var dialogId = 'order-detail-product-amount-edit-form';
         var dialogHtml = foodcoopshop.DialogOrderDetail.getHtmlForOrderDetailProductAmountEdit(dialogId);
         $(container).append(dialogHtml);
-        
+
         var buttons = {};
         buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
         buttons['save'] = {
@@ -1876,7 +1891,6 @@ foodcoopshop.Admin = {
                 );
             }
         };
-        
 
         var dialog = $('#' + dialogId).dialog({
 
@@ -1923,53 +1937,47 @@ foodcoopshop.Admin = {
         var dialogHtml = foodcoopshop.DialogCustomer.getHtmlForCustomerGroupEdit(dialogId);
         $(container).append(dialogHtml);
 
-        var dialog = $('#' + dialogId).dialog({
+        var buttons = {};
+        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+        buttons['save'] = {
+            text: foodcoopshop.LocalizedJs.helper.save,
+            click: function() {
+                if ($('#dialogCustomerGroupEditGroupId').val() == '' || $('#dialogCustomerGroupEditCustomerId').val() == '') {
+                    return false;
+                }
 
+                $('#customer-group-edit-form .ajax-loader').show();
+                $('.ui-dialog button').attr('disabled', 'disabled');
+
+                foodcoopshop.Helper.ajaxCall(
+                    '/admin/customers/ajaxEditGroup/',
+                    {
+                        customerId: $('#dialogCustomerGroupEditCustomerId').val(),
+                        groupId: $('#dialogCustomerGroupEditGroup').val(),
+                    },
+                    {
+                        onOk: function (data) {
+                            document.location.reload();
+                        },
+                        onError: function (data) {
+                            dialog.dialog('close');
+                            $('#customer-group-edit-form .ajax-loader').hide();
+                            alert(data.msg);
+                        }
+                    }
+                );
+            }
+        };
+
+        var dialog = $('#' + dialogId).dialog({
             autoOpen: false,
             width: 400,
             modal: true,
-
             close: function () {
                 $('#dialogCustomerGroupEditGroupId').val('');
                 $('#dialogCustomerGroupEditCustomerId').val('');
             },
-
-            buttons: {
-
-                'Abbrechen': function () {
-                    dialog.dialog('close');
-                },
-
-                'Speichern': function () {
-
-                    if ($('#dialogCustomerGroupEditGroupId').val() == '' || $('#dialogCustomerGroupEditCustomerId').val() == '') {
-                        return false;
-                    }
-
-                    $('#customer-group-edit-form .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-
-                    foodcoopshop.Helper.ajaxCall(
-                        '/admin/customers/ajaxEditGroup/',
-                        {
-                            customerId: $('#dialogCustomerGroupEditCustomerId').val(),
-                            groupId: $('#dialogCustomerGroupEditGroup').val(),
-                        },
-                        {
-                            onOk: function (data) {
-                                document.location.reload();
-                            },
-                            onError: function (data) {
-                                dialog.dialog('close');
-                                $('#customer-group-edit-form .ajax-loader').hide();
-                                alert(data.msg);
-                            }
-                        }
-                    );
-
-                }
-
-            }
+            buttons: buttons
         });
 
         $('.customer-group-edit-button').on('click', function () {
@@ -1978,7 +1986,9 @@ foodcoopshop.Admin = {
             select.find('option').remove();
             select.append($('#selectgroupid').html());
             select.val(selectedGroupId);
-            $('#' + dialogId + ' #dialogCustomerGroupEditText').html('Gruppe ändern für ' + $(this).closest('tr').find('td:nth-child(2) a').text() + '<p style="font-weight: normal;"><br />Er/Sie muss sich nach der Änderung neu einloggen.</p>');
+            var html = foodcoopshop.LocalizedJs.admin.ChangeGroupFor + ': ' + $(this).closest('tr').find('td:nth-child(2) a').text();
+            html += '<p style="font-weight: normal;"><br />' + foodcoopshop.LocalizedJs.admin.TheMemberNeedsToSignInAgain + '</p>';
+            $('#' + dialogId + ' #dialogCustomerGroupEditText').html(html);
             $('#' + dialogId + ' #dialogCustomerGroupEditCustomerId').val($(this).closest('tr').find('td:nth-child(1)').html());
             dialog.dialog('open');
         });
@@ -1990,14 +2000,14 @@ foodcoopshop.Admin = {
      * @param int weekday
      */
     initAddOrder: function (button, weekday) {
-        // auf dev und demo seite immer zulassen (zum testen)
         if ($.inArray(foodcoopshop.Helper.cakeServerName, [
             'http://www.foodcoopshop.test',
-            'https://demo.foodcoopshop.com'
+            'https://demo-de.foodcoopshop.com',
+            'https://demo-en.foodcoopshop.com',
         ]) == -1 &&
             $.inArray(weekday, foodcoopshop.Admin.weekdaysBetweenOrderSendAndDelivery) == -1) {
             $(button).on('click', function (event) {
-                alert('Diese Funktion steht heute nicht zur Verfügung.');
+                alert(foodcoopshop.LocalizedJs.admin.ThisFunctionIsNotAvailableToday);
                 $.featherlight.close();
             });
         } else {
@@ -2010,7 +2020,7 @@ foodcoopshop.Admin = {
                     iframeHeight: $(window).height() - 100,
                     afterClose: function () {
                         foodcoopshop.Helper.ajaxCall(
-                            '/carts/ajaxDeleteShopOrderCustomer',
+                            '/carts/ajaxDeleteInstantOrderCustomer',
                             {},
                             {
                                 onOk: function (data) {},
@@ -2020,7 +2030,7 @@ foodcoopshop.Admin = {
                     },
                     afterContent: function () {
 
-                        var header = $('<div class="message-container"><span class="start">' + foodcoopshop.LocalizedJs.admin.PlaceShopOrderFor + ': </span> ' + foodcoopshop.LocalizedJs.admin.ShopOrderDateIsSetBackAfterPlacingIt + '</div>');
+                        var header = $('<div class="message-container"><span class="start">' + foodcoopshop.LocalizedJs.admin.PlaceInstantOrderFor + ': </span> ' + foodcoopshop.LocalizedJs.admin.InstantOrderDateIsSetBackAfterPlacingIt + '</div>');
                         $('.featherlight-close').after(header);
 
                         // only clone dropdown once
@@ -2028,7 +2038,7 @@ foodcoopshop.Admin = {
                             var customersDropdown = $('#add-order-button-wrapper select').clone(true);
                             customersDropdown.attr('id', 'customersDropdown');
                             customersDropdown.on('change', function () {
-                                var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/orders/initShopOrder/' + $(this).val();
+                                var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/orders/initInstantOrder/' + $(this).val();
                                 $('iframe.featherlight-inner').attr('src', newSrc);
                                 $.featherlight.showLoader();
                             });
@@ -2040,7 +2050,7 @@ foodcoopshop.Admin = {
                                 var cartFinishedRegExp = new RegExp(foodcoopshop.LocalizedJs.admin.routeCartFinished);
                                 if (currentUrl.match(cartFinishedRegExp)) {
                                     $.featherlight.showLoader();
-                                    document.location.href = '/admin/orders/correctShopOrder?url=' + encodeURIComponent(currentUrl);
+                                    document.location.href = '/admin/orders/correctInstantOrder?url=' + encodeURIComponent(currentUrl);
                                 }
                             });
                             customersDropdown.show();
@@ -2085,65 +2095,47 @@ foodcoopshop.Admin = {
             customerId = customerId[customerId.length - 1];
 
             var newState = 1;
-            var newStateText = 'aktivieren';
+            var newStateText = foodcoopshop.LocalizedJs.admin.ReallyActivateMember0;
+            var newStateTextShort = foodcoopshop.LocalizedJs.admin.ActivateMember;
             if ($(this).hasClass('set-state-to-inactive')) {
                 newState = 0;
-                newStateText = 'deaktivieren';
+                newStateText = foodcoopshop.LocalizedJs.admin.ReallyDeactivateMember0;
+                newStateTextShort = foodcoopshop.LocalizedJs.admin.DeactivateMember;
             }
 
-            var dataRow = $('#change-active-state-' + customerId).parent().parent().parent().parent();
+            var dataRow = $('#change-active-state-' + customerId).closest('tr');
 
             var buttons = {};
-            buttons['no'] = {
-                text: 'Nein',
-                click: function () {
-                    $(this).dialog('close');
-                }
-            };
+            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
 
             if (newState == 1) {
                 buttons['yes'] = {
-                    text: 'Ja (Info-Mail wird versendet)',
+                    text: foodcoopshop.LocalizedJs.admin.YesInfoMailWillBeSent,
                     click: function () {
                         $('.ui-dialog .ajax-loader').show();
-                        $('.ui-dialog button').attr(
-                            'disabled',
-                            'disabled'
-                        );
+                        $('.ui-dialog button').attr('disabled','disabled');
                         document.location.href = '/admin/customers/changeStatus/' + customerId + '/' + newState + '/1';
                     }
                 };
             } else {
                 buttons['yes'] = {
-                    text: 'Ja',
+                    text: foodcoopshop.LocalizedJs.helper.yes,
                     click: function () {
                         $('.ui-dialog .ajax-loader').show();
-                        $('.ui-dialog button').attr(
-                            'disabled',
-                            'disabled'
-                        );
+                        $('.ui-dialog button').attr('disabled','disabled');
                         document.location.href = '/admin/customers/changeStatus/' + customerId + '/' + newState + '/0';
                     }
                 };
             }
 
+            var html = '<p>' + newStateText.replaceI18n(0, '<b>' + dataRow.find('td:nth-child(2) span.name a').html() + '</b>') + '</p>';
+            html += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
             $('<div></div>')
                 .appendTo('body')
-                .html(
-                    '<p>Möchtest du das Mitglied <b>' +
-                    dataRow
-                        .find(
-                            'td:nth-child(2) span.name a'
-                        )
-                        .html() +
-                    '</b> wirklich ' +
-                    newStateText +
-                    '?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />'
-                )
+                .html(html)
                 .dialog({
                     modal: true,
-                    title: 'Mitglied ' +
-                        newStateText + '?',
+                    title: newStateTextShort,
                     autoOpen: true,
                     width: 400,
                     resizable: false,
@@ -2167,10 +2159,10 @@ foodcoopshop.Admin = {
             var reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyActivateProduct0;
             if ($(this).hasClass('set-state-to-inactive')) {
                 newState = 0;
-                var newStateText = foodcoopshop.LocalizedJs.admin.DeactivateProduct;
-                var reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyDeactivateProduct0;
+                newStateText = foodcoopshop.LocalizedJs.admin.DeactivateProduct;
+                reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyDeactivateProduct0;
             }
-            
+
             var buttons = {};
             buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
             buttons['yes'] = {
@@ -2239,7 +2231,7 @@ foodcoopshop.Admin = {
                                 document.location.reload();
                             }
                         }
-                    );                            
+                    );
                 }
             };
 
@@ -2359,10 +2351,10 @@ foodcoopshop.Admin = {
             var message;
             var isDepositForm;
             if ($('.featherlight-content .add-payment-form').hasClass('add-payment-deposit-form')) {
-                message = 'Bitte wähle die Art der Pfand-Rücknahme aus.';
+                message = foodcoopshop.LocalizedJs.admin.PleaseChoseTypeOfPayment;
                 isDepositForm = true;
             } else {
-                message = 'Bitte wähle aus, ob es sich um eine Aufladung oder ein Rückzahlung handelt.';
+                message = foodcoopshop.LocalizedJs.admin.PleaseChoseIfPaybackOrCreditUpload;
                 isDepositForm = false;
             }
 
@@ -2388,7 +2380,7 @@ foodcoopshop.Admin = {
                 }
             );
             if (months_range.length == 0) {
-                alert('Bitte wähle zumindest ein Monat aus.');
+                alert(foodcoopshop.LocalizedJs.admin.PleaseChoseAtLeastOneMonth);
                 foodcoopshop.AppFeatherlight.enableSaveButton();
                 return;
             }
@@ -2420,55 +2412,50 @@ foodcoopshop.Admin = {
 
             var dataRow = $(this).closest('tr');
 
-            var dialogHtml = '<p>Willst du deine Zahlung wirklich löschen?<br />';
-            dialogHtml += 'Datum: <b>' + dataRow.find('td:nth-child(2)').html() + '</b> <br />';
-            dialogHtml += 'Betrag: <b>' + dataRow.find('td:nth-child(4)').html();
+            var dialogHtml = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyDeletePayment + '<br />';
+            dialogHtml += foodcoopshop.LocalizedJs.admin.Date + ': <b>' + dataRow.find('td:nth-child(2)').html() + '</b> <br />';
+            dialogHtml += foodcoopshop.LocalizedJs.admin.Amount + ': <b>' + dataRow.find('td:nth-child(4)').html();
             if (dataRow.find('td:nth-child(6)').length > 0) {
                 dialogHtml += dataRow.find('td:nth-child(6)').html();
             }
             dialogHtml += '</b>';
             dialogHtml += '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
 
+            var buttons = {};
+            buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+            buttons['yes'] = {
+                text: foodcoopshop.LocalizedJs.helper.yes,
+                click: function() {
+                    $('.ui-dialog .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+                    var paymentId = dataRow.find('td:nth-child(1)').html();
+                    foodcoopshop.Helper.ajaxCall(
+                        '/admin/payments/changeState/',
+                        {
+                            paymentId: paymentId
+                        },
+                        {
+                            onOk: function (data) {
+                                document.location.reload();
+                            },
+                            onError: function (data) {
+                                alert(data.msg);
+                            }
+                        }
+                    );
+                }
+            };
+
             $('<div></div>')
                 .appendTo('body')
                 .html(dialogHtml)
                 .dialog({
                     modal: true,
-                    title: 'Zahlung löschen?',
+                    title: foodcoopshop.LocalizedJs.admin.DeletePayment,
                     autoOpen: true,
                     width: 400,
                     resizable: false,
-                    buttons: {
-
-                        'Abbrechen': function () {
-                            $(this).dialog('close');
-                        },
-
-                        'Ja': function () {
-
-                            $('.ui-dialog .ajax-loader').show();
-                            $('.ui-dialog button').attr('disabled', 'disabled');
-
-                            var paymentId = dataRow.find('td:nth-child(1)').html();
-
-                            foodcoopshop.Helper.ajaxCall(
-                                '/admin/payments/changeState/',
-                                {
-                                    paymentId: paymentId
-                                },
-                                {
-                                    onOk: function (data) {
-                                        document.location.reload();
-                                    },
-                                    onError: function (data) {
-                                        alert(data.msg);
-                                    }
-                                }
-                            );
-
-                        }
-
-                    },
+                    buttons: buttons,
                     close: function (event, ui) {
                         $(this).remove();
                     }

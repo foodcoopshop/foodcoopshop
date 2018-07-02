@@ -27,7 +27,7 @@ use Cake\Core\Configure;
                 __('Price'),
                 __('Deposit')
             ];
-            if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) {
+            if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) {
                 $columns[] = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME');
             }
             foreach ($columns as $column) {
@@ -81,7 +81,7 @@ use Cake\Core\Configure;
                     ?>
                 </td>
                 
-                <?php if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
+                <?php if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
                     <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
                         <?php
                             if (isset($product['timebasedCurrencySeconds'])) {
@@ -107,7 +107,7 @@ use Cake\Core\Configure;
                 ?>
             </td>
             
-            <?php if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
+            <?php if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
                 <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;">
                     <?php
                         echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($appAuth->Cart->getTimebasedCurrencySecondsSum());
@@ -125,7 +125,7 @@ use Cake\Core\Configure;
                     echo $this->MyNumber->formatAsCurrency($productAndDepositSum);
                 ?>
             </td>
-            <?php if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
+            <?php if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
                 <td style="background-color:#fbfbfb;border:1px solid #d6d4d4;"></td>
             <?php } ?>
         </tr>

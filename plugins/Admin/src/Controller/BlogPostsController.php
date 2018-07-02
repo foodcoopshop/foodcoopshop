@@ -64,7 +64,7 @@ class BlogPostsController extends AdminAppController
             ],
             ['validate' => false]
         );
-        $this->set('title_for_layout', 'Blog-Artikel erstellen');
+        $this->set('title_for_layout', __d('admin', 'Add_blog_post'));
         $this->_processForm($blogPost, false);
 
         if (empty($this->getRequest()->getData())) {
@@ -93,7 +93,7 @@ class BlogPostsController extends AdminAppController
         if (empty($blogPost)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', 'Blog-Artikel bearbeiten');
+        $this->set('title_for_layout', __d('admin', 'Edit_blog_post'));
         $this->_processForm($blogPost, true);
     }
 
@@ -120,15 +120,15 @@ class BlogPostsController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData(), ['content'])));
 
         $this->setRequest($this->getRequest()->withData('BlogPosts.id_customer', $this->AppAuth->getUserId()));
-        
+
         if ($this->AppAuth->isManufacturer()) {
             $this->setRequest($this->getRequest()->withData('BlogPosts.id_manufacturer', $this->AppAuth->getManufacturerId()));
         }
-        
+
         if (!$this->getRequest()->getData('BlogPosts.update_modified_field') && !$this->AppAuth->isManufacturer() && $isEditMode) {
             $this->BlogPost->removeBehavior('Timestamp');
         }
-        
+
         $blogPost = $this->BlogPost->patchEntity($blogPost, $this->getRequest()->getData());
         if (!empty($blogPost->getErrors())) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
@@ -157,10 +157,10 @@ class BlogPostsController extends AdminAppController
             if (!empty($this->getRequest()->getData('BlogPosts.delete_blog_post'))) {
                 $blogPost = $this->BlogPost->patchEntity($blogPost, ['active' => APP_DEL]);
                 $this->BlogPost->save($blogPost);
-                $messageSuffix = 'gelöscht';
+                $messageSuffix = __d('admin', 'deleted');
                 $actionLogType = 'blog_post_deleted';
             }
-            $message = 'Der Blog-Artikel <b>' . $blogPost->title . '</b> wurde ' . $messageSuffix . '.';
+            $message = __d('admin', 'The_blog_post_{0}_has_been_{1}.', ['<b>' . $blogPost->title . '</b>', $messageSuffix]);
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $blogPost->id_blog_post, 'blog_posts', $message);
             $this->Flash->success($message);
 
@@ -229,7 +229,7 @@ class BlogPostsController extends AdminAppController
 
         $this->set('blogPosts', $blogPosts);
 
-        $this->set('title_for_layout', 'Blog-Artikel');
+        $this->set('title_for_layout', __d('admin', 'Blog_posts'));
 
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $this->set('customersForDropdown', $this->Customer->getForDropdown());

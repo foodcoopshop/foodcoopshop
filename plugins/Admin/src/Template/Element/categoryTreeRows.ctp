@@ -20,7 +20,7 @@ $categoryTable = TableRegistry::getTableLocator()->get('Categories');
 
 foreach ($categories as $category) {
     $level = $categoryTable->getLevel($category);
-    
+
     $rowClass = [
         'data'
     ];
@@ -30,7 +30,7 @@ foreach ($categories as $category) {
     if (! $category->active) {
         $rowClass[] = 'deactivated';
     }
-    
+
     echo '<tr id="category-' . $category->id_category . '" class="' . implode(' ', $rowClass) . '">';
 
     echo '<td class="hide">';
@@ -39,7 +39,7 @@ foreach ($categories as $category) {
 
     echo '<td>';
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-            'title' => 'Bearbeiten'
+            'title' => __d('admin', 'Edit')
         ], $this->Slug->getCategoryEdit($category->id_category));
     echo '</td>';
 
@@ -65,8 +65,8 @@ foreach ($categories as $category) {
     echo '<td style="width:20px;">';
     if ($category->active) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
-        'title' => 'Seite anzeigen',
-        'target' => '_blank'
+            'title' => __d('admin', 'Show_category'),
+            'target' => '_blank'
         ], $this->Slug->getCategoryDetail($category->id_category, $category->name));
     }
     echo '</td>';

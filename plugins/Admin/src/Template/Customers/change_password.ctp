@@ -22,7 +22,7 @@ $this->element('addScript', [
 ?>
 
 <div class="filter-container">
-    <h1>Passwort ändern</h1>
+    <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
             class="fa fa-check"></i> <?php echo __d('admin', 'Save'); ?></a>
@@ -40,16 +40,19 @@ echo $this->Form->create($customer, [
 ]);
 
 echo $this->Form->control('Customers.passwd_old', [
-    'label' => 'Altes Passwort *',
+    'label' => __d('admin', 'Old_password'),
+    'required' => true,
     'type' => 'password',
 ]);
 echo $this->Form->control('Customers.passwd_1', [
-    'label' => 'Neues Passwort *<br /><span class="small">mindestens 8 Zeichen</span>',
+    'label' => __d('admin', 'New_password') . '<br /><span class="small">'.__d('admin', 'min_8_characters').'</span>',
+    'required' => true,
     'type' => 'password',
     'escape' => false,
 ]);
 echo $this->Form->control('Customers.passwd_2', [
-    'label' => 'Neues Passwort (nochmal) * <br /><span class="small">mindestens 8 Zeichen</span>',
+    'label' => __d('admin', 'New_password_again') . '<br /><span class="small">'.__d('admin', 'min_8_characters').'</span>',
+    'required' => true,
     'type' => 'password',
     'escape' => false,
 ]);

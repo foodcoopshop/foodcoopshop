@@ -47,49 +47,46 @@ echo $this->Form->create($customer, [
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
 echo $this->Form->control('Customers.firstname', [
-    'label' => 'Vorname',
+    'label' => __d('admin', 'Firstname'),
     'required' => true
 ]);
 echo $this->Form->control('Customers.lastname', [
-    'label' => 'Nachname',
+    'label' => __d('admin', 'Lastname'),
     'required' => true
 ]);
 echo $this->Form->control('Customers.address_customer.email', [
-    'label' => 'E-Mail-Adresse'
+    'label' => __d('admin', 'Email')
 ]);
-
 echo $this->Form->control('Customers.address_customer.address1', [
-    'label' => 'Straße'
+    'label' => __d('admin', 'Street')
 ]);
 echo $this->Form->control('Customers.address_customer.address2', [
-    'label' => 'Adresszusatz'
+    'label' => __d('admin', 'Additional_address_information')
 ]);
-
 echo $this->Form->control('Customers.address_customer.postcode', [
-    'label' => 'PLZ'
+    'label' => __d('admin', 'Zip')
 ]);
 echo $this->Form->control('Customers.address_customer.city', [
-    'label' => 'Ort'
+    'label' => __d('admin', 'City')
 ]);
-
 echo $this->Form->control('Customers.address_customer.phone_mobile', [
-    'label' => 'Handy'
+    'label' => __d('admin', 'Mobile')
 ]);
 echo $this->Form->control('Customers.address_customer.phone', [
-    'label' => 'Telefon'
+    'label' => __d('admin', 'Phone')
 ]);
 
 if (Configure::read('app.emailOrderReminderEnabled')) {
     echo $this->Form->control('Customers.newsletter', [
-        'label' => 'Bestellerinnerung<span class="after small">Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden.</span>',
+        'label' => __d('admin', 'Order_reminder').'<span class="after small">'.__d('admin', 'Want_to_receive_reminder_emails?').'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);
 }
 
 if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-    $label = 'Stundenabrechnungs-Modul aktiv? ';
-    $label .= '<span class="after small">Ich möchte meine Produkte (auch) in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ' bezahlen. Mehr Infos dazu findest du <a href="https://foodcoopshop.github.io/de/stundenabrechnungs-modul" target="_blank">in der Online-Doku</a>.';
+    $label = __d('admin', 'Paying_with_time_module_active?') . ' ';
+    $label .= '<span class="after small">'.__d('admin', 'I_want_to_be_able_to_pay_my_products_also_in_{0}.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).' <a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_paying-with-time-module')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_paying_with_time_module?').'</a>';
     if (!$timebasedCurrencyDisableOptionAllowed) {
         $label .= ' Zum Deaktivieren der Option muss dein ' . $this->TimebasedCurrency->getName() . ' ausgeglichen sein, derzeit beträgt es '.$this->TimebasedCurrency->formatSecondsToTimebasedCurrency($timebasedCurrencyCreditBalance).'.';
     }
@@ -102,7 +99,7 @@ if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
     ]);
 }
 
-echo '<a class="delete-customer-button btn btn-danger">Mitgliedskonto unwiderruflich löschen?</a>';
+echo '<a class="delete-customer-button btn btn-danger">'.__d('admin', 'Delete_member_irrevocably?').'</a>';
 
 echo $this->Form->end(); ?>
 

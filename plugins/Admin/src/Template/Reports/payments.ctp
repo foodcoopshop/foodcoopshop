@@ -20,7 +20,7 @@ $this->element('addScript', [
         $('input.datepicker').datepicker();" .
         Configure::read('app.jsNamespace') . ".Admin.init();".
         Configure::read('app.jsNamespace') . ".Helper.initTooltip('.payment-approval-comment');".
-        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');"
+        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');"
 ]);
 if ($paymentType == 'product') {
     $this->element('highlightRowAfterEdit', [
@@ -33,7 +33,7 @@ if ($paymentType == 'product') {
     <?php echo $this->Form->create(null, ['type' => 'get']); ?>
         <h1><?php echo $title_for_layout; ?></h1>
         <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameTo' => 'dateTo', 'nameFrom' => 'dateFrom']); ?>
-        <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Mitglieder', 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
+        <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_members'), 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
         <div class="right">
         	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_financial_reports'))]); ?>
         </div>
@@ -53,15 +53,15 @@ echo '<tr class="sort">';
 $colspan = 3;
 if ($paymentType == 'product') {
     echo '<th style="width:25px;"></th>';
-    echo '<th style="width:50px;">' . $this->Paginator->sort('Payments.approval', 'Status') . '</th>';
+    echo '<th style="width:50px;">' . $this->Paginator->sort('Payments.approval', __d('admin', 'Status')) . '</th>';
     $colspan = $colspan + 2;
 }
-echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), 'Mitglied') . '</th>';
-echo '<th>' . $this->Paginator->sort('Payments.date_add', 'Eingetragen am') . '</th>';
-echo '<th>' . $this->Paginator->sort('CreatedBy.' . Configure::read('app.customerMainNamePart'), 'Eingetragen von') . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Payments.date_add', __d('admin', 'Added_on')) . '</th>';
+echo '<th>' . $this->Paginator->sort('CreatedBy.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Added_by')) . '</th>';
 echo '<th>' . $this->Html->getPaymentText($paymentType) . '</th>';
 if ($showTextColumn) {
-    echo '<th>' . $this->Paginator->sort('Payments.text', 'Text') . '</th>';
+    echo '<th>' . $this->Paginator->sort('Payments.text', __d('admin', 'Text')) . '</th>';
 }
 echo '</tr>';
 
@@ -73,7 +73,7 @@ foreach ($payments as $payment) {
     $additionalText = '';
     if ($payment->status == APP_DEL) {
         $rowClass = 'deactivated line-through';
-        $additionalText = ' (' . $this->Html->getPaymentText($paymentType) . ' gelöscht am ' . $payment->date_changed->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) . ' - scheint in der Summe nicht auf)';
+        $additionalText = ' (' . $this->Html->getPaymentText($paymentType) . ' '.__d('admin', 'deleted_on').' ' . $payment->date_changed->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) . ' - '.__d('admin', 'does_not_appear_in_sum.').')';
     } else {
         $i ++;
         $paymentSum += $payment->amount;
@@ -86,7 +86,7 @@ foreach ($payments as $payment) {
             echo $this->Html->getJqueryUiIcon(
                 $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
                 [
-                'title' => 'Bearbeiten'
+                'title' => __d('admin', 'Edit')
                 ],
                 $this->Slug->getPaymentEdit($payment->id)
             );

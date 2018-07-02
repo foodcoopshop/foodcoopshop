@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-22 17:31+0200\n"
+"POT-Creation-Date: 2018-07-02 11:01+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -15,6 +15,9 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 msgid "You_have_been_signed_out."
+msgstr ""
+
+msgid "News"
 msgstr ""
 
 msgid "You_are_not_signed_in."
@@ -29,7 +32,7 @@ msgstr ""
 msgid "Order_confirmation"
 msgstr ""
 
-msgid "Filename_Cancellation-information-and-form"
+msgid "Filename_Right-of-withdrawal-information-and-form"
 msgstr ""
 
 msgid "Filename_Order-confirmation"
@@ -68,13 +71,16 @@ msgstr ""
 msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
 msgstr ""
 
+msgid "Errors_occurred."
+msgstr ""
+
 msgid "Your_order_has_been_placed_succesfully."
 msgstr ""
 
 msgid "{0}_has_placed_a_new_order_({1})."
 msgstr ""
 
-msgid "Notification_about_shop_order_order_number_{0}"
+msgid "Notification_about_instant_order_order_number_{0}"
 msgstr ""
 
 msgid "Your_order_has_been_placed"
@@ -200,10 +206,10 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-msgid "Cancel_shop_order?"
+msgid "Cancel_instant_order?"
 msgstr ""
 
-msgid "Really_cancel_shop_order?"
+msgid "Really_cancel_instant_order?"
 msgstr ""
 
 msgid "January"
@@ -365,9 +371,6 @@ msgstr ""
 msgid "route_news_list"
 msgstr ""
 
-msgid "News"
-msgstr ""
-
 msgid "Pages"
 msgstr ""
 
@@ -383,10 +386,10 @@ msgstr ""
 msgid "route_cart_finished"
 msgstr ""
 
-msgid "Place_shop_order_for"
+msgid "Place_instant_order_for"
 msgstr ""
 
-msgid "Shop_order_date_is_set_back_after_placing_it."
+msgid "Instant_order_date_is_set_back_after_placing_it."
 msgstr ""
 
 msgid "Close_all_orders?"
@@ -557,10 +560,94 @@ msgstr ""
 msgid "Deactivate_product"
 msgstr ""
 
+msgid "Activate_member?"
+msgstr ""
+
+msgid "Deactivate_member?"
+msgstr ""
+
+msgid "Really_activate_member_{0}_?"
+msgstr ""
+
+msgid "Really_deactivate_member_{0}?"
+msgstr ""
+
 msgid "Really_activate_product_{0}_?"
 msgstr ""
 
-msgid "Really_deactivate_product_{0}_?"
+msgid "Really_deactivate_product_{0}?"
+msgstr ""
+
+msgid "Delete_attribute"
+msgstr ""
+
+msgid "Really_delete_attribute_{0}?"
+msgstr ""
+
+msgid "Please_chose_if_it_is_a_payback_or_a_credit_upload."
+msgstr ""
+
+msgid "Please_chose_the_type_of_your_payment."
+msgstr ""
+
+msgid "Delete_payment"
+msgstr ""
+
+msgid "Really_delete_payment?"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Amount"
+msgstr ""
+
+msgid "Please_chose_at_least_one_month."
+msgstr ""
+
+msgid "Delete_member?"
+msgstr ""
+
+msgid "Really_delete_member?"
+msgstr ""
+
+msgid "Be_careful_there_is_no_way_back!"
+msgstr ""
+
+msgid "Errors_occurred_while_member_was_deleted"
+msgstr ""
+
+msgid "Add_comment"
+msgstr ""
+
+msgid "Please_cancel_all_ordered_products_before_cancelling_the_order."
+msgstr ""
+
+msgid "Add_new_product?"
+msgstr ""
+
+msgid "Really_add_new_product?"
+msgstr ""
+
+msgid "This_function_is_not_available_today."
+msgstr ""
+
+msgid "Manually_send_order_list?"
+msgstr ""
+
+msgid "Really_manually_send_order_list_to_{0}?"
+msgstr ""
+
+msgid "Order_period"
+msgstr ""
+
+msgid "An_existing_order_list_will_be_overwritten!"
+msgstr ""
+
+msgid "Change_group_for"
+msgstr ""
+
+msgid "The_member_needs_to_sign_again."
 msgstr ""
 
 msgid "Change_comment_of_order"
@@ -570,6 +657,12 @@ msgid "Set_date_of_order_back_to"
 msgstr ""
 
 msgid "Set_date_of_order_back"
+msgstr ""
+
+msgid "Change_member_comment"
+msgstr ""
+
+msgid "Change_group"
 msgstr ""
 
 msgid "Change_amount"
@@ -629,6 +722,33 @@ msgstr ""
 msgid "Enter_zero_for_delete"
 msgstr ""
 
+msgid "delete"
+msgstr ""
+
+msgid "Delete_image?"
+msgstr ""
+
+msgid "Really_delete_image?"
+msgstr ""
+
+msgid "rotate_anti_clockwise?"
+msgstr ""
+
+msgid "rotate_clockwise?"
+msgstr ""
+
+msgid "Manufacturer"
+msgstr ""
+
+msgid "Terms_of_use"
+msgstr ""
+
+msgid "Privacy_policy"
+msgstr ""
+
+msgid "List_of_allergens"
+msgstr ""
+
 msgid "Price_excl."
 msgstr ""
 
@@ -639,6 +759,9 @@ msgid "Member"
 msgstr ""
 
 msgid "Total_sum"
+msgstr ""
+
+msgid "Page_{0}_of_{1}"
 msgstr ""
 
 msgid "Action_Log_Product_added"
@@ -713,7 +836,7 @@ msgstr ""
 msgid "Action_Log_Order_date_changed"
 msgstr ""
 
-msgid "Action_Log_Order_shop_order_placed"
+msgid "Action_Log_Order_instant_order_placed"
 msgstr ""
 
 msgid "Action_Log_Order_detail_product_price_changed"
@@ -902,10 +1025,133 @@ msgstr ""
 msgid "Action_Log_Setting_changed"
 msgstr ""
 
+msgid "Please_enter_your_email_address."
+msgstr ""
+
+msgid "The_email_address_is_not_valid."
+msgstr ""
+
+msgid "The_email_address_is_already_used_by_another_member_or_manufacturer."
+msgstr ""
+
+msgid "Please_enter_your_street."
+msgstr ""
+
+msgid "Please_enter_your_city."
+msgstr ""
+
+msgid "Please_enter_your_zip."
+msgstr ""
+
+msgid "The_zip_is_not_valid."
+msgstr ""
+
+msgid "Please_enter_your_mobile_number."
+msgstr ""
+
+msgid "The_mobile_number_is_not_valid."
+msgstr ""
+
+msgid "The_phone_number_is_not_valid."
+msgstr ""
+
+msgid "Please_enter_the_first_name_of_the_invoice_holder."
+msgstr ""
+
+msgid "Please_enter_the_last_name_of_the_invoice_holder."
+msgstr ""
+
+msgid "Please_enter_an_email_address."
+msgstr ""
+
+msgid "Please_enter_a_number_between_{0}_and_{1}."
+msgstr ""
+
+msgid "Please_enter_a_name."
+msgstr ""
+
+msgid "An_attribute_with_this_name_already_exists."
+msgstr ""
+
+msgid "Please_enter_a_title."
+msgstr ""
+
+msgid "Please_enter_at_least_{0}_characters."
+msgstr ""
+
+msgid "Please_enter_max_{0}_characters."
+msgstr ""
+
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr ""
 
 msgid "Product_with_id_{0}_does_not_exist."
+msgstr ""
+
+msgid "The_attribute_does_not_exist:_{0}"
+msgstr ""
+
+msgid "offline"
+msgstr ""
+
+msgid "Please_enter_a_valid_internet_address."
+msgstr ""
+
+msgid "Decimals_are_not_allowed."
+msgstr ""
+
+msgid "Please_enter_the_name_of_the_foodcoop."
+msgstr ""
+
+msgid "Please_enter_the_paying_with_time_module_name."
+msgstr ""
+
+msgid "Please_enter_the_abbreviation_of_the_paying_with_time_module."
+msgstr ""
+
+msgid "Please_enter_the_exchange_rate_for_the_paying_with_time_module_in_{0}."
+msgstr ""
+
+msgid "Please_enter_exactly_2_decimals."
+msgstr ""
+
+msgid "Please_provide_a_value."
+msgstr ""
+
+msgid "The_following_values_are_valid:"
+msgstr ""
+
+msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
+msgstr ""
+
+msgid "Please_enter_your_first_name."
+msgstr ""
+
+msgid "Please_enter_your_last_name."
+msgstr ""
+
+msgid "Please_enter_your_old_password."
+msgstr ""
+
+msgid "Your_old_password_is_wrong."
+msgstr ""
+
+msgid "Please_enter_a_new_password."
+msgstr ""
+
+msgid "The_password_needs_to_be_at_least_8_characters_long."
+msgstr ""
+
+msgid "The_passwords_do_not_match."
+msgstr ""
+
+msgid "We_did_not_find_this_email_address."
+msgstr ""
+
+msgid "Your_account_is_not_active_any_more._If_you_want_to_reactivate_it_please_write_an_email."
+msgstr ""
+
+msgid "Please_accept_the_terms_of_use."
 msgstr ""
 
 msgid "Members:_active"
@@ -923,10 +1169,34 @@ msgstr ""
 msgid "Members:_inactive"
 msgstr ""
 
+msgid "Please_enter_between_{0}_and_{1}_characters."
+msgstr ""
+
+msgid "Please_enter_a_valid_IBAN."
+msgstr ""
+
+msgid "Please_enter_a_valid_BIC."
+msgstr ""
+
+msgid "At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space."
+msgstr ""
+
+msgid "Delivery_break"
+msgstr ""
+
+msgid "online"
+msgstr ""
+
 msgid "Pick_up_day"
 msgstr ""
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr ""
+
+msgid "Please_accept_the_information_about_right_of_withdrawal."
+msgstr ""
+
+msgid "Please_accept_the_general_terms_and_conditions."
 msgstr ""
 
 msgid "Please_enter_a_correct_number."
@@ -935,10 +1205,43 @@ msgstr ""
 msgid "The_amount_needs_to_be_greater_than_0."
 msgstr ""
 
+msgid "New_product_of"
+msgstr ""
+
+msgid "Please_upload_an_image."
+msgstr ""
+
+msgid "Please_enter_a_tax_rate."
+msgstr ""
+
+msgid "This_tax_rate_is_already_being_used."
+msgstr ""
+
 msgid "Runtime"
 msgstr ""
 
 msgid "seconds"
+msgstr ""
+
+msgid "Database_backup_successful"
+msgstr ""
+
+msgid "Your_credit_is_used_up"
+msgstr ""
+
+msgid "Sum"
+msgstr ""
+
+msgid "Sent_emails"
+msgstr ""
+
+msgid "Order_reminder"
+msgstr ""
+
+msgid "today"
+msgstr ""
+
+msgid "tomorrow"
 msgstr ""
 
 msgid "to_(time_context)"
@@ -948,9 +1251,6 @@ msgid "Invoices_for_{0}_have_been_sent"
 msgstr ""
 
 msgid "Sent_invoices"
-msgstr ""
-
-msgid "Order_period"
 msgstr ""
 
 msgid "Sent_order_lists"
@@ -966,6 +1266,9 @@ msgid "by"
 msgstr ""
 
 msgid "Edit"
+msgstr ""
+
+msgid "Further_news"
 msgstr ""
 
 msgid "found"
@@ -1004,7 +1307,7 @@ msgstr ""
 msgid "Please_pick_up_your_products_on_{0}_at_{1}."
 msgstr ""
 
-msgid "general_terms_of_use"
+msgid "general_terms_and_conditions"
 msgstr ""
 
 msgid "I_accept_the_{0}"
@@ -1097,6 +1400,24 @@ msgstr ""
 msgid "terms_of_use"
 msgstr ""
 
+msgid "Please_enter_your_email_address_and_click_on_send_button."
+msgstr ""
+
+msgid "You_will_then_get_a_link_to_change_your_password."
+msgstr ""
+
+msgid "Send"
+msgstr ""
+
+msgid "The_confirmation_of_your_registration_was_sent_to_you_by_email."
+msgstr ""
+
+msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
+msgstr ""
+
+msgid "You_will_get_an_email_as_soon_as_we_activated_you."
+msgstr ""
+
 msgid "Hello"
 msgstr ""
 
@@ -1127,22 +1448,10 @@ msgstr ""
 msgid "Add_credit"
 msgstr ""
 
-msgid "Sum"
-msgstr ""
-
 msgid "Value_added_tax"
 msgstr ""
 
 msgid "Show_cart_button"
-msgstr ""
-
-msgid "Terms_of_use"
-msgstr ""
-
-msgid "Privacy_policy"
-msgstr ""
-
-msgid "List_of_allergens"
 msgstr ""
 
 msgid "Information"
@@ -1158,6 +1467,18 @@ msgid "Bank_account_member_fee"
 msgstr ""
 
 msgid "Help?"
+msgstr ""
+
+msgid "Replace_existing_image"
+msgstr ""
+
+msgid "Upload_new_image"
+msgstr ""
+
+msgid "Please_only_use_self_made_images_(not_from_the_internet)."
+msgstr ""
+
+msgid "Search_PC"
 msgstr ""
 
 msgid "DELIVERY_DAY"
@@ -1178,19 +1499,13 @@ msgstr ""
 msgid "Manufacturer_area"
 msgstr ""
 
-msgid "To_change_your_profile_please_stop_the_shop_order_mode."
+msgid "To_change_your_profile_please_stop_the_instant_order_mode."
 msgstr ""
 
 msgid "Signed_in"
 msgstr ""
 
-msgid "Amount"
-msgstr ""
-
 msgid "Product"
-msgstr ""
-
-msgid "Manufacturer"
 msgstr ""
 
 msgid "Price"
@@ -1244,12 +1559,6 @@ msgstr ""
 msgid "Your_registration_at_{0}_has_just_been_successful!"
 msgstr ""
 
-msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
-msgstr ""
-
-msgid "You_will_get_an_email_as_soon_as_we_activated_you."
-msgstr ""
-
 msgid "Dear_responsible_person_for_new_members,"
 msgstr ""
 
@@ -1262,6 +1571,12 @@ msgstr ""
 msgid "Here_you_can_see_the_data_of_the_new_member"
 msgstr ""
 
+msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1}_(order_number_{2})."
+msgstr ""
+
+msgid "You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists."
+msgstr ""
+
 msgid "please_click_on_this_link_to_generate_a_new_password"
 msgstr ""
 
@@ -1272,12 +1587,6 @@ msgid "You_can_sign_in_and_change_your_password_here"
 msgstr ""
 
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."
-msgstr ""
-
-msgid "There_has_been_placed_a_shop_order_for_{0}_by_{1}_(order_number_{2})."
-msgstr ""
-
-msgid "You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists."
 msgstr ""
 
 msgid "route_search"
@@ -1304,6 +1613,60 @@ msgstr ""
 msgid "Imprint"
 msgstr ""
 
+msgid "Terms_and_conditions"
+msgstr ""
+
+msgid "Order_overview"
+msgstr ""
+
+msgid "Order_of"
+msgstr ""
+
+msgid "placed_on"
+msgstr ""
+
+msgid "Prices_are_including_vat."
+msgstr ""
+
+msgid "Information_about_right_of_withdrawal"
+msgstr ""
+
+msgid "Withdrawal_form"
+msgstr ""
+
+msgid "If_you_want_to_cancel_the_contract_please_fill_out_this_form_and_send_it_back."
+msgstr ""
+
+msgid "Hereby_I_cancel_the_contract_about_the_purchase_of_following_goods_or_service."
+msgstr ""
+
+msgid "Ordered_on"
+msgstr ""
+
+msgid "Received_on"
+msgstr ""
+
+msgid "Name_of_consumer(s)"
+msgstr ""
+
+msgid "Address_of_consumer(s)"
+msgstr ""
+
+msgid "Signature_of_consumer_only_if_transmitted_on_paper."
+msgstr ""
+
+msgid "Strike_out_unnecessary_items."
+msgstr ""
+
+msgid "Filename_Information-about-right-of-withdrawal"
+msgstr ""
+
+msgid "yes"
+msgstr ""
+
+msgid "no"
+msgstr ""
+
 msgid "Sign_out"
 msgstr ""
 
@@ -1311,6 +1674,24 @@ msgid "Credit"
 msgstr ""
 
 msgid "Member_fee"
+msgstr ""
+
+msgid "Deleted_Member"
+msgstr ""
+
+msgid "Deleted_Email_Address"
+msgstr ""
+
+msgid "delivery_break_since_holiday_active"
+msgstr ""
+
+msgid "delivery_break_since_holiday_not_active"
+msgstr ""
+
+msgid "delivery_break_until"
+msgstr ""
+
+msgid "The_manufacturer_{0}_has_{1}_delivery_break."
 msgstr ""
 
 msgid "Website"
@@ -1329,6 +1710,33 @@ msgid "Supervisory_authority"
 msgstr ""
 
 msgid "Chamber"
+msgstr ""
+
+msgid "Header_(top)"
+msgstr ""
+
+msgid "Footer_(bottom)"
+msgstr ""
+
+msgid "Admin"
+msgstr ""
+
+msgid "Superadmin"
+msgstr ""
+
+msgid "credit_and_deposit"
+msgstr ""
+
+msgid "Payment_type_credit_upload"
+msgstr ""
+
+msgid "Payment_type_payback"
+msgstr ""
+
+msgid "Payment_type_deposit_return"
+msgstr ""
+
+msgid "Payment_type_member_fee"
 msgstr ""
 
 msgid "Empty_glasses"

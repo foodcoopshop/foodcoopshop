@@ -33,12 +33,12 @@ use Cake\Core\Configure;
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php echo $this->Form->control('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'default' => isset($active) ? $active : '']); ?>
-            Anzahl Bestellungen zwischen <input id="validOrdersCountFrom" name="validOrdersCountFrom"
+            <?php echo __d('admin', 'Amount_orders_between'); ?> <input id="validOrdersCountFrom" name="validOrdersCountFrom"
                 type="text"
                 value="<?php echo isset($validOrdersCountFrom) ? $validOrdersCountFrom : ''; ?>" />
-            und <input id="validOrdersCountTo" name="validOrdersCountTo" type="text"
+            <?php echo __d('admin', 'and'); ?> <input id="validOrdersCountTo" name="validOrdersCountTo" type="text"
                 value="<?php echo isset($validOrdersCountTo) ? $validOrdersCountTo: ''; ?>" />
-            und letztes Bestelldatum von <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
+            <?php echo __d('admin', 'and_last_order_date_between'); ?> <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
             <div class="right">
             	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_members'))]); ?>
             </div>
@@ -50,23 +50,23 @@ use Cake\Core\Configure;
 echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide">ID</th>';
-echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), 'Name') . '</th>';
-echo '<th>' . $this->Paginator->sort('Customers.id_default_group', 'Gruppe') . '</th>';
-echo '<th>' . $this->Paginator->sort('Customers.email', 'E-Mail') . '</th>';
-echo '<th>' . $this->Paginator->sort('Customers.active', 'Status') . '</th>';
-echo '<th>Bestellungen</th>';
+echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Name')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.id_default_group', __d('admin', 'Group')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.email', __d('admin', 'Email')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.active', __d('admin', 'Status')) . '</th>';
+echo '<th>'.__d('admin', 'Orders').'</th>';
 if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-    echo '<th>Guthaben</th>';
+    echo '<th>'.__d('admin', 'Credit').'</th>';
 }
 if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
     echo '<th>' . $this->Paginator->sort('Customers.timebased_currency_enabled', Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')) . '</th>';
 }
 if (Configure::read('app.emailOrderReminderEnabled')) {
-    echo '<th>' . $this->Paginator->sort('Customers.newsletter', 'Email') . '</th>';
+    echo '<th>' . $this->Paginator->sort('Customers.newsletter',  __d('admin', 'Reminder')) . '</th>';
 }
-echo '<th>' . $this->Paginator->sort('Customers.date_add', 'Registrier-Datum') . '</th>';
-echo '<th>Letztes Bestelldatum</th>';
-echo '<th>Komm.</th>';
+echo '<th>' . $this->Paginator->sort('Customers.date_add',  __d('admin', 'Register_date')) . '</th>';
+echo '<th>'.__d('admin', 'Last_order_date').'</th>';
+echo '<th>'.__d('admin', 'Comment_abbreviation').'</th>';
 echo '</tr>';
 
 $i = 0;
@@ -85,23 +85,23 @@ foreach ($customers as $customer) {
     echo '<td>';
 
         $customerName = $this->Html->getNameRespectingIsDeleted($customer);
-    
+
         if ($appAuth->isSuperadmin()) {
             echo '<span class="edit-wrapper">';
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                    'title' => 'Bearbeiten'
+                    'title' => __d('admin', 'Edit')
                 ], $this->Slug->getCustomerEdit($customer->id_customer));
             echo '</span>';
         }
         if ($customer->order_count <= 3) {
-            $customerName = '<i class="fa fa-pagelines" title="Neuling: Hat erst ' . $customer->order_count . 'x bestellt."></i> ' . $customerName;
+            $customerName = '<i class="fa fa-pagelines" title="'.__d('admin', 'Newbie_only_{0}_times_ordered.', [$customer->order_count]).'"></i> ' . $customerName;
         }
-    
+
         echo '<span class="name">' . $this->Html->link($customerName, '/admin/orders/index/?orderStates[]=' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . '&dateFrom=01.01.2014&dateTo=' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt')) . '&customerId=' . $customer->id_customer . '&sort=Orders.date_add&direction=desc', [
-            'title' => 'Zu allen Bestellungen von ' . $this->Html->getNameRespectingIsDeleted($customer),
+            'title' => __d('admin', 'Show_all_orders_from_{0}', [$this->Html->getNameRespectingIsDeleted($customer)]),
             'escape' => false
         ]) . '</span>';
-    
+
         echo '<div class="customer-details-wrapper">';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('telephone.png')), [
                 'class' => 'customer-details-read-button',
@@ -117,7 +117,7 @@ foreach ($customers as $customer) {
         echo '<div class="table-cell-wrapper group">';
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
             'class' => 'customer-group-edit-button',
-            'title' => 'Zum Ändern der Gruppe anklicken'
+            'title' => __d('admin', 'Change_group')
         ], 'javascript:void(0);');
         echo '<span>' . $this->Html->getGroupName($customer->id_default_group) . '</span>';
         echo '</div>';
@@ -137,7 +137,7 @@ foreach ($customers as $customer) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')), [
             'class' => 'set-state-to-inactive change-active-state',
             'id' => 'change-active-state-' . $customer->id_customer,
-            'title' => 'Zum Deaktivieren anklicken'
+            'title' => __d('admin', 'deactivate')
         ], 'javascript:void(0);');
     }
 
@@ -145,7 +145,7 @@ foreach ($customers as $customer) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
             'class' => 'set-state-to-active change-active-state',
             'id' => 'change-active-state-' . $customer->id_customer,
-            'title' => 'Zum Aktivieren anklicken'
+            'title' => __d('admin', 'activate')
         ], 'javascript:void(0);');
     }
 
@@ -166,7 +166,7 @@ foreach ($customers as $customer) {
                 $creditBalanceHtml,
                 [
                 'class' => 'icon-with-text',
-                'title' => 'Guthaben anzeigen'
+                'title' => __d('admin', 'Show_credit')
                 ],
                 $this->Slug->getCreditBalance($customer->id_customer)
             );
@@ -175,27 +175,27 @@ foreach ($customers as $customer) {
                 echo $this->Number->formatAsCurrency($customer->credit_balance);
             }
         }
-        
+
         echo '</td>';
     }
-    
+
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
         echo '<td>';
         if ($customer->timebased_currency_enabled) {
             $sumTimebasedCurrency += $customer->timebased_currency_credit_balance;
-            
+
             $timebasedCurrencyCreditBalanceClasses = [];
             if ($customer->timebased_currency_credit_balance < 0) {
                 $timebasedCurrencyCreditBalanceClasses[] = 'negative';
             }
             $timebasedCurrencyCreditBalanceHtml = '<span class="'.implode(' ', $timebasedCurrencyCreditBalanceClasses).'">' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($customer->timebased_currency_credit_balance);
-            
+
             if ($appAuth->isSuperadmin()) {
                 echo $this->Html->getJqueryUiIcon(
                     $timebasedCurrencyCreditBalanceHtml,
                     [
                         'class' => 'icon-with-text',
-                        'title' => $this->TimebasedCurrency->getName() . ' anzeigen'
+                        'title' => __d('admin', 'Show_{0}', [$this->TimebasedCurrency->getName()])
                     ],
                     $this->Slug->getTimebasedCurrencyPaymentDetailsForSuperadmins(0, $customer->id_customer)
                 );
@@ -205,7 +205,7 @@ foreach ($customers as $customer) {
         }
         echo '</td>';
     }
-    
+
 
     if (Configure::read('app.emailOrderReminderEnabled')) {
         echo '<td>';
@@ -223,7 +223,7 @@ foreach ($customers as $customer) {
     echo '</td>';
 
     echo '<td style="padding-left: 11px;">';
-        $commentText = $customer->address_customer->comment != '' ? $customer->address_customer->comment : 'Kommentar hinzufügen';
+        $commentText = $customer->address_customer->comment != '' ? $customer->address_customer->comment : __d('admin', 'Add_comment');
         echo $this->Html->getJqueryUiIcon(
             $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
             [
@@ -258,7 +258,7 @@ echo '</table>';
 echo '<div class="sc"></div>';
 
 echo '<div class="bottom-button-container">';
-echo '<button class="email-to-all btn btn-default" data-column="4"><i class="fa fa-envelope-o"></i> Alle E-Mail-Adressen kopieren</button>';
+echo '<button class="email-to-all btn btn-default" data-column="4"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
 echo '</div>';
 echo '<div class="sc"></div>';
 

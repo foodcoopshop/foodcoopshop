@@ -39,7 +39,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '65,03', 'product');
         $this->assertEquals(65.03, $jsonDecodedContent->amount);
     }
-    
+
     public function testAddPaymentParameterPriceNegative()
     {
         $this->loginAsCustomer();
@@ -55,7 +55,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals(0, $jsonDecodedContent->status);
         $this->assertRegExpWithUnquotedString('Der Betrag muss größer als 0 sein', $jsonDecodedContent->msg);
     }
-    
+
     public function testAddPaymentParameterPriceZero()
     {
         $this->loginAsCustomer();
@@ -63,7 +63,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals(0, $jsonDecodedContent->status);
         $this->assertRegExpWithUnquotedString('Der Betrag muss größer als 0 sein', $jsonDecodedContent->msg);
     }
-    
+
     public function testAddPaymentParameterPriceWrongNumber()
     {
         $this->loginAsCustomer();
@@ -71,7 +71,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals(0, $jsonDecodedContent->status);
         $this->assertRegExpWithUnquotedString('Bitte gib eine korrekte Zahl ein', $jsonDecodedContent->msg);
     }
-    
+
     public function testAddPaymentWithInvalidType()
     {
         $this->loginAsCustomer();

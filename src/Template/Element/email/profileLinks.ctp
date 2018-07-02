@@ -18,7 +18,7 @@ use Cake\Core\Configure;
 <p>
     <?php echo __('You_can_sign_in_here_for_ordering'); ?>:<br />
     <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getLogin(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getLogin(); ?></a><br /><br />
-    <?php echo __('E-mail_address'); ?>: <?php echo $data['Customers']['email']; ?><br />
+    <?php echo __('E-mail_address'); ?>: <?php echo $data->address_customer->email; ?><br />
     <?php echo __('Password'); ?>: <?php echo $newPassword; ?>
 </p>
 

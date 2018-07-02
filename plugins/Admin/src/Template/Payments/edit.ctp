@@ -19,7 +19,7 @@ $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();" .
         Configure::read('app.jsNamespace') . ".Helper.initCkeditor('payments-approval-comment');" .
-        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');" .
+        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');"
         Configure::read('app.jsNamespace') . ".Admin.initForm();
         $('#payments-approval').on('change', function() {
             var emailCheckbox = $('#payments-send-email');
@@ -43,12 +43,6 @@ $this->element('addScript', [
     </div>
 </div>
 
-<div id="help-container">
-    <ul>
-        <li>Auf dieser Seite kannst du die Guthaben-Aufladungen ändern.</li>
-    </ul>
-</div>
-
 <div class="sc"></div>
 
 <?php
@@ -59,18 +53,18 @@ echo $this->Form->create($payment, [
 ]);
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
-echo '<p><label>Mitglied</label>' . $payment->customer->name.'</p>';
-echo '<p><label>Betrag</label>' . $this->Number->formatAsCurrency($payment->amount).'</p>';
-echo '<p><label>Datum der Aufladung</label>' . $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) .'</p>';
-echo '<p><label>Datum der letzten Änderung</label>' . $payment->date_changed->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')).'</p>';
-echo '<p><label>Letzter Bearbeiter</label>' . (empty($payment->changed_by_customer) ? 'Diese Zahlung wurde noch nicht bearbeitet' : $payment->changed_by_customer->name).'</p>';
+echo '<p><label>'.__d('admin', 'Member').'</label>' . (!empty($payment->customer) ? $payment->customer->name : '').'</p>';
+echo '<p><label>'.__d('admin', 'Amount').'</label>' . $this->Number->formatAsCurrency($payment->amount).'</p>';
+echo '<p><label>'.__d('admin', 'Date_of_upload').'</label>' . $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) .'</p>';
+echo '<p><label>'.__d('admin', 'Date_last_modified').'</label>' . $payment->date_changed->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')).'</p>';
+echo '<p><label>'.__d('admin', 'Last_editor').'</label>' . (empty($payment->changed_by_customer) ? __d('admin', 'This_payment_has_not_been_changed_yet.') : $payment->changed_by_customer->name).'</p>';
 echo $this->Form->control('Payments.approval', [
     'type' => 'select',
     'label' => 'Status',
     'options' => $this->Html->getApprovalStates()
 ]);
 
-$checkboxLabel = 'E-Mail versenden? <span class="after small multiple-lines">Wenn angehakt, wird das Mitglied beim Speichern per E-Mail<br /> über die Status-Änderung informiert (inkl. Kommentar).<br /><span style="float: left;">E-Mail-Vorschau:</span>'.
+$checkboxLabel = __d('admin', 'Send_email?').' <span class="after small multiple-lines">'.__d('admin', 'If_checked_the_member_will_be_notified_about_the_status_change_by_email_on_saving_including_the_comment.').'<br /><span style="float: left;">'.__d('admin', 'Email_preview').':</span>'.
     $this->Html->getJqueryUiIcon(
         $this->Html->image($this->Html->getFamFamFamPath('accept.png')),
         [
@@ -97,7 +91,7 @@ echo $this->Form->control('Payments.send_email', [
 
 echo $this->Form->control('Payments.approval_comment', [
     'type' => 'textarea',
-    'label' => 'Kommentar',
+    'label' => __d('admin', 'Comment'),
     'class' => 'ckeditor'
 ]);
 

@@ -42,7 +42,7 @@ class AppTable extends Table
 
     public function getNumberRangeValidator(Validator $validator, $field, $min, $max)
     {
-        $message = 'Die Eingabe muss eine Zahl zwischen ' . $min . ' und ' . $max . ' sein.';
+        $message = __('Please_enter_a_number_between_{0}_and_{1}.', [$min, $max]);
         $validator->lessThanOrEqual($field, $max, $message);
         $validator->greaterThanOrEqual($field, $min, $message);
         $validator->notEmpty($field, $message);
@@ -53,7 +53,7 @@ class AppTable extends Table
     {
         return (object) Hash::sort($object->toArray(), '{n}.' . $name, 'ASC');
     }
-    
+
     public function getAllValidationErrors($entity)
     {
         $preparedErrors = [];
@@ -116,7 +116,7 @@ class AppTable extends Table
                 Manufacturers.timebased_currency_enabled,
                 Units.price_per_unit_enabled, Units.price_incl_per_unit, Units.name as unit_name, Units.amount as unit_amount, Units.quantity_in_units,
                 StockAvailables.quantity";
-        
+
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
             $fields .= ", Manufacturers.timebased_currency_max_percentage, Manufacturers.timebased_currency_max_credit_balance";
         }

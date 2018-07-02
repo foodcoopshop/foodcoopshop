@@ -35,7 +35,7 @@ class AttributesController extends AdminAppController
             ['active' => APP_ON],
             ['validate' => false]
         );
-        $this->set('title_for_layout', 'Variante erstellen');
+        $this->set('title_for_layout', __d('admin', 'Add_attribute'));
         $this->_processForm($attribute, false);
 
         if (empty($this->getRequest()->getData())) {
@@ -63,7 +63,7 @@ class AttributesController extends AdminAppController
         if (empty($attribute)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', 'Variante bearbeiten');
+        $this->set('title_for_layout', __d('admin', 'Edit_attribute'));
         $this->_processForm($attribute, true);
     }
 
@@ -100,10 +100,10 @@ class AttributesController extends AdminAppController
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('Attributes.delete_attribute'))) {
                 $this->Attribute->delete($attribute);
-                $messageSuffix = 'gelöscht';
+                $messageSuffix = __d('admin', 'deleted');
                 $actionLogType = 'attribute_deleted';
             }
-            $message = 'Die Variante <b>' . $attribute->name . '</b> wurde ' . $messageSuffix . '.';
+            $message = __d('admin', 'The_attribute_{0}_has_been_{1}.', ['<b>' . $attribute->name . '</b>', $messageSuffix]);
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $attribute->id_attribute, 'attributes', $message);
             $this->Flash->success($message);
 
@@ -139,6 +139,6 @@ class AttributesController extends AdminAppController
         }
         $this->set('attributes', $attributes);
 
-        $this->set('title_for_layout', 'Varianten');
+        $this->set('title_for_layout', __d('admin', 'Attributes'));
     }
 }

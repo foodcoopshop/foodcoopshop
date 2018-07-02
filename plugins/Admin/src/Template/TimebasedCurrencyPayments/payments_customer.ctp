@@ -47,7 +47,7 @@ if ($isDeleteAllowedGlobally) {
                     'type' => 'select',
                     'label' => '',
                     'options' => $manufacturersForDropdown,
-                    'empty' => 'alle Hersteller',
+                    'empty' => __d('admin', 'All_manufacturers'),
                     'default' => $manufacturerId != '' ? $manufacturerId : ''
                 ]);
             ?>
@@ -69,7 +69,7 @@ if ($isDeleteAllowedGlobally) {
             ]);
         echo '</div>';
     }
-    
+
 $tableColumnHead  = '<th>Status</th>';
 $tableColumnHead .= '<th>Datum Eintragung / Bestellung</th>';
 $tableColumnHead .= '<th>Arbeitstag</th>';
@@ -86,14 +86,14 @@ echo '<table class="list">';
     echo '</tr>';
 
     foreach($payments as $payment) {
-        
+
         $rowClass = [];
         if ($payment['status'] == APP_DEL || $payment['approval'] == APP_DEL) {
             $rowClass = ['deactivated', 'line-through'];
         }
-        
+
         echo '<tr id="timebased-currency-payment-'.$payment['paymentId'].'" data-payment-id="'.$payment['paymentId'].'" class="' . join(' ', $rowClass) . '">';
-            
+
             echo '<td style="text-align:center;width:50px;">';
                 if ($payment['status'] > APP_DEL) {
                     switch ($payment['approval']) {
@@ -126,23 +126,23 @@ echo '<table class="list">';
                         ]
                         );
                 }
-                
+
             echo '</td>';
-            
+
             echo '<td>';
                 echo $payment['dateRaw']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
             echo '</td>';
-            
+
             echo '<td>';
                 if (!empty($payment['workingDay'])) {
                     echo $payment['workingDay']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
                 }
             echo '</td>';
-            
+
             echo '<td style="width: 180px;">';
                 echo $payment['manufacturerName'];
             echo '</td>';
-            
+
             echo '<td style="width: 180px;">';
                 if ($payment['paymentId'] && $payment['text'] != '') {
                     echo $this->Html->image(
@@ -156,19 +156,19 @@ echo '<table class="list">';
                     echo $payment['text'];
                 }
             echo '</td>';
-            
+
             echo '<td align="right">';
                 if ($payment['secondsDone']) {
                     echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($payment['secondsDone']);
                 }
             echo '</td>';
-            
+
             echo '<td class="negative" align="right">';
                 if ($payment['secondsOpen']) {
                     echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($payment['secondsOpen']);
                 }
             echo '</td>';
-            
+
             echo '<td style="text-align:center;width:'.($isEditAllowedGlobally && $isDeleteAllowedGlobally ? 50 : 25).'px;">';
                 if ($payment['isEditAllowed'] && $isEditAllowedGlobally) {
                     echo $this->Html->getJqueryUiIcon(
@@ -188,23 +188,23 @@ echo '<table class="list">';
                     }
                 }
             echo '</td>';
-            
+
         echo '</tr>';
-        
+
     }
-    
-    
+
+
     echo '<tr class="fake-th">';
         echo str_replace('th', 'td', $tableColumnHead);
     echo '</tr>';
-    
+
     echo '<tr>';
         echo '<td colspan="'.$colspan.'"></td>';
         echo '<td align="right"><b>' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($sumPayments) . '</b></td>';
         echo '<td align="right" class="negative"><b>' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($sumOrders) . '</b></td>';
         echo '<td></td>';
     echo '</tr>';
-    
+
     echo '<tr>';
         echo '<td></td>';
         $sumNumberClass = '';
@@ -217,6 +217,6 @@ echo '<table class="list">';
         echo '<td></td>';
         echo '<td></td>';
     echo '</tr>';
-    
+
 echo '</table>';
-    
+

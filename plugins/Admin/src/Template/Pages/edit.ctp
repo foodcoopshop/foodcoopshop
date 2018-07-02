@@ -50,38 +50,38 @@ echo $this->Form->create($page, [
 echo $this->Form->hidden('referer', ['value' => $referer]);
 echo $this->Form->hidden('Pages.id_page');
 echo $this->Form->control('Pages.title', [
-    'label' => 'Seitentitel',
+    'label' => __d('admin', 'Page_title'),
     'required' => true
 ]);
 
 echo $this->Form->control('Pages.menu_type', [
     'type' => 'select',
-    'label' => 'In welchem Menü<br /><span class="small">soll die Seite angezeigt werden?</span>',
+    'label' => __d('admin', 'Pages_menu_type_main_description').'<br /><span class="small">'. __d('admin', 'Pages_menu_type_sub_description').'</span>',
     'options' => $this->Html->getMenuTypes(),
     'escape' => false
 ]);
 echo $this->Form->control('Pages.id_parent', [
     'type' => 'select',
-    'label' => 'Übergeordneter Menüpunkt<br /><span class="small">Hauptmenü: Auswahl leer lassen</span>',
-    'empty' => 'Übergeordneten Menüpunkt auswählen...',
+    'label' => __d('admin', 'Pages_parent_main_description').'<br /><span class="small">'.__d('admin', 'Pages_parent_sub_description').'</span>',
+    'empty' => __d('admin', 'Chose_parent_menu_item'),
     'options' => $pagesForSelect,
     'escape' => false
 ]);
 echo $this->Form->control('Pages.position', [
     'class' => 'short',
-    'label' => 'Reihenfolge im Menü<br /><span class="small">Zahl von 0 bis 100</span> <span class="after small">"0" zeigt die Seite nicht im Menü an, sie bleibt aber über den Link erreichbar.</span>',
+    'label' => __d('admin', 'Pages_position_main_description').'<br /><span class="small">'.__d('admin', 'Pages_position_sub_description').'</span> <span class="after small">'.__d('admin', 'Pages_position_sub2_description').'</span>',
     'type' => 'text',
     'escape' => false
 ]);
 
 echo $this->Form->control('Pages.full_width', [
-    'label' => 'Ganze Breite? <span class="after small">Inhalt der Seite wird verbreitert, indem das linke Menü ausgeblendet wird.</span>',
+    'label' => __d('admin', 'Pages_full_width_main_description') . ' <span class="after small">'.__d('admin', 'Pages_full_width_sub_description') . '</span>',
     'type' => 'checkbox',
     'escape' => false
 ]);
 echo $this->Form->control('Pages.extern_url', [
-    'placeholder' => 'z.B. https://www.foodcoopshop.com',
-    'label' => 'Link auf externe Seite?<br /><span class="small">Menüpunkt führt auf diese Webseite (der Inhalt der Seite wird nicht angezeigt).</span>',
+    'placeholder' => __d('admin', 'Example_given_abbreviation') . ' https://www.foodcoopshop.com',
+    'label' => __d('admin', 'Pages_extern_url_main_description') . '<br /><span class="small">'.__d('admin', 'Pages_extern_url_sub_description') . '</span>',
     'div' => [
         'class' => 'long text input'
     ],
@@ -90,25 +90,25 @@ echo $this->Form->control('Pages.extern_url', [
 
 if ($this->request->getRequestTarget() != $this->Slug->getPageAdd()) {
     echo $this->Form->control('Pages.delete_page', [
-        'label' => 'Seite löschen? <span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>',
+        'label' => __d('admin', 'Pages_delete_page_main_description') . ' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);
 }
 
 echo $this->Form->control('Pages.is_private', [
-    'label' => 'Nur für Mitglieder sichtbar?',
+    'label' => __d('admin', 'Only_for_members').'?',
     'type' => 'checkbox'
 ]);
 echo $this->Form->control('Pages.active', [
-    'label' => 'Aktiv?',
+    'label' => __d('admin', 'Active').'?',
     'type' => 'checkbox'
 ]);
 
 echo $this->Form->control('Pages.content', [
     'class' => 'ckeditor',
     'type' => 'textarea',
-    'label' => 'Text<br /><br /><span class="small"><a href="https://foodcoopshop.github.io/de/wysiwyg-editor" target="_blank">Wie verwende ich den Editor?</a></span>',
+    'label' => __d('admin', 'Text') . '<br /><br /><span class="small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
     'escape' => false
 ]);
 

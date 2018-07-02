@@ -132,7 +132,7 @@ class ProductsController extends AdminAppController
         $productId = (int) $productId;
 
         if ($productId == 0 || $productId == '') {
-            $message = 'Product Id nicht korrekt: ' . $productId;
+            $message = 'Product ID not correct: ' . $productId;
             $this->log($message);
             die(json_encode([
                 'status' => 0,
@@ -164,9 +164,14 @@ class ProductsController extends AdminAppController
             unlink($thumbsFileName);
         }
 
-        $messageString = 'Bild (ID: ' . $product->image->id_image . ') wurde erfolgreich gelöscht. Produkt: <b>' . $product->product_lang->name . '</b>, Hersteller: <b>' . $product->manufacturer->name . '</b>';
-        $this->Flash->success($messageString);
-        $this->ActionLog->customSave('product_image_deleted', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
+        $actionLogMessage = __d('admin', 'Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}.', [
+            $product->image->id_image,
+            '<b>' . $product->product_lang->name . '</b>',
+            '<b>' . $product->manufacturer->name . '</b>'
+        ]);
+
+        $this->Flash->success($actionLogMessage);
+        $this->ActionLog->customSave('product_image_deleted', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
 
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
@@ -223,9 +228,12 @@ class ProductsController extends AdminAppController
             $physicalImage->save($thumbsFileName);
         }
 
-        $messageString = 'Ein neues Bild zum Produkt <b>' . $product->product_lang->name . '</b> vom Hersteller <b>' . $product->manufacturer->name . '</b> wurde hochgeladen.';
-        $this->Flash->success($messageString);
-        $this->ActionLog->customSave('product_image_added', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
+        $actionLogMessage = __d('admin', 'A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}.', [
+            '<b>' . $product->product_lang->name . '</b>',
+            '<b>' . $product->manufacturer->name . '</b>'
+        ]);
+        $this->Flash->success($actionLogMessage);
+        $this->ActionLog->customSave('product_image_added', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
 
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
@@ -261,9 +269,13 @@ class ProductsController extends AdminAppController
 
         $this->Product->deleteProductAttribute($productId, $productAttributeId);
 
-        $messageString = 'Die Variante <b>' . $attributeName . '</b> des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller </b>' . $oldProduct->manufacturer->name . '</b> wurde erfolgreich gelöscht.';
-        $this->Flash->success($messageString);
-        $this->ActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $oldProduct->id_product, 'products', $messageString);
+        $actionLogMessage = __d('admin', 'The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted.', [
+            '<b>' . $attributeName . '</b>',
+            '<b>' . $oldProduct->product_lang->name . '</b>',
+            '<b>' . $oldProduct->manufacturer->name . '</b>'
+        ]);
+        $this->Flash->success($actionLogMessage);
+        $this->ActionLog->customSave('product_attribute_deleted', $this->AppAuth->getUserId(), $oldProduct->id_product, 'products', $actionLogMessage);
 
         $this->redirect($this->referer());
     }
@@ -300,9 +312,13 @@ class ProductsController extends AdminAppController
         }
         $this->getRequest()->getSession()->write('highlightedRowId', $productId . '-' . $productAttributeIdForHighlighting);
 
-        $messageString = 'Die Variante "' . $attribute . '" für das Produkt <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde erfolgreich erstellt.';
-        $this->Flash->success($messageString);
-        $this->ActionLog->customSave('product_attribute_added', $this->AppAuth->getUserId(), $oldProduct->id_product, 'products', $messageString);
+        $actionLogMessage = __d('admin', 'The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created.', [
+            '<b>' . $attribute . '</b>',
+            '<b>' . $oldProduct->product_lang->name . '</b>',
+            '<b>' . $oldProduct->manufacturer->name . '</b>'
+        ]);
+        $this->Flash->success($actionLogMessage);
+        $this->ActionLog->customSave('product_attribute_added', $this->AppAuth->getUserId(), $oldProduct->id_product, 'products', $actionLogMessage);
 
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
@@ -331,7 +347,7 @@ class ProductsController extends AdminAppController
 
         $newProduct = $this->Product->add($manufacturer);
 
-        $messageString = 'Ein neues Produkt für "' . $manufacturer->name . '" wurde erfolgreich erstellt.';
+        $messageString = __d('admin', 'A_new_product_was_created_for_{0}.', ['<b>' . $manufacturer->name . '</b>']);
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_added', $this->AppAuth->getUserId(), $newProduct->id_product, 'products', $messageString);
 
@@ -419,10 +435,10 @@ class ProductsController extends AdminAppController
                 $oldTaxRate = 0; // 0 % does not have record in tax
             }
 
-            $messageString = 'Der Steuersatz des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde erfolgreich von  ' . $oldTaxRate . '% auf ' . $taxRate . '% geändert.';
+            $messageString = __d('admin', 'The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', ['<b>' . $oldProduct->product_lang->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', $oldTaxRate . '%', $taxRate . '%']);
             $this->ActionLog->customSave('product_tax_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
         } else {
-            $messageString = 'Es wurden keine Änderungen gespeichert.';
+            $messageString = __d('admin', 'Nothing_changed.');
         }
 
         $this->Flash->success($messageString);
@@ -431,7 +447,7 @@ class ProductsController extends AdminAppController
 
         die(json_encode([
             'status' => 1,
-            'msg' => 'Speichern erfolgreich.'
+            'msg' => __d('admin', 'Saving_successful.')
         ]));
     }
 
@@ -473,7 +489,7 @@ class ProductsController extends AdminAppController
                 ]
             ])->first();
             if (! empty($oldCategory)) {
-                // do not track "alle-produkte"
+                // do not track "all-products"
                 if ($selectedCategory != Configure::read('app.categoryAllProducts')) {
                     $selectedCategoryNames[] = $oldCategory->name;
                 }
@@ -482,7 +498,7 @@ class ProductsController extends AdminAppController
             }
         }
 
-        $messageString = 'Die Kategorien des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurden erfolgreich geändert: ' . join(', ', $selectedCategoryNames);
+        $messageString = __d('admin', 'The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}', ['<b>' . $oldProduct->product_lang->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', join(', ', $selectedCategoryNames)]);
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_categories_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
 
@@ -490,7 +506,7 @@ class ProductsController extends AdminAppController
 
         die(json_encode([
             'status' => 1,
-            'msg' => 'Speichern erfolgreich.'
+            'msg' => __('Saving_successful.')
         ]));
     }
 
@@ -539,8 +555,9 @@ class ProductsController extends AdminAppController
         }
 
         $quantity = $this->Product->getQuantityAsInteger($this->getRequest()->getData('quantity'));
-        $this->Flash->success('Die Anzahl des Produktes <b>' . $oldProduct->product_lang->name . '</b> wurde erfolgreich geändert.');
-        $this->ActionLog->customSave('product_quantity_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Anzahl des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde von ' . $oldProduct->stock_available->quantity . ' auf ' . $quantity . ' geändert.');
+        $this->Flash->success(__d('admin', 'The_amount_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->product_lang->name . '</b>']));
+
+        $this->ActionLog->customSave('product_quantity_changed', $this->AppAuth->getUserId(), $productId, 'products', __d('admin', 'The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', ['<b>' . $oldProduct->product_lang->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', $oldProduct->stock_available->quantity, $quantity]));
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         die(json_encode([
@@ -552,7 +569,7 @@ class ProductsController extends AdminAppController
     public function editPrice()
     {
         $this->RequestHandler->renderAs($this, 'json');
-        
+
         $this->loadComponent('Sanitize');
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
@@ -614,23 +631,26 @@ class ProductsController extends AdminAppController
 
         $price = $this->Product->getStringAsFloat($this->getRequest()->getData('price'));
         $this->Flash->success('Der Preis des Produktes <b>' . $oldProduct->product_lang->name . '</b> wurde erfolgreich geändert.');
-        
+
         if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
             $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
         } else {
             $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($productId, $oldProduct->product_shop->price));
         }
-        
+
         if ($this->getRequest()->getData('pricePerUnitEnabled')) {
             $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($priceInclPerUnit, $this->getRequest()->getData('priceUnitName'), $this->getRequest()->getData('priceUnitAmount'));
         } else {
             $newPrice = Configure::read('app.numberHelper')->formatAsCurrency($price);
         }
-        
-        $actionLogMessage  = 'Der Preis des Produktes <b>' . $oldProduct->product_lang->name;
-        $actionLogMessage .= '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde von ';
-        $actionLogMessage .= $oldPrice . ' auf ' . $newPrice . ' geändert.';
-        
+
+        $actionLogMessage = __d('admin', 'The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', [
+            '<b>' . $oldProduct->product_lang->name . '</b>',
+            '<b>' . $oldProduct->manufacturer->name . '</b>',
+            $oldPrice,
+            $newPrice
+        ]);
+
         $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
@@ -685,22 +705,24 @@ class ProductsController extends AdminAppController
                     break;
                 }
             }
-            $productName .= ' (Variante: '.$attributeName.')';
+            $productName .= ' ('.__d('admin', 'Attribute').': '.$attributeName.')';
         }
 
-        $logString = 'Der Pfand des Produktes <b>' . $productName . '</b> wurde von ';
+        $oldDeposit = 0;
         if (!empty($depositEntity->deposit)) {
-            $logString .= Configure::read('app.numberHelper')->formatAsCurrency($depositEntity->deposit);
-        } else {
-            $logString .= Configure::read('app.numberHelper')->formatAsCurrency(0);
+            $oldDeposit = $depositEntity->deposit;
         }
-
         $deposit = $this->Product->getStringAsFloat($this->getRequest()->getData('deposit'));
-        $logString .= ' auf ' . Configure::read('app.numberHelper')->formatAsCurrency($deposit) . ' geändert.';
 
-        $this->ActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $logString);
+        $actionLogMessage = __d('admin', 'The_deposit_of_the_product_{0}_was_changed_from_{1}_to_{2}.', [
+            '<b>' . $productName . '</b>',
+            Configure::read('app.numberHelper')->formatAsCurrency($oldDeposit),
+            Configure::read('app.numberHelper')->formatAsCurrency($deposit)
+        ]);
 
-        $this->Flash->success('Der Pfand des Produktes <b>' . $productName . '</b> wurde erfolgreich geändert.');
+        $this->ActionLog->customSave('product_deposit_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
+
+        $this->Flash->success($actionLogMessage);
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         $this->set('data', [
@@ -743,19 +765,39 @@ class ProductsController extends AdminAppController
             $this->sendAjaxError($e);
         }
 
-        $this->Flash->success('Das Produkt wurde erfolgreich geändert.');
+        $this->Flash->success(__d('admin', 'The_product_was_changed_successfully.'));
 
         if ($this->getRequest()->getData('name') != $oldProduct->product_lang->name) {
-            $this->ActionLog->customSave('product_name_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Das Produkt <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde umbenannt in <i>"' . $this->getRequest()->getData('name') . '"</i>.');
+            $actionLogMessage = __d('admin', 'The_product_{0}_from_manufacturer_{1}_was_renamed_to_{2}.', [
+                '<b>' . $oldProduct->product_lang->name . '</b>',
+                '<b>' . $oldProduct->manufacturer->name . '</b>',
+                '<i>"' . $this->getRequest()->getData('name') . '"</i>'
+            ]);
+            $this->ActionLog->customSave('product_name_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
         }
         if ($this->getRequest()->getData('unity') != $oldProduct->product_lang->unity) {
-            $this->ActionLog->customSave('product_unity_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Einheit des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde geändert in <i>"' . $this->getRequest()->getData('unity') . '"</i>.');
+            $actionLogMessage = __d('admin', 'The_unity_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}.', [
+                '<b>' . $oldProduct->product_lang->name . '</b>',
+                '<b>' . $oldProduct->manufacturer->name . '</b>',
+                '<i>"' . $this->getRequest()->getData('unity') . '"</i>'
+            ]);
+            $this->ActionLog->customSave('product_unity_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
         }
         if ($this->getRequest()->getData('description') != $oldProduct->product_lang->description) {
-            $this->ActionLog->customSave('product_description_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Beschreibung des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde geändert: <div class="changed">' . $this->getRequest()->getData('description') . ' </div>');
+            $actionLogMessage = __d('admin', 'The_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}', [
+                '<b>' . $oldProduct->product_lang->name . '</b>',
+                '<b>' . $oldProduct->manufacturer->name . '</b>',
+                '<div class="changed">' . $this->getRequest()->getData('description') . ' </div>'
+            ]);
+            $this->ActionLog->customSave('product_description_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
         }
         if ($this->getRequest()->getData('descriptionShort') != $oldProduct->product_lang->description_short) {
-            $this->ActionLog->customSave('product_description_short_changed', $this->AppAuth->getUserId(), $productId, 'products', 'Die Kurzbeschreibung des Produktes <b>' . $oldProduct->product_lang->name . '</b> vom Hersteller <b>' . $oldProduct->manufacturer->name . '</b> wurde geändert. <div class="changed">' . $this->getRequest()->getData('descriptionShort') . '</div>');
+            $actionLogMessage = __d('admin', 'The_short_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}', [
+                '<b>' . $oldProduct->product_lang->name . '</b>',
+                '<b>' . $oldProduct->manufacturer->name . '</b>',
+                '<div class="changed">' . $this->getRequest()->getData('descriptionShort') . ' </div>'
+            ]);
+            $this->ActionLog->customSave('product_description_short_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
         }
 
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
@@ -821,7 +863,7 @@ class ProductsController extends AdminAppController
         $this->set('attributesForDropdown', $this->Attribute->getForDropdown());
         $this->Category = TableRegistry::getTableLocator()->get('Categories');
         $this->set('categoriesForSelect', $this->Category->getForSelect());
-        $manufacturersForDropdown = ['all' => 'Alle Hersteller'];
+        $manufacturersForDropdown = ['all' => __d('admin', 'All_manufacturers')];
         $manufacturersForDropdown = array_merge($manufacturersForDropdown, $this->Product->Manufacturers->getForDropdown());
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
         $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
@@ -843,7 +885,7 @@ class ProductsController extends AdminAppController
             $this->set('variableMemberFee', $variableMemberFee);
         }
 
-        $this->set('title_for_layout', 'Produkte');
+        $this->set('title_for_layout', __d('admin', 'Products'));
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED') && $this->AppAuth->isManufacturer()) {
             $this->SyncManufacturer = TableRegistry::getTableLocator()->get('Network.SyncManufacturers');
@@ -882,9 +924,13 @@ class ProductsController extends AdminAppController
             ]
         ])->first();
 
-        $message = 'Die Standard-Variante des Produktes <b>' . $product->product_lang->name . '</b> vom Hersteller <b>' . $product->manufacturer->name . '</b> wurde auf <b>' . $productAttribute->product_attribute_combination->attribute->name . '</b> geändert.';
-        $this->Flash->success($message);
-        $this->ActionLog->customSave('product_default_attribute_changed', $this->AppAuth->getUserId(), $productId, 'products', $message);
+        $actionLogMessage = __d('admin', 'The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}.', [
+            '<b>' . $product->product_lang->name . '</b>',
+            '<b>' . $product->manufacturer->name . '</b>',
+            '<b>' . $productAttribute->product_attribute_combination->attribute->name . '</b>'
+        ]);
+        $this->Flash->success($actionLogMessage);
+        $this->ActionLog->customSave('product_default_attribute_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
 
         $this->redirect($this->referer());
     }
@@ -897,7 +943,7 @@ class ProductsController extends AdminAppController
             APP_OFF,
             APP_ON
         ])) {
-            throw new InvalidParameterException('New-Status muss 0 oder 1 sein!');
+            throw new InvalidParameterException('New status needs to be 0 or 1: ' . $status);
         }
 
         if ($status == 1) {
@@ -924,18 +970,22 @@ class ProductsController extends AdminAppController
             ]
         ])->first();
 
-        $statusText = 'ab sofort nicht mehr als "neu" angezeigt';
         $actionLogType = 'product_set_to_old';
+        $actionLogMessage = __d('admin', 'The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more.', [
+            '<b>' . $product->product_lang->name . '</b>',
+            '<b>' . $product->manufacturer->name . '</b>'
+        ]);
         if ($status) {
-            $statusText = 'jetzt ' . Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' Tage lang als "neu" angezeigt';
+            $actionLogMessage = __d('admin', 'The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days.', [
+                '<b>' . $product->product_lang->name . '</b>',
+                '<b>' . $product->manufacturer->name . '</b>',
+                Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW')
+            ]);
             $actionLogType = 'product_set_to_new';
         }
 
-        $message = 'Das Produkt <b>' . $product->product_lang->name . '</b> vom Hersteller <b>' . $product->manufacturer->name . '</b> wird ' . $statusText . '.';
-        $this->Flash->success($message);
-
-        $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', $message);
-
+        $this->Flash->success($actionLogMessage);
+        $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         $this->redirect($this->referer());
@@ -960,17 +1010,23 @@ class ProductsController extends AdminAppController
             ]
         ])->first();
 
-        $statusText = 'deaktiviert';
+        $actionLogMessage = __d('admin', 'The_product_{0}_from_manufacturer_{1}_was_deactivated.', [
+            '<b>' . $product->product_lang->name . '</b>',
+            '<b>' . $product->manufacturer->name . '</b>'
+        ]);
         $actionLogType = 'product_set_inactive';
         if ($status) {
-            $statusText = 'aktiviert';
+            $actionLogMessage = __d('admin', 'The_product_{0}_from_manufacturer_{1}_was_activated.', [
+                '<b>' . $product->product_lang->name . '</b>',
+                '<b>' . $product->manufacturer->name . '</b>'
+            ]);
             $actionLogType = 'product_set_active';
             $this->getRequest()->getSession()->write('highlightedRowId', $productId);
         }
 
-        $this->Flash->success('Das Produkt "' . $product->product_lang->name . '" wurde erfolgreich ' . $statusText . '.');
+        $this->Flash->success($actionLogMessage);
 
-        $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', 'Das Produkt <b>' . $product->product_lang->name . '</b> vom Hersteller "' . $product->manufacturer->name . '" wurde ' . $statusText . '.');
+        $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
 
         $this->redirect($this->referer());
     }

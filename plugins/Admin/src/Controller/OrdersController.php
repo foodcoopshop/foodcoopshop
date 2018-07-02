@@ -55,10 +55,10 @@ class OrdersController extends AdminAppController
             )
         );
 
-        $this->Flash->success('Der Kommentar wurde erfolgreich geändert.');
+        $this->Flash->success(__d('admin', 'The_comment_was_changed_successfully.'));
 
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $orderId, 'orders', 'Der Kommentar der Bestellung Nr. ' . $oldOrder->id_order . ' von '.$oldOrder->customer->name.' wurde geändert: <div class="changed">' . $orderComment . ' </div>');
+        $this->ActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $orderId, 'orders', __d('admin', 'The_comment_of_the_order_number_{0}_by_{1}_was_changed:', [$oldOrder->id_order, $oldOrder->customer->name]) . ' <div class="changed">' . $orderComment . ' </div>');
 
         die(json_encode([
             'status' => 1,
@@ -71,7 +71,7 @@ class OrdersController extends AdminAppController
         if (empty($this->getRequest()->getQuery('orderIds'))) {
             throw new RecordNotFoundException('wrong orderIds');
         }
-        
+
         $orderIds = explode(',', $this->getRequest()->getQuery('orderIds'));
         if (empty($orderIds)) {
             throw new RecordNotFoundException('wrong orderIds');
@@ -99,7 +99,7 @@ class OrdersController extends AdminAppController
         $this->set('orders', $orders);
     }
 
-    public function correctShopOrder()
+    public function correctInstantOrder()
     {
         $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->getRequest()->getQuery('url'));
 
@@ -118,19 +118,23 @@ class OrdersController extends AdminAppController
                 ]
             ])->first();
 
-            $newDate = Configure::read('app.timeHelper')->getDateForShopOrder(Configure::read('app.timeHelper')->getCurrentDay());
+            $newDate = Configure::read('app.timeHelper')->getDateForInstantOrder(Configure::read('app.timeHelper')->getCurrentDay());
 
             $this->Order->save(
                 $this->Order->patchEntity(
                     $order,
                     [
                         'date_add' => $newDate,
-                        'current_state' => Configure::read('appDb.FCS_SHOP_ORDER_DEFAULT_STATE')
+                        'current_state' => Configure::read('appDb.FCS_INSTANT_ORDER_DEFAULT_STATE')
                     ]
                 )
             );
 
-            $message = 'Sofort-Bestellung Nr. (' . $order->id_order . ') für <b>' . $order->customer->name . '</b> erfolgreich erstellt und rückdatiert auf den ' . Configure::read('app.timeHelper')->formatToDateShort($newDate) . '. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat.';
+            $message = __d('admin', 'Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated.', [
+                $order->id_order,
+                '<b>' . $order->customer->name . '</b>',
+                Configure::read('app.timeHelper')->formatToDateShort($newDate)
+            ]);
 
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave('orders_shop_added', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
@@ -189,7 +193,7 @@ class OrdersController extends AdminAppController
                 'msg' => 'error'
             ]));
         }
-        
+
         foreach ($orderIds as $orderId) {
             $oldOrder = $this->Order->find('all', [
                 'conditions' => [
@@ -212,7 +216,18 @@ class OrdersController extends AdminAppController
 
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
 
-        $message = 'Der Bestellstatus der Bestellung' . (count($orderIds) == 1 ? '' : 'en') . ' ' . join(', ', array_reverse($orderIds)) . ' von ' . $oldOrder->customer->name . ' wurde' . (count($orderIds) == 1 ? '' : 'n') . ' erfolgreich auf <b>' . Configure::read('app.htmlHelper')->getOrderStates()[$orderState] . '</b> geändert.';
+        $orderStateAsText = '<b>' . Configure::read('app.htmlHelper')->getOrderStates()[$orderState] . '</b>';
+        if (count($orderIds) == 1) {
+            $message = __d('admin', 'The_order_status_of_the_order_of_{0}_was_successfully_changed_to_{1}.', [
+                $oldOrder->customer->name,
+                $orderStateAsText
+            ]);
+        } else {
+            $message = __d('admin', 'The_order_status_of_the_orders_{0}_was_successfully_changed_to_{1}.', [
+                join(', ', array_reverse($orderIds)),
+                $orderStateAsText
+            ]);
+        }
         $this->ActionLog->customSave('orders_state_changed', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
 
         $this->Flash->success($message);
@@ -308,9 +323,9 @@ class OrdersController extends AdminAppController
             'contain' => $orderParams['contain']
         ])
         ->select($this->Order->Customers);
-        
+
         $query->select($this->Order->TimebasedCurrencyOrders);
-        
+
         if ($groupByCustomer) {
             $query->select(['orders_total_paid' => $query->func()->sum('Orders.total_paid')]);
             $query->select(['orders_count' => $query->func()->count('Orders.total_paid')]);
@@ -332,7 +347,7 @@ class OrdersController extends AdminAppController
             }
         }
         $this->set('orders', $orders);
-        
+
         $timebasedCurrencyOrderInList = false;
         foreach($orders as $order) {
             if (!empty($order->timebased_currency_order)) {
@@ -341,7 +356,7 @@ class OrdersController extends AdminAppController
             }
         }
         $this->set('timebasedCurrencyOrderInList', $timebasedCurrencyOrderInList);
-        
+
         $this->set('customersForDropdown', $this->Order->Customers->getForDropdown(false, 'id_customer', $this->AppAuth->isSuperadmin()));
 
         $this->set('title_for_layout', __d('admin', 'Orders'));
@@ -349,21 +364,21 @@ class OrdersController extends AdminAppController
 
     public function iframeStartPage()
     {
-        $this->set('title_for_layout', __d('admin', 'Shop_order'));
+        $this->set('title_for_layout', __d('admin', 'Instant_order'));
     }
 
     /**
      * this url is called if shop order (sofortbestellung) is initialized
      * saves the desired user in session
      */
-    public function initShopOrder($customerId)
+    public function initInstantOrder($customerId)
     {
         if (! $customerId) {
             throw new RecordNotFoundException('customerId not passed');
         }
 
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
-        $shopOrderCustomer = $this->Customer->find('all', [
+        $instantOrderCustomer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
             ],
@@ -371,8 +386,8 @@ class OrdersController extends AdminAppController
                 'AddressCustomers'
             ]
         ])->first();
-        if (! empty($shopOrderCustomer)) {
-            $this->getRequest()->getSession()->write('Auth.shopOrderCustomer', $shopOrderCustomer);
+        if (! empty($instantOrderCustomer)) {
+            $this->getRequest()->getSession()->write('Auth.instantOrderCustomer', $instantOrderCustomer);
         } else {
             $this->Flash->error(__d('admin', 'No_member_found_with_id_{0}.', [$customerId]));
         }
@@ -407,7 +422,11 @@ class OrdersController extends AdminAppController
             )
         );
 
-        $message = 'Die Bestellung ' . $orderId . ' von ' . $oldOrder->customer->name . ' wurde vom ' . $oldDate->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' auf den ' . Configure::read('app.timeHelper')->formatToDateShort($date) . ' rückdatiert.';
+        $message = __d('admin', 'The_date_of_the_order_{0}_of_{1}_was_changed_to_{2}.', [
+            $orderId,
+            $oldOrder->customer->name,
+            Configure::read('app.timeHelper')->formatToDateShort($date)
+        ]);
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('orders_date_changed', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
 
