@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-02 10:45+0200\n"
-"PO-Revision-Date: 2018-07-02 10:43+0200\n"
+"POT-Creation-Date: 2018-07-02 11:01+0200\n"
+"PO-Revision-Date: 2018-07-02 11:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1401,6 +1401,24 @@ msgstr "Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden?"
 msgid "terms_of_use"
 msgstr "Nutzungsbedingungen"
 
+msgid "Please_enter_your_email_address_and_click_on_send_button."
+msgstr "Bitte gib deine E-Mail-Adresse an und klicke dann auf \"Senden\"."
+
+msgid "You_will_then_get_a_link_to_change_your_password."
+msgstr "Wir senden dir dann einen Link zu, mit dem du das neue Passwort generieren kannst."
+
+msgid "Send"
+msgstr "Senden"
+
+msgid "The_confirmation_of_your_registration_was_sent_to_you_by_email."
+msgstr "Die Bestätigung deiner Registrierung wurde per E-Mail an dich versendet."
+
+msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
+msgstr "Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert. Das heißt, du kannst dich noch nicht einloggen!"
+
+msgid "You_will_get_an_email_as_soon_as_we_activated_you."
+msgstr "Du wirst per E-Mail benachrichtigt, sobald wir dich aktiviert haben."
+
 msgid "Hello"
 msgstr "Hallo"
 
@@ -1541,12 +1559,6 @@ msgstr "Eine detaillierte Auflistung deiner Bestellung findest du in der angehä
 
 msgid "Your_registration_at_{0}_has_just_been_successful!"
 msgstr "Deine Registrierung bei {0} war erfolgreich!"
-
-msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
-msgstr "Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert. Das heißt, du kannst dich noch nicht einloggen!"
-
-msgid "You_will_get_an_email_as_soon_as_we_activated_you."
-msgstr "Du wirst per E-Mail benachrichtigt, sobald wir dich aktiviert haben."
 
 msgid "Dear_responsible_person_for_new_members,"
 msgstr "Lieber Verantwortliche für neue Mitglieder,"

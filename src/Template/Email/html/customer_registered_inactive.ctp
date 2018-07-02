@@ -30,7 +30,7 @@ use Cake\Core\Configure;
                 </p>
                 
                 <p>
-                    <p><?php echo __('You_will_get_an_email_as_soon_as_we_activated_you.')?></p>
+                    <?php echo __('You_will_get_an_email_as_soon_as_we_activated_you.')?>
                 </p>
                 
                 <?php

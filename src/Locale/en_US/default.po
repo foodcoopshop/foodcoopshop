@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-02 10:45+0200\n"
-"PO-Revision-Date: 2018-07-02 10:42+0200\n"
+"POT-Creation-Date: 2018-07-02 11:01+0200\n"
+"PO-Revision-Date: 2018-07-02 11:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1401,6 +1401,24 @@ msgstr "Do you want to receive an order reminder e-mail every week?"
 msgid "terms_of_use"
 msgstr "terms of use"
 
+msgid "Please_enter_your_email_address_and_click_on_send_button."
+msgstr "Please enter your email address and click on send button."
+
+msgid "You_will_then_get_a_link_to_change_your_password."
+msgstr "You will then get a link to change your password."
+
+msgid "Send"
+msgstr "Send"
+
+msgid "The_confirmation_of_your_registration_was_sent_to_you_by_email."
+msgstr "The confirmation of your registration was sent to you by email."
+
+msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
+msgstr "Your account was created but not activated yet. This means, you can't login yet!"
+
+msgid "You_will_get_an_email_as_soon_as_we_activated_you."
+msgstr "You will get an e-mail as soon as we activate you."
+
 msgid "Hello"
 msgstr "Hello"
 
@@ -1541,12 +1559,6 @@ msgstr "You can find a detailed list of your ordered products in the attached or
 
 msgid "Your_registration_at_{0}_has_just_been_successful!"
 msgstr "Your registration at {0} has been successful!"
-
-msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
-msgstr "Your account was created but not activated yet. This means, you can't login yet!"
-
-msgid "You_will_get_an_email_as_soon_as_we_activated_you."
-msgstr "You will get an e-mail as soon as we activate you."
 
 msgid "Dear_responsible_person_for_new_members,"
 msgstr "Dear responsible for new members,"
