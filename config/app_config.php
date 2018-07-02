@@ -65,7 +65,7 @@ return [
         'defaultSendInvoice' => true,
         'defaultTaxId' => 2,
         'defaultBulkOrdersAllowed' => false,
-        'defaultSendShopOrderNotification' => true,
+        'defaultSendInstantOrderNotification' => true,
         'defaultSendOrderedProductDeletedNotification' => true,
         'defaultSendOrderedProductPriceChangedNotification' => true,
         'defaultSendOrderedProductAmountChangedNotification' => true,

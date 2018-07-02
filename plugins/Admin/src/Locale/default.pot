@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-29 16:51+0200\n"
+"POT-Creation-Date: 2018-07-02 10:12+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -269,13 +269,25 @@ msgstr ""
 msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
 msgstr ""
 
+msgid "Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
+msgstr ""
+
+msgid "The_order_status_of_the_order_of_{0}_was_successfully_changed_to_{1}."
+msgstr ""
+
+msgid "The_order_status_of_the_orders_{0}_was_successfully_changed_to_{1}."
+msgstr ""
+
 msgid "Orders"
 msgstr ""
 
-msgid "Shop_order"
+msgid "Instant_order"
 msgstr ""
 
 msgid "No_member_found_with_id_{0}."
+msgstr ""
+
+msgid "The_date_of_the_order_{0}_of_{1}_was_changed_to_{2}."
 msgstr ""
 
 msgid "Home"
@@ -420,6 +432,9 @@ msgid "The_product_{0}_from_manufacturer_{1}_was_deactivated."
 msgstr ""
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
+msgstr ""
+
+msgid "Report"
 msgstr ""
 
 msgid "Add_slider"
@@ -692,6 +707,21 @@ msgstr ""
 msgid "New_password_again"
 msgstr ""
 
+msgid "Website_administration"
+msgstr ""
+
+msgid "Financial_reports"
+msgstr ""
+
+msgid "Sum_of_credits"
+msgstr ""
+
+msgid "Included_deposit"
+msgstr ""
+
+msgid "Of_the_{0}_on_the_credit_account_{1}_are_reserved_for_deposit_compensation_payments._As_long_as_this_amount_is_negative_money_for_deposit_compensation_payments_is_available."
+msgstr ""
+
 msgid "docs_route_members"
 msgstr ""
 
@@ -875,13 +905,7 @@ msgstr ""
 msgid "My_data"
 msgstr ""
 
-msgid "Website_administration"
-msgstr ""
-
 msgid "Manufacturers"
-msgstr ""
-
-msgid "Financial_reports"
 msgstr ""
 
 msgid "Configurations"
@@ -1313,7 +1337,7 @@ msgstr ""
 msgid "to_receive_an_email_on_every_adaption_of_the_amount_of_a_ordered_product."
 msgstr ""
 
-msgid "Shop_orders"
+msgid "Instant_orders"
 msgstr ""
 
 msgid "to_receive_an_email_on_every_shop_order."
@@ -1430,7 +1454,7 @@ msgstr ""
 msgid "Cancel_selected_products"
 msgstr ""
 
-msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
+msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
 msgstr ""
 
 msgid "Group_by_member"
@@ -1641,6 +1665,9 @@ msgid "product_preview"
 msgstr ""
 
 msgid "docs_route_financial_reports"
+msgstr ""
+
+msgid "Added_on"
 msgstr ""
 
 msgid "Added_by"

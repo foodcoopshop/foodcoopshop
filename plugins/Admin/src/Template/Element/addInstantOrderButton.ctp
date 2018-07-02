@@ -25,11 +25,11 @@ if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
         'escape' => false
     ];
     $options['class'] = 'btn btn-default';
-    echo $this->Html->link('<i class="fa fa-shopping-cart fa-lg"></i> '.__d('admin', 'Shop_order'), 'javascript:void(0);', $options);
+    echo $this->Html->link('<i class="fa fa-shopping-cart fa-lg"></i> '.__d('admin', 'Instant_order'), 'javascript:void(0);', $options);
     echo $this->Form->control(null, [
         'type' => 'select',
         'label' => '',
-        'id' => 'shopOrderCustomerId', //null as first param and id removes attribute name => field is not submitted
+        'id' => 'instantOrderCustomerId', //null as first param and id removes attribute name => field is not submitted
         'class' => 'do-not-submit',
         'empty' => __d('admin', 'chose_member...'),
         'options' => $customers

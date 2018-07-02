@@ -229,8 +229,8 @@ class ProductsController extends AdminAppController
         }
 
         $actionLogMessage = __d('admin', 'A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}.', [
-            '<b>' . $oldProduct->product_lang->name . '</b>',
-            '<b>' . $oldProduct->manufacturer->name . '</b>'
+            '<b>' . $product->product_lang->name . '</b>',
+            '<b>' . $product->manufacturer->name . '</b>'
         ]);
         $this->Flash->success($actionLogMessage);
         $this->ActionLog->customSave('product_image_added', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);

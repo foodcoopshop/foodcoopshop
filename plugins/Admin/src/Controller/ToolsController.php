@@ -33,7 +33,7 @@ class ToolsController extends AdminAppController
         $formatInfo = getimagesize($this->getRequest()->getData('upload.tmp_name'));
         // non-image files will return false
         if ($formatInfo === false || $formatInfo['mime'] != 'image/jpeg') {
-            $message = 'Die hochgeladene Datei muss im Format "jpg" sein.';
+            $message = 'the uploaded file needs to have jpg format.';
             die(json_encode([
                 'status' => 0,
                 'msg' => $message
@@ -84,7 +84,7 @@ class ToolsController extends AdminAppController
 
         // non-image files will return false
         if ($formatInfo === false || $formatInfo['mime'] != 'image/jpeg') {
-            $message = 'Die hochgeladene Datei muss im Format "jpg" sein.';
+            $message = 'the uploaded file needs to have jpg format.';
             die(json_encode([
                 'status' => 0,
                 'msg' => $message

@@ -76,8 +76,8 @@ use Cake\Core\Configure;
                 echo '</div>';
             }
             if (!$appAuth->isManufacturer()) {
-                echo $this->element('addShopOrderButton', [
-                    'customers' => $customersForShopOrderDropdown
+                echo $this->element('addInstantOrderButton', [
+                    'customers' => $customersForInstantOrderDropdown
                 ]);
                 echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products'))]);
             }

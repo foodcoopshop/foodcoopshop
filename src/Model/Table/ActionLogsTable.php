@@ -208,7 +208,7 @@ class ActionLogsTable extends AppTable
                 'name' => __('Action_Log_Order_date_changed')
             ],
             'orders_shop_added' => [
-                'name' => __('Action_Log_Order_shop_order_placed')
+                'name' => __('Action_Log_Order_instant_order_placed')
             ],
             'order_detail_product_price_changed' => [
                 'name' => __('Action_Log_Order_detail_product_price_changed'),

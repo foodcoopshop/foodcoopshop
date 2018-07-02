@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-29 14:57+0200\n"
-"PO-Revision-Date: 2018-06-29 11:11+0200\n"
+"POT-Creation-Date: 2018-07-02 10:12+0200\n"
+"PO-Revision-Date: 2018-07-02 10:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -264,20 +264,33 @@ msgstr "Produkt {0} (Preis: {1}) aus Bestellung Nr. {2} vom {3} wurde erfolgreic
 msgid "Product_was_cancelled"
 msgstr "Produkt storniert"
 
-msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}"
-msgstr "{0,plural,=1{Produkte wurden erfolgreich storniert.} other{Produkte wurden erfolgreich storniert.}"
+msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}}"
+msgstr "{0,plural,=1{Produkte wurden erfolgreich storniert.} other{Produkte wurden erfolgreich storniert.}}"
 
 msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
 msgstr "Der Kommentar der Bestellung Nr. {0} von {1} wurde geändert:"
 
+msgid "Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
+msgstr "Die Sofort-Bestellung Nr. {0} für {1} wurde erfolgreich getätigt und rückdatiert auf den {2}. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat."
+
+msgid "The_order_status_of_the_order_of_{0}_was_successfully_changed_to_{1}."
+msgstr "Der Bestellstatus der Bestellung von {0} wurde erfolgreich auf {1} geändert."
+
+msgid "The_order_status_of_the_orders_{0}_was_successfully_changed_to_{1}."
+msgstr "Der Bestellstatus der Bestellungungen {0} wurde erfolgreich auf {1} geändert."
+
 msgid "Orders"
 msgstr "Bestellungen"
 
-msgid "Shop_order"
+msgid "Instant_order"
 msgstr "Sofort-Bestellung"
 
 msgid "No_member_found_with_id_{0}."
 msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
+
+#, fuzzy
+msgid "The_date_of_the_order_{0}_of_{1}_was_changed_to_{2}."
+msgstr "Die Bestellung {0} von {1} wurde auf den {2} rückdatiert."
 
 msgid "Home"
 msgstr "Home"
@@ -422,6 +435,9 @@ msgstr "Das Produkt {0} vom Hersteller {1} wurde deaktiviert."
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr "Das Produkt {0} vom Hersteller {1} wurde aktiviert."
+
+msgid "Report"
+msgstr "Bericht"
 
 msgid "Add_slider"
 msgstr "Neues Slideshow-Bild erstellen"
@@ -693,6 +709,21 @@ msgstr "mindestens 8 Zeichen"
 msgid "New_password_again"
 msgstr "Neues Passwort (nochmal)"
 
+msgid "Website_administration"
+msgstr "Homepage-Verwaltung"
+
+msgid "Financial_reports"
+msgstr "Finanzberichte"
+
+msgid "Sum_of_credits"
+msgstr "Summe Guthaben"
+
+msgid "Included_deposit"
+msgstr "Davon Pfand"
+
+msgid "Of_the_{0}_on_the_credit_account_{1}_are_reserved_for_deposit_compensation_payments._As_long_as_this_amount_is_negative_money_for_deposit_compensation_payments_is_available."
+msgstr "Von den {0} auf dem Guthaben-Konto sind {1} für Pfand-Rückzahlungen reserviert. Solange der Pfand-Betrag negativ ist, ist Geld für die Rückzahlungen vorhanden."
+
 msgid "docs_route_members"
 msgstr "mitglieder"
 
@@ -876,14 +907,8 @@ msgstr "Pfand-Rückgaben"
 msgid "My_data"
 msgstr "Meine Daten"
 
-msgid "Website_administration"
-msgstr "Homepage-Verwaltung"
-
 msgid "Manufacturers"
 msgstr "Hersteller"
-
-msgid "Financial_reports"
-msgstr "Finanzberichte"
 
 msgid "Configurations"
 msgstr "Einstellungen"
@@ -1314,8 +1339,8 @@ msgstr "Änderungen der bestellten Anzahl"
 msgid "to_receive_an_email_on_every_adaption_of_the_amount_of_a_ordered_product."
 msgstr "bei jeder Änderung der Anzahl eines bereits bestellten Produktes eine Info-Mail erhalten."
 
-msgid "Shop_orders"
-msgstr "Sofortbestellungen"
+msgid "Instant_orders"
+msgstr "Sofort-Bestellungen"
 
 msgid "to_receive_an_email_on_every_shop_order."
 msgstr "bei jeder Sofort-Bestellung eine Info-Mail erhalten."
@@ -1431,7 +1456,7 @@ msgstr "Zurück zum Pfandkonto"
 msgid "Cancel_selected_products"
 msgstr "Ausgewählte Produkte stornieren"
 
-msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
+msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
 msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
 
 msgid "Group_by_member"
@@ -1644,6 +1669,9 @@ msgstr "Produkt-Vorschau"
 msgid "docs_route_financial_reports"
 msgstr "finanzberichte"
 
+msgid "Added_on"
+msgstr "Eingetragen am"
+
 msgid "Added_by"
 msgstr "Eingetragen von"
 
@@ -1688,6 +1716,12 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+#~ msgid "Shop_order"
+#~ msgstr "Sofort-Bestellung"
+
+#~ msgid "Shop_orders"
+#~ msgstr "Sofortbestellungen"
 
 #~ msgid "Do_not_forget_to_press_save"
 #~ msgstr "Speicher nicht vergesen"

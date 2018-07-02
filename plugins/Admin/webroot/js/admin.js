@@ -2020,7 +2020,7 @@ foodcoopshop.Admin = {
                     iframeHeight: $(window).height() - 100,
                     afterClose: function () {
                         foodcoopshop.Helper.ajaxCall(
-                            '/carts/ajaxDeleteShopOrderCustomer',
+                            '/carts/ajaxDeleteInstantOrderCustomer',
                             {},
                             {
                                 onOk: function (data) {},
@@ -2030,7 +2030,7 @@ foodcoopshop.Admin = {
                     },
                     afterContent: function () {
 
-                        var header = $('<div class="message-container"><span class="start">' + foodcoopshop.LocalizedJs.admin.PlaceShopOrderFor + ': </span> ' + foodcoopshop.LocalizedJs.admin.ShopOrderDateIsSetBackAfterPlacingIt + '</div>');
+                        var header = $('<div class="message-container"><span class="start">' + foodcoopshop.LocalizedJs.admin.PlaceInstantOrderFor + ': </span> ' + foodcoopshop.LocalizedJs.admin.InstantOrderDateIsSetBackAfterPlacingIt + '</div>');
                         $('.featherlight-close').after(header);
 
                         // only clone dropdown once
@@ -2038,7 +2038,7 @@ foodcoopshop.Admin = {
                             var customersDropdown = $('#add-order-button-wrapper select').clone(true);
                             customersDropdown.attr('id', 'customersDropdown');
                             customersDropdown.on('change', function () {
-                                var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/orders/initShopOrder/' + $(this).val();
+                                var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/orders/initInstantOrder/' + $(this).val();
                                 $('iframe.featherlight-inner').attr('src', newSrc);
                                 $.featherlight.showLoader();
                             });
@@ -2050,7 +2050,7 @@ foodcoopshop.Admin = {
                                 var cartFinishedRegExp = new RegExp(foodcoopshop.LocalizedJs.admin.routeCartFinished);
                                 if (currentUrl.match(cartFinishedRegExp)) {
                                     $.featherlight.showLoader();
-                                    document.location.href = '/admin/orders/correctShopOrder?url=' + encodeURIComponent(currentUrl);
+                                    document.location.href = '/admin/orders/correctInstantOrder?url=' + encodeURIComponent(currentUrl);
                                 }
                             });
                             customersDropdown.show();

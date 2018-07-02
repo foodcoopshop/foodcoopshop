@@ -134,11 +134,11 @@ class ManufacturersTable extends AppTable
      * @param $boolean $sendInvoice
      * @return boolean
      */
-    public function getOptionSendShopOrderNotification($sendShopOrderNotification)
+    public function getOptionSendInstantOrderNotification($sendInstantOrderNotification)
     {
-        $result = $sendShopOrderNotification;
-        if (is_null($sendShopOrderNotification)) {
-            $result = Configure::read('app.defaultSendShopOrderNotification');
+        $result = $sendInstantOrderNotification;
+        if (is_null($sendInstantOrderNotification)) {
+            $result = Configure::read('app.defaultSendInstantOrderNotification');
         }
         return (boolean) $result;
     }

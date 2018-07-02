@@ -61,7 +61,7 @@ use Cake\Core\Configure;
             <?php } ?>
             <div class="right">
                 <?php
-                    echo $this->element('addShopOrderButton', [
+                    echo $this->element('addInstantOrderButton', [
                         'customers' => $customersForDropdown
                     ]);
                     echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products'))]);

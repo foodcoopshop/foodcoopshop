@@ -20,7 +20,7 @@ $this->element('addScript', [
         $('input.datepicker').datepicker();" .
         Configure::read('app.jsNamespace') . ".Admin.init();".
         Configure::read('app.jsNamespace') . ".Helper.initTooltip('.payment-approval-comment');".
-        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Homepage-Verwaltung', 'Finanzberichte');"
+        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');"
 ]);
 if ($paymentType == 'product') {
     $this->element('highlightRowAfterEdit', [
@@ -33,7 +33,7 @@ if ($paymentType == 'product') {
     <?php echo $this->Form->create(null, ['type' => 'get']); ?>
         <h1><?php echo $title_for_layout; ?></h1>
         <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameTo' => 'dateTo', 'nameFrom' => 'dateFrom']); ?>
-        <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Mitglieder', 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
+        <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_members'), 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
         <div class="right">
         	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_financial_reports'))]); ?>
         </div>
@@ -57,7 +57,7 @@ if ($paymentType == 'product') {
     $colspan = $colspan + 2;
 }
 echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member')) . '</th>';
-echo '<th>' . $this->Paginator->sort('Payments.date_add', 'Eingetragen am') . '</th>';
+echo '<th>' . $this->Paginator->sort('Payments.date_add', __d('admin', 'Added_on')) . '</th>';
 echo '<th>' . $this->Paginator->sort('CreatedBy.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Added_by')) . '</th>';
 echo '<th>' . $this->Html->getPaymentText($paymentType) . '</th>';
 if ($showTextColumn) {

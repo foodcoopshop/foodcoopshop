@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-29 14:57+0200\n"
-"PO-Revision-Date: 2018-06-29 23:14+0200\n"
+"POT-Creation-Date: 2018-07-02 10:12+0200\n"
+"PO-Revision-Date: 2018-07-02 10:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -78,7 +78,7 @@ msgstr "Deine Bestellung wurde erfolgreich abgeschlossen."
 msgid "{0}_has_placed_a_new_order_({1})."
 msgstr "{0} hat eine neue Bestellung getätigt ({1})."
 
-msgid "Notification_about_shop_order_order_number_{0}"
+msgid "Notification_about_instant_order_order_number_{0}"
 msgstr "Benachrichtigung über Sofort-Bestellung Nr. {0}"
 
 msgid "Your_order_has_been_placed"
@@ -204,10 +204,10 @@ msgstr "Speichern"
 msgid "Cancel"
 msgstr "Abbrechen"
 
-msgid "Cancel_shop_order?"
+msgid "Cancel_instant_order?"
 msgstr "Sofort-Bestellung abbrechen?"
 
-msgid "Really_cancel_shop_order?"
+msgid "Really_cancel_instant_order?"
 msgstr "Möchtest du die Sofort-Bestellung wirklich abbrechen?"
 
 msgid "January"
@@ -384,10 +384,10 @@ msgstr "Alle Produkte anzeigen"
 msgid "route_cart_finished"
 msgstr "abgeschlossen"
 
-msgid "Place_shop_order_for"
+msgid "Place_instant_order_for"
 msgstr "Sofort-Bestellung tätigen für"
 
-msgid "Shop_order_date_is_set_back_after_placing_it."
+msgid "Instant_order_date_is_set_back_after_placing_it."
 msgstr "Nach dem Abschließen der Bestellung wird sie automatisch rückdatiert."
 
 msgid "Close_all_orders?"
@@ -834,7 +834,7 @@ msgstr "Bestellung: Kommentar geändert"
 msgid "Action_Log_Order_date_changed"
 msgstr "Bestellung: rückdatiert"
 
-msgid "Action_Log_Order_shop_order_placed"
+msgid "Action_Log_Order_instant_order_placed"
 msgstr "Bestellung: Sofort-Bestellung getätigt"
 
 msgid "Action_Log_Order_detail_product_price_changed"
@@ -1085,6 +1085,9 @@ msgstr "Die gewünschte Anzahl {0} ist nicht gültig."
 
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "Das Produkt mit der ID {0} ist nicht vorhanden."
+
+msgid "The_attribute_does_not_exist:_{0}"
+msgstr "Die Variante existiert nicht: {0}"
 
 msgid "offline"
 msgstr "offline"
@@ -1476,7 +1479,7 @@ msgstr "Admin-Bereich"
 msgid "Manufacturer_area"
 msgstr "Hersteller-Bereich"
 
-msgid "To_change_your_profile_please_stop_the_shop_order_mode."
+msgid "To_change_your_profile_please_stop_the_instant_order_mode."
 msgstr "Um dein Profil zu ändern, beende bitte den Sofort-Bestellungsmodus."
 
 msgid "Signed_in"
@@ -1554,6 +1557,12 @@ msgstr "Hier kannst du das neue Mitglied aktivieren und die Daten einsehen"
 msgid "Here_you_can_see_the_data_of_the_new_member"
 msgstr "Hier kannst du die Daten des neuen Mitglieds einsehen"
 
+msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1}_(order_number_{2})."
+msgstr "Soeben wurde von {1} eine Sofort-Bestellung für {0} getätigt (Bestellung Nr. {2})."
+
+msgid "You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists."
+msgstr "Du erhältst diese Nachricht, weil diese Bestellung automatisch in die Vorwoche rückdatiert wurde und sie daher nicht in deinen Bestelllisten aufscheint."
+
 msgid "please_click_on_this_link_to_generate_a_new_password"
 msgstr "bitte klicke auf folgenden Link, um dein neues Passwort zu generieren"
 
@@ -1565,12 +1574,6 @@ msgstr "Du kannst dich hier anmelden und das Passwort gleich ändern"
 
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."
 msgstr "Das ist der Text der E-Mail (mit FoodCoopShop-Logo als Anhang)."
-
-msgid "There_has_been_placed_a_shop_order_for_{0}_by_{1}_(order_number_{2})."
-msgstr "Soeben wurde von {1} eine Sofort-Bestellung für {0} getätigt (Bestellung Nr. {2})."
-
-msgid "You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists."
-msgstr "Du erhältst diese Nachricht, weil diese Bestellung automatisch in die Vorwoche rückdatiert wurde und sie daher nicht in deinen Bestelllisten aufscheint."
 
 msgid "route_search"
 msgstr "suche"

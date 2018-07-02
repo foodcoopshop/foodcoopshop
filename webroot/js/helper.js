@@ -414,7 +414,7 @@ foodcoopshop.Helper = {
         });
     },
 
-    initLogoutShopOrderCustomerButton: function () {
+    initLogoutInstantOrderCustomerButton: function () {
         $('#cart .shop-order-customer-info a.btn').on('click', function () {
             var buttons = {};
             buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
@@ -424,7 +424,7 @@ foodcoopshop.Helper = {
                     $('.ui-dialog .ajax-loader').show();
                     $('.ui-dialog button').attr('disabled', 'disabled');
                     foodcoopshop.Helper.ajaxCall(
-                        '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxDeleteShopOrderCustomer',
+                        '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxDeleteInstantOrderCustomer',
                         {},
                         {
                             onOk: function (data) {
@@ -440,10 +440,10 @@ foodcoopshop.Helper = {
             };
 
             $('<div></div>').appendTo('body')
-                .html('<p>' + foodcoopshop.LocalizedJs.helper.ReallyCancelShopOrder + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p>' + foodcoopshop.LocalizedJs.helper.ReallyCancelInstantOrder + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
-                    title: foodcoopshop.LocalizedJs.helper.CancelShopOrder,
+                    title: foodcoopshop.LocalizedJs.helper.CancelInstantOrder,
                     autoOpen: true,
                     width: 400,
                     resizable: false,

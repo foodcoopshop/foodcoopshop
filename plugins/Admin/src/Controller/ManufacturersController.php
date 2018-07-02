@@ -522,8 +522,8 @@ class ManufacturersController extends AdminAppController
         if (!$this->AppAuth->isManufacturer() && is_null($manufacturer->bulk_orders_allowed)) {
             $manufacturer->bulk_orders_allowed = Configure::read('app.defaultBulkOrdersAllowed');
         }
-        if (is_null($manufacturer->send_shop_order_notification)) {
-            $manufacturer->send_shop_order_notification = Configure::read('app.defaultSendShopOrderNotification');
+        if (is_null($manufacturer->send_instant_order_notification)) {
+            $manufacturer->send_instant_order_notification = Configure::read('app.defaultSendInstantOrderNotification');
         }
         if (is_null($manufacturer->send_ordered_product_deleted_notification)) {
             $manufacturer->send_ordered_product_deleted_notification = Configure::read('app.defaultSendOrderedProductDeletedNotification');
@@ -613,8 +613,8 @@ class ManufacturersController extends AdminAppController
             if (!$this->AppAuth->isManufacturer() && $this->getRequest()->getData('Manufacturers.bulk_orders_allowed') == Configure::read('app.defaultBulkOrdersAllowed')) {
                 $this->setRequest($this->getRequest()->withData('Manufacturers.bulk_orders_allowed', null));
             }
-            if ($this->getRequest()->getData('Manufacturers.send_shop_order_notification') == Configure::read('app.defaultSendShopOrderNotification')) {
-                $this->setRequest($this->getRequest()->withData('Manufacturers.send_shop_order_notification', null));
+            if ($this->getRequest()->getData('Manufacturers.send_instant_order_notification') == Configure::read('app.defaultSendInstantOrderNotification')) {
+                $this->setRequest($this->getRequest()->withData('Manufacturers.send_instant_order_notification', null));
             }
             if ($this->getRequest()->getData('Manufacturers.send_ordered_product_deleted_notification') == Configure::read('app.defaultSendOrderedProductDeletedNotification')) {
                 $this->setRequest($this->getRequest()->withData('Manufacturers.send_ordered_product_deleted_notification', null));

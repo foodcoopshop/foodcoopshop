@@ -138,7 +138,7 @@ class ConfigurationsTable extends AppTable
         return $this->getNumberRangeValidator($validator, 'value', CUSTOMER_GROUP_MEMBER, CUSTOMER_GROUP_ADMIN);
     }
 
-    public function validationFcsShopOrderDefaultState(Validator $validator)
+    public function validationFcsInstantOrderDefaultState(Validator $validator)
     {
         return $this->getRuleEqualsToMultipleValuesValidator($validator, 'value', Configure::read('app.htmlHelper')->getVisibleOrderStates());
     }

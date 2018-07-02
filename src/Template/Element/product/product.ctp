@@ -136,7 +136,7 @@ if ($product['description'] != '') {
                 if (!empty($attribute['DepositProductAttributes']['deposit'])) {
                     echo '<div class="deposit">+ <b>'. $this->Number->formatAsCurrency($attribute['DepositProductAttributes']['deposit']) . '</b> '.__('deposit').'</div>';
                 }
-                if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && !empty($attribute['timebased_currency_money_incl'])) {
+                if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && !empty($attribute['timebased_currency_money_incl'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
                         'class' => 'timebased-currency-product-info',
                         'money' => $attribute['timebased_currency_money_incl'],
@@ -194,7 +194,7 @@ if ($product['description'] != '') {
                     echo '<div class="deposit">+ <b>' . $this->Number->formatAsCurrency($product['deposit']).'</b> '.__('deposit').'</div>';
                 }
                 echo '</div>';
-                if (!$this->request->getSession()->read('Auth.shopOrderCustomer') && !empty($product['timebased_currency_money_incl'])) {
+                if (!$this->request->getSession()->read('Auth.instantOrderCustomer') && !empty($product['timebased_currency_money_incl'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
                         'class' => 'timebased-currency-product-info',
                         'money' => $product['timebased_currency_money_incl'],

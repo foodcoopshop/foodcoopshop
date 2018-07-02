@@ -129,8 +129,8 @@ echo '<div class="holiday-wrapper">';
     ]);
     echo '<div class="sc"></div>';
 
-    echo $this->Form->control('Manufacturers.send_shop_order_notification', [
-        'label' => __d('admin', 'Shop_orders').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' .__d('admin', 'to_receive_an_email_on_every_shop_order.').'</span>',
+    echo $this->Form->control('Manufacturers.send_instant_order_notification', [
+        'label' => __d('admin', 'Instant_orders').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' .__d('admin', 'to_receive_an_email_on_every_shop_order.').'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);

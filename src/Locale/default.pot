@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-29 14:57+0200\n"
+"POT-Creation-Date: 2018-07-02 10:12+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -77,7 +77,7 @@ msgstr ""
 msgid "{0}_has_placed_a_new_order_({1})."
 msgstr ""
 
-msgid "Notification_about_shop_order_order_number_{0}"
+msgid "Notification_about_instant_order_order_number_{0}"
 msgstr ""
 
 msgid "Your_order_has_been_placed"
@@ -203,10 +203,10 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-msgid "Cancel_shop_order?"
+msgid "Cancel_instant_order?"
 msgstr ""
 
-msgid "Really_cancel_shop_order?"
+msgid "Really_cancel_instant_order?"
 msgstr ""
 
 msgid "January"
@@ -383,10 +383,10 @@ msgstr ""
 msgid "route_cart_finished"
 msgstr ""
 
-msgid "Place_shop_order_for"
+msgid "Place_instant_order_for"
 msgstr ""
 
-msgid "Shop_order_date_is_set_back_after_placing_it."
+msgid "Instant_order_date_is_set_back_after_placing_it."
 msgstr ""
 
 msgid "Close_all_orders?"
@@ -833,7 +833,7 @@ msgstr ""
 msgid "Action_Log_Order_date_changed"
 msgstr ""
 
-msgid "Action_Log_Order_shop_order_placed"
+msgid "Action_Log_Order_instant_order_placed"
 msgstr ""
 
 msgid "Action_Log_Order_detail_product_price_changed"
@@ -1083,6 +1083,9 @@ msgid "The_desired_amount_{0}_is_not_valid."
 msgstr ""
 
 msgid "Product_with_id_{0}_does_not_exist."
+msgstr ""
+
+msgid "The_attribute_does_not_exist:_{0}"
 msgstr ""
 
 msgid "offline"
@@ -1475,7 +1478,7 @@ msgstr ""
 msgid "Manufacturer_area"
 msgstr ""
 
-msgid "To_change_your_profile_please_stop_the_shop_order_mode."
+msgid "To_change_your_profile_please_stop_the_instant_order_mode."
 msgstr ""
 
 msgid "Signed_in"
@@ -1553,6 +1556,12 @@ msgstr ""
 msgid "Here_you_can_see_the_data_of_the_new_member"
 msgstr ""
 
+msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1}_(order_number_{2})."
+msgstr ""
+
+msgid "You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists."
+msgstr ""
+
 msgid "please_click_on_this_link_to_generate_a_new_password"
 msgstr ""
 
@@ -1563,12 +1572,6 @@ msgid "You_can_sign_in_and_change_your_password_here"
 msgstr ""
 
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."
-msgstr ""
-
-msgid "There_has_been_placed_a_shop_order_for_{0}_by_{1}_(order_number_{2})."
-msgstr ""
-
-msgid "You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists."
 msgstr ""
 
 msgid "route_search"

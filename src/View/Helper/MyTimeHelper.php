@@ -121,7 +121,7 @@ class MyTimeHelper extends TimeHelper
     /**
      * @param day
      */
-    public function getDateForShopOrder($day)
+    public function getDateForInstantOrder($day)
     {
         $currentWeekday = $this->formatAsWeekday($day);
         $daysDiff = $currentWeekday - Configure::read('app.sendOrderListsWeekday');

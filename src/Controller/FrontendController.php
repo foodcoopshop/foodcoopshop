@@ -120,9 +120,9 @@ class FrontendController extends AppController
         }
     }
 
-    protected function destroyShopOrderCustomer()
+    protected function destroyInstantOrderCustomer()
     {
-        $this->getRequest()->getSession()->delete('Auth.shopOrderCustomer');
+        $this->getRequest()->getSession()->delete('Auth.instantOrderCustomer');
         $this->getRequest()->getSession()->delete('Auth.originalLoggedCustomer');
     }
 
@@ -202,13 +202,13 @@ class FrontendController extends AppController
         }
 
         /*
-         * changed the acutally logged in customer to the desired shopOrderCustomer
+         * changed the acutally logged in customer to the desired instantOrderCustomer
          * but only in controller beforeFilter(), beforeRender() sets the customer back to the original one
-         * this means, in views $appAuth ALWAYS returns the original customer, in controllers ALWAYS the desired shopOrderCustomer
+         * this means, in views $appAuth ALWAYS returns the original customer, in controllers ALWAYS the desired instantOrderCustomer
          */
-        if ($this->getRequest()->getSession()->check('Auth.shopOrderCustomer')) {
+        if ($this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
             $this->getRequest()->getSession()->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
-            $this->AppAuth->setUser($this->getRequest()->getSession()->read('Auth.shopOrderCustomer'));
+            $this->AppAuth->setUser($this->getRequest()->getSession()->read('Auth.instantOrderCustomer'));
         }
         if (!empty($this->AppAuth->user()) && Configure::read('app.htmlHelper')->paymentIsCashless()) {
             $creditBalance = $this->AppAuth->getCreditBalance();

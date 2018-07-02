@@ -537,7 +537,7 @@ class CartsController extends FrontendController
             $this->saveOrderDetailTax($order->id_order);
             $this->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
 
-            $this->sendShopOrderNotificationToManufacturers($cart['CartProducts'], $order);
+            $this->sendInstantOrderNotificationToManufacturers($cart['CartProducts'], $order);
 
             $this->AppAuth->Cart->markAsSaved();
 
@@ -556,10 +556,10 @@ class CartsController extends FrontendController
         $this->setAction('detail');
     }
 
-    public function sendShopOrderNotificationToManufacturers($cartProducts, $order)
+    public function sendInstantOrderNotificationToManufacturers($cartProducts, $order)
     {
 
-        if (!$this->getRequest()->getSession()->check('Auth.shopOrderCustomer')) {
+        if (!$this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
             return false;
         }
 
@@ -586,13 +586,13 @@ class CartsController extends FrontendController
                 $productSum += $cartProduct['price'];
             }
 
-            $sendShopOrderNotification = $this->Manufacturer->getOptionSendShopOrderNotification($manufacturer->send_shop_order_notification);
+            $sendInstantOrderNotification = $this->Manufacturer->getOptionSendInstantOrderNotification($manufacturer->send_instant_order_notification);
             $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer->bulk_orders_allowed);
-            if ($sendShopOrderNotification && !$bulkOrdersAllowed) {
+            if ($sendInstantOrderNotification && !$bulkOrdersAllowed) {
                 $email = new AppEmail();
-                $email->setTemplate('shop_order_notification')
+                $email->setTemplate('instant_order_notification')
                 ->setTo($manufacturer->address_manufacturer->email)
-                ->setSubject(__('Notification_about_shop_order_order_number_{0}', [$order->id_order]))
+                ->setSubject(__('Notification_about_instant_order_order_number_{0}', [$order->id_order]))
                 ->setViewVars([
                     'appAuth' => $this->AppAuth,
                     'order' => $order,
@@ -636,16 +636,16 @@ class CartsController extends FrontendController
         $this->set('title_for_layout', __('Your_order_has_been_placed'));
 
         $this->resetOriginalLoggedCustomer();
-        $this->destroyShopOrderCustomer();
+        $this->destroyInstantOrderCustomer();
     }
 
-    public function ajaxDeleteShopOrderCustomer()
+    public function ajaxDeleteInstantOrderCustomer()
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
-        $this->destroyShopOrderCustomer();
+        $this->destroyInstantOrderCustomer();
 
         die(json_encode([
             'status' => 1,

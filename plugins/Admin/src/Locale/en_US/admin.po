@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-29 14:57+0200\n"
-"PO-Revision-Date: 2018-06-29 14:59+0200\n"
+"POT-Creation-Date: 2018-07-02 10:12+0200\n"
+"PO-Revision-Date: 2018-07-02 10:12+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -264,20 +264,32 @@ msgstr "Product {0} (price {1}) of order number {2} from {3} was successfully ca
 msgid "Product_was_cancelled"
 msgstr "Product cancelled"
 
-msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}"
-msgstr "{0,plural,=1{product was cancelled succesfully.} other{products were cancelled succesfully.}"
+msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}}"
+msgstr "{0,plural,=1{product was cancelled succesfully.} other{products were cancelled succesfully.}}"
 
 msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
 msgstr "The comment of the order number {0} by {1} was changed:"
 
+msgid "Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
+msgstr "Instant order nrº {0} successfully placed for {1} and date changed to {2}. The manufacturer was notified unless the notification was disabled."
+
+msgid "The_order_status_of_the_order_of_{0}_was_successfully_changed_to_{1}."
+msgstr "The order state of the order of {0} was successfully changed to {1}."
+
+msgid "The_order_status_of_the_orders_{0}_was_successfully_changed_to_{1}."
+msgstr "The order state of the orders {0} was successfully changed to {1}."
+
 msgid "Orders"
 msgstr "Orders"
 
-msgid "Shop_order"
+msgid "Instant_order"
 msgstr "Instant order"
 
 msgid "No_member_found_with_id_{0}."
 msgstr "No member found with id {0}."
+
+msgid "The_date_of_the_order_{0}_of_{1}_was_changed_to_{2}."
+msgstr "The date of the order {0} of {1} was changed to {2}."
 
 msgid "Home"
 msgstr "Home"
@@ -422,6 +434,9 @@ msgstr "The product {0} has been deactivated."
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr "The product {0} has been activated."
+
+msgid "Report"
+msgstr "Report"
 
 msgid "Add_slider"
 msgstr "Add slider"
@@ -613,7 +628,7 @@ msgid "The_following_settings_can_be_changed_in_the_admin_area."
 msgstr "The following settings can be changed in the admin panel."
 
 msgid "Setting"
-msgstr "Settings"
+msgstr "Setting"
 
 msgid "Value"
 msgstr "Value"
@@ -692,6 +707,21 @@ msgstr "min 8 characters"
 
 msgid "New_password_again"
 msgstr "New password (again)"
+
+msgid "Website_administration"
+msgstr "Website administration"
+
+msgid "Financial_reports"
+msgstr "Financial reports"
+
+msgid "Sum_of_credits"
+msgstr "Sum of credits"
+
+msgid "Included_deposit"
+msgstr "Included deposit"
+
+msgid "Of_the_{0}_on_the_credit_account_{1}_are_reserved_for_deposit_compensation_payments._As_long_as_this_amount_is_negative_money_for_deposit_compensation_payments_is_available."
+msgstr "{1} (of {0} on the credit account) are reserved for deposit compensation payments. As long as this amount is negative, there is money available for compensation payments."
 
 msgid "docs_route_members"
 msgstr "members"
@@ -876,14 +906,8 @@ msgstr "Deposit returns"
 msgid "My_data"
 msgstr "My data"
 
-msgid "Website_administration"
-msgstr "Website administration"
-
 msgid "Manufacturers"
 msgstr "Manufacturers"
-
-msgid "Financial_reports"
-msgstr "Financial reports"
 
 msgid "Configurations"
 msgstr "Settings"
@@ -1314,7 +1338,7 @@ msgstr "Adaptions of the ordered amount"
 msgid "to_receive_an_email_on_every_adaption_of_the_amount_of_a_ordered_product."
 msgstr "to receive an email on every adaption of the amount of an ordered product."
 
-msgid "Shop_orders"
+msgid "Instant_orders"
 msgstr "Instant orders"
 
 msgid "to_receive_an_email_on_every_shop_order."
@@ -1431,7 +1455,7 @@ msgstr "Back to deposit account"
 msgid "Cancel_selected_products"
 msgstr "Cancel selected products"
 
-msgid "Please_chose_member_in_above_dropdown_for_placing_shop_order."
+msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
 msgstr "Please chose the member you want to place the instant order for in the dropdown above."
 
 msgid "Group_by_member"
@@ -1644,6 +1668,9 @@ msgstr "product preview"
 msgid "docs_route_financial_reports"
 msgstr "financial-reports"
 
+msgid "Added_on"
+msgstr "Added on"
+
 msgid "Added_by"
 msgstr "Added by"
 
@@ -1688,6 +1715,12 @@ msgstr "{0,plural,=1{record} other{records}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
+#~ msgid "Shop_order"
+#~ msgstr "Instant order"
+
+#~ msgid "Shop_orders"
+#~ msgstr "Instant orders"
 
 #~ msgid "Do_not_forget_to_press_save"
 #~ msgstr "Don't forget to press save button"

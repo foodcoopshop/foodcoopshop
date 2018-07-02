@@ -127,7 +127,7 @@ class CartProductsTable extends AppTable
                 }
             }
             if (! $attributeIdFound) {
-                $message = 'Die Variante existiert nicht: ' . $initialProductId;
+                $message = __('The_attribute_does_not_exist:_{0}', [$initialProductId]);
                 return [
                     'status' => 0,
                     'msg' => $message,

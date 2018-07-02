@@ -120,7 +120,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $newSendInvoice = false;
         $newSendOrderedProductPriceChangedNotification = false;
         $newSendOrderedProductAmountChangedNotification = false;
-        $newSendShopOrderNotification = false;
+        $newSendInstantOrderNotification = false;
         $newBulkOrdersAllowed = false;
         $newDefaultTaxId = 3;
 
@@ -144,7 +144,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $this->browser->setFieldById('manufacturers-send-ordered-product-price-changed-notification', $newSendOrderedProductPriceChangedNotification);// do not use 0 here
         $this->browser->setFieldById('manufacturers-send-ordered-product-amount-changed-notification', $newSendOrderedProductAmountChangedNotification); // do not use 0 here
-        $this->browser->setFieldById('manufacturers-send-shop-order-notification', $newSendShopOrderNotification); // do not use 0 here
+        $this->browser->setFieldById('manufacturers-send-shop-order-notification', $newSendInstantOrderNotification); // do not use 0 here
         $this->browser->setFieldById('manufacturers-bulk-orders-allowed', $newBulkOrdersAllowed); // do not use 0 here
         $this->browser->setFieldById('manufacturers-default-tax-id', $newDefaultTaxId); // do not use 0 here
 
@@ -171,8 +171,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $sendOrderedProductAmountChangedNotification = $this->Manufacturer->getOptionSendOrderedProductAmountChangedNotification($manufacturerNew->send_ordered_product_amount_changed_notification);
         $this->assertEquals($sendOrderedProductAmountChangedNotification, $newSendOrderedProductAmountChangedNotification, 'saving option send_ordered_product_amount_changed_notification failed');
 
-        $sendShopOrderNotification = $this->Manufacturer->getOptionSendShopOrderNotification($manufacturerNew->send_shop_order_notification);
-        $this->assertEquals($sendShopOrderNotification, $newSendShopOrderNotification, 'saving option send_shop_order_notification failed');
+        $sendInstantOrderNotification = $this->Manufacturer->getOptionSendInstantOrderNotification($manufacturerNew->send_instant_order_notification);
+        $this->assertEquals($sendInstantOrderNotification, $newSendInstantOrderNotification, 'saving option send_instant_order_notification failed');
 
         $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturerNew->bulk_orders_allowed);
         $this->assertEquals($bulkOrdersAllowed, $newBulkOrdersAllowed, 'saving option bulk_orders_allowed failed');

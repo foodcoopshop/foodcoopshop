@@ -45,7 +45,7 @@ if ($appAuth->Cart->getProducts() !== null) {
     <div class="inner">
     
     	<?php
-    	if (!$this->request->getSession()->check('Auth.shopOrderCustomer')) {
+    	if (!$this->request->getSession()->check('Auth.instantOrderCustomer')) {
     	    $lastOrderDetails = $appAuth->getLastOrderDetailsForDropdown();
     	    if (!empty($lastOrderDetails)) {
     	        $lastOrderDetails['remove-all-products-from-cart'] = __('Empty_cart').'...';
@@ -62,13 +62,13 @@ if ($appAuth->Cart->getProducts() !== null) {
     	}
 
         if ($appAuth->user() && $this->Html->paymentIsCashless()) {
-            if ($this->request->getSession()->check('Auth.shopOrderCustomer')) {
+            if ($this->request->getSession()->check('Auth.instantOrderCustomer')) {
                 $this->element('addScript', ['script' =>
-                    Configure::read('app.jsNamespace').".Helper.initLogoutShopOrderCustomerButton();"
+                    Configure::read('app.jsNamespace').".Helper.initLogoutInstantOrderCustomerButton();"
                 ]);
                 echo '<p class="shop-order-customer-info">';
-                    echo __('This_order_will_be_placed_for_{0}', ['<b>'.$this->request->getSession()->read('Auth.shopOrderCustomer')->name.'</b>']);
-                echo '<b><a class="btn btn-default" href="javascript:void(0);">'.__('Cancel_shop_order?').'</a></b>';
+                    echo __('This_order_will_be_placed_for_{0}', ['<b>'.$this->request->getSession()->read('Auth.instantOrderCustomer')->name.'</b>']);
+                echo '<b><a class="btn btn-default" href="javascript:void(0);">'.__('Cancel_instant_order?').'</a></b>';
                 echo '</p>';
 
             }
@@ -95,7 +95,7 @@ if ($appAuth->Cart->getProducts() !== null) {
             <p class="deposit-sum-wrapper"><b><?php echo __('Deposit'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
             <p class="tax-sum-wrapper"><b><?php echo __('Value_added_tax'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
             
-            <?php if (!$this->request->getSession()->check('Auth.shopOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
+            <?php if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
             	<p class="timebased-currency-sum-wrapper"><b><?php echo __('From_which_in'); ?> <?php echo Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'); ?></b><span class="sum"><?php echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($appAuth->Cart->getTimebasedCurrencySecondsSum()); ?></span></p>
             <?php } ?>
             

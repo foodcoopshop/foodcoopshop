@@ -124,13 +124,16 @@ class ConfigurationsController extends AdminAppController
                     $template = 'customer_registered_inactive';
                 }
                 $email->setTemplate($template);
+                $data = (object) [
+                    'firstname' => 'Vorname',
+                    'lastname' => 'Nachname',
+                ];
+                $data->address_customer = (object) [
+                    'email' => 'vorname.nachname@example.com'
+                ];
                 $email->setViewVars([
-                    'data' => (object) [
-                        'firstname' => 'Vorname',
-                        'lastname' => 'Nachname',
-                        'email' => 'vorname.nachname@example.com'
-                    ],
-                    'newPassword' => 'Password'
+                    'data' => $data,
+                    'newPassword' => 'password'
                 ]);
                 break;
         }
