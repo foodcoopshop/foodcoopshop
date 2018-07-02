@@ -76,7 +76,7 @@ $ chmod a+w -R ./webroot/tmp
 
 ## Unit Testing
 * Create second database and add test database configuration to database.php. For details read [Cake's testing documentation](https://book.cakephp.org/3.0/en/development/testing.html)
-* Import [this dump](config/sql/_installation/clean-db-structure.sql) into your test database
+* Import [this dump](config/sql/_installation/clean-db-structure_de_DE.sql) into your test database
 ```
-$ vendor/bin/phpunit --testsuite App,Admin
+$ vendor/bin/phpunit
 ```
