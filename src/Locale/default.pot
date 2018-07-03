@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-03 14:24+0200\n"
+"POT-Creation-Date: 2018-07-03 22:26+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1208,6 +1208,9 @@ msgstr ""
 msgid "The_amount_needs_to_be_greater_than_0."
 msgstr ""
 
+msgid "The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long."
+msgstr ""
+
 msgid "New_product_of"
 msgstr ""
 
@@ -1671,6 +1674,12 @@ msgid "yes"
 msgstr ""
 
 msgid "no"
+msgstr ""
+
+msgid "Members"
+msgstr ""
+
+msgid "Activities"
 msgstr ""
 
 msgid "Sign_out"

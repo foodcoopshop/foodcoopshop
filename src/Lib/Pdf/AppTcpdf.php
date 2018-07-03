@@ -239,7 +239,7 @@ class AppTcpdf extends TCPDF
     public function getCorrectColspan($headers)
     {
         $diff = 2;
-        // first page of invoices does not contain column "mitglied"
+        // first page of invoices does not contain column "member"
         if (! in_array(__('Member'), $headers)) {
             $diff = 3;
         }

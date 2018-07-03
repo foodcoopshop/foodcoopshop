@@ -90,7 +90,10 @@ class CustomersController extends AdminAppController
             )
         );
 
-        $messageString = 'Die Gruppe des Mitglieds <b>' . $oldCustomer->name . '</b> wurde von <b>' . Configure::read('app.htmlHelper')->getGroupName($oldGroup) . '</b> auf <b>' . Configure::read('app.htmlHelper')->getGroupName($groupId) . '</b> geändert.';
+        $messageString = __d('admin', 'The_group_of_the_member_{0}_was_changed_to_{1}.', [
+            '<b>' . $oldCustomer->name . '</b>',
+            '<b>' . Configure::read('app.htmlHelper')->getGroupName($groupId) . '</b>'
+        ]);
         $this->Flash->success($messageString);
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('customer_group_changed', $this->AppAuth->getUserId(), $customerId, 'customers', $messageString);

@@ -999,7 +999,6 @@ foodcoopshop.Admin = {
 
     openBulkDeleteOrderDetailDialog : function (orderDetailIds) {
 
-        var productString = orderDetailIds.length == 1 ? 'Produkt' : 'Produkte';
         var infoText = '<p>';
         if (orderDetailIds.length == 1) {
             infoText = foodcoopshop.LocalizedJs.admin.YouSelectedOneProductForCancellation;

@@ -53,7 +53,7 @@ if ($results_product[0]['ManufacturerUidNumber'] != '') {
 }
 $pdf->infoTextForFooter .= ', '.__d('admin', 'Invoice_number_abbreviation').' ' . $newInvoiceNumber;
 
-// Produktauflistung Start
+// product list start
 $widths = [
     33,
     332,
@@ -76,7 +76,7 @@ $pdf->addLastSumRow(
     $this->MyNumber->formatAsDecimal($sumPriceIncl)
 );
 $pdf->renderTable();
-// Produktauflistung End
+// product list end
 
 if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0 && $sumTimebasedCurrencyPriceIncl == 0) {
 

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-03 14:24+0200\n"
-"PO-Revision-Date: 2018-07-03 10:42+0200\n"
+"POT-Creation-Date: 2018-07-03 22:26+0200\n"
+"PO-Revision-Date: 2018-07-03 22:25+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -83,6 +83,9 @@ msgstr "Send test email"
 
 msgid "Test_email"
 msgstr "Test email"
+
+msgid "The_group_of_the_member_{0}_was_changed_to_{1}."
+msgstr "The group of the member {0} was changed to {1}."
 
 msgid "Change_password"
 msgstr "Change password"
@@ -395,6 +398,9 @@ msgstr "The amount of the product {0} was changed successfully."
 
 msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
 msgstr "The amount of the product {0} from manufacturer {1} was changed from {2} to {3}."
+
+msgid "The_price_of_the_product_{0}_was_changed_successfully."
+msgstr "The price of the product {0} was changed successfully."
 
 msgid "The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
 msgstr "The price of the product {0} from manufacturer {1} was changed from {2} to {3}."

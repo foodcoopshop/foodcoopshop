@@ -63,7 +63,7 @@ class ProductLangsTable extends AppTable
             }
             $newName = StringComponent::removeSpecialChars(strip_tags(trim($name['name'])));
             if (strlen($newName) < 2) {
-                throw new InvalidParameterException('Der Name des Produktes <b>'.$newName.'</b> muss mindestens zwei Zeichen lang sein.');
+                throw new InvalidParameterException(__('The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long.', ['<b>'.$newName.'</b>', 2]));
             } else {
                 $tmpProductLang2Save = [
                     'id_product' => $ids['productId'],

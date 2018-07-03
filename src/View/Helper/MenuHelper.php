@@ -105,9 +105,9 @@ class MenuHelper extends Helper
             $applyActiveClass = true;
 
             // START hack: sometimes two menu items are selected, because of same url
-            if ((    $name == 'Mitglieder'  && preg_match('/(profile|changePassword)/', $_SERVER['REQUEST_URI']))
-                 || ($name == 'Aktuelles' && preg_match('/hersteller/', $_SERVER['REQUEST_URI']))
-                 || ($name == 'Aktivitäten' && preg_match('/order_detail_cancelled|payment_deposit_customer_added/', $_SERVER['REQUEST_URI']))) {
+            if ((   $name == __('Members')  && preg_match('/(profile|changePassword)/', $_SERVER['REQUEST_URI']))
+                || ($name == __('News') && preg_match('/'.__('route_manufacturer_list').'/', $_SERVER['REQUEST_URI']))
+                || ($name == __('Activities') && preg_match('/order_detail_cancelled|payment_deposit_customer_added/', $_SERVER['REQUEST_URI']))) {
                      $applyActiveClass = false;
             }
 

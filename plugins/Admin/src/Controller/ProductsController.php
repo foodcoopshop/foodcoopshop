@@ -461,7 +461,7 @@ class ProductsController extends AdminAppController
             $selectedCategories = $this->getRequest()->getData('selectedCategories');
         }
 
-        $selectedCategories[] = Configure::read('app.categoryAllProducts'); // always add 'alle-produkte'
+        $selectedCategories[] = Configure::read('app.categoryAllProducts'); // always add 'all-products'
         $selectedCategories = array_unique($selectedCategories);
 
         $oldProduct = $this->Product->find('all', [
@@ -630,8 +630,8 @@ class ProductsController extends AdminAppController
         }
 
         $price = $this->Product->getStringAsFloat($this->getRequest()->getData('price'));
-        $this->Flash->success('Der Preis des Produktes <b>' . $oldProduct->product_lang->name . '</b> wurde erfolgreich geändert.');
-
+        
+        $this->Flash->success(__d('admin', 'The_price_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->product_lang->name . '</b>']));
         if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
             $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
         } else {
