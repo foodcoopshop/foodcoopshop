@@ -179,7 +179,7 @@ class LocalizedController extends Controller
                 'DeactivateMember' => __('Deactivate_member?'),
                 'ReallyActivateMember0' => __('Really_activate_member_{0}_?'),
                 'ReallyDeactivateMember0' => __('Really_deactivate_member_{0}?'),
-                'YesInfoMailWillBeSent' => _('Yes_info_mail_will_be_sent'),
+                'YesInfoMailWillBeSent' => __('Yes_info_mail_will_be_sent'),
                 'ReallyActivateProduct0' => __('Really_activate_product_{0}_?'),
                 'ReallyDeactivateProduct0' => __('Really_deactivate_product_{0}?'),
                 'DeleteAttribute' => __('Delete_attribute'),
