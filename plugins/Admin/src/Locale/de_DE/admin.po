@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-03 08:49+0200\n"
-"PO-Revision-Date: 2018-07-03 08:50+0200\n"
+"POT-Creation-Date: 2018-07-03 10:41+0200\n"
+"PO-Revision-Date: 2018-07-03 10:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -65,6 +65,9 @@ msgstr "Die Kategorie {0} wurde {1}."
 
 msgid "Categories"
 msgstr "Kategorien"
+
+msgid "Edit_setting"
+msgstr "Einstellung bearbeiten"
 
 msgid "The_setting_has_been_changed_successfully."
 msgstr "Die Einstellung wurde erfolgreich geändert."
@@ -208,7 +211,7 @@ msgid "Order_lists_for_the_day"
 msgstr "Bestellungen für den"
 
 msgid "Edit_settings"
-msgstr "Einstellungen berbeiten"
+msgstr "Einstellungen bearbeiten"
 
 msgid "The_settings_of_manufacturer_{0}_have_been_changed."
 msgstr "Die Einstellungen des Herstellers {0} wurden erfolgreich gespeichert."
