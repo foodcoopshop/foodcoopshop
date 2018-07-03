@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ccd88de63586cd16d663a27ec69d4642",
+    "content-hash": "142ff5338a93ad16d3c00c6e7c241100",
     "packages": [
         {
             "name": "aura/intl",
@@ -999,59 +999,62 @@
             "time": "2015-09-21T18:19:52+00:00"
         },
         {
-            "name": "sunhater/kcfinder",
-            "version": "dev-master",
+            "name": "studio-42/elfinder",
+            "version": "2.1.39",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sunhater/kcfinder.git",
-                "reference": "b645d2a81e647d63780c238b130593e32b4d95a9"
+                "url": "https://github.com/Studio-42/elFinder.git",
+                "reference": "f92460bdf9bb210296e2aaaf47fbe8a04c770937"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sunhater/kcfinder/zipball/b645d2a81e647d63780c238b130593e32b4d95a9",
-                "reference": "b645d2a81e647d63780c238b130593e32b4d95a9",
+                "url": "https://api.github.com/repos/Studio-42/elFinder/zipball/f92460bdf9bb210296e2aaaf47fbe8a04c770937",
+                "reference": "f92460bdf9bb210296e2aaaf47fbe8a04c770937",
                 "shasum": ""
             },
             "require": {
-                "ext-gd": "*",
-                "php": ">=5.3.0"
+                "php": ">=5.2"
             },
             "suggest": {
-                "ext-curl": "*",
-                "ext-exif": "*",
-                "ext-fileinfo": "*",
-                "ext-gmagick": "*",
-                "ext-http": "*",
-                "ext-imagick": "*",
-                "ext-sockets": "*",
-                "ext-zip": "*"
+                "barryvdh/elfinder-flysystem-driver": "VolumeDriver for elFinder to use Flysystem as a root.",
+                "google/apiclient": "VolumeDriver GoogleDrive require `google/apiclient:^2.0.",
+                "kunalvarma05/dropbox-php-sdk": "VolumeDriver `Dropbox`2 require `kunalvarma05/dropbox-php-sdk.",
+                "nao-pon/flysystem-google-drive": "require in GoogleDrive network volume mounting with Flysystem."
             },
             "type": "library",
+            "autoload": {
+                "classmap": [
+                    "php"
+                ]
+            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-3.0+",
-                "LGPL-3.0+"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
-                    "name": "Pavel Tzonkov",
-                    "email": "sunhater@sunhater.com",
-                    "homepage": "http://sunhater.com",
-                    "role": "Developer"
+                    "name": "Dmitry Levashov",
+                    "email": "dio@std42.ru",
+                    "homepage": "http://std42.ru"
+                },
+                {
+                    "name": "Troex Nevelin",
+                    "email": "troex@fury.scancode.ru",
+                    "homepage": "http://std42.ru"
+                },
+                {
+                    "name": "Community contributions",
+                    "homepage": "https://github.com/Studio-42/elFinder/contributors"
+                },
+                {
+                    "name": "Naoki Sawada",
+                    "email": "hypweb+elfinder@gmail.com",
+                    "homepage": "http://xoops.hypweb.net"
                 }
             ],
-            "description": "KCFinder web file manager",
-            "homepage": "http://kcfinder.sunhater.com",
-            "keywords": [
-                "explorer",
-                "file",
-                "file explorer",
-                "file manager",
-                "finder",
-                "kcfinder",
-                "manager"
-            ],
-            "time": "2014-09-27T18:47:34+00:00"
+            "description": "File manager for web",
+            "homepage": "http://elfinder.org",
+            "time": "2018-06-05T07:36:51+00:00"
         },
         {
             "name": "symfony/config",
@@ -4515,7 +4518,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "cakephp/migrations": 0,
-        "sunhater/kcfinder": 20,
         "psy/psysh": 0,
         "cakephp/bake": 0
     },

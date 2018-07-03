@@ -86,9 +86,9 @@ class ManufacturersController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $_SESSION['KCFINDER'] = [
-            'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
-            'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
+        $_SESSION['ELFINDER'] = [
+            'uploadUrl' => Configure::read('app.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
+            'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
         ];
 
         $manufacturer = $this->Manufacturer->find('all', [
@@ -210,9 +210,9 @@ class ManufacturersController extends AdminAppController
             $manufacturerId = $manufacturer->id_manufacturer;
         }
 
-        $_SESSION['KCFINDER'] = [
-            'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
-            'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
+        $_SESSION['ELFINDER'] = [
+            'uploadUrl' => Configure::read('app.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
+            'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
         ];
         $this->set('data', [
             'status' => true,

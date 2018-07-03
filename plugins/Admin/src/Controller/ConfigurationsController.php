@@ -55,9 +55,9 @@ class ConfigurationsController extends AdminAppController
         $this->set('title_for_layout', 'Einstellung bearbeiten');
 
         if (in_array($configuration->type, ['textarea_big'])) {
-            $_SESSION['KCFINDER'] = [
-                'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/configurations/",
-                'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/configurations/"
+            $_SESSION['ELFINDER'] = [
+                'uploadUrl' => Configure::read('app.cakeServerName') . "/files/kcfinder/configurations/",
+                'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/configurations/"
             ];
         }
 

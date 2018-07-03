@@ -20,10 +20,8 @@ CKEDITOR.editorConfig = function ( config ) {
         '/js/ckeditor/config-small-with-upload.css'
     ];
 
-    config.filebrowserBrowseUrl = '/node_modules/kcfinder/browse.php?type=files';
-    config.filebrowserImageBrowseUrl = '/node_modules/kcfinder/browse.php?type=images';
-    config.filebrowserUploadUrl = '/node_modules/kcfinder/upload.php?type=files';
-    config.filebrowserImageUploadUrl = '/node_modules/kcfinder/upload.php?type=images';
+    config.filebrowserBrowseUrl = '/node_modules/elFinder/elfinder.html';
+    config.filebrowserImageBrowseUrl = '/node_modules/elFinder/elfinder.html';
 
     // The toolbar groups arrangement, optimized for two toolbar rows.
     config.toolbarGroups = [
@@ -37,5 +35,5 @@ CKEDITOR.editorConfig = function ( config ) {
 
 };
 
-CKEDITOR.timestamp = '4.8.0'; // change this string if version is updated in package.json
+CKEDITOR.timestamp = 'v4.9.2'; // change this string if version is updated in package.json
 
