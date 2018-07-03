@@ -130,7 +130,7 @@ $uploadUrl = '/files/kcfinder/';
 if (isset($_SESSION['ELFINDER']['uploadUrl'])) {
     $uploadUrl = $_SESSION['ELFINDER']['uploadUrl'];
 }
-mkdir($uploadPath, '0777', true);
+mkdir($uploadPath, 0777, true);
 
 $opts = array(
 	// 'debug' => true,
