@@ -40,6 +40,13 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals(65.03, $jsonDecodedContent->amount);
     }
 
+    public function testAddPaymentParameterPriceWithWhitespaceOk()
+    {
+        $this->loginAsCustomer();
+        $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), ' 24,88 ', 'product');
+        $this->assertEquals(24.88, $jsonDecodedContent->amount);
+    }
+    
     public function testAddPaymentParameterPriceNegative()
     {
         $this->loginAsCustomer();
