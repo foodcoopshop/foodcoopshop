@@ -2,7 +2,7 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Unveröffentlicht / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.0.2...HEAD)
+## v2.1.0 2018-07-06 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.0.2...v2.1.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
 * [EvaSee](https://github.com/EvaSee)
@@ -24,6 +24,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - FoodCoopShop ist jetzt auch auf Englisch verfügbar. [PR#234](https://github.com/foodcoopshop/foodcoopshop/pull/234) / [PR#235](https://github.com/foodcoopshop/foodcoopshop/pull/235) / [PR#238](https://github.com/foodcoopshop/foodcoopshop/pull/238) / [I#9](https://github.com/foodcoopshop/foodcoopshop/issues/9) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Für Entwickler
+- [elFinder](https://studio-42.github.io/elFinder/) ist jetzt Datei-Upload-Plugin für den WYSIWYG-Editor. [PR#239](https://github.com/foodcoopshop/foodcoopshop/pull/239) / [I#228](https://github.com/foodcoopshop/foodcoopshop/issues/228) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Netzwerk-Modul ist jetzt Teil vom Core. / [PR#237](https://github.com/foodcoopshop/foodcoopshop/pull/237) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - JQuery-Update v3.3.1 mit JQuery Migrate 1.4.1 / [PR#230](https://github.com/foodcoopshop/foodcoopshop/pull/230) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Vendor-Updates: CakePHP-Update v3.6, Featherlight v1.7.13, OwlCarousel v2.3.4 / [PR#218](https://github.com/foodcoopshop/foodcoopshop/pull/218) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
@@ -31,18 +32,18 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - JQuery UI Tooltip wurde durch Tooltipster ersetzt. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/ed331eae8fbb8959bb7e3981a1c8895199a3075c) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - JsMin wurde durch JShrink ersetzt. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/5013ee524d594a5ca4850dbf2e745c1d573e3b76) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-## v2.0.2 2017-04-18 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.0.1...v2.0.2)
+## v2.0.2 2018-04-18 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.0.1...v2.0.2)
 
 ### Bugfixes
 - Das Ändern der E-Mail-Adresse beim Hersteller hat nicht korrekt funktioniert. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/1b72e5dad95287d48efd09882e6aa57d4d52b6d9) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Beim Erstellen eines neuen Blog-Artikels wurde das Feld "nach vorne reihen" irrtümlich angezeigt. Das Deaktivieren dieser Funktion hat zu einem Fehler geführt. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/22c550947df41bfc56fea049db4343e70d511a57) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-## v2.0.1 2017-04-03 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.0.0...v2.0.1)
+## v2.0.1 2018-04-03 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.0.0...v2.0.1)
 
 ### Bugfixes
 - Die Sommerzeit wurde nicht korrekt berücksichtigt. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/245e5e1d7a7173a24a5f83cae90359563dfb3f01) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-## v2.0.0 2017-03-29 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.5.0...v2.0.0)
+## v2.0.0 2018-03-29 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.5.0...v2.0.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
 * [EvaSee](https://github.com/EvaSee)

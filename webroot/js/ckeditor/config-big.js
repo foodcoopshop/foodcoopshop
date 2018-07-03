@@ -17,10 +17,8 @@ CKEDITOR.editorConfig = function ( config ) {
     config.forcePasteAsPlainText = true;
     config.allowedContent = true;
 
-    config.filebrowserBrowseUrl = '/node_modules/kcfinder/browse.php?type=files';
-    config.filebrowserImageBrowseUrl = '/node_modules/kcfinder/browse.php?type=images';
-    config.filebrowserUploadUrl = '/node_modules/kcfinder/upload.php?type=files';
-    config.filebrowserImageUploadUrl = '/node_modules/kcfinder/upload.php?type=images';
+    config.filebrowserBrowseUrl = '/js/elfinder/elfinder.html';
+    config.filebrowserImageBrowseUrl = '/js/elfinder/elfinder.html';
 
     config.toolbarGroups = [
         { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
@@ -36,5 +34,5 @@ CKEDITOR.editorConfig = function ( config ) {
 
 };
 
-CKEDITOR.timestamp = 'v4.8.0'; // change this string if version is updated in package.json
+CKEDITOR.timestamp = 'v4.9.2'; // change this string if version is updated in package.json
 

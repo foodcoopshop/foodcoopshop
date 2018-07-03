@@ -105,9 +105,9 @@ class BlogPostsController extends AdminAppController
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
 
-        $_SESSION['KCFINDER'] = [
-            'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/blog_posts",
-            'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/blog_posts"
+        $_SESSION['ELFINDER'] = [
+            'uploadUrl' => Configure::read('app.cakeServerName') . "/files/kcfinder/blog_posts",
+            'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/blog_posts"
         ];
 
         if (empty($this->getRequest()->getData())) {
