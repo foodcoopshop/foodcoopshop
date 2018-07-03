@@ -52,7 +52,7 @@ class ConfigurationsController extends AdminAppController
         if (empty($configuration)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', 'Einstellung bearbeiten');
+        $this->set('title_for_layout', __d('admin', 'Edit_setting'));
 
         if (in_array($configuration->type, ['textarea_big'])) {
             $_SESSION['ELFINDER'] = [

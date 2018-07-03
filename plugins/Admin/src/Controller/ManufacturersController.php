@@ -60,7 +60,7 @@ class ManufacturersController extends AdminAppController
     {
         $this->edit($this->AppAuth->getManufacturerId());
         $this->set('referer', $this->getRequest()->getUri()->getPath());
-        $this->set('title_for_layout', 'Profil bearbeiten');
+        $this->set('title_for_layout', __d('admin', 'Edit_profile'));
         if (empty($this->getRequest()->getData())) {
             $this->render('edit');
         }
