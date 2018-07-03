@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-02 10:45+0200\n"
-"PO-Revision-Date: 2018-07-02 10:45+0200\n"
+"POT-Creation-Date: 2018-07-03 08:49+0200\n"
+"PO-Revision-Date: 2018-07-03 08:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1041,8 +1041,8 @@ msgstr "Vergiss bitte nicht, diesen Betrag <b>in unser Guthaben-System einzutrag
 msgid "Here_you_find_the_link_to_add_the_credit:"
 msgstr "Hier der Link zum Eintragen:"
 
-msgid "{0}_is_the_last_day_to_order._You_can_do_that_until_{1}_midnight."
-msgstr " {0} ist schon wieder der letzte Bestelltag. Bis {1} Mitternacht hast du noch Zeit."
+msgid "{0}_is_the_last_day_to_order._You_can_do_that_until_{0}_midnight."
+msgstr "{0} ist schon wieder der letzte Bestelltag. Bis {0} Mitternacht hast du noch Zeit."
 
 msgid "Do_you_want_to_load_your_last_order_into_your_shopping_cart?_The_current_cart_will_be_emptied_for_that."
 msgstr "Möchtest du deine letzte Bestellung in den Warenkorb laden? Der aktuelle Warenkorb wird dafür vorher geleert."
