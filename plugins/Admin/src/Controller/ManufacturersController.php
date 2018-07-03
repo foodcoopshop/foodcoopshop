@@ -295,7 +295,7 @@ class ManufacturersController extends AdminAppController
         }
         $this->set('manufacturers', $manufacturers);
 
-        $this->set('title_for_layout', __('Manufacturers'));
+        $this->set('title_for_layout', __d('admin', 'Manufacturers'));
     }
 
     public function sendInvoice()

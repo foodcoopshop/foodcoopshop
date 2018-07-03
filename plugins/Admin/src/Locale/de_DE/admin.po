@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-03 10:41+0200\n"
+"POT-Creation-Date: 2018-07-03 14:24+0200\n"
 "PO-Revision-Date: 2018-07-03 10:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -194,6 +194,9 @@ msgstr "Hersteller bearbeiten"
 
 msgid "Manufacturer_{0}_was"
 msgstr "Der Hersteller {0} wurde"
+
+msgid "Manufacturers"
+msgstr "Hersteller"
 
 msgid "Invoice_for_manufacturer_{0}_successfully_sent_to_{1}."
 msgstr "Rechnung für Hersteller {0} erfolgreich versendet an {1}."
@@ -908,9 +911,6 @@ msgstr "Pfand-Rückgaben"
 
 msgid "My_data"
 msgstr "Meine Daten"
-
-msgid "Manufacturers"
-msgstr "Hersteller"
 
 msgid "Configurations"
 msgstr "Einstellungen"

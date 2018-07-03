@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-03 08:49+0200\n"
-"PO-Revision-Date: 2018-07-02 11:06+0200\n"
+"POT-Creation-Date: 2018-07-03 14:24+0200\n"
+"PO-Revision-Date: 2018-07-03 14:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -572,6 +572,9 @@ msgstr "Do you really want to activate the member {0}?"
 
 msgid "Really_deactivate_member_{0}?"
 msgstr "Do you really want to deactivate the member {0}?"
+
+msgid "Yes_info_mail_will_be_sent"
+msgstr "Yes (info email will be sent)"
 
 msgid "Really_activate_product_{0}_?"
 msgstr "Do you really want to activate product {0}?"
@@ -1631,6 +1634,9 @@ msgstr "The prices include the VAT."
 
 msgid "Information_about_right_of_withdrawal"
 msgstr "Information about the right of withdrawal"
+
+msgid "and_withdrawal_form"
+msgstr "and withdrawal form"
 
 msgid "Withdrawal_form"
 msgstr "Withdrawal form"

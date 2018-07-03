@@ -24,7 +24,7 @@ $pdf->SetRightMargin(12);
 
 $title = __('Information_about_right_of_withdrawal');
 if (isset($order)) {
-    $title .= ' ' . _('and_withdrawal_form');
+    $title .= ' ' . __('and_withdrawal_form');
 }
 $pdf->SetTitle($title);
 $pdf->infoTextForFooter = $title;
