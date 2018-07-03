@@ -17,8 +17,8 @@ CKEDITOR.editorConfig = function ( config ) {
     config.forcePasteAsPlainText = true;
     config.allowedContent = true;
 
-    config.filebrowserBrowseUrl = '/node_modules/elFinder/elfinder.html';
-    config.filebrowserImageBrowseUrl = '/node_modules/elFinder/elfinder.html';
+    config.filebrowserBrowseUrl = '/js/elFinder/elfinder.html';
+    config.filebrowserImageBrowseUrl = '/js/elFinder/elfinder.html';
 
     config.toolbarGroups = [
         { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },

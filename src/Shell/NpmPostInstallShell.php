@@ -71,7 +71,7 @@ class NpmPostInstallShell extends AppShell
         ];
 
         foreach ($adaptedFiles as $file) {
-            copy($file, preg_replace('/config/', 'webroot' . DS . 'node_modules', $file, 1));
+            copy($file, preg_replace('/config/', 'webroot' . DS . 'js', $file, 1));
             $this->out('Elfinder config file ' . $file . ' copied successfully.');
         }
     }

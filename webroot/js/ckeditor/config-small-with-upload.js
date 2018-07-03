@@ -20,8 +20,8 @@ CKEDITOR.editorConfig = function ( config ) {
         '/js/ckeditor/config-small-with-upload.css'
     ];
 
-    config.filebrowserBrowseUrl = '/node_modules/elFinder/elfinder.html';
-    config.filebrowserImageBrowseUrl = '/node_modules/elFinder/elfinder.html';
+    config.filebrowserBrowseUrl = '/js/elFinder/elfinder.html';
+    config.filebrowserImageBrowseUrl = '/js/elFinder/elfinder.html';
 
     // The toolbar groups arrangement, optimized for two toolbar rows.
     config.toolbarGroups = [
