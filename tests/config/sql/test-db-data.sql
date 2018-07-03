@@ -211,6 +211,8 @@ INSERT INTO `fcs_pages` VALUES
 /*!40000 ALTER TABLE `fcs_pages` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_payments` DISABLE KEYS */;
+INSERT INTO `fcs_payments` VALUES
+(1,92,0,'product',100.00,'','2018-07-03 20:00:20','2018-07-03 20:00:20',1,0,'',0,92);
 /*!40000 ALTER TABLE `fcs_payments` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product` DISABLE KEYS */;

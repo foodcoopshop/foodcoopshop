@@ -76,6 +76,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getReport('product'),
             $this->Slug->getReport('payback'),
             $this->Slug->getReport('deposit'),
+            $this->Slug->getPaymentEdit(1),
             $this->Slug->getBlogPostListAdmin(),
             $this->Slug->getBlogPostAdd(),
             $this->Slug->getBlogPostEdit(2),
