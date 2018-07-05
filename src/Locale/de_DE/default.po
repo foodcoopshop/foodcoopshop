@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-05 09:44+0200\n"
-"PO-Revision-Date: 2018-07-05 09:51+0200\n"
+"POT-Creation-Date: 2018-07-05 10:12+0200\n"
+"PO-Revision-Date: 2018-07-05 10:12+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1206,7 +1206,7 @@ msgstr "Bitte akzeptiere die AGB."
 msgid "Please_enter_a_correct_number."
 msgstr "Bitte gib eine korrekte Zahl ein."
 
-msgid "The_amount_needs_to_be_greater_than_0."
+msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr "Der Betrag muss größer als 0 sein."
 
 msgid "The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long."
@@ -1233,8 +1233,11 @@ msgstr "Der Preis nach Gewicht muss größer als 0 sein."
 msgid "The_name_is_not_valid."
 msgstr "Der Name ist nicht erlaubt."
 
-msgid "The_amount_needs_to_be_a_number."
+msgid "The_amount_(quantity)_needs_to_be_a_number."
 msgstr "Die Anzahl muss eine Zahl sein."
+
+msgid "The_amount_(quantity)_needs_to_be_greater_than_0."
+msgstr "Die Anzahl muss größer als 0 sein."
 
 msgid "The_approximate_weight_needs_to_be_a_number."
 msgstr "Das ungefähre Liefergewicht muss eine Zahl sein."

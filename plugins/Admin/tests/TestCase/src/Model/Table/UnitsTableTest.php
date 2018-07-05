@@ -68,7 +68,7 @@ class UnitsTableTest extends AppCakeTestCase
 
     /**
      * @expectedException App\Lib\Error\Exception\InvalidParameterException
-     * @expectedExceptionMessage Der Name muss angegeben sein.
+     * @expectedExceptionMessage Bitte gib einen Namen ein.
      */
     public function testSaveProductWithInvalidNameEmpty()
     {

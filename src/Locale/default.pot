@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-05 09:44+0200\n"
+"POT-Creation-Date: 2018-07-05 10:12+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1205,7 +1205,7 @@ msgstr ""
 msgid "Please_enter_a_correct_number."
 msgstr ""
 
-msgid "The_amount_needs_to_be_greater_than_0."
+msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr ""
 
 msgid "The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long."
@@ -1232,7 +1232,10 @@ msgstr ""
 msgid "The_name_is_not_valid."
 msgstr ""
 
-msgid "The_amount_needs_to_be_a_number."
+msgid "The_amount_(quantity)_needs_to_be_a_number."
+msgstr ""
+
+msgid "The_amount_(quantity)_needs_to_be_greater_than_0."
 msgstr ""
 
 msgid "The_approximate_weight_needs_to_be_a_number."
