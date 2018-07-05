@@ -22,19 +22,19 @@ class UnitsTable extends AppTable
 
     public function validationDefault(Validator $validator)
     {
-        $validator->numeric('price_incl_per_unit', 'Der Preis nach Gewicht muss eine Zahl sein.');
-        $validator->greaterThan('price_incl_per_unit', 0, 'Der Preis nach Gewicht muss größer als 0 sein.');
+        $validator->numeric('price_incl_per_unit', __('The_price_per_unit_needs_to_be_a_number.'));
+        $validator->greaterThan('price_incl_per_unit', 0, __('The_price_per_unit_needs_to_be_greater_than_0.'));
         $validator
             ->add('name', 'validName', [
                 'rule' => 'isValidName',
-                'message' => 'Der Name ist nicht erlaubt.',
+                'message' => __('The_name_is_not_valid.'),
                 'provider' => 'table',
             ]);
-        $validator->notEmpty('name', 'Der Name muss angegeben sein.');
-        $validator->numeric('amount', 'Die Anzahl muss eine Zahl sein.');
-        $validator->greaterThan('amount', 0, 'Die Anzahl muss größer als 0 sein.');
-        $validator->numeric('quantity_in_units', 'Das ungefähre Liefergewicht muss eine Zahl sein.');
-        $validator->greaterThanOrEqual('quantity_in_units', 0, 'Das ungefähre Liefergewicht muss eine positive Zahl sein.');
+        $validator->notEmpty('name', __('Please_enter_a_name.'));
+        $validator->numeric('amount', __('The_amount_needs_to_be_a_number.'));
+        $validator->greaterThan('amount', 0, __('The_amount_needs_to_be_greater_than_0.'));
+        $validator->numeric('quantity_in_units', __('The_approximate_weight_needs_to_be_a_number.'));
+        $validator->greaterThanOrEqual('quantity_in_units', 0, __('The_approximate_weight_needs_to_be_greater_or_equal_than_0.'));
         return $validator;
     }
 

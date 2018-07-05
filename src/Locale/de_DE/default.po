@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-03 22:26+0200\n"
-"PO-Revision-Date: 2018-07-03 22:23+0200\n"
+"POT-Creation-Date: 2018-07-05 09:44+0200\n"
+"PO-Revision-Date: 2018-07-05 09:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1224,6 +1224,24 @@ msgstr "Bitte gib einen Steuersatz ein."
 msgid "This_tax_rate_is_already_being_used."
 msgstr "Dieser Steuersatz wird bereits verwendet."
 
+msgid "The_price_per_unit_needs_to_be_a_number."
+msgstr "Der Preis nach Gewicht muss eine Zahl sein."
+
+msgid "The_price_per_unit_needs_to_be_greater_than_0."
+msgstr "Der Preis nach Gewicht muss größer als 0 sein."
+
+msgid "The_name_is_not_valid."
+msgstr "Der Name ist nicht erlaubt."
+
+msgid "The_amount_needs_to_be_a_number."
+msgstr "Die Anzahl muss eine Zahl sein."
+
+msgid "The_approximate_weight_needs_to_be_a_number."
+msgstr "Das ungefähre Liefergewicht muss eine Zahl sein."
+
+msgid "The_approximate_weight_needs_to_be_greater_or_equal_than_0."
+msgstr "Das ungefähre Liefergewicht muss eine positive Zahl sein."
+
 msgid "Runtime"
 msgstr "Laufzeit"
 
@@ -1868,18 +1886,3 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
-
-#~ msgid "general_terms_of_use"
-#~ msgstr "AGB"
-
-#~ msgid "More_news"
-#~ msgstr "Weitere Beiträge"
-
-#~ msgid "until"
-#~ msgstr "bis"
-
-#~ msgid "Euro"
-#~ msgstr "Euro"
-
-#~ msgid "Action_Log_Payback_deleted"
-#~ msgstr "Mitglied: Rückzahlung gelöscht"

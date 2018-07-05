@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-03 22:26+0200\n"
-"PO-Revision-Date: 2018-07-03 22:25+0200\n"
+"POT-Creation-Date: 2018-07-05 09:44+0200\n"
+"PO-Revision-Date: 2018-07-05 09:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -195,8 +195,8 @@ msgstr "Add manufacturer"
 msgid "Edit_manufacturer"
 msgstr "Edit manufacturer"
 
-msgid "Manufacturer_{0}_was"
-msgstr "Manufacturer was {0}."
+msgid "The_manufacturer_{0}_has_been_{1}."
+msgstr "The manufacturer {0} has been {1}."
 
 msgid "Manufacturers"
 msgstr "Manufacturers"
@@ -1129,7 +1129,7 @@ msgid "The_base_price_is_{0}."
 msgstr "The base price is {0}."
 
 msgid "The_status_of_your_credit_upload_of_{0}_({1}_amount)_was_changed_to_{2}."
-msgstr "The status of your credit upload of {0} ({1)} was changed to {2}."
+msgstr "The status of your credit upload of {0} ({1}) was changed to {2}."
 
 msgid "Please_compare_the_credit_upload_that_you_added_to_our_system_with_the_actual_bank_account_transfer."
 msgstr "Please compare the credit upload that you added to our system with the actual bank account transfer."
@@ -1724,38 +1724,3 @@ msgstr "{0,plural,=1{record} other{records}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
-
-#~ msgid "Shop_order"
-#~ msgstr "Instant order"
-
-#~ msgid "Shop_orders"
-#~ msgstr "Instant orders"
-
-#~ msgid "Do_not_forget_to_press_save"
-#~ msgstr "Don't forget to press save button"
-
-#~ msgid "Pages_delete_page_sub_description"
-#~ msgstr "Do not forget to click on the <b>Save</b> button."
-
-#, fuzzy
-#~ msgid "Amount_in"
-#~ msgstr "Amount in {0}"
-
-#~ msgid "A_negative_amount_is_not_allowed:"
-#~ msgstr "A negative amount is not allowed:"
-
-#~ msgid "The_amount_needs_to_be_greater_than_0:"
-#~ msgstr "The amount needs to be greater than 0:"
-
-#~ msgid "Paid_by_members_in_euro"
-#~ msgstr "Paid by all members"
-
-#~ msgid "Email_address"
-#~ msgstr "E-mail"
-
-#, fuzzy
-#~ msgid "Cancel_product?"
-#~ msgstr "Cancelled products"
-
-#~ msgid "Deposit returns"
-#~ msgstr "Returned deposit"

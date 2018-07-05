@@ -124,7 +124,7 @@ foodcoopshop.Mobile = {
 
         // if all manufacturers are disabled / set to private - do not include menu item
         $('.sidebar li.header').each(function () {
-            if ($(this).html() == 'Hersteller') {
+            if ($(this).html() == foodcoopshop.LocalizedJs.mobile.manufacturers) {
                 menuItems.push('<li><a href="/' + foodcoopshop.LocalizedJs.mobile.routeManufacturerList + '"><i class="fa"></i>' + foodcoopshop.LocalizedJs.mobile.manufacturers + '</a></li>');
             }
         });

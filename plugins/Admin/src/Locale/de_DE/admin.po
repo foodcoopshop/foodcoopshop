@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-03 22:26+0200\n"
-"PO-Revision-Date: 2018-07-03 22:24+0200\n"
+"POT-Creation-Date: 2018-07-05 09:44+0200\n"
+"PO-Revision-Date: 2018-07-05 10:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -145,7 +145,7 @@ msgid "Filename_Terms-of-use"
 msgstr "Nutzungsbedingungen"
 
 msgid "The_member_{0}_has_been_activated_succesfully_and_the_member_was_notified_by_email."
-msgstr "Das Mitglied {0} wurde erfolgreich aktiviert und per E-Mai darüber informiert."
+msgstr "Das Mitglied {0} wurde erfolgreich aktiviert und per E-Mail darüber informiert."
 
 msgid "The_comment_was_changed_successfully."
 msgstr "Der Kommentar wurde erfolgreich geändert."
@@ -195,8 +195,8 @@ msgstr "Neuen Hersteller erstellen"
 msgid "Edit_manufacturer"
 msgstr "Hersteller bearbeiten"
 
-msgid "Manufacturer_{0}_was"
-msgstr "Der Hersteller {0} wurde"
+msgid "The_manufacturer_{0}_has_been_{1}."
+msgstr "Der Hersteller {0} wurde {1}."
 
 msgid "Manufacturers"
 msgstr "Hersteller"
@@ -1724,36 +1724,3 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
-
-#~ msgid "Shop_order"
-#~ msgstr "Sofort-Bestellung"
-
-#~ msgid "Shop_orders"
-#~ msgstr "Sofortbestellungen"
-
-#~ msgid "Do_not_forget_to_press_save"
-#~ msgstr "Speicher nicht vergesen"
-
-#~ msgid "Pages_delete_page_sub_description"
-#~ msgstr "Anhaken und dann auf <b>Speichern</b> klicken."
-
-#~ msgid "Amount_in"
-#~ msgstr "Betrag in"
-
-#~ msgid "A_negative_amount_is_not_allowed:"
-#~ msgstr "Ein negativer Betrag ist nicht erlaubt:"
-
-#~ msgid "The_amount_needs_to_be_greater_than_0:"
-#~ msgstr "Der Betrag muss größer als 0 sein:"
-
-#~ msgid "Paid_by_members_in_euro"
-#~ msgstr "Von den Mitgliedern bezahlt in Euro"
-
-#~ msgid "Email_address"
-#~ msgstr "E-Mail-Adresse"
-
-#~ msgid "Cancel_product?"
-#~ msgstr "Produkt stornieren?"
-
-#~ msgid "Deposit returns"
-#~ msgstr "Pfand-Rückgaben"

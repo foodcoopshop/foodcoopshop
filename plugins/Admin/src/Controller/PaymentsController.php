@@ -191,8 +191,8 @@ class PaymentsController extends AdminAppController
                 $message = __d('admin', 'The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}_and_an_email_was_sent_to_the_member.', ['<b>'.$payment->customer->name.'</b>', '<b>' .$newStatusAsString.'</b>']);
             }
 
-            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $payment->id, 'payments', $message.' (PaymentId: ' . $payment->id.').');
-            $this->Flash->success($message.'.');
+            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $payment->id, 'payments', $message . ' (PaymentId: ' . $payment->id.')');
+            $this->Flash->success($message);
 
             $this->getRequest()->getSession()->write('highlightedRowId', $payment->id);
 
