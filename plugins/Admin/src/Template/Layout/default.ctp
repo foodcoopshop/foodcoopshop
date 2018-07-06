@@ -18,6 +18,7 @@ use Cake\Utility\Inflector;
 
 ?>
 <!DOCTYPE html>
+<html lang="<?php echo strtolower(str_replace('_', '-', I18n::getLocale())); ?>">
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="theme-color" content="#719f41">
@@ -45,8 +46,7 @@ use Cake\Utility\Inflector;
     ?>
     
 </head>
-<body
-    class="<?php echo Inflector::tableize($this->name); ?> <?php echo Inflector::singularize(Inflector::tableize($this->request->getParam('action'))); ?>">
+<body class="<?php echo Inflector::tableize($this->name); ?> <?php echo Inflector::singularize(Inflector::tableize($this->request->getParam('action'))); ?>">
 
     <div id="container">
         

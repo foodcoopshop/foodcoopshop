@@ -13,6 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 use Cake\Utility\Inflector;
 
 ?>
@@ -27,6 +28,7 @@ header('Last-Modified: '.gmdate('D, d M Y H:i:s') . ' GMT');
 header('Pragma: no-cache');
 ?>
 <!DOCTYPE html>
+<html lang="<?php echo strtolower(str_replace('_', '-', I18n::getLocale())); ?>">
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="theme-color" content="#719f41">
