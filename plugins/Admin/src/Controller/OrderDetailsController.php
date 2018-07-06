@@ -388,9 +388,10 @@ class OrderDetailsController extends AdminAppController
             }
 
             $email->send();
+            
+            $message .= $emailMessage;
+            
         }
-
-        $message .= $emailMessage;
 
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_detail_product_quantity_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
