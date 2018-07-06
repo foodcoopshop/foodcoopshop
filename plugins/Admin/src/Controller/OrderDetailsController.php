@@ -372,7 +372,7 @@ class OrderDetailsController extends AdminAppController
                 'appAuth' => $this->AppAuth
             ]);
 
-            $emailMssage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->order->customer->name . '</b>']);
+            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->order->customer->name . '</b>']);
 
             // never send email to manufacturer if bulk orders are allowed
             $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
