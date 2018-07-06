@@ -630,7 +630,7 @@ class PaymentsController extends AdminAppController
 
         $title = $this->viewVars['title_for_layout'];
         if (in_array($this->getRequest()->getParam('action'), ['product', 'member_fee'])) {
-            $title .= ' von ' . $customer->name;
+            $title .= ' '.__d('admin', 'of_{0}', [$customer->name]);
         }
         $this->set('title_for_layout', $title);
 

@@ -163,7 +163,7 @@ foreach ($manufacturers as $manufacturer) {
             __d('admin', 'Deposit') . ':&nbsp;' . $depositCreditBalanceHtml,
             [
             'class' => 'icon-with-text',
-            'title' => 'Pfandkonto anzeigen'
+            'title' => __d('admin', 'Show_deposit_account')
             ],
             $this->Slug->getDepositList($manufacturer->id_manufacturer)
         );

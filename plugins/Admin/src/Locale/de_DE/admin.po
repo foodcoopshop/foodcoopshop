@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-05 09:44+0200\n"
-"PO-Revision-Date: 2018-07-05 10:06+0200\n"
+"POT-Creation-Date: 2018-07-06 11:36+0200\n"
+"PO-Revision-Date: 2018-07-06 11:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -365,6 +365,9 @@ msgstr "Bestell-Nr."
 
 msgid "Show_order"
 msgstr "Bestellung anzeigen"
+
+msgid "of_{0}"
+msgstr "von {0}"
 
 msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
 msgstr "Bild (ID: {0}) wurde erfolgreich gelöscht. Produkt: {1}, Hersteller: {2}"
@@ -1409,6 +1412,9 @@ msgstr "Opt."
 
 msgid "Show_all_products_from_{0}"
 msgstr "Alle Produkte von {0} anzeigen"
+
+msgid "Show_deposit_account"
+msgstr "Pfandkonto anzeigen"
 
 msgid "Edit_manufacturer_settings"
 msgstr "Hersteller-Einstellungen bearbeiten"

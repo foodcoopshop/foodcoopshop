@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-05 09:44+0200\n"
+"POT-Creation-Date: 2018-07-06 11:36+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -363,6 +363,9 @@ msgid "Order_number_abbr"
 msgstr ""
 
 msgid "Show_order"
+msgstr ""
+
+msgid "of_{0}"
 msgstr ""
 
 msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
@@ -1407,6 +1410,9 @@ msgid "Settings_abbreviation"
 msgstr ""
 
 msgid "Show_all_products_from_{0}"
+msgstr ""
+
+msgid "Show_deposit_account"
 msgstr ""
 
 msgid "Edit_manufacturer_settings"

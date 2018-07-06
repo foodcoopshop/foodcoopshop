@@ -22,7 +22,7 @@ $this->element('addScript', ['script' =>
 
 <h1><?php echo $title_for_layout; ?>
 <?php if (isset($manufacturer->name)) {
-    echo ' von ' . $manufacturer->name;
+    echo ' ' . __('of_{0}', [$manufacturer->name]);
 } ?>
 <span><?php echo $blogPosts->count(); ?> <?php echo __('found'); ?></span></h1>
 
@@ -70,7 +70,7 @@ foreach ($blogPosts as $blogPost) {
     echo '<div class="third-column">';
 
         echo $this->Html->link(
-            'Blog-Artikel anzeigen',
+            __('Show_Blog_post').
             $blogDetailLink,
             ['class' => 'btn btn-success']
         );
@@ -86,7 +86,7 @@ foreach ($blogPosts as $blogPost) {
                 echo '<a href="'.$this->Slug->getManufacturerBlogList($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name).'">' . __('Go_to_blog_from') . ' ' . $blogPost->manufacturer->name.'</a>';
             }
         } else {
-            echo 'von ' . $blogPost['Manufacturers']['name'];
+            echo ' ' . __('of_{0}', [$blogPost['Manufacturers']['name']]);
         }
     }
             echo '</div>';
