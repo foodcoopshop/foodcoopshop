@@ -24,7 +24,7 @@ class MyTimeHelper extends TimeHelper
 
     public function getI18Format($formatString)
     {
-        return Configure::read('DateFormat.'. I18n::getLocale() . '.' . $formatString);
+        return Configure::read('DateFormat.' . $formatString);
     }
 
     public function getLastDayOfGivenMonth($monthAndYear)

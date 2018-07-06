@@ -150,29 +150,6 @@ return [
         'Database' => 'yyyy-MM-dd',
         'DatabaseWithTime' => 'yyyy-MM-dd HH:mm:ss',
         'DatabaseAlt' => 'Y-m-d',
-        'DatabaseWithTimeAlt' => 'Y-m-d H:i:s',
-        'de_DE' => [
-            'DateShort' => 'dd.MM.yy',
-            'DateLong2' => 'dd.MM.yyyy',
-            'DateNTimeShort' => 'dd.MM.y HH:mm',
-            'DateNTimeShort2' => 'dd.MM.yy HH:mm',
-            'DateNTimeLongWithSecs' => 'dd.MM.y HH:mm:ss',
-            'TimeShort' => 'HH:mm',
-            'DateForDatepicker' => 'dd.mm.yy',
-            'Year' => 'Y',
-            'DateShortAlt' => 'd.m.Y'
-        ],
-        'en_US' => [
-            'DateShort' => 'MM/dd//yy',
-            'DateLong2' => 'MM/dd/yyyy',
-            'DateNTimeShort' => 'MM/dd/y HH:mm',
-            'DateNTimeShort2' => 'MM/dd/yy HH:mm',
-            'DateNTimeLongWithSecs' => 'MM/dd/y HH:mm:ss',
-            'TimeShort' => 'HH:mm',
-            'DateForDatepicker' => 'mm/dd/yy',
-            'Year' => 'Y',
-            'DateShortAlt' => 'm/d/Y'
-        ]
-
+        'DatabaseWithTimeAlt' => 'Y-m-d H:i:s'
     ]
 ];

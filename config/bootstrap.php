@@ -43,7 +43,6 @@ use Cake\Log\Log;
 use Cake\Mailer\Email;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Security;
-use App\Lib\Error\Exception\InvalidParameterException;
 
 /*
  * Read configuration file and inject configuration into various
@@ -203,6 +202,7 @@ if (in_array(Configure::read('appDb.FCS_DEFAULT_LOCALE'), Configure::read('app.i
     locale_set_default(Configure::read('appDb.FCS_DEFAULT_LOCALE'));
     setlocale(LC_ALL, Configure::read('appDb.FCS_DEFAULT_LOCALE').'.UTF-8');
     I18n::setLocale(Configure::read('appDb.FCS_DEFAULT_LOCALE'));
+    Configure::load('Locale' . DS . Configure::read('appDb.FCS_DEFAULT_LOCALE') . DS . 'date', 'default');
 }
 
 if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {

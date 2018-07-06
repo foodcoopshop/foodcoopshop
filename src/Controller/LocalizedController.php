@@ -31,7 +31,7 @@ class LocalizedController extends Controller
                 'next' => __('datepicker_next'),
                 'today' => __('datepicker_today'),
                 'weekHeader' => __('WeekHeader'),
-                'dateFormat' => Configure::read('DateFormat.'.I18n::getLocale().'.DateForDatepicker')
+                'dateFormat' => Configure::read('DateFormat.DateForDatepicker')
             ],
             'helper' => [
                 'defaultLocale' => Configure::read('appDb.FCS_DEFAULT_LOCALE'),
