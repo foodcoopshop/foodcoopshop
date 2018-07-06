@@ -17,7 +17,6 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\I18n\I18n;
 
 class LocalizedController extends Controller
 {
