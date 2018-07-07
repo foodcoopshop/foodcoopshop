@@ -26,13 +26,4 @@ class AddressesTable extends AppTable
         $this->setPrimaryKey('id_address');
     }
 
-    /*
-    public function __construct($id = false, $table = null, $ds = null)
-    {
-        parent::__construct($id, $table, $ds);
-        $this->virtualFields = [
-            'name' => "TRIM(CONCAT(`{$this->getAlias()}`.`firstname`,' ',`{$this->getAlias()}`.`lastname`))"
-        ];
-    }
-    */
 }

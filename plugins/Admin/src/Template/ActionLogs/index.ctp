@@ -18,10 +18,12 @@ use Cake\Core\Configure;
 <div id="actionLogs">
 
         <?php
-        $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
+        $this->element('addScript', ['script' =>
+            Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
             var datefieldSelector = $('input.datepicker');
-            datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ");
+            datefieldSelector.datepicker();" .
+            Configure::read('app.jsNamespace') . ".Admin.init();" .
+            Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ");
         "
         ]);
     ?>
@@ -29,26 +31,20 @@ use Cake\Core\Configure;
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php if ($appAuth->isManufacturer() || $appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
-                <?php echo $this->Form->control('type', ['type' => 'select', 'empty' => 'Alle Aktivitäten', 'label' => '', 'options' => $actionLogModel->getTypesForDropdown($appAuth), 'default' => isset($type) ? $type : '']); ?>
-                <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => 'alle Benutzer', 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
-                <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'empty' => 'alle Produkte', 'options' => []]); ?>
+                <?php echo $this->Form->control('type', ['type' => 'select', 'empty' => __d('admin', 'all_activities'), 'label' => '', 'options' => $actionLogModel->getTypesForDropdown($appAuth), 'default' => isset($type) ? $type : '']); ?>
+                <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_users'), 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
+                <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_products'), 'options' => []]); ?>
             <?php } ?>
             <?php if ($appAuth->isCustomer()) { ?>
                 <?php echo $this->Form->control('type', ['class' => 'hide', 'label' => '', 'value' => isset($type) ? $type : '']); ?>
             <?php } ?>
             <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
-            <div class="right"></div>
+            <div class="right">
+            	<?php
+            	   echo $this->element('printIcon');
+            	?>
+            </div>
         <?php echo $this->Form->end(); ?>
-    </div>
-
-    <div id="help-container">
-        <ul>
-            <li>Auf dieser Seite siehst du alle Aktivitäten im FoodCoopShop.</li>
-            <?php if ($appAuth->isManufacturer()) { ?>
-                <li>Die stornierten Produkte werden erst ab dem
-                20.07.2015 angezeigt.</li>
-            <?php } ?>
-        </ul>
     </div>
 
 <?php
@@ -56,10 +52,10 @@ use Cake\Core\Configure;
 echo '<table class="list no-hover">';
 echo '<tr class="sort">';
 echo '<th class="hide">' . $this->Paginator->sort('ActionLogs.id', 'ID') . '</th>';
-echo '<th>' . $this->Paginator->sort('ActionLogs.type', 'Aktivitäts-Typ') . '</th>';
-echo '<th>' . $this->Paginator->sort('ActionLogs.date', 'Datum') . '</th>';
-echo '<th>' . $this->Paginator->sort('ActionLogs.text', 'Text') . '</th>';
-echo '<th>' . $this->Paginator->sort('Customers.name', 'Benutzer') . '</th>';
+echo '<th>' . $this->Paginator->sort('ActionLogs.type', __d('admin', 'Action_log_type')) . '</th>';
+echo '<th>' . $this->Paginator->sort('ActionLogs.date', __d('admin', 'Date')) . '</th>';
+echo '<th>' . $this->Paginator->sort('ActionLogs.text', __d('admin', 'Text')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'User')) . '</th>';
 echo '<th></th>';
 echo '</tr>';
 
@@ -79,13 +75,13 @@ foreach ($actionLogs as $actionLog) {
 
     echo '<td>';
     echo $this->Html->link(
-        $actionType['de'],
+        $actionType['name'],
         '/admin/action-logs/index/?type='.$actionLog->type.'&productId='.$productId.'&customerId='.$customerId.'&dateFrom='.$dateFrom.'&dateTo='.$dateTo.(!empty($this->request->getQuery('sort')) ? '&sort='.$this->request->getQuery('sort') : '').(!empty($this->request->getQuery('direction')) ? '&direction='.$this->request->getQuery('direction') : '')
     );
     echo '</td>';
 
     echo '<td>';
-    echo $actionLog->date->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs'));
+    echo $actionLog->date->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
     echo '</td>';
 
     echo '<td>';
@@ -115,14 +111,14 @@ foreach ($actionLogs as $actionLog) {
     // products
     if ($actionLog->object_id > 0 && $actionLog->object_type == 'products' && ! ($actionLog->type == 'product_set_inactive')) {
         $showLink = true;
-        $title = 'Produkt anzeigen';
+        $title = __('Show_product');
         $url = $this->Slug->getProductDetail($actionLog->object_id, '');
     }
 
     // manufacturers
     if ($actionLog->object_id > 0 && $actionLog->object_type == 'manufacturers') {
         $showLink = true;
-        $title = 'Hersteller anzeigen';
+        $title = __('Show_manufacturer');
         $url = $this->Slug->getManufacturerDetail($actionLog->object_id, '');
     }
 
@@ -131,7 +127,7 @@ foreach ($actionLogs as $actionLog) {
         'blog_post_deleted'
     ]))) {
         $showLink = true;
-        $title = 'Blog-Artikel anzeigen';
+        $title = __('Show_blog_post');
         $url = $this->Slug->getBlogPostDetail($actionLog->object_id, '');
     }
 
@@ -140,7 +136,7 @@ foreach ($actionLogs as $actionLog) {
         'page_deleted'
     ]))) {
         $showLink = true;
-        $title = 'Seite anzeigen';
+        $title = __('Show_page');
         $url = $this->Slug->getPageDetail($actionLog->object_id, '');
     }
 
@@ -149,14 +145,14 @@ foreach ($actionLogs as $actionLog) {
         'category_deleted'
     ]))) {
         $showLink = true;
-        $title = 'Kategorie anzeigen';
+        $title = __('Show_category');
         $url = $this->Slug->getCategoryDetail($actionLog->object_id, '');
     }
 
     // order details
     if ($actionLog->object_id > 0 && $actionLog->object_type == 'order_details') {
         $showLink = true;
-        $title = 'Bestelltes Produkt anzeigen';
+        $title = __d('admin', 'Show_ordered_product');
         $url = '/admin/order-details/index/?orderDetailId=' . $actionLog->object_id;
         $targetBlank = false;
     }
@@ -164,7 +160,7 @@ foreach ($actionLogs as $actionLog) {
     // orders
     if ($actionLog->object_id > 0 && $actionLog->object_type == 'orders') {
         $showLink = true;
-        $title = 'Bestellung anzeigen';
+        $title = __('Show_order');
         // manually add ORDER_STATE_CANCELLED to orderState to show cancelled orders
         $url = '/admin/orders/index/?orderId=' . $actionLog->object_id . '&orderStates[]=' . join(',', array_keys($this->Html->getOrderStates()));
         $targetBlank = false;
@@ -182,7 +178,7 @@ foreach ($actionLogs as $actionLog) {
 }
 
 echo '<tr>';
-echo '<td colspan="10"><b>' . $this->Html->formatAsDecimal($i, 0) . '</b> Datensätze</td>';
+echo '<td colspan="10"><b>' . $this->Number->formatAsDecimal($i, 0) . '</b> '.__d('admin', 'records').'</td>';
 echo '</tr>';
 
 echo '</table>';

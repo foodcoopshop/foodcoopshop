@@ -16,6 +16,7 @@
  * @link          https://www.foodcoopshop.com
  */
 use App\Test\TestCase\AppCakeTestCase;
+use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
 class ProductsControllerTest extends AppCakeTestCase
@@ -26,7 +27,7 @@ class ProductsControllerTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->Product = TableRegistry::get('Products');
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
     }
 
     public function testChangeProductStatus()
@@ -49,7 +50,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $price = 'invalid-price';
         $this->changeProductPrice(346, $price);
         $response = $this->browser->getJsonDecodedContent();
-        $this->assertRegExpWithUnquotedString('Eingabeformat von Preis ist nicht korrekt: ' . $price, $response->msg);
+        $this->assertRegExpWithUnquotedString('input format not correct: ' . $price, $response->msg);
         $this->assertJsonError();
     }
 
@@ -71,7 +72,19 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
 
+    public function testEditPriceOfProductAsSuperadminToZero()
+    {
+        $this->loginAsSuperadmin();
+        $this->assertPriceChange(346, '0', '0,00');
+    }
+
     public function testEditPriceOfProductAsSuperadmin()
+    {
+        $this->loginAsSuperadmin();
+        $this->assertPriceChange(346, '2,20', '2,00');
+    }
+
+    public function testEditPricePerUnitOfProductAsSuperadmin()
     {
         $this->loginAsSuperadmin();
         $this->assertPriceChange(346, '2,20', '2,00');
@@ -94,8 +107,8 @@ class ProductsControllerTest extends AppCakeTestCase
      */
     private function assertPriceChange($productId, $price, $expectedNetPrice)
     {
-        $price = str_replace(',', '.', $price);
-        $expectedNetPrice = str_replace(',', '.', $expectedNetPrice);
+        $price = Configure::read('app.numberHelper')->parseFloatRespectingLocale($price);
+        $expectedNetPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedNetPrice);
         $this->changeProductPrice($productId, $price);
         $this->assertJsonOk();
         $netPrice = $this->Product->getNetPrice($productId, $price);

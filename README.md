@@ -21,15 +21,15 @@
 
 <h1></h1>
 
-**FoodCoopShop** provides plenty of useful tools to help the people behind this fantastic way of self-organized food supply, such as: A user-friendly web shop, a login area for producers, billing, a credit system for payments, dealing with changings of ordered products... The software can be used with any modern web browser, tablet or smartphone.
+**FoodCoopShop** provides plenty of useful tools to help the people behind this fantastic way of self-organized food supply, such as: A user-friendly web shop, a login area for producers, billing, a credit system for payments, dealing with changings of ordered products... The software can be used with any modern web browser, tablet or smartphone. It's available in **German** and **English**.
 
 * Official homepage: [https://www.foodcoopshop.com](https://www.foodcoopshop.com/)
-* Demo version: [https://demo.foodcoopshop.com](https://demo.foodcoopshop.com)
+* Demo version in [German](https://demo-de.foodcoopshop.com) or [English](https://demo-en.foodcoopshop.com) - English translation can be improved
 * Software documentation: [https://foodcoopshop.github.io](https://foodcoopshop.github.io)
 
 ## Roadmap for 2018
 
-There's still a lot going on! In its 4th year of existance, FoodCoopShop continues to grow. You can take a look on the planned work for [Q2/2018 - v2.1](https://github.com/foodcoopshop/foodcoopshop/milestone/2) / [Q3/2018 - v2.2](https://github.com/foodcoopshop/foodcoopshop/milestone/3) and [Q4/2018 - v2.3](https://github.com/foodcoopshop/foodcoopshop/milestone/4). So far, FoodCoopShop only exists in German. But there will be an **English version** available by June 2018! More languages will then be possible if we find translators...
+There's still a lot going on! In its 4th year of existance, FoodCoopShop continues to grow. You can take a look on the planned work for [Q3/2018 - v2.2](https://github.com/foodcoopshop/foodcoopshop/milestone/3) and [Q4/2018 - v2.3](https://github.com/foodcoopshop/foodcoopshop/milestone/4).
 
 ## Who uses FoodCoopShop?
 [https://foodcoopshop.github.io/en/foodcoops](https://foodcoopshop.github.io/en/foodcoops)
@@ -41,7 +41,7 @@ There's still a lot going on! In its 4th year of existance, FoodCoopShop continu
 ## Requirements
 * Server with root access / sudo and cronjobs
 * Apache with `mod_rewrite`
-* PHP >= 7.0
+* PHP >= 7.1
 * MySQL >= 5.6
 * Nodejs and npm ([installation](https://www.npmjs.com/get-npm)) developer packages
 * Composer ([installation](https://getcomposer.org/download/)) developer packages
@@ -78,5 +78,5 @@ $ chmod a+w -R ./webroot/tmp
 * Create second database and add test database configuration to database.php. For details read [Cake's testing documentation](https://book.cakephp.org/3.0/en/development/testing.html)
 * Import [this dump](config/sql/_installation/clean-db-structure.sql) into your test database
 ```
-$ vendor/bin/phpunit --testsuite App,Admin
+$ vendor/bin/phpunit
 ```

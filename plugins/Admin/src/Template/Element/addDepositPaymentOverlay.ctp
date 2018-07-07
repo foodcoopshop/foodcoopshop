@@ -19,26 +19,25 @@ $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-deposit-button');"
 ]);
 
-echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('money_euro.png')) . $buttonText, [
-    'title' => 'Pfand-Betrag eintragen',
+echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('money_'.strtolower(Configure::read('app.currencyName')).'.png')) . $buttonText, [
+    'title' => __d('admin', 'Add_deposit_amount'),
     'class' => 'add-payment-deposit-button icon-with-text',
     'data-object-id' => $rowId
 ], 'javascript:void(0);');
 echo '<div id="add-payment-deposit-form-' . $rowId . '" class="add-payment-form add-payment-deposit-form">';
-echo '<h3>Pfand eintragen</h3>';
-echo '<p>Pfand-Betrag für <b>' . $userName . '</b> eintragen:</p>';
+echo '<h3>'.__d('admin', 'Add_deposit').'</h3>';
+echo '<p>'.__d('admin', 'Add_deposit_amount_for_{0}', ['<b>' . $userName . '</b>']).':</p>';
 
 if (isset($manufacturerId)) {
     if ($appAuth->isAdmin() || $appAuth->isManufacturer()) {
-        echo '<p style="margin-top:10px;">Bitte trage hier den Wert des Leergebindes ein,<br />
-            das vom Hersteller zurückgenommen wird.</p>';
+        echo '<p style="margin-top:10px;">'.__d('admin', 'Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer.').'</p>';
         echo $this->Form->hidden('Payments.text', [
             'value' => 'empty_glasses'
         ]);
     }
 
     if ($appAuth->isSuperadmin()) {
-        echo '<p style="margin-top:10px;">Hat der Hersteller Leergebinde mitgenommen<br />oder wurde sein Pfandkonto mit Geld ausgeglichen?</p>';
+        echo '<p style="margin-top:10px;">'.__d('admin', 'Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?').'</p>';
         foreach ($this->Html->getManufacturerDepositPaymentTexts() as $paymentTextKey => $paymentText) {
             echo '<div class="radio-wrapper">';
             echo '<label for="payment-'.$paymentTextKey.'-'.$rowId.'">'.$paymentText.'</label><input id="payment-'.$paymentTextKey.'-'.$rowId.'"type="radio" name="payment_text" value="'.$paymentTextKey.'"/>';
@@ -48,8 +47,9 @@ if (isset($manufacturerId)) {
 }
 
 echo $this->Form->control('Payments.amount', [
-    'label' => 'Betrag in €',
-    'type' => 'string'
+    'label' => __d('admin', 'Amount_in_{0}', [Configure::read('appDb.FCS_CURRENCY_SYMBOL')]),
+    'type' => 'number',
+    'step' => '0.01'
 ]);
 
 echo $this->Form->hidden('Payments.type', [

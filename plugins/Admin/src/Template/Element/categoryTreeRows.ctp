@@ -14,17 +14,23 @@
  */
 
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
+$categoryTable = TableRegistry::getTableLocator()->get('Categories');
 
 foreach ($categories as $category) {
+    $level = $categoryTable->getLevel($category);
+
     $rowClass = [
         'data'
     ];
-    if ($subRow) {
+    if ($level > 0) {
         $rowClass[] = 'sub-row';
     }
     if (! $category->active) {
         $rowClass[] = 'deactivated';
     }
+
     echo '<tr id="category-' . $category->id_category . '" class="' . implode(' ', $rowClass) . '">';
 
     echo '<td class="hide">';
@@ -33,19 +39,19 @@ foreach ($categories as $category) {
 
     echo '<td>';
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-            'title' => 'Bearbeiten'
+            'title' => __d('admin', 'Edit')
         ], $this->Slug->getCategoryEdit($category->id_category));
     echo '</td>';
 
     echo '<td>';
-    if ($subRow) {
-        echo '<i class="fa fa-level-up fa-rotate-90" style="margin-right:5px;margin-left: ' . (($category->level_depth - 2) * 10) . 'px;"></i>';
+    if ($level > 0) {
+        echo '<i class="fa fa-level-up fa-rotate-90" style="margin-right:5px;margin-left:'.(($level - 1) * 10).'px;"></i>';
     }
-        echo $category->name;
+    echo $category->name;
     echo '</td>';
 
     echo '<td>';
-        echo $category->modified->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs'));
+        echo $category->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
     echo '</td>';
 
     echo '<td align="center">';
@@ -59,8 +65,8 @@ foreach ($categories as $category) {
     echo '<td style="width:20px;">';
     if ($category->active) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
-        'title' => 'Seite anzeigen',
-        'target' => '_blank'
+            'title' => __d('admin', 'Show_category'),
+            'target' => '_blank'
         ], $this->Slug->getCategoryDetail($category->id_category, $category->name));
     }
     echo '</td>';
@@ -69,8 +75,7 @@ foreach ($categories as $category) {
 
     if (! empty($category->children)) {
         echo $this->element('categoryTreeRows', [
-            'categories' => $category->children,
-            'subRow' => true
+            'categories' => $category->children
         ]);
     }
 }

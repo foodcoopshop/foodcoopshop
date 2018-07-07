@@ -47,7 +47,7 @@ class EmailOrderReminderShell extends AppShell
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
 
-        $this->Customer->association('ActiveOrders')->setConditions(
+        $this->Customer->getAssociation('ActiveOrders')->setConditions(
             [
                 'DATE_FORMAT(ActiveOrders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
                     Configure::read('app.timeHelper')->getOrderPeriodFirstDay(
@@ -82,10 +82,10 @@ class EmailOrderReminderShell extends AppShell
             $email = new AppEmail();
             $email->setTo($customer->email)
             ->setTemplate('Admin.email_order_reminder')
-            ->setSubject('Bestell-Erinnerung ' . Configure::read('appDb.FCS_APP_NAME'))
+            ->setSubject(__('Order_reminder') . ' ' . Configure::read('appDb.FCS_APP_NAME'))
             ->setViewVars([
                 'customer' => $customer,
-                'lastOrderDayAsString' => (Configure::read('app.sendOrderListsWeekday') - date('N')) == 1 ? 'heute' : 'morgen'
+                'lastOrderDayAsString' => (Configure::read('app.sendOrderListsWeekday') - date('N')) == 1 ? __('today') : __('tomorrow')
             ])
             ->send();
 
@@ -94,7 +94,7 @@ class EmailOrderReminderShell extends AppShell
             $i ++;
         }
 
-        $outString .= 'Verschickte E-Mails: ' . $i;
+        $outString .= __('Sent_emails') . ': ' . $i;
 
         $this->stopTimeLogging();
 

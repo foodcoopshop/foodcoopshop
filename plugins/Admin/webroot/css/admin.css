@@ -22,7 +22,7 @@ body {
 
 #container {
     position: relative;
-    min-width: 1141px; /* 990px + navi width 150 + border */
+    min-width: 1201px; /* 1050px + navi width 150 + border */
     display: none;
 }
 
@@ -67,11 +67,11 @@ body.taxes.edit #flashMessage {
     top: 3px;
 }
 #content {
-    width: 990px;
+    width: 1050px;
     margin-top: 5px;
     line-height: 20px;
     float: left;
-    margin-left: 145px;
+    margin-left: 150px;
     min-height: 500px; /* hack for mobile with little content */
     background-color: #fff;
     padding: 2px 2px 2px 1px;
@@ -94,8 +94,8 @@ body.pages.home #content {
 #content-logo {
     margin: 10px 0 15px -5px;
 }
-body.pages.display #menu a.help {
-    display: none;
+a.btn-default.help {
+    color: #f3515c;
 }
 .input.select, .input.checkbox, .input.text {
     display: inline-block;
@@ -143,6 +143,9 @@ form.fcs-form .bootstrap-select {
     background-color: #fff;
     min-height: 500px;
 }
+.vertical.menu {
+	width: 150px;
+}
 .vertical.menu > li a img.logo {
     padding: 0;
     border: none;
@@ -174,10 +177,10 @@ form.fcs-form .bootstrap-select {
     top: 10px;
 }
 #product-name-edit-form input[type="text"],
-#product-price-edit-form input,
-#product-deposit-edit-form input,
+#product-price-edit-form input[type="text"],
+#product-deposit-edit-form input[type="text"],
 #product-name-edit-form textarea,
-#product-quantity-edit-form input {
+#product-quantity-edit-form input[type="text"] {
     width: 300px;
     margin-bottom: 10px;
 }
@@ -193,7 +196,9 @@ form.fcs-form .bootstrap-select {
 }
 span.name-for-dialog,
 span.quantity-for-dialog,
+span.product-amount-for-dialog,
 span.price-for-dialog,
+span.unit-price-for-dialog,
 span.deposit-for-dialog,
 span.categories-for-dialog,
 span.tax-for-dialog,
@@ -217,17 +222,17 @@ span.is-declaration-ok-wrapper .fa-close {
 
 .filter-container {
     position: fixed;
-    left: 145px;
+    left: 150px;
     top: 0px;
     padding: 5px;
     background: #efefef;
-    width: 990px; /* be aware of table border if scrolled */
+    width: 1050px; /* be aware of table border if scrolled */
     z-index: 100;
     border-bottom: 1px solid #dfdfdf;
 }
 .filter-container-not-fixed {
   float: left;
-  width: 975px;
+  width: 1035px;
 }
 .filter-container .right,
 .filter-container-not-fixed .right {
@@ -239,10 +244,6 @@ span.is-declaration-ok-wrapper .fa-close {
 .filter-container .right .icons,
 .filter-container-not-fixed .right .icons {
     float: left;
-}
-.filter-container .right .icons a:not(:first-child),
-.filter-container-not-fixed .right .icons a:not(:first-child) {
-    margin-left: 3px;
 }
 .filter-container .right a.submit,
 .filter-container .right a.cancel {
@@ -277,6 +278,11 @@ body.products.index .filter-container div.input.select {
 }
 body.products.index .bootstrap-select {
   width: 172px ! important;
+}
+body.products.index td.status {
+	text-align: center;
+	padding-left: 10px;
+	width: 42px;
 }
 #filter-loader {
   position: fixed;
@@ -332,28 +338,18 @@ input.datepicker {
     width: 110px;
     text-align: center;
 }
-#help-container {
-    float: left;
-    border-bottom: 1px solid #dfdfdf;
-    background: white;
-    width: 100%;
-    padding: 5px;
-    display: none;
-    margin-bottom: 5px;
+.ui-dialog-content li {
+	margin-left: 20px;
+	margin-top: 5px;
+	list-style: disc;
 }
-#help-container p {
-    margin-bottom: 0;
+.ui-dialog-content #flashMessage,
+.featherlight-content #flashMessage {
+	position: absolute;
+	top: 10px;
 }
-#help-container img {
-    margin-bottom: 5px;
-}
-#help-container ul {
-  padding-left: 10px;
-  margin-left: 15px;
-  margin-top: 10px;
-}
-#help-container li {
-    list-style-type: disc;
+.featherlight-content #flashMessage {
+	z-index: 10000;
 }
 .warning {
     color: red;
@@ -383,7 +379,8 @@ div.cke {
 #cke_configurations-value,
 #cke_dialogCancellationReason,
 #cke_dialogEditPriceReason,
-#cke_dialogEditQuantityReason {
+#cke_dialogEditQuantityReason,
+#cke_dialogEditAmountReason {
     float: left;
 }
 #product-name-edit-form div.textarea-wrapper {
@@ -399,6 +396,13 @@ body.order_details.index .add-payment-deposit-button-wrapper {
   float: left;
   margin-right: 3px;
 }
+body.order_details.index td.date-short2,
+body.orders.index td.date-short2 {
+	width: 100px;
+}
+body.order_details.index .timebased-currency-object {
+	display: none;
+}
 body.order_details.index .add-payment-deposit-button-wrapper .jquery-ui-icon a.icon-with-text {
   padding-top: 3px;
   padding-bottom: 3px;
@@ -413,14 +417,15 @@ body.order_details.index .add-payment-deposit-button-wrapper .jquery-ui-icon a.i
 #product-name-edit-form div.textarea-wrapper a:hover  {
   color: #333;
 }
-#order-detail-product-quantity-edit-form div.textarea-wrapper {
+#order-detail-product-amount-edit-form div.textarea-wrapper {
     float: left;
     margin-top: 10px;
 }
 .product-attributes-dropdown {
     width: 400px;
 }
-body.products.index .unity-for-dialog {
+body.products.index table.list .unity-for-dialog, /* do not apply in dialogs! */
+body.products.index table.list .quantity-in-units {
     font-size: 11px;
     font-style: italic;
 }
@@ -503,8 +508,9 @@ form div.error-message {
     padding: 10px;
     width: 100%;
 }
+.add-payment-form.featherlight-inner,
 .categories-checkboxes.featherlight-inner {
-  max-width: 450px;
+  max-width: 400px;
 }
 .tax-dropdown-wrapper.featherlight-inner label {
     width: 100%;
@@ -521,13 +527,18 @@ form div.error-message {
     font-weight: bold;
     font-size: 14px;
 }
+#labelUnity span {
+    font-weight: normal;
+    font-size: 12px;
+}
 .product-description-rename-info {
     position: absolute;
     right: 30px;
     top: 70px;
     width: 300px;
 }
-#add-payment-button-wrapper {
+#add-payment-button-wrapper,
+#add-timebased-currency-payment-button-wrapper {
     margin-bottom: 10px;
     clear: both;
 }
@@ -576,14 +587,24 @@ body.orders.index td span.customer-is-new {
 .add-payment-form .checkbox label {
     margin-left: 5px;
 }
-.featherlight-content .add-payment-form {
-    min-width:370px ! important;
+#timebasedCurrencyPaymentEditForm a.btn-arrow {
+	top: 5px;
+}
+#timebasedCurrencyPaymentEditForm h3 {
+	margin-bottom: 20px;
+}
+#timebasedCurrencyPaymentEditForm .textarea label {
+	vertical-align: top;
+}
+#timebasedCurrencyPaymentEditForm select,
+#timebasedCurrencyPaymentEditForm textarea {
+    width: 250px;
 }
 .featherlight-content .add-payment-form label {
     width: 100%;
 }
 .featherlight-content .add-payment-form .radio-wrapper {
-    width: 185px;
+    width: 100%;
     float: left;
     margin-bottom: 10px;
 }
@@ -599,11 +620,6 @@ body.orders.index td span.customer-is-new {
 }
 .jquery-ui-icon a.icon-with-text.button {
     padding: 7px;
-}
-body.deposits #help-container,
-body.payments.overview #help-container,
-body.payments.my_member_fee #help-container {
-    display: block;
 }
 .featherlight-content h3 {
     margin: 0;
@@ -649,10 +665,14 @@ body.payments.my_member_fee #help-container {
 .table-cell-wrapper {
     float: right;
 }
-.table-cell-wrapper.price {
+body.products.index .table-cell-wrapper.price {
+    width: 85px;
+    text-align: right;
+}
+body.order_details.index .table-cell-wrapper.price {
     width: 60px;
 }
-.table-cell-wrapper.quantity {
+.table-cell-wrapper.amount {
     width: 48px;
 }
 .table-cell-wrapper.group {
@@ -794,6 +814,10 @@ body.payments.my_member_fee table.list,
 body.payments .bottom-button-container {
     width: 650px;
 }
+
+body.timebased_currency_payments table.list {
+	width: 850px;
+}
 body.payments .bottom-button-container {
     float: left;
     text-align: right;
@@ -802,8 +826,56 @@ body.payments .bottom-button-container {
 #customer-group-edit-form {
     margin-top: 10px;
 }
-#dialogOrderDetailProductPricePrice {
+#order-detail-product-price-edit-form input[type="number"],
+#order-detail-product-quantity-edit-form input[type="number"],
+#product-price-edit-form input[type="text"],
+#product-price-edit-form input[type="number"],
+#product-deposit-edit-form input[type="text"] {
     margin-bottom: 5px;
+    margin-right: 5px;
+    text-align: right;
+    width: 85px;
+}
+#order-detail-product-price-edit-form .price-per-unit-info-text {
+	color:red;
+	float:left;
+	margin-bottom:5px;
+}
+#product-price-edit-form input#dialogPriceUnitName {
+	text-align: left;
+}
+
+#product-price-edit-form label.radio {
+	margin-left: 20px;
+	line-height: 28px;
+	position: static;
+}
+#product-price-edit-form label.radio input {
+	margin-right: 5px;
+	position: static;
+	float: left;
+    width: 20px;
+    height: 20px;
+}
+#product-price-edit-form label.radio input:focus {
+    outline: none;
+}
+#product-price-edit-form .price-per-unit-wrapper,
+#product-price-edit-form .price-wrapper {
+	width: 100%;
+	float: left;
+	margin-top: 5px;
+}
+#product-price-edit-form .deactivated {
+    opacity: 0.3;
+}
+#product-price-edit-form select {
+	background-color: #fff;
+	width: 80px;
+}
+#order-detail-product-price-edit-form span.small {
+    line-height: 16px;
+    margin-left: 5px;
 }
 .btn:not(.dropdown-toggle):not(.btn-close) {
     padding: 3px 6px;
@@ -859,6 +931,12 @@ form.fcs-form .input.checkbox input {
 form.fcs-form input[type="checkbox"] {
     left: 200px;
 }
+body.customers .delete-customer-button {
+    float:right;
+    clear:both;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
 body.configurations.index td.first {
     vertical-align: top;
     width: 450px;
@@ -898,8 +976,10 @@ form.fcs-form .small {
     float: left;
 }
 form.fcs-form .checkbox .small {
-    line-height: 28px;
+    line-height: 16px;
     float: left;
+    max-width: 280px;
+    margin-top: 7px;
 }
 form.fcs-form .checkbox .small.multiple-lines {
     line-height: 21px;
@@ -930,17 +1010,17 @@ div.date-field-wrapper {
     position: relative;
     display: inline-block;
 }
-body.reports ul.nav-tabs {
+ul.nav-tabs {
     background: #efefef;
     margin-top: -2px;
     margin-left: -2px;
-    width: 986px;
+    width: 1046px;
     padding-bottom: 1px;
 }
-body.reports .nav > li > a {
+ul.nav-tabs > li > a {
     padding: 5px 10px;
 }
-body.reports ul.nav-tabs a:hover {
+ul.nav-tabs a:hover {
     background-color: #fff;
 }
 a.btn-arrow {
@@ -948,21 +1028,22 @@ a.btn-arrow {
     position: absolute;
     top: 7px;
     color: #ccc;
+    width: 15px;
 }
 a.btn-arrow:hover {
     color: #719f41;
 }
 a.btn-previous-day {
-    left: 138px;
+    right: 92px;
 }
 a.btn-previous-day:nth-of-type(1) {
     left: 3px;
 }
 a.btn-next-day {
-    left: 226px;
+    right: 3px;
 }
 a.btn-next-day:nth-of-type(2) {
-    left: 91px;
+    left: 92px;
 }
 a.btn-arrow i {
     font-size: 17px;
@@ -1029,6 +1110,9 @@ body.payments .payment-approval-comment-wrapper,
 body.reports.payment .payment-approval-comment-wrapper {
     float: left;
     margin-right: 2px;
+}
+body.payments.edit form {
+	width: 530px;
 }
 body.payments.edit .email-template-info {
     float: left;

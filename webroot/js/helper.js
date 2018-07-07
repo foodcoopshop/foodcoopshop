@@ -11,6 +11,12 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
+String.prototype.replaceI18n = function(object, replace) {
+    var regExp = new RegExp('\\{' + object + '\\}', 'g');
+    return this.replace(regExp, replace);
+};
+
 foodcoopshop.Helper = {
 
     init: function () {
@@ -22,6 +28,23 @@ foodcoopshop.Helper = {
             this.initScrolltopButton();
             this.showContent();
         }
+    },
+
+    getJqueryUiNoButton : function() {
+        return this.getJqueryUiCloseDialogButton(foodcoopshop.LocalizedJs.helper.no);
+    },
+
+    getJqueryUiCancelButton : function() {
+        return this.getJqueryUiCloseDialogButton(foodcoopshop.LocalizedJs.helper.cancel);
+    },
+
+    getJqueryUiCloseDialogButton : function(label) {
+        return {
+            text: label,
+            click: function() {
+                $(this).dialog('close');
+            }
+        };
     },
 
     initBlogPostCarousel: function () {
@@ -100,8 +123,8 @@ foodcoopshop.Helper = {
      */
     updateAntiSpamField: function (form) {
 
-        if (document.getElementById("antiSpam")) {
-            a = document.getElementById("antiSpam");
+        if (document.getElementById('antiSpam')) {
+            var a = document.getElementById('antiSpam');
             if (isNaN(a.value) == true) {
                 a.value = 0;
             } else {
@@ -195,15 +218,20 @@ foodcoopshop.Helper = {
         $('.inner-right').css('left', newLeft);
 
         // adapt height of cart
-        $('#cart p.products').css('max-height', parseInt($(window).height()) - 145);
+        var difference = 150;
+        var loadLastOrderDetailsDropdown = $('#cart #load-last-order-details');
+        if (loadLastOrderDetailsDropdown.length > 0) {
+            difference += loadLastOrderDetailsDropdown.closest('.input').height();
+        }
+        $('#cart p.products').css('max-height', parseInt($(window).height()) - difference);
 
     },
 
     initMenu: function () {
 
         // select and show submenu of vertical menu, recursive!
-        var selectedSubMenu = $('.menu.vertical ul a.active').closest('ul');
-        var s = selectedSubMenu.closest('li').find('a').parentsUntil('ul.vertical-menu', 'li.has-children')
+        var selectedVerticalSubMenu = $('.menu.vertical ul a.active').closest('ul');
+        var s = selectedVerticalSubMenu.closest('li').find('a').parentsUntil('ul.vertical-menu', 'li.has-children');
         s.each(function () {
             var m = $(this).find('a').first();
             m.addClass('active');
@@ -222,8 +250,8 @@ foodcoopshop.Helper = {
         });
 
         // select horizontal main if sub is selected
-        var selectedSubMenu = $('.menu.horizontal ul a.active').closest('ul');
-        selectedSubMenu.closest('li').find('a').first().addClass('active'); // set main manu item active if sub navi is selected
+        var selectedHorizontalSubMenu = $('.menu.horizontal ul a.active').closest('ul');
+        selectedHorizontalSubMenu.closest('li').find('a').first().addClass('active'); // set main manu item active if sub navi is selected
 
     },
 
@@ -236,17 +264,17 @@ foodcoopshop.Helper = {
             var activeEntityWrapper = $('#entity-wrapper-' + id);
             activeEntityWrapper.addClass('active');
             activeEntityWrapper.show();
-        })
+        });
     },
 
     addSpinnerToButton: function (button, iconClass) {
         button.find('i').removeClass(iconClass);
-        button.find('i').addClass('fa-spinner')
+        button.find('i').addClass('fa-spinner');
         button.find('i').addClass('fa-spin');
     },
 
     removeSpinnerFromButton: function (button, iconClass) {
-        button.find('i').removeClass('fa-spinner')
+        button.find('i').removeClass('fa-spinner');
         button.find('i').removeClass('fa-spin');
         button.find('i').addClass(iconClass);
     },
@@ -262,26 +290,49 @@ foodcoopshop.Helper = {
     },
 
     applyBlinkEffect: function (container, callback) {
-        container.fadeTo('fast', 1, function () {
-            $(this).fadeTo('fast', 0, function () {
-                $(this).fadeTo('fast', 1, function () {
-                    $(this).fadeTo('fast', 0, function () {
-                        $(this).fadeTo('fast', 1);
-                        if (callback) {
-                            callback();
-                        }
-                    });
-                });
+        container.fadeTo(150, 1, function () {
+            $(this).fadeTo(150, 0, function () {
+                $(this).fadeTo(150, 1);
+                if (callback) {
+                    callback();
+                }
             });
         });
     },
 
-    formatFloatAsEuro: function (float) {
-        return '€&nbsp;' + float.toFixed(2).replace(/\./, ',');
+    formatFloatAsCurrency: function (float) {
+        var currency = this.formatFloatAsString(float) + '&nbsp;' + foodcoopshop.LocalizedJs.helper.CurrencySymbol;
+        if (foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47 == 'en-US') {
+            currency = foodcoopshop.LocalizedJs.helper.CurrencySymbol + this.formatFloatAsString(float);
+        }
+        return currency;
     },
 
-    getEuroAsFloat: function (string) {
-        return parseFloat(string.replace(/€&nbsp;/, '').replace(/,/, '.'));
+    getCurrencyAsFloat: function (string) {
+        var currencyRegExp = new RegExp('&nbsp;\\' + foodcoopshop.LocalizedJs.helper.CurrencySymbol);
+        if (foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47 == 'en-US') {
+            currencyRegExp = new RegExp('\\' + foodcoopshop.LocalizedJs.helper.CurrencySymbol);
+        }
+        return this.getStringAsFloat(string.replace(currencyRegExp, ''));
+    },
+
+    formatFloatAsString: function(float) {
+        var floatAsString = float.toLocaleString(
+            foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47,
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        );
+        return floatAsString;
+    },
+
+    getStringAsFloat: function (string) {
+        // german uses , as decimal separator and not as thousand separator
+        if (foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47 == 'de-DE') {
+            string = string.replace(/,/, '.');
+        }
+        return parseFloat(string);
     },
 
     bindToggleLinks: function (autoOpen) {
@@ -292,10 +343,12 @@ foodcoopshop.Helper = {
             var toggleMode = elementToToggle.css('display');
 
             if (toggleMode == 'none') {
-                $(this).html($(this).html().replace(/Mehr/, 'Weniger'));
+                var showMoreRegExp = new RegExp(foodcoopshop.LocalizedJs.helper.ShowMore);
+                $(this).html($(this).html().replace(showMoreRegExp, foodcoopshop.LocalizedJs.helper.ShowLess));
                 $(this).addClass('collapsed');
             } else {
-                $(this).html($(this).html().replace(/Weniger/, 'Mehr'));
+                var showLessRegExp = new RegExp(foodcoopshop.LocalizedJs.helper.ShowLess);
+                $(this).html($(this).html().replace(showLessRegExp, foodcoopshop.LocalizedJs.helper.ShowMore));
                 $(this).removeClass('collapsed');
             }
 
@@ -325,7 +378,7 @@ foodcoopshop.Helper = {
 
     initAnystretch: function () {
         $.backstretch(
-            '/img/bg-v2.0.0.jpg',
+            '/img/bg-v2.1.jpg',
             {
                 positionY: 'top',
                 transitionDuration: 400
@@ -335,64 +388,66 @@ foodcoopshop.Helper = {
 
     initLogoutButton: function () {
         $('a.logout-button').on('click', function () {
+
+            var buttons = {};
+            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
+            buttons['yes'] = {
+                text: foodcoopshop.LocalizedJs.helper.yes,
+                click: function() {
+                    $('.ui-dialog .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+                    document.location.href = '/' + foodcoopshop.LocalizedJs.helper.routeLogout;
+                }
+            };
+
             $('<div></div>').appendTo('body')
-                .html('<p>Willst du dich wirklich abmelden?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p>' + foodcoopshop.LocalizedJs.helper.logoutInfoText + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
-                    title: 'Abmelden?',
+                    title: foodcoopshop.LocalizedJs.helper.logout,
                     dialogClass: 'logout-button',
                     autoOpen: true,
                     width: 400,
                     resizable: false,
-                    buttons: {
-                        'Nein': function () {
-                            $(this).dialog('close');
-                        },
-                        'Ja': function () {
-                            $('.ui-dialog .ajax-loader').show();
-                            $('.ui-dialog button').attr('disabled', 'disabled');
-                            document.location.href = '/logout';
-                        }
-                    },
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
+                    buttons: buttons
                 });
         });
     },
 
-    initLogoutShopOrderCustomerButton: function () {
-        $('#cart .shop-order-customer-info a.btn').on('click', function () {
+    initLogoutInstantOrderCustomerButton: function () {
+        $('#cart .instant-order-customer-info a.btn').on('click', function () {
+            var buttons = {};
+            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
+            buttons['yes'] = {
+                text: foodcoopshop.LocalizedJs.helper.yes,
+                click: function() {
+                    $('.ui-dialog .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+                    foodcoopshop.Helper.ajaxCall(
+                        '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxDeleteInstantOrderCustomer',
+                        {},
+                        {
+                            onOk: function (data) {
+                                $('.featherlight', window.parent.document).remove();
+                                document.location.reload();
+                            },
+                            onError: function (data) {
+                                document.location.reload();
+                            }
+                        }
+                    );
+                }
+            };
+
             $('<div></div>').appendTo('body')
-                .html('<p>Willst du die Sofort-Bestellung wirklich abbrechen?</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p>' + foodcoopshop.LocalizedJs.helper.ReallyCancelInstantOrder + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
-                    title: 'Sofort-Bestellung abbrechen?',
+                    title: foodcoopshop.LocalizedJs.helper.CancelInstantOrder,
                     autoOpen: true,
                     width: 400,
                     resizable: false,
-                    buttons: {
-                        'Nein': function () {
-                            $(this).dialog('close');
-                        },
-                        'Ja': function () {
-                            $('.ui-dialog .ajax-loader').show();
-                            $('.ui-dialog button').attr('disabled', 'disabled');
-                            foodcoopshop.Helper.ajaxCall(
-                                '/carts/ajaxDeleteShopOrderCustomer',
-                                {},
-                                {
-                                    onOk: function (data) {
-                                        $('.featherlight', window.parent.document).remove();
-                                        document.location.reload();
-                                    },
-                                    onError: function (data) {
-                                        document.location.reload();
-                                    }
-                                }
-                            );
-                        }
-                    },
+                    buttons: buttons,
                     close: function (event, ui) {
                         $(this).remove();
                     }
@@ -400,14 +455,18 @@ foodcoopshop.Helper = {
         });
     },
 
-    initTooltip: function (container, position, hover) {
-        var hover = hover || true;
-        $(container).tooltip({
-            content: function () {
-                return $(this).attr('title');
-            },
-            tooltipHover: hover,
-            position: position
+    initTooltip: function (container, trigger) {
+        trigger = trigger || 'hover';
+        $(container).each(function() {
+            $(this).not('.tooltipstered').tooltipster({
+                contentAsHTML: true,
+                interactive: true,
+                maxWidth: 400,
+                trigger: trigger,
+                animationDuration: 150,
+                delay: 100,
+                theme: ['tooltipster-light']
+            });
         });
     },
 
@@ -429,7 +488,7 @@ foodcoopshop.Helper = {
     showContent: function () {
         // do not use jquery .animate() or .show() here, if loaded in iframe and firefox, this does not work
         // only css('display') works
-        $('body:not(.cake_errors) #container').css('display', 'block')
+        $('body:not(.cake_errors) #container').css('display', 'block');
     },
 
     initCkeditor: function (name) {
@@ -440,7 +499,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = '2017-11-20';
+        CKEDITOR.timestamp = 'v4.9.2';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config.js'
         });
@@ -468,7 +527,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = '2016-08-29';
+        CKEDITOR.timestamp = 'v4.9.2';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config-big.js'
         });
@@ -483,38 +542,77 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = '2017-11-20';
+        CKEDITOR.timestamp = 'v4.9.2';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config-small-with-upload.js'
         });
 
     },
 
-    /**
-     * German initialisation for the jQuery UI date picker plugin. Written by
-     * Milian Wolff (mail@milianw.de).
-     */
     initDatepicker: function () {
         jQuery(function ($) {
-            $.datepicker.regional['de'] = {
-                closeText: 'schließen',
-                prevText: '&#x3c;zurück',
-                nextText: 'Vor&#x3e;',
-                currentText: 'heute',
-                monthNames: ['Januar', 'Februar', 'März', 'April', 'Mai',
-                    'Juni', 'Juli', 'August', 'September', 'Oktober',
-                    'November', 'Dezember'
+            $.datepicker.regional = {
+                closeText: foodcoopshop.LocalizedJs.datepicker.close,
+                prevText: '&#x3c;' + foodcoopshop.LocalizedJs.datepicker.prev,
+                nextText: foodcoopshop.LocalizedJs.datepicker.next + '&#x3e;',
+                currentText: foodcoopshop.LocalizedJs.datepicker.today,
+                monthNames: [
+                    foodcoopshop.LocalizedJs.helper.January,
+                    foodcoopshop.LocalizedJs.helper.February,
+                    foodcoopshop.LocalizedJs.helper.March,
+                    foodcoopshop.LocalizedJs.helper.April,
+                    foodcoopshop.LocalizedJs.helper.May,
+                    foodcoopshop.LocalizedJs.helper.June,
+                    foodcoopshop.LocalizedJs.helper.July,
+                    foodcoopshop.LocalizedJs.helper.August,
+                    foodcoopshop.LocalizedJs.helper.September,
+                    foodcoopshop.LocalizedJs.helper.October,
+                    foodcoopshop.LocalizedJs.helper.November,
+                    foodcoopshop.LocalizedJs.helper.December
                 ],
-                monthNamesShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun',
-                    'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'
+                monthNamesShort: [
+                    foodcoopshop.LocalizedJs.helper.JanuaryShort,
+                    foodcoopshop.LocalizedJs.helper.FebruaryShort,
+                    foodcoopshop.LocalizedJs.helper.MarchShort,
+                    foodcoopshop.LocalizedJs.helper.AprilShort,
+                    foodcoopshop.LocalizedJs.helper.MayShort,
+                    foodcoopshop.LocalizedJs.helper.JuneShort,
+                    foodcoopshop.LocalizedJs.helper.JulyShort,
+                    foodcoopshop.LocalizedJs.helper.AugustShort,
+                    foodcoopshop.LocalizedJs.helper.SeptemberShort,
+                    foodcoopshop.LocalizedJs.helper.OctoberShort,
+                    foodcoopshop.LocalizedJs.helper.NovemberShort,
+                    foodcoopshop.LocalizedJs.helper.DecemberShort
                 ],
-                dayNames: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch',
-                    'Donnerstag', 'Freitag', 'Samstag'
+                dayNames: [
+                    foodcoopshop.LocalizedJs.helper.Sunday,
+                    foodcoopshop.LocalizedJs.helper.Monday,
+                    foodcoopshop.LocalizedJs.helper.Tuesday,
+                    foodcoopshop.LocalizedJs.helper.Wednesday,
+                    foodcoopshop.LocalizedJs.helper.Thursday,
+                    foodcoopshop.LocalizedJs.helper.Friday,
+                    foodcoopshop.LocalizedJs.helper.Saturday
                 ],
-                dayNamesShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
-                dayNamesMin: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
-                weekHeader: 'Wo',
-                dateFormat: 'dd.mm.yy',
+                dayNamesShort: [
+                    foodcoopshop.LocalizedJs.helper.SundayShort,
+                    foodcoopshop.LocalizedJs.helper.MondayShort,
+                    foodcoopshop.LocalizedJs.helper.TuesdayShort,
+                    foodcoopshop.LocalizedJs.helper.WednesdayShort,
+                    foodcoopshop.LocalizedJs.helper.ThursdayShort,
+                    foodcoopshop.LocalizedJs.helper.FridayShort,
+                    foodcoopshop.LocalizedJs.helper.SaturdayShort
+                ],
+                dayNamesMin: [
+                    foodcoopshop.LocalizedJs.helper.SundayShort,
+                    foodcoopshop.LocalizedJs.helper.MondayShort,
+                    foodcoopshop.LocalizedJs.helper.TuesdayShort,
+                    foodcoopshop.LocalizedJs.helper.WednesdayShort,
+                    foodcoopshop.LocalizedJs.helper.ThursdayShort,
+                    foodcoopshop.LocalizedJs.helper.FridayShort,
+                    foodcoopshop.LocalizedJs.helper.SaturdayShort
+                ],
+                weekHeader: foodcoopshop.LocalizedJs.datepicker.weekHeader,
+                dateFormat: foodcoopshop.LocalizedJs.datepicker.dateFormat,
                 firstDay: 1,
                 isRTL: false,
                 showMonthAfterYear: false,
@@ -524,7 +622,7 @@ foodcoopshop.Helper = {
                 duration: 'fast',
                 yearRange: '2014:2020'
             };
-            $.datepicker.setDefaults($.datepicker.regional['de']);
+            $.datepicker.setDefaults($.datepicker.regional);
         });
     },
 
@@ -533,8 +631,8 @@ foodcoopshop.Helper = {
      */
     resolveIndex : function (path, obj) {
         return path.split('.').reduce(function (prev, curr) {
-            return prev ? prev[curr] : undefined
-        }, obj || self)
+            return prev ? prev[curr] : undefined;
+        }, obj || self);
     },
 
     getRandomCode: function () {
@@ -565,8 +663,9 @@ foodcoopshop.Helper = {
 
         var root = '#content';
 
-        if (foodcoopshop.Helper.isMobile()) {
-            root = '#responsive-header';
+        var responsiveHeaderSelector = '#responsive-header';
+        if (foodcoopshop.Helper.isMobile() && $(responsiveHeaderSelector).length == 1) {
+            root = responsiveHeaderSelector;
         }
 
         var messageNode = $('<div />');
@@ -637,7 +736,7 @@ foodcoopshop.Helper = {
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 data = {
                     status: 9,
-                    msg: 'Es ist ein Fehler aufgetreten.',
+                    msg: foodcoopshop.LocalizedJs.helper.anErrorOccurred + '.',
                     jquery: {
                         XMLHttpRequest: XMLHttpRequest,
                         textStatus: textStatus,
@@ -661,4 +760,4 @@ foodcoopshop.Helper = {
         });
     }
 
-}
+};

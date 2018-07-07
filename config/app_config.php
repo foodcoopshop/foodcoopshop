@@ -39,8 +39,6 @@ define('HTTPS_REGEX', '/^https\:\/\//');
 // copied from Cake/Utility/Validation.php with additional $ at the end
 define('HOSTNAME_REGEX', '/(?:[_\p{L}0-9][-_\p{L}0-9]*\.)*(?:[\p{L}0-9][-\p{L}0-9]{0,62})\.(?:(?:[a-z]{2}\.)?[a-z]{2,})$/');
 
-define('ACCESS_DENIED_MESSAGE', 'Zugriff verweigert, bitte melde dich an.');
-
 return [
     'Email' => [
         'default' => [
@@ -52,10 +50,6 @@ return [
     ],
     'app' => [
         'jsNamespace' => 'foodcoopshop',
-        'visibleOrderStates' => [
-            ORDER_STATE_OPEN => 'offen',
-            ORDER_STATE_CASH_FREE => 'abgeschlossen',
-        ],
         'filesDir' => DS . 'files',
         'tmpWwwDir' => DS.'tmp',
         'uploadedImagesDir' => DS . 'files' . DS . 'images',
@@ -64,7 +58,6 @@ return [
         'folder_invoices_with_current_year_and_month' => ROOT . DS . 'files_private'. DS . 'invoices'.DS.date('Y').DS.date('m'),
         'folder_order_lists_with_current_year_and_month' => ROOT . DS . 'files_private' . DS .'order_lists'.DS.date('Y').DS.date('m'),
 
-        'manufacturerComponensationInfoText' => 'Die Bestellung beinhaltet den variablen Mitgliedsbeitrag.',
         /**
          * all the default values in this block can be overwritten in the manufacturer settings
          */
@@ -72,10 +65,10 @@ return [
         'defaultSendInvoice' => true,
         'defaultTaxId' => 2,
         'defaultBulkOrdersAllowed' => false,
-        'defaultSendShopOrderNotification' => true,
+        'defaultSendInstantOrderNotification' => true,
         'defaultSendOrderedProductDeletedNotification' => true,
         'defaultSendOrderedProductPriceChangedNotification' => true,
-        'defaultSendOrderedProductQuantityChangedNotification' => true,
+        'defaultSendOrderedProductAmountChangedNotification' => true,
         'isDepositPaymentCashless' => true,
         'depositPaymentCashlessStartDate' => '2016-01-01',
         'depositForManufacturersStartDate' => '2016-01-01',
@@ -144,22 +137,19 @@ return [
          */
         'termsOfUseLastUpdate' => '2016-11-28',
 
+        'implementedLocales' => ['de_DE', 'en_US'],
+
         'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),
         'timeHelper' => new App\View\Helper\MyTimeHelper(new Cake\View\View()),
-        'slugHelper' => new App\View\Helper\SlugHelper(new Cake\View\View())
+        'numberHelper' => new App\View\Helper\MyNumberHelper(new Cake\View\View()),
+        'slugHelper' => new App\View\Helper\SlugHelper(new Cake\View\View()),
+        'timebasedCurrencyHelper' => new App\View\Helper\TimebasedCurrencyHelper(new Cake\View\View()),
+        'pricePerUnitHelper' => new App\View\Helper\PricePerUnitHelper(new Cake\View\View())
     ],
     'DateFormat' => [
         'Database' => 'yyyy-MM-dd',
         'DatabaseWithTime' => 'yyyy-MM-dd HH:mm:ss',
-        'de' => [
-            'DateShort' => 'dd.MM.yy',
-            'DateLong' =>  'dd. MMMM y',
-            'DateLong2' => 'dd.MM.yyyy',
-            'DateNTimeShort' => 'dd.MM.y HH:mm',
-            'DateNTimeLongWithSecs' => 'dd.MM.y HH:mm:ss',
-            'TimeShort' => 'HH:mm',
-            'DateNTimeForDatepicker' => 'dd.MM.yyyy HH:mm',
-            'Year' => 'Y'
-        ]
+        'DatabaseAlt' => 'Y-m-d',
+        'DatabaseWithTimeAlt' => 'Y-m-d H:i:s'
     ]
 ];

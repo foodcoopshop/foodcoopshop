@@ -25,24 +25,19 @@ $this->element('highlightRowAfterEdit', [
 ?>
 
 <div class="filter-container">
-    <h1>Slideshow</h1>
+    <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <?php
         echo '<div id="add-category-button-wrapper" class="add-button-wrapper">';
-        echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neues Slideshow-Bild erstellen', $this->Slug->getSliderAdd(), [
+        echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> '.__d('admin', 'Add_slider').'', $this->Slug->getSliderAdd(), [
             'class' => 'btn btn-default',
             'escape' => false
         ]);
         echo '</div>';
+        echo $this->element('printIcon');
         ?>
     </div>
 
-</div>
-
-<div id="help-container">
-    <ul>
-        <li>Auf dieser Seite kannst du die Slideshow-Bilder verwalten.</li>
-    </ul>
 </div>
 
 <?php
@@ -52,9 +47,9 @@ echo '<table class="list">';
 echo '<tr class="sort">';
 echo '<th class="hide">ID</th>';
 echo '<th></th>';
-echo '<th>Bild</th>';
-echo '<th>' . $this->Paginator->sort('Sliders.position', 'Reihenfolge') . '</th>';
-echo '<th>' . $this->Paginator->sort('Sliders.active', 'Aktiv') . '</th>';
+echo '<th>'.__d('admin', 'Image').'</th>';
+echo '<th>' . $this->Paginator->sort('Sliders.position', __d('admin', 'Rank')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Sliders.active', __d('admin', 'Active')) . '</th>';
 echo '</tr>';
 
 $i = 0;
@@ -70,7 +65,7 @@ foreach ($sliders as $slider) {
 
     echo '<td>';
     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-        'title' => 'Bearbeiten'
+        'title' => __d('admin', 'Edit')
     ], $this->Slug->getSliderEdit($slider->id_slider));
     echo '</td>';
 
@@ -98,7 +93,7 @@ foreach ($sliders as $slider) {
 }
 
 echo '<tr>';
-echo '<td colspan="5"><b>' . $i . '</b> Datensätze</td>';
+echo '<td colspan="5"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '</tr>';
 
 echo '</table>';

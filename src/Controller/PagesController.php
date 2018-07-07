@@ -31,10 +31,10 @@ class PagesController extends FrontendController
     {
 
         parent::beforeFilter($event);
-        switch ($this->request->action) {
+        switch ($this->getRequest()->getParam('action')) {
             case 'detail':
-                $pageId = (int) $this->request->getParam('pass')[0];
-                $this->Page = TableRegistry::get('Pages');
+                $pageId = (int) $this->getRequest()->getParam('pass')[0];
+                $this->Page = TableRegistry::getTableLocator()->get('Pages');
                 $page = $this->Page->find('all', [
                     'conditions' => [
                         'Pages.id_page' => $pageId,
@@ -42,7 +42,7 @@ class PagesController extends FrontendController
                     ]
                 ])->first();
                 if (!empty($page) && !$this->AppAuth->user() && $page->is_private) {
-                    $this->AppAuth->deny($this->request->action);
+                    $this->AppAuth->deny($this->getRequest()->getParam('action'));
                 }
                 break;
         }
@@ -70,27 +70,28 @@ class PagesController extends FrontendController
          * END: security keys check
          */
 
-        $this->BlogPost = TableRegistry::get('BlogPosts');
+        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findFeatured($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
-        $this->set('title_for_layout', 'Willkommen');
+        $this->set('title_for_layout', __('Welcome'));
 
-        $this->Slider = TableRegistry::get('Sliders');
+        $this->Slider = TableRegistry::getTableLocator()->get('Sliders');
         $sliders = $this->Slider->getForHome();
         $this->set('sliders', $sliders);
+
     }
 
     public function detail()
     {
-        $pageId = (int) $this->request->getParam('pass')[0];
+        $pageId = (int) $this->getRequest()->getParam('pass')[0];
 
         $conditions = [
             'Pages.id_page' => $pageId,
             'Pages.active' => APP_ON
         ];
 
-        $this->Page = TableRegistry::get('Pages');
+        $this->Page = TableRegistry::getTableLocator()->get('Pages');
         $page = $this->Page->find('all', [
             'conditions' => $conditions,
             'contain' => [
@@ -122,7 +123,7 @@ class PagesController extends FrontendController
             ]);
 
         $correctSlug = Configure::read('app.slugHelper')->getPageDetail($page->id_page, $page->title);
-        if ($correctSlug != Configure::read('app.slugHelper')->getPageDetail($pageId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
+        if ($correctSlug != Configure::read('app.slugHelper')->getPageDetail($pageId, StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]))) {
             $this->redirect($correctSlug);
         }
 
@@ -132,11 +133,16 @@ class PagesController extends FrontendController
 
     public function termsOfUse()
     {
-        $this->set('title_for_layout', 'Nutzungsbedingungen');
+        $this->set('title_for_layout', __('Terms_of_use'));
     }
 
     public function privacyPolicy()
     {
-        $this->set('title_for_layout', 'Datenschutzerklärung');
+        $this->set('title_for_layout', __('Privacy_policy'));
+    }
+
+    public function listOfAllergens()
+    {
+        $this->set('title_for_layout', __('List_of_allergens'));
     }
 }

@@ -94,5 +94,6 @@ return [
         'paymentMethods' => [
             'cashless'
         ]
+
     ]
 ];

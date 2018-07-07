@@ -33,10 +33,10 @@ class OrdersController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $orderId = $this->request->getData('orderId');
-        $orderComment = htmlspecialchars_decode(strip_tags(trim($this->request->getData('orderComment')), '<strong><b>'));
+        $orderId = $this->getRequest()->getData('orderId');
+        $orderComment = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('orderComment')), '<strong><b>'));
 
-        $this->Order = TableRegistry::get('Orders');
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
         $oldOrder = $this->Order->find('all', [
             'conditions' => [
                 'Orders.id_order' => $orderId
@@ -55,10 +55,10 @@ class OrdersController extends AdminAppController
             )
         );
 
-        $this->Flash->success('Der Kommentar wurde erfolgreich geändert.');
+        $this->Flash->success(__d('admin', 'The_comment_was_changed_successfully.'));
 
-        $this->ActionLog = TableRegistry::get('ActionLogs');
-        $this->ActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $orderId, 'orders', 'Der Kommentar der Bestellung Nr. ' . $oldOrder->id_order . ' von '.$oldOrder->customer->name.' wurde geändert: <div class="changed">' . $orderComment . ' </div>');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $orderId, 'orders', __d('admin', 'The_comment_of_the_order_number_{0}_by_{1}_was_changed:', [$oldOrder->id_order, $oldOrder->customer->name]) . ' <div class="changed">' . $orderComment . ' </div>');
 
         die(json_encode([
             'status' => 1,
@@ -68,15 +68,15 @@ class OrdersController extends AdminAppController
 
     public function ordersAsPdf()
     {
-        if (empty($this->request->getQuery('orderIds'))) {
+        if (empty($this->getRequest()->getQuery('orderIds'))) {
             throw new RecordNotFoundException('wrong orderIds');
         }
-        
-        $orderIds = explode(',', $this->request->getQuery('orderIds'));
+
+        $orderIds = explode(',', $this->getRequest()->getQuery('orderIds'));
         if (empty($orderIds)) {
             throw new RecordNotFoundException('wrong orderIds');
         }
-        $this->Order = TableRegistry::get('Orders');
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
         $orders = $this->Order->find('all', [
             'conditions' => [
                 'Orders.id_order IN' => $orderIds
@@ -86,7 +86,8 @@ class OrdersController extends AdminAppController
                 'OrderDetails' => [
                     'sort' => ['OrderDetails.product_name' => 'ASC']
                 ],
-                'OrderDetails.Products.Manufacturers'
+                'OrderDetails.Products.Manufacturers',
+                'OrderDetails.OrderDetailUnits'
             ],
             'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy()
         ]);
@@ -98,11 +99,11 @@ class OrdersController extends AdminAppController
         $this->set('orders', $orders);
     }
 
-    public function correctShopOrder()
+    public function correctInstantOrder()
     {
-        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->request->getQuery('url'));
+        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->getRequest()->getQuery('url'));
 
-        $this->Order = TableRegistry::get('Orders');
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
 
         if ($orderId > 0) {
             $order = $this->Order->find('all', [
@@ -117,25 +118,29 @@ class OrdersController extends AdminAppController
                 ]
             ])->first();
 
-            $newDate = Configure::read('app.timeHelper')->getDateForShopOrder(Configure::read('app.timeHelper')->getCurrentDay());
+            $newDate = Configure::read('app.timeHelper')->getDateForInstantOrder(Configure::read('app.timeHelper')->getCurrentDay());
 
             $this->Order->save(
                 $this->Order->patchEntity(
                     $order,
                     [
                         'date_add' => $newDate,
-                        'current_state' => Configure::read('appDb.FCS_SHOP_ORDER_DEFAULT_STATE')
+                        'current_state' => Configure::read('appDb.FCS_INSTANT_ORDER_DEFAULT_STATE')
                     ]
                 )
             );
 
-            $message = 'Sofort-Bestellung Nr. (' . $order->id_order . ') für <b>' . $order->customer->name . '</b> erfolgreich erstellt und rückdatiert auf den ' . Configure::read('app.timeHelper')->formatToDateShort($newDate) . '. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat.';
+            $message = __d('admin', 'Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated.', [
+                $order->id_order,
+                '<b>' . $order->customer->name . '</b>',
+                Configure::read('app.timeHelper')->formatToDateShort($newDate)
+            ]);
 
-            $this->ActionLog = TableRegistry::get('ActionLogs');
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave('orders_shop_added', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
             $this->Flash->success($message);
 
-            $this->request->getSession()->write('highlightedRowId', $orderId);
+            $this->getRequest()->getSession()->write('highlightedRowId', $orderId);
             $this->redirect($this->referer());
         } else {
             die('order id not correct: ' + $orderId);
@@ -146,11 +151,11 @@ class OrdersController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $orderIds = $this->request->getData('orderIds');
+        $orderIds = $this->getRequest()->getData('orderIds');
         $orderIds = array_unique($orderIds);
-        $orderState = $this->request->getData('orderState');
+        $orderState = $this->getRequest()->getData('orderState');
 
-        $this->Order = TableRegistry::get('Orders');
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
         foreach ($orderIds as $orderId) {
             $this->Order->save(
                 $this->Order->patchEntity(
@@ -163,7 +168,7 @@ class OrdersController extends AdminAppController
         }
 
         $message = count($orderIds) . ' Bestellungen wurden erfolgreich abgeschlossen';
-        $this->ActionLog = TableRegistry::get('ActionLogs');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('orders_closed', $this->AppAuth->getUserId(), 0, 'orders', $message . ': ' . join(', ', $orderIds));
 
         $this->Flash->success($message . '.');
@@ -178,10 +183,17 @@ class OrdersController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $orderIds = $this->request->getData('orderIds');
-        $orderState = $this->request->getData('orderState');
+        $orderIds = $this->getRequest()->getData('orderIds');
+        $orderState = $this->getRequest()->getData('orderState');
 
-        $this->Order = TableRegistry::get('Orders');
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
+        if (empty($orderIds) || empty($orderState)) {
+            die(json_encode([
+                'status' => 0,
+                'msg' => 'error'
+            ]));
+        }
+
         foreach ($orderIds as $orderId) {
             $oldOrder = $this->Order->find('all', [
                 'conditions' => [
@@ -202,9 +214,20 @@ class OrdersController extends AdminAppController
             );
         }
 
-        $this->ActionLog = TableRegistry::get('ActionLogs');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
 
-        $message = 'Der Bestellstatus der Bestellung' . (count($orderIds) == 1 ? '' : 'en') . ' ' . join(', ', array_reverse($orderIds)) . ' von ' . $oldOrder->customer->name . ' wurde' . (count($orderIds) == 1 ? '' : 'n') . ' erfolgreich auf <b>' . Configure::read('app.htmlHelper')->getOrderStates()[$orderState] . '</b> geändert.';
+        $orderStateAsText = '<b>' . Configure::read('app.htmlHelper')->getOrderStates()[$orderState] . '</b>';
+        if (count($orderIds) == 1) {
+            $message = __d('admin', 'The_order_status_of_the_order_of_{0}_was_successfully_changed_to_{1}.', [
+                $oldOrder->customer->name,
+                $orderStateAsText
+            ]);
+        } else {
+            $message = __d('admin', 'The_order_status_of_the_orders_{0}_was_successfully_changed_to_{1}.', [
+                join(', ', array_reverse($orderIds)),
+                $orderStateAsText
+            ]);
+        }
         $this->ActionLog->customSave('orders_state_changed', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
 
         $this->Flash->success($message);
@@ -245,16 +268,16 @@ class OrdersController extends AdminAppController
 
         // for filter from action logs page
         $orderId = '';
-        if (! empty($this->request->getQuery('orderId'))) {
-            $orderId = $this->request->getQuery('orderId');
+        if (! empty($this->getRequest()->getQuery('orderId'))) {
+            $orderId = $this->getRequest()->getQuery('orderId');
         }
 
         $dateFrom = '';
         if ($orderId == '') {
             $dateFrom = Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay());
         }
-        if (! empty($this->request->getQuery('dateFrom'))) {
-            $dateFrom = $this->request->getQuery('dateFrom');
+        if (! empty($this->getRequest()->getQuery('dateFrom'))) {
+            $dateFrom = $this->getRequest()->getQuery('dateFrom');
         }
         $this->set('dateFrom', $dateFrom);
 
@@ -262,37 +285,37 @@ class OrdersController extends AdminAppController
         if ($orderId == '') {
             $dateTo = Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay());
         }
-        if (! empty($this->request->getQuery('dateTo'))) {
-            $dateTo = $this->request->getQuery('dateTo');
+        if (! empty($this->getRequest()->getQuery('dateTo'))) {
+            $dateTo = $this->getRequest()->getQuery('dateTo');
         }
         $this->set('dateTo', $dateTo);
 
         $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
-        if (in_array('orderStates', array_keys($this->request->getQueryParams()))) {
-            $orderStates = $this->request->getQuery('orderStates');
+        if (in_array('orderStates', array_keys($this->getRequest()->getQueryParams()))) {
+            $orderStates = $this->getRequest()->getQuery('orderStates');
             if ($orderStates == '') {
                 $orderStates = [];
             }
         }
         // legacy cakephp2: param was called "orderState" and contained csv data
-        if (! empty($this->request->getQuery('orderState'))) {
-            $orderStates = explode(', ', $this->request->getQuery('orderState'));
+        if (! empty($this->getRequest()->getQuery('orderState'))) {
+            $orderStates = explode(', ', $this->getRequest()->getQuery('orderState'));
         }
         $this->set('orderStates', $orderStates);
 
         $customerId = '';
-        if (! empty($this->request->getQuery('customerId'))) {
-            $customerId = $this->request->getQuery('customerId');
+        if (! empty($this->getRequest()->getQuery('customerId'))) {
+            $customerId = $this->getRequest()->getQuery('customerId');
         }
         $this->set('customerId', $customerId);
 
         $groupByCustomer = 0;
-        if (! empty($this->request->getQuery('groupByCustomer'))) {
-            $groupByCustomer = $this->request->getQuery('groupByCustomer');
+        if (! empty($this->getRequest()->getQuery('groupByCustomer'))) {
+            $groupByCustomer = $this->getRequest()->getQuery('groupByCustomer');
         }
         $this->set('groupByCustomer', $groupByCustomer);
 
-        $this->Order = TableRegistry::get('Orders');
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
         $orderParams = $this->Order->getOrderParams($customerId, $orderStates, $dateFrom, $dateTo, $orderId, $this->AppAuth);
 
         $query = $this->Order->find('all', [
@@ -301,9 +324,12 @@ class OrdersController extends AdminAppController
         ])
         ->select($this->Order->Customers);
 
+        $query->select($this->Order->TimebasedCurrencyOrders);
+
         if ($groupByCustomer) {
             $query->select(['orders_total_paid' => $query->func()->sum('Orders.total_paid')]);
             $query->select(['orders_count' => $query->func()->count('Orders.total_paid')]);
+            $query->select('Orders.id_customer');
             $query->group(['Orders.id_customer']);
         } else {
             $query->select($this->Order);
@@ -316,32 +342,43 @@ class OrdersController extends AdminAppController
             'order' => $orderParams['order']
         ])->toArray();
         foreach ($orders as $order) {
-            $order->customer->order_count = $this->Order->getCountByCustomerId($order->customer->id_customer);
+            if (!empty($order->customer)) {
+                $order->customer->order_count = $this->Order->getCountByCustomerId($order->customer->id_customer);
+            }
         }
         $this->set('orders', $orders);
 
+        $timebasedCurrencyOrderInList = false;
+        foreach($orders as $order) {
+            if (!empty($order->timebased_currency_order)) {
+                $timebasedCurrencyOrderInList = true;
+                break;
+            }
+        }
+        $this->set('timebasedCurrencyOrderInList', $timebasedCurrencyOrderInList);
+
         $this->set('customersForDropdown', $this->Order->Customers->getForDropdown(false, 'id_customer', $this->AppAuth->isSuperadmin()));
 
-        $this->set('title_for_layout', 'Bestellungen');
+        $this->set('title_for_layout', __d('admin', 'Orders'));
     }
 
     public function iframeStartPage()
     {
-        $this->set('title_for_layout', 'Sofort-Bestellung');
+        $this->set('title_for_layout', __d('admin', 'Instant_order'));
     }
 
     /**
      * this url is called if shop order (sofortbestellung) is initialized
      * saves the desired user in session
      */
-    public function initShopOrder($customerId)
+    public function initInstantOrder($customerId)
     {
         if (! $customerId) {
             throw new RecordNotFoundException('customerId not passed');
         }
 
-        $this->Customer = TableRegistry::get('Customers');
-        $shopOrderCustomer = $this->Customer->find('all', [
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $instantOrderCustomer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
             ],
@@ -349,10 +386,10 @@ class OrdersController extends AdminAppController
                 'AddressCustomers'
             ]
         ])->first();
-        if (! empty($shopOrderCustomer)) {
-            $this->request->getSession()->write('Auth.shopOrderCustomer', $shopOrderCustomer);
+        if (! empty($instantOrderCustomer)) {
+            $this->getRequest()->getSession()->write('Auth.instantOrderCustomer', $instantOrderCustomer);
         } else {
-            $this->Flash->error('Es wurde kein Mitglied mit der Id <b>' . $customerId . '</b> gefunden.');
+            $this->Flash->error(__d('admin', 'No_member_found_with_id_{0}.', [$customerId]));
         }
         $this->redirect('/');
     }
@@ -361,10 +398,10 @@ class OrdersController extends AdminAppController
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
-        $orderId = $this->request->getData('orderId');
-        $date = $this->request->getData('date');
+        $orderId = $this->getRequest()->getData('orderId');
+        $date = $this->getRequest()->getData('date');
 
-        $this->Order = TableRegistry::get('Orders');
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
         $oldOrder = $this->Order->find('all', [
             'conditions' => [
                 'Orders.id_order' => $orderId
@@ -385,8 +422,12 @@ class OrdersController extends AdminAppController
             )
         );
 
-        $message = 'Die Bestellung ' . $orderId . ' von ' . $oldOrder->customer->name . ' wurde vom ' . $oldDate->i18nFormat(Configure::read('DateFormat.de.DateLong2')) . ' auf den ' . Configure::read('app.timeHelper')->formatToDateShort($date) . ' rückdatiert.';
-        $this->ActionLog = TableRegistry::get('ActionLogs');
+        $message = __d('admin', 'The_date_of_the_order_{0}_of_{1}_was_changed_to_{2}.', [
+            $orderId,
+            $oldOrder->customer->name,
+            Configure::read('app.timeHelper')->formatToDateShort($date)
+        ]);
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('orders_date_changed', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
 
         $this->Flash->success($message);

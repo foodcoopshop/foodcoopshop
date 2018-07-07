@@ -24,18 +24,19 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
 ]);
+echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 ?>
 
 <?php
 if (!empty($blogPosts)) {
-    echo '<h2><a href="'.$this->Slug->getBlogList().'">Aktuelles</a></h2>';
+    echo '<h2><a href="'.$this->Slug->getBlogList().'">'.__('News').'</a></h2>';
     echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts
     ]);
 }
 ?>
 
-<h1><?php echo $title_for_layout; ?> <span><?php echo count($products); ?> gefunden</span></h1>
+<h1><?php echo $title_for_layout; ?> <span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
 
 <?php
 

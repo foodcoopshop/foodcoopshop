@@ -7,10 +7,6 @@ use Cake\Core\Configure;
 use Cake\View\Helper;
 
 /**
- * SlugHelper
- *
- * TODO use cake's routing
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -44,37 +40,42 @@ class SlugHelper extends Helper
 
     public function getAcceptTermsOfUse()
     {
-        return '/nutzungsbedingungen-akzeptieren';
+        return '/'.__('route_accept_terms_of_use');
     }
 
     public function getManufacturerDetail($manufacturerId, $manufacturerName)
     {
-        return '/hersteller/'.$manufacturerId.'-'.StringComponent::slugify($manufacturerName);
+        return '/'.__('route_manufacturer_detail').'/'.$manufacturerId.'-'.StringComponent::slugify($manufacturerName);
     }
 
     public function getManufacturerBlogList($manufacturerId, $manufacturerName)
     {
-        return $this->getManufacturerDetail($manufacturerId, $manufacturerName) . '/aktuelles';
+        return $this->getManufacturerDetail($manufacturerId, $manufacturerName) . __('route_news');
     }
 
     public function getPageDetail($pageId, $name)
     {
-        return '/content/'.$pageId.'-'.StringComponent::slugify($name);
+        return '/'.__('route_content').'/'.$pageId.'-'.StringComponent::slugify($name);
     }
 
     public function getTermsOfUse()
     {
-        return '/nutzungsbedingungen';
+        return '/'.__('route_terms_of_use');
     }
 
     public function getPrivacyPolicy()
     {
-        return '/datenschutzerklaerung';
+        return '/'.__('route_privacy_policy');
+    }
+
+    public function getListOfAllergens()
+    {
+        return '/'.__('route_list_of_allergens');
     }
 
     public function getManufacturerList()
     {
-        return '/hersteller';
+        return '/'.__('route_manufacturer_list');
     }
 
     public function getMyDepositList()
@@ -105,19 +106,24 @@ class SlugHelper extends Helper
         return $url;
     }
 
+    public function getCreditBalanceSum()
+    {
+        return '/admin/customers/credit_balance_sum';
+    }
+
     public function getCartDetail()
     {
-        return '/warenkorb/anzeigen';
+        return '/'.__('route_cart') . '/' . __('route_cart_show');
     }
 
     public function getCartFinish()
     {
-        return '/warenkorb/abschliessen';
+        return '/'.__('route_cart') . '/' . __('route_cart_finish');
     }
 
     public function getCartFinished($orderId)
     {
-        return '/warenkorb/abgeschlossen/' . $orderId;
+        return '/'.__('route_cart') . '/' . __('route_cart_finished').'/'.$orderId;
     }
 
     public function getAdminHome()
@@ -130,29 +136,81 @@ class SlugHelper extends Helper
         return '/';
     }
 
+    public function getNewProducts()
+    {
+        return '/' . __('route_new_products');
+    }
+
     public function getAllProducts()
     {
-        return $this->getCategoryDetail(Configure::read('app.categoryAllProducts'), 'alle-produkte');
+        return $this->getCategoryDetail(Configure::read('app.categoryAllProducts'), __('route_all_products'));
     }
 
     public function getCategoryDetail($categoryId, $name)
     {
-        return '/kategorie/' . $categoryId . '-' . StringComponent::slugify($name);
+        return '/' . __('route_category') . '/' . $categoryId . '-' . StringComponent::slugify($name);
     }
 
     public function getLogin()
     {
-        return '/anmelden';
+        return '/'.__('route_sign_in');
     }
 
     public function getLogout()
     {
-        return '/logout';
+        return '/'.__('route_sign_out');
+    }
+
+    public function getRegistrationSuccessful()
+    {
+        return '/'.__('route_registration_successful');
     }
 
     public function getRegistration()
     {
-        return '/registrierung';
+        return '/'.__('route_registration');
+    }
+
+    public function getMyTimebasedCurrencyBalanceForManufacturers()
+    {
+        return '/admin/timebased-currency-payments/my-payments-manufacturer';
+    }
+
+    public function getTimebasedCurrencyBalanceForManufacturers($manufacturerId)
+    {
+        return '/admin/timebased-currency-payments/payments-manufacturer/' . $manufacturerId;
+    }
+
+    public function getMyTimebasedCurrencyBalanceForCustomers($manufacturerId = null)
+    {
+        $url = '/admin/timebased-currency-payments/my-payments-customer';
+        if (!is_null($manufacturerId)){
+            $url .= '?manufacturerId='.$manufacturerId;
+        }
+        return $url;
+    }
+
+    public function getTimebasedCurrencyPaymentDetailsForManufacturers($customerId)
+    {
+        return '/admin/timebased-currency-payments/my-payment-details-manufacturer/'.$customerId;
+    }
+
+    public function getTimebasedCurrencyPaymentDetailsForSuperadmins($manufacturerId, $customerId)
+    {
+        $url = '/admin/timebased-currency-payments/payment-details-superadmin/' . $customerId;
+        if (!is_null($manufacturerId)){
+            $url .= '?manufacturerId='.$manufacturerId;
+        }
+        return $url;
+    }
+
+    public function getTimebasedCurrencyPaymentEdit($paymentId)
+    {
+        return '/admin/timebased-currency-payments/edit/'.$paymentId;
+    }
+    public function getTimebasedCurrencyPaymentAdd($customerId)
+    {
+        return '/admin/timebased-currency-payments/add/' . $customerId;
     }
 
     public function getMyMemberFeeBalance()
@@ -202,12 +260,12 @@ class SlugHelper extends Helper
 
     public function getApproveNewPassword($changePasswordCode)
     {
-        return '/neues-passwort-generieren/' . $changePasswordCode;
+        return '/'.__('route_generate_new_password') . '/' . $changePasswordCode;
     }
 
     public function getNewPasswordRequest()
     {
-        return '/neues-passwort-anfordern';
+        return '/'.__('route_request_new_password');
     }
 
     public function getReport($paymentType)
@@ -217,12 +275,12 @@ class SlugHelper extends Helper
 
     public function getBlogList()
     {
-        return '/aktuelles';
+        return '/'.__('route_news_list');
     }
 
     public function getBlogPostDetail($blogPostId, $name)
     {
-        return '/aktuelles/' . $blogPostId . '-' . StringComponent::slugify($name);
+        return '/'.__('route_news_detail') . '/' . $blogPostId . '-' . StringComponent::slugify($name);
     }
 
     public function getBlogPostListAdmin()
@@ -345,7 +403,7 @@ class SlugHelper extends Helper
 
     public function getProductDetail($productId, $name)
     {
-        return '/produkt/' . $productId . '-' . StringComponent::slugify($name);
+        return '/' . __('routes_product') . '/' . $productId . '-' . StringComponent::slugify($name);
     }
 
     public function getConfigurationsList()

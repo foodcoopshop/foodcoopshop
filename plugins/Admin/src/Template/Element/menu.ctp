@@ -16,65 +16,74 @@
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
-if (! $appAuth->user() || $this->request->action == 'iframeStartPage') {
+if (! $appAuth->user() || $this->request->getParam('action') == 'iframeStartPage') {
     return;
 }
 
 // used multiple times...
 $paymentProductMenuElement = $this->Menu->getPaymentProductMenuElement();
 $paymentMemberFeeMenuElement = $this->Menu->getPaymentMemberFeeMenuElement();
+$timebasedCurrencyPaymentForCustomersMenuElement = $this->Menu->getTimebasedCurrencyPaymentForCustomersMenuElement($appAuth);
+
 $actionLogsMenuElement = [
     'slug' => $this->Slug->getActionLogsList(),
-    'name' => 'Aktivitäten',
+    'name' => __d('admin', 'Activities'),
     'options' => [
         'fa-icon' => 'fa-fw fa-eye'
     ]
 ];
-$cancelledArticlesMenuElement = [
+$cancelledProductsMenuElement = [
     'slug' => $this->Slug->getActionLogsList().'/index/?type=order_detail_cancelled',
-    'name' => 'Stornierte Produkte',
+    'name' => __d('admin', 'Cancelled_products'),
     'options' => [
         'fa-icon' => 'fa-fw fa-remove'
     ]
 ];
+$paymentDepositCustomerAddedMenuElement = [
+    'slug' => $this->Slug->getActionLogsList().'/index/?type=payment_deposit_customer_added',
+    'name' => __d('admin', 'Deposit_returns'),
+    'options' => [
+        'fa-icon' => 'fa-fw fa-'.strtolower(Configure::read('app.currencyName'))
+    ]
+];
 $ordersMenuElement = [
     'slug' => $this->Slug->getOrdersList(),
-    'name' => 'Bestellungen',
+    'name' => __d('admin', 'Orders'),
     'options' => [
         'fa-icon' => 'fa-fw fa-shopping-cart'
     ]
 ];
 $orderDetailsMenuElement = [
     'slug' => $this->Slug->getOrderDetailsList(),
-    'name' => 'Bestellte Produkte',
+    'name' => __d('admin', 'Ordered_products'),
     'options' => [
         'fa-icon' => 'fa-fw fa-shopping-cart'
     ]
 ];
 $customerProfileMenuElement = [
     'slug' => $this->Slug->getCustomerProfile(),
-    'name' => 'Meine Daten',
+    'name' => __d('admin', 'My_data'),
     'options' => [
         'fa-icon' => 'fa-fw fa-home'
     ]
 ];
 $changePasswordMenuElement = [
     'slug' => $this->Slug->getChangePassword(),
-    'name' => 'Passwort ändern',
+    'name' => __d('admin', 'Change_password'),
     'options' => [
         'fa-icon' => 'fa-fw fa-key'
     ]
 ];
 $blogPostsMenuElement = [
     'slug' => $this->Slug->getBlogPostListAdmin(),
-    'name' => 'Blog-Artikel',
+    'name' => __d('admin', 'Blog_posts'),
     'options' => [
         'fa-icon' => 'fa-fw fa-file-text'
     ]
 ];
 $homepageAdministrationElement = [
     'slug' => $this->Slug->getPagesListAdmin(),
-    'name' => 'Homepage-Verwaltung',
+    'name' => __d('admin', 'Website_administration'),
     'options' => [
         'fa-icon' => 'fa-fw fa-pencil-square-o'
     ]
@@ -88,7 +97,7 @@ $menu[] = [
 ];
 $menu[] = [
     'slug' => $this->Slug->getHome(),
-    'name' => 'Home',
+    'name' => __d('admin', 'Home'),
     'options' => [
         'fa-icon' => 'fa-fw fa-home'
     ]
@@ -97,7 +106,8 @@ $menu[] = [
 if ($appAuth->isCustomer()) {
     $ordersMenuElement['children'] = [
         $orderDetailsMenuElement,
-        $cancelledArticlesMenuElement
+        $paymentDepositCustomerAddedMenuElement,
+        $cancelledProductsMenuElement
     ];
     $menu[] = $ordersMenuElement;
     $menu[] = $customerProfileMenuElement;
@@ -107,6 +117,9 @@ if ($appAuth->isCustomer()) {
     if (! empty($paymentMemberFeeMenuElement)) {
         $menu[]= $paymentMemberFeeMenuElement;
     }
+    if (! empty($timebasedCurrencyPaymentForCustomersMenuElement)) {
+        $menu[]= $timebasedCurrencyPaymentForCustomersMenuElement;
+    }
     $menu[] = $changePasswordMenuElement;
     $menu[] = $actionLogsMenuElement;
 }
@@ -114,10 +127,11 @@ if ($appAuth->isCustomer()) {
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     $ordersMenuElement['children'] = [
         $orderDetailsMenuElement,
-        $cancelledArticlesMenuElement,
+        $paymentDepositCustomerAddedMenuElement,
+        $cancelledProductsMenuElement,
         [
             'slug' => '/admin/lists/orderLists',
-            'name' => 'Bestelllisten',
+            'name' => __d('admin', 'Order_lists'),
             'options' => [
                 'fa-icon' => 'fa-fw fa-book'
             ]
@@ -126,14 +140,14 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     $menu[] = $ordersMenuElement;
     $manufacturerMenu = [
         'slug' => '/admin/manufacturers',
-        'name' => 'Hersteller',
+        'name' => __d('admin', 'Manufacturers'),
         'options' => [
             'fa-icon' => 'fa-fw fa-leaf'
         ]
     ];
     $manufacturerMenu['children'][] = [
         'slug' => $this->Slug->getProductAdmin(),
-        'name' => 'Produkte',
+        'name' => __d('admin', 'Products'),
         'options' => [
             'fa-icon' => 'fa-fw fa-tags'
         ]
@@ -142,7 +156,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     if (date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
         $manufacturerMenu['children'][] = [
             'slug' => $this->Slug->getDepositList(),
-            'name' => 'Pfandkonto',
+            'name' => __d('admin', 'Deposit_account'),
             'options' => [
                 'fa-icon' => 'fa-fw fa-recycle'
             ]
@@ -153,7 +167,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
 
     $menu[] = [
         'slug' => $this->Slug->getCustomerListAdmin(),
-        'name' => 'Mitglieder',
+        'name' => __d('admin', 'Members'),
         'options' => [
             'fa-icon' => 'fa-fw fa-male'
         ]
@@ -164,6 +178,8 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     }
     if (! empty($paymentMemberFeeMenuElement)) {
         $customerProfileMenuElement['children'][] = $paymentMemberFeeMenuElement;
+    }    if (! empty($timebasedCurrencyPaymentForCustomersMenuElement)) {
+        $customerProfileMenuElement['children'][] = $timebasedCurrencyPaymentForCustomersMenuElement;
     }
     $customerProfileMenuElement['children'][] = $changePasswordMenuElement;
     $menu[] = $customerProfileMenuElement;
@@ -171,7 +187,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
 
     $homepageAdministrationElement['children'][] = [
         'slug' => $this->Slug->getPagesListAdmin(),
-        'name' => 'Seiten',
+        'name' => __d('admin', 'Pages'),
         'options' => [
             'fa-icon' => 'fa-fw fa-pencil-square-o'
         ]
@@ -179,21 +195,21 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
 
     $homepageAdministrationElement['children'][] = [
         'slug' => $this->Slug->getCategoriesList(),
-        'name' => 'Kategorien',
+        'name' => __d('admin', 'Categories'),
         'options' => [
             'fa-icon' => 'fa-fw fa-list'
         ]
     ];
     $homepageAdministrationElement['children'][] = [
         'slug' => $this->Slug->getAttributesList(),
-        'name' => 'Varianten',
+        'name' => __d('admin', 'Attributes'),
         'options' => [
             'fa-icon' => 'fa-fw fa-chevron-circle-right'
         ]
     ];
     $homepageAdministrationElement['children'][] = [
         'slug' => $this->Slug->getSlidersList(),
-        'name' => 'Slideshow',
+        'name' => __d('admin', 'Slideshow'),
         'options' => [
             'fa-icon' => 'fa-fw fa-image'
         ]
@@ -202,7 +218,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     if ($appAuth->isSuperadmin()) {
         $homepageAdministrationElement['children'][] = [
             'slug' => $this->Slug->getTaxesList(),
-            'name' => 'Steuersätze',
+            'name' => __d('admin', 'Tax_rates'),
             'options' => [
                 'fa-icon' => 'fa-fw fa-percent'
             ]
@@ -214,14 +230,14 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         }
         $homepageAdministrationElement['children'][] = [
             'slug' => $reportSlug,
-            'name' => 'Finanzberichte',
+            'name' => __d('admin', 'Financial_reports'),
             'options' => [
                 'fa-icon' => 'fa-fw fa-money'
             ]
         ];
         $homepageAdministrationElement['children'][] = [
             'slug' => $this->Slug->getConfigurationsList(),
-            'name' => 'Einstellungen',
+            'name' => __d('admin', 'Configurations'),
             'options' => [
                 'fa-icon' => 'fa-fw fa-cogs'
             ]
@@ -235,38 +251,42 @@ if ($appAuth->isManufacturer()) {
     $menu[] = $orderDetailsMenuElement;
     $menu[] = [
         'slug' => $this->Slug->getProductAdmin(),
-        'name' => 'Meine Produkte',
+        'name' => __d('admin', 'My_products'),
         'options' => [
             'fa-icon' => 'fa-fw fa-tags'
         ]
     ];
-    $menu[] = $cancelledArticlesMenuElement;
+    $menu[] = $cancelledProductsMenuElement;
     $profileMenu = [
         'slug' => $this->Slug->getManufacturerProfile(),
-        'name' => 'Mein Profil',
+        'name' => __d('admin', 'My_profile'),
         'options' => [
             'fa-icon' => 'fa-fw fa-home'
         ]
     ];
     $optionsMenu = [
         'slug' => $this->Slug->getManufacturerMyOptions(),
-        'name' => 'Einstellungen',
+        'name' => __d('admin', 'Configurations'),
         'options' => [
             'fa-icon' => 'fa-fw fa-cogs'
         ]
     ];
     if (date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
-        $od = TableRegistry::get('OrderDetails');
+        $od = TableRegistry::getTableLocator()->get('OrderDetails');
         $sumDepositDelivered = $od->getDepositSum($appAuth->getManufacturerId(), false);
         if ($sumDepositDelivered[0]['sumDepositDelivered'] > 0) {
             $menu[] = [
                 'slug' => $this->Slug->getMyDepositList(),
-                'name' => 'Pfandkonto',
+                'name' => __d('admin', 'Deposit_account'),
                 'options' => [
                     'fa-icon' => 'fa-fw fa-recycle'
                 ]
             ];
         }
+    }
+    $timebasedCurrencyPaymentForManufacturersMenuElement = $this->Menu->getTimebasedCurrencyPaymentForManufacturersMenuElement($appAuth);
+    if (! empty($timebasedCurrencyPaymentForManufacturersMenuElement)) {
+        $menu[]= $timebasedCurrencyPaymentForManufacturersMenuElement;
     }
     $profileMenu['children'][] = $changePasswordMenuElement;
     $menu[] = $profileMenu;
@@ -280,7 +300,7 @@ $menu[] = $this->Menu->getAuthMenuElement($appAuth);
 
 $footerHtml = '';
 if ($appAuth->isManufacturer() && !empty($appAuth->manufacturer->customer) && !empty($appAuth->manufacturer->customer->address_customer)) {
-    $footerHtml = '<b>Ansprechperson</b><br />' . $appAuth->manufacturer->customer->name . ', ' . $appAuth->manufacturer->customer->email. ', ' . $appAuth->manufacturer->customer->address_customer->phone_mobile;
+    $footerHtml = '<b>'.__d('admin', 'Contact_person').'</b><br />' . $appAuth->manufacturer->customer->name . ', ' . $appAuth->manufacturer->customer->email. ', ' . $appAuth->manufacturer->customer->address_customer->phone_mobile;
 }
 
 echo $this->Menu->render($menu, [

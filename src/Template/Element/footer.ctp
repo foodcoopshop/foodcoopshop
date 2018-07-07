@@ -19,22 +19,23 @@ use Cake\Core\Configure;
 <div class="first-column">
     <?php
         $menu = $this->Menu->buildPageMenu($pagesForFooter);
-        $menu[] = ['name' => 'Nutzungsbedingungen', 'slug' => $this->Slug->getTermsOfUse()];
-        $menu[] = ['name' => 'Datenschutzerklärung', 'slug' => $this->Slug->getPrivacyPolicy()];
-        echo '<h2>Informationen</h2>';
+        $menu[] = ['name' => __('Terms_of_use'), 'slug' => $this->Slug->getTermsOfUse()];
+        $menu[] = ['name' => __('Privacy_policy'), 'slug' => $this->Slug->getPrivacyPolicy()];
+        $menu[] = ['name' => __('List_of_allergens'), 'slug' => $this->Slug->getListOfAllergens()];
+        echo '<h2>'.__('Information').'</h2>';
         echo $this->Menu->render($menu, ['id' => 'footer-menu', 'class' => 'menu']);
     ?>
 </div>
 
 <div class="second-column">
-    <h2>Kontakt</h2>
+    <h2><?php echo __('Contact'); ?></h2>
     <p><i class="fa fa-map-marker fa-2x fa-fw"></i> <span>
     <?php
        echo Configure::read('appDb.FCS_APP_NAME').', ';
        echo str_replace('<br />', ', ', $this->Html->getAddressFromAddressConfiguration());
     ?></span></p>
     <?php
-       echo '<p><i class="fa fa-envelope-o fa-2x fa-fw"></i> <span>E-Mail: '.StringComponent::hideEmail($this->Html->getEmailFromAddressConfiguration()).'</span></p>';
+       echo '<p><i class="fa fa-envelope-o fa-2x fa-fw"></i> <span>'.__('Email').': '.StringComponent::hideEmail($this->Html->getEmailFromAddressConfiguration()).'</span></p>';
     if (Configure::read('appDb.FCS_FACEBOOK_URL') != '') { ?>
         <p>
             <a target="_blank" href="<?php echo Configure::read('appDb.FCS_FACEBOOK_URL'); ?>"><i class="fa fa-2x fa-fw fa-facebook-square"></i></a>
@@ -53,10 +54,10 @@ if (Configure::read('appDb.FCS_FOOTER_CMS_TEXT') != '') {
 
 if ($appAuth->user()) {
     if ($this->Html->paymentIsCashless() && Configure::read('appDb.FCS_BANK_ACCOUNT_DATA') != '') {
-        echo '<p class="additional-footer-info" style="margin-bottom: 0;"><b>Kontodaten (Guthaben aufladen):</b> '.Configure::read('appDb.FCS_BANK_ACCOUNT_DATA').'</p>';
+        echo '<p class="additional-footer-info" style="margin-bottom: 0;"><b>'.__('Bank_account_credit_balance').':</b> '.Configure::read('appDb.FCS_BANK_ACCOUNT_DATA').'</p>';
     }
     if (Configure::read('app.memberFeeEnabled') && Configure::read('appDb.FCS_MEMBER_FEE_BANK_ACCOUNT_DATA') != '') {
-        echo '<p class="additional-footer-info" style="margin-bottom: 0;"><b>Kontodaten (Mitgliedsbeitrag):</b> '.Configure::read('appDb.FCS_MEMBER_FEE_BANK_ACCOUNT_DATA').'</p>';
+        echo '<p class="additional-footer-info" style="margin-bottom: 0;"><b>'.__('Bank_account_member_fee').':</b> '.Configure::read('appDb.FCS_MEMBER_FEE_BANK_ACCOUNT_DATA').'</p>';
     }
 }
 ?>

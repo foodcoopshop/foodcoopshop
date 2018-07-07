@@ -21,16 +21,16 @@ use Cake\Core\Configure;
         <tr>
             <td>
                 
-                <p><b>Lieber Verantwortliche für neue Mitglieder,</b></p>
+                <p><b><?php echo __('Dear_responsible_person_for_new_members,'); ?></b></p>
                 
-                <p>Es gab gerade eine neue Registrierung: <b><?php echo $data->firstname; ?> <?php echo $data->lastname; ?></b> (<?php echo $data->email; ?>) aus <b><?php echo $data->address_customer->city; ?></b></p>
+                <p><?php echo __('there_has_been_a_new_registration:_{0}_({1})_from_{2}.', ['<b>'.$data->firstname . ' ' . $data->lastname . '</b>', $data->email, '<b>'.$data->address_customer->city.'</b>']); ?></p>
                 
                 <?php $link = Configure::read('app.cakeServerName').'/admin/customers/index/active:'.(Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE') ? '1' : '0'); ?>
                 
                 <?php if (!Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) { ?>
-                    <p>Hier kannst du das neue Mitglied aktivieren und die Daten einsehen:
+                    <p><?php echo __('Here_you_can_activate_the_new_member_and_see_the_data'); ?>:
                 <?php } else { ?>
-                    <p>Hier kannst du die Daten des neuen Mitglieds einsehen:
+                    <p><?php echo __('Here_you_can_see_the_data_of_the_new_member'); ?>:
                 <?php } ?>
                     <br />
                     <a href="<?php echo $link ?>"><?php echo $link; ?></a>
@@ -41,4 +41,4 @@ use Cake\Core\Configure;
         </tr>
         
     </tbody>
-</table>
+<?php echo $this->element('email/tableFoot'); ?>

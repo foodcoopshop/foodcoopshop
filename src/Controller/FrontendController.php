@@ -37,8 +37,9 @@ class FrontendController extends AppController
      */
     protected function prepareProductsForFrontend($products)
     {
-        $this->Product = TableRegistry::get('Products');
-        $this->ProductAttribute = TableRegistry::get('ProductAttributes');
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->ProductAttribute = TableRegistry::getTableLocator()->get('ProductAttributes');
 
         foreach ($products as &$product) {
             $grossPrice = $this->Product->getGrossPrice($product['id_product'], $product['price']);
@@ -46,6 +47,14 @@ class FrontendController extends AppController
             $product['tax'] = $grossPrice - $product['price'];
             $product['is_new'] = $this->Product->isNew($product['created']);
             $product['attributes'] = [];
+
+            if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
+                if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($product['timebased_currency_enabled'])) {
+                    $product['timebased_currency_money_incl'] = $this->Manufacturer->getTimebasedCurrencyMoney($product['gross_price'], $product['timebased_currency_max_percentage']);
+                    $product['timebased_currency_money_excl'] = $this->Manufacturer->getTimebasedCurrencyMoney($product['price'], $product['timebased_currency_max_percentage']);
+                    $product['timebased_currency_seconds'] = $this->Manufacturer->getCartTimebasedCurrencySeconds($product['gross_price'], $product['timebased_currency_max_percentage']);
+                }
+            }
 
             $attributes = $this->ProductAttribute->find('all', [
                 'conditions' => [
@@ -55,7 +64,8 @@ class FrontendController extends AppController
                     'ProductAttributeShops',
                     'StockAvailables',
                     'ProductAttributeCombinations.Attributes',
-                    'DepositProductAttributes'
+                    'DepositProductAttributes',
+                    'UnitProductAttributes'
                 ]
             ]);
             $preparedAttributes = [];
@@ -63,8 +73,9 @@ class FrontendController extends AppController
                 $preparedAttributes['ProductAttributes'] = [
                     'id_product_attribute' => $attribute->id_product_attribute
                 ];
+                $grossPrice = $this->Product->getGrossPrice($attribute->product_attribute_shop->id_product, $attribute->product_attribute_shop->price);
                 $preparedAttributes['ProductAttributeShops'] = [
-                    'gross_price' => $this->Product->getGrossPrice($attribute->product_attribute_shop->id_product, $attribute->product_attribute_shop->price),
+                    'gross_price' => $grossPrice,
                     'tax' => $grossPrice - $attribute->product_attribute_shop->price,
                     'default_on' => $attribute->product_attribute_shop->default_on
                 ];
@@ -76,9 +87,26 @@ class FrontendController extends AppController
                 ];
                 $preparedAttributes['ProductAttributeCombinations'] = [
                     'Attributes' => [
-                        'name' => $attribute->product_attribute_combination->attribute->name
+                        'name' => $attribute->product_attribute_combination->attribute->name,
+                        'can_be_used_as_unit' => $attribute->product_attribute_combination->attribute->can_be_used_as_unit
                     ]
                 ];
+                $preparedAttributes['Units'] = [
+                    'price_per_unit_enabled' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->price_per_unit_enabled : 0,
+                    'price_incl_per_unit' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->price_incl_per_unit : 0,
+                    'unit_name' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->name : '',
+                    'unit_amount' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->amount : 0,
+                    'quantity_in_units' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute->quantity_in_units : 0
+                ];
+
+                if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
+                    if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($product['timebased_currency_enabled'])) {
+                        $preparedAttributes['timebased_currency_money_incl'] = $this->Manufacturer->getTimebasedCurrencyMoney($grossPrice, $product['timebased_currency_max_percentage']);
+                        $preparedAttributes['timebased_currency_money_excl'] = $this->Manufacturer->getTimebasedCurrencyMoney($attribute->product_attribute_shop->price, $product['timebased_currency_max_percentage']);
+                        $preparedAttributes['timebased_currency_seconds'] = $this->Manufacturer->getCartTimebasedCurrencySeconds($grossPrice, $product['timebased_currency_max_percentage']);
+                    }
+                }
+
                 $product['attributes'][] = $preparedAttributes;
             }
         }
@@ -87,15 +115,15 @@ class FrontendController extends AppController
 
     protected function resetOriginalLoggedCustomer()
     {
-        if ($this->request->getSession()->read('Auth.originalLoggedCustomer')) {
-            $this->AppAuth->setUser($this->request->getSession()->read('Auth.originalLoggedCustomer'));
+        if ($this->getRequest()->getSession()->read('Auth.originalLoggedCustomer')) {
+            $this->AppAuth->setUser($this->getRequest()->getSession()->read('Auth.originalLoggedCustomer'));
         }
     }
 
-    protected function destroyShopOrderCustomer()
+    protected function destroyInstantOrderCustomer()
     {
-        $this->request->getSession()->delete('Auth.shopOrderCustomer');
-        $this->request->getSession()->delete('Auth.originalLoggedCustomer');
+        $this->getRequest()->getSession()->delete('Auth.instantOrderCustomer');
+        $this->getRequest()->getSession()->delete('Auth.originalLoggedCustomer');
     }
 
     // is not called on ajax actions!
@@ -107,7 +135,7 @@ class FrontendController extends AppController
         // when a shop order was placed, the pdfs that are rendered for the order confirmation email
         // called this method and therefore called resetOriginalLoggedCustomer() => email was sent t
         // the user who placed the order for a member and not to the member
-        if ($this->response->type() != 'text/html') {
+        if ($this->getResponse()->getType() != 'text/html') {
             return;
         }
 
@@ -115,20 +143,20 @@ class FrontendController extends AppController
 
         $categoriesForMenu = [];
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
-            $this->Category = TableRegistry::get('Categories');
+            $this->Category = TableRegistry::getTableLocator()->get('Categories');
             $allProductsCount = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, '', 0, true);
             $newProductsCount = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), true, '', 0, true);
             $categoriesForMenu = $this->Category->getForMenu();
             array_unshift($categoriesForMenu, [
-                'slug' => '/neue-produkte',
-                'name' => 'Neue Produkte <span class="additional-info"> (' . $newProductsCount . ')</span>',
+                'slug' => Configure::read('app.slugHelper')->getNewProducts(),
+                'name' => __('New_products') . ' <span class="additional-info"> (' . $newProductsCount . ')</span>',
                 'options' => [
                     'fa-icon' => 'fa-star' . ($newProductsCount > 0 ? ' gold' : '')
                 ]
             ]);
             array_unshift($categoriesForMenu, [
                 'slug' => Configure::read('app.slugHelper')->getAllProducts(),
-                'name' => 'Alle Produkte <span class="additional-info"> (' . $allProductsCount . ')</span>',
+                'name' => __('All_products') . ' <span class="additional-info"> (' . $allProductsCount . ')</span>',
                 'options' => [
                     'fa-icon' => 'fa-tags'
                 ]
@@ -136,11 +164,11 @@ class FrontendController extends AppController
         }
         $this->set('categoriesForMenu', $categoriesForMenu);
 
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturersForMenu = $this->Manufacturer->getForMenu($this->AppAuth);
         $this->set('manufacturersForMenu', $manufacturersForMenu);
 
-        $this->Page = TableRegistry::get('Pages');
+        $this->Page = TableRegistry::getTableLocator()->get('Pages');
         $conditions = [];
         $conditions['Pages.active'] = APP_ON;
         $conditions[] = 'Pages.position > 0';
@@ -167,20 +195,20 @@ class FrontendController extends AppController
     {
         parent::beforeFilter($event);
 
-        if (($this->name == 'Categories' && $this->request->action == 'detail') || $this->name == 'Carts') {
+        if (($this->name == 'Categories' && $this->getRequest()->getParam('action') == 'detail') || $this->name == 'Carts') {
             // do not allow but call isAuthorized
         } else {
             $this->AppAuth->allow();
         }
 
         /*
-         * changed the acutally logged in customer to the desired shopOrderCustomer
+         * changed the acutally logged in customer to the desired instantOrderCustomer
          * but only in controller beforeFilter(), beforeRender() sets the customer back to the original one
-         * this means, in views $appAuth ALWAYS returns the original customer, in controllers ALWAYS the desired shopOrderCustomer
+         * this means, in views $appAuth ALWAYS returns the original customer, in controllers ALWAYS the desired instantOrderCustomer
          */
-        if ($this->request->getSession()->read('Auth.shopOrderCustomer')) {
-            $this->request->getSession()->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
-            $this->AppAuth->setUser($this->request->getSession()->read('Auth.shopOrderCustomer'));
+        if ($this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
+            $this->getRequest()->getSession()->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
+            $this->AppAuth->setUser($this->getRequest()->getSession()->read('Auth.instantOrderCustomer'));
         }
         if (!empty($this->AppAuth->user()) && Configure::read('app.htmlHelper')->paymentIsCashless()) {
             $creditBalance = $this->AppAuth->getCreditBalance();
@@ -189,7 +217,6 @@ class FrontendController extends AppController
             $shoppingLimitReached = Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') != - 1 && $creditBalance < Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') * - 1;
             $this->set('shoppingLimitReached', $shoppingLimitReached);
         }
-
         $this->AppAuth->setCart($this->AppAuth->getCart());
     }
 }

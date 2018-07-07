@@ -24,13 +24,14 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
 ]);
+echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 ?>
 
 <h1><?php echo $manufacturer->name; ?>
 
 <?php
 if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
-    echo '<span>'.count($manufacturer['Products']) . ' gefunden</span>';
+    echo '<span>'.count($manufacturer['Products']) . ' ' . __('found') . '</span>';
 }
 ?>
 </h1>
@@ -60,7 +61,7 @@ if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
         echo $this->Html->getJqueryUiIcon(
             $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
             [
-            'title' => 'Bearbeiten'
+                'title' => __('Edit')
             ],
             $manufacturerEditSlug
         );
@@ -71,7 +72,7 @@ if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
 
 <?php
 if ($blogPosts->count() > 0) {
-    echo '<h2>Aktuelles von '.$manufacturer->name.'</a><a style="float: right;margin-top: 5px;" class="btn btn-default" href="'.$this->Slug->getManufacturerBlogList($manufacturer->id_manufacturer, $manufacturer->name).'">Zum Blog von '.$manufacturer->name.'</a></h2><div class="sc"></div>';
+    echo '<h2>' . __('News_from') .  ' '.$manufacturer->name.'</a><a style="float: right;margin-top: 5px;" class="btn btn-default" href="'.$this->Slug->getManufacturerBlogList($manufacturer->id_manufacturer, $manufacturer->name).'">' . __('Go_to_blog_from') . ' ' . $manufacturer->name.'</a></h2><div class="sc"></div>';
     echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts
     ]);
@@ -89,7 +90,15 @@ if (!empty($manufacturer['Products'])) {
 }
 
     echo '<div class="imprint">';
-        echo '<h2>Impressum</h2>';
+
+        echo '<h2>'.__('Imprint').'</h2>';
         echo $this->Html->getManufacturerImprint($manufacturer, 'html', false);
+
+        if (!empty($manufacturer->modified)) {
+            echo '<p><i>';
+            echo __('Modified_on') . ' ' . $manufacturer->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
+            echo '</i></p>';
+        }
+
     echo '</div>';
 ?>

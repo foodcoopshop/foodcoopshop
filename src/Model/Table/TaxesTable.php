@@ -30,12 +30,12 @@ class TaxesTable extends AppTable
 
     public function validationDefault(Validator $validator)
     {
-        $validator->notEmpty('rate', 'Bitte gib einen Steuersatz an.');
-        $validator->range('rate', [0, 100], 'Bitte gibt eine Zahl von 0,01 bis 99,99 an.');
+        $validator->notEmpty('rate', __('Please_enter_a_tax_rate.'));
+        $validator->range('rate', [0.01, 99.99], __('Please_enter_a_number_between_{0}_and_{1}.', [0.01,99.99]));
         $validator->add('rate', 'unique', [
             'rule' => 'validateUnique',
             'provider' => 'table',
-            'message' => 'Dieser Steuersatz wird bereits verwendet.'
+            'message' => __('This_tax_rate_is_already_being_used.')
         ]);
         return $validator;
     }
@@ -54,7 +54,7 @@ class TaxesTable extends AppTable
             0 => '0 %'
         ];
         foreach ($taxes as $tax) {
-            $preparedTaxes[$tax->id_tax] = Configure::read('app.htmlHelper')->formatAsPercent($tax->rate);
+            $preparedTaxes[$tax->id_tax] = Configure::read('app.numberHelper')->formatAsPercent($tax->rate);
         }
         return $preparedTaxes;
     }

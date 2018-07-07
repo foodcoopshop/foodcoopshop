@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Controller;
 
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -30,15 +30,15 @@ class AttributesController extends AdminAppController
 
     public function add()
     {
-        $this->Attribute = TableRegistry::get('Attributes');
+        $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
         $attribute = $this->Attribute->newEntity(
             ['active' => APP_ON],
             ['validate' => false]
         );
-        $this->set('title_for_layout', 'Variante erstellen');
+        $this->set('title_for_layout', __d('admin', 'Add_attribute'));
         $this->_processForm($attribute, false);
 
-        if (empty($this->request->getData())) {
+        if (empty($this->getRequest()->getData())) {
             $this->render('edit');
         }
     }
@@ -49,21 +49,21 @@ class AttributesController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $this->Attribute = TableRegistry::get('Attributes');
+        $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
         $attribute = $this->Attribute->find('all', [
             'conditions' => [
                 'Attributes.id_attribute' => $attributeId
             ]
         ])->first();
 
-        $this->ProductAttributeCombination = TableRegistry::get('ProductAttributeCombinations');
+        $this->ProductAttributeCombination = TableRegistry::getTableLocator()->get('ProductAttributeCombinations');
         $combinationCounts = $this->ProductAttributeCombination->getCombinationCounts($attributeId);
         $attribute->has_combined_products = count($combinationCounts['online']) + count($combinationCounts['offline']) > 0;
 
         if (empty($attribute)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', 'Variante bearbeiten');
+        $this->set('title_for_layout', __d('admin', 'Edit_attribute'));
         $this->_processForm($attribute, true);
     }
 
@@ -72,43 +72,43 @@ class AttributesController extends AdminAppController
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
 
-        if (empty($this->request->getData())) {
+        if (empty($this->getRequest()->getData())) {
             $this->set('attribute', $attribute);
             return;
         }
 
         $this->loadComponent('Sanitize');
-        $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
-        $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
 
-        $attribute = $this->Attribute->patchEntity($attribute, $this->request->getData());
+        $attribute = $this->Attribute->patchEntity($attribute, $this->getRequest()->getData());
         if (!empty($attribute->getErrors())) {
-            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('attribute', $attribute);
             $this->render('edit');
         } else {
             $attribute = $this->Attribute->save($attribute);
 
             if (!$isEditMode) {
-                $messageSuffix = 'erstellt';
+                $messageSuffix = __d('admin', 'created');
                 $actionLogType = 'attribute_added';
             } else {
-                $messageSuffix = 'geändert';
+                $messageSuffix = __d('admin', 'changed');
                 $actionLogType = 'attribute_changed';
             }
 
-            $this->ActionLog = TableRegistry::get('ActionLogs');
-            if (!empty($this->request->getData('Attributes.delete_attribute'))) {
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            if (!empty($this->getRequest()->getData('Attributes.delete_attribute'))) {
                 $this->Attribute->delete($attribute);
-                $messageSuffix = 'gelöscht';
+                $messageSuffix = __d('admin', 'deleted');
                 $actionLogType = 'attribute_deleted';
             }
-            $message = 'Die Variante <b>' . $attribute->name . '</b> wurde ' . $messageSuffix . '.';
+            $message = __d('admin', 'The_attribute_{0}_has_been_{1}.', ['<b>' . $attribute->name . '</b>', $messageSuffix]);
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $attribute->id_attribute, 'attributes', $message);
             $this->Flash->success($message);
 
-            $this->request->getSession()->write('highlightedRowId', $attribute->id_attribute);
-            $this->redirect($this->request->getData('referer'));
+            $this->getRequest()->getSession()->write('highlightedRowId', $attribute->id_attribute);
+            $this->redirect($this->getRequest()->getData('referer'));
         }
 
         $this->set('attribute', $attribute);
@@ -120,25 +120,25 @@ class AttributesController extends AdminAppController
             'Attributes.active > ' . APP_DEL
         ];
 
-        $this->Attribute = TableRegistry::get('Attributes');
+        $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
         $query = $this->Attribute->find('all', [
             'conditions' => $conditions
         ]);
         $attributes = $this->paginate($query, [
             'sortWhitelist' => [
-                'Attributes.name', 'Attributes.modified'
+                'Attributes.name', 'Attributes.modified', 'Attributes.can_be_used_as_unit'
             ],
             'order' => [
                 'Attributes.name' => 'ASC'
             ]
         ])->toArray();
 
-        $this->ProductAttributeCombination = TableRegistry::get('ProductAttributeCombinations');
+        $this->ProductAttributeCombination = TableRegistry::getTableLocator()->get('ProductAttributeCombinations');
         foreach ($attributes as $attribute) {
             $attribute->combination_product = $this->ProductAttributeCombination->getCombinationCounts($attribute->id_attribute);
         }
         $this->set('attributes', $attributes);
 
-        $this->set('title_for_layout', 'Varianten');
+        $this->set('title_for_layout', __d('admin', 'Attributes'));
     }
 }

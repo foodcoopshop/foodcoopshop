@@ -29,9 +29,9 @@ class SendInvoicesShell extends AppShell
     {
         parent::main();
 
-        $this->ActionLog = TableRegistry::get('ActionLogs');
-        $this->Order = TableRegistry::get('Orders');
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
 
         $this->startTimeLogging();
 
@@ -68,7 +68,7 @@ class SendInvoicesShell extends AppShell
         $manufacturerOrders = [];
         foreach ($orders as $order) {
             foreach ($order->order_details as $orderDetail) {
-                @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_quantity_sum'] += $orderDetail->product_quantity;
+                @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_amount_sum'] += $orderDetail->product_amount;
                 @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_price_sum'] += $orderDetail->total_price_tax_incl;
             }
         }
@@ -77,14 +77,14 @@ class SendInvoicesShell extends AppShell
         $i = 0;
         foreach ($manufacturers as $manufacturer) {
             $manufacturer->current_order_count = $manufacturerOrders[$manufacturer->id_manufacturer];
-            $manufacturer->order_detail_quantity_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_quantity_sum'];
+            $manufacturer->order_detail_amount_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_amount_sum'];
             $manufacturer->order_detail_price_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_price_sum'];
             $i++;
         }
 
         // 5) check if manufacturers have open order details and send email
         $i = 0;
-        $outString = $dateFrom . ' bis ' . $dateTo . '<br />';
+        $outString = $dateFrom . ' ' . __('to_(time_context)') . ' ' . $dateTo . '<br />';
 
         $this->initSimpleBrowser();
         $this->browser->doFoodCoopShopLogin();
@@ -92,9 +92,9 @@ class SendInvoicesShell extends AppShell
         foreach ($manufacturers as $manufacturer) {
             $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
             if (!empty($manufacturer->current_order_count) && $sendInvoice) {
-                $productString = ($manufacturer->order_detail_quantity_sum == 1 ? 'Produkt' : 'Produkte');
-                $outString .= ' - ' . $manufacturer->name . ': ' . $manufacturer->order_detail_quantity_sum . ' ' . $productString . ' / ' . Configure::read('app.htmlHelper')->formatAsEuro($manufacturer->order_detail_price_sum) . '<br />';
-                $url = $this->browser->adminPrefix . '/manufacturers/sendInvoice/' . $manufacturer->id_manufacturer . '/' . $dateFrom . '/' . $dateTo;
+                $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->order_detail_amount_sum]);
+                $outString .= ' - ' . $manufacturer->name . ': ' . $productString . ' / ' . Configure::read('app.numberHelper')->formatAsCurrency($manufacturer->order_detail_price_sum) . '<br />';
+                $url = $this->browser->adminPrefix . '/manufacturers/sendInvoice?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
                 $this->browser->get($url);
                 $i ++;
             }
@@ -108,7 +108,7 @@ class SendInvoicesShell extends AppShell
             $email = new AppEmail();
             $email->setTemplate('Admin.accounting_information_invoices_sent')
                 ->setTo($accountingEmail)
-                ->setSubject('Rechnungen für ' . Configure::read('app.timeHelper')->getLastMonthNameAndYear() . ' wurden verschickt')
+                ->setSubject(__('Invoices_for_{0}_have_been_sent', [Configure::read('app.timeHelper')->getLastMonthNameAndYear()]))
                 ->setViewVars([
                 'dateFrom' => $dateFrom,
                 'dateTo' => $dateTo
@@ -117,7 +117,7 @@ class SendInvoicesShell extends AppShell
         }
         // END send email to accounting employee
 
-        $outString .= 'Verschickte Rechnungen: ' . $i;
+        $outString .= __('Sent_invoices') . ': ' . $i;
 
         $this->stopTimeLogging();
 

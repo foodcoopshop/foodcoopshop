@@ -53,6 +53,15 @@ return [
         'salt' => ''
     ],
 
+    /**
+     * locale can be overriden here, attention: "App" namespace (not "app")
+     * since v2.1 FoodCoopShop is multilingual
+     * @see app_config.php:implementedLocales for valid locales
+     */
+//     'App' => [
+//         'defaultLocale' => 'en_US'
+//     ],
+
     'app' => [
         /**
          * please create a unique cookie key and put it here
@@ -96,5 +105,6 @@ return [
         'paymentMethods' => [
             'cashless'
         ]
+
     ]
 ];

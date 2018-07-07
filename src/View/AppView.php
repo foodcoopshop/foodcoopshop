@@ -43,10 +43,15 @@ class AppView extends View
         $this->loadHelper('Time', [
             'className' => 'MyTime'
         ]);
+        $this->loadHelper('Number', [
+            'className' => 'MyNumber'
+        ]);
         $this->loadHelper('Form');
         $this->loadHelper('Menu');
         $this->loadHelper('Slug');
         $this->loadHelper('Text');
         $this->loadHelper('AssetCompress.AssetCompress');
+        $this->loadHelper('TimebasedCurrency');
+        $this->loadHelper('PricePerUnit');
     }
 }

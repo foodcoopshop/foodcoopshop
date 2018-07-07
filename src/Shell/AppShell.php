@@ -33,8 +33,8 @@ class AppShell extends Shell
 
     public function main()
     {
-        $this->Customer = TableRegistry::get('Customers');
-        $this->ActionLog = TableRegistry::get('ActionLogs');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         error_reporting(0); // disable all error messages
     }
 
@@ -51,7 +51,7 @@ class AppShell extends Shell
     public function getRuntime()
     {
         $time = $this->timeEnd - $this->timeStart;
-        return 'Laufzeit: ' . Configure::read('app.htmlHelper')->formatAsDecimal($time) . ' Sekunden';
+        return __('Runtime') . ': ' . Configure::read('app.numberHelper')->formatAsDecimal($time) . ' ' . __('seconds');
     }
 
     public function initSimpleBrowser()

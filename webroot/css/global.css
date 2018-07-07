@@ -139,7 +139,12 @@ h2.warning {
     background: #009335;
     color: #fff;
 }
-
+#flashMessage.success .error {
+    background: #f3515c;
+    padding: 5px;
+    margin-top: 10px;
+    border-radius: 6px;
+}
 .vertical.menu {
     width: 145px;
     background: #efefef;
@@ -219,6 +224,9 @@ a.toggle-link.collapsed i:before {
 }
 .ui-dialog .ajax-loader {
     bottom: 14px;
+}
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+	font-family: 'Open Sans';
 }
 .ui-dialog .ui-dialog-content {
     position: static;
@@ -308,6 +316,7 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="tel"],
+input[type="number"],
 select {
     padding: 3px;
     width: 110px;
@@ -336,7 +345,8 @@ input[type="checkbox"] {
 }
 .featherlight-close-icon {
     background: transparent ! important;
-    right: 35px ! important;
+    right: 0px ! important;
+    width: 60px ! important;
     top: 3px ! important;
 }
 .featherlight-close-icon a {
@@ -345,7 +355,6 @@ input[type="checkbox"] {
     font-size: 21px ! important;
     border-bottom-left-radius: 5px ! important;
 }
-
 .featherlight-content {
     max-width: none ! important;
     border: none ! important;
@@ -477,4 +486,11 @@ pre {
 a.btn.btn-success:hover i.cgold,
 i.gold {
   color: #FFD700 ! important;
+}
+.tooltipster-sidetip.tooltipster-light .tooltipster-box {
+	background: #fff ! important;
+}
+.tooltipster-sidetip.tooltipster-light .tooltipster-box img:not(.no-max-width) {
+    max-width: 400px;
+    height: auto ! important;
 }

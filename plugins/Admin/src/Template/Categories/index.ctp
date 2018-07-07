@@ -17,47 +17,44 @@ use Cake\Core\Configure;
 ?>
 <div id="categories">
 
-        <?php
-        $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');
-        "
+    <?php
+        $this->element('addScript', ['script' =>
+            Configure::read('app.jsNamespace') . ".Admin.init();" .
+            Configure::read('app.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');
+            "
         ]);
         $this->element('highlightRowAfterEdit', [
-        'rowIdPrefix' => '#category-'
+            'rowIdPrefix' => '#category-'
         ]);
     ?>
    
     <div class="filter-container">
-        <h1>Kategorien</h1>
+        <h1><?php echo $title_for_layout; ?></h1>
         <div class="right">
             <?php
             echo '<div id="add-category-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Kategorie erstellen', $this->Slug->getCategoryAdd(), [
+            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> '.__d('admin', 'Add_category').'', $this->Slug->getCategoryAdd(), [
                 'class' => 'btn btn-default',
                 'escape' => false
             ]);
             echo '</div>';
+            echo $this->element('printIcon');
             ?>
         </div>
 
     </div>
 
-    <div id="help-container">
-        <ul>
-            <li>Auf dieser Seite kannst du Seiten verwalten.</li>
-        </ul>
-    </div>    
     
 <?php
 
 echo '<table class="list">';
 
 echo '<tr class="sort">';
-echo '<th class="hide">' . $this->Paginator->sort('Categories.id_category', 'ID') . '</th>';
+echo '<th class="hide">' . $this->Paginator->sort('Categories.id_category', __d('admin', 'ID')) . '</th>';
 echo '<th></th>';
-echo '<th>Name</th>';
-echo '<th>geändert am</th>';
-echo '<th>Aktiv</th>';
+echo '<th>'.__d('admin', 'Name').'</th>';
+echo '<th>'.__d('admin', 'Modified_on').'</th>';
+echo '<th>'.__d('admin', 'Active').'</th>';
 echo '<th></th>';
 echo '</tr>';
 
@@ -67,7 +64,7 @@ echo $this->element('categoryTreeRows', [
 ]);
 
 echo '<tr>';
-echo '<td colspan="12"><b>' . $totalCategoriesCount . '</b> Datensätze</td>';
+echo '<td colspan="12"><b>' . $totalCategoriesCount . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $totalCategoriesCount).'</td>';
 echo '</tr>';
 
 echo '</table>';

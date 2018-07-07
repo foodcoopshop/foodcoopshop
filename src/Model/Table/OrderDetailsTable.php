@@ -3,6 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -39,6 +40,91 @@ class OrderDetailsTable extends AppTable
         $this->belongsTo('ProductAttributes', [
             'foreignKey' => 'product_attribute_id'
         ]);
+        $this->hasOne('TimebasedCurrencyOrderDetails', [
+            'foreignKey' => 'id_order_detail'
+        ]);
+        $this->hasOne('OrderDetailUnits', [
+            'foreignKey' => 'id_order_detail'
+        ]);
+    }
+
+    /**
+     * @param int $customerId
+     * @return array
+     */
+    public function getLastOrderDetailsForDropdown($customerId)
+    {
+
+        $ordersToLoad = 3;
+
+        $foundOrders = 0;
+        $result = [];
+
+        $i = 0;
+        while($foundOrders < $ordersToLoad) {
+
+            $dateFrom = strtotime('- '.$i * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay())));
+            $dateTo = strtotime('- '.$i * 7 . 'day', strtotime(Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay())));
+
+            // stop trying to search for valid orders if year is 2013
+            if (date('Y', $dateFrom) == '2013') {
+                break;
+            }
+
+            $orderDetails = $this->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId);
+
+            if (count($orderDetails) > 0) {
+                $deliveryDay = Configure::read('app.timeHelper')->formatToDateShort(date('Y-m-d', Configure::read('app.timeHelper')->getDeliveryDay($dateTo)));
+                $result[$deliveryDay] = __('Pick_up_day') . ' ' . $deliveryDay . ' - ' . __('{0,plural,=1{1_product} other{#_products}}', [count($orderDetails)]);
+                $foundOrders++;
+            }
+
+            $i++;
+
+        }
+
+        return $result;
+
+    }
+
+    public function getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId)
+    {
+        $conditions = [
+            'Orders.id_customer' => $customerId,
+            'RIGHT(Orders.date_add, 8) <> \'00:00:00\'' // exlude shop orders
+        ];
+        $conditions[] = 'Orders.current_state IN ('.ORDER_STATE_CASH_FREE.','.ORDER_STATE_CASH.','.ORDER_STATE_OPEN.')';
+
+        $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
+            date('Y-m-d', $dateFrom)
+        ).'\'';
+
+        $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
+            date('Y-m-d', $dateTo)
+        ).'\'';
+
+        $orderDetails = $this->find('all', [
+            'conditions' => $conditions,
+            'order' => [
+                'Orders.date_add' => 'DESC'
+            ],
+            'contain' => [
+                'Orders',
+                'Products.Manufacturers'
+            ]
+        ])->toArray();
+
+        // manually remove products from bulk orders manufacturers
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $cleanedOrderDetails = [];
+        foreach($orderDetails as $orderDetail) {
+            $isBulkOrderManufacturer = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail->product->manufacturer->bulk_orders_allowed);
+            if (!$isBulkOrderManufacturer) {
+                $cleanedOrderDetails[] = $orderDetail;
+            }
+        }
+
+        return $cleanedOrderDetails;
     }
 
     public function deleteOrderDetail($orderDetail)
@@ -48,6 +134,15 @@ class OrderDetailsTable extends AppTable
         if (!empty($orderDetail->order_detail_tax)) {
             $this->OrderDetailTaxes->delete($orderDetail->order_detail_tax);
         }
+
+        if (!empty($orderDetail->timebased_currency_order_detail)) {
+            $this->TimebasedCurrencyOrderDetails->delete($orderDetail->timebased_currency_order_detail);
+        }
+
+        if (!empty($orderDetail->order_detail_unit)) {
+            $this->OrderDetailUnits->delete($orderDetail->order_detail_unit);
+        }
+
     }
 
     /**
@@ -87,8 +182,8 @@ class OrderDetailsTable extends AppTable
 
     /**
      * @param int $manufacturerId
-     * @param date $dateFrom
-     * @param date $dateTo
+     * @param $dateFrom
+     * @param $dateTo
      * @return float
      */
     public function getOpenOrderDetailSum($manufacturerId, $dateFrom, $dateTo)
@@ -155,7 +250,9 @@ class OrderDetailsTable extends AppTable
             'Orders',
             'Orders.Customers',
             'Products.Manufacturers.AddressManufacturers',
-            'Products.ProductLangs'
+            'Products.ProductLangs',
+            'TimebasedCurrencyOrderDetails',
+            'OrderDetailUnits'
         ];
 
         if ($customerId != '') {

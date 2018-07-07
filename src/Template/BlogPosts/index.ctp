@@ -22,9 +22,9 @@ $this->element('addScript', ['script' =>
 
 <h1><?php echo $title_for_layout; ?>
 <?php if (isset($manufacturer->name)) {
-    echo ' von ' . $manufacturer->name;
+    echo ' ' . __('of_{0}', [$manufacturer->name]);
 } ?>
-<span><?php echo $blogPosts->count(); ?> gefunden</span></h1>
+<span><?php echo $blogPosts->count(); ?> <?php echo __('found'); ?></span></h1>
 
 <?php
 foreach ($blogPosts as $blogPost) {
@@ -50,7 +50,7 @@ foreach ($blogPosts as $blogPost) {
         ).'</h4>';
         echo $blogPost->short_description.'<br />';
         echo $this->Html->link(
-            '<i class="fa fa-plus-circle"></i> Mehr anzeigen',
+            '<i class="fa fa-plus-circle"></i> ' . __('Show_more'),
             $blogDetailLink,
             ['escape' => false]
         );
@@ -59,7 +59,7 @@ foreach ($blogPosts as $blogPost) {
         echo $this->Html->getJqueryUiIcon(
             $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
             [
-            'title' => 'Bearbeiten'
+                'title' => __('Edit')
             ],
             $this->Slug->getBlogPostEdit($blogPost->id_blog_post)
         );
@@ -70,23 +70,23 @@ foreach ($blogPosts as $blogPost) {
     echo '<div class="third-column">';
 
         echo $this->Html->link(
-            'Blog-Artikel anzeigen',
+            __('Show_Blog_post').
             $blogDetailLink,
             ['class' => 'btn btn-success']
         );
 
         echo '<div class="additional-info">';
-            echo 'Geändert am ' .$blogPost->modified->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort'));
+            echo __('Modified_on') . ' ' .$blogPost->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
     if (!empty($blogPost->manufacturer->id_manufacturer)) {
         echo '<br />';
         if ($blogPost->manufacturer->active) {
-            if ($this->request->here == $this->Slug->getManufacturerBlogList($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name)) {
-                echo '<a href="'.$this->Slug->getManufacturerDetail($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name).'">Zum Hersteller ' . $blogPost->manufacturer->name.'</a>';
+            if ($this->request->getRequestTarget() == $this->Slug->getManufacturerBlogList($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name)) {
+                echo '<a href="'.$this->Slug->getManufacturerDetail($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name).'">' . __('Go_to_manufacturer') . ' ' . $blogPost->manufacturer->name.'</a>';
             } else {
-                echo '<a href="'.$this->Slug->getManufacturerBlogList($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name).'">Zum Blog von  ' . $blogPost->manufacturer->name.'</a>';
+                echo '<a href="'.$this->Slug->getManufacturerBlogList($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name).'">' . __('Go_to_blog_from') . ' ' . $blogPost->manufacturer->name.'</a>';
             }
         } else {
-            echo 'von ' . $blogPost['Manufacturers']['name'];
+            echo ' ' . __('of_{0}', [$blogPost['Manufacturers']['name']]);
         }
     }
             echo '</div>';

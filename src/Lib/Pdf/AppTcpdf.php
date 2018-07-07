@@ -25,7 +25,7 @@ class AppTcpdf extends TCPDF
     public $headerRight;
 
     public $table = '';
-    
+
     public $infoTextForFooter = '';
 
     public function renderTable()
@@ -44,6 +44,8 @@ class AppTcpdf extends TCPDF
     {
         $this->table .= '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
 
+        $isOrderList = $this->isOrderList($headers);
+
         // Header
         $num_headers = count($headers);
         for ($i = 0; $i < $num_headers; ++ $i) {
@@ -56,10 +58,11 @@ class AppTcpdf extends TCPDF
         $priceInclSum = 0;
         $priceExclSum = 0;
         $taxSum = 0;
+        $unitSum = [];
         $i = 0;
 
         foreach ($results as $result) {
-            $amount = $result['OrderDetailQuantity'];
+            $amount = $result['OrderDetailAmount'];
             $priceIncl = $result['OrderDetailPriceIncl'];
             $priceExcl = $result['OrderDetailPriceExcl'];
             $tax = $result['OrderDetailTaxAmount'];
@@ -68,21 +71,27 @@ class AppTcpdf extends TCPDF
             $taxRate = $result['TaxRate'];
 
             if ($groupType == 'customer' && isset($lastCustomerName) && $lastCustomerName != $customerName) {
-                $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastCustomerName, $lastTaxRate);
+                $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastCustomerName, $lastTaxRate, $lastUnitSum);
                 // reset everything
                 $amountSum = $priceExclSum = $taxSum = $priceInclSum = 0;
+                $unitSum = [];
             }
 
             if ($groupType == 'product' && isset($lastProductName) && ($lastProductName != $productName || $lastTaxRate != $taxRate)) {
-                $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastProductName, $lastTaxRate);
+                $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastProductName, $lastTaxRate, $lastUnitSum);
                 // reset everything
                 $amountSum = $priceExclSum = $taxSum = $priceInclSum = 0;
+                $unitSum = [];
             }
 
             $amountSum += $amount;
             $priceInclSum += $priceIncl;
             $priceExclSum += $priceExcl;
             $taxSum += $tax;
+
+            if ($result['OrderDetailUnitQuantityInUnits'] != '') {
+                @$unitSum[$result['OrderDetailUnitUnitName']] += $result['OrderDetailUnitProductQuantityInUnits'];
+            }
 
             if (! $onlyShowSums) {
                 $this->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
@@ -95,23 +104,44 @@ class AppTcpdf extends TCPDF
                 $this->table .= '<td style="' . $amountStyle . '" align="right" width="' . $widths[$indexForWidth] . '">' . $amount . 'x</td>';
 
                 $indexForWidth ++;
-                $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $productName . '</td>';
 
-                if (in_array('Preis exkl.', $headers)) {
-                    $indexForWidth ++;
-                    $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.htmlHelper')->formatAsDecimal($priceExcl) . '</td>';
+                $unity = '';
+                if ($result['OrderDetailUnitQuantityInUnits'] > 0) {
+                    if ($isOrderList) {
+                        $unity = Configure::read('app.pricePerUnitHelper')->getQuantityInUnits(
+                            true,
+                            $result['OrderDetailUnitQuantityInUnits'],
+                            $result['OrderDetailUnitUnitName'],
+                            $amount
+                        );
+                    }
+                }
+                if (!$isOrderList) {
+                    if ($result['OrderDetailUnitProductQuantityInUnits'] > 0) {
+                        $unity = Configure::read('app.numberHelper')->formatUnitAsDecimal($result['OrderDetailUnitProductQuantityInUnits']) . ' ' . $result['OrderDetailUnitUnitName'];
+                    }
                 }
 
-                if (in_array('USt.', $headers)) {
+                if ($unity != '') {
+                    $unity = ', ' . $unity;
+                }
+                $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $productName . $unity . '</td>';
+
+                if (in_array(__('Price_excl.'), $headers)) {
                     $indexForWidth ++;
-                    $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . Configure::read('app.htmlHelper')->formatAsDecimal($tax) . ' (' . ($taxRate != intval($taxRate) ? Configure::read('app.htmlHelper')->formatAsDecimal($taxRate, 1) : Configure::read('app.htmlHelper')->formatAsDecimal($taxRate, 0)) . '%)</td>';
+                    $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceExcl) . '</td>';
+                }
+
+                if (in_array(__('VAT'), $headers)) {
+                    $indexForWidth ++;
+                    $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($tax) . ' (' . ($taxRate != intval($taxRate) ? Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 1) : Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 0)) . '%)</td>';
                 }
 
                 $indexForWidth ++;
-                $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.htmlHelper')->formatAsDecimal($priceIncl) . '</td>';
+                $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceIncl) . '</td>';
 
                 $indexForWidth ++;
-                $this->table .= '<td align="center" width="' . $widths[$indexForWidth] . '">' . $result['OrderDateAdd'] . '</td>';
+                $this->table .= '<td align="center" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.timeHelper')->formatToDateShort($result['OrderDateAdd']) . '</td>';
 
                 $indexForWidth ++;
                 $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $result['CustomerName'] . '</td>';
@@ -122,22 +152,23 @@ class AppTcpdf extends TCPDF
             // very last row
             if ($i + 1 == count($results)) {
                 if ($groupType == 'customer') {
-                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $customerName, $taxRate);
+                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $customerName, $taxRate, $unitSum);
                 }
                 if ($groupType == 'product') {
-                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $productName, $taxRate);
+                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $productName, $taxRate, $unitSum);
                 }
             }
 
             $lastProductName = $productName;
             $lastCustomerName = $customerName;
             $lastTaxRate = $taxRate;
+            $lastUnitSum = $unitSum;
 
             $i ++;
         }
     }
 
-    private function getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastObjectName, $taxRate = '')
+    private function getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastObjectName, $taxRate = '', $unitSum)
     {
         $colspan = $this->getCorrectColspan($headers);
 
@@ -160,26 +191,33 @@ class AppTcpdf extends TCPDF
         $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . $amountSum . 'x</td>';
         $indexForWidth ++;
 
-        $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $lastObjectName . '</td>';
+        $unitSumString = '';
+        if ($detailsHidden) {
+            $unitSumString = Configure::read('app.pricePerUnitHelper')->getStringFromUnitSums($unitSum, ', ');
+            if ($unitSumString != '') {
+                $unitSumString = ', ' . $unitSumString;
+            }
+        }
+        $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $lastObjectName . $unitSumString .  '</td>';
         $indexForWidth ++;
 
-        if (in_array('Preis exkl.', $headers)) {
+        if (in_array(__('Price_excl.'), $headers)) {
             $colspan --;
-            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.htmlHelper')->formatAsDecimal($priceExclSum) . '</td>';
+            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceExclSum) . '</td>';
             $indexForWidth ++;
         }
 
-        if (in_array('USt.', $headers)) {
+        if (in_array(__('VAT'), $headers)) {
             $colspan --;
             $taxRateString = '';
             if ($detailsHidden) {
-                $taxRateString = ' (' . ($taxRate != intval($taxRate) ? Configure::read('app.htmlHelper')->formatAsDecimal($taxRate, 1) : Configure::read('app.htmlHelper')->formatAsDecimal($taxRate, 0)) . '%)';
+                $taxRateString = ' (' . ($taxRate != intval($taxRate) ? Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 1) : Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 0)) . '%)';
             }
-            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.htmlHelper')->formatAsDecimal($taxSum) . $taxRateString . '</td>';
+            $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($taxSum) . $taxRateString . '</td>';
             $indexForWidth ++;
         }
 
-        $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.htmlHelper')->formatAsDecimal($priceInclSum) . '</td>';
+        $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceInclSum) . '</td>';
         $indexForWidth ++;
 
         if ($colspan > 0) {
@@ -193,11 +231,16 @@ class AppTcpdf extends TCPDF
         }
     }
 
+    public function isOrderList($headers)
+    {
+        return $this->getCorrectColspan($headers) == 3;
+    }
+
     public function getCorrectColspan($headers)
     {
         $diff = 2;
-        // first page of invoices does not contain column "mitglied"
-        if (! in_array('Mitglied', $headers)) {
+        // first page of invoices does not contain column "member"
+        if (! in_array(__('Member'), $headers)) {
             $diff = 3;
         }
         $colspan = count($headers) - $diff;
@@ -221,14 +264,14 @@ class AppTcpdf extends TCPDF
         $this->table .= '<tr style="font-size:12px;font-weight:bold;">';
 
         $this->table .= '<td></td>';
-        $this->table .= '<td>' . 'Gesamtsumme</td>';
+        $this->table .= '<td>' . __('Total_sum') . '</td>';
 
-        if (in_array('Preis exkl.', $headers)) {
+        if (in_array(__('Price_excl.'), $headers)) {
             $colspan --;
             $this->table .= '<td align="right">' . $sumPriceExcl . '</td>';
         }
 
-        if (in_array('USt.', $headers)) {
+        if (in_array(__('VAT'), $headers)) {
             $colspan --;
             $this->table .= '<td align="right">' . $sumTax . '</td>';
         }
@@ -292,7 +335,7 @@ class AppTcpdf extends TCPDF
         $this->drawLine();
         $this->SetFontSize(10);
         $this->Cell(0, 10, $this->infoTextForFooter, 0, false, 'L', 0, '', 0, false, 'T', 'M');
-        $textForFooterRight = 'Seite ' . $this->getAliasNumPage() . ' von ' . $this->getAliasNbPages();
+        $textForFooterRight = __('Page_{0}_of_{1}', [$this->getAliasNumPage(), $this->getAliasNbPages()]);
         $this->Cell(0, 10, $textForFooterRight, 0, false, 'R', 0, '', 0, false, 'T', 'M');
         $this->SetFontSize(12);
     }

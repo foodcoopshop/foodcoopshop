@@ -40,7 +40,7 @@ class AppSimpleBrowser extends SimpleBrowser
 
         $View = new View();
         $this->Slug = new SlugHelper($View);
-        $this->Customer = TableRegistry::get('Customers');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
 
         $this->setConnectionTimeout(300); // 5 min should be enough
         $this->baseUrl = Configure::read('app.cakeServerName');
@@ -89,11 +89,11 @@ class AppSimpleBrowser extends SimpleBrowser
             'remember_me' => false
         ]);
 
-        if (preg_match('/Anmelden ist fehlgeschlagen./', $this->getContent())) {
-            print_r('Falsche Zugangsdaten für FCS Login');
+        if (preg_match('/'.__('Signing_in_failed_account_inactive_or_password_wrong?').'/', $this->getContent())) {
+            print_r('wrong credentials for admin login');
             print_r('AdminEmail: ' . $this->loginEmail);
             print_r('AdminPassword: ' . $this->loginPassword);
-            print_r('Skript wird abgebrochen.');
+            print_r(' - script will stop here');
             exit();
         }
     }

@@ -19,11 +19,12 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".AppFeatherlight.addLightboxToCkeditorImages('.product-wrapper .toggle-content.description img');".
     Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForImages('.product-wrapper a.lightbox');".
     Configure::read('app.jsNamespace').".Helper.bindToggleLinks(true);".
-    Configure::read('app.jsNamespace').".Helper.selectMainMenuFrontend('Produkte');".
+    Configure::read('app.jsNamespace').".Helper.selectMainMenuFrontend('".__('Products')."');".
     Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
 ]);
+echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 ?>
 
 <h1><?php echo $title_for_layout; ?></h1>
@@ -34,7 +35,7 @@ $this->element('addScript', ['script' =>
 
 <?php
 if (!empty($blogPosts)) {
-    echo '<h2><a href="'.$this->Slug->getBlogList().'">Aktuelles</a></h2>';
+    echo '<h2><a href="'.$this->Slug->getBlogList().'">'.__('News').'</a></h2>';
     echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts
     ]);

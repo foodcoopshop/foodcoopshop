@@ -23,7 +23,7 @@ use Cake\Core\Configure;
         <tr>
             <td>
                 
-                <p>Deine Registrierung bei "<?php echo Configure::read('appDb.FCS_APP_NAME'); ?>" war erfolgreich!</p>
+                <p><?php echo __('Your_registration_at_{0}_has_just_been_successful!', [Configure::read('appDb.FCS_APP_NAME')])?></p>
                 
                 <?php
                 if (Configure::read('appDb.FCS_REGISTRATION_EMAIL_TEXT') != '') {
@@ -38,4 +38,4 @@ use Cake\Core\Configure;
         </tr>
         
     </tbody>
-</table>
+<?php echo $this->element('email/tableFoot'); ?>

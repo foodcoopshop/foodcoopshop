@@ -38,7 +38,7 @@ form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within 
     width: 150px ! important;
 }
 .fcs-form .error-message {
-    margin-left: 120px;
+    margin-left: 0px;
 }
 #filter-loader {
   left: 36vw;
@@ -145,16 +145,28 @@ table.list th, table.list td {
    width: 45% ! important;
 }
 body.manufacturers .holiday-wrapper .description {
-  margin-left: 0px;
-  margin-top: 5px;
+    margin-left: 0px;
+    margin-top: 5px;
 }
-form.fcs-form label,
+form.fcs-form label {
+    width: 100%;
+}
 form.fcs-form .input.checkbox label {
-  width: 120px;
+    width: 140px;
 }
 form.fcs-form input[type="checkbox"] {
-  left: 120px;
+    left: 120px;
 }
 form.fcs-form .description {
-  margin-left: 120px;
+    margin-left: 0px;
+}
+div.cke {
+    float: left;
+}
+form.fcs-form .input .after.small {
+	width: 100%;
+}
+.ui-dialog-content #flashMessage {
+	width: 96%;
+	left: 2%;
 }

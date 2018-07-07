@@ -16,18 +16,18 @@ use Cake\Core\Configure;
 
 ?>
 <p>
-    Zum Bestellen kannst du dich hier einloggen:<br />
+    <?php echo __('You_can_sign_in_here_for_ordering'); ?>:<br />
     <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getLogin(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getLogin(); ?></a><br /><br />
-    E-Mail-Adresse: <?php echo $data['Customers']['email']; ?><br />
-    Passwort: <?php echo $newPassword; ?>
+    <?php echo __('E-mail_address'); ?>: <?php echo $data->address_customer->email; ?><br />
+    <?php echo __('Password'); ?>: <?php echo $newPassword; ?>
 </p>
 
 <p>
-    Hier kannst du dein Passwort ändern:<br />
+    <?php echo __('You_can_change_your_password_here'); ?>:<br />
     <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getChangePassword(); ?></a>
 </p>
 
 <p>
-    Hier kannst du dein Profil ändern:<br />
+    <?php echo __('You_can_change_your_profile_here'); ?>:<br />
     <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getCustomerProfile(); ?></a>
 </p>

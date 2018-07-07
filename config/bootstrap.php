@@ -31,7 +31,6 @@ require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
 use Cake\Cache\Cache;
 use Cake\Console\ConsoleErrorHandler;
-use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
 use Cake\Core\Plugin;
@@ -39,10 +38,10 @@ use Cake\Database\Type;
 use Cake\Datasource\ConnectionManager;
 use Cake\Error\ErrorHandler;
 use Cake\Http\ServerRequest;
+use Cake\I18n\I18n;
 use Cake\Log\Log;
 use Cake\Mailer\Email;
 use Cake\ORM\TableRegistry;
-use Cake\Utility\Inflector;
 use Cake\Utility\Security;
 
 /*
@@ -69,13 +68,9 @@ Configure::load('app_config', 'default');
 Configure::load('custom_config', 'default');
 Configure::load('credentials', 'default');
 
-/*
- * When debug = true the metadata cache should only last
- * for a short time.
- */
+// disable caching if debug is on
 if (Configure::read('debug')) {
-    Configure::write('Cache._cake_model_.duration', '+2 minutes');
-    Configure::write('Cache._cake_core_.duration', '+2 minutes');
+    Cache::disable();
 }
 
 /*
@@ -89,12 +84,6 @@ date_default_timezone_set('UTC');
  * Configure the mbstring extension to use the correct encoding.
  */
 mb_internal_encoding(Configure::read('App.encoding'));
-
-/*
- * Set the default locale. This controls how dates, number and currency is
- * formatted and sets the default language to use for translations.
- */
-ini_set('intl.default_locale', Configure::read('App.defaultLocale'));
 
 /*
  * Register application error and exception handlers.
@@ -204,15 +193,29 @@ Plugin::load('Admin', [
     'autoload' => true
 ]);
 
-date_default_timezone_set('Europe/Berlin');
-locale_set_default('de');
-setlocale(LC_ALL, 'de_DE.UTF-8');
 mb_internal_encoding('UTF-8');
+date_default_timezone_set('Europe/Berlin');
 
-TableRegistry::get('Configurations')->loadConfigurations();
+TableRegistry::getTableLocator()->get('Configurations')->loadConfigurations();
+if (in_array(Configure::read('appDb.FCS_DEFAULT_LOCALE'), Configure::read('app.implementedLocales'))) {
+    ini_set('intl.default_locale', Configure::read('appDb.FCS_DEFAULT_LOCALE'));
+    locale_set_default(Configure::read('appDb.FCS_DEFAULT_LOCALE'));
+    setlocale(LC_ALL, Configure::read('appDb.FCS_DEFAULT_LOCALE').'.UTF-8');
+    I18n::setLocale(Configure::read('appDb.FCS_DEFAULT_LOCALE'));
+    Configure::load('Locale' . DS . Configure::read('appDb.FCS_DEFAULT_LOCALE') . DS . 'date', 'default');
+}
+
 if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
     Plugin::load('Network', [
         'routes' => true,
         'autoload' => true
     ]);
 }
+
+// gettext not available in app_config
+Configure::load('localized_config', 'default');
+
+if (file_exists(CONFIG.DS.'localized_custom_config.php')) {
+    Configure::load('localized_custom_config', 'default');
+}
+

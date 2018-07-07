@@ -3,14 +3,12 @@
 namespace App\View\Helper;
 
 use Cake\Core\Configure;
-use Cake\Utility\Inflector;
+use Cake\I18n\I18n;
 use Cake\View\View;
 use Cake\View\Helper\HtmlHelper;
 use App\Controller\Component\StringComponent;
 
 /**
- * MyHtmlHelper
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -28,16 +26,59 @@ class MyHtmlHelper extends HtmlHelper
 
     public function __construct(View $View, array $config = [])
     {
-        // wrap js block with jquery document ready
-        $this->_defaultConfig['templates']['javascriptblock'] =
-        "<script{{attrs}}>
+        $this->_defaultConfig['templates']['javascriptblock'] = "{{content}}";
+        $this->helpers[] = 'MyNumber';
+        parent::__construct($View, $config);
+    }
+
+    function wrapJavascriptBlock($content) {
+        return "<script>
             //<![CDATA[
                 $(document).ready(function() {
-                    {{content}}
+                    ".$content."
                 });
             //]]>
         </script>";
-        parent::__construct($View, $config);
+    }
+
+    public function getCurrencyName($currencySymbol)
+    {
+        switch($currencySymbol) {
+            case '€':
+                return 'Euro';
+                break;
+            case '$':
+                return 'Dollar';
+                break;
+            default:
+                return '';
+                break;
+        }
+    }
+
+    public function getDocsUrl($page)
+    {
+        $languageCode = substr(I18n::getLocale(), 0, 2);
+        $url = 'https://foodcoopshop.github.io/' . $languageCode . '/' . $page;
+        return $url;
+    }
+
+    public function getNameRespectingIsDeleted($customer)
+    {
+        if (empty($customer)) {
+            return self::getDeletedCustomerName();
+        }
+        return $customer->name;
+    }
+
+    public function getDeletedCustomerName()
+    {
+        return __('Deleted_Member');
+    }
+
+    public function getDeletedCustomerEmail()
+    {
+        return __('Deleted_Email_Address');
     }
 
     /**
@@ -73,27 +114,47 @@ class MyHtmlHelper extends HtmlHelper
             return $result;
         }
 
-        if ($long) {
-            $result .= 'Der Hersteller <b>' . $name . '</b> hat ';
-        }
+        $shortResult = '';
         if (!Configure::read('app.timeHelper')->isDatabaseDateNotSet($dateFrom)) {
             if ($isHolidayActive) {
-                $result .= 'seit';
+                $shortResult .=  __('delivery_break_since_holiday_active');
             } else {
-                $result .= 'von';
+                $shortResult .=  __('delivery_break_since_holiday_not_active');
             }
-            $result .= ' ' . Configure::read('app.timeHelper')->formatToDateShort($dateFrom);
+            $shortResult .= ' ' . Configure::read('app.timeHelper')->formatToDateShort($dateFrom);
         }
         if (!Configure::read('app.timeHelper')->isDatabaseDateNotSet($dateTo)) {
-            $result .= ' bis ' . Configure::read('app.timeHelper')->formatToDateShort($dateTo);
+            $shortResult .= ' ' . __('delivery_break_until') . ' ' . Configure::read('app.timeHelper')->formatToDateShort($dateTo);
         }
-        if ($long && $result != '') {
-            $result .= ' Lieferpause.';
+
+        $result = $shortResult;
+        if ($long) {
+            $result = __('The_manufacturer_{0}_has_{1}_delivery_break.', ['<b>' . $name . '</b>', $shortResult]);
         }
 
         $result = str_replace('  ', ' ', $result);
 
         return $result;
+    }
+
+    public function getCustomerAddress($customer)
+    {
+        if (empty($customer->address_customer)) {
+            return '';
+        }
+        $details = $customer->address_customer->address1;
+        if ($customer->address_customer->address2 != '') {
+            $details .= '<br />' . $customer->address_customer->address2;
+        }
+        $details .= '<br />' . $customer->address_customer->postcode . ' ' . $customer->address_customer->city;
+
+        if ($customer->address_customer->phone_mobile != '') {
+            $details .= '<br />Tel.: ' . $customer->address_customer->phone_mobile;
+        }
+        if ($customer->address_customer->phone != '') {
+            $details .= '<br />Tel.: ' . $customer->address_customer->phone;
+        }
+        return $details;
     }
 
     /**
@@ -117,33 +178,33 @@ class MyHtmlHelper extends HtmlHelper
             $imprintLines[] = @$manufacturer->address_manufacturer->postcode . ' ' . @$manufacturer->address_manufacturer->city;
         }
         if ($manufacturer->address_manufacturer->phone_mobile != '') {
-            $imprintLines[] = 'Mobil: ' . $manufacturer->address_manufacturer->phone_mobile;
+            $imprintLines[] = __('Mobile') . ': ' . $manufacturer->address_manufacturer->phone_mobile;
         }
         if ($manufacturer->address_manufacturer->phone != '') {
-            $imprintLines[] = 'Telefon: ' . $manufacturer->address_manufacturer->phone;
+            $imprintLines[] = __('Phone') . ': ' . $manufacturer->address_manufacturer->phone;
         }
-        $imprintLines[] = 'E-Mail: ' . ($outputType == 'html' ? StringComponent::hideEmail($manufacturer->address_manufacturer->email) : $manufacturer->address_manufacturer->email);
+        $imprintLines[] = __('Email') . ': ' . ($outputType == 'html' ? StringComponent::hideEmail($manufacturer->address_manufacturer->email) : $manufacturer->address_manufacturer->email);
 
         if (!$addressOnly) {
             if ($manufacturer->homepage != '') {
-                $imprintLines[] = 'Homepage: ' . ($outputType == 'html' ? self::link($manufacturer->homepage, $manufacturer->homepage, ['options' => ['target' => '_blank']]) : $manufacturer->homepage);
+                $imprintLines[] = __('Website') . ': ' . ($outputType == 'html' ? self::link($manufacturer->homepage, $manufacturer->homepage, ['options' => ['target' => '_blank']]) : $manufacturer->homepage);
             }
             $imprintLines[] = ''; // new line
             if ($manufacturer->uid_number != '') {
-                $imprintLines[] = 'UID-Nummer: ' . $manufacturer->uid_number;
+                $imprintLines[] = __('VAT_number') . ': ' . $manufacturer->uid_number;
             }
 
             if ($manufacturer->firmenbuchnummer != '') {
-                $imprintLines[] = 'Firmenbuchnummer: ' . $manufacturer->firmenbuchnummer;
+                $imprintLines[] = __('Commercial_register_number') . ': ' . $manufacturer->firmenbuchnummer;
             }
             if ($manufacturer->firmengericht != '') {
-                $imprintLines[] = 'Firmengericht: ' . $manufacturer->firmengericht;
+                $imprintLines[] = __('Company_court') . ': ' . $manufacturer->firmengericht;
             }
             if ($manufacturer->aufsichtsbehoerde != '') {
-                $imprintLines[] = 'Aufsichtsbehörde: ' . $manufacturer->aufsichtsbehoerde;
+                $imprintLines[] = __('Supervisory_authority') .': ' . $manufacturer->aufsichtsbehoerde;
             }
             if ($manufacturer->kammer != '') {
-                $imprintLines[] = 'Kammer: ' . $manufacturer->kammer;
+                $imprintLines[] = __('Chamber') . ': ' . $manufacturer->kammer;
             }
         }
         return '<p>'.implode('<br />', $imprintLines).'</p>';
@@ -175,8 +236,8 @@ class MyHtmlHelper extends HtmlHelper
     public function getMenuTypes()
     {
         return [
-            'header' => 'Header (oben)',
-            'footer' => 'Footer (unten)'
+            'header' => __('Header_(top)'),
+            'footer' => __('Footer_(bottom)'),
         ];
     }
 
@@ -209,9 +270,9 @@ class MyHtmlHelper extends HtmlHelper
     public function getGroups()
     {
         return [
-            CUSTOMER_GROUP_MEMBER => 'Mitglied',
-            CUSTOMER_GROUP_ADMIN => 'Admin',
-            CUSTOMER_GROUP_SUPERADMIN => 'Superadmin'
+            CUSTOMER_GROUP_MEMBER => __('Member'),
+            CUSTOMER_GROUP_ADMIN => __('Admin'),
+            CUSTOMER_GROUP_SUPERADMIN => __('Superadmin')
         ];
     }
 
@@ -227,31 +288,6 @@ class MyHtmlHelper extends HtmlHelper
     public function getGroupName($groupId)
     {
         return $this->getGroups()[$groupId];
-    }
-
-    public function formatAsEuro($amount)
-    {
-        return '€&nbsp;' . self::formatAsDecimal($amount);
-    }
-
-    public function formatAsPercent($amount)
-    {
-        return self::formatAsDecimal($amount) . '%';
-    }
-
-    /**
-     * shows decimals only if necessary
-     *
-     * @param decimal $amount
-     */
-    public function formatTaxRate($rate)
-    {
-        return $rate != intval($rate) ? self::formatAsDecimal($rate, 1) : self::formatAsDecimal($rate, 0);
-    }
-
-    public function formatAsDecimal($amount, $decimals = 2)
-    {
-        return number_format($amount, $decimals, ',', '.');
     }
 
     public function getCustomerOrderBy()
@@ -316,15 +352,33 @@ class MyHtmlHelper extends HtmlHelper
         return implode(', ', $preparedText);
     }
 
+    public function getReportTabs()
+    {
+        $tabs = [];
+        foreach($this->getPaymentTexts() as $key => $paymentText) {
+            $tabs[] = [
+                'name' => $paymentText,
+                'url' => Configure::read('app.slugHelper')->getReport($key),
+                'key' => $key
+            ];
+        }
+        $tabs[] = [
+            'name' => __('credit_and_deposit'),
+            'url' => Configure::read('app.slugHelper')->getCreditBalanceSum(),
+            'key' => 'credit_balance_sum'
+        ];
+        return $tabs;
+    }
+
     public function getPaymentTexts()
     {
         $paymentTexts = [
-            'product' => 'Guthaben-Aufladung',
-            'payback' => 'Rückzahlung',
-            'deposit' => 'Pfand-Rückgabe'
+            'product' => __('Payment_type_credit_upload'),
+            'payback' => __('Payment_type_payback'),
+            'deposit' => __('Payment_type_deposit_return')
         ];
         if (Configure::read('app.memberFeeEnabled')) {
-            $paymentTexts['member_fee'] = 'Mitgliedsbeitrag';
+            $paymentTexts['member_fee'] = __('Payment_type_member_fee');
         }
         return $paymentTexts;
     }
@@ -346,8 +400,8 @@ class MyHtmlHelper extends HtmlHelper
     public function getManufacturerDepositPaymentTexts()
     {
         $paymentTexts = [
-            'empty_glasses' => 'Leergebinde',
-            'money' => 'Ausgleichszahlung'
+            'empty_glasses' => __('Empty_glasses'),
+            'money' => __('Compensation_payment')
         ];
         return $paymentTexts;
     }
@@ -479,41 +533,35 @@ class MyHtmlHelper extends HtmlHelper
         return $string;
     }
 
-    public function getOrderListLink($manufacturerName, $manufacturerId, $deliveryDay, $groupType_de)
+    public function getOrderListLink($manufacturerName, $manufacturerId, $deliveryDay, $groupTypeLabel)
     {
         $url = Configure::read('app.folder_order_lists_with_current_year_and_month') . DS;
-        $url .= $deliveryDay . '_' . Inflector::slug($manufacturerName) . '_' . $manufacturerId . '_Bestellliste_' . $groupType_de . '_' . Inflector::slug(Configure::read('appDb.FCS_APP_NAME')) . '.pdf';
+        $url .= $deliveryDay . '_' . StringComponent::slugifyAndKeepCase($manufacturerName) . '_' . $manufacturerId . __('_Order_list_filename_') . $groupTypeLabel . '_' . StringComponent::slugifyAndKeepCase(Configure::read('appDb.FCS_APP_NAME')) . '.pdf';
         return $url;
     }
 
     public function getInvoiceLink($manufacturerName, $manufacturerId, $invoiceDate, $invoiceNumber)
     {
         $url = Configure::read('app.folder_invoices_with_current_year_and_month') . DS;
-        $url .= $invoiceDate . '_' . Inflector::slug($manufacturerName) . '_' . $manufacturerId . '_Rechnung_' . $invoiceNumber . '_' . Inflector::slug(Configure::read('appDb.FCS_APP_NAME')) . '.pdf';
+        $url .= $invoiceDate . '_' . StringComponent::slugifyAndKeepCase($manufacturerName) . '_' . $manufacturerId . __('_Invoice_filename_') . $invoiceNumber . '_' . StringComponent::slugifyAndKeepCase(Configure::read('appDb.FCS_APP_NAME')) . '.pdf';
         return $url;
-    }
-
-    // gehört in time helper
-    public function convertToGermanDate($date)
-    {
-        return date('d.m.Y', strtotime(str_replace('/', '-', $date)));
     }
 
     public function getApprovalStates()
     {
         return [
-            1 => 'bestätigt',
-            0 => 'offen',
-            -1 => 'da stimmt was nicht...'
+            1 => __('approval_state_ok'),
+            0 => __('approval_state_open'),
+            -1 => __('approval_state_not_ok'),
         ];
     }
 
     public function getActiveStates()
     {
         return [
-            1 => 'aktiviert',
-            0 => 'deaktiviert',
-            'all' => 'alle'
+            1 => __('active_state_active'),
+            0 => __('active_state_inactive'),
+            'all' => __('active_state_all')
         ];
     }
 
@@ -525,7 +573,7 @@ class MyHtmlHelper extends HtmlHelper
     public function getOrderStates()
     {
         $orderStates = self::getVisibleOrderStates();
-        $orderStates[ORDER_STATE_CANCELLED] = 'storniert';
+        $orderStates[ORDER_STATE_CANCELLED] = __('order_state_cancelled');
         return $orderStates;
     }
 

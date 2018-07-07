@@ -7,10 +7,13 @@ if (!defined('DATASOURCE')) {
     exit('Do not use directly.');
 }
 
+$locale = 'de_DE';
+$locale = 'en_US';
+
 $datasource = array(
     'PROD' => array(
         'structure' => 'config' . DS . 'sql' . DS . '_installation' . DS . 'clean-db-structure.sql',
-        'data' => 'config' . DS . 'sql' . DS . '_installation' . DS . 'clean-db-data.sql',
+        'data' => 'config' . DS . 'sql' . DS . '_installation' . DS . 'clean-db-data-' . $locale . '.sql',
     ),
     'TEST' => array(
         'structure' => 'config' . DS . 'sql' . DS . '_installation' . DS . 'clean-db-structure.sql',

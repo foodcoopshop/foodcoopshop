@@ -13,6 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 use Cake\Utility\Inflector;
 
 ?>
@@ -27,6 +28,7 @@ header('Last-Modified: '.gmdate('D, d M Y H:i:s') . ' GMT');
 header('Pragma: no-cache');
 ?>
 <!DOCTYPE html>
+<html lang="<?php echo strtolower(str_replace('_', '-', I18n::getLocale())); ?>">
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="theme-color" content="#719f41">
@@ -41,7 +43,6 @@ header('Pragma: no-cache');
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
     
     <?php echo $this->element('jsNamespace'); ?>
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     
     <?php
         echo $this->element('renderCss', ['configs' => ['frontend']]);
@@ -68,13 +69,13 @@ header('Pragma: no-cache');
     
         <div id="header">
             <div class="logo-wrapper">
-                <a href="<?php echo $this->Slug->getHome(); ?>" title="Home">
+                <a href="<?php echo $this->Slug->getHome(); ?>" title="<?php echo __('Home'); ?>">
                     <img class="logo" src="/files/images/logo.jpg" />
                 </a>
             </div>
             <?php if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) { ?>
-                <form id="product-search" action="/suche">
-                    <input placeholder="Suche" name="keyword" type="text" required="required" <?php echo isset($keyword) ? 'value="'.$keyword.'"' : ''; ?> />
+                <form id="product-search" action="/<?php echo __('route_search');?>">
+                    <input placeholder="<?php echo __('Search'); ?>" name="keyword" type="text" required="required" <?php echo isset($keyword) ? 'value="'.$keyword.'"' : ''; ?> />
                     <button type="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
                 </form>
             <?php } ?>
@@ -115,18 +116,36 @@ header('Pragma: no-cache');
     <div class="sc"></div>
     
 <?php
+    echo $this->element('localizedJavascript');
     echo $this->element('renderJs', ['configs' => ['frontend']]);
-if ($isMobile) {
-    echo '<div class="is-mobile-detector"></div>';
-    echo $this->Html->script(['/node_modules/slidebars/dist/slidebars']);
 
-    // add script BEFORE all scripts that are loaded in views (block)
-    echo $this->MyHtml->scriptBlock(
-        Configure::read('app.jsNamespace').".Mobile.initMenusFrontend();",
-        ['inline' => true]
-    );
-}
-    echo $this->fetch('script'); // all scripts from layouts
+    if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+        echo $this->Html->scriptBlock(
+            $this->Html->wrapJavascriptBlock(
+                Configure::read('app.jsNamespace').".TimebasedCurrency.setShortcode('".Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE')."');"
+            ),
+            ['inline' => true]
+        );
+    }
+
+    if ($isMobile) {
+        echo '<div class="is-mobile-detector"></div>';
+        echo $this->Html->script(['/node_modules/slidebars/dist/slidebars']);
+
+        // add script BEFORE all scripts that are loaded in views (block)
+        echo $this->MyHtml->scriptBlock(
+            $this->Html->wrapJavascriptBlock(
+                Configure::read('app.jsNamespace').".Mobile.initMenusFrontend();"
+            ),
+            ['inline' => true]
+        );
+    }
+
+    $scripts = $this->fetch('script');
+    if ($scripts != '') {
+        echo $this->Html->wrapJavascriptBlock($scripts);
+    }
+
 ?>
 
 </body>

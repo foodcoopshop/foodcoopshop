@@ -29,9 +29,9 @@ class SendOrderListsShell extends AppShell
     {
         parent::main();
 
-        $this->ActionLog = TableRegistry::get('ActionLogs');
-        $this->Order = TableRegistry::get('Orders');
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
 
         $this->startTimeLogging();
 
@@ -64,7 +64,7 @@ class SendOrderListsShell extends AppShell
         $manufacturerOrders = [];
         foreach ($orders as $order) {
             foreach ($order->order_details as $orderDetail) {
-                @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_quantity_sum'] += $orderDetail->product_quantity;
+                @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_amount_sum'] += $orderDetail->product_amount;
                 @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_price_sum'] += $orderDetail->total_price_tax_incl;
             }
         }
@@ -72,14 +72,14 @@ class SendOrderListsShell extends AppShell
         // 4) merge the order detail count with the manufacturers array
         $i = 0;
         foreach ($manufacturers as $manufacturer) {
-            $manufacturer->order_detail_quantity_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_quantity_sum'];
+            $manufacturer->order_detail_amount_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_amount_sum'];
             $manufacturer->order_detail_price_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_price_sum'];
             $i++;
         }
 
         // 5) check if manufacturers have open order details and send email
         $i = 0;
-        $outString = 'Bestellzeitraum: ' . $dateFrom . ' bis ' . $dateTo . '<br />';
+        $outString = __('Order_period').': ' . $dateFrom . ' ' . __('to_(time_context)') . ' ' . $dateTo . '<br />';
 
         $this->initSimpleBrowser();
         $this->browser->doFoodCoopShopLogin();
@@ -87,10 +87,10 @@ class SendOrderListsShell extends AppShell
         foreach ($manufacturers as $manufacturer) {
             $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer->bulk_orders_allowed);
             $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
-            if (!empty($manufacturer->order_detail_quantity_sum) && $sendOrderList && !$bulkOrdersAllowed) {
-                $productString = ($manufacturer->order_detail_quantity_sum == 1 ? 'Produkt' : 'Produkte');
-                $outString .= ' - ' . $manufacturer->name . ': ' . $manufacturer->order_detail_quantity_sum . ' ' . $productString . ' / ' . Configure::read('app.htmlHelper')->formatAsEuro($manufacturer->order_detail_price_sum) . '<br />';
-                $url = $this->browser->adminPrefix . '/manufacturers/sendOrderList/' . $manufacturer->id_manufacturer . '/' . $dateFrom . '/' . $dateTo;
+            if (!empty($manufacturer->order_detail_amount_sum) && $sendOrderList && !$bulkOrdersAllowed) {
+                $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->order_detail_amount_sum]);
+                $outString .= ' - ' . $manufacturer->name . ': ' . $productString . ' / ' . Configure::read('app.numberHelper')->formatAsCurrency($manufacturer->order_detail_price_sum) . '<br />';
+                $url = $this->browser->adminPrefix . '/manufacturers/sendOrderList?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
                 $this->browser->get($url);
                 $i ++;
             }
@@ -98,7 +98,7 @@ class SendOrderListsShell extends AppShell
 
         $this->browser->doFoodCoopShopLogout();
 
-        $outString .= 'Verschickte Bestelllisten: ' . $i;
+        $outString .= __('Sent_order_lists') . ': ' . $i;
 
         $this->stopTimeLogging();
 

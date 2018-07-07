@@ -19,42 +19,47 @@ use Cake\Core\Configure;
     <tbody>
         <tr>
             <td style="font-weight:bold;font-size:18px;padding-bottom:20px;">
-                Hallo <?php echo $appAuth->getUsername(); ?>,
+                <?php echo __('Hello'); ?> <?php echo $appAuth->getUsername(); ?>,
             </td>
         </tr>
         <tr>
             <td style="padding-bottom:20px;">
-                vielen Dank für deine Bestellung Nr. <?php echo $order->id_order; ?> vom <?php echo $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs')); ?>.
+            	<?php echo __('thank_you_for_your_order_number_{0}_from_{1}.', [$order->id_order, $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'))]); ?>
             </td>
         </tr>
     </tbody>
-</table>
+<?php echo $this->element('email/tableFoot'); ?>
 
 <?php echo $this->element('email/tableHead', ['cellpadding' => 6]); ?>
     <?php echo $this->element('email/orderedProductsTable', [
         'manufacturerId' => null,
         'cartProducts' => $cart['CartProducts'],
-        'depositSum' => $depositSum,
-        'productSum' => $productSum,
-        'productAndDepositSum' => $productAndDepositSum
+        'depositSum' => $appAuth->Cart->getDepositSum(),
+        'productSum' => $appAuth->Cart->getProductSum(),
+        'productAndDepositSum' => $appAuth->Cart->getProductAndDepositSum()
     ]); ?>
-</table>
+<?php echo $this->element('email/tableFoot'); ?>
 
 <?php echo $this->element('email/tableHead'); ?>
     <tbody>
     
+        <?php if ($appAuth->Cart->getProductsWithUnitCount() > 0) { ?>
+            <tr><td style="padding-top:20px;">
+            	* <?php echo __('The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly.'); ?>
+            </td></tr>
+        <?php } ?>
+        
         <tr><td style="padding-top:20px;">
-            Enthaltene Umsatzsteuer: <?php echo $this->MyHtml->formatAsEuro($appAuth->Cart->getTaxSum()); ?>
+            <?php echo __('Including_vat'); ?> <?php echo $this->MyNumber->formatAsCurrency($appAuth->Cart->getTaxSum()); ?>
         </td></tr>
         
         <tr><td>
             <?php
-            if ($this->MyHtml->paymentIsCashless()) {
-                $paymentText = 'Der Gesamtbetrag wurde von deinem Guthaben abgezogen.';
-            } else {
-                $paymentText = 'Bitte vergiss nicht, den Betrag beim Abholen so genau wie möglich in bar mitzunehmen.';
-            }
-                echo $paymentText;
+                if ($this->MyHtml->paymentIsCashless()) {
+                    echo __('The_amount_will_be_reduced_from_your_credit_balance.');
+                } else {
+                    echo __('Please_pay_when_picking_up_products.');
+                }
             ?>
         </td></tr>
         
@@ -65,12 +70,19 @@ use Cake\Core\Configure;
         <?php } ?>
 
         <tr><td><p>
-            Bitte hole deine Produkte am <b><?php echo $this->MyTime->getFormattedDeliveryDateByCurrentDay(); ?></b> bei uns (<?php echo str_replace('<br />', ', ', $this->MyHtml->getAddressFromAddressConfiguration()); ?>) ab.
+            <?php
+                echo __(
+                    'Please_pick_up_your_products_on_{0}_at_{1}.', [
+                        '<b>'.$this->MyTime->getFormattedDeliveryDateByCurrentDay().'</b>',
+                        str_replace('<br />', ', ', $this->MyHtml->getAddressFromAddressConfiguration())
+                    ]
+                );
+            ?>
         </p></td></tr>
         
         <tr><td style="font-size:12px;">
-            Eine detaillierte Auflistung deiner Bestellung findest du in der angehängten Bestellübersicht (PDF). Die Informationen zum Rücktrittsrecht sind gesetzlich vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen.
+        	<?php echo __('You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation.'); ?>
         </td></tr>
         
     </tbody>
-</table>
+<?php echo $this->element('email/tableFoot'); ?>

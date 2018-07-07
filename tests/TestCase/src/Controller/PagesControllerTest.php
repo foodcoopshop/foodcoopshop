@@ -26,7 +26,7 @@ class PagesControllerTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->Page = TableRegistry::get('Pages');
+        $this->Page = TableRegistry::getTableLocator()->get('Pages');
     }
 
     public function testAllPublicUrls()
@@ -39,8 +39,9 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getBlogList(),
             $this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'),
             $this->Slug->getNewPasswordRequest(),
-            $this->Slug->getPageDetail(9, 'Impressum'),
+            $this->Slug->getPageDetail(3, 'Page'),
             $this->Slug->getLogin(),
+            $this->Slug->getListOfAllergens(),
             $this->Slug->getTermsOfUse(),
             $this->Slug->getPrivacyPolicy()
         ];
@@ -75,6 +76,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getReport('product'),
             $this->Slug->getReport('payback'),
             $this->Slug->getReport('deposit'),
+            $this->Slug->getPaymentEdit(1),
             $this->Slug->getBlogPostListAdmin(),
             $this->Slug->getBlogPostAdd(),
             $this->Slug->getBlogPostEdit(2),
@@ -85,10 +87,10 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getManufacturerEditOptions(5),
             $this->Slug->getAttributesList(),
             $this->Slug->getAttributeAdd(),
-            $this->Slug->getAttributeEdit(32),
+            $this->Slug->getAttributeEdit(33),
             $this->Slug->getCategoriesList(),
             $this->Slug->getCategoryAdd(),
-            $this->Slug->getCategoryEdit(17),
+            $this->Slug->getCategoryEdit(16),
             $this->Slug->getTaxesList(),
             $this->Slug->getTaxAdd(),
             $this->Slug->getTaxEdit(2),

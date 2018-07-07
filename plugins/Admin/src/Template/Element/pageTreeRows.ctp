@@ -16,7 +16,7 @@
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
-$pageTable = TableRegistry::get('Pages');
+$pageTable = TableRegistry::getTableLocator()->get('Pages');
 
 foreach ($pages as $page) {
     $level = $pageTable->getLevel($page);
@@ -30,7 +30,7 @@ foreach ($pages as $page) {
     if (! $page->active) {
         $rowClass[] = 'deactivated';
     }
-    echo '<tr class="' . implode(' ', $rowClass) . '">';
+    echo '<tr id="page-' . $page->id_page . '" class="' . implode(' ', $rowClass) . '">';
 
     echo '<td class="hide">';
     echo $page->id_page;
@@ -38,7 +38,7 @@ foreach ($pages as $page) {
 
     echo '<td>';
     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-        'title' => 'Bearbeiten'
+        'title' => __d('admin', 'Edit')
     ], $this->Slug->getPageEdit($page->id_page));
     echo '</td>';
 
@@ -81,11 +81,13 @@ foreach ($pages as $page) {
     echo '</td>';
 
     echo '<td>';
-    echo $page->customer->name;
+    if (!empty($page->customer)) {
+        echo $page->customer->name;
+    }
     echo '</td>';
 
     echo '<td>';
-    echo $page->modified->i18nFormat(Configure::read('DateFormat.de.DateNTimeLongWithSecs'));
+    echo $page->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
     echo '</td>';
 
     echo '<td align="center">';
@@ -99,7 +101,7 @@ foreach ($pages as $page) {
     echo '<td>';
     if ($page->active) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
-            'title' => 'Seite anzeigen',
+            'title' => __d('admin', 'Show_page'),
             'target' => '_blank'
         ], $this->Slug->getPageDetail($page->id_page, $page->title));
     }

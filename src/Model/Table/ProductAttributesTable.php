@@ -41,6 +41,9 @@ class ProductAttributesTable extends AppTable
             'className' => 'ProductAttributeShops',
             'foreignKey' => 'id_product_attribute'
         ]);
+        $this->hasOne('UnitProductAttributes', [
+            'foreignKey' => 'id_product_attribute'
+        ]);
     }
 
     public function add($productId, $attributeId)
@@ -78,7 +81,7 @@ class ProductAttributesTable extends AppTable
         );
 
         // set price of product back to 0 => if not, the price of the attribute is added to the price of the product
-        $this->ProductShop = TableRegistry::get('ProductShops');
+        $this->ProductShop = TableRegistry::getTableLocator()->get('ProductShops');
         $this->ProductShop->id = $productId;
         $this->ProductShop->save(
             $this->ProductShop->patchEntity(
@@ -93,7 +96,7 @@ class ProductAttributesTable extends AppTable
         // with custom sql
         $this->getConnection()->query('INSERT INTO '.$this->tablePrefix.'stock_available (id_product, id_product_attribute, quantity) VALUES(' . $productId . ', ' . $productAttributeId . ', ' . $defaultQuantity . ')');
 
-        $this->StockAvailable = TableRegistry::get('StockAvailables');
+        $this->StockAvailable = TableRegistry::getTableLocator()->get('StockAvailables');
         $this->StockAvailable->updateQuantityForMainProduct($productId);
     }
 }

@@ -40,7 +40,20 @@ class FileAndEmailLog extends FileLog
     private function sendEmailWithErrorInformation($message)
     {
 
-        $ignoredExceptionsRegex = '/(MissingController|MissingAction|RecordNotFound|MissingRoute)Exception|cancellation_terms_accepted|general_terms_and_conditions_accepted/';
+        $ignoredPatterns = [
+            'MissingControllerException',
+            'MissingActionException',
+            'RecordNotFoundException',
+            'MissingRouteException',
+            'cancellation_terms_accepted',
+            'general_terms_and_conditions_accepted',
+            'terms_of_use_accepted_date_checkbox',
+            '{"passwd_old',
+            '{"passwd_1',
+            '{"passwd_2',
+            '{"email":{"unique":'
+        ];
+        $ignoredExceptionsRegex = '/('.join('|', $ignoredPatterns).')/';
         if (preg_match($ignoredExceptionsRegex, $message)) {
             return false;
         }
@@ -51,7 +64,7 @@ class FileAndEmailLog extends FileLog
             $loggedUser = $session->read('Auth');
         }
 
-        $subject = Configure::read('app.cakeServerName') . ' ' . Text::truncate($message, 90) . ' ' . date('Y-m-d H:i:s');
+        $subject = Configure::read('app.cakeServerName') . ' ' . Text::truncate($message, 90) . ' ' . date(Configure::read('DateFormat.DatabaseWithTimeAlt'));
         try {
             $email = new AppEmail(false);
             $email->setProfile('debug');

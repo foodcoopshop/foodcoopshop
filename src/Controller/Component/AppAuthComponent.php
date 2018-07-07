@@ -77,13 +77,20 @@ class AppAuthComponent extends AuthComponent
         return $this->user('id_default_group');
     }
 
+    public function getLastOrderDetailsForDropdown()
+    {
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $dropdownData = $this->OrderDetail->getLastOrderDetailsForDropdown($this->getUserId());
+        return $dropdownData;
+    }
+
     private function setManufacturer()
     {
         if (!empty($this->manufacturer)) {
             return;
         }
 
-        $mm = TableRegistry::get('Manufacturers');
+        $mm = TableRegistry::getTableLocator()->get('Manufacturers');
         $this->manufacturer = $mm->find('all', [
             'conditions' => [
                 'AddressManufacturers.email' => $this->user('email'),
@@ -184,7 +191,7 @@ class AppAuthComponent extends AuthComponent
 
     public function getCreditBalance()
     {
-        $c = TableRegistry::get('Customers');
+        $c = TableRegistry::getTableLocator()->get('Customers');
         return $c->getCreditBalance($this->getUserId());
     }
 
@@ -198,7 +205,18 @@ class AppAuthComponent extends AuthComponent
         if (! $this->user()) {
             return null;
         }
-        $cc = TableRegistry::get('Carts');
-        return $cc->getCart($this->getUserId());
+        $cart = TableRegistry::getTableLocator()->get('Carts');
+        return $cart->getCart($this->getUserId());
     }
+
+    public function isTimebasedCurrencyEnabledForManufacturer()
+    {
+        return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->isManufacturer() && $this->manufacturer->timebased_currency_enabled;
+    }
+
+    public function isTimebasedCurrencyEnabledForCustomer()
+    {
+        return Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->user('timebased_currency_enabled');
+    }
+
 }

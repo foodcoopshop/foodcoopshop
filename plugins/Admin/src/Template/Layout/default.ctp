@@ -13,10 +13,12 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 use Cake\Utility\Inflector;
 
 ?>
 <!DOCTYPE html>
+<html lang="<?php echo strtolower(str_replace('_', '-', I18n::getLocale())); ?>">
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="theme-color" content="#719f41">
@@ -31,7 +33,6 @@ use Cake\Utility\Inflector;
     <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('appDb.FCS_APP_NAME'); ?></title>
 
     <?php echo $this->element('jsNamespace'); ?>
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     
     <?php
     $cssConfigs = ['admin'];
@@ -45,8 +46,7 @@ use Cake\Utility\Inflector;
     ?>
     
 </head>
-<body
-    class="<?php echo Inflector::tableize($this->name); ?> <?php echo Inflector::singularize(Inflector::tableize($this->request->action)); ?>">
+<body class="<?php echo Inflector::tableize($this->name); ?> <?php echo Inflector::singularize(Inflector::tableize($this->request->getParam('action'))); ?>">
 
     <div id="container">
         
@@ -70,23 +70,34 @@ $jsConfigs = ['admin'];
 if ($this->plugin != 'Admin') {
     $jsConfigs[] = $this->plugin.'.all';
 }
+echo $this->element('localizedJavascript');
 echo $this->element('renderJs', ['configs' => $jsConfigs]);
 
 if ($isMobile) {
     echo '<div class="is-mobile-detector"></div>';
     echo $this->Html->script(['/node_modules/slidebars/dist/slidebars']);
+
     // add script BEFORE all scripts that are loaded in views (block)
-    echo $this->MyHtml->scriptBlock(Configure::read('app.jsNamespace').".Mobile.initMenusAdmin();", ['block']);
+    echo $this->MyHtml->scriptBlock(
+        $this->Html->wrapJavascriptBlock(
+            Configure::read('app.jsNamespace').".Mobile.initMenusAdmin();",
+            ['block']
+        )
+    );
 }
 
 if ($this->plugin == 'Admin') {
+    echo $this->Html->script('/node_modules/bootstrap-select/dist/js/i18n/defaults-'.I18n::getLocale().'.js');
     echo $this->Html->script('/node_modules/ckeditor/ckeditor');
     echo $this->Html->script('/node_modules/ckeditor/adapters/jquery');
 }
 
-echo $this->fetch('script'); // all scripts from layouts
-?>
+$scripts = $this->fetch('script');
+if ($scripts != '') {
+    echo $this->Html->wrapJavascriptBlock($scripts);
+}
 
+?>
 
 </body>
 </html>

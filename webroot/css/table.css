@@ -57,6 +57,9 @@ div:not(.product-list) > table.list tr:nth-child(odd) {
 table.list tr.deactivated {
     opacity: 0.6;
 }
+table.list tr.line-through {
+	text-decoration: line-through;
+}
 table.list tr.sub-row td {
     font-size: 11px;
     font-style: italic;
@@ -69,6 +72,9 @@ table.list td.negative,
 b.negative,
 span.negative {
     color: red ! important;
+}
+table.list td.slim {
+	line-height: 15px;
 }
 table.list th,
 table.list td {
@@ -85,6 +91,9 @@ table.list tr.fake-th td {
 table.list th {
   background-color: #ebebeb;
   border-top: 1px solid #dfdfdf;
+}
+table.list th,
+table.list tr.fake-th {
   line-height: 14px;
 }
 table.list tr.fake-th td {

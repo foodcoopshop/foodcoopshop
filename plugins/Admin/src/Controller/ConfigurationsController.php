@@ -5,7 +5,7 @@ use App\Controller\Component\StringComponent;
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 
@@ -42,7 +42,7 @@ class ConfigurationsController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $this->Configuration = TableRegistry::get('Configurations');
+        $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
         $configuration = $this->Configuration->find('all', [
             'conditions' => [
                 'Configurations.id_configuration' => $configurationId
@@ -52,30 +52,30 @@ class ConfigurationsController extends AdminAppController
         if (empty($configuration)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', 'Einstellung bearbeiten');
+        $this->set('title_for_layout', __d('admin', 'Edit_setting'));
 
         if (in_array($configuration->type, ['textarea_big'])) {
-            $_SESSION['KCFINDER'] = [
-                'uploadURL' => Configure::read('app.cakeServerName') . "/files/kcfinder/configurations/",
-                'uploadDir' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/configurations/"
+            $_SESSION['ELFINDER'] = [
+                'uploadUrl' => Configure::read('app.cakeServerName') . "/files/kcfinder/configurations/",
+                'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/configurations/"
             ];
         }
 
         $this->setFormReferer();
 
-        if (empty($this->request->getData())) {
+        if (empty($this->getRequest()->getData())) {
             $this->set('configuration', $configuration);
             return;
         }
 
         $this->loadComponent('Sanitize');
-        $this->request->data = $this->Sanitize->trimRecursive($this->request->getData());
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
 
         if (!in_array($configuration->type, ['textarea', 'textarea_big'])) {
-            $this->request->data = $this->Sanitize->stripTagsRecursive($this->request->getData());
+            $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
         }
         if ($configuration->name == 'FCS_FACEBOOK_URL') {
-            $this->request->data['Configurations']['value'] = StringComponent::addHttpToUrl($this->request->getData('Configurations.value'));
+            $this->setRequest($this->getRequest()->withData('Configurations.value', StringComponent::addHttpToUrl($this->getRequest()->getData('Configurations.value'))));
         }
 
         $validationName = Inflector::camelize(strtolower($configuration->name));
@@ -86,21 +86,21 @@ class ConfigurationsController extends AdminAppController
 
         $configuration = $this->Configuration->patchEntity(
             $configuration,
-            $this->request->getData(),
+            $this->getRequest()->getData(),
             [
                 'validate' => $validatorExists ? $validationName : false
             ]
         );
 
         if (!empty($configuration->getErrors())) {
-            $this->Flash->error('Beim Speichern sind Fehler aufgetreten!');
+            $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('configuration', $configuration);
         } else {
             $configuration = $this->Configuration->save($configuration);
-            $this->ActionLog = TableRegistry::get('ActionLogs');
-            $this->Flash->success('Die Einstellung wurde erfolgreich geändert.');
-            $this->ActionLog->customSave('configuration_changed', $this->AppAuth->getUserId(), $configuration->id_configuration, 'configurations', 'Die Einstellung "' . $configuration->name . '" wurde geändert in <i>"' . $configuration->value . '"</i>');
-            $this->redirect($this->request->getData('referer'));
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->Flash->success(__d('admin', 'The_setting_has_been_changed_successfully.'));
+            $this->ActionLog->customSave('configuration_changed', $this->AppAuth->getUserId(), $configuration->id_configuration, 'configurations', __d('admin', 'The_setting_{0}_has_been_changed_to_{1}.', ['"' . $configuration->name . '"', '<i>"' . $configuration->value . '"</i>']));
+            $this->redirect($this->getRequest()->getData('referer'));
         }
 
         $this->set('configuration', $configuration);
@@ -108,7 +108,7 @@ class ConfigurationsController extends AdminAppController
 
     public function previewEmail($configurationName)
     {
-        $this->Configuration = TableRegistry::get('Configurations');
+        $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
         $this->Configuration->getConfigurations();
         $email = new AppEmail();
         $email
@@ -124,13 +124,16 @@ class ConfigurationsController extends AdminAppController
                     $template = 'customer_registered_inactive';
                 }
                 $email->setTemplate($template);
+                $data = (object) [
+                    'firstname' => 'Vorname',
+                    'lastname' => 'Nachname',
+                ];
+                $data->address_customer = (object) [
+                    'email' => 'vorname.nachname@example.com'
+                ];
                 $email->setViewVars([
-                    'data' => (object) [
-                        'firstname' => 'Vorname',
-                        'lastname' => 'Nachname',
-                        'email' => 'vorname.nachname@example.com'
-                    ],
-                    'newPassword' => 'DeinNeuesPasswort'
+                    'data' => $data,
+                    'newPassword' => 'password'
                 ]);
                 break;
         }
@@ -145,9 +148,9 @@ class ConfigurationsController extends AdminAppController
     public function index()
     {
         $this->helpers[] = 'Configuration';
-        $this->Configuration = TableRegistry::get('Configurations');
+        $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
         $this->set('configurations', $this->Configuration->getConfigurations());
-        $this->Tax = TableRegistry::get('Taxes');
+        $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
         $defaultTax = $this->Tax->find('all', [
             'conditions' => [
                 'Taxes.id_tax' => Configure::read('app.defaultTaxId')
@@ -156,9 +159,8 @@ class ConfigurationsController extends AdminAppController
         $this->set('defaultTax', $defaultTax);
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
-            $this->set('versionNetworkPlugin', $this->Configuration->getVersion('Network'));
             $this->helpers[] = 'Network.Network';
-            $this->SyncDomain = TableRegistry::get('Network.SyncDomains');
+            $this->SyncDomain = TableRegistry::getTableLocator()->get('Network.SyncDomains');
             $syncDomains = $this->SyncDomain->getSyncDomains(APP_OFF);
             $this->set('syncDomains', $syncDomains);
         }
@@ -171,15 +173,15 @@ class ConfigurationsController extends AdminAppController
         } catch (\PDOException  $e) {
         }
 
-        $this->set('title_for_layout', 'Einstellungen');
+        $this->set('title_for_layout', __d('admin', 'Settings'));
     }
 
     public function sendTestEmail()
     {
-        $this->set('title_for_layout', 'Test E-Mail versenden');
+        $this->set('title_for_layout', __d('admin', 'Send_test_email'));
         $email = new AppEmail(false);
         $success = $email->setTo(Configure::read('app.hostingEmail'))
-            ->setSubject('Test E-Mail')
+        ->setSubject(__d('admin', 'Test_email'))
             ->setTemplate('send_test_email_template')
             ->setAttachments([
                 WWW_ROOT . DS . 'files' . DS . 'images' . DS. 'logo.jpg'

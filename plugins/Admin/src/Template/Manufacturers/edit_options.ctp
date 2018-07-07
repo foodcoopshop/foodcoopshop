@@ -19,7 +19,8 @@ $this->element('addScript', [
     'script' =>
     Configure::read('app.jsNamespace') . ".Admin.init();" .
     Configure::read('app.jsNamespace') . ".Admin.initForm();".
-    Configure::read('app.jsNamespace') . ".Helper.initDatepicker(); var datefieldSelector = $('input.datepicker');datefieldSelector.datepicker();
+    Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
+    $('input.datepicker').datepicker();
     "
 ]);
 
@@ -29,19 +30,13 @@ $this->element('addScript', [
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa fa-check"></i> Speichern</a>
-        <?php if ($this->request->here != $this->Slug->getManufacturerMyOptions()) { ?>
+            class="fa fa-check"></i> <?php echo __d('admin', 'Save'); ?></a>
+        <?php if ($this->request->getRequestTarget() != $this->Slug->getManufacturerMyOptions()) { ?>
             <a href="javascript:void(0);" class="btn btn-default cancel"><i
-            class="fa fa-remove"></i> Abbrechen</a>
+            class="fa fa-remove"></i> <?php echo __d('admin', 'Cancel'); ?></a>
         <?php } ?>
+        <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers'))]); ?>
     </div>
-</div>
-
-<div id="help-container">
-    <ul>
-        <li>Auf dieser Seite kannst du die Hersteller-Einstellungen ändern.</li>
-        <?php echo $this->element('docs/hersteller'); ?>
-    </ul>
 </div>
 
 <div class="sc"></div>
@@ -61,10 +56,10 @@ echo $this->Form->create($manufacturer, [
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
-echo '<h2>Sichtbarkeit der Produkte</h2>';
+echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
 
 echo $this->Form->control('Manufacturers.active', [
-    'label' => 'Aktiv? <span class="after small">Hersteller-Profil und Produkte werden angezeigt (vom Hersteller selbst nicht änderbar).</span>',
+    'label' => ''.__d('admin', 'Active').'? <span class="after small">'.__d('admin', 'Manufacturer_profile_and_products_are_visible_(cannot_be_changed_by_manufacturer).').'</span>',
     'disabled' => ($appAuth->isManufacturer() ? 'disabled' : ''),
     'type' => 'checkbox',
     'escape' => false
@@ -72,80 +67,80 @@ echo $this->Form->control('Manufacturers.active', [
 
 echo '<div class="holiday-wrapper">';
     echo '<div class="input">';
-        echo '<label>Lieferpause?';
+        echo '<label>'.__d('admin', 'Delivery_break').'?';
     echo '</div>';
     echo $this->element('dateFields', [
-        'dateFrom' => !empty($manufacturer->holiday_from) ? $manufacturer->holiday_from->i18nFormat(Configure::read('DateFormat.de.DateLong2')) : '',
+        'dateFrom' => !empty($manufacturer->holiday_from) ? $manufacturer->holiday_from->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) : '',
         'nameFrom' => 'Manufacturers[holiday_from]',
-        'dateTo' => !empty($manufacturer->holiday_to) ? $manufacturer->holiday_to->i18nFormat(Configure::read('DateFormat.de.DateLong2')) : '',
+        'dateTo' => !empty($manufacturer->holiday_to) ? $manufacturer->holiday_to->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) : '',
         'nameTo' => 'Manufacturers[holiday_to]'
     ]);
-    echo '<span class="description small"><a href="https://foodcoopshop.github.io/de/hersteller" target="_blank">Wie verwende ich die Funktion "Lieferpause"?</a>';
+    echo '<span class="description small">';
+    echo '<a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_function_delivery_break?').'</a>';
     echo '</span>';
     echo '</div>';
 
     echo $this->Form->control('Manufacturers.is_private', [
-    'label' => 'Nur für Mitglieder? <span class="after small">Hersteller-Profil und Produkte werden <b>nur für eingeloggte Mitglieder</b> angezeigt.</span>',
-    'type' => 'checkbox',
-    'escape' => false
+        'label' => __d('admin', 'Only_for_members').'? <span class="after small">'.__d('admin', 'Manufacturer_profile_and_products_are_only_visible_for_signed_in_members.').'</span>',
+        'type' => 'checkbox',
+        'escape' => false
     ]);
     echo '<div class="sc"></div>';
 
-    echo '<h2>Benachrichtigungen</h2>';
+    echo '<h2>'.__d('admin', 'Notifications').'</h2>';
 
     echo $this->Form->control('Manufacturers.send_order_list', [
-    'label' => 'Bestelllisten per E-Mail <span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte - falls es Bestellungen gibt - diese am '.$this->Time->getWeekdayName(Configure::read('app.sendOrderListsWeekday')).' per E-Mail erhalten.</span>',
-    'type' => 'checkbox',
+        'label' => __d('admin', 'Order_lists_by_email').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' . __d('admin', 'to_receive_the_orders_per_email_on_{0}.', [$this->Time->getWeekdayName(Configure::read('app.sendOrderListsWeekday'))]) . '</span>',
+        'type' => 'checkbox',
         'escape' => false
     ]);
     echo '<div class="sc"></div>';
 
     echo $this->Form->control('Manufacturers.send_order_list_cc', [
-    'label' => 'CC-Empfänger für Bestell-Listen-Versand <span class="after small">Mehrere Empfänger mit , trennen.</span>',
-    'escape' => false
+        'label' => __d('admin', 'CC_recipient_for_order_lists').' <span class="after small">'.__d('admin', 'Separate_multiple_emails_with_comma').'</span>',
+        'escape' => false
     ]);
 
     echo $this->Form->control('Manufacturers.send_invoice', [
-    'label' => 'Rechnungen per E-Mail <span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte monatlich per E-Mail die Rechnungen erhalten.</span>',
-    'type' => 'checkbox',
-    'escape' => false
+        'label' => __d('admin', 'Invoices_by_email').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' '.__d('admin', 'to_receive_his_invoice_every_month_by_email.').'</span>',
+        'type' => 'checkbox',
+        'escape' => false
     ]);
     echo '<div class="sc"></div>';
 
     echo $this->Form->control('Manufacturers.send_ordered_product_deleted_notification', [
-        'label' => 'Stornierungen <span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte bei jeder Stornierung eine Info-Mail erhalten.</span>',
+        'label' => __d('admin', 'Cancellations').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' '.__d('admin', 'to_receive_an_email_on_every_cancellation.').'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);
     echo '<div class="sc"></div>';
 
     echo $this->Form->control('Manufacturers.send_ordered_product_price_changed_notification', [
-        'label' => 'Preis-Änderungen von bestellten Produkten <span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte bei jeder Preis-Änderung eines bereits bestellten Produktes eine Info-Mail erhalten.</span>',
+        'label' => __d('admin', 'Adaptions_of_price_and_weight_of_ordered_products').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' '.__d('admin', 'to_receive_an_email_on_every_adaption_of_price_or_weight_of_a_ordered_product.').'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);
     echo '<div class="sc"></div>';
 
-    echo $this->Form->control('Manufacturers.send_ordered_product_quantity_changed_notification', [
-        'label' => 'Änderungen der bestellten Anzahl <span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte bei jeder Änderung der Anzahl eines bereits bestellten Produktes eine Info-Mail erhalten.</span>',
+    echo $this->Form->control('Manufacturers.send_ordered_product_amount_changed_notification', [
+        'label' => __d('admin', 'Adaptions_of_the_ordered_amount').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' . __d('admin', 'to_receive_an_email_on_every_adaption_of_the_amount_of_a_ordered_product.').'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);
     echo '<div class="sc"></div>';
 
-    echo $this->Form->control('Manufacturers.send_shop_order_notification', [
-    'label' => 'Sofortbestellungen <span class="after small">'.($appAuth->isManufacturer() ? 'Ich' : 'Der Hersteller') . ' möchte bei jeder Sofort-Bestellung eine Info-Mail erhalten.</span>',
-    'type' => 'checkbox',
-    'escape' => false
+    echo $this->Form->control('Manufacturers.send_instant_order_notification', [
+        'label' => __d('admin', 'Instant_orders').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' .__d('admin', 'to_receive_an_email_on_every_instant_order.').'</span>',
+        'type' => 'checkbox',
+        'escape' => false
     ]);
     echo '<div class="sc"></div>';
 
-    echo '<h2>Sonstige Einstellungen</h2>';
-
+    echo '<h2>'.__d('admin', 'Other_settings').'</h2>';
 
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && !$appAuth->isManufacturer()) {
         echo $this->Form->control('Manufacturers.variable_member_fee', [
-        'label' => 'Variabler Mitgliedsbeitrag in % <span class="after small">Die Rechnung für den Hersteller wird um den angegebenen Prozentwert reduziert (nur ganze Zahlen erlaubt).</span>',
+        'label' => __d('admin', 'Variable_member_fee_in').' % <span class="after small">'.__d('admin', 'The_invoice_for_the_manufacturer_will_be_reduced_by_the_given_percentage_no_decimals_allowed.').'</span>',
         'class' => 'short',
         'type' => 'text',
         'escape' => false
@@ -153,14 +148,14 @@ echo '<div class="holiday-wrapper">';
     }
 
     echo $this->Form->control('Manufacturers.default_tax_id', [
-    'type' => 'select',
-    'label' => 'Voreingestellter Steuersatz für neue Produkte',
-    'options' => $taxesForDropdown
+        'type' => 'select',
+        'label' => __d('admin', 'Preselected_tax_rate_for_new_products'),
+        'options' => $taxesForDropdown
     ]);
 
     if (!$appAuth->isManufacturer()) {
         echo $this->Form->control('Manufacturers.bulk_orders_allowed', [
-        'label' => 'Hersteller optimiert für Sammelbestellungen? <span class="after small">Deaktiviert alle Benachrichtigungen, außer den Rechnungsversand. Mehr Infos findest du im <a href="https://foodcoopshop.github.io/de/sammelbestellungen" target="_blank">Leitfaden für Sammelbestellungen</a>.</span>',
+        'label' => __d('admin', 'Manufacturer_optimized_for_bulk_orders?').' <span class="after small">'.__d('admin', 'Disables_all_notifications_except_sent_invoices.').' <a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_bulk_orders')).'" target="_blank">'.__d('admin', 'Info_page_for_bulk_orders').'</a>.</span>',
         'type' => 'checkbox',
         'escape' => false
         ]);
@@ -170,8 +165,8 @@ echo '<div class="holiday-wrapper">';
     if (!$appAuth->isManufacturer()) {
         echo $this->Form->control('Manufacturers.id_customer', [
         'type' => 'select',
-        'label' => 'Ansprechperson',
-        'empty' => 'Mitglied auswählen...',
+        'label' => __d('admin', 'Contact_person'),
+        'empty' => __d('admin', 'Chose_member'),
         'options' => $customersForDropdown
         ]);
     }
@@ -187,11 +182,34 @@ echo '<div class="holiday-wrapper">';
             'type' => 'select',
             'multiple' => true,
             'data-val' => $manufacturer->enabled_sync_domains,
-            'label' => 'Remote-Foodcoops <span class="small"><a href="'.$this->Network->getNetworkPluginDocs().'" target="_blank">Infos zum Netzwerk-Modul</a></div>',
+            'label' => __d('admin', 'Remote_foodcoops').' <span class="after small"><a href="'.$this->Network->getNetworkPluginDocs().'" target="_blank">'.__d('admin', 'Info_page_for_network_module').'</a></span>',
             'options' => $syncDomainsForDropdown,
             'escape' => false
         ]);
         echo '<div class="sc"></div>';
+    }
+
+    if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+        echo '<h2>'.__d('admin', 'Paying_with_time').'</h2>';
+        echo $this->Form->control('Manufacturers.timebased_currency_enabled', [
+            'label' => __d('admin', 'Paying_with_time_module_active?').' <span class="after small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_paying-with-time-module')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_paying_with_time_module?').'</a>.</span>',
+            'type' => 'checkbox',
+            'escape' => false
+        ]);
+        if ($manufacturer->timebased_currency_enabled) {
+            echo $this->Form->control('Manufacturers.timebased_currency_max_percentage', [
+                'label' => __d('admin', 'Max_part_of_{0}_in_percent', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).' <span class="after small">'.__d('admin', 'valid_for_all_products_0_means_paying_with_time_module_is_deactivated_in_the_shop.').'</span>',
+                'type' => 'text',
+                'class' => 'short',
+                'escape' => false
+            ]);
+            echo $this->Form->control('Manufacturers.timebased_currency_max_credit_balance', [
+                'label' => __d('admin', 'Maximum_credit_balance_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).' <span class="after small">'.__d('admin', 'up_to_which_it_can_be_paid_in_{0}.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).'</span>',
+                'type' => 'text',
+                'class' => 'short',
+                'escape' => false
+            ]);
+        }
     }
 
     echo $this->Form->end();

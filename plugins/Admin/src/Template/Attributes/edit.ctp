@@ -15,8 +15,9 @@
 
 use Cake\Core\Configure;
 
-$this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Admin.initForm();
+$this->element('addScript', ['script' =>
+    Configure::read('app.jsNamespace') . ".Admin.init();" .
+    Configure::read('app.jsNamespace') . ".Admin.initForm();
     "
 ]);
 ?>
@@ -25,15 +26,10 @@ $this->element('addScript', [
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa fa-check"></i> Speichern</a> <a href="javascript:void(0);"
-            class="btn btn-default cancel"><i class="fa fa-remove"></i> Abbrechen</a>
+            class="fa fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a href="javascript:void(0);"
+            class="btn btn-default cancel"><i class="fa fa-remove"></i> <?php echo __d('admin', 'Cancel'); ?></a>
+            <?php echo $this->element('printIcon'); ?>
     </div>
-</div>
-
-<div id="help-container">
-    <ul>
-        <li>Auf dieser Seite kannst du die Variante ändern.</li>
-    </ul>
 </div>
 
 <div class="sc"></div>
@@ -53,12 +49,19 @@ echo $this->Form->control('Attributes.name', [
     'div' => [
         'class' => 'long text input'
     ],
-    'label' => 'Name'
+    'label' => __d('admin', 'Name')
 ]);
 
-if ($this->request->here != $this->Slug->getAttributeAdd()) {
+echo $this->Form->control('Attributes.can_be_used_as_unit', [
+    'label' => __d('admin', 'Weight_unit').'? <span class="after small">'.__d('admin', 'Please_check_if_this_attribute_is_a_weight_attribute_(e_g_kg).') . ' ' . '<a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_products')).'" target="_blank">'.__d('admin', 'Information_needed_for_function_price_per_unit.').'</a></span>',
+    'type' => 'checkbox',
+    'escape' => false
+]);
+
+
+if ($this->request->getRequestTarget() != $this->Slug->getAttributeAdd()) {
     echo $this->Form->control('Attributes.delete_attribute', [
-        'label' => 'Variante löschen? <span class="after small">' . ($attribute->has_combined_products ? 'Das Löschen dieser Variante ist nicht möglich, weil Produkte zugewiesen sind.' : 'Anhaken und dann auf <b>Speichern</b> klicken.') . '</span>',
+        'label' => __d('admin', 'Delete_attribute?').' <span class="after small">' . ($attribute->has_combined_products ? __d('admin', 'Attribute_can_not_be_deleted_because_products_are_associated_with_it.') : __d('admin', 'Check_and_do_not_forget_to_click_save_button.')) . '</span>',
         'disabled' => ($attribute->has_combined_products ? 'disabled' : ''),
         'escape' => false,
         'type' => 'checkbox'

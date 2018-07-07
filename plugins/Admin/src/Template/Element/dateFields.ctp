@@ -22,22 +22,22 @@ $this->element('addScript', [
 
 <div class="date-field-wrapper">
     
-    <a class="btn-arrow btn-previous-day" title="1 Tag zurück"
+    <a class="btn-arrow btn-previous-day" title="<?php echo __d('admin', '1_day_ahead'); ?>"
         href="javascript:void(0)"><i class="fa fa-arrow-circle-left fa"></i></a>
     <input id="dateFrom" type="text" class="datepicker"
         <?php echo (isset($nameFrom) ? 'name="'.$nameFrom.'"' : ''); ?>
         value="<?php echo $dateFrom; ?>" /> <a class="btn-arrow btn-next-day"
-        title="1 Tag vor" href="javascript:void(0)"><i
+        title="<?php echo __d('admin', '1_day_ahead'); ?>" href="javascript:void(0)"><i
         class="fa fa-arrow-circle-right fa"></i></a>
         
     <?php if (!isset($showDateTo) || $showDateTo) { ?>
-         bis <a
-        class="btn-arrow btn-previous-day" title="1 Tag zurück"
+         <?php echo __d('admin', 'to'); ?> <a
+        class="btn-arrow btn-previous-day" title="<?php echo __d('admin', '1_day_back'); ?>"
         href="javascript:void(0)"><i class="fa fa-arrow-circle-left fa"></i></a>
         <input id="dateTo" type="text" class="datepicker"
             <?php echo (isset($nameTo) ? 'name="'.$nameTo.'"' : ''); ?>
             value="<?php echo $dateTo; ?>" /> <a class="btn-arrow btn-next-day"
-            title="1 Tag vor" href="javascript:void(0)"><i
+            title="<?php echo __d('admin', '1_day_back'); ?>" href="javascript:void(0)"><i
             class="fa fa-arrow-circle-right fa"></i></a>
     <?php } ?>
     

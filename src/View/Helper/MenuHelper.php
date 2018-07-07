@@ -6,8 +6,6 @@ use Cake\Core\Configure;
 use Cake\View\Helper;
 
 /**
- * MenuHelper
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -107,9 +105,9 @@ class MenuHelper extends Helper
             $applyActiveClass = true;
 
             // START hack: sometimes two menu items are selected, because of same url
-            if ((    $name == 'Mitglieder'  && preg_match('/(profile|changePassword)/', $_SERVER['REQUEST_URI']))
-                 || ($name == 'Aktuelles' && preg_match('/hersteller/', $_SERVER['REQUEST_URI']))
-                 || ($name == 'Aktivitäten' && preg_match('/order_detail_cancelled/', $_SERVER['REQUEST_URI']))) {
+            if ((   $name == __('Members')  && preg_match('/(profile|changePassword)/', $_SERVER['REQUEST_URI']))
+                || ($name == __('News') && preg_match('/'.__('route_manufacturer_list').'/', $_SERVER['REQUEST_URI']))
+                || ($name == __('Activities') && preg_match('/order_detail_cancelled|payment_deposit_customer_added/', $_SERVER['REQUEST_URI']))) {
                      $applyActiveClass = false;
             }
 
@@ -146,13 +144,13 @@ class MenuHelper extends Helper
             }
 
             if ($this->plugin != '') {
-                $menuElement = ['slug' => 'javascript:void(0);', 'name' => 'Abmelden<br /><span>'.$userName.'</span>', 'options' => ['fa-icon' => 'fa-fw fa-sign-out', 'class' => ['logout-button']]];
+                $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out') . '<br /><span>'.$userName.'</span>', 'options' => ['fa-icon' => 'fa-fw fa-sign-out', 'class' => ['logout-button']]];
             } else {
-                $menuElement = ['slug' => 'javascript:void(0);', 'name' => 'Abmelden', 'options' => ['class' => ['logout-button']]];
+                $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out'), 'options' => ['class' => ['logout-button']]];
             }
         } else {
             if ($this->plugin == '') {
-                $menuElement = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => 'Anmelden'];
+                $menuElement = ['slug' => Configure::read('app.slugHelper')->getLogin(), 'name' => __('Sign_in')];
             }
         }
         return $menuElement;
@@ -161,7 +159,7 @@ class MenuHelper extends Helper
     public function getPaymentProductMenuElement()
     {
         if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-            return ['slug' => Configure::read('app.slugHelper')->getMyCreditBalance(), 'name' => 'Guthaben', 'options' => ['fa-icon' => 'fa-fw fa-euro']];
+            return ['slug' => Configure::read('app.slugHelper')->getMyCreditBalance(), 'name' => __('Credit'), 'options' => ['fa-icon' => 'fa-fw fa-' . strtolower(Configure::read('app.currencyName'))]];
         }
         return [];
     }
@@ -169,8 +167,25 @@ class MenuHelper extends Helper
     public function getPaymentMemberFeeMenuElement()
     {
         if (Configure::read('app.memberFeeEnabled')) {
-            return ['slug' => Configure::read('app.slugHelper')->getMyMemberFeeBalance(), 'name' => 'Mitgliedsbeitrag', 'options' => ['fa-icon' => 'fa-fw fa-heart']];
+            return ['slug' => Configure::read('app.slugHelper')->getMyMemberFeeBalance(), 'name' => __('Member_fee'), 'options' => ['fa-icon' => 'fa-fw fa-heart']];
         }
         return [];
     }
+
+    public function getTimebasedCurrencyPaymentForCustomersMenuElement($appAuth)
+    {
+        if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) {
+            return ['slug' => Configure::read('app.slugHelper')->getMyTimebasedCurrencyBalanceForCustomers(), 'name' => Configure::read('app.timebasedCurrencyHelper')->getName(), 'options' => ['fa-icon' => 'fa-fw fa-clock-o']];
+        }
+        return [];
+    }
+
+    public function getTimebasedCurrencyPaymentForManufacturersMenuElement($appAuth)
+    {
+        if ($appAuth->isTimebasedCurrencyEnabledForManufacturer()) {
+            return ['slug' => Configure::read('app.slugHelper')->getMyTimebasedCurrencyBalanceForManufacturers(), 'name' => Configure::read('app.timebasedCurrencyHelper')->getName(), 'options' => ['fa-icon' => 'fa-fw fa-clock-o']];
+        }
+        return [];
+    }
+
 }

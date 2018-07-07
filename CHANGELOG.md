@@ -2,18 +2,48 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## v2.0.2 2017-04-18 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.0.1...v2.0.2)
+## v2.1.0 2018-07-06 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.0.2...v2.1.0)
+
+### Herzlichen Dank an alle beteiligten Personen
+* [EvaSee](https://github.com/EvaSee)
+* [mrothauer](https://github.com/mrothauer)
+* [SaibotP](https://github.com/SaibotP)
+* [tantelisl](https://github.com/tantelisl)
+* [veronimus](https://github.com/veronimus)
+
+### Neue Funktionen
+- Für Produkte, bei denen das Gewicht zum Zeitpunkt der Bestellung noch nicht feststeht, kann der **Preis jetzt auch nach Gewicht** eingeben werden. (z. B. 25 € / kg oder 10 € / 100 g). Bei der Eingabe des tatsächlichen Gewichts wird der Preis dann automatisch berechnet. / [PR#223](https://github.com/foodcoopshop/foodcoopshop/pull/223) / [I#14](https://github.com/foodcoopshop/foodcoopshop/issues/14) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Hersteller können ihre Produkte auch in Stunden anbieten, abgerechnet wird über das neue [Stundenabrechnungs-Modul](https://foodcoopshop.github.io/de/stundenabrechnungs-modul). Beta-Version! / [PR#213](https://github.com/foodcoopshop/foodcoopshop/pull/213) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/SaibotP"><img src="https://github.com/SaibotP.png" width="20"></a>
+- Mitglieder können **vergangene Bestellungen in ihren Warenkorb laden**. In der Bestellerinnerungs-Email befindet sich ein Link, mit dem die letzte Bestellung automatisch in den Warenkorb geladen werden kann. / [PR#215](https://github.com/foodcoopshop/foodcoopshop/pull/215) / [I#74](https://github.com/foodcoopshop/foodcoopshop/issues/74) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/tantelisl"><img src="https://github.com/tantelisl.png" width="20"></a>
+- Mitglieder können jetzt in ihrem Profil ihr eigenes Mitgliedskonto löschen, Superadmins können das auch für andere Mitglieder tun. [PR#226](https://github.com/foodcoopshop/foodcoopshop/pull/226) / [I#29](https://github.com/foodcoopshop/foodcoopshop/issues/29) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Die Produktpreise können jetzt auch für Nicht-Mitglieder angezeigt werden. / [PR#231](https://github.com/foodcoopshop/foodcoopshop/pull/231) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#210](https://github.com/foodcoopshop/foodcoopshop/issues/210) / <a href="https://github.com/veronimus"><img src="https://github.com/veronimus.png" width="20"></a>
+- Anpassungen für die DSGVO bzw. Rechtliches: Allergenliste im Footer; Schriftart nicht mehr vom Google-Server laden. [PR#227](https://github.com/foodcoopshop/foodcoopshop/pull/227) / [I#225](https://github.com/foodcoopshop/foodcoopshop/issues/225) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Für Superadmins gibt es eine unter *Homepage-Verwaltung / Finanzberichte* eine neue Übersicht **Guthaben- und Pfand-Saldo** um einen Überblick über das Guthaben-System und Pfand-Zahlungen zu behalten.
+- Verbesserungen Produkt-Admin: Bild und Beschreibung werden jetzt als Mouseover angezeigt. / [PR#229](https://github.com/foodcoopshop/foodcoopshop/pull/229) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#145](https://github.com/foodcoopshop/foodcoopshop/issues/145) / <a href="https://github.com/EvaSee"><img src="https://github.com/EvaSee.png" width="20"></a> / Nach dem Deaktivieren wird nicht mehr automatisch runtergescrollt. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/f190414f5be1cfbba86fbf26100e08f9aff0dda2) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [I#146](https://github.com/foodcoopshop/foodcoopshop/issues/146) / <a href="https://github.com/EvaSee"><img src="https://github.com/EvaSee.png" width="20"></a>
+- Software-Hilfe komplett ausgelagert in die [Online-Dokumentation](https://foodcoopshop.github.io), Hilfe-Button hervorgehoben. [PR#234](https://github.com/foodcoopshop/foodcoopshop/pull/234) / [I#9](https://github.com/foodcoopshop/foodcoopshop/issues/9) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- FoodCoopShop ist jetzt auch auf Englisch verfügbar. [PR#234](https://github.com/foodcoopshop/foodcoopshop/pull/234) / [PR#235](https://github.com/foodcoopshop/foodcoopshop/pull/235) / [PR#238](https://github.com/foodcoopshop/foodcoopshop/pull/238) / [I#9](https://github.com/foodcoopshop/foodcoopshop/issues/9) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+### Für Entwickler
+- [elFinder](https://studio-42.github.io/elFinder/) ist jetzt Datei-Upload-Plugin für den WYSIWYG-Editor. [PR#239](https://github.com/foodcoopshop/foodcoopshop/pull/239) / [I#228](https://github.com/foodcoopshop/foodcoopshop/issues/228) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Netzwerk-Modul ist jetzt Teil vom Core. / [PR#237](https://github.com/foodcoopshop/foodcoopshop/pull/237) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- JQuery-Update v3.3.1 mit JQuery Migrate 1.4.1 / [PR#230](https://github.com/foodcoopshop/foodcoopshop/pull/230) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Vendor-Updates: CakePHP-Update v3.6, Featherlight v1.7.13, OwlCarousel v2.3.4 / [PR#218](https://github.com/foodcoopshop/foodcoopshop/pull/218) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Update auf PHPUnit 7. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/885c1365fd0ed12f2589f92f2fcdca82993c3558) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- JQuery UI Tooltip wurde durch Tooltipster ersetzt. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/ed331eae8fbb8959bb7e3981a1c8895199a3075c) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- JsMin wurde durch JShrink ersetzt. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/5013ee524d594a5ca4850dbf2e745c1d573e3b76) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+## v2.0.2 2018-04-18 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.0.1...v2.0.2)
 
 ### Bugfixes
 - Das Ändern der E-Mail-Adresse beim Hersteller hat nicht korrekt funktioniert. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/1b72e5dad95287d48efd09882e6aa57d4d52b6d9) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Beim Erstellen eines neuen Blog-Artikels wurde das Feld "nach vorne reihen" irrtümlich angezeigt. Das Deaktivieren dieser Funktion hat zu einem Fehlern geführt. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/22c550947df41bfc56fea049db4343e70d511a57) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Beim Erstellen eines neuen Blog-Artikels wurde das Feld "nach vorne reihen" irrtümlich angezeigt. Das Deaktivieren dieser Funktion hat zu einem Fehler geführt. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/22c550947df41bfc56fea049db4343e70d511a57) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-## v2.0.1 2017-04-03 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.0.0...v2.0.1)
+## v2.0.1 2018-04-03 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.0.0...v2.0.1)
 
 ### Bugfixes
 - Die Sommerzeit wurde nicht korrekt berücksichtigt. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/245e5e1d7a7173a24a5f83cae90359563dfb3f01) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-## v2.0.0 2017-03-29 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.5.0...v2.0.0)
+## v2.0.0 2018-03-29 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v1.5.0...v2.0.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
 * [EvaSee](https://github.com/EvaSee)

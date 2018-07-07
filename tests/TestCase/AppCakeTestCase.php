@@ -58,23 +58,34 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
 
         $this->initSimpleBrowser();
 
-        self::resetTestDatabaseData();
-
         $View = new View();
         $this->Slug = new SlugHelper($View);
         $this->Html = new MyHtmlHelper($View);
         $this->Time = new MyTimeHelper($View);
-        $this->Configuration = TableRegistry::get('Configurations');
-        $this->Customer = TableRegistry::get('Customers');
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
-        $this->generatePasswordHashes();
+        $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+
+        self::resetTestDatabaseData();
+
     }
 
     protected static function resetTestDatabaseData()
     {
+
         self::$dbConnection = ConnectionManager::get('test');
         self::$testDumpDir = ROOT . DS .  'tests' . DS . 'config' . DS . 'sql' . DS;
         self::importDump(self::$testDumpDir . 'test-db-data.sql');
+
+        // regenerate password hashes
+        $ph = new AppPasswordHasher();
+        $query = 'UPDATE fcs_customer SET passwd = :passwd;';
+        $params = [
+            'passwd' => $ph->hash(Configure::read('test.loginPassword'))
+        ];
+        $statement = self::$dbConnection->prepare($query);
+        $statement->execute($params);
+
     }
 
     public function initSimpleBrowser()
@@ -239,20 +250,6 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->assertEquals($preparedBccAddresses, $expectedBccEmails, 'email bcc_addresses wrong', 0, 0, true);
     }
 
-    /**
-     * due to different app.cookieKeys, logins would not work with a defined hash
-     */
-    protected function generatePasswordHashes()
-    {
-        $ph = new AppPasswordHasher();
-        $query = 'UPDATE '.$this->Customer->getTable().' SET passwd = :passwd;';
-        $params = [
-            'passwd' => $ph->hash(Configure::read('test.loginPassword'))
-        ];
-        $statement = self::$dbConnection->prepare($query);
-        $statement->execute($params);
-    }
-
     protected function changeReadOnlyConfiguration($configKey, $value)
     {
         $query = 'UPDATE ' . $this->Configuration->getTable() . ' SET value = :value WHERE name = :configKey';
@@ -318,41 +315,69 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     }
 
 
-    protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '')
+    protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '', $timebaseCurrencyTimeSum = null)
     {
-        $this->browser->post(
-            $this->Slug->getCartFinish(),
-            [
-                'Orders' => [
-                    'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
-                    'cancellation_terms_accepted' => $cancellation_terms_accepted,
-                    'comment' => $comment
-                ]
+        $data = [
+            'Orders' => [
+                'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
+                'cancellation_terms_accepted' => $cancellation_terms_accepted
             ]
+        ];
+
+        if ($comment != '') {
+            $data['Orders']['comment'] = $comment;
+        }
+
+        if ($timebaseCurrencyTimeSum !== null) {
+            $data['timebased_currency_order']['seconds_sum_tmp'] = $timebaseCurrencyTimeSum;
+        }
+
+        $this->browser->post(
+            $this->Slug->getCartFinish(), $data
         );
     }
 
     /**
-     *
-     * @param int $productId
+     * @param string $productId
      * @param double $price
-     * @return json string
+     * @param boolean $pricePerUnitEnabled
+     * @param number $priceInclPerUnit
+     * @param string $priceUnitName
+     * @param number $priceUnitAmount
+     * @param number $priceQuantityInUnits
+     * @return mixed
      */
-    protected function changeProductPrice($productId, $price)
+    protected function changeProductPrice($productId, $price, $usePricePerUnit = false, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0)
     {
         $this->browser->ajaxPost('/admin/products/editPrice', [
             'productId' => $productId,
-            'price' => $price
+            'price' => $price,
+            'pricePerUnitEnabled' => $pricePerUnitEnabled,
+            'priceInclPerUnit' => $priceInclPerUnit,
+            'priceUnitName' => $priceUnitName,
+            'priceUnitAmount' => $priceUnitAmount,
+            'priceQuantityInUnits' => $priceQuantityInUnits
         ]);
         return $this->browser->getJsonDecodedContent();
     }
 
-    protected function changeManufacturer($manufacturerId, $option, $value)
+    protected function changeManufacturer($manufacturerId, $field, $value)
     {
-        $query = 'UPDATE ' . $this->Manufacturer->getTable().' SET '.$option.' = :value WHERE id_manufacturer = :manufacturerId';
+        $query = 'UPDATE ' . $this->Manufacturer->getTable().' SET '.$field.' = :value WHERE id_manufacturer = :manufacturerId';
         $params = [
             'value' => $value,
             'manufacturerId' => $manufacturerId
+        ];
+        $statement = self::$dbConnection->prepare($query);
+        return $statement->execute($params);
+    }
+
+    protected function changeCustomer($customerId, $field, $value)
+    {
+        $query = 'UPDATE ' . $this->Customer->getTable().' SET '.$field.' = :value WHERE id_customer = :customerId';
+        $params = [
+            'value' => $value,
+            'customerId' => $customerId
         ];
         $statement = self::$dbConnection->prepare($query);
         return $statement->execute($params);
@@ -392,4 +417,16 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->browser->loginEmail = Configure::read('test.loginEmailVegetableManufacturer');
         $this->browser->doFoodCoopShopLogin();
     }
+
+    protected function prepareTimebasedCurrencyConfiguration($reducedMaxPercentage)
+    {
+        $this->changeConfiguration('FCS_TIMEBASED_CURRENCY_ENABLED', 1);
+        $this->changeConfiguration('FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE', '10,50');
+        $this->changeCustomer(Configure::read('test.superadminId'), 'timebased_currency_enabled', 1);
+        $this->changeCustomer(Configure::read('test.customerId'), 'timebased_currency_enabled', 1);
+        $this->changeManufacturer(5, 'timebased_currency_enabled', 1);
+        $this->changeManufacturer(4, 'timebased_currency_enabled', 1);
+        $this->changeManufacturer(4, 'timebased_currency_max_percentage', $reducedMaxPercentage);
+    }
+
 }

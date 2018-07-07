@@ -17,7 +17,7 @@ use Cake\Core\Configure;
 $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();".
-        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Hersteller', 'Pfandkonto');".
+        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Manufacturers')."', '".__d('admin', 'Deposit_account')."');".
         Configure::read('app.jsNamespace') . ".Admin.initDeletePayment();"
 ]);
 ?>
@@ -49,7 +49,7 @@ foreach ($payments as $payment) {
         echo '</td>';
 
         echo '<td>';
-            echo $payment->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeLong'));
+            echo $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong'));
         echo '</td>';
 
         echo '<td>';
@@ -57,7 +57,7 @@ foreach ($payments as $payment) {
         echo '</td>';
 
         echo '<td style="text-align:right;" class="negative">';
-            echo $this->Html->formatAsEuro($payment->amount * -1);
+            echo $this->Number->formatAsCurrency($payment->amount * -1);
         echo '</td>';
 
         echo '<td style="text-align:center;">';
@@ -74,7 +74,7 @@ foreach ($payments as $payment) {
         echo '<td></td>';
         echo '<td>Summe</td>';
         echo '<td class="right negative">';
-            echo '<b style="font-size: 16px;">'.$this->Html->formatAsEuro($sum * -1).'</b>';
+            echo '<b style="font-size: 16px;">'.$this->Number->formatAsCurrency($sum * -1).'</b>';
         echo '</td>';
         echo '<td></td>';
     echo '</tr>';

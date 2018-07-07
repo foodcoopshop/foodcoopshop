@@ -23,7 +23,7 @@ $this->element('addScript', [
 $idForImageUpload = !empty($slider->id_slider) ? $slider->id_slider : StringComponent::createRandomString(6);
 
 $imageSrc = false;
-if ($this->request->here != $this->Slug->getSliderAdd()) {
+if ($this->request->getRequestTarget() != $this->Slug->getSliderAdd()) {
     $imageSrc = $this->Html->getSliderImageSrc($slider->image);
     if (!empty($slider->tmp_image) && $slider->tmp_image != '') {
         $imageSrc = str_replace('\\', '/', $slider->tmp_image);
@@ -35,15 +35,10 @@ if ($this->request->here != $this->Slug->getSliderAdd()) {
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa fa-check"></i> Speichern</a> <a href="javascript:void(0);"
-            class="btn btn-default cancel"><i class="fa fa-remove"></i> Abbrechen</a>
+            class="fa fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a href="javascript:void(0);"
+            class="btn btn-default cancel"><i class="fa fa-remove"></i> <?php echo __d('admin', 'Cancel'); ?></a>
+            <?php echo $this->element('printIcon'); ?>
     </div>
-</div>
-
-<div id="help-container">
-    <ul>
-        <li>Auf dieser Seite kannst du das Slideshow-Bild ändern.</li>
-    </ul>
 </div>
 
 <div class="sc"></div>
@@ -54,21 +49,21 @@ echo $this->Form->create($slider, [
     'class' => 'fcs-form',
     'novalidate' => 'novalidate',
     'url' => $isEditMode ? $this->Slug->getSliderEdit($slider->id_slider) : $this->Slug->getSliderAdd(),
-    'id' => 'categoryEditForm'
+    'id' => 'sliderEditForm'
 ]);
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
 echo '<div class="input">';
-echo '<label>Slideshow-Bild';
+echo '<label>' . __d('admin', 'Slider_image');
 if ($imageSrc) {
-    echo '<br /><span class="small">Zum Ändern auf das Bild klicken.<br />Breite: 905px</span>';
+    echo '<br /><span class="small">'.__d('admin', 'Click_on_image_to_change_it.').'<br />'.__d('admin', 'Width').': 905px</span>';
 }
 echo '</label>';
 echo '<div style="float:right;">';
 echo $this->Html->getJqueryUiIcon($imageSrc ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
     'class' => 'add-image-button ' . ($imageSrc ? 'uploaded' : ''),
-    'title' => 'Neues Bild hochladen bzw. austauschen',
+    'title' => __d('admin', 'Upload_new_image_or_change_it'),
     'data-object-id' => $idForImageUpload
 ], 'javascript:void(0);');
 echo '</div>';
@@ -77,17 +72,17 @@ echo '</div>';
 
 echo $this->Form->control('Sliders.position', [
     'class' => 'short',
-    'label' => 'Reihenfolge',
+    'label' => __d('admin', 'Rank'),
     'type' => 'text'
 ]);
 echo $this->Form->control('Sliders.active', [
-    'label' => 'Aktiv?',
+    'label' => __d('admin', 'Active').'?',
     'type' => 'checkbox'
 ]);
 
-if ($this->request->here != $this->Slug->getSliderAdd()) {
+if ($this->request->getRequestTarget() != $this->Slug->getSliderAdd()) {
     echo $this->Form->control('Sliders.delete_slider', [
-        'label' => 'Slideshow-Bild löschen? <span class="after small">Anhaken und dann auf <b>Speichern</b> klicken.</span>',
+        'label' => __d('admin', 'Delete_slider_image?').' <span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);

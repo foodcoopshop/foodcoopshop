@@ -1,6 +1,6 @@
 /**
- * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 CKEDITOR.editorConfig = function ( config ) {
@@ -8,7 +8,7 @@ CKEDITOR.editorConfig = function ( config ) {
     config.width = 413;
     config.height = 250;
     config.format_tags = 'p';
-    config.language = 'de';
+    config.language = foodcoopshop.LocalizedJs.helper.defaultLocale;
 
     config.enterMode = CKEDITOR.ENTER_BR;
     config.extraPlugins = 'format';
@@ -20,10 +20,8 @@ CKEDITOR.editorConfig = function ( config ) {
         '/js/ckeditor/config-small-with-upload.css'
     ];
 
-    config.filebrowserBrowseUrl = '/node_modules/kcfinder/browse.php?type=files';
-    config.filebrowserImageBrowseUrl = '/node_modules/kcfinder/browse.php?type=images';
-    config.filebrowserUploadUrl = '/node_modules/kcfinder/upload.php?type=files';
-    config.filebrowserImageUploadUrl = '/node_modules/kcfinder/upload.php?type=images';
+    config.filebrowserBrowseUrl = '/js/elfinder/elfinder.html';
+    config.filebrowserImageBrowseUrl = '/js/elfinder/elfinder.html';
 
     // The toolbar groups arrangement, optimized for two toolbar rows.
     config.toolbarGroups = [
@@ -37,5 +35,5 @@ CKEDITOR.editorConfig = function ( config ) {
 
 };
 
-CKEDITOR.timestamp = '4.8.0'; // change this string if version is updated in package.json
+CKEDITOR.timestamp = 'v4.9.2'; // change this string if version is updated in package.json
 

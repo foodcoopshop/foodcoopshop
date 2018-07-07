@@ -33,7 +33,7 @@ class BackupDatabaseShell extends AppShell
         ini_set('max_execution_time', 300);
         ini_set('memory_limit', '256M');
 
-        $this->ActionLog = TableRegistry::get('ActionLogs');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
 
         $this->startTimeLogging();
 
@@ -65,7 +65,7 @@ class BackupDatabaseShell extends AppShell
         unlink($backupdir . DS . $filename);
         // END zip and delete sql file
 
-        $message = 'Datenbank-Backup erfolgreich ('.Number::toReadableSize(filesize($zipFilename)).').';
+        $message = __('Database_backup_successful') . ' ('.Number::toReadableSize(filesize($zipFilename)).').';
 
         // email zipped file
         $email = new AppEmail(false);

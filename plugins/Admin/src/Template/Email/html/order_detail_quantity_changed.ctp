@@ -6,7 +6,7 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 1.0.0
+ * @since         FoodCoopShop 2.1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
@@ -18,42 +18,35 @@ use Cake\Core\Configure;
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
     
-        <?php echo $this->element('email/greeting', ['data' => $oldOrderDetail->order->customer]); ?>
-        
-        <tr>
+    <?php echo $this->element('email/greeting', ['data' => $oldOrderDetail->order->customer]); ?>
+    
+    <tr>
         <td>
 
             <p>
-                Die Anzahl des Produktes <b><?php echo $oldOrderDetail->product_name; ?></b> wurde korrigiert. Du hast am <?php echo $oldOrderDetail->order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')); ?> beim Hersteller <b><?php echo $oldOrderDetail->product->manufacturer->name; ?></b>
-                bestellt.
+            	<?php echo __d('admin', 'The_weight_of_the_product_{0}_has_been_adapted.', ['<b>'.$oldOrderDetail->product_name.'</b>']); ?> <?php echo __d('admin', 'You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}.', [
+            	    $oldOrderDetail->product_amount,
+            	    $oldOrderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')),
+            	    '<b>'.$oldOrderDetail->product->manufacturer->name.'</b>'
+            	]); ?>
             </p>
 
             <ul style="padding-left: 10px;">
-                <li>Alte Anzahl: <b><?php echo $oldOrderDetail->product_quantity; ?></b></li>
-                <li>Neue Anzahl: <b><?php echo $newOrderDetail->product_quantity; ?></b></li>
+                <li><?php echo __d('admin', 'Old_price_for'); ?> <?php echo $this->MyNumber->formatUnitAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units) . ' ' . $oldOrderDetail->order_detail_unit->unit_name; ?>: <b><?php echo $this->MyNumber->formatAsDecimal($oldOrderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
+                <li><?php echo __d('admin', 'New_price_for'); ?> <?php echo $this->MyNumber->formatUnitAsDecimal($newProductQuantityInUnits) . ' ' . $oldOrderDetail->order_detail_unit->unit_name; ?>: <b><?php echo $this->MyNumber->formatAsDecimal($newOrderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
             </ul>
-
+            
             <p>
-                Warum wurde die Anzahl korrigiert?<br />
-                <b>
-                <?php
-
-                if ($editQuantityReason != '') {
-                    echo '"' . $editQuantityReason . '"';
-                } else {
-                    echo 'Kein Grund angegeben.';
-                }
-                ?>
-                </b>
+            	<?php echo __d('admin', 'The_base_price_is_{0}.', [$this->PricePerUnit->getPricePerUnitBaseInfo($oldOrderDetail->order_detail_unit->price_incl_per_unit, $oldOrderDetail->order_detail_unit->unit_name, $oldOrderDetail->order_detail_unit->unit_amount)]); ?>
             </p>
-                
-                <?php if ($this->MyHtml->paymentIsCashless()) { ?>
-                    <p>PS: Dein Guthaben wurde automatisch angepasst.</p>
-                <?php } ?>
 
-            </td>
+            <?php if ($this->MyHtml->paymentIsCashless()) { ?>
+                <p><?php echo __d('admin', 'PS:_Your_credit_has_been_adapted_automatically.'); ?></p>
+            <?php } ?>
+
+        </td>
 
     </tr>
 
 </tbody>
-</table>
+<?php echo $this->element('email/tableFoot'); ?>

@@ -30,7 +30,7 @@ class DepositsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        switch ($this->request->action) {
+        switch ($this->getRequest()->getParam('action')) {
             case 'index':
             case 'detail':
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
@@ -52,8 +52,8 @@ class DepositsController extends AdminAppController
     private function getManufacturerId()
     {
         $manufacturerId = '';
-        if (!empty($this->request->getQuery('manufacturerId'))) {
-            $manufacturerId = $this->request->getQuery('manufacturerId');
+        if (!empty($this->getRequest()->getQuery('manufacturerId'))) {
+            $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
         } if ($this->manufacturerId > 0) {
             $manufacturerId = $this->manufacturerId;
         }
@@ -78,12 +78,12 @@ class DepositsController extends AdminAppController
     {
         $manufacturerId = $this->getManufacturerId();
 
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
         $this->set('manufacturerId', $manufacturerId);
 
         if ($manufacturerId == '') {
-            $this->set('title_for_layout', 'Pfandkonto');
+            $this->set('title_for_layout', __d('admin', 'Deposit_account'));
             return;
         }
 
@@ -94,8 +94,8 @@ class DepositsController extends AdminAppController
         ])->first();
         $this->set('manufacturer', $manufacturer);
 
-        $this->OrderDetail = TableRegistry::get('OrderDetails');
-        $this->Payment = TableRegistry::get('Payments');
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
 
         $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
         $this->set('orderStates', $orderStates);
@@ -168,7 +168,7 @@ class DepositsController extends AdminAppController
 
         $manufacturerId = $this->getManufacturerId();
 
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $this->set('manufacturerId', $manufacturerId);
 
         $manufacturer = $this->Manufacturer->find('all', [
@@ -178,7 +178,7 @@ class DepositsController extends AdminAppController
         ])->first();
         $this->set('manufacturer', $manufacturer);
 
-        $this->Payment = TableRegistry::get('Payments');
+        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
         $payments = $this->Payment->getManufacturerDepositsByMonth($manufacturerId, $monthAndYear);
 
         $this->set('payments', $payments);
@@ -191,6 +191,6 @@ class DepositsController extends AdminAppController
         $month = $monthAndYearExploded[1];
         $this->set('month', $month);
         $this->set('year', $year);
-        $this->set('title_for_layout', 'Pfand-Rücknahme Detail für ' . $manufacturer->name);
+        $this->set('title_for_layout', __d('admin', 'Deposit_take_back_detail_for') . ' ' . $manufacturer->name);
     }
 }

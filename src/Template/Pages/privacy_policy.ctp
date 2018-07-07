@@ -13,10 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 
-?>
-<?php
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();"
 ]);
-echo $this->element('legal/privacyPolicy');
+echo $this->element('legal/'.I18n::getLocale().'/privacyPolicy');

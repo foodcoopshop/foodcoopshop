@@ -2,7 +2,7 @@
 
 namespace App\Network;
 
-use Cake\Network\Session;
+use Cake\Http\Session;
 use Cake\Utility\Hash;
 
 class AppSession extends Session
@@ -11,7 +11,7 @@ class AppSession extends Session
     /**
      * quite tricky and hacky to get session into AppTable
      * {@inheritDoc}
-     * @see \Cake\Network\Session::read()
+     * @see \Cake\Http\Session::read()
      */
     public function read($name = null)
     {

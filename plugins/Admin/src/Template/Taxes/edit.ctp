@@ -25,15 +25,10 @@ $this->element('addScript', [
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa fa-check"></i> Speichern</a> <a href="javascript:void(0);"
-            class="btn btn-default cancel"><i class="fa fa-remove"></i> Abbrechen</a>
+            class="fa fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a href="javascript:void(0);"
+            class="btn btn-default cancel"><i class="fa fa-remove"></i> <?php echo __d('admin', 'Cancel'); ?></a>
+        <?php echo $this->element('printIcon'); ?>
     </div>
-</div>
-
-<div id="help-container">
-    <ul>
-        <li>Auf dieser Seite kannst du den Steuersatz ändern.</li>
-    </ul>
 </div>
 
 <div class="sc"></div>
@@ -49,18 +44,18 @@ echo $this->Form->create($tax, [
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
 
-if ($this->request->here != $this->Slug->getTaxAdd()) {
-    echo '<label>Steuersatz<br /><span class="small">Steuersätze sind nicht änderbar</span></label><p>' . $this->Html->formatAsPercent($tax->rate) . '</p>';
+if ($this->request->getRequestTarget() != $this->Slug->getTaxAdd()) {
+    echo '<label>'.__d('admin', 'Tax_rate').'<br /><span class="small">'.__d('admin', 'Tax_rates_can_not_be_changed.').'</span></label><p>' . $this->Number->formatAsPercent($tax->rate) . '</p>';
 } else {
     echo $this->Form->control('Taxes.rate', [
         'class' => 'long',
-        'label' => 'Steuersatz<br /><span class="small">z.B. "10" für 10%<br />Steuersätze sind später nicht änderbar</span>',
+        'label' => __d('admin', 'Tax_rate') . '<br /><span class="small">'.__d('admin', 'e.g._10_for_10%').'<br />'.__d('admin', 'Tax_rates_can_not_be_changed_later.').'</span>',
         'escape' => false
     ]);
 }
 
 echo $this->Form->control('Taxes.active', [
-    'label' => 'Steuersatz aktiv?'
+    'label' => __d('admin', 'Active').'?'
 ]);
 
 echo $this->Form->end();

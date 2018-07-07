@@ -24,24 +24,30 @@ use Cake\Core\Configure;
         <td>
 
             <p>
-                Der Status deiner Guthaben-Aufladung vom <b><?php echo $payment->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort')); ?></b> über <b>€ <?php echo Configure::read('app.htmlHelper')->formatAsDecimal($payment->amount); ?></b> wurde auf <b><?php echo $newStatusAsString; ?></b> geändert.
+            	<?php
+            	   echo __d('admin', 'The_status_of_your_credit_upload_of_{0}_({1}_amount)_was_changed_to_{2}.', [
+            	       '<b>'.$payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')).'</b>',
+            	       '<b>'.Configure::read('app.numberHelper')->formatAsDecimal($payment->amount). ' ' . Configure::read('appDb.FCS_CURRENCY_SYMBOL') . '</b>',
+            	       $newStatusAsString
+            	   ]);
+            	?>
                 
                 <?php if ($payment->approval == -1) { ?>
-                    Bitte überprüfe die Guthaben-Aufladung, die du im System eingetragen hast, mit den Zahlungen auf deinem Bankkonto.
+                	<?php echo __d('admin', 'Please_compare_the_credit_upload_that_you_added_to_our_system_with_the_actual_bank_account_transfer.'); ?>
                 <?php } ?>
                 
             </p>
             
             <?php
             if ($payment->approval_comment != '') {
-                echo '<p>Kommentar:<br />';
+                echo '<p>'.__d('admin', 'Comment').':<br />';
                 echo '<b>"'.$payment->approval_comment . '</b>"';
                 echo '</p>';
             }
             ?>
             
             <p>
-                Hier der Link zu deinem Guthaben-System:<br />
+                <?php echo __d('admin', 'Here_you_find_the_link_to_add_the_credit:'); ?><br />
                 <a href="<?php echo Configure::read('app.cakeServerName').'/admin/payments/product'; ?>"><?php echo Configure::read('app.cakeServerName').'/admin/payments/product'; ?></a>
             </p>
             
@@ -50,4 +56,4 @@ use Cake\Core\Configure;
     </tr>
 
 </tbody>
-</table>
+<?php echo $this->element('email/tableFoot'); ?>

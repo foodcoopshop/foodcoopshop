@@ -34,9 +34,55 @@ class CartComponent extends Component
         return null;
     }
 
+    public function getProductsWithUnitCount()
+    {
+        if ($this->cart !== null) {
+            return $this->cart['ProductsWithUnitCount'];
+        }
+        return 0;
+    }
+
     public function getProductAndDepositSum()
     {
         return $this->getProductSum() + $this->getDepositSum();
+    }
+
+    public function getTimebasedCurrencyMoneyInclSum()
+    {
+        if ($this->cart !== null) {
+            return $this->cart['CartTimebasedCurrencyMoneyInclSum'];
+        }
+        return 0;
+    }
+
+    public function isTimebasedCurrencyUsed()
+    {
+        return isset($this->cart['CartTimebasedCurrencyUsed']) && $this->cart['CartTimebasedCurrencyUsed'];
+    }
+
+    public function getTimebasedCurrencyMoneyExclSum()
+    {
+        if ($this->cart !== null) {
+            return $this->cart['CartTimebasedCurrencyMoneyExclSum'];
+        }
+        return 0;
+    }
+
+    /**
+     * avoids rounding errors
+     * @return number
+     */
+    public function getTimebasedCurrencySecondsSumRoundedUp()
+    {
+        return round($this->getTimebasedCurrencySecondsSum() * 1.05, 0);
+    }
+
+    public function getTimebasedCurrencySecondsSum()
+    {
+        if ($this->cart !== null) {
+            return $this->cart['CartTimebasedCurrencySecondsSum'];
+        }
+        return 0;
     }
 
     public function getTaxSum()
@@ -79,7 +125,7 @@ class CartComponent extends Component
     public function markAsSaved()
     {
         if ($this->cart !== null) {
-            $cc = TableRegistry::get('Carts');
+            $cc = TableRegistry::getTableLocator()->get('Carts');
             $cc->save($cc->patchEntity($cc->get($this->getCartId()), [
                 'status' => APP_OFF
             ]));

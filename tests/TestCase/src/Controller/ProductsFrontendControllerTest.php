@@ -24,13 +24,13 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->Product = TableRegistry::get('Products');
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
         $this->changeConfiguration('FCS_SHOW_PRODUCTS_FOR_GUESTS', true);
     }
 
     public function testProductDetailOfflineManufacturerPublicLoggedOut()
     {
-        $productId = 47;
+        $productId = 60;
         $this->changeProductStatus($productId, 0);
         $this->browser->get($this->Slug->getProductDetail($productId, 'Demo Product'));
         $this->assert404NotFoundHeader();
@@ -39,7 +39,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
     public function testProductDetailOfflineManufacturerPublicLoggedIn()
     {
         $this->loginAsCustomer();
-        $productId = 47;
+        $productId = 60;
         $this->changeProductStatus($productId, 0);
         $this->browser->get($this->Slug->getProductDetail($productId, 'Demo Product'));
         $this->assert404NotFoundHeader();
@@ -47,20 +47,29 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
 
     public function testProductDetailOnlineManufacturerPublicLoggedOut()
     {
-        $this->browser->get($this->Slug->getProductDetail(47, 'Demo Product'));
+        $response = $this->browser->get($this->Slug->getProductDetail(60, 'Demo Product'));
+        $this->assertNotRegExpWithUnquotedString('0,62&nbsp;€', $response); // price must not be shown
+        $this->assert200OkHeader();
+    }
+
+    public function testProductDetailOnlineManufacturerPublicLoggedOutShowProductPriceEnabled()
+    {
+        $this->changeConfiguration('FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS', 1);
+        $response = $this->browser->get($this->Slug->getProductDetail(60, 'Demo Product'));
+        $this->assertRegExpWithUnquotedString('<div class="price">0,62&nbsp;€</div><div class="deposit">+ <b>0,50&nbsp;€</b> Pfand</div><div class="tax">0,07&nbsp;€</div>', $response);
         $this->assert200OkHeader();
     }
 
     public function testProductDetailOnlineManufacturerPublicLoggedIn()
     {
         $this->loginAsCustomer();
-        $this->browser->get($this->Slug->getProductDetail(47, 'Demo Product'));
+        $this->browser->get($this->Slug->getProductDetail(60, 'Demo Product'));
         $this->assert200OkHeader();
     }
 
     public function testProductDetailOnlineManufacturerPrivateLoggedOut()
     {
-        $productId = 47;
+        $productId = 60;
         $manufacturerId = 15;
         $this->changeManufacturer($manufacturerId, 'is_private', 1);
         $this->browser->get($this->Slug->getProductDetail($productId, 'Demo Product'));

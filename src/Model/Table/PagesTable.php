@@ -27,6 +27,7 @@ class PagesTable extends AppTable
         $this->addBehavior('Tree', [
             'parent' => 'id_parent'
         ]);
+        $this->addBehavior('Timestamp');
         $this->belongsTo('Customers', [
             'foreignKey' => 'id_customer'
         ]);
@@ -34,10 +35,10 @@ class PagesTable extends AppTable
 
     public function validationDefault(Validator $validator)
     {
-        $validator->notEmpty('title', 'Bitte gib einen Titel an.');
-        $validator->minLength('title', 2, 'Bitte gib mindestens 3 Zeichen ein.');
-        $validator->range('position', [-1, 1001], 'Bitte gibt eine Zahl von 0 bis 1000 an.');
-        $validator->urlWithProtocol('extern_url', 'Bitte gibt eine gültige Internet-Adresse an.');
+        $validator->notEmpty('title', __('Please_enter_a_title.'));
+        $validator->minLength('title', 2, __('Please_enter_at_least_{0}_characters.', [2]));
+        $validator->range('position', [-1, 1001], __('Please_enter_a_number_between_{0}_and_{1}.', [0, 1000]));
+        $validator->urlWithProtocol('extern_url', __('Please_enter_a_valid_internet_address.'));
         $validator->allowEmpty('extern_url');
         return $validator;
     }
@@ -49,7 +50,7 @@ class PagesTable extends AppTable
         foreach ($array as $item) {
             $statusString = '';
             if (! $item->active) {
-                $statusString = ' (offline)';
+                $statusString = ' ('.__('offline').')';
             }
             $this->flattenedArray[$item->id_page] = $separator . $item->title . $statusString;
             if (! empty($item['children'])) {

@@ -4,6 +4,7 @@ namespace App\Model\Table;
 
 use App\Network\AppSession;
 use App\ORM\AppMarshaller;
+use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Table;
 use Cake\Utility\Hash;
@@ -39,9 +40,9 @@ class AppTable extends Table
         parent::initialize($config);
     }
 
-    protected function getNumberRangeValidator(Validator $validator, $field, $min, $max)
+    public function getNumberRangeValidator(Validator $validator, $field, $min, $max)
     {
-        $message = 'Die Eingabe muss eine Zahl zwischen ' . $min . ' und ' . $max . ' sein.';
+        $message = __('Please_enter_a_number_between_{0}_and_{1}.', [$min, $max]);
         $validator->lessThanOrEqual($field, $max, $message);
         $validator->greaterThanOrEqual($field, $min, $message);
         $validator->notEmpty($field, $message);
@@ -51,6 +52,18 @@ class AppTable extends Table
     public function sortByVirtualField($object, $name)
     {
         return (object) Hash::sort($object->toArray(), '{n}.' . $name, 'ASC');
+    }
+
+    public function getAllValidationErrors($entity)
+    {
+        $preparedErrors = [];
+        foreach($entity->getErrors() as $field => $message) {
+            $errors = array_keys($message);
+            foreach($errors as $error) {
+                $preparedErrors[] = $message[$error];
+            }
+        }
+        return $preparedErrors;
     }
 
     /**
@@ -78,13 +91,13 @@ class AppTable extends Table
     }
 
     /**
-     * @return boolean
+     * @return boolean | array
      */
-    protected function user()
+    protected function getLoggedUser()
     {
         $session = new AppSession();
         if ($session->read('Auth.User.id_customer') !== null) {
-            return $session->read('Auth.User.id_customer');
+            return $session->read('Auth.User');
         }
         return false;
     }
@@ -94,13 +107,21 @@ class AppTable extends Table
      */
     protected function getFieldsForProductListQuery()
     {
-        return "Products.id_product,
+        $fields = "Products.id_product,
                 ProductLangs.name, ProductLangs.description_short, ProductLangs.description, ProductLangs.unity,
                 ProductShops.price, ProductShops.created,
                 Deposits.deposit,
                 Images.id_image,
                 Manufacturers.id_manufacturer, Manufacturers.name as ManufacturersName,
-                StockAvailables.quantity ";
+                Manufacturers.timebased_currency_enabled,
+                Units.price_per_unit_enabled, Units.price_incl_per_unit, Units.name as unit_name, Units.amount as unit_amount, Units.quantity_in_units,
+                StockAvailables.quantity";
+
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+            $fields .= ", Manufacturers.timebased_currency_max_percentage, Manufacturers.timebased_currency_max_credit_balance";
+        }
+        $fields .= " ";
+        return $fields;
     }
 
     /**
@@ -113,6 +134,7 @@ class AppTable extends Table
                 LEFT JOIN ".$this->tablePrefix."stock_available StockAvailables ON Products.id_product = StockAvailables.id_product
                 LEFT JOIN ".$this->tablePrefix."images Images ON Images.id_product = Products.id_product
                 LEFT JOIN ".$this->tablePrefix."deposits Deposits ON Products.id_product = Deposits.id_product
+                LEFT JOIN ".$this->tablePrefix."units Units ON Products.id_product = Units.id_product
                 LEFT JOIN ".$this->tablePrefix."manufacturer Manufacturers ON Manufacturers.id_manufacturer = Products.id_manufacturer ";
     }
 
@@ -123,11 +145,12 @@ class AppTable extends Table
     {
         $conditions = "WHERE 1
                     AND StockAvailables.id_product_attribute = 0
+                    AND (Units.id_product_attribute = 0 OR Units.id_product_attribute IS NULL)
                     AND Products.active = :active
                     AND ".$this->getManufacturerHolidayConditions()."
                     AND Manufacturers.active = :active ";
 
-        if (! $this->user()) {
+        if (! $this->getLoggedUser()) {
             $conditions .= 'AND Manufacturers.is_private = :isPrivate ';
         }
         return $conditions;

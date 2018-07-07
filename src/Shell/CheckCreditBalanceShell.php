@@ -54,15 +54,15 @@ class CheckCreditBalanceShell extends AppShell
         foreach ($customers as $customer) {
             $delta = $this->Customer->getCreditBalance($customer->id_customer);
 
-            if ($customer->email == 'fcs-demo-mitglied@mailinator.com' || $delta < 0) {
+            if ($delta < 0) {
                 $i ++;
                 $deltaSum -= $delta;
-                $delta = '€ ' . Configure::read('app.htmlHelper')->formatAsDecimal($delta); // creditBalance is rendered in email view => do not use formatAsEuro here because of &nbsp;
+                $delta = Configure::read('app.numberHelper')->formatAsDecimal($delta) . ' ' . Configure::read('appDb.FCS_CURRENCY_SYMBOL'); // creditBalance is rendered in email view => do not use formatAsCurrency here because of &nbsp;
                 $outString .= $customer->name . ': ' . $delta . '<br />';
                 $email = new AppEmail();
                 $email->setTemplate('Admin.check_credit_balance')
                     ->setTo($customer->email)
-                    ->setSubject('Dein Guthaben ist aufgebraucht')
+                    ->setSubject(__('Your_credit_is_used_up'))
                     ->setViewVars([
                     'customer' => $customer,
                     'delta' => $delta
@@ -71,8 +71,8 @@ class CheckCreditBalanceShell extends AppShell
             }
         }
 
-        $outString .= 'Summe: ' . Configure::read('app.htmlHelper')->formatAsEuro($deltaSum * - 1) . '<br />';
-        $outString .= 'Verschickte E-Mails: ' . $i;
+        $outString .= __('Sum') . ': ' . Configure::read('app.numberHelper')->formatAsCurrency($deltaSum * - 1) . '<br />';
+        $outString .= __('Sent_emails') . ': ' . $i;
 
         $this->stopTimeLogging();
 

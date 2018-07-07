@@ -12,13 +12,24 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 ?>
 
 <tbody>
     
         <tr>
             <?php
-            $columns = ['Anzahl', 'Produkte', 'Hersteller', 'Preis', 'Pfand'];
+            $columns = [
+                __('Amount'),
+                __('Product'),
+                __('Manufacturer'),
+                __('Price'),
+                __('Deposit')
+            ];
+            if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) {
+                $columns[] = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME');
+            }
             foreach ($columns as $column) {
                 echo '<td align="center" style="padding: 10px;font-weight:bold;border:1px solid #d6d4d4;background-color:#fbfbfb;">'.$column.'</td>';
             }
@@ -45,8 +56,8 @@
                 <td valign="middle" style="border:1px solid #d6d4d4;">
                     <?php
                     echo $product['productName'];
-                    if ($product['unity'] != '') {
-                        echo ' : ' . $product['unity'];
+                    if ($product['unity_with_unit'] != '') {
+                        echo ' : ' . $product['unity_with_unit'];
                     }
                     ?>
                 </td>
@@ -54,39 +65,69 @@
                     <?php echo $product['manufacturerName']; ?>
                 </td>
                 <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
-                    <?php echo $this->MyHtml->formatAsEuro($product['price']); ?>
-                </td>
-                <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
+                    <?php echo $this->MyNumber->formatAsCurrency($product['price']); ?>
                     <?php
-                    if ($product['deposit'] > 0) {
-                        echo $this->MyHtml->formatAsEuro($product['deposit']);
-                    }
+                        if ($product['unitName'] != '') {
+                            echo ' *';
+                        }
                     ?>
                 </td>
+                
+                <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
+                    <?php
+                        if ($product['deposit'] > 0) {
+                            echo $this->MyNumber->formatAsCurrency($product['deposit']);
+                        }
+                    ?>
+                </td>
+                
+                <?php if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
+                    <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
+                        <?php
+                            if (isset($product['timebasedCurrencySeconds'])) {
+                                echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($product['timebasedCurrencySeconds']);
+                            }
+                        ?>
+                    </td>
+                <?php } ?>
+                
             </tr>           
             
         <?php } ?>
      
          <tr>
             <td style="border:1px solid #d6d4d4;" colspan="3"></td>
-            <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;border-right:none;"><?php echo $this->MyHtml->formatAsEuro($productSum); ?></td>
+            <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;"><?php echo $this->MyNumber->formatAsCurrency($productSum); ?></td>
+
             <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;">
                 <?php
                 if ($depositSum > 0) {
-                    echo $this->MyHtml->formatAsEuro($depositSum);
+                    echo $this->MyNumber->formatAsCurrency($depositSum);
                 }
                 ?>
             </td>
+            
+            <?php if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
+                <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;">
+                    <?php
+                        echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($appAuth->Cart->getTimebasedCurrencySecondsSum());
+                    ?>
+                </td>
+            <?php } ?>
+            
         </tr>
         
         <tr>
             <td style="background-color:#fbfbfb;border:1px solid #d6d4d4;" colspan="2"></td>
-            <td align="right" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;border-right:none;">Gesamt</td>
+            <td align="right" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;">Gesamt</td>
             <td align="center" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;" colspan="2">
                 <?php
-                    echo $this->MyHtml->formatAsEuro($productAndDepositSum);
+                    echo $this->MyNumber->formatAsCurrency($productAndDepositSum);
                 ?>
             </td>
+            <?php if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
+                <td style="background-color:#fbfbfb;border:1px solid #d6d4d4;"></td>
+            <?php } ?>
         </tr>
         
     </tbody>

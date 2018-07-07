@@ -28,9 +28,40 @@ class ProductsTableTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->Product = TableRegistry::get('Products');
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
     }
 
+    public function testGetCompositeProductIdAndAttributeId()
+    {
+        $tests = [
+            [
+                'ids' => [
+                    'productId' => 5,
+                    'attributeId' => 0
+                ],
+                'result' => '5',
+            ],
+            [
+                'ids' => [
+                    'productId' => 8,
+                    'attributeId' => 0
+                ],
+                'result' => 8,
+            ],
+            [
+                'ids' => [
+                    'productId' => 80,
+                    'attributeId' => 9
+                ],
+                'result' => '80-9',
+            ]
+        ];
+
+        foreach ($tests as $test) {
+            $result = $this->Product->getCompositeProductIdAndAttributeId($test['ids']['productId'], $test['ids']['attributeId']);
+            $this->assertEquals($test['result'], $result);
+        }
+    }
     public function testGetProductIdAndAttributeId()
     {
         $tests = [
@@ -167,9 +198,9 @@ class ProductsTableTest extends AppCakeTestCase
         // 1) change quantity to same quantityto be able to test if the quantity has not changed
         $sameQuantity = '20';
         $products = [
-            [346 => $sameQuantity],
             [102 => $sameQuantity],
-            [161 => $sameQuantity],
+            [346 => $sameQuantity],
+            [103 => $sameQuantity]
         ];
         $this->Product->changeQuantity($products);
         $this->assertProductQuantity($products);
@@ -178,7 +209,7 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [102 => '14'],
             [346 => '-1'], // invalid quantity
-            [161 => '1']
+            [103 => '1']
         ];
 
         $exceptionThrown = false;
@@ -270,16 +301,16 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [346 => $samePrice],
             [102 => $samePrice],
-            [161 => $samePrice],
+            [103 => $samePrice]
         ];
         $this->Product->changePrice($products);
         $this->assertProductPrice($products);
 
         // try to change prices, but include one invalid price
         $products = [
-            [102 => '2,58'],
             [346 => '-1'], // invalid price
-            [161 => '1,01']
+            [102 => '2,58'],
+            [103 => '1,01']
         ];
 
         $exceptionThrown = false;
@@ -324,16 +355,16 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [346 => $sameDeposit],
             [102 => $sameDeposit],
-            [161 => $sameDeposit],
+            [103 => $sameDeposit]
         ];
         $this->Product->changeDeposit($products);
         $this->assertProductDeposit($products);
 
         // try to change deposits, but include one invalid deposit
         $products = [
-            [102 => '2,00'],
             [346 => '-1'], // invalid deposit
-            [161 => '1,00']
+            [102 => '2,00'],
+            [103 => '1,00']
         ];
 
         $exceptionThrown = false;
@@ -413,7 +444,7 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [102 => 1],
             [340 => 1],
-            [342 => 0]
+            [346 => 0]
         ];
         $response = $this->Product->changeStatus($products);
         $this->assertEquals(true, $response);
@@ -443,7 +474,7 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [346 => 0],  // pass correct but different to current status
             [102 => -1], // invalid status
-            [161 => 0]   // pass correct but different to current status
+            [103 => 0]   // pass correct but different to current status
         ];
 
         $exceptionThrown = false;
@@ -475,7 +506,7 @@ class ProductsTableTest extends AppCakeTestCase
             if ($productAndAttributeId['attributeId'] == 0) {
                 $contain = ['StockAvailables'];
             } else {
-                $this->Product->association('ProductAttributes')->conditions(
+                $this->Product->getAssociation('ProductAttributes')->setConditions(
                     ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']]
                 );
                 $contain = ['ProductAttributes.StockAvailables'];
@@ -505,12 +536,12 @@ class ProductsTableTest extends AppCakeTestCase
             if ($forceUseThisDeposit) {
                 $expectedDeposit = $forceUseThisDeposit;
             }
-            $expectedDeposit = str_replace(',', '.', $expectedDeposit);
+            $expectedDeposit = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedDeposit);
             if ($productAndAttributeId['attributeId'] == 0) {
                 $contain = ['DepositProducts'];
             } else {
                 $contain = ['ProductAttributes', 'ProductAttributes.DepositProductAttributes'];
-                $this->Product->association('ProductAttributes')->conditions(
+                $this->Product->getAssociation('ProductAttributes')->setConditions(
                     ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']]
                 );
             }
@@ -528,7 +559,7 @@ class ProductsTableTest extends AppCakeTestCase
             } else {
                 $resultEntity = $changedProduct->product_attributes[0]->deposit_product_attribute;
             }
-            $this->assertEquals($expectedDeposit, $this->Product->getPriceAsFloat($resultEntity->deposit), 'changing the deposit did not work');
+            $this->assertEquals($expectedDeposit, $resultEntity->deposit, 'changing the deposit did not work');
         }
     }
 
@@ -542,11 +573,11 @@ class ProductsTableTest extends AppCakeTestCase
             if ($forceUseThisPrice) {
                 $expectedPrice = $forceUseThisPrice;
             }
-            $expectedPrice = str_replace(',', '.', $expectedPrice);
+            $expectedPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedPrice);
             if ($productAndAttributeId['attributeId'] == 0) {
                 $contain = ['ProductShops'];
             } else {
-                $this->Product->association('ProductAttributes')->conditions(
+                $this->Product->getAssociation('ProductAttributes')->setConditions(
                     ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']]
                 );
                 $contain = ['ProductAttributes.ProductAttributeShops'];

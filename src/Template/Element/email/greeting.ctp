@@ -15,6 +15,6 @@
 ?>
 <tr>
     <td style="font-weight:bold;font-size:18px;padding-bottom:10px;">
-        <p>Hallo <?php echo $data->firstname . ' ' . $data->lastname; ?>,</p>
+        <p><?php echo __('Hello'); ?> <?php echo $data->firstname . ' ' . $data->lastname; ?>,</p>
     </td>
 </tr>

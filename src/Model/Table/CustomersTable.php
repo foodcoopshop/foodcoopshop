@@ -51,6 +51,9 @@ class CustomersTable extends AppTable
             'foreignKey' => 'id_customer',
             'limit' => 1
         ]);
+        $this->hasMany('Manufacturers', [
+            'foreignKey' => 'id_customer'
+        ]);
         $this->hasMany('Payments', [
             'foreignKey' => 'id_customer',
             'sort' => [
@@ -65,15 +68,15 @@ class CustomersTable extends AppTable
 
     public function validationEdit(Validator $validator)
     {
-        $validator->notEmpty('firstname', 'Bitte gib deinen Vornamen an.');
-        $validator->notEmpty('lastname', 'Bitte gib deinen Nachnamen an.');
+        $validator->notEmpty('firstname', __('Please_enter_your_first_name.'));
+        $validator->notEmpty('lastname', __('Please_enter_your_last_name.'));
         return $validator;
     }
 
     public function validationRegistration(Validator $validator)
     {
-        $validator->notEmpty('firstname', 'Bitte gib deinen Vornamen an.');
-        $validator->notEmpty('lastname', 'Bitte gib deinen Nachnamen an.');
+        $validator->notEmpty('firstname', __('Please_enter_your_first_name.'));
+        $validator->notEmpty('lastname', __('Please_enter_your_last_name.'));
         $validator = $this->getValidationTermsOfUse($validator);
         return $validator;
     }
@@ -81,7 +84,7 @@ class CustomersTable extends AppTable
     public function validationChangePassword($validator)
     {
         $validator
-        ->notEmpty('passwd_old', 'Bitte gib dein altes Passwort ein.')
+        ->notEmpty('passwd_old', __('Please_enter_your_old_password.'))
         ->add('passwd_old', 'custom', [
             'rule'=>  function ($value, $context) {
                 $user = $this->get($context['data']['id_customer']);
@@ -92,38 +95,38 @@ class CustomersTable extends AppTable
                 }
                 return false;
             },
-            'message' => 'Dein altes Passwort ist leider falsch.',
+            'message' => __('Your_old_password_is_wrong.')
         ])
         ->notEmpty('passwd_old');
 
         $validator
-        ->notEmpty('passwd_1', 'Bitte gib ein neues Passwort ein.')
+        ->notEmpty('passwd_1', __('Please_enter_a_new_password.'))
         ->add('passwd_1', [
             'length' => [
                 'rule' => ['minLength', 8],
-                'message' => 'Das Passwort muss aus mindestens 8 Zeichen bestehen.',
+                'message' => __('The_password_needs_to_be_at_least_8_characters_long.')
             ]
         ])
         ->add('passwd_1', [
             'match' => [
                 'rule' => ['compareWith', 'passwd_2'],
-                'message' => 'Die Passwörter stimmen nicht überein.',
+                'message' => __('The_passwords_do_not_match.')
             ]
         ])
         ->notEmpty('passwd_1');
 
         $validator
-        ->notEmpty('passwd_2', 'Bitte gib ein neues Passwort ein.')
+        ->notEmpty('passwd_2', __('Please_enter_a_new_password.'))
         ->add('passwd_2', [
             'length' => [
                 'rule' => ['minLength', 8],
-                'message' => 'Das Passwort muss aus mindestens 8 Zeichen bestehen.',
+                'message' => __('The_password_needs_to_be_at_least_8_characters_long.')
             ]
         ])
         ->add('passwd_2', [
             'match' => [
                 'rule' => ['compareWith', 'passwd_1'],
-                'message' => 'Die Passwörter stimmen nicht überein.',
+                'message' => __('The_passwords_do_not_match.')
             ]
         ])
         ->notEmpty('passwd_2');
@@ -134,20 +137,20 @@ class CustomersTable extends AppTable
 
     public function validationNewPasswordRequest(Validator $validator)
     {
-        $validator->notEmpty('email', 'Bitte gib deine E-Mail-Adresse an.');
-        $validator->email('email', false, 'Die E-Mail-Adresse ist nicht gültig.');
+        $validator->notEmpty('email', __('Please_enter_your_email_address.'));
+        $validator->email('email', false, __('The_email_address_is_not_valid.'));
         $validator->add('email', 'exists', [
             'rule' => function ($value, $context) {
-                $ct = TableRegistry::get('Customers');
+                $ct = TableRegistry::getTableLocator()->get('Customers');
                 return $ct->exists([
                     'email' => $value
                 ]);
             },
-            'message' => 'Wir haben diese E-Mail-Adresse nicht gefunden.'
+            'message' => __('We_did_not_find_this_email_address.')
         ]);
         $validator->add('email', 'account_inactive', [
             'rule' => function ($value, $context) {
-                $ct = TableRegistry::get('Customers');
+                $ct = TableRegistry::getTableLocator()->get('Customers');
                 $record  = $ct->find('all', [
                     'conditions' => [
                         'email' => $value
@@ -158,7 +161,7 @@ class CustomersTable extends AppTable
                 }
                 return true;
             },
-            'message' => 'Dein Mitgliedskonto ist nicht mehr aktiv. Falls du es wieder aktivieren möchtest, schreib uns bitte eine E-Mail.'
+            'message' => __('Your_account_is_not_active_any_more._If_you_want_to_reactivate_it_please_write_an_email.')
         ]);
         return $validator;
     }
@@ -170,27 +173,31 @@ class CustomersTable extends AppTable
 
     private function getValidationTermsOfUse(Validator $validator)
     {
-        return $validator->equals('terms_of_use_accepted_date_checkbox', 1, 'Bitte akzeptiere die Nutzungsbedingungen.');
+        return $validator->equals('terms_of_use_accepted_date_checkbox', 1, __('Please_accept_the_terms_of_use.'));
     }
 
     public function findAuth(\Cake\ORM\Query $query, array $options)
     {
-        return $query->contain([
+        $query->where([
+            'Customers.active' => true
+        ]);
+        $query->contain([
             'AddressCustomers'
         ]);
+        return $query;
     }
 
     public function __construct($id = false, $table = null, $ds = null)
     {
         parent::__construct($id, $table, $ds);
 
-        $this->association('ValidOrders')->setConditions([
+        $this->getAssociation('ValidOrders')->setConditions([
             'ValidOrders.current_state IN (' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . ')'
         ]);
-        $this->association('ActiveOrders')->setConditions([
+        $this->getAssociation('ActiveOrders')->setConditions([
             'ActiveOrders.current_state IN (' . ORDER_STATE_OPEN . ')'
         ]);
-        $this->association('PaidCashFreeOrders')->setConditions([
+        $this->getAssociation('PaidCashFreeOrders')->setConditions([
             'PaidCashFreeOrders.current_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')'
         ]);
     }
@@ -204,7 +211,7 @@ class CustomersTable extends AppTable
 
     public function dropManufacturersInNextFind()
     {
-        $this->association('AddressCustomers')->setJoinType('INNER');
+        $this->getAssociation('AddressCustomers')->setJoinType('INNER');
     }
 
     /**
@@ -215,7 +222,7 @@ class CustomersTable extends AppTable
      */
     public function getManufacturerRecord($customer)
     {
-        $mm = TableRegistry::get('Manufacturers');
+        $mm = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturer = $mm->find('all', [
             'conditions' => [
                 'AddressManufacturers.email' => $customer->email
@@ -274,19 +281,141 @@ class CustomersTable extends AppTable
         return 0;
     }
 
+    public function getProductBalanceForDeletedCustomers()
+    {
+
+        $productBalanceSum = 0;
+        $orderTable = TableRegistry::getTableLocator()->get('Orders');
+
+        $query = $orderTable->find('all', [
+            'contain' => [
+                'Customers'
+            ],
+            'conditions' => [
+                'Customers.id_customer IS NULL'
+            ]
+        ]);
+        $query->group('Orders.id_customer');
+
+        $removedCustomerIds = [];
+        foreach($query as $order) {
+            $removedCustomerIds[] = $order->id_customer;
+        }
+
+        $productBalanceSum = $this->getProductBalanceSumForCustomerIds($removedCustomerIds);
+        return $productBalanceSum;
+
+    }
+
+    private function getProductBalanceSumForCustomerIds($customerIds)
+    {
+
+        $paymentTable = TableRegistry::getTableLocator()->get('Payments');
+        $orderTable = TableRegistry::getTableLocator()->get('Orders');
+
+        $productBalanceSum = 0;
+        foreach($customerIds as $customerId) {
+            $productPaymentSum = $paymentTable->getSum($customerId, 'product');
+            $paybackPaymentSum = $paymentTable->getSum($customerId, 'payback');
+            $productOrderSum = $orderTable->getSumProduct($customerId);
+            $productBalance = $productPaymentSum - $paybackPaymentSum - $productOrderSum;
+            $productBalanceSum += $productBalance;
+        }
+
+        return round($productBalanceSum, 2);
+
+    }
+
+    public function getDepositBalanceForDeletedCustomers()
+    {
+
+        $paymentTable = TableRegistry::getTableLocator()->get('Payments');
+
+        $query = $paymentTable->find('all', [
+            'contain' => [
+                'Customers'
+            ],
+            'conditions' => [
+                'Customers.id_customer IS NULL'
+            ]
+        ]);
+        $query->group('Payments.id_customer');
+
+        $removedCustomerIds = [];
+        foreach($query as $payment) {
+            $removedCustomerIds[] = $payment->id_customer;
+        }
+
+        $depositBalanceSum = $this->getDepositBalanceSumForCustomerIds($removedCustomerIds);
+        return $depositBalanceSum;
+
+    }
+
+    public function getProductBalanceForCustomers($status)
+    {
+        $customerIds = $this->getCustomerIdsWithStatus($status);
+        $productBalanceSum = $this->getProductBalanceSumForCustomerIds($customerIds);
+        return $productBalanceSum;
+
+    }
+
+    public function getDepositBalanceForCustomers($status)
+    {
+        $customerIds = $this->getCustomerIdsWithStatus($status);
+        $depositBalanceSum = $this->getDepositBalanceSumForCustomerIds($customerIds);
+        return $depositBalanceSum;
+    }
+
+    public function getCustomerIdsWithStatus($status)
+    {
+        $conditions = [
+            'Customers.active' => $status
+        ];
+        $conditions[] = $this->getConditionToExcludeHostingUser();
+        $this->dropManufacturersInNextFind();
+        $query = $this->find('all', [
+            'contain' => [
+                'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
+            ],
+            'conditions' => $conditions
+        ]);
+
+        $customerIds = [];
+        foreach($query as $customer) {
+            $customerIds[] = $customer->id_customer;
+        }
+        return $customerIds;
+    }
+
+    private function getDepositBalanceSumForCustomerIds($customerIds)
+    {
+
+        $paymentTable = TableRegistry::getTableLocator()->get('Payments');
+        $orderTable = TableRegistry::getTableLocator()->get('Orders');
+
+        $depositBalanceSum = 0;
+        foreach($customerIds as $customerId) {
+            $paymentSumDeposit = $paymentTable->getSum($customerId, 'deposit');
+            $depositSum = $orderTable->getSumDeposit($customerId);
+            $depositBalance = $paymentSumDeposit - $depositSum;
+            $depositBalanceSum += $depositBalance;
+        }
+        return round($depositBalanceSum, 2);
+    }
+
     public function getCreditBalance($customerId)
     {
-        $payment = TableRegistry::get('Payments');
-        $paymentSumProduct = $payment->getSum($customerId, 'product');
-        $paybackSumProduct = $payment->getSum($customerId, 'payback');
-        $paymentSumDeposit = $payment->getSum($customerId, 'deposit');
-        
-        $order = TableRegistry::get('Orders');
+        $payment = TableRegistry::getTableLocator()->get('Payments');
+        $paymentProductSum = $payment->getSum($customerId, 'product');
+        $paybackProductSum = $payment->getSum($customerId, 'payback');
+        $paymentDepositSum = $payment->getSum($customerId, 'deposit');
+
+        $order = TableRegistry::getTableLocator()->get('Orders');
         $productSum = $order->getSumProduct($customerId);
         $depositSum = $order->getSumDeposit($customerId);
-        
+
         // rounding avoids problems with very tiny numbers (eg. 2.8421709430404E-14)
-        return round($paymentSumProduct - $paybackSumProduct + $paymentSumDeposit - $productSum - $depositSum, 2);
+        return round($paymentProductSum - $paybackProductSum + $paymentDepositSum - $productSum - $depositSum, 2);
     }
 
     public function getForDropdown($includeManufacturers = false, $index = 'id_customer', $includeOfflineCustomers = true)
@@ -344,21 +473,21 @@ class CustomersTable extends AppTable
 
         $customersForDropdown = [];
         if (! empty($onlineCustomers)) {
-            $customersForDropdown['Mitglieder: aktiv'] = $onlineCustomers;
+            $customersForDropdown[__('Members:_active')] = $onlineCustomers;
         }
         if (! empty($notYetOrderedCustomers)) {
-            $customersForDropdown['Mitglieder: noch nie bestellt'] = $notYetOrderedCustomers;
+            $customersForDropdown[__('Members:_never_ordered')] = $notYetOrderedCustomers;
         }
         if (! empty($onlineManufacturers)) {
             asort($onlineManufacturers);
-            $customersForDropdown['Hersteller: aktiv'] = $onlineManufacturers;
+            $customersForDropdown[__('Manufacturers:_active')] = $onlineManufacturers;
         }
         if (! empty($offlineManufacturers)) {
             asort($offlineManufacturers);
-            $customersForDropdown['Hersteller: inaktiv'] = $offlineManufacturers;
+            $customersForDropdown[__('Manufacturers:_inactive')] = $offlineManufacturers;
         }
         if (! empty($offlineCustomers) && $includeOfflineCustomers) {
-            $customersForDropdown['Mitglieder: inaktiv'] = $offlineCustomers;
+            $customersForDropdown[__('Members:_inactive')] = $offlineCustomers;
         }
         return $customersForDropdown;
     }

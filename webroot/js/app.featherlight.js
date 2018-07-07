@@ -51,13 +51,13 @@ foodcoopshop.AppFeatherlight = {
     },
 
     initLightboxForHref: function (container) {
-          var configuration = this.initLightbox({
-                afterContent : function () {
-                    $('.featherlight-inner').addClass('href');
-                    foodcoopshop.AppFeatherlight.setMaxHeightInner();
-                }
-            });
-          $(container).featherlight(configuration);
+        var configuration = this.initLightbox({
+            afterContent : function () {
+                $('.featherlight-inner').addClass('href');
+                foodcoopshop.AppFeatherlight.setMaxHeightInner();
+            }
+        });
+        $(container).featherlight(configuration);
     },
 
     initLightboxForImages: function (container) {
@@ -109,8 +109,8 @@ foodcoopshop.AppFeatherlight = {
 
                     var formButtons = '';
                     formButtons += '<div class="form-buttons">';
-                    formButtons += '<button type="button" class="btn btn-success save"><i class="fa fa-check"></i> Speichern</button>';
-                    formButtons += '<button type="button" class="btn btn-default cancel"><i class="fa fa-remove"></i> Abbrechen</button>';
+                    formButtons += '<button type="button" class="btn btn-success save"><i class="fa fa-check"></i> ' + foodcoopshop.LocalizedJs.helper.save + '</button>';
+                    formButtons += '<button type="button" class="btn btn-default cancel"><i class="fa fa-remove"></i> ' + foodcoopshop.LocalizedJs.helper.cancel + '</button>';
                     formButtons += '</div>';
 
                     $(formButtons).appendTo(placeholder);
@@ -139,9 +139,9 @@ foodcoopshop.AppFeatherlight = {
 
                 },
 
-            afterClose: function () {
-                lightboxCloseMethod();
-            }
+                afterClose: function () {
+                    lightboxCloseMethod();
+                }
 
             });
 
@@ -174,8 +174,8 @@ foodcoopshop.AppFeatherlight = {
         if (img.attr('src') != img.data('src')) {
             img.on('load', function () {
                 $(this).removeClass('loading');
-            }).attr('src', img.data('src'));;
+            }).attr('src', img.data('src'));
         }
     }
 
-}
+};

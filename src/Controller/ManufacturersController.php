@@ -30,10 +30,10 @@ class ManufacturersController extends FrontendController
     {
 
         parent::beforeFilter($event);
-        switch ($this->request->action) {
+        switch ($this->getRequest()->getParam('action')) {
             case 'detail':
-                $manufacturerId = (int) $this->request->getParam('pass')[0];
-                $this->Manufacturer = TableRegistry::get('Manufacturers');
+                $manufacturerId = (int) $this->getRequest()->getParam('pass')[0];
+                $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
                 $manufacturer = $this->Manufacturer->find('all', [
                     'conditions' => [
                         'Manufacturers.id_manufacturer' => $manufacturerId,
@@ -41,7 +41,7 @@ class ManufacturersController extends FrontendController
                     ]
                 ])->first();
                 if (!empty($manufacturer) && !$this->AppAuth->user() && $manufacturer->is_private) {
-                    $this->AppAuth->deny($this->request->action);
+                    $this->AppAuth->deny($this->getRequest()->getParam('action'));
                 }
                 break;
         }
@@ -57,7 +57,7 @@ class ManufacturersController extends FrontendController
             $conditions['Manufacturers.is_private'] = APP_OFF;
         }
 
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturers = $this->Manufacturer->find('all', [
             'conditions' => $conditions,
             'order' => [
@@ -74,26 +74,26 @@ class ManufacturersController extends FrontendController
         }
 
         if ($this->AppAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-            $productModel = TableRegistry::get('Products');
+            $productModel = TableRegistry::getTableLocator()->get('Products');
             foreach ($manufacturers as $manufacturer) {
                 $manufacturer->product_count = $productModel->getCountByManufacturerId($manufacturer->id_manufacturer, true);
             }
         }
 
         $this->set('manufacturers', $manufacturers);
-        $this->set('title_for_layout', 'Hersteller');
+        $this->set('title_for_layout', __('Manufacturer'));
     }
 
     public function detail()
     {
-        $manufacturerId = (int) $this->request->getParam('pass')[0];
+        $manufacturerId = (int) $this->getRequest()->getParam('pass')[0];
 
         $conditions = [
             'Manufacturers.id_manufacturer' => $manufacturerId,
             'Manufacturers.active' => APP_ON
         ];
 
-        $this->Manufacturer = TableRegistry::get('Manufacturers');
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => $conditions,
             'fields' => ['is_holiday_active' => '!'.$this->Manufacturer->getManufacturerHolidayConditions()],
@@ -110,7 +110,7 @@ class ManufacturersController extends FrontendController
         }
 
         $correctSlug = Configure::read('app.slugHelper')->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name);
-        if ($correctSlug != Configure::read('app.slugHelper')->getManufacturerDetail($manufacturerId, StringComponent::removeIdFromSlug($this->request->getParam('pass')[0]))) {
+        if ($correctSlug != Configure::read('app.slugHelper')->getManufacturerDetail($manufacturerId, StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]))) {
             $this->redirect($correctSlug);
         }
 
@@ -119,7 +119,7 @@ class ManufacturersController extends FrontendController
             $manufacturer['Products'] = $this->prepareProductsForFrontend($products);
         }
 
-        $this->BlogPost = TableRegistry::get('BlogPosts');
+        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, $manufacturerId);
         $this->set('blogPosts', $blogPosts);
 

@@ -31,30 +31,25 @@ use Cake\Core\Configure;
         <div class="right">
             <?php
             echo '<div id="add-tax-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> Neue Steuersatz erstellen', $this->Slug->getTaxAdd(), [
+            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> '.__d('admin', 'Add_tax_rate').'', $this->Slug->getTaxAdd(), [
                 'class' => 'btn btn-default',
                 'escape' => false
             ]);
             echo '</div>';
+            echo $this->element('printIcon');
             ?>
         </div>
 
     </div>
-
-    <div id="help-container">
-        <ul>
-            <li>Auf dieser Seite kannst du Steuersätze verwalten.</li>
-        </ul>
-    </div>    
-    
+ 
 <?php
 
 echo '<table class="list">';
 echo '<tr class="sort">';
-echo '<th class="hide">ID</th>';
+echo '<th class="hide">'.__d('admin', 'ID').'</th>';
 echo '<th></th>';
-echo '<th>' . $this->Paginator->sort('Taxes.rate', 'Steuersatz') . '</th>';
-echo '<th>' . $this->Paginator->sort('Taxes.active', 'Aktiv') . '</th>';
+echo '<th>' . $this->Paginator->sort('Taxes.rate', __d('admin', 'Tax_rate')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Taxes.active', __d('admin', 'Active')) . '</th>';
 echo '</tr>';
 
 $i = 0;
@@ -75,12 +70,12 @@ foreach ($taxes as $tax) {
 
     echo '<td>';
     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-        'title' => 'Bearbeiten'
+        'title' => __d('admin', 'Edit')
     ], $this->Slug->getTaxEdit($tax->id_tax));
     echo '</td>';
 
     echo '<td>';
-    echo $this->Html->formatAsPercent($tax->rate);
+    echo $this->Number->formatAsPercent($tax->rate);
     echo '</td>';
 
     echo '<td align="center">';
@@ -95,7 +90,7 @@ foreach ($taxes as $tax) {
 }
 
 echo '<tr>';
-echo '<td colspan="4"><b>' . $i . '</b> Datensätze</td>';
+echo '<td colspan="4"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '</tr>';
 
 echo '</table>';

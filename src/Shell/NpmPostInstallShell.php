@@ -30,7 +30,7 @@ class NpmPostInstallShell extends AppShell
     public function main()
     {
         $this->vendorDir = WWW_ROOT . 'node_modules';
-        $this->copyAdaptedKcfinderFiles();
+        $this->copyAdaptedElfinderFiles();
         $this->copyJqueryUiImages();
         $this->copyBoostrapFonts();
         $this->copyFontawesomeFonts();
@@ -47,7 +47,7 @@ class NpmPostInstallShell extends AppShell
     {
         $folder = new Folder($this->vendorDir . DS . 'bootstrap' . DS . 'dist' . DS . 'fonts' . DS);
         $folder->copy(WWW_ROOT . 'fonts');
-        $this->out('Boostrap fonts copied.');
+        $this->out('Bootstrap fonts copied.');
     }
 
     /**
@@ -61,18 +61,18 @@ class NpmPostInstallShell extends AppShell
         $this->out('JQueryUI images copied.');
     }
 
-    private function copyAdaptedKcfinderFiles()
+    private function copyAdaptedElfinderFiles()
     {
-        $kcfinderConfigDir = ROOT . DS . 'config' . DS . 'kcfinder' . DS;
+        $elfinderConfigDir = ROOT . DS . 'config' . DS . 'elfinder' . DS;
 
         $adaptedFiles = [
-            $kcfinderConfigDir . 'conf' . DS . 'config.php',
-            $kcfinderConfigDir . 'core' . DS . 'bootstrap.php'
+            $elfinderConfigDir . 'elfinder.html',
+            $elfinderConfigDir . 'php' . DS . 'connector.minimal.php'
         ];
 
         foreach ($adaptedFiles as $file) {
-            copy($file, preg_replace('/config/', 'webroot' . DS . 'node_modules', $file, 1));
-            $this->out('KCFinder config file ' . $file . ' copied successfully.');
+            copy($file, preg_replace('/config/', 'webroot' . DS . 'js', $file, 1));
+            $this->out('Elfinder config file ' . $file . ' copied successfully.');
         }
     }
 }

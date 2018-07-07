@@ -20,18 +20,33 @@ use Cake\Core\Configure;
         <?php
         $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
-            var datefieldSelector = $('input.datepicker');
-            datefieldSelector.datepicker();" . Configure::read('app.jsNamespace') . ".Admin.init();" . Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');" . Configure::read('app.jsNamespace') . ".Admin.setVisibleOrderStates('" . json_encode(Configure::read('app.visibleOrderStates')) . "');" . Configure::read('app.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery(1)) . "');" . Configure::read('app.jsNamespace') . ".Admin.setAdditionalOrderStatusChangeInfo('" . Configure::read('app.additionalOrderStatusChangeInfo') . "');" . Configure::read('app.jsNamespace') . ".Helper.setPaymentMethods(" . json_encode(Configure::read('app.paymentMethods')) . ");" . Configure::read('app.jsNamespace') . ".Admin.initOrderEditDialog('#orders-list');" . Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();" . Configure::read('app.jsNamespace') . ".Admin.initChangeOrderStateFromOrders();
+            $('input.datepicker').datepicker();".
+            Configure::read('app.jsNamespace') . ".Admin.init();" .
+            Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" .
+            Configure::read('app.cakeServerName') . "');" .
+            Configure::read('app.jsNamespace') . ".Admin.setVisibleOrderStates('" . json_encode(Configure::read('app.visibleOrderStates')) . "');" .
+            Configure::read('app.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery(1)) . "');" .
+            Configure::read('app.jsNamespace') . ".Admin.setAdditionalOrderStatusChangeInfo('" . Configure::read('app.additionalOrderStatusChangeInfo') . "');" .
+            Configure::read('app.jsNamespace') . ".Helper.setPaymentMethods(" . json_encode(Configure::read('app.paymentMethods')) . ");" .
+            Configure::read('app.jsNamespace') . ".Admin.initOrderEditDialog('#orders-list');" . Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();" .
+            Configure::read('app.jsNamespace') . ".Admin.initChangeOrderStateFromOrders();
         "
         ]);
 
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
             $this->element('addScript', [
                 'script' =>
-                    Configure::read('app.jsNamespace') . ".Helper.initTooltip('.order-comment-edit-button', { my: \"left top\", at: \"left bottom\" }, false);".
+                    Configure::read('app.jsNamespace') . ".Helper.initTooltip('.order-comment-edit-button', false);".
                     Configure::read('app.jsNamespace') . ".Admin.initOrderCommentEditDialog('#orders-list');"
             ]);
         }
+
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
+            $this->element('addScript', [
+                'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.timebased-currency-time-element');"
+            ]);
+        }
+
         $this->element('highlightRowAfterEdit', [
             'rowIdPrefix' => '#order-'
         ]);
@@ -42,45 +57,17 @@ use Cake\Core\Configure;
             <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
             <?php echo $this->Form->control('orderStates', ['type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => join(',', $orderStates)]); ?>
             <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
-                <?php echo $this->Form->control('groupByCustomer', ['type'=>'checkbox', 'label' =>'Gruppieren nach Mitglied', 'checked' => $groupByCustomer]);?>
+                <?php echo $this->Form->control('groupByCustomer', ['type'=>'checkbox', 'label' => __d('admin', 'Group_by_member'), 'checked' => $groupByCustomer]);?>
             <?php } ?>
             <div class="right">
                 <?php
-                    echo $this->element('addShopOrderButton', [
+                    echo $this->element('addInstantOrderButton', [
                         'customers' => $customersForDropdown
                     ]);
+                    echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products'))]);
                 ?>
             </div>
         <?php echo $this->Form->end(); ?>
-    </div>
-
-    <div id="help-container">
-        <ul>
-            <?php echo $this->element('docs/abholdienst'); ?>
-            <li>Auf dieser Seite werden die <b>Bestellungen</b>
-                verwaltet.
-            </li>
-            <li>Eine Bestellung (im Unterschied zum <b>bestellten Produkt</b>)
-                beinhaltet einen oder mehrere bestellte Produkte.
-            </li>
-            <li>Ein Klick auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('cart.png')); ?> "Bestellte Produkte anzeigen" neben dem Namen bringt dich direkt in die Liste der bestellten Produkte des Mitglieds. Es werden dort alle Bestellungen dieser Bestellperiode zusammengefasst angezeigt.</li>
-            <li><b>Bestellung rückdatieren</b>: Falls du während eines Abholdienstes eine Bestellung rückdatieren musst (damit das Mitglied das Produkt sofort mitnehmen kann und die Bestellung nicht in der nächsten Bestellperiode aufscheint), klicke bitte auf <?php echo $this->Html->image($this->Html->getFamFamFamPath('calendar.png')); ?> "rückdatieren" ganz rechts wähle einen Tag der letzten Bestellperiode aus. Ein Beispiel wäre: Freitag abholdienst => neuer Wert: 3 Tage früher (Dienstag).</li>
-            <li><b>Gruppieren nach Mitglied</b> bedeutet, dass alle Bestellungen
-                der gleichen Mitgliedern zusammengefasst werden. Somit sieht man,
-                wieviel jedes Mitglied tatsächlich zu bezahlen hat. Diese Liste ist
-                ideal für eine Gesamtübersicht des Abholdienstes (nach allen
-                Stornierungen).</li>
-            <li>Unten rechts ist ein Button, mit dem man alle E-Mail-Adressen der
-                Mitglieder in der Liste erhält. So kann man Informationen an alle
-                Leute aussenden, die bestellt haben.</li>
-            <li>Mit Klick <?php echo $this->Html->image($this->Html->getFamFamFamPath('money_euro.png')); ?> "Bestellstatus ändern" kannst du den Bestellstatus der Bestellung ändern.</li>
-            <li>Mitglieder mit diesem Symbol <i class="fa fa-pagelines"></i>
-                haben erst 3x oder weniger bestellt.
-            </li>
-            <?php if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) { ?>
-                    <li>Das Symbol <?php echo $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')); ?> zeigt an, ob das Mitglied einen Kommentar zur Bestellung verfasst hat. Dieser kann auch geändert werden. Wenn das Symbol ausgegraut ist, kann ein neuer Kommentar erstellt werden.</li>
-            <?php } ?>
-        </ul>
     </div>
     
     <?php
@@ -88,23 +75,23 @@ use Cake\Core\Configure;
 
     echo '<tr class="sort">';
     echo '<th class="hide">' . $this->Paginator->sort('Orders.id_order', 'ID') . '</th>';
-    echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), 'Mitglied') . '</th>';
+    echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member')) . '</th>';
     echo '<th></th>';
-    echo '<th class="hide">' . $this->Paginator->sort('Customers.email', 'E-Mail') . '</th>';
+    echo '<th class="hide">' . $this->Paginator->sort('Customers.email', __d('admin', 'Email')) . '</th>';
     if (! $groupByCustomer) {
-        echo '<th class="right">' . $this->Paginator->sort('Orders.total_paid', 'Betrag') . '</th>';
+        echo '<th class="right">' . $this->Paginator->sort('Orders.total_paid', __d('admin', 'Price')) . '</th>';
     } else {
-        echo '<th class="right">Betrag</th>';
+        echo '<th class="right">'.__d('admin', 'Amount').'</th>';
     }
     if (Configure::read('app.isDepositPaymentCashless')) {
-        echo '<th>Pfand</th>';
+        echo '<th>'.__d('admin', 'Deposit').'</th>';
     }
     if (! $groupByCustomer) {
-        echo '<th>' . $this->Paginator->sort('Orders.date_add', 'Bestelldatum') . '</th>';
+        echo '<th>' . $this->Paginator->sort('Orders.date_add', __d('admin', 'Order_date')) . '</th>';
     } else {
-        echo '<th>Anzahl Bestellungen</th>';
+        echo '<th>'.__d('admin', 'Order_count').'</th>';
     }
-    echo '<th>Status</th>';
+    echo '<th>'.__d('admin', 'Status').'</th>';
     echo '<th></th>';
     echo '</tr>';
 
@@ -130,7 +117,7 @@ use Cake\Core\Configure;
             $rowClass[] = 'selected';
         }
 
-        echo '<tr id="order-' . ($groupByCustomer ? $order->customer->id_customer : $order->id_order) . '" class="' . join(' ', $rowClass) . '">';
+        echo '<tr id="order-' . ($groupByCustomer ? $order->id_customer : $order->id_order) . '" class="' . join(' ', $rowClass) . '">';
 
         echo '<td class="hide order-id">';
         if (! $groupByCustomer) {
@@ -141,52 +128,56 @@ use Cake\Core\Configure;
         echo '<td style="max-width: 200px;">';
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED') && !$groupByCustomer) {
             echo '<span class="order-comment-wrapper">';
+                $commentText = $order->comment != '' ? $order->comment : __d('admin', 'Add_comment');
                 echo $this->Html->getJqueryUiIcon(
                     $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')),
                     [
                     'class' => 'order-comment-edit-button' . ($order->comment == '' ? ' disabled' : ''),
-                    'title' => $order->comment != '' ? $order->comment : 'Kommentar hinzufügen',
-                    'data-title-for-overlay' => $order->comment != '' ? $order->comment : 'Kommentar hinzufügen'
+                    'title' => $commentText,
+                    'originalTitle' => $commentText
                     ],
                     'javascript:void(0);'
                 );
             echo '</span>';
         }
-        if ($order->customer->order_count <= 3) {
-            echo '<span class="customer-is-new"><i class="fa fa-pagelines" title="Neuling: Hat erst ' . $order->customer->order_count . 'x bestellt."></i></span>';
+        if (isset($order->customer->order_count) && $order->customer->order_count <= 3) {
+            echo '<span class="customer-is-new"><i class="fa fa-pagelines" title="'.__d('admin', 'Newbie_only_{0}_times_ordered.', [$order->customer->order_count]).'"></i></span>';
         }
-        echo '<span class="customer-name">'.$order->customer->name.'</span>';
+        echo '<span class="customer-name">'.$this->Html->getNameRespectingIsDeleted($order->customer).'</span>';
         echo '</td>';
 
         echo '<td'.(!$isMobile ? ' style="width: 157px;"' : '').'>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' Bestellte Produkte' : ''), [
-            'title' => 'Alle bestellten Produkte von ' . $order->customer->name . ' anzeigen',
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' ' . __d('admin', 'Ordered_products') : ''), [
+            'title' => __d('admin', 'Show_all_ordered_products_from_{0}', [$this->Html->getNameRespectingIsDeleted($order->customer)]),
             'class' => 'icon-with-text'
-        ], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&customerId=' . $order->customer->id_customer . '&orderStates[]=' . join(',', $orderStates));
+        ], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&customerId=' . $order->id_customer . '&orderStates[]=' . join(',', $orderStates));
         echo '</td>';
 
         echo '<td class="hide">';
-        echo '<span class="email">' . $order->customer->email . '</span>';
+        echo '<span class="email">' . (!empty($order->customer)? $order->customer->email : ''). '</span>';
         echo '</td>';
 
         echo '<td class="right">';
-        echo $this->Html->formatAsEuro($paidField);
+            echo $this->Number->formatAsCurrency($paidField);
+            if (!empty($order->timebased_currency_order)) {
+                echo '<b class="timebased-currency-time-element" title="'.__d('admin', 'Additional_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($order->timebased_currency_order->seconds_sum)]).'">&nbsp;*</b>';
+            }
         echo '</td>';
 
         if (Configure::read('app.isDepositPaymentCashless')) {
             echo '<td'.(!$isMobile ? ' style="width: 144px;"' : '').'>';
                 echo $this->element('addDepositPaymentOverlay', [
-                    'buttonText' => (!$isMobile ? 'Pfand-Rückgabe' : ''),
-                    'rowId' => $groupByCustomer ? $order->customer->id_customer : $order->id_order,
-                    'userName' => $order->customer->name,
-                    'customerId' => $order->customer->id_customer
+                    'buttonText' => (!$isMobile ? __d('admin', 'Deposit_return') : ''),
+                    'rowId' => $groupByCustomer ? $order->id_customer : $order->id_order,
+                    'userName' => $this->Html->getNameRespectingIsDeleted($order->customer),
+                    'customerId' => $order->id_customer
                 ]);
             echo '</td>';
         }
 
-        echo '<td style="width: 115px;">';
+        echo '<td class="date-short2">';
         if (! $groupByCustomer) {
-            echo $order->date_add->i18nFormat(Configure::read('DateFormat.de.DateNTimeShort'));
+            echo $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2'));
         } else {
             echo $order->orders_count;
         }
@@ -200,8 +191,8 @@ use Cake\Core\Configure;
                 $statusChangeIcon = 'error';
             }
             if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath($statusChangeIcon . '.png')) . (!$isMobile ? ' Bestellstatus ändern' : ''), [
-                    'title' => 'Bestellstatus ändern',
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath($statusChangeIcon . '.png')) . (!$isMobile ? ' ' . __d('admin', 'Change_order_status') : ''), [
+                    'title' => __d('admin', 'Change_order_status'),
                     'class' => 'change-order-state-button icon-with-text'
                 ], 'javascript:void(0);');
             }
@@ -219,7 +210,7 @@ use Cake\Core\Configure;
             echo '</div>';
             if (! $groupByCustomer) {
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('calendar.png')), [
-                    'title' => 'Bestellung rückdatieren',
+                    'title' => __d('admin', 'Set_date_of_order_back'),
                     'class' => 'edit-button'
                 ], 'javascript:void(0);');
             }
@@ -230,8 +221,10 @@ use Cake\Core\Configure;
     }
 
     echo '<tr>';
-    echo '<td colspan="2"><b>' . $this->Html->formatAsDecimal($i, 0) . '</b> Datensätze</td>';
-    echo '<td class="right"><b>' . $this->Html->formatAsEuro($sumPrice) . '</b></td>';
+    echo '<td colspan="2"><b>' . $this->Number->formatAsDecimal($i, 0) . '</b> '.__d('admin', 'records').'</td>';
+    echo '<td class="right">';
+        echo '<b>' . $this->Number->formatAsCurrency($sumPrice) . '</b>';
+    echo '</td>';
     echo '<td colspan="5"></td>';
     echo '</tr>';
 
@@ -248,17 +241,19 @@ use Cake\Core\Configure;
         $this->element('addScript', [
             'script' => Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();"
         ]);
-        echo '<button class="email-to-all btn btn-default" data-column="4"><i class="fa fa-envelope-o"></i> Alle E-Mail-Adressen kopieren</button>';
+        echo '<button class="email-to-all btn btn-default" data-column="4"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
         if (! $groupByCustomer && ($appAuth->isSuperadmin() || $appAuth->isAdmin())) {
             $this->element('addScript', [
                 'script' => Configure::read('app.jsNamespace') . ".Admin.initCloseOrdersButton();" . Configure::read('app.jsNamespace') . ".Admin.initGenerateOrdersAsPdf();"
             ]);
-            echo '<button class="btn btn-default generate-orders-as-pdf"><i class="fa fa-file-pdf-o"></i> Bestellungen als PDF generieren</button>';
-            echo '<button id="closeOrdersButton" class="btn btn-default"><i class="fa fa-check-square-o"></i> Alle Bestellungen abschließen</button>';
+            echo '<button class="btn btn-default generate-orders-as-pdf"><i class="fa fa-file-pdf-o"></i> '.__d('admin', 'Generate_orders_as_pdf').'</button>';
+            echo '<button id="closeOrdersButton" class="btn btn-default"><i class="fa fa-check-square-o"></i> '.__d('admin', 'Close_all_orders').'</button>';
         }
     }
-
     echo '</div>';
+
+    echo $this->TimebasedCurrency->getOrderInformationText($timebasedCurrencyOrderInList);
+
     echo '<div class="sc"></div>';
 
     ?>

@@ -15,8 +15,8 @@ class SendOrderListsShellTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        $this->EmailLog = TableRegistry::get('EmailLogs');
-        $this->Order = TableRegistry::get('Orders');
+        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
         $this->SendOrderLists = new SendOrderListsShell(new ConsoleIo());
     }
 
@@ -46,7 +46,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
                 $this->Order->patchEntity(
                     $this->Order->get($orderId),
                     [
-                        'date_add' => Configure::read('app.timeHelper')->getDateForShopOrder(Configure::read('app.timeHelper')->getCurrentDay()),
+                        'date_add' => Configure::read('app.timeHelper')->getDateForInstantOrder(Configure::read('app.timeHelper')->getCurrentDay()),
                     ]
                 )
             );

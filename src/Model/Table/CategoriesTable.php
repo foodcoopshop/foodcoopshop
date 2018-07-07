@@ -27,8 +27,7 @@ class CategoriesTable extends AppTable
         $this->addBehavior('Tree', [
             'left' => 'nleft',
             'right' => 'nright',
-            'parent' => 'id_parent',
-            'level' => 'level_depth'
+            'parent' => 'id_parent'
         ]);
         parent::initialize($config);
         $this->setPrimaryKey('id_category');
@@ -37,7 +36,7 @@ class CategoriesTable extends AppTable
 
     public function validationDefault(Validator $validator)
     {
-        $validator->notEmpty('name', 'Bitte gib einen Namen an.');
+        $validator->notEmpty('name', __('Please_enter_a_name.'));
         return $validator;
     }
 
@@ -48,11 +47,11 @@ class CategoriesTable extends AppTable
         foreach ($array as $item) {
             $statusString = '';
             if (! $item->active) {
-                $statusString = ' (offline)';
+                $statusString = ' ('.__('offline').')';
             }
             $this->flattenedArray[$item->id_category] = $separator . $item->name . $statusString;
             if (! empty($item['children'])) {
-                $this->flattenNestedArrayWithChildren($item->children, str_repeat('-', $item->level_depth - 1) . ' ');
+                $this->flattenNestedArrayWithChildren($item->children, str_repeat('-', $this->getLevel($item) + 1) . ' ');
             }
         }
 
@@ -103,6 +102,7 @@ class CategoriesTable extends AppTable
 
     /**
      * custom sql for best performance
+     * product attributes ARE NOT fetched in this query!
      */
     public function getProductsByCategoryId($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false)
     {
@@ -110,7 +110,7 @@ class CategoriesTable extends AppTable
             'active' => APP_ON,
             'shopId' => Configure::read('app.shopId')
         ];
-        if (! $this->user()) {
+        if (! $this->getLoggedUser()) {
             $params['isPrivate'] = APP_OFF;
         }
 
