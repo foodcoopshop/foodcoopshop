@@ -29,7 +29,7 @@ return [
         'manufacturerComponensationInfoText' => __('This_order_contains_the_variable_member_fee.'),
         'visibleOrderStates' => [
             ORDER_STATE_OPEN => __('order_state_open'),
-            ORDER_STATE_CASH_FREE => __('order_state_closed'),
+            ORDER_STATE_CLOSED => __('order_state_closed'),
         ],
         'currencyName' => Configure::read('app.htmlHelper')->getCurrencyName(Configure::read('appDb.FCS_CURRENCY_SYMBOL'))
     ]
