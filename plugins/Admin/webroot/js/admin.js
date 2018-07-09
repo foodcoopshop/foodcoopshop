@@ -455,6 +455,8 @@ foodcoopshop.Admin = {
         var dialogId = 'product-deposit-edit-form';
         var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductDepositEdit(dialogId);
         $(container).append(dialogHtml);
+        
+        foodcoopshop.Helper.changeInputNumberToTextForEdge();
 
         var buttons = {};
         buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
@@ -516,7 +518,9 @@ foodcoopshop.Admin = {
         var dialogId = 'product-price-edit-form';
         var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductPriceEdit(dialogId);
         $(container).append(dialogHtml);
-
+        
+        foodcoopshop.Helper.changeInputNumberToTextForEdge();
+        
         var buttons = {};
         buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
         buttons['save'] = {
@@ -1613,6 +1617,8 @@ foodcoopshop.Admin = {
         var dialogId = 'order-detail-product-quantity-edit-form';
         var dialogHtml = foodcoopshop.DialogOrderDetail.getHtmlForOrderDetailProductQuantityEdit(dialogId);
         $(container).append(dialogHtml);
+        
+        foodcoopshop.Helper.changeInputNumberToTextForEdge();
 
         var buttons = {};
         buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
@@ -1722,7 +1728,7 @@ foodcoopshop.Admin = {
         var dialogId = 'order-detail-product-price-edit-form';
         var dialogHtml = foodcoopshop.DialogOrderDetail.getHtmlForOrderDetailProductPriceEdit(dialogId);
         $(container).append(dialogHtml);
-
+        
         var buttons = {};
         buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
         buttons['save'] = {
@@ -1827,6 +1833,7 @@ foodcoopshop.Admin = {
                 productPriceField.val(price);
             }
 
+            foodcoopshop.Helper.changeInputNumberToTextForEdge();
             dialog.dialog('open');
         });
 
@@ -2298,6 +2305,8 @@ foodcoopshop.Admin = {
 
     initAddPaymentInList: function (button) {
 
+        foodcoopshop.Helper.changeInputNumberToTextForEdge();
+        
         $(button).each(function () {
 
             var buttonClass = button.replace(/\./, '');
@@ -2318,6 +2327,8 @@ foodcoopshop.Admin = {
     },
 
     initAddPayment: function (button) {
+
+        foodcoopshop.Helper.changeInputNumberToTextForEdge();
 
         $(button).featherlight(
             foodcoopshop.AppFeatherlight.initLightboxForForms(
