@@ -213,7 +213,7 @@ return [
             'persistent' => false,
             //'port' => 'non_standard_port_number',
             'encoding' => 'utf8',
-            'timezone' => 'UTC',
+            'timezone' => date('P'),
             'cacheMetadata' => true,
             'quoteIdentifiers' => false,
             'log' => false,
