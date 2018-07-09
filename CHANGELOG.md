@@ -2,6 +2,11 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+## v2.1.1 2018-07-09 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.1.0...v2.1.1)
+
+### Bugfixes
+- Eingabe von Kommazahlen hat bei Pfand- und Guthaben-Eintragungen im Edge-Browser nicht funktioniert. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/a0898ba33408a478189be52af2eea7558329b199) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
 ## v2.1.0 2018-07-06 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.0.2...v2.1.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
