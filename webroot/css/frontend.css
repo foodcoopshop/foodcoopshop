@@ -1011,12 +1011,12 @@ a.blog-post-wrapper {
     border: 1px solid #d6d4d4;
     border-radius: 5px;
 }
-a.blog-post-wrapper .img-wrapper {
-    min-height: 137px;
-}
 a.blog-post-wrapper img {
     padding: 5px;
-    width: 162px ! important;
+    width: 100%;
+    object-fit: contain;
+    height: 115px;
+    margin-bottom: 5px;
 }
 a.blog-post-wrapper h3 {
     font-size: 14px;
