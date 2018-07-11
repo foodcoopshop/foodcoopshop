@@ -56,14 +56,16 @@ class MyNumberHelper extends NumberHelper
 
     public function formatAsDecimal($amount, $decimals = 2, $removeTrailingZeros = false)
     {
-        $result = self::format($amount, [
-            'locale' => I18n::getLocale(),
-            'places' => $decimals,
-            'precision' => $decimals
-        ]);
-        if ($removeTrailingZeros) {
-            $result = floatval($amount);
+        $options = [
+            'locale' => I18n::getLocale()
+        ];
+        if (!$removeTrailingZeros) {
+            $options = array_merge($options, [
+                'places' => $decimals,
+                'precision' => $decimals
+            ]);
         }
+        $result = self::format($amount, $options);
         return $result;
     }
 

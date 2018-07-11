@@ -28,7 +28,7 @@ class PricePerUnitHelper extends Helper
         if (!empty($unitSum)) {
             $preparedUnitSum = [];
             foreach($unitSum as $unitName => $unitSum) {
-                $preparedUnitSum[] = $unitSum . ' ' . $unitName;
+                $preparedUnitSum[] = $this->MyNumber->formatUnitAsDecimal($unitSum) . ' ' . $unitName;
             }
             $unitSumString = join($separator, $preparedUnitSum);
         }

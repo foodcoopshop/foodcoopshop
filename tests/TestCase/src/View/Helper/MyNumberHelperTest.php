@@ -43,6 +43,18 @@ class MyNumberHelperTest extends AppCakeTestCase
         $this->assertEquals($result, '93,8');
     }
 
+    public function testFormatAsDecimalThousandSeparatorAndThreeDecimals()
+    {
+        $result = $this->MyNumberHelper->formatAsDecimal(4381.422, 2, true);
+        $this->assertEquals($result, '4.381,422');
+    }
+    
+    public function testFormatAsDecimalRoundToTwoDecimals()
+    {
+        $result = $this->MyNumberHelper->formatAsDecimal(1.228);
+        $this->assertEquals($result, '1,23');
+    }
+    
     public function testParseFloatRespectingLocaleInvalidString()
     {
         $result = $this->MyNumberHelper->parseFloatRespectingLocale('invalid-price');
@@ -63,10 +75,11 @@ class MyNumberHelperTest extends AppCakeTestCase
 
     public function testParseFloatRespectingLocaleValidEnglishPriceWithEnglishLocale()
     {
+        $originalLocale = I18n::getLocale();
         I18n::setLocale('en_US');
         $result = $this->MyNumberHelper->parseFloatRespectingLocale('3.45');
         $this->assertEquals($result, 3.45);
-        I18n::setLocale('de_DE');
+        I18n::setLocale($originalLocale);
     }
 
     public function testParseFloatRespectingLocaleNegativeFloat()
