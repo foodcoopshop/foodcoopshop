@@ -70,7 +70,7 @@ foreach ($blogPosts as $blogPost) {
     echo '<div class="third-column">';
 
         echo $this->Html->link(
-            __('Show_Blog_post').
+            __('Show_Blog_post'),
             $blogDetailLink,
             ['class' => 'btn btn-success']
         );
