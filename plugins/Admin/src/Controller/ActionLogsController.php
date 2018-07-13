@@ -96,12 +96,12 @@ class ActionLogsController extends AdminAppController
             $conditions[] = 'ActionLogs.type NOT REGEXP \'^cronjob_\'';
         }
 
-        $type = '';
-        if (! empty($this->getRequest()->getQuery('type'))) {
-            $type = $this->getRequest()->getQuery('type');
-            $conditions[] = 'ActionLogs.type = \'' . $type . '\'';
+        $types = [];
+        if (! empty($this->getRequest()->getQuery('types'))) {
+            $types = $this->getRequest()->getQuery('types');
+            $conditions['ActionLogs.type IN'] = $types;
         }
-        $this->set('type', $type);
+        $this->set('types', $types);
 
         $query = $this->ActionLog->find('all', [
             'conditions' => $conditions,
@@ -138,9 +138,6 @@ class ActionLogsController extends AdminAppController
         }
 
         $titleForLayout = __d('admin', 'Activities');
-        if (isset($this->ActionLog->types[$type])) {
-            $titleForLayout .= ' | ' . $this->ActionLog->types[$type]['name'];
-        }
         $this->set('title_for_layout', $titleForLayout);
     }
 }

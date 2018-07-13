@@ -31,7 +31,7 @@ use Cake\Core\Configure;
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php if ($appAuth->isManufacturer() || $appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
-                <?php echo $this->Form->control('type', ['type' => 'select', 'empty' => __d('admin', 'all_activities'), 'label' => '', 'options' => $actionLogModel->getTypesForDropdown($appAuth), 'default' => isset($type) ? $type : '']); ?>
+                <?php echo $this->Form->control('types', ['type' => 'select', 'multiple' => true, 'empty' => __d('admin', 'all_activities'), 'label' => '', 'options' => $actionLogModel->getTypesForDropdown($appAuth), 'data-val' => join(',', $types)]); ?>
                 <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_users'), 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
                 <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_products'), 'options' => []]); ?>
             <?php } ?>
@@ -76,7 +76,7 @@ foreach ($actionLogs as $actionLog) {
     echo '<td>';
     echo $this->Html->link(
         $actionType['name'],
-        '/admin/action-logs/index/?type='.$actionLog->type.'&productId='.$productId.'&customerId='.$customerId.'&dateFrom='.$dateFrom.'&dateTo='.$dateTo.(!empty($this->request->getQuery('sort')) ? '&sort='.$this->request->getQuery('sort') : '').(!empty($this->request->getQuery('direction')) ? '&direction='.$this->request->getQuery('direction') : '')
+        '/admin/action-logs/index/?types[]='.$actionLog->type.'&productId='.$productId.'&customerId='.$customerId.'&dateFrom='.$dateFrom.'&dateTo='.$dateTo.(!empty($this->request->getQuery('sort')) ? '&sort='.$this->request->getQuery('sort') : '').(!empty($this->request->getQuery('direction')) ? '&direction='.$this->request->getQuery('direction') : '')
     );
     echo '</td>';
 
@@ -98,7 +98,7 @@ foreach ($actionLogs as $actionLog) {
     if (isset($name)) {
         echo $this->Html->link(
             $name,
-            '/admin/action-logs/index/?type='.$type.'&productId='.$productId.'&customerId='.($actionLog->customer ? $actionLog->customer->id_customer : '').'&dateFrom='.$dateFrom.'&dateTo='.$dateTo.(!empty($this->request->getQuery('sort')) ? '&sort='.$this->request->getQuery('sort') : '').(!empty($this->request->getQuery('direction')) ? '&direction='.$this->request->getQuery('direction') : '')
+            '/admin/action-logs/index/?types[]='.join(',', $types).'&productId='.$productId.'&customerId='.($actionLog->customer ? $actionLog->customer->id_customer : '').'&dateFrom='.$dateFrom.'&dateTo='.$dateTo.(!empty($this->request->getQuery('sort')) ? '&sort='.$this->request->getQuery('sort') : '').(!empty($this->request->getQuery('direction')) ? '&direction='.$this->request->getQuery('direction') : '')
         );
     }
     echo '</td>';

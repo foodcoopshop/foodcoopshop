@@ -33,8 +33,8 @@ $actionLogsMenuElement = [
     ]
 ];
 $cancelledProductsMenuElement = [
-    'slug' => $this->Slug->getActionLogsList().'/index/?type=order_detail_cancelled',
-    'name' => __d('admin', 'Cancelled_products'),
+    'slug' => $this->Slug->getActionLogsList().'/index/?types[]=order_detail_cancelled&types[]=order_detail_product_price_changed&&types[]=order_detail_product_quantity_changed&&types[]=order_detail_product_amount_changed',
+    'name' => __d('admin', 'Order_adaptions'),
     'options' => [
         'fa-icon' => 'fa-fw fa-remove'
     ]
