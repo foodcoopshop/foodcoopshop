@@ -164,14 +164,9 @@ body.categories.detail div.description-wrapper {
     border-radius: 5px;
     font-size: 14px;
 }
-#main-menu li a:hover,
-#main-menu li a.active {
-    background-color: #719f41;
-    color: #fff;
-}
 #main-menu ul li a:hover,
 #main-menu ul li a.active {
-    color: #333;
+	background-color: rgba(113,159,65, 0.6);
 }
 #main-menu ul li a i {
     margin-right: 5px;
@@ -193,15 +188,21 @@ body.categories.detail div.description-wrapper {
 }
 #main-menu li ul li {
     float: left;
-    line-height: 35px;
+    line-height: 17px;
+    width: 220px;
+    margin-right: 2px;
 }
 #main-menu li ul li a {
     background-color: #719f41;
     color: #fff;
-    margin-right: 3px;
-    padding-right: 15px;
-    padding-top: 7px;
-    padding-bottom: 7px;
+    margin-right: 15px;
+    margin-top: 0px;
+    margin-bottom: 2px;
+    float: left;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 #main-menu li ul ul {
     display: none;

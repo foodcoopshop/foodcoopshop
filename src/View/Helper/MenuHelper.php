@@ -130,7 +130,7 @@ class MenuHelper extends Helper
             $classString = ' class="' . join(' ', $class). '" ';
         }
 
-        $naviElement = '<a' . $classString . $style.' href="'.$slug.'">'.$fontAwesomeIconString.$name.'</a>';
+        $naviElement = '<a' . $classString . $style.' href="'.$slug.'" title="'.h(strip_tags($name)).'">'.$fontAwesomeIconString.$name.'</a>';
 
         return $naviElement;
     }
