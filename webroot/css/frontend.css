@@ -166,7 +166,7 @@ body.categories.detail div.description-wrapper {
 }
 #main-menu ul li a:hover,
 #main-menu ul li a.active {
-	background-color: rgba(113,159,65, 0.6);
+	opacity: 0.8;
 }
 #main-menu ul li a i {
     margin-right: 5px;
