@@ -164,6 +164,11 @@ body.categories.detail div.description-wrapper {
     border-radius: 5px;
     font-size: 14px;
 }
+#main-menu li a:hover,
+#main-menu li a.active {
+    background-color: #719f41;
+    color: #fff;
+}
 #main-menu ul li a:hover,
 #main-menu ul li a.active {
 	opacity: 0.8;
