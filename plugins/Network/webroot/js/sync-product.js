@@ -26,7 +26,7 @@ foodcoopshop.SyncProduct = {
     },
 
     getProductNameWithUnity : function (product, isAttribute, hasAttributes) {
-        var productName = product.unchanged_name;
+        var productName = product.name;
         if (!isAttribute && !hasAttributes && product.unity != '') {
             productName += ': <span class="unity">' + product.unity + '</span>';
         }
