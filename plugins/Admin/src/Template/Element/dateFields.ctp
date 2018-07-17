@@ -27,12 +27,12 @@ $this->element('addScript', [
     <input id="dateFrom" type="text" class="datepicker"
         <?php echo (isset($nameFrom) ? 'name="'.$nameFrom.'"' : ''); ?>
         value="<?php echo $dateFrom; ?>" /> <a class="btn-arrow btn-next-day"
-        title="<?php echo __d('admin', '1_day_ahead'); ?>" href="javascript:void(0)"><i
+        title="<?php echo __d('admin', '1_day_back'); ?>" href="javascript:void(0)"><i
         class="fa fa-arrow-circle-right fa"></i></a>
         
     <?php if (!isset($showDateTo) || $showDateTo) { ?>
          <?php echo __d('admin', 'to'); ?> <a
-        class="btn-arrow btn-previous-day" title="<?php echo __d('admin', '1_day_back'); ?>"
+        class="btn-arrow btn-previous-day" title="<?php echo __d('admin', '1_day_ahead'); ?>"
         href="javascript:void(0)"><i class="fa fa-arrow-circle-left fa"></i></a>
         <input id="dateTo" type="text" class="datepicker"
             <?php echo (isset($nameTo) ? 'name="'.$nameTo.'"' : ''); ?>
