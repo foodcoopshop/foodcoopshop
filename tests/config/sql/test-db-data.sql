@@ -43,7 +43,6 @@ TRUNCATE TABLE `fcs_timebased_currency_order_detail`;
 TRUNCATE TABLE `fcs_timebased_currency_orders`;
 TRUNCATE TABLE `fcs_timebased_currency_payments`;
 TRUNCATE TABLE `fcs_units`;
-TRUNCATE TABLE `phinxlog`;
 
 /*!40000 ALTER TABLE `fcs_action_logs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_action_logs` ENABLE KEYS */;
@@ -295,8 +294,6 @@ INSERT INTO `fcs_units` VALUES
 (3,0,12,20.00,'kg',1,1,1.000);
 /*!40000 ALTER TABLE `fcs_units` ENABLE KEYS */;
 
-/*!40000 ALTER TABLE `phinxlog` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
