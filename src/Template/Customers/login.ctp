@@ -95,7 +95,7 @@ $this->element('addScript', ['script' =>
                   echo $this->Form->control('Customers.address_customer.phone', ['label' => __('Phone')]);
 
                   if (Configure::read('app.emailOrderReminderEnabled')) {
-                      echo $this->Form->control('Customers.newsletter', ['label' => __('Want_to_receive_reminder_emails?'), 'type' => 'checkbox']);
+                      echo $this->Form->control('Customers.email_order_reminder', ['label' => __('Want_to_receive_reminder_emails?'), 'type' => 'checkbox']);
                   }
 
                   echo '<div id="terms-of-use" class="featherlight-overlay">';

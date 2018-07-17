@@ -42,7 +42,7 @@ class ProductAttributeCombinationsTable extends AppTable
             ],
             'contain' => [
                 'Attributes',
-                'ProductAttributes.Products.ProductLangs',
+                'ProductAttributes.Products',
                 'ProductAttributes.Products.Manufacturers'
             ]
         ]);
@@ -56,8 +56,8 @@ class ProductAttributeCombinationsTable extends AppTable
             $preparedProduct = $combination->product_attribute->product;
 
             $tmpProduct = [];
-            $tmpProduct['link'] = Configure::read('app.htmlHelper')->link($preparedProduct->product_lang->name . ' - ' . $preparedProduct->manufacturer->name, Configure::read('app.slugHelper')->getProductDetail($preparedProduct->id_product, $preparedProduct->product_lang->name));
-            $tmpProduct['name']= $preparedProduct->product_lang->name;
+            $tmpProduct['link'] = Configure::read('app.htmlHelper')->link($preparedProduct->name . ' - ' . $preparedProduct->manufacturer->name, Configure::read('app.slugHelper')->getProductDetail($preparedProduct->id_product, $preparedProduct->name));
+            $tmpProduct['name']= $preparedProduct->name;
             $tmpProduct['manufacturer_name'] = $preparedProduct->manufacturer->name;
 
             if ($preparedProduct->active == 1) {

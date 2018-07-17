@@ -1,7 +1,6 @@
 <?php
 
 use App\Test\TestCase\AppCakeTestCase;
-use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -43,16 +42,13 @@ class ProductAttributesTableTest extends AppCakeTestCase
                 'Products.id_product' => $productId
             ],
             'contain' => [
-                'ProductLangs',
-                'ProductShops',
                 'ProductAttributes.StockAvailables',
-                'ProductAttributes.ProductAttributeShops',
             ]
         ])->first();
 
-        $this->assertEquals($product->product_attributes[0]->product_attribute_shop->default_on, 1);
-        $this->assertEquals($product->product_attributes[0]->product_attribute_shop->price, 0);
+        $this->assertEquals($product->product_attributes[0]->default_on, 1);
+        $this->assertEquals($product->product_attributes[0]->price, 0);
         $this->assertEquals($product->product_attributes[0]->stock_available->quantity, 999);
-        $this->assertEquals($product->product_shop->price, 0);
+        $this->assertEquals($product->price, 0);
     }
 }

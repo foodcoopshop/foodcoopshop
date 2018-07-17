@@ -34,9 +34,6 @@ TRUNCATE TABLE `fcs_payments`;
 TRUNCATE TABLE `fcs_product`;
 TRUNCATE TABLE `fcs_product_attribute`;
 TRUNCATE TABLE `fcs_product_attribute_combination`;
-TRUNCATE TABLE `fcs_product_attribute_shop`;
-TRUNCATE TABLE `fcs_product_lang`;
-TRUNCATE TABLE `fcs_product_shop`;
 TRUNCATE TABLE `fcs_sliders`;
 TRUNCATE TABLE `fcs_stock_available`;
 TRUNCATE TABLE `fcs_sync_domains`;
@@ -159,15 +156,6 @@ INSERT INTO `fcs_configuration` VALUES
 
 /*!40000 ALTER TABLE `fcs_product_attribute_combination` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_product_attribute_combination` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_product_attribute_shop` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_product_attribute_shop` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_product_lang` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_product_lang` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_product_shop` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_product_shop` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sliders` DISABLE KEYS */;
 INSERT INTO `fcs_sliders` VALUES

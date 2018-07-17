@@ -91,8 +91,6 @@ foodcoopshop.SyncProducts = {
 
     renderProductList : function (response, server) {
 
-        var reponse = foodcoopshop.SyncLegacyHelper.transformResponse(response.products);
-
         server = server || 'remote';
 
         foodcoopshop.SyncBase.resetForm();

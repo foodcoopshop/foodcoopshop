@@ -99,16 +99,13 @@ class CartsTable extends AppTable
                 'CartProducts.id_cart' => $cart['id_cart']
             ],
             'order' => [
-                'ProductLangs.name' => 'ASC'
+                'Products.name' => 'ASC'
             ],
             'contain' => [
-                'ProductLangs',
-                'Products.ProductShops',
                 'Products.Manufacturers',
                 'Products.DepositProducts',
                 'Products.UnitProducts',
                 'ProductAttributes.ProductAttributeCombinations.Attributes',
-                'ProductAttributes.ProductAttributeShops',
                 'ProductAttributes.DepositProductAttributes',
                 'ProductAttributes.UnitProductAttributes',
                 'Products.Images'
@@ -135,11 +132,11 @@ class CartsTable extends AppTable
 
             $productImage = Configure::read('app.htmlHelper')->image(Configure::read('app.htmlHelper')->getProductImageSrc($imageId, 'home'));
             $productLink = Configure::read('app.htmlHelper')->link(
-                $cartProduct->product_lang->name,
+                $cartProduct->product->name,
                 Configure::read('app.slugHelper')->getProductDetail(
                     $cartProduct->id_product,
-                    $cartProduct->product_lang->name
-                    ),
+                    $cartProduct->product->name
+                ),
                 ['class' => 'product-name']
             );
             $manufacturerLink = Configure::read('app.htmlHelper')->link($cartProduct->product->manufacturer->name, Configure::read('app.slugHelper')->getManufacturerDetail($cartProduct->product->id_manufacturer, $cartProduct->product->manufacturer->name));
@@ -216,20 +213,19 @@ class CartsTable extends AppTable
 
         $productsTable = TableRegistry::getTableLocator()->get('Products');
 
-        $netPricePerPiece = $cartProduct->product->product_shop->price;
+        $netPricePerPiece = $cartProduct->product->price;
         $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $netPricePerPiece);
         $grossPrice = $grossPricePerPiece * $cartProduct->amount;
         $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $cartProduct->amount) * $cartProduct->amount;
-
         $productData = [
             'cartProductId' => $cartProduct->id_cart_product,
             'productId' => $cartProduct->id_product,
-            'productName' => $cartProduct->product_lang->name,
+            'productName' => $cartProduct->product->name,
             'amount' => $cartProduct->amount,
             'manufacturerId' => $cartProduct->product->id_manufacturer,
             'manufacturerName' => $cartProduct->product->manufacturer->name,
             'price' => $grossPrice,
-            'priceExcl' => $cartProduct->product->product_shop->price * $cartProduct->amount,
+            'priceExcl' => $cartProduct->product->price * $cartProduct->amount,
             'tax' => $tax
         ];
 
@@ -244,7 +240,7 @@ class CartsTable extends AppTable
         $priceInclPerUnit = 0;
         $quantityInUnits = 0;
         $productQuantityInUnits = 0;
-        $unity = $cartProduct->product_lang->unity;
+        $unity = $cartProduct->product->unity;
         $productData['unity'] = $unity;
         if (!empty($cartProduct->product->unit_product) && $cartProduct->product->unit_product->price_per_unit_enabled) {
             $unitName = $cartProduct->product->unit_product->name;
@@ -270,7 +266,7 @@ class CartsTable extends AppTable
         $productData['quantityInUnits'] = $quantityInUnits;
 
         $productData = $this->addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece);
-
+        
         return $productData;
 
     }
@@ -284,7 +280,7 @@ class CartsTable extends AppTable
 
         $productsTable = TableRegistry::getTableLocator()->get('Products');
 
-        $netPricePerPiece = $cartProduct->product_attribute->product_attribute_shop->price;
+        $netPricePerPiece = $cartProduct->product_attribute->price;
         $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $netPricePerPiece);
         $grossPrice = $grossPricePerPiece * $cartProduct->amount;
         $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $cartProduct->amount) * $cartProduct->amount;
@@ -292,12 +288,12 @@ class CartsTable extends AppTable
         $productData = [
             'cartProductId' => $cartProduct->id_cart_product,
             'productId' => $cartProduct->id_product . '-' . $cartProduct->id_product_attribute,
-            'productName' => $cartProduct->product_lang->name,
+            'productName' => $cartProduct->product->name,
             'amount' => $cartProduct->amount,
             'manufacturerId' => $cartProduct->product->id_manufacturer,
             'manufacturerName' => $cartProduct->product->manufacturer->name,
             'price' => $grossPrice,
-            'priceExcl' => $cartProduct->product_attribute->product_attribute_shop->price * $cartProduct->amount,
+            'priceExcl' => $cartProduct->product_attribute->price * $cartProduct->amount,
             'tax' => $tax
         ];
 

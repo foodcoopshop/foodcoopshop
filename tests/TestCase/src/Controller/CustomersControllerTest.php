@@ -86,7 +86,7 @@ class CustomersControllerTest extends AppCakeTestCase
             'Customers' => [
                 'firstname' => '',
                 'lastname' => '',
-                'newsletter' => 1,
+                'email_order_reminder' => 1,
                 'terms_of_use_accepted_date_checkbox' => 0,
                 'address_customer' => [
                     'email' => '',
@@ -189,7 +189,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertEquals($customerAddressEmail, $customer->email, 'saving field email failed');
         $this->assertEquals('John', $customer->firstname, 'saving field firstname failed');
         $this->assertEquals('Doe', $customer->lastname, 'saving field lastname failed');
-        $this->assertEquals(1, $customer->newsletter, 'saving field newsletter failed');
+        $this->assertEquals(1, $customer->email_order_reminder, 'saving field email_order_reminder failed');
         $this->assertEquals(date('Y-m-d'), $customer->terms_of_use_accepted_date->i18nFormat(Configure::read('DateFormat.Database')), 'saving field terms_of_use_accepted_date failed');
 
         // check address record

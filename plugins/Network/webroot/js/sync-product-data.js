@@ -31,10 +31,10 @@ foodcoopshop.SyncProductData = {
             label: 'Name',
             additionalInfo: 'Name, Einheit, kurze Beschreibung und Beschreibung <i class="fa fa-file-text-o"></i>',
             data: {
-                name: 'product_lang.unchanged_name',
-                unity: 'product_lang.unity',
-                description: 'product_lang.description',
-                description_short: 'product_lang.description_short'
+                name: 'unchanged_name',
+                unity: 'unity',
+                description: 'description',
+                description_short: 'description_short'
             },
             column: 2
         },
@@ -154,7 +154,7 @@ foodcoopshop.SyncProductData = {
                 var tableData = '<tr class="' + [product.row_class].join(' ') + '" data-product-id="' + product.id_product + '">';
                 tableData += '<td class="sync-checkbox"><input type="checkbox" class="row-marker" disabled="disabled" /></td>';
                 tableData += '<td class="name">' + foodcoopshop.SyncProduct.getProductNameWithUnity(product, isAttribute, hasAttributes);
-                var descriptionAsTitle = foodcoopshop.SyncProductData.getDescriptionsAsString(product.product_lang.description_short, product.product_lang.description);
+                var descriptionAsTitle = foodcoopshop.SyncProductData.getDescriptionsAsString(product.description_short, product.description);
                 if (!isAttribute && descriptionAsTitle != '') {
                     tableData += '<i title="' + descriptionAsTitle + '" class="fa fa-file-text-o description"></i>';
                 }
@@ -271,8 +271,6 @@ foodcoopshop.SyncProductData = {
 
     renderPreviewList : function (response) {
 
-        var reponse = foodcoopshop.SyncLegacyHelper.transformResponse(response.products);
-
         if (foodcoopshop.SyncProductData.tmpFlashMessage != '') {
             foodcoopshop.Helper.showSuccessMessage(foodcoopshop.SyncProductData.tmpFlashMessage);
         }
@@ -298,8 +296,8 @@ foodcoopshop.SyncProductData = {
                     var remoteProductName = foodcoopshop.SyncProduct.getProductNameWithUnity(product, isAttribute, hasAttributes);
 
                     var descriptionAsTitle = foodcoopshop.SyncProductData.getDescriptionsAsString(
-                        product.product_lang.description_short,
-                        product.product_lang.description
+                        product.description_short,
+                        product.description
                     );
                     if (!isAttribute && descriptionAsTitle != '') {
                         remoteProductName += '<i title="' + descriptionAsTitle + '" class="fa fa-file-text-o description"></i>';

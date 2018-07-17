@@ -28,9 +28,6 @@ class CartProductsTable extends AppTable
         $this->belongsTo('Products', [
             'foreignKey' => 'id_product'
         ]);
-        $this->belongsTo('ProductLangs', [
-            'foreignKey' => ['id_product']
-        ]);
         $this->belongsTo('ProductAttributes', [
             'foreignKey' => 'id_product_attribute'
         ]);
@@ -68,7 +65,6 @@ class CartProductsTable extends AppTable
             ],
             'contain' => [
                 'Manufacturers',
-                'ProductLangs',
                 'StockAvailables',
                 'ProductAttributes',
                 'ProductAttributes.StockAvailables',
@@ -76,7 +72,6 @@ class CartProductsTable extends AppTable
             ]
         ])
         ->select($this->Products)
-        ->select($this->Products->ProductLangs)
         ->select($this->Products->StockAvailables)
         ->select($this->Products->Manufacturers)
         ->select($this->Products->ProductAttributes->StockAvailables)
@@ -99,7 +94,7 @@ class CartProductsTable extends AppTable
 
         // stock available check for product
         if ($attributeId == 0 && $product->stock_available->quantity < $combinedAmount && $amount > 0) {
-            $message = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}.', ['<b>' . $combinedAmount . '</b>', '<b>' . $product->product_lang->name . '</b>', $product->stock_available->quantity]);
+            $message = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}.', ['<b>' . $combinedAmount . '</b>', '<b>' . $product->name . '</b>', $product->stock_available->quantity]);
             return [
                 'status' => 0,
                 'msg' => $message,
@@ -115,7 +110,7 @@ class CartProductsTable extends AppTable
                     $attributeIdFound = true;
                     // stock available check for attribute
                     if ($attribute->stock_available->quantity < $combinedAmount && $amount > 0) {
-                        $message = __('The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}.', ['<b>' . $combinedAmount . '</b>', '<b>' . $attribute->product_attribute_combination->attribute->name . '</b>', '<b>' . $product->product_lang->name . '</b>', $attribute->stock_available->quantity]);
+                        $message = __('The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}.', ['<b>' . $combinedAmount . '</b>', '<b>' . $attribute->product_attribute_combination->attribute->name . '</b>', '<b>' . $product->name . '</b>', $attribute->stock_available->quantity]);
 
                         return [
                             'status' => 0,
@@ -137,7 +132,7 @@ class CartProductsTable extends AppTable
         }
 
         if (! $product->active) {
-            $message = __('The_product_{0}_is_not_activated_any_more.', ['<b>' . $product->product_lang->name . '</b>']);
+            $message = __('The_product_{0}_is_not_activated_any_more.', ['<b>' . $product->name . '</b>']);
             return [
                 'status' => 0,
                 'msg' => $message,
@@ -146,7 +141,7 @@ class CartProductsTable extends AppTable
         }
 
         if (! $product->manufacturer->active || $product->is_holiday_active) {
-            $message = __('The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated.', ['<b>' . $product->product_lang->name . '</b>']);
+            $message = __('The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated.', ['<b>' . $product->name . '</b>']);
             return [
                 'status' => 0,
                 'msg' => $message,
