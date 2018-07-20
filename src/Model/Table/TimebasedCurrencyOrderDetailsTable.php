@@ -73,7 +73,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         ]);
         $result = [];
         foreach($customersFromOrderDetails as $customersFromOrderDetail) {
-            $result[] = $customersFromOrderDetail->order_detail->order->id_customer;
+            $result[] = $customersFromOrderDetail->order_detail->id_customer;
         }
         $result = array_unique($result);
         return $result;
@@ -148,16 +148,15 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         }
 
         $conditions = [];
-        $conditions[] = $this->OrderDetails->Orders->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStateIds());
+        $conditions[] = $this->OrderDetails->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStateIds());
 
         if ($customerId) {
-            $conditions['Orders.id_customer'] = $customerId;
+            $conditions['OrderDetails.id_customer'] = $customerId;
         }
 
         $query = $this->find('all', [
             'conditions' => $conditions,
             'contain' => [
-                'OrderDetails.Orders',
                 'OrderDetails.Products'
             ]
         ]);

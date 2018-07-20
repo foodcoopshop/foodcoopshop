@@ -204,7 +204,7 @@ class OrderDetailsController extends AdminAppController
         $this->set('groupBy', $groupBy);
 
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, $manufacturerId, $productId, $customerId, $orderStates, $dateFrom, $dateTo, $orderDetailId, $orderId, $deposit);
+        $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, $manufacturerId, $productId, $customerId, $orderStates, $dateFrom, $dateTo, $orderDetailId, $deposit);
 
         $query = $this->OrderDetail->find('all', [
             'conditions' => $odParams['conditions'],
@@ -213,11 +213,11 @@ class OrderDetailsController extends AdminAppController
 
         $orderDetails = $this->paginate($query, [
             'sortWhitelist' => [
-                'OrderDetails.product_amount', 'OrderDetails.product_name', 'OrderDetails.total_price_tax_incl', 'OrderDetails.deposit', 'OrderDetails.current_state', 'Orders.date_add', 'Manufacturers.name', 'Customers.' . Configure::read('app.customerMainNamePart'), 'OrderDetailUnits.product_quantity_in_units'
+                'OrderDetails.product_amount', 'OrderDetails.product_name', 'OrderDetails.total_price_tax_incl', 'OrderDetails.deposit', 'OrderDetails.current_state', 'OrderDetails.created', 'Manufacturers.name', 'Customers.' . Configure::read('app.customerMainNamePart'), 'OrderDetailUnits.product_quantity_in_units'
             ],
             'order' => [
                 // first param needs to be included in sortWhitelist!
-                'Orders.date_add' => 'DESC',
+                'OrderDetails.created' => 'DESC',
                 'Products.id_manufacturer' => 'ASC',
                 'OrderDetails.product_name' => 'ASC'
             ]
@@ -297,11 +297,11 @@ class OrderDetailsController extends AdminAppController
             $groupByForDropdown['manufacturer'] = __d('admin', 'Group_by_manufacturer');
         }
         $this->set('groupByForDropdown', $groupByForDropdown);
-        $this->set('customersForDropdown', $this->OrderDetail->Orders->Customers->getForDropdown());
+        $this->set('customersForDropdown', $this->OrderDetail->Customers->getForDropdown());
         $this->set('manufacturersForDropdown', $this->OrderDetail->Products->Manufacturers->getForDropdown());
 
         if (!$this->AppAuth->isManufacturer()) {
-            $this->set('customersForInstantOrderDropdown', $this->OrderDetail->Orders->Customers->getForDropdown(false, 'id_customer', $this->AppAuth->isSuperadmin()));
+            $this->set('customersForInstantOrderDropdown', $this->OrderDetail->Customers->getForDropdown(false, 'id_customer', $this->AppAuth->isSuperadmin()));
         }
 
         $this->set('title_for_layout', __d('admin', 'Ordered_products'));
@@ -331,14 +331,12 @@ class OrderDetailsController extends AdminAppController
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
             'contain' => [
-                'Orders',
-                'Orders.Customers',
+                'Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
                 'OrderDetailTaxes',
                 'OrderDetailUnits',
-                'TimebasedCurrencyOrderDetails',
-                'Orders.TimebasedCurrencyOrders'
+                'TimebasedCurrencyOrderDetails'
             ]
         ])->first();
 
@@ -427,12 +425,10 @@ class OrderDetailsController extends AdminAppController
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
             'contain' => [
-                'Orders',
-                'Orders.Customers',
+                'Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
                 'TimebasedCurrencyOrderDetails',
-                'Orders.TimebasedCurrencyOrders',
                 'OrderDetailUnits'
             ]
         ])->first();
@@ -533,13 +529,11 @@ class OrderDetailsController extends AdminAppController
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
             'contain' => [
-                'Orders',
-                'Orders.Customers',
+                'OrderDetails.Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
                 'OrderDetailTaxes',
                 'TimebasedCurrencyOrderDetails',
-                'Orders.TimebasedCurrencyOrders'
             ]
         ])->first();
 
@@ -624,14 +618,13 @@ class OrderDetailsController extends AdminAppController
                     'OrderDetails.id_order_detail' => $orderDetailId
                 ],
                 'contain' => [
-                    'Orders.Customers',
+                    'Customers',
                     'Products.StockAvailables',
                     'Products.Manufacturers',
                     'Products.Manufacturers.AddressManufacturers',
                     'ProductAttributes.StockAvailables',
                     'OrderDetailTaxes',
                     'TimebasedCurrencyOrderDetails',
-                    'Orders.TimebasedCurrencyOrders',
                     'OrderDetailUnits'
                 ]
             ])->first();
@@ -763,8 +756,7 @@ class OrderDetailsController extends AdminAppController
                 'OrderDetails.id_order_detail' => $oldOrderDetail->id_order_detail
             ],
             'contain' => [
-                'Orders',
-                'Orders.Customers',
+                'Customers',
                 'Products.StockAvailables',
                 'Products.Manufacturers',
                 'ProductAttributes.StockAvailables',

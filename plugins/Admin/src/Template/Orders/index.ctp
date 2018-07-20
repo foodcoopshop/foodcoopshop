@@ -87,7 +87,7 @@ use Cake\Core\Configure;
         echo '<th>'.__d('admin', 'Deposit').'</th>';
     }
     if (! $groupByCustomer) {
-        echo '<th>' . $this->Paginator->sort('Orders.date_add', __d('admin', 'Order_date')) . '</th>';
+        echo '<th>' . $this->Paginator->sort('OrderDetails.created', __d('admin', 'Order_date')) . '</th>';
     } else {
         echo '<th>'.__d('admin', 'Order_count').'</th>';
     }

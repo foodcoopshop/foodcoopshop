@@ -21,14 +21,20 @@ use Cake\ORM\TableRegistry;
 class OrderDetailsTable extends AppTable
 {
 
+    public $states = [
+        'actual' => 3,
+        'paid' => 2,
+        'closed' => 5
+    ];
+    
     public function initialize(array $config)
     {
         $this->setTable('order_detail');
         parent::initialize($config);
         $this->setPrimaryKey('id_order_detail');
 
-        $this->belongsTo('Orders', [
-            'foreignKey' => 'id_order'
+        $this->belongsTo('Customers', [
+            'foreignKey' => 'id_customer'
         ]);
         $this->belongsTo('OrderDetailTaxes', [
             'foreignKey' => 'id_order_detail'
@@ -90,26 +96,25 @@ class OrderDetailsTable extends AppTable
     public function getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId)
     {
         $conditions = [
-            'Orders.id_customer' => $customerId,
-            'RIGHT(Orders.date_add, 8) <> \'00:00:00\'' // exlude shop orders
+            'OrderDetails.id_customer' => $customerId,
+            'RIGHT(OrderDetails.created, 8) <> \'00:00:00\'' // exlude instant orders
         ];
-        $conditions[] = 'Orders.current_state IN ('.ORDER_STATE_CASH_FREE.','.ORDER_STATE_CASH.','.ORDER_STATE_OPEN.')';
+        $conditions[] = 'OrderDetails.order_state IN ('.ORDER_STATE_CASH_FREE.','.ORDER_STATE_CASH.','.ORDER_STATE_OPEN.')';
 
-        $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
+        $conditions[] = 'DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
             date('Y-m-d', $dateFrom)
         ).'\'';
 
-        $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
+        $conditions[] = 'DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
             date('Y-m-d', $dateTo)
         ).'\'';
 
         $orderDetails = $this->find('all', [
             'conditions' => $conditions,
             'order' => [
-                'Orders.date_add' => 'DESC'
+                'OrderDetails.created' => 'DESC'
             ],
             'contain' => [
-                'Orders',
                 'Products.Manufacturers'
             ]
         ])->toArray();
@@ -214,20 +219,67 @@ class OrderDetailsTable extends AppTable
             return 0;
         }
     }
+    
+    public function getSumProduct($customerId)
+    {
+        $conditions = [
+            'OrderDetails.id_customer' => $customerId,
+            'OrderDetails.order_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')'
+        ];
+        
+        $query = $this->find('all', [
+            'conditions' => $conditions
+        ]);
+        $query->select(
+            ['SumTotalPaid' => $query->func()->sum('OrderDetails.total_price_tax_incl')]
+        );
+        
+        return $query->toArray()[0]['SumTotalPaid'];
+    }
+    
+    public function getSumDeposit($customerId)
+    {
+        $conditions = [
+            'OrderDetails.id_customer' => $customerId,
+            'OrderDetails.order_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')',
+            'DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.depositPaymentCashlessStartDate') . '\''
+        ];
+        
+        $query = $this->find('all', [
+            'conditions' => $conditions
+        ]);
+        $query->select(
+            ['SumTotalDeposit' => $query->func()->sum('OrderDetails.deposit')]
+        );
+        
+        return $query->toArray()[0]['SumTotalDeposit'];
+    }
+    
+    public function getOrderStateCondition($orderStates)
+    {
+        if ($orderStates == '' || empty($orderStates) || empty($orderStates[0])) {
+            return false;
+        }
+        if (!is_array($orderStates)) {
+            $orderStates = [$orderStates];
+        }
+        $condition = 'OrderDetails.order_state IN (' . join(', ', $orderStates) . ')';
+        return $condition;
+    }
 
-    public function getOrderDetailParams($appAuth, $manufacturerId, $productId, $customerId, $orderState, $dateFrom, $dateTo, $orderDetailId, $orderId, $deposit)
+    public function getOrderDetailParams($appAuth, $manufacturerId, $productId, $customerId, $orderState, $dateFrom, $dateTo, $orderDetailId, $deposit)
     {
         $conditions = [];
 
         if ($dateFrom != '') {
-            $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
+            $conditions[] = 'DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
         }
         if ($dateTo != '') {
-            $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
+            $conditions[] = 'DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
         }
 
         if ($orderState != '') {
-            $conditions[] = $this->Orders->getOrderStateCondition($orderState);
+            $conditions[] = $this->getOrderStateCondition($orderState);
         }
 
         if ($productId != '') {
@@ -238,24 +290,19 @@ class OrderDetailsTable extends AppTable
             $conditions['OrderDetails.id_order_detail'] = $orderDetailId;
         }
 
-        if ($orderId != '') {
-            $conditions['Orders.id_order'] = $orderId;
-        }
-
         if ($deposit != '') {
             $conditions[] = 'OrderDetails.deposit > 0';
         }
 
         $contain = [
-            'Orders',
-            'Orders.Customers',
+            'Customers',
             'Products.Manufacturers.AddressManufacturers',
             'TimebasedCurrencyOrderDetails',
             'OrderDetailUnits'
         ];
 
         if ($customerId != '') {
-            $conditions['Orders.id_customer'] = $customerId;
+            $conditions['OrderDetails.id_customer'] = $customerId;
         }
 
         if ($manufacturerId != '') {
@@ -266,13 +313,13 @@ class OrderDetailsTable extends AppTable
         if ($appAuth->isManufacturer()) {
             $conditions['Products.id_manufacturer'] = $appAuth->getManufacturerId();
             if ($customerId =! '') {
-                unset($conditions['Orders.id_customer']);
+                unset($conditions['OrderDetails.id_customer']);
             }
         }
 
         // customers are only allowed to see their own data
         if ($appAuth->isCustomer()) {
-            $conditions['Orders.id_customer'] = $appAuth->getUserId();
+            $conditions['OrderDetails.id_customer'] = $appAuth->getUserId();
         }
 
         $odParams = [

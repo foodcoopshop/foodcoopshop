@@ -45,24 +45,6 @@ class OrdersTable extends AppTable
         return $validator;
     }
 
-    public $states = [
-        'actual' => 3,
-        'paid' => 2,
-        'closed' => 5
-    ];
-
-    public function getOrderStateCondition($orderStates)
-    {
-        if ($orderStates == '' || empty($orderStates) || empty($orderStates[0])) {
-            return false;
-        }
-        if (!is_array($orderStates)) {
-            $orderStates = [$orderStates];
-        }
-        $condition = 'Orders.current_state IN (' . join(', ', $orderStates) . ')';
-        return $condition;
-    }
-
     public function getCountByCustomerId($customerId)
     {
         $conditions = [
@@ -75,50 +57,15 @@ class OrdersTable extends AppTable
         return $orderCount;
     }
 
-    public function getSumProduct($customerId)
-    {
-        $conditions = [
-            'Orders.id_customer' => $customerId,
-            'Orders.current_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')'
-        ];
-
-        $query = $this->find('all', [
-            'conditions' => $conditions
-        ]);
-        $query->select(
-            ['SumTotalPaid' => $query->func()->sum('Orders.total_paid')]
-        );
-
-        return $query->toArray()[0]['SumTotalPaid'];
-    }
-
-    public function getSumDeposit($customerId)
-    {
-        $conditions = [
-            'Orders.id_customer' => $customerId,
-            'Orders.current_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')',
-            'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.depositPaymentCashlessStartDate') . '\''
-        ];
-
-        $query = $this->find('all', [
-            'conditions' => $conditions
-        ]);
-        $query->select(
-            ['SumTotalDeposit' => $query->func()->sum('Orders.total_deposit')]
-        );
-
-        return $query->toArray()[0]['SumTotalDeposit'];
-    }
-
     public function getOrderParams($customerId, $orderStates, $dateFrom, $dateTo, $orderId, $appAuth)
     {
         $conditions = [];
 
         if ($dateFrom != '') {
-            $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
+            $conditions[] = 'DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
         }
         if ($dateTo != '') {
-            $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
+            $conditions[] = 'DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
         }
 
         $group = [];

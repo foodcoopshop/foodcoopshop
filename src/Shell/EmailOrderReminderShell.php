@@ -49,12 +49,12 @@ class EmailOrderReminderShell extends AppShell
 
         $this->Customer->getAssociation('ActiveOrders')->setConditions(
             [
-                'DATE_FORMAT(ActiveOrders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
+                'DATE_FORMAT(ActiveOrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
                     Configure::read('app.timeHelper')->getOrderPeriodFirstDay(
                         Configure::read('app.timeHelper')->getCurrentDay()
                     )
                 ). '\'',
-                'DATE_FORMAT(ActiveOrders.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
+                'DATE_FORMAT(ActiveOrderDetails.created, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
                     Configure::read('app.timeHelper')->getOrderPeriodLastDay(
                         Configure::read('app.timeHelper')->getCurrentDay()
                     )
@@ -65,7 +65,7 @@ class EmailOrderReminderShell extends AppShell
         $customers = $this->Customer->find('all', [
             'conditions' => $conditions,
             'contain' => [
-                'ActiveOrders',
+                'ActiveOrderDetails',
                 'AddressCustomers' // to make exclude happen using dropManufacturersInNextFind
             ]
         ]);

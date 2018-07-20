@@ -111,7 +111,7 @@ class OrdersController extends AdminAppController
                     'Orders.id_order' => $orderId
                 ],
                 'order' => [
-                    'Orders.date_add' => 'DESC'
+                    'OrderDetails.created' => 'DESC'
                 ],
                 'contain' => [
                     'Customers'
@@ -329,15 +329,15 @@ class OrdersController extends AdminAppController
         if ($groupByCustomer) {
             $query->select(['orders_total_paid' => $query->func()->sum('Orders.total_paid')]);
             $query->select(['orders_count' => $query->func()->count('Orders.total_paid')]);
-            $query->select('Orders.id_customer');
-            $query->group(['Orders.id_customer']);
+            $query->select('OrderDetails.id_customer');
+            $query->group(['OrderDetails.id_customer']);
         } else {
             $query->select($this->Order);
         }
 
         $orders = $this->paginate($query, [
             'sortWhitelist' => [
-                'Orders.total_paid', 'Orders.date_add', 'Orders.current_state', 'Customers.' . Configure::read('app.customerMainNamePart')
+                'Orders.total_paid', 'OrderDetails.created', 'Orders.current_state', 'Customers.' . Configure::read('app.customerMainNamePart')
             ],
             'order' => $orderParams['order']
         ])->toArray();

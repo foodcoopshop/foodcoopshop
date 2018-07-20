@@ -68,9 +68,9 @@ use Cake\Core\Configure;
                 echo '<div class="add-payment-deposit-button-wrapper">';
                     echo $this->element('addDepositPaymentOverlay', [
                         'buttonText' => (!$isMobile ? __d('admin', 'Deposit_return') : ''),
-                        'rowId' => $orderDetails[0]->order->id_order,
-                        'userName' => $this->Html->getNameRespectingIsDeleted($orderDetails[0]->order->customer),
-                        'customerId' => $orderDetails[0]->order->id_customer,
+                        'rowId' => $orderDetails[0]->id_order_detail,
+                        'userName' => $this->Html->getNameRespectingIsDeleted($orderDetails[0]->customer),
+                        'customerId' => $orderDetails[0]->id_customer,
                         'manufacturerId' => null // explicitly unset manufacturerId
                     ]);
                 echo '</div>';
@@ -125,10 +125,10 @@ if ($groupBy == '') {
         echo $this->Paginator->sort('OrderDetailUnits.product_quantity_in_units', __d('admin', 'Weight'));
     echo '</th>';
     echo '<th>';
-        echo $this->Paginator->sort('Orders.date_add', __d('admin', 'Order_date'));
+        echo $this->Paginator->sort('OrderDetails.created', __d('admin', 'Order_date'));
     echo '</th>';
     echo '<th>'.$this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member')).'</th>';
-    echo '<th>'.$this->Paginator->sort('Orders.current_state', __d('admin', 'Status')).'</th>';
+    echo '<th>'.$this->Paginator->sort('OrderDetails.order_state', __d('admin', 'Status')).'</th>';
     echo '<th style="width:25px;"></th>';
     echo '<th class="hide">' . $this->Paginator->sort('OrderDetails.order_id', 'OrderID') . '</th>';
 }
@@ -141,7 +141,7 @@ $sumReducedPrice = 0;
 $sumUnits = [];
 $i = 0;
 foreach ($orderDetails as $orderDetail) {
-    $editRecordAllowed = $groupBy == '' && ($orderDetail->order->current_state == ORDER_STATE_OPEN || $orderDetail->bulkOrdersAllowed);
+    $editRecordAllowed = $groupBy == '' && ($orderDetail->order_state == ORDER_STATE_OPEN || $orderDetail->bulkOrdersAllowed);
 
     $i ++;
     if ($groupBy == '') {
@@ -297,7 +297,7 @@ foreach ($orderDetails as $orderDetail) {
     if ($groupBy == '') {
         if ($groupBy == '') {
             echo '<td class="date-short2">';
-            echo $orderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2'));
+            echo $orderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2'));
         } else {
             echo '<td>';
         }
@@ -305,19 +305,19 @@ foreach ($orderDetails as $orderDetail) {
 
         echo '<td>';
         if ($groupBy == '') {
-            echo $this->Html->getNameRespectingIsDeleted($orderDetail->order->customer);
+            echo $this->Html->getNameRespectingIsDeleted($orderDetail->customer);
         }
         echo '</td>';
 
         echo '<td class="hide">';
-        if ($groupBy == '' && !empty($orderDetail->order->customer)) {
-            echo '<span class="email">' . $orderDetail->order->customer->email . '</span>';
+        if ($groupBy == '' && !empty($orderDetail->customer)) {
+            echo '<span class="email">' . $orderDetail->customer->email . '</span>';
         }
         echo '</td>';
 
         echo '<td>';
         if ($groupBy == '') {
-            echo $this->MyHtml->getOrderStates()[$orderDetail->order->current_state];
+            echo $this->MyHtml->getOrderStates()[$orderDetail->order_state];
         }
         echo '</td>';
 

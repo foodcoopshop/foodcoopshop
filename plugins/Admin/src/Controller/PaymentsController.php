@@ -553,9 +553,9 @@ class PaymentsController extends AdminAppController
 
         $contain = ['Payments'];
         if (in_array('product', $this->allowedPaymentTypes)) {
-            $contain[] = 'PaidCashFreeOrders';
+            $contain[] = 'PaidCashFreeOrderDetails';
             if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-                $contain[] = 'PaidCashFreeOrders.TimebasedCurrencyOrders';
+                $contain[] = 'PaidCashFreeOrderDetails.TimebasedCurrencyOrderDetails';
             }
         }
 
@@ -591,18 +591,25 @@ class PaymentsController extends AdminAppController
             }
         }
 
-        if (! empty($customer->paid_cash_free_orders)) {
-            foreach ($customer->paid_cash_free_orders as $order) {
+        if (! empty($customer->paid_cash_free_order_details)) {
+            foreach ($customer->paid_cash_free_order_details as $order_detail) {
                 $payments[] = [
-                    'dateRaw' => $order->date_add,
-                    'date' => $order->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
-                    'year' => $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year')),
-                    'amount' => $order->total_paid * - 1,
-                    'deposit' => strtotime($order->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $order->total_deposit * - 1 : 0,
+                    'dateRaw' => $order_detail->created,
+                    'date' => $order_detail->created->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
+                    'year' => $order_detail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year')),
+                    'amount' => $order_detail->total_price_tax_incl * - 1,
+                    'deposit' => strtotime($order_detail->created->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $order_detail->deposit * - 1 : 0,
                     'type' => 'order',
-                    'text' => Configure::read('app.htmlHelper')->link(__d('admin', 'Order_number_abbr') . ' ' . $order->id_order . ' (' . Configure::read('app.htmlHelper')->getOrderStates()[$order['current_state']] . ')', '/admin/order-details/?dateFrom=' . $order['date_add']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '&dateTo=' . $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '&orderId=' . $order->id_order . '&customerId=' . $order->id_customer, [
-                        'title' => __d('admin', 'Show_order')
-                    ]),
+                    'text' => Configure::read('app.htmlHelper')->link(
+                        __d('admin', 'Order_number_abbr') . ' (' . 
+                            Configure::read('app.htmlHelper')->getOrderStates()[$order_detail->order_state] . ')',
+                            '/admin/order-details/?dateFrom=' . $order_detail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
+                            '&dateTo=' . $order_detail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . 
+                            '&customerId=' . $order_detail->id_customer,
+                            [
+                                'title' => __d('admin', 'Show_order')
+                            ]
+                    ),
                     'payment_id' => null,
                     'timebased_currency_order' => isset($order->timebased_currency_order) ? $order->timebased_currency_order : null
                 ];
@@ -611,9 +618,9 @@ class PaymentsController extends AdminAppController
 
         $timebasedCurrencyOrderInList = false;
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-            if (!empty($customer->paid_cash_free_orders)) {
-                foreach($customer->paid_cash_free_orders as $order) {
-                    if (!empty($order->timebased_currency_order)) {
+            if (!empty($customer->paid_cash_free_order_details)) {
+                foreach($customer->paid_cash_free_order_details as $order) {
+                    if (!empty($order->timebased_currency_order_details)) {
                         $timebasedCurrencyOrderInList = true;
                         break;
                     }
