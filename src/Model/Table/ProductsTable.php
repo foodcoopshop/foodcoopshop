@@ -32,12 +32,6 @@ class ProductsTable extends AppTable
         $this->belongsTo('Manufacturers', [
             'foreignKey' => 'id_manufacturer'
         ]);
-        $this->belongsTo('ProductLangs', [
-            'foreignKey' => 'id_product'
-        ]);
-        $this->belongsTo('ProductShops', [
-            'foreignKey' => 'id_product'
-        ]);
         $this->belongsTo('StockAvailables', [
             'foreignKey' => 'id_product'
         ]);
@@ -305,7 +299,7 @@ class ProductsTable extends AppTable
 
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
-                $success = $this->ProductAttributes->ProductAttributeShops->updateAll([
+                $success = $this->ProductAttributes->updateAll([
                     'price' => $netPrice
                 ], [
                     'id_product_attribute' => $ids['attributeId']
@@ -314,9 +308,9 @@ class ProductsTable extends AppTable
                 $product2update = [
                     'price' => $netPrice
                 ];
-                $entity = $this->ProductShops->get($ids['productId']);
-                $result = $this->ProductShops->save(
-                    $this->ProductShops->patchEntity($entity, $product2update)
+                $entity = $this->get($ids['productId']);
+                $result = $this->save(
+                    $this->patchEntity($entity, $product2update)
                 );
                 $success |= is_object($result);
             }
@@ -370,6 +364,64 @@ class ProductsTable extends AppTable
                 $this->StockAvailables->save($this->StockAvailables->patchEntity($entity, $product2update));
             }
         }
+    }
+    
+    /**
+     * @param array $products
+     *  Array
+     *  (
+     *      [0] => Array
+     *          (
+     *              [productId] => Array
+     *                  (
+     *                      [name] => Brokkoli-1
+     *                      [description] => grünes Gemüse: Strunk mit Röschen auch angeschwollenen Knospen-1
+     *                      [description_short] => kbA, vom Gemüsehof Wild-Obermayr-1
+     *                      [unity] => ca. 0,4 kg-1
+     *                      [is_declaration_ok] => 1
+     *                  )
+     *          )
+     *  )
+     * @return boolean $success
+     */
+    public function changeName($products)
+    {
+        
+        $products2save = [];
+        
+        foreach ($products as $product) {
+            $productId = key($product);
+            $name = $product[$productId];
+            $ids = $this->getProductIdAndAttributeId($productId);
+            if ($ids['attributeId'] > 0) {
+                throw new InvalidParameterException('change name is not allowed for product attributes');
+            }
+            $newName = StringComponent::removeSpecialChars(strip_tags(trim($name['name'])));
+            if (strlen($newName) < 2) {
+                throw new InvalidParameterException(__('The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long.', ['<b>'.$newName.'</b>', 2]));
+            } else {
+                $tmpProduct2Save = [
+                    'id_product' => $ids['productId'],
+                    'name' => StringComponent::removeSpecialChars(strip_tags(trim($name['name']))),
+                    'description' => strip_tags(htmlspecialchars_decode(trim($name['description'])), '<p><b><br><img>'),
+                    'description_short' => strip_tags(htmlspecialchars_decode(trim($name['description_short'])), '<p><b><br>'),
+                    'unity' => StringComponent::removeSpecialChars(strip_tags(trim($name['unity'])))
+                ];
+                if (isset($name['is_declaration_ok'])) {
+                    $tmpProduct2Save['is_declaration_ok'] = $name['is_declaration_ok'];
+                }
+                $products2save[] = $tmpProduct2Save;
+            }
+        }
+        
+        $success = false;
+        if (!empty($products2save)) {
+            $entities = $this->newEntities($products2save);
+            $result = $this->saveMany($entities);
+            $success = !empty($result);
+        }
+        
+        return $success;
     }
 
     /**
@@ -446,9 +498,9 @@ class ProductsTable extends AppTable
                 $quantityIsZeroFilterOn = true;
             }
             if (preg_match('/'.$this->getIsPriceZeroCondition().'/', $condition)) {
-                $this->ProductAttributes->getAssociation('ProductAttributeShops')->setConditions(
+                $this->ProductAttributes->setConditions(
                     [
-                        'ProductAttributeShops.price' => 0
+                        'ProductAttributes.price' => 0
                     ]
                 );
                 $priceIsZeroFilterOn = true;
@@ -458,8 +510,6 @@ class ProductsTable extends AppTable
         $contain = [
             'CategoryProducts',
             'CategoryProducts.Categories',
-            'ProductShops',
-            'ProductLangs',
             'DepositProducts',
             'Images',
             'Taxes',
@@ -476,7 +526,6 @@ class ProductsTable extends AppTable
                     'StockAvailables.id_product_attribute > 0'
                 ]
             ],
-            'ProductAttributes.ProductAttributeShops',
             'ProductAttributes.DepositProductAttributes',
             'ProductAttributes.UnitProductAttributes',
             'ProductAttributes.ProductAttributeCombinations.Attributes'
@@ -484,7 +533,7 @@ class ProductsTable extends AppTable
 
         $order = [
             'Products.active' => 'DESC',
-            'ProductLangs.name' => 'ASC'
+            'Products.name' => 'ASC'
         ];
 
         $query = $this->find('all', [
@@ -502,8 +551,6 @@ class ProductsTable extends AppTable
         $query
         ->select('Products.id_product')->distinct()
         ->select($this) // Products
-        ->select($this->ProductShops)
-        ->select($this->ProductLangs)
         ->select($this->DepositProducts)
         ->select('Images.id_image')
         ->select($this->Taxes)
@@ -514,7 +561,7 @@ class ProductsTable extends AppTable
         if ($controller) {
             $query = $controller->paginate($query, [
                 'sortWhitelist' => [
-                    'Images.id_image', 'ProductLangs.name', 'ProductLangs.is_declaration_ok', 'Taxes.rate', 'Products.active', 'Manufacturers.name'
+                    'Images.id_image', 'Products.name', 'Products.is_declaration_ok', 'Taxes.rate', 'Products.active', 'Manufacturers.name'
                 ],
                 'order' => $order
             ]);
@@ -541,11 +588,11 @@ class ProductsTable extends AppTable
             $product->selected_categories = Hash::extract($product->category_products, '{n}.id_category');
 
             $product->is_new = true;
-            if ($product->product_shop->created) {
-                $product->is_new = $this->isNew($product->product_shop->created->i18nFormat(Configure::read('DateFormat.Database')));
+            if ($product->created) {
+                $product->is_new = $this->isNew($product->created->i18nFormat(Configure::read('DateFormat.Database')));
             }
 
-            $product->gross_price = $this->getGrossPrice($product->id_product, $product->product_shop->price);
+            $product->gross_price = $this->getGrossPrice($product->id_product, $product->price);
 
             $rowClass = [];
             if (! $product->active) {
@@ -560,8 +607,8 @@ class ProductsTable extends AppTable
 
             // show unity only for main products
             $additionalProductNameInfos = [];
-            if (empty($product->product_attributes) && $product->product_lang->unity != '') {
-                $additionalProductNameInfos[] = '<span class="unity-for-dialog">' . $product->product_lang->unity . '</span>';
+            if (empty($product->product_attributes) && $product->unity != '') {
+                $additionalProductNameInfos[] = '<span class="unity-for-dialog">' . $product->unity . '</span>';
             }
 
             $product->price_is_zero = false;
@@ -584,10 +631,10 @@ class ProductsTable extends AppTable
 
             }
 
-            $product->product_lang->unchanged_name = $product->product_lang->name;
-            $product->product_lang->name = '<span class="product-name">' . $product->product_lang->name . '</span>';
+            $product->unchanged_name = $product->name;
+            $product->name = '<span class="product-name">' . $product->name . '</span>';
             if (!empty($additionalProductNameInfos)) {
-                $product->product_lang->name = $product->product_lang->name . ': ' . join(', ', $additionalProductNameInfos);
+                $product->name = $product->name . ': ' . join(', ', $additionalProductNameInfos);
             }
 
             if (empty($product->tax)) {
@@ -612,14 +659,14 @@ class ProductsTable extends AppTable
                 $preparedProducts[$currentPreparedProduct]['AttributesRemoved'] = 0;
 
                 foreach ($product->product_attributes as $attribute) {
-                    if (($quantityIsZeroFilterOn && empty($attribute->stock_available)) || ($priceIsZeroFilterOn && empty($attribute->product_attribute_shop))) {
+                    if (($quantityIsZeroFilterOn && empty($attribute->stock_available)) || ($priceIsZeroFilterOn && empty($attribute))) {
                         $preparedProducts[$currentPreparedProduct]['AttributesRemoved'] ++;
                         continue;
                     }
 
                     $grossPrice = 0;
-                    if (! empty($attribute->product_attribute_shop->price)) {
-                        $grossPrice = $this->getGrossPrice($product->id_product, $attribute->product_attribute_shop->price);
+                    if (! empty($attribute->price)) {
+                        $grossPrice = $this->getGrossPrice($product->id_product, $attribute->price);
                     }
 
                     $rowClass = [
@@ -649,7 +696,7 @@ class ProductsTable extends AppTable
                     } else {
                         $productName = $attribute->product_attribute_combination->attribute->name;
                         if ($addProductNameToAttributes) {
-                            $productName = $product->product_lang->name . ': ' . $productName;
+                            $productName = $product->name . ': ' . $productName;
                         }
                     }
 
@@ -659,19 +706,15 @@ class ProductsTable extends AppTable
                         'active' => - 1,
                         'price_is_zero' => $priceIsZero,
                         'row_class' => join(' ', $rowClass),
-                        'product_lang' => [
-                            'unchanged_name' => $product->product_lang->unchanged_name,
-                            'name' => $productName,
-                            'description_short' => '',
-                            'description' => '',
-                            'unity' => ''
-                        ],
+                        'unchanged_name' => $product->unchanged_name,
+                        'name' => $productName,
+                        'description_short' => '',
+                        'description' => '',
+                        'unity' => '',
                         'manufacturer' => [
                             'name' => (!empty($product->manufacturer) ? $product->manufacturer->name : '')
                         ],
-                        'product_attribute_shop' => [
-                            'default_on' => $attribute->product_attribute_shop->default_on
-                        ],
+                        'default_on' => $attribute->default_on,
                         'stock_available' => [
                             'quantity' => $attribute->stock_available->quantity
                         ],
@@ -721,19 +764,18 @@ class ProductsTable extends AppTable
         $products = $this->find('all', [
             'conditions' => $conditions,
             'contain' => [
-                'ProductLangs',
                 'Manufacturers',
             ],
             'order' => [
                 'Products.active' => 'DESC',
-                'ProductLangs.name' => 'ASC'
+                'Products.name' => 'ASC'
             ]
         ]);
 
         $offlineProducts = [];
         $onlineProducts = [];
         foreach ($products as $product) {
-            $productNameForDropdown = $product->product_lang->name . (!empty($product->manufacturer) ? ' - ' . $product->manufacturer->name : '');
+            $productNameForDropdown = $product->name . (!empty($product->manufacturer) ? ' - ' . $product->manufacturer->name : '');
             if ($product->active == 0) {
                 $offlineProducts[$product->id_product] = $productNameForDropdown;
             } else {
@@ -869,7 +911,7 @@ class ProductsTable extends AppTable
 
     private function getIsPriceZeroCondition()
     {
-        return 'ProductShops.price = 0';
+        return 'Products.price = 0';
     }
 
     public function changeDefaultAttributeId($productId, $productAttributeId)
@@ -886,19 +928,17 @@ class ProductsTable extends AppTable
         }
 
         // first set all associated attributes to 0
-        $this->ProductAttributes->ProductAttributeShops->updateAll([
+        $this->ProductAttributes->updateAll([
             'default_on' => 0
         ], [
             'id_product_attribute IN (' . join(', ', $productAttributeIds) . ')',
-            'id_shop' => 1
         ]);
 
         // then set the new one
-        $this->ProductAttributes->ProductAttributeShops->updateAll([
+        $this->ProductAttributes->updateAll([
             'default_on' => 1
         ], [
             'id_product_attribute' => $productAttributeId,
-            'id_shop' => 1
         ]);
     }
 
@@ -920,10 +960,6 @@ class ProductsTable extends AppTable
             'ProductAttributeCombinations.id_product_attribute' => $productAttributeId
         ]);
 
-        $this->ProductAttributes->ProductAttributeShops->deleteAll([
-            'ProductAttributeShops.id_product_attribute' => $productAttributeId
-        ]);
-
         $this->ProductAttributes->UnitProductAttributes->deleteAll([
             'UnitProductAttributes.id_product_attribute' => $productAttributeId
         ]);
@@ -941,34 +977,23 @@ class ProductsTable extends AppTable
 
     public function add($manufacturer)
     {
-        $defaultQuantity = 999;
 
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-        $defaultTaxId = $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id);
-
+        
         // INSERT PRODUCT
         $newProduct = $this->save(
             $this->newEntity(
                 [
                     'id_manufacturer' => $manufacturer->id_manufacturer,
-                    'id_category_default' => Configure::read('app.categoryAllProducts'),
-                    'id_tax' => $defaultTaxId,
+                    'id_tax' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id),
+                    'name' => StringComponent::removeSpecialChars(__('New_product_of') . ' ' . $manufacturer->name),
+                    'description' => '',
+                    'description_short' => '',
                     'unity' => ''
                 ]
             )
         );
         $newProductId = $newProduct->id_product;
-
-        // INSERT PRODUCT_SHOP
-        $this->ProductShops->save(
-            $this->ProductShops->newEntity(
-                [
-                    'id_product' => $newProductId,
-                    'id_shop' => 1,
-                    'id_category_default' => Configure::read('app.categoryAllProducts')
-                ]
-            )
-        );
 
         // INSERT CATEGORY_PRODUCTS
         $this->CategoryProducts->save(
@@ -980,27 +1005,12 @@ class ProductsTable extends AppTable
             )
         );
 
-        // INSERT PRODUCT_LANG
-        $name = StringComponent::removeSpecialChars(__('New_product_of') . ' ' . $manufacturer->name);
-        $this->ProductLangs->save(
-            $this->ProductLangs->newEntity(
-                [
-                    'id_product' => $newProductId,
-                    'name' => $name,
-                    'description' => '',
-                    'description_short' => '',
-                    'unity' => ''
-                ]
-            )
-        );
-
         // INSERT STOCK AVAILABLE
         $this->StockAvailables->save(
             $this->StockAvailables->newEntity(
                 [
                     'id_product' => $newProductId,
-                    'id_shop' => 1,
-                    'quantity' => $defaultQuantity
+                    'quantity' => 999
                 ]
             )
         );

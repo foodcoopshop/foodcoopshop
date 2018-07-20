@@ -77,7 +77,7 @@ echo $this->Form->control('Customers.address_customer.phone', [
 ]);
 
 if (Configure::read('app.emailOrderReminderEnabled')) {
-    echo $this->Form->control('Customers.newsletter', [
+    echo $this->Form->control('Customers.email_order_reminder', [
         'label' => __d('admin', 'Order_reminder').'<span class="after small">'.__d('admin', 'Want_to_receive_reminder_emails?').'</span>',
         'type' => 'checkbox',
         'escape' => false

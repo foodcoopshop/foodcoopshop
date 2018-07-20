@@ -107,8 +107,7 @@ class CategoriesTable extends AppTable
     public function getProductsByCategoryId($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false)
     {
         $params = [
-            'active' => APP_ON,
-            'shopId' => Configure::read('app.shopId')
+            'active' => APP_ON
         ];
         if (! $this->getLoggedUser()) {
             $params['isPrivate'] = APP_OFF;
@@ -138,12 +137,12 @@ class CategoriesTable extends AppTable
 
         if ($filterByNewProducts) {
             $params['dateAdd'] = date('Y-m-d', strtotime('-' . Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') . ' DAYS'));
-            $sql .= " AND DATE_FORMAT(ProductShops.created, '%Y-%m-%d') > :dateAdd";
+            $sql .= " AND DATE_FORMAT(Products.created, '%Y-%m-%d') > :dateAdd";
         }
 
         if ($keyword != '') {
             $params['keyword'] = '%' . $keyword . '%';
-            $sql .= " AND (ProductLangs.name LIKE :keyword OR ProductLangs.description_short LIKE :keyword) ";
+            $sql .= " AND (Products.name LIKE :keyword OR Products.description_short LIKE :keyword) ";
         }
 
         if ($productId > 0) {

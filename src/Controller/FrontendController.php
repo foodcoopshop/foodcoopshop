@@ -61,7 +61,6 @@ class FrontendController extends AppController
                     'ProductAttributes.id_product' => $product['id_product']
                 ],
                 'contain' => [
-                    'ProductAttributeShops',
                     'StockAvailables',
                     'ProductAttributeCombinations.Attributes',
                     'DepositProductAttributes',
@@ -73,11 +72,12 @@ class FrontendController extends AppController
                 $preparedAttributes['ProductAttributes'] = [
                     'id_product_attribute' => $attribute->id_product_attribute
                 ];
-                $grossPrice = $this->Product->getGrossPrice($attribute->product_attribute_shop->id_product, $attribute->product_attribute_shop->price);
-                $preparedAttributes['ProductAttributeShops'] = [
+                $grossPrice = $this->Product->getGrossPrice($attribute->id_product, $attribute->price);
+                $preparedAttributes['ProductAttributes'] = [
                     'gross_price' => $grossPrice,
-                    'tax' => $grossPrice - $attribute->product_attribute_shop->price,
-                    'default_on' => $attribute->product_attribute_shop->default_on
+                    'tax' => $grossPrice - $attribute->price,
+                    'default_on' => $attribute->default_on,
+                    'id_product_attribute' => $attribute->id_product_attribute
                 ];
                 $preparedAttributes['StockAvailables'] = [
                     'quantity' => $attribute->stock_available->quantity
@@ -102,7 +102,7 @@ class FrontendController extends AppController
                 if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
                     if ($this->Manufacturer->getOptionTimebasedCurrencyEnabled($product['timebased_currency_enabled'])) {
                         $preparedAttributes['timebased_currency_money_incl'] = $this->Manufacturer->getTimebasedCurrencyMoney($grossPrice, $product['timebased_currency_max_percentage']);
-                        $preparedAttributes['timebased_currency_money_excl'] = $this->Manufacturer->getTimebasedCurrencyMoney($attribute->product_attribute_shop->price, $product['timebased_currency_max_percentage']);
+                        $preparedAttributes['timebased_currency_money_excl'] = $this->Manufacturer->getTimebasedCurrencyMoney($attribute->price, $product['timebased_currency_max_percentage']);
                         $preparedAttributes['timebased_currency_seconds'] = $this->Manufacturer->getCartTimebasedCurrencySeconds($grossPrice, $product['timebased_currency_max_percentage']);
                     }
                 }

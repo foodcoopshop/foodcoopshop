@@ -122,8 +122,6 @@ return [
         ],
         'tmpUploadImagesDir' => DS.'tmp' . DS . 'images',
 
-        'langId' => 1,
-        'shopId' => 1,
         'countryId' => 2, // austria: 2, germany: 1
 
         /**

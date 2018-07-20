@@ -83,20 +83,19 @@ class ApiController extends Controller
                     'Products.id_product' => $productIds['productId'],
                 ],
                 'contain' => [
-                    'ProductLangs',
                     'ProductAttributes.ProductAttributeCombinations.Attributes'
                 ]
             ])->first();
             if ($productIds['attributeId'] == 0) {
-                $linkName = $product->product_lang->name;
+                $linkName = $product->name;
             } else {
                 foreach ($product->product_attributes as $attribute) {
                     if ($attribute->id_product_attribute == $productIds['attributeId']) {
-                        $linkName = $product->product_lang->name . ' : ' . $attribute->product_attribute_combination->attribute->name;
+                        $linkName = $product->name . ' : ' . $attribute->product_attribute_combination->attribute->name;
                     }
                 }
             }
-            $productDetailLinks[] = Configure::read('app.htmlHelper')->link($linkName, Configure::read('app.slugHelper')->getProductDetail($productIds['productId'], $product->product_lang->name));
+            $productDetailLinks[] = Configure::read('app.htmlHelper')->link($linkName, Configure::read('app.slugHelper')->getProductDetail($productIds['productId'], $product->name));
         }
         return join(', ', $productDetailLinks);
     }
@@ -193,7 +192,7 @@ class ApiController extends Controller
         } else {
             if (!empty($products2saveForName)) {
                 $syncFieldsOk[] = 'Name';
-                $updateStatus = $this->Product->ProductLangs->changeName($products2saveForName);
+                $updateStatus = $this->Product->changeName($products2saveForName);
                 $productIds = [];
                 foreach ($products2saveForName as $p) {
                     $productIds[] = key($p);

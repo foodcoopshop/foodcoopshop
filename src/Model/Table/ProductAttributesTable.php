@@ -37,10 +37,6 @@ class ProductAttributesTable extends AppTable
         $this->hasOne('DepositProductAttributes', [
             'foreignKey' => 'id_product_attribute'
         ]);
-        $this->hasOne('ProductAttributeShops', [
-            'className' => 'ProductAttributeShops',
-            'foreignKey' => 'id_product_attribute'
-        ]);
         $this->hasOne('UnitProductAttributes', [
             'foreignKey' => 'id_product_attribute'
         ]);
@@ -69,23 +65,11 @@ class ProductAttributesTable extends AppTable
         // INSERT in ProductAttributeCombination tricky because of set primary_key
         $this->getConnection()->query('INSERT INTO '.$this->tablePrefix.'product_attribute_combination (id_attribute, id_product_attribute) VALUES(' . $attributeId . ', ' . $productAttributeId . ')');
 
-        $this->ProductAttributeShops->save(
-            $this->ProductAttributeShops->newEntity(
-                [
-                    'id_product_attribute' => $productAttributeId,
-                    'default_on' => $productAttributesCount == 0 ? 1 : 0,
-                    'id_shop' => 1,
-                    'id_product' => $productId
-                ]
-            )
-        );
-
         // set price of product back to 0 => if not, the price of the attribute is added to the price of the product
-        $this->ProductShop = TableRegistry::getTableLocator()->get('ProductShops');
-        $this->ProductShop->id = $productId;
-        $this->ProductShop->save(
-            $this->ProductShop->patchEntity(
-                $this->ProductShop->get($productId),
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product->save(
+            $this->Product->patchEntity(
+                $this->Product->get($productId),
                 [
                     'price' => 0
                 ]

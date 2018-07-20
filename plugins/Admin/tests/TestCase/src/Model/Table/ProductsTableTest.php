@@ -110,7 +110,6 @@ class ProductsTableTest extends AppCakeTestCase
             ],
             'contain' => [
                 'CategoryProducts',
-                'ProductLangs',
                 'StockAvailables'
             ]
         ])->first();
@@ -119,7 +118,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertEquals($product->id_manufacturer, $manufacturerId);
         $this->assertEquals($product->active, APP_OFF);
         $this->assertEquals($product->category_products[0]->id_category, Configure::read('app.categoryAllProducts'));
-        $this->assertEquals($product->product_lang->name, 'Neues Produkt von ' . $manufacturer->name);
+        $this->assertEquals($product->name, 'Neues Produkt von ' . $manufacturer->name);
         $this->assertEquals($product->id_tax, $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id));
         $this->assertEquals($product->stock_available->quantity, 999);
     }
@@ -488,10 +487,87 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertProductStatus($products, APP_ON);
         $this->assertSame(true, $exceptionThrown);
     }
-
+    
+    public function testChangeNameWithOneProductAndInvalidStringName()
+    {
+        $products = [
+            [346 => [
+                'name' => 'a', // at least 2 chars needed
+                'unity' => '',
+                'description' => 'Beschreibung',
+                'description_short' => 'Kurze Beschreibung'
+            ]]
+        ];
+        
+        $exceptionThrown = false;
+        
+        try {
+            $this->Product->changeName($products);
+        } catch (InvalidParameterException $e) {
+            $exceptionThrown = true;
+        }
+        
+        $expectedResult = ['name' => 'Artischocke', 'unity' => 'Stück', 'description' => '', 'description_short' => ''];
+        $this->assertProductName($products, $expectedResult);
+        $this->assertSame(true, $exceptionThrown);
+    }
+    
+    /**
+     * @expectedException App\Lib\Error\Exception\InvalidParameterException
+     * @expectedExceptionMessage change name is not allowed for product attributes
+     */
+    public function testChangeNameForProductAttribute()
+    {
+        $products = [
+            ['60-10' => 0]
+        ];
+        $this->Product->changeName($products);
+    }
+    
+    public function testChangeNameWithMultipleProducts()
+    {
+        
+        $parameters = [
+            'name' => 'test <b>name</b>', // no tags allowed
+            'unity' => ' test unity ',    // trim and no tags allowed
+            'description' => '    <p>test <br /><b>description</b></p>', // b, p and br allowed
+            'description_short' => '<p>test description<br /> short</p>    ' // b, p and br allowed
+        ];
+        
+        $products = [
+            [102 => $parameters],
+            [346 => $parameters]
+        ];
+        $this->Product->changeName($products);
+        
+        $expectedResults = [
+            'name' => 'test name',
+            'unity' => 'test unity',
+            'description' => '<p>test <br /><b>description</b></p>',
+            'description_short' => '<p>test description<br /> short</p>'
+        ];
+        $this->assertProductName($products, $expectedResults);
+    }
+    
     /**
      * START helper methods
      */
+    
+    private function assertProductName($products, $expectedResults)
+    {
+        foreach ($products as $product) {
+            $productId = key($product);
+            $changedProduct = $this->Product->find('all', [
+                'conditions' => [
+                    'Products.id_product' => $productId,
+                ]
+            ])->first();
+            $this->assertEquals($expectedResults['name'], $changedProduct->name, 'changing the name did not work');
+            $this->assertEquals($expectedResults['unity'], $changedProduct->unity, 'changing the unity did not work');
+            $this->assertEquals($expectedResults['description'], $changedProduct->description, 'changing the description did not work');
+            $this->assertEquals($expectedResults['description_short'], $changedProduct->description_short, 'changing the description short did not work');
+        }
+    }
 
     private function assertProductQuantity($products, $forceUseThisQuantity = null)
     {
@@ -575,12 +651,12 @@ class ProductsTableTest extends AppCakeTestCase
             }
             $expectedPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedPrice);
             if ($productAndAttributeId['attributeId'] == 0) {
-                $contain = ['ProductShops'];
+                $contain = [];
             } else {
                 $this->Product->getAssociation('ProductAttributes')->setConditions(
                     ['ProductAttributes.id_product_attribute' => $productAndAttributeId['attributeId']]
                 );
-                $contain = ['ProductAttributes.ProductAttributeShops'];
+                $contain = ['ProductAttributes'];
             }
             $changedProduct = $this->Product->find('all', [
                 'conditions' => [
@@ -589,9 +665,9 @@ class ProductsTableTest extends AppCakeTestCase
                 'contain' => $contain
             ])->first();
             if ($productAndAttributeId['attributeId'] == 0) {
-                $resultEntity = $changedProduct->product_shop;
+                $resultEntity = $changedProduct;
             } else {
-                $resultEntity = $changedProduct->product_attributes[0]->product_attribute_shop;
+                $resultEntity = $changedProduct->product_attributes[0];
             }
             $this->assertEquals($expectedPrice, $this->Product->getGrossPrice($productId, $resultEntity->price), 'changing the price did not work');
         }

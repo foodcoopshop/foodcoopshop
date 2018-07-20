@@ -411,8 +411,7 @@ class ManufacturersTable extends AppTable
 
         $params = [
             'manufacturerId' => $manufacturerId,
-            'active' => APP_ON,
-            'shopId' => Configure::read('app.shopId')
+            'active' => APP_ON
         ];
         if (! $this->getLoggedUser()) {
             $params['isPrivate'] = APP_OFF;
@@ -473,7 +472,6 @@ class ManufacturersTable extends AppTable
             LEFT JOIN ".$this->tablePrefix."orders o ON o.id_order = od.id_order
             LEFT JOIN ".$this->tablePrefix."order_detail_tax odt ON odt.id_order_detail = od.id_order_detail
             LEFT JOIN ".$this->tablePrefix."order_detail_units odu ON od.id_order_detail = odu.id_order_detail
-            LEFT JOIN ".$this->tablePrefix."product_lang pl ON p.id_product = pl.id_product
             LEFT JOIN ".$this->tablePrefix."customer c ON c.id_customer = o.id_customer
             LEFT JOIN ".$this->tablePrefix."manufacturer m ON m.id_manufacturer = p.id_manufacturer
             LEFT JOIN ".$this->tablePrefix."address ma ON m.id_manufacturer = ma.id_manufacturer

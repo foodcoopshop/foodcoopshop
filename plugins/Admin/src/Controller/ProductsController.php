@@ -146,7 +146,6 @@ class ProductsController extends AdminAppController
             ],
             'contain' => [
                 'Images',
-                'ProductLangs',
                 'Manufacturers'
             ]
         ])->first();
@@ -166,7 +165,7 @@ class ProductsController extends AdminAppController
 
         $actionLogMessage = __d('admin', 'Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}.', [
             $product->image->id_image,
-            '<b>' . $product->product_lang->name . '</b>',
+            '<b>' . $product->name . '</b>',
             '<b>' . $product->manufacturer->name . '</b>'
         ]);
 
@@ -192,7 +191,6 @@ class ProductsController extends AdminAppController
             ],
             'contain' => [
                 'Images',
-                'ProductLangs',
                 'Manufacturers'
             ]
         ])->first();
@@ -229,7 +227,7 @@ class ProductsController extends AdminAppController
         }
 
         $actionLogMessage = __d('admin', 'A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}.', [
-            '<b>' . $product->product_lang->name . '</b>',
+            '<b>' . $product->name . '</b>',
             '<b>' . $product->manufacturer->name . '</b>'
         ]);
         $this->Flash->success($actionLogMessage);
@@ -252,7 +250,6 @@ class ProductsController extends AdminAppController
                 'Products.id_product' => $productId
             ],
             'contain' => [
-                'ProductLangs',
                 'Manufacturers',
                 'ProductAttributes',
                 'ProductAttributes.ProductAttributeCombinations.Attributes'
@@ -271,7 +268,7 @@ class ProductsController extends AdminAppController
 
         $actionLogMessage = __d('admin', 'The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted.', [
             '<b>' . $attributeName . '</b>',
-            '<b>' . $oldProduct->product_lang->name . '</b>',
+            '<b>' . $oldProduct->name . '</b>',
             '<b>' . $oldProduct->manufacturer->name . '</b>'
         ]);
         $this->Flash->success($actionLogMessage);
@@ -287,7 +284,6 @@ class ProductsController extends AdminAppController
                 'Products.id_product' => $productId
             ],
             'contain' => [
-                'ProductLangs',
                 'Manufacturers'
             ]
         ])->first();
@@ -314,7 +310,7 @@ class ProductsController extends AdminAppController
 
         $actionLogMessage = __d('admin', 'The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created.', [
             '<b>' . $attribute . '</b>',
-            '<b>' . $oldProduct->product_lang->name . '</b>',
+            '<b>' . $oldProduct->name . '</b>',
             '<b>' . $oldProduct->manufacturer->name . '</b>'
         ]);
         $this->Flash->success($actionLogMessage);
@@ -368,10 +364,7 @@ class ProductsController extends AdminAppController
             ],
             'contain' => [
                 'Taxes',
-                'ProductLangs',
-                'ProductShops',
                 'ProductAttributes',
-                'ProductAttributes.ProductAttributeShops',
                 'Manufacturers'
             ]
         ])->first();
@@ -390,16 +383,13 @@ class ProductsController extends AdminAppController
             $this->Product->save(
                 $this->Product->patchEntity($oldProduct, $product2update)
             );
-            $this->Product->ProductShops->save(
-                $this->Product->ProductShops->patchEntity($oldProduct->product_shop, $product2update)
-            );
 
             if (! empty($oldProduct->product_attributes)) {
                 // update net price of all attributes
                 foreach ($oldProduct->product_attributes as $attribute) {
                     // netPrice needs to be calculated new - product tax has been saved above...
-                    $newNetPrice = $this->Product->getNetPriceAfterTaxUpdate($productId, $attribute->product_attribute_shop->price, $oldProduct->tax->rate);
-                    $this->Product->ProductAttributes->ProductAttributeShops->updateAll([
+                    $newNetPrice = $this->Product->getNetPriceAfterTaxUpdate($productId, $attribute->price, $oldProduct->tax->rate);
+                    $this->Product->ProductAttributes->updateAll([
                         'price' => $newNetPrice
                     ], [
                         'id_product_attribute' => $attribute->id_product_attribute
@@ -407,12 +397,12 @@ class ProductsController extends AdminAppController
                 }
             } else {
                 // update price of product without attributes
-                $newNetPrice = $this->Product->getNetPriceAfterTaxUpdate($productId, $oldProduct->product_shop->price, $oldProduct->tax->rate);
+                $newNetPrice = $this->Product->getNetPriceAfterTaxUpdate($productId, $oldProduct->price, $oldProduct->tax->rate);
                 $product2update = [
                     'price' => $newNetPrice
                 ];
-                $this->Product->ProductShops->save(
-                    $this->Product->ProductShops->patchEntity($oldProduct->product_shop, $product2update)
+                $this->Product->save(
+                    $this->Product->patchEntity($oldProduct, $product2update)
                 );
             }
 
@@ -435,7 +425,7 @@ class ProductsController extends AdminAppController
                 $oldTaxRate = 0; // 0 % does not have record in tax
             }
 
-            $messageString = __d('admin', 'The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', ['<b>' . $oldProduct->product_lang->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', $oldTaxRate . '%', $taxRate . '%']);
+            $messageString = __d('admin', 'The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', ['<b>' . $oldProduct->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', $oldTaxRate . '%', $taxRate . '%']);
             $this->ActionLog->customSave('product_tax_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
         } else {
             $messageString = __d('admin', 'Nothing_changed.');
@@ -469,7 +459,6 @@ class ProductsController extends AdminAppController
                 'Products.id_product' => $productId
             ],
             'contain' => [
-                'ProductLangs',
                 'Manufacturers'
             ]
         ])->first();
@@ -482,7 +471,7 @@ class ProductsController extends AdminAppController
         $this->Category = TableRegistry::getTableLocator()->get('Categories');
         $selectedCategoryNames = [];
         foreach ($selectedCategories as $selectedCategory) {
-            // only add if entry of passed id exists in category lang table
+            // only add if entry of passed id exists in category table
             $oldCategory = $this->Category->find('all', [
                 'conditions' => [
                     'Categories.id_category' => $selectedCategory
@@ -498,7 +487,7 @@ class ProductsController extends AdminAppController
             }
         }
 
-        $messageString = __d('admin', 'The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}', ['<b>' . $oldProduct->product_lang->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', join(', ', $selectedCategoryNames)]);
+        $messageString = __d('admin', 'The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}', ['<b>' . $oldProduct->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', join(', ', $selectedCategoryNames)]);
         $this->Flash->success($messageString);
         $this->ActionLog->customSave('product_categories_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
 
@@ -524,7 +513,6 @@ class ProductsController extends AdminAppController
                 'Products.id_product' => $productId
             ],
             'contain' => [
-                'ProductLangs',
                 'StockAvailables',
                 'Manufacturers',
                 'ProductAttributes',
@@ -539,7 +527,7 @@ class ProductsController extends AdminAppController
                 if ($attribute->id_product_attribute != $ids['attributeId']) {
                     continue;
                 }
-                $oldProduct->product_lang->name = $oldProduct->product_lang->name . ' : ' . $attribute->product_attribute_combination->attribute->name;
+                $oldProduct->name = $oldProduct->name . ' : ' . $attribute->product_attribute_combination->attribute->name;
                 $oldProduct->stock_available->quantity = $attribute->stock_available->quantity;
             }
         }
@@ -555,9 +543,9 @@ class ProductsController extends AdminAppController
         }
 
         $quantity = $this->Product->getQuantityAsInteger($this->getRequest()->getData('quantity'));
-        $this->Flash->success(__d('admin', 'The_amount_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->product_lang->name . '</b>']));
+        $this->Flash->success(__d('admin', 'The_amount_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']));
 
-        $this->ActionLog->customSave('product_quantity_changed', $this->AppAuth->getUserId(), $productId, 'products', __d('admin', 'The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', ['<b>' . $oldProduct->product_lang->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', $oldProduct->stock_available->quantity, $quantity]));
+        $this->ActionLog->customSave('product_quantity_changed', $this->AppAuth->getUserId(), $productId, 'products', __d('admin', 'The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', ['<b>' . $oldProduct->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', $oldProduct->stock_available->quantity, $quantity]));
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         die(json_encode([
@@ -584,11 +572,8 @@ class ProductsController extends AdminAppController
                 'Products.id_product' => $productId
             ],
             'contain' => [
-                'ProductLangs',
-                'ProductShops',
                 'Manufacturers',
                 'ProductAttributes',
-                'ProductAttributes.ProductAttributeShops',
                 'ProductAttributes.ProductAttributeCombinations.Attributes',
                 'ProductAttributes.UnitProductAttributes',
                 'UnitProducts'
@@ -601,8 +586,8 @@ class ProductsController extends AdminAppController
                 if ($attribute->id_product_attribute != $ids['attributeId']) {
                     continue;
                 }
-                $oldProduct->product_lang->name = $oldProduct->product_lang->name . ' : ' . $attribute->product_attribute_combination->attribute->name;
-                $oldProduct->product_shop->price = $attribute->product_attribute_shop->price;
+                $oldProduct->name = $oldProduct->name . ' : ' . $attribute->product_attribute_combination->attribute->name;
+                $oldProduct->price = $attribute->price;
                 $oldProduct->unit_product = $attribute->unit_product_attribute;
             }
         }
@@ -631,11 +616,11 @@ class ProductsController extends AdminAppController
 
         $price = $this->Product->getStringAsFloat($this->getRequest()->getData('price'));
         
-        $this->Flash->success(__d('admin', 'The_price_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->product_lang->name . '</b>']));
+        $this->Flash->success(__d('admin', 'The_price_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']));
         if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
             $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
         } else {
-            $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($productId, $oldProduct->product_shop->price));
+            $oldPrice = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($productId, $oldProduct->price));
         }
 
         if ($this->getRequest()->getData('pricePerUnitEnabled')) {
@@ -645,7 +630,7 @@ class ProductsController extends AdminAppController
         }
 
         $actionLogMessage = __d('admin', 'The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', [
-            '<b>' . $oldProduct->product_lang->name . '</b>',
+            '<b>' . $oldProduct->name . '</b>',
             '<b>' . $oldProduct->manufacturer->name . '</b>',
             $oldPrice,
             $newPrice
@@ -676,7 +661,6 @@ class ProductsController extends AdminAppController
                 'Products.id_product' => $productId
             ],
             'contain' => [
-                'ProductLangs',
                 'DepositProducts',
                 'ProductAttributes.DepositProductAttributes',
                 'ProductAttributes.ProductAttributeCombinations.Attributes'
@@ -694,7 +678,7 @@ class ProductsController extends AdminAppController
         }
 
         $depositEntity = $oldProduct->deposit_product;
-        $productName = $oldProduct->product_lang->name;
+        $productName = $oldProduct->name;
 
         if ($ids['attributeId'] > 0) {
             $attributeName = '';
@@ -744,13 +728,12 @@ class ProductsController extends AdminAppController
                 'Products.id_product' => $productId
             ],
             'contain' => [
-                'ProductLangs',
                 'Manufacturers'
             ]
         ])->first();
 
         try {
-            $this->Product->ProductLangs->changeName(
+            $this->Product->changeName(
                 [
                     [$productId => [
                         'name' => $this->getRequest()->getData('name'),
@@ -767,33 +750,33 @@ class ProductsController extends AdminAppController
 
         $this->Flash->success(__d('admin', 'The_product_was_changed_successfully.'));
 
-        if ($this->getRequest()->getData('name') != $oldProduct->product_lang->name) {
+        if ($this->getRequest()->getData('name') != $oldProduct->name) {
             $actionLogMessage = __d('admin', 'The_product_{0}_from_manufacturer_{1}_was_renamed_to_{2}.', [
-                '<b>' . $oldProduct->product_lang->name . '</b>',
+                '<b>' . $oldProduct->name . '</b>',
                 '<b>' . $oldProduct->manufacturer->name . '</b>',
                 '<i>"' . $this->getRequest()->getData('name') . '"</i>'
             ]);
             $this->ActionLog->customSave('product_name_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
         }
-        if ($this->getRequest()->getData('unity') != $oldProduct->product_lang->unity) {
+        if ($this->getRequest()->getData('unity') != $oldProduct->unity) {
             $actionLogMessage = __d('admin', 'The_unity_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}.', [
-                '<b>' . $oldProduct->product_lang->name . '</b>',
+                '<b>' . $oldProduct->name . '</b>',
                 '<b>' . $oldProduct->manufacturer->name . '</b>',
                 '<i>"' . $this->getRequest()->getData('unity') . '"</i>'
             ]);
             $this->ActionLog->customSave('product_unity_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
         }
-        if ($this->getRequest()->getData('description') != $oldProduct->product_lang->description) {
+        if ($this->getRequest()->getData('description') != $oldProduct->description) {
             $actionLogMessage = __d('admin', 'The_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}', [
-                '<b>' . $oldProduct->product_lang->name . '</b>',
+                '<b>' . $oldProduct->name . '</b>',
                 '<b>' . $oldProduct->manufacturer->name . '</b>',
                 '<div class="changed">' . $this->getRequest()->getData('description') . ' </div>'
             ]);
             $this->ActionLog->customSave('product_description_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
         }
-        if ($this->getRequest()->getData('descriptionShort') != $oldProduct->product_lang->description_short) {
+        if ($this->getRequest()->getData('descriptionShort') != $oldProduct->description_short) {
             $actionLogMessage = __d('admin', 'The_short_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}', [
-                '<b>' . $oldProduct->product_lang->name . '</b>',
+                '<b>' . $oldProduct->name . '</b>',
                 '<b>' . $oldProduct->manufacturer->name . '</b>',
                 '<div class="changed">' . $this->getRequest()->getData('descriptionShort') . ' </div>'
             ]);
@@ -910,7 +893,6 @@ class ProductsController extends AdminAppController
                 'Products.id_product' => $productId
             ],
             'contain' => [
-                'ProductLangs',
                 'Manufacturers',
             ]
         ])->first();
@@ -925,7 +907,7 @@ class ProductsController extends AdminAppController
         ])->first();
 
         $actionLogMessage = __d('admin', 'The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}.', [
-            '<b>' . $product->product_lang->name . '</b>',
+            '<b>' . $product->name . '</b>',
             '<b>' . $product->manufacturer->name . '</b>',
             '<b>' . $productAttribute->product_attribute_combination->attribute->name . '</b>'
         ]);
@@ -952,12 +934,10 @@ class ProductsController extends AdminAppController
             $newCreated = 'DATE_ADD(NOW(), INTERVAL -8 DAY)';
         }
 
-        $this->ProductShop = TableRegistry::getTableLocator()->get('ProductShops');
-        $sql = "UPDATE ".$this->Product->getTable()." p, ".$this->ProductShop->getTable()." ps 
-                SET p.created  = " . $newCreated . ",
-                    ps.created = " . $newCreated . "
-                WHERE p.id_product = ps.id_product
-                AND p.id_product = " . $productId . ";";
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $sql = "UPDATE ".$this->Product->getTable()." p 
+                SET p.created  = " . $newCreated . "
+                WHERE p.id_product = " . $productId . ";";
         $result = $this->Product->getConnection()->query($sql);
 
         $product = $this->Product->find('all', [
@@ -965,19 +945,18 @@ class ProductsController extends AdminAppController
                 'Products.id_product' => $productId
             ],
             'contain' => [
-                'ProductLangs',
                 'Manufacturers'
             ]
         ])->first();
 
         $actionLogType = 'product_set_to_old';
         $actionLogMessage = __d('admin', 'The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more.', [
-            '<b>' . $product->product_lang->name . '</b>',
+            '<b>' . $product->name . '</b>',
             '<b>' . $product->manufacturer->name . '</b>'
         ]);
         if ($status) {
             $actionLogMessage = __d('admin', 'The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days.', [
-                '<b>' . $product->product_lang->name . '</b>',
+                '<b>' . $product->name . '</b>',
                 '<b>' . $product->manufacturer->name . '</b>',
                 Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW')
             ]);
@@ -1005,19 +984,18 @@ class ProductsController extends AdminAppController
                 'Products.id_product' => $productId
             ],
             'contain' => [
-                'ProductLangs',
                 'Manufacturers'
             ]
         ])->first();
 
         $actionLogMessage = __d('admin', 'The_product_{0}_from_manufacturer_{1}_was_deactivated.', [
-            '<b>' . $product->product_lang->name . '</b>',
+            '<b>' . $product->name . '</b>',
             '<b>' . $product->manufacturer->name . '</b>'
         ]);
         $actionLogType = 'product_set_inactive';
         if ($status) {
             $actionLogMessage = __d('admin', 'The_product_{0}_from_manufacturer_{1}_was_activated.', [
-                '<b>' . $product->product_lang->name . '</b>',
+                '<b>' . $product->name . '</b>',
                 '<b>' . $product->manufacturer->name . '</b>'
             ]);
             $actionLogType = 'product_set_active';

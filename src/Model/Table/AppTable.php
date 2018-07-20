@@ -108,8 +108,7 @@ class AppTable extends Table
     protected function getFieldsForProductListQuery()
     {
         $fields = "Products.id_product,
-                ProductLangs.name, ProductLangs.description_short, ProductLangs.description, ProductLangs.unity,
-                ProductShops.price, ProductShops.created,
+                Products.name, Products.description_short, Products.description, Products.unity, Products.price, Products.created,
                 Deposits.deposit,
                 Images.id_image,
                 Manufacturers.id_manufacturer, Manufacturers.name as ManufacturersName,
@@ -129,9 +128,7 @@ class AppTable extends Table
      */
     protected function getJoinsForProductListQuery()
     {
-        return "LEFT JOIN ".$this->tablePrefix."product_shop ProductShops ON Products.id_product = ProductShops.id_product
-                LEFT JOIN ".$this->tablePrefix."product_lang ProductLangs ON Products.id_product = ProductLangs.id_product
-                LEFT JOIN ".$this->tablePrefix."stock_available StockAvailables ON Products.id_product = StockAvailables.id_product
+        return "LEFT JOIN ".$this->tablePrefix."stock_available StockAvailables ON Products.id_product = StockAvailables.id_product
                 LEFT JOIN ".$this->tablePrefix."images Images ON Images.id_product = Products.id_product
                 LEFT JOIN ".$this->tablePrefix."deposits Deposits ON Products.id_product = Deposits.id_product
                 LEFT JOIN ".$this->tablePrefix."units Units ON Products.id_product = Units.id_product
@@ -178,6 +175,6 @@ class AppTable extends Table
      */
     protected function getOrdersForProductListQuery()
     {
-        return " ORDER BY ProductLangs.name ASC, Images.id_image DESC;";
+        return " ORDER BY Products.name ASC, Images.id_image DESC;";
     }
 }

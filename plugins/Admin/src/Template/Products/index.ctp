@@ -135,7 +135,7 @@ use Cake\Core\Configure;
     echo '<th class="hide">ID</th>';
     echo '<th>'.__d('admin', 'Attribute').'</th>';
     echo '<th>' . $this->Paginator->sort('Images.id_image', __d('admin', 'Image')) . '</th>';
-    echo '<th>' . $this->Paginator->sort('ProductLangs.name', __d('admin', 'Name')) . '<span class="product-declaration-header">' . $this->Paginator->sort('ProductLangs.is_declaration_ok', __d('admin', 'Product_declaration')) . '</span></th>';
+    echo '<th>' . $this->Paginator->sort('Products.name', __d('admin', 'Name')) . '<span class="product-declaration-header">' . $this->Paginator->sort('Products.is_declaration_ok', __d('admin', 'Product_declaration')) . '</span></th>';
     if ($manufacturerId == 'all') {
         echo '<th>' . $this->Paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer')) . '</th>';
     }
@@ -143,7 +143,7 @@ use Cake\Core\Configure;
     echo '<th>'.__d('admin', 'Amount').'</th>';
     echo '<th>'.__d('admin', 'Price').'</th>';
     echo '<th>' . $this->Paginator->sort('Taxes.rate', __d('admin', 'Tax_rate')) . '</th>';
-    echo '<th class="center" style="width:69px;">' . $this->Paginator->sort('ProductShops.created', __d('admin', 'New?')) . '</th>';
+    echo '<th class="center" style="width:69px;">' . $this->Paginator->sort('Products.created', __d('admin', 'New?')) . '</th>';
     echo '<th>'.__d('admin', 'Deposit').'</th>';
     echo '<th>' . $this->Paginator->sort('Products.active', __d('admin', 'Status')) . '</th>';
     echo '<th style="width:29px;"></th>';
@@ -163,7 +163,7 @@ use Cake\Core\Configure;
         if (! empty($product->product_attributes) || isset($product->product_attributes)) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('add.png')), [
                 'class' => 'add-product-attribute-button',
-                'title' => __d('admin', 'Add_new_attribute_for_product_{0}', [$product->product_lang->unchanged_name])
+                'title' => __d('admin', 'Add_new_attribute_for_product_{0}', [$product->unchanged_name])
             ], 'javascript:void(0);');
         }
         echo '</td>';
@@ -190,7 +190,7 @@ use Cake\Core\Configure;
         if (! empty($product->product_attributes) || isset($product->product_attributes)) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'product-name-edit-button',
-                'title' => '<b>'.__d('admin', 'Short_description').'</b><br />'.$product->product_lang->description_short.'<br /><br /><b>'.__d('admin', 'Long_description').'</b><br />'.$product->product_lang->description,
+                'title' => '<b>'.__d('admin', 'Short_description').'</b><br />'.$product->description_short.'<br /><br /><b>'.__d('admin', 'Long_description').'</b><br />'.$product->description,
             ], 'javascript:void(0);');
         }
 
@@ -198,12 +198,12 @@ use Cake\Core\Configure;
             echo '<span style="float:left;margin-right: 5px;">';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
                 'class' => 'delete-product-attribute-button',
-                'title' => __d('admin', 'Delete_attribute_for_product_{0}', [$product->product_lang->unchanged_name])
+                'title' => __d('admin', 'Delete_attribute_for_product_{0}', [$product->unchanged_name])
             ], 'javascript:void(0);');
             echo '</span>';
 
             echo '<span style="float:left;">';
-            if ($product->product_attribute_shop->default_on == 1) {
+            if ($product->default_on == 1) {
                 echo $this->Html->image($this->Html->getFamFamFamPath('star.png'), [
                     'title' => __d('admin', 'This_attribute_is_the_default_attribute.')
                 ]);
@@ -217,19 +217,19 @@ use Cake\Core\Configure;
         }
 
         echo '<span class="name-for-dialog">';
-            echo $product->product_lang->name;
+            echo $product->name;
         echo '</span>';
 
         if (! empty($product->product_attributes) || isset($product->product_attributes)) {
-            echo '<span data-is-declaration-ok="'.$product->product_lang->is_declaration_ok.'" class="is-declaration-ok-wrapper">' . ($product->product_lang->is_declaration_ok ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>').'</span>';
+            echo '<span data-is-declaration-ok="'.$product->is_declaration_ok.'" class="is-declaration-ok-wrapper">' . ($product->is_declaration_ok ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>').'</span>';
         }
 
         echo '<span class="description-short-for-dialog">';
-        echo $product->product_lang->description_short;
+        echo $product->description_short;
         echo '</span>';
 
         echo '<span class="description-for-dialog">';
-        echo $product->product_lang->description;
+        echo $product->description;
         echo '</span>';
 
         echo '</td>';
@@ -383,7 +383,7 @@ use Cake\Core\Configure;
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
                 'title' => __d('admin', 'product_preview'),
                 'target' => '_blank'
-            ], $url = $this->Slug->getProductDetail($product->id_product, $product->product_lang->unchanged_name));
+            ], $url = $this->Slug->getProductDetail($product->id_product, $product->unchanged_name));
         }
         echo '</td>';
 

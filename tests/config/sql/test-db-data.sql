@@ -34,9 +34,6 @@ TRUNCATE TABLE `fcs_payments`;
 TRUNCATE TABLE `fcs_product`;
 TRUNCATE TABLE `fcs_product_attribute`;
 TRUNCATE TABLE `fcs_product_attribute_combination`;
-TRUNCATE TABLE `fcs_product_attribute_shop`;
-TRUNCATE TABLE `fcs_product_lang`;
-TRUNCATE TABLE `fcs_product_shop`;
 TRUNCATE TABLE `fcs_sliders`;
 TRUNCATE TABLE `fcs_stock_available`;
 TRUNCATE TABLE `fcs_sync_domains`;
@@ -149,12 +146,12 @@ INSERT INTO `fcs_configuration` VALUES
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
 INSERT INTO `fcs_customer` VALUES
-(87,3,NULL,'Demo','Mitglied','fcs-demo-mitglied@mailinator.com','',NULL,1,'1000-01-01',1,'2014-12-02 12:19:31','2015-12-06 23:37:44',0),
-(88,4,NULL,'Demo','Admin','fcs-demo-admin@mailinator.com','',NULL,1,'1000-01-01',1,'2014-12-02 12:28:43','2016-09-29 16:25:09',0),
-(89,4,NULL,'Demo','Gemüse-Hersteller','fcs-demo-gemuese-hersteller@mailinator.com','',NULL,0,'1000-01-01',1,'2014-12-02 12:37:26','2015-03-11 18:12:10',0),
-(90,4,NULL,'Demo','Milch-Hersteller','fcs-demo-milch-hersteller@mailinator.com','',NULL,0,'1000-01-01',1,'2014-12-02 12:37:49','2015-03-11 18:11:54',0),
-(91,4,NULL,'Demo','Fleisch-Hersteller','fcs-demo-fleisch-hersteller@mailinator.com','',NULL,0,'1000-01-01',1,'2014-12-02 12:38:12','2015-03-11 18:11:47',0),
-(92,5,NULL,'Demo','Superadmin','fcs-demo-superadmin@mailinator.com','',NULL,1,'1000-01-01',1,'2016-09-29 16:26:12','2016-09-29 16:26:12',0);
+(87,3,'Demo','Mitglied','fcs-demo-mitglied@mailinator.com','',NULL,1,'1000-01-01',1,'2014-12-02 12:19:31','2015-12-06 23:37:44',0),
+(88,4,'Demo','Admin','fcs-demo-admin@mailinator.com','',NULL,1,'1000-01-01',1,'2014-12-02 12:28:43','2016-09-29 16:25:09',0),
+(89,4,'Demo','Gemüse-Hersteller','fcs-demo-gemuese-hersteller@mailinator.com','',NULL,0,'1000-01-01',1,'2014-12-02 12:37:26','2015-03-11 18:12:10',0),
+(90,4,'Demo','Milch-Hersteller','fcs-demo-milch-hersteller@mailinator.com','',NULL,0,'1000-01-01',1,'2014-12-02 12:37:49','2015-03-11 18:11:54',0),
+(91,4,'Demo','Fleisch-Hersteller','fcs-demo-fleisch-hersteller@mailinator.com','',NULL,0,'1000-01-01',1,'2014-12-02 12:38:12','2015-03-11 18:11:47',0),
+(92,5,'Demo','Superadmin','fcs-demo-superadmin@mailinator.com','',NULL,1,'1000-01-01',1,'2016-09-29 16:26:12','2016-09-29 16:26:12',0);
 /*!40000 ALTER TABLE `fcs_customer` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_deposits` DISABLE KEYS */;
@@ -217,21 +214,21 @@ INSERT INTO `fcs_payments` VALUES
 
 /*!40000 ALTER TABLE `fcs_product` DISABLE KEYS */;
 INSERT INTO `fcs_product` VALUES
-(60,15,17,3,0,0.909091,1,'2014-06-11 21:20:24','2014-12-14 19:47:33'),
-(102,4,20,2,0,3.181818,1,'2016-04-27 21:13:37','2014-09-19 14:32:51'),
-(103,4,16,2,0,3.181818,1,'2016-05-05 08:28:49','2014-08-16 14:05:58'),
-(163,5,20,0,0,1.363637,1,'2014-07-12 20:41:43','2017-07-26 13:24:10'),
-(339,5,15,0,0,0.000000,1,'2015-09-07 12:05:38','2015-02-26 13:54:07'),
-(340,4,20,0,0,0.000000,1,'2016-05-05 08:28:45','2015-06-23 14:52:53'),
-(344,5,20,0,0,0.000000,1,'2015-10-05 17:22:40','2015-07-06 10:24:44'),
-(346,5,20,2,0,0.000000,1,'2015-08-19 09:35:45','2015-08-19 09:35:45'),
-(347,4,20,2,0,0.000000,1,'2018-05-17 16:13:39','2018-05-17 16:15:21'),
-(348,4,20,2,0,0.000000,1,'2018-05-17 16:15:33','2018-05-17 16:16:38');
+(60,15,3,0,0.909091,'Milch','','1 Liter','',0,1,'2014-06-11 21:20:24','2014-12-14 19:47:33'),
+(102,4,2,0,0.000000,'Frankfurter','','<p>2 Paar</p>','',0,1,'2016-04-27 21:13:37','2014-09-19 14:32:51'),
+(103,4,2,0,3.181819,'Bratwürstel','','2 Paar','',0,1,'2016-05-05 08:28:49','2014-08-16 14:05:58'),
+(163,5,0,0,1.363637,'Mangold','','0,25kg','',0,1,'2014-07-12 20:41:43','2017-07-26 13:24:10'),
+(339,5,0,0,0.000000,'Kartoffel','','','',0,1,'2015-09-07 12:05:38','2015-02-26 13:54:07'),
+(340,4,0,0,4.545455,'Beuschl','','','',0,1,'2016-05-05 08:28:45','2015-06-23 14:52:53'),
+(344,5,0,0,0.636364,'Knoblauch','','','100 g',0,1,'2015-10-05 17:22:40','2015-07-06 10:24:44'),
+(346,5,2,0,1.652893,'Artischocke','','','Stück',0,1,'2015-08-19 09:35:46','2015-08-19 09:35:45'),
+(347,4,2,0,0.000000,'Forelle','','','Stück',0,1,'2018-05-17 16:13:39','2018-05-17 16:15:21'),
+(348,4,2,0,0.000000,'Rindfleisch','','','',0,1,'2018-05-17 16:15:33','2018-05-17 16:16:38');
 /*!40000 ALTER TABLE `fcs_product` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product_attribute` DISABLE KEYS */;
 INSERT INTO `fcs_product_attribute` VALUES
-(10,60,0.000000,0,0),
+(10,60,0.545455,0,0),
 (11,348,0.000000,0,1),
 (12,348,0.000000,0,0);
 /*!40000 ALTER TABLE `fcs_product_attribute` ENABLE KEYS */;
@@ -242,41 +239,6 @@ INSERT INTO `fcs_product_attribute_combination` VALUES
 (35,12),
 (36,11);
 /*!40000 ALTER TABLE `fcs_product_attribute_combination` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_product_attribute_shop` DISABLE KEYS */;
-INSERT INTO `fcs_product_attribute_shop` VALUES
-(10,1,0.545455,0,60),
-(11,1,0.000000,1,348),
-(12,1,0.000000,0,348);
-/*!40000 ALTER TABLE `fcs_product_attribute_shop` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_product_lang` DISABLE KEYS */;
-INSERT INTO `fcs_product_lang` VALUES
-(60,'','1 Liter','','Milch',0),
-(102,'','<p>2 Paar</p>','','Frankfurter',0),
-(103,'','2 Paar','','Bratwürstel',0),
-(163,'','0,25kg','','Mangold',0),
-(339,'','','','Kartoffel',0),
-(340,'','','','Beuschl',0),
-(344,'','','100 g','Knoblauch',0),
-(346,'','','Stück','Artischocke',0),
-(347,'','','Stück','Forelle',0),
-(348,'','','','Rindfleisch',0);
-/*!40000 ALTER TABLE `fcs_product_lang` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_product_shop` DISABLE KEYS */;
-INSERT INTO `fcs_product_shop` VALUES
-(60,17,0.909091,'2014-06-11 21:20:24','2014-12-14 19:47:33'),
-(102,20,0.000000,'2016-04-27 21:13:37','2014-09-19 14:32:51'),
-(103,16,3.181819,'2016-05-05 08:28:49','2014-08-16 14:05:58'),
-(163,20,1.363637,'2014-07-12 20:41:43','2017-07-26 13:24:10'),
-(339,15,0.000000,'2015-09-07 12:05:38','2015-02-26 13:54:07'),
-(340,20,4.545455,'2016-05-05 08:28:45','2015-06-23 14:52:53'),
-(344,20,0.636364,'2015-10-05 17:22:40','2015-07-06 10:24:44'),
-(346,20,1.652893,'2015-08-19 09:35:46','2015-08-19 09:35:46'),
-(347,20,0.000000,'2018-05-17 16:13:39','2018-05-17 16:13:39'),
-(348,20,0.000000,'2018-05-17 16:15:33','2018-05-17 16:15:33');
-/*!40000 ALTER TABLE `fcs_product_shop` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sliders` DISABLE KEYS */;
 INSERT INTO `fcs_sliders` VALUES
@@ -331,6 +293,7 @@ INSERT INTO `fcs_units` VALUES
 (2,0,11,20.00,'kg',1,1,0.500),
 (3,0,12,20.00,'kg',1,1,1.000);
 /*!40000 ALTER TABLE `fcs_units` ENABLE KEYS */;
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

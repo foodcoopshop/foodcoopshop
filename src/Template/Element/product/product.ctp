@@ -37,7 +37,7 @@ if ($product['is_new']) {
     echo '</div>';
 
     echo '<div class="second-column">';
-
+    
     echo '<div class="heading">';
         echo '<h4><a class="product-name" href="'.$this->Slug->getProductDetail($product['id_product'], $product['name']).'">'.$product['name'].'</a></h4>';
     echo '</div>';
@@ -99,7 +99,7 @@ if ($product['description'] != '') {
         $i = 0;
         foreach ($preparedProductAttributes as $attribute) {
             $preparedProductAttributes[$i]['checked'] = false;
-            if ($attribute['ProductAttributeShops']['default_on'] == 1) {
+            if ($attribute['ProductAttributes']['default_on'] == 1) {
                 $preparedProductAttributes[$i]['checked'] = true;
                 $hasCheckedAttribute = true;
             }
@@ -126,7 +126,7 @@ if ($product['description'] != '') {
             echo '<div class="'.join(' ', $entityClasses).'" id="entity-wrapper-'.$attribute['ProductAttributes']['id_product_attribute'].'">';
             if ($showProductPrice) {
                 echo '<div class="line">';
-                $priceHtml =  '<div class="price">' . $this->Number->formatAsCurrency($attribute['ProductAttributeShops']['gross_price']) . '</div>';
+                $priceHtml =  '<div class="price">' . $this->Number->formatAsCurrency($attribute['ProductAttributes']['gross_price']) . '</div>';
                 $pricePerUnitInfoText = '';
                 if ($attribute['Units']['price_per_unit_enabled']) {
                     $priceHtml = $this->PricePerUnit->getPricePerUnit($attribute['Units']['price_incl_per_unit'], $attribute['Units']['quantity_in_units'], $attribute['Units']['unit_amount']);
@@ -144,7 +144,7 @@ if ($product['description'] != '') {
                         'labelPrefix' => __('from_which_{0}_%', [$product['timebased_currency_max_percentage']]) . ' '
                     ]);
                 }
-                echo '<div class="tax">'. $this->Number->formatAsCurrency($attribute['ProductAttributeShops']['tax']) . '</div>';
+                echo '<div class="tax">'. $this->Number->formatAsCurrency($attribute['ProductAttributes']['tax']) . '</div>';
                 echo '</div>';
             }
             if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {

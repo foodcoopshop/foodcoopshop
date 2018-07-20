@@ -251,7 +251,7 @@ class OrderDetailsController extends AdminAppController
                     @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_amount;
                     @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
                     $preparedOrderDetails[$key]['product_id'] = $key;
-                    $preparedOrderDetails[$key]['name'] = $orderDetail->product->product_lang->name;
+                    $preparedOrderDetails[$key]['name'] = $orderDetail->product->name;
                     $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail->product->manufacturer->id_manufacturer;
                     $preparedOrderDetails[$key]['manufacturer_name'] = $orderDetail->product->manufacturer->name;
                 }
