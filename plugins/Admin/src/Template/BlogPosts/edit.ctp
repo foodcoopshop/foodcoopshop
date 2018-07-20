@@ -127,7 +127,7 @@ if ($this->request->getRequestTarget() != $this->Slug->getBlogPostAdd()) {
 echo $this->Form->control('BlogPosts.content', [
     'class' => 'ckeditor',
     'type' => 'textarea',
-    'label' => __d('admin', 'Text').'<br /><br /><span class="small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
+    'label' => __d('admin', 'Text').'<br /><br /><span class="small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_wysiwyg_editor')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
     'escape' => false
 ]);
 

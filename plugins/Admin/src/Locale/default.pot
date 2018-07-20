@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-13 14:41+0200\n"
+"POT-Creation-Date: 2018-07-20 15:29+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -605,7 +605,7 @@ msgstr ""
 msgid "Delete_blog_post?"
 msgstr ""
 
-msgid "docs_route_manufacturers"
+msgid "docs_route_wysiwyg_editor"
 msgstr ""
 
 msgid "How_do_I_use_the_WYSIWYG_editor?"
@@ -905,10 +905,10 @@ msgstr ""
 msgid "1_day_ahead"
 msgstr ""
 
-msgid "to"
+msgid "1_day_back"
 msgstr ""
 
-msgid "1_day_back"
+msgid "to"
 msgstr ""
 
 msgid "Order_adaptions"
@@ -1161,6 +1161,9 @@ msgid "Your_personal_manufacturer_panel"
 msgstr ""
 
 msgid "Help_pages"
+msgstr ""
+
+msgid "docs_route_manufacturers"
 msgstr ""
 
 msgid "You_can_change_your_imprint_by_yourself."

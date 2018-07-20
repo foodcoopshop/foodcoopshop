@@ -157,7 +157,7 @@ if ($appAuth->isManufacturer()) {
         echo $this->Form->control('Manufacturers.description', [
         'class' => 'ckeditor',
         'type' => 'textarea',
-            'label' => $label . '<br /><br /><span class="small">'.__d('admin', 'Will_be_shown_on_the_manufacturer_profile.').'<br /><br /><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
+            'label' => $label . '<br /><br /><span class="small">'.__d('admin', 'Will_be_shown_on_the_manufacturer_profile.').'<br /><br /><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_wysiwyg_editor')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
         'escape' => false
         ]);
     }

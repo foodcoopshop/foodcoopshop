@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-13 14:41+0200\n"
-"PO-Revision-Date: 2018-07-13 14:41+0200\n"
+"POT-Creation-Date: 2018-07-20 15:29+0200\n"
+"PO-Revision-Date: 2018-07-20 15:30+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -606,8 +606,8 @@ msgstr "Falls angehakt, wird der Blog-Artikel an die erste Stelle der Liste gere
 msgid "Delete_blog_post?"
 msgstr "Blog-Artikel löschen?"
 
-msgid "docs_route_manufacturers"
-msgstr "hersteller"
+msgid "docs_route_wysiwyg_editor"
+msgstr "wysiwyg-editor"
 
 msgid "How_do_I_use_the_WYSIWYG_editor?"
 msgstr "Wie verwende ich den Editor?"
@@ -906,11 +906,11 @@ msgstr "Kategorie anzeigen"
 msgid "1_day_ahead"
 msgstr "1 Tag zurück"
 
-msgid "to"
-msgstr "bis"
-
 msgid "1_day_back"
 msgstr "1 Tag vor"
+
+msgid "to"
+msgstr "bis"
 
 msgid "Order_adaptions"
 msgstr "Bestelländerungen"
@@ -1163,6 +1163,9 @@ msgstr "Dein persönlicher Hersteller-Bereich:"
 
 msgid "Help_pages"
 msgstr "Online-Hilfe"
+
+msgid "docs_route_manufacturers"
+msgstr "hersteller"
 
 msgid "You_can_change_your_imprint_by_yourself."
 msgstr "Die Daten für dein <b>Impressum</b> (rechts unten auf deinem Hersteller-Profil) kannst du selbst ändern."
