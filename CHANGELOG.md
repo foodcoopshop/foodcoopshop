@@ -2,6 +2,14 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+## Unveröffentlicht / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.1.2...HEAD)
+
+### Herzlichen Dank an alle beteiligten Personen
+* [mrothauer](https://github.com/mrothauer)
+
+### Für Entwickler
+- Tabellen für die Produkt-Verwaltung sind jetzt stark vereinfacht. / [PR#247](https://github.com/foodcoopshop/foodcoopshop/pull/247) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
 ## v2.1.2 2018-07-12 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.1.1...v2.1.2)
 
 ### Bugfixes
