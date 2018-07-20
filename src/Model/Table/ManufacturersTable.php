@@ -411,8 +411,7 @@ class ManufacturersTable extends AppTable
 
         $params = [
             'manufacturerId' => $manufacturerId,
-            'active' => APP_ON,
-            'shopId' => Configure::read('app.shopId')
+            'active' => APP_ON
         ];
         if (! $this->getLoggedUser()) {
             $params['isPrivate'] = APP_OFF;
