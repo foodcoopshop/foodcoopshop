@@ -23,12 +23,12 @@ echo '<th>';
     echo $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member'));
 echo '</th>';
 
-if (Configure::read('app.isDepositPaymentCashless')) {
-    echo '<th>'.__d('admin', 'Deposit').'</th>';
-}
-
 echo '<th class="right">';
     echo $this->Paginator->sort('OrderDetails.total_price_tax_incl', __d('admin', 'Price'));
 echo '</th>';
+
+if (Configure::read('app.isDepositPaymentCashless')) {
+    echo '<th>'.__d('admin', 'Deposit').'</th>';
+}
 
 ?>

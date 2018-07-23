@@ -201,18 +201,6 @@ foreach ($orderDetails as $orderDetail) {
         echo $groupByObjectLink;
     }
     
-    if ($groupBy == 'customer' && Configure::read('app.isDepositPaymentCashless')) {
-        echo '<td'.(!$isMobile ? ' style="width: 144px;"' : '').'>';
-        echo $this->element('addDepositPaymentOverlay', [
-            'buttonText' => (!$isMobile ? __d('admin', 'Deposit_return') : ''),
-            'rowId' => $orderDetail['customer_id'],
-            'userName' => $orderDetail['name'],
-            'customerId' => $orderDetail['customer_id'],
-            'manufacturerId' => null
-        ]);
-        echo '</td>';
-    }
-    
     if ($groupBy == 'product') {
         echo $this->MyHtml->link($orderDetail['manufacturer_name'], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&' . 'manufacturerId=' . $orderDetail['manufacturer_id'] . '&orderStates[]=' . join(',', $orderStates) . '&customerId=' . $customerId.'&groupBy=product');
     }
@@ -236,6 +224,18 @@ foreach ($orderDetails as $orderDetail) {
     }
     echo '</div>';
     echo '</td>';
+    
+    if ($groupBy == 'customer' && Configure::read('app.isDepositPaymentCashless')) {
+        echo '<td'.(!$isMobile ? ' style="width: 144px;"' : '').'>';
+        echo $this->element('addDepositPaymentOverlay', [
+            'buttonText' => (!$isMobile ? __d('admin', 'Deposit_return') : ''),
+            'rowId' => $orderDetail['customer_id'],
+            'userName' => $orderDetail['name'],
+            'customerId' => $orderDetail['customer_id'],
+            'manufacturerId' => null
+        ]);
+        echo '</td>';
+    }
 
     if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
         $priceDiffers = $reducedPrice != $orderDetail['sum_price'];
@@ -344,7 +344,6 @@ if ($groupBy == 'manufacturer') {
 
 if ($groupBy == 'customer') {
     echo '<td></td>';
-    echo '<td></td>';
 }
 if ($groupBy == 'product') {
     if ($appAuth->isManufacturer()) {
@@ -364,6 +363,8 @@ if ($groupBy != 'customer') {
         $sumDepositString = $this->Number->formatAsDecimal($sumDeposit);
     }
     echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
+} else {
+    echo '<td></td>';
 }
 if ($groupBy == '') {
     $sumUnitsString = $this->PricePerUnit->getStringFromUnitSums($sumUnits, '<br />');
