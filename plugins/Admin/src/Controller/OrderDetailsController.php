@@ -249,6 +249,135 @@ class OrderDetailsController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Orders'));
     }
     
+    public function changeState()
+    {
+        $this->RequestHandler->renderAs($this, 'ajax');
+        
+        $orderDetailIds = $this->getRequest()->getData('orderDetailIds');
+        $orderState = $this->getRequest()->getData('orderState');
+        
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        if (empty($orderDetailIds) || empty($orderState)) {
+            die(json_encode([
+                'status' => 0,
+                'msg' => 'error'
+            ]));
+        }
+        
+        foreach ($orderDetailIds as $orderDetailId) {
+            
+            $oldOrderDetail = $this->OrderDetail->find('all', [
+                'conditions' => [
+                    'OrderDetails.id_order_detail' => $orderDetailId
+                ],
+                'contain' => [
+                    'Customers'
+                ]
+            ])->first();
+            
+            $this->OrderDetail->save(
+                $this->OrderDetail->patchEntity(
+                    $oldOrderDetail,
+                    [
+                        'order_state' => $orderState
+                    ]
+                )
+            );
+        }
+        
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        
+        $orderStateAsText = '<b>' . Configure::read('app.htmlHelper')->getOrderStates()[$orderState] . '</b>';
+        if (count($orderDetailIds) == 1) {
+            $message = __d('admin', 'The_order_status_of_the_ordered_product_{0}_of_{1}_was_successfully_changed_to_{2}.', [
+                $orderDetailIds[0],
+                $oldOrderDetail->customer->name,
+                $orderStateAsText
+            ]);
+        } else {
+            $message = __d('admin', 'The_order_status_of_the_ordered_products_{0}_were_successfully_changed_to_{1}.', [
+                join(', ', array_reverse($orderDetailIds)),
+                $orderStateAsText
+            ]);
+        }
+        $this->ActionLog->customSave('order_details_state_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
+        
+        $this->Flash->success($message);
+        
+        // redirect to order-details grouped by customer (and keep some filters)
+        $redirectUrlParams = [];
+        $parsedReferer = parse_url($this->referer());
+        
+        $refererQueryParams = [];
+        if (isset($parsedReferer['query'])) {
+            parse_str($parsedReferer['query'], $refererQueryParams);
+        }
+        
+        foreach ($refererQueryParams as $param => $value) {
+            if (in_array($param, [
+                'dateFrom',
+                'dateTo',
+                'orderStates'
+            ])) {
+                $redirectUrlParams[$param] = $value;
+            }
+        }
+        
+        if (count($orderDetailIds) > 1) {
+            $redirectUrlParams['groupBy'] = 'customer';
+        }
+        
+        $queryString = '';
+        if (!empty($redirectUrlParams)) {
+            $queryString = '?' . http_build_query($redirectUrlParams);
+        }
+        $redirectUrl = Configure::read('app.slugHelper')->getOrderDetailsList() . $queryString;
+        
+        die(json_encode([
+            'status' => 1,
+            'msg' => 'ok',
+            'redirectUrl' => $redirectUrl
+        ]));
+    }
+    
+    public function changeStateToClosed()
+    {
+        $this->RequestHandler->renderAs($this, 'ajax');
+        
+        $orderDetailIds = $this->getRequest()->getData('orderDetailIds');
+        $orderDetailIds = array_unique($orderDetailIds);
+        $orderState = $this->getRequest()->getData('orderState');
+        
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        foreach ($orderDetailIds as $orderDetailId) {
+            $this->OrderDetail->save(
+                $this->OrderDetail->patchEntity(
+                    $this->OrderDetail->get($orderDetailId),
+                    [
+                        'order_state' => $orderState
+                    ]
+                )
+            );
+        }
+        
+        $orderDetailsCount = count($orderDetailIds);
+        if ($orderDetailsCount == 1) {
+            $message = __d('admin', '1_ordered_product_was_successfully_closed.');
+        } else {
+            $message = __d('admin', '{0}_ordered_product_were_successfully_closed.', [$orderDetailsCount]);
+        }
+        
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog->customSave('order_details_closed', $this->AppAuth->getUserId(), 0, 'order_details', $message . ': ' . join(', ', $orderDetailIds));
+        
+        $this->Flash->success($message . '.');
+        
+        die(json_encode([
+            'status' => 1,
+            'msg' => 'ok'
+        ]));
+    }
+    
     private function prepareGroupedOrderDetails($orderDetails, $groupBy)
     {
         

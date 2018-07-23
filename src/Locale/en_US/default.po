@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-06 11:36+0200\n"
-"PO-Revision-Date: 2018-07-06 11:37+0200\n"
+"POT-Creation-Date: 2018-07-23 15:13+0200\n"
+"PO-Revision-Date: 2018-07-23 15:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.0.9\n"
 
 msgid "You_have_been_signed_out."
 msgstr "You have been signed out."
@@ -831,8 +831,14 @@ msgstr "Network module: Products synchronized"
 msgid "Action_Log_Order_status_changed"
 msgstr "Order: Status changed"
 
+msgid "Action_Log_Order_detail_status_changed"
+msgstr "Ordered product: Status changed"
+
 msgid "Action_Log_Orders_closed"
 msgstr "Orders: closed"
+
+msgid "Action_Log_Order_details_closed"
+msgstr "Ordered product: closed"
 
 msgid "Action_Log_Order_comment_changed"
 msgstr "Order: Comment changed"
@@ -1191,7 +1197,7 @@ msgstr "Delivery break"
 msgid "online"
 msgstr "online"
 
-msgid "Pick_up_day"
+msgid "Pickup_day"
 msgstr "Pick-up day"
 
 msgid "{0,plural,=1{1_product} other{#_products}}"

@@ -194,16 +194,18 @@ foreach ($orderDetails as $orderDetail) {
         echo '</td>';
     }
     echo '<td class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">';
-    if ($groupBy == '') {
-        echo $this->MyHtml->link($orderDetail->product->manufacturer->name, '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&manufacturerId=' . $orderDetail->product->id_manufacturer . '&orderStates[]=' . join(',', $orderStates) . '&customerId=' . $customerId . '&groupBy='.$groupBy);
-    }
-    if (in_array($groupBy, ['manufacturer', 'customer'])) {
-        echo $groupByObjectLink;
-    }
-    
-    if ($groupBy == 'product') {
-        echo $this->MyHtml->link($orderDetail['manufacturer_name'], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&' . 'manufacturerId=' . $orderDetail['manufacturer_id'] . '&orderStates[]=' . join(',', $orderStates) . '&customerId=' . $customerId.'&groupBy=product');
-    }
+        if ($groupBy == '') {
+            echo $this->MyHtml->link($orderDetail->product->manufacturer->name, '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&manufacturerId=' . $orderDetail->product->id_manufacturer . '&orderStates[]=' . join(',', $orderStates) . '&customerId=' . $customerId . '&groupBy='.$groupBy);
+        }
+        if ($groupBy == 'manufacturer') {
+            echo $groupByObjectLink;
+        }
+        if ($groupBy == 'customer') {
+            echo $groupByObjectLink;
+        }
+        if ($groupBy == 'product') {
+            echo $this->MyHtml->link($orderDetail['manufacturer_name'], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&' . 'manufacturerId=' . $orderDetail['manufacturer_id'] . '&orderStates[]=' . join(',', $orderStates) . '&customerId=' . $customerId . '&groupBy=product');
+        }
     echo '</td>';
 
     echo '<td class="right' . ($groupBy == '' && $orderDetail->total_price_tax_incl == 0 ? ' not-available' : '') . '">';
@@ -306,12 +308,22 @@ foreach ($orderDetails as $orderDetail) {
         }
         echo '</td>';
 
-        echo '<td>';
         if ($groupBy == '') {
-            echo $this->MyHtml->getOrderStates()[$orderDetail->order_state];
+            echo '<td'.(!$isMobile ? ' style="width: 247px;"' : '').'>';
+                echo '<span class="truncate" style="float: left; width: 77px;">' . $this->MyHtml->getOrderStates()[$orderDetail->order_state] . '</span>';
+                $statusChangeIcon = 'accept';
+                if ($orderDetail->order_state == ORDER_STATE_OPEN) {
+                    $statusChangeIcon = 'error';
+                }
+                if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
+                    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath($statusChangeIcon . '.png')) . (!$isMobile ? ' ' . __d('admin', 'Change_order_status') : ''), [
+                        'title' => __d('admin', 'Change_order_status'),
+                        'class' => 'change-order-state-button icon-with-text'
+                    ], 'javascript:void(0);');
+                }
+            echo '</td>';
         }
-        echo '</td>';
-
+    
         echo '<td style="text-align:center;">';
         if ($editRecordAllowed) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
@@ -382,7 +394,7 @@ if ($groupBy == '' && ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAu
     $buttonHtml .= '<button class="email-to-all btn btn-default" data-column="11"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
 }
 
-if ($groupBy == '' && $productId == '' && $manufacturerId == '' && $customerId != '') {
+if ($groupBy == '' && $productId == '' && $manufacturerId == '') {
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace') . ".Admin.setAdditionalOrderStatusChangeInfo('" .
         Configure::read('app.additionalOrderStatusChangeInfo') . "');" .
