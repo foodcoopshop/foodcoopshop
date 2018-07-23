@@ -301,7 +301,7 @@ class OrderDetailsController extends AdminAppController
             $this->set('customersForInstantOrderDropdown', $this->OrderDetail->Customers->getForDropdown(false, 'id_customer', $this->AppAuth->isSuperadmin()));
         }
 
-        $this->set('title_for_layout', __d('admin', 'Ordered_products'));
+        $this->set('title_for_layout', __d('admin', 'Orders'));
     }
 
     public function editProductQuantity()

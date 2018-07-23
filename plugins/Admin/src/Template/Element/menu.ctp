@@ -48,7 +48,7 @@ $paymentDepositCustomerAddedMenuElement = [
 ];
 $orderDetailsMenuElement = [
     'slug' => $this->Slug->getOrderDetailsList(),
-    'name' => __d('admin', 'Ordered_products'),
+    'name' => __d('admin', 'Orders'),
     'options' => [
         'fa-icon' => 'fa-fw fa-shopping-cart'
     ]
