@@ -172,7 +172,13 @@ foreach ($orderDetails as $orderDetail) {
     echo '</td>';
 
     if ($groupBy != '') {
-        $groupByObjectLink = $this->MyHtml->link($orderDetail['name'], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&' . $groupBy.'Id=' . $orderDetail[$groupBy . '_id'] . '&orderStates[]=' . join(',', $orderStates) . '&customerId=' . $customerId);
+        $groupByObjectLink = $this->MyHtml->link(
+            $orderDetail['name'], '/admin/order-details/index/' .
+            '?dateFrom=' . $dateFrom . 
+            '&dateTo=' . $dateTo . 
+            '&' . $groupBy.'Id=' . $orderDetail[$groupBy . '_id'] . 
+            '&orderStates[]=' . join(',', $orderStates) . 
+            (isset($orderDetail['customer_id']) ? $orderDetail['customer_id'] : '&customerId=' . $customerId ));
     }
 
     if ($groupBy == '' || $groupBy == 'product') {
