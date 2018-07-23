@@ -266,6 +266,53 @@ class OrderDetailsTable extends AppTable
         $condition = 'OrderDetails.order_state IN (' . join(', ', $orderStates) . ')';
         return $condition;
     }
+    
+    public function prepareOrderDetailsGroupedByProduct($orderDetails)
+    {
+        $preparedOrderDetails = [];
+        foreach ($orderDetails as $orderDetail) {
+            $key = $orderDetail->product_id;
+            @$preparedOrderDetails[$key]['sum_price'] += $orderDetail->total_price_tax_incl;
+            @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_amount;
+            @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
+            $preparedOrderDetails[$key]['product_id'] = $key;
+            $preparedOrderDetails[$key]['name'] = $orderDetail->product->name;
+            $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail->product->manufacturer->id_manufacturer;
+            $preparedOrderDetails[$key]['manufacturer_name'] = $orderDetail->product->manufacturer->name;
+        }
+        return $preparedOrderDetails;
+    }
+    
+    public function prepareOrderDetailsGroupedByManufacturer($orderDetails)
+    {
+        $preparedOrderDetails = [];
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        foreach ($orderDetails as $orderDetail) {
+            $key = $orderDetail->product->id_manufacturer;
+            @$preparedOrderDetails[$key]['sum_price'] += $orderDetail->total_price_tax_incl;
+            @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_amount;
+            $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($orderDetail->product->manufacturer->variable_member_fee);
+            $preparedOrderDetails[$key]['variable_member_fee'] = $variableMemberFee;
+            @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
+            $preparedOrderDetails[$key]['manufacturer_id'] = $key;
+            $preparedOrderDetails[$key]['name'] = $orderDetail->product->manufacturer->name;
+        }
+        return $preparedOrderDetails;
+    }
+    
+    public function prepareOrderDetailsGroupedByCustomer($orderDetails)
+    {
+        $preparedOrderDetails = [];
+        foreach ($orderDetails as $orderDetail) {
+            $key = $orderDetail->id_customer;
+            @$preparedOrderDetails[$key]['sum_price'] += $orderDetail->total_price_tax_incl;
+            @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_amount;
+            @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
+            $preparedOrderDetails[$key]['customer_id'] = $key;
+            $preparedOrderDetails[$key]['name'] = Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($orderDetail->customer);
+        }
+        return $preparedOrderDetails;
+    }
 
     public function getOrderDetailParams($appAuth, $manufacturerId, $productId, $customerId, $orderState, $dateFrom, $dateTo, $orderDetailId, $deposit)
     {

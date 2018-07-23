@@ -218,79 +218,8 @@ class OrderDetailsController extends AdminAppController
         ])->toArray();
 
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-
-        switch ($groupBy) {
-            case 'customer':
-                $preparedOrderDetails = [];
-                foreach ($orderDetails as $orderDetail) {
-                    $key = $orderDetail->id_customer;
-                    @$preparedOrderDetails[$key]['sum_price'] += $orderDetail->total_price_tax_incl;
-                    @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_amount;
-                    @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
-                    $preparedOrderDetails[$key]['customer_id'] = $key;
-                    $preparedOrderDetails[$key]['name'] = Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($orderDetail->customer);
-                    $preparedOrderDetails[$key]['customer_name'] = Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($orderDetail->customer);
-                }
-                $sortField = $this->getSortFieldForGroupedOrderDetails('name');
-                $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
-                $preparedOrderDetails = Hash::sort($preparedOrderDetails, '{n}.' . $sortField, $sortDirection);
-                $orderDetails = $preparedOrderDetails;
-                break;
-            case 'manufacturer':
-                $preparedOrderDetails = [];
-                foreach ($orderDetails as $orderDetail) {
-                    $key = $orderDetail->product->id_manufacturer;
-                    @$preparedOrderDetails[$key]['sum_price'] += $orderDetail->total_price_tax_incl;
-                    @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_amount;
-                    $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($orderDetail->product->manufacturer->variable_member_fee);
-                    $preparedOrderDetails[$key]['variable_member_fee'] = $variableMemberFee;
-                    @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
-                    $preparedOrderDetails[$key]['manufacturer_id'] = $key;
-                    $preparedOrderDetails[$key]['name'] = $orderDetail->product->manufacturer->name;
-                }
-                $sortField = $this->getSortFieldForGroupedOrderDetails('name');
-                $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
-                $preparedOrderDetails = Hash::sort($preparedOrderDetails, '{n}.' . $sortField, $sortDirection);
-                $orderDetails = $preparedOrderDetails;
-                break;
-            case 'product':
-                $preparedOrderDetails = [];
-                foreach ($orderDetails as $orderDetail) {
-                    $key = $orderDetail->product_id;
-                    @$preparedOrderDetails[$key]['sum_price'] += $orderDetail->total_price_tax_incl;
-                    @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_amount;
-                    @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
-                    $preparedOrderDetails[$key]['product_id'] = $key;
-                    $preparedOrderDetails[$key]['name'] = $orderDetail->product->name;
-                    $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail->product->manufacturer->id_manufacturer;
-                    $preparedOrderDetails[$key]['manufacturer_name'] = $orderDetail->product->manufacturer->name;
-                }
-                $sortField = $this->getSortFieldForGroupedOrderDetails('manufacturer_name');
-                $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
-                $preparedOrderDetails = Hash::sort($preparedOrderDetails, '{n}.' . $sortField, $sortDirection);
-                $orderDetails = $preparedOrderDetails;
-                break;
-            default:
-                $i = 0;
-                foreach ($orderDetails as $orderDetail) {
-                    $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-                    $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail->product->manufacturer->bulk_orders_allowed);
-                    $orderDetail->bulkOrdersAllowed = $bulkOrdersAllowed;
-                    $orderDetail->row_class = [];
-                    if ($bulkOrdersAllowed) {
-                        $orderDetail->row_class[] = 'deactivated';
-                    }
-                    $orderDetail->quantityInUnitsNotYetChanged = false;
-                    if (!empty($orderDetail->order_detail_unit)) {
-                        if (round($orderDetail->order_detail_unit->product_quantity_in_units, 3) == round($orderDetail->order_detail_unit->quantity_in_units * $orderDetail->product_amount, 3)) {
-                            $orderDetail->quantityInUnitsNotYetChanged = true;
-                        }
-                    }
-                    $i ++;
-                }
-                break;
-        }
-
+        
+        $orderDetails = $this->prepareGroupedOrderDetails($orderDetails, $groupBy);
         $this->set('orderDetails', $orderDetails);
 
         $timebasedCurrencyOrderInList = false;
@@ -318,6 +247,52 @@ class OrderDetailsController extends AdminAppController
         }
 
         $this->set('title_for_layout', __d('admin', 'Orders'));
+    }
+    
+    private function prepareGroupedOrderDetails($orderDetails, $groupBy)
+    {
+        
+        switch ($groupBy) {
+            case 'customer':
+                $preparedOrderDetails = $this->OrderDetail->prepareOrderDetailsGroupedByCustomer($orderDetails);
+                $sortField = $this->getSortFieldForGroupedOrderDetails('name');
+                break;
+            case 'manufacturer':
+                $preparedOrderDetails = $this->OrderDetail->prepareOrderDetailsGroupedByManufacturer($orderDetails);
+                $sortField = $this->getSortFieldForGroupedOrderDetails('name');
+                break;
+            case 'product':
+                $preparedOrderDetails = $this->OrderDetail->prepareOrderDetailsGroupedByProduct($orderDetails);
+                $sortField = $this->getSortFieldForGroupedOrderDetails('manufacturer_name');
+                break;
+            default:
+                $i = 0;
+                foreach ($orderDetails as $orderDetail) {
+                    $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+                    $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail->product->manufacturer->bulk_orders_allowed);
+                    $orderDetail->bulkOrdersAllowed = $bulkOrdersAllowed;
+                    $orderDetail->row_class = [];
+                    if ($bulkOrdersAllowed) {
+                        $orderDetail->row_class[] = 'deactivated';
+                    }
+                    $orderDetail->quantityInUnitsNotYetChanged = false;
+                    if (!empty($orderDetail->order_detail_unit)) {
+                        if (round($orderDetail->order_detail_unit->product_quantity_in_units, 3) == round($orderDetail->order_detail_unit->quantity_in_units * $orderDetail->product_amount, 3)) {
+                            $orderDetail->quantityInUnitsNotYetChanged = true;
+                        }
+                    }
+                    $i ++;
+                }
+                break;
+        }
+        
+        if (isset($sortField)) {
+            $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
+            $orderDetails = Hash::sort($preparedOrderDetails, '{n}.' . $sortField, $sortDirection);
+        }
+        
+        return $orderDetails;
+        
     }
 
     public function editProductQuantity()
