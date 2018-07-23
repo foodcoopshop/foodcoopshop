@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-20 15:29+0200\n"
-"PO-Revision-Date: 2018-07-20 15:30+0200\n"
+"POT-Creation-Date: 2018-07-23 10:05+0200\n"
+"PO-Revision-Date: 2018-07-23 10:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -230,6 +230,9 @@ msgstr "Keine offenen Bestellungen im angegebenen Zeitraum."
 
 msgid "Group_by_product"
 msgstr "Gruppieren nach Produkt"
+
+msgid "Group_by_member"
+msgstr "Gruppieren nach Mitglied"
 
 msgid "Group_by_manufacturer"
 msgstr "Gruppieren nach Hersteller"
@@ -681,7 +684,7 @@ msgstr "Version FoodCoopShop"
 msgid "Last_executed_migration"
 msgstr "Zuletzt ausgeführte Migration"
 
-msgid "Pick_up_day"
+msgid "Pickup_day"
 msgstr "Abholtag"
 
 msgid "Software_update_version"
@@ -1179,9 +1182,6 @@ msgstr "Bitte verwende zum Einloggen die E-Mail-Adresse dieser Nachricht. Falls 
 msgid "Your_contact_person"
 msgstr "Deine Ansprechperson"
 
-msgid "Pick_up_date"
-msgstr "Abholdatum"
-
 msgid "Order_list_by_product"
 msgstr "Bestellliste nach Produkt"
 
@@ -1476,9 +1476,6 @@ msgstr "Ausgewählte Produkte stornieren"
 msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
 msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
 
-msgid "Group_by_member"
-msgstr "Gruppieren nach Mitglied"
-
 msgid "Order_count"
 msgstr "Anzahl Bestellungen"
 
@@ -1733,3 +1730,9 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+#~ msgid "Pick_up_day"
+#~ msgstr "Abholtag"
+
+#~ msgid "Pick_up_date"
+#~ msgstr "Abholdatum"

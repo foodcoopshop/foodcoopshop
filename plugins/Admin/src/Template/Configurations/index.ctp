@@ -244,7 +244,7 @@ $this->element('addScript', [
         </tr>
 
         <tr>
-            <td><?php echo __d('admin', 'Pick_up_day'); ?></td>
+            <td><?php echo __d('admin', 'Pickup_day'); ?></td>
             <td><?php echo $this->MyTime->getWeekdayName(Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta')); ?> (app.sendOrderListsWeekday + app.deliveryDayDelta)</td>
         </tr>
 

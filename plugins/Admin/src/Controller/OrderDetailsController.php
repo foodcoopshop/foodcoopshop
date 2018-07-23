@@ -131,11 +131,11 @@ class OrderDetailsController extends AdminAppController
         $dateFrom = '';
         $dateTo = '';
         if ($orderDetailId == '') {
-            $dateFrom = Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay());
+            $dateFrom = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay()));
             if (! empty($this->getRequest()->getQuery('dateFrom'))) {
                 $dateFrom = $this->getRequest()->getQuery('dateFrom');
             }
-            $dateTo = Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay());
+            $dateTo = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay()));
             if (! empty($this->getRequest()->getQuery('dateTo'))) {
                 $dateTo = $this->getRequest()->getQuery('dateTo');
             }

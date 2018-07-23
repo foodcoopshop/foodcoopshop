@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-20 15:29+0200\n"
-"PO-Revision-Date: 2018-07-20 15:30+0200\n"
+"POT-Creation-Date: 2018-07-23 10:05+0200\n"
+"PO-Revision-Date: 2018-07-23 10:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -230,6 +230,9 @@ msgstr "No orders within the given time range"
 
 msgid "Group_by_product"
 msgstr "Group by product"
+
+msgid "Group_by_member"
+msgstr "Group by member"
 
 msgid "Group_by_manufacturer"
 msgstr "Group by manufacturer"
@@ -681,7 +684,7 @@ msgstr "Version of FoodCoopShop"
 msgid "Last_executed_migration"
 msgstr "Last executed migration"
 
-msgid "Pick_up_day"
+msgid "Pickup_day"
 msgstr "Pick-up day"
 
 msgid "Software_update_version"
@@ -1179,9 +1182,6 @@ msgstr "For signing in please use the email address of this message. If you want
 msgid "Your_contact_person"
 msgstr "Your contact person"
 
-msgid "Pick_up_date"
-msgstr "Pick-up date"
-
 msgid "Order_list_by_product"
 msgstr "Order list by product"
 
@@ -1476,9 +1476,6 @@ msgstr "Cancel selected products"
 msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
 msgstr "Please chose the member you want to place the instant order for in the dropdown above."
 
-msgid "Group_by_member"
-msgstr "Group by member"
-
 msgid "Order_count"
 msgstr "Order count"
 
@@ -1733,3 +1730,9 @@ msgstr "{0,plural,=1{record} other{records}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
+#~ msgid "Pick_up_day"
+#~ msgstr "Pick-up day"
+
+#~ msgid "Pick_up_date"
+#~ msgstr "Pick-up date"

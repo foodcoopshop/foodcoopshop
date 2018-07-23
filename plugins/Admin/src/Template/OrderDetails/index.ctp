@@ -125,7 +125,7 @@ if ($groupBy == '') {
         echo $this->Paginator->sort('OrderDetailUnits.product_quantity_in_units', __d('admin', 'Weight'));
     echo '</th>';
     echo '<th>';
-        echo $this->Paginator->sort('OrderDetails.created', __d('admin', 'Order_date'));
+        echo $this->Paginator->sort('OrderDetails.pickup_day', __d('admin', 'Pickup_day'));
     echo '</th>';
     echo '<th>'.$this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member')).'</th>';
     echo '<th>'.$this->Paginator->sort('OrderDetails.order_state', __d('admin', 'Status')).'</th>';
@@ -297,7 +297,7 @@ foreach ($orderDetails as $orderDetail) {
     if ($groupBy == '') {
         if ($groupBy == '') {
             echo '<td class="date-short2">';
-            echo $orderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2'));
+            echo $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
         } else {
             echo '<td>';
         }

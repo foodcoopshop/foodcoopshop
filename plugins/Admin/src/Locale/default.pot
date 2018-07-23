@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-20 15:29+0200\n"
+"POT-Creation-Date: 2018-07-23 10:05+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -228,6 +228,9 @@ msgid "No_orders_within_the_given_time_range."
 msgstr ""
 
 msgid "Group_by_product"
+msgstr ""
+
+msgid "Group_by_member"
 msgstr ""
 
 msgid "Group_by_manufacturer"
@@ -680,7 +683,7 @@ msgstr ""
 msgid "Last_executed_migration"
 msgstr ""
 
-msgid "Pick_up_day"
+msgid "Pickup_day"
 msgstr ""
 
 msgid "Software_update_version"
@@ -1178,9 +1181,6 @@ msgstr ""
 msgid "Your_contact_person"
 msgstr ""
 
-msgid "Pick_up_date"
-msgstr ""
-
 msgid "Order_list_by_product"
 msgstr ""
 
@@ -1473,9 +1473,6 @@ msgid "Cancel_selected_products"
 msgstr ""
 
 msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
-msgstr ""
-
-msgid "Group_by_member"
 msgstr ""
 
 msgid "Order_count"
