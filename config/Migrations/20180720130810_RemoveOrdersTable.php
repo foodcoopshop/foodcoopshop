@@ -39,6 +39,7 @@ class RemoveOrdersTable extends AbstractMigration
             ALTER TABLE `fcs_order_detail` DROP INDEX `id_order_id_order_detail`;
             ALTER TABLE `fcs_order_detail` ADD INDEX(`id_customer`);
             ALTER TABLE `fcs_order_detail` ADD INDEX(`pickup_day`);
+            ALTER TABLE `fcs_order_detail` ADD INDEX(`created`);
             ALTER TABLE `fcs_order_detail` ADD INDEX(`order_state`);
             ALTER TABLE `fcs_product` ADD INDEX(`id_manufacturer`);
 
