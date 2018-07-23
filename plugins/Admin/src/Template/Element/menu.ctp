@@ -46,7 +46,7 @@ $paymentDepositCustomerAddedMenuElement = [
         'fa-icon' => 'fa-fw fa-'.strtolower(Configure::read('app.currencyName'))
     ]
 ];
-$orderDetailsMenuElement = [
+$orderDetailsGroupedByCustomerMenuElement = [
     'slug' => $this->Slug->getOrderDetailsList().'?groupBy=customer',
     'name' => __d('admin', 'Orders'),
     'options' => [
@@ -97,11 +97,11 @@ $menu[] = [
 ];
 
 if ($appAuth->isCustomer()) {
-    $orderDetailsMenuElement['children'] = [
+    $orderDetailsGroupedByCustomerMenuElement['children'] = [
         $paymentDepositCustomerAddedMenuElement,
         $cancelledProductsMenuElement
     ];
-    $menu[] = $orderDetailsMenuElement;
+    $menu[] = $orderDetailsGroupedByCustomerMenuElement;
     $menu[] = $customerProfileMenuElement;
     if (! empty($paymentProductMenuElement)) {
         $menu[]= $paymentProductMenuElement;
@@ -117,7 +117,7 @@ if ($appAuth->isCustomer()) {
 }
 
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-    $orderDetailsMenuElement['children'] = [
+    $orderDetailsGroupedByCustomerMenuElement['children'] = [
         $paymentDepositCustomerAddedMenuElement,
         $cancelledProductsMenuElement,
         [
@@ -128,7 +128,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             ]
         ]
     ];
-    $menu[] = $orderDetailsMenuElement;
+    $menu[] = $orderDetailsGroupedByCustomerMenuElement;
     $manufacturerMenu = [
         'slug' => '/admin/manufacturers',
         'name' => __d('admin', 'Manufacturers'),
@@ -239,6 +239,13 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
 }
 
 if ($appAuth->isManufacturer()) {
+    $orderDetailsMenuElement = [
+        'slug' => $this->Slug->getOrderDetailsList(),
+        'name' => __d('admin', 'Orders'),
+        'options' => [
+            'fa-icon' => 'fa-fw fa-shopping-cart'
+        ]
+    ];
     $menu[] = $orderDetailsMenuElement;
     $menu[] = [
         'slug' => $this->Slug->getProductAdmin(),

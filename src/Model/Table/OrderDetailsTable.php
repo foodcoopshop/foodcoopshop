@@ -163,15 +163,14 @@ class OrderDetailsTable extends AppTable
             $sql .= ', DATE_FORMAT(o.date_add, \'%Y-%c\') as monthAndYear ';
         }
         $sql .= 'FROM '.$this->tablePrefix.'order_detail od ';
-        $sql .= 'LEFT JOIN '.$this->tablePrefix.'orders o ON o.id_order = od.id_order ';
         $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';
         $sql .= 'WHERE p.id_manufacturer = :manufacturerId ';
-        $sql .= 'AND DATE_FORMAT(o.date_add, \'%Y-%m-%d\') >= :depositForManufacturersStartDate ';
+        $sql .= 'AND DATE_FORMAT(od.created, \'%Y-%m-%d\') >= :depositForManufacturersStartDate ';
         if ($groupByMonth) {
             $sql .= 'GROUP BY monthAndYear ';
             $sql .= 'ORDER BY monthAndYear DESC;';
         } else {
-            $sql .= 'ORDER BY o.date_add DESC;';
+            $sql .= 'ORDER BY od.created DESC;';
         }
         $params = [
             'manufacturerId' => $manufacturerId,
@@ -195,12 +194,11 @@ class OrderDetailsTable extends AppTable
     {
         $sql = 'SELECT SUM(od.total_price_tax_incl) as sumOrderDetail ';
         $sql .= 'FROM '.$this->tablePrefix.'order_detail od ';
-        $sql .= 'LEFT JOIN '.$this->tablePrefix.'orders o ON o.id_order = od.id_order ';
         $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';
         $sql .= 'WHERE p.id_manufacturer = :manufacturerId ';
-        $sql .= 'AND o.current_state = :orderStateOpen ';
-        $sql .= 'AND DATE_FORMAT(o.date_add, \'%Y-%m-%d\') >= :dateFrom ';
-        $sql .= 'AND DATE_FORMAT(o.date_add, \'%Y-%m-%d\') <= :dateTo ';
+        $sql .= 'AND od.order_state = :orderStateOpen ';
+        $sql .= 'AND DATE_FORMAT(od.created, \'%Y-%m-%d\') >= :dateFrom ';
+        $sql .= 'AND DATE_FORMAT(od.created, \'%Y-%m-%d\') <= :dateTo ';
         $sql .= 'GROUP BY p.id_manufacturer ';
         $params = [
             'manufacturerId' => $manufacturerId,
