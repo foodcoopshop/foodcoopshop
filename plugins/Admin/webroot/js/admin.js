@@ -378,12 +378,12 @@ foodcoopshop.Admin = {
         return dialog;
     },
 
-    initOrderCommentEditDialog: function (container) {
+    initPickupDayCommentEditDialog: function (container) {
 
-        $('.order-comment-edit-button').on('click', function () {
+        $('.pickup-day-comment-edit-button').on('click', function () {
 
             foodcoopshop.Helper.destroyCkeditor('dialogOrderComment');
-            $('#order-comment-edit-form').remove();
+            $('#pickup-day-comment-edit-form').remove();
 
             var dialog = foodcoopshop.Admin.createOrderCommentEditDialog(container);
             foodcoopshop.Helper.initCkeditor('dialogOrderComment');
@@ -393,7 +393,7 @@ foodcoopshop.Admin = {
                 text = '';
             }
             CKEDITOR.instances['dialogOrderComment'].setData(text);
-            $('#order-comment-edit-form #dialogOrderId').val($(this).closest('tr').find('td:nth-child(1)').html());
+            $('#pickup-day-comment-edit-form #dialogOrderId').val($(this).closest('tr').find('td:nth-child(1)').html());
             dialog.dialog('open');
 
         });

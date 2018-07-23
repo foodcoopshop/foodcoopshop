@@ -557,7 +557,7 @@ body.orders.index #add-order-button-wrapper div.select,
 body.order_details.index #add-order-button-wrapper div.select {
     display: none;
 }
-body.orders.index td .order-comment-edit-button.disabled img,
+body.order_details.index td .pickup-day-comment-edit-button.disabled img,
 body.customers.index td .customer-comment-edit-button.disabled img {
   opacity: 0.2;
 }
@@ -565,8 +565,7 @@ body.customers.index span.edit-wrapper {
     float: left;
     margin-right: 3px;
 }
-body.orders.index td span.order-comment-wrapper,
-body.orders.index td span.customer-is-new {
+body.order_details.index td span.pickup-day-comment-wrapper {
   float: left;
   margin-right: 5px;
 }

@@ -137,7 +137,7 @@ class OrderDetailsController extends AdminAppController
                 $dateFrom = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay()));
             }
             if (! empty($this->getRequest()->getQuery('dateFrom'))) {
-                $dateFrom = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay()));
+                $dateFrom = $this->getRequest()->getQuery('dateFrom');
             }
             
             $dateTo = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getCurrentDay());
@@ -208,9 +208,14 @@ class OrderDetailsController extends AdminAppController
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, $manufacturerId, $productId, $customerId, $orderStates, $dateFrom, $dateTo, $orderDetailId, $deposit);
 
+        $contain = $odParams['contain'];
+        if ($groupBy == 'customer') {
+            $contain[] = 'PickupDaysEntity';
+        }
+        
         $query = $this->OrderDetail->find('all', [
             'conditions' => $odParams['conditions'],
-            'contain' => $odParams['contain']
+            'contain' => $contain
         ]);
 
         $orderDetails = $this->paginate($query, [
@@ -224,10 +229,10 @@ class OrderDetailsController extends AdminAppController
                 'OrderDetails.product_name' => 'ASC'
             ]
         ])->toArray();
-
+        
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         
-        $orderDetails = $this->prepareGroupedOrderDetails($orderDetails, $groupBy);
+        $orderDetails = $this->prepareGroupedOrderDetails($orderDetails, $groupBy, $dateTo);
         $this->set('orderDetails', $orderDetails);
 
         $timebasedCurrencyOrderInList = false;

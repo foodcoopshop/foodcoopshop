@@ -39,6 +39,13 @@ class OrderDetailsTable extends AppTable
         $this->belongsTo('OrderDetailTaxes', [
             'foreignKey' => 'id_order_detail'
         ]);
+        $this->belongsTo('PickupDaysEntity', [
+            'className' => 'PickupDays', // field has same name and would clash
+            'foreignKey' => [
+                'id_customer',
+                'pickup_day'
+            ]
+        ]);
         $this->belongsTo('Products', [
             'foreignKey' => 'product_id',
             'type' => 'INNER'
@@ -309,6 +316,9 @@ class OrderDetailsTable extends AppTable
             @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
             $preparedOrderDetails[$key]['customer_id'] = $key;
             $preparedOrderDetails[$key]['name'] = Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($orderDetail->customer);
+            if (!empty($orderDetail->pickup_days_entity)) {
+                $preparedOrderDetails[$key]['comment'] = $orderDetail->pickup_days_entity->comment;
+            }
         }
         return $preparedOrderDetails;
     }

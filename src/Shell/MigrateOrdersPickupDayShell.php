@@ -18,7 +18,7 @@ namespace App\Shell;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
-class CalculateOrderDetailsPickupDayShell extends AppShell
+class MigrateOrdersPickupDayShell extends AppShell
 {
 
     public function main()
@@ -26,10 +26,48 @@ class CalculateOrderDetailsPickupDayShell extends AppShell
         parent::main();
         
         $this->startTimeLogging();
+        $this->migrateDataToOrderDetails();
+        $this->migrateDataToPickupDays();
+        $this->stopTimeLogging();
+        $this->out($this->getRuntime());
+    }
+    
+    private function migrateDataToPickupDays()
+    {
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
+        $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
+        
+        $orders = $this->Order->find('all');
+        $i = 0;
+        foreach($orders as $order) {
+            
+            if ($order->comment != '') {
+                $createdFormattedAsDatabase = strtotime($order->date_add->i18nFormat(Configure::read('DateFormat.Database')));
+                $pickupDay = Configure::read('app.timeHelper')->getDeliveryDay($createdFormattedAsDatabase);
+                $pickupDay = date(Configure::read('DateFormat.DatabaseAlt'), $pickupDay);
+                
+                $this->PickupDay->save(
+                    $this->PickupDay->newEntity([
+                        'pickup_day' => $pickupDay,
+                        'customer_id' => $order->id_customer,
+                        'comment' => $order->comment
+                    ])
+                );
+                $i++;
+            }
+            
+        }
+        
+        $this->out('Comments from ' . $i . ' orders migrated.');
+        
+    }
 
+
+    private function migrateDataToOrderDetails()
+    {
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->find('all');
-
+        
         foreach($orderDetails as $orderDetail) {
             if ($orderDetail->created) {
                 $createdFormattedAsDatabase = strtotime($orderDetail->created->i18nFormat(Configure::read('DateFormat.Database')));
@@ -49,7 +87,6 @@ class CalculateOrderDetailsPickupDayShell extends AppShell
         
         $this->out('Pickup day for ' . $orderDetails->count() . ' order details calculated.');
         
-        $this->stopTimeLogging();
-        $this->out($this->getRuntime());
     }
+    
 }

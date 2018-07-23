@@ -8,6 +8,22 @@ class RemoveOrdersTable extends AbstractMigration
         
         $this->execute("
             
+            CREATE TABLE `fcs_pickup_days` (
+              `id` int(10) UNSIGNED NOT NULL,
+              `customer_id` int(10) UNSIGNED NOT NULL,
+              `pickup_day` date NOT NULL,
+              `comment` text NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+            
+            ALTER TABLE `fcs_pickup_days`
+              ADD PRIMARY KEY (`id`),
+              ADD KEY `customer_id` (`customer_id`),
+              ADD KEY `pickup_day` (`pickup_day`);
+
+            ALTER TABLE `fcs_pickup_days`
+              MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+            COMMIT;
+
             ALTER TABLE `fcs_order_detail` 
                 ADD `id_customer` INT(10) UNSIGNED NOT NULL AFTER `deposit`, 
                 ADD `id_cart_product` INT(10) UNSIGNED NOT NULL AFTER `id_customer`, 
@@ -41,6 +57,8 @@ class RemoveOrdersTable extends AbstractMigration
             ALTER TABLE `fcs_order_detail` ADD INDEX(`pickup_day`);
             ALTER TABLE `fcs_order_detail` ADD INDEX(`created`);
             ALTER TABLE `fcs_order_detail` ADD INDEX(`order_state`);
+            ALTER TABLE `fcs_order_detail` ADD INDEX(`product_name`);
+            
             ALTER TABLE `fcs_product` ADD INDEX(`id_manufacturer`);
 
         ");

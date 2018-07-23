@@ -40,6 +40,15 @@ use Cake\Core\Configure;
             'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.timebased-currency-time-element');"
         ]);
     }
+    
+    if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
+        $this->element('addScript', [
+            'script' =>
+            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.pickup-day-comment-edit-button', false);".
+            Configure::read('app.jsNamespace') . ".Admin.initPickupDayCommentEditDialog('table.list');"
+        ]);
+    }
+    
     ?>
     
     <div class="filter-container">
@@ -201,6 +210,20 @@ foreach ($orderDetails as $orderDetail) {
             echo $groupByObjectLink;
         }
         if ($groupBy == 'customer') {
+            if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
+                echo '<span class="pickup-day-comment-wrapper">';
+                $commentText = !empty($orderDetail['comment']) ? $orderDetail['comment'] : __d('admin', 'Add_comment');
+                echo $this->Html->getJqueryUiIcon(
+                    $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')),
+                    [
+                        'class' => 'pickup-day-comment-edit-button' . (empty($orderDetail['comment']) ? ' disabled' : ''),
+                        'title' => $commentText,
+                        'originalTitle' => $commentText
+                    ],
+                    'javascript:void(0);'
+                    );
+                echo '</span>';
+            }
             echo $groupByObjectLink;
         }
         if ($groupBy == 'product') {
