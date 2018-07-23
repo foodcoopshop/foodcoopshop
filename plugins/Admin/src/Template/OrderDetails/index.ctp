@@ -194,6 +194,19 @@ foreach ($orderDetails as $orderDetail) {
     if (in_array($groupBy, ['manufacturer', 'customer'])) {
         echo $groupByObjectLink;
     }
+    
+    if ($groupBy == 'customer' && Configure::read('app.isDepositPaymentCashless')) {
+        echo '<td'.(!$isMobile ? ' style="width: 144px;"' : '').'>';
+        echo $this->element('addDepositPaymentOverlay', [
+            'buttonText' => (!$isMobile ? __d('admin', 'Deposit_return') : ''),
+            'rowId' => $orderDetail['customer_id'],
+            'userName' => $orderDetail['name'],
+            'customerId' => $orderDetail['customer_id'],
+            'manufacturerId' => null
+        ]);
+        echo '</td>';
+    }
+    
     if ($groupBy == 'product') {
         echo $this->MyHtml->link($orderDetail['manufacturer_name'], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&' . 'manufacturerId=' . $orderDetail['manufacturer_id'] . '&orderStates[]=' . join(',', $orderStates) . '&customerId=' . $customerId.'&groupBy=product');
     }
@@ -236,18 +249,20 @@ foreach ($orderDetails as $orderDetail) {
         echo '</td>';
     }
 
-    echo '<td class="right">';
-    if ($groupBy == '') {
-        if ($orderDetail->deposit > 0) {
-            echo $this->Number->formatAsDecimal($orderDetail->deposit);
+    if ($groupBy != 'customer') {
+        echo '<td class="right">';
+        if ($groupBy == '') {
+            if ($orderDetail->deposit > 0) {
+                echo $this->Number->formatAsDecimal($orderDetail->deposit);
+            }
+        } else {
+            if ($orderDetail['sum_deposit'] > 0) {
+                echo $this->Number->formatAsDecimal($orderDetail['sum_deposit']);
+            }
         }
-    } else {
-        if ($orderDetail['sum_deposit'] > 0) {
-            echo $this->Number->formatAsDecimal($orderDetail['sum_deposit']);
-        }
+        echo '</td>';
     }
-    echo '</td>';
-
+    
     if ($groupBy == '') {
         echo '<td class="right ' . ($orderDetail->quantityInUnitsNotYetChanged ? 'not-available' : '') . '">';
             if (!empty($orderDetail->order_detail_unit)) {
@@ -316,7 +331,13 @@ if ($groupBy == '') {
         echo '<td colspan="2"></td>';
     }
 }
-if (in_array($groupBy, ['manufacturer', 'customer'])) {
+
+if ($groupBy == 'manufacturer') {
+    echo '<td></td>';
+}
+
+if ($groupBy == 'customer') {
+    echo '<td></td>';
     echo '<td></td>';
 }
 if ($groupBy == 'product') {
@@ -331,12 +352,13 @@ if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER
     echo '<td></td>';
     echo '<td class="right"><b>' . $this->Number->formatAsDecimal($sumReducedPrice) . '</b></td>';
 }
-$sumDepositString = '';
-if ($sumDeposit > 0) {
-    $sumDepositString = $this->Number->formatAsDecimal($sumDeposit);
+if ($groupBy != 'customer') {
+    $sumDepositString = '';
+    if ($sumDeposit > 0) {
+        $sumDepositString = $this->Number->formatAsDecimal($sumDeposit);
+    }
+    echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
 }
-echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
-
 if ($groupBy == '') {
     $sumUnitsString = $this->PricePerUnit->getStringFromUnitSums($sumUnits, '<br />');
     echo '<td class="right slim"><b>' . $sumUnitsString . '</b></td>';

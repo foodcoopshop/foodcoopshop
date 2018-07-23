@@ -228,8 +228,8 @@ class OrderDetailsController extends AdminAppController
                     @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_amount;
                     @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
                     $preparedOrderDetails[$key]['customer_id'] = $key;
-                    $preparedOrderDetails[$key]['name'] = $orderDetail->customer->name;
-                    $preparedOrderDetails[$key]['customer_name'] = $orderDetail->customer->name;
+                    $preparedOrderDetails[$key]['name'] = Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($orderDetail->customer);
+                    $preparedOrderDetails[$key]['customer_name'] = Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($orderDetail->customer);
                 }
                 $sortField = $this->getSortFieldForGroupedOrderDetails('name');
                 $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
