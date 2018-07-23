@@ -16,7 +16,7 @@
 use Cake\Core\Configure;
 
 echo '<th class="right">';
-    echo $this->Paginator->sort('OrderDetails.product_amount', __d('admin', 'Amount'));
+    echo $this->Paginator->sort('OrderDetails.product_amount', __d('admin', 'Products'));
 echo '</th>';
 
 echo '<th>';
