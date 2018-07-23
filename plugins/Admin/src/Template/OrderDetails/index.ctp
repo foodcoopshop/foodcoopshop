@@ -97,7 +97,7 @@ echo '<tr class="sort">';
     echo '<th class="hide">' . $this->Paginator->sort('OrderDetails.detail_order_id', 'ID') . '</th>';
     
     if ($groupBy != '') {
-        echo $this->element('orderDetailListHeaders/group_by_' . $groupBy);
+        echo $this->element('orderDetailListHeaders/groupBy' . ucfirst($groupBy));
     } else {
         echo $this->element('orderDetailListHeaders/default');
     }
