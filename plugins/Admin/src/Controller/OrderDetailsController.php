@@ -292,7 +292,10 @@ class OrderDetailsController extends AdminAppController
         }
         $this->set('timebasedCurrencyOrderInList', $timebasedCurrencyOrderInList);
 
-        $groupByForDropdown = ['product' => __d('admin', 'Group_by_product')];
+        $groupByForDropdown = [
+            'product' => __d('admin', 'Group_by_product'),
+            'customer' => __d('admin', 'Group_by_member')
+        ];
         if (!$this->AppAuth->isManufacturer()) {
             $groupByForDropdown['manufacturer'] = __d('admin', 'Group_by_manufacturer');
         }
