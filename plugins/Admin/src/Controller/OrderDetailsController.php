@@ -220,6 +220,22 @@ class OrderDetailsController extends AdminAppController
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
 
         switch ($groupBy) {
+            case 'customer':
+                $preparedOrderDetails = [];
+                foreach ($orderDetails as $orderDetail) {
+                    $key = $orderDetail->id_customer;
+                    @$preparedOrderDetails[$key]['sum_price'] += $orderDetail->total_price_tax_incl;
+                    @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_amount;
+                    @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
+                    $preparedOrderDetails[$key]['customer_id'] = $key;
+                    $preparedOrderDetails[$key]['name'] = $orderDetail->customer->name;
+                    $preparedOrderDetails[$key]['customer_name'] = $orderDetail->customer->name;
+                }
+                $sortField = $this->getSortFieldForGroupedOrderDetails('name');
+                $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
+                $preparedOrderDetails = Hash::sort($preparedOrderDetails, '{n}.' . $sortField, $sortDirection);
+                $orderDetails = $preparedOrderDetails;
+                break;
             case 'manufacturer':
                 $preparedOrderDetails = [];
                 foreach ($orderDetails as $orderDetail) {

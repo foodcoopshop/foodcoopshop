@@ -86,48 +86,22 @@ use Cake\Core\Configure;
 <?php
 echo '<table class="list">';
 echo '<tr class="sort">';
-echo '<th style="width:20px;">';
-if (count($orderDetails) > 0 && $groupBy == '') {
-    $this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".Admin.initRowMarkerAll();"
-    ]);
-    echo '<input type="checkbox" id="row-marker-all" />';
-}
-echo '</th>';
-echo '<th class="hide">' . $this->Paginator->sort('OrderDetails.detail_order_id', 'ID') . '</th>';
-echo '<th class="right">';
-    echo $this->Paginator->sort('OrderDetails.product_amount', __d('admin', 'Amount'));
-echo '</th>';
-if ($groupBy == '' || $groupBy == 'product') {
-    echo '<th>';
-        echo $this->Paginator->sort('OrderDetails.product_name', __d('admin', 'Product'));
+    echo '<th style="width:20px;">';
+    if (count($orderDetails) > 0 && $groupBy == '') {
+        $this->element('addScript', [
+        'script' => Configure::read('app.jsNamespace') . ".Admin.initRowMarkerAll();"
+        ]);
+        echo '<input type="checkbox" id="row-marker-all" />';
+    }
     echo '</th>';
-}
-
-echo '<th class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">';
-    echo $this->Paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer'));
-echo '</th>';
-echo '<th class="right">';
-    echo $this->Paginator->sort('OrderDetails.total_price_tax_incl', __d('admin', 'Price'));
-echo '</th>';
-if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
-    echo '<th>%</th>';
-    echo '<th class="right">'.__d('admin', 'Amount_minus_eventual_variable_member_fee').'</th>';
-}
-echo '<th>';
-    echo $this->Paginator->sort('OrderDetails.deposit', __d('admin', 'Deposit'));
-echo '</th>';
-if ($groupBy == '') {
-    echo '<th class="right">';
-        echo $this->Paginator->sort('OrderDetailUnits.product_quantity_in_units', __d('admin', 'Weight'));
-    echo '</th>';
-    echo '<th>';
-        echo $this->Paginator->sort('OrderDetails.pickup_day', __d('admin', 'Pickup_day'));
-    echo '</th>';
-    echo '<th>'.$this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member')).'</th>';
-    echo '<th>'.$this->Paginator->sort('OrderDetails.order_state', __d('admin', 'Status')).'</th>';
-    echo '<th style="width:25px;"></th>';
-}
+    echo '<th class="hide">' . $this->Paginator->sort('OrderDetails.detail_order_id', 'ID') . '</th>';
+    
+    if ($groupBy != '') {
+        echo $this->element('orderDetailListHeaders/group_by_' . $groupBy);
+    } else {
+        echo $this->element('orderDetailListHeaders/default');
+    }
+    
 echo '</tr>';
 
 $sumPrice = 0;
@@ -217,7 +191,7 @@ foreach ($orderDetails as $orderDetail) {
     if ($groupBy == '') {
         echo $this->MyHtml->link($orderDetail->product->manufacturer->name, '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&manufacturerId=' . $orderDetail->product->id_manufacturer . '&orderStates[]=' . join(',', $orderStates) . '&customerId=' . $customerId . '&groupBy='.$groupBy);
     }
-    if ($groupBy == 'manufacturer') {
+    if (in_array($groupBy, ['manufacturer', 'customer'])) {
         echo $groupByObjectLink;
     }
     if ($groupBy == 'product') {
@@ -342,7 +316,7 @@ if ($groupBy == '') {
         echo '<td colspan="2"></td>';
     }
 }
-if ($groupBy == 'manufacturer') {
+if (in_array($groupBy, ['manufacturer', 'customer'])) {
     echo '<td></td>';
 }
 if ($groupBy == 'product') {

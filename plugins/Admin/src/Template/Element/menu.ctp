@@ -47,7 +47,7 @@ $paymentDepositCustomerAddedMenuElement = [
     ]
 ];
 $orderDetailsMenuElement = [
-    'slug' => $this->Slug->getOrderDetailsList(),
+    'slug' => $this->Slug->getOrderDetailsList().'?groupBy=customer',
     'name' => __d('admin', 'Orders'),
     'options' => [
         'fa-icon' => 'fa-fw fa-shopping-cart'
