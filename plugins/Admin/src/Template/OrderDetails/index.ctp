@@ -182,13 +182,13 @@ foreach ($orderDetails as $orderDetail) {
     echo '</td>';
 
     if ($groupBy != '') {
-        $groupByObjectLink = $this->MyHtml->link(
-            $orderDetail['name'], '/admin/order-details/index/' .
+        $groupByObjectHref = '/admin/order-details/index/' .
             '?dateFrom=' . $dateFrom . 
             '&dateTo=' . $dateTo . 
             '&' . $groupBy.'Id=' . $orderDetail[$groupBy . '_id'] . 
             '&orderStates[]=' . join(',', $orderStates) . 
-            (isset($orderDetail['customer_id']) ? $orderDetail['customer_id'] : '&customerId=' . $customerId ));
+            (isset($orderDetail['customer_id']) ? '' : '&customerId=' . $customerId );
+        $groupByObjectName = $this->Html->link($orderDetail['name'], $groupByObjectHref);
     }
 
     if ($groupBy == '' || $groupBy == 'product') {
@@ -225,12 +225,21 @@ foreach ($orderDetails as $orderDetail) {
                     );
                 echo '</span>';
             }
-            echo $groupByObjectLink;
+            echo $orderDetail['name'];
         }
         if ($groupBy == 'product') {
             echo $this->MyHtml->link($orderDetail['manufacturer_name'], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&' . 'manufacturerId=' . $orderDetail['manufacturer_id'] . '&orderStates[]=' . join(',', $orderStates) . '&customerId=' . $customerId . '&groupBy=product');
         }
     echo '</td>';
+    
+    if ($groupBy == 'customer') {
+        echo '<td'.(!$isMobile ? ' style="width: 157px;"' : '').'>';
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' ' . __d('admin', 'Ordered_products') : ''), [
+                'title' => __d('admin', 'Show_all_ordered_products_from_{0}', [$orderDetail['name']]),
+                'class' => 'icon-with-text'
+            ], $groupByObjectHref);
+        echo '</td>';
+    }
 
     echo '<td class="right' . ($groupBy == '' && $orderDetail->total_price_tax_incl == 0 ? ' not-available' : '') . '">';
     echo '<div class="table-cell-wrapper price">';
@@ -312,14 +321,18 @@ foreach ($orderDetails as $orderDetail) {
     }
 
     if ($groupBy == '') {
-        if ($groupBy == '') {
-            echo '<td class="date-short2">';
+        echo '<td class="date-short2">';
             echo $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
-        } else {
-            echo '<td>';
-        }
         echo '</td>';
-
+    }
+    
+    if ($groupBy == 'customer') {
+        echo '<td class="date-short2">';
+            echo $dateTo;
+        echo '</td>';
+    }
+    
+    if ($groupBy == '') {
         echo '<td>';
         if ($groupBy == '') {
             echo $this->Html->getNameRespectingIsDeleted($orderDetail->customer);
@@ -379,7 +392,7 @@ if ($groupBy == 'manufacturer') {
 }
 
 if ($groupBy == 'customer') {
-    echo '<td></td>';
+    echo '<td colspan="2"></td>';
 }
 if ($groupBy == 'product') {
     if ($appAuth->isManufacturer()) {
@@ -400,7 +413,7 @@ if ($groupBy != 'customer') {
     }
     echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
 } else {
-    echo '<td></td>';
+    echo '<td colspan="2"></td>';
 }
 if ($groupBy == '') {
     $sumUnitsString = $this->PricePerUnit->getStringFromUnitSums($sumUnits, '<br />');
