@@ -56,9 +56,6 @@ use Cake\Core\Configure;
                 <?php // for preselecting customer in shop order dropdown ?>
                 <?php echo $this->Form->hidden('customerId', ['value' => isset($customerId) ? $customerId: '']); ?>
             <?php } ?>
-            <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
-                <input id="orderId" type="text" placeholder="<?php echo __d('admin', 'Order_number_abbr')?>" name="orderId" value="<?php echo $orderId; ?>" />
-            <?php } ?>
             <?php echo $this->Form->control('orderStates', ['type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => join(',', $orderStates)]); ?>
             <?php echo $this->Form->control('groupBy', ['type'=>'select', 'label' =>'', 'empty' => __d('admin', 'Group_by...'), 'options' => $groupByForDropdown, 'default' => $groupBy]);?>
             <div class="right">
@@ -130,7 +127,6 @@ if ($groupBy == '') {
     echo '<th>'.$this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member')).'</th>';
     echo '<th>'.$this->Paginator->sort('OrderDetails.order_state', __d('admin', 'Status')).'</th>';
     echo '<th style="width:25px;"></th>';
-    echo '<th class="hide">' . $this->Paginator->sort('OrderDetails.order_id', 'OrderID') . '</th>';
 }
 echo '</tr>';
 
@@ -331,11 +327,6 @@ foreach ($orderDetails as $orderDetail) {
         }
         echo '</td>';
 
-        echo '<td class="hide orderId">';
-        if ($groupBy == '') {
-            echo $orderDetail->id_order;
-        }
-        echo '</td>';
     }
 
     echo '</tr>';

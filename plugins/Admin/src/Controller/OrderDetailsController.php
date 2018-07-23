@@ -149,12 +149,6 @@ class OrderDetailsController extends AdminAppController
         }
         $this->set('manufacturerId', $manufacturerId);
 
-        $orderId = '';
-        if (! empty($this->getRequest()->getQuery('orderId'))) {
-            $orderId = $this->getRequest()->getQuery('orderId');
-        }
-        $this->set('orderId', $orderId);
-
         $deposit = '';
         if (! empty($this->getRequest()->getQuery('deposit'))) {
             $deposit = $this->getRequest()->getQuery('deposit');
