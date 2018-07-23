@@ -52,6 +52,7 @@ class OrderDetailsTable extends AppTable
         $this->hasOne('OrderDetailUnits', [
             'foreignKey' => 'id_order_detail'
         ]);
+        $this->addBehavior('Timestamp');
     }
 
     /**
