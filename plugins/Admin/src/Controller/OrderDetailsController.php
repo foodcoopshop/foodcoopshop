@@ -236,8 +236,16 @@ class OrderDetailsController extends AdminAppController
         $this->set('orderDetails', $orderDetails);
 
         $timebasedCurrencyOrderInList = false;
+        $sums = [
+            'records_count' => 0,
+            'amount' => 0,
+            'price' => 0,
+            'deposit' => 0,
+            'units' => [],
+            'reduced_price' => 0
+        ];
         foreach($orderDetails as $orderDetail) {
-            @$sums['recordsCount']++;
+            @$sums['records_count']++;
             if ($groupBy == '') {
                 @$sums['price'] += $orderDetail->total_price_tax_incl;
                 @$sums['amount'] += $orderDetail->product_amount;

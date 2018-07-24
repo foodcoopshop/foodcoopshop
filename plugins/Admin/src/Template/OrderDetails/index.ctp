@@ -192,7 +192,7 @@ foreach ($orderDetails as $orderDetail) {
 }
 
 echo '<tr>';
-echo '<td colspan="1"><b>' . $this->Number->formatAsDecimal($sums['recordsCount'], 0) . '</b></td>';
+echo '<td colspan="1"><b>' . $this->Number->formatAsDecimal($sums['records_count'], 0) . '</b></td>';
 echo '<td class="right"><b>' . $this->Number->formatAsDecimal($sums['amount'], 0) . 'x</b></td>';
 if ($groupBy == '') {
     if ($appAuth->isManufacturer()) {
