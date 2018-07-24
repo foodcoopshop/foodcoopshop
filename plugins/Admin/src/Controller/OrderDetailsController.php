@@ -237,12 +237,29 @@ class OrderDetailsController extends AdminAppController
 
         $timebasedCurrencyOrderInList = false;
         foreach($orderDetails as $orderDetail) {
+            @$sums['recordsCount']++;
+            if ($groupBy == '') {
+                @$sums['price'] += $orderDetail->total_price_tax_incl;
+                @$sums['amount'] += $orderDetail->product_amount;
+                @$sums['deposit'] += $orderDetail->deposit;
+            } else {
+                @$sums['price'] += $orderDetail['sum_price'];
+                @$sums['amount'] += $orderDetail['sum_amount'];
+                if ($groupBy == 'manufacturer') {
+                    @$sums['reduced_price'] += $orderDetail['reduced_price'];
+                }
+                @$sums['deposit'] += $orderDetail['sum_deposit'];
+            }
+            if (!empty($orderDetail->order_detail_unit)) {
+                @$sums['units'][$orderDetail->order_detail_unit->unit_name] += $orderDetail->order_detail_unit->product_quantity_in_units;
+            }
             if (!empty($orderDetail->timebased_currency_order_detail)) {
                 $timebasedCurrencyOrderInList = true;
                 break;
             }
         }
         $this->set('timebasedCurrencyOrderInList', $timebasedCurrencyOrderInList);
+        $this->set('sums', $sums);
 
         $groupByForDropdown = [
             'product' => __d('admin', 'Group_by_product'),

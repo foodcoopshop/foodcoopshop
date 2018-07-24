@@ -114,30 +114,9 @@ echo '<tr class="sort">';
     
 echo '</tr>';
 
-$sumPrice = 0;
-$sumAmount = 0;
-$sumDeposit = 0;
-$sumReducedPrice = 0;
-$sumUnits = [];
-$i = 0;
 foreach ($orderDetails as $orderDetail) {
     
     $editRecordAllowed = $groupBy == '' && ($orderDetail->order_state == ORDER_STATE_OPEN || $orderDetail->bulkOrdersAllowed);
-
-    $i ++;
-    if ($groupBy == '') {
-        $sumPrice += $orderDetail->total_price_tax_incl;
-        $sumAmount += $orderDetail->product_amount;
-        $sumDeposit += $orderDetail->deposit;
-    } else {
-        $sumPrice += $orderDetail['sum_price'];
-        $sumAmount += $orderDetail['sum_amount'];
-        if ($groupBy == 'manufacturer') {
-            $reducedPrice = $orderDetail['sum_price'] * (100 - $orderDetail['variable_member_fee']) / 100;
-            $sumReducedPrice += $reducedPrice;
-        }
-        $sumDeposit += $orderDetail['sum_deposit'];
-    }
 
     echo '<tr class="data ' . (isset($orderDetail->row_class) ? implode(' ', $orderDetail->row_class) : '') . '">';
 
@@ -172,7 +151,6 @@ foreach ($orderDetails as $orderDetail) {
     if ($groupBy == 'manufacturer') {
         echo $this->element('orderDetailList/data/elements/variableMemberFee', [
             'orderDetail' => $orderDetail,
-            'reducedPrice' => $reducedPrice,
             'groupBy' => $groupBy
         ]);
     }
@@ -214,8 +192,8 @@ foreach ($orderDetails as $orderDetail) {
 }
 
 echo '<tr>';
-echo '<td colspan="1"><b>' . $this->Number->formatAsDecimal($i, 0) . '</b></td>';
-echo '<td class="right"><b>' . $this->Number->formatAsDecimal($sumAmount, 0) . 'x</b></td>';
+echo '<td colspan="1"><b>' . $this->Number->formatAsDecimal($sums['recordsCount'], 0) . '</b></td>';
+echo '<td class="right"><b>' . $this->Number->formatAsDecimal($sums['amount'], 0) . 'x</b></td>';
 if ($groupBy == '') {
     if ($appAuth->isManufacturer()) {
         echo '<td></td>';
@@ -238,22 +216,22 @@ if ($groupBy == 'product') {
         echo '<td colspan="2"></td>';
     }
 }
-echo '<td class="right"><b>' . $this->Number->formatAsDecimal($sumPrice) . '</b></td>';
+echo '<td class="right"><b>' . $this->Number->formatAsDecimal($sums['price']) . '</b></td>';
 if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<td></td>';
-    echo '<td class="right"><b>' . $this->Number->formatAsDecimal($sumReducedPrice) . '</b></td>';
+    echo '<td class="right"><b>' . $this->Number->formatAsDecimal($sums['reduced_price']) . '</b></td>';
 }
 if ($groupBy != 'customer') {
     $sumDepositString = '';
-    if ($sumDeposit > 0) {
-        $sumDepositString = $this->Number->formatAsDecimal($sumDeposit);
+    if ($sums['deposit']> 0) {
+        $sumDepositString = $this->Number->formatAsDecimal($sums['deposit']);
     }
     echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
 } else {
     echo '<td colspan="2"></td>';
 }
 if ($groupBy == '') {
-    $sumUnitsString = $this->PricePerUnit->getStringFromUnitSums($sumUnits, '<br />');
+    $sumUnitsString = $this->PricePerUnit->getStringFromUnitSums($sums['units'], '<br />');
     echo '<td class="right slim"><b>' . $sumUnitsString . '</b></td>';
     echo '<td colspan="4"></td>';
 }

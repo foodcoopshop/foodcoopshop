@@ -303,6 +303,11 @@ class OrderDetailsTable extends AppTable
             $preparedOrderDetails[$key]['manufacturer_id'] = $key;
             $preparedOrderDetails[$key]['name'] = $orderDetail->product->manufacturer->name;
         }
+        
+        foreach($preparedOrderDetails as &$pod) {
+            $pod['reduced_price'] = $pod['sum_price'] * (100 - $pod['variable_member_fee']) / 100;
+        }
+        
         return $preparedOrderDetails;
     }
     

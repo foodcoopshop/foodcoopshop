@@ -16,7 +16,7 @@
 use Cake\Core\Configure;
 
 if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
-    $priceDiffers = $reducedPrice != $orderDetail['sum_price'];
+    $priceDiffers = $orderDetail['reduced_price'] != $orderDetail['sum_price'];
     
     echo '<td>';
         echo $orderDetail['variable_member_fee'] . '%';
@@ -26,7 +26,7 @@ if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER
         if ($priceDiffers) {
             echo '<span style="color:red;font-weight:bold;">';
         }
-        echo $this->Number->formatAsDecimal($reducedPrice);
+        echo $this->Number->formatAsDecimal($orderDetail['reduced_price']);
         if ($priceDiffers) {
             echo '</span>';
         }

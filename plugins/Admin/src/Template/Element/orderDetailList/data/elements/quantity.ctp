@@ -16,7 +16,6 @@
 if ($groupBy == '') {
     echo '<td class="right ' . ($orderDetail->quantityInUnitsNotYetChanged ? 'not-available' : '') . '">';
     if (!empty($orderDetail->order_detail_unit)) {
-        @$sumUnits[$orderDetail->order_detail_unit->unit_name] += $orderDetail->order_detail_unit->product_quantity_in_units;
         if ($editRecordAllowed) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                 'class' => 'order-detail-product-quantity-edit-button',
