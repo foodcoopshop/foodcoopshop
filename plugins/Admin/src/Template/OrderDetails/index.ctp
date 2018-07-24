@@ -106,11 +106,11 @@ echo '<tr class="sort">';
     echo '</th>';
     echo '<th class="hide">' . $this->Paginator->sort('OrderDetails.detail_order_id', 'ID') . '</th>';
     
+    $orderDetailTemplateElement = 'default';
     if ($groupBy != '') {
-        echo $this->element('orderDetailListHeaders/groupBy' . ucfirst($groupBy));
-    } else {
-        echo $this->element('orderDetailListHeaders/default');
+        $orderDetailTemplateElement = 'groupBy' . ucfirst($groupBy);
     }
+    echo $this->element('orderDetailList/header/'.$orderDetailTemplateElement);
     
 echo '</tr>';
 
@@ -121,6 +121,7 @@ $sumReducedPrice = 0;
 $sumUnits = [];
 $i = 0;
 foreach ($orderDetails as $orderDetail) {
+    
     $editRecordAllowed = $groupBy == '' && ($orderDetail->order_state == ORDER_STATE_OPEN || $orderDetail->bulkOrdersAllowed);
 
     $i ++;
@@ -141,237 +142,73 @@ foreach ($orderDetails as $orderDetail) {
     echo '<tr class="data ' . (isset($orderDetail->row_class) ? implode(' ', $orderDetail->row_class) : '') . '">';
 
     echo '<td style="text-align: center;">';
-    if ($editRecordAllowed) {
-        echo '<input type="checkbox" class="row-marker" />';
-    }
-    echo '</td>';
-
-    echo '<td class="hide">';
-    if ($groupBy == '') {
-        echo $orderDetail->id_order_detail;
-    }
-    echo '</td>';
-
-    echo '<td class="right">';
-
-        if (!empty($orderDetail->timebased_currency_order_detail)) {
-            echo '<span id="timebased-currency-object-'.$orderDetail->id_order_detail.'" class="timebased-currency-object"></span>';
-            $this->element('addScript', [
-                'script' => Configure::read('app.jsNamespace') . ".Admin.setOrderDetailTimebasedCurrencyData($('#timebased-currency-object-".$orderDetail->id_order_detail."'),'".json_encode($orderDetail->timebased_currency_order_detail)."');"
-            ]);
-        }
-
-        echo '<div class="table-cell-wrapper amount">';
-        if ($groupBy == '') {
-            if ($orderDetail->product_amount > 1 && $editRecordAllowed) {
-                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                    'class' => 'order-detail-product-amount-edit-button',
-                    'title' => __d('admin', 'Click_to_change_amount')
-                ], 'javascript:void(0);');
-            }
-            $amount = $orderDetail->product_amount;
-            $style = '';
-            if ($amount > 1) {
-                $style = 'font-weight:bold;';
-            }
-            echo '<span class="product-amount-for-dialog" style="' . $style . '">' . $amount . '</span><span style="' . $style . '">x</span>';
-        } else {
-            echo $this->Number->formatAsDecimal($orderDetail['sum_amount'], 0) . 'x';
-        }
-        echo '</div>';
-    echo '</td>';
-
-    if ($groupBy != '') {
-        $groupByObjectHref = '/admin/order-details/index/' .
-            '?dateFrom=' . $dateFrom . 
-            '&dateTo=' . $dateTo . 
-            '&' . $groupBy.'Id=' . $orderDetail[$groupBy . '_id'] . 
-            '&orderStates[]=' . join(',', $orderStates) . 
-            (isset($orderDetail['customer_id']) ? '' : '&customerId=' . $customerId );
-        $groupByObjectName = $this->Html->link($orderDetail['name'], $groupByObjectHref);
-    }
-
-    if ($groupBy == '' || $groupBy == 'product') {
-        echo '<td>';
-        if ($groupBy == '') {
-            echo $this->MyHtml->link($orderDetail->product_name, '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&productId=' . $orderDetail->product_id . '&orderStates[]=' . join(',', $orderStates), [
-                'class' => 'name-for-dialog'
-            ]);
-        }
-        if ($groupBy == 'product') {
-            echo $groupByObjectLink;
-        }
-        echo '</td>';
-    }
-    echo '<td class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">';
-        if ($groupBy == '') {
-            echo $this->MyHtml->link($orderDetail->product->manufacturer->name, '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&manufacturerId=' . $orderDetail->product->id_manufacturer . '&orderStates[]=' . join(',', $orderStates) . '&customerId=' . $customerId . '&groupBy='.$groupBy);
-        }
-        if ($groupBy == 'manufacturer') {
-            echo $groupByObjectLink;
-        }
-        if ($groupBy == 'customer') {
-            if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
-                echo '<span class="pickup-day-comment-wrapper">';
-                $commentText = !empty($orderDetail['comment']) ? $orderDetail['comment'] : __d('admin', 'Add_comment');
-                echo $this->Html->getJqueryUiIcon(
-                    $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')),
-                    [
-                        'class' => 'pickup-day-comment-edit-button' . (empty($orderDetail['comment']) ? ' disabled' : ''),
-                        'title' => $commentText,
-                        'originalTitle' => $commentText
-                    ],
-                    'javascript:void(0);'
-                    );
-                echo '</span>';
-            }
-            echo $orderDetail['name'];
-        }
-        if ($groupBy == 'product') {
-            echo $this->MyHtml->link($orderDetail['manufacturer_name'], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&' . 'manufacturerId=' . $orderDetail['manufacturer_id'] . '&orderStates[]=' . join(',', $orderStates) . '&customerId=' . $customerId . '&groupBy=product');
-        }
-    echo '</td>';
-    
-    if ($groupBy == 'customer') {
-        echo '<td'.(!$isMobile ? ' style="width: 157px;"' : '').'>';
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' ' . __d('admin', 'Ordered_products') : ''), [
-                'title' => __d('admin', 'Show_all_ordered_products_from_{0}', [$orderDetail['name']]),
-                'class' => 'icon-with-text'
-            ], $groupByObjectHref);
-        echo '</td>';
-    }
-
-    echo '<td class="right' . ($groupBy == '' && $orderDetail->total_price_tax_incl == 0 ? ' not-available' : '') . '">';
-    echo '<div class="table-cell-wrapper price">';
-    if ($groupBy == '') {
         if ($editRecordAllowed) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                'class' => 'order-detail-product-price-edit-button',
-                'title' => __d('admin', 'Click_to_change_price')
-            ], 'javascript:void(0);');
+            echo '<input type="checkbox" class="row-marker" />';
         }
-        echo '<span class="product-price-for-dialog">' . $this->Number->formatAsDecimal($orderDetail->total_price_tax_incl) . '</span>';
-        if (!empty($orderDetail->timebased_currency_order_detail)) {
-            echo '<b class="timebased-currency-time-element" title="'.__d('admin', 'Additional_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($orderDetail->timebased_currency_order_detail->seconds)]).'">&nbsp;*</b>';
-        }
-    } else {
-        echo $this->Number->formatAsDecimal($orderDetail['sum_price']);
-    }
-    echo '</div>';
     echo '</td>';
+
+    echo $this->element('orderDetailList/data/elements/id', [
+        'orderDetail' => $orderDetail,
+        'groupBy' => $groupBy
+    ]);
+
+    echo $this->element('orderDetailList/data/elements/amount', [
+        'orderDetail' => $orderDetail,
+        'editRecordAllowed' => $editRecordAllowed,
+        'groupBy' => $groupBy
+    ]);
+
+    echo $this->element('orderDetailList/data/elements/mainObject', [
+        'orderDetail' => $orderDetail,
+        'groupBy' => $groupBy
+    ]);
     
-    if ($groupBy == 'customer' && Configure::read('app.isDepositPaymentCashless')) {
-        echo '<td'.(!$isMobile ? ' style="width: 144px;"' : '').'>';
-        echo $this->element('addDepositPaymentOverlay', [
-            'buttonText' => (!$isMobile ? __d('admin', 'Deposit_return') : ''),
-            'rowId' => $orderDetail['customer_id'],
-            'userName' => $orderDetail['name'],
-            'customerId' => $orderDetail['customer_id'],
-            'manufacturerId' => null
+    echo $this->element('orderDetailList/data/elements/price', [
+        'orderDetail' => $orderDetail,
+        'editRecordAllowed' => $editRecordAllowed,
+        'groupBy' => $groupBy
+    ]);
+
+    if ($groupBy == 'manufacturer') {
+        echo $this->element('orderDetailList/data/elements/variableMemberFee', [
+            'orderDetail' => $orderDetail,
+            'reducedPrice' => $reducedPrice,
+            'groupBy' => $groupBy
         ]);
-        echo '</td>';
-    }
-
-    if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
-        $priceDiffers = $reducedPrice != $orderDetail['sum_price'];
-
-        echo '<td>';
-        echo $orderDetail['variable_member_fee'] . '%';
-        echo '</td>';
-
-        echo '<td class="right">';
-        if ($priceDiffers) {
-            echo '<span style="color:red;font-weight:bold;">';
-        }
-        echo $this->Number->formatAsDecimal($reducedPrice);
-        if ($priceDiffers) {
-            echo '</span>';
-        }
-        echo '</td>';
-    }
-
-    if ($groupBy != 'customer') {
-        echo '<td class="right">';
-        if ($groupBy == '') {
-            if ($orderDetail->deposit > 0) {
-                echo $this->Number->formatAsDecimal($orderDetail->deposit);
-            }
-        } else {
-            if ($orderDetail['sum_deposit'] > 0) {
-                echo $this->Number->formatAsDecimal($orderDetail['sum_deposit']);
-            }
-        }
-        echo '</td>';
     }
     
-    if ($groupBy == '') {
-        echo '<td class="right ' . ($orderDetail->quantityInUnitsNotYetChanged ? 'not-available' : '') . '">';
-            if (!empty($orderDetail->order_detail_unit)) {
-                @$sumUnits[$orderDetail->order_detail_unit->unit_name] += $orderDetail->order_detail_unit->product_quantity_in_units;
-                if ($editRecordAllowed) {
-                    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                        'class' => 'order-detail-product-quantity-edit-button',
-                        'title' => __d('admin', 'Click_to_change_weight')
-                    ], 'javascript:void(0);');
-                }
-                echo '<span class="quantity-in-units">' . $this->Number->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) .'</span><span class="unit-name">'. ' ' . $orderDetail->order_detail_unit->unit_name.'</span>';
-                echo '<span class="hide price-per-unit-base-info">'.$this->PricePerUnit->getPricePerUnitBaseInfo($orderDetail->order_detail_unit->price_incl_per_unit, $orderDetail->order_detail_unit->unit_name, $orderDetail->order_detail_unit->unit_amount).'</span>';
-            }
-        echo '</td>';
-    }
-
-    if ($groupBy == '') {
-        echo '<td class="date-short2">';
-            echo $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
-        echo '</td>';
-    }
+    echo $this->element('orderDetailList/data/elements/deposit', [
+        'orderDetail' => $orderDetail,
+        'groupBy' => $groupBy
+    ]);
     
-    if ($groupBy == 'customer') {
-        echo '<td class="date-short2">';
-            echo $dateTo;
-        echo '</td>';
-    }
+    echo $this->element('orderDetailList/data/elements/quantity', [
+        'orderDetail' => $orderDetail,
+        'editRecordAllowed' => $editRecordAllowed,
+        'groupBy' => $groupBy
+    ]);
+
+    echo $this->element('orderDetailList/data/elements/pickupDay', [
+        'orderDetail' => $orderDetail,
+        'editRecordAllowed' => $editRecordAllowed,
+        'groupBy' => $groupBy
+    ]);
     
-    if ($groupBy == '') {
-        echo '<td>';
-        if ($groupBy == '') {
-            echo $this->Html->getNameRespectingIsDeleted($orderDetail->customer);
-        }
-        echo '</td>';
-
-        echo '<td class="hide">';
-        if ($groupBy == '' && !empty($orderDetail->customer)) {
-            echo '<span class="email">' . $orderDetail->customer->email . '</span>';
-        }
-        echo '</td>';
-
-        if ($groupBy == '') {
-            echo '<td'.(!$isMobile ? ' style="width: 247px;"' : '').'>';
-                echo '<span class="truncate" style="float: left; width: 77px;">' . $this->MyHtml->getOrderStates()[$orderDetail->order_state] . '</span>';
-                $statusChangeIcon = 'accept';
-                if ($orderDetail->order_state == ORDER_STATE_OPEN) {
-                    $statusChangeIcon = 'error';
-                }
-                if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-                    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath($statusChangeIcon . '.png')) . (!$isMobile ? ' ' . __d('admin', 'Change_order_status') : ''), [
-                        'title' => __d('admin', 'Change_order_status'),
-                        'class' => 'change-order-state-button icon-with-text'
-                    ], 'javascript:void(0);');
-                }
-            echo '</td>';
-        }
+    echo $this->element('orderDetailList/data/elements/customer', [
+        'orderDetail' => $orderDetail
+    ]);
     
-        echo '<td style="text-align:center;">';
-        if ($editRecordAllowed) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
-                'class' => 'delete-order-detail',
-                'id' => 'delete-order-detail-' . $orderDetail->id_order_detail,
-                'title' => __d('admin', 'Click_to_cancel_product')
-            ], 'javascript:void(0);');
-        }
-        echo '</td>';
+    echo $this->element('orderDetailList/data/elements/orderState', [
+        'orderDetail' => $orderDetail,
+        'editRecordAllowed' => $editRecordAllowed,
+        'groupBy' => $groupBy
+    ]);
 
-    }
+    echo $this->element('orderDetailList/data/elements/cancelButton', [
+        'orderDetail' => $orderDetail,
+        'editRecordAllowed' => $editRecordAllowed,
+        'groupBy' => $groupBy
+    ]);
 
     echo '</tr>';
 }
