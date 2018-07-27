@@ -32,6 +32,12 @@ class CartsTable extends AppTable
         $this->hasMany('CartProducts', [
             'foreignKey' => 'id_cart'
         ]);
+        $this->hasMany('PickupDayEntities', [
+            'className' => 'PickupDays', // field has same name and would clash
+            'foreignKey' => [
+                'id_customer'
+            ]
+        ]);
         $this->addBehavior('Timestamp');
     }
     
@@ -102,7 +108,6 @@ class CartsTable extends AppTable
         }
 
         $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
-
         $cartProducts = $cartProductsTable->find('all', [
             'conditions' => [
                 'CartProducts.id_cart' => $cart['id_cart']
@@ -120,7 +125,19 @@ class CartsTable extends AppTable
                 'Products.Images'
             ]
         ])->toArray();
-
+        
+        $pickupDayTable = TableRegistry::getTableLocator()->get('PickupDays');
+        $pickupDays = $pickupDayTable->find('all', [
+            'conditions' => [
+                'PickupDays.customer_id' => $customerId,
+                //'PickupDays.pickup_day IN' => ['2017-07-14', '2017-11-10']
+            ],
+            'order' => [
+                'PickupDays.pickup_day' => 'ASC'
+            ]
+        ])->toArray();
+        $cart->pickup_day_entities = $pickupDays;
+        
         $preparedCart = [
             'Cart' => $cart,
             'CartProducts' => []

@@ -73,8 +73,8 @@ class CartsController extends FrontendController
         $this->set('title_for_layout', __('Your_cart'));
         if (!$this->getRequest()->is('post')) {
             $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-            $this->Cart = TableRegistry::getTableLocator()->get('Carts');
-            $this->set('cart', $this->Cart->newEntity());
+            $cart = $this->AppAuth->getCart();
+            $this->set('cart', $cart['Cart']);
         }
     }
 
@@ -234,20 +234,21 @@ class CartsController extends FrontendController
             $this->OrderDetail->newEntities($orderDetails2save)
         );
     }
-
+    
     public function finish()
     {
 
-        if (!$this->getRequest()->is('post')) {
-            $this->redirect('/');
-            return;
-        }
+//         if (!$this->getRequest()->is('post')) {
+//             $this->redirect('/');
+//             return;
+//         }
 
         $this->set('title_for_layout', __('Finish_cart'));
         $cart = $this->AppAuth->getCart();
-
+        
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
         $this->Product = TableRegistry::getTableLocator()->get('Products');
 
         // START check if no amount is 0
@@ -415,14 +416,36 @@ class CartsController extends FrontendController
             $maxValue = $this->AppAuth->Cart->getTimebasedCurrencySecondsSumRoundedUp();
             $validator = $this->OrderDetail->TimebasedCurrencyOrderDetails->getNumberRangeValidator($validator, 'seconds_sum_tmp', 0, $maxValue);
         }
+        
         $cart['Cart'] = $this->Cart->patchEntity(
             $cart['Cart'],
             $this->getRequest()->getData()
         );
+        
+        /*
+        if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
+            $pickupDayData = [
+                'pickup_day_entities' => [
+                    'customer_id' => $this->AppAuth->getUserId(),
+                    'pickup_day' => Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb()
+                ]
+            ];
+            $cart['Cart'] = $this->Cart->patchEntity(
+                $cart['Cart'],
+                $pickupDayData,
+                [
+                    'associated' => [
+                        'PickupDayEntities'
+                    ]
+                ]
+            );
+        }
+        */
+        
         if (!empty($cart['Cart']->getErrors())) {
             $formErrors = true;
         }
-
+        
         $this->set('cart', $cart['Cart']); // to show error messages in form (from validation)
         $this->set('formErrors', $formErrors);
 

@@ -210,7 +210,7 @@ class OrderDetailsController extends AdminAppController
 
         $contain = $odParams['contain'];
         if ($groupBy == 'customer') {
-            $contain[] = 'PickupDaysEntity';
+            $contain[] = 'PickupDayEntities';
         }
         
         $query = $this->OrderDetail->find('all', [

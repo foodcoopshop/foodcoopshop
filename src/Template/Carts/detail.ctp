@@ -111,28 +111,41 @@ if (!$appAuth->termsOfUseAccepted()) {
         <div class="sc"></div>
         
         <?php
+        /*
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
             $this->element('addScript', ['script' =>
                 Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();"
             ]);
-            if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) && !empty($this->request->getData('PickupDays.comment')) && $this->request->getData('PickupDays.comment') != '') {
+            if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) && !empty($this->request->getData('Carts.pickup_day_entity.comment')) && $this->request->getData('Carts.pickup_day_entity.comment') != '') {
                 $this->element('addScript', ['script' =>
-                "$('.toggle-link').trigger('click');"
+                    "$('.toggle-link').trigger('click');"
                 ]);
             }
-            echo $this->Html->link('<i class="fa"></i> ' . __('Write_message_to_pick_up_team?'), 'javascript:void(0);', [
-            'class' => 'toggle-link',
-            'title' => __('Write_message_to_pick_up_team?'),
-            'escape' => false
-            ]);
-            echo '<div class="toggle-content pickup-day-comment">';
-            echo $this->Form->control('PickupDays.comment', [
-                'type' => 'textarea',
-                'placeholder' => __('Placeholder_message_pickup_day_comment.'),
-                'label' => ''
-            ]);
-            echo '</div>';
+            
+            foreach($cart->pickup_day_entities as $pickupDay) {
+                $message =  __('Write_message_to_pick_up_team_for_{0}?',
+                    [$pickupDay->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateShort'))]
+                );
+                echo $this->Html->link(
+                    '<i class="fa"></i> ' . $message,
+                    'javascript:void(0);',
+                    [
+                        'class' => 'toggle-link',
+                        'title' => $message,
+                        'escape' => false
+                    ]
+                );
+                echo '<div class="toggle-content pickup-day-comment">';
+                echo $this->Form->control('Carts.pickup_day_entities.comment', [
+                    'type' => 'textarea',
+                    'placeholder' => __('Placeholder_message_pickup_day_comment.'),
+                    'label' => '',
+                    'value' => $pickupDay->comment
+                ]);
+                echo '</div>';
+            }
         }
+        */
         ?>
         
         <p>
