@@ -207,7 +207,7 @@ span.product-quantity-for-dialog {
     line-height: 21px;
     margin-left: 5px;
 }
-span.name-for-dialog {
+tr.main-product span.name-for-dialog {
 	font-weight: 600;
 }
 span.categories-for-dialog {
