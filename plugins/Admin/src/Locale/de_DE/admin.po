@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-27 11:44+0200\n"
-"PO-Revision-Date: 2018-07-27 11:48+0200\n"
+"POT-Creation-Date: 2018-07-27 12:34+0200\n"
+"PO-Revision-Date: 2018-07-27 12:38+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1631,6 +1631,9 @@ msgstr "Neues Produkt"
 
 msgid "Synchronize_products"
 msgstr "Produkte synchronisieren"
+
+msgid "Name_and_categories"
+msgstr "Name und Kategorien"
 
 msgid "Product_declaration"
 msgstr "Produktdeklaration"

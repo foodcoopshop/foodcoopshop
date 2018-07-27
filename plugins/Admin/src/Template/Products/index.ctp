@@ -135,11 +135,10 @@ use Cake\Core\Configure;
     echo '<th class="hide">ID</th>';
     echo '<th>'.__d('admin', 'Attribute').'</th>';
     echo '<th>' . $this->Paginator->sort('Images.id_image', __d('admin', 'Image')) . '</th>';
-    echo '<th>' . $this->Paginator->sort('Products.name', __d('admin', 'Name')) . '<span class="product-declaration-header">' . $this->Paginator->sort('Products.is_declaration_ok', __d('admin', 'Product_declaration')) . '</span></th>';
+    echo '<th>' . $this->Paginator->sort('Products.name', __d('admin', 'Name_and_categories')) . '<span class="product-declaration-header">' . $this->Paginator->sort('Products.is_declaration_ok', __d('admin', 'Product_declaration')) . '</span></th>';
     if ($manufacturerId == 'all') {
         echo '<th>' . $this->Paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer')) . '</th>';
     }
-    echo '<th>'.__d('admin', 'Categories').'</th>';
     echo '<th>'.__d('admin', 'Amount').'</th>';
     echo '<th>'.__d('admin', 'Price').'</th>';
     echo '<th>' . $this->Paginator->sort('Taxes.rate', __d('admin', 'Tax_rate')) . '</th>';
@@ -219,9 +218,29 @@ use Cake\Core\Configure;
         echo '<span class="name-for-dialog">';
             echo $product->name;
         echo '</span>';
-
+        
         if (! empty($product->product_attributes) || isset($product->product_attributes)) {
             echo '<span data-is-declaration-ok="'.$product->is_declaration_ok.'" class="is-declaration-ok-wrapper">' . ($product->is_declaration_ok ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>').'</span>';
+        }
+        
+        if (! empty($product->product_attributes) || isset($product->product_attributes)) {
+            echo $this->Form->hidden('Products.selected_categories', [
+                'value' => implode(',', $product->selected_categories),
+                'id' => 'selected-categories-' . $product->id_product
+            ]);
+            echo '<br />';
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
+                'class' => 'product-categories-edit-button',
+                'title' => __d('admin', 'change_category'),
+                'data-object-id' => $product->id_product
+            ], 'javascript:void(0);');
+            if (!isset($product->category)) {
+                pr($product);
+            }
+            echo '<span class="categories-for-dialog">' . join(', ', $product->category->names) . '</span>';
+            if (! $product->category->all_products_found) {
+                echo ' - <b>'.__d('admin', 'Category_"all_products"_is_missing!').'</b>';
+            }
         }
 
         echo '<span class="description-short-for-dialog">';
@@ -244,27 +263,6 @@ use Cake\Core\Configure;
             }
             echo '</td>';
         }
-
-        echo '<td>';
-        if (! empty($product->product_attributes) || isset($product->product_attributes)) {
-            echo $this->Form->hidden('Products.selected_categories', [
-                'value' => implode(',', $product->selected_categories),
-                'id' => 'selected-categories-' . $product->id_product
-            ]);
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                'class' => 'product-categories-edit-button',
-                'title' => __d('admin', 'change_category'),
-                'data-object-id' => $product->id_product
-            ], 'javascript:void(0);');
-            if (!isset($product->category)) {
-                pr($product);
-            }
-            echo '<span class="categories-for-dialog">' . join(', ', $product->category->names) . '</span>';
-            if (! $product->category->all_products_found) {
-                echo ' - <b>'.__d('admin', 'Category_"all_products"_is_missing!').'</b>';
-            }
-        }
-        echo '</td>';
 
         echo '<td class="' . (empty($product->product_attributes) && $product->stock_available->quantity == 0 ? 'not-available' : '') . '">';
 
