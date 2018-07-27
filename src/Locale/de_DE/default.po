@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-23 15:13+0200\n"
-"PO-Revision-Date: 2018-07-23 15:13+0200\n"
+"POT-Creation-Date: 2018-07-27 11:44+0200\n"
+"PO-Revision-Date: 2018-07-27 11:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.9\n"
+"X-Generator: Poedit 2.1.1\n"
 
 msgid "You_have_been_signed_out."
 msgstr "Du hast dich erfolgreich abgemeldet."
@@ -41,12 +41,6 @@ msgstr "Bestelluebersicht"
 
 msgid "Filename_General-terms-and-conditions"
 msgstr "Allgemeine-Geschaeftsbedingungen"
-
-msgid "Error_while_creating_the_order."
-msgstr "Bei der Erstellung der Bestellung ist ein Fehler aufgetreten."
-
-msgid "Error_while_saving_the_ordered_products."
-msgstr "Beim Speichern der bestellten Produkte ist ein Fehler aufgetreten."
 
 msgid "Finish_cart"
 msgstr "Warenkorb abschließen"
@@ -77,9 +71,6 @@ msgstr "Es sind Fehler aufgetreten."
 
 msgid "Your_order_has_been_placed_succesfully."
 msgstr "Deine Bestellung wurde erfolgreich abgeschlossen."
-
-msgid "{0}_has_placed_a_new_order_({1})."
-msgstr "{0} hat eine neue Bestellung getätigt ({1})."
 
 msgid "Notification_about_instant_order_order_number_{0}"
 msgstr "Benachrichtigung über Sofort-Bestellung Nr. {0}"
@@ -1101,6 +1092,12 @@ msgstr "Das Produkt mit der ID {0} ist nicht vorhanden."
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "Die Variante existiert nicht: {0}"
 
+msgid "Please_accept_the_information_about_right_of_withdrawal."
+msgstr "Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss."
+
+msgid "Please_accept_the_general_terms_and_conditions."
+msgstr "Bitte akzeptiere die AGB."
+
 msgid "offline"
 msgstr "offline"
 
@@ -1202,12 +1199,6 @@ msgstr "Abholtag"
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{1 Produkt} other{# Produkte}}"
-
-msgid "Please_accept_the_information_about_right_of_withdrawal."
-msgstr "Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss."
-
-msgid "Please_accept_the_general_terms_and_conditions."
-msgstr "Bitte akzeptiere die AGB."
 
 msgid "Please_enter_a_correct_number."
 msgstr "Bitte gib eine korrekte Zahl ein."
@@ -1362,7 +1353,7 @@ msgstr "Ich nehme das {0} zur Kenntnis und akzeptiere dessen Ausschluss für lei
 msgid "Write_message_to_pick_up_team?"
 msgstr "Nachricht an Abholdienst schreiben?"
 
-msgid "Placeholder_message_order_comment."
+msgid "Placeholder_message_pickup_day_comment."
 msgstr "Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. Die Hersteller sehen diese Nachricht nicht."
 
 msgid "Order_button"
@@ -1377,14 +1368,8 @@ msgstr "Vielen Dank, deine Bestellung wurde erfolgreich abgeschlossen."
 msgid "The_order_confirmation_was_sent_by_email_to_{0}."
 msgstr "Die Bestellbestätigung wurde per E-Mail an {0} versendet."
 
-msgid "Please_pick_up_the_ordered_products_on_{0}_in_our_pick_up_store."
-msgstr "Bitte hole die bestellten Waren verlässlich am {0} in unserem Abhollager ab."
-
-msgid "The_product_value_{0}_with_an_additional_deposit_of_{1}_was_automatically_reduced_from_your_credit."
-msgstr "Der Warenwert von {0} zuzüglich {1} Pfand wurde automatisch von deinem Guthaben abgezogen."
-
-msgid "The_product_value_{0}_was_automatically_reduced_from_your_credit."
-msgstr "Der Warenwert von {0} wurde automatisch von deinem Guthaben abgezogen."
+msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
+msgstr "Bitte hole die bestellten Waren verlässlich in unserem Abhollager ab."
 
 msgid "Increase_credit"
 msgstr "Guthaben aufladen"
@@ -1901,3 +1886,18 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "Error_while_creating_the_order."
+#~ msgstr "Bei der Erstellung der Bestellung ist ein Fehler aufgetreten."
+
+#~ msgid "Error_while_saving_the_ordered_products."
+#~ msgstr "Beim Speichern der bestellten Produkte ist ein Fehler aufgetreten."
+
+#~ msgid "{0}_has_placed_a_new_order_({1})."
+#~ msgstr "{0} hat eine neue Bestellung getätigt ({1})."
+
+#~ msgid "The_product_value_{0}_with_an_additional_deposit_of_{1}_was_automatically_reduced_from_your_credit."
+#~ msgstr "Der Warenwert von {0} zuzüglich {1} Pfand wurde automatisch von deinem Guthaben abgezogen."
+
+#~ msgid "The_product_value_{0}_was_automatically_reduced_from_your_credit."
+#~ msgstr "Der Warenwert von {0} wurde automatisch von deinem Guthaben abgezogen."

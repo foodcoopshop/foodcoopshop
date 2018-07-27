@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-23 15:13+0200\n"
+"POT-Creation-Date: 2018-07-27 11:44+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -41,12 +41,6 @@ msgstr ""
 msgid "Filename_General-terms-and-conditions"
 msgstr ""
 
-msgid "Error_while_creating_the_order."
-msgstr ""
-
-msgid "Error_while_saving_the_ordered_products."
-msgstr ""
-
 msgid "Finish_cart"
 msgstr ""
 
@@ -75,9 +69,6 @@ msgid "Errors_occurred."
 msgstr ""
 
 msgid "Your_order_has_been_placed_succesfully."
-msgstr ""
-
-msgid "{0}_has_placed_a_new_order_({1})."
 msgstr ""
 
 msgid "Notification_about_instant_order_order_number_{0}"
@@ -1100,6 +1091,12 @@ msgstr ""
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr ""
 
+msgid "Please_accept_the_information_about_right_of_withdrawal."
+msgstr ""
+
+msgid "Please_accept_the_general_terms_and_conditions."
+msgstr ""
+
 msgid "offline"
 msgstr ""
 
@@ -1200,12 +1197,6 @@ msgid "Pickup_day"
 msgstr ""
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
-msgstr ""
-
-msgid "Please_accept_the_information_about_right_of_withdrawal."
-msgstr ""
-
-msgid "Please_accept_the_general_terms_and_conditions."
 msgstr ""
 
 msgid "Please_enter_a_correct_number."
@@ -1361,7 +1352,7 @@ msgstr ""
 msgid "Write_message_to_pick_up_team?"
 msgstr ""
 
-msgid "Placeholder_message_order_comment."
+msgid "Placeholder_message_pickup_day_comment."
 msgstr ""
 
 msgid "Order_button"
@@ -1376,13 +1367,7 @@ msgstr ""
 msgid "The_order_confirmation_was_sent_by_email_to_{0}."
 msgstr ""
 
-msgid "Please_pick_up_the_ordered_products_on_{0}_in_our_pick_up_store."
-msgstr ""
-
-msgid "The_product_value_{0}_with_an_additional_deposit_of_{1}_was_automatically_reduced_from_your_credit."
-msgstr ""
-
-msgid "The_product_value_{0}_was_automatically_reduced_from_your_credit."
+msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
 msgstr ""
 
 msgid "Increase_credit"

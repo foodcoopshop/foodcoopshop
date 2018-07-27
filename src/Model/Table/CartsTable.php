@@ -4,6 +4,7 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\Validation\Validator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,7 +26,7 @@ class CartsTable extends AppTable
     {
         parent::initialize($config);
         $this->setPrimaryKey('id_cart');
-        $this->belongsTo('Customer', [
+        $this->belongsTo('Customers', [
             'foreignKey' => 'id_customer'
         ]);
         $this->hasMany('CartProducts', [
@@ -33,6 +34,14 @@ class CartsTable extends AppTable
         ]);
         $this->addBehavior('Timestamp');
     }
+    
+    public function validationDefault(Validator $validator)
+    {
+        $validator->equals('cancellation_terms_accepted', 1, __('Please_accept_the_information_about_right_of_withdrawal.'));
+        $validator->equals('general_terms_and_conditions_accepted', 1, __('Please_accept_the_general_terms_and_conditions.'));
+        return $validator;
+    }
+    
 
     public function getProductNameWithUnity($productName, $unity)
     {
@@ -226,9 +235,10 @@ class CartsTable extends AppTable
             'manufacturerName' => $cartProduct->product->manufacturer->name,
             'price' => $grossPrice,
             'priceExcl' => $cartProduct->product->price * $cartProduct->amount,
-            'tax' => $tax
+            'tax' => $tax,
+            'pickupDay' => Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb()
         ];
-
+        
         $deposit = 0;
         if (!empty($cartProduct->product->deposit_product->deposit)) {
             $deposit = $cartProduct->product->deposit_product->deposit * $cartProduct->amount;
@@ -294,7 +304,8 @@ class CartsTable extends AppTable
             'manufacturerName' => $cartProduct->product->manufacturer->name,
             'price' => $grossPrice,
             'priceExcl' => $cartProduct->product_attribute->price * $cartProduct->amount,
-            'tax' => $tax
+            'tax' => $tax,
+            'pickupDay' => Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb()
         ];
 
         $deposit = 0;

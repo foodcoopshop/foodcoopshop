@@ -26,17 +26,10 @@ $this->element('addScript', ['script' =>
 
 <ul>
 
-    <li><?php echo __('The_order_confirmation_was_sent_by_email_to_{0}.', ['<b>'.$order->customer->email.'</b>']); ?></li>
-    <li><?php echo __('Please_pick_up_the_ordered_products_on_{0}_in_our_pick_up_store.', [$this->Time->getFormattedDeliveryDateByCurrentDay()]); ?></li>
+    <li><?php echo __('The_order_confirmation_was_sent_by_email_to_{0}.', ['<b>'.$appAuth->getEmail().'</b>']); ?></li>
+    <li><?php echo __('Please_pick_up_the_ordered_products_in_our_pick_up_store.'); ?></li>
 
     <?php if ($this->Html->paymentIsCashless()) { ?>
-        <li>
-            <?php if ($order->total_deposit > 0) { ?>
-            	 <?php echo __('The_product_value_{0}_with_an_additional_deposit_of_{1}_was_automatically_reduced_from_your_credit.', ['<b>'.$this->Number->formatAsCurrency($order->total_paid).'</b>', '<b>'.$this->Number->formatAsCurrency($order->total_deposit).'</b>']); ?>
-            <?php } else { ?>
-            	<?php echo __('The_product_value_{0}_was_automatically_reduced_from_your_credit.', ['<b>'.$this->Number->formatAsCurrency($order->total_paid).'</b>']); ?>
-            <?php } ?>
-        </li>
         <li><a class="btn btn-success" href="<?php echo $this->Slug->getMyCreditBalance(); ?>"><?php echo __('Increase_credit'); ?></a></li>
     <?php } else { ?>
         <li><?php echo __('Please_do_not_forget_to_bring_exact_amount_of_cash.'); ?></li>

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-23 15:13+0200\n"
-"PO-Revision-Date: 2018-07-23 15:14+0200\n"
+"POT-Creation-Date: 2018-07-27 11:44+0200\n"
+"PO-Revision-Date: 2018-07-27 11:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.9\n"
+"X-Generator: Poedit 2.1.1\n"
 
 msgid "You_have_been_signed_out."
 msgstr "You have been signed out."
@@ -41,12 +41,6 @@ msgstr "Order-confirmation"
 
 msgid "Filename_General-terms-and-conditions"
 msgstr "General-terms-and-conditions"
-
-msgid "Error_while_creating_the_order."
-msgstr "Error while creating the order."
-
-msgid "Error_while_saving_the_ordered_products."
-msgstr "Error while saving the ordered products."
 
 msgid "Finish_cart"
 msgstr "Finish cart"
@@ -77,9 +71,6 @@ msgstr "Errors occurred."
 
 msgid "Your_order_has_been_placed_succesfully."
 msgstr "Your order was placed successfully."
-
-msgid "{0}_has_placed_a_new_order_({1})."
-msgstr "{0} has placed a new order ({1})."
 
 msgid "Notification_about_instant_order_order_number_{0}"
 msgstr "Notification about instant order order n° {0}"
@@ -1101,6 +1092,12 @@ msgstr "The product with id {0} does not exist."
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "The attribute does not exist: {0}"
 
+msgid "Please_accept_the_information_about_right_of_withdrawal."
+msgstr "Please accept the information about the right of withdrawal."
+
+msgid "Please_accept_the_general_terms_and_conditions."
+msgstr "Please accept the general terms and conditions."
+
 msgid "offline"
 msgstr "offline"
 
@@ -1202,12 +1199,6 @@ msgstr "Pick-up day"
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{1 product} other{# products}}"
-
-msgid "Please_accept_the_information_about_right_of_withdrawal."
-msgstr "Please accept the information about the right of withdrawal."
-
-msgid "Please_accept_the_general_terms_and_conditions."
-msgstr "Please accept the general terms and conditions."
 
 msgid "Please_enter_a_correct_number."
 msgstr "Please enter a correct number."
@@ -1362,7 +1353,7 @@ msgstr "I accept the {0} and accept that this is not valid for perishable goods.
 msgid "Write_message_to_pick_up_team?"
 msgstr "Want to write a message to the pick up team?"
 
-msgid "Placeholder_message_order_comment."
+msgid "Placeholder_message_pickup_day_comment."
 msgstr "Your message will be shown next to your order in the admin panel. Manufacturers cannot not this message."
 
 msgid "Order_button"
@@ -1377,14 +1368,8 @@ msgstr "Thank you, your order was placed successfully."
 msgid "The_order_confirmation_was_sent_by_email_to_{0}."
 msgstr "The order confirmation was sent to you by e-mail ({0})."
 
-msgid "Please_pick_up_the_ordered_products_on_{0}_in_our_pick_up_store."
-msgstr "Please pick up the ordered products on {0} in our pick up store."
-
-msgid "The_product_value_{0}_with_an_additional_deposit_of_{1}_was_automatically_reduced_from_your_credit."
-msgstr "The product value {0} with an additional deposit value of {1} was automatically reduced from your credit."
-
-msgid "The_product_value_{0}_was_automatically_reduced_from_your_credit."
-msgstr "The product value {0} was automatically reduced from your credit."
+msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
+msgstr "Please pick up the ordered products in our pick up store."
 
 msgid "Increase_credit"
 msgstr "Increase your credit"
@@ -1901,3 +1886,18 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "Error_while_creating_the_order."
+#~ msgstr "Error while creating the order."
+
+#~ msgid "Error_while_saving_the_ordered_products."
+#~ msgstr "Error while saving the ordered products."
+
+#~ msgid "{0}_has_placed_a_new_order_({1})."
+#~ msgstr "{0} has placed a new order ({1})."
+
+#~ msgid "The_product_value_{0}_with_an_additional_deposit_of_{1}_was_automatically_reduced_from_your_credit."
+#~ msgstr "The product value {0} with an additional deposit value of {1} was automatically reduced from your credit."
+
+#~ msgid "The_product_value_{0}_was_automatically_reduced_from_your_credit."
+#~ msgstr "The product value {0} was automatically reduced from your credit."

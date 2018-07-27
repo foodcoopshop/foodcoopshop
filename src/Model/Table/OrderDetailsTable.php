@@ -36,7 +36,7 @@ class OrderDetailsTable extends AppTable
         $this->belongsTo('Customers', [
             'foreignKey' => 'id_customer'
         ]);
-        $this->belongsTo('OrderDetailTaxes', [
+        $this->hasOne('OrderDetailTaxes', [
             'foreignKey' => 'id_order_detail'
         ]);
         $this->belongsTo('PickupDaysEntity', [

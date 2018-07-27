@@ -42,10 +42,7 @@ class MigrateOrdersPickupDayShell extends AppShell
         foreach($orders as $order) {
             
             if ($order->comment != '') {
-                $createdFormattedAsDatabase = strtotime($order->date_add->i18nFormat(Configure::read('DateFormat.Database')));
-                $pickupDay = Configure::read('app.timeHelper')->getDeliveryDay($createdFormattedAsDatabase);
-                $pickupDay = date(Configure::read('DateFormat.DatabaseAlt'), $pickupDay);
-                
+                $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($order->date_add->i18nFormat(Configure::read('DateFormat.Database')));
                 $this->PickupDay->save(
                     $this->PickupDay->newEntity([
                         'pickup_day' => $pickupDay,
@@ -70,9 +67,7 @@ class MigrateOrdersPickupDayShell extends AppShell
         
         foreach($orderDetails as $orderDetail) {
             if ($orderDetail->created) {
-                $createdFormattedAsDatabase = strtotime($orderDetail->created->i18nFormat(Configure::read('DateFormat.Database')));
-                $pickupDay = Configure::read('app.timeHelper')->getDeliveryDay($createdFormattedAsDatabase);
-                $pickupDay = date(Configure::read('DateFormat.DatabaseAlt'), $pickupDay);
+                $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($orderDetail->created->i18nFormat(Configure::read('DateFormat.Database')));
                 $created = $orderDetail->created;
                 $modified = $orderDetail->modified;
             }

@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Mailer\AppEmail;
-use App\Model\Table\OrdersTable;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
@@ -73,8 +72,9 @@ class CartsController extends FrontendController
     {
         $this->set('title_for_layout', __('Your_cart'));
         if (!$this->getRequest()->is('post')) {
-            $this->Order = TableRegistry::getTableLocator()->get('Orders');
-            $this->set('order', $this->Order->newEntity());
+            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+            $this->Cart = TableRegistry::getTableLocator()->get('Carts');
+            $this->set('cart', $this->Cart->newEntity());
         }
     }
 
@@ -200,11 +200,9 @@ class CartsController extends FrontendController
         }
     }
 
-    private function saveOrderDetails($orderDetails2save, $order)
+    private function saveOrderDetails($orderDetails2save)
     {
         foreach ($orderDetails2save as &$orderDetail) {
-
-            $orderDetail['id_order'] = $order->id_order;
 
             // timebased_currency: ORDER_DETAILS
             if ($this->AppAuth->Cart->isTimebasedCurrencyUsed()) {
@@ -232,108 +230,9 @@ class CartsController extends FrontendController
             }
         }
 
-        $this->Order->OrderDetails->saveMany(
-            $this->Order->OrderDetails->newEntities($orderDetails2save)
+        $this->OrderDetail->saveMany(
+            $this->OrderDetail->newEntities($orderDetails2save)
         );
-    }
-
-    /**
-     * @param array $order
-     * @return OrdersTable $order
-     */
-    private function saveOrder($orderEntity)
-    {
-        $order2save = [
-            'Orders' => [
-                'id_customer' => $this->AppAuth->getUserId(),
-                'id_cart' => $this->AppAuth->Cart->getCartId(),
-                'current_state' => ORDER_STATE_OPEN,
-                'total_paid' => $this->AppAuth->Cart->getProductSum(),
-                'total_paid_tax_incl' => $this->AppAuth->Cart->getProductSum(),
-                'total_paid_tax_excl' => $this->AppAuth->Cart->getProductSumExcl(),
-                'total_deposit' => $this->AppAuth->Cart->getDepositSum()
-            ]
-        ];
-
-        // timebased_currency: ORDERS
-        if ($this->AppAuth->Cart->isTimebasedCurrencyUsed()) {
-            $order2save['timebased_currency_order']['money_excl_sum'] = $this->AppAuth->Cart->getTimebasedCurrencyMoneyExclSum();
-            $order2save['timebased_currency_order']['money_incl_sum'] = $this->AppAuth->Cart->getTimebasedCurrencyMoneyInclSum();
-            $order2save['timebased_currency_order']['seconds_sum'] = $this->AppAuth->Cart->getTimebasedCurrencySecondsSum();
-        }
-
-        // avoid saving empty record for timebased_currency_order
-        if (!$this->AppAuth->Cart->isTimebasedCurrencyUsed()) {
-            unset($orderEntity->timebased_currency_order);
-        }
-
-        $patchedOrder = $this->Order->patchEntity($orderEntity, $order2save);
-        $order = $this->Order->save($patchedOrder);
-
-        if (!$order) {
-            $message = __('Error_while_creating_the_order.');
-            $this->Flash->error($message);
-            $this->log($message);
-            $this->redirect(Configure::read('app.slugHelper')->getCartFinish());
-        }
-
-        // get order again to have field date_add available as a datetime-object
-        $order = $this->Order->find('all', [
-            'conditions' => [
-                'Orders.id_order' => $order->id_order
-            ]
-        ])->first();
-
-        return $order;
-    }
-
-    private function saveOrderDetailTax($orderId)
-    {
-        $orderDetails = $this->Order->OrderDetails->find('all', [
-            'conditions' => [
-                'OrderDetails.id_order' => $orderId
-            ],
-            'contain' => [
-                'OrderDetailTaxes'
-            ]
-        ]);
-
-        if (empty($orderDetails)) {
-            $message = __('Error_while_saving_the_ordered_products.');
-            $this->Flash->error($message);
-            $this->log($message);
-            $this->redirect(Configure::read('app.slugHelper')->getCartFinish());
-        }
-
-        $orderDetailTax2save = [];
-        $this->OrderDetailTax = TableRegistry::getTableLocator()->get('OrderDetailTaxes');
-        foreach ($orderDetails as $orderDetail) {
-            // should not be necessary but a user somehow managed to set product_amount as 0
-            $amount = $orderDetail->product_amount;
-            if ($amount == 0) {
-                $this->log('product_amount was 0, would have resulted in division by zero error');
-                continue;
-            }
-
-            $productId = $orderDetail->product_id;
-            $price = $orderDetail->total_price_tax_incl;
-
-            $unitPriceExcl = $this->Product->getNetPrice($productId, $price / $amount);
-            $unitTaxAmount = $this->Product->getUnitTax($price, $unitPriceExcl, $amount);
-            $totalTaxAmount = $unitTaxAmount * $amount;
-
-            $orderDetailTax2save[] = [
-                'id_order_detail' => $orderDetail->id_order_detail,
-                'id_tax' => 0, // do not use the field id_tax in order_details_tax but id_tax in order_details!
-                'unit_amount' => $unitTaxAmount,
-                'total_amount' => $totalTaxAmount
-            ];
-        }
-
-        $this->OrderDetailTax->saveMany(
-            $this->OrderDetailTax->newEntities($orderDetailTax2save)
-        );
-
     }
 
     public function finish()
@@ -348,6 +247,7 @@ class CartsController extends FrontendController
         $cart = $this->AppAuth->getCart();
 
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $this->Product = TableRegistry::getTableLocator()->get('Products');
 
         // START check if no amount is 0
@@ -451,6 +351,7 @@ class CartsController extends FrontendController
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
+            // prepare data for table order_detail
             $orderDetail2save = [
                 'product_id' => $ids['productId'],
                 'product_attribute_id' => $ids['attributeId'],
@@ -459,11 +360,26 @@ class CartsController extends FrontendController
                 'total_price_tax_excl' => $cartProduct['priceExcl'],
                 'total_price_tax_incl' => $cartProduct['price'],
                 'id_tax' => $product->id_tax,
+                'order_state' => ORDER_STATE_OPEN,
+                'id_customer' => $this->AppAuth->getUserId(),
+                'id_cart_product' => $cartProduct['cartProductId'],
+                'pickup_day' => $cartProduct['pickupDay'],
                 'deposit' => $cartProduct['deposit'],
                 'product' => $product,
-                'cartProductId' => $cartProduct['cartProductId']
+                'cartProductId' => $cartProduct['cartProductId'],
+            ];
+            
+            // prepare data for table order_detail_tax
+            $unitPriceExcl = $this->Product->getNetPrice($ids['productId'], $cartProduct['price'] / $cartProduct['amount']);
+            $unitTaxAmount = $this->Product->getUnitTax($cartProduct['price'], $unitPriceExcl, $cartProduct['amount']);
+            $totalTaxAmount = $unitTaxAmount * $cartProduct['amount'];
+            
+            $orderDetail2save['order_detail_tax'] = [
+                'unit_amount' => $unitTaxAmount,
+                'total_amount' => $totalTaxAmount
             ];
 
+            // prepare data for table order_detail_units
             if ($cartProduct['unitName'] != '') {
                 $orderDetail2save['order_detail_unit'] = [
                     'unit_name' => $cartProduct['unitName'],
@@ -493,24 +409,21 @@ class CartsController extends FrontendController
         $this->set('cartErrors', $cartErrors);
 
         $formErrors = false;
-        $this->Order = TableRegistry::getTableLocator()->get('Orders');
 
         if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
-            $validator = $this->Order->TimebasedCurrencyOrders->getValidator('default');
+            $validator = $this->OrderDetail->TimebasedCurrencyOrderDetails->getValidator('default');
             $maxValue = $this->AppAuth->Cart->getTimebasedCurrencySecondsSumRoundedUp();
-            $validator = $this->Order->TimebasedCurrencyOrders->getNumberRangeValidator($validator, 'seconds_sum_tmp', 0, $maxValue);
+            $validator = $this->OrderDetail->TimebasedCurrencyOrderDetails->getNumberRangeValidator($validator, 'seconds_sum_tmp', 0, $maxValue);
         }
-        $order = $this->Order->newEntity(
-            $this->getRequest()->getData(),
-            [
-                'validate' => 'cart'
-            ]
+        $cart['Cart'] = $this->Cart->patchEntity(
+            $cart['Cart'],
+            $this->getRequest()->getData()
         );
-        if (!empty($order->getErrors())) {
+        if (!empty($cart['Cart']->getErrors())) {
             $formErrors = true;
         }
 
-        $this->set('order', $order); // to show error messages in form (from validation)
+        $this->set('cart', $cart['Cart']); // to show error messages in form (from validation)
         $this->set('formErrors', $formErrors);
 
         if (!empty($cartErrors) || !empty($formErrors)) {
@@ -519,8 +432,8 @@ class CartsController extends FrontendController
 
             $selectedTimebasedCurrencySeconds = 0;
             $selectedTimeAdaptionFactor = 0;
-            if (!empty($this->getRequest()->getData('timebased_currency_order.seconds_sum_tmp')) && $this->getRequest()->getData('timebased_currency_order.seconds_sum_tmp') > 0) {
-                $selectedTimebasedCurrencySeconds = $this->getRequest()->getData('timebased_currency_order.seconds_sum_tmp');
+            if (!empty($this->getRequest()->getData('timebased_currency_order_detail.seconds_sum_tmp')) && $this->getRequest()->getData('timebased_currency_order_detail.seconds_sum_tmp') > 0) {
+                $selectedTimebasedCurrencySeconds = $this->getRequest()->getData('timebased_currency_order_detail.seconds_sum_tmp');
                 $selectedTimeAdaptionFactor = $selectedTimebasedCurrencySeconds / $this->AppAuth->Cart->getTimebasedCurrencySecondsSum();
             }
 
@@ -529,26 +442,23 @@ class CartsController extends FrontendController
                 $this->AppAuth->setCart($cart);
             }
 
-            $order = $this->saveOrder($order);
-
-            $this->saveOrderDetails($orderDetails2save, $order);
-            $this->saveOrderDetailTax($order->id_order);
+            $this->saveOrderDetails($orderDetails2save);
             $this->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
 
-            $this->sendInstantOrderNotificationToManufacturers($cart['CartProducts'], $order);
+//             $this->sendInstantOrderNotificationToManufacturers($cart['CartProducts']);
 
-            $this->AppAuth->Cart->markAsSaved();
+//             $this->AppAuth->Cart->markAsSaved();
 
             $this->Flash->success(__('Your_order_has_been_placed_succesfully.'));
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-            $this->ActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $order->id_order, 'orders', __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->AppAuth->Cart->getProductSum())]));
+//             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+//             $this->ActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $order->id_order, 'orders', __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->AppAuth->Cart->getProductSum())]));
 
-            $this->sendConfirmationEmailToCustomer($cart, $order, $products);
+//             $this->sendConfirmationEmailToCustomer($cart, $products);
 
             // due to redirect, beforeRender() is not called
             $this->resetOriginalLoggedCustomer();
 
-            $this->redirect(Configure::read('app.slugHelper')->getCartFinished($order->id_order));
+            $this->redirect(Configure::read('app.slugHelper')->getCartFinished($cart['Cart']->id_cart));
         }
 
         $this->setAction('detail');
@@ -607,25 +517,26 @@ class CartsController extends FrontendController
         }
     }
 
-    public function orderSuccessful($orderId)
+    public function orderSuccessful($cartId)
     {
-        $orderId = (int) $this->getRequest()->getParam('pass')[0];
+        $cartId = (int) $this->getRequest()->getParam('pass')[0];
 
-        $this->Order = TableRegistry::getTableLocator()->get('Orders');
-        $order = $this->Order->find('all', [
+        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
+        $cart = $this->Cart->find('all', [
             'conditions' => [
-                'Orders.id_order' => $orderId,
-                'Orders.id_customer' => $this->AppAuth->getUserId()
+                'Carts.id_cart' => $cartId,
+                'Carts.id_customer' => $this->AppAuth->getUserId()
             ],
             'contain' => [
-                'Customers'
+                'Customers',
+                'CartProducts.OrderDetails'
             ]
         ])->first();
-        if (empty($order)) {
-            throw new RecordNotFoundException('order not found');
+        if (empty($cart)) {
+            throw new RecordNotFoundException('cart not found');
         }
-
-        $this->set('order', $order);
+        
+        $this->set('cart', $cart);
 
         $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);

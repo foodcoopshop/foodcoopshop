@@ -121,9 +121,9 @@ class SlugHelper extends Helper
         return '/'.__('route_cart') . '/' . __('route_cart_finish');
     }
 
-    public function getCartFinished($orderId)
+    public function getCartFinished($cartId)
     {
-        return '/'.__('route_cart') . '/' . __('route_cart_finished').'/'.$orderId;
+        return '/'.__('route_cart') . '/' . __('route_cart_finished').'/'.$cartId;
     }
 
     public function getAdminHome()

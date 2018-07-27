@@ -25,6 +25,9 @@ class CartProductsTable extends AppTable
     {
         parent::initialize($config);
         $this->setPrimaryKey('id_cart_product');
+        $this->belongsTo('OrderDetails', [
+            'foreignKey' => 'id_product'
+        ]);
         $this->belongsTo('Products', [
             'foreignKey' => 'id_product'
         ]);

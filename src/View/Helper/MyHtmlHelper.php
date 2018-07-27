@@ -305,10 +305,10 @@ class MyHtmlHelper extends HtmlHelper
         }
     }
 
-    public function getOrderIdFromCartFinishedUrl($url)
+    public function getCartIdFromCartFinishedUrl($url)
     {
-        $orderId = explode('/', $url);
-        return (int) $orderId[5];
+        $cartId = explode('/', $url);
+        return (int) $cartId[5];
     }
 
     public function getCustomerNameForSql()

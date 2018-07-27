@@ -234,25 +234,15 @@ class CartsControllerTest extends AppCakeTestCase
         $this->fillCart();
         $this->checkCartStatus();
 
-        $orderComment = 'this is a valid order comment';
-        $this->finishCart(1, 1, $orderComment);
-        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
+        $pickupDayComment = 'this is a valid pickup day comment';
+        $this->finishCart(1, 1, $pickupDayComment);
 
         $this->checkCartStatusAfterFinish();
 
-        $order = $this->Order->find('all', [
-            'conditions' => [
-                'Orders.id_order' => $orderId
-            ],
-            'contain' => [
-                'OrderDetails.OrderDetailTaxes'
-            ]
-        ])->first();
-
-        $this->checkOrder($order, $orderId, $orderComment);
-
+//         $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
+        
         // check order_details for product1
-        $this->checkOrderDetails($order->order_details[0], 'Artischocke : Stück', 2, 0, 1, 3.305786, 3.64, 0.17, 0.34, 2);
+        $this->checkOrderDetails($order->order_details[0], 'Artischocke : Stück', 2, 0, 1, 3.305786, 3.64, 0.17, 0.34, 2, 1);
 
         // check order_details for product2 (third! index)
         $this->checkOrderDetails($order->order_details[2], 'Milch : 0,5l', 3, 10, 1.5, 1.636365, 1.86, 0.07, 0.21, 3);
@@ -541,22 +531,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($stockAvailable->quantity, $result, 'stockavailable quantity wrong');
     }
 
-    private function checkOrder($order, $orderId, $orderComment)
-    {
-        $this->assertNotEquals([], $order, 'order not correct');
-        $this->assertEquals($order->id_order, $orderId, 'order id not correct');
-        $this->assertEquals($order->id_customer, $this->browser->getLoggedUserId(), 'order customer_id not correct');
-        $this->assertEquals($order->id_cart, 2, 'order cart_id not correct');
-        $this->assertEquals($order->current_state, 3, 'order current_state not correct');
-        $this->assertEquals($order->total_deposit, 2.5, 'order total_deposit not correct');
-        $this->assertEquals($order->total_paid_tax_excl, 5.578515, 'order total_paid_tax_excl not correct');
-        $this->assertEquals($order->total_paid_tax_incl, 6.136364, 'order total_paid_tax_incl not correct');
-        $this->assertEquals($order->general_terms_and_conditions_accepted, 1, 'order general_terms_and_conditions_accepted not correct');
-        $this->assertEquals($order->cancellation_terms_accepted, 1, 'order cancellation_terms_accepted not correct');
-        $this->assertEquals($order->comment, $orderComment, 'order comment not correct');
-    }
-
-    private function checkOrderDetails($orderDetail, $name, $amount, $productAttributeId, $deposit, $totalPriceTaxExcl, $totalPriceTaxIncl, $taxUnitAmount, $taxTotalAmount, $taxId)
+    private function checkOrderDetails($orderDetail, $name, $amount, $productAttributeId, $deposit, $totalPriceTaxExcl, $totalPriceTaxIncl, $taxUnitAmount, $taxTotalAmount, $taxId/*, $cartProductId, $pickupDay*/)
     {
 
         // check order_details
@@ -567,7 +542,11 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($orderDetail->total_price_tax_excl, $totalPriceTaxExcl, 'order_detail total_price_tax_excl not correct');
         $this->assertEquals($orderDetail->total_price_tax_incl, $totalPriceTaxIncl, 'order_detail total_price_tax_incl not correct');
         $this->assertEquals($orderDetail->id_tax, $taxId, 'order_detail id_tax not correct');
-
+        $this->assertEquals($orderDetail->id_customer, $this->browser->getLoggedUserId(), 'order_detail id_customer not correct');
+        $this->assertEquals($orderDetail->id_cart_product, $cartProductId, 'order_detail id_cart_product not correct');
+//         $this->assertEquals($orderDetail->order_state, ORDER_STATE_OPEN, 'order_detail order_state not correct');
+//         $this->assertEquals($orderDetail->pickup_day, $pickupDay, 'order_detail pickup_day not correct');
+        
         // check order_details_tax
         $this->assertEquals($orderDetail->order_detail_tax->unit_amount, $taxUnitAmount, 'order_detail tax unit amount not correct');
         $this->assertEquals($orderDetail->order_detail_tax->total_amount, $taxTotalAmount, 'order_detail tax total amount not correct');
@@ -577,7 +556,7 @@ class CartsControllerTest extends AppCakeTestCase
     /**
      * @param int $productId
      * @param int $amount
-     * @return json string
+     * @return string
      */
     private function changeProductStatus($productId, $status)
     {
@@ -591,7 +570,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     /**
      * @param int $productId
-     * @return json string
+     * @return string
      */
     private function removeProduct($productId)
     {

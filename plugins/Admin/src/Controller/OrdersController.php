@@ -101,7 +101,7 @@ class OrdersController extends AdminAppController
 
     public function correctInstantOrder()
     {
-        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->getRequest()->getQuery('url'));
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->getRequest()->getQuery('url'));
 
         $this->Order = TableRegistry::getTableLocator()->get('Orders');
 

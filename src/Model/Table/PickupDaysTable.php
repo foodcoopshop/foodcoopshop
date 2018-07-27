@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use Cake\Validation\Validator;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -25,6 +27,13 @@ class PickupDaysTable extends AppTable
             'foreignKey' => 'customer_id'
         ]);
         $this->setPrimaryKey(['customer_id', 'pickup_day']);
+    }
+    
+    public function validationCart(Validator $validator)
+    {
+        $validator->allowEmpty('comment');
+        $validator->maxLength('comment', 500, __('Please_enter_max_{0}_characters.', [500]));
+        return $validator;
     }
 
 }

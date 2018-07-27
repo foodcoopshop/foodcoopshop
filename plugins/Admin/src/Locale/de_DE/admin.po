@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-23 10:05+0200\n"
-"PO-Revision-Date: 2018-07-23 10:05+0200\n"
+"POT-Creation-Date: 2018-07-27 11:44+0200\n"
+"PO-Revision-Date: 2018-07-27 11:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.9\n"
+"X-Generator: Poedit 2.1.1\n"
 
 msgid "Activities"
 msgstr "Aktivitäten"
@@ -237,8 +237,20 @@ msgstr "Gruppieren nach Mitglied"
 msgid "Group_by_manufacturer"
 msgstr "Gruppieren nach Hersteller"
 
-msgid "Ordered_products"
-msgstr "Bestellte Produkte"
+msgid "Orders"
+msgstr "Bestellungen"
+
+msgid "The_order_status_of_the_ordered_product_{0}_of_{1}_was_successfully_changed_to_{2}."
+msgstr "Der Bestellstatus des bestellten Produktes {0} vom {1} wurde erfolgreich auf {2} geändert."
+
+msgid "The_order_status_of_the_ordered_products_{0}_were_successfully_changed_to_{1}."
+msgstr "Der Bestellstatus des bestellten Produktes von {0} wurde erfolgreich auf {1} geändert."
+
+msgid "1_ordered_product_was_successfully_closed."
+msgstr "Das bestellte Produkt wurde erfolgreich auf abgeschlossen geändert."
+
+msgid "{0}_ordered_product_were_successfully_closed."
+msgstr "{0} bestellte Produkte wurden erfolgreich auf abgeschlossen geändert."
 
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
 msgstr "Das Gewicht des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich von {2} auf {3} angepasst."
@@ -284,15 +296,6 @@ msgstr "Der Kommentar der Bestellung Nr. {0} von {1} wurde geändert:"
 
 msgid "Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
 msgstr "Die Sofort-Bestellung Nr. {0} für {1} wurde erfolgreich getätigt und rückdatiert auf den {2}. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat."
-
-msgid "The_order_status_of_the_order_of_{0}_was_successfully_changed_to_{1}."
-msgstr "Der Bestellstatus der Bestellung von {0} wurde erfolgreich auf {1} geändert."
-
-msgid "The_order_status_of_the_orders_{0}_was_successfully_changed_to_{1}."
-msgstr "Der Bestellstatus der Bestellungungen {0} wurde erfolgreich auf {1} geändert."
-
-msgid "Orders"
-msgstr "Bestellungen"
 
 msgid "Instant_order"
 msgstr "Sofort-Bestellung"
@@ -954,6 +957,51 @@ msgstr "Wenn es sich um eine Rückzahlung handelt, trage bitte ein, wie viel du 
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Bitte wähle die Monate aus, für die deine Zahlung gedacht ist."
 
+msgid "Click_to_change_amount"
+msgstr "Zum Ändern der Anzahl anklicken"
+
+msgid "Click_to_cancel_product"
+msgstr "Zum Stornieren des Produktes anklicken"
+
+msgid "Deposit_return"
+msgstr "Pfand-Rückgabe"
+
+msgid "Ordered_products"
+msgstr "Bestellte Produkte"
+
+msgid "Show_all_ordered_products_from_{0}"
+msgstr "Alle bestellten Produkte von {0} anzeigen"
+
+msgid "Change_order_status"
+msgstr "Bestellstatus ändern"
+
+msgid "Click_to_change_price"
+msgstr "Zum Ändern des Preises anklicken"
+
+msgid "Additional_in_{0}"
+msgstr "Zusätzlich in {0}"
+
+msgid "Click_to_change_weight"
+msgstr "Zum Ändern des Gewichtes anklicken"
+
+msgid "Amount"
+msgstr "Anzahl"
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "Price"
+msgstr "Preis"
+
+msgid "Deposit"
+msgstr "Pfand"
+
+msgid "Member"
+msgstr "Mitglied"
+
+msgid "Amount_minus_eventual_variable_member_fee"
+msgstr "Betrag abzügl. eventuellem variablen Mitgliedsbeitrag"
+
 msgid "Invoice_for_the_order_period_{0}_to_{1}"
 msgstr "Rechnung für den Bestell-Zeitraum {0} - {1}"
 
@@ -968,12 +1016,6 @@ msgstr "Bestellungen vom"
 
 msgid "Invoice_date"
 msgstr "Rechnungsdatum"
-
-msgid "Amount"
-msgstr "Anzahl"
-
-msgid "Product"
-msgstr "Produkt"
 
 msgid "Price_excl."
 msgstr "Preis exkl."
@@ -1014,17 +1056,11 @@ msgstr "Vielen Dank, dass du uns belieferst!"
 msgid "Detail_view"
 msgstr "Detailübersicht"
 
-msgid "Member"
-msgstr "Mitglied"
-
 msgid "Order_list_grouped_by"
 msgstr "Bestellliste gruppiert nach"
 
 msgid "Delivery_date"
 msgstr "Liefertermin"
-
-msgid "Price"
-msgstr "Preis"
 
 msgid "Dear_financial_responsible"
 msgstr "Liebe(r) Finanz-Verantwortliche(r)"
@@ -1401,9 +1437,6 @@ msgstr "Maximaler Kontostand in {0}"
 msgid "up_to_which_it_can_be_paid_in_{0}."
 msgstr "bis zu dem in {0} bezahlt werden kann."
 
-msgid "Deposit"
-msgstr "Pfand"
-
 msgid "Sum_of_open_orders_in_given_time_range"
 msgstr "Summe der offenen Bestellungen im angegebenen Zeitraum"
 
@@ -1440,32 +1473,8 @@ msgstr "alle Mitglieder"
 msgid "Group_by..."
 msgstr "Gruppieren nach..."
 
-msgid "Deposit_return"
-msgstr "Pfand-Rückgabe"
-
 msgid "docs_route_pick_up_products"
 msgstr "abholung-der-produkte"
-
-msgid "Amount_minus_eventual_variable_member_fee"
-msgstr "Betrag abzügl. eventuellem variablen Mitgliedsbeitrag"
-
-msgid "Click_to_change_amount"
-msgstr "Zum Ändern der Anzahl anklicken"
-
-msgid "Click_to_change_price"
-msgstr "Zum Ändern des Preises anklicken"
-
-msgid "Additional_in_{0}"
-msgstr "Zusätzlich in {0}"
-
-msgid "Click_to_change_weight"
-msgstr "Zum Ändern des Gewichtes anklicken"
-
-msgid "Click_to_cancel_product"
-msgstr "Zum Stornieren des Produktes anklicken"
-
-msgid "Change_order_status"
-msgstr "Bestellstatus ändern"
 
 msgid "Back_to_deposit_account"
 msgstr "Zurück zum Pfandkonto"
@@ -1478,9 +1487,6 @@ msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen m
 
 msgid "Order_count"
 msgstr "Anzahl Bestellungen"
-
-msgid "Show_all_ordered_products_from_{0}"
-msgstr "Alle bestellten Produkte von {0} anzeigen"
 
 msgid "Set_date_of_order_back"
 msgstr "Bestellung rückdatieren"
@@ -1730,6 +1736,9 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+#~ msgid "The_order_status_of_the_orders_{0}_was_successfully_changed_to_{1}."
+#~ msgstr "Der Bestellstatus der Bestellungungen {0} wurde erfolgreich auf {1} geändert."
 
 #~ msgid "Pick_up_day"
 #~ msgstr "Abholtag"

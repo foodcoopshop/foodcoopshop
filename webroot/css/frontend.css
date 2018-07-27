@@ -845,11 +845,11 @@ body.carts.detail .cart:not(#cart) a.btn {
     margin-left: -30px;
     margin-top: 1px;
 }
-#CartsDetailForm .order-comment textarea {
+#CartsDetailForm .pickup-day-comment textarea {
   width: 100%;
   padding: 5px;
 }
-#CartsDetailForm .order-comment div.error-message {
+#CartsDetailForm .pickup-day-comment div.error-message {
   margin-left: 0;
   width: 100%;
 }

@@ -68,7 +68,14 @@ class MyTimeHelper extends TimeHelper
         }
     }
 
-    public function getFormattedDeliveryDateByCurrentDay()
+    public function getDeliveryDateByCurrentDayForDb()
+    {
+        $deliveryDate = self::getDeliveryDayByCurrentDay();
+        $deliveryDate = date($this->getI18Format('DatabaseAlt'), $deliveryDate);
+        return $deliveryDate;
+    }
+    
+    public function getDeliveryDateByCurrentDayFormattedLong()
     {
         $deliveryDate = self::getDeliveryDayByCurrentDay();
         $deliveryDate = $this->getWeekdayName($this->formatAsWeekday($deliveryDate)) . ', ' . date($this->getI18Format('DateShortAlt'), $deliveryDate);
@@ -89,6 +96,13 @@ class MyTimeHelper extends TimeHelper
         }
 
         return $deliveryDate;
+    }
+    
+    public function getDbFormattedPickupDayByDbFormattedDate($date)
+    {
+        $pickupDay = $this->getDeliveryDay(strtotime($date));
+        $pickupDay = date(Configure::read('DateFormat.DatabaseAlt'), $pickupDay);
+        return $pickupDay;
     }
 
 

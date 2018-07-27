@@ -30,17 +30,6 @@ class TimebasedCurrencyOrdersTable extends AppTable
         $this->setPrimaryKey('id_order');
     }
 
-    /**
-     * @param Validator $validator
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        $validator->notEmpty('seconds_sum_tmp', 'Bitte gib an, wie viel du in Stunden zahlen möchtest.');
-        $validator->numeric('seconds_sum_tmp', 'Bitte trage eine Zahl ein.');
-        return $validator;
-    }
-
     public function updateSums($order)
     {
         $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');

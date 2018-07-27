@@ -46,7 +46,7 @@ if (!$appAuth->termsOfUseAccepted()) {
         <p class="tax-sum-wrapper"><?php echo __('Including_vat'); ?>: <span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
 
         <?php
-            echo $this->Form->create($order, [
+            echo $this->Form->create($cart, [
                 'class' => 'fcs-form',
                 'id' => 'CartsDetailForm',
                 'url' => $this->Slug->getCartFinish()
@@ -80,7 +80,7 @@ if (!$appAuth->termsOfUseAccepted()) {
             <?php
                 echo __(
                     'Please_pick_up_your_products_on_{0}_at_{1}.', [
-                        '<b>'.$this->Time->getFormattedDeliveryDateByCurrentDay().'</b>',
+                        '<b>'.$this->Time->getDeliveryDateByCurrentDayFormattedLong().'</b>',
                         str_replace('<br />', ', ', $this->Html->getAddressFromAddressConfiguration())
                     ]
                 );
@@ -92,7 +92,7 @@ if (!$appAuth->termsOfUseAccepted()) {
                 echo $this->element('legal/'.I18n::getLocale().'/generalTermsAndConditions');
             echo '</div>';
             $generalTermsOfUseLink = '<a href="#general-terms-and-conditions">'.__('general_terms_and_conditions').'</a>';
-            echo $this->Form->control('Orders.general_terms_and_conditions_accepted', [
+            echo $this->Form->control('Carts.general_terms_and_conditions_accepted', [
                 'label' => __('I_accept_the_{0}', [$generalTermsOfUseLink]),
                 'type' => 'checkbox',
                 'escape' => false
@@ -102,7 +102,7 @@ if (!$appAuth->termsOfUseAccepted()) {
                 echo $this->element('legal/'.I18n::getLocale().'/rightOfWithdrawalTerms');
             echo '</div>';
             $cancellationTermsLink = '<a href="#cancellation-terms">'.__('right_of_withdrawal').'</a>';
-            echo $this->Form->control('Orders.cancellation_terms_accepted', [
+            echo $this->Form->control('Carts.cancellation_terms_accepted', [
                 'label' => __('I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods.', [$cancellationTermsLink]),
                 'type' => 'checkbox',
                 'escape' => false
@@ -115,7 +115,7 @@ if (!$appAuth->termsOfUseAccepted()) {
             $this->element('addScript', ['script' =>
                 Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();"
             ]);
-            if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) && !empty($this->request->getData('Orders.comment')) && $this->request->getData('Orders.comment') != '') {
+            if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) && !empty($this->request->getData('PickupDays.comment')) && $this->request->getData('PickupDays.comment') != '') {
                 $this->element('addScript', ['script' =>
                 "$('.toggle-link').trigger('click');"
                 ]);
@@ -125,10 +125,10 @@ if (!$appAuth->termsOfUseAccepted()) {
             'title' => __('Write_message_to_pick_up_team?'),
             'escape' => false
             ]);
-            echo '<div class="toggle-content order-comment">';
-            echo $this->Form->control('Orders.comment', [
+            echo '<div class="toggle-content pickup-day-comment">';
+            echo $this->Form->control('PickupDays.comment', [
                 'type' => 'textarea',
-                'placeholder' => __('Placeholder_message_order_comment.'),
+                'placeholder' => __('Placeholder_message_pickup_day_comment.'),
                 'label' => ''
             ]);
             echo '</div>';

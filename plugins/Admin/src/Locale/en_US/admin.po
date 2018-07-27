@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-23 10:05+0200\n"
-"PO-Revision-Date: 2018-07-23 10:05+0200\n"
+"POT-Creation-Date: 2018-07-27 11:44+0200\n"
+"PO-Revision-Date: 2018-07-27 11:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.9\n"
+"X-Generator: Poedit 2.1.1\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -237,8 +237,20 @@ msgstr "Group by member"
 msgid "Group_by_manufacturer"
 msgstr "Group by manufacturer"
 
-msgid "Ordered_products"
-msgstr "Ordered products"
+msgid "Orders"
+msgstr "Orders"
+
+msgid "The_order_status_of_the_ordered_product_{0}_of_{1}_was_successfully_changed_to_{2}."
+msgstr "The order state of the ordered product of {0} of {1} was successfully changed to {2}."
+
+msgid "The_order_status_of_the_ordered_products_{0}_were_successfully_changed_to_{1}."
+msgstr "The order state of the ordered products of {0} was successfully changed to {1}."
+
+msgid "1_ordered_product_was_successfully_closed."
+msgstr "1 ordered product was changed successfully to closed."
+
+msgid "{0}_ordered_product_were_successfully_closed."
+msgstr "{0} ordered product were changed successfully to closed."
 
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
 msgstr "The weight of the ordered product {0} (amount {1}) was successfully adapted from {2} to {3}."
@@ -284,15 +296,6 @@ msgstr "The comment of the order number {0} by {1} was changed:"
 
 msgid "Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
 msgstr "Instant order nrº {0} successfully placed for {1} and date changed to {2}. The manufacturer was notified unless the notification was disabled."
-
-msgid "The_order_status_of_the_order_of_{0}_was_successfully_changed_to_{1}."
-msgstr "The order state of the order of {0} was successfully changed to {1}."
-
-msgid "The_order_status_of_the_orders_{0}_was_successfully_changed_to_{1}."
-msgstr "The order state of the orders {0} was successfully changed to {1}."
-
-msgid "Orders"
-msgstr "Orders"
 
 msgid "Instant_order"
 msgstr "Instant order"
@@ -954,6 +957,51 @@ msgstr "If you chose \"payback\", please enter the amount that you just transfer
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Please chose the months for your payment."
 
+msgid "Click_to_change_amount"
+msgstr "Click to change amount"
+
+msgid "Click_to_cancel_product"
+msgstr "Click to cancel product"
+
+msgid "Deposit_return"
+msgstr "Deposit return"
+
+msgid "Ordered_products"
+msgstr "Ordered products"
+
+msgid "Show_all_ordered_products_from_{0}"
+msgstr "Show all ordered products from {0}"
+
+msgid "Change_order_status"
+msgstr "Change order status"
+
+msgid "Click_to_change_price"
+msgstr "Click to change price"
+
+msgid "Additional_in_{0}"
+msgstr "Additional in {0}"
+
+msgid "Click_to_change_weight"
+msgstr "Click to change weight"
+
+msgid "Amount"
+msgstr "Amount"
+
+msgid "Product"
+msgstr "Product"
+
+msgid "Price"
+msgstr "Price"
+
+msgid "Deposit"
+msgstr "Deposit"
+
+msgid "Member"
+msgstr "Member"
+
+msgid "Amount_minus_eventual_variable_member_fee"
+msgstr "Amount minus eventual variable member fee"
+
 msgid "Invoice_for_the_order_period_{0}_to_{1}"
 msgstr "Invoice for the order period {0} to {1}"
 
@@ -968,12 +1016,6 @@ msgstr "Orders from"
 
 msgid "Invoice_date"
 msgstr "Invoice date"
-
-msgid "Amount"
-msgstr "Amount"
-
-msgid "Product"
-msgstr "Product"
 
 msgid "Price_excl."
 msgstr "Price excl."
@@ -1014,17 +1056,11 @@ msgstr "Thank you very much for delivering your products to us!"
 msgid "Detail_view"
 msgstr "Detail view"
 
-msgid "Member"
-msgstr "Member"
-
 msgid "Order_list_grouped_by"
 msgstr "Order list grouped by"
 
 msgid "Delivery_date"
 msgstr "Delivery date"
-
-msgid "Price"
-msgstr "Price"
 
 msgid "Dear_financial_responsible"
 msgstr "Dear financial responsible"
@@ -1401,9 +1437,6 @@ msgstr "Maximum credit balance in {0}"
 msgid "up_to_which_it_can_be_paid_in_{0}."
 msgstr "up to which the member can pay in {0}."
 
-msgid "Deposit"
-msgstr "Deposit"
-
 msgid "Sum_of_open_orders_in_given_time_range"
 msgstr "Sum of open orders in given time range"
 
@@ -1440,32 +1473,8 @@ msgstr "all members"
 msgid "Group_by..."
 msgstr "Group by..."
 
-msgid "Deposit_return"
-msgstr "Deposit return"
-
 msgid "docs_route_pick_up_products"
 msgstr "pick-up-products"
-
-msgid "Amount_minus_eventual_variable_member_fee"
-msgstr "Amount minus eventual variable member fee"
-
-msgid "Click_to_change_amount"
-msgstr "Click to change amount"
-
-msgid "Click_to_change_price"
-msgstr "Click to change price"
-
-msgid "Additional_in_{0}"
-msgstr "Additional in {0}"
-
-msgid "Click_to_change_weight"
-msgstr "Click to change weight"
-
-msgid "Click_to_cancel_product"
-msgstr "Click to cancel product"
-
-msgid "Change_order_status"
-msgstr "Change order status"
 
 msgid "Back_to_deposit_account"
 msgstr "Back to deposit account"
@@ -1478,9 +1487,6 @@ msgstr "Please chose the member you want to place the instant order for in the d
 
 msgid "Order_count"
 msgstr "Order count"
-
-msgid "Show_all_ordered_products_from_{0}"
-msgstr "Show all ordered products from {0}"
 
 msgid "Set_date_of_order_back"
 msgstr "Set date of order back"
@@ -1730,6 +1736,9 @@ msgstr "{0,plural,=1{record} other{records}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
+#~ msgid "The_order_status_of_the_orders_{0}_was_successfully_changed_to_{1}."
+#~ msgstr "The order state of the orders {0} was successfully changed to {1}."
 
 #~ msgid "Pick_up_day"
 #~ msgstr "Pick-up day"
