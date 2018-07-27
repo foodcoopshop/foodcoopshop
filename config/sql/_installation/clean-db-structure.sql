@@ -240,7 +240,7 @@ CREATE TABLE `fcs_manufacturer` (
   `uid_number` varchar(30) NOT NULL DEFAULT '',
   `additional_text_for_invoice` text NOT NULL,
   `iban` varchar(20) NOT NULL DEFAULT '',
-  `bic` varchar(8) NOT NULL DEFAULT '',
+  `bic` varchar(11) NOT NULL DEFAULT '',
   `bank_name` varchar(255) NOT NULL DEFAULT '',
   `firmenbuchnummer` varchar(20) NOT NULL DEFAULT '',
   `firmengericht` varchar(150) NOT NULL DEFAULT '',
