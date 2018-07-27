@@ -90,39 +90,4 @@ class OrdersTable extends AppTable
         return $orderParams;
     }
 
-    public function updateSums($order)
-    {
-
-        $query = $this->OrderDetails->find('all');
-        $query->select(['sumPriceExcl' => $query->func()->sum('OrderDetails.total_price_tax_excl')]);
-        $query->select(['sumPriceIncl' => $query->func()->sum('OrderDetails.total_price_tax_incl')]);
-        $query->select(['sumDeposit' => $query->func()->sum('OrderDetails.deposit')]);
-
-        $query->group('OrderDetails.id_order');
-        $query->having(['OrderDetails.id_order' => $order->id_order]);
-
-        $orderDetails = $query->first();
-
-        // if last order_detail was deleted, $orderDetails is empty => avoid notices
-        if (empty($orderDetails)) {
-            $sumPriceIncl = 0;
-            $sumPriceExcl = 0;
-            $sumDeposit = 0;
-        } else {
-            $sumPriceIncl = $orderDetails['sumPriceIncl'];
-            $sumPriceExcl = $orderDetails['sumPriceExcl'];
-            $sumDeposit = $orderDetails['sumDeposit'];
-        }
-
-        $order2update = [
-            'total_paid' => $sumPriceIncl,
-            'total_paid_tax_incl' => $sumPriceIncl,
-            'total_paid_tax_excl' => $sumPriceExcl,
-            'total_deposit' => $sumDeposit
-        ];
-
-        $this->save(
-            $this->patchEntity($order, $order2update)
-        );
-    }
 }

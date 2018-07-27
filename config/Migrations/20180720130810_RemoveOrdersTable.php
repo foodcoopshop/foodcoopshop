@@ -50,7 +50,6 @@ class RemoveOrdersTable extends AbstractMigration
                 od.id_cart_product = cp.id_cart_product;
 
             ALTER TABLE `fcs_order_detail` DROP `id_order`;
-            ALTER TABLE `fcs_order_detail` DROP `id_cart`;
 
             ALTER TABLE `fcs_order_detail` DROP INDEX `id_order_id_order_detail`;
             ALTER TABLE `fcs_order_detail` ADD INDEX(`id_customer`);

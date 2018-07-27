@@ -299,7 +299,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExp('/Bitte gib eine Zahl zwischen 0 und (.*) an./', $this->browser->getContent());
 
         $this->finishCart(1, 1, '', '1200');
-        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
+        $orderId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
 
         $this->checkCartStatusAfterFinish();
 
@@ -371,7 +371,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($productIdB, 3);
 
         $this->finishCart(1, 1);
-        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
+        $orderId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
 
         $this->checkCartStatusAfterFinish();
 
@@ -440,7 +440,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId1, - 1);
         $this->addProductToCart($this->productId2, 1);
         $this->finishCart();
-        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
+        $orderId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
         $this->assertTrue(is_int($orderId), 'order not finished correctly');
 
         $this->checkCartStatusAfterFinish();

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-27 11:44+0200\n"
+"POT-Creation-Date: 2018-07-27 16:59+0200\n"
 "PO-Revision-Date: 2018-07-27 11:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1350,12 +1350,6 @@ msgstr "right of withdrawal"
 msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
 msgstr "I accept the {0} and accept that this is not valid for perishable goods."
 
-msgid "Write_message_to_pick_up_team?"
-msgstr "Want to write a message to the pick up team?"
-
-msgid "Placeholder_message_pickup_day_comment."
-msgstr "Your message will be shown next to your order in the admin panel. Manufacturers cannot not this message."
-
 msgid "Order_button"
 msgstr "Buy now"
 
@@ -1886,6 +1880,12 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "Write_message_to_pick_up_team?"
+#~ msgstr "Want to write a message to the pick up team?"
+
+#~ msgid "Placeholder_message_pickup_day_comment."
+#~ msgstr "Your message will be shown next to your order in the admin panel. Manufacturers cannot not this message."
 
 #~ msgid "Error_while_creating_the_order."
 #~ msgstr "Error while creating the order."

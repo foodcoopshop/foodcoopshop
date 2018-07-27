@@ -31,6 +31,7 @@ TRUNCATE TABLE `fcs_order_detail_units`;
 TRUNCATE TABLE `fcs_orders`;
 TRUNCATE TABLE `fcs_pages`;
 TRUNCATE TABLE `fcs_payments`;
+TRUNCATE TABLE `fcs_pickup_days`;
 TRUNCATE TABLE `fcs_product`;
 TRUNCATE TABLE `fcs_product_attribute`;
 TRUNCATE TABLE `fcs_product_attribute_combination`;
@@ -185,8 +186,8 @@ INSERT INTO `fcs_manufacturer` VALUES
 
 /*!40000 ALTER TABLE `fcs_order_detail` DISABLE KEYS */;
 INSERT INTO `fcs_order_detail` VALUES
-(1,1,346,0,'Artischocke : Stück',1,1.820000,1.652893,2,0.50),
-(2,1,340,0,'Beuschl',1,4.545455,4.545455,0,0.00);
+(1,346,0,'Artischocke : Stück',1,1.820000,1.652893,2,0.50,92,1,3,'2018-02-02','2018-02-01 09:17:14','2018-07-27 17:08:52'),
+(2,340,0,'Beuschl',1,4.545455,4.545455,0,0.00,92,2,3,'2018-02-02','2018-02-01 09:17:14','2018-07-27 17:08:52');
 /*!40000 ALTER TABLE `fcs_order_detail` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_order_detail_tax` DISABLE KEYS */;
@@ -212,6 +213,9 @@ INSERT INTO `fcs_pages` VALUES
 INSERT INTO `fcs_payments` VALUES
 (1,92,0,'product',100.00,'','2018-07-03 20:00:20','2018-07-03 20:00:20',1,0,'',0,92);
 /*!40000 ALTER TABLE `fcs_payments` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_pickup_days` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_pickup_days` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product` DISABLE KEYS */;
 INSERT INTO `fcs_product` VALUES

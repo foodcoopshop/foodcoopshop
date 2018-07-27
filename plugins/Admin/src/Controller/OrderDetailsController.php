@@ -70,16 +70,14 @@ class OrderDetailsController extends AdminAppController
                     'OrderDetails.id_order_detail' => $orderDetailId
                 ],
                 'contain' => [
-                    'Products',
-                    'Orders'
-
+                    'Products'
                 ]
             ])->first();
             if (!empty($orderDetail)) {
                 if ($this->AppAuth->isManufacturer() && $orderDetail->product->id_manufacturer == $this->AppAuth->getManufacturerId()) {
                     return true;
                 }
-                if ($this->AppAuth->isCustomer() && $orderDetail->order->id_customer == $this->AppAuth->getUserId()) {
+                if ($this->AppAuth->isCustomer() && $orderDetail->id_customer == $this->AppAuth->getUserId()) {
                     return true;
                 }
             }
@@ -516,7 +514,7 @@ class OrderDetailsController extends AdminAppController
         if (!$doNotChangePrice) {
             $email = new AppEmail();
             $email->setTemplate('Admin.order_detail_quantity_changed')
-            ->setTo($oldOrderDetail->order->customer->email)
+            ->setTo($oldOrderDetail->customer->email)
             ->setSubject(__d('admin', 'Weight_adapted') . ': ' . $oldOrderDetail->product_name)
             ->setViewVars([
                 'oldOrderDetail' => $oldOrderDetail,
@@ -525,7 +523,7 @@ class OrderDetailsController extends AdminAppController
                 'appAuth' => $this->AppAuth
             ]);
 
-            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->order->customer->name . '</b>']);
+            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
             // never send email to manufacturer if bulk orders are allowed
             $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
@@ -534,7 +532,7 @@ class OrderDetailsController extends AdminAppController
 
             if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
                 $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
-                    '<b>' . $oldOrderDetail->order->customer->name . '</b>',
+                    '<b>' . $oldOrderDetail->customer->name . '</b>',
                     '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
                 ]);
                 $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
@@ -610,7 +608,7 @@ class OrderDetailsController extends AdminAppController
         // send email to customer
         $email = new AppEmail();
         $email->setTemplate('Admin.order_detail_amount_changed')
-        ->setTo($oldOrderDetail->order->customer->email)
+        ->setTo($oldOrderDetail->customer->email)
         ->setSubject(__d('admin', 'Ordered_amount_adapted') . ': ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
@@ -619,7 +617,7 @@ class OrderDetailsController extends AdminAppController
             'editAmountReason' => $editAmountReason
         ]);
 
-        $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->order->customer->name . '</b>']);
+        $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
         // never send email to manufacturer if bulk orders are allowed
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
@@ -630,7 +628,7 @@ class OrderDetailsController extends AdminAppController
         $weekday = date('N');
         if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('app.timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed && $sendOrderedProductAmountChangedNotification) {
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
-                '<b>' . $oldOrderDetail->order->customer->name . '</b>',
+                '<b>' . $oldOrderDetail->customer->name . '</b>',
                 '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
             ]);
             $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
@@ -707,7 +705,7 @@ class OrderDetailsController extends AdminAppController
         // send email to customer
         $email = new AppEmail();
         $email->setTemplate('Admin.order_detail_price_changed')
-        ->setTo($oldOrderDetail->order->customer->email)
+        ->setTo($oldOrderDetail->customer->email)
         ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
@@ -716,7 +714,7 @@ class OrderDetailsController extends AdminAppController
             'editPriceReason' => $editPriceReason
         ]);
 
-        $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->order->customer->name . '</b>']);
+        $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
         // never send email to manufacturer if bulk orders are allowed
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
@@ -724,7 +722,7 @@ class OrderDetailsController extends AdminAppController
         $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
         if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
-                '<b>' . $oldOrderDetail->order->customer->name . '</b>',
+                '<b>' . $oldOrderDetail->customer->name . '</b>',
                 '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
             ]);
             $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
@@ -784,27 +782,20 @@ class OrderDetailsController extends AdminAppController
                 ]
             ])->first();
 
-            $message = __d('admin', 'Product_{0}_with_a_price_of_{1}_from_order_number_{2}_from_{3}_was_successfully_cancelled.', [
+            $message = __d('admin', 'Product_{0}_with_a_price_of_{1}_from_{2}_was_successfully_cancelled.', [
                 '<b>' . $orderDetail->product_name . '</b>',
                 Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_incl),
-                $orderDetail->id_order,
-                $orderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'))
+                $orderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'))
             ]);
 
             $this->OrderDetail->deleteOrderDetail($orderDetail);
-            $this->OrderDetail->Orders->updateSums($orderDetail->order);
-
-            if (!empty($orderDetail->timebased_currency_order_detail)) {
-                $this->TimebasedCurrencyOrder = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrders');
-                $this->TimebasedCurrencyOrder->updateSums($orderDetail->order);
-            }
 
             $newQuantity = $this->increaseQuantityForProduct($orderDetail, $orderDetail->product_amount * 2);
 
             // send email to customer
             $email = new AppEmail();
             $email->setTemplate('Admin.order_detail_deleted')
-            ->setTo($orderDetail->order->customer->email)
+            ->setTo($orderDetail->customer->email)
             ->setSubject(__d('admin', 'Product_was_cancelled').': ' . $orderDetail->product_name)
             ->setViewVars([
                 'orderDetail' => $orderDetail,
@@ -812,7 +803,7 @@ class OrderDetailsController extends AdminAppController
                 'cancellationReason' => $cancellationReason
             ]);
 
-            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $orderDetail->order->customer->name . '</b>']);
+            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $orderDetail->customer->name . '</b>']);
 
             // never send email to manufacturer if bulk orders are allowed
             $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
@@ -823,7 +814,7 @@ class OrderDetailsController extends AdminAppController
             $weekday = date('N');
             if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('app.timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed && $sendOrderedProductDeletedNotification) {
                 $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
-                    '<b>' . $orderDetail->order->customer->name . '</b>',
+                    '<b>' . $orderDetail->customer->name . '</b>',
                     '<b>' . $orderDetail->product->manufacturer->name . '</b>'
                 ]);
                 $email->addCC($orderDetail->product->manufacturer->address_manufacturer->email);
@@ -919,8 +910,6 @@ class OrderDetailsController extends AdminAppController
             ]
         ])->first();
 
-        $this->OrderDetail->Orders->updateSums($newOrderDetail);
-
         return $newOrderDetail;
     }
 
@@ -929,8 +918,6 @@ class OrderDetailsController extends AdminAppController
         if (!empty($object->timebased_currency_order_detail)) {
             $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
             $this->TimebasedCurrencyOrderDetail->changePrice($object, $newPrice, $amount);
-            $this->TimebasedCurrencyOrder = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrders');
-            $this->TimebasedCurrencyOrder->updateSums($oldOrderDetail->order);
         }
     }
 

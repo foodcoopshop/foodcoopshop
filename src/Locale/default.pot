@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-27 11:44+0200\n"
+"POT-Creation-Date: 2018-07-27 16:59+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1347,12 +1347,6 @@ msgid "right_of_withdrawal"
 msgstr ""
 
 msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
-msgstr ""
-
-msgid "Write_message_to_pick_up_team?"
-msgstr ""
-
-msgid "Placeholder_message_pickup_day_comment."
 msgstr ""
 
 msgid "Order_button"

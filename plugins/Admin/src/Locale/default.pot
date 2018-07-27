@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-27 12:34+0200\n"
+"POT-Creation-Date: 2018-07-27 16:59+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -281,7 +281,7 @@ msgstr ""
 msgid "Ordered_price_adapted"
 msgstr ""
 
-msgid "Product_{0}_with_a_price_of_{1}_from_order_number_{2}_from_{3}_was_successfully_cancelled."
+msgid "Product_{0}_with_a_price_of_{1}_from_{2}_was_successfully_cancelled."
 msgstr ""
 
 msgid "Product_was_cancelled"
