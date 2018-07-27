@@ -22,6 +22,21 @@ class GlobalTest extends AppCakeTestCase
         // do not import database - no database needed for this test
     }
 
+    public function testBicValid1()
+    {
+        $this->assertBic('RZOOAT2L510', true);
+    }
+    
+    public function testBicValid2()
+    {
+        $this->assertBic('RZOOAT2L380', true);
+    }
+    
+    public function testBicValid3()
+    {
+        $this->assertBic('RZOOAT2L', true);
+    }
+    
     public function testIbanAustria()
     {
         $this->assertIban('AT193357281080332578', true);
@@ -56,4 +71,10 @@ class GlobalTest extends AppCakeTestCase
     {
         $this->assertEquals($expected, (boolean) preg_match(IBAN_REGEX, $iban));
     }
+    
+    private function assertBic($iban, $expected)
+    {
+        $this->assertEquals($expected, (boolean) preg_match(BIC_REGEX, $iban));
+    }
+    
 }
