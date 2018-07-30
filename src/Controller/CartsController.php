@@ -461,10 +461,12 @@ class CartsController extends FrontendController
 
             $this->AppAuth->Cart->markAsSaved();
             
-            // save pickup day: primary key needs to be changed!
-            $this->Cart->PickupDayEntities->setPrimaryKey(['customer_id', 'pickup_day']);
-            $this->Cart->PickupDayEntities->saveMany($cart['Cart']->pickup_day_entities);
-
+            if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
+                // save pickup day: primary key needs to be changed!
+                $this->Cart->PickupDayEntities->setPrimaryKey(['customer_id', 'pickup_day']);
+                $this->Cart->PickupDayEntities->saveMany($cart['Cart']->pickup_day_entities);
+            }
+            
             $this->Flash->success(__('Your_order_has_been_placed_succesfully.'));
 //             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
 //             $this->ActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $order->id_order, 'orders', __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->AppAuth->Cart->getProductSum())]));
