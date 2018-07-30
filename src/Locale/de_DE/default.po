@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-27 16:59+0200\n"
-"PO-Revision-Date: 2018-07-27 11:45+0200\n"
+"POT-Creation-Date: 2018-07-30 09:22+0200\n"
+"PO-Revision-Date: 2018-07-30 09:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1350,6 +1350,12 @@ msgstr "Rücktrittsrecht"
 msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
 msgstr "Ich nehme das {0} zur Kenntnis und akzeptiere dessen Ausschluss für leicht verderbliche Waren."
 
+msgid "Write_message_to_pick_up_team_for_{0}?"
+msgstr "Nachricht an Abholdienst für {0} schreiben?"
+
+msgid "Placeholder_message_pickup_day_comment."
+msgstr "Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. Die Hersteller sehen diese Nachricht nicht."
+
 msgid "Order_button"
 msgstr "Zahlungspflichtig bestellen"
 
@@ -1880,12 +1886,6 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
-
-#~ msgid "Write_message_to_pick_up_team?"
-#~ msgstr "Nachricht an Abholdienst schreiben?"
-
-#~ msgid "Placeholder_message_pickup_day_comment."
-#~ msgstr "Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. Die Hersteller sehen diese Nachricht nicht."
 
 #~ msgid "Error_while_creating_the_order."
 #~ msgstr "Bei der Erstellung der Bestellung ist ein Fehler aufgetreten."
