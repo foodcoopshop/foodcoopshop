@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-30 09:22+0200\n"
-"PO-Revision-Date: 2018-07-30 09:23+0200\n"
+"POT-Creation-Date: 2018-07-30 17:21+0200\n"
+"PO-Revision-Date: 2018-07-30 17:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -69,8 +69,14 @@ msgstr "The manufacturer of the product {0} either has a delivery break or the p
 msgid "Errors_occurred."
 msgstr "Errors occurred."
 
+msgid "Instant_order_successfully_placed_for_{0}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
+msgstr "Instant order successfully placed for {1}. The manufacturer was notified unless the notification was disabled."
+
 msgid "Your_order_has_been_placed_succesfully."
 msgstr "Your order was placed successfully."
+
+msgid "{0}_has_placed_a_new_order_({1})."
+msgstr "{0} has placed a new order ({1})."
 
 msgid "Notification_about_instant_order_order_number_{0}"
 msgstr "Notification about instant order order n° {0}"
@@ -1892,9 +1898,6 @@ msgstr "product"
 
 #~ msgid "Error_while_saving_the_ordered_products."
 #~ msgstr "Error while saving the ordered products."
-
-#~ msgid "{0}_has_placed_a_new_order_({1})."
-#~ msgstr "{0} has placed a new order ({1})."
 
 #~ msgid "The_product_value_{0}_with_an_additional_deposit_of_{1}_was_automatically_reduced_from_your_credit."
 #~ msgstr "The product value {0} with an additional deposit value of {1} was automatically reduced from your credit."

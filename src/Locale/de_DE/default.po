@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-30 09:22+0200\n"
-"PO-Revision-Date: 2018-07-30 09:24+0200\n"
+"POT-Creation-Date: 2018-07-30 17:21+0200\n"
+"PO-Revision-Date: 2018-07-30 17:22+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -69,8 +69,14 @@ msgstr "Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist ni
 msgid "Errors_occurred."
 msgstr "Es sind Fehler aufgetreten."
 
+msgid "Instant_order_successfully_placed_for_{0}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
+msgstr "Die Sofort-Bestellung für {0} wurde erfolgreich getätigt. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat."
+
 msgid "Your_order_has_been_placed_succesfully."
 msgstr "Deine Bestellung wurde erfolgreich abgeschlossen."
+
+msgid "{0}_has_placed_a_new_order_({1})."
+msgstr "{0} hat eine neue Bestellung getätigt ({1})."
 
 msgid "Notification_about_instant_order_order_number_{0}"
 msgstr "Benachrichtigung über Sofort-Bestellung Nr. {0}"
@@ -1892,9 +1898,6 @@ msgstr "produkt"
 
 #~ msgid "Error_while_saving_the_ordered_products."
 #~ msgstr "Beim Speichern der bestellten Produkte ist ein Fehler aufgetreten."
-
-#~ msgid "{0}_has_placed_a_new_order_({1})."
-#~ msgstr "{0} hat eine neue Bestellung getätigt ({1})."
 
 #~ msgid "The_product_value_{0}_with_an_additional_deposit_of_{1}_was_automatically_reduced_from_your_credit."
 #~ msgstr "Der Warenwert von {0} zuzüglich {1} Pfand wurde automatisch von deinem Guthaben abgezogen."

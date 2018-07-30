@@ -370,6 +370,11 @@ class CartsController extends FrontendController
                 'cartProductId' => $cartProduct['cartProductId'],
             ];
             
+            if (!$this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
+                $orderDetail2save['order_state'] = Configure::read('appDb.FCS_INSTANT_ORDER_DEFAULT_STATE');
+                $orderDetail2save['pickup_day'] = $cartProduct['pickupDay'];
+            }
+            
             // prepare data for table order_detail_tax
             $unitPriceExcl = $this->Product->getNetPrice($ids['productId'], $cartProduct['price'] / $cartProduct['amount']);
             $unitTaxAmount = $this->Product->getUnitTax($cartProduct['price'], $unitPriceExcl, $cartProduct['amount']);
@@ -467,10 +472,19 @@ class CartsController extends FrontendController
                 $this->Cart->PickupDayEntities->saveMany($cart['Cart']->pickup_day_entities);
             }
             
-            $this->Flash->success(__('Your_order_has_been_placed_succesfully.'));
-//             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-//             $this->ActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), $order->id_order, 'orders', __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->AppAuth->Cart->getProductSum())]));
-
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            if ($this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
+                $message = __('Instant_order_successfully_placed_for_{0}._The_manufacturer_was_notified_unless_the_notification_was_deactivated.', [
+                    '<b>' . $this->request->getSession()->read('Auth.instantOrderCustomer')->name . '</b>'
+                ]);
+                $this->ActionLog->customSave('orders_shop_added', $this->AppAuth->getUserId(), 0, '', $message);
+            } else {
+                $message = __('Your_order_has_been_placed_succesfully.');
+                $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->AppAuth->Cart->getProductSum())]);
+                $this->ActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), 0, '', $messageForActionLog);
+            }
+            $this->Flash->success($message);
+            
 //             $this->sendConfirmationEmailToCustomer($cart, $products);
 
             // due to redirect, beforeRender() is not called

@@ -140,35 +140,6 @@ class MyTimeHelperTest extends AppCakeTestCase
         $this->assertGetOrderPeriodLastDay('06.12.2017', '10.12.2017'); // wednesday
     }
 
-    public function testGetDateForInstantOrderWednesdayFriday()
-    {
-        $this->prepareWednesdayFridayConfig();
-        $this->assertGetDateForInstantOrder('29.11.2017 01:00:00', '2017-11-28 00:00:00'); // wednesday
-        $this->assertGetDateForInstantOrder('30.11.2017 02:00:00', '2017-11-28 00:00:00'); // thursday
-        $this->assertGetDateForInstantOrder('01.12.2017 03:00:00', '2017-11-28 00:00:00'); // friday
-        $this->assertGetDateForInstantOrder('02.12.2017 04:00:00', '2017-11-28 00:00:00'); // saturday
-        $this->assertGetDateForInstantOrder('03.12.2017 05:00:00', '2017-11-28 00:00:00'); // sunday
-    }
-
-    public function testGetDateForInstantOrderTuesdayFriday()
-    {
-        $this->prepareTuesdayFridayConfig();
-        $this->assertGetDateForInstantOrder('28.11.2017 06:00:00', '2017-11-27 00:00:00'); // tuesday
-        $this->assertGetDateForInstantOrder('29.11.2017 07:00:00', '2017-11-27 00:00:00'); // wednesday
-        $this->assertGetDateForInstantOrder('30.11.2017 08:00:00', '2017-11-27 00:00:00'); // thursday
-        $this->assertGetDateForInstantOrder('01.12.2017 09:00:00', '2017-11-27 00:00:00'); // friday
-        $this->assertGetDateForInstantOrder('02.12.2017 10:00:00', '2017-11-27 00:00:00'); // saturday
-    }
-
-    public function testGetDateForInstantOrderMondayTuesday()
-    {
-        $this->prepareMondayTuesdayConfig();
-        $this->assertGetDateForInstantOrder('27.11.2017 11:00:00', '2017-11-26 00:00:00'); // monday
-        $this->assertGetDateForInstantOrder('28.11.2017 12:00:00', '2017-11-26 00:00:00'); // tuesday
-        $this->assertGetDateForInstantOrder('29.11.2017 13:00:00', '2017-11-26 00:00:00'); // wednesday
-        $this->assertGetDateForInstantOrder('30.11.2017 14:00:00', '2017-11-26 00:00:00'); // thursday
-    }
-
     private function assertGetOrderPeriodFirstDay($currentDay, $expected)
     {
         $result = $this->MyTimeHelper->getOrderPeriodFirstDay(strtotime($currentDay));

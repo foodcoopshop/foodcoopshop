@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-30 16:27+0200\n"
-"PO-Revision-Date: 2018-07-30 16:27+0200\n"
+"POT-Creation-Date: 2018-07-30 17:21+0200\n"
+"PO-Revision-Date: 2018-07-30 17:22+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -981,11 +981,11 @@ msgstr "Zum Ändern des Preises anklicken"
 msgid "Additional_in_{0}"
 msgstr "Zusätzlich in {0}"
 
-msgid "Picked_up"
-msgstr "Abgeholt"
+msgid "Yes"
+msgstr "Ja"
 
-msgid "Not_picked_up"
-msgstr "Nicht abgeholt"
+msgid "No"
+msgstr "Nein"
 
 msgid "Click_to_change_weight"
 msgstr "Zum Ändern des Gewichtes anklicken"
@@ -1004,6 +1004,9 @@ msgstr "Pfand"
 
 msgid "Member"
 msgstr "Mitglied"
+
+msgid "Picked_up"
+msgstr "Abgeholt"
 
 msgid "Amount_minus_eventual_variable_member_fee"
 msgstr "Betrag abzügl. eventuellem variablen Mitgliedsbeitrag"
@@ -1745,6 +1748,9 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+#~ msgid "Not_picked_up"
+#~ msgstr "Nicht abgeholt"
 
 #~ msgid "Picked_up?"
 #~ msgstr "Abgeholt?"

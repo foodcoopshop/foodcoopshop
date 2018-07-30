@@ -91,8 +91,9 @@ class CartsTable extends AppTable
      * @param int $customerId
      * @return array
      */
-    public function getCart($customerId)
+    public function getCart($customerId, $instantOrderMode=false)
     {
+		
         $cart = $this->find('all', [
             'conditions' => [
                 'Carts.status' => APP_ON,
@@ -128,7 +129,7 @@ class CartsTable extends AppTable
         
         
         if (!empty($cartProducts)) {
-            $cart->pickup_day_entities = $this->CartProducts->setPickupDays($cartProducts, $customerId);
+            $cart->pickup_day_entities = $this->CartProducts->setPickupDays($cartProducts, $customerId, $instantOrderMode);
         }
         
         $preparedCart = [

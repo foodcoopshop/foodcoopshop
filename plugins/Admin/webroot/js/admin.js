@@ -2003,78 +2003,70 @@ foodcoopshop.Admin = {
      * @param string button
      * @param int weekday
      */
-    initAddOrder: function (button, weekday) {
-        if ($.inArray(foodcoopshop.Helper.cakeServerName, [
-            'http://www.foodcoopshop.test',
-            'https://demo-de.foodcoopshop.com',
-            'https://demo-en.foodcoopshop.com',
-        ]) == -1 &&
-            $.inArray(weekday, foodcoopshop.Admin.weekdaysBetweenOrderSendAndDelivery) == -1) {
-            $(button).on('click', function (event) {
-                alert(foodcoopshop.LocalizedJs.admin.ThisFunctionIsNotAvailableToday);
-                $.featherlight.close();
-            });
-        } else {
-            $(button).on('click', function () {
+    initAddOrder: function (button) {
+        
+        $(button).on('click', function () {
 
-                var configuration = foodcoopshop.AppFeatherlight.initLightbox({
-                    iframe: foodcoopshop.Helper.cakeServerName + '/admin/orders/iframeStartPage',
-                    iframeWidth: $(window).width() - 50,
-                    iframeMaxWidth: '100%',
-                    iframeHeight: $(window).height() - 100,
-                    afterClose: function () {
-                        foodcoopshop.Helper.ajaxCall(
-                            '/carts/ajaxDeleteInstantOrderCustomer',
-                            {},
-                            {
-                                onOk: function (data) {},
-                                onError: function (data) {}
-                            }
-                        );
-                    },
-                    afterContent: function () {
+            var configuration = foodcoopshop.AppFeatherlight.initLightbox({
+                iframe: foodcoopshop.Helper.cakeServerName + '/admin/orders/iframeStartPage',
+                iframeWidth: $(window).width() - 50,
+                iframeMaxWidth: '100%',
+                iframeHeight: $(window).height() - 100,
+                afterClose: function () {
+                    foodcoopshop.Helper.ajaxCall(
+                        '/carts/ajaxDeleteInstantOrderCustomer',
+                        {},
+                        {
+                            onOk: function (data) {},
+                            onError: function (data) {}
+                        }
+                    );
+                },
+                afterContent: function () {
 
-                        var header = $('<div class="message-container"><span class="start">' + foodcoopshop.LocalizedJs.admin.PlaceInstantOrderFor + ': </span> ' + foodcoopshop.LocalizedJs.admin.InstantOrderDateIsSetBackAfterPlacingIt + '</div>');
-                        $('.featherlight-close').after(header);
+                    var header = $('<div class="message-container"><span class="start">' + foodcoopshop.LocalizedJs.admin.PlaceInstantOrderFor + ': </span> ' + foodcoopshop.LocalizedJs.admin.InstantOrderDateIsSetBackAfterPlacingIt + '</div>');
+                    $('.featherlight-close').after(header);
 
-                        // only clone dropdown once
-                        if ($('.message-container span.start select').length == 0) {
-                            var customersDropdown = $('#add-order-button-wrapper select').clone(true);
-                            customersDropdown.attr('id', 'customersDropdown');
-                            customersDropdown.on('change', function () {
-                                var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/orders/initInstantOrder/' + $(this).val();
-                                $('iframe.featherlight-inner').attr('src', newSrc);
+                    // only clone dropdown once
+                    if ($('.message-container span.start select').length == 0) {
+                        var customersDropdown = $('#add-order-button-wrapper select').clone(true);
+                        customersDropdown.attr('id', 'customersDropdown');
+                        customersDropdown.on('change', function () {
+                            var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/orders/initInstantOrder/' + $(this).val();
+                            $('iframe.featherlight-inner').attr('src', newSrc);
+                            $.featherlight.showLoader();
+                        });
+
+                        $('iframe.featherlight-inner').on('load', function () {
+                            // called after each url change in iframe!
+                            $.featherlight.hideLoader();
+                            var currentUrl = $(this).get(0).contentWindow.document.URL;
+                            var cartFinishedRegExp = new RegExp(foodcoopshop.LocalizedJs.admin.routeCartFinished);
+                            if (currentUrl.match(cartFinishedRegExp)) {
                                 $.featherlight.showLoader();
-                            });
-
-                            $('iframe.featherlight-inner').on('load', function () {
-                                // called after each url change in iframe!
-                                $.featherlight.hideLoader();
-                                var currentUrl = $(this).get(0).contentWindow.document.URL;
-                                var cartFinishedRegExp = new RegExp(foodcoopshop.LocalizedJs.admin.routeCartFinished);
-                                if (currentUrl.match(cartFinishedRegExp)) {
-                                    $.featherlight.showLoader();
-                                    document.location.href = '/admin/orders/correctInstantOrder?url=' + encodeURIComponent(currentUrl);
-                                }
-                            });
-                            customersDropdown.show();
-                            customersDropdown.removeClass('hide');
-                            customersDropdown.appendTo('.message-container span.start');
-
-                            // always preselect user if there is a dropdown called #customerId (for call from order detail)
-                            var customerId = $('#customerid').val();
-                            if (customerId > 0) {
-                                customersDropdown.val(customerId);
-                                customersDropdown.trigger('change');
+                                var message = $(this).contents().find('#flashMessage').html().replace(/<img[^>]*>/g,"");
+                                $('.featherlight', window.parent.document).remove();
+                                foodcoopshop.Helper.showSuccessMessage(message);
                             }
+                        });
+                        customersDropdown.show();
+                        customersDropdown.removeClass('hide');
+                        customersDropdown.appendTo('.message-container span.start');
+
+                        // always preselect user if there is a dropdown called #customerId (for call from order detail)
+                        var customerId = $('#customerid').val();
+                        if (customerId > 0) {
+                            customersDropdown.val(customerId);
+                            customersDropdown.trigger('change');
                         }
                     }
-                });
-
-                $.featherlight(configuration);
-
+                }
             });
-        }
+
+            $.featherlight(configuration);
+
+        });
+        
     },
 
     setMenuFixed: function () {

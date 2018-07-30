@@ -2,6 +2,7 @@
 
 namespace App\Controller\Component;
 
+use App\Network\AppSession;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
@@ -26,7 +27,6 @@ class AppAuthComponent extends AuthComponent
 {
 
     public $components = [
-        'Session',
         'Flash',
         'RequestHandler',
         'Cart'
@@ -206,7 +206,8 @@ class AppAuthComponent extends AuthComponent
             return null;
         }
         $cart = TableRegistry::getTableLocator()->get('Carts');
-        return $cart->getCart($this->getUserId());
+        $session = new AppSession();
+        return $cart->getCart($this->getUserId(), $session->check('Auth.instantOrderCustomer'));
     }
 
     public function isTimebasedCurrencyEnabledForManufacturer()

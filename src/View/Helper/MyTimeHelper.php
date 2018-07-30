@@ -36,10 +36,10 @@ class MyTimeHelper extends TimeHelper
     {
         return date('Y', strtotime($dbDate));
     }
-
+    
     public function getCurrentDateForDatabase()
     {
-        return date(Configure::read('DateFormat.DatabaseWithTimeAlt'));
+        return date($this->getI18Format('DatabaseAlt'));
     }
 
     /**
@@ -130,18 +130,6 @@ class MyTimeHelper extends TimeHelper
     public function formatAsWeekday($day)
     {
         return date('N', $day);
-    }
-
-    /**
-     * @param day
-     */
-    public function getDateForInstantOrder($day)
-    {
-        $currentWeekday = $this->formatAsWeekday($day);
-        $daysDiff = $currentWeekday - Configure::read('app.sendOrderListsWeekday');
-        $daysDiff = ($daysDiff * -1) - 1;
-        $resetDate = strtotime($daysDiff . ' day', $day);
-        return date('Y-m-d', $resetDate) . ' 00:00:00';
     }
 
     public function getCurrentDay()

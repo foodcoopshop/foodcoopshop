@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-30 16:27+0200\n"
+"POT-Creation-Date: 2018-07-30 17:21+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -980,10 +980,10 @@ msgstr ""
 msgid "Additional_in_{0}"
 msgstr ""
 
-msgid "Picked_up"
+msgid "Yes"
 msgstr ""
 
-msgid "Not_picked_up"
+msgid "No"
 msgstr ""
 
 msgid "Click_to_change_weight"
@@ -1002,6 +1002,9 @@ msgid "Deposit"
 msgstr ""
 
 msgid "Member"
+msgstr ""
+
+msgid "Picked_up"
 msgstr ""
 
 msgid "Amount_minus_eventual_variable_member_fee"

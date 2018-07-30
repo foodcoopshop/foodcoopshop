@@ -99,54 +99,6 @@ class OrdersController extends AdminAppController
         $this->set('orders', $orders);
     }
 
-    public function correctInstantOrder()
-    {
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->getRequest()->getQuery('url'));
-
-        $this->Order = TableRegistry::getTableLocator()->get('Orders');
-
-        if ($orderId > 0) {
-            $order = $this->Order->find('all', [
-                'conditions' => [
-                    'Orders.id_order' => $orderId
-                ],
-                'order' => [
-                    'OrderDetails.created' => 'DESC'
-                ],
-                'contain' => [
-                    'Customers'
-                ]
-            ])->first();
-
-            $newDate = Configure::read('app.timeHelper')->getDateForInstantOrder(Configure::read('app.timeHelper')->getCurrentDay());
-
-            $this->Order->save(
-                $this->Order->patchEntity(
-                    $order,
-                    [
-                        'date_add' => $newDate,
-                        'current_state' => Configure::read('appDb.FCS_INSTANT_ORDER_DEFAULT_STATE')
-                    ]
-                )
-            );
-
-            $message = __d('admin', 'Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated.', [
-                $order->id_order,
-                '<b>' . $order->customer->name . '</b>',
-                Configure::read('app.timeHelper')->formatToDateShort($newDate)
-            ]);
-
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-            $this->ActionLog->customSave('orders_shop_added', $this->AppAuth->getUserId(), $orderId, 'orders', $message);
-            $this->Flash->success($message);
-
-            $this->getRequest()->getSession()->write('highlightedRowId', $orderId);
-            $this->redirect($this->referer());
-        } else {
-            die('order id not correct: ' + $orderId);
-        }
-    }
-
     public function index()
     {
 
