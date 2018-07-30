@@ -118,7 +118,15 @@ foreach ($orderDetails as $orderDetail) {
     
     $editRecordAllowed = $groupBy == '' && ($orderDetail->order_state == ORDER_STATE_OPEN || $orderDetail->bulkOrdersAllowed);
 
-    echo '<tr class="data ' . (isset($orderDetail->row_class) ? implode(' ', $orderDetail->row_class) : '') . '">';
+    $rowClasses = [];
+    if (isset($orderDetail->row_class)) {
+        $rowClasses = $orderDetail->row_class;
+    }
+    if (isset($orderDetail['row_class'])) {
+        $rowClasses = $orderDetail['row_class'];
+    }
+    
+    echo '<tr class="data ' . (!empty($rowClasses) ? implode(' ', $rowClasses) : '') . '">';
 
     echo '<td style="text-align: center;">';
         if ($editRecordAllowed) {
@@ -169,6 +177,11 @@ foreach ($orderDetails as $orderDetail) {
     echo $this->element('orderDetailList/data/elements/pickupDay', [
         'orderDetail' => $orderDetail,
         'editRecordAllowed' => $editRecordAllowed,
+        'groupBy' => $groupBy
+    ]);
+    
+    echo $this->element('orderDetailList/data/elements/productsPickedUp', [
+        'orderDetail' => $orderDetail,
         'groupBy' => $groupBy
     ]);
     

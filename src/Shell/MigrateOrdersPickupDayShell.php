@@ -36,18 +36,29 @@ class MigrateOrdersPickupDayShell extends AppShell
     {
         $this->Order = TableRegistry::getTableLocator()->get('Orders');
         $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
+        $this->PickupDay->setPrimaryKey(['customer_id', 'pickup_day']);
         
         $orders = $this->Order->find('all');
         $i = 0;
         foreach($orders as $order) {
             
-            if ($order->comment != '') {
-                $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($order->date_add->i18nFormat(Configure::read('DateFormat.Database')));
+            $productsPickedUp = 0;
+            if (in_array($order->current_state, [
+                ORDER_STATE_CASH,
+                ORDER_STATE_CASH_FREE
+            ])) {
+                $productsPickedUp = 1;
+            }
+            
+            $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($order->date_add->i18nFormat(Configure::read('DateFormat.Database')));
+            
+            if ($order->comment != '' || $productsPickedUp == 1) {
                 $this->PickupDay->save(
                     $this->PickupDay->newEntity([
                         'pickup_day' => $pickupDay,
                         'customer_id' => $order->id_customer,
-                        'comment' => $order->comment
+                        'comment' => $order->comment,
+                        'products_picked_up' => $productsPickedUp
                     ])
                 );
                 $i++;

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-27 16:59+0200\n"
-"PO-Revision-Date: 2018-07-27 17:00+0200\n"
+"POT-Creation-Date: 2018-07-30 16:27+0200\n"
+"PO-Revision-Date: 2018-07-30 16:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -981,6 +981,12 @@ msgstr "Click to change price"
 msgid "Additional_in_{0}"
 msgstr "Additional in {0}"
 
+msgid "Picked_up"
+msgstr "Picked up"
+
+msgid "Not_picked_up"
+msgstr "Not picked up"
+
 msgid "Click_to_change_weight"
 msgstr "Click to change weight"
 
@@ -1740,11 +1746,12 @@ msgstr "{0,plural,=1{record} other{records}}"
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
 
+#, fuzzy
+#~ msgid "Picked_up?"
+#~ msgstr "Pick-up day"
+
 #~ msgid "The_order_status_of_the_orders_{0}_was_successfully_changed_to_{1}."
 #~ msgstr "The order state of the orders {0} was successfully changed to {1}."
-
-#~ msgid "Pick_up_day"
-#~ msgstr "Pick-up day"
 
 #~ msgid "Pick_up_date"
 #~ msgstr "Pick-up date"

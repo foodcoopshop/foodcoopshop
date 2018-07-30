@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-27 16:59+0200\n"
-"PO-Revision-Date: 2018-07-27 16:59+0200\n"
+"POT-Creation-Date: 2018-07-30 16:27+0200\n"
+"PO-Revision-Date: 2018-07-30 16:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -981,6 +981,12 @@ msgstr "Zum Ändern des Preises anklicken"
 msgid "Additional_in_{0}"
 msgstr "Zusätzlich in {0}"
 
+msgid "Picked_up"
+msgstr "Abgeholt"
+
+msgid "Not_picked_up"
+msgstr "Nicht abgeholt"
+
 msgid "Click_to_change_weight"
 msgstr "Zum Ändern des Gewichtes anklicken"
 
@@ -1740,11 +1746,11 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
 
+#~ msgid "Picked_up?"
+#~ msgstr "Abgeholt?"
+
 #~ msgid "The_order_status_of_the_orders_{0}_was_successfully_changed_to_{1}."
 #~ msgstr "Der Bestellstatus der Bestellungungen {0} wurde erfolgreich auf {1} geändert."
-
-#~ msgid "Pick_up_day"
-#~ msgstr "Abholtag"
 
 #~ msgid "Pick_up_date"
 #~ msgstr "Abholdatum"

@@ -320,10 +320,19 @@ class OrderDetailsTable extends AppTable
             @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
             $preparedOrderDetails[$key]['customer_id'] = $key;
             $preparedOrderDetails[$key]['name'] = Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($orderDetail->customer);
+            $productsPickedUp = false;
             if (!empty($orderDetail->pickup_day_entity)) {
                 $preparedOrderDetails[$key]['comment'] = $orderDetail->pickup_day_entity->comment;
+                $preparedOrderDetails[$key]['products_picked_up_tmp'] = $orderDetail->pickup_day_entity->products_picked_up;
             }
+            if (isset($preparedOrderDetails[$key]['products_picked_up_tmp']) && $preparedOrderDetails[$key]['products_picked_up_tmp']) {
+                $productsPickedUp = true;
+                $preparedOrderDetails[$key]['row_class'] = ['selected'];
+            }
+            $preparedOrderDetails[$key]['products_picked_up'] = $productsPickedUp;
+            unset($preparedOrderDetails[$key]['products_picked_up_tmp']);
         }
+        
         return $preparedOrderDetails;
     }
 
