@@ -71,7 +71,7 @@ class CartsController extends FrontendController
     public function detail()
     {
         $this->set('title_for_layout', __('Your_cart'));
-        if (!$this->getRequest()->is('post')) {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
             $cart = $this->AppAuth->getCart();
             $this->set('cart', $cart['Cart']);
@@ -237,11 +237,11 @@ class CartsController extends FrontendController
     
     public function finish()
     {
-
-//         if (!$this->getRequest()->is('post')) {
-//             $this->redirect('/');
-//             return;
-//         }
+        
+        if (!$_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->redirect('/');
+            return;
+        }
 
         $this->set('title_for_layout', __('Finish_cart'));
         $cart = $this->AppAuth->getCart();
@@ -417,35 +417,24 @@ class CartsController extends FrontendController
             $validator = $this->OrderDetail->TimebasedCurrencyOrderDetails->getNumberRangeValidator($validator, 'seconds_sum_tmp', 0, $maxValue);
         }
         
-        $cart['Cart'] = $this->Cart->patchEntity(
-            $cart['Cart'],
-            $this->getRequest()->getData()
-        );
-        
-        /*
+        $options = [];
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
-            $pickupDayData = [
-                'pickup_day_entities' => [
-                    'customer_id' => $this->AppAuth->getUserId(),
-                    'pickup_day' => Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb()
+            $options = [
+                'associated' => [
+                    'PickupDayEntities'
                 ]
             ];
-            $cart['Cart'] = $this->Cart->patchEntity(
-                $cart['Cart'],
-                $pickupDayData,
-                [
-                    'associated' => [
-                        'PickupDayEntities'
-                    ]
-                ]
-            );
         }
-        */
+        
+        $cart['Cart'] = $this->Cart->patchEntity(
+            $cart['Cart'],
+            $this->getRequest()->getData(),
+            $options
+        );
         
         if (!empty($cart['Cart']->getErrors())) {
             $formErrors = true;
         }
-        
         $this->set('cart', $cart['Cart']); // to show error messages in form (from validation)
         $this->set('formErrors', $formErrors);
 
@@ -470,7 +459,11 @@ class CartsController extends FrontendController
 
 //             $this->sendInstantOrderNotificationToManufacturers($cart['CartProducts']);
 
-//             $this->AppAuth->Cart->markAsSaved();
+            $this->AppAuth->Cart->markAsSaved();
+            
+            // save pickup day: primary key needs to be changed!
+            $this->Cart->PickupDayEntities->setPrimaryKey(['customer_id', 'pickup_day']);
+            $this->Cart->PickupDayEntities->saveMany($cart['Cart']->pickup_day_entities);
 
             $this->Flash->success(__('Your_order_has_been_placed_succesfully.'));
 //             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');

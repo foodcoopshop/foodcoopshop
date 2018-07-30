@@ -126,17 +126,10 @@ class CartsTable extends AppTable
             ]
         ])->toArray();
         
-        $pickupDayTable = TableRegistry::getTableLocator()->get('PickupDays');
-        $pickupDays = $pickupDayTable->find('all', [
-            'conditions' => [
-                'PickupDays.customer_id' => $customerId,
-                //'PickupDays.pickup_day IN' => ['2017-07-14', '2017-11-10']
-            ],
-            'order' => [
-                'PickupDays.pickup_day' => 'ASC'
-            ]
-        ])->toArray();
-        $cart->pickup_day_entities = $pickupDays;
+        
+        if (!empty($cartProducts)) {
+            $cart->pickup_day_entities = $this->CartProducts->setPickupDays($cartProducts, $customerId);
+        }
         
         $preparedCart = [
             'Cart' => $cart,
@@ -253,7 +246,7 @@ class CartsTable extends AppTable
             'price' => $grossPrice,
             'priceExcl' => $cartProduct->product->price * $cartProduct->amount,
             'tax' => $tax,
-            'pickupDay' => Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb()
+            'pickupDay' => $cartProduct->pickup_day
         ];
         
         $deposit = 0;
@@ -322,7 +315,7 @@ class CartsTable extends AppTable
             'price' => $grossPrice,
             'priceExcl' => $cartProduct->product_attribute->price * $cartProduct->amount,
             'tax' => $tax,
-            'pickupDay' => Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb()
+            'pickupDay' => $cartProduct->pickup_day
         ];
 
         $deposit = 0;

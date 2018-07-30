@@ -111,41 +111,46 @@ if (!$appAuth->termsOfUseAccepted()) {
         <div class="sc"></div>
         
         <?php
-        /*
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
+            
             $this->element('addScript', ['script' =>
                 Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();"
             ]);
-            if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) && !empty($this->request->getData('Carts.pickup_day_entity.comment')) && $this->request->getData('Carts.pickup_day_entity.comment') != '') {
-                $this->element('addScript', ['script' =>
-                    "$('.toggle-link').trigger('click');"
-                ]);
-            }
             
+            $i = 0;
             foreach($cart->pickup_day_entities as $pickupDay) {
+                
+                $formattedPickupDay = $pickupDay->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+                
+                if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) || !empty($pickupDay->comment)) {
+                    $this->element('addScript', ['script' =>
+                        "$('.toggle-link-" . $formattedPickupDay . "').trigger('click');"
+                    ]);
+                }
+                
                 $message =  __('Write_message_to_pick_up_team_for_{0}?',
-                    [$pickupDay->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateShort'))]
+                    [$pickupDay->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'))]
                 );
                 echo $this->Html->link(
                     '<i class="fa"></i> ' . $message,
                     'javascript:void(0);',
                     [
-                        'class' => 'toggle-link',
+                        'class' => 'toggle-link toggle-link-' . $formattedPickupDay,
                         'title' => $message,
                         'escape' => false
                     ]
                 );
                 echo '<div class="toggle-content pickup-day-comment">';
-                echo $this->Form->control('Carts.pickup_day_entities.comment', [
-                    'type' => 'textarea',
-                    'placeholder' => __('Placeholder_message_pickup_day_comment.'),
-                    'label' => '',
-                    'value' => $pickupDay->comment
-                ]);
+                    echo $this->Form->hidden('Carts.pickup_day_entities.'.$i.'.customer_id');
+                    echo $this->Form->control('Carts.pickup_day_entities.'.$i.'.comment', [
+                            'type' => 'textarea',
+                            'placeholder' => __('Placeholder_message_pickup_day_comment.'),
+                            'label' => ''
+                        ]);
                 echo '</div>';
+                $i++;
             }
         }
-        */
         ?>
         
         <p>

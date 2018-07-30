@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use App\Lib\Error\Exception\InvalidParameterException;
 
@@ -172,6 +173,35 @@ class CartProductsTable extends AppTable
 
         return true;
 
+    }
+    
+    public function setPickupDays($cartProducts, $customerId)
+    {
+        $pickupDayTable = TableRegistry::getTableLocator()->get('PickupDays');
+        foreach($cartProducts as &$cartProduct) {
+            $cartProduct->pickup_day = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
+        }
+        
+        $uniquePickupDays = $pickupDayTable->getUniquePickupDays($cartProducts);
+        $pickupDays = $pickupDayTable->find('all', [
+            'conditions' => [
+                'PickupDays.customer_id' => $customerId,
+                'PickupDays.pickup_day IN' => $uniquePickupDays
+            ],
+            'order' => [
+                'PickupDays.pickup_day' => 'ASC'
+            ]
+        ])->toArray();
+        
+        if (empty($pickupDays)) {
+            $pickupDays = [
+                $pickupDayTable->newEntity([
+                    'customer_id' => $customerId,
+                    'pickup_day' => $uniquePickupDays[0]
+                ])
+            ];
+        }
+        return $pickupDays;
     }
 
     public function removeAll($cartId, $customerId)

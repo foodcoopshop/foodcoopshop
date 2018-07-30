@@ -35,5 +35,15 @@ class PickupDaysTable extends AppTable
         $validator->maxLength('comment', 500, __('Please_enter_max_{0}_characters.', [500]));
         return $validator;
     }
+    
+    
+    public function getUniquePickupDays($cartProducts)
+    {
+        $uniquePickupDays = [];
+        foreach($cartProducts as $cartProduct) {
+            $uniquePickupDays[] = $cartProduct->pickup_day;
+        }
+        return array_unique($uniquePickupDays);
+    }
 
 }
