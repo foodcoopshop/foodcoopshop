@@ -14,7 +14,7 @@
  */
 
 if ($this->Html->paymentIsCashless()) {
-    echo __('The_amount_will_be_reduced_from_your_credit_balance.');
+    echo __('The_amount_will_be_reduced_from_the_credit_balance.');
 } else {
     echo __('Please_pay_when_picking_up_products.');
 }

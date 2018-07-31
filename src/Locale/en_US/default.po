@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-31 08:37+0200\n"
-"PO-Revision-Date: 2018-07-31 08:38+0200\n"
+"POT-Creation-Date: 2018-07-31 09:58+0200\n"
+"PO-Revision-Date: 2018-07-31 09:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1512,23 +1512,23 @@ msgstr "right of withdrawal"
 msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
 msgstr "I accept the {0} and accept that this is not valid for perishable goods."
 
-msgid "Write_message_to_pick_up_team_for_{0}?"
-msgstr "Want to write a message to the pick up team on {0}?"
-
-msgid "Placeholder_message_pickup_day_comment."
-msgstr "Your message will be shown next to your order in the admin panel. Manufacturers cannot not this message."
-
 msgid "general_terms_and_conditions"
 msgstr "general terms and conditions"
 
 msgid "Order_button"
 msgstr "Buy now"
 
-msgid "The_amount_will_be_reduced_from_your_credit_balance."
-msgstr "The amount will be reduced from your credit balance."
+msgid "The_amount_will_be_reduced_from_the_credit_balance."
+msgstr "The amount will be reduced from the credit balance."
 
 msgid "Please_pay_when_picking_up_products."
 msgstr "Please pay when picking up your products."
+
+msgid "Write_message_to_pick_up_team_for_{0}?"
+msgstr "Want to write a message to the pick up team on {0}?"
+
+msgid "Placeholder_message_pickup_day_comment."
+msgstr "Your message will be shown next to your order in the admin panel. Manufacturers cannot not this message."
 
 msgid "Pickup_place:_{0}"
 msgstr "Pickup place: {0}"
@@ -1583,6 +1583,9 @@ msgstr "thank you for order n° {0} from {1}."
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
+msgid "The_amount_will_be_reduced_from_your_credit_balance."
+msgstr "The amount will be reduced from your credit balance."
 
 msgid "Please_pick_up_your_products_on_{0}_at_{1}."
 msgstr "Please pick up your products on {0} at {1}."

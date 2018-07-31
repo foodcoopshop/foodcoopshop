@@ -13,6 +13,10 @@
  * @link          https://www.foodcoopshop.com
  */
 
+if ($this->request->getSession()->check('Auth.instantOrderCustomer')) {
+    return false;
+}
+
 echo '<p>';
     echo __('Pickup_place:_{0}', [
         str_replace('<br />', ', ', $this->Html->getAddressFromAddressConfiguration())

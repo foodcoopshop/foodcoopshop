@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-31 08:37+0200\n"
+"POT-Creation-Date: 2018-07-31 09:58+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1511,22 +1511,22 @@ msgstr ""
 msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
 msgstr ""
 
-msgid "Write_message_to_pick_up_team_for_{0}?"
-msgstr ""
-
-msgid "Placeholder_message_pickup_day_comment."
-msgstr ""
-
 msgid "general_terms_and_conditions"
 msgstr ""
 
 msgid "Order_button"
 msgstr ""
 
-msgid "The_amount_will_be_reduced_from_your_credit_balance."
+msgid "The_amount_will_be_reduced_from_the_credit_balance."
 msgstr ""
 
 msgid "Please_pay_when_picking_up_products."
+msgstr ""
+
+msgid "Write_message_to_pick_up_team_for_{0}?"
+msgstr ""
+
+msgid "Placeholder_message_pickup_day_comment."
 msgstr ""
 
 msgid "Pickup_place:_{0}"
@@ -1581,6 +1581,9 @@ msgid "thank_you_for_your_order_number_{0}_from_{1}."
 msgstr ""
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr ""
+
+msgid "The_amount_will_be_reduced_from_your_credit_balance."
 msgstr ""
 
 msgid "Please_pick_up_your_products_on_{0}_at_{1}."
