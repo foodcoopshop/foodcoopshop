@@ -1574,8 +1574,8 @@ foodcoopshop.Admin = {
 
     triggerFilter : function () {
         $('#filter-loader').remove();
-        $('#content').css('opacity', '.4');
-        $('#container').append('<i id="filter-loader" class="fa fa-spinner"></i>');
+        $('#content').css('opacity', '.3');
+        $('#container').append('<div id="filter-loader"><i class="fa fa-spinner"></i></div>');
         var marginTop = $('.filter-container').outerHeight();
         $('#filter-loader').css('top', marginTop + 20);
         foodcoopshop.Admin.submitFilterForm();

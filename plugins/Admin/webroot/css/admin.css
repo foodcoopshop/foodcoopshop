@@ -294,11 +294,18 @@ body.products.index td.status {
   position: fixed;
   top: 10px;
   left: 590px;
-  color: #719f41;
   font-size: 8em;
+  background: white;
+  border-radius: 10px;
+  width: 150px;
+  height: 150px;
+  text-align: center;
+}
+#filter-loader i {
   animation:reload-loader-animation 10s infinite, fa-spin 2s infinite linear;
   -moz-animation:reload-loader-animation 10s infinite, fa-spin 2s infinite linear; /* Firefox */
   -webkit-animation:reload-loader-animation 10s infinite, fa-spin 2s infinite linear; /* Safari and Chrome */
+  color: #719f41;
 }
 @-moz-keyframes reload-loader-animation /* Firefox */ {
     0% {color:#719f41;}
