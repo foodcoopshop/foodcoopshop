@@ -4,7 +4,6 @@ namespace App\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\View\Helper\TimeHelper;
-use Cake\I18n\I18n;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -303,7 +302,6 @@ class MyTimeHelper extends TimeHelper
 
     /**
      * considers windows and unix
-     * @param date $date
      * @return boolean
      */
     public function isDatabaseDateNotSet($date)
@@ -324,7 +322,6 @@ class MyTimeHelper extends TimeHelper
     /**
      * formats a timestamp to a short date
      * @param integer $timestamp
-     * @return Date
      */
     public function formatToDateShort($dbString)
     {
@@ -335,8 +332,7 @@ class MyTimeHelper extends TimeHelper
         return date($this->getI18Format('DateShortAlt'), $timestamp);
     }
     /**
-      * @param date $dateString
-      * @return date in format YYYY-mm-dd
+      * @param $dateString
       */
     public function formatToDbFormatDate($dateString)
     {

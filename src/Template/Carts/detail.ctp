@@ -13,7 +13,6 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
-use Cake\I18n\I18n;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
@@ -22,7 +21,7 @@ $this->element('addScript', ['script' =>
 ]);
 if (!$appAuth->termsOfUseAccepted()) {
     $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace') . ".Helper.disableButton($('#OrderDetailForm button.btn-success'));"
+        Configure::read('app.jsNamespace') . ".Helper.disableButton($('#CartsDetailForm button.btn-success'));"
     ]);
 }
 ?>
@@ -51,113 +50,30 @@ if (!$appAuth->termsOfUseAccepted()) {
                 'id' => 'CartsDetailForm',
                 'url' => $this->Slug->getCartFinish()
             ]);
-
-            if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer() && $appAuth->Cart->getTimebasedCurrencySecondsSum() > 0) {
-                echo $this->Form->control('timebased_currency_order.seconds_sum_tmp', [
-                    'label' => __('How_much_of_it_do_i_want_to_pay_in_{0}?', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]),
-                    'type' => 'select',
-                    'options' => $this->TimebasedCurrency->getTimebasedCurrencyHoursDropdown($appAuth->Cart->getTimebasedCurrencySecondsSumRoundedUp(), Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'))
-                ]);
-            }
+            echo $this->element('cart/timebasedCurrencyDropdown');
+            echo $this->element('cart/variableMemberFeeInfoText');
         ?>
-        
-        <?php if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('app.manufacturerComponensationInfoText') != '') { ?>
-            <p style="margin-top: 20px;"><b><?php echo Configure::read('app.manufacturerComponensationInfoText'); ?></b></p>
-        <?php } ?>
 
-        <p style="margin-top: 20px;"><?php echo __('To_finish_order_click_here.'); ?> 
-        
-        <?php
-            if ($this->Html->paymentIsCashless()) {
-                echo __('The_amount_will_be_reduced_from_your_credit_balance.');
-            } else {
-                echo __('Please_pay_when_picking_up_products.');
-            }
-        ?>
+        <p style="margin-top: 20px;">
+        	<?php echo __('To_finish_order_click_here.'); ?> 
+        	<?php echo $this->element('cart/paymentInfoText'); ?>
         </p>
          
-        <p>
-            <?php
-                echo __(
-                    'Please_pick_up_your_products_on_{0}_at_{1}.', [
-                        '<b>'.$this->Time->getDeliveryDateByCurrentDayFormattedLong().'</b>',
-                        str_replace('<br />', ', ', $this->Html->getAddressFromAddressConfiguration())
-                    ]
-                );
-            ?>
-        </p>
+        <?php echo $this->element('cart/pickupPlaceInfoText'); ?>
     
     	<?php
-            echo '<div id="general-terms-and-conditions" class="featherlight-overlay">';
-                echo $this->element('legal/'.I18n::getLocale().'/generalTermsAndConditions');
-            echo '</div>';
-            $generalTermsOfUseLink = '<a href="#general-terms-and-conditions">'.__('general_terms_and_conditions').'</a>';
-            echo $this->Form->control('Carts.general_terms_and_conditions_accepted', [
-                'label' => __('I_accept_the_{0}', [$generalTermsOfUseLink]),
-                'type' => 'checkbox',
-                'escape' => false
-            ]);
-
-            echo '<div id="cancellation-terms" class="featherlight-overlay">';
-                echo $this->element('legal/'.I18n::getLocale().'/rightOfWithdrawalTerms');
-            echo '</div>';
-            $cancellationTermsLink = '<a href="#cancellation-terms">'.__('right_of_withdrawal').'</a>';
-            echo $this->Form->control('Carts.cancellation_terms_accepted', [
-                'label' => __('I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods.', [$cancellationTermsLink]),
-                'type' => 'checkbox',
-                'escape' => false
-            ]);
+            echo $this->element('cart/generalTermsOfUseCheckbox');
+            echo $this->element('cart/cancellationTermsCheckbox');
         ?>
         <div class="sc"></div>
         
         <?php
-        if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
-            
-            $this->element('addScript', ['script' =>
-                Configure::read('app.jsNamespace') . ".Helper.bindToggleLinks();"
-            ]);
-            
-            $i = 0;
-            foreach($cart->pickup_day_entities as $pickupDay) {
-                
-                $formattedPickupDay = $pickupDay->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
-                
-                if (((isset($cartErrors) && $cartErrors) || (isset($formErrors) && $formErrors)) || !empty($pickupDay->comment)) {
-                    $this->element('addScript', ['script' =>
-                        "$('.toggle-link-" . $formattedPickupDay . "').trigger('click');"
-                    ]);
-                }
-                
-                $message =  __('Write_message_to_pick_up_team_for_{0}?',
-                    [$pickupDay->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'))]
-                );
-                echo $this->Html->link(
-                    '<i class="fa"></i> ' . $message,
-                    'javascript:void(0);',
-                    [
-                        'class' => 'toggle-link toggle-link-' . $formattedPickupDay,
-                        'title' => $message,
-                        'escape' => false
-                    ]
-                );
-                echo '<div class="toggle-content pickup-day-comment">';
-                    echo $this->Form->hidden('Carts.pickup_day_entities.'.$i.'.customer_id');
-                    echo $this->Form->control('Carts.pickup_day_entities.'.$i.'.comment', [
-                            'type' => 'textarea',
-                            'placeholder' => __('Placeholder_message_pickup_day_comment.'),
-                            'label' => ''
-                        ]);
-                echo '</div>';
-                $i++;
-            }
-        }
+            echo $this->element('cart/commentTextareas');
         ?>
         
-        <p>
-            <button type="submit" class="btn btn-success btn-order"><i class="fa fa-check fa-lg"></i> <?php echo __('Order_button'); ?></button>
-        </p>
+        <?php echo $this->element('cart/orderButton'); ?>
                 
-        </form>
+        <?php echo $this->Form->end(); ?>
     
     <?php } ?>
     
