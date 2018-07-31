@@ -16,7 +16,6 @@
 use App\Controller\Component\StringComponent;
 use App\Lib\Pdf\AppTcpdf;
 use Cake\Core\Configure;
-use Cake\Log\Log;
 
 $pdf = new AppTcpdf();
 $pdf->SetLeftMargin(16);
