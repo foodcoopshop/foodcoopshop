@@ -16,7 +16,7 @@
 
 use Cake\Core\Configure;
 
-if (!Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
+if (!Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED') || $this->request->getSession()->check('Auth.instantOrderCustomer')) {
     return false;
 }
 
@@ -29,7 +29,7 @@ foreach($cart->pickup_day_entities as $pickupDay) {
     
     $formattedPickupDay = $pickupDay->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
     
-    if ($pickupDay->getErrors() > 0 || !empty($pickupDay->comment)) {
+    if (count($pickupDay->getErrors()) > 0 || !empty($pickupDay->comment)) {
         $this->element('addScript', ['script' =>
             "$('.toggle-link-" . $formattedPickupDay . "').trigger('click');"
         ]);

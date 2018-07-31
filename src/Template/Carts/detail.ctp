@@ -68,7 +68,7 @@ if (!$appAuth->termsOfUseAccepted()) {
         <div class="sc"></div>
         
         <?php
-            echo $this->element('cart/commentTextareas');
+            echo $this->element('cart/pickupDayCommentTextareas');
         ?>
         
         <?php echo $this->element('cart/orderButton'); ?>

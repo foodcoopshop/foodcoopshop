@@ -1998,6 +1998,18 @@ foodcoopshop.Admin = {
         });
 
     },
+    
+    getParentLocation: function() {
+        var url = (window.location != window.parent.location)
+            ? document.referrer
+            : document.location.href;
+        return url;
+    },
+    
+    addParameterToURL : function(url, param) {
+        url += (url.split('?')[1] ? '&':'?') + param;
+        return url;
+    },
 
     /**
      * @param string button
@@ -2044,9 +2056,11 @@ foodcoopshop.Admin = {
                             var cartFinishedRegExp = new RegExp(foodcoopshop.LocalizedJs.admin.routeCartFinished);
                             if (currentUrl.match(cartFinishedRegExp)) {
                                 $.featherlight.showLoader();
-                                var message = $(this).contents().find('#flashMessage').html().replace(/<img[^>]*>/g,"");
-                                $('.featherlight', window.parent.document).remove();
-                                foodcoopshop.Helper.showSuccessMessage(message);
+                                var message = $(this).contents().find('#flashMessage').html().replace(/<(a|img)[^>]*>/g,"");
+                                document.location.href = foodcoopshop.Admin.addParameterToURL(
+                                    foodcoopshop.Admin.getParentLocation(),
+                                    'message=' + encodeURIComponent(message)
+                                );
                             }
                         });
                         customersDropdown.show();
