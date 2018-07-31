@@ -23,7 +23,7 @@ $pdf->SetLeftMargin(12);
 $pdf->SetRightMargin(12);
 
 $title = __('Information_about_right_of_withdrawal');
-if (isset($order)) {
+if (isset($cart)) {
     $title .= ' ' . __('and_withdrawal_form');
 }
 $pdf->SetTitle($title);
@@ -68,7 +68,7 @@ if (!empty($manufacturers)) {
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(3);
 
-            $html = '<p>'.__('Ordered_on').' (*): '.$order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong')).'</p>';
+            $html = '<p>'.__('Ordered_on').' (*): '.$cart['Cart']->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong')).'</p>';
             $pdf->writeHTML($html, true, false, true, false, '');
 
             $html = '<p>'.__('Received_on').' (*): </p>';

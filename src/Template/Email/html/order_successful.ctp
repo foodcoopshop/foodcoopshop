@@ -24,7 +24,12 @@ use Cake\Core\Configure;
         </tr>
         <tr>
             <td style="padding-bottom:20px;">
-            	<?php echo __('thank_you_for_your_order_number_{0}_from_{1}.', [$order->id_order, $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'))]); ?>
+            	<?php
+            	   echo __('thank_you_for_your_order_from_{0}.', [
+            	       $cart['Cart']->modified->i18nFormat(
+            	           Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'))
+            	   ]);
+            	?>
             </td>
         </tr>
     </tbody>
@@ -72,8 +77,7 @@ use Cake\Core\Configure;
         <tr><td><p>
             <?php
                 echo __(
-                    'Please_pick_up_your_products_on_{0}_at_{1}.', [
-                        '<b>'.$this->MyTime->getFormattedDeliveryDateByCurrentDay().'</b>',
+                    'Pickup_place:_{0}', [
                         str_replace('<br />', ', ', $this->MyHtml->getAddressFromAddressConfiguration())
                     ]
                 );

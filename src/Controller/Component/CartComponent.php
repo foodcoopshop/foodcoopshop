@@ -128,10 +128,13 @@ class CartComponent extends Component
             return false;
         }
         $cc = TableRegistry::getTableLocator()->get('Carts');
-        $cc->save($cc->patchEntity(
+        $patchedEntity = $cc->patchEntity(
             $cc->get($this->getCartId()), [
-            'status' => APP_OFF
-        ]));
+                'status' => APP_OFF
+            ]
+        );
+        $cc->save($patchedEntity);
+        return $patchedEntity;
     }
 
     /**

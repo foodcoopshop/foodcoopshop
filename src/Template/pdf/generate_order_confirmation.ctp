@@ -16,6 +16,7 @@
 use App\Controller\Component\StringComponent;
 use App\Lib\Pdf\AppTcpdf;
 use Cake\Core\Configure;
+use Cake\Log\Log;
 
 $pdf = new AppTcpdf();
 $pdf->SetLeftMargin(16);
@@ -28,7 +29,7 @@ if (!empty($manufacturers)) {
 
         $pdf->infoTextForFooter = __('Order_overview') . ' ' . $details['Manufacturer']->name;
 
-        $pdf->writeHTML('<h3>' . __('Order_of') . ' '. $appAuth->getUsername().'<br />' . __('placed_on') . ' '. $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong')).'</h3>', true, false, true, false, '');
+        $pdf->writeHTML('<h3>' . __('Order_of') . ' '. $appAuth->getUsername().'<br />' . __('placed_on') . ' '. $cart['Cart']->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong')).'</h3>', true, false, true, false, '');
         $pdf->Ln(8);
 
         $pdf->writeHTML($this->MyHtml->getManufacturerImprint($details['Manufacturer'], 'pdf', false), true, false, true, false, '');
@@ -60,19 +61,22 @@ if (!empty($manufacturers)) {
         $sumQuantity = 0;
         $sumOrderDetailTax = 0;
 
-        $manufacturerOrderDetails = [];
-        foreach ($details['OrderDetails'] as $orderDetail) {
-            if ($orderDetail->product->id_manufacturer != $manufacturerId) {
+        $manufacturerCartProducts = [];
+        foreach ($details['CartProducts'] as $cartProduct) {
+            if ($cartProduct->product->id_manufacturer != $manufacturerId) {
                 continue;
             }
-            $manufacturerOrderDetails[] = $orderDetail;
+            $manufacturerCartProducts[] = $cartProduct;
         }
 
         $k = 0;
 
-        foreach ($manufacturerOrderDetails as $orderDetail) {
+        foreach ($manufacturerCartProducts as $cartProduct) {
+            
+            $orderDetail = $cartProduct->order_detail;
+            
             $k++;
-            $showSum = $k == count($manufacturerOrderDetails);
+            $showSum = $k == count($manufacturerCartProducts);
 
             $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
 

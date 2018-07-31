@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-31 10:07+0200\n"
+"POT-Creation-Date: 2018-07-31 10:46+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1580,21 +1580,6 @@ msgstr ""
 msgid "Your_account_at_{0}_has_just_been_activated."
 msgstr ""
 
-msgid "thank_you_for_your_order_number_{0}_from_{1}."
-msgstr ""
-
-msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
-msgstr ""
-
-msgid "The_amount_will_be_reduced_from_your_credit_balance."
-msgstr ""
-
-msgid "Please_pick_up_your_products_on_{0}_at_{1}."
-msgstr ""
-
-msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
-msgstr ""
-
 msgid "Your_registration_at_{0}_has_just_been_successful!"
 msgstr ""
 
@@ -1623,6 +1608,21 @@ msgid "you_just_generated_a_new_password_which_is"
 msgstr ""
 
 msgid "You_can_sign_in_and_change_your_password_here"
+msgstr ""
+
+msgid "thank_you_for_your_order_from_{0}."
+msgstr ""
+
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr ""
+
+msgid "The_amount_will_be_reduced_from_your_credit_balance."
+msgstr ""
+
+msgid "Please_pick_up_your_products_on_{0}_at_{1}."
+msgstr ""
+
+msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
 msgstr ""
 
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."

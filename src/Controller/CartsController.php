@@ -81,12 +81,12 @@ class CartsController extends FrontendController
     /**
      * called from finish context
      * saves pdf as file
-     * @param array $order
+     * @param array $cart
      * @param array $orderDetails
      */
-    private function generateRightOfWithdrawalInformationAndForm($order, $products)
+    private function generateRightOfWithdrawalInformationAndForm($cart, $products)
     {
-        $this->set('order', $order);
+        $this->set('cart', $cart);
         $manufacturers = [];
         foreach ($products as $product) {
             $manufacturers[$product->manufacturer->id_manufacturer][] = $product;
@@ -99,7 +99,6 @@ class CartsController extends FrontendController
 
     /**
      * called from finish context
-     * @param array $order
      * saves pdf as file
      */
     private function generateGeneralTermsAndConditions()
@@ -112,37 +111,33 @@ class CartsController extends FrontendController
     /**
      * called from finish context
      * saves pdf as file
-     * @param array $order
-     * @param array $orderDetails
-     * @param array $orderDetailsTax
+     * @param array $cart
      */
-    private function generateOrderConfirmation($order)
+    private function generateOrderConfirmation($cart)
     {
-
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-
-        $this->set('order', $order);
+        
+        $this->set('cart', $cart);
         $manufacturers = [];
-        $i = 0;
 
-        $orderDetails = $this->Order->OrderDetails->find('all', [
+        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
+        $cart = $this->Cart->find('all', [
             'conditions' => [
-                'OrderDetails.id_order' => $order->id_order
+                'Carts.id_cart' => $cart['Cart']->id_cart,
             ],
             'contain' => [
-                'OrderDetailTaxes',
-                'Products',
-                'Products.Manufacturers.AddressManufacturers'
+                'CartProducts.OrderDetails.OrderDetailTaxes',
+                'CartProducts.Products',
+                'CartProducts.Products.Manufacturers.AddressManufacturers'
             ]
-        ]);
-
-        foreach ($orderDetails as $orderDetail) {
-            $manufacturers[$orderDetail->product->id_manufacturer] = [
-                'OrderDetails' => $orderDetails,
-                'Manufacturer' => $orderDetail->product->manufacturer
+        ])->first();
+        
+        foreach ($cart->cart_products as $cartProduct) {
+            $manufacturers[$cartProduct->product->id_manufacturer] = [
+                'CartProducts' => $cart->cart_products,
+                'Manufacturer' => $cartProduct->product->manufacturer
             ];
         }
-
+        
         $this->set('manufacturers', $manufacturers);
         $this->set('saveParam', 'I');
         $this->RequestHandler->renderAs($this, 'pdf');
@@ -165,23 +160,22 @@ class CartsController extends FrontendController
      * @param array $orders
      * @param array $products
      */
-    private function sendConfirmationEmailToCustomer($cart, $order, $products)
+    private function sendConfirmationEmailToCustomer($cart, $products)
     {
         if ($this->AppAuth->user('active')) {
             $email = new AppEmail();
-            $email->setTemplate('customer_order_successful')
+            $email->setTemplate('order_successful')
             ->setTo($this->AppAuth->getEmail())
             ->setSubject(__('Order_confirmation'))
             ->setViewVars([
                 'cart' => $cart,
                 'appAuth' => $this->AppAuth,
-                'originalLoggedCustomer' => $this->getRequest()->getSession()->check('Auth.originalLoggedCustomer') ? $this->getRequest()->getSession()->read('Auth.originalLoggedCustomer') : null,
-                'order' => $order
+                'originalLoggedCustomer' => $this->getRequest()->getSession()->check('Auth.originalLoggedCustomer') ? $this->getRequest()->getSession()->read('Auth.originalLoggedCustomer') : null
             ]);
 
-            $email->addAttachments([__('Filename_Right-of-withdrawal-information-and-form').'.pdf' => ['data' => $this->generateRightOfWithdrawalInformationAndForm($order, $products), 'mimetype' => 'application/pdf']]);
-            $email->addAttachments([__('Filename_Order-confirmation').'.pdf' => ['data' => $this->generateOrderConfirmation($order), 'mimetype' => 'application/pdf']]);
-            $email->addAttachments([__('Filename_General-terms-and-conditions').'.pdf' => ['data' => $this->generateGeneralTermsAndConditions(), 'mimetype' => 'application/pdf']]);
+            $email->addAttachments([__('Filename_Right-of-withdrawal-information-and-form').'.pdf' => ['data' => $this->generateRightOfWithdrawalInformationAndForm($cart, $products), 'mimetype' => 'application/pdf']]);
+            $email->addAttachments([__('Filename_Order-confirmation').'.pdf' => ['data' => $this->generateOrderConfirmation($cart), 'mimetype' => 'application/pdf']]);
+//             $email->addAttachments([__('Filename_General-terms-and-conditions').'.pdf' => ['data' => $this->generateGeneralTermsAndConditions(), 'mimetype' => 'application/pdf']]);
 
             $email->send();
         }
@@ -464,13 +458,15 @@ class CartsController extends FrontendController
 
             $manufacturersThatReceivedInstantOrderNotification = $this->sendInstantOrderNotificationToManufacturers($cart['CartProducts']);
 
-            $this->AppAuth->Cart->markAsSaved();
-            
             if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
                 // save pickup day: primary key needs to be changed!
                 $this->Cart->PickupDayEntities->setPrimaryKey(['customer_id', 'pickup_day']);
                 $this->Cart->PickupDayEntities->saveMany($cart['Cart']->pickup_day_entities);
             }
+            
+            $cart = $this->AppAuth->getCart(); // to get attached order details
+            $this->AppAuth->setCart($cart);
+            $cart['Cart'] = $this->AppAuth->Cart->markAsSaved(); // modified timestamp is needed later on!
             
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             if ($this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
@@ -492,7 +488,7 @@ class CartsController extends FrontendController
             }
             $this->Flash->success($message);
             
-//             $this->sendConfirmationEmailToCustomer($cart, $products);
+            $this->sendConfirmationEmailToCustomer($cart, $products);
 
             // due to redirect, beforeRender() is not called
             $this->resetOriginalLoggedCustomer();
@@ -559,7 +555,7 @@ class CartsController extends FrontendController
                 $email->send();
             }
         }
-        pr($manufacturersThatReceivedInstantOrderNotification);
+        
         return $manufacturersThatReceivedInstantOrderNotification;
     }
 
@@ -578,6 +574,7 @@ class CartsController extends FrontendController
                 'CartProducts.OrderDetails'
             ]
         ])->first();
+        
         if (empty($cart)) {
             throw new RecordNotFoundException('cart not found');
         }

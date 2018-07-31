@@ -117,6 +117,7 @@ class CartsTable extends AppTable
                 'Products.name' => 'ASC'
             ],
             'contain' => [
+                'OrderDetails',
                 'Products.Manufacturers',
                 'Products.DepositProducts',
                 'Products.UnitProducts',

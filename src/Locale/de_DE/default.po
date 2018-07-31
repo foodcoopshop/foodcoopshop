@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-31 10:07+0200\n"
-"PO-Revision-Date: 2018-07-31 10:14+0200\n"
+"POT-Creation-Date: 2018-07-31 10:46+0200\n"
+"PO-Revision-Date: 2018-07-31 11:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1581,21 +1581,6 @@ msgstr "davon {0} %"
 msgid "Your_account_at_{0}_has_just_been_activated."
 msgstr "Dein Mitgliedkonto bei {0} wurde soeben aktiviert."
 
-msgid "thank_you_for_your_order_number_{0}_from_{1}."
-msgstr "vielen Dank für deine Bestellung Nr. {0} vom {1}."
-
-msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
-msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
-
-msgid "The_amount_will_be_reduced_from_your_credit_balance."
-msgstr "Der Betrag wird dann automatisch von deinem Guthaben abgebucht."
-
-msgid "Please_pick_up_your_products_on_{0}_at_{1}."
-msgstr "Bitte hole deine Produkte am {0} bei uns ({1}) ab. Die genaue Uhrzeit steht in der Box rechts."
-
-msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
-msgstr "Eine detaillierte Auflistung deiner Bestellung findest du in der angehängten Bestellübersicht (PDF). Die Informationen zum Rücktrittsrecht sind gesetzlich vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen."
-
 msgid "Your_registration_at_{0}_has_just_been_successful!"
 msgstr "Deine Registrierung bei {0} war erfolgreich!"
 
@@ -1625,6 +1610,21 @@ msgstr "du hast gerade ein neues Passwort generiert, es lautet"
 
 msgid "You_can_sign_in_and_change_your_password_here"
 msgstr "Du kannst dich hier anmelden und das Passwort gleich ändern"
+
+msgid "thank_you_for_your_order_from_{0}."
+msgstr "vielen Dank für deine Bestellung vom {0}."
+
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+msgid "The_amount_will_be_reduced_from_your_credit_balance."
+msgstr "Der Betrag wird dann automatisch von deinem Guthaben abgebucht."
+
+msgid "Please_pick_up_your_products_on_{0}_at_{1}."
+msgstr "Bitte hole deine Produkte am {0} bei uns ({1}) ab. Die genaue Uhrzeit steht in der Box rechts."
+
+msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
+msgstr "Eine detaillierte Auflistung deiner Bestellung findest du in der angehängten Bestellübersicht (PDF). Die Informationen zum Rücktrittsrecht sind gesetzlich vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen."
 
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."
 msgstr "Das ist der Text der E-Mail (mit FoodCoopShop-Logo als Anhang)."

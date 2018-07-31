@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-31 10:07+0200\n"
-"PO-Revision-Date: 2018-07-31 10:14+0200\n"
+"POT-Creation-Date: 2018-07-31 10:46+0200\n"
+"PO-Revision-Date: 2018-07-31 11:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1581,21 +1581,6 @@ msgstr "from which {0} %"
 msgid "Your_account_at_{0}_has_just_been_activated."
 msgstr "Your account at {0} has just been activated."
 
-msgid "thank_you_for_your_order_number_{0}_from_{1}."
-msgstr "thank you for order n° {0} from {1}."
-
-msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
-msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
-
-msgid "The_amount_will_be_reduced_from_your_credit_balance."
-msgstr "The amount will be reduced from your credit balance."
-
-msgid "Please_pick_up_your_products_on_{0}_at_{1}."
-msgstr "Please pick up your products on {0} at {1}."
-
-msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
-msgstr "You can find a detailed list of your ordered products in the attached order confirmation."
-
 msgid "Your_registration_at_{0}_has_just_been_successful!"
 msgstr "Your registration at {0} has been successful!"
 
@@ -1625,6 +1610,21 @@ msgstr "you just generated a new password which is"
 
 msgid "You_can_sign_in_and_change_your_password_here"
 msgstr "You can sign in and change your password here"
+
+msgid "thank_you_for_your_order_from_{0}."
+msgstr "thank you for order from {0}."
+
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
+msgid "The_amount_will_be_reduced_from_your_credit_balance."
+msgstr "The amount will be reduced from your credit balance."
+
+msgid "Please_pick_up_your_products_on_{0}_at_{1}."
+msgstr "Please pick up your products on {0} at {1}."
+
+msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
+msgstr "You can find a detailed list of your ordered products in the attached order confirmation."
 
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."
 msgstr "This is the text of the email (with attached logo)."
