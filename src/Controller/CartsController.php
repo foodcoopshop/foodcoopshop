@@ -175,7 +175,7 @@ class CartsController extends FrontendController
 
             $email->addAttachments([__('Filename_Right-of-withdrawal-information-and-form').'.pdf' => ['data' => $this->generateRightOfWithdrawalInformationAndForm($cart, $products), 'mimetype' => 'application/pdf']]);
             $email->addAttachments([__('Filename_Order-confirmation').'.pdf' => ['data' => $this->generateOrderConfirmation($cart), 'mimetype' => 'application/pdf']]);
-//             $email->addAttachments([__('Filename_General-terms-and-conditions').'.pdf' => ['data' => $this->generateGeneralTermsAndConditions(), 'mimetype' => 'application/pdf']]);
+            $email->addAttachments([__('Filename_General-terms-and-conditions').'.pdf' => ['data' => $this->generateGeneralTermsAndConditions(), 'mimetype' => 'application/pdf']]);
 
             $email->send();
         }
@@ -568,17 +568,12 @@ class CartsController extends FrontendController
             'conditions' => [
                 'Carts.id_cart' => $cartId,
                 'Carts.id_customer' => $this->AppAuth->getUserId()
-            ],
-            'contain' => [
-                'Customers',
-                'CartProducts.OrderDetails'
             ]
         ])->first();
         
         if (empty($cart)) {
             throw new RecordNotFoundException('cart not found');
         }
-        
         $this->set('cart', $cart);
 
         $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
