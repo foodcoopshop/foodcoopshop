@@ -5,6 +5,7 @@ namespace Admin\Controller;
 use App\Mailer\AppEmail;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
+use Cake\I18n\FrozenDate;
 use Cake\I18n\Time;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
@@ -553,7 +554,6 @@ class PaymentsController extends AdminAppController
 
         $contain = ['Payments'];
         if (in_array('product', $this->allowedPaymentTypes)) {
-            $contain[] = 'PaidCashFreeOrderDetails';
             if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
                 $contain[] = 'PaidCashFreeOrderDetails.TimebasedCurrencyOrderDetails';
             }
@@ -591,27 +591,33 @@ class PaymentsController extends AdminAppController
             }
         }
 
-        if (! empty($customer->paid_cash_free_order_details)) {
-            foreach ($customer->paid_cash_free_order_details as $order_detail) {
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $orderDetailsGroupedByMonth = $this->OrderDetail->getMonthlySumProduct($this->getCustomerId());
+        
+        if (! empty($orderDetailsGroupedByMonth)) {
+            foreach ($orderDetailsGroupedByMonth as $order_detail) {
+                $monthAndYear = explode('-', $order_detail['MonthAndYear']);
+                $frozenDateFrom = FrozenDate::create($monthAndYear[0], $monthAndYear[1], 1);
+                $lastDayOfMonth = Configure::read('app.timeHelper')->getLastDayOfGivenMonth($order_detail['MonthAndYear']);
+                $frozenDateTo = FrozenDate::create($monthAndYear[0], $monthAndYear[1], $lastDayOfMonth);
                 $payments[] = [
-                    'dateRaw' => $order_detail->created,
-                    'date' => $order_detail->created->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
-                    'year' => $order_detail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year')),
-                    'amount' => $order_detail->total_price_tax_incl * - 1,
-                    'deposit' => strtotime($order_detail->created->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $order_detail->deposit * - 1 : 0,
+                    'dateRaw' => $frozenDateFrom,
+                    'date' => $frozenDateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
+                    'year' => $frozenDateFrom->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year')),
+                    'amount' => $order_detail['SumTotalPaid'] * - 1,
+                    'deposit' => strtotime($frozenDateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $order_detail['SumDeposit'] * - 1 : 0,
                     'type' => 'order',
                     'text' => Configure::read('app.htmlHelper')->link(
-                        __d('admin', 'Order_number_abbr') . ' (' . 
-                            Configure::read('app.htmlHelper')->getOrderStates()[$order_detail->order_state] . ')',
-                            '/admin/order-details/?dateFrom=' . $order_detail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
-                            '&dateTo=' . $order_detail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . 
-                            '&customerId=' . $order_detail->id_customer,
-                            [
-                                'title' => __d('admin', 'Show_order')
-                            ]
+                        __d('admin', 'Orders') . ' ' . Configure::read('app.timeHelper')->getMonthName($monthAndYear[1]) . ' ' . $monthAndYear[0],
+                        '/admin/order-details/?dateFrom=' . $frozenDateFrom->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
+                        '&dateTo=' . $frozenDateTo->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . 
+                        '&customerId=' . $this->getCustomerId(),
+                        [
+                            'title' => __d('admin', 'Show_order')
+                        ]
                     ),
                     'payment_id' => null,
-                    'timebased_currency_order' => isset($order->timebased_currency_order) ? $order->timebased_currency_order : null
+//                     'timebased_currency_order' => isset($order->timebased_currency_order) ? $order->timebased_currency_order : null
                 ];
             }
         }

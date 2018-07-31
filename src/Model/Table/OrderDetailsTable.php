@@ -225,7 +225,7 @@ class OrderDetailsTable extends AppTable
         }
     }
     
-    public function getSumProduct($customerId)
+    private function prepareSumProduct($customerId)
     {
         $conditions = [
             'OrderDetails.id_customer' => $customerId,
@@ -235,10 +235,28 @@ class OrderDetailsTable extends AppTable
         $query = $this->find('all', [
             'conditions' => $conditions
         ]);
+        
+        return $query;
+    }
+    
+    public function getMonthlySumProduct($customerId)
+    {
+        $query = $this->prepareSumProduct($customerId);
+        $query->group('MonthAndYear');
+        $query->select([
+            'SumTotalPaid' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
+            'SumDeposit' => $query->func()->sum('OrderDetails.deposit'),
+            'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')'
+        ]);
+        return $query->toArray();
+    }
+    
+    public function getSumProduct($customerId)
+    {
+        $query = $this->prepareSumProduct($customerId);
         $query->select(
             ['SumTotalPaid' => $query->func()->sum('OrderDetails.total_price_tax_incl')]
         );
-        
         return $query->toArray()[0]['SumTotalPaid'];
     }
     
