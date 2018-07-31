@@ -16,9 +16,6 @@ use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
 
-?>
-<?php
-
 if (!$appAuth->user() || $appAuth->termsOfUseAccepted()) {
     return false;
 }

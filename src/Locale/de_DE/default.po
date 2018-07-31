@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-30 17:21+0200\n"
-"PO-Revision-Date: 2018-07-30 17:22+0200\n"
+"POT-Creation-Date: 2018-07-31 08:37+0200\n"
+"PO-Revision-Date: 2018-07-31 08:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1329,41 +1329,8 @@ msgstr "Davon in"
 msgid "Including_vat"
 msgstr "Enthaltene Umsatzsteuer"
 
-msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
-msgstr "Wieviel davon möchtest du in {0} bezahlen?"
-
 msgid "To_finish_order_click_here."
 msgstr "Um die Bestellung abzuschließen, klicke bitte auf \"Zahlungspflichtig bestellen\"."
-
-msgid "The_amount_will_be_reduced_from_your_credit_balance."
-msgstr "Der Betrag wird dann automatisch von deinem Guthaben abgebucht."
-
-msgid "Please_pay_when_picking_up_products."
-msgstr "Den Betrag bitte bei der Abholung in bar bezahlen."
-
-msgid "Please_pick_up_your_products_on_{0}_at_{1}."
-msgstr "Bitte hole deine Produkte am {0} bei uns ({1}) ab. Die genaue Uhrzeit steht in der Box rechts."
-
-msgid "general_terms_and_conditions"
-msgstr "AGB"
-
-msgid "I_accept_the_{0}"
-msgstr "Ich akzeptiere die {0}"
-
-msgid "right_of_withdrawal"
-msgstr "Rücktrittsrecht"
-
-msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
-msgstr "Ich nehme das {0} zur Kenntnis und akzeptiere dessen Ausschluss für leicht verderbliche Waren."
-
-msgid "Write_message_to_pick_up_team_for_{0}?"
-msgstr "Nachricht an Abholdienst für {0} schreiben?"
-
-msgid "Placeholder_message_pickup_day_comment."
-msgstr "Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. Die Hersteller sehen diese Nachricht nicht."
-
-msgid "Order_button"
-msgstr "Zahlungspflichtig bestellen"
 
 msgid "Order_placed"
 msgstr "Bestellung abgeschlossen"
@@ -1430,6 +1397,9 @@ msgstr "Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden?"
 
 msgid "terms_of_use"
 msgstr "Nutzungsbedingungen"
+
+msgid "I_accept_the_{0}"
+msgstr "Ich akzeptiere die {0}"
 
 msgid "Please_enter_your_email_address_and_click_on_send_button."
 msgstr "Bitte gib deine E-Mail-Adresse an und klicke dann auf \"Senden\"."
@@ -1536,6 +1506,36 @@ msgstr "Um dein Profil zu ändern, beende bitte den Sofort-Bestellungsmodus."
 msgid "Signed_in"
 msgstr "Eingeloggt"
 
+msgid "right_of_withdrawal"
+msgstr "Rücktrittsrecht"
+
+msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
+msgstr "Ich nehme das {0} zur Kenntnis und akzeptiere dessen Ausschluss für leicht verderbliche Waren."
+
+msgid "Write_message_to_pick_up_team_for_{0}?"
+msgstr "Nachricht an Abholdienst für den {0} schreiben?"
+
+msgid "Placeholder_message_pickup_day_comment."
+msgstr "Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. Die Hersteller sehen diese Nachricht nicht."
+
+msgid "general_terms_and_conditions"
+msgstr "AGB"
+
+msgid "Order_button"
+msgstr "Zahlungspflichtig bestellen"
+
+msgid "The_amount_will_be_reduced_from_your_credit_balance."
+msgstr "Der Betrag wird dann automatisch von deinem Guthaben abgebucht."
+
+msgid "Please_pay_when_picking_up_products."
+msgstr "Den Betrag bitte bei der Abholung in bar bezahlen."
+
+msgid "Pickup_place:_{0}"
+msgstr "Abholort: {0}"
+
+msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
+msgstr "Wieviel davon möchtest du in {0} bezahlen?"
+
 msgid "Product"
 msgstr "Produkt"
 
@@ -1583,6 +1583,9 @@ msgstr "vielen Dank für deine Bestellung Nr. {0} vom {1}."
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+msgid "Please_pick_up_your_products_on_{0}_at_{1}."
+msgstr "Bitte hole deine Produkte am {0} bei uns ({1}) ab. Die genaue Uhrzeit steht in der Box rechts."
 
 msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
 msgstr "Eine detaillierte Auflistung deiner Bestellung findest du in der angehängten Bestellübersicht (PDF). Die Informationen zum Rücktrittsrecht sind gesetzlich vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen."
