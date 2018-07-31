@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-31 09:58+0200\n"
+"POT-Creation-Date: 2018-07-31 10:07+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -68,7 +68,10 @@ msgstr ""
 msgid "Errors_occurred."
 msgstr ""
 
-msgid "Instant_order_successfully_placed_for_{0}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
+msgid "Instant_order_successfully_placed_for_{0}."
+msgstr ""
+
+msgid "Instant_order_successfully_placed_for_{0}._The_following_manufacturers_were_notified:_{1}"
 msgstr ""
 
 msgid "Your_order_has_been_placed_succesfully."
@@ -77,7 +80,7 @@ msgstr ""
 msgid "{0}_has_placed_a_new_order_({1})."
 msgstr ""
 
-msgid "Notification_about_instant_order_order_number_{0}"
+msgid "Notification_about_instant_order_order"
 msgstr ""
 
 msgid "Your_order_has_been_placed"
@@ -1607,7 +1610,7 @@ msgstr ""
 msgid "Here_you_can_see_the_data_of_the_new_member"
 msgstr ""
 
-msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1}_(order_number_{2})."
+msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1})."
 msgstr ""
 
 msgid "You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists."

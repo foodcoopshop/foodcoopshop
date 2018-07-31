@@ -462,7 +462,7 @@ class CartsController extends FrontendController
             $this->saveOrderDetails($orderDetails2save);
             $this->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
 
-//             $this->sendInstantOrderNotificationToManufacturers($cart['CartProducts']);
+            $manufacturersThatReceivedInstantOrderNotification = $this->sendInstantOrderNotificationToManufacturers($cart['CartProducts']);
 
             $this->AppAuth->Cart->markAsSaved();
             
@@ -474,9 +474,16 @@ class CartsController extends FrontendController
             
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             if ($this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
-                $message = __('Instant_order_successfully_placed_for_{0}._The_manufacturer_was_notified_unless_the_notification_was_deactivated.', [
-                    '<b>' . $this->request->getSession()->read('Auth.instantOrderCustomer')->name . '</b>'
-                ]);
+                if (empty($manufacturersThatReceivedInstantOrderNotification)) {
+                    $message = __('Instant_order_successfully_placed_for_{0}.', [
+                        '<b>' . $this->request->getSession()->read('Auth.instantOrderCustomer')->name . '</b>'
+                    ]);
+                } else {
+                    $message = __('Instant_order_successfully_placed_for_{0}._The_following_manufacturers_were_notified:_{1}', [
+                        '<b>' . $this->request->getSession()->read('Auth.instantOrderCustomer')->name . '</b>',
+                        '<b>' . join(', ', $manufacturersThatReceivedInstantOrderNotification) . '</b>'
+                    ]);
+                }
                 $this->ActionLog->customSave('orders_shop_added', $this->AppAuth->getUserId(), 0, '', $message);
             } else {
                 $message = __('Your_order_has_been_placed_succesfully.');
@@ -496,11 +503,15 @@ class CartsController extends FrontendController
         $this->setAction('detail');
     }
 
-    public function sendInstantOrderNotificationToManufacturers($cartProducts, $order)
+    /**
+     * @param $cartProducts
+     * @return array
+     */
+    public function sendInstantOrderNotificationToManufacturers($cartProducts)
     {
 
         if (!$this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
-            return false;
+            return [];
         }
 
         $manufacturers = [];
@@ -509,6 +520,7 @@ class CartsController extends FrontendController
         }
 
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $manufacturersThatReceivedInstantOrderNotification = [];
         foreach ($manufacturers as $manufacturerId => $cartProducts) {
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
@@ -529,13 +541,13 @@ class CartsController extends FrontendController
             $sendInstantOrderNotification = $this->Manufacturer->getOptionSendInstantOrderNotification($manufacturer->send_instant_order_notification);
             $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer->bulk_orders_allowed);
             if ($sendInstantOrderNotification && !$bulkOrdersAllowed) {
+                $manufacturersThatReceivedInstantOrderNotification[] = $manufacturer->name;
                 $email = new AppEmail();
                 $email->setTemplate('instant_order_notification')
                 ->setTo($manufacturer->address_manufacturer->email)
-                ->setSubject(__('Notification_about_instant_order_order_number_{0}', [$order->id_order]))
+                ->setSubject(__('Notification_about_instant_order_order'))
                 ->setViewVars([
                     'appAuth' => $this->AppAuth,
-                    'order' => $order,
                     'cart' => ['CartProducts' => $cartProducts],
                     'originalLoggedCustomer' => $this->getRequest()->getSession()->read('Auth.originalLoggedCustomer'),
                     'manufacturer' => $manufacturer,
@@ -547,6 +559,8 @@ class CartsController extends FrontendController
                 $email->send();
             }
         }
+        pr($manufacturersThatReceivedInstantOrderNotification);
+        return $manufacturersThatReceivedInstantOrderNotification;
     }
 
     public function orderSuccessful($cartId)

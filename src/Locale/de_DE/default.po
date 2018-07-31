@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-31 09:58+0200\n"
-"PO-Revision-Date: 2018-07-31 09:58+0200\n"
+"POT-Creation-Date: 2018-07-31 10:07+0200\n"
+"PO-Revision-Date: 2018-07-31 10:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -69,8 +69,11 @@ msgstr "Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist ni
 msgid "Errors_occurred."
 msgstr "Es sind Fehler aufgetreten."
 
-msgid "Instant_order_successfully_placed_for_{0}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
-msgstr "Die Sofort-Bestellung für {0} wurde erfolgreich getätigt. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat."
+msgid "Instant_order_successfully_placed_for_{0}."
+msgstr "Die Sofort-Bestellung für {0} wurde erfolgreich getätigt."
+
+msgid "Instant_order_successfully_placed_for_{0}._The_following_manufacturers_were_notified:_{1}"
+msgstr "Die Sofort-Bestellung für {0} wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: {1}"
 
 msgid "Your_order_has_been_placed_succesfully."
 msgstr "Deine Bestellung wurde erfolgreich abgeschlossen."
@@ -78,8 +81,8 @@ msgstr "Deine Bestellung wurde erfolgreich abgeschlossen."
 msgid "{0}_has_placed_a_new_order_({1})."
 msgstr "{0} hat eine neue Bestellung getätigt ({1})."
 
-msgid "Notification_about_instant_order_order_number_{0}"
-msgstr "Benachrichtigung über Sofort-Bestellung Nr. {0}"
+msgid "Notification_about_instant_order_order"
+msgstr "Benachrichtigung über Sofort-Bestellung"
 
 msgid "Your_order_has_been_placed"
 msgstr "Deine Bestellung ist abgeschlossen"
@@ -1608,8 +1611,8 @@ msgstr "Hier kannst du das neue Mitglied aktivieren und die Daten einsehen"
 msgid "Here_you_can_see_the_data_of_the_new_member"
 msgstr "Hier kannst du die Daten des neuen Mitglieds einsehen"
 
-msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1}_(order_number_{2})."
-msgstr "Soeben wurde von {1} eine Sofort-Bestellung für {0} getätigt (Bestellung Nr. {2})."
+msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1})."
+msgstr "Soeben wurde von {1} eine Sofort-Bestellung für {0} getätigt."
 
 msgid "You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists."
 msgstr "Du erhältst diese Nachricht, weil diese Bestellung automatisch in die Vorwoche rückdatiert wurde und sie daher nicht in deinen Bestelllisten aufscheint."

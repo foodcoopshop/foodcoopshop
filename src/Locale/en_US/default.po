@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-31 09:58+0200\n"
-"PO-Revision-Date: 2018-07-31 09:58+0200\n"
+"POT-Creation-Date: 2018-07-31 10:07+0200\n"
+"PO-Revision-Date: 2018-07-31 10:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -69,8 +69,11 @@ msgstr "The manufacturer of the product {0} either has a delivery break or the p
 msgid "Errors_occurred."
 msgstr "Errors occurred."
 
-msgid "Instant_order_successfully_placed_for_{0}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
-msgstr "Instant order successfully placed for {1}. The manufacturer was notified unless the notification was disabled."
+msgid "Instant_order_successfully_placed_for_{0}."
+msgstr "Instant order successfully placed for {0}."
+
+msgid "Instant_order_successfully_placed_for_{0}._The_following_manufacturers_were_notified:_{1}"
+msgstr "Instant order successfully placed for {0}. The following manufacturers were notified: {1}"
 
 msgid "Your_order_has_been_placed_succesfully."
 msgstr "Your order was placed successfully."
@@ -78,8 +81,8 @@ msgstr "Your order was placed successfully."
 msgid "{0}_has_placed_a_new_order_({1})."
 msgstr "{0} has placed a new order ({1})."
 
-msgid "Notification_about_instant_order_order_number_{0}"
-msgstr "Notification about instant order order n° {0}"
+msgid "Notification_about_instant_order_order"
+msgstr "Notification about instant order"
 
 msgid "Your_order_has_been_placed"
 msgstr "Your order has been placed"
@@ -1608,8 +1611,8 @@ msgstr "Here you can activate the new member and see the data"
 msgid "Here_you_can_see_the_data_of_the_new_member"
 msgstr "Here you can see the data of the new member"
 
-msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1}_(order_number_{2})."
-msgstr "There has been placed a instant order for {0} by {1} (order n° {2})."
+msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1})."
+msgstr "There has been placed a instant order for {0} by {1}."
 
 msgid "You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists."
 msgstr "You receive this message because this order was automatically moved into the previous order period and therefore it does not appear on your order lists."
