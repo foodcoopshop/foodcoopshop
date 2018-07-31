@@ -607,8 +607,8 @@ class CustomersController extends AdminAppController
 
         $i = 0;
         $this->Payment = TableRegistry::getTableLocator()->get('Payments');
-        $this->Order = TableRegistry::getTableLocator()->get('Orders');
-
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
             $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
         }
@@ -621,12 +621,13 @@ class CustomersController extends AdminAppController
                 }
             }
 
-            $customer->order_count = $this->Order->getCountByCustomerId($customer->id_customer);
+            $customer->order_detail_count = $this->OrderDetail->getCountByCustomerId($customer->id_customer);
 
-            $voc = count($customer->valid_orders);
-            $customer->valid_orders_count = $voc;
-
-            $customer->last_valid_order_date = '';
+            /*
+            $voc = count($customer->valid_order_details);
+            $customer->valid_order_details_count = $voc;
+             
+            $customer->last_valid_order_detail_date = '';
 
             $validOrdersCountCondition = true;
             if ($validOrdersCountFrom != '') {
@@ -663,10 +664,11 @@ class CustomersController extends AdminAppController
                     unset($customer);
                 }
             }
-
+            */
+        
             $i ++;
         }
-
+        
         $this->set('customers', $customers);
 
         $this->set('title_for_layout', __d('admin', 'Members'));

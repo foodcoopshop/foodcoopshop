@@ -36,18 +36,6 @@ class OrdersTable extends AppTable
         $this->setPrimaryKey('id_order');
     }
 
-    public function getCountByCustomerId($customerId)
-    {
-        $conditions = [
-            'id_customer' => $customerId
-        ];
-        $conditions[] = $this->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStateIds());
-        $orderCount = $this->find('all', [
-            'conditions' => $conditions
-        ])->count();
-        return $orderCount;
-    }
-
     public function getOrderParams($customerId, $orderStates, $dateFrom, $dateTo, $orderId, $appAuth)
     {
         $conditions = [];

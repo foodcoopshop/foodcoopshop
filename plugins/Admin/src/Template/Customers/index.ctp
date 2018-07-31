@@ -54,7 +54,7 @@ echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.custome
 echo '<th>' . $this->Paginator->sort('Customers.id_default_group', __d('admin', 'Group')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.email', __d('admin', 'Email')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.active', __d('admin', 'Status')) . '</th>';
-echo '<th>'.__d('admin', 'Orders').'</th>';
+echo '<th style="text-align:right">'.__d('admin', 'Ordered_products').'</th>';
 if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
     echo '<th>'.__d('admin', 'Credit').'</th>';
 }
@@ -70,7 +70,7 @@ echo '<th>'.__d('admin', 'Comment_abbreviation').'</th>';
 echo '</tr>';
 
 $i = 0;
-$sumOrdersCount = 0;
+$sumOrderDetailsCount = 0;
 $sumEmailReminders = 0;
 $sumTimebasedCurrency = null;
 foreach ($customers as $customer) {
@@ -93,8 +93,8 @@ foreach ($customers as $customer) {
                 ], $this->Slug->getCustomerEdit($customer->id_customer));
             echo '</span>';
         }
-        if ($customer->order_count <= 3) {
-            $customerName = '<i class="fa fa-pagelines" title="'.__d('admin', 'Newbie_only_{0}_times_ordered.', [$customer->order_count]).'"></i> ' . $customerName;
+        if ($customer->order_detail_count <= 3) {
+            $customerName = '<i class="fa fa-pagelines" title="'.__d('admin', 'Newbie_only_{0}_times_ordered.', [$customer->order_detail_count]).'"></i> ' . $customerName;
         }
 
         echo '<span class="name">' . $this->Html->link($customerName, '/admin/orders/index/?orderStates[]=' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . '&dateFrom=01.01.2014&dateTo=' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt')) . '&customerId=' . $customer->id_customer . '&sort=OrderDetails.created&direction=desc', [
@@ -151,14 +151,14 @@ foreach ($customers as $customer) {
 
     echo '</td>';
 
-    echo '<td>';
-    echo $customer->valid_orders_count;
-    $sumOrdersCount += $customer->valid_orders_count;
+    echo '<td style="text-align:right">';
+        echo $this->Number->formatAsDecimal($customer->order_detail_count, 0);
+        $sumOrderDetailsCount += $customer->order_detail_count;
     echo '</td>';
 
     if ($this->Html->paymentIsCashless()) {
         $negativeClass = $customer->credit_balance < 0 ? 'negative' : '';
-        echo '<td align="center" class="' . $negativeClass . '">';
+        echo '<td style="text-align:center" class="' . $negativeClass . '">';
 
         if ($appAuth->isSuperadmin()) {
             $creditBalanceHtml = '<span class="'.$negativeClass.'">' . $this->Number->formatAsCurrency($customer->credit_balance);
@@ -240,7 +240,7 @@ foreach ($customers as $customer) {
 
 echo '<tr>';
 echo '<td colspan="4"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
-echo '<td><b>' . $this->Number->formatAsDecimal($sumOrdersCount, 0) . '</b></td>';
+echo '<td style="text-align:right"><b>' . $this->Number->formatAsDecimal($sumOrderDetailsCount, 0) . '</b></td>';
 if ($this->Html->paymentIsCashless()) {
     echo '<td></td>';
 }

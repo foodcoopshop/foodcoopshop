@@ -179,7 +179,7 @@ class OrdersController extends AdminAppController
         ])->toArray();
         foreach ($orders as $order) {
             if (!empty($order->customer)) {
-                $order->customer->order_count = $this->Order->getCountByCustomerId($order->customer->id_customer);
+                $order->customer->cart_count = $this->Order->getCountByCustomerId($order->customer->id_customer);
             }
         }
         $this->set('orders', $orders);

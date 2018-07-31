@@ -239,6 +239,18 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
     
+    public function getCountByCustomerId($customerId)
+    {
+        $conditions = [
+            'OrderDetails.id_customer' => $customerId,
+            'OrderDetails.order_state NOT IN (' . ORDER_STATE_CANCELLED. ')'
+        ];
+        $query = $this->find('all', [
+            'conditions' => $conditions
+        ]);
+        return $query->count();
+    }
+    
     public function getMonthlySumProduct($customerId)
     {
         $query = $this->prepareSumProduct($customerId);
