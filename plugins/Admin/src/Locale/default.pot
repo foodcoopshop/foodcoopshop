@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-30 17:21+0200\n"
+"POT-Creation-Date: 2018-07-31 17:40+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -293,9 +293,6 @@ msgstr ""
 msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
 msgstr ""
 
-msgid "Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
-msgstr ""
-
 msgid "Instant_order"
 msgstr ""
 
@@ -363,9 +360,6 @@ msgid "Member_fee"
 msgstr ""
 
 msgid "Credit"
-msgstr ""
-
-msgid "Order_number_abbr"
 msgstr ""
 
 msgid "Show_order"
@@ -809,6 +803,9 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
+msgid "Ordered_products"
+msgstr ""
+
 msgid "Reminder"
 msgstr ""
 
@@ -821,7 +818,7 @@ msgstr ""
 msgid "Comment_abbreviation"
 msgstr ""
 
-msgid "Newbie_only_{0}_times_ordered."
+msgid "Newbie_only_{0}_products_ordered."
 msgstr ""
 
 msgid "Show_all_orders_from_{0}"
@@ -963,9 +960,6 @@ msgid "Click_to_cancel_product"
 msgstr ""
 
 msgid "Deposit_return"
-msgstr ""
-
-msgid "Ordered_products"
 msgstr ""
 
 msgid "Show_all_ordered_products_from_{0}"

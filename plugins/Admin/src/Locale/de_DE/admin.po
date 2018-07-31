@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-30 17:21+0200\n"
-"PO-Revision-Date: 2018-07-30 17:22+0200\n"
+"POT-Creation-Date: 2018-07-31 17:40+0200\n"
+"PO-Revision-Date: 2018-07-31 17:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -294,9 +294,6 @@ msgstr "{0,plural,=1{Produkte wurden erfolgreich storniert.} other{Produkte wurd
 msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
 msgstr "Der Kommentar der Bestellung Nr. {0} von {1} wurde geändert:"
 
-msgid "Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
-msgstr "Die Sofort-Bestellung Nr. {0} für {1} wurde erfolgreich getätigt und rückdatiert auf den {2}. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat."
-
 msgid "Instant_order"
 msgstr "Sofort-Bestellung"
 
@@ -365,9 +362,6 @@ msgstr "Mitgliedsbeitrag"
 
 msgid "Credit"
 msgstr "Guthaben"
-
-msgid "Order_number_abbr"
-msgstr "Bestell-Nr."
 
 msgid "Show_order"
 msgstr "Bestellung anzeigen"
@@ -810,6 +804,9 @@ msgstr "Gruppe"
 msgid "Status"
 msgstr "Status"
 
+msgid "Ordered_products"
+msgstr "Bestellte Produkte"
+
 msgid "Reminder"
 msgstr "Erinnerung"
 
@@ -822,8 +819,8 @@ msgstr "Letztes Bestell-Datum"
 msgid "Comment_abbreviation"
 msgstr "Komm."
 
-msgid "Newbie_only_{0}_times_ordered."
-msgstr "Neuling: Erst {0}x bestellt."
+msgid "Newbie_only_{0}_products_ordered."
+msgstr "Neuling: Erst {0} Produkte bestellt."
 
 msgid "Show_all_orders_from_{0}"
 msgstr "Alle Bestellungen von {0} anzeigen"
@@ -965,9 +962,6 @@ msgstr "Zum Stornieren des Produktes anklicken"
 
 msgid "Deposit_return"
 msgstr "Pfand-Rückgabe"
-
-msgid "Ordered_products"
-msgstr "Bestellte Produkte"
 
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Alle bestellten Produkte von {0} anzeigen"
@@ -1748,6 +1742,12 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+#~ msgid "Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
+#~ msgstr "Die Sofort-Bestellung Nr. {0} für {1} wurde erfolgreich getätigt und rückdatiert auf den {2}. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat."
+
+#~ msgid "Order_number_abbr"
+#~ msgstr "Bestell-Nr."
 
 #~ msgid "Not_picked_up"
 #~ msgstr "Nicht abgeholt"

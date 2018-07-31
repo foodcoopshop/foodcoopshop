@@ -15,17 +15,14 @@
 
 if ($groupBy == '') {
     echo '<td>';
-        if ($groupBy == '') {
-            echo $this->Html->getNameRespectingIsDeleted($orderDetail->customer);
-        }
+        echo $this->Html->getNameRespectingIsDeleted($orderDetail->customer);
     echo '</td>';
     
     echo '<td class="hide">';
-        if ($groupBy == '' && !empty($orderDetail->customer)) {
+        if (!empty($orderDetail->customer)) {
             echo '<span class="email">' . $orderDetail->customer->email . '</span>';
         }
     echo '</td>';
 }
-
 
 ?>

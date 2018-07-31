@@ -60,7 +60,13 @@ if ($groupBy == 'customer') {
             );
         echo '</span>';
     }
-    echo $orderDetail['name'];
+    $name = $orderDetail['name'];
+    if ($orderDetail['order_detail_count'] <= 25) {
+        $name = '<i class="fa fa-pagelines" title="'.__d('admin', 'Newbie_only_{0}_products_ordered.', [
+            $orderDetail['order_detail_count']
+        ]).'"></i> ' . $name;
+    }
+    echo $name;
 }
 if ($groupBy == 'product') {
     echo $this->MyHtml->link($orderDetail['manufacturer_name'], '/admin/order-details/index/?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '&' . 'manufacturerId=' . $orderDetail['manufacturer_id'] . '&orderStates[]=' . join(',', $orderStates) . '&customerId=' . $customerId . '&groupBy=product');

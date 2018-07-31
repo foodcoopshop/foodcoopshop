@@ -363,6 +363,10 @@ class OrderDetailsTable extends AppTable
             unset($preparedOrderDetails[$key]['products_picked_up_tmp']);
         }
         
+        foreach($preparedOrderDetails as &$orderDetail) {
+            $orderDetail['order_detail_count'] = $this->getCountByCustomerId($orderDetail['customer_id']);
+        }
+        
         return $preparedOrderDetails;
     }
 

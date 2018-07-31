@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-30 17:21+0200\n"
-"PO-Revision-Date: 2018-07-30 16:27+0200\n"
+"POT-Creation-Date: 2018-07-31 17:40+0200\n"
+"PO-Revision-Date: 2018-07-31 17:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -294,9 +294,6 @@ msgstr "{0,plural,=1{product was cancelled succesfully.} other{products were can
 msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
 msgstr "The comment of the order number {0} by {1} was changed:"
 
-msgid "Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
-msgstr "Instant order nrº {0} successfully placed for {1} and date changed to {2}. The manufacturer was notified unless the notification was disabled."
-
 msgid "Instant_order"
 msgstr "Instant order"
 
@@ -365,9 +362,6 @@ msgstr "Member fee"
 
 msgid "Credit"
 msgstr "Credit"
-
-msgid "Order_number_abbr"
-msgstr "Order nº"
 
 msgid "Show_order"
 msgstr "Show order"
@@ -810,6 +804,9 @@ msgstr "Group"
 msgid "Status"
 msgstr "Status"
 
+msgid "Ordered_products"
+msgstr "Ordered products"
+
 msgid "Reminder"
 msgstr "Reminder"
 
@@ -822,8 +819,8 @@ msgstr "Last order date"
 msgid "Comment_abbreviation"
 msgstr "Comm."
 
-msgid "Newbie_only_{0}_times_ordered."
-msgstr "Newbie: has only ordered {0} times."
+msgid "Newbie_only_{0}_products_ordered."
+msgstr "Newbie: has only ordered {0} products"
 
 msgid "Show_all_orders_from_{0}"
 msgstr "Show all orders from {0}"
@@ -966,9 +963,6 @@ msgstr "Click to cancel product"
 msgid "Deposit_return"
 msgstr "Deposit return"
 
-msgid "Ordered_products"
-msgstr "Ordered products"
-
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Show all ordered products from {0}"
 
@@ -981,12 +975,11 @@ msgstr "Click to change price"
 msgid "Additional_in_{0}"
 msgstr "Additional in {0}"
 
-#, fuzzy
 msgid "Yes"
-msgstr "yes"
+msgstr "Yes"
 
 msgid "No"
-msgstr ""
+msgstr "No"
 
 msgid "Click_to_change_weight"
 msgstr "Click to change weight"
@@ -1749,6 +1742,12 @@ msgstr "{0,plural,=1{record} other{records}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
+#~ msgid "Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
+#~ msgstr "Instant order nrº {0} successfully placed for {1} and date changed to {2}. The manufacturer was notified unless the notification was disabled."
+
+#~ msgid "Order_number_abbr"
+#~ msgstr "Order nº"
 
 #~ msgid "Not_picked_up"
 #~ msgstr "Not picked up"

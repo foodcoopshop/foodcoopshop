@@ -140,8 +140,8 @@ use Cake\Core\Configure;
                 );
             echo '</span>';
         }
-        if (isset($order->customer->order_count) && $order->customer->order_count <= 3) {
-            echo '<span class="customer-is-new"><i class="fa fa-pagelines" title="'.__d('admin', 'Newbie_only_{0}_times_ordered.', [$order->customer->order_count]).'"></i></span>';
+        if (isset($order->customer->order_count) && $order->customer->order_count <= 25) {
+            echo '<span class="customer-is-new"><i class="fa fa-pagelines" title="'.__d('admin', 'Newbie_only_{0}_products_ordered.', [$order->customer->order_details_count]).'"></i></span>';
         }
         echo '<span class="customer-name">'.$this->Html->getNameRespectingIsDeleted($order->customer).'</span>';
         echo '</td>';

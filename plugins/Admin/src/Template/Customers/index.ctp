@@ -93,8 +93,8 @@ foreach ($customers as $customer) {
                 ], $this->Slug->getCustomerEdit($customer->id_customer));
             echo '</span>';
         }
-        if ($customer->order_detail_count <= 3) {
-            $customerName = '<i class="fa fa-pagelines" title="'.__d('admin', 'Newbie_only_{0}_times_ordered.', [$customer->order_detail_count]).'"></i> ' . $customerName;
+        if ($customer->order_detail_count <= 25) {
+            $customerName = '<i class="fa fa-pagelines" title="'.__d('admin', 'Newbie_only_{0}_products_ordered.', [$customer->order_detail_count]).'"></i> ' . $customerName;
         }
 
         echo '<span class="name">' . $this->Html->link($customerName, '/admin/orders/index/?orderStates[]=' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . '&dateFrom=01.01.2014&dateTo=' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt')) . '&customerId=' . $customer->id_customer . '&sort=OrderDetails.created&direction=desc', [
