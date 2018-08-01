@@ -1,8 +1,6 @@
 <?php
 
 /**
- * EmailOrderReminderShell
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -47,18 +45,11 @@ class EmailOrderReminderShell extends AppShell
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
 
-        $this->Customer->getAssociation('ActiveOrders')->setConditions(
+        $this->Customer->getAssociation('ActiveOrderDetails')->setConditions(
             [
-                'DATE_FORMAT(ActiveOrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
-                    Configure::read('app.timeHelper')->getOrderPeriodFirstDay(
-                        Configure::read('app.timeHelper')->getCurrentDay()
-                    )
-                ). '\'',
-                'DATE_FORMAT(ActiveOrderDetails.created, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
-                    Configure::read('app.timeHelper')->getOrderPeriodLastDay(
-                        Configure::read('app.timeHelper')->getCurrentDay()
-                    )
-                ). '\'',
+                'DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\') = \'' . 
+                    Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb()
+                . '\'',
             ]
         );
 
@@ -75,7 +66,7 @@ class EmailOrderReminderShell extends AppShell
         $outString = '';
         foreach ($customers as $customer) {
             // customer has open orders, do not send email
-            if (count($customer->active_orders) > 0) {
+            if (count($customer->active_order_details) > 0) {
                 continue;
             }
 
