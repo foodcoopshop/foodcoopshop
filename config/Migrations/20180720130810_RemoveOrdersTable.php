@@ -80,41 +80,45 @@ class RemoveOrdersTable extends AbstractMigration
     
     private function migrateDataToPickupDays()
     {
-        $this->Order = TableRegistry::getTableLocator()->get('Orders');
         $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
         $this->PickupDay->setPrimaryKey(['customer_id', 'pickup_day']);
         
-        $orders = $this->Order->find('all');
+        // src/Model/Table/OrdersTable.php does not exist any more!
+        $sql = 'SELECT * from fcs_orders';
+        $orders = $this->fetchAll($sql);
+        
         $i = 0;
         foreach($orders as $order) {
             
             $productsPickedUp = 0;
-            if (in_array($order->current_state, [
+            if (in_array($order['current_state'], [
                 ORDER_STATE_CASH,
                 ORDER_STATE_CASH_FREE
             ])) {
                 $productsPickedUp = 1;
             }
             
-            $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($order->date_add->i18nFormat(Configure::read('DateFormat.Database')));
+            $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate(
+                Configure::read('app.timeHelper')->formatToDbFormatDate($order['date_add'])
+            );
             
-            if ($order->comment != '' || $productsPickedUp == 1) {
+            if ($order['comment'] != '' || $productsPickedUp == 1) {
                 $this->PickupDay->save(
                     $this->PickupDay->newEntity([
                         'pickup_day' => $pickupDay,
-                        'customer_id' => $order->id_customer,
-                        'comment' => $order->comment,
+                        'customer_id' => $order['id_customer'],
+                        'comment' => $order['comment'],
                         'products_picked_up' => $productsPickedUp
                     ], [
                         'validate' => false
                     ])
-                    );
+                );
                 $i++;
             }
             
         }
         
-        $this->out('Comments from ' . $i . ' orders migrated.');
+        echo 'Comments from ' . $i . ' orders migrated.';
         
     }
     
@@ -136,10 +140,10 @@ class RemoveOrdersTable extends AbstractMigration
                     'created' => $created,
                     'modified' => $modified
                 ])
-                );
+            );
         }
         
-        $this->out('Pickup day for ' . $orderDetails->count() . ' order details calculated.');
+        echo 'Pickup day for ' . $orderDetails->count() . ' order details calculated.';
         
     }
     
