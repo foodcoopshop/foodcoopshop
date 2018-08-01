@@ -530,21 +530,6 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($orderDetail->order_detail_tax->unit_amount, $taxUnitAmount, 'order_detail tax unit amount not correct');
         $this->assertEquals($orderDetail->order_detail_tax->total_amount, $taxTotalAmount, 'order_detail tax total amount not correct');
     }
-    
-    private function getCartById($cartId)
-    {
-        $cart = $this->Cart->find('all', [
-            'conditions' => [
-                'Carts.id_cart' => $cartId
-            ],
-            'contain' => [
-                'CartProducts.OrderDetails.OrderDetailTaxes',
-                'CartProducts.OrderDetails.OrderDetailUnits'
-            ]
-        ])->first();
-        return $cart;
-    }
-
 
     /**
      * @param int $productId

@@ -151,22 +151,20 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
 
-        $order = $this->preparePricePerUnitOrder();
+        $cart = $this->preparePricePerUnitOrder();
 
         $newQuantity = 800.584;
-        $this->editOrderDetailQuantity($order->order_details[0]->id_order_detail, $newQuantity, false);
+        $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
+        $this->editOrderDetailQuantity($orderDetailId, $newQuantity, false);
 
-        $changedOrder = $this->getOrderWithUnitAssociations($order->id_order);
+        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId]);
+        
+        $this->assertEquals(12.00876, $changedOrderDetails[0]->total_price_tax_incl);
+        $this->assertEquals(10.90876, $changedOrderDetails[0]->total_price_tax_excl);
+        $this->assertEquals($newQuantity, $changedOrderDetails[0]->order_detail_unit->product_quantity_in_units);
 
-        $this->assertEquals(12.00876, $changedOrder->total_paid);
-        $this->assertEquals(12.00876, $changedOrder->total_paid_tax_incl);
-        $this->assertEquals(10.90876, $changedOrder->total_paid_tax_excl);
-        $this->assertEquals(12.00876, $changedOrder->cart_products[0]->order_detail->total_price_tax_incl);
-        $this->assertEquals(10.90876, $changedOrder->cart_products[0]->order_detail->total_price_tax_excl);
-        $this->assertEquals($newQuantity, $changedOrder->cart_products[0]->order_detail->order_detail_unit->product_quantity_in_units);
-
-        $this->assertEquals(0.55, $changedOrder->cart_products[0]->order_detail->order_detail_tax->unit_amount);
-        $this->assertEquals(1.10, $changedOrder->cart_products[0]->order_detail->order_detail_tax->total_amount);
+        $this->assertEquals(0.55, $changedOrderDetails[0]->order_detail_tax->unit_amount);
+        $this->assertEquals(1.10, $changedOrderDetails[0]->order_detail_tax->total_amount);
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [Configure::read('test.loginEmailMeatManufacturer')];
@@ -178,22 +176,21 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
 
-        $order = $this->preparePricePerUnitOrder();
+        $cart = $this->preparePricePerUnitOrder();
 
         $newQuantity = 800.854;
-        $this->editOrderDetailQuantity($order->order_details[0]->id_order_detail, $newQuantity, true);
+        $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
+        
+        $this->editOrderDetailQuantity($orderDetailId, $newQuantity, true);
 
-        $changedOrder = $this->getOrderWithUnitAssociations($order->id_order);
+        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId]);
+        
+        $this->assertEquals($changedOrderDetails[0]->total_price_tax_incl, $changedOrderDetails[0]->total_price_tax_incl);
+        $this->assertEquals($changedOrderDetails[0]->total_price_tax_excl, $changedOrderDetails[0]->total_price_tax_excl);
+        $this->assertEquals($newQuantity, $changedOrderDetails[0]->order_detail_unit->product_quantity_in_units);
 
-        $this->assertEquals($order->total_paid, $changedOrder->total_paid);
-        $this->assertEquals($order->total_paid_tax_incl, $changedOrder->total_paid_tax_incl);
-        $this->assertEquals($order->total_paid_tax_excl, $changedOrder->total_paid_tax_excl);
-        $this->assertEquals($order->order_details[0]->total_price_tax_incl, $changedOrder->cart_products[0]->order_detail->total_price_tax_incl);
-        $this->assertEquals($order->order_details[0]->total_price_tax_excl, $changedOrder->cart_products[0]->order_detail->total_price_tax_excl);
-        $this->assertEquals($newQuantity, $changedOrder->cart_products[0]->order_detail->order_detail_unit->product_quantity_in_units);
-
-        $this->assertEquals($order->order_details[0]->order_detail_tax->unit_amount, $changedOrder->cart_products[0]->order_detail->order_detail_tax->unit_amount);
-        $this->assertEquals($order->order_details[0]->order_detail_tax->total_amount, $changedOrder->cart_products[0]->order_detail->order_detail_tax->total_amount);
+        $this->assertEquals($changedOrderDetails[0]->order_detail_tax->unit_amount, $changedOrderDetails[0]->order_detail_tax->unit_amount);
+        $this->assertEquals($changedOrderDetails[0]->order_detail_tax->total_amount, $changedOrderDetails[0]->order_detail_tax->total_amount);
 
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(1, count($emailLogs));
@@ -384,7 +381,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
         $this->finishCart(1, 1);
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
-        $cart = $this->getOrderWithUnitAssociations($cartId);
+        $cart = $this->getCartById($cartId);
         return $cart;
     }
 
@@ -415,20 +412,6 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->assertEquals($changedOrderDetail->timebased_currency_order_detail->seconds, $seconds);
     }
 
-    private function getOrderWithUnitAssociations($orderId)
-    {
-        $order = $this->Order->find('all', [
-            'conditions' => [
-                'Orders.id_order' => $orderId
-            ],
-            'contain' => [
-                'OrderDetails.OrderDetailTaxes',
-                'OrderDetails.OrderDetailUnits',
-            ]
-        ])->first();
-        return $order;
-    }
-
     private function getOrderWithTimebasedCurrencyAssociations($orderId)
     {
         $order = $this->Order->find('all', [
@@ -454,7 +437,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
                 'Carts.id_cart' => $this->mockCart->id_cart
             ],
             'contain' => [
-                'CartProducts.OrderDetails'
+                'CartProducts.OrderDetails.OrderDetailUnits',
             ]
         ])->first();
         return $cart;
@@ -464,6 +447,10 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $orderDetails = $this->OrderDetail->find('all', [
             'conditions' => [
                 'OrderDetails.id_order_detail IN' => $orderDetailIds
+            ],
+            'contain' => [
+                'OrderDetailTaxes',
+                'OrderDetailUnits'
             ]
         ])->toArray();
         return $orderDetails;
@@ -487,16 +474,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productIdB, $productBAmount);
         $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
-
-        $cart = $this->Cart->find('all', [
-            'conditions' => [
-                'Carts.id_cart' => $cartId
-            ],
-            'contain' => [
-                'CartProducts.OrderDetails'
-            ]
-        ])->first();
-
+        $cart = $this->getCartById($cartId);
         return $cart;
     }
 

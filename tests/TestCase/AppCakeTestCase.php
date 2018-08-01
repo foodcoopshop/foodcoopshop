@@ -339,6 +339,22 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
             $this->Slug->getCartFinish(), $data
         );
     }
+    
+    
+    protected function getCartById($cartId)
+    {
+        $cart = $this->Cart->find('all', [
+            'conditions' => [
+                'Carts.id_cart' => $cartId
+            ],
+            'contain' => [
+                'CartProducts.OrderDetails.OrderDetailTaxes',
+                'CartProducts.OrderDetails.OrderDetailUnits'
+            ]
+        ])->first();
+        return $cart;
+    }
+    
 
     /**
      * @param string $productId
