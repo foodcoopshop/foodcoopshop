@@ -16,13 +16,14 @@ class SendOrderListsShellTest extends AppCakeTestCase
     {
         parent::setUp();
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
-        $this->Order = TableRegistry::getTableLocator()->get('Orders');
+        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $this->SendOrderLists = new SendOrderListsShell(new ConsoleIo());
     }
 
     public function testSendOrderListsIfNoOrdersAvailable()
     {
-        $this->Order->deleteAll([]);
+        $this->OrderDetail->deleteAll([]);
         $this->SendOrderLists->main();
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
@@ -38,21 +39,23 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->addProductToCart($productId, 1);
         $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
-
+        $cart = $this->getCartById($cartId);
+        
         // reset date if needed
         $currentWeekday = Configure::read('app.timeHelper')->getCurrentWeekday();
         if (in_array($currentWeekday, Configure::read('app.timeHelper')->getWeekdaysBetweenOrderSendAndDelivery())) {
-            $this->Order->save(
-                $this->Order->patchEntity(
-                    $this->Order->get($orderId),
+            $this->OrderDetail->save(
+                $this->OrderDetail->patchEntity(
+                    $this->OrderDetail->get($cart->cart_products[0]->order_detail->id_order_detail),
                     [
-                        'date_add' => Configure::read('app.timeHelper')->getDateForInstantOrder(Configure::read('app.timeHelper')->getCurrentDay()),
+                        'pickup_day' => Configure::read('app.timeHelper')->getDeliveryDateForSendOrderListsShell(),
                     ]
                 )
             );
         }
 
         $this->SendOrderLists->main();
+        
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(2, count($emailLogs), 'amount of sent emails wrong');
         $this->assertEmailLogs(
