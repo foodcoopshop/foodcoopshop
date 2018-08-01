@@ -58,8 +58,10 @@ class PagesControllerTest extends AppCakeTestCase
         $testUrls = [
             $this->Slug->getAdminHome(),
             $this->Slug->getCartDetail(),
-            $this->Slug->getOrdersList(),
             $this->Slug->getOrderDetailsList(),
+            $this->Slug->getOrderDetailsList().'?groupBy=customer',
+            $this->Slug->getOrderDetailsList().'?groupBy=manufacturer',
+            $this->Slug->getOrderDetailsList().'?groupBy=product',
             $this->Slug->getActionLogsList(),
             $this->Slug->getPagesListAdmin(),
             $this->Slug->getPageAdd(),
