@@ -28,7 +28,6 @@ TRUNCATE TABLE `fcs_manufacturer`;
 TRUNCATE TABLE `fcs_order_detail`;
 TRUNCATE TABLE `fcs_order_detail_tax`;
 TRUNCATE TABLE `fcs_order_detail_units`;
-TRUNCATE TABLE `fcs_orders`;
 TRUNCATE TABLE `fcs_pages`;
 TRUNCATE TABLE `fcs_payments`;
 TRUNCATE TABLE `fcs_pickup_days`;
@@ -41,7 +40,6 @@ TRUNCATE TABLE `fcs_sync_domains`;
 TRUNCATE TABLE `fcs_sync_products`;
 TRUNCATE TABLE `fcs_tax`;
 TRUNCATE TABLE `fcs_timebased_currency_order_detail`;
-TRUNCATE TABLE `fcs_timebased_currency_orders`;
 TRUNCATE TABLE `fcs_timebased_currency_payments`;
 TRUNCATE TABLE `fcs_units`;
 TRUNCATE TABLE `phinxlog`;
@@ -141,9 +139,6 @@ INSERT INTO `fcs_configuration` VALUES
 /*!40000 ALTER TABLE `fcs_order_detail_units` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_order_detail_units` ENABLE KEYS */;
 
-/*!40000 ALTER TABLE `fcs_orders` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_orders` ENABLE KEYS */;
-
 /*!40000 ALTER TABLE `fcs_pages` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_pages` ENABLE KEYS */;
 
@@ -185,9 +180,6 @@ INSERT INTO `fcs_tax` VALUES
 
 /*!40000 ALTER TABLE `fcs_timebased_currency_order_detail` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_timebased_currency_order_detail` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_timebased_currency_orders` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_timebased_currency_orders` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_timebased_currency_payments` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_timebased_currency_payments` ENABLE KEYS */;

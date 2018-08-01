@@ -4,6 +4,7 @@ namespace Admin\Controller;
 
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use App\Model\Table\OrderDetailsTable;
@@ -116,7 +117,72 @@ class OrderDetailsController extends AdminAppController
         }
         return $sortDirection;
     }
+    
+    /**
+     * this url is called if instant order is initialized
+     * saves the desired user in session
+     */
+    public function initInstantOrder($customerId)
+    {
+        if (! $customerId) {
+            throw new RecordNotFoundException('customerId not passed');
+        }
+        
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $instantOrderCustomer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $customerId
+            ],
+            'contain' => [
+                'AddressCustomers'
+            ]
+        ])->first();
+        if (! empty($instantOrderCustomer)) {
+            $this->getRequest()->getSession()->write('Auth.instantOrderCustomer', $instantOrderCustomer);
+        } else {
+            $this->Flash->error(__d('admin', 'No_member_found_with_id_{0}.', [$customerId]));
+        }
+        $this->redirect('/');
+    }
 
+    public function iframeStartPage()
+    {
+        $this->set('title_for_layout', __d('admin', 'Instant_order'));
+    }
+    
+    public function orderDetailsAsPdf()
+    {
+        if (empty($this->getRequest()->getQuery('orderIds'))) {
+            throw new RecordNotFoundException('wrong orderIds');
+        }
+        
+        $orderIds = explode(',', $this->getRequest()->getQuery('orderIds'));
+        if (empty($orderIds)) {
+            throw new RecordNotFoundException('wrong orderIds');
+        }
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
+        $orders = $this->Order->find('all', [
+            'conditions' => [
+                'Orders.id_order IN' => $orderIds
+            ],
+            'contain' => [
+                'Customers',
+                'OrderDetails' => [
+                    'sort' => ['OrderDetails.product_name' => 'ASC']
+                ],
+                'OrderDetails.Products.Manufacturers',
+                'OrderDetails.OrderDetailUnits'
+            ],
+            'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy()
+        ]);
+        
+        if (empty($orders)) {
+            throw new RecordNotFoundException('no orders found');
+        }
+        
+        $this->set('orders', $orders);
+    }
+    
     public function index()
     {
 

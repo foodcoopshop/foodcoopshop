@@ -71,6 +71,11 @@ class RemoveOrdersTable extends AbstractMigration
         
         $this->migrateDataToPickupDays();
         
+        $this->execute("
+            DROP TABLE `fcs_orders`;
+            DROP TABLE `fcs_timebased_currency_orders`;
+        ");
+        
     }
     
     private function migrateDataToPickupDays()

@@ -2020,7 +2020,7 @@ foodcoopshop.Admin = {
         $(button).on('click', function () {
 
             var configuration = foodcoopshop.AppFeatherlight.initLightbox({
-                iframe: foodcoopshop.Helper.cakeServerName + '/admin/orders/iframeStartPage',
+                iframe: foodcoopshop.Helper.cakeServerName + '/admin/order-details/iframeStartPage',
                 iframeWidth: $(window).width() - 50,
                 iframeMaxWidth: '100%',
                 iframeHeight: $(window).height() - 100,
@@ -2044,7 +2044,7 @@ foodcoopshop.Admin = {
                         var customersDropdown = $('#add-order-button-wrapper select').clone(true);
                         customersDropdown.attr('id', 'customersDropdown');
                         customersDropdown.on('change', function () {
-                            var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/orders/initInstantOrder/' + $(this).val();
+                            var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/order-details/initInstantOrder/' + $(this).val();
                             $('iframe.featherlight-inner').attr('src', newSrc);
                             $.featherlight.showLoader();
                         });
