@@ -75,7 +75,8 @@ INSERT INTO `fcs_blog_posts` VALUES
 /*!40000 ALTER TABLE `fcs_cart_products` DISABLE KEYS */;
 INSERT INTO `fcs_cart_products` VALUES
 (1,1,346,0,1,'2018-03-01 10:17:14','2018-03-01 10:17:14'),
-(2,1,340,0,1,'2018-03-01 10:17:14','2018-03-01 10:17:14');
+(2,1,340,0,1,'2018-03-01 10:17:14','2018-03-01 10:17:14'),
+(3,1,60,10,1,'2018-03-01 10:17:14','2018-03-01 10:17:14');
 /*!40000 ALTER TABLE `fcs_cart_products` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_carts` DISABLE KEYS */;
@@ -187,13 +188,15 @@ INSERT INTO `fcs_manufacturer` VALUES
 /*!40000 ALTER TABLE `fcs_order_detail` DISABLE KEYS */;
 INSERT INTO `fcs_order_detail` VALUES
 (1,346,0,'Artischocke : Stück',1,1.820000,1.652893,2,0.50,92,1,3,'2018-02-02','2018-02-01 09:17:14','2018-07-27 17:08:52'),
-(2,340,0,'Beuschl',1,4.545455,4.545455,0,0.00,92,2,3,'2018-02-02','2018-02-01 09:17:14','2018-07-27 17:08:52');
+(2,340,0,'Beuschl',1,4.545455,4.545455,0,0.00,92,2,3,'2018-02-02','2018-02-01 09:17:14','2018-07-27 17:08:52'),
+(3,60,10,'Milch : 0,5l',1,0.620000,0.545455,3,0.50,92,3,1,'2018-02-01','2018-02-01 09:17:14','2018-07-27 17:08:52');
 /*!40000 ALTER TABLE `fcs_order_detail` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_order_detail_tax` DISABLE KEYS */;
 INSERT INTO `fcs_order_detail_tax` VALUES
 (1,0.170000,0.170000),
-(2,0.000000,0.000000);
+(2,0.000000,0.000000),
+(3,0.070000,0.070000);
 /*!40000 ALTER TABLE `fcs_order_detail_tax` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_order_detail_units` DISABLE KEYS */;
@@ -252,7 +255,7 @@ INSERT INTO `fcs_sliders` VALUES
 
 /*!40000 ALTER TABLE `fcs_stock_available` DISABLE KEYS */;
 INSERT INTO `fcs_stock_available` VALUES
-(132,60,0,2979),
+(132,60,0,1015),
 (195,102,0,2996),
 (196,103,0,990),
 (318,163,0,988),
@@ -261,7 +264,7 @@ INSERT INTO `fcs_stock_available` VALUES
 (680,344,0,78),
 (686,346,0,97),
 (692,60,9,996),
-(693,60,10,20),
+(693,60,10,19),
 (704,347,0,999),
 (705,348,0,1998),
 (706,348,11,999),
