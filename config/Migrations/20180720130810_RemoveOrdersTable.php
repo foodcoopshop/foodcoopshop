@@ -12,7 +12,7 @@ class RemoveOrdersTable extends AbstractMigration
               `id` int(10) UNSIGNED NOT NULL,
               `customer_id` int(10) UNSIGNED NOT NULL,
               `pickup_day` date NOT NULL,
-              `comment` text NOT NULL,
+              `comment` text DEFAULT NULL,
               `products_picked_up` tinyint(4) UNSIGNED NOT NULL DEFAULT '0'
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
             

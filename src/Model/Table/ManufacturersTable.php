@@ -477,8 +477,8 @@ class ManufacturersTable extends AppTable
             LEFT JOIN ".$this->tablePrefix."tax t ON od.id_tax = t.id_tax
             WHERE 1
             AND m.id_manufacturer = :manufacturerId
-            AND DATE_FORMAT(od.created, '%Y-%m-%d') >= :dateFrom
-            AND DATE_FORMAT(od.created, '%Y-%m-%d') <= :dateTo
+            AND DATE_FORMAT(od.pickup_day, '%Y-%m-%d') >= :dateFrom
+            AND DATE_FORMAT(od.pickup_day, '%Y-%m-%d') <= :dateTo
             AND ma.id_manufacturer > 0
             AND od.order_state IN (" . join(',', $orderState) . ")
             ORDER BY {$orderClause}, DATE_FORMAT (od.created, '%d.%m.%Y, %H:%i') DESC;";

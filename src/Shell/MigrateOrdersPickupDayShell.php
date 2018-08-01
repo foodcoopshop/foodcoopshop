@@ -59,6 +59,8 @@ class MigrateOrdersPickupDayShell extends AppShell
                         'customer_id' => $order->id_customer,
                         'comment' => $order->comment,
                         'products_picked_up' => $productsPickedUp
+                    ], [
+                        'validate' => false
                     ])
                 );
                 $i++;

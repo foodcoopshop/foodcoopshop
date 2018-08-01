@@ -389,7 +389,7 @@ CREATE TABLE `fcs_pickup_days` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `customer_id` int(10) unsigned NOT NULL,
   `pickup_day` date NOT NULL,
-  `comment` text NOT NULL,
+  `comment` text DEFAULT NULL,
   `products_picked_up` tinyint(4) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `customer_id` (`customer_id`),
