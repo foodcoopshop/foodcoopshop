@@ -690,7 +690,7 @@ class OrderDetailsController extends AdminAppController
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
             'contain' => [
-                'OrderDetails.Customers',
+                'Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
                 'OrderDetailTaxes',
