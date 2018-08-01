@@ -167,7 +167,7 @@ class OrderDetailsTable extends AppTable
 
         $sql =  'SELECT SUM(od.deposit) as sumDepositDelivered ';
         if ($groupByMonth) {
-            $sql .= ', DATE_FORMAT(o.date_add, \'%Y-%c\') as monthAndYear ';
+            $sql .= ', DATE_FORMAT(od.created, \'%Y-%c\') as monthAndYear ';
         }
         $sql .= 'FROM '.$this->tablePrefix.'order_detail od ';
         $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';

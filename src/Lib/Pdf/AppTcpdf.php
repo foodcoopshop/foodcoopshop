@@ -141,7 +141,7 @@ class AppTcpdf extends TCPDF
                 $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceIncl) . '</td>';
 
                 $indexForWidth ++;
-                $this->table .= '<td align="center" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.timeHelper')->formatToDateShort($result['OrderDateAdd']) . '</td>';
+                $this->table .= '<td align="center" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.timeHelper')->formatToDateShort($result['OrderDetailCreated']) . '</td>';
 
                 $indexForWidth ++;
                 $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $result['CustomerName'] . '</td>';
