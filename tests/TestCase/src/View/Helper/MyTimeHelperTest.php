@@ -139,7 +139,20 @@ class MyTimeHelperTest extends AppCakeTestCase
         $this->assertGetOrderPeriodLastDay('05.12.2017', '03.12.2017'); // tuesday
         $this->assertGetOrderPeriodLastDay('06.12.2017', '10.12.2017'); // wednesday
     }
+    
+    public function testGetDeliveryDayTuesdayFriday()
+    {
+        $this->prepareWednesdayFridayConfig();
+        $this->assertGetDeliveryDay('25.07.2018', '03.08.2018'); // wednesday
+    }
 
+    private function assertGetDeliveryDay($currentDay, $expected)
+    {
+        $result = $this->MyTimeHelper->getDeliveryDay(strtotime($currentDay));
+        $result = date($this->MyTimeHelper->getI18Format('DateShortAlt'), $result);
+        $this->assertEquals($expected, $result);
+    }
+    
     private function assertGetOrderPeriodFirstDay($currentDay, $expected)
     {
         $result = $this->MyTimeHelper->getOrderPeriodFirstDay(strtotime($currentDay));
@@ -149,12 +162,6 @@ class MyTimeHelperTest extends AppCakeTestCase
     private function assertGetOrderPeriodLastDay($currentDay, $expected)
     {
         $result = $this->MyTimeHelper->getOrderPeriodLastDay(strtotime($currentDay));
-        $this->assertEquals($expected, $result);
-    }
-
-    private function assertGetDateForInstantOrder($currentDay, $expected)
-    {
-        $result = $this->MyTimeHelper->getDateForInstantOrder(strtotime($currentDay));
         $this->assertEquals($expected, $result);
     }
 }

@@ -83,18 +83,7 @@ class MyTimeHelper extends TimeHelper
 
     public function getDeliveryDayByCurrentDay()
     {
-
-        $deliveryDate = self::getDeliveryDay($this->getCurrentDay());
-
-        $weekdayDeliveryDate = $this->formatAsWeekday($deliveryDate);
-        $weekdayStringDeliveryDate = strtolower(date('l', $deliveryDate));
-        $day = $this->formatAsWeekday(time());
-
-        if ($day >= Configure::read('app.sendOrderListsWeekday') && $day <= $weekdayDeliveryDate) {
-            $deliveryDate = strtotime('+ 1 week ' . $weekdayStringDeliveryDate);
-        }
-
-        return $deliveryDate;
+        return self::getDeliveryDay($this->getCurrentDay());
     }
     
     public function getDbFormattedPickupDayByDbFormattedDate($date)
@@ -105,10 +94,21 @@ class MyTimeHelper extends TimeHelper
     }
 
 
-    public function getDeliveryDay($day)
+    public function getDeliveryDay($orderDay)
     {
         $daysToAddToOrderPeriodLastDay = Configure::read('app.deliveryDayDelta') + 1;
-        $deliveryDate = strtotime($this->getOrderPeriodLastDay($day) . '+' . $daysToAddToOrderPeriodLastDay . ' days');
+        $deliveryDate = strtotime($this->getOrderPeriodLastDay($orderDay) . '+' . $daysToAddToOrderPeriodLastDay . ' days');
+        
+        $weekdayDeliveryDate = $this->formatAsWeekday($deliveryDate);
+        $weekdayStringDeliveryDate = strtolower(date('l', $deliveryDate));
+        
+        $weekdayOrderDay = $this->formatAsWeekday($orderDay);
+        
+        if ($weekdayOrderDay >= Configure::read('app.sendOrderListsWeekday') && $weekdayOrderDay <= $weekdayDeliveryDate) {
+            $preparedOrderDay = date($this->getI18Format('DateShortAlt'), $orderDay);
+            $deliveryDate = strtotime($preparedOrderDay . '+ 1 week ' . $weekdayStringDeliveryDate);
+        }
+        
         return $deliveryDate;
     }
 
