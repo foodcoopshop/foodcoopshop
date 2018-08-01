@@ -1,4 +1,8 @@
 <?php
+
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+
 use Migrations\AbstractMigration;
 
 class RemoveOrdersTable extends AbstractMigration
@@ -63,5 +67,75 @@ class RemoveOrdersTable extends AbstractMigration
 
         ");
         
+        $this->migrateDataToOrderDetails();
+        
+        $this->migrateDataToPickupDays();
+        
     }
+    
+    private function migrateDataToPickupDays()
+    {
+        $this->Order = TableRegistry::getTableLocator()->get('Orders');
+        $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
+        $this->PickupDay->setPrimaryKey(['customer_id', 'pickup_day']);
+        
+        $orders = $this->Order->find('all');
+        $i = 0;
+        foreach($orders as $order) {
+            
+            $productsPickedUp = 0;
+            if (in_array($order->current_state, [
+                ORDER_STATE_CASH,
+                ORDER_STATE_CASH_FREE
+            ])) {
+                $productsPickedUp = 1;
+            }
+            
+            $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($order->date_add->i18nFormat(Configure::read('DateFormat.Database')));
+            
+            if ($order->comment != '' || $productsPickedUp == 1) {
+                $this->PickupDay->save(
+                    $this->PickupDay->newEntity([
+                        'pickup_day' => $pickupDay,
+                        'customer_id' => $order->id_customer,
+                        'comment' => $order->comment,
+                        'products_picked_up' => $productsPickedUp
+                    ], [
+                        'validate' => false
+                    ])
+                    );
+                $i++;
+            }
+            
+        }
+        
+        $this->out('Comments from ' . $i . ' orders migrated.');
+        
+    }
+    
+    
+    private function migrateDataToOrderDetails()
+    {
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $orderDetails = $this->OrderDetail->find('all');
+        
+        foreach($orderDetails as $orderDetail) {
+            if ($orderDetail->created) {
+                $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($orderDetail->created->i18nFormat(Configure::read('DateFormat.Database')));
+                $created = $orderDetail->created;
+                $modified = $orderDetail->modified;
+            }
+            $this->OrderDetail->save(
+                $this->OrderDetail->patchEntity($orderDetail, [
+                    'pickup_day' => $pickupDay,
+                    'created' => $created,
+                    'modified' => $modified
+                ])
+                );
+        }
+        
+        $this->out('Pickup day for ' . $orderDetails->count() . ' order details calculated.');
+        
+    }
+    
 }
