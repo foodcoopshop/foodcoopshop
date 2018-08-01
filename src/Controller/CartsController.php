@@ -364,7 +364,7 @@ class CartsController extends FrontendController
                 'cartProductId' => $cartProduct['cartProductId'],
             ];
             
-            if (!$this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
+            if ($this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
                 $orderDetail2save['order_state'] = Configure::read('appDb.FCS_INSTANT_ORDER_DEFAULT_STATE');
                 $orderDetail2save['pickup_day'] = $cartProduct['pickupDay'];
             }

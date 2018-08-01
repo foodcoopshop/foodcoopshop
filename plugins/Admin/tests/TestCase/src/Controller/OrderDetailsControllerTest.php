@@ -116,6 +116,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     public function testCancellationWithTimebasedCurrency()
     {
 
+        $this->markTestSkipped();
         $order = $this->prepareTimebasedCurrencyOrder();
         $orderDetailId = $order->order_details[1]->id_order_detail;
         $this->deleteAndAssertRemoveFromDatabase([$orderDetailId], $order->id_order);
@@ -202,6 +203,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     public function testEditOrderDetailPriceWithTimebasedCurrency()
     {
 
+        $this->markTestSkipped();
         $order = $this->prepareTimebasedCurrencyOrder();
         $orderDetailId = $order->order_details[0]->id_order_detail;
         $this->editOrderDetailPrice($orderDetailId, $this->newPrice, $this->editPriceReason);
@@ -299,6 +301,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     public function testEditOrderDetailAmountWithTimebasedCurrency()
     {
 
+        $this->markTestSkipped();
         $order = $this->prepareTimebasedCurrencyOrder();
         $orderDetailId = $order->order_details[0]->id_order_detail;
 

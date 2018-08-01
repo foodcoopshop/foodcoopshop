@@ -303,7 +303,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
      *
      * @param int $productId
      * @param int $amount
-     * @return json string
+     * @return string
      */
     protected function addProductToCart($productId, $amount)
     {
@@ -318,14 +318,17 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '', $timebaseCurrencyTimeSum = null)
     {
         $data = [
-            'Orders' => [
+            'Carts' => [
                 'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
                 'cancellation_terms_accepted' => $cancellation_terms_accepted
-            ]
+            ],
         ];
 
         if ($comment != '') {
-            $data['Orders']['comment'] = $comment;
+            $data['Carts']['pickup_day_entities'][0] = [
+                'customer_id' => $this->browser->getLoggedUserId(),
+                'comment' => $comment
+            ];
         }
 
         if ($timebaseCurrencyTimeSum !== null) {
