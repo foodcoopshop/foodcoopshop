@@ -20,36 +20,36 @@ foodcoopshop.TimebasedCurrency = {
     },
 
     getTimebasedCurrencyPrice: function(originalPrice, percentage) {
-        return originalPrice * (100 - percentage) / 100;
+        return (originalPrice * (100 - percentage) / 100).toFixed(2);
     },
 
     getTimebasedCurrencyOriginalPrice: function(timebasedCurrencyPrice, percentage) {
-        return timebasedCurrencyPrice / (100 - percentage) * 100;
+        return (timebasedCurrencyPrice / (100 - percentage) * 100).toFixed(2);
     },
 
     bindOrderDetailProductPriceField: function(productPriceField, timebasedCurrencyData, productTimebasedCurrencyPriceField) {
-        var appliedPercentage = timebasedCurrencyData.money_incl / foodcoopshop.Helper.getStringAsFloat(productPriceField.val()) * 100;
-        productPriceField.off('keyup');
-        productPriceField.on('keyup', function() {
-            var currentPrice = foodcoopshop.Helper.getStringAsFloat($(this).val());
+        var appliedPercentage = timebasedCurrencyData.money_incl / productPriceField.val() * 100;
+        productPriceField.off('keyup mouseup');
+        productPriceField.on('keyup mouseup', function() {
+            var currentPrice = $(this).val();
             var updatedTimebasedCurrencyPrice = foodcoopshop.TimebasedCurrency.getTimebasedCurrencyPrice(
                 currentPrice,
                 appliedPercentage
             );
-            productTimebasedCurrencyPriceField.val(foodcoopshop.Helper.formatFloatAsString(updatedTimebasedCurrencyPrice));
+            productTimebasedCurrencyPriceField.val(updatedTimebasedCurrencyPrice);
         });
     },
 
     bindOrderDetailProductTimebasedCurrencyPriceField : function(productTimebasedCurrencyPriceField, timebasedCurrencyData, productPriceField) {
-        var appliedPercentage = timebasedCurrencyData.money_incl / foodcoopshop.Helper.getStringAsFloat(productPriceField.val()) * 100;
-        productTimebasedCurrencyPriceField.off('keyup');
-        productTimebasedCurrencyPriceField.on('keyup', function() {
-            var currentTimebasedCurrencyPrice = foodcoopshop.Helper.getStringAsFloat($(this).val());
+        var appliedPercentage = timebasedCurrencyData.money_incl / productPriceField.val() * 100;
+        productTimebasedCurrencyPriceField.off('keyup mouseup');
+        productTimebasedCurrencyPriceField.on('keyup mouseup', function() {
+            var currentTimebasedCurrencyPrice = $(this).val();
             var updatedPrice = foodcoopshop.TimebasedCurrency.getTimebasedCurrencyOriginalPrice(
                 currentTimebasedCurrencyPrice,
                 appliedPercentage
             );
-            productPriceField.val(foodcoopshop.Helper.formatFloatAsString(updatedPrice));
+            productPriceField.val(updatedPrice);
         });
     },
 

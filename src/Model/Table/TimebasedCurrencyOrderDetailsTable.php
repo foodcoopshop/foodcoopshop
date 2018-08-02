@@ -31,17 +31,6 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         ]);
         $this->setPrimaryKey('id_order_detail');
     }
-    
-    /**
-     * @param Validator $validator
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        $validator->notEmpty('seconds_sum_tmp', 'Bitte gib an, wie viel du in Stunden zahlen möchtest.');
-        $validator->numeric('seconds_sum_tmp', 'Bitte trage eine Zahl ein.');
-        return $validator;
-    }
 
     /**
      * @param float $price

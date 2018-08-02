@@ -1776,7 +1776,7 @@ foodcoopshop.Admin = {
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
-            width: 400,
+            width: 450,
             modal: true,
             close: function () {
                 $('#dialogOrderDetailProductPricePrice').val('');
@@ -1813,16 +1813,16 @@ foodcoopshop.Admin = {
                 var additionalDialogHtml = '<span class="timebased-currency-wrapper">';
                 additionalDialogHtml += '<span class="small"> (' + foodcoopshop.LocalizedJs.admin.OriginalPriceWithoutReductionOfPriceInTime + ')</span>';
                 additionalDialogHtml += '<label for="dialogOrderDetailProductPriceTimebasedCurrency"></label><br />';
-                additionalDialogHtml += '<input type="text" name="dialogOrderDetailProductPriceTimebasedCurrencyPrice" id="dialogOrderDetailProductPriceTimebasedCurrencyPrice" value="" />';
+                additionalDialogHtml += '<input type="number" step="0.01" min="0.01" name="dialogOrderDetailProductPriceTimebasedCurrencyPrice" id="dialogOrderDetailProductPriceTimebasedCurrencyPrice" value="" />';
                 additionalDialogHtml += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b><span class="small"> (' + foodcoopshop.LocalizedJs.admin.FromWhichReallyPaidIn + ' ' + foodcoopshop.LocalizedJs.helper.CurrencyName + ')</span>';
                 additionalDialogHtml += '</span>';
                 $('#' + dialogId + ' .textarea-wrapper').before(additionalDialogHtml);
             }
 
             if (timebasedCurrencyObject.length > 0) {
-                var newPrice = foodcoopshop.Helper.getStringAsFloat(price) + timebasedCurrencyData.money_incl;
+                var newPrice = (price + timebasedCurrencyData.money_incl).toFixed(2);
                 productTimebasedCurrencyPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPriceTimebasedCurrencyPrice');
-                productPriceField.val(foodcoopshop.Helper.formatFloatAsString(newPrice));
+                productPriceField.val(newPrice);
                 productTimebasedCurrencyPriceField.val(price);
                 foodcoopshop.TimebasedCurrency.bindOrderDetailProductPriceField(productPriceField, timebasedCurrencyData, productTimebasedCurrencyPriceField);
                 foodcoopshop.TimebasedCurrency.bindOrderDetailProductTimebasedCurrencyPriceField(productTimebasedCurrencyPriceField, timebasedCurrencyData, productPriceField);

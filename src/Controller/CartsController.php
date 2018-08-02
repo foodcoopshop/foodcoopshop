@@ -409,11 +409,14 @@ class CartsController extends FrontendController
         $this->set('cartErrors', $cartErrors);
 
         $formErrors = false;
-
+        
         if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
-            $validator = $this->OrderDetail->TimebasedCurrencyOrderDetails->getValidator('default');
+            $validator = $this->Cart->getValidator('default');
+            $validator->notEmpty('timebased_currency_seconds_sum_tmp', 'Bitte gib an, wie viel du in Stunden zahlen möchtest.');
+            $validator->numeric('timebased_currency_seconds_sum_tmp', 'Bitte trage eine Zahl ein.');
             $maxValue = $this->AppAuth->Cart->getTimebasedCurrencySecondsSumRoundedUp();
-            $validator = $this->OrderDetail->TimebasedCurrencyOrderDetails->getNumberRangeValidator($validator, 'seconds_sum_tmp', 0, $maxValue);
+            $validator = $this->Cart->getNumberRangeValidator($validator, 'timebased_currency_seconds_sum_tmp', 0, $maxValue);
+            $this->Cart->setValidator('default', $validator);
         }
         
         $options = [];
@@ -424,7 +427,6 @@ class CartsController extends FrontendController
                 ]
             ];
         }
-        
         $cart['Cart'] = $this->Cart->patchEntity(
             $cart['Cart'],
             $this->getRequest()->getData(),
@@ -443,8 +445,8 @@ class CartsController extends FrontendController
 
             $selectedTimebasedCurrencySeconds = 0;
             $selectedTimeAdaptionFactor = 0;
-            if (!empty($this->getRequest()->getData('timebased_currency_order_detail.seconds_sum_tmp')) && $this->getRequest()->getData('timebased_currency_order_detail.seconds_sum_tmp') > 0) {
-                $selectedTimebasedCurrencySeconds = $this->getRequest()->getData('timebased_currency_order_detail.seconds_sum_tmp');
+            if (!empty($this->getRequest()->getData('Carts.timebased_currency_seconds_sum_tmp')) && $this->getRequest()->getData('Carts.timebased_currency_seconds_sum_tmp') > 0) {
+                $selectedTimebasedCurrencySeconds = $this->getRequest()->getData('Carts.timebased_currency_seconds_sum_tmp');
                 $selectedTimeAdaptionFactor = $selectedTimebasedCurrencySeconds / $this->AppAuth->Cart->getTimebasedCurrencySecondsSum();
             }
 

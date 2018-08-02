@@ -115,13 +115,11 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
     public function testCancellationWithTimebasedCurrency()
     {
+        $cart = $this->prepareTimebasedCurrencyCart();
+        $orderDetailId = $cart->cart_products[1]->order_detail->id_order_detail;
+        $this->deleteAndAssertRemoveFromDatabase([$orderDetailId]);
 
-        $this->markTestSkipped();
-        $order = $this->prepareTimebasedCurrencyOrder();
-        $orderDetailId = $order->order_details[1]->id_order_detail;
-        $this->deleteAndAssertRemoveFromDatabase([$orderDetailId], $order->id_order);
-
-        $changedOrder = $this->getOrderWithTimebasedCurrencyAssociations($order->id_order);
+        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId]);
 
         // assert if record TimebasedCurrencyOrderDetail was removed
         $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
@@ -131,7 +129,6 @@ class OrderDetailsControllerTest extends AppCakeTestCase
             ]
         ]);
         $this->assertEquals(0, $timebasedCurrencyOrderDetail->count());
-        $this->assertTimebasedCurrencyOrderSums($changedOrder, 0.76, 0.84, 300);
     }
 
     public function testEditOrderDetailPriceAsManufacturer()
@@ -199,18 +196,14 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
     public function testEditOrderDetailPriceWithTimebasedCurrency()
     {
-
-        $this->markTestSkipped();
-        $order = $this->prepareTimebasedCurrencyOrder();
-        $orderDetailId = $order->order_details[0]->id_order_detail;
+        $cart = $this->prepareTimebasedCurrencyCart();
+        $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
         $this->editOrderDetailPrice($orderDetailId, $this->newPrice, $this->editPriceReason);
+        
+        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId]);
+        $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrderDetails[0]->total_price_tax_incl), 'order detail price was not changed properly');
 
-        $changedOrder = $this->getOrderWithTimebasedCurrencyAssociations($order->id_order);
-
-        $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrder->cart_products[0]->order_detail->total_price_tax_incl), 'order detail price was not changed properly');
-
-        $this->assertTimebasedCurrencyOrderDetail($changedOrder->cart_products[0]->order_detail, 1.38, 1.52, 544);
-        $this->assertTimebasedCurrencyOrderSums($changedOrder, 1.52, 1.66, 596);
+        $this->assertTimebasedCurrencyOrderDetail($changedOrderDetails[0], 1.38, 1.52, 544);
     }
 
     public function testEditOrderDetailPriceAsSuperadminWithEnabledNotification()
@@ -298,19 +291,16 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     public function testEditOrderDetailAmountWithTimebasedCurrency()
     {
 
-        $this->markTestSkipped();
-        $order = $this->prepareTimebasedCurrencyOrder();
-        $orderDetailId = $order->order_details[0]->id_order_detail;
-
+        $cart = $this->prepareTimebasedCurrencyCart();
+        $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
         $this->editOrderDetailAmount($orderDetailId, $this->newAmount, $this->editAmountReason);
+        
+        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId]);
+        
+        $this->assertEquals($this->newAmount, $changedOrderDetails[0]->product_amount, 'order detail amount was not changed properly');
+        $this->assertEquals('1,40', Configure::read('app.numberHelper')->formatAsDecimal($changedOrderDetails[0]->total_price_tax_incl), 'order detail price was not changed properly');
 
-        $changedOrder = $this->getOrderWithTimebasedCurrencyAssociations($order->id_order);
-
-        $this->assertEquals($this->newAmount, $changedOrder->cart_products[0]->order_detail->product_amount, 'order detail amount was not changed properly');
-        $this->assertEquals('1,40', Configure::read('app.numberHelper')->formatAsDecimal($changedOrder->cart_products[0]->order_detail->total_price_tax_incl), 'order detail price was not changed properly');
-
-        $this->assertTimebasedCurrencyOrderDetail($changedOrder->cart_products[0]->order_detail, 0.55, 0.6, 216);
-        $this->assertTimebasedCurrencyOrderSums($changedOrder, 0.69, 0.74, 268);
+        $this->assertTimebasedCurrencyOrderDetail($changedOrderDetails[0], 0.55, 0.6, 216);
     }
 
     public function testEditOrderDetailAmountAsSuperadminWithEnabledNotification()
@@ -385,7 +375,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         return $cart;
     }
 
-    private function prepareTimebasedCurrencyOrder()
+    private function prepareTimebasedCurrencyCart()
     {
         $reducedMaxPercentage = 15;
         $this->prepareTimebasedCurrencyConfiguration($reducedMaxPercentage);
@@ -393,16 +383,9 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->addProductToCart(344, 1); // addProductToCart needs to be called twice!
         $this->addProductToCart(346, 2);
         $this->finishCart(1, 1, '', '352');
-        $orderId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
-        $order = $this->getOrderWithTimebasedCurrencyAssociations($orderId);
-        return $order;
-    }
-
-    private function assertTimebasedCurrencyOrderSums($changedOrder, $moneyExclSum, $moneyInclSum, $secondsSum)
-    {
-        $this->assertEquals($changedOrder->timebased_currency_order->money_excl_sum, $moneyExclSum);
-        $this->assertEquals($changedOrder->timebased_currency_order->money_incl_sum, $moneyInclSum);
-        $this->assertEquals($changedOrder->timebased_currency_order->seconds_sum, $secondsSum);
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
+        $cart = $this->getCartById($cartId);
+        return $cart;
     }
 
     private function assertTimebasedCurrencyOrderDetail($changedOrderDetail, $moneyExcl, $moneyIncl, $seconds)
@@ -410,21 +393,6 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->assertEquals($changedOrderDetail->timebased_currency_order_detail->money_excl, $moneyExcl);
         $this->assertEquals($changedOrderDetail->timebased_currency_order_detail->money_incl, $moneyIncl);
         $this->assertEquals($changedOrderDetail->timebased_currency_order_detail->seconds, $seconds);
-    }
-
-    private function getOrderWithTimebasedCurrencyAssociations($orderId)
-    {
-        $order = $this->Order->find('all', [
-            'conditions' => [
-                'Orders.id_order' => $orderId
-            ],
-            'contain' => [
-                'TimebasedCurrencyOrders',
-                'OrderDetails.TimebasedCurrencyOrderDetails',
-                'OrderDetails.OrderDetailTaxes'
-            ]
-        ])->first();
-        return $order;
     }
 
     private function getChangedMockCartFromDatabase()
@@ -450,7 +418,8 @@ class OrderDetailsControllerTest extends AppCakeTestCase
             ],
             'contain' => [
                 'OrderDetailTaxes',
-                'OrderDetailUnits'
+                'OrderDetailUnits',
+                'TimebasedCurrencyOrderDetails'
             ]
         ])->toArray();
         return $orderDetails;
