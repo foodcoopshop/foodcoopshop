@@ -254,10 +254,12 @@ class OrderDetailsTable extends AppTable
     public function getMonthlySumProduct($customerId)
     {
         $query = $this->prepareSumProduct($customerId);
+        $query->contain('TimebasedCurrencyOrderDetails');
         $query->group('MonthAndYear');
         $query->select([
             'SumTotalPaid' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
             'SumDeposit' => $query->func()->sum('OrderDetails.deposit'),
+            'SumTimebasedCurrencySeconds' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds'),
             'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')'
         ]);
         return $query->toArray();

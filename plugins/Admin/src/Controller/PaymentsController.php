@@ -552,18 +552,13 @@ class PaymentsController extends AdminAppController
             )
         );
 
-        $contain = ['Payments'];
-        if (in_array('product', $this->allowedPaymentTypes)) {
-            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-                $contain[] = 'PaidCashFreeOrderDetails.TimebasedCurrencyOrderDetails';
-            }
-        }
-
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $this->getCustomerId()
             ],
-            'contain' => $contain
+            'contain' => [
+               'Payments'
+            ]
         ])->first();
 
         $payments = [];
@@ -595,17 +590,17 @@ class PaymentsController extends AdminAppController
         $orderDetailsGroupedByMonth = $this->OrderDetail->getMonthlySumProduct($this->getCustomerId());
         
         if (! empty($orderDetailsGroupedByMonth)) {
-            foreach ($orderDetailsGroupedByMonth as $order_detail) {
-                $monthAndYear = explode('-', $order_detail['MonthAndYear']);
+            foreach ($orderDetailsGroupedByMonth as $orderDetail) {
+                $monthAndYear = explode('-', $orderDetail['MonthAndYear']);
                 $frozenDateFrom = FrozenDate::create($monthAndYear[0], $monthAndYear[1], 1);
-                $lastDayOfMonth = Configure::read('app.timeHelper')->getLastDayOfGivenMonth($order_detail['MonthAndYear']);
+                $lastDayOfMonth = Configure::read('app.timeHelper')->getLastDayOfGivenMonth($orderDetail['MonthAndYear']);
                 $frozenDateTo = FrozenDate::create($monthAndYear[0], $monthAndYear[1], $lastDayOfMonth);
                 $payments[] = [
                     'dateRaw' => $frozenDateFrom,
                     'date' => $frozenDateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
                     'year' => $frozenDateFrom->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year')),
-                    'amount' => $order_detail['SumTotalPaid'] * - 1,
-                    'deposit' => strtotime($frozenDateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $order_detail['SumDeposit'] * - 1 : 0,
+                    'amount' => $orderDetail['SumTotalPaid'] * - 1,
+                    'deposit' => strtotime($frozenDateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $orderDetail['SumDeposit'] * - 1 : 0,
                     'type' => 'order',
                     'text' => Configure::read('app.htmlHelper')->link(
                         __d('admin', 'Orders') . ' ' . Configure::read('app.timeHelper')->getMonthName($monthAndYear[1]) . ' ' . $monthAndYear[0],
@@ -617,22 +612,14 @@ class PaymentsController extends AdminAppController
                         ]
                     ),
                     'payment_id' => null,
-//                     'timebased_currency_order' => isset($order->timebased_currency_order) ? $order->timebased_currency_order : null
+                    'timebased_currency_sum_seconds' => $orderDetail['SumTimebasedCurrencySeconds']
                 ];
             }
         }
 
-        $timebasedCurrencyOrderInList = false;
-        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-            if (!empty($customer->paid_cash_free_order_details)) {
-                foreach($customer->paid_cash_free_order_details as $order) {
-                    if (!empty($order->timebased_currency_order_details)) {
-                        $timebasedCurrencyOrderInList = true;
-                        break;
-                    }
-                }
-            }
-        }
+        $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
+        $timebasedCurrencySum = $this->TimebasedCurrencyOrderDetail->getSum(null, $this->getCustomerId());
+        $timebasedCurrencyOrderInList = $timebasedCurrencySum > 0;
         $this->set('timebasedCurrencyOrderInList', $timebasedCurrencyOrderInList);
 
         $payments = Hash::sort($payments, '{n}.date', 'desc');

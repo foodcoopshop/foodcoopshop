@@ -349,7 +349,8 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
             ],
             'contain' => [
                 'CartProducts.OrderDetails.OrderDetailTaxes',
-                'CartProducts.OrderDetails.OrderDetailUnits'
+                'CartProducts.OrderDetails.OrderDetailUnits',
+                'CartProducts.OrderDetails.TimebasedCurrencyOrderDetails'
             ]
         ])->first();
         return $cart;

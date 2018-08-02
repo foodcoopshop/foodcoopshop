@@ -4,7 +4,6 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
-use Cake\Validation\Validator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -166,23 +165,6 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
     /**
      * @param int $manufacturerId
      * @param int $customerId
-     * @return array
-     */
-    public function getOrders($manufacturerId = null, $customerId = null)
-    {
-        $query = $this->getFilteredQuery($manufacturerId, $customerId);
-        $orders = [];
-        // having is not attachable to associations, so sum up and prepare result manually
-        foreach($query as $orderDetail) {
-            @$orders[$orderDetail->order_detail->id_order]['SumSeconds'] += $orderDetail->seconds;
-            @$orders[$orderDetail->order_detail->id_order]['order'] = $orderDetail->order_detail->order;
-        }
-        return $orders;
-    }
-
-    /**
-     * @param int $manufacturerId
-     * @param int $customerId
      * @return float
      */
     public function getCreditBalance($manufacturerId = null, $customerId = null)
@@ -192,6 +174,17 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         return $creditBalance;
     }
 
+    public function getMonthlySum($manufacturerId = null, $customerId = null)
+    {
+        $query = $this->getFilteredQuery($manufacturerId, $customerId);
+        $query->group('MonthAndYear');
+        $query->select([
+            'SumSeconds' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds'),
+            'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')'
+        ]);
+        return $query->toArray();
+    }
+    
     /**
      * @param int $manufacturerId
      * @param int $customerId
