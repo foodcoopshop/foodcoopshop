@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-31 17:40+0200\n"
+"POT-Creation-Date: 2018-08-02 15:39+0200\n"
 "PO-Revision-Date: 2018-07-31 17:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -228,6 +228,12 @@ msgstr "Your settings have been changed."
 msgid "No_orders_within_the_given_time_range."
 msgstr "No orders within the given time range"
 
+msgid "No_member_found_with_id_{0}."
+msgstr "No member found with id {0}."
+
+msgid "Instant_order"
+msgstr "Instant order"
+
 msgid "Group_by_product"
 msgstr "Group by product"
 
@@ -293,12 +299,6 @@ msgstr "{0,plural,=1{product was cancelled succesfully.} other{products were can
 
 msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
 msgstr "The comment of the order number {0} by {1} was changed:"
-
-msgid "Instant_order"
-msgstr "Instant order"
-
-msgid "No_member_found_with_id_{0}."
-msgstr "No member found with id {0}."
 
 msgid "The_date_of_the_order_{0}_of_{1}_was_changed_to_{2}."
 msgstr "The date of the order {0} of {1} was changed to {2}."
@@ -1470,6 +1470,9 @@ msgstr "Test invoice"
 msgid "Manufacturer_profile"
 msgstr "Manufacturer profile"
 
+msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
+msgstr "Please chose the member you want to place the instant order for in the dropdown above."
+
 msgid "all_members"
 msgstr "all members"
 
@@ -1484,21 +1487,6 @@ msgstr "Back to deposit account"
 
 msgid "Cancel_selected_products"
 msgstr "Cancel selected products"
-
-msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
-msgstr "Please chose the member you want to place the instant order for in the dropdown above."
-
-msgid "Order_count"
-msgstr "Order count"
-
-msgid "Set_date_of_order_back"
-msgstr "Set date of order back"
-
-msgid "Generate_orders_as_pdf"
-msgstr "Generate orders as PDF"
-
-msgid "Close_all_orders"
-msgstr "Close all orders"
 
 msgid "Order_from"
 msgstr "Order from"
@@ -1742,6 +1730,18 @@ msgstr "{0,plural,=1{record} other{records}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
+#~ msgid "Order_count"
+#~ msgstr "Order count"
+
+#~ msgid "Set_date_of_order_back"
+#~ msgstr "Set date of order back"
+
+#~ msgid "Generate_orders_as_pdf"
+#~ msgstr "Generate orders as PDF"
+
+#~ msgid "Close_all_orders"
+#~ msgstr "Close all orders"
 
 #~ msgid "Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
 #~ msgstr "Instant order nrº {0} successfully placed for {1} and date changed to {2}. The manufacturer was notified unless the notification was disabled."

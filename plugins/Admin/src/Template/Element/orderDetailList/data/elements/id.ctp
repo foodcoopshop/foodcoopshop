@@ -17,6 +17,9 @@ echo '<td class="hide">';
     if ($groupBy == '') {
         echo $orderDetail->id_order_detail;
     }
+    if ($groupBy == 'customer') {
+        echo $orderDetail['customer_id'];
+    }
 echo '</td>';
 
 ?>

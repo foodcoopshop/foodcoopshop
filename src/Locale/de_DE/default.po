@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-31 10:46+0200\n"
-"PO-Revision-Date: 2018-07-31 11:05+0200\n"
+"POT-Creation-Date: 2018-08-02 15:39+0200\n"
+"PO-Revision-Date: 2018-08-02 15:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -653,6 +653,12 @@ msgstr "Gruppe ändern für"
 
 msgid "The_member_needs_to_sign_again."
 msgstr "Das Mitglied muss sich nach der Änderung neu einloggen."
+
+msgid "Were_the_products_picked_up?"
+msgstr "Wurden die Produkte abgeholt?"
+
+msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
+msgstr "Diese Eingabe ist für den Abholdienst hilfreich, die Zeile wird dann grün angezeigt."
 
 msgid "Change_comment_of_order"
 msgstr "Kommentar zu Bestellung ändern"
@@ -1620,9 +1626,6 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 msgid "The_amount_will_be_reduced_from_your_credit_balance."
 msgstr "Der Betrag wird dann automatisch von deinem Guthaben abgebucht."
 
-msgid "Please_pick_up_your_products_on_{0}_at_{1}."
-msgstr "Bitte hole deine Produkte am {0} bei uns ({1}) ab. Die genaue Uhrzeit steht in der Box rechts."
-
 msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
 msgstr "Eine detaillierte Auflistung deiner Bestellung findest du in der angehängten Bestellübersicht (PDF). Die Informationen zum Rücktrittsrecht sind gesetzlich vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen."
 
@@ -1901,6 +1904,9 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "Please_pick_up_your_products_on_{0}_at_{1}."
+#~ msgstr "Bitte hole deine Produkte am {0} bei uns ({1}) ab. Die genaue Uhrzeit steht in der Box rechts."
 
 #~ msgid "Error_while_creating_the_order."
 #~ msgstr "Bei der Erstellung der Bestellung ist ein Fehler aufgetreten."

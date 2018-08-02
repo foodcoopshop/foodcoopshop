@@ -331,7 +331,7 @@ foodcoopshop.Admin = {
 
     },
 
-    createOrderCommentEditDialog: function (container) {
+    createPickupDayCommentEditDialog: function (container) {
 
         var dialogId = 'order-comment-edit-form';
         var dialogHtml = foodcoopshop.DialogOrder.getHtmlForOrderCommentEdit(dialogId);
@@ -385,7 +385,7 @@ foodcoopshop.Admin = {
             foodcoopshop.Helper.destroyCkeditor('dialogOrderComment');
             $('#pickup-day-comment-edit-form').remove();
 
-            var dialog = foodcoopshop.Admin.createOrderCommentEditDialog(container);
+            var dialog = foodcoopshop.Admin.createPickupDayCommentEditDialog(container);
             foodcoopshop.Helper.initCkeditor('dialogOrderComment');
 
             var text = $(this).attr('originalTitle');
@@ -1317,6 +1317,91 @@ foodcoopshop.Admin = {
                 });
         });
 
+    },
+    
+    changeProductsPickedUpCallbackYes : function() {
+        foodcoopshop.Admin.changeProductsPickedUpCallback(1);
+    },
+
+    changeProductsPickedUpCallbackNo : function() {
+        foodcoopshop.Admin.changeProductsPickedUpCallback(0);
+    },
+    
+    changeProductsPickedUpCallback : function(state) {
+        
+        var dialogId = 'change-products-picked-up-form';
+        var customerId = $('#' + dialogId + ' #customerId').val();
+        var pickupDay = $('#' + dialogId + ' #pickupDay').val();
+        
+        $('#' + dialogId + ' .ajax-loader').show();
+        $('.ui-dialog button').attr('disabled', 'disabled');
+
+        foodcoopshop.Helper.ajaxCall(
+            '/admin/order-details/changeProductsPickedUp',
+            {
+                state: state,
+                customerId: customerId,
+                pickupDay: pickupDay
+            },
+            {
+                onOk: function (data) {
+                    document.location.reload();
+                },
+                onError: function (data) {
+                    var form = $('#' + dialogId);
+                    form.find('.ajax-loader').hide();
+                    foodcoopshop.Admin.appendFlashMessageToDialog(form, data.msg);
+                }
+            }
+        );
+        
+    },
+    
+    initChangeProductsPickedUp: function(container) {
+
+        $('.change-products-picked-up-button').on('click', function () {
+            
+            var dialogId = 'change-products-picked-up-form';
+            var dialogHtml = foodcoopshop.DialogOrderDetail.getHtmlForOrderDetailProductsPickupDayEdit(dialogId);
+            $(container).append(dialogHtml);
+
+            var buttons = {};
+            buttons['no'] = {
+                text: foodcoopshop.LocalizedJs.helper.no,
+                click: foodcoopshop.Admin.changeProductsPickedUpCallbackNo
+            };
+            buttons['yes'] = {
+                text: foodcoopshop.LocalizedJs.helper.yes,
+                click: foodcoopshop.Admin.changeProductsPickedUpCallbackYes
+            };
+            
+            var dialog = $('#' + dialogId).dialog({
+                autoOpen: false,
+                height: 230,
+                width: 400,
+                modal: true,
+                close: function () {
+                    $('#customerId').val('');
+                    $('#pickupDay').val('');
+                },
+                buttons: buttons
+            });
+            
+            var customerId = $(this).closest('tr').find('td:nth-child(2)').html();
+            var customerName = $(this).closest('tr').find('td:nth-child(4)').text();
+            var pickupDay = $(this).closest('tr').find('td:nth-child(8)').html();
+            
+            $('#' + dialogId + ' #customerId').val(customerId);
+            $('#' + dialogId + ' #pickupDay').val(pickupDay);
+            
+            var infoMessage = $('#' + dialogId + ' p').html('');
+            var dialogHtml = '<p>' + foodcoopshop.LocalizedJs.admin.ThisInformationServesThePickupTeamToSeeWhoWasAlreadyHere + '</p>';
+            dialogHtml += '<p>' + foodcoopshop.LocalizedJs.admin.Member + ': <b>' + customerName + '</b></p>';
+            infoMessage.html(dialogHtml);
+            
+            dialog.dialog('open');
+        });
+        
     },
 
     initManualOrderListSend: function (container, weekday) {

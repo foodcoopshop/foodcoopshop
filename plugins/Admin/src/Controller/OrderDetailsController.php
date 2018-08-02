@@ -280,7 +280,7 @@ class OrderDetailsController extends AdminAppController
         $contain = $odParams['contain'];
         if ($groupBy == 'customer') {
             $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
-                    'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo)
+                'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo)
             ]);
             $contain[] = 'PickupDayEntities';
         }
@@ -818,6 +818,59 @@ class OrderDetailsController extends AdminAppController
             'status' => 1,
             'msg' => 'ok'
         ]));
+    }
+    
+    public function changeProductsPickedUp()
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+        
+        $customerId = $this->getRequest()->getData('customerId');
+        $state = $this->getRequest()->getData('state');
+        $pickupDay = $this->getRequest()->getData('pickupDay');
+        $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
+        
+        $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
+        $this->PickupDay->setPrimaryKey(['customer_id', 'pickup_day']);
+        
+        $conditions = [
+            'customer_id' => $customerId,
+            'pickup_day' => $pickupDay
+        ];
+        
+        $pickupDayEntity = $this->PickupDay->find('all', [
+            'conditions' => [
+                $conditions
+            ]
+        ])->first();
+            
+        if (empty($pickupDayEntity)) {
+            $pickupDayEntity = $this->PickupDay->newEntity($conditions);
+        }
+        
+        $patchedEntity = $this->PickupDay->patchEntity(
+            $pickupDayEntity,
+            [
+                'products_picked_up' => $state
+            ]
+        );
+        
+        $result = $this->PickupDay->save($patchedEntity);
+        
+        $message = '';
+        if (empty($result)) {
+            $message = __d('admin', 'Errors_while_saving!');
+        }
+        
+        $this->set('data', [
+            'pickupDay' => $pickupDay,
+            'result' => $result,
+            'pickupDayEntity' => $pickupDayEntity,
+            'status' => !empty($result),
+            'msg' => $message
+        ]);
+        
+        $this->set('_serialize', 'data');
+        
     }
 
     /**

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-31 17:40+0200\n"
+"POT-Creation-Date: 2018-08-02 15:39+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -227,6 +227,12 @@ msgstr ""
 msgid "No_orders_within_the_given_time_range."
 msgstr ""
 
+msgid "No_member_found_with_id_{0}."
+msgstr ""
+
+msgid "Instant_order"
+msgstr ""
+
 msgid "Group_by_product"
 msgstr ""
 
@@ -291,12 +297,6 @@ msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_canc
 msgstr ""
 
 msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
-msgstr ""
-
-msgid "Instant_order"
-msgstr ""
-
-msgid "No_member_found_with_id_{0}."
 msgstr ""
 
 msgid "The_date_of_the_order_{0}_of_{1}_was_changed_to_{2}."
@@ -1469,6 +1469,9 @@ msgstr ""
 msgid "Manufacturer_profile"
 msgstr ""
 
+msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
+msgstr ""
+
 msgid "all_members"
 msgstr ""
 
@@ -1482,21 +1485,6 @@ msgid "Back_to_deposit_account"
 msgstr ""
 
 msgid "Cancel_selected_products"
-msgstr ""
-
-msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
-msgstr ""
-
-msgid "Order_count"
-msgstr ""
-
-msgid "Set_date_of_order_back"
-msgstr ""
-
-msgid "Generate_orders_as_pdf"
-msgstr ""
-
-msgid "Close_all_orders"
 msgstr ""
 
 msgid "Order_from"

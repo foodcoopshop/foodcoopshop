@@ -27,7 +27,7 @@ echo '<td>';
     }
     echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath($icon.'.png')) . (!$isMobile ? ' ' . $buttonText : ''), [
         'title' => $buttonText,
-        'class' => 'icon-with-text'
+        'class' => 'change-products-picked-up-button icon-with-text'
     ], 'javascript:void(0);');
 echo '</td>';
 

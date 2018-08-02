@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-31 10:46+0200\n"
+"POT-Creation-Date: 2018-08-02 15:39+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -651,6 +651,12 @@ msgid "Change_group_for"
 msgstr ""
 
 msgid "The_member_needs_to_sign_again."
+msgstr ""
+
+msgid "Were_the_products_picked_up?"
+msgstr ""
+
+msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
 msgstr ""
 
 msgid "Change_comment_of_order"
@@ -1617,9 +1623,6 @@ msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can
 msgstr ""
 
 msgid "The_amount_will_be_reduced_from_your_credit_balance."
-msgstr ""
-
-msgid "Please_pick_up_your_products_on_{0}_at_{1}."
 msgstr ""
 
 msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."

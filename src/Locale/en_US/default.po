@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-31 10:46+0200\n"
-"PO-Revision-Date: 2018-07-31 11:05+0200\n"
+"POT-Creation-Date: 2018-08-02 15:39+0200\n"
+"PO-Revision-Date: 2018-08-02 15:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -653,6 +653,12 @@ msgstr "Change group for"
 
 msgid "The_member_needs_to_sign_again."
 msgstr "The member needs to sign in again."
+
+msgid "Were_the_products_picked_up?"
+msgstr "Were the products picked up?"
+
+msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
+msgstr "This input is for the pickup team, the row will be shown green."
 
 msgid "Change_comment_of_order"
 msgstr "Change order comment"
@@ -1620,9 +1626,6 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 msgid "The_amount_will_be_reduced_from_your_credit_balance."
 msgstr "The amount will be reduced from your credit balance."
 
-msgid "Please_pick_up_your_products_on_{0}_at_{1}."
-msgstr "Please pick up your products on {0} at {1}."
-
 msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
 msgstr "You can find a detailed list of your ordered products in the attached order confirmation."
 
@@ -1901,6 +1904,9 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "Please_pick_up_your_products_on_{0}_at_{1}."
+#~ msgstr "Please pick up your products on {0} at {1}."
 
 #~ msgid "Error_while_creating_the_order."
 #~ msgstr "Error while creating the order."

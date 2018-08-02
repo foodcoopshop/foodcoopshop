@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-31 17:40+0200\n"
+"POT-Creation-Date: 2018-08-02 15:39+0200\n"
 "PO-Revision-Date: 2018-07-31 17:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -228,6 +228,12 @@ msgstr "Deine Einstellungen wurden erfolgreich gespeichert."
 msgid "No_orders_within_the_given_time_range."
 msgstr "Keine offenen Bestellungen im angegebenen Zeitraum."
 
+msgid "No_member_found_with_id_{0}."
+msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
+
+msgid "Instant_order"
+msgstr "Sofort-Bestellung"
+
 msgid "Group_by_product"
 msgstr "Gruppieren nach Produkt"
 
@@ -293,12 +299,6 @@ msgstr "{0,plural,=1{Produkte wurden erfolgreich storniert.} other{Produkte wurd
 
 msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
 msgstr "Der Kommentar der Bestellung Nr. {0} von {1} wurde geändert:"
-
-msgid "Instant_order"
-msgstr "Sofort-Bestellung"
-
-msgid "No_member_found_with_id_{0}."
-msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
 
 msgid "The_date_of_the_order_{0}_of_{1}_was_changed_to_{2}."
 msgstr "Die Bestellung {0} von {1} wurde auf den {2} rückdatiert."
@@ -1470,6 +1470,9 @@ msgstr "Rechnung prüfen"
 msgid "Manufacturer_profile"
 msgstr "Hersteller-Profil"
 
+msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
+msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
+
 msgid "all_members"
 msgstr "alle Mitglieder"
 
@@ -1484,21 +1487,6 @@ msgstr "Zurück zum Pfandkonto"
 
 msgid "Cancel_selected_products"
 msgstr "Ausgewählte Produkte stornieren"
-
-msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
-msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
-
-msgid "Order_count"
-msgstr "Anzahl Bestellungen"
-
-msgid "Set_date_of_order_back"
-msgstr "Bestellung rückdatieren"
-
-msgid "Generate_orders_as_pdf"
-msgstr "Bestellungen als PDF generieren"
-
-msgid "Close_all_orders"
-msgstr "Alle Bestellungen abschließen"
 
 msgid "Order_from"
 msgstr "Bestellung vom"
@@ -1742,6 +1730,18 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+#~ msgid "Order_count"
+#~ msgstr "Anzahl Bestellungen"
+
+#~ msgid "Set_date_of_order_back"
+#~ msgstr "Bestellung rückdatieren"
+
+#~ msgid "Generate_orders_as_pdf"
+#~ msgstr "Bestellungen als PDF generieren"
+
+#~ msgid "Close_all_orders"
+#~ msgstr "Alle Bestellungen abschließen"
 
 #~ msgid "Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
 #~ msgstr "Die Sofort-Bestellung Nr. {0} für {1} wurde erfolgreich getätigt und rückdatiert auf den {2}. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat."
