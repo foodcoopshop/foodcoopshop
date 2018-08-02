@@ -207,7 +207,13 @@ span.product-quantity-for-dialog {
     line-height: 21px;
     margin-left: 5px;
 }
-
+tr.main-product span.name-for-dialog {
+	font-weight: 600;
+}
+span.categories-for-dialog {
+	font-style: italic;
+	font-size: 11px;
+}
 span.is-declaration-ok-wrapper,
 span.product-declaration-header {
   float: right;

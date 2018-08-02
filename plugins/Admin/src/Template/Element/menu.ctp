@@ -40,7 +40,7 @@ $cancelledProductsMenuElement = [
     ]
 ];
 $paymentDepositCustomerAddedMenuElement = [
-    'slug' => $this->Slug->getActionLogsList().'/index/?type=payment_deposit_customer_added',
+    'slug' => $this->Slug->getActionLogsList().'/index/?types[]=payment_deposit_customer_added',
     'name' => __d('admin', 'Deposit_returns'),
     'options' => [
         'fa-icon' => 'fa-fw fa-'.strtolower(Configure::read('app.currencyName'))
