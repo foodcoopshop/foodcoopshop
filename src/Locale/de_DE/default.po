@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-03 10:36+0200\n"
-"PO-Revision-Date: 2018-08-03 10:49+0200\n"
+"POT-Creation-Date: 2018-08-03 11:21+0200\n"
+"PO-Revision-Date: 2018-08-03 11:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -75,8 +75,8 @@ msgstr "Die Sofort-Bestellung für {0} wurde erfolgreich getätigt."
 msgid "Instant_order_successfully_placed_for_{0}._The_following_manufacturers_were_notified:_{1}"
 msgstr "Die Sofort-Bestellung für {0} wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: {1}"
 
-msgid "Delivery_day"
-msgstr "Liefertag"
+msgid "Pickup_day"
+msgstr "Abholtag"
 
 msgid "Your_order_has_been_placed_succesfully."
 msgstr "Deine Bestellung wurde erfolgreich abgeschlossen."
@@ -1209,9 +1209,6 @@ msgstr "Lieferpause"
 msgid "online"
 msgstr "online"
 
-msgid "Pickup_day"
-msgstr "Abholtag"
-
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{1 Produkt} other{# Produkte}}"
 
@@ -1605,8 +1602,8 @@ msgstr "Hier kannst du die Daten des neuen Mitglieds einsehen"
 msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1})."
 msgstr "Soeben wurde von {1} eine Sofort-Bestellung für {0} getätigt."
 
-msgid "You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists."
-msgstr "Du erhältst diese Nachricht, weil der Liefertag dieser Bestellung automatisch auf heute gesetzt wurde und sie daher nicht in deinen Bestelllisten aufscheint."
+msgid "You_receive_this_message_because_the_delivery_day_of_this_order_was_automatically_set_to_today_{0}_and_therefore_it_does_not_appear_on_your_order_lists."
+msgstr "Du erhältst diese Nachricht, weil der Liefertag dieser Bestellung automatisch auf <b>heute ({0})</b>, gesetzt wurde und sie daher nicht in deinen Bestelllisten aufscheint."
 
 msgid "please_click_on_this_link_to_generate_a_new_password"
 msgstr "bitte klicke auf folgenden Link, um dein neues Passwort zu generieren"
@@ -1623,8 +1620,8 @@ msgstr "vielen Dank für deine Bestellung vom {0}."
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
 
-msgid "The_amount_will_be_reduced_from_your_credit_balance."
-msgstr "Der Betrag wird dann automatisch von deinem Guthaben abgebucht."
+msgid "The_amount_was_reduced_from_your_credit_balance."
+msgstr "Der Betrag wurde von deinem Guthaben abgebucht."
 
 msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
 msgstr "Eine detaillierte Auflistung deiner Bestellung findest du in der angehängten Bestellübersicht (PDF). Die Informationen zum Rücktrittsrecht sind gesetzlich vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen."
@@ -1904,6 +1901,9 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "Delivery_day"
+#~ msgstr "Liefertag"
 
 #~ msgid "Instant_order_date_is_set_back_after_placing_it."
 #~ msgstr "Nach dem Abschließen der Bestellung wird sie automatisch rückdatiert."

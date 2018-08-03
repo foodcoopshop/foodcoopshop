@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-03 10:36+0200\n"
+"POT-Creation-Date: 2018-08-03 11:21+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1475,6 +1475,9 @@ msgstr ""
 msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
 msgstr ""
 
+msgid "Delivery_day"
+msgstr ""
+
 msgid "all_members"
 msgstr ""
 
@@ -1482,9 +1485,6 @@ msgid "Group_by..."
 msgstr ""
 
 msgid "docs_route_pick_up_products"
-msgstr ""
-
-msgid "Delivery_day"
 msgstr ""
 
 msgid "Back_to_deposit_account"

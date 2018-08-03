@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-03 10:36+0200\n"
+"POT-Creation-Date: 2018-08-03 11:21+0200\n"
 "PO-Revision-Date: 2018-08-03 10:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1476,6 +1476,9 @@ msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen m
 msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
 msgstr "Der Abholtag der Sofort-Bestellung wird automatisch auf <b>heute, {0}</b> gesetzt."
 
+msgid "Delivery_day"
+msgstr "Liefertag"
+
 msgid "all_members"
 msgstr "alle Mitglieder"
 
@@ -1484,9 +1487,6 @@ msgstr "Gruppieren nach..."
 
 msgid "docs_route_pick_up_products"
 msgstr "abholung-der-produkte"
-
-msgid "Delivery_day"
-msgstr "Liefertag"
 
 msgid "Back_to_deposit_account"
 msgstr "Zurück zum Pfandkonto"

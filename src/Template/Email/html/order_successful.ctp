@@ -32,6 +32,13 @@ use Cake\Core\Configure;
             	?>
             </td>
         </tr>
+        <tr>
+            <td style="padding-bottom:10px;">
+            	<?php
+            	   echo __('Pickup_day') . ': <b> ' . $this->MyTime->getDeliveryDateByCurrentDayFormattedWithWeekday().'</b>';
+            	?>
+            </td>
+        </tr>
     </tbody>
 <?php echo $this->element('email/tableFoot'); ?>
 
@@ -61,7 +68,7 @@ use Cake\Core\Configure;
         <tr><td>
             <?php
                 if ($this->MyHtml->paymentIsCashless()) {
-                    echo __('The_amount_will_be_reduced_from_your_credit_balance.');
+                    echo __('The_amount_was_reduced_from_your_credit_balance.');
                 } else {
                     echo __('Please_pay_when_picking_up_products.');
                 }

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-03 10:36+0200\n"
+"POT-Creation-Date: 2018-08-03 11:21+0200\n"
 "PO-Revision-Date: 2018-08-03 10:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1476,6 +1476,9 @@ msgstr "Please chose the member you want to place the instant order for in the d
 msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
 msgstr "The pickup day of the instant order will be automatically changed to <b>today, {0}</b>."
 
+msgid "Delivery_day"
+msgstr "Delivery day"
+
 msgid "all_members"
 msgstr "all members"
 
@@ -1484,9 +1487,6 @@ msgstr "Group by..."
 
 msgid "docs_route_pick_up_products"
 msgstr "pick-up-products"
-
-msgid "Delivery_day"
-msgstr "Delivery day"
 
 msgid "Back_to_deposit_account"
 msgstr "Back to deposit account"
