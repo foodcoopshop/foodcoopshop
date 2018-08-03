@@ -14,18 +14,8 @@
  */
 
 if ($groupBy == '') {
-    echo '<td'.(!$isMobile ? ' style="width: 247px;"' : '').'>';
-        echo '<span class="truncate" style="float: left; width: 77px;">' . $this->MyHtml->getOrderStates()[$orderDetail->order_state] . '</span>';
-        $statusChangeIcon = 'accept';
-        if ($orderDetail->order_state == ORDER_STATE_OPEN) {
-            $statusChangeIcon = 'error';
-        }
-        if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath($statusChangeIcon . '.png')) . (!$isMobile ? ' ' . __d('admin', 'Change_order_status') : ''), [
-                'title' => __d('admin', 'Change_order_status'),
-                'class' => 'change-order-state-button icon-with-text'
-            ], 'javascript:void(0);');
-        }
+    echo '<td>';
+        echo $this->MyHtml->getOrderStates()[$orderDetail->order_state];
     echo '</td>';
 }
 

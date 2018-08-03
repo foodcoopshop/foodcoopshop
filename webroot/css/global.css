@@ -87,7 +87,8 @@ h2 {
     font-weight: normal;
 }
 h2.warning,
-h2.info {
+h2.info,
+h2.info2 {
     letter-spacing: normal;
     font-size: 15px;
     padding: 7px 5px ! important;
@@ -97,10 +98,13 @@ h2.info {
     line-height: 19px;
 }
 h2.info {
-    background: #719f41;
+    background-color: #719f41;
 }
 h2.warning {
-    background: #f3515c;
+    background-color: #f3515c;
+}
+h2.info2 {
+	background-color: orange;
 }
 #installation-logo {
     border-radius: 10px;

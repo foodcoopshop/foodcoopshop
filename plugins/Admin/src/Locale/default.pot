@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-02 15:39+0200\n"
+"POT-Creation-Date: 2018-08-03 10:15+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -899,6 +899,9 @@ msgstr ""
 msgid "Amount_in_{0}"
 msgstr ""
 
+msgid "Instant_order_for_today"
+msgstr ""
+
 msgid "chose_member..."
 msgstr ""
 
@@ -963,9 +966,6 @@ msgid "Deposit_return"
 msgstr ""
 
 msgid "Show_all_ordered_products_from_{0}"
-msgstr ""
-
-msgid "Change_order_status"
 msgstr ""
 
 msgid "Click_to_change_price"
@@ -1479,6 +1479,9 @@ msgid "Group_by..."
 msgstr ""
 
 msgid "docs_route_pick_up_products"
+msgstr ""
+
+msgid "Delivery_day"
 msgstr ""
 
 msgid "Back_to_deposit_account"

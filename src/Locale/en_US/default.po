@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-02 15:39+0200\n"
+"POT-Creation-Date: 2018-08-03 10:15+0200\n"
 "PO-Revision-Date: 2018-08-02 15:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -660,6 +660,9 @@ msgstr "Were the products picked up?"
 msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
 msgstr "This input is for the pickup team, the row will be shown green."
 
+msgid "Member"
+msgstr "Member"
+
 msgid "Change_comment_of_order"
 msgstr "Change order comment"
 
@@ -764,9 +767,6 @@ msgstr "Price excl."
 
 msgid "VAT"
 msgstr "VAT"
-
-msgid "Member"
-msgstr "Member"
 
 msgid "Total_sum"
 msgstr "Total sum"

@@ -197,28 +197,14 @@ class OrderDetailsController extends AdminAppController
             $orderDetailId = $this->getRequest()->getQuery('orderDetailId');
         }
 
-        $dateFrom = '';
-        $dateTo = '';
+        $pickupDay = '';
         if ($orderDetailId == '') {
-            
-            $dateFrom = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getCurrentDay());
-            if ($this->AppAuth->isManufacturer()) {
-                $dateFrom = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getDeliveryDayByCurrentDay());
-            }
-            if (! empty($this->getRequest()->getQuery('dateFrom'))) {
-                $dateFrom = $this->getRequest()->getQuery('dateFrom');
-            }
-            
-            $dateTo = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getCurrentDay());
-            if ($this->AppAuth->isManufacturer()) {
-                $dateTo = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getDeliveryDayByCurrentDay());
-            }
-            if (! empty($this->getRequest()->getQuery('dateTo'))) {
-                $dateTo = $this->getRequest()->getQuery('dateTo');
+            $pickupDay = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getCurrentDay());
+            if (! empty($this->getRequest()->getQuery('pickupDay'))) {
+                $pickupDay = $this->getRequest()->getQuery('pickupDay');
             }
         }
-        $this->set('dateFrom', $dateFrom);
-        $this->set('dateTo', $dateTo);
+        $this->set('pickupDay', $pickupDay);
 
         $manufacturerId = '';
         if (! empty($this->getRequest()->getQuery('manufacturerId'))) {
@@ -275,12 +261,12 @@ class OrderDetailsController extends AdminAppController
         $this->set('groupBy', $groupBy);
 
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, $manufacturerId, $productId, $customerId, $orderStates, $dateFrom, $dateTo, $orderDetailId, $deposit);
+        $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, $manufacturerId, $productId, $customerId, $orderStates, $pickupDay, $orderDetailId, $deposit);
 
         $contain = $odParams['contain'];
         if ($groupBy == 'customer') {
             $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
-                'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo)
+                'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay)
             ]);
             $contain[] = 'PickupDayEntities';
         }
@@ -304,7 +290,7 @@ class OrderDetailsController extends AdminAppController
         
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         
-        $orderDetails = $this->prepareGroupedOrderDetails($orderDetails, $groupBy, $dateTo);
+        $orderDetails = $this->prepareGroupedOrderDetails($orderDetails, $groupBy, $pickupDay);
         $this->set('orderDetails', $orderDetails);
 
         $timebasedCurrencyOrderInList = false;
@@ -342,10 +328,10 @@ class OrderDetailsController extends AdminAppController
         $this->set('sums', $sums);
 
         $groupByForDropdown = [
-            'product' => __d('admin', 'Group_by_product'),
-            'customer' => __d('admin', 'Group_by_member')
+            'product' => __d('admin', 'Group_by_product')
         ];
         if (!$this->AppAuth->isManufacturer()) {
+            $groupByForDropdown['manufacturer'] = __d('admin', 'Group_by_member');
             $groupByForDropdown['manufacturer'] = __d('admin', 'Group_by_manufacturer');
         }
         $this->set('groupByForDropdown', $groupByForDropdown);
@@ -425,8 +411,7 @@ class OrderDetailsController extends AdminAppController
         
         foreach ($refererQueryParams as $param => $value) {
             if (in_array($param, [
-                'dateFrom',
-                'dateTo',
+                'pickupDay',
                 'orderStates'
             ])) {
                 $redirectUrlParams[$param] = $value;

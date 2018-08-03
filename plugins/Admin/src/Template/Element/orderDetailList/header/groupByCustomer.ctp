@@ -30,10 +30,6 @@ if (Configure::read('app.isDepositPaymentCashless')) {
     echo '<th>'.__d('admin', 'Deposit').'</th>';
 }
 
-echo '<th>';
-    echo $this->Paginator->sort('OrderDetails.pickup_day', __d('admin', 'Pickup_day'));
-echo '</th>';
-
 echo '<th>'.__d('admin', 'Picked_up').'</th>';
 
 ?>

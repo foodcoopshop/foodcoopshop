@@ -39,10 +39,6 @@ echo '<th class="right">';
     echo $this->Paginator->sort('OrderDetailUnits.product_quantity_in_units', __d('admin', 'Weight'));
 echo '</th>';
 
-echo '<th>';
-    echo $this->Paginator->sort('OrderDetails.pickup_day', __d('admin', 'Pickup_day'));
-echo '</th>';
-
 echo '<th>'.$this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member')).'</th>';
 echo '<th>'.$this->Paginator->sort('OrderDetails.order_state', __d('admin', 'Status')).'</th>';
 echo '<th style="width:25px;"></th>';

@@ -65,7 +65,7 @@ use Cake\Core\Configure;
     
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
-            <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
+            <?php echo __d('admin', 'Pickup_day') . ': ' . $this->element('dateFields', ['dateFrom' => $pickupDay, 'nameFrom' => 'pickupDay', 'showDateTo' => false]); ?>
             <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_products'), 'options' => []]); ?>
             <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
                 <?php echo $this->Form->control('manufacturerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_manufacturers'), 'options' => $manufacturersForDropdown, 'default' => isset($manufacturerId) ? $manufacturerId: '']); ?>
@@ -77,7 +77,6 @@ use Cake\Core\Configure;
                 <?php // for preselecting customer in shop order dropdown ?>
                 <?php echo $this->Form->hidden('customerId', ['value' => isset($customerId) ? $customerId: '']); ?>
             <?php } ?>
-            <?php echo $this->Form->control('orderStates', ['type' => 'select', 'multiple' => true, 'label' => '', 'options' => $this->MyHtml->getVisibleOrderStates(), 'data-val' => join(',', $orderStates)]); ?>
             <?php echo $this->Form->control('groupBy', ['type'=>'select', 'label' =>'', 'empty' => __d('admin', 'Group_by...'), 'options' => $groupByForDropdown, 'default' => $groupBy]);?>
             <div class="right">
             
@@ -105,6 +104,15 @@ use Cake\Core\Configure;
     </div>
 
 <?php
+
+echo '<p style="margin-top:7px;">';
+    if ($appAuth->isManufacturer()) {
+        echo __d('admin', 'Delivery_day');
+    } else {
+        echo __d('admin', 'Pickup_day');
+    }
+echo ': <b>' . $this->Time->getDateFormattedWithWeekday(strtotime($pickupDay)) . '</b></p>';
+
 echo '<table class="list">';
 echo '<tr class="sort">';
     echo '<th style="width:20px;">';
@@ -185,12 +193,6 @@ foreach ($orderDetails as $orderDetail) {
         'groupBy' => $groupBy
     ]);
 
-    echo $this->element('orderDetailList/data/elements/pickupDay', [
-        'orderDetail' => $orderDetail,
-        'editRecordAllowed' => $editRecordAllowed,
-        'groupBy' => $groupBy
-    ]);
-    
     echo $this->element('orderDetailList/data/elements/productsPickedUp', [
         'orderDetail' => $orderDetail,
         'groupBy' => $groupBy
@@ -217,7 +219,9 @@ foreach ($orderDetails as $orderDetail) {
 
 echo '<tr>';
 echo '<td colspan="1"><b>' . $this->Number->formatAsDecimal($sums['records_count'], 0) . '</b></td>';
-echo '<td class="right"><b>' . $this->Number->formatAsDecimal($sums['amount'], 0) . 'x</b></td>';
+if ($groupBy != 'customer') {
+    echo '<td class="right"><b>' . $this->Number->formatAsDecimal($sums['amount'], 0) . 'x</b></td>';
+}
 if ($groupBy == '') {
     if ($appAuth->isManufacturer()) {
         echo '<td></td>';
@@ -240,24 +244,24 @@ if ($groupBy == 'product') {
         echo '<td colspan="2"></td>';
     }
 }
-echo '<td class="right"><b>' . $this->Number->formatAsDecimal($sums['price']) . '</b></td>';
+echo '<td class="right"><b>' . $this->Number->formatAsCurrency($sums['price']) . '</b></td>';
 if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     echo '<td></td>';
-    echo '<td class="right"><b>' . $this->Number->formatAsDecimal($sums['reduced_price']) . '</b></td>';
+    echo '<td class="right"><b>' . $this->Number->formatAsCurrency($sums['reduced_price']) . '</b></td>';
 }
 if ($groupBy != 'customer') {
     $sumDepositString = '';
     if ($sums['deposit']> 0) {
-        $sumDepositString = $this->Number->formatAsDecimal($sums['deposit']);
+        $sumDepositString = $this->Number->formatAsCurrency($sums['deposit']);
     }
     echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
 } else {
-    echo '<td colspan="2"></td>';
+    echo '<td></td>';
 }
 if ($groupBy == '') {
     $sumUnitsString = $this->PricePerUnit->getStringFromUnitSums($sums['units'], '<br />');
     echo '<td class="right slim"><b>' . $sumUnitsString . '</b></td>';
-    echo '<td colspan="4"></td>';
+    echo '<td colspan="3"></td>';
 }
 echo '</tr>';
 echo '</table>';
@@ -267,23 +271,14 @@ $buttonHtml = '';
 
 if ($groupBy == '' && ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isManufacturer())) {
     $buttonExists = true;
-    $buttonHtml .= '<button class="email-to-all btn btn-default" data-column="11"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
+    $buttonHtml .= '<button class="email-to-all btn btn-default" data-column="10"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
 }
 
 if ($groupBy == '' && $productId == '' && $manufacturerId == '') {
     $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace') . ".Admin.setAdditionalOrderStatusChangeInfo('" .
-        Configure::read('app.additionalOrderStatusChangeInfo') . "');" .
-        Configure::read('app.jsNamespace') . ".Helper.setPaymentMethods(" . json_encode(Configure::read('app.paymentMethods')) . ");" .
-        Configure::read('app.jsNamespace') . ".Admin.setVisibleOrderStates('" . json_encode(Configure::read('app.visibleOrderStates')) . "');"
+        Configure::read('app.jsNamespace') . ".Admin.setAdditionalOrderStatusChangeInfo('" . Configure::read('app.additionalOrderStatusChangeInfo') . "');" .
+        Configure::read('app.jsNamespace') . ".Helper.setPaymentMethods(" . json_encode(Configure::read('app.paymentMethods')) . ");"
     ]);
-    if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-        $this->element('addScript', [
-            'script' => Configure::read('app.jsNamespace') . ".Admin.initChangeOrderStateFromOrderDetails();"
-        ]);
-        $buttonExists = true;
-        $buttonHtml .= '<button class="change-order-state-button btn btn-default"><i class="fa fa-check-square-o"></i> ' . __d('admin', 'Change_order_status') . '</button>';
-    }
 }
 
 if ($deposit != '') {

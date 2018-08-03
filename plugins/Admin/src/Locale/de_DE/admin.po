@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-02 15:39+0200\n"
-"PO-Revision-Date: 2018-07-31 17:40+0200\n"
+"POT-Creation-Date: 2018-08-03 10:15+0200\n"
+"PO-Revision-Date: 2018-08-03 10:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -900,6 +900,9 @@ msgstr "Hat der Hersteller Leergebinde mitgenommen oder wurde sein Pfandkonto mi
 msgid "Amount_in_{0}"
 msgstr "Betrag in {0}"
 
+msgid "Instant_order_for_today"
+msgstr "Sofort-Bestellung für heute"
+
 msgid "chose_member..."
 msgstr "Mitglied auswählen..."
 
@@ -965,9 +968,6 @@ msgstr "Pfand-Rückgabe"
 
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Alle bestellten Produkte von {0} anzeigen"
-
-msgid "Change_order_status"
-msgstr "Bestellstatus ändern"
 
 msgid "Click_to_change_price"
 msgstr "Zum Ändern des Preises anklicken"
@@ -1482,6 +1482,9 @@ msgstr "Gruppieren nach..."
 msgid "docs_route_pick_up_products"
 msgstr "abholung-der-produkte"
 
+msgid "Delivery_day"
+msgstr "Liefertag"
+
 msgid "Back_to_deposit_account"
 msgstr "Zurück zum Pfandkonto"
 
@@ -1730,6 +1733,9 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+#~ msgid "Change_order_status"
+#~ msgstr "Bestellstatus ändern"
 
 #~ msgid "Order_count"
 #~ msgstr "Anzahl Bestellungen"

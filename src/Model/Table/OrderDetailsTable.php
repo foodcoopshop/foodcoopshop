@@ -372,15 +372,12 @@ class OrderDetailsTable extends AppTable
         return $preparedOrderDetails;
     }
 
-    public function getOrderDetailParams($appAuth, $manufacturerId, $productId, $customerId, $orderState, $dateFrom, $dateTo, $orderDetailId, $deposit)
+    public function getOrderDetailParams($appAuth, $manufacturerId, $productId, $customerId, $orderState, $pickupDay, $orderDetailId, $deposit)
     {
         $conditions = [];
 
-        if ($dateFrom != '') {
-            $conditions[] = 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
-        }
-        if ($dateTo != '') {
-            $conditions[] = 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
+        if ($pickupDay != '') {
+            $conditions[] = 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') = \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay) . '\'';
         }
 
         if ($orderState != '') {

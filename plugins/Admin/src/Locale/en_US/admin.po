@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-02 15:39+0200\n"
-"PO-Revision-Date: 2018-07-31 17:40+0200\n"
+"POT-Creation-Date: 2018-08-03 10:15+0200\n"
+"PO-Revision-Date: 2018-08-03 10:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -900,6 +900,9 @@ msgstr "Did the manufacturer take away empty glasses or was his deposit account 
 msgid "Amount_in_{0}"
 msgstr "Amount in {0}"
 
+msgid "Instant_order_for_today"
+msgstr "Instant order for today"
+
 msgid "chose_member..."
 msgstr "chose member..."
 
@@ -965,9 +968,6 @@ msgstr "Deposit return"
 
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Show all ordered products from {0}"
-
-msgid "Change_order_status"
-msgstr "Change order status"
 
 msgid "Click_to_change_price"
 msgstr "Click to change price"
@@ -1482,6 +1482,9 @@ msgstr "Group by..."
 msgid "docs_route_pick_up_products"
 msgstr "pick-up-products"
 
+msgid "Delivery_day"
+msgstr "Delivery day"
+
 msgid "Back_to_deposit_account"
 msgstr "Back to deposit account"
 
@@ -1730,6 +1733,9 @@ msgstr "{0,plural,=1{record} other{records}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
+#~ msgid "Change_order_status"
+#~ msgstr "Change order status"
 
 #~ msgid "Order_count"
 #~ msgstr "Order count"

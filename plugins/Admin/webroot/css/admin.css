@@ -456,8 +456,6 @@ body.configurations.index td.sync-domain-list a.btn {
     padding: 10px;
     margin-bottom: 10px;
 }
-#actionLogs table.list tr.info {
-}
 #actionLogs table.list tr.warn {
     background-color: #800080;
     color: white;
@@ -682,7 +680,7 @@ body.products.index .table-cell-wrapper.price {
     text-align: right;
 }
 body.order_details.index .table-cell-wrapper.price {
-    width: 60px;
+    width: 70px;
 }
 .table-cell-wrapper.amount {
     width: 48px;

@@ -31,11 +31,11 @@ if ($groupBy != 'customer') {
     echo '<td class="right">';
     if ($groupBy == '') {
         if ($orderDetail->deposit > 0) {
-            echo $this->Number->formatAsDecimal($orderDetail->deposit);
+            echo $this->Number->formatAsCurrency($orderDetail->deposit);
         }
     } else {
         if ($orderDetail['sum_deposit'] > 0) {
-            echo $this->Number->formatAsDecimal($orderDetail['sum_deposit']);
+            echo $this->Number->formatAsCurrency($orderDetail['sum_deposit']);
         }
     }
     echo '</td>';

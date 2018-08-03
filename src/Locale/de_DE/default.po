@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-02 15:39+0200\n"
+"POT-Creation-Date: 2018-08-03 10:15+0200\n"
 "PO-Revision-Date: 2018-08-02 15:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -660,6 +660,9 @@ msgstr "Wurden die Produkte abgeholt?"
 msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
 msgstr "Diese Eingabe ist für den Abholdienst hilfreich, die Zeile wird dann grün angezeigt."
 
+msgid "Member"
+msgstr "Mitglied"
+
 msgid "Change_comment_of_order"
 msgstr "Kommentar zu Bestellung ändern"
 
@@ -764,9 +767,6 @@ msgstr "Preis exkl."
 
 msgid "VAT"
 msgstr "USt."
-
-msgid "Member"
-msgstr "Mitglied"
 
 msgid "Total_sum"
 msgstr "Gesamtsumme"
