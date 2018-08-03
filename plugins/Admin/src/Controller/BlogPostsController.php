@@ -147,6 +147,15 @@ class BlogPostsController extends AdminAppController
 
             if (!empty($this->getRequest()->getData('BlogPosts.tmp_image'))) {
                 $this->saveUploadedImage($blogPost->id_blog_post, $this->getRequest()->getData('BlogPosts.tmp_image'), Configure::read('app.htmlHelper')->getBlogPostThumbsPath(), Configure::read('app.blogPostImageSizes'));
+            } else { //If no image was specified
+                if(!empty($blogPost->id_manufacturer)) { //If a manufacturer was specified
+                    $filename = Configure::read('app.htmlHelper')->getManufacturerImageSrc($blogPost->id_manufacturer, "large");
+                    $splitted = explode("/", $filename);
+
+                    if(is_numeric(substr(end($splitted),0, 1))) { //Check if filename starts with number --> no default image
+                        $this->saveUploadedImage($blogPost->id_blog_post, $filename, Configure::read('app.htmlHelper')->getBlogPostThumbsPath(), Configure::read('app.blogPostImageSizes'));
+                    }
+                }
             }
 
             if (!empty($this->getRequest()->getData('BlogPosts.delete_image'))) {
