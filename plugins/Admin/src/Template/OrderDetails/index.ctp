@@ -57,7 +57,7 @@ use Cake\Core\Configure;
     }
     if ($groupBy == 'customer') {
         $this->element('addScript', [ 'script' =>
-            Configure::read('app.jsNamespace').".Admin.initChangeProductsPickedUp('table.list');"
+            Configure::read('app.jsNamespace').".Admin.initChangeProductsPickedUp('#order-details-list');"
         ]);
     }
     
@@ -252,7 +252,7 @@ if ($groupBy != 'customer') {
     }
     echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
 } else {
-    echo '<td colspan="3"></td>';
+    echo '<td colspan="2"></td>';
 }
 if ($groupBy == '') {
     $sumUnitsString = $this->PricePerUnit->getStringFromUnitSums($sums['units'], '<br />');

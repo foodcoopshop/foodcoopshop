@@ -1388,8 +1388,8 @@ foodcoopshop.Admin = {
             });
             
             var customerId = $(this).closest('tr').find('td:nth-child(2)').html();
-            var customerName = $(this).closest('tr').find('td:nth-child(4)').text();
-            var pickupDay = $(this).closest('tr').find('td:nth-child(8)').html();
+            var customerName = $(this).closest('tr').find('td:nth-child(3)').text();
+            var pickupDay = $(this).closest('tr').find('td:nth-child(7)').html();
             
             $('#' + dialogId + ' #customerId').val(customerId);
             $('#' + dialogId + ' #pickupDay').val(pickupDay);

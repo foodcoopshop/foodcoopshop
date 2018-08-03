@@ -15,6 +15,10 @@
 
 use Cake\Core\Configure;
 
+if ($groupBy == 'customer') {
+    return false;
+}
+
 echo '<td class="right">';
 
     if (!empty($orderDetail->timebased_currency_order_detail)) {
@@ -25,23 +29,26 @@ echo '<td class="right">';
     }
     
     echo '<div class="table-cell-wrapper amount">';
-    if ($groupBy == '') {
-        if ($orderDetail->product_amount > 1 && $editRecordAllowed) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                'class' => 'order-detail-product-amount-edit-button',
-                'title' => __d('admin', 'Click_to_change_amount')
-            ], 'javascript:void(0);');
+    
+        if ($groupBy == '') {
+            if ($orderDetail->product_amount > 1 && $editRecordAllowed) {
+                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
+                    'class' => 'order-detail-product-amount-edit-button',
+                    'title' => __d('admin', 'Click_to_change_amount')
+                ], 'javascript:void(0);');
+            }
+            $amount = $orderDetail->product_amount;
+            $style = '';
+            if ($amount > 1) {
+                $style = 'font-weight:bold;';
+            }
+            echo '<span class="product-amount-for-dialog" style="' . $style . '">' . $amount . '</span><span style="' . $style . '">x</span>';
+        } else {
+            echo $this->Number->formatAsDecimal($orderDetail['sum_amount'], 0) . 'x';
         }
-        $amount = $orderDetail->product_amount;
-        $style = '';
-        if ($amount > 1) {
-            $style = 'font-weight:bold;';
-        }
-        echo '<span class="product-amount-for-dialog" style="' . $style . '">' . $amount . '</span><span style="' . $style . '">x</span>';
-    } else {
-        echo $this->Number->formatAsDecimal($orderDetail['sum_amount'], 0) . 'x';
-    }
+    
     echo '</div>';
+    
 echo '</td>';
 
 ?>
