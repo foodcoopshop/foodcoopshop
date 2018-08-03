@@ -1331,7 +1331,7 @@ foodcoopshop.Admin = {
         
         var dialogId = 'change-products-picked-up-form';
         var customerId = $('#' + dialogId + ' #customerId').val();
-        var pickupDay = $('#' + dialogId + ' #pickupDay').val();
+        var pickupDay = $('#pickupDay').val(); // filter-dropdown!
         
         $('#' + dialogId + ' .ajax-loader').show();
         $('.ui-dialog button').attr('disabled', 'disabled');
