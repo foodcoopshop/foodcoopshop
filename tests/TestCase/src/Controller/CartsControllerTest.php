@@ -416,7 +416,6 @@ class CartsControllerTest extends AppCakeTestCase
         foreach($cart->cart_products as $cartProduct) {
             $orderDetail = $cartProduct->order_detail;
             $this->assertEquals($orderDetail->id_customer, $testCustomer->id_customer, 'order_detail id_customer not correct');
-            $this->assertEquals($orderDetail->order_state, Configure::read('appDb.FCS_INSTANT_ORDER_DEFAULT_STATE'), 'order_detail order_state not correct');
             $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getCurrentDateForDatabase(), 'order_detail pickup_day not correct');
         }
         

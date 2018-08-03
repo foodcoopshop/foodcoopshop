@@ -2121,7 +2121,7 @@ foodcoopshop.Admin = {
                 },
                 afterContent: function () {
 
-                    var header = $('<div class="message-container"><span class="start">' + foodcoopshop.LocalizedJs.admin.PlaceInstantOrderFor + ': </span> ' + foodcoopshop.LocalizedJs.admin.InstantOrderDateIsSetBackAfterPlacingIt + '</div>');
+                    var header = $('<div class="message-container"><span class="start">' + foodcoopshop.LocalizedJs.admin.PlaceInstantOrderFor + ': </span></div>');
                     $('.featherlight-close').after(header);
 
                     // only clone dropdown once

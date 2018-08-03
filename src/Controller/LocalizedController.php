@@ -115,9 +115,8 @@ class LocalizedController extends Controller
                 'routeCart' => __('route_cart')
             ],
             'admin' => [
-                'routeCartFinished' => '/'.__('route_cart') . '/' . __('route_cart_finished'), //! careful, without $orderId argument,
+                'routeCartFinished' => '/'.__('route_cart') . '/' . __('route_cart_finished'), //! careful, without $cartId argument,
                 'PlaceInstantOrderFor' => __('Place_instant_order_for'),
-                'InstantOrderDateIsSetBackAfterPlacingIt' => __('Instant_order_date_is_set_back_after_placing_it.'),
                 'CloseAllOrders' => __('Close_all_orders?'),
                 'ReallyCloseAllOrders' => __('Really_close_all_orders?'),
                 'GenerateOrdersAsPdf' => __('Generate_orders_as_pdf?'),

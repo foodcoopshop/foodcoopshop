@@ -128,7 +128,6 @@ INSERT INTO `fcs_configuration` VALUES
 (557,1,'FCS_APP_ADDRESS','Adresse der Foodcoop<br /><div class=\"small\">Wird im Footer von Homepage und E-Mails, Datenschutzerklärung, Nutzungsbedingungen usw. verwendet.</div>','Demostra&szlig;e 4,<br />\r\nA-4564 Demostadt','textarea',6,'de_DE','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (558,1,'FCS_APP_EMAIL','E-Mail-Adresse der Foodcoop<br /><div class=\"small\"></div>','demo-foodcoop@maillinator.com','text',7,'de_DE','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (559,1,'FCS_PLATFORM_OWNER','Betreiber der Plattform<br /><div class=\"small\">Für Datenschutzerklärung und Nutzungsbedingungen, bitte auch Adresse angeben. Kann leer gelassen werden, wenn die Foodcoop selbst die Plattform betreibt.</div>','','textarea',8,'de_DE','2017-01-12 00:00:00','2017-01-12 00:00:00'),
-(560,1,'FCS_INSTANT_ORDER_DEFAULT_STATE','Bestellstatus für Sofort-Bestellungen','1','dropdown',75,'de_DE','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (563,1,'FCS_EMAIL_LOG_ENABLED','Sollen alle ausgehenden E-Mails in der Datenbank gespeichert werden?<br /><div class=\"small\">Für Debugging gedacht.</div>','1','readonly',30,'de_DE','2017-07-05 00:00:00','2017-07-05 00:00:00'),
 (564,1,'FCS_ORDER_COMMENT_ENABLED','Kommentarfeld bei Bestell-Abschluss anzeigen?<br /><div class=\"small\">Wird im Admin-Bereich unter \"Bestellungen\" angezeigt.</div>','1','boolean',13,'de_DE','2017-07-09 00:00:00','2017-07-09 00:00:00'),
 (565,1,'FCS_USE_VARIABLE_MEMBER_FEE','Variablen Mitgliedsbeitrag verwenden?<br /><div class=\"small\">Den variablen Mitgliedsbeitrag bei den Hersteller-Rechnungen abziehen? Die Produkt-Preise müssen entsprechend höher eingegeben werden.</div>','0','readonly',40,'de_DE','2017-08-02 00:00:00','2017-08-02 00:00:00'),
@@ -147,12 +146,12 @@ INSERT INTO `fcs_configuration` VALUES
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
 INSERT INTO `fcs_customer` VALUES
-(87,3,'Demo','Mitglied','fcs-demo-mitglied@mailinator.com','',NULL,1,'1000-01-01',1,'2014-12-02 12:19:31','2015-12-06 23:37:44',0),
-(88,4,'Demo','Admin','fcs-demo-admin@mailinator.com','',NULL,1,'1000-01-01',1,'2014-12-02 12:28:43','2016-09-29 16:25:09',0),
-(89,4,'Demo','Gemüse-Hersteller','fcs-demo-gemuese-hersteller@mailinator.com','',NULL,0,'1000-01-01',1,'2014-12-02 12:37:26','2015-03-11 18:12:10',0),
-(90,4,'Demo','Milch-Hersteller','fcs-demo-milch-hersteller@mailinator.com','',NULL,0,'1000-01-01',1,'2014-12-02 12:37:49','2015-03-11 18:11:54',0),
-(91,4,'Demo','Fleisch-Hersteller','fcs-demo-fleisch-hersteller@mailinator.com','',NULL,0,'1000-01-01',1,'2014-12-02 12:38:12','2015-03-11 18:11:47',0),
-(92,5,'Demo','Superadmin','fcs-demo-superadmin@mailinator.com','',NULL,1,'1000-01-01',1,'2016-09-29 16:26:12','2016-09-29 16:26:12',0);
+(87,3,'Demo','Mitglied','fcs-demo-mitglied@mailinator.com','',NULL,1,'2018-08-03',1,'2014-12-02 12:19:31','2015-12-06 23:37:44',0),
+(88,4,'Demo','Admin','fcs-demo-admin@mailinator.com','',NULL,1,'2018-08-03',1,'2014-12-02 12:28:43','2016-09-29 16:25:09',0),
+(89,4,'Demo','Gemüse-Hersteller','fcs-demo-gemuese-hersteller@mailinator.com','',NULL,0,'2018-08-03',1,'2014-12-02 12:37:26','2015-03-11 18:12:10',0),
+(90,4,'Demo','Milch-Hersteller','fcs-demo-milch-hersteller@mailinator.com','',NULL,0,'2018-08-03',1,'2014-12-02 12:37:49','2015-03-11 18:11:54',0),
+(91,4,'Demo','Fleisch-Hersteller','fcs-demo-fleisch-hersteller@mailinator.com','',NULL,0,'2018-08-03',1,'2014-12-02 12:38:12','2015-03-11 18:11:47',0),
+(92,5,'Demo','Superadmin','fcs-demo-superadmin@mailinator.com','',NULL,1,'2018-08-03',1,'2016-09-29 16:26:12','2016-09-29 16:26:12',0);
 /*!40000 ALTER TABLE `fcs_customer` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_deposits` DISABLE KEYS */;

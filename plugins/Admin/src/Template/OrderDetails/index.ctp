@@ -65,7 +65,15 @@ use Cake\Core\Configure;
     
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
-            <?php echo __d('admin', 'Pickup_day') . ': ' . $this->element('dateFields', ['dateFrom' => $pickupDay, 'nameFrom' => 'pickupDay', 'showDateTo' => false]); ?>
+            <?php
+                echo '<b>';
+                if ($appAuth->isManufacturer()) {
+                    echo __d('admin', 'Delivery_day');
+                } else {
+                    echo __d('admin', 'Pickup_day');
+                }
+                echo '</b>: ' . $this->Time->getWeekdayName($this->Time->formatAsWeekday(strtotime($pickupDay))) . ', ';
+                echo $this->element('dateFields', ['dateFrom' => $pickupDay, 'nameFrom' => 'pickupDay', 'showDateTo' => false]); ?>
             <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_products'), 'options' => []]); ?>
             <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
                 <?php echo $this->Form->control('manufacturerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_manufacturers'), 'options' => $manufacturersForDropdown, 'default' => isset($manufacturerId) ? $manufacturerId: '']); ?>
@@ -79,9 +87,8 @@ use Cake\Core\Configure;
             <?php } ?>
             <?php echo $this->Form->control('groupBy', ['type'=>'select', 'label' =>'', 'empty' => __d('admin', 'Group_by...'), 'options' => $groupByForDropdown, 'default' => $groupBy]);?>
             <div class="right">
-            
-            <?php
-            if (Configure::read('app.isDepositPaymentCashless') && $groupBy == '' && $customerId > 0 && count($orderDetails) > 0) {
+        	<?php
+        	if (Configure::read('app.isDepositPaymentCashless') && $groupBy == '' && $customerId > 0 && count($orderDetails) > 0) {
                 echo '<div class="add-payment-deposit-button-wrapper">';
                     echo $this->element('addDepositPaymentOverlay', [
                         'buttonText' => (!$isMobile ? __d('admin', 'Deposit_return') : ''),
@@ -104,14 +111,6 @@ use Cake\Core\Configure;
     </div>
 
 <?php
-
-echo '<p style="margin-top:7px;">';
-    if ($appAuth->isManufacturer()) {
-        echo __d('admin', 'Delivery_day');
-    } else {
-        echo __d('admin', 'Pickup_day');
-    }
-echo ': <b>' . $this->Time->getDateFormattedWithWeekday(strtotime($pickupDay)) . '</b></p>';
 
 echo '<table class="list">';
 echo '<tr class="sort">';
@@ -235,7 +234,7 @@ if ($groupBy == 'manufacturer') {
 }
 
 if ($groupBy == 'customer') {
-    echo '<td colspan="2"></td>';
+    echo '<td></td><td></td>';
 }
 if ($groupBy == 'product') {
     if ($appAuth->isManufacturer()) {
@@ -256,7 +255,7 @@ if ($groupBy != 'customer') {
     }
     echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
 } else {
-    echo '<td></td>';
+    echo '<td></td><td></td>';
 }
 if ($groupBy == '') {
     $sumUnitsString = $this->PricePerUnit->getStringFromUnitSums($sums['units'], '<br />');

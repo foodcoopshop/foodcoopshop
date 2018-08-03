@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-03 10:15+0200\n"
+"POT-Creation-Date: 2018-08-03 10:36+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1470,6 +1470,9 @@ msgid "Manufacturer_profile"
 msgstr ""
 
 msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
+msgstr ""
+
+msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
 msgstr ""
 
 msgid "all_members"

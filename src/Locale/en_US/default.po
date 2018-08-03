@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-03 10:15+0200\n"
-"PO-Revision-Date: 2018-08-02 15:41+0200\n"
+"POT-Creation-Date: 2018-08-03 10:36+0200\n"
+"PO-Revision-Date: 2018-08-03 10:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -74,6 +74,9 @@ msgstr "Instant order successfully placed for {0}."
 
 msgid "Instant_order_successfully_placed_for_{0}._The_following_manufacturers_were_notified:_{1}"
 msgstr "Instant order successfully placed for {0}. The following manufacturers were notified: {1}"
+
+msgid "Delivery_day"
+msgstr "Delivery day"
 
 msgid "Your_order_has_been_placed_succesfully."
 msgstr "Your order was placed successfully."
@@ -390,9 +393,6 @@ msgstr "finished"
 msgid "Place_instant_order_for"
 msgstr "Place instant order for"
 
-msgid "Instant_order_date_is_set_back_after_placing_it."
-msgstr "Instant order date is set back after placing it."
-
 msgid "Close_all_orders?"
 msgstr "Close all orders?"
 
@@ -658,7 +658,7 @@ msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
 
 msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
-msgstr "This input is for the pickup team, the row will be shown green."
+msgstr "This input is helpful for the pickup team, but not mandatory."
 
 msgid "Member"
 msgstr "Member"
@@ -1606,7 +1606,7 @@ msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1})."
 msgstr "There has been placed a instant order for {0} by {1}."
 
 msgid "You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists."
-msgstr "You receive this message because this order was automatically moved into the previous order period and therefore it does not appear on your order lists."
+msgstr "You receive this message because the delivery day for this order was set to today and therefore it does not appear on your order lists."
 
 msgid "please_click_on_this_link_to_generate_a_new_password"
 msgstr "Please click on this link to generate a new password"
@@ -1904,6 +1904,9 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "Instant_order_date_is_set_back_after_placing_it."
+#~ msgstr "Instant order date is set back after placing it."
 
 #~ msgid "Please_pick_up_your_products_on_{0}_at_{1}."
 #~ msgstr "Please pick up your products on {0} at {1}."

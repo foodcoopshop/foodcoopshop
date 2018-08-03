@@ -157,15 +157,6 @@ foreach ($actionLogs as $actionLog) {
         $targetBlank = false;
     }
 
-    // orders
-    if ($actionLog->object_id > 0 && $actionLog->object_type == 'orders') {
-        $showLink = true;
-        $title = __('Show_order');
-        // manually add ORDER_STATE_CANCELLED to orderState to show cancelled orders
-        $url = '/admin/orders/index/?orderId=' . $actionLog->object_id . '&orderStates[]=' . join(',', array_keys($this->Html->getOrderStates()));
-        $targetBlank = false;
-    }
-
     if ($showLink) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
             'title' => $title,

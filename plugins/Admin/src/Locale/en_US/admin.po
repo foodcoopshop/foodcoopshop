@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-03 10:15+0200\n"
-"PO-Revision-Date: 2018-08-03 10:15+0200\n"
+"POT-Creation-Date: 2018-08-03 10:36+0200\n"
+"PO-Revision-Date: 2018-08-03 10:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1472,6 +1472,9 @@ msgstr "Manufacturer profile"
 
 msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
 msgstr "Please chose the member you want to place the instant order for in the dropdown above."
+
+msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
+msgstr "The pickup day of the instant order will be automatically changed to <b>today, {0}</b>."
 
 msgid "all_members"
 msgstr "all members"

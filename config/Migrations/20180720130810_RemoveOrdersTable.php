@@ -65,6 +65,8 @@ class RemoveOrdersTable extends AbstractMigration
             
             ALTER TABLE `fcs_product` ADD INDEX(`id_manufacturer`);
 
+            DELETE FROM fcs_configuration WHERE name = 'FCS_INSTANT_ORDER_DEFAULT_STATE';
+
         ");
         
         $this->migrateDataToOrderDetails();

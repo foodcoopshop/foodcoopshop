@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-03 10:15+0200\n"
+"POT-Creation-Date: 2018-08-03 10:36+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -72,6 +72,9 @@ msgid "Instant_order_successfully_placed_for_{0}."
 msgstr ""
 
 msgid "Instant_order_successfully_placed_for_{0}._The_following_manufacturers_were_notified:_{1}"
+msgstr ""
+
+msgid "Delivery_day"
 msgstr ""
 
 msgid "Your_order_has_been_placed_succesfully."
@@ -387,9 +390,6 @@ msgid "route_cart_finished"
 msgstr ""
 
 msgid "Place_instant_order_for"
-msgstr ""
-
-msgid "Instant_order_date_is_set_back_after_placing_it."
 msgstr ""
 
 msgid "Close_all_orders?"

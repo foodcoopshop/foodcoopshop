@@ -16,7 +16,7 @@
 
 use Cake\Core\Configure;
 
-if (!Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED') || $this->request->getSession()->check('Auth.instantOrderCustomer')) {
+if (!Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
     return false;
 }
 

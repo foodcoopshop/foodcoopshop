@@ -38,9 +38,6 @@ class ConfigurationHelper extends Helper
             case 'FCS_LOCALE':
                 return Configure::read('app.implementedLocales');
                 break;
-            case 'FCS_INSTANT_ORDER_DEFAULT_STATE':
-                return Configure::read('app.htmlHelper')->getVisibleOrderStates();
-                break;
             case 'FCS_CUSTOMER_GROUP':
                 return array_slice(Configure::read('app.htmlHelper')->getGroups(), 0, 2, true); // true: preserveKeys
                 break;

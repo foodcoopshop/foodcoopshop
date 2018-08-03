@@ -365,7 +365,6 @@ class CartsController extends FrontendController
             ];
             
             if ($this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
-                $orderDetail2save['order_state'] = Configure::read('appDb.FCS_INSTANT_ORDER_DEFAULT_STATE');
                 $orderDetail2save['pickup_day'] = $cartProduct['pickupDay'];
             }
             
@@ -482,6 +481,7 @@ class CartsController extends FrontendController
                         '<b>' . join(', ', $manufacturersThatReceivedInstantOrderNotification) . '</b>'
                     ]);
                 }
+                $message .= '<br />' . __('Delivery_day') . ': <b>' . Configure::read('app.timeHelper')->getDateFormattedWithWeekday(Configure::read('app.timeHelper')->getCurrentDay()).'</b>';
                 $this->ActionLog->customSave('orders_shop_added', $this->AppAuth->getUserId(), 0, '', $message);
             } else {
                 $message = __('Your_order_has_been_placed_succesfully.');
