@@ -18,9 +18,9 @@ use Cake\Core\Configure;
 if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
     $this->element('addScript', [
         'script' =>
-            Configure::read('app.jsNamespace') . ".Admin.initAddOrder('#add-order-button-wrapper .btn');"
+            Configure::read('app.jsNamespace') . ".Admin.initAddInstantOrder('#add-instant-order-button-wrapper .btn');"
     ]);
-    echo '<div id="add-order-button-wrapper" class="add-button-wrapper">';
+    echo '<div id="add-instant-order-button-wrapper" class="add-button-wrapper">';
     $options = [
         'escape' => false
     ];

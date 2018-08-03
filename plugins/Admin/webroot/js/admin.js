@@ -2100,7 +2100,7 @@ foodcoopshop.Admin = {
      * @param string button
      * @param int weekday
      */
-    initAddOrder: function (button) {
+    initAddInstantOrder: function (button) {
         
         $(button).on('click', function () {
 
@@ -2126,7 +2126,7 @@ foodcoopshop.Admin = {
 
                     // only clone dropdown once
                     if ($('.message-container span.start select').length == 0) {
-                        var customersDropdown = $('#add-order-button-wrapper select').clone(true);
+                        var customersDropdown = $('#add-instant-order-button-wrapper select').clone(true);
                         customersDropdown.attr('id', 'customersDropdown');
                         customersDropdown.on('change', function () {
                             var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/order-details/initInstantOrder/' + $(this).val();
