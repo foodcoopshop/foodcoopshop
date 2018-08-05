@@ -15,23 +15,10 @@
 
 use Cake\Core\Configure;
 
-echo '<th>';
-    echo $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member'));
-echo '</th>';
-
-echo '<th>';
-echo '</th>';
-
-echo '<th class="right">';
-    echo $this->Paginator->sort('OrderDetails.total_price_tax_incl', __d('admin', 'Price'));
-echo '</th>';
-
-if (Configure::read('app.isDepositPaymentCashless')) {
-    echo '<th>'.__d('admin', 'Deposit').'</th>';
-}
-
-if (count($pickupDay) == 1) {
-    echo '<th>'.__d('admin', 'Picked_up').'</th>';
+if (count($pickupDay) == 2 && $groupBy == '') {
+    echo '<td class="date-short2">';
+        echo $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
+    echo '</td>';
 }
 
 ?>

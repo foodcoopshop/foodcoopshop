@@ -13,22 +13,21 @@
  * @link          https://www.foodcoopshop.com
  */
 
-if ($groupBy != 'customer') {
-    return false;
-}
+if ($groupBy == 'customer' && count($pickupDay) == 1) {
 
-echo '<td>';
-    if ($orderDetail['products_picked_up']) {
-        $buttonText = __d('admin', 'Yes');
-        $icon = 'emoticon_smile';
-    } else {
-        $buttonText = __d('admin', 'No');
-        $icon = 'emoticon_unhappy';
-    }
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath($icon.'.png')) . (!$isMobile ? ' ' . $buttonText : ''), [
-        'title' => $buttonText,
-        'class' => 'change-products-picked-up-button icon-with-text'
-    ], 'javascript:void(0);');
-echo '</td>';
+    echo '<td>';
+        if ($orderDetail['products_picked_up']) {
+            $buttonText = __d('admin', 'Yes');
+            $icon = 'emoticon_smile';
+        } else {
+            $buttonText = __d('admin', 'No');
+            $icon = 'emoticon_unhappy';
+        }
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath($icon.'.png')) . (!$isMobile ? ' ' . $buttonText : ''), [
+            'title' => $buttonText,
+            'class' => 'change-products-picked-up-button icon-with-text'
+        ], 'javascript:void(0);');
+    echo '</td>';
+}
 
 ?>

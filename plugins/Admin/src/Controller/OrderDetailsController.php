@@ -197,11 +197,17 @@ class OrderDetailsController extends AdminAppController
             $orderDetailId = $this->getRequest()->getQuery('orderDetailId');
         }
 
-        $pickupDay = '';
+        $pickupDay = [];
         if ($orderDetailId == '') {
-            $pickupDay = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getCurrentDay());
-            if (! empty($this->getRequest()->getQuery('pickupDay'))) {
+            if (in_array('pickupDay', array_keys($this->getRequest()->getQueryParams()))) {
                 $pickupDay = $this->getRequest()->getQuery('pickupDay');
+                $explodedPickupDay = explode(',', $pickupDay[0]); // param can be passed comma separated
+                if (count($explodedPickupDay) == 2) {
+                    $pickupDay = $explodedPickupDay;
+                }
+            } else {
+                // default value
+                $pickupDay[0] = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getDeliveryDayByCurrentDay());
             }
         }
         $this->set('pickupDay', $pickupDay);
@@ -252,6 +258,9 @@ class OrderDetailsController extends AdminAppController
         if (! empty($this->getRequest()->getQuery('groupBy'))) {
             $groupBy = $this->getRequest()->getQuery('groupBy');
         }
+        if ($this->AppAuth->isManufacturer() && $groupBy != 'product') {
+            $groupBy = '';
+        }
 
         // legacy: still allow old variable "groupByManufacturer"
         if (! empty($this->getRequest()->getQuery('groupByManufacturer'))) {
@@ -264,9 +273,9 @@ class OrderDetailsController extends AdminAppController
         $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, $manufacturerId, $productId, $customerId, $orderStates, $pickupDay, $orderDetailId, $deposit);
 
         $contain = $odParams['contain'];
-        if ($groupBy == 'customer') {
+        if ($groupBy == 'customer' && count($pickupDay) == 1) {
             $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
-                'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay)
+                'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
             ]);
             $contain[] = 'PickupDayEntities';
         }
@@ -278,7 +287,7 @@ class OrderDetailsController extends AdminAppController
 
         $orderDetails = $this->paginate($query, [
             'sortWhitelist' => [
-                'OrderDetails.product_amount', 'OrderDetails.product_name', 'OrderDetails.total_price_tax_incl', 'OrderDetails.deposit', 'OrderDetails.current_state', 'OrderDetails.created', 'Manufacturers.name', 'Customers.' . Configure::read('app.customerMainNamePart'), 'OrderDetailUnits.product_quantity_in_units'
+                'OrderDetails.product_amount', 'OrderDetails.product_name', 'OrderDetails.total_price_tax_incl', 'OrderDetails.deposit', 'OrderDetails.order_state', 'OrderDetails.pickup_day', 'Manufacturers.name', 'Customers.' . Configure::read('app.customerMainNamePart'), 'OrderDetailUnits.product_quantity_in_units'
             ],
             'order' => [
                 // first param needs to be included in sortWhitelist!

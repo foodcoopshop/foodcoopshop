@@ -605,8 +605,8 @@ class PaymentsController extends AdminAppController
                         'type' => 'order',
                         'text' => Configure::read('app.htmlHelper')->link(
                             __d('admin', 'Orders') . ' ' . Configure::read('app.timeHelper')->getMonthName($monthAndYear[1]) . ' ' . $monthAndYear[0],
-                            '/admin/order-details/?dateFrom=' . $frozenDateFrom->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
-                            '&dateTo=' . $frozenDateTo->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . 
+                            '/admin/order-details/?pickupDay[]=' . $frozenDateFrom->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
+                            '&pickupDay[]=' . $frozenDateTo->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . 
                             '&customerId=' . $this->getCustomerId(),
                             [
                                 'title' => __d('admin', 'Show_order')

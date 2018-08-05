@@ -40,6 +40,11 @@ echo '<th class="right">';
 echo '</th>';
 
 echo '<th>'.$this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member')).'</th>';
+
+if (count($pickupDay) == 2) {
+    echo '<th>'.$this->Paginator->sort('OrderDetails.pickup_day', __d('admin', 'Pickup_day')) . '</th>';
+}
+
 echo '<th>'.$this->Paginator->sort('OrderDetails.order_state', __d('admin', 'Status')).'</th>';
 echo '<th style="width:25px;"></th>';
 

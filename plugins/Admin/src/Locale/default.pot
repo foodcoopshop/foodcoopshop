@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-03 11:21+0200\n"
+"POT-Creation-Date: 2018-08-05 21:55+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -956,6 +956,15 @@ msgstr ""
 msgid "Please_chose_the_months_for_your_payment."
 msgstr ""
 
+msgid "Delivery_day"
+msgstr ""
+
+msgid "Delivery_days"
+msgstr ""
+
+msgid "Pickup_days"
+msgstr ""
+
 msgid "Click_to_change_amount"
 msgstr ""
 
@@ -1473,9 +1482,6 @@ msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
 msgstr ""
 
 msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
-msgstr ""
-
-msgid "Delivery_day"
 msgstr ""
 
 msgid "all_members"

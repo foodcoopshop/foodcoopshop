@@ -51,9 +51,9 @@ class SendInvoicesShell extends AppShell
         // 2) get all orders in the given date range
         $orders = $this->Order->find('all', [
             'conditions' => [
-                'DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
-                'DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
-                'Orders.current_state IN (' . join(",", [
+                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
+                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
+                'OrderDetails.order_state IN (' . join(",", [
                     ORDER_STATE_OPEN,
                     ORDER_STATE_CASH,
                     ORDER_STATE_CASH_FREE

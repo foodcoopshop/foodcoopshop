@@ -66,14 +66,10 @@ use Cake\Core\Configure;
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php
-                echo '<b>';
-                if ($appAuth->isManufacturer()) {
-                    echo __d('admin', 'Delivery_day');
-                } else {
-                    echo __d('admin', 'Pickup_day');
-                }
-                echo '</b>: ' . $this->Time->getWeekdayName($this->Time->formatAsWeekday(strtotime($pickupDay))) . ', ';
-                echo $this->element('dateFields', ['dateFrom' => $pickupDay, 'nameFrom' => 'pickupDay', 'showDateTo' => false]); ?>
+                echo $this->element('orderDetailList/pickupDayFilter', [
+                    'pickupDay' => $pickupDay
+                ]);
+            ?>
             <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_products'), 'options' => []]); ?>
             <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
                 <?php echo $this->Form->control('manufacturerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_manufacturers'), 'options' => $manufacturersForDropdown, 'default' => isset($manufacturerId) ? $manufacturerId: '']); ?>
@@ -201,6 +197,10 @@ foreach ($orderDetails as $orderDetail) {
         'orderDetail' => $orderDetail
     ]);
     
+    echo $this->element('orderDetailList/data/elements/pickupDay', [
+        'orderDetail' => $orderDetail
+    ]);
+    
     echo $this->element('orderDetailList/data/elements/orderState', [
         'orderDetail' => $orderDetail,
         'editRecordAllowed' => $editRecordAllowed,
@@ -234,7 +234,10 @@ if ($groupBy == 'manufacturer') {
 }
 
 if ($groupBy == 'customer') {
-    echo '<td></td><td></td>';
+    echo '<td></td>';
+    if (count($pickupDay) == 1) {
+        echo '<td></td>';
+    }
 }
 if ($groupBy == 'product') {
     if ($appAuth->isManufacturer()) {
@@ -260,7 +263,11 @@ if ($groupBy != 'customer') {
 if ($groupBy == '') {
     $sumUnitsString = $this->PricePerUnit->getStringFromUnitSums($sums['units'], '<br />');
     echo '<td class="right slim"><b>' . $sumUnitsString . '</b></td>';
-    echo '<td colspan="3"></td>';
+    $c = 3;
+    if (count($pickupDay) == 2) {
+        $c = 4;
+    }
+    echo '<td colspan="'.$c.'"></td>';
 }
 echo '</tr>';
 echo '</table>';

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-03 11:21+0200\n"
-"PO-Revision-Date: 2018-08-03 10:23+0200\n"
+"POT-Creation-Date: 2018-08-05 21:55+0200\n"
+"PO-Revision-Date: 2018-08-05 21:56+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -957,6 +957,15 @@ msgstr "Wenn es sich um eine Rückzahlung handelt, trage bitte ein, wie viel du 
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Bitte wähle die Monate aus, für die deine Zahlung gedacht ist."
 
+msgid "Delivery_day"
+msgstr "Liefertag"
+
+msgid "Delivery_days"
+msgstr "Liefertage"
+
+msgid "Pickup_days"
+msgstr "Abholtage"
+
 msgid "Click_to_change_amount"
 msgstr "Zum Ändern der Anzahl anklicken"
 
@@ -1475,9 +1484,6 @@ msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen m
 
 msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
 msgstr "Der Abholtag der Sofort-Bestellung wird automatisch auf <b>heute, {0}</b> gesetzt."
-
-msgid "Delivery_day"
-msgstr "Liefertag"
 
 msgid "all_members"
 msgstr "alle Mitglieder"

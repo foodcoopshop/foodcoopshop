@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-03 11:21+0200\n"
-"PO-Revision-Date: 2018-08-03 10:24+0200\n"
+"POT-Creation-Date: 2018-08-05 21:55+0200\n"
+"PO-Revision-Date: 2018-08-05 21:56+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -957,6 +957,15 @@ msgstr "If you chose \"payback\", please enter the amount that you just transfer
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Please chose the months for your payment."
 
+msgid "Delivery_day"
+msgstr "Delivery day"
+
+msgid "Delivery_days"
+msgstr "Delivery days"
+
+msgid "Pickup_days"
+msgstr "Pick-up days"
+
 msgid "Click_to_change_amount"
 msgstr "Click to change amount"
 
@@ -1475,9 +1484,6 @@ msgstr "Please chose the member you want to place the instant order for in the d
 
 msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
 msgstr "The pickup day of the instant order will be automatically changed to <b>today, {0}</b>."
-
-msgid "Delivery_day"
-msgstr "Delivery day"
 
 msgid "all_members"
 msgstr "all members"
