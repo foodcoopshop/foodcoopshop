@@ -41,18 +41,14 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
         $cart = $this->getCartById($cartId);
         
-        // reset date if needed
-        $currentWeekday = Configure::read('app.timeHelper')->getCurrentWeekday();
-        if (in_array($currentWeekday, Configure::read('app.timeHelper')->getWeekdaysBetweenOrderSendAndDelivery())) {
-            $this->OrderDetail->save(
-                $this->OrderDetail->patchEntity(
-                    $this->OrderDetail->get($cart->cart_products[0]->order_detail->id_order_detail),
-                    [
-                        'pickup_day' => Configure::read('app.timeHelper')->getDeliveryDateForSendOrderListsShell(),
-                    ]
-                )
-            );
-        }
+        $this->OrderDetail->save(
+            $this->OrderDetail->patchEntity(
+                $this->OrderDetail->get($cart->cart_products[0]->order_detail->id_order_detail),
+                [
+                    'pickup_day' => Configure::read('app.timeHelper')->getDeliveryDateForSendOrderListsShell(),
+                ]
+            )
+        );
 
         $this->SendOrderLists->main();
         
