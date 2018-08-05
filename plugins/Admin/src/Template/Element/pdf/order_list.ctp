@@ -58,8 +58,8 @@ $headers = [
 $pdf->renderDetailedOrderList($results, $widths, $headers, $groupType, false);
 $pdf->addLastSumRow(
     $headers,
-    $this->MyNumber->formatAsDecimal($sumPriceExcl),
-    $this->MyNumber->formatAsDecimal($sumTax),
+    null,
+    null,
     $this->MyNumber->formatAsDecimal($sumPriceIncl)
 );
 $pdf->renderTable();
