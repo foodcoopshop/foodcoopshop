@@ -1012,7 +1012,7 @@ foodcoopshop.Admin = {
         infoText += '<ul>';
         for (var i in orderDetailIds) {
             var dataRow = $('#delete-order-detail-' + orderDetailIds[i]).closest('tr');
-            infoText += '<li>- ' + dataRow.find('td:nth-child(4) a').html() + ' / ' + dataRow.find('td:nth-child(10)').html() + '</li>';
+            infoText += '<li>' + dataRow.find('td:nth-child(4) a').html() + ' / ' + dataRow.find('td:nth-child(10)').html() + '</li>';
         }
         infoText += '</ul>';
 
