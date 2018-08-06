@@ -57,7 +57,7 @@ use Cake\Core\Configure;
     }
     if ($groupBy == 'customer') {
         $this->element('addScript', [ 'script' =>
-            Configure::read('app.jsNamespace').".Admin.initChangeProductsPickedUp('#order-details-list');"
+            Configure::read('app.jsNamespace').".Admin.initChangeProductsPickedUpByCustomer('#order-details-list');"
         ]);
     }
     
@@ -288,6 +288,16 @@ $buttonHtml = '';
 if (!empty($emailAddresses) && ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isManufacturer())) {
     $buttonExists = true;
     $buttonHtml .= '<button data-email-addresses="'.join(',', $emailAddresses).'" class="email-to-all btn btn-default"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
+}
+
+if ($groupBy == 'customer') {
+    if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
+        $this->element('addScript', ['script' =>
+            Configure::read('app.jsNamespace').".Admin.initChangeProductsPickedUpForAllCustomers('#order-details-list');"
+        ]);
+        $buttonExists = true;
+        $buttonHtml .= '<button class="change-products-picked-up-all-customers-button btn btn-default"><i class="fa fa-check-square-o"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';
+    }
 }
 
 if ($deposit != '') {

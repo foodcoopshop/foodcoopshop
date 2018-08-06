@@ -207,6 +207,8 @@ class LocalizedController extends Controller
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),
                 'ThisInformationServesThePickupTeamToSeeWhoWasAlreadyHere' => __('This_information_serves_the_pickup_team_to_see_who_was_already_here.'),
                 'Member' => __('Member'),
+                'AllProductsPickedUp' => __('All_products_picked_up?'),
+                'WereTheProductsOfAllMembersPickedUp' => __('Were_the_products_of_all_members_picked_up?'),
             ],
             'dialogOrder' => [
                 'ChangeCommentOfOrder' => __('Change_comment_of_order'),

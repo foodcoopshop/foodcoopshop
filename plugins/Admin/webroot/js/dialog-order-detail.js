@@ -13,11 +13,10 @@
  */
 foodcoopshop.DialogOrderDetail = {
 
-    getHtmlForOrderDetailProductsPickupDayEdit : function(dialogId) {
+    getHtmlForOrderDetailProductsPickupDayEdit : function(dialogId, title) {
         var dialogHtml = '<p></p>';
         dialogHtml += '<input type="hidden" id="customerId"></input>';
-        dialogHtml += '<input type="hidden" id="pickupDay"></input>';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.admin.WereTheProductsPickedUp, dialogId, dialogHtml);
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(title, dialogId, dialogHtml);
         return dialogHtml;
     },
 

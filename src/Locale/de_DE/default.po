@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-03 11:21+0200\n"
-"PO-Revision-Date: 2018-08-03 11:21+0200\n"
+"POT-Creation-Date: 2018-08-06 16:33+0200\n"
+"PO-Revision-Date: 2018-08-06 16:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -662,6 +662,12 @@ msgstr "Diese Funktion ist nicht zwingend notwendig, doch für den Abholdienst h
 
 msgid "Member"
 msgstr "Mitglied"
+
+msgid "All_products_picked_up?"
+msgstr "Alle Produkte abgeholt?"
+
+msgid "Were_the_products_of_all_members_picked_up?"
+msgstr "Wurden die Produkte von allem Mitgliedern abgeholt?"
 
 msgid "Change_comment_of_order"
 msgstr "Kommentar zu Bestellung ändern"

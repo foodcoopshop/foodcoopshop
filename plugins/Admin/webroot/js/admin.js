@@ -1330,7 +1330,7 @@ foodcoopshop.Admin = {
     changeProductsPickedUpCallback : function(state) {
         
         var dialogId = 'change-products-picked-up-form';
-        var customerId = $('#' + dialogId + ' #customerId').val();
+        var customerIds = $('#' + dialogId + ' #customerId').val().split(',');
         var pickupDay = $('input[name="pickupDay[]"]').val(); // filter-dropdown!
         
         $('#' + dialogId + ' .ajax-loader').show();
@@ -1340,7 +1340,7 @@ foodcoopshop.Admin = {
             '/admin/order-details/changeProductsPickedUp',
             {
                 state: state,
-                customerId: customerId,
+                customerIds: customerIds,
                 pickupDay: pickupDay
             },
             {
@@ -1357,51 +1357,64 @@ foodcoopshop.Admin = {
         
     },
     
-    initChangeProductsPickedUp: function(container) {
+    initChangeProductsPickedUpDialog : function(title, customerIds, customerName) {
+        
+        var dialogId = 'change-products-picked-up-form';
+        var dialogHtml = foodcoopshop.DialogOrderDetail.getHtmlForOrderDetailProductsPickupDayEdit(dialogId, title);
+        $(container).append(dialogHtml);
 
-        $('.change-products-picked-up-button').on('click', function () {
-            
-            var dialogId = 'change-products-picked-up-form';
-            var dialogHtml = foodcoopshop.DialogOrderDetail.getHtmlForOrderDetailProductsPickupDayEdit(dialogId);
-            $(container).append(dialogHtml);
-
-            var buttons = {};
-            buttons['no'] = {
-                text: foodcoopshop.LocalizedJs.helper.no,
-                click: foodcoopshop.Admin.changeProductsPickedUpCallbackNo
-            };
-            buttons['yes'] = {
-                text: foodcoopshop.LocalizedJs.helper.yes,
-                click: foodcoopshop.Admin.changeProductsPickedUpCallbackYes
-            };
-            
-            var dialog = $('#' + dialogId).dialog({
-                autoOpen: false,
-                height: 230,
-                width: 400,
-                modal: true,
-                close: function () {
-                    $('#customerId').val('');
-                    $('#pickupDay').val('');
-                },
-                buttons: buttons
-            });
-            
-            var customerId = $(this).closest('tr').find('td:nth-child(2)').html();
-            var customerName = $(this).closest('tr').find('td:nth-child(3)').text();
-            var pickupDay = $(this).closest('tr').find('td:nth-child(7)').html();
-            
-            $('#' + dialogId + ' #customerId').val(customerId);
-            $('#' + dialogId + ' #pickupDay').val(pickupDay);
-            
-            var infoMessage = $('#' + dialogId + ' p').html('');
-            var dialogHtml = '<p>' + foodcoopshop.LocalizedJs.admin.ThisInformationServesThePickupTeamToSeeWhoWasAlreadyHere + '</p>';
-            dialogHtml += '<p>' + foodcoopshop.LocalizedJs.admin.Member + ': <b>' + customerName + '</b></p>';
-            infoMessage.html(dialogHtml);
-            
-            dialog.dialog('open');
+        var buttons = {};
+        buttons['no'] = {
+            text: foodcoopshop.LocalizedJs.helper.no,
+            click: foodcoopshop.Admin.changeProductsPickedUpCallbackNo
+        };
+        buttons['yes'] = {
+            text: foodcoopshop.LocalizedJs.helper.yes,
+            click: foodcoopshop.Admin.changeProductsPickedUpCallbackYes
+        };
+        
+        var dialog = $('#' + dialogId).dialog({
+            autoOpen: false,
+            height: 230,
+            width: 500,
+            modal: true,
+            close: function () {
+                $('#customerId').val('');
+            },
+            buttons: buttons
         });
         
+        $('#' + dialogId + ' #customerId').val(customerIds.join(','));
+        
+        var infoMessage = $('#' + dialogId + ' p').html('');
+        var dialogHtml = '<p>' + foodcoopshop.LocalizedJs.admin.ThisInformationServesThePickupTeamToSeeWhoWasAlreadyHere + '</p>';
+        if (customerName != '') {
+            dialogHtml += '<p>' + foodcoopshop.LocalizedJs.admin.Member + ': <b>' + customerName + '</b></p>';
+        }
+        infoMessage.html(dialogHtml);
+        
+        dialog.dialog('open');        
+    },
+    
+    initChangeProductsPickedUpForAllCustomers: function(container) {
+        $('.change-products-picked-up-all-customers-button').on('click', function () {
+            var customerIds = [];
+            $(container).find('table.list tr.data').each(function() {
+                customerIds.push($(this).find('td:nth-child(2)').html());
+            });
+            var customerName = '';
+            var title = foodcoopshop.LocalizedJs.admin.WereTheProductsOfAllMembersPickedUp;
+            foodcoopshop.Admin.initChangeProductsPickedUpDialog(title, customerIds, customerName);
+        });
+    },
+    
+    initChangeProductsPickedUpByCustomer: function(container) {
+        $('.change-products-picked-up-button').on('click', function () {
+            var customerIds = [$(this).closest('tr').find('td:nth-child(2)').html()];
+            var customerName = $(this).closest('tr').find('td:nth-child(3)').text();
+            var title = foodcoopshop.LocalizedJs.admin.WereTheProductsPickedUp;
+            foodcoopshop.Admin.initChangeProductsPickedUpDialog(title, customerIds, customerName);
+        });
     },
 
     initManualOrderListSend: function (container, weekday) {
