@@ -108,6 +108,16 @@ use Cake\Core\Configure;
 
 <?php
 
+if (count($orderDetails) == 0) {
+    echo '<h2 class="info2">';
+    if (count($pickupDay) == 1) {
+        echo __d('admin', 'No_orders_found_for_pickup_day_{0}.', [$this->Time->formatToDateShort($pickupDay[0])]);
+    } else {
+        echo __d('admin', 'No_orders_found_for_delivery_period_{0}_-_{1}.', [$this->Time->formatToDateShort($pickupDay[0]), $this->Time->formatToDateShort($pickupDay[1])]);
+    }
+    echo '</h2>';
+}
+
 echo '<table class="list">';
 echo '<tr class="sort">';
     echo '<th style="width:20px;">';

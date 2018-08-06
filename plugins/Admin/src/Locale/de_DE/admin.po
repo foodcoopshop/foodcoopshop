@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-05 21:55+0200\n"
-"PO-Revision-Date: 2018-08-05 21:56+0200\n"
+"POT-Creation-Date: 2018-08-06 15:17+0200\n"
+"PO-Revision-Date: 2018-08-06 15:18+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1493,6 +1493,12 @@ msgstr "Gruppieren nach..."
 
 msgid "docs_route_pick_up_products"
 msgstr "abholung-der-produkte"
+
+msgid "No_orders_found_for_pickup_day_{0}."
+msgstr "Es wurden keine Bestellungen für den Abholtag {0} gefunden."
+
+msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
+msgstr "Es wurden keine Bestellungen für den Lieferzeitraum {0} bis {1} gefunden."
 
 msgid "Back_to_deposit_account"
 msgstr "Zurück zum Pfandkonto"
