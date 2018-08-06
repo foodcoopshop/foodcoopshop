@@ -18,10 +18,10 @@ if ($groupBy == 'customer' && count($pickupDay) == 1) {
     echo '<td>';
         if ($orderDetail['products_picked_up']) {
             $buttonText = __d('admin', 'Yes');
-            $icon = 'emoticon_smile';
+            $icon = 'accept';
         } else {
             $buttonText = __d('admin', 'No');
-            $icon = 'emoticon_unhappy';
+            $icon = 'error';
         }
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath($icon.'.png')) . (!$isMobile ? ' ' . $buttonText : ''), [
             'title' => $buttonText,
