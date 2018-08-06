@@ -1456,18 +1456,8 @@ foodcoopshop.Admin = {
 
     initEmailToAllButton: function () {
         $('button.email-to-all').on('click', function () {
-            var emailColumn = $(this).data('column');
-            var emails = [];
-            $('table.list tr.data').each(function () {
-                var emailContainer = $(this).find('td:nth-child(' + emailColumn + ') span.email');
-                if (emailContainer.length > 0 && emailContainer.html() != '') {
-                    emails.push(emailContainer.html());
-                }
-            });
-            emails = $.unique(emails);
-
             $('<div></div>').appendTo('body')
-                .html('<p>' + emails.join(',') + '</p>')
+                .html('<p>' + $(this).data('email-addresses') + '</p>')
                 .dialog({
                     modal: true,
                     title: foodcoopshop.LocalizedJs.admin.EmailAddresses,

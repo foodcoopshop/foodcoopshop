@@ -285,16 +285,9 @@ echo '</table>';
 $buttonExists = false;
 $buttonHtml = '';
 
-if ($groupBy == '' && ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isManufacturer())) {
+if (!empty($emailAddresses) && ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isManufacturer())) {
     $buttonExists = true;
-    $buttonHtml .= '<button class="email-to-all btn btn-default" data-column="10"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
-}
-
-if ($groupBy == '' && $productId == '' && $manufacturerId == '') {
-    $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace') . ".Admin.setAdditionalOrderStatusChangeInfo('" . Configure::read('app.additionalOrderStatusChangeInfo') . "');" .
-        Configure::read('app.jsNamespace') . ".Helper.setPaymentMethods(" . json_encode(Configure::read('app.paymentMethods')) . ");"
-    ]);
+    $buttonHtml .= '<button data-email-addresses="'.join(',', $emailAddresses).'" class="email-to-all btn btn-default"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
 }
 
 if ($deposit != '') {
@@ -306,7 +299,8 @@ if ($deposit != '') {
     $buttonHtml .= '<a class="btn btn-default" href="'.$depositOverviewUrl.'"><i class="fa fa-arrow-circle-left"></i> ' . __d('admin', 'Back_to_deposit_account') . '</a>';
 }
 
-if (count($orderDetails) > 0) {
+if ($groupBy == '' && count($orderDetails) > 0) {
+    $buttonExists = true;
     $buttonHtml .= '<a id="cancelSelectedProductsButton" class="btn btn-default" href="javascript:void(0);"><i class="fa fa-minus-circle"></i> ' . __d('admin', 'Cancel_selected_products') . '</a>';
 }
 

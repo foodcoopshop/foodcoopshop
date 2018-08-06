@@ -335,6 +335,17 @@ class OrderDetailsController extends AdminAppController
         }
         $this->set('timebasedCurrencyOrderInList', $timebasedCurrencyOrderInList);
         $this->set('sums', $sums);
+        
+        // extract all email addresses for button
+        $emailAddresses = [];
+        if ($groupBy == '') {
+            $emailAddresses = $query->all()->extract('customer.email')->toArray();
+        }
+        if ($groupBy == 'customer') {
+            $emailAddresses = Hash::extract($orderDetails, '{n}.email');
+        }
+        $emailAddresses = array_unique($emailAddresses);
+        $this->set('emailAddresses', $emailAddresses);
 
         $groupByForDropdown = [
             'product' => __d('admin', 'Group_by_product')

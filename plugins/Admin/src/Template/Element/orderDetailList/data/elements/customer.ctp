@@ -17,12 +17,6 @@ if ($groupBy == '') {
     echo '<td>';
         echo $this->Html->getNameRespectingIsDeleted($orderDetail->customer);
     echo '</td>';
-    
-    echo '<td class="hide">';
-        if (!empty($orderDetail->customer)) {
-            echo '<span class="email">' . $orderDetail->customer->email . '</span>';
-        }
-    echo '</td>';
 }
 
 ?>

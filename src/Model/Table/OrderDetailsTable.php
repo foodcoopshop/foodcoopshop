@@ -352,6 +352,7 @@ class OrderDetailsTable extends AppTable
             @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
             $preparedOrderDetails[$key]['customer_id'] = $key;
             $preparedOrderDetails[$key]['name'] = Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($orderDetail->customer);
+            $preparedOrderDetails[$key]['email'] = $orderDetail->customer->email;
             $productsPickedUp = false;
             if (!empty($orderDetail->pickup_day_entity)) {
                 $preparedOrderDetails[$key]['comment'] = $orderDetail->pickup_day_entity->comment;

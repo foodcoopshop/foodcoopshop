@@ -270,6 +270,12 @@ class ManufacturersController extends AdminAppController
                 'Manufacturers.name' => 'ASC'
             ]
         ])->toArray();
+        
+        // extract all email addresses for button
+        $emailAddresses = [];
+        $emailAddresses = $query->all()->extract('address_manufacturer.email')->toArray();
+        $emailAddresses = array_unique($emailAddresses);
+        $this->set('emailAddresses', $emailAddresses);
 
         $this->Product = TableRegistry::getTableLocator()->get('Products');
         $this->Payment = TableRegistry::getTableLocator()->get('Payments');
