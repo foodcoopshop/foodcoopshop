@@ -66,13 +66,24 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
         $this->deleteAndAssertRemoveFromDatabase([$this->orderDetailIdA]);
+        
+        $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
+        $expectedCcEmails = [];
+        
+        $this->assertOrderDetailDeletedEmails(0, $expectedToEmails, $expectedCcEmails);
+        $this->assertChangedStockAvailable($this->productIdA, 98);
+    }
+    
+    public function testCancellationAsSuperadminWithEnabledNotificationAfterOrderListsWereSent()
+    {
+        $this->loginAsSuperadmin();
+        $this->simulateSendOrderListsCronjob($this->orderDetailIdA);
+        
+        $this->deleteAndAssertRemoveFromDatabase([$this->orderDetailIdA]);
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
-        $weekday = date('N');
-        if (in_array($weekday, [3,4,5])) {
-            $expectedCcEmails[] = Configure::read('test.loginEmailVegetableManufacturer');
-        }
+        $expectedCcEmails[] = Configure::read('test.loginEmailVegetableManufacturer');
 
         $this->assertOrderDetailDeletedEmails(0, $expectedToEmails, $expectedCcEmails);
         $this->assertChangedStockAvailable($this->productIdA, 98);
@@ -81,6 +92,8 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     public function testCancellationAsSuperadminWithDisabledNotification()
     {
         $this->loginAsSuperadmin();
+        $this->simulateSendOrderListsCronjob($this->orderDetailIdA);
+        
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'send_ordered_product_deleted_notification', 0);
 
@@ -95,6 +108,8 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     public function testCancellationAsSuperadminWithEnabledBulkOrders()
     {
         $this->loginAsSuperadmin();
+        $this->simulateSendOrderListsCronjob($this->orderDetailIdA);
+        
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'bulk_orders_allowed', 1);
 
@@ -478,6 +493,19 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         ])->first();
         $quantity = $changedStockAvailable->quantity;
         $this->assertEquals($expectedAmount, $quantity, 'amount was not corrected properly');
+    }
+    
+    private function simulateSendOrderListsCronjob($orderDetailId)
+    {
+        $this->OrderDetail->save(
+            $this->OrderDetail->patchEntity(
+                $this->OrderDetail->get($orderDetailId),
+                [
+                    'order_state' => ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER
+                ]
+            )
+        );
+        
     }
 
     private function deleteOrderDetail($orderDetailIds, $cancellationReason)
