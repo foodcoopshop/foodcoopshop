@@ -73,7 +73,7 @@ class SendOrderListsShell extends AppShell
         
         // 5) check if manufacturers have open order details and send email
         $i = 0;
-        $outString = __('Order_period').': ' . $dateFrom . ' ' . __('to_(time_context)') . ' ' . $dateTo . '<br />';
+        $outString = __('Pickup_day') . ': ' . $formattedPickupDay . '<br />';
 
         $this->initSimpleBrowser();
         $this->browser->doFoodCoopShopLogin();
