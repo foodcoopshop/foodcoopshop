@@ -195,7 +195,7 @@ class ManufacturersController extends AdminAppController
         $this->set('manufacturer', $manufacturer);
     }
 
-    public function setKcFinderUploadPath($manufacturerId)
+    public function setElFinderUploadPath($manufacturerId)
     {
         $this->RequestHandler->renderAs($this, 'json');
 

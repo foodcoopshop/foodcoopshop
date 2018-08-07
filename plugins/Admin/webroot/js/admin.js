@@ -631,7 +631,7 @@ foodcoopshop.Admin = {
 
             var manufacturerId = row.data('manufacturerId');
             foodcoopshop.Helper.ajaxCall(
-                '/admin/manufacturers/setKcFinderUploadPath/' + manufacturerId,
+                '/admin/manufacturers/setElFinderUploadPath/' + manufacturerId,
                 {},
                 {
                     onOk: function (data) {
