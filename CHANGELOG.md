@@ -7,6 +7,10 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Herzlichen Dank an alle beteiligten Personen
 * [mrothauer](https://github.com/mrothauer)
 
+### Neue Funktionen
+- Viele wichtige Änderungen bei der Bestellabwicklung inkl. Sofort-Bestellungen. [Mehr dazu](https://foodcoopshop.github.io/de/bestellabwicklung). / [PR#251](https://github.com/foodcoopshop/foodcoopshop/pull/251) / [I#92](https://github.com/foodcoopshop/foodcoopshop/issues/92) / [I#211](https://github.com/foodcoopshop/foodcoopshop/issues/211) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+
 ### Für Entwickler
 - Tabellen für die Produkt-Verwaltung sind jetzt stark vereinfacht. / [PR#247](https://github.com/foodcoopshop/foodcoopshop/pull/247) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
