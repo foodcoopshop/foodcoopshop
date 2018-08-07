@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-06 16:33+0200\n"
+"POT-Creation-Date: 2018-08-07 09:25+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -287,6 +287,9 @@ msgstr ""
 msgid "Ordered_price_adapted"
 msgstr ""
 
+msgid "The_pickup_day_comment_of_{0}_was_changed:"
+msgstr ""
+
 msgid "Product_{0}_with_a_price_of_{1}_from_{2}_was_successfully_cancelled."
 msgstr ""
 
@@ -294,12 +297,6 @@ msgid "Product_was_cancelled"
 msgstr ""
 
 msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}}"
-msgstr ""
-
-msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
-msgstr ""
-
-msgid "The_date_of_the_order_{0}_of_{1}_was_changed_to_{2}."
 msgstr ""
 
 msgid "Home"
@@ -1499,7 +1496,7 @@ msgstr ""
 msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
 msgstr ""
 
-msgid "Change_order_status"
+msgid "All_products_picked_up?"
 msgstr ""
 
 msgid "Back_to_deposit_account"

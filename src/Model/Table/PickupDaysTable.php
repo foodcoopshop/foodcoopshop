@@ -36,7 +36,6 @@ class PickupDaysTable extends AppTable
         return $validator;
     }
     
-    
     public function getUniquePickupDays($cartProducts)
     {
         $uniquePickupDays = [];
@@ -44,6 +43,35 @@ class PickupDaysTable extends AppTable
             $uniquePickupDays[] = $cartProduct->pickup_day;
         }
         return array_unique($uniquePickupDays);
+    }
+    
+    /**
+     * @param array $conditions
+     * @param array $data
+     * result $success
+     */
+    public function insertOrUpdate($conditions, $data)
+    {
+        $this->setPrimaryKey(['customer_id', 'pickup_day']);
+        
+        $pickupDayEntity = $this->find('all', [
+            'conditions' => [
+                $conditions
+            ]
+        ])->first();
+        
+        if (empty($pickupDayEntity)) {
+            $pickupDayEntity = $this->newEntity($conditions);
+        }
+        
+        $patchedEntity = $this->patchEntity(
+            $pickupDayEntity,
+            $data
+        );
+        
+        $result = $this->save($patchedEntity);
+        return $result;
+        
     }
 
 }

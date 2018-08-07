@@ -204,16 +204,14 @@ class LocalizedController extends Controller
                 'AnExistingOrderListWillBeOverwritten' => __('An_existing_order_list_will_be_overwritten!'),
                 'ChangeGroupFor' => __('Change_group_for'),
                 'TheMemberNeedsToSignInAgain' => __('The_member_needs_to_sign_again.'),
+                'Member' => __('Member')
+            ],
+            'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),
                 'ThisInformationServesThePickupTeamToSeeWhoWasAlreadyHere' => __('This_information_serves_the_pickup_team_to_see_who_was_already_here.'),
-                'Member' => __('Member'),
                 'AllProductsPickedUp' => __('All_products_picked_up?'),
                 'WereTheProductsOfAllMembersPickedUp' => __('Were_the_products_of_all_members_picked_up?'),
-            ],
-            'dialogOrder' => [
-                'ChangeCommentOfOrder' => __('Change_comment_of_order'),
-                'SetDateOfOrderBackTo' => __('Set_date_of_order_back_to'),
-                'SetDateOfOrderBack' => __('Set_date_of_order_back')
+                'ChangePickupDayComment' => __('Change_pickup_day_comment')
             ],
             'dialogCustomer' => [
                 'ChangeMemberComment' => __('Change_member_comment'),

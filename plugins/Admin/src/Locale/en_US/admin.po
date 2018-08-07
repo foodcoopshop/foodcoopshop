@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-06 16:33+0200\n"
+"POT-Creation-Date: 2018-08-07 09:25+0200\n"
 "PO-Revision-Date: 2018-08-06 15:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -288,6 +288,10 @@ msgstr "The price of the ordered product {0} (amount {1}) was successfully adapt
 msgid "Ordered_price_adapted"
 msgstr "Price adapted"
 
+#, fuzzy
+msgid "The_pickup_day_comment_of_{0}_was_changed:"
+msgstr "The comment of the member {0} was changed:"
+
 msgid "Product_{0}_with_a_price_of_{1}_from_{2}_was_successfully_cancelled."
 msgstr "Product {0} (price {1}) of from {2} was successfully cancelled."
 
@@ -296,12 +300,6 @@ msgstr "Product cancelled"
 
 msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}}"
 msgstr "{0,plural,=1{product was cancelled succesfully.} other{products were cancelled succesfully.}}"
-
-msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
-msgstr "The comment of the order number {0} by {1} was changed:"
-
-msgid "The_date_of_the_order_{0}_of_{1}_was_changed_to_{2}."
-msgstr "The date of the order {0} of {1} was changed to {2}."
 
 msgid "Home"
 msgstr "Home"
@@ -1500,8 +1498,9 @@ msgstr "No orders found for the pickup day {0}."
 msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
 msgstr "No orders found for the delivery period {0} to {1}."
 
-msgid "Change_order_status"
-msgstr "Change order status"
+#, fuzzy
+msgid "All_products_picked_up?"
+msgstr "Not picked up"
 
 msgid "Back_to_deposit_account"
 msgstr "Back to deposit account"
@@ -1752,6 +1751,15 @@ msgstr "{0,plural,=1{record} other{records}}"
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
 
+#~ msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
+#~ msgstr "The comment of the order number {0} by {1} was changed:"
+
+#~ msgid "The_date_of_the_order_{0}_of_{1}_was_changed_to_{2}."
+#~ msgstr "The date of the order {0} of {1} was changed to {2}."
+
+#~ msgid "Change_order_status"
+#~ msgstr "Change order status"
+
 #~ msgid "Order_count"
 #~ msgstr "Order count"
 
@@ -1769,9 +1777,6 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 #~ msgid "Order_number_abbr"
 #~ msgstr "Order nº"
-
-#~ msgid "Not_picked_up"
-#~ msgstr "Not picked up"
 
 #, fuzzy
 #~ msgid "Picked_up?"

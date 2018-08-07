@@ -824,6 +824,52 @@ class OrderDetailsController extends AdminAppController
         ]));
     }
     
+    public function editPickupDayComment()
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+        
+        $customerId = $this->getRequest()->getData('customerId');
+        $pickupDay = $this->getRequest()->getData('pickupDay');
+        $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
+        $pickupDayComment = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('pickupDayComment')), '<strong><b>'));
+        
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'id_customer' => $customerId
+            ]
+        ])->first();
+        
+        $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
+        $result = $this->PickupDay->insertOrUpdate(
+            [
+                'customer_id' => $customerId,
+                'pickup_day' => $pickupDay
+            ],
+            [
+                'comment' => $pickupDayComment
+            ]
+        );
+        
+        $message = '';
+        if (empty($result)) {
+            $message = __d('admin', 'Errors_while_saving!');
+        }
+        
+        $this->Flash->success(__d('admin', 'The_comment_was_changed_successfully.'));
+        
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', __d('admin', 'The_pickup_day_comment_of_{0}_was_changed:', [$customer->name]) . ' <div class="changed">' . $pickupDayComment . ' </div>');
+        
+        $this->set('data', [
+            'result' => $result,
+            'status' => !empty($result),
+            'msg' => 'ok'
+        ]);
+        
+        $this->set('_serialize', 'data');
+    }
+    
     public function changeProductsPickedUp()
     {
         $this->RequestHandler->renderAs($this, 'json');
@@ -837,29 +883,15 @@ class OrderDetailsController extends AdminAppController
         $this->PickupDay->setPrimaryKey(['customer_id', 'pickup_day']);
         
         foreach($customerIds as $customerId) {
-            $conditions = [
-                'customer_id' => $customerId,
-                'pickup_day' => $pickupDay
-            ];
-            
-            $pickupDayEntity = $this->PickupDay->find('all', [
-                'conditions' => [
-                    $conditions
-                ]
-            ])->first();
-                
-            if (empty($pickupDayEntity)) {
-                $pickupDayEntity = $this->PickupDay->newEntity($conditions);
-            }
-            
-            $patchedEntity = $this->PickupDay->patchEntity(
-                $pickupDayEntity,
+            $result = $this->PickupDay->insertOrUpdate(
+                [
+                    'customer_id' => $customerId,
+                    'pickup_day' => $pickupDay
+                ],
                 [
                     'products_picked_up' => $state
                 ]
             );
-            
-            $result = $this->PickupDay->save($patchedEntity);
         }
         
         $message = '';
@@ -870,7 +902,6 @@ class OrderDetailsController extends AdminAppController
         $this->set('data', [
             'pickupDay' => $pickupDay,
             'result' => $result,
-            'pickupDayEntity' => $pickupDayEntity,
             'status' => !empty($result),
             'msg' => $message
         ]);

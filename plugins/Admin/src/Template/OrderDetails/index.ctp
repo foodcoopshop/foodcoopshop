@@ -52,12 +52,12 @@ use Cake\Core\Configure;
         $this->element('addScript', [
             'script' =>
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.pickup-day-comment-edit-button', false);".
-            Configure::read('app.jsNamespace') . ".Admin.initPickupDayCommentEditDialog('#order-details-list');"
+            Configure::read('app.jsNamespace') . ".PickupDay.initPickupDayCommentEditDialog('#order-details-list');"
         ]);
     }
     if ($groupBy == 'customer') {
         $this->element('addScript', [ 'script' =>
-            Configure::read('app.jsNamespace').".Admin.initChangeProductsPickedUpByCustomer('#order-details-list');"
+            Configure::read('app.jsNamespace').".PickupDay.initChangeProductsPickedUpByCustomer('#order-details-list');"
         ]);
     }
     
@@ -293,7 +293,7 @@ if (!empty($emailAddresses) && ($appAuth->isSuperadmin() || $appAuth->isAdmin() 
 if ($groupBy == 'customer') {
     if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         $this->element('addScript', ['script' =>
-            Configure::read('app.jsNamespace').".Admin.initChangeProductsPickedUpForAllCustomers('#order-details-list');"
+            Configure::read('app.jsNamespace').".PickupDay.initChangeProductsPickedUpForAllCustomers('#order-details-list');"
         ]);
         $buttonExists = true;
         $buttonHtml .= '<button class="change-products-picked-up-all-customers-button btn btn-default"><i class="fa fa-check-square-o"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';

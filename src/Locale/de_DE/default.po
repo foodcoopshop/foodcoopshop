@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-06 16:33+0200\n"
-"PO-Revision-Date: 2018-08-06 17:02+0200\n"
+"POT-Creation-Date: 2018-08-07 09:25+0200\n"
+"PO-Revision-Date: 2018-08-07 09:22+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -654,14 +654,14 @@ msgstr "Gruppe ändern für"
 msgid "The_member_needs_to_sign_again."
 msgstr "Das Mitglied muss sich nach der Änderung neu einloggen."
 
+msgid "Member"
+msgstr "Mitglied"
+
 msgid "Were_the_products_picked_up?"
 msgstr "Wurden die Produkte abgeholt?"
 
 msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
 msgstr "Diese Funktion ist nicht zwingend notwendig, doch für den Abholdienst hilfreich."
-
-msgid "Member"
-msgstr "Mitglied"
 
 msgid "All_products_picked_up?"
 msgstr "Alle Produkte abgeholt?"
@@ -669,14 +669,9 @@ msgstr "Alle Produkte abgeholt?"
 msgid "Were_the_products_of_all_members_picked_up?"
 msgstr "Wurden die Produkte von allem Mitgliedern abgeholt?"
 
-msgid "Change_comment_of_order"
-msgstr "Kommentar zu Bestellung ändern"
-
-msgid "Set_date_of_order_back_to"
-msgstr "Bestellung rückdatieren auf"
-
-msgid "Set_date_of_order_back"
-msgstr "Bestellung rückdatieren"
+#, fuzzy
+msgid "Change_pickup_day_comment"
+msgstr "Kommentar zu Abholtag ändern"
 
 msgid "Change_member_comment"
 msgstr "Mitglieder-Kommentar ändern"
@@ -1907,6 +1902,12 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "Set_date_of_order_back_to"
+#~ msgstr "Bestellung rückdatieren auf"
+
+#~ msgid "Set_date_of_order_back"
+#~ msgstr "Bestellung rückdatieren"
 
 #~ msgid "Delivery_day"
 #~ msgstr "Liefertag"
