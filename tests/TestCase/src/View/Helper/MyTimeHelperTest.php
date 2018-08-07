@@ -145,7 +145,31 @@ class MyTimeHelperTest extends AppCakeTestCase
         $this->prepareWednesdayFridayConfig();
         $this->assertGetDeliveryDay('25.07.2018', '03.08.2018'); // wednesday
     }
-
+    
+    public function testGetLastDayOfLastMonth()
+    {
+        $this->assertGetLastDayOfLastMonth('2018-03-11', '28.02.2018');
+        $this->assertGetLastDayOfLastMonth('2018-01-11', '31.12.2017');
+    }
+    
+    public function testGetFirstDayOfLastMonth()
+    {
+        $this->assertGetFirstDayOfLastMonth('2018-03-11', '01.02.2018');
+        $this->assertGetFirstDayOfLastMonth('2018-01-11', '01.12.2017');
+    }
+    
+    private function assertGetLastDayOfLastMonth($currentDay, $expected)
+    {
+        $result = $this->MyTimeHelper->getLastDayOfLastMonth($currentDay);
+        $this->assertEquals($expected, $result);
+    }
+    
+    private function assertGetFirstDayOfLastMonth($currentDay, $expected)
+    {
+        $result = $this->MyTimeHelper->getFirstDayOfLastMonth($currentDay);
+        $this->assertEquals($expected, $result);
+    }
+    
     private function assertGetDeliveryDay($currentDay, $expected)
     {
         $result = $this->MyTimeHelper->getDeliveryDay(strtotime($currentDay));

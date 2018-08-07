@@ -283,7 +283,7 @@ class MyTimeHelper extends TimeHelper
         }
         return $days;
     }
-
+    
     public function getFirstDayOfThisYear()
     {
         return date($this->getI18Format('DateShortAlt'), strtotime('first day of january'));
@@ -294,16 +294,6 @@ class MyTimeHelper extends TimeHelper
         return date($this->getI18Format('DateShortAlt'), strtotime('last day of december'));
     }
 
-    public function getFirstDayOfLastMonth()
-    {
-        return date($this->getI18Format('DateShortAlt'), strtotime('first day of previous month'));
-    }
-
-    public function getLastDayOfLastMonth()
-    {
-        return date($this->getI18Format('DateShortAlt'), strtotime('last day of previous month'));
-    }
-
     public function getLastMonthNameAndYear()
     {
         $previousMonthModifier = strtotime('first day of previous month');
@@ -311,6 +301,16 @@ class MyTimeHelper extends TimeHelper
         return $lastMonthAndYearString;
     }
 
+    public function getFirstDayOfLastMonth($date)
+    {
+        return date($this->getI18Format('DateShortAlt'), strtotime($date . ' first day of previous month'));
+    }
+    
+    public function getLastDayOfLastMonth($date)
+    {
+        return date($this->getI18Format('DateShortAlt'), strtotime($date . ' last day of previous month'));
+    }
+    
     /**
      * considers windows and unix
      * @return boolean

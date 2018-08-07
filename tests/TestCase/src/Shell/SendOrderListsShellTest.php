@@ -41,16 +41,25 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
         $cart = $this->getCartById($cartId);
         
+        $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
+        
         $this->OrderDetail->save(
             $this->OrderDetail->patchEntity(
-                $this->OrderDetail->get($cart->cart_products[0]->order_detail->id_order_detail),
+                $this->OrderDetail->get($orderDetailId),
                 [
                     'pickup_day' => Configure::read('app.timeHelper')->getDeliveryDateForSendOrderListsShell(),
                 ]
             )
         );
-
+        
         $this->SendOrderLists->main();
+        
+        $newOrderDetail = $this->OrderDetail->find('all', [
+            'conditions' => [
+                'OrderDetails.id_order_detail' => $orderDetailId
+            ]
+        ])->first();
+        $this->assertEquals(ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $newOrderDetail->order_state);
         
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(2, count($emailLogs), 'amount of sent emails wrong');

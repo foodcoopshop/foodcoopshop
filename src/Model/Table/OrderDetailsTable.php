@@ -100,16 +100,16 @@ class OrderDetailsTable extends AppTable
 
     }
     
-    public function updateOrderStateToBilled($dateFrom, $dateTo, $orderStates)
+    public function updateOrderState($dateFrom, $dateTo, $oldOrderStates, $newOrderState)
     {
         $this->updateAll(
             [
-                'order_state' => Configure::read('app.htmlHelper')->getOrderStateBilled()
+                'order_state' => $newOrderState
             ],
             [
                 'DATE_FORMAT(pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
                 'DATE_FORMAT(pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
-                $this->getOrderStateCondition($orderStates)
+                'order_state IN (' . join(', ', $oldOrderStates) . ')'
             ]
         );
     }

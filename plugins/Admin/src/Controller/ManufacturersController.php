@@ -364,7 +364,7 @@ class ManufacturersController extends AdminAppController
             $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
             
             $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-            $this->OrderDetail->updateOrderStateToBilled($dateFrom, $dateTo, $validOrderStates);
+            $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, Configure::read('app.htmlHelper')->getOrderStateBilled());
 
             $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
             if ($sendEmail) {
@@ -427,10 +427,10 @@ class ManufacturersController extends AdminAppController
             ]
         ])->first();
 
+        $validOrderStates = [ORDER_STATE_OPEN];
+        
         // generate and save PDF - should be done here because count of results will be checked
-        $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, [
-            ORDER_STATE_OPEN
-        ], 'F');
+        $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $validOrderStates, 'F');
 
         // no orders in current period => do not send pdf but send information email
         if (count($productResults) == 0) {
@@ -443,15 +443,16 @@ class ManufacturersController extends AdminAppController
             $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), __d('admin', 'product'));
 
             // generate order list by customer
-            $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, [
-                ORDER_STATE_OPEN
-            ], 'F');
+            $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, $validOrderStates, 'F');
             $this->render('get_order_list_by_customer');
             $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), __d('admin', 'member'));
 
             $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
             $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
 
+            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+            $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+            
             $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}.', ['<b>'.$manufacturer->name.'</b>']);
 
             if ($sendEmail) {

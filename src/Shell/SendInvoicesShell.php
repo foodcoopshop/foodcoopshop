@@ -22,8 +22,11 @@ use Cake\ORM\TableRegistry;
 
 class SendInvoicesShell extends AppShell
 {
+    
+    public $cronjobRunDay;
+    
     /**
-     * sends invoices to manufacturers who have orders from the last month
+     * sends invoices to manufacturers who have order details with pickup_day of last month
      */
     public function main()
     {
@@ -35,12 +38,13 @@ class SendInvoicesShell extends AppShell
 
         $this->startTimeLogging();
 
-        $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfLastMonth();
-        $dateTo = Configure::read('app.timeHelper')->getLastDayOfLastMonth();
-
-        // $dateFrom = '01.02.2016';
-        // $dateTo = '29.02.2016';
-
+        // $this->cronjobRunDay can is set in unit test
+        if (empty($this->cronjobRunDay)) {
+            $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+        }
+        
+        $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfLastMonth($this->cronjobRunDay);
+        $dateTo = Configure::read('app.timeHelper')->getLastDayOfLastMonth($this->cronjobRunDay);
         
         // update all order details that are already billed but cronjob did not change the order state
         // to new order state ORDER_STATE_BILLED (introduced in FCS 2.2)
@@ -66,7 +70,7 @@ class SendInvoicesShell extends AppShell
                 'OrderDetails.order_state NOT IN (' . join(",", [
                     ORDER_STATE_BILLED_CASH,
                     ORDER_STATE_BILLED_CASHLESS
-                ]) . ')'
+                ]) . ')' // order_state condition necessary for switch from OrderDetails.created to OrderDetails.pickup_day
             ],
             'contain' => [
                 'Products'
