@@ -330,7 +330,6 @@ class OrderDetailsController extends AdminAppController
             }
             if (!empty($orderDetail->timebased_currency_order_detail)) {
                 $timebasedCurrencyOrderInList = true;
-                break;
             }
         }
         $this->set('timebasedCurrencyOrderInList', $timebasedCurrencyOrderInList);
