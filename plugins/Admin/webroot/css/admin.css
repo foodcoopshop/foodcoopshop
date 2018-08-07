@@ -209,6 +209,7 @@ span.product-quantity-for-dialog {
 }
 tr.main-product span.name-for-dialog {
 	font-weight: 600;
+    line-height: 24px;
 }
 span.categories-for-dialog {
 	font-style: italic;
