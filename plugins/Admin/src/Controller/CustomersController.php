@@ -178,8 +178,7 @@ class CustomersController extends AdminAppController
         try {
 
             $activeOrdersAssociation = $this->Customer->getAssociation('ActiveOrderDetails')->setConditions([
-                'DATE_FORMAT(ActiveOrderDetails.created, \'%Y-%m-%d\') > DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 2 MONTH), \'%Y-%m-%d\')',
-                'ActiveOrderDetails.order_state <> ' . ORDER_STATE_CANCELLED
+                'DATE_FORMAT(ActiveOrderDetails.created, \'%Y-%m-%d\') > DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 2 MONTH), \'%Y-%m-%d\')'
             ]);
 
             $customer = $this->Customer->find('all', [
@@ -592,7 +591,7 @@ class CustomersController extends AdminAppController
             'contain' => [
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
                 'ValidOrderDetails',
-                'PaidCashFreeOrderDetails'
+                'PaidCashlessOrderDetails'
             ]
         ]);
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-07 09:25+0200\n"
+"POT-Creation-Date: 2018-08-07 10:56+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1893,6 +1893,15 @@ msgid "This_order_contains_the_variable_member_fee."
 msgstr ""
 
 msgid "order_state_closed"
+msgstr ""
+
+msgid "order_state_order_list_sent_to_manufacturer"
+msgstr ""
+
+msgid "order_state_billed_cashless"
+msgstr ""
+
+msgid "order_state_billed_cash"
 msgstr ""
 
 msgid "route_information_about_right_of_withdrawal"

@@ -45,7 +45,7 @@ class SendOrderListsShell extends AppShell
             ]
         ])->toArray();
 
-        // 2) get all orders in the given date range
+        // 2) get all order details with pickup day in the given date range
         $orderDetails = $this->OrderDetail->find('all', [
             'conditions' => [
                 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') = \'' . $pickupDay . '\'',

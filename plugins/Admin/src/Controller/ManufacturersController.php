@@ -321,12 +321,13 @@ class ManufacturersController extends AdminAppController
             ]
         ])->first();
 
-        // generate and save PDF - should be done here because count of results will be checked
-        $product_results = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, [
+        $validOrderStates = [
             ORDER_STATE_OPEN,
-            ORDER_STATE_CASH,
-            ORDER_STATE_CASH_FREE
-        ], 'F');
+            ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER
+        ];
+        
+        // generate and save PDF - should be done here because count of results will be checked
+        $product_results = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $validOrderStates, 'F');
 
         // no orders in current period => do not send pdf but send information email
         if (count($product_results) == 0) {
@@ -341,11 +342,7 @@ class ManufacturersController extends AdminAppController
             $this->set('newInvoiceNumber', $newInvoiceNumber);
 
             $this->RequestHandler->renderAs($this, 'pdf');
-            $customer_results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, [
-                ORDER_STATE_OPEN,
-                ORDER_STATE_CASH,
-                ORDER_STATE_CASH_FREE
-            ], 'F');
+            $customer_results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, $validOrderStates, 'F');
 
             // generate invoice
             $this->render('get_invoice');
@@ -365,6 +362,9 @@ class ManufacturersController extends AdminAppController
             );
 
             $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
+            
+            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+            $this->OrderDetail->updateOrderStateToBilled($dateFrom, $dateTo, $validOrderStates);
 
             $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
             if ($sendEmail) {
@@ -372,7 +372,7 @@ class ManufacturersController extends AdminAppController
                 $email->setTemplate('Admin.send_invoice')
                     ->setTo($manufacturer->address_manufacturer->email)
                     ->setAttachments([
-                    $invoicePdfFile
+                        $invoicePdfFile
                     ])
                     ->setSubject(__d('admin', 'Invoice_number_abbreviataion_{1}_{2}', [$newInvoiceNumber, $invoicePeriodMonthAndYear]))
                     ->setViewVars([
@@ -380,8 +380,7 @@ class ManufacturersController extends AdminAppController
                     'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
                     'appAuth' => $this->AppAuth,
                     'showManufacturerUnsubscribeLink' => true
-                    ]);
-
+                ]);
                 $email->send();
             }
         }

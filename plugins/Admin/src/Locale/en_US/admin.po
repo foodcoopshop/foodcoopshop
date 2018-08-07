@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-07 09:25+0200\n"
-"PO-Revision-Date: 2018-08-06 15:19+0200\n"
+"POT-Creation-Date: 2018-08-07 10:56+0200\n"
+"PO-Revision-Date: 2018-08-07 10:59+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -288,7 +288,6 @@ msgstr "The price of the ordered product {0} (amount {1}) was successfully adapt
 msgid "Ordered_price_adapted"
 msgstr "Price adapted"
 
-#, fuzzy
 msgid "The_pickup_day_comment_of_{0}_was_changed:"
 msgstr "The comment of the member {0} was changed:"
 
@@ -976,6 +975,9 @@ msgstr "Deposit return"
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Show all ordered products from {0}"
 
+msgid "products_picked_up"
+msgstr "Products picked up"
+
 msgid "Click_to_change_price"
 msgstr "Click to change price"
 
@@ -1498,9 +1500,8 @@ msgstr "No orders found for the pickup day {0}."
 msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
 msgstr "No orders found for the delivery period {0} to {1}."
 
-#, fuzzy
 msgid "All_products_picked_up?"
-msgstr "Not picked up"
+msgstr "All products picked up?"
 
 msgid "Back_to_deposit_account"
 msgstr "Back to deposit account"

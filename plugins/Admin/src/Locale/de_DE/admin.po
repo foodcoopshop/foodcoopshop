@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-07 09:25+0200\n"
-"PO-Revision-Date: 2018-08-07 09:26+0200\n"
+"POT-Creation-Date: 2018-08-07 10:56+0200\n"
+"PO-Revision-Date: 2018-08-07 11:01+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -974,6 +974,9 @@ msgstr "Pfand-Rückgabe"
 
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Alle bestellten Produkte von {0} anzeigen"
+
+msgid "products_picked_up"
+msgstr "Produkte abgeholt"
 
 msgid "Click_to_change_price"
 msgstr "Zum Ändern des Preises anklicken"

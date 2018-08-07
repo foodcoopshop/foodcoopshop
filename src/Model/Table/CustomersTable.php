@@ -38,11 +38,11 @@ class CustomersTable extends AppTable
                 'ActiveOrderDetails.created' => 'DESC'
             ]
         ]);
-        $this->hasMany('PaidCashFreeOrderDetails', [
+        $this->hasMany('PaidCashlessOrderDetails', [
             'className' => 'OrderDetails',
             'foreignKey' => 'id_customer',
             'sort' => [
-                'PaidCashFreeOrderDetails.created' => 'DESC'
+                'PaidCashlessOrderDetails.created' => 'DESC'
             ]
         ]);
         // has many does not produce multiple records - this should be hasOne ideally...
@@ -197,8 +197,8 @@ class CustomersTable extends AppTable
         $this->getAssociation('ActiveOrderDetails')->setConditions([
             'ActiveOrderDetails.order_state IN (' . ORDER_STATE_OPEN . ')'
         ]);
-        $this->getAssociation('PaidCashFreeOrderDetails')->setConditions([
-            'PaidCashFreeOrderDetails.order_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')'
+        $this->getAssociation('PaidCashlessOrderDetails')->setConditions([
+            'PaidCashlessOrderDetails.order_state IN (' . join(',', Configure::read('app.htmlHelper')->getOrderStatesCashless()). ')'
         ]);
     }
 

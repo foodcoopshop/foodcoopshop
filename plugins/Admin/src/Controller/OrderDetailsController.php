@@ -273,7 +273,7 @@ class OrderDetailsController extends AdminAppController
         $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, $manufacturerId, $productId, $customerId, $orderStates, $pickupDay, $orderDetailId, $deposit);
 
         $contain = $odParams['contain'];
-        if ($groupBy == 'customer' && count($pickupDay) == 1) {
+        if (($groupBy == 'customer' || $groupBy == '') && count($pickupDay) == 1) {
             $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
                 'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
             ]);
@@ -402,7 +402,7 @@ class OrderDetailsController extends AdminAppController
         
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         
-        $orderStateAsText = '<b>' . Configure::read('app.htmlHelper')->getOrderStates()[$orderState] . '</b>';
+        $orderStateAsText = '<b>' . Configure::read('app.htmlHelper')->getVisibleOrderStates()[$orderState] . '</b>';
         if (count($orderDetailIds) == 1) {
             $message = __d('admin', 'The_order_status_of_the_ordered_product_{0}_of_{1}_was_successfully_changed_to_{2}.', [
                 $orderDetailIds[0],

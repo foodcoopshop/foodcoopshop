@@ -99,6 +99,34 @@ class OrderDetailsTable extends AppTable
         return $result;
 
     }
+    
+    public function updateOrderStateToBilled($dateFrom, $dateTo, $orderStates)
+    {
+        $this->updateAll(
+            [
+                'order_state' => Configure::read('app.htmlHelper')->getOrderStateBilled()
+            ],
+            [
+                'DATE_FORMAT(pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
+                'DATE_FORMAT(pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
+                $this->getOrderStateCondition($orderStates)
+            ]
+        );
+    }
+    
+    public function legacyUpdateOrderStateToNewBilledState($dateFrom, $statusOld, $statusNew)
+    {
+        $conditions = ['order_state' => $statusOld];
+        if (!is_null($dateFrom)) {
+            $conditions[] = 'DATE_FORMAT(created, \'%Y-%m-%d\') < \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
+        }
+        $this->updateAll(
+            [
+                'order_state' => $statusNew
+            ],
+            $conditions
+        );
+    }
 
     public function getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId)
     {
@@ -106,7 +134,6 @@ class OrderDetailsTable extends AppTable
             'OrderDetails.id_customer' => $customerId,
             'RIGHT(OrderDetails.created, 8) <> \'00:00:00\'' // exlude instant orders
         ];
-        $conditions[] = 'OrderDetails.order_state IN ('.ORDER_STATE_CASH_FREE.','.ORDER_STATE_CASH.','.ORDER_STATE_OPEN.')';
 
         $conditions[] = 'DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
             date('Y-m-d', $dateFrom)
@@ -229,9 +256,8 @@ class OrderDetailsTable extends AppTable
     {
         $conditions = [
             'OrderDetails.id_customer' => $customerId,
-            'OrderDetails.order_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')'
+            'OrderDetails.order_state IN (' . join(',', Configure::read('app.htmlHelper')->getOrderStatesCashless()) . ')'
         ];
-        
         $query = $this->find('all', [
             'conditions' => $conditions
         ]);
@@ -242,8 +268,7 @@ class OrderDetailsTable extends AppTable
     public function getCountByCustomerId($customerId)
     {
         $conditions = [
-            'OrderDetails.id_customer' => $customerId,
-            'OrderDetails.order_state NOT IN (' . ORDER_STATE_CANCELLED. ')'
+            'OrderDetails.id_customer' => $customerId
         ];
         $query = $this->find('all', [
             'conditions' => $conditions
@@ -278,7 +303,7 @@ class OrderDetailsTable extends AppTable
     {
         $conditions = [
             'OrderDetails.id_customer' => $customerId,
-            'OrderDetails.order_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')',
+            $this->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStatesCashless()),
             'DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.depositPaymentCashlessStartDate') . '\''
         ];
         

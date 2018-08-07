@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-07 09:25+0200\n"
-"PO-Revision-Date: 2018-08-07 09:22+0200\n"
+"POT-Creation-Date: 2018-08-07 10:56+0200\n"
+"PO-Revision-Date: 2018-08-07 11:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -669,7 +669,6 @@ msgstr "All products picked up?"
 msgid "Were_the_products_of_all_members_picked_up?"
 msgstr "Were the products of all members picked up?"
 
-#, fuzzy
 msgid "Change_pickup_day_comment"
 msgstr "Change pickup day comment"
 
@@ -1896,6 +1895,15 @@ msgstr "This order contains the variable member fee."
 
 msgid "order_state_closed"
 msgstr "closed"
+
+msgid "order_state_order_list_sent_to_manufacturer"
+msgstr "Order list sent to manufacturer"
+
+msgid "order_state_billed_cashless"
+msgstr "billing complete and paid cashless"
+
+msgid "order_state_billed_cash"
+msgstr "billing complete and paid in cash"
 
 msgid "route_information_about_right_of_withdrawal"
 msgstr "information-about-right-of-withdrawal"

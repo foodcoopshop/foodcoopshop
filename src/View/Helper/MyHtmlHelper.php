@@ -241,6 +241,15 @@ class MyHtmlHelper extends HtmlHelper
         ];
     }
 
+    public function getOrderStateBilled()
+    {
+        $billedOrderState = ORDER_STATE_BILLED_CASH;
+        if ($this->paymentIsCashless()) {
+            $billedOrderState = ORDER_STATE_BILLED_CASHLESS;
+        }
+        return $billedOrderState;
+    }
+    
     public function paymentIsCashless()
     {
         return in_array('cashless', Configure::read('app.paymentMethods'));
@@ -569,12 +578,14 @@ class MyHtmlHelper extends HtmlHelper
     {
         return Configure::read('app.visibleOrderStates');
     }
-
-    public function getOrderStates()
+    
+    public function getOrderStatesCashless()
     {
-        $orderStates = self::getVisibleOrderStates();
-        $orderStates[ORDER_STATE_CANCELLED] = __('order_state_cancelled');
-        return $orderStates;
+        return [
+            ORDER_STATE_OPEN,
+            ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
+            ORDER_STATE_BILLED_CASHLESS
+        ];
     }
 
     public function getOrderStateIds()
