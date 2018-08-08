@@ -486,7 +486,7 @@ class MyHtmlHelper extends HtmlHelper
 
             $imageFilenameAndPath = $urlPrefix . 'no-' . $size . '-default.jpg';
 
-            if ($blogPost->id_manufacturer !== 0) {
+            if ($blogPost->id_manufacturer != 0) {
                 $imageFilenameAndPath = $this->getManufacturerImageSrc($blogPost->id_manufacturer, $manufacturerSize);
             }
         } else {
