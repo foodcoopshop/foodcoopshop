@@ -471,14 +471,33 @@ class MyHtmlHelper extends HtmlHelper
         return $this->prepareAsUrl($urlPrefix . $sliderImage);
     }
 
-    public function getBlogPostImageSrc($blogPostId, $size)
+    /**
+     * Returns a blogpost's image with desired size
+     * If the blogpost has no image, but a manufacturer was specified, the manufacturer's image will be returned
+     *
+     * @param $blogPost
+     * @param string $size
+     * @return string
+     */
+
+    public function getBlogPostImageSrc($blogPost, $size)
     {
         $thumbsPath = $this->getBlogPostThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'blog_posts' . DS;
 
-        $imageFilename = $blogPostId . '-' . $size . '-default.jpg';
+        $imageFilename = $blogPost->id_blog_post . '-' . $size . '-default.jpg';
         if (! file_exists($thumbsPath . DS . $imageFilename)) {
+
+            $manufacturerSize = "medium";
+            if($size == "single") {
+                $manufacturerSize = "large";
+            }
+
             $imageFilenameAndPath = $urlPrefix . 'no-' . $size . '-default.jpg';
+
+            if ($blogPost->id_manufacturer != 0) {
+                $imageFilenameAndPath = $this->getManufacturerImageSrc($blogPost->id_manufacturer, $manufacturerSize);
+            }
         } else {
             $imageFilenameAndPath = $urlPrefix . $imageFilename;
         }

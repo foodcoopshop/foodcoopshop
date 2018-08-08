@@ -3,9 +3,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-07 10:56+0200\n"
-"PO-Revision-Date: 2018-08-07 11:01+0200\n"
+"POT-Creation-Date: 2018-08-08 11:44+0200\n"
+"PO-Revision-Date: 2018-08-08 14:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -14,6 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.1.1\n"
+"Project-Id-Version: \n"
 
 msgid "Activities"
 msgstr "Aktivitäten"
@@ -572,6 +572,12 @@ msgstr "Zum Ändern auf das Bild klicken."
 
 msgid "Upload_new_image_or_change_it"
 msgstr "Neues Bild hochladen bzw. austauschen"
+
+msgid "If_the_blog_post_is_associated_to_a_manufacturer_and_no_image_selected_the_default_image_of_the_manufacturer_profile_is_shown."
+msgstr "Falls der Blog-Artikel einem Hersteller zugeordnet ist und kein Bild ausgewählt ist, wird das Profil-Bild des Herstellers angezeigt."
+
+msgid "If_no_image_selected_the_default_image_of_your_manufacturer_profile_is_shown."
+msgstr "Wenn kein Bild ausgewählt ist, wird das Profil-Bild des Herstellers angezeigt."
 
 msgid "Delete_image?"
 msgstr "Bild löschen?"

@@ -56,16 +56,21 @@ class PagesController extends FrontendController
          */
         $securityErrors = 0;
         if (Configure::read('app.cookieKey') == '') {
-            echo '<p>Please copy this <b>app.cookieKey</b> to your custom_custom.php: '.StringComponent::createRandomString(58).'</p>';
+            echo '<p>Please copy this <b>app.cookieKey</b> to your custom_config.php: '.StringComponent::createRandomString(58).'</p>';
             $securityErrors++;
         }
         if (Security::getSalt() == '') {
-            echo '<p>Please copy this <b>Security => salt</b> to your custom_custom.php: '.hash('sha256', Security::randomBytes(64)).'</p>';
+            echo '<p>Please copy this <b>Security => salt</b> to your custom_config.php: '.hash('sha256', Security::randomBytes(64)).'</p>';
             $securityErrors++;
         }
+		if (Configure::read('app.cakeServerName') == '') {
+			echo '<p>Please copy <b>http://' . $_SERVER['HTTP_HOST'] . '</b> to custom_config.php</p>';
+			$securityErrors++;
+		}
         if ($securityErrors > 0) {
             die('<p><b>Security errors: '.$securityErrors.'</b></p>');
         }
+
         /**
          * END: security keys check
          */

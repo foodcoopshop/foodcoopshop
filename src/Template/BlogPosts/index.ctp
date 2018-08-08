@@ -32,12 +32,12 @@ foreach ($blogPosts as $blogPost) {
 
     $blogDetailLink = $this->Slug->getBlogPostDetail($blogPost->id_blog_post, $blogPost->title);
     echo '<div class="first-column">';
-        $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost->id_blog_post, 'single');
+        $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost, 'single');
         $largeImageExists = preg_match('/no-single-default/', $srcLargeImage);
     if (!$largeImageExists) {
         echo '<a data-featherlight="image" href="'.$srcLargeImage.'">';
     }
-        echo '<img src="' . $this->Html->getBlogPostImageSrc($blogPost->id_blog_post, 'home'). '" />';
+        echo '<img src="' . $this->Html->getBlogPostImageSrc($blogPost, 'home'). '" />';
     if (!$largeImageExists) {
         echo '</a>';
     }

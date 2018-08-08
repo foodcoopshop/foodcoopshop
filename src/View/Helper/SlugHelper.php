@@ -45,7 +45,7 @@ class SlugHelper extends Helper
 
     public function getManufacturerBlogList($manufacturerId, $manufacturerName)
     {
-        return $this->getManufacturerDetail($manufacturerId, $manufacturerName) . __('route_news');
+        return $this->getManufacturerDetail($manufacturerId, $manufacturerName) . '/' . __('route_news');
     }
 
     public function getPageDetail($pageId, $name)
