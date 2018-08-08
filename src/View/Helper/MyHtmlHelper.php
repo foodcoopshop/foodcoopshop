@@ -462,14 +462,26 @@ class MyHtmlHelper extends HtmlHelper
         return $this->prepareAsUrl($urlPrefix . $sliderImage);
     }
 
-    public function getBlogPostImageSrc($blogPostId, $size)
+    public function getBlogPostImageSrc($blogPost, $size)
     {
         $thumbsPath = $this->getBlogPostThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'blog_posts' . DS;
 
-        $imageFilename = $blogPostId . '-' . $size . '-default.jpg';
+        $imageFilename = $blogPost->id_blogpost . '-' . $size . '-default.jpg';
         if (! file_exists($thumbsPath . DS . $imageFilename)) {
-            $imageFilenameAndPath = $urlPrefix . 'no-' . $size . '-default.jpg';
+            if($size == "single") {
+                $manufacturerSize = "large";
+            } else if ($size == "home") {
+                $manufacturerSize = "medium";
+            } else {
+                $manufacturerSize = "medium";
+            }
+
+            if ($blogPost->id_manufacturer !== 0) {
+                $imageFilenameAndPath = $this->getManufacturerImageSrc($blogPost->id_manufacturer, $manufacturerSize);
+            } else {
+                $imageFilenameAndPath = $urlPrefix . 'no-' . $size . '-default.jpg';
+            }
         } else {
             $imageFilenameAndPath = $urlPrefix . $imageFilename;
         }

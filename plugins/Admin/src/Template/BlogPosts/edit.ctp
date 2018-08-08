@@ -25,7 +25,7 @@ $this->element('addScript', ['script' =>
 ]);
 
 $idForImageUpload = (!empty($blogPost->id_blog_post)) ? $blogPost->id_blog_post : StringComponent::createRandomString(6);
-$imageSrc = $this->Html->getBlogPostImageSrc($idForImageUpload, 'single');
+$imageSrc = $this->Html->getBlogPostImageSrc($blogPost, 'single');
 if (!empty($blogPost->tmp_image) && $blogPost->tmp_image != '') {
     $imageSrc = str_replace('\\', '/', $blogPost->tmp_image);
 }
