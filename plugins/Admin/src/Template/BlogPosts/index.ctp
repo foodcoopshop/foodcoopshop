@@ -93,12 +93,25 @@ foreach ($blogPosts as $blogPost) {
 
     echo '<td align="center" style="background-color: #fff;">';
     $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost->id_blog_post, 'single');
-    $largeImageExists = preg_match('/no-single-default/', $srcLargeImage);
-    if (! $largeImageExists) {
+    $srcSmallImage = $this->Html->getBlogPostImageSrc($blogPost->id_blog_post, 'home');
+
+    $largeImageExists = ! preg_match('/no-single-default/', $srcLargeImage);
+    $smallImageExists = ! preg_match('/no-home-default/', $srcLargeImage);
+
+    if(! ($largeImageExists && $smallImageExists)) { //Only default image available
+        if($blogPost->id_manufacturer !== 0) {
+            $srcLargeImage = $this->Html->getManufacturerImageSrc($blogPost->id_manufacturer, 'large');
+            $srcSmallImage = $this->Html->getManufacturerImageSrc($blogPost->id_manufacturer, 'medium');
+
+            $largeImageExists = ! preg_match('/de-default-large_default/', $srcLargeImage);
+        }
+    }
+
+    if ($largeImageExists) {
         echo '<a class="lightbox" href="' . $srcLargeImage . '">';
     }
-    echo '<img width="90" src="' . $this->Html->getBlogPostImageSrc($blogPost->id_blog_post, 'home') . '" />';
-    if (! $largeImageExists) {
+    echo '<img width="90" src="' . $srcSmallImage . '" />';
+    if ($largeImageExists) {
         echo '</a>';
     }
     echo '</td>';
