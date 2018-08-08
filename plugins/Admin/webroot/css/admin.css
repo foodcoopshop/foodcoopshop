@@ -607,6 +607,14 @@ body.orders.index td span.customer-is-new {
 #timebasedCurrencyPaymentEditForm textarea {
     width: 250px;
 }
+#blogPostEditForm .blog-post-image-wrapper {
+	float: left;
+}
+#blogPostEditForm .blog-post-image-wrapper span {
+	float: left;
+	width: 400px;
+	margin-left: 10px;
+}
 .featherlight-content .add-payment-form label {
     width: 100%;
 }
