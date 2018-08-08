@@ -467,14 +467,12 @@ class MyHtmlHelper extends HtmlHelper
         $thumbsPath = $this->getBlogPostThumbsPath();
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'blog_posts' . DS;
 
-        $imageFilename = $blogPost->id_blogpost . '-' . $size . '-default.jpg';
+        $imageFilename = $blogPost->id_blog_post . '-' . $size . '-default.jpg';
         if (! file_exists($thumbsPath . DS . $imageFilename)) {
+            $manufacturerSize = "medium";
+
             if($size == "single") {
                 $manufacturerSize = "large";
-            } else if ($size == "home") {
-                $manufacturerSize = "medium";
-            } else {
-                $manufacturerSize = "medium";
             }
 
             if ($blogPost->id_manufacturer !== 0) {
