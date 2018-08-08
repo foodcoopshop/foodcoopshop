@@ -330,15 +330,30 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
-        $weekday = date('N');
-        if (in_array($weekday, [3,4,5])) {
-            $expectedCcEmails[] = Configure::read('test.loginEmailVegetableManufacturer');
-        }
         $this->assertOrderDetailProductAmountChangedEmails(1, $expectedToEmails, $expectedCcEmails);
 
         $this->assertChangedStockAvailable($this->productIdA, 96);
     }
 
+    public function testEditOrderDetailAmountAsSuperadminWithEnabledNotificationAfterOrderListsWereSent()
+    {
+        $this->loginAsSuperadmin();
+        $this->mockCart = $this->generateAndGetCart(1, 2);
+        $orderDetailId = $this->mockCart->cart_products[0]->order_detail->id_order_detail;
+        $this->simulateSendOrderListsCronjob($orderDetailId);
+        
+        $this->editOrderDetailAmount($orderDetailId, $this->newAmount, $this->editAmountReason);
+        
+        $changedOrder = $this->getChangedMockCartFromDatabase();
+        $this->assertEquals($this->newAmount, $changedOrder->cart_products[0]->order_detail->product_amount, 'order detail amount was not changed properly');
+        
+        $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
+        $expectedCcEmails = [];
+        $this->assertOrderDetailProductAmountChangedEmails(1, $expectedToEmails, $expectedCcEmails);
+        
+        $this->assertChangedStockAvailable($this->productIdA, 96);
+    }
+    
     public function testEditOrderDetailAmountAsSuperadminWithDisabledNotification()
     {
         $this->loginAsSuperadmin();
