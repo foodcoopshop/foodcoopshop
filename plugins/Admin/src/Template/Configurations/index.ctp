@@ -234,11 +234,6 @@ $this->element('addScript', [
         </tr>
 
         <tr>
-            <td>app.allowManualOrderListSending</td>
-            <td><?php echo Configure::read('app.allowManualOrderListSending') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
-        </tr>
-
-        <tr>
             <td>app.sendOrderListsWeekday</td>
             <td><?php echo $this->MyTime->getWeekdayName(Configure::read('app.sendOrderListsWeekday')); ?></td>
         </tr>

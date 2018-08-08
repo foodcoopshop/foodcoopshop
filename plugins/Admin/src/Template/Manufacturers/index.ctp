@@ -28,13 +28,6 @@ use Cake\Core\Configure;
             Configure::read('app.cakeServerName') . "');".
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.manufacturer-details-read-button');"
     ]);
-    if (Configure::read('app.allowManualOrderListSending')) {
-        $this->element('addScript', [
-            'script' =>
-                Configure::read('app.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery()) . "');" .
-                Configure::read('app.jsNamespace') . ".Admin.initManualOrderListSend('#manufacturers-list .manual-order-list-send-link', " . date('N', time()) . ");"
-        ]);
-    }
     ?>
 
     <div class="filter-container">
@@ -78,9 +71,6 @@ echo '<tr class="sort">';
         echo '<th>%</th>';
     }
     echo '<th></th>';
-    if (Configure::read('app.allowManualOrderListSending')) {
-        echo '<th></th>';
-    }
     echo '<th></th>';
     echo '<th></th>';
 echo '</tr>';
@@ -253,14 +243,6 @@ foreach ($manufacturers as $manufacturer) {
         'target' => '_blank'
     ]);
     echo '</td>';
-    if (Configure::read('app.allowManualOrderListSending')) {
-        echo '<td>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('email.png')), [
-            'title' => __d('admin', 'Manually_send_order_list'),
-            'class' => 'manual-order-list-send-link'
-        ], 'javascript:void(0);');
-        echo '</td>';
-    }
 
     echo '<td>';
     echo $this->Html->link(__d('admin', 'Test_invoice'), '/admin/manufacturers/getInvoice.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo, [
@@ -290,9 +272,6 @@ echo '<td>';
 echo '</td>';
 
 if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
-    $colspan ++;
-}
-if (Configure::read('app.allowManualOrderListSending')) {
     $colspan ++;
 }
 if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {

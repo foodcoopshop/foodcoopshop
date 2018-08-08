@@ -28,10 +28,7 @@ $pdf->SetTitle($title);
 
 $html = '<h2>' . $title;
 
-/**
- * if order lists are sent on wednesday, thursday or friday, eventually changed deliveryDayDelta
- * important if allowManualOrderListSending = true
- */
+ // if order lists are sent on wednesday, thursday or friday, eventually changed deliveryDayDelta
 if (! $bulkOrdersAllowed && Configure::read('appDb.FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS') != '') {
     $deliveryDate = strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day');
     $html .= '<br />'.__d('admin', 'Delivery_date').': ' . $this->MyTime->getWeekdayName(date('N', $deliveryDate)) . ', ' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), $deliveryDate);

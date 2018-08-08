@@ -75,12 +75,6 @@ return [
         'depositForManufacturersStartDate' => '2016-01-01',
 
         /**
-         * adds a link to the manufacturer admin to generate and send the order list on click
-         * can be useful, if e.g. a member forgot to order and the order lists are already sent
-         * @deprecated - do not use this option any more, will be removed in next version
-         */
-        'allowManualOrderListSending' => false,
-        /**
          * weekday on which the weekly cronjob "SendOrderList" is called
          * the available options (in combination with deliveryDayDelta) can be found in tests/TestCase/src/View/Helper/MyTimeHelperTest.php
          */

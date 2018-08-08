@@ -24,7 +24,6 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace').".Admin.init();" .
             Configure::read('app.jsNamespace').".Admin.initCancelSelectionButton();" .
             Configure::read('app.jsNamespace').".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');" .
-            Configure::read('app.jsNamespace').".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery(1)) . "');".
             Configure::read('app.jsNamespace').".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" .
             Configure::read('app.jsNamespace').".Admin.initEmailToAllButton();" .
             Configure::read('app.jsNamespace').".Admin.selectMainMenuAdmin('".__d('admin', 'Orders')."');" .

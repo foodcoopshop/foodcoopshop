@@ -1190,56 +1190,6 @@ foodcoopshop.Admin = {
 
     },
 
-    initManualOrderListSend: function (container, weekday) {
-
-        $(container).on('click', function () {
-            if ($.inArray(foodcoopshop.Helper.cakeServerName, [
-                'http://www.foodcoopshop.test',
-                'https://demo-de.foodcoopshop.com',
-                'https://demo-en.foodcoopshop.com'
-            ]) == -1 &&
-                $.inArray(weekday, foodcoopshop.Admin.weekdaysBetweenOrderSendAndDelivery) == -1) {
-                alert(foodcoopshop.LocalizedJs.admin.ThisFunctionIsNotAvailableToday);
-                return;
-            }
-
-            var manufacturerId = $(this).closest('tr').attr('id').replace(/manufacturer-/, '');
-            var dataRow = $('#manufacturer-' + manufacturerId);
-
-            var buttons = {};
-            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
-            buttons['yes'] = {
-                text: foodcoopshop.LocalizedJs.helper.yes,
-                click: function() {
-                    $('.ui-dialog .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-                    var url = '/admin/manufacturers/sendOrderList/' + manufacturerId + '/' + $('#dateFrom').val() + '/' + $('#dateTo').val();
-                    document.location.href = url;
-                }
-            };
-
-            var html = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyManuallySendOrderList.replaceI18n(0, '<b>' + dataRow.find('td:nth-child(4) b').html() + '</b>') + '</p>';
-            html += '<p>' + foodcoopshop.LocalizedJs.admin.OrderPeriod + ': <b>' + $('#dateFrom').val() + ' - ' + $('#dateTo').val() + ' </b></p>';
-            html += '<p>' + foodcoopshop.LocalizedJs.admin.AnExistingOrderListWillBeOverwritten + '</p>';
-            html += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-
-            $('<div></div>').appendTo('body')
-                .html(html)
-                .dialog({
-                    modal: true,
-                    title: foodcoopshop.LocalizedJs.admin.ManuallySendOrderList,
-                    autoOpen: true,
-                    width: 400,
-                    resizable: false,
-                    buttons: buttons,
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
-                });
-        });
-
-    },
-
     initEmailToAllButton: function () {
         $('button.email-to-all').on('click', function () {
             $('<div></div>').appendTo('body')
@@ -1700,10 +1650,6 @@ foodcoopshop.Admin = {
 
     setVisibleOrderStates: function (visibleOrderStates) {
         this.visibleOrderStates = $.parseJSON(visibleOrderStates);
-    },
-
-    setWeekdaysBetweenOrderSendAndDelivery: function (weekdaysBetweenOrderSendAndDelivery) {
-        this.weekdaysBetweenOrderSendAndDelivery = $.parseJSON(weekdaysBetweenOrderSendAndDelivery);
     },
 
     setAdditionalOrderStatusChangeInfo: function (additionalOrderStatusChangeInfo) {
