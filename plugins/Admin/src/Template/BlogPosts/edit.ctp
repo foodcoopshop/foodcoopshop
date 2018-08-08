@@ -76,6 +76,11 @@ echo $this->Html->getJqueryUiIcon($imageExists ? $this->Html->image($imageSrc) :
     'title' => __d('admin', 'Upload_new_image_or_change_it'),
     'data-object-id' => $idForImageUpload
 ], 'javascript:void(0);');
+$defaultImageExplanationText = __d('admin', 'If_the_blog_post_is_associated_to_a_manufacturer_and_no_image_selected_the_default_image_of_the_manufacturer_profile_is_shown.');
+if ($appAuth->isManufacturer()) {
+    $defaultImageExplanationText = __d('admin', 'If_no_image_selected_the_default_image_of_your_manufacturer_profile_is_shown.');
+}
+echo '<span style="margin-left:10px;" class="small">' . $defaultImageExplanationText . '</span>';
 echo '</div>';
 echo $this->Form->hidden('BlogPosts.tmp_image');
 echo '</div>';
