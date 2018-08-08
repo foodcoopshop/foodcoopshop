@@ -22,15 +22,16 @@ $pdf->AddPage();
 $pdf->infoTextForFooter = __d('admin', 'Orders');
 
 $j = 1;
-foreach ($orders as $order) {
+foreach ($orderDetails as $od) {
+    
     $pdf->Ln(5);
-    $pdf->writeHTML('<h2>' . $order->customer->name . '</h2>', true, false, true, false, '');
-    $pdf->writeHTML('<h3>'.__d('admin', 'Order_from') . ' ' . $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong')) . '</h3>', true, false, true, false, '');
+    $pdf->writeHTML('<h2>' . $od[0]->customer->name . '</h2>', true, false, true, false, '');
+    $pdf->writeHTML('<h3>'.__d('admin', 'Pickup_day') . ': ' . $od[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '</h3>', true, false, true, false, '');
 
-    if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED') && $order->comment != '') {
+    if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED') && !empty($od[0]->pickup_day_entity) && $od[0]->pickup_day_entity->comment != '') {
         $pdf->SetRightMargin(16);
         $pdf->Ln(2);
-        $pdf->writeHTML('<p><b>'.__d('admin', 'Comment').': </b>' . $order->comment. '</p>', true, false, true, false, '');
+        $pdf->writeHTML('<p><b>'.__d('admin', 'Comment').': </b>' . $od[0]->pickup_day_entity->comment . '</p>', true, false, true, false, '');
     }
 
     $pdf->Ln(5);
@@ -57,13 +58,15 @@ foreach ($orders as $order) {
         $pdf->table .= '<th style="font-weight:bold;background-color:#cecece" width="' . $widths[$i] . '">' . $headers[$i] . '</th>';
     }
     $pdf->table .= '</tr></thead>';
-
+        
     $sumPrice = 0;
     $sumDeposit = 0;
     $sumQuantity = 0;
-    $i = 1;
     $usesQuantityInUnits = 0;
-    foreach ($order->order_details as $orderDetail) {
+    $i = 1;
+        
+    foreach($od as $orderDetail) {
+        
         $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
 
         $quantityStyle = '';
@@ -114,7 +117,7 @@ foreach ($orders as $order) {
 
         $pdf->table .= '</tr>';
 
-        if ($i == count($order->order_details)) {
+        if ($i == count($od)) {
             $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
                 $pdf->table .= '<td width="' . $widths[0] . '"></td>';
                 $pdf->table .= '<td width="' . $widths[1] . '"></td>';
@@ -134,8 +137,9 @@ foreach ($orders as $order) {
         }
 
         $i ++;
+        
     }
-
+    
     $pdf->renderTable();
 
     if ($usesQuantityInUnits > 0) {
@@ -150,10 +154,7 @@ foreach ($orders as $order) {
         $pdf->Ln(2);
     }
 
-    $html = '<p>'.__d('admin', 'Thank_you_very_much_for_delivering_your_products_to_us!').'</p>';
-    $pdf->writeHTML($html, true, false, true, false, '');
-
-    if ($j < $orders->count()) {
+    if ($j < count($orderDetails)) {
         $pdf->AddPage();
     }
 

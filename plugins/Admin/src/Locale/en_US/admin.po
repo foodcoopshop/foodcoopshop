@@ -3,7 +3,8 @@
 #
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2018-08-08 11:44+0200\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2018-08-08 17:13+0200\n"
 "PO-Revision-Date: 2018-08-08 14:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -13,7 +14,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.1.1\n"
-"Project-Id-Version: \n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -1476,9 +1476,6 @@ msgstr "Edit manufacturer settings"
 msgid "Test_order_list"
 msgstr "Test order list"
 
-msgid "Manually_send_order_list"
-msgstr "Manually send order list"
-
 msgid "Test_invoice"
 msgstr "Test invoice"
 
@@ -1506,6 +1503,9 @@ msgstr "No orders found for the pickup day {0}."
 msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
 msgstr "No orders found for the delivery period {0} to {1}."
 
+msgid "Generate_orders_as_pdf"
+msgstr "Generate orders as PDF"
+
 msgid "All_products_picked_up?"
 msgstr "All products picked up?"
 
@@ -1514,9 +1514,6 @@ msgstr "Back to deposit account"
 
 msgid "Cancel_selected_products"
 msgstr "Cancel selected products"
-
-msgid "Order_from"
-msgstr "Order from"
 
 msgid "Page_title"
 msgstr "Page title"
@@ -1758,6 +1755,12 @@ msgstr "{0,plural,=1{record} other{records}}"
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
 
+#~ msgid "Manually_send_order_list"
+#~ msgstr "Manually send order list"
+
+#~ msgid "Order_from"
+#~ msgstr "Order from"
+
 #~ msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
 #~ msgstr "The comment of the order number {0} by {1} was changed:"
 
@@ -1772,9 +1775,6 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 #~ msgid "Set_date_of_order_back"
 #~ msgstr "Set date of order back"
-
-#~ msgid "Generate_orders_as_pdf"
-#~ msgstr "Generate orders as PDF"
 
 #~ msgid "Close_all_orders"
 #~ msgstr "Close all orders"

@@ -3,8 +3,9 @@
 #
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2018-08-08 11:44+0200\n"
-"PO-Revision-Date: 2018-08-08 14:33+0200\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2018-08-08 17:13+0200\n"
+"PO-Revision-Date: 2018-08-08 17:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -13,7 +14,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.1.1\n"
-"Project-Id-Version: \n"
 
 msgid "Activities"
 msgstr "Aktivitäten"
@@ -1476,9 +1476,6 @@ msgstr "Hersteller-Einstellungen bearbeiten"
 msgid "Test_order_list"
 msgstr "Bestellliste prüfen"
 
-msgid "Manually_send_order_list"
-msgstr "Bestellliste manuell versenden"
-
 msgid "Test_invoice"
 msgstr "Rechnung prüfen"
 
@@ -1506,6 +1503,9 @@ msgstr "Es wurden keine Bestellungen für den Abholtag {0} gefunden."
 msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
 msgstr "Es wurden keine Bestellungen für den Lieferzeitraum {0} bis {1} gefunden."
 
+msgid "Generate_orders_as_pdf"
+msgstr "Bestellungen als PDF generieren"
+
 msgid "All_products_picked_up?"
 msgstr "Alle Produkte abgeholt?"
 
@@ -1514,9 +1514,6 @@ msgstr "Zurück zum Pfandkonto"
 
 msgid "Cancel_selected_products"
 msgstr "Ausgewählte Produkte stornieren"
-
-msgid "Order_from"
-msgstr "Bestellung vom"
 
 msgid "Page_title"
 msgstr "Seitentitel"
@@ -1758,6 +1755,12 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
 
+#~ msgid "Manually_send_order_list"
+#~ msgstr "Bestellliste manuell versenden"
+
+#~ msgid "Order_from"
+#~ msgstr "Bestellung vom"
+
 #~ msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
 #~ msgstr "Der Kommentar der Bestellung Nr. {0} von {1} wurde geändert:"
 
@@ -1772,9 +1775,6 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 #~ msgid "Set_date_of_order_back"
 #~ msgstr "Bestellung rückdatieren"
-
-#~ msgid "Generate_orders_as_pdf"
-#~ msgstr "Bestellungen als PDF generieren"
 
 #~ msgid "Close_all_orders"
 #~ msgstr "Alle Bestellungen abschließen"

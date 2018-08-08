@@ -294,18 +294,19 @@ if (!empty($emailAddresses) && ($appAuth->isSuperadmin() || $appAuth->isAdmin() 
 if ($groupBy == 'customer') {
     if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         $this->element('addScript', ['script' =>
-            Configure::read('app.jsNamespace').".PickupDay.initChangeProductsPickedUpForAllCustomers('#order-details-list');"
+            Configure::read('app.jsNamespace').".PickupDay.initChangeProductsPickedUpForAllCustomers('#order-details-list');" . 
+            Configure::read('app.jsNamespace') . ".Admin.initGenerateOrderDetailsAsPdf();"
         ]);
         $buttonExists = true;
+        $buttonHtml .= '<button class="btn btn-default generate-order-details-as-pdf"><i class="fa fa-file-pdf-o"></i> '.__d('admin', 'Generate_orders_as_pdf').'</button>';
         $buttonHtml .= '<button class="change-products-picked-up-all-customers-button btn btn-default"><i class="fa fa-check-square-o"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';
     }
 }
 
 if ($deposit != '') {
+    $depositOverviewUrl = $this->Slug->getDepositList($manufacturerId);
     if ($appAuth->isManufacturer()) {
         $depositOverviewUrl = $this->Slug->getMyDepositList();
-    } else {
-        $depositOverviewUrl = $this->Slug->getDepositList($manufacturerId);
     }
     $buttonHtml .= '<a class="btn btn-default" href="'.$depositOverviewUrl.'"><i class="fa fa-arrow-circle-left"></i> ' . __d('admin', 'Back_to_deposit_account') . '</a>';
 }

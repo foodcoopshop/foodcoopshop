@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-08 11:44+0200\n"
+"POT-Creation-Date: 2018-08-08 17:13+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1475,9 +1475,6 @@ msgstr ""
 msgid "Test_order_list"
 msgstr ""
 
-msgid "Manually_send_order_list"
-msgstr ""
-
 msgid "Test_invoice"
 msgstr ""
 
@@ -1505,6 +1502,9 @@ msgstr ""
 msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
 msgstr ""
 
+msgid "Generate_orders_as_pdf"
+msgstr ""
+
 msgid "All_products_picked_up?"
 msgstr ""
 
@@ -1512,9 +1512,6 @@ msgid "Back_to_deposit_account"
 msgstr ""
 
 msgid "Cancel_selected_products"
-msgstr ""
-
-msgid "Order_from"
 msgstr ""
 
 msgid "Page_title"

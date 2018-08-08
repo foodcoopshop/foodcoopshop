@@ -152,35 +152,34 @@ class OrderDetailsController extends AdminAppController
     
     public function orderDetailsAsPdf()
     {
-        if (empty($this->getRequest()->getQuery('orderIds'))) {
-            throw new RecordNotFoundException('wrong orderIds');
-        }
         
-        $orderIds = explode(',', $this->getRequest()->getQuery('orderIds'));
-        if (empty($orderIds)) {
-            throw new RecordNotFoundException('wrong orderIds');
-        }
-        $this->Order = TableRegistry::getTableLocator()->get('Orders');
-        $orders = $this->Order->find('all', [
-            'conditions' => [
-                'Orders.id_order IN' => $orderIds
-            ],
-            'contain' => [
-                'Customers',
-                'OrderDetails' => [
-                    'sort' => ['OrderDetails.product_name' => 'ASC']
-                ],
-                'OrderDetails.Products.Manufacturers',
-                'OrderDetails.OrderDetailUnits'
-            ],
-            'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy()
+        $pickupDay = [$this->getRequest()->getQuery('pickupDay')];
+        
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, '', '', '', [], $pickupDay, '', '');
+        $contain = $odParams['contain'];
+        $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
+            'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
+        ]);
+        $contain[] = 'PickupDayEntities';
+        $query = $this->OrderDetail->find('all', [
+            'conditions' => $odParams['conditions'],
+            'contain' => $contain
         ]);
         
-        if (empty($orders)) {
-            throw new RecordNotFoundException('no orders found');
-        }
+        $orderDetails = $this->paginate($query, [
+            'order' => [
+                'Products.id_manufacturer' => 'ASC',
+                'OrderDetails.product_name' => 'ASC'
+            ]
+        ])->toArray();
         
-        $this->set('orders', $orders);
+        $preparedOrderDetails = [];
+        foreach($orderDetails as $orderDetail) {
+            @$preparedOrderDetails[$orderDetail->id_customer][] = $orderDetail;
+        }
+        $this->set('orderDetails', $preparedOrderDetails);
+        
     }
     
     public function index()
@@ -235,10 +234,6 @@ class OrderDetailsController extends AdminAppController
             if ($orderStates == '') {
                 $orderStates = [];
             }
-        }
-        // legacy cakephp2: param was called "orderState" and contained csv data
-        if (in_array('orderState', array_keys($this->getRequest()->getQueryParams()))) {
-            $orderStates = explode(', ', $this->getRequest()->getQuery('orderState'));
         }
         $this->set('orderStates', $orderStates);
 

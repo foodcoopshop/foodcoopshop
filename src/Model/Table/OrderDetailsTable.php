@@ -394,7 +394,6 @@ class OrderDetailsTable extends AppTable
         foreach($preparedOrderDetails as &$orderDetail) {
             $orderDetail['order_detail_count'] = $this->getCountByCustomerId($orderDetail['customer_id']);
         }
-        
         return $preparedOrderDetails;
     }
 
