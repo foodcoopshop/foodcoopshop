@@ -6,6 +6,11 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Herzlichen Dank an alle beteiligten Personen
 * [mrothauer](https://github.com/mrothauer)
+* [tantelisl](https://github.com/tantelisl)
+* [wintersim](https://github.com/wintersim)
+
+### Neue Funktionen
+- Bei Blogartikel von Herstellern ohne Bild wird jetzt das Hersteller Profilbild angezeigt / [PR#255](https://github.com/foodcoopshop/foodcoopshop/pull/255) / <a href="https://github.com/wintersim"><img src="https://github.com/wintersim.png" width="20"></a><a href="https://github.com/tantelisl"><img src="https://github.com/tantelisl.png" width="20"></a>
 
 ### Für Entwickler
 - Tabellen für die Produkt-Verwaltung sind jetzt stark vereinfacht. / [PR#247](https://github.com/foodcoopshop/foodcoopshop/pull/247) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
