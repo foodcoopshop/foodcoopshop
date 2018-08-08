@@ -31,12 +31,11 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
 
-    function wrapJavascriptBlock($content)
-    {
+    function wrapJavascriptBlock($content) {
         return "<script>
             //<![CDATA[
                 $(document).ready(function() {
-                    " . $content . "
+                    ".$content."
                 });
             //]]>
         </script>";
@@ -44,7 +43,7 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getCurrencyName($currencySymbol)
     {
-        switch ($currencySymbol) {
+        switch($currencySymbol) {
             case '€':
                 return 'Euro';
                 break;
@@ -90,7 +89,7 @@ class MyHtmlHelper extends HtmlHelper
      */
     public function addLeadingZero($number, $maxDigits = 2)
     {
-        return sprintf('%0' . $maxDigits . 'd', $number);
+        return sprintf('%0'.$maxDigits.'d', $number);
     }
 
     public function getManufacturerHolidayString($dateFrom, $dateTo, $isHolidayActive, $long = false, $name = '')
@@ -118,9 +117,9 @@ class MyHtmlHelper extends HtmlHelper
         $shortResult = '';
         if (!Configure::read('app.timeHelper')->isDatabaseDateNotSet($dateFrom)) {
             if ($isHolidayActive) {
-                $shortResult .= __('delivery_break_since_holiday_active');
+                $shortResult .=  __('delivery_break_since_holiday_active');
             } else {
-                $shortResult .= __('delivery_break_since_holiday_not_active');
+                $shortResult .=  __('delivery_break_since_holiday_not_active');
             }
             $shortResult .= ' ' . Configure::read('app.timeHelper')->formatToDateShort($dateFrom);
         }
@@ -166,7 +165,7 @@ class MyHtmlHelper extends HtmlHelper
     public function getManufacturerImprint($manufacturer, $outputType, $addressOnly)
     {
         $imprintLines = [];
-        $imprintLines[] = '<b>' . $manufacturer->name . '</b>';
+        $imprintLines[] = '<b>'.$manufacturer->name.'</b>';
         if ($manufacturer->name != $manufacturer->address_manufacturer->firstname . ' ' . $manufacturer->address_manufacturer->lastname) {
             $imprintLines[] = $manufacturer->address_manufacturer->firstname . ' ' . $manufacturer->address_manufacturer->lastname;
         }
@@ -202,13 +201,13 @@ class MyHtmlHelper extends HtmlHelper
                 $imprintLines[] = __('Company_court') . ': ' . $manufacturer->firmengericht;
             }
             if ($manufacturer->aufsichtsbehoerde != '') {
-                $imprintLines[] = __('Supervisory_authority') . ': ' . $manufacturer->aufsichtsbehoerde;
+                $imprintLines[] = __('Supervisory_authority') .': ' . $manufacturer->aufsichtsbehoerde;
             }
             if ($manufacturer->kammer != '') {
                 $imprintLines[] = __('Chamber') . ': ' . $manufacturer->kammer;
             }
         }
-        return '<p>' . implode('<br />', $imprintLines) . '</p>';
+        return '<p>'.implode('<br />', $imprintLines).'</p>';
     }
 
     /**
@@ -283,7 +282,7 @@ class MyHtmlHelper extends HtmlHelper
      */
     public function getFamFamFamPath($icon)
     {
-        return '/node_modules/famfamfam-silk/dist/png/' . $icon;
+        return '/node_modules/famfamfam-silk/dist/png/'.$icon;
     }
 
     public function getGroupName($groupId)
@@ -309,7 +308,7 @@ class MyHtmlHelper extends HtmlHelper
     public function getOrderIdFromCartFinishedUrl($url)
     {
         $orderId = explode('/', $url);
-        return (int)$orderId[5];
+        return (int) $orderId[5];
     }
 
     public function getCustomerNameForSql()
@@ -356,7 +355,7 @@ class MyHtmlHelper extends HtmlHelper
     public function getReportTabs()
     {
         $tabs = [];
-        foreach ($this->getPaymentTexts() as $key => $paymentText) {
+        foreach($this->getPaymentTexts() as $key => $paymentText) {
             $tabs[] = [
                 'name' => $paymentText,
                 'url' => Configure::read('app.slugHelper')->getReport($key),
@@ -454,7 +453,7 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getUploadImageDir()
     {
-        return substr(WWW_ROOT, 0, -1) . Configure::read('app.uploadedImagesDir');
+        return substr(WWW_ROOT, 0, - 1) . Configure::read('app.uploadedImagesDir');
     }
 
     public function getSliderImageSrc($sliderImage)
@@ -481,7 +480,7 @@ class MyHtmlHelper extends HtmlHelper
         if (! file_exists($thumbsPath . DS . $imageFilename)) {
             $manufacturerSize = "medium";
 
-            if ($size == "single") {
+            if($size == "single") {
                 $manufacturerSize = "large";
             }
 
@@ -503,7 +502,7 @@ class MyHtmlHelper extends HtmlHelper
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'manufacturers' . DS;
 
         $imageFilename = $manufacturerId . '-' . $size . '_default.jpg';
-        if (!file_exists($thumbsPath . DS . $imageFilename)) {
+        if (! file_exists($thumbsPath . DS . $imageFilename)) {
             $imageFilenameAndPath = $urlPrefix . 'de-default-' . $size . '_default.jpg';
         } else {
             $imageFilenameAndPath = $urlPrefix . $imageFilename;
@@ -518,7 +517,7 @@ class MyHtmlHelper extends HtmlHelper
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'categories' . DS;
 
         $imageFilename = $categoryId . '-category_default.jpg';
-        if (!file_exists($thumbsPath . DS . $imageFilename)) {
+        if (! file_exists($thumbsPath . DS . $imageFilename)) {
             return false; // do not show any image if image does not exist
         } else {
             $imageFilenameAndPath = $urlPrefix . $imageFilename;
@@ -534,7 +533,7 @@ class MyHtmlHelper extends HtmlHelper
         $urlPrefix = Configure::read('app.uploadedImagesDir') . DS . 'products' . DS;
 
         $imageFilename = $imageId . '-' . $size . '_default.jpg';
-        if (!file_exists($thumbsPath . DS . $imageFilename)) {
+        if (! file_exists($thumbsPath . DS . $imageFilename)) {
             $imageFilenameAndPath = $urlPrefix . 'de-default-' . $size . '_default.jpg';
         } else {
             $imageFilenameAndPath = $urlPrefix . $imageIdAsPath . DS . $imageFilename;
@@ -545,7 +544,7 @@ class MyHtmlHelper extends HtmlHelper
 
     public function prepareAsUrl($string)
     {
-        $physicalFile = substr(WWW_ROOT, 0, -1) . $string;
+        $physicalFile = substr(WWW_ROOT, 0, - 1) . $string;
         if (file_exists($physicalFile)) {
             $string .= '?' . filemtime($physicalFile);
         }
