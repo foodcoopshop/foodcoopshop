@@ -468,7 +468,7 @@ class MyHtmlHelper extends HtmlHelper
      *
      * @param $blogPost
      * @param string $size
-     * @return image source string
+     * @return string
      */
 
     public function getBlogPostImageSrc($blogPost, $size)
@@ -478,8 +478,8 @@ class MyHtmlHelper extends HtmlHelper
 
         $imageFilename = $blogPost->id_blog_post . '-' . $size . '-default.jpg';
         if (! file_exists($thumbsPath . DS . $imageFilename)) {
-            $manufacturerSize = "medium";
 
+            $manufacturerSize = "medium";
             if($size == "single") {
                 $manufacturerSize = "large";
             }
