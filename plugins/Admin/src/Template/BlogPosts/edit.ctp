@@ -25,7 +25,7 @@ $this->element('addScript', ['script' =>
 ]);
 
 $idForImageUpload = (!empty($blogPost->id_blog_post)) ? $blogPost->id_blog_post : StringComponent::createRandomString(6);
-$imageSrc = $this->Html->getBlogPostImageSrc($idForImageUpload, 'single');
+$imageSrc = $this->Html->getBlogPostImageSrc($blogPost, 'single');
 if (!empty($blogPost->tmp_image) && $blogPost->tmp_image != '') {
     $imageSrc = str_replace('\\', '/', $blogPost->tmp_image);
 }
@@ -51,7 +51,7 @@ echo $this->Form->create($blogPost, [
     'class' => 'fcs-form',
     'novalidate' => 'novalidate',
     'url' => $isEditMode ? $this->Slug->getBlogPostEdit($blogPost->id_blog_post) : $this->Slug->getBlogPostAdd(),
-    'id' => 'categoryEditForm'
+    'id' => 'blogPostEditForm'
 ]);
 
 echo $this->Form->hidden('referer', ['value' => $referer]);
@@ -70,12 +70,17 @@ if ($imageExists) {
     echo '<br /><span class="small">'.__d('admin', 'Click_on_image_to_change_it.').'</span>';
 }
 echo '</label>';
-echo '<div style="float:right;">';
-echo $this->Html->getJqueryUiIcon($imageExists ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
-    'class' => 'add-image-button ' . ($imageExists ? 'uploaded' : ''),
-    'title' => __d('admin', 'Upload_new_image_or_change_it'),
-    'data-object-id' => $idForImageUpload
-], 'javascript:void(0);');
+echo '<div class="blog-post-image-wrapper">';
+    echo $this->Html->getJqueryUiIcon($imageExists ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
+        'class' => 'add-image-button ' . ($imageExists ? 'uploaded' : ''),
+        'title' => __d('admin', 'Upload_new_image_or_change_it'),
+        'data-object-id' => $idForImageUpload
+    ], 'javascript:void(0);');
+    $defaultImageExplanationText = __d('admin', 'If_the_blog_post_is_associated_to_a_manufacturer_and_no_image_selected_the_default_image_of_the_manufacturer_profile_is_shown.');
+    if ($appAuth->isManufacturer()) {
+        $defaultImageExplanationText = __d('admin', 'If_no_image_selected_the_default_image_of_your_manufacturer_profile_is_shown.');
+    }
+    echo '<span class="small">' . $defaultImageExplanationText . '</span>';
 echo '</div>';
 echo $this->Form->hidden('BlogPosts.tmp_image');
 echo '</div>';

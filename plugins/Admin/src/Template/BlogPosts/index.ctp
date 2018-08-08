@@ -92,13 +92,16 @@ foreach ($blogPosts as $blogPost) {
     echo '</td>';
 
     echo '<td align="center" style="background-color: #fff;">';
-    $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost->id_blog_post, 'single');
-    $largeImageExists = preg_match('/no-single-default/', $srcLargeImage);
-    if (! $largeImageExists) {
+    $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost, 'single');
+    $srcSmallImage = $this->Html->getBlogPostImageSrc($blogPost, 'home');
+
+    $largeImageExists = ! preg_match('/no-single-default/', $srcLargeImage);
+
+    if ($largeImageExists) {
         echo '<a class="lightbox" href="' . $srcLargeImage . '">';
     }
-    echo '<img width="90" src="' . $this->Html->getBlogPostImageSrc($blogPost->id_blog_post, 'home') . '" />';
-    if (! $largeImageExists) {
+    echo '<img width="90" src="' . $srcSmallImage . '" />';
+    if ($largeImageExists) {
         echo '</a>';
     }
     echo '</td>';

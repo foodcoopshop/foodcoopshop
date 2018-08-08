@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-27 12:34+0200\n"
+"POT-Creation-Date: 2018-08-08 11:44+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -573,6 +573,12 @@ msgid "Click_on_image_to_change_it."
 msgstr ""
 
 msgid "Upload_new_image_or_change_it"
+msgstr ""
+
+msgid "If_the_blog_post_is_associated_to_a_manufacturer_and_no_image_selected_the_default_image_of_the_manufacturer_profile_is_shown."
+msgstr ""
+
+msgid "If_no_image_selected_the_default_image_of_your_manufacturer_profile_is_shown."
 msgstr ""
 
 msgid "Delete_image?"

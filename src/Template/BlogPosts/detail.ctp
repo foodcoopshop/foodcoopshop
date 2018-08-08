@@ -24,11 +24,11 @@ $this->element('addScript', ['script' =>
 
 <?php
     echo '<div class="img-wrapper">';
-        $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost->id_blog_post, 'single');
+        $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost, 'single');
         $largeImageExists = preg_match('/no-single-default/', $srcLargeImage);
 if (!$largeImageExists) {
     echo '<a href="'.$srcLargeImage.'">';
-    echo '<img class="blog-post-image" src="' . $this->Html->getBlogPostImageSrc($blogPost->id_blog_post, 'single'). '" />';
+    echo '<img class="blog-post-image" src="' . $this->Html->getBlogPostImageSrc($blogPost, 'single'). '" />';
     echo '</a>';
 }
     echo '</div>';
