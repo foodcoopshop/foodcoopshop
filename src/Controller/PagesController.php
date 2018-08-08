@@ -71,7 +71,6 @@ class PagesController extends FrontendController
             die('<p><b>Security errors: '.$securityErrors.'</b></p>');
         }
 
-		#Server variable
         /**
          * END: security keys check
          */
