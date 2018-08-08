@@ -234,10 +234,13 @@ use Cake\Core\Configure;
                 'title' => __d('admin', 'change_category'),
                 'data-object-id' => $product->id_product
             ], 'javascript:void(0);');
-            if (!isset($product->category)) {
-                pr($product);
-            }
-            echo '<span class="categories-for-dialog">' . join(', ', $product->category->names) . '</span>';
+            echo '<span class="categories-for-dialog">';
+                if (empty($product->category->names)) {
+                    echo __d('admin', 'chose_category...');
+                } else {
+                    echo join(', ', $product->category->names);
+                }
+            echo '</span>';
             if (! $product->category->all_products_found) {
                 echo ' - <b>'.__d('admin', 'Category_"all_products"_is_missing!').'</b>';
             }
