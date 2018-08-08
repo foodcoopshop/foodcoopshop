@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-27 12:34+0200\n"
-"PO-Revision-Date: 2018-07-27 12:35+0200\n"
+"POT-Creation-Date: 2018-08-08 11:44+0200\n"
+"PO-Revision-Date: 2018-08-08 11:47+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -575,6 +575,12 @@ msgstr "Click on image to change it."
 
 msgid "Upload_new_image_or_change_it"
 msgstr "Upload new image or change it"
+
+msgid "If_the_blog_post_is_associated_to_a_manufacturer_and_no_image_selected_the_default_image_of_the_manufacturer_profile_is_shown."
+msgstr "If the blog post is associated to a manufacturer and no image is selected, the default image of the manufacturer profile is shown."
+
+msgid "If_no_image_selected_the_default_image_of_your_manufacturer_profile_is_shown."
+msgstr "If no image is selected, the default image of your manufacturer profile is shown."
 
 msgid "Delete_image?"
 msgstr "Delete image?"
