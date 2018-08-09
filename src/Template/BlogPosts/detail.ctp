@@ -25,7 +25,7 @@ $this->element('addScript', ['script' =>
 <?php
     echo '<div class="img-wrapper">';
         $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost, 'single');
-        $largeImageExists = preg_match('/no-single-default/', $srcLargeImage);
+        $largeImageExists = preg_match('/(no-single-default|default-large)/', $srcLargeImage);
 if (!$largeImageExists) {
     echo '<a href="'.$srcLargeImage.'">';
     echo '<img class="blog-post-image" src="' . $this->Html->getBlogPostImageSrc($blogPost, 'single'). '" />';
