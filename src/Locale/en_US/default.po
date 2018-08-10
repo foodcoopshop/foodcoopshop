@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-10 10:02+0200\n"
-"PO-Revision-Date: 2018-08-10 10:03+0200\n"
+"POT-Creation-Date: 2018-08-10 16:28+0200\n"
+"PO-Revision-Date: 2018-08-10 16:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -76,7 +76,7 @@ msgid "Instant_order_successfully_placed_for_{0}._The_following_manufacturers_we
 msgstr "Instant order successfully placed for {0}. The following manufacturers were notified: {1}"
 
 msgid "Pickup_day"
-msgstr "Pick-up day"
+msgstr "Pickup day"
 
 msgid "Your_order_has_been_placed_succesfully."
 msgstr "Your order was placed successfully."
@@ -767,6 +767,12 @@ msgstr "Price excl."
 
 msgid "VAT"
 msgstr "VAT"
+
+msgid "Order_day"
+msgstr "Order day"
+
+msgid "Delivery_day"
+msgstr "Delivery day"
 
 msgid "Total_sum"
 msgstr "Total sum"
@@ -1919,9 +1925,6 @@ msgstr "product"
 
 #~ msgid "Set_date_of_order_back"
 #~ msgstr "Set date of order back"
-
-#~ msgid "Delivery_day"
-#~ msgstr "Delivery day"
 
 #~ msgid "Instant_order_date_is_set_back_after_placing_it."
 #~ msgstr "Instant order date is set back after placing it."

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-10 11:09+0200\n"
-"PO-Revision-Date: 2018-08-10 11:09+0200\n"
+"POT-Creation-Date: 2018-08-10 16:28+0200\n"
+"PO-Revision-Date: 2018-08-10 16:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1065,11 +1065,11 @@ msgstr "Vielen Dank, dass du uns belieferst!"
 msgid "Detail_view"
 msgstr "Detailübersicht"
 
+msgid "Order_day"
+msgstr "Bestelltag"
+
 msgid "Order_list_grouped_by"
 msgstr "Bestellliste gruppiert nach"
-
-msgid "Delivery_date"
-msgstr "Liefertermin"
 
 msgid "Dear_financial_responsible"
 msgstr "Liebe(r) Finanz-Verantwortliche(r)"
@@ -1742,6 +1742,9 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+#~ msgid "Delivery_date"
+#~ msgstr "Liefertermin"
 
 #~ msgid "Be_careful:_it_is_the_order_date_that_counts_not_the_delivery_date."
 #~ msgstr "<b>Achtung:</b> es wird das Bestelldatum berücksichtigt, nicht das Lieferdatum."

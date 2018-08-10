@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-10 10:02+0200\n"
-"PO-Revision-Date: 2018-08-10 10:02+0200\n"
+"POT-Creation-Date: 2018-08-10 16:28+0200\n"
+"PO-Revision-Date: 2018-08-10 16:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -767,6 +767,12 @@ msgstr "Preis exkl."
 
 msgid "VAT"
 msgstr "USt."
+
+msgid "Order_day"
+msgstr "Bestelltag"
+
+msgid "Delivery_day"
+msgstr "Liefertag"
 
 msgid "Total_sum"
 msgstr "Gesamtsumme"
@@ -1919,9 +1925,6 @@ msgstr "produkt"
 
 #~ msgid "Set_date_of_order_back"
 #~ msgstr "Bestellung rückdatieren"
-
-#~ msgid "Delivery_day"
-#~ msgstr "Liefertag"
 
 #~ msgid "Instant_order_date_is_set_back_after_placing_it."
 #~ msgstr "Nach dem Abschließen der Bestellung wird sie automatisch rückdatiert."

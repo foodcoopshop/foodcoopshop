@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-10 11:09+0200\n"
+"POT-Creation-Date: 2018-08-10 16:28+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1064,10 +1064,10 @@ msgstr ""
 msgid "Detail_view"
 msgstr ""
 
-msgid "Order_list_grouped_by"
+msgid "Order_day"
 msgstr ""
 
-msgid "Delivery_date"
+msgid "Order_list_grouped_by"
 msgstr ""
 
 msgid "Dear_financial_responsible"

@@ -207,7 +207,7 @@ class OrderDetailsController extends AdminAppController
                 }
             } else {
                 // default value
-                $pickupDay[0] = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getDeliveryDayByCurrentDay());
+                $pickupDay[0] = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getCurrentDay());
             }
         }
         $this->set('pickupDay', $pickupDay);
