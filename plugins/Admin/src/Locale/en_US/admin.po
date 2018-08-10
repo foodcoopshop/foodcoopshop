@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-10 11:06+0200\n"
-"PO-Revision-Date: 2018-08-10 10:42+0200\n"
+"POT-Creation-Date: 2018-08-10 11:09+0200\n"
+"PO-Revision-Date: 2018-08-10 11:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1191,11 +1191,8 @@ msgstr "Comment"
 msgid "Hello"
 msgstr "Hello"
 
-msgid "this_invoice_contains_all_orders_that_have_been_placed_in_{0}."
-msgstr "this invoice contains all orders that have been placed in {0}."
-
-msgid "Be_careful:_it_is_the_order_date_that_counts_not_the_delivery_date."
-msgstr "Be careful: It is the order date that counts, not the delivery date!"
+msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
+msgstr "this invoice contains all products that have been delivered in {0}."
 
 msgid "If_the_invoice_amount_should_differ_from_your_own_recordings_please_tell_us."
 msgstr "If the invoice amount should differ from your own recordings, please tell us."
@@ -1745,6 +1742,9 @@ msgstr "{0,plural,=1{record} other{records}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
+#~ msgid "Be_careful:_it_is_the_order_date_that_counts_not_the_delivery_date."
+#~ msgstr "Be careful: It is the order date that counts, not the delivery date!"
 
 #~ msgid "Last_pickup_day_between"
 #~ msgstr "Last pickup day between"
