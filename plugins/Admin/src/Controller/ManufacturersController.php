@@ -364,7 +364,7 @@ class ManufacturersController extends AdminAppController
             $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
             
             $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-            $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, Configure::read('app.htmlHelper')->getOrderStateBilled());
+            $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, Configure::read('app.htmlHelper')->getOrderStateBilled(), $manufacturerId);
 
             $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
             if ($sendEmail) {
@@ -451,7 +451,7 @@ class ManufacturersController extends AdminAppController
             $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
 
             $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-            $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+            $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturerId);
             
             $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}.', ['<b>'.$manufacturer->name.'</b>']);
 
@@ -728,20 +728,12 @@ class ManufacturersController extends AdminAppController
         $dateFrom = $this->getRequest()->getQuery('dateFrom');
         $dateTo = $this->getRequest()->getQuery('dateTo');
 
-        $results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, [
-            ORDER_STATE_OPEN,
-            ORDER_STATE_CASH,
-            ORDER_STATE_CASH_FREE
-        ]);
+        $results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, []);
         if (empty($results)) {
             // do not throw exception because no debug mails wanted
             die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }
-        $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, [
-            ORDER_STATE_OPEN,
-            ORDER_STATE_CASH,
-            ORDER_STATE_CASH_FREE
-        ]);
+        $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, []);
     }
 
     public function getOrderListByProduct()

@@ -100,18 +100,36 @@ class OrderDetailsTable extends AppTable
 
     }
     
-    public function updateOrderState($dateFrom, $dateTo, $oldOrderStates, $newOrderState)
+    public function updateOrderState($dateFrom, $dateTo, $oldOrderStates, $newOrderState, $manufacturerId)
     {
-        $this->updateAll(
-            [
-                'order_state' => $newOrderState
+        
+        // update with condition on association does not work with ->update or ->updateAll
+        $orderDetails = $this->find('all', [
+            'contain' => [
+                'Products'
             ],
-            [
-                'DATE_FORMAT(pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
-                'DATE_FORMAT(pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
-                'order_state IN (' . join(', ', $oldOrderStates) . ')'
+            'conditions' => [
+                'Products.id_manufacturer' => $manufacturerId,
+                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
+                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
+                'OrderDetails.order_state IN (' . join(', ', $oldOrderStates) . ')'
+            ],
+            'contain' => [
+                'Products'
             ]
-        );
+        ]);
+        
+        foreach($orderDetails as $orderDetail) {
+            $this->save(
+                $this->patchEntity(
+                    $orderDetail,
+                    [
+                        'order_state' => $newOrderState
+                    ]
+                )
+            );
+        }
+            
     }
     
     public function legacyUpdateOrderStateToNewBilledState($dateFrom, $statusOld, $statusNew)

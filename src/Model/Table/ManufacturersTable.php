@@ -460,6 +460,11 @@ class ManufacturersTable extends AppTable
             $dateConditions .= "AND DATE_FORMAT(od.pickup_day, '%Y-%m-%d') <= :dateTo";
             $params['dateTo'] = Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo);
         }
+        
+        $orderStateCondition = "";
+        if (!empty($orderState)) {
+            $orderStateCondition = "AND od.order_state IN (" . join(',', $orderState) . ")";
+        }
 
         $customerNameAsSql = Configure::read('app.htmlHelper')->getCustomerNameForSql();
 
@@ -496,7 +501,7 @@ class ManufacturersTable extends AppTable
             {$dateConditions}
             AND m.id_manufacturer = :manufacturerId
             AND ma.id_manufacturer > 0
-            AND od.order_state IN (" . join(',', $orderState) . ")
+            {$orderStateCondition}
             ORDER BY {$orderClause}, DATE_FORMAT (od.created, '%d.%m.%Y, %H:%i') DESC;";
         
         $statement = $this->getConnection()->prepare($sql);

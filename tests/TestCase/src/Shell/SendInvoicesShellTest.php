@@ -43,7 +43,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
         }
         
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(2, count($emailLogs), 'amount of sent emails wrong');
+        $this->assertEquals(4, count($emailLogs), 'amount of sent emails wrong');
         $this->assertEmailLogs(
             $emailLogs[1],
             'Rechnung Nr. 0001',
@@ -55,6 +55,13 @@ class SendInvoicesShellTest extends AppCakeTestCase
                 Configure::read('test.loginEmailMeatManufacturer')
             ]
         );
+        
+        // run again
+        $this->SendInvoices->main();
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        // no additional emails should be sent
+        $this->assertEquals(4, count($emailLogs), 'amount of sent emails wrong');
+        
     }
 
     public function tearDown()

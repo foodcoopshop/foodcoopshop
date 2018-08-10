@@ -33,7 +33,7 @@ use Cake\Core\Configure;
 
             <p>
                 <?php echo __d('admin', 'Here_you_find_the_overview_for_making_the_transfers:'); ?><br />
-                <?php $link = Configure::read('app.cakeServerName').'/admin/order-details/index/?dateFrom='.$dateFrom.'&dateTo='.$dateTo.'&orderStates[]='.ORDER_STATE_CASH.'&orderStates[]='.ORDER_STATE_CASH_FREE.'&orderStates[]='.ORDER_STATE_OPEN.'&groupBy=manufacturer'; ?>
+                <?php $link = Configure::read('app.cakeServerName').'/admin/order-details/index?pickupDay[]='.$dateFrom.'&pickupDay[]='.$dateTo.'&groupBy=manufacturer'; ?>
                 <a href="<?php echo $link; ?>"><?php echo $link; ?></a>
             </p>
             
