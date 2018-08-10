@@ -221,7 +221,7 @@ if ($this->request->getParam('action') == 'product') {
     echo '</div>';
 }
 
-echo $this->TimebasedCurrency->getOrderInformationText($timebasedCurrencyOrderInList);
+echo $this->TimebasedCurrency->getOrderInformationText($timebasedCurrencyOrderDetailInList);
 
 ?>
 <div class="sc"></div>

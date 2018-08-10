@@ -178,6 +178,7 @@ class OrderDetailsController extends AdminAppController
         foreach($orderDetails as $orderDetail) {
             @$preparedOrderDetails[$orderDetail->id_customer][] = $orderDetail;
         }
+        
         $this->set('orderDetails', $preparedOrderDetails);
         
     }
@@ -297,7 +298,7 @@ class OrderDetailsController extends AdminAppController
         $orderDetails = $this->prepareGroupedOrderDetails($orderDetails, $groupBy, $pickupDay);
         $this->set('orderDetails', $orderDetails);
 
-        $timebasedCurrencyOrderInList = false;
+        $timebasedCurrencyOrderDetailInList = false;
         $sums = [
             'records_count' => 0,
             'amount' => 0,
@@ -323,11 +324,11 @@ class OrderDetailsController extends AdminAppController
             if (!empty($orderDetail->order_detail_unit)) {
                 @$sums['units'][$orderDetail->order_detail_unit->unit_name] += $orderDetail->order_detail_unit->product_quantity_in_units;
             }
-            if (!empty($orderDetail->timebased_currency_order_detail)) {
-                $timebasedCurrencyOrderInList = true;
+            if (!empty($orderDetail->timebased_currency_order_detail) || !empty($orderDetail['timebased_currency_order_detail_seconds_sum'])) {
+                $timebasedCurrencyOrderDetailInList = true;
             }
         }
-        $this->set('timebasedCurrencyOrderInList', $timebasedCurrencyOrderInList);
+        $this->set('timebasedCurrencyOrderDetailInList', $timebasedCurrencyOrderDetailInList);
         $this->set('sums', $sums);
         
         // extract all email addresses for button

@@ -37,6 +37,19 @@ class TimebasedCurrencyHelper extends Helper
     }
 
     /**
+     * @param boolean $showText
+     * @return string
+     */
+    public function getOrderInformationTextForPdf($showText)
+    {
+        $text = '';
+        if ($showText) {
+            $text = '<p>* '.__('Order_contains_amount_in_{0}.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).'</p>';
+        }
+        return $text;
+    }
+    
+    /**
      * @return string
      */
     public function getName()

@@ -620,8 +620,8 @@ class PaymentsController extends AdminAppController
     
             $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
             $timebasedCurrencySum = $this->TimebasedCurrencyOrderDetail->getSum(null, $this->getCustomerId());
-            $timebasedCurrencyOrderInList = $timebasedCurrencySum > 0;
-            $this->set('timebasedCurrencyOrderInList', $timebasedCurrencyOrderInList);
+            $timebasedCurrencyOrderDetailInList = $timebasedCurrencySum > 0;
+            $this->set('timebasedCurrencyOrderDetailInList', $timebasedCurrencyOrderDetailInList);
         }
 
         $payments = Hash::sort($payments, '{n}.date', 'desc');

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-07 10:56+0200\n"
-"PO-Revision-Date: 2018-08-07 11:01+0200\n"
+"POT-Creation-Date: 2018-08-10 10:02+0200\n"
+"PO-Revision-Date: 2018-08-10 10:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1880,6 +1880,9 @@ msgstr "produkt"
 
 msgid "Mouseover_shows_the_paid_amont_in_{0}."
 msgstr "Mouseover zeigt den bezahlten Betrag in {0} an."
+
+msgid "Order_contains_amount_in_{0}."
+msgstr "Bestellung wurde teilweise in {0} bezahlt."
 
 msgid "Paying_with_time_account_name_{0}"
 msgstr "{0}konto"

@@ -26,13 +26,18 @@ echo '<td class="right' . ($groupBy == '' && $orderDetail->total_price_tax_incl 
         }
         echo '<span class="product-price-for-dialog">' . $this->Number->formatAsCurrency($orderDetail->total_price_tax_incl) . '</span>';
         if (!empty($orderDetail->timebased_currency_order_detail)) {
-            echo '<b class="timebased-currency-time-element" title="'.__d('admin', 'Additional_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($orderDetail->timebased_currency_order_detail->seconds)]).'">&nbsp;*</b>';
+            $timebasedCurrencySeconds = $orderDetail->timebased_currency_order_detail->seconds;
         }
     } else {
         echo $this->Number->formatAsCurrency($orderDetail['sum_price']);
+        if (!empty($orderDetail['timebased_currency_order_detail_seconds_sum'])) {
+            $timebasedCurrencySeconds = $orderDetail['timebased_currency_order_detail_seconds_sum'];
+        }
+    }
+    if (isset($timebasedCurrencySeconds)) {
+        echo '<b class="timebased-currency-time-element" title="'.__d('admin', 'Additional_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($timebasedCurrencySeconds)]).'">&nbsp;*</b>';
     }
     echo '</div>';
 echo '</td>';
-
 
 ?>

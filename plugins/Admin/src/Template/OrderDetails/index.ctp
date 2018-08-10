@@ -291,16 +291,14 @@ if (!empty($emailAddresses) && ($appAuth->isSuperadmin() || $appAuth->isAdmin() 
     $buttonHtml .= '<button data-email-addresses="'.join(',', $emailAddresses).'" class="email-to-all btn btn-default"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
 }
 
-if ($groupBy == 'customer') {
-    if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-        $this->element('addScript', ['script' =>
-            Configure::read('app.jsNamespace').".PickupDay.initChangeProductsPickedUpForAllCustomers('#order-details-list');" . 
-            Configure::read('app.jsNamespace') . ".Admin.initGenerateOrderDetailsAsPdf();"
-        ]);
-        $buttonExists = true;
-        $buttonHtml .= '<button class="btn btn-default generate-order-details-as-pdf"><i class="fa fa-file-pdf-o"></i> '.__d('admin', 'Generate_orders_as_pdf').'</button>';
-        $buttonHtml .= '<button class="change-products-picked-up-all-customers-button btn btn-default"><i class="fa fa-check-square-o"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';
-    }
+if (count($pickupDay) == 1 && $groupBy == 'customer' && ($appAuth->isSuperadmin() || $appAuth->isAdmin())) {
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace').".PickupDay.initChangeProductsPickedUpForAllCustomers('#order-details-list');" . 
+        Configure::read('app.jsNamespace') . ".Admin.initGenerateOrderDetailsAsPdf();"
+    ]);
+    $buttonExists = true;
+    $buttonHtml .= '<button class="btn btn-default generate-order-details-as-pdf"><i class="fa fa-file-pdf-o"></i> '.__d('admin', 'Generate_orders_as_pdf').'</button>';
+    $buttonHtml .= '<button class="change-products-picked-up-all-customers-button btn btn-default"><i class="fa fa-check-square-o"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';
 }
 
 if ($deposit != '') {
@@ -323,7 +321,7 @@ if ($buttonExists) {
     echo '<div class="sc"></div>';
 }
 
-echo $this->TimebasedCurrency->getOrderInformationText($timebasedCurrencyOrderInList);
+echo $this->TimebasedCurrency->getOrderInformationText($timebasedCurrencyOrderDetailInList);
 
 ?>
     <div class="sc"></div>
