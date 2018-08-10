@@ -599,7 +599,7 @@ class PaymentsController extends AdminAppController
                     $payments[] = [
                         'dateRaw' => $frozenDateFrom,
                         'date' => $frozenDateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
-                        'year' => $frozenDateFrom->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year')),
+                        'year' => $monthAndYear[0],
                         'amount' => $orderDetail['SumTotalPaid'] * - 1,
                         'deposit' => strtotime($frozenDateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $orderDetail['SumDeposit'] * - 1 : 0,
                         'type' => 'order',
