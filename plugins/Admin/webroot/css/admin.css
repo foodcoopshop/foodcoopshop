@@ -688,7 +688,7 @@ body.products.index .table-cell-wrapper.price {
     text-align: right;
 }
 body.order_details.index .table-cell-wrapper.price {
-    width: 70px;
+    width: 75px;
 }
 .table-cell-wrapper.amount {
     width: 48px;
