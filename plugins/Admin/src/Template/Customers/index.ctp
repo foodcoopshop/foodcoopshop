@@ -33,12 +33,7 @@ use Cake\Core\Configure;
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php echo $this->Form->control('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'default' => isset($active) ? $active : '']); ?>
-            <?php echo __d('admin', 'Amount_orders_between'); ?> <input id="validOrdersCountFrom" name="validOrdersCountFrom"
-                type="text"
-                value="<?php echo isset($validOrdersCountFrom) ? $validOrdersCountFrom : ''; ?>" />
-            <?php echo __d('admin', 'and'); ?> <input id="validOrdersCountTo" name="validOrdersCountTo" type="text"
-                value="<?php echo isset($validOrdersCountTo) ? $validOrdersCountTo: ''; ?>" />
-            <?php echo __d('admin', 'and_last_order_date_between'); ?> <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
+            <?php echo __d('admin', 'Last_pickup_day'); ?> <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
             <div class="right">
             	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_members'))]); ?>
             </div>
@@ -65,7 +60,7 @@ if (Configure::read('app.emailOrderReminderEnabled')) {
     echo '<th>' . $this->Paginator->sort('Customers.email_order_reminder',  __d('admin', 'Reminder')) . '</th>';
 }
 echo '<th>' . $this->Paginator->sort('Customers.date_add',  __d('admin', 'Register_date')) . '</th>';
-echo '<th>'.__d('admin', 'Last_order_date').'</th>';
+echo '<th>'.__d('admin', 'Last_pickup_day').'</th>';
 echo '<th>'.__d('admin', 'Comment_abbreviation').'</th>';
 echo '</tr>';
 
@@ -219,7 +214,9 @@ foreach ($customers as $customer) {
     echo '</td>';
 
     echo '<td>';
-    echo $this->Time->formatToDateShort($customer->last_valid_order_date);
+        if (!empty($customer->valid_order_details)) {
+            echo $customer->valid_order_details[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateShort'));
+        }
     echo '</td>';
 
     echo '<td style="padding-left: 11px;">';

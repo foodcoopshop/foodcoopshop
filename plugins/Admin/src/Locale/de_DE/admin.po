@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-08 17:13+0200\n"
-"PO-Revision-Date: 2018-08-08 17:14+0200\n"
+"POT-Creation-Date: 2018-08-10 11:06+0200\n"
+"PO-Revision-Date: 2018-08-10 10:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -792,14 +792,8 @@ msgstr "Wie verwende ich das Stundenabrechnungs-Modul?"
 msgid "Delete_member_irrevocably?"
 msgstr "Mitgliedskonto unwiderruflich löschen?"
 
-msgid "Amount_orders_between"
-msgstr "Anzahl Bestellungen zwischen"
-
-msgid "and"
-msgstr "und"
-
-msgid "and_last_order_date_between"
-msgstr "und letztes Bestelldatum vom"
+msgid "Last_pickup_day"
+msgstr "Letzter Abholtag"
 
 msgid "Group"
 msgstr "Gruppe"
@@ -815,9 +809,6 @@ msgstr "Erinnerung"
 
 msgid "Register_date"
 msgstr "Reg.-Datum"
-
-msgid "Last_order_date"
-msgstr "Letztes Bestell-Datum"
 
 msgid "Comment_abbreviation"
 msgstr "Komm."
@@ -1754,6 +1745,18 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+#~ msgid "Last_pickup_day_between"
+#~ msgstr "Letzter Abholtag zwischen"
+
+#~ msgid "Amount_orders_between"
+#~ msgstr "Anzahl Bestellungen zwischen"
+
+#~ msgid "and"
+#~ msgstr "und"
+
+#~ msgid "Last_order_date"
+#~ msgstr "Letztes Bestell-Datum"
 
 #~ msgid "Manually_send_order_list"
 #~ msgstr "Bestellliste manuell versenden"

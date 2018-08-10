@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-08 17:13+0200\n"
-"PO-Revision-Date: 2018-08-08 14:33+0200\n"
+"POT-Creation-Date: 2018-08-10 11:06+0200\n"
+"PO-Revision-Date: 2018-08-10 10:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -289,7 +289,7 @@ msgid "Ordered_price_adapted"
 msgstr "Price adapted"
 
 msgid "The_pickup_day_comment_of_{0}_was_changed:"
-msgstr "The comment of the member {0} was changed:"
+msgstr "The pickup day comment {0} was changed:"
 
 msgid "Product_{0}_with_a_price_of_{1}_from_{2}_was_successfully_cancelled."
 msgstr "Product {0} (price {1}) of from {2} was successfully cancelled."
@@ -685,7 +685,7 @@ msgid "Last_executed_migration"
 msgstr "Last executed migration"
 
 msgid "Pickup_day"
-msgstr "Pick-up day"
+msgstr "Pickup day"
 
 msgid "Software_update_version"
 msgstr "Software update / Version"
@@ -792,14 +792,8 @@ msgstr "How do I use the paying-with-time-module?"
 msgid "Delete_member_irrevocably?"
 msgstr "Delete account irrevocably?"
 
-msgid "Amount_orders_between"
-msgstr "Amount orders between"
-
-msgid "and"
-msgstr "and"
-
-msgid "and_last_order_date_between"
-msgstr "and last order date between"
+msgid "Last_pickup_day"
+msgstr "Last pickup day"
 
 msgid "Group"
 msgstr "Group"
@@ -815,9 +809,6 @@ msgstr "Reminder"
 
 msgid "Register_date"
 msgstr "Register date"
-
-msgid "Last_order_date"
-msgstr "Last order date"
 
 msgid "Comment_abbreviation"
 msgstr "Comm."
@@ -967,7 +958,7 @@ msgid "Delivery_days"
 msgstr "Delivery days"
 
 msgid "Pickup_days"
-msgstr "Pick-up days"
+msgstr "Pickup days"
 
 msgid "Click_to_change_amount"
 msgstr "Click to change amount"
@@ -1754,6 +1745,18 @@ msgstr "{0,plural,=1{record} other{records}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
+#~ msgid "Last_pickup_day_between"
+#~ msgstr "Last pickup day between"
+
+#~ msgid "Amount_orders_between"
+#~ msgstr "Amount orders between"
+
+#~ msgid "and"
+#~ msgstr "and"
+
+#~ msgid "Last_order_date"
+#~ msgstr "Last order date"
 
 #~ msgid "Manually_send_order_list"
 #~ msgstr "Manually send order list"
