@@ -614,6 +614,7 @@ class MyHtmlHelper extends HtmlHelper
     public function getOrderStatesCashless()
     {
         return [
+            ORDER_STATE_CASH_FREE,
             ORDER_STATE_OPEN,
             ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
             ORDER_STATE_BILLED_CASHLESS
