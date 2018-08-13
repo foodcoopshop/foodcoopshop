@@ -283,43 +283,39 @@ if ($groupBy == '') {
 echo '</tr>';
 echo '</table>';
 
-$buttonExists = false;
-$buttonHtml = '';
+echo '<div class="bottom-button-container">';
 
-if (!empty($emailAddresses) && ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isManufacturer())) {
-    $buttonExists = true;
-    $buttonHtml .= '<button data-email-addresses="'.join(',', $emailAddresses).'" class="email-to-all btn btn-default"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
-}
-
-if (count($pickupDay) == 1 && $groupBy == 'customer' && ($appAuth->isSuperadmin() || $appAuth->isAdmin())) {
-    $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".PickupDay.initChangeProductsPickedUpForAllCustomers('#order-details-list');" . 
-        Configure::read('app.jsNamespace') . ".Admin.initGenerateOrderDetailsAsPdf();"
-    ]);
-    $buttonExists = true;
-    $buttonHtml .= '<button class="btn btn-default generate-order-details-as-pdf"><i class="fa fa-file-pdf-o"></i> '.__d('admin', 'Generate_orders_as_pdf').'</button>';
-    $buttonHtml .= '<button class="change-products-picked-up-all-customers-button btn btn-default"><i class="fa fa-check-square-o"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';
-}
-
-if ($deposit != '') {
-    $depositOverviewUrl = $this->Slug->getDepositList($manufacturerId);
-    if ($appAuth->isManufacturer()) {
-        $depositOverviewUrl = $this->Slug->getMyDepositList();
+    if (!empty($emailAddresses)) {
+        echo $this->element('orderDetailList/button/email', [
+            'emailAddresses' => $emailAddresses
+        ]);
     }
-    $buttonHtml .= '<a class="btn btn-default" href="'.$depositOverviewUrl.'"><i class="fa fa-arrow-circle-left"></i> ' . __d('admin', 'Back_to_deposit_account') . '</a>';
-}
+    
+    echo $this->element('orderDetailList/button/multiplePickupDays', [
+        'pickupDay' => $pickupDay
+    ]);
+    
+    echo $this->element('orderDetailList/button/generateOrderDetailsAsPdf', [
+        'pickupDay' => $pickupDay
+    ]);
 
-if ($groupBy == '' && count($orderDetails) > 0) {
-    $buttonExists = true;
-    $buttonHtml .= '<a id="cancelSelectedProductsButton" class="btn btn-default" href="javascript:void(0);"><i class="fa fa-minus-circle"></i> ' . __d('admin', 'Cancel_selected_products') . '</a>';
-}
+    echo $this->element('orderDetailList/button/backToDepositAccount', [
+        'deposit' => $deposit
+    ]);
+    
+    echo $this->element('orderDetailList/button/allProductsPickedUp', [
+        'pickupDay' => $pickupDay
+    ]);
+    
+    echo $this->element('orderDetailList/button/cancelSelectedOrderDetails', [
+        'deposit' => $deposit,
+        'orderDetails' => $orderDetails,
+        'groupBy' => $groupBy
+    ]);
+    
+echo '</div>';
+echo '<div class="sc"></div>';
 
-if ($buttonExists) {
-    echo '<div class="bottom-button-container">';
-        echo $buttonHtml;
-    echo '</div>';
-    echo '<div class="sc"></div>';
-}
 
 echo $this->TimebasedCurrency->getOrderInformationText($timebasedCurrencyOrderDetailInList);
 

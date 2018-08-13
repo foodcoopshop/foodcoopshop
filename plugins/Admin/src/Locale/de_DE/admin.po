@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-10 16:28+0200\n"
-"PO-Revision-Date: 2018-08-10 16:29+0200\n"
+"POT-Creation-Date: 2018-08-13 10:10+0200\n"
+"PO-Revision-Date: 2018-08-13 10:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -245,18 +245,6 @@ msgstr "Gruppieren nach Hersteller"
 
 msgid "Orders"
 msgstr "Bestellungen"
-
-msgid "The_order_status_of_the_ordered_product_{0}_of_{1}_was_successfully_changed_to_{2}."
-msgstr "Der Bestellstatus des bestellten Produktes {0} vom {1} wurde erfolgreich auf {2} geändert."
-
-msgid "The_order_status_of_the_ordered_products_{0}_were_successfully_changed_to_{1}."
-msgstr "Der Bestellstatus des bestellten Produktes von {0} wurde erfolgreich auf {1} geändert."
-
-msgid "1_ordered_product_was_successfully_closed."
-msgstr "Das bestellte Produkt wurde erfolgreich auf abgeschlossen geändert."
-
-msgid "{0}_ordered_product_were_successfully_closed."
-msgstr "{0} bestellte Produkte wurden erfolgreich auf abgeschlossen geändert."
 
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
 msgstr "Das Gewicht des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich von {2} auf {3} angepasst."
@@ -1491,6 +1479,9 @@ msgstr "Es wurden keine Bestellungen für den Abholtag {0} gefunden."
 msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
 msgstr "Es wurden keine Bestellungen für den Lieferzeitraum {0} bis {1} gefunden."
 
+msgid "Multiple_pickup_days"
+msgstr "Mehrere Abholtage"
+
 msgid "Generate_orders_as_pdf"
 msgstr "Bestellungen als PDF generieren"
 
@@ -1742,6 +1733,18 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+#~ msgid "The_order_status_of_the_ordered_product_{0}_of_{1}_was_successfully_changed_to_{2}."
+#~ msgstr "Der Bestellstatus des bestellten Produktes {0} vom {1} wurde erfolgreich auf {2} geändert."
+
+#~ msgid "The_order_status_of_the_ordered_products_{0}_were_successfully_changed_to_{1}."
+#~ msgstr "Der Bestellstatus des bestellten Produktes von {0} wurde erfolgreich auf {1} geändert."
+
+#~ msgid "1_ordered_product_was_successfully_closed."
+#~ msgstr "Das bestellte Produkt wurde erfolgreich auf abgeschlossen geändert."
+
+#~ msgid "{0}_ordered_product_were_successfully_closed."
+#~ msgstr "{0} bestellte Produkte wurden erfolgreich auf abgeschlossen geändert."
 
 #~ msgid "Delivery_date"
 #~ msgstr "Liefertermin"

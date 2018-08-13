@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-10 16:28+0200\n"
-"PO-Revision-Date: 2018-08-10 16:29+0200\n"
+"POT-Creation-Date: 2018-08-13 10:10+0200\n"
+"PO-Revision-Date: 2018-08-13 10:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -245,18 +245,6 @@ msgstr "Group by manufacturer"
 
 msgid "Orders"
 msgstr "Orders"
-
-msgid "The_order_status_of_the_ordered_product_{0}_of_{1}_was_successfully_changed_to_{2}."
-msgstr "The order state of the ordered product of {0} of {1} was successfully changed to {2}."
-
-msgid "The_order_status_of_the_ordered_products_{0}_were_successfully_changed_to_{1}."
-msgstr "The order state of the ordered products of {0} was successfully changed to {1}."
-
-msgid "1_ordered_product_was_successfully_closed."
-msgstr "1 ordered product was changed successfully to closed."
-
-msgid "{0}_ordered_product_were_successfully_closed."
-msgstr "{0} ordered product were changed successfully to closed."
 
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
 msgstr "The weight of the ordered product {0} (amount {1}) was successfully adapted from {2} to {3}."
@@ -1491,6 +1479,9 @@ msgstr "No orders found for the pickup day {0}."
 msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
 msgstr "No orders found for the delivery period {0} to {1}."
 
+msgid "Multiple_pickup_days"
+msgstr "Multiple pickup days"
+
 msgid "Generate_orders_as_pdf"
 msgstr "Generate orders as PDF"
 
@@ -1742,6 +1733,18 @@ msgstr "{0,plural,=1{record} other{records}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
+#~ msgid "The_order_status_of_the_ordered_product_{0}_of_{1}_was_successfully_changed_to_{2}."
+#~ msgstr "The order state of the ordered product of {0} of {1} was successfully changed to {2}."
+
+#~ msgid "The_order_status_of_the_ordered_products_{0}_were_successfully_changed_to_{1}."
+#~ msgstr "The order state of the ordered products of {0} was successfully changed to {1}."
+
+#~ msgid "1_ordered_product_was_successfully_closed."
+#~ msgstr "1 ordered product was changed successfully to closed."
+
+#~ msgid "{0}_ordered_product_were_successfully_closed."
+#~ msgstr "{0} ordered product were changed successfully to closed."
 
 #~ msgid "Delivery_date"
 #~ msgstr "Delivery date"

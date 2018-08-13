@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-10 16:28+0200\n"
+"POT-Creation-Date: 2018-08-13 10:10+0200\n"
 "PO-Revision-Date: 2018-08-13 09:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1710,12 +1710,6 @@ msgstr "Strike out unwanted items."
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
 
-msgid "yes"
-msgstr "yes"
-
-msgid "no"
-msgstr "no"
-
 msgid "Members"
 msgstr "Members"
 
@@ -1730,6 +1724,12 @@ msgstr "Credit"
 
 msgid "Member_fee"
 msgstr "Member fee"
+
+msgid "yes"
+msgstr "yes"
+
+msgid "no"
+msgstr "no"
 
 msgid "Deleted_Member"
 msgstr "Deleted member"

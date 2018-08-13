@@ -40,6 +40,19 @@ class MyHtmlHelper extends HtmlHelper
             //]]>
         </script>";
     }
+    
+    public function getYesNo($value)
+    {
+        return $this->getYesNoArray()[$value];
+    }
+    
+    public function getYesNoArray()
+    {
+        return [
+            APP_ON => __('yes'),
+            APP_OFF => __('no')
+        ];
+    }
 
     public function getCurrencyName($currencySymbol)
     {

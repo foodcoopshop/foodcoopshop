@@ -336,7 +336,7 @@ td span.description-for-dialog {
     float: right;
     margin: 10px 10px 7px 0;
 }
-.bottom-button-container button {
+.bottom-button-container .btn {
     float: right;
     margin-left: 10px;
     margin-bottom: 5px;

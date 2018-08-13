@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-10 16:28+0200\n"
+"POT-Creation-Date: 2018-08-13 10:10+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -243,18 +243,6 @@ msgid "Group_by_manufacturer"
 msgstr ""
 
 msgid "Orders"
-msgstr ""
-
-msgid "The_order_status_of_the_ordered_product_{0}_of_{1}_was_successfully_changed_to_{2}."
-msgstr ""
-
-msgid "The_order_status_of_the_ordered_products_{0}_were_successfully_changed_to_{1}."
-msgstr ""
-
-msgid "1_ordered_product_was_successfully_closed."
-msgstr ""
-
-msgid "{0}_ordered_product_were_successfully_closed."
 msgstr ""
 
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
@@ -1488,6 +1476,9 @@ msgid "No_orders_found_for_pickup_day_{0}."
 msgstr ""
 
 msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
+msgstr ""
+
+msgid "Multiple_pickup_days"
 msgstr ""
 
 msgid "Generate_orders_as_pdf"
