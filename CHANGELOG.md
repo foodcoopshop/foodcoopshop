@@ -5,7 +5,10 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ## Unveröffentlicht / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.1.2...HEAD)
 
 ### Herzlichen Dank an alle beteiligten Personen
+* [firerain-tgz](https://github.com/firerain-tgz)
+* [hasslerf](https://github.com/hasslerf)
 * [mrothauer](https://github.com/mrothauer)
+* [robbinjanssen](https://github.com/robbinjanssen)
 * [tantelisl](https://github.com/tantelisl)
 * [wintersim](https://github.com/wintersim)
 
@@ -15,6 +18,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Für Entwickler
 - Tabellen für die Produkt-Verwaltung sind jetzt stark vereinfacht. / [PR#247](https://github.com/foodcoopshop/foodcoopshop/pull/247) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Timeouts bei Travis-CI gefixt. / [PR#256](https://github.com/foodcoopshop/foodcoopshop/pull/256) / <a href="https://github.com/robbinjanssen"><img src="https://github.com/robbinjanssen.png" width="20"></a>
 
 ## v2.1.2 2018-07-12 / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.1.1...v2.1.2)
 
