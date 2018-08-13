@@ -64,11 +64,6 @@ return [
         'deliveryDayDelta' => 2,
 
         /**
-         * optional: message that is displayed in the dialog where order-detail status can be changed (/admin/order-details)
-         */
-        'additionalOrderStatusChangeInfo' => '',
-
-        /**
          * your host's name, eg. http://www.yourfoodcoop.com
          */
         'cakeServerName' => 'http://www.foodcoopshop.test',
