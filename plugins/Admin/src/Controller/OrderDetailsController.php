@@ -190,7 +190,7 @@ class OrderDetailsController extends AdminAppController
             $this->Flash->success($this->getRequest()->getQuery('message'));
             $this->redirect($this->referer());
         }
-            
+        
         // for filter from action logs page
         $orderDetailId = '';
         if (! empty($this->getRequest()->getQuery('orderDetailId'))) {
@@ -209,6 +209,14 @@ class OrderDetailsController extends AdminAppController
                 // default value
                 $pickupDay[0] = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getCurrentDay());
             }
+            // START legacy code - can be safely removed in v3
+            if ($this->getRequest()->getQuery('dateFrom')) {
+                $pickupDay[0] = $this->getRequest()->getQuery('dateFrom');
+            }
+            if ($this->getRequest()->getQuery('dateTo')) {
+                $pickupDay[1] = $this->getRequest()->getQuery('dateTo');
+            }
+            // END legacy code
         }
         $this->set('pickupDay', $pickupDay);
 
