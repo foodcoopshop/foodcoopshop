@@ -129,13 +129,13 @@ foreach ($orderDetails as $od) {
                 $pdf->table .= '<td width="' . $widths[0] . '"></td>';
                 $pdf->table .= '<td width="' . $widths[1] . '"></td>';
                 $pdf->table .= '<td width="' . $widths[2] . '"></td>';
-                $pdf->table .= '<td style="text-align: right;" width="' . $widths[3] . '">' . $this->Number->formatAsCurrency($sumPrice) . '</td>';
+                $pdf->table .= '<td style="text-align:right;font-weight:bold;" width="' . $widths[3] . '">' . $this->Number->formatAsCurrency($sumPrice) . '</td>';
             if ($sumDeposit > 0) {
                 $sumDepositAsString = $this->Number->formatAsCurrency($sumDeposit);
             } else {
                 $sumDepositAsString = '';
             }
-                $pdf->table .= '<td style="text-align: right;" width="' . $widths[4] . '">' . $sumDepositAsString . '</td>';
+                $pdf->table .= '<td style="text-align:right;font-weight:bold;" width="' . $widths[4] . '">' . $sumDepositAsString . '</td>';
             $pdf->table .= '</tr>';
             $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
                 $pdf->table .= '<td colspan="3" style="font-size:10px;font-weight:bold;text-align:right;" width="' . ($widths[0] + $widths[1] + $widths[2]) . '">Gesamt</td>';
