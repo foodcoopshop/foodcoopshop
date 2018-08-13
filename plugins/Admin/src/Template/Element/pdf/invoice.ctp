@@ -19,6 +19,7 @@ use Cake\ORM\TableRegistry;
 use Cake\Filesystem\Folder;
 
 $pdf = new AppTcpdf();
+$pdf->setTextHelper($this->Text);
 $pdf->SetLeftMargin(12);
 $pdf->AddPage();
 
@@ -199,12 +200,13 @@ $pdf->Ln(5);
 
 $widths = [
     33,
-    178,
+    152,
     45,
     45,
     45,
-    50,
-    134
+    48,
+    48,
+    114
 ];
 $headers = [
     __d('admin', 'Amount'),
@@ -212,7 +214,8 @@ $headers = [
     __d('admin', 'Price_excl.'),
     __d('admin', 'VAT'),
     __d('admin', 'Price_incl.'),
-    __d('admin', 'Date'),
+    __d('admin', 'Order_day'),
+    __d('admin', 'Delivery_day'),
     __d('admin', 'Member')
 ];
 $pdf->renderDetailedOrderList($results_customer, $widths, $headers, 'customer');

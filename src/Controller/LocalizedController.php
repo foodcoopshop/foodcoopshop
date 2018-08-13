@@ -115,9 +115,8 @@ class LocalizedController extends Controller
                 'routeCart' => __('route_cart')
             ],
             'admin' => [
-                'routeCartFinished' => '/'.__('route_cart') . '/' . __('route_cart_finished'), //! careful, without $orderId argument,
+                'routeCartFinished' => '/'.__('route_cart') . '/' . __('route_cart_finished'), //! careful, without $cartId argument,
                 'PlaceInstantOrderFor' => __('Place_instant_order_for'),
-                'InstantOrderDateIsSetBackAfterPlacingIt' => __('Instant_order_date_is_set_back_after_placing_it.'),
                 'CloseAllOrders' => __('Close_all_orders?'),
                 'ReallyCloseAllOrders' => __('Really_close_all_orders?'),
                 'GenerateOrdersAsPdf' => __('Generate_orders_as_pdf?'),
@@ -205,11 +204,14 @@ class LocalizedController extends Controller
                 'AnExistingOrderListWillBeOverwritten' => __('An_existing_order_list_will_be_overwritten!'),
                 'ChangeGroupFor' => __('Change_group_for'),
                 'TheMemberNeedsToSignInAgain' => __('The_member_needs_to_sign_again.'),
+                'Member' => __('Member')
             ],
-            'dialogOrder' => [
-                'ChangeCommentOfOrder' => __('Change_comment_of_order'),
-                'SetDateOfOrderBackTo' => __('Set_date_of_order_back_to'),
-                'SetDateOfOrderBack' => __('Set_date_of_order_back')
+            'pickupDay' => [
+                'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),
+                'ThisInformationServesThePickupTeamToSeeWhoWasAlreadyHere' => __('This_information_serves_the_pickup_team_to_see_who_was_already_here.'),
+                'AllProductsPickedUp' => __('All_products_picked_up?'),
+                'WereTheProductsOfAllMembersPickedUp' => __('Were_the_products_of_all_members_picked_up?'),
+                'ChangePickupDayComment' => __('Change_pickup_day_comment')
             ],
             'dialogCustomer' => [
                 'ChangeMemberComment' => __('Change_member_comment'),

@@ -33,12 +33,7 @@ use Cake\Core\Configure;
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php echo $this->Form->control('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'default' => isset($active) ? $active : '']); ?>
-            <?php echo __d('admin', 'Amount_orders_between'); ?> <input id="validOrdersCountFrom" name="validOrdersCountFrom"
-                type="text"
-                value="<?php echo isset($validOrdersCountFrom) ? $validOrdersCountFrom : ''; ?>" />
-            <?php echo __d('admin', 'and'); ?> <input id="validOrdersCountTo" name="validOrdersCountTo" type="text"
-                value="<?php echo isset($validOrdersCountTo) ? $validOrdersCountTo: ''; ?>" />
-            <?php echo __d('admin', 'and_last_order_date_between'); ?> <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
+            <?php echo __d('admin', 'Last_pickup_day'); ?> <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
             <div class="right">
             	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_members'))]); ?>
             </div>
@@ -54,7 +49,7 @@ echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.custome
 echo '<th>' . $this->Paginator->sort('Customers.id_default_group', __d('admin', 'Group')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.email', __d('admin', 'Email')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.active', __d('admin', 'Status')) . '</th>';
-echo '<th>'.__d('admin', 'Orders').'</th>';
+echo '<th style="text-align:right">'.__d('admin', 'Ordered_products').'</th>';
 if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
     echo '<th>'.__d('admin', 'Credit').'</th>';
 }
@@ -65,12 +60,12 @@ if (Configure::read('app.emailOrderReminderEnabled')) {
     echo '<th>' . $this->Paginator->sort('Customers.email_order_reminder',  __d('admin', 'Reminder')) . '</th>';
 }
 echo '<th>' . $this->Paginator->sort('Customers.date_add',  __d('admin', 'Register_date')) . '</th>';
-echo '<th>'.__d('admin', 'Last_order_date').'</th>';
+echo '<th>'.__d('admin', 'Last_pickup_day').'</th>';
 echo '<th>'.__d('admin', 'Comment_abbreviation').'</th>';
 echo '</tr>';
 
 $i = 0;
-$sumOrdersCount = 0;
+$sumOrderDetailsCount = 0;
 $sumEmailReminders = 0;
 $sumTimebasedCurrency = null;
 foreach ($customers as $customer) {
@@ -93,11 +88,11 @@ foreach ($customers as $customer) {
                 ], $this->Slug->getCustomerEdit($customer->id_customer));
             echo '</span>';
         }
-        if ($customer->order_count <= 3) {
-            $customerName = '<i class="fa fa-pagelines" title="'.__d('admin', 'Newbie_only_{0}_times_ordered.', [$customer->order_count]).'"></i> ' . $customerName;
+        if ($customer->order_detail_count <= 25) {
+            $customerName = '<i class="fa fa-pagelines" title="'.__d('admin', 'Newbie_only_{0}_products_ordered.', [$customer->order_detail_count]).'"></i> ' . $customerName;
         }
 
-        echo '<span class="name">' . $this->Html->link($customerName, '/admin/orders/index/?orderStates[]=' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . '&dateFrom=01.01.2014&dateTo=' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt')) . '&customerId=' . $customer->id_customer . '&sort=Orders.date_add&direction=desc', [
+        echo '<span class="name">' . $this->Html->link($customerName, '/admin/order-details?orderStates[]=' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . '&pickupDay[]=01.01.2014&pickupDay[]=' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt')) . '&customerId=' . $customer->id_customer . '&sort=OrderDetails.pickup_day&direction=desc', [
             'title' => __d('admin', 'Show_all_orders_from_{0}', [$this->Html->getNameRespectingIsDeleted($customer)]),
             'escape' => false
         ]) . '</span>';
@@ -151,14 +146,14 @@ foreach ($customers as $customer) {
 
     echo '</td>';
 
-    echo '<td>';
-    echo $customer->valid_orders_count;
-    $sumOrdersCount += $customer->valid_orders_count;
+    echo '<td style="text-align:right">';
+        echo $this->Number->formatAsDecimal($customer->order_detail_count, 0);
+        $sumOrderDetailsCount += $customer->order_detail_count;
     echo '</td>';
 
     if ($this->Html->paymentIsCashless()) {
         $negativeClass = $customer->credit_balance < 0 ? 'negative' : '';
-        echo '<td align="center" class="' . $negativeClass . '">';
+        echo '<td style="text-align:center" class="' . $negativeClass . '">';
 
         if ($appAuth->isSuperadmin()) {
             $creditBalanceHtml = '<span class="'.$negativeClass.'">' . $this->Number->formatAsCurrency($customer->credit_balance);
@@ -219,7 +214,9 @@ foreach ($customers as $customer) {
     echo '</td>';
 
     echo '<td>';
-    echo $this->Time->formatToDateShort($customer->last_valid_order_date);
+        if (!empty($customer->valid_order_details)) {
+            echo $customer->valid_order_details[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateShort'));
+        }
     echo '</td>';
 
     echo '<td style="padding-left: 11px;">';
@@ -240,7 +237,7 @@ foreach ($customers as $customer) {
 
 echo '<tr>';
 echo '<td colspan="4"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
-echo '<td><b>' . $this->Number->formatAsDecimal($sumOrdersCount, 0) . '</b></td>';
+echo '<td style="text-align:right"><b>' . $this->Number->formatAsDecimal($sumOrderDetailsCount, 0) . '</b></td>';
 if ($this->Html->paymentIsCashless()) {
     echo '<td></td>';
 }
@@ -258,7 +255,7 @@ echo '</table>';
 echo '<div class="sc"></div>';
 
 echo '<div class="bottom-button-container">';
-echo '<button class="email-to-all btn btn-default" data-column="4"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
+echo '<button data-email-addresses="'.join(',', $emailAddresses).'" class="email-to-all btn btn-default"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
 echo '</div>';
 echo '<div class="sc"></div>';
 

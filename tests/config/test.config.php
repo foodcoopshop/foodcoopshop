@@ -27,6 +27,8 @@ Configure::write('test.loginEmailVegetableManufacturer', 'fcs-demo-gemuese-herst
 Configure::write('test.vegetableManufacturerId', 89);
 Configure::write('test.loginEmailMeatManufacturer', 'fcs-demo-fleisch-hersteller@mailinator.com');
 Configure::write('test.meatManufacturerId', 91);
+Configure::write('test.loginEmailMilkManufacturer', 'fcs-demo-milch-hersteller@mailinator.com');
+Configure::write('test.meatMilkManufacturerId', 90);
 
 // password for all users is reset to test.loginPassword on Test::setUp()
 Configure::write('test.loginPassword', 'foodcoopshop');

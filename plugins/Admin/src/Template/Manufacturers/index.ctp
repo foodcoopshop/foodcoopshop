@@ -28,18 +28,11 @@ use Cake\Core\Configure;
             Configure::read('app.cakeServerName') . "');".
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.manufacturer-details-read-button');"
     ]);
-    if (Configure::read('app.allowManualOrderListSending')) {
-        $this->element('addScript', [
-            'script' =>
-                Configure::read('app.jsNamespace') . ".Admin.setWeekdaysBetweenOrderSendAndDelivery('" . json_encode($this->MyTime->getWeekdaysBetweenOrderSendAndDelivery()) . "');" .
-                Configure::read('app.jsNamespace') . ".Admin.initManualOrderListSend('#manufacturers-list .manual-order-list-send-link', " . date('N', time()) . ");"
-        ]);
-    }
     ?>
 
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
-            <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameTo' => 'dateTo', 'nameFrom' => 'dateFrom']); ?>
+            <?php echo __d('admin', 'Pickup_days') . ': ' .  $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameTo' => 'dateTo', 'nameFrom' => 'dateFrom']); ?>
             <?php echo $this->Form->control('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'default' => isset($active) ? $active : '']); ?>
             <div class="right">
                 <?php
@@ -78,9 +71,6 @@ echo '<tr class="sort">';
         echo '<th>%</th>';
     }
     echo '<th></th>';
-    if (Configure::read('app.allowManualOrderListSending')) {
-        echo '<th></th>';
-    }
     echo '<th></th>';
     echo '<th></th>';
 echo '</tr>';
@@ -245,7 +235,7 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td style="width:140px;">';
     echo __d('admin', 'Test_order_list').'<br />';
-    echo $this->Html->link(__d('admin', 'Product'), '/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo, [
+    echo $this->Html->link(__d('admin', 'Product'), '/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom, [
             'target' => '_blank'
         ]);
     echo ' / ';
@@ -253,14 +243,6 @@ foreach ($manufacturers as $manufacturer) {
         'target' => '_blank'
     ]);
     echo '</td>';
-    if (Configure::read('app.allowManualOrderListSending')) {
-        echo '<td>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('email.png')), [
-            'title' => __d('admin', 'Manually_send_order_list'),
-            'class' => 'manual-order-list-send-link'
-        ], 'javascript:void(0);');
-        echo '</td>';
-    }
 
     echo '<td>';
     echo $this->Html->link(__d('admin', 'Test_invoice'), '/admin/manufacturers/getInvoice.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo, [
@@ -292,9 +274,6 @@ echo '</td>';
 if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     $colspan ++;
 }
-if (Configure::read('app.allowManualOrderListSending')) {
-    $colspan ++;
-}
 if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
     echo '<td><b class="' . ($sumTimebasedCurrency < 0 ? 'negative' : '') . '">'.$this->TimebasedCurrency->formatSecondsToTimebasedCurrency($sumTimebasedCurrency) . '</b></td>';
 }
@@ -303,7 +282,7 @@ echo '</tr>';
 echo '</table>';
 echo '<div class="sc"></div>';
 echo '<div class="bottom-button-container">';
-echo '<button class="email-to-all btn btn-default" data-column="4"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
+echo '<button data-email-addresses="'.join(',', $emailAddresses).'" class="email-to-all btn btn-default"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
 echo '</div>';
 echo '<div class="sc"></div>';
 

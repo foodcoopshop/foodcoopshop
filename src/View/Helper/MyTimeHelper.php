@@ -4,7 +4,6 @@ namespace App\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\View\Helper\TimeHelper;
-use Cake\I18n\I18n;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -36,10 +35,10 @@ class MyTimeHelper extends TimeHelper
     {
         return date('Y', strtotime($dbDate));
     }
-
+    
     public function getCurrentDateForDatabase()
     {
-        return date(Configure::read('DateFormat.DatabaseWithTimeAlt'));
+        return date($this->getI18Format('DatabaseAlt'));
     }
 
     /**
@@ -68,34 +67,59 @@ class MyTimeHelper extends TimeHelper
         }
     }
 
-    public function getFormattedDeliveryDateByCurrentDay()
+    public function getDeliveryDateByCurrentDayForDb()
     {
         $deliveryDate = self::getDeliveryDayByCurrentDay();
-        $deliveryDate = $this->getWeekdayName($this->formatAsWeekday($deliveryDate)) . ', ' . date($this->getI18Format('DateShortAlt'), $deliveryDate);
+        $deliveryDate = date($this->getI18Format('DatabaseAlt'), $deliveryDate);
         return $deliveryDate;
+    }
+    
+    public function getDateFormattedWithWeekday($date) {
+        $date = $this->getWeekdayName($this->formatAsWeekday($date)) . ', ' . date($this->getI18Format('DateShortAlt'), $date);
+        return $date;
+    }
+    
+    public function getDeliveryDateByCurrentDayFormattedWithWeekday()
+    {
+        $deliveryDate = self::getDeliveryDayByCurrentDay();
+        return $this->getDateFormattedWithWeekday($deliveryDate);
     }
 
     public function getDeliveryDayByCurrentDay()
     {
-
-        $deliveryDate = self::getDeliveryDay($this->getCurrentDay());
-
-        $weekdayDeliveryDate = $this->formatAsWeekday($deliveryDate);
-        $weekdayStringDeliveryDate = strtolower(date('l', $deliveryDate));
-        $day = $this->formatAsWeekday(time());
-
-        if ($day >= Configure::read('app.sendOrderListsWeekday') && $day <= $weekdayDeliveryDate) {
-            $deliveryDate = strtotime('+ 1 week ' . $weekdayStringDeliveryDate);
-        }
-
-        return $deliveryDate;
+        return self::getDeliveryDay($this->getCurrentDay());
+    }
+    
+    public function getDbFormattedPickupDayByDbFormattedDate($date)
+    {
+        $pickupDay = $this->getDeliveryDay(strtotime($date));
+        $pickupDay = date(Configure::read('DateFormat.DatabaseAlt'), $pickupDay);
+        return $pickupDay;
     }
 
+    public function getDeliveryDateForSendOrderListsShell()
+    {
+        $formattedToday = date(Configure::read('DateFormat.DatabaseAlt'), $this->getCurrentDay());
+        $deliveryDay = strtotime($formattedToday . '+' . Configure::read('app.deliveryDayDelta') . ' days');
+        $deliveryDay = date($this->getI18Format('DatabaseAlt'), $deliveryDay);
+        return $deliveryDay;
+    }
 
-    public function getDeliveryDay($day)
+    public function getDeliveryDay($orderDay)
     {
         $daysToAddToOrderPeriodLastDay = Configure::read('app.deliveryDayDelta') + 1;
-        $deliveryDate = strtotime($this->getOrderPeriodLastDay($day) . '+' . $daysToAddToOrderPeriodLastDay . ' days');
+        $deliveryDate = strtotime($this->getOrderPeriodLastDay($orderDay) . '+' . $daysToAddToOrderPeriodLastDay . ' days');
+        
+        $weekdayDeliveryDate = $this->formatAsWeekday($deliveryDate);
+        $weekdayStringDeliveryDate = strtolower(date('l', $deliveryDate));
+        
+        $weekdayOrderDay = $this->formatAsWeekday($orderDay);
+        
+        if ($weekdayOrderDay >= Configure::read('app.sendOrderListsWeekday') && $weekdayOrderDay <= $weekdayDeliveryDate) {
+            $preparedOrderDay = date($this->getI18Format('DateShortAlt'), $orderDay);
+            $deliveryDate = strtotime($preparedOrderDay . '+ 1 week ' . $weekdayStringDeliveryDate);
+        }
+        
         return $deliveryDate;
     }
 
@@ -116,18 +140,6 @@ class MyTimeHelper extends TimeHelper
     public function formatAsWeekday($day)
     {
         return date('N', $day);
-    }
-
-    /**
-     * @param day
-     */
-    public function getDateForInstantOrder($day)
-    {
-        $currentWeekday = $this->formatAsWeekday($day);
-        $daysDiff = $currentWeekday - Configure::read('app.sendOrderListsWeekday');
-        $daysDiff = ($daysDiff * -1) - 1;
-        $resetDate = strtotime($daysDiff . ' day', $day);
-        return date('Y-m-d', $resetDate) . ' 00:00:00';
     }
 
     public function getCurrentDay()
@@ -271,7 +283,7 @@ class MyTimeHelper extends TimeHelper
         }
         return $days;
     }
-
+    
     public function getFirstDayOfThisYear()
     {
         return date($this->getI18Format('DateShortAlt'), strtotime('first day of january'));
@@ -282,16 +294,6 @@ class MyTimeHelper extends TimeHelper
         return date($this->getI18Format('DateShortAlt'), strtotime('last day of december'));
     }
 
-    public function getFirstDayOfLastMonth()
-    {
-        return date($this->getI18Format('DateShortAlt'), strtotime('first day of previous month'));
-    }
-
-    public function getLastDayOfLastMonth()
-    {
-        return date($this->getI18Format('DateShortAlt'), strtotime('last day of previous month'));
-    }
-
     public function getLastMonthNameAndYear()
     {
         $previousMonthModifier = strtotime('first day of previous month');
@@ -299,9 +301,18 @@ class MyTimeHelper extends TimeHelper
         return $lastMonthAndYearString;
     }
 
+    public function getFirstDayOfLastMonth($date)
+    {
+        return date($this->getI18Format('DateShortAlt'), strtotime($date . ' first day of previous month'));
+    }
+    
+    public function getLastDayOfLastMonth($date)
+    {
+        return date($this->getI18Format('DateShortAlt'), strtotime($date . ' last day of previous month'));
+    }
+    
     /**
      * considers windows and unix
-     * @param date $date
      * @return boolean
      */
     public function isDatabaseDateNotSet($date)
@@ -322,7 +333,6 @@ class MyTimeHelper extends TimeHelper
     /**
      * formats a timestamp to a short date
      * @param integer $timestamp
-     * @return Date
      */
     public function formatToDateShort($dbString)
     {
@@ -333,8 +343,7 @@ class MyTimeHelper extends TimeHelper
         return date($this->getI18Format('DateShortAlt'), $timestamp);
     }
     /**
-      * @param date $dateString
-      * @return date in format YYYY-mm-dd
+      * @param $dateString
       */
     public function formatToDbFormatDate($dateString)
     {

@@ -16,6 +16,6 @@ use Cake\Core\Configure;
 
 ?><div id="info-box" class="box">
     <?php
-       echo preg_replace('/{'.__('DELIVERY_DAY').'}/', $this->Time->getFormattedDeliveryDateByCurrentDay(), Configure::read('appDb.FCS_RIGHT_INFO_BOX_HTML'));
+        echo preg_replace('/{'.__('DELIVERY_DAY').'}/', $this->Time->getDeliveryDateByCurrentDayFormattedWithWeekday(), Configure::read('appDb.FCS_RIGHT_INFO_BOX_HTML'));
     ?>
 </div>

@@ -812,10 +812,10 @@ body.carts.detail .cart:not(#cart) a.btn {
 #CartsDetailForm .input.checkbox {
     margin-left: 10px;
 }
-#CartsDetailForm #timebased-currency-order-seconds-sum-tmp {
+#CartsDetailForm #carts-timebased-currency-seconds-sum-tmp {
     width: 170px;
 }
-#CartsDetailForm label[for="timebased-currency-order-seconds-sum-tmp"] {
+#CartsDetailForm label[for="carts-timebased-currency-seconds-sum-tmp"] {
     margin-right: 10px;
 }
 #RegistrationForm .input.checkbox {
@@ -829,12 +829,18 @@ body.carts.detail .cart:not(#cart) a.btn {
     padding-left: 90px;
     width: 350px;
 }
-#CartsDetailForm  .input.checkbox .error-message {
+#CartsDetailForm  .input.checkbox .error-message,
+#CartsDetailForm  .input.select .error-message {
     margin-left: -10px ! important;
     width: 100% ! important;
     font-size: 14px;
     float: left;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    line-height: 26px;
+}
+#CartsDetailForm  .input.select .error-message {
+	margin-left: 0 ! important;
 }
 #CartsDetailForm .input.text .error-message {
     margin-left: 321px ! important;
@@ -845,11 +851,11 @@ body.carts.detail .cart:not(#cart) a.btn {
     margin-left: -30px;
     margin-top: 1px;
 }
-#CartsDetailForm .order-comment textarea {
+#CartsDetailForm .pickup-day-comment textarea {
   width: 100%;
   padding: 5px;
 }
-#CartsDetailForm .order-comment div.error-message {
+#CartsDetailForm .pickup-day-comment div.error-message {
   margin-left: 0;
   width: 100%;
 }

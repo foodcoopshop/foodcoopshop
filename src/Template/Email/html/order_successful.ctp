@@ -24,7 +24,19 @@ use Cake\Core\Configure;
         </tr>
         <tr>
             <td style="padding-bottom:20px;">
-            	<?php echo __('thank_you_for_your_order_number_{0}_from_{1}.', [$order->id_order, $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'))]); ?>
+            	<?php
+            	   echo __('thank_you_for_your_order_from_{0}.', [
+            	       $cart['Cart']->modified->i18nFormat(
+            	           Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'))
+            	   ]);
+            	?>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-bottom:10px;">
+            	<?php
+            	   echo __('Pickup_day') . ': <b> ' . $this->MyTime->getDeliveryDateByCurrentDayFormattedWithWeekday().'</b>';
+            	?>
             </td>
         </tr>
     </tbody>
@@ -56,7 +68,7 @@ use Cake\Core\Configure;
         <tr><td>
             <?php
                 if ($this->MyHtml->paymentIsCashless()) {
-                    echo __('The_amount_will_be_reduced_from_your_credit_balance.');
+                    echo __('The_amount_was_reduced_from_your_credit_balance.');
                 } else {
                     echo __('Please_pay_when_picking_up_products.');
                 }
@@ -72,8 +84,7 @@ use Cake\Core\Configure;
         <tr><td><p>
             <?php
                 echo __(
-                    'Please_pick_up_your_products_on_{0}_at_{1}.', [
-                        '<b>'.$this->MyTime->getFormattedDeliveryDateByCurrentDay().'</b>',
+                    'Pickup_place:_{0}', [
                         str_replace('<br />', ', ', $this->MyHtml->getAddressFromAddressConfiguration())
                     ]
                 );

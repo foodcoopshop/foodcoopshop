@@ -32,7 +32,6 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
     }
 
     /**
-     * @param OrderDetail $orderDetail
      * @param float $price
      * @param int $amount
      */
@@ -73,7 +72,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         ]);
         $result = [];
         foreach($customersFromOrderDetails as $customersFromOrderDetail) {
-            $result[] = $customersFromOrderDetail->order_detail->order->id_customer;
+            $result[] = $customersFromOrderDetail->order_detail->id_customer;
         }
         $result = array_unique($result);
         return $result;
@@ -148,37 +147,19 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         }
 
         $conditions = [];
-        $conditions[] = $this->OrderDetails->Orders->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStateIds());
+        $conditions[] = $this->OrderDetails->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStateIds());
 
         if ($customerId) {
-            $conditions['Orders.id_customer'] = $customerId;
+            $conditions['OrderDetails.id_customer'] = $customerId;
         }
 
         $query = $this->find('all', [
             'conditions' => $conditions,
             'contain' => [
-                'OrderDetails.Orders',
                 'OrderDetails.Products'
             ]
         ]);
         return $query;
-    }
-
-    /**
-     * @param int $manufacturerId
-     * @param int $customerId
-     * @return array
-     */
-    public function getOrders($manufacturerId = null, $customerId = null)
-    {
-        $query = $this->getFilteredQuery($manufacturerId, $customerId);
-        $orders = [];
-        // having is not attachable to associations, so sum up and prepare result manually
-        foreach($query as $orderDetail) {
-            @$orders[$orderDetail->order_detail->id_order]['SumSeconds'] += $orderDetail->seconds;
-            @$orders[$orderDetail->order_detail->id_order]['order'] = $orderDetail->order_detail->order;
-        }
-        return $orders;
     }
 
     /**
@@ -193,6 +174,17 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         return $creditBalance;
     }
 
+    public function getMonthlySum($manufacturerId = null, $customerId = null)
+    {
+        $query = $this->getFilteredQuery($manufacturerId, $customerId);
+        $query->group('MonthAndYear');
+        $query->select([
+            'SumSeconds' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds'),
+            'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')'
+        ]);
+        return $query->toArray();
+    }
+    
     /**
      * @param int $manufacturerId
      * @param int $customerId

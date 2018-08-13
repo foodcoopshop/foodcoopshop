@@ -33,11 +33,6 @@ class SlugHelper extends Helper
         return $this->getAdminHome().'/order-details';
     }
 
-    public function getOrdersList()
-    {
-        return $this->getAdminHome().'/orders';
-    }
-
     public function getAcceptTermsOfUse()
     {
         return '/'.__('route_accept_terms_of_use');
@@ -121,9 +116,9 @@ class SlugHelper extends Helper
         return '/'.__('route_cart') . '/' . __('route_cart_finish');
     }
 
-    public function getCartFinished($orderId)
+    public function getCartFinished($cartId)
     {
-        return '/'.__('route_cart') . '/' . __('route_cart_finished').'/'.$orderId;
+        return '/'.__('route_cart') . '/' . __('route_cart_finished').'/'.$cartId;
     }
 
     public function getAdminHome()

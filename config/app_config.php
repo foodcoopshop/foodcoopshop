@@ -21,10 +21,13 @@ define('APP_OFF', 0);
 define('APP_DEL', -1);
 
 define('ORDER_STATE_OPEN', 3);
-define('ORDER_STATE_CLOSED', 5);
+define('ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER', 10);
+define('ORDER_STATE_BILLED_CASHLESS', 11);
+define('ORDER_STATE_BILLED_CASH', 12);
+
+// ORDER_STATE_CASH_FREE and ORDER_STATE_CASH can be safely removed in v3
 define('ORDER_STATE_CASH_FREE', 1);
 define('ORDER_STATE_CASH', 2);
-define('ORDER_STATE_CANCELLED', 6);
 
 define('CUSTOMER_GROUP_MEMBER', 3);
 define('CUSTOMER_GROUP_ADMIN', 4);
@@ -73,12 +76,6 @@ return [
         'depositPaymentCashlessStartDate' => '2016-01-01',
         'depositForManufacturersStartDate' => '2016-01-01',
 
-        /**
-         * adds a link to the manufacturer admin to generate and send the order list on click
-         * can be useful, if e.g. a member forgot to order and the order lists are already sent
-         * @deprecated - do not use this option any more, will be removed in next version
-         */
-        'allowManualOrderListSending' => false,
         /**
          * weekday on which the weekly cronjob "SendOrderList" is called
          * the available options (in combination with deliveryDayDelta) can be found in tests/TestCase/src/View/Helper/MyTimeHelperTest.php

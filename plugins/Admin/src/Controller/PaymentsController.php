@@ -5,6 +5,7 @@ namespace Admin\Controller;
 use App\Mailer\AppEmail;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
+use Cake\I18n\FrozenDate;
 use Cake\I18n\Time;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
@@ -551,19 +552,13 @@ class PaymentsController extends AdminAppController
             )
         );
 
-        $contain = ['Payments'];
-        if (in_array('product', $this->allowedPaymentTypes)) {
-            $contain[] = 'PaidCashFreeOrders';
-            if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-                $contain[] = 'PaidCashFreeOrders.TimebasedCurrencyOrders';
-            }
-        }
-
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $this->getCustomerId()
             ],
-            'contain' => $contain
+            'contain' => [
+               'Payments'
+            ]
         ])->first();
 
         $payments = [];
@@ -591,36 +586,43 @@ class PaymentsController extends AdminAppController
             }
         }
 
-        if (! empty($customer->paid_cash_free_orders)) {
-            foreach ($customer->paid_cash_free_orders as $order) {
-                $payments[] = [
-                    'dateRaw' => $order->date_add,
-                    'date' => $order->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
-                    'year' => $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year')),
-                    'amount' => $order->total_paid * - 1,
-                    'deposit' => strtotime($order->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $order->total_deposit * - 1 : 0,
-                    'type' => 'order',
-                    'text' => Configure::read('app.htmlHelper')->link(__d('admin', 'Order_number_abbr') . ' ' . $order->id_order . ' (' . Configure::read('app.htmlHelper')->getOrderStates()[$order['current_state']] . ')', '/admin/order-details/?dateFrom=' . $order['date_add']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '&dateTo=' . $order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '&orderId=' . $order->id_order . '&customerId=' . $order->id_customer, [
-                        'title' => __d('admin', 'Show_order')
-                    ]),
-                    'payment_id' => null,
-                    'timebased_currency_order' => isset($order->timebased_currency_order) ? $order->timebased_currency_order : null
-                ];
-            }
-        }
-
-        $timebasedCurrencyOrderInList = false;
-        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-            if (!empty($customer->paid_cash_free_orders)) {
-                foreach($customer->paid_cash_free_orders as $order) {
-                    if (!empty($order->timebased_currency_order)) {
-                        $timebasedCurrencyOrderInList = true;
-                        break;
-                    }
+        if ($this->paymentType == 'product') {
+            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+            $orderDetailsGroupedByMonth = $this->OrderDetail->getMonthlySumProduct($this->getCustomerId());
+            
+            if (! empty($orderDetailsGroupedByMonth)) {
+                foreach ($orderDetailsGroupedByMonth as $orderDetail) {
+                    $monthAndYear = explode('-', $orderDetail['MonthAndYear']);
+                    $frozenDateFrom = FrozenDate::create($monthAndYear[0], $monthAndYear[1], 1);
+                    $lastDayOfMonth = Configure::read('app.timeHelper')->getLastDayOfGivenMonth($orderDetail['MonthAndYear']);
+                    $frozenDateTo = FrozenDate::create($monthAndYear[0], $monthAndYear[1], $lastDayOfMonth);
+                    $payments[] = [
+                        'dateRaw' => $frozenDateFrom,
+                        'date' => $frozenDateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
+                        'year' => $monthAndYear[0],
+                        'amount' => $orderDetail['SumTotalPaid'] * - 1,
+                        'deposit' => strtotime($frozenDateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))) > strtotime(Configure::read('app.depositPaymentCashlessStartDate')) ? $orderDetail['SumDeposit'] * - 1 : 0,
+                        'type' => 'order',
+                        'text' => Configure::read('app.htmlHelper')->link(
+                            __d('admin', 'Orders') . ' ' . Configure::read('app.timeHelper')->getMonthName($monthAndYear[1]) . ' ' . $monthAndYear[0],
+                            '/admin/order-details/?pickupDay[]=' . $frozenDateFrom->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
+                            '&pickupDay[]=' . $frozenDateTo->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . 
+                            '&customerId=' . $this->getCustomerId() . '&orderStates[]=' . join(',', Configure::read('app.htmlHelper')->getOrderStatesCashless()),
+                            [
+                                'title' => __d('admin', 'Show_order')
+                            ]
+                        ),
+                        'payment_id' => null,
+                        'timebased_currency_sum_seconds' => $orderDetail['SumTimebasedCurrencySeconds']
+                    ];
                 }
             }
+    
+            $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
+            $timebasedCurrencySum = $this->TimebasedCurrencyOrderDetail->getSum(null, $this->getCustomerId());
+            $timebasedCurrencyOrderDetailInList = $timebasedCurrencySum > 0;
+            $this->set('timebasedCurrencyOrderDetailInList', $timebasedCurrencyOrderDetailInList);
         }
-        $this->set('timebasedCurrencyOrderInList', $timebasedCurrencyOrderInList);
 
         $payments = Hash::sort($payments, '{n}.date', 'desc');
         $this->set('payments', $payments);

@@ -28,9 +28,9 @@ TRUNCATE TABLE `fcs_manufacturer`;
 TRUNCATE TABLE `fcs_order_detail`;
 TRUNCATE TABLE `fcs_order_detail_tax`;
 TRUNCATE TABLE `fcs_order_detail_units`;
-TRUNCATE TABLE `fcs_orders`;
 TRUNCATE TABLE `fcs_pages`;
 TRUNCATE TABLE `fcs_payments`;
+TRUNCATE TABLE `fcs_pickup_days`;
 TRUNCATE TABLE `fcs_product`;
 TRUNCATE TABLE `fcs_product_attribute`;
 TRUNCATE TABLE `fcs_product_attribute_combination`;
@@ -40,7 +40,6 @@ TRUNCATE TABLE `fcs_sync_domains`;
 TRUNCATE TABLE `fcs_sync_products`;
 TRUNCATE TABLE `fcs_tax`;
 TRUNCATE TABLE `fcs_timebased_currency_order_detail`;
-TRUNCATE TABLE `fcs_timebased_currency_orders`;
 TRUNCATE TABLE `fcs_timebased_currency_payments`;
 TRUNCATE TABLE `fcs_units`;
 TRUNCATE TABLE `phinxlog`;
@@ -96,7 +95,6 @@ INSERT INTO `fcs_configuration` VALUES
 (557,1,'FCS_APP_ADDRESS','Adress of the food-coop<br /><div class=\"small\">Used in footer of homepage and e-mails, privacy policy and terms of use.</div>','','textarea',6,'en_US','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (558,1,'FCS_APP_EMAIL','E-mail adress of the food-coop<br /><div class=\"small\"></div>','','text',7,'en_US','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (559,1,'FCS_PLATFORM_OWNER','Operator of the platform<br /><div class=\"small\">For privacy policy and terms of use, please also add adrress. Can be left empty if the food-coop itself is operator.</div>','','textarea',8,'en_US','2017-01-12 00:00:00','2017-01-12 00:00:00'),
-(560,1,'FCS_INSTANT_ORDER_DEFAULT_STATE','Order status for instant orders.','1','dropdown',75,'en_US','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (563,1,'FCS_EMAIL_LOG_ENABLED','Should all sent e-mails be stored in the database?<br /><div class=\"small\">For debugging and unit tests.</div>','0','readonly',30,'en_US','2017-07-05 00:00:00','2017-07-05 00:00:00'),
 (564,1,'FCS_ORDER_COMMENT_ENABLED','Show comment field when placing an order?<br /><div class=\"small\">Shown in admin area under \"Orders\".</div>','0','boolean',13,'en_US','2017-07-09 00:00:00','2017-07-09 00:00:00'),
 (565,1,'FCS_USE_VARIABLE_MEMBER_FEE','Use variable member fee?<br /><div class=\"small\">Reduce the variable member fee in the manufacturer\'s invoices? Therefore the prices need to be increased.</div>','0','readonly',40,'en_US','2017-08-02 00:00:00','2017-08-02 00:00:00'),
@@ -140,14 +138,14 @@ INSERT INTO `fcs_configuration` VALUES
 /*!40000 ALTER TABLE `fcs_order_detail_units` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_order_detail_units` ENABLE KEYS */;
 
-/*!40000 ALTER TABLE `fcs_orders` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_orders` ENABLE KEYS */;
-
 /*!40000 ALTER TABLE `fcs_pages` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_pages` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_payments` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_payments` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_pickup_days` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_pickup_days` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_product` ENABLE KEYS */;
@@ -182,9 +180,6 @@ INSERT INTO `fcs_tax` VALUES
 /*!40000 ALTER TABLE `fcs_timebased_currency_order_detail` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_timebased_currency_order_detail` ENABLE KEYS */;
 
-/*!40000 ALTER TABLE `fcs_timebased_currency_orders` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_timebased_currency_orders` ENABLE KEYS */;
-
 /*!40000 ALTER TABLE `fcs_timebased_currency_payments` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_timebased_currency_payments` ENABLE KEYS */;
 
@@ -193,6 +188,7 @@ INSERT INTO `fcs_tax` VALUES
 
 /*!40000 ALTER TABLE `phinxlog` DISABLE KEYS */;
 INSERT INTO `phinxlog` VALUES
+(20180213193116,'InitPhinxlog','2018-08-01 07:31:03','2018-08-01 07:31:03',0),
 (20180213193117,'Migration018','2018-02-13 16:49:03','2018-02-13 16:49:04',0),
 (20180213193123,'Migration019','2018-02-13 16:49:04','2018-02-13 16:49:04',0),
 (20180213193133,'Migration020','2018-02-13 16:49:04','2018-02-13 16:49:04',0),
@@ -200,15 +196,17 @@ INSERT INTO `phinxlog` VALUES
 (20180313083036,'TimebasedCurrency','2018-04-16 05:26:12','2018-04-16 05:26:20',0),
 (20180430130912,'PricePerUnit','2018-05-18 07:00:58','2018-05-18 07:01:06',0),
 (20180528152246,'ShowProductPriceForGuests','2018-06-01 08:02:58','2018-06-01 08:02:58',0),
-(20180604063719,'PricePerUnitFix','2018-06-04 10:56:06','2018-06-04 10:56:07',0),
 (20180601101119,'LocaleConfig','2018-06-11 06:13:02','2018-06-11 06:13:03',0),
+(20180604063719,'PricePerUnitFix','2018-06-04 10:56:06','2018-06-04 10:56:07',0),
 (20180613080329,'CategoriesLevelDepthFix','2018-06-13 06:20:52','2018-06-13 06:20:53',0),
 (20180613121712,'TreeLeftRightFix','2018-06-13 10:29:04','2018-06-13 10:29:06',0),
 (20180613174031,'CurrencySymbolAsConfiguration','2018-06-25 06:55:19','2018-06-25 06:55:19',0),
 (20180626080524,'AddLocaleToDatabaseConfig','2018-06-27 06:00:47','2018-06-27 06:00:47',0),
-(20180702075300,'RenameShopOrderToInstantOrder','2018-07-02 07:23:18','2018-07-02 07:23:18',0);
+(20180702075300,'RenameShopOrderToInstantOrder','2018-07-02 07:23:18','2018-07-02 07:23:18',0),
+(20180717100910,'ProductTablesOptimization','2018-08-01 07:31:15','2018-08-01 07:31:15',0),
+(20180720130810,'RemoveOrdersTable','2018-08-01 07:31:44','2018-08-01 07:31:44',0),
+(20180727070325,'CorrectBicLength','2018-08-01 07:31:44','2018-08-01 07:31:44',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
-
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

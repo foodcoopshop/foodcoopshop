@@ -22,25 +22,39 @@ use Cake\ORM\TableRegistry;
 
 class SendInvoicesShell extends AppShell
 {
+    
+    public $cronjobRunDay;
+    
     /**
-     * sends invoices to manufacturers who have orders from the last month
+     * sends invoices to manufacturers who have order details with pickup_day of last month
      */
     public function main()
     {
         parent::main();
 
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-        $this->Order = TableRegistry::getTableLocator()->get('Orders');
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
 
         $this->startTimeLogging();
 
-        $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfLastMonth();
-        $dateTo = Configure::read('app.timeHelper')->getLastDayOfLastMonth();
-
-        // $dateFrom = '01.02.2016';
-        // $dateTo = '29.02.2016';
-
+        // $this->cronjobRunDay can is set in unit test
+        if (empty($this->cronjobRunDay)) {
+            $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+        }
+        
+        $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfLastMonth($this->cronjobRunDay);
+        $dateTo = Configure::read('app.timeHelper')->getLastDayOfLastMonth($this->cronjobRunDay);
+        
+        // update all order details that are already billed but cronjob did not change the order state
+        // to new order state ORDER_STATE_BILLED (introduced in FCS 2.2)
+        // can be removed safely in FCS v3.0
+        $this->OrderDetail->legacyUpdateOrderStateToNewBilledState($dateFrom, ORDER_STATE_CASH_FREE, ORDER_STATE_BILLED_CASHLESS);
+        $this->OrderDetail->legacyUpdateOrderStateToNewBilledState($dateFrom, ORDER_STATE_CASH, ORDER_STATE_BILLED_CASH);
+        $this->OrderDetail->legacyUpdateOrderStateToNewBilledState($dateFrom, ORDER_STATE_OPEN, Configure::read('app.htmlHelper')->getOrderStateBilled());
+        $this->OrderDetail->legacyUpdateOrderStateToNewBilledState(null, ORDER_STATE_CASH_FREE, ORDER_STATE_OPEN);
+        $this->OrderDetail->legacyUpdateOrderStateToNewBilledState(null, ORDER_STATE_CASH, ORDER_STATE_OPEN);
+        
         // 1) get all manufacturers (not only active ones)
         $manufacturers = $this->Manufacturer->find('all', [
             'order' => [
@@ -48,29 +62,26 @@ class SendInvoicesShell extends AppShell
             ]
         ])->toArray();
 
-        // 2) get all orders in the given date range
-        $orders = $this->Order->find('all', [
+        // 2) get all order details with pickup day in the given date range
+        $orderDetails = $this->OrderDetail->find('all', [
             'conditions' => [
-                'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
-                'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
-                'Orders.current_state IN (' . join(",", [
-                    ORDER_STATE_OPEN,
-                    ORDER_STATE_CASH,
-                    ORDER_STATE_CASH_FREE
-                ]) . ')'
+                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
+                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
+                'OrderDetails.order_state NOT IN (' . join(",", [
+                    ORDER_STATE_BILLED_CASH,
+                    ORDER_STATE_BILLED_CASHLESS
+                ]) . ')' // order_state condition necessary for switch from OrderDetails.created to OrderDetails.pickup_day
             ],
             'contain' => [
-                'OrderDetails.Products'
+                'Products'
             ]
         ]);
 
         // 3) add up the order detail by manufacturer
         $manufacturerOrders = [];
-        foreach ($orders as $order) {
-            foreach ($order->order_details as $orderDetail) {
-                @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_amount_sum'] += $orderDetail->product_amount;
-                @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_price_sum'] += $orderDetail->total_price_tax_incl;
-            }
+        foreach ($orderDetails as $orderDetail) {
+            @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_amount_sum'] += $orderDetail->product_amount;
+            @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_price_sum'] += $orderDetail->total_price_tax_incl;
         }
 
         // 4) merge the order detail count with the manufacturers array

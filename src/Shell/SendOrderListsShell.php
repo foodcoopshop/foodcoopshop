@@ -30,16 +30,13 @@ class SendOrderListsShell extends AppShell
         parent::main();
 
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-        $this->Order = TableRegistry::getTableLocator()->get('Orders');
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
 
         $this->startTimeLogging();
 
-        $dateFrom = Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay());
-        $dateTo = Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay());
-
-        // $dateFrom = '01.02.2016';
-        // $dateTo = '29.02.2016';
+        $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateForSendOrderListsShell();
+        $formattedPickupDay = Configure::read('app.timeHelper')->formatToDateShort($pickupDay);
 
         // 1) get all manufacturers (not only active ones)
         $manufacturers = $this->Manufacturer->find('all', [
@@ -48,25 +45,22 @@ class SendOrderListsShell extends AppShell
             ]
         ])->toArray();
 
-        // 2) get all orders in the given date range
-        $orders = $this->Order->find('all', [
+        // 2) get all order details with pickup day in the given date range
+        $orderDetails = $this->OrderDetail->find('all', [
             'conditions' => [
-                'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
-                'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
-                'Orders.current_state' => ORDER_STATE_OPEN
+                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') = \'' . $pickupDay . '\'',
+                'OrderDetails.order_state' => ORDER_STATE_OPEN
             ],
             'contain' => [
-                'OrderDetails.Products'
+                'Products'
             ]
         ]);
-
+        
         // 3) add up the order detail by manufacturer
         $manufacturerOrders = [];
-        foreach ($orders as $order) {
-            foreach ($order->order_details as $orderDetail) {
-                @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_amount_sum'] += $orderDetail->product_amount;
-                @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_price_sum'] += $orderDetail->total_price_tax_incl;
-            }
+        foreach ($orderDetails as $orderDetail) {
+            @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_amount_sum'] += $orderDetail->product_amount;
+            @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_price_sum'] += $orderDetail->total_price_tax_incl;
         }
 
         // 4) merge the order detail count with the manufacturers array
@@ -76,10 +70,10 @@ class SendOrderListsShell extends AppShell
             $manufacturer->order_detail_price_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_price_sum'];
             $i++;
         }
-
+        
         // 5) check if manufacturers have open order details and send email
         $i = 0;
-        $outString = __('Order_period').': ' . $dateFrom . ' ' . __('to_(time_context)') . ' ' . $dateTo . '<br />';
+        $outString = __('Pickup_day') . ': ' . $formattedPickupDay . '<br />';
 
         $this->initSimpleBrowser();
         $this->browser->doFoodCoopShopLogin();
@@ -90,7 +84,7 @@ class SendOrderListsShell extends AppShell
             if (!empty($manufacturer->order_detail_amount_sum) && $sendOrderList && !$bulkOrdersAllowed) {
                 $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->order_detail_amount_sum]);
                 $outString .= ' - ' . $manufacturer->name . ': ' . $productString . ' / ' . Configure::read('app.numberHelper')->formatAsCurrency($manufacturer->order_detail_price_sum) . '<br />';
-                $url = $this->browser->adminPrefix . '/manufacturers/sendOrderList?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
+                $url = $this->browser->adminPrefix . '/manufacturers/sendOrderList?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $formattedPickupDay . '&dateTo=' . $formattedPickupDay;
                 $this->browser->get($url);
                 $i ++;
             }

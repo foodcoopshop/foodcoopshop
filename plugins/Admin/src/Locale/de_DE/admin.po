@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-08 11:44+0200\n"
-"PO-Revision-Date: 2018-08-08 12:32+0200\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2018-08-13 10:10+0200\n"
+"PO-Revision-Date: 2018-08-13 10:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -228,14 +228,23 @@ msgstr "Deine Einstellungen wurden erfolgreich gespeichert."
 msgid "No_orders_within_the_given_time_range."
 msgstr "Keine offenen Bestellungen im angegebenen Zeitraum."
 
+msgid "No_member_found_with_id_{0}."
+msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
+
+msgid "Instant_order"
+msgstr "Sofort-Bestellung"
+
 msgid "Group_by_product"
 msgstr "Gruppieren nach Produkt"
+
+msgid "Group_by_member"
+msgstr "Gruppieren nach Mitglied"
 
 msgid "Group_by_manufacturer"
 msgstr "Gruppieren nach Hersteller"
 
-msgid "Ordered_products"
-msgstr "Bestellte Produkte"
+msgid "Orders"
+msgstr "Bestellungen"
 
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
 msgstr "Das Gewicht des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich von {2} auf {3} angepasst."
@@ -267,38 +276,17 @@ msgstr "Der Preis des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich v
 msgid "Ordered_price_adapted"
 msgstr "Preis angepasst"
 
-msgid "Product_{0}_with_a_price_of_{1}_from_order_number_{2}_from_{3}_was_successfully_cancelled."
-msgstr "Produkt {0} (Preis: {1}) aus Bestellung Nr. {2} vom {3} wurde erfolgreich storniert."
+msgid "The_pickup_day_comment_of_{0}_was_changed:"
+msgstr "Der Abholtag-Kommentar des Mitglieds {0} wurde geändert: "
+
+msgid "Product_{0}_with_a_price_of_{1}_from_{2}_was_successfully_cancelled."
+msgstr "Produkt {0} (Preis: {1}) aus vom {2} wurde erfolgreich storniert."
 
 msgid "Product_was_cancelled"
 msgstr "Produkt storniert"
 
 msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}}"
 msgstr "{0,plural,=1{Produkte wurden erfolgreich storniert.} other{Produkte wurden erfolgreich storniert.}}"
-
-msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
-msgstr "Der Kommentar der Bestellung Nr. {0} von {1} wurde geändert:"
-
-msgid "Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
-msgstr "Die Sofort-Bestellung Nr. {0} für {1} wurde erfolgreich getätigt und rückdatiert auf den {2}. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat."
-
-msgid "The_order_status_of_the_order_of_{0}_was_successfully_changed_to_{1}."
-msgstr "Der Bestellstatus der Bestellung von {0} wurde erfolgreich auf {1} geändert."
-
-msgid "The_order_status_of_the_orders_{0}_was_successfully_changed_to_{1}."
-msgstr "Der Bestellstatus der Bestellungungen {0} wurde erfolgreich auf {1} geändert."
-
-msgid "Orders"
-msgstr "Bestellungen"
-
-msgid "Instant_order"
-msgstr "Sofort-Bestellung"
-
-msgid "No_member_found_with_id_{0}."
-msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
-
-msgid "The_date_of_the_order_{0}_of_{1}_was_changed_to_{2}."
-msgstr "Die Bestellung {0} von {1} wurde auf den {2} rückdatiert."
 
 msgid "Home"
 msgstr "Home"
@@ -359,9 +347,6 @@ msgstr "Mitgliedsbeitrag"
 
 msgid "Credit"
 msgstr "Guthaben"
-
-msgid "Order_number_abbr"
-msgstr "Bestell-Nr."
 
 msgid "Show_order"
 msgstr "Bestellung anzeigen"
@@ -687,7 +672,7 @@ msgstr "Version FoodCoopShop"
 msgid "Last_executed_migration"
 msgstr "Zuletzt ausgeführte Migration"
 
-msgid "Pick_up_day"
+msgid "Pickup_day"
 msgstr "Abholtag"
 
 msgid "Software_update_version"
@@ -795,14 +780,8 @@ msgstr "Wie verwende ich das Stundenabrechnungs-Modul?"
 msgid "Delete_member_irrevocably?"
 msgstr "Mitgliedskonto unwiderruflich löschen?"
 
-msgid "Amount_orders_between"
-msgstr "Anzahl Bestellungen zwischen"
-
-msgid "and"
-msgstr "und"
-
-msgid "and_last_order_date_between"
-msgstr "und letztes Bestelldatum vom"
+msgid "Last_pickup_day"
+msgstr "Letzter Abholtag"
 
 msgid "Group"
 msgstr "Gruppe"
@@ -810,20 +789,20 @@ msgstr "Gruppe"
 msgid "Status"
 msgstr "Status"
 
+msgid "Ordered_products"
+msgstr "Bestellte Produkte"
+
 msgid "Reminder"
 msgstr "Erinnerung"
 
 msgid "Register_date"
 msgstr "Reg.-Datum"
 
-msgid "Last_order_date"
-msgstr "Letztes Bestell-Datum"
-
 msgid "Comment_abbreviation"
 msgstr "Komm."
 
-msgid "Newbie_only_{0}_times_ordered."
-msgstr "Neuling: Erst {0}x bestellt."
+msgid "Newbie_only_{0}_products_ordered."
+msgstr "Neuling: Erst {0} Produkte bestellt."
 
 msgid "Show_all_orders_from_{0}"
 msgstr "Alle Bestellungen von {0} anzeigen"
@@ -903,6 +882,9 @@ msgstr "Hat der Hersteller Leergebinde mitgenommen oder wurde sein Pfandkonto mi
 msgid "Amount_in_{0}"
 msgstr "Betrag in {0}"
 
+msgid "Instant_order_for_today"
+msgstr "Sofort-Bestellung für heute"
+
 msgid "chose_member..."
 msgstr "Mitglied auswählen..."
 
@@ -957,6 +939,66 @@ msgstr "Wenn es sich um eine Rückzahlung handelt, trage bitte ein, wie viel du 
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Bitte wähle die Monate aus, für die deine Zahlung gedacht ist."
 
+msgid "Delivery_day"
+msgstr "Liefertag"
+
+msgid "Delivery_days"
+msgstr "Liefertage"
+
+msgid "Pickup_days"
+msgstr "Abholtage"
+
+msgid "Click_to_change_amount"
+msgstr "Zum Ändern der Anzahl anklicken"
+
+msgid "Click_to_cancel_product"
+msgstr "Zum Stornieren des Produktes anklicken"
+
+msgid "Deposit_return"
+msgstr "Pfand-Rückgabe"
+
+msgid "Show_all_ordered_products_from_{0}"
+msgstr "Alle bestellten Produkte von {0} anzeigen"
+
+msgid "products_picked_up"
+msgstr "Produkte abgeholt"
+
+msgid "Click_to_change_price"
+msgstr "Zum Ändern des Preises anklicken"
+
+msgid "Additional_in_{0}"
+msgstr "Zusätzlich in {0}"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nein"
+
+msgid "Click_to_change_weight"
+msgstr "Zum Ändern des Gewichtes anklicken"
+
+msgid "Amount"
+msgstr "Anzahl"
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "Price"
+msgstr "Preis"
+
+msgid "Deposit"
+msgstr "Pfand"
+
+msgid "Member"
+msgstr "Mitglied"
+
+msgid "Picked_up"
+msgstr "Abgeholt"
+
+msgid "Amount_minus_eventual_variable_member_fee"
+msgstr "Betrag abzügl. eventuellem variablen Mitgliedsbeitrag"
+
 msgid "Invoice_for_the_order_period_{0}_to_{1}"
 msgstr "Rechnung für den Bestell-Zeitraum {0} - {1}"
 
@@ -971,12 +1013,6 @@ msgstr "Bestellungen vom"
 
 msgid "Invoice_date"
 msgstr "Rechnungsdatum"
-
-msgid "Amount"
-msgstr "Anzahl"
-
-msgid "Product"
-msgstr "Produkt"
 
 msgid "Price_excl."
 msgstr "Preis exkl."
@@ -1017,17 +1053,11 @@ msgstr "Vielen Dank, dass du uns belieferst!"
 msgid "Detail_view"
 msgstr "Detailübersicht"
 
-msgid "Member"
-msgstr "Mitglied"
+msgid "Order_day"
+msgstr "Bestelltag"
 
 msgid "Order_list_grouped_by"
 msgstr "Bestellliste gruppiert nach"
-
-msgid "Delivery_date"
-msgstr "Liefertermin"
-
-msgid "Price"
-msgstr "Preis"
 
 msgid "Dear_financial_responsible"
 msgstr "Liebe(r) Finanz-Verantwortliche(r)"
@@ -1149,11 +1179,8 @@ msgstr "Kommentar"
 msgid "Hello"
 msgstr "Hallo"
 
-msgid "this_invoice_contains_all_orders_that_have_been_placed_in_{0}."
-msgstr "in dieser Rechnung sind alle Bestellungen enthalten, die im {0} getätigt wurden."
-
-msgid "Be_careful:_it_is_the_order_date_that_counts_not_the_delivery_date."
-msgstr "<b>Achtung:</b> es wird das Bestelldatum berücksichtigt, nicht das Lieferdatum."
+msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
+msgstr "in dieser Rechnung sind alle Produkte enthalten, die im {0} geliefert wurden."
 
 msgid "If_the_invoice_amount_should_differ_from_your_own_recordings_please_tell_us."
 msgstr "Sollten der Rechnungsbetrag nicht mit deinen Aufzeichnungen übereinstimmen, sag uns bitte umgehend Bescheid."
@@ -1184,9 +1211,6 @@ msgstr "Bitte verwende zum Einloggen die E-Mail-Adresse dieser Nachricht. Falls 
 
 msgid "Your_contact_person"
 msgstr "Deine Ansprechperson"
-
-msgid "Pick_up_date"
-msgstr "Abholdatum"
 
 msgid "Order_list_by_product"
 msgstr "Bestellliste nach Produkt"
@@ -1407,9 +1431,6 @@ msgstr "Maximaler Kontostand in {0}"
 msgid "up_to_which_it_can_be_paid_in_{0}."
 msgstr "bis zu dem in {0} bezahlt werden kann."
 
-msgid "Deposit"
-msgstr "Pfand"
-
 msgid "Sum_of_open_orders_in_given_time_range"
 msgstr "Summe der offenen Bestellungen im angegebenen Zeitraum"
 
@@ -1431,14 +1452,17 @@ msgstr "Hersteller-Einstellungen bearbeiten"
 msgid "Test_order_list"
 msgstr "Bestellliste prüfen"
 
-msgid "Manually_send_order_list"
-msgstr "Bestellliste manuell versenden"
-
 msgid "Test_invoice"
 msgstr "Rechnung prüfen"
 
 msgid "Manufacturer_profile"
 msgstr "Hersteller-Profil"
+
+msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
+msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
+
+msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
+msgstr "Der Abholtag der Sofort-Bestellung wird automatisch auf <b>heute, {0}</b> gesetzt."
 
 msgid "all_members"
 msgstr "alle Mitglieder"
@@ -1446,62 +1470,29 @@ msgstr "alle Mitglieder"
 msgid "Group_by..."
 msgstr "Gruppieren nach..."
 
-msgid "Deposit_return"
-msgstr "Pfand-Rückgabe"
-
 msgid "docs_route_pick_up_products"
 msgstr "abholung-der-produkte"
 
-msgid "Amount_minus_eventual_variable_member_fee"
-msgstr "Betrag abzügl. eventuellem variablen Mitgliedsbeitrag"
+msgid "No_orders_found_for_pickup_day_{0}."
+msgstr "Es wurden keine Bestellungen für den Abholtag {0} gefunden."
 
-msgid "Click_to_change_amount"
-msgstr "Zum Ändern der Anzahl anklicken"
+msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
+msgstr "Es wurden keine Bestellungen für den Lieferzeitraum {0} bis {1} gefunden."
 
-msgid "Click_to_change_price"
-msgstr "Zum Ändern des Preises anklicken"
+msgid "Multiple_pickup_days"
+msgstr "Mehrere Abholtage"
 
-msgid "Additional_in_{0}"
-msgstr "Zusätzlich in {0}"
+msgid "Generate_orders_as_pdf"
+msgstr "Bestellungen als PDF generieren"
 
-msgid "Click_to_change_weight"
-msgstr "Zum Ändern des Gewichtes anklicken"
-
-msgid "Click_to_cancel_product"
-msgstr "Zum Stornieren des Produktes anklicken"
-
-msgid "Change_order_status"
-msgstr "Bestellstatus ändern"
+msgid "All_products_picked_up?"
+msgstr "Alle Produkte abgeholt?"
 
 msgid "Back_to_deposit_account"
 msgstr "Zurück zum Pfandkonto"
 
 msgid "Cancel_selected_products"
 msgstr "Ausgewählte Produkte stornieren"
-
-msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
-msgstr "Bitte wähle links oben das Mitglied aus, in dessen Namen du bestellen möchtest."
-
-msgid "Group_by_member"
-msgstr "Gruppieren nach Mitglied"
-
-msgid "Order_count"
-msgstr "Anzahl Bestellungen"
-
-msgid "Show_all_ordered_products_from_{0}"
-msgstr "Alle bestellten Produkte von {0} anzeigen"
-
-msgid "Set_date_of_order_back"
-msgstr "Bestellung rückdatieren"
-
-msgid "Generate_orders_as_pdf"
-msgstr "Bestellungen als PDF generieren"
-
-msgid "Close_all_orders"
-msgstr "Alle Bestellungen abschließen"
-
-msgid "Order_from"
-msgstr "Bestellung vom"
 
 msgid "Page_title"
 msgstr "Seitentitel"
@@ -1742,3 +1733,72 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+#~ msgid "The_order_status_of_the_ordered_product_{0}_of_{1}_was_successfully_changed_to_{2}."
+#~ msgstr "Der Bestellstatus des bestellten Produktes {0} vom {1} wurde erfolgreich auf {2} geändert."
+
+#~ msgid "The_order_status_of_the_ordered_products_{0}_were_successfully_changed_to_{1}."
+#~ msgstr "Der Bestellstatus des bestellten Produktes von {0} wurde erfolgreich auf {1} geändert."
+
+#~ msgid "1_ordered_product_was_successfully_closed."
+#~ msgstr "Das bestellte Produkt wurde erfolgreich auf abgeschlossen geändert."
+
+#~ msgid "{0}_ordered_product_were_successfully_closed."
+#~ msgstr "{0} bestellte Produkte wurden erfolgreich auf abgeschlossen geändert."
+
+#~ msgid "Delivery_date"
+#~ msgstr "Liefertermin"
+
+#~ msgid "Be_careful:_it_is_the_order_date_that_counts_not_the_delivery_date."
+#~ msgstr "<b>Achtung:</b> es wird das Bestelldatum berücksichtigt, nicht das Lieferdatum."
+
+#~ msgid "Last_pickup_day_between"
+#~ msgstr "Letzter Abholtag zwischen"
+
+#~ msgid "Amount_orders_between"
+#~ msgstr "Anzahl Bestellungen zwischen"
+
+#~ msgid "and"
+#~ msgstr "und"
+
+#~ msgid "Last_order_date"
+#~ msgstr "Letztes Bestell-Datum"
+
+#~ msgid "Manually_send_order_list"
+#~ msgstr "Bestellliste manuell versenden"
+
+#~ msgid "Order_from"
+#~ msgstr "Bestellung vom"
+
+#~ msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
+#~ msgstr "Der Kommentar der Bestellung Nr. {0} von {1} wurde geändert:"
+
+#~ msgid "The_date_of_the_order_{0}_of_{1}_was_changed_to_{2}."
+#~ msgstr "Die Bestellung {0} von {1} wurde auf den {2} rückdatiert."
+
+#~ msgid "Change_order_status"
+#~ msgstr "Bestellstatus ändern"
+
+#~ msgid "Order_count"
+#~ msgstr "Anzahl Bestellungen"
+
+#~ msgid "Set_date_of_order_back"
+#~ msgstr "Bestellung rückdatieren"
+
+#~ msgid "Close_all_orders"
+#~ msgstr "Alle Bestellungen abschließen"
+
+#~ msgid "Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
+#~ msgstr "Die Sofort-Bestellung Nr. {0} für {1} wurde erfolgreich getätigt und rückdatiert auf den {2}. Der Hersteller wurde informiert, sofern er die Benachrichtigung nicht selbst deaktiviert hat."
+
+#~ msgid "Order_number_abbr"
+#~ msgstr "Bestell-Nr."
+
+#~ msgid "Picked_up?"
+#~ msgstr "Abgeholt?"
+
+#~ msgid "The_order_status_of_the_orders_{0}_was_successfully_changed_to_{1}."
+#~ msgstr "Der Bestellstatus der Bestellungungen {0} wurde erfolgreich auf {1} geändert."
+
+#~ msgid "Pick_up_date"
+#~ msgstr "Abholdatum"

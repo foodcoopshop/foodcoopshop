@@ -90,7 +90,7 @@ if ($appAuth->isSuperadmin()) {
                         'title' => __d('admin', 'Show_details'),
                     'class' => 'icon-with-text',
                     ],
-                    '/admin/order-details/?manufacturerId='.$manufacturerId.'&dateFrom='.$deposit['dateFrom'].'&dateTo='.$deposit['dateTo'].'&deposit=1&orderStates[]='.join(',', $orderStates)
+                    '/admin/order-details/?manufacturerId='.$manufacturerId.'&pickupDay[]='.$deposit['dateFrom'].'&pickupDay[]='.$deposit['dateTo'].'&deposit=1&orderStates[]='.join(',', $orderStates)
                 ).'</span>';
                 echo '<span style="float: right;">';
                 echo $this->Number->formatAsCurrency($deposit['delivered']);

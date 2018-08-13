@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-06 11:36+0200\n"
+"POT-Creation-Date: 2018-08-13 10:10+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -41,12 +41,6 @@ msgstr ""
 msgid "Filename_General-terms-and-conditions"
 msgstr ""
 
-msgid "Error_while_creating_the_order."
-msgstr ""
-
-msgid "Error_while_saving_the_ordered_products."
-msgstr ""
-
 msgid "Finish_cart"
 msgstr ""
 
@@ -74,13 +68,22 @@ msgstr ""
 msgid "Errors_occurred."
 msgstr ""
 
+msgid "Instant_order_successfully_placed_for_{0}."
+msgstr ""
+
+msgid "Instant_order_successfully_placed_for_{0}._The_following_manufacturers_were_notified:_{1}"
+msgstr ""
+
+msgid "Pickup_day"
+msgstr ""
+
 msgid "Your_order_has_been_placed_succesfully."
 msgstr ""
 
 msgid "{0}_has_placed_a_new_order_({1})."
 msgstr ""
 
-msgid "Notification_about_instant_order_order_number_{0}"
+msgid "Notification_about_instant_order_order"
 msgstr ""
 
 msgid "Your_order_has_been_placed"
@@ -389,9 +392,6 @@ msgstr ""
 msgid "Place_instant_order_for"
 msgstr ""
 
-msgid "Instant_order_date_is_set_back_after_placing_it."
-msgstr ""
-
 msgid "Close_all_orders?"
 msgstr ""
 
@@ -653,13 +653,22 @@ msgstr ""
 msgid "The_member_needs_to_sign_again."
 msgstr ""
 
-msgid "Change_comment_of_order"
+msgid "Member"
 msgstr ""
 
-msgid "Set_date_of_order_back_to"
+msgid "Were_the_products_picked_up?"
 msgstr ""
 
-msgid "Set_date_of_order_back"
+msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
+msgstr ""
+
+msgid "All_products_picked_up?"
+msgstr ""
+
+msgid "Were_the_products_of_all_members_picked_up?"
+msgstr ""
+
+msgid "Change_pickup_day_comment"
 msgstr ""
 
 msgid "Change_member_comment"
@@ -758,7 +767,10 @@ msgstr ""
 msgid "VAT"
 msgstr ""
 
-msgid "Member"
+msgid "Order_day"
+msgstr ""
+
+msgid "Delivery_day"
 msgstr ""
 
 msgid "Total_sum"
@@ -830,7 +842,13 @@ msgstr ""
 msgid "Action_Log_Order_status_changed"
 msgstr ""
 
+msgid "Action_Log_Order_detail_status_changed"
+msgstr ""
+
 msgid "Action_Log_Orders_closed"
+msgstr ""
+
+msgid "Action_Log_Order_details_closed"
 msgstr ""
 
 msgid "Action_Log_Order_comment_changed"
@@ -1094,6 +1112,12 @@ msgstr ""
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr ""
 
+msgid "Please_accept_the_information_about_right_of_withdrawal."
+msgstr ""
+
+msgid "Please_accept_the_general_terms_and_conditions."
+msgstr ""
+
 msgid "offline"
 msgstr ""
 
@@ -1190,16 +1214,7 @@ msgstr ""
 msgid "online"
 msgstr ""
 
-msgid "Pick_up_day"
-msgstr ""
-
 msgid "{0,plural,=1{1_product} other{#_products}}"
-msgstr ""
-
-msgid "Please_accept_the_information_about_right_of_withdrawal."
-msgstr ""
-
-msgid "Please_accept_the_general_terms_and_conditions."
 msgstr ""
 
 msgid "Please_enter_a_correct_number."
@@ -1325,40 +1340,7 @@ msgstr ""
 msgid "Including_vat"
 msgstr ""
 
-msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
-msgstr ""
-
 msgid "To_finish_order_click_here."
-msgstr ""
-
-msgid "The_amount_will_be_reduced_from_your_credit_balance."
-msgstr ""
-
-msgid "Please_pay_when_picking_up_products."
-msgstr ""
-
-msgid "Please_pick_up_your_products_on_{0}_at_{1}."
-msgstr ""
-
-msgid "general_terms_and_conditions"
-msgstr ""
-
-msgid "I_accept_the_{0}"
-msgstr ""
-
-msgid "right_of_withdrawal"
-msgstr ""
-
-msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
-msgstr ""
-
-msgid "Write_message_to_pick_up_team?"
-msgstr ""
-
-msgid "Placeholder_message_order_comment."
-msgstr ""
-
-msgid "Order_button"
 msgstr ""
 
 msgid "Order_placed"
@@ -1370,13 +1352,7 @@ msgstr ""
 msgid "The_order_confirmation_was_sent_by_email_to_{0}."
 msgstr ""
 
-msgid "Please_pick_up_the_ordered_products_on_{0}_in_our_pick_up_store."
-msgstr ""
-
-msgid "The_product_value_{0}_with_an_additional_deposit_of_{1}_was_automatically_reduced_from_your_credit."
-msgstr ""
-
-msgid "The_product_value_{0}_was_automatically_reduced_from_your_credit."
+msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
 msgstr ""
 
 msgid "Increase_credit"
@@ -1431,6 +1407,9 @@ msgid "Want_to_receive_reminder_emails?"
 msgstr ""
 
 msgid "terms_of_use"
+msgstr ""
+
+msgid "I_accept_the_{0}"
 msgstr ""
 
 msgid "Please_enter_your_email_address_and_click_on_send_button."
@@ -1538,6 +1517,36 @@ msgstr ""
 msgid "Signed_in"
 msgstr ""
 
+msgid "right_of_withdrawal"
+msgstr ""
+
+msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
+msgstr ""
+
+msgid "general_terms_and_conditions"
+msgstr ""
+
+msgid "Order_button"
+msgstr ""
+
+msgid "The_amount_will_be_reduced_from_the_credit_balance."
+msgstr ""
+
+msgid "Please_pay_when_picking_up_products."
+msgstr ""
+
+msgid "Write_message_to_pick_up_team_for_{0}?"
+msgstr ""
+
+msgid "Placeholder_message_pickup_day_comment."
+msgstr ""
+
+msgid "Pickup_place:_{0}"
+msgstr ""
+
+msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
+msgstr ""
+
 msgid "Product"
 msgstr ""
 
@@ -1580,15 +1589,6 @@ msgstr ""
 msgid "Your_account_at_{0}_has_just_been_activated."
 msgstr ""
 
-msgid "thank_you_for_your_order_number_{0}_from_{1}."
-msgstr ""
-
-msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
-msgstr ""
-
-msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
-msgstr ""
-
 msgid "Your_registration_at_{0}_has_just_been_successful!"
 msgstr ""
 
@@ -1604,10 +1604,10 @@ msgstr ""
 msgid "Here_you_can_see_the_data_of_the_new_member"
 msgstr ""
 
-msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1}_(order_number_{2})."
+msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1})."
 msgstr ""
 
-msgid "You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists."
+msgid "You_receive_this_message_because_the_delivery_day_of_this_order_was_automatically_set_to_today_{0}_and_therefore_it_does_not_appear_on_your_order_lists."
 msgstr ""
 
 msgid "please_click_on_this_link_to_generate_a_new_password"
@@ -1617,6 +1617,18 @@ msgid "you_just_generated_a_new_password_which_is"
 msgstr ""
 
 msgid "You_can_sign_in_and_change_your_password_here"
+msgstr ""
+
+msgid "thank_you_for_your_order_from_{0}."
+msgstr ""
+
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr ""
+
+msgid "The_amount_was_reduced_from_your_credit_balance."
+msgstr ""
+
+msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
 msgstr ""
 
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."
@@ -1697,12 +1709,6 @@ msgstr ""
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr ""
 
-msgid "yes"
-msgstr ""
-
-msgid "no"
-msgstr ""
-
 msgid "Members"
 msgstr ""
 
@@ -1716,6 +1722,12 @@ msgid "Credit"
 msgstr ""
 
 msgid "Member_fee"
+msgstr ""
+
+msgid "yes"
+msgstr ""
+
+msgid "no"
 msgstr ""
 
 msgid "Deleted_Member"
@@ -1874,6 +1886,9 @@ msgstr ""
 msgid "Mouseover_shows_the_paid_amont_in_{0}."
 msgstr ""
 
+msgid "Order_contains_amount_in_{0}."
+msgstr ""
+
 msgid "Paying_with_time_account_name_{0}"
 msgstr ""
 
@@ -1887,6 +1902,15 @@ msgid "This_order_contains_the_variable_member_fee."
 msgstr ""
 
 msgid "order_state_closed"
+msgstr ""
+
+msgid "order_state_order_list_sent_to_manufacturer"
+msgstr ""
+
+msgid "order_state_billed_cashless"
+msgstr ""
+
+msgid "order_state_billed_cash"
 msgstr ""
 
 msgid "route_information_about_right_of_withdrawal"

@@ -4,6 +4,7 @@ namespace Admin\Controller;
 
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use App\Model\Table\OrderDetailsTable;
@@ -70,16 +71,14 @@ class OrderDetailsController extends AdminAppController
                     'OrderDetails.id_order_detail' => $orderDetailId
                 ],
                 'contain' => [
-                    'Products',
-                    'Orders'
-
+                    'Products'
                 ]
             ])->first();
             if (!empty($orderDetail)) {
                 if ($this->AppAuth->isManufacturer() && $orderDetail->product->id_manufacturer == $this->AppAuth->getManufacturerId()) {
                     return true;
                 }
-                if ($this->AppAuth->isCustomer() && $orderDetail->order->id_customer == $this->AppAuth->getUserId()) {
+                if ($this->AppAuth->isCustomer() && $orderDetail->id_customer == $this->AppAuth->getUserId()) {
                     return true;
                 }
             }
@@ -118,42 +117,114 @@ class OrderDetailsController extends AdminAppController
         }
         return $sortDirection;
     }
+    
+    /**
+     * this url is called if instant order is initialized
+     * saves the desired user in session
+     */
+    public function initInstantOrder($customerId)
+    {
+        if (! $customerId) {
+            throw new RecordNotFoundException('customerId not passed');
+        }
+        
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $instantOrderCustomer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $customerId
+            ],
+            'contain' => [
+                'AddressCustomers'
+            ]
+        ])->first();
+        if (! empty($instantOrderCustomer)) {
+            $this->getRequest()->getSession()->write('Auth.instantOrderCustomer', $instantOrderCustomer);
+        } else {
+            $this->Flash->error(__d('admin', 'No_member_found_with_id_{0}.', [$customerId]));
+        }
+        $this->redirect('/');
+    }
 
+    public function iframeStartPage()
+    {
+        $this->set('title_for_layout', __d('admin', 'Instant_order'));
+    }
+    
+    public function orderDetailsAsPdf()
+    {
+        
+        $pickupDay = [$this->getRequest()->getQuery('pickupDay')];
+        
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, '', '', '', [], $pickupDay, '', '');
+        $contain = $odParams['contain'];
+        $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
+            'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
+        ]);
+        $contain[] = 'PickupDayEntities';
+        $query = $this->OrderDetail->find('all', [
+            'conditions' => $odParams['conditions'],
+            'contain' => $contain
+        ]);
+        
+        $orderDetails = $this->paginate($query, [
+            'order' => [
+                'Products.id_manufacturer' => 'ASC',
+                'OrderDetails.product_name' => 'ASC'
+            ]
+        ])->toArray();
+        
+        $preparedOrderDetails = [];
+        foreach($orderDetails as $orderDetail) {
+            @$preparedOrderDetails[$orderDetail->id_customer][] = $orderDetail;
+        }
+        
+        $this->set('orderDetails', $preparedOrderDetails);
+        
+    }
+    
     public function index()
     {
 
+        if (!empty($this->getRequest()->getQuery('message'))) {
+            $this->Flash->success($this->getRequest()->getQuery('message'));
+            $this->redirect($this->referer());
+        }
+        
         // for filter from action logs page
         $orderDetailId = '';
         if (! empty($this->getRequest()->getQuery('orderDetailId'))) {
             $orderDetailId = $this->getRequest()->getQuery('orderDetailId');
         }
 
-        $dateFrom = '';
-        $dateTo = '';
+        $pickupDay = [];
         if ($orderDetailId == '') {
-            $dateFrom = Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay());
-            if (! empty($this->getRequest()->getQuery('dateFrom'))) {
-                $dateFrom = $this->getRequest()->getQuery('dateFrom');
+            if (in_array('pickupDay', array_keys($this->getRequest()->getQueryParams()))) {
+                $pickupDay = $this->getRequest()->getQuery('pickupDay');
+                $explodedPickupDay = explode(',', $pickupDay[0]); // param can be passed comma separated
+                if (count($explodedPickupDay) == 2) {
+                    $pickupDay = $explodedPickupDay;
+                }
+            } else {
+                // default value
+                $pickupDay[0] = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getCurrentDay());
             }
-            $dateTo = Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay());
-            if (! empty($this->getRequest()->getQuery('dateTo'))) {
-                $dateTo = $this->getRequest()->getQuery('dateTo');
+            // START legacy code - can be safely removed in v3
+            if ($this->getRequest()->getQuery('dateFrom')) {
+                $pickupDay[0] = $this->getRequest()->getQuery('dateFrom');
             }
+            if ($this->getRequest()->getQuery('dateTo')) {
+                $pickupDay[1] = $this->getRequest()->getQuery('dateTo');
+            }
+            // END legacy code
         }
-        $this->set('dateFrom', $dateFrom);
-        $this->set('dateTo', $dateTo);
+        $this->set('pickupDay', $pickupDay);
 
         $manufacturerId = '';
         if (! empty($this->getRequest()->getQuery('manufacturerId'))) {
             $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
         }
         $this->set('manufacturerId', $manufacturerId);
-
-        $orderId = '';
-        if (! empty($this->getRequest()->getQuery('orderId'))) {
-            $orderId = $this->getRequest()->getQuery('orderId');
-        }
-        $this->set('orderId', $orderId);
 
         $deposit = '';
         if (! empty($this->getRequest()->getQuery('deposit'))) {
@@ -173,10 +244,6 @@ class OrderDetailsController extends AdminAppController
                 $orderStates = [];
             }
         }
-        // legacy cakephp2: param was called "orderState" and contained csv data
-        if (in_array('orderState', array_keys($this->getRequest()->getQueryParams()))) {
-            $orderStates = explode(', ', $this->getRequest()->getQuery('orderState'));
-        }
         $this->set('orderStates', $orderStates);
 
         $productId = '';
@@ -195,6 +262,9 @@ class OrderDetailsController extends AdminAppController
         if (! empty($this->getRequest()->getQuery('groupBy'))) {
             $groupBy = $this->getRequest()->getQuery('groupBy');
         }
+        if ($this->AppAuth->isManufacturer() && $groupBy != 'product') {
+            $groupBy = '';
+        }
 
         // legacy: still allow old variable "groupByManufacturer"
         if (! empty($this->getRequest()->getQuery('groupByManufacturer'))) {
@@ -204,61 +274,115 @@ class OrderDetailsController extends AdminAppController
         $this->set('groupBy', $groupBy);
 
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, $manufacturerId, $productId, $customerId, $orderStates, $dateFrom, $dateTo, $orderDetailId, $orderId, $deposit);
+        $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, $manufacturerId, $productId, $customerId, $orderStates, $pickupDay, $orderDetailId, $deposit);
 
+        $contain = $odParams['contain'];
+        if (($groupBy == 'customer' || $groupBy == '') && count($pickupDay) == 1) {
+            $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
+                'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
+            ]);
+            $contain[] = 'PickupDayEntities';
+        }
+        
         $query = $this->OrderDetail->find('all', [
             'conditions' => $odParams['conditions'],
-            'contain' => $odParams['contain']
+            'contain' => $contain
         ]);
 
         $orderDetails = $this->paginate($query, [
             'sortWhitelist' => [
-                'OrderDetails.product_amount', 'OrderDetails.product_name', 'OrderDetails.total_price_tax_incl', 'OrderDetails.deposit', 'OrderDetails.current_state', 'Orders.date_add', 'Manufacturers.name', 'Customers.' . Configure::read('app.customerMainNamePart'), 'OrderDetailUnits.product_quantity_in_units'
+                'OrderDetails.product_amount', 'OrderDetails.product_name', 'OrderDetails.total_price_tax_incl', 'OrderDetails.deposit', 'OrderDetails.order_state', 'OrderDetails.pickup_day', 'Manufacturers.name', 'Customers.' . Configure::read('app.customerMainNamePart'), 'OrderDetailUnits.product_quantity_in_units'
             ],
             'order' => [
                 // first param needs to be included in sortWhitelist!
-                'Orders.date_add' => 'DESC',
+                'OrderDetails.created' => 'DESC',
                 'Products.id_manufacturer' => 'ASC',
                 'OrderDetails.product_name' => 'ASC'
             ]
         ])->toArray();
-
+        
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        
+        $orderDetails = $this->prepareGroupedOrderDetails($orderDetails, $groupBy, $pickupDay);
+        $this->set('orderDetails', $orderDetails);
 
-        switch ($groupBy) {
-            case 'manufacturer':
-                $preparedOrderDetails = [];
-                foreach ($orderDetails as $orderDetail) {
-                    $key = $orderDetail->product->id_manufacturer;
-                    @$preparedOrderDetails[$key]['sum_price'] += $orderDetail->total_price_tax_incl;
-                    @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_amount;
-                    $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($orderDetail->product->manufacturer->variable_member_fee);
-                    $preparedOrderDetails[$key]['variable_member_fee'] = $variableMemberFee;
-                    @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
-                    $preparedOrderDetails[$key]['manufacturer_id'] = $key;
-                    $preparedOrderDetails[$key]['name'] = $orderDetail->product->manufacturer->name;
+        $timebasedCurrencyOrderDetailInList = false;
+        $sums = [
+            'records_count' => 0,
+            'amount' => 0,
+            'price' => 0,
+            'deposit' => 0,
+            'units' => [],
+            'reduced_price' => 0
+        ];
+        foreach($orderDetails as $orderDetail) {
+            @$sums['records_count']++;
+            if ($groupBy == '') {
+                @$sums['price'] += $orderDetail->total_price_tax_incl;
+                @$sums['amount'] += $orderDetail->product_amount;
+                @$sums['deposit'] += $orderDetail->deposit;
+            } else {
+                @$sums['price'] += $orderDetail['sum_price'];
+                @$sums['amount'] += $orderDetail['sum_amount'];
+                if ($groupBy == 'manufacturer') {
+                    @$sums['reduced_price'] += $orderDetail['reduced_price'];
                 }
+                @$sums['deposit'] += $orderDetail['sum_deposit'];
+            }
+            if (!empty($orderDetail->order_detail_unit)) {
+                @$sums['units'][$orderDetail->order_detail_unit->unit_name] += $orderDetail->order_detail_unit->product_quantity_in_units;
+            }
+            if (!empty($orderDetail->timebased_currency_order_detail) || !empty($orderDetail['timebased_currency_order_detail_seconds_sum'])) {
+                $timebasedCurrencyOrderDetailInList = true;
+            }
+        }
+        $this->set('timebasedCurrencyOrderDetailInList', $timebasedCurrencyOrderDetailInList);
+        $this->set('sums', $sums);
+        
+        // extract all email addresses for button
+        $emailAddresses = [];
+        if ($groupBy == '') {
+            $emailAddresses = $query->all()->extract('customer.email')->toArray();
+        }
+        if ($groupBy == 'customer') {
+            $emailAddresses = Hash::extract($orderDetails, '{n}.email');
+        }
+        $emailAddresses = array_unique($emailAddresses);
+        $this->set('emailAddresses', $emailAddresses);
+
+        $groupByForDropdown = [
+            'product' => __d('admin', 'Group_by_product')
+        ];
+        if (!$this->AppAuth->isManufacturer()) {
+            $groupByForDropdown['customer'] = __d('admin', 'Group_by_member');
+            $groupByForDropdown['manufacturer'] = __d('admin', 'Group_by_manufacturer');
+        }
+        $this->set('groupByForDropdown', $groupByForDropdown);
+        $this->set('customersForDropdown', $this->OrderDetail->Customers->getForDropdown());
+        $this->set('manufacturersForDropdown', $this->OrderDetail->Products->Manufacturers->getForDropdown());
+
+        if (!$this->AppAuth->isManufacturer()) {
+            $this->set('customersForInstantOrderDropdown', $this->OrderDetail->Customers->getForDropdown(false, 'id_customer', $this->AppAuth->isSuperadmin()));
+        }
+
+        $this->set('title_for_layout', __d('admin', 'Orders'));
+    }
+    
+    private function prepareGroupedOrderDetails($orderDetails, $groupBy)
+    {
+        
+        switch ($groupBy) {
+            case 'customer':
+                $preparedOrderDetails = $this->OrderDetail->prepareOrderDetailsGroupedByCustomer($orderDetails);
                 $sortField = $this->getSortFieldForGroupedOrderDetails('name');
-                $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
-                $preparedOrderDetails = Hash::sort($preparedOrderDetails, '{n}.' . $sortField, $sortDirection);
-                $orderDetails = $preparedOrderDetails;
+                break;
+            case 'manufacturer':
+                $preparedOrderDetails = $this->OrderDetail->prepareOrderDetailsGroupedByManufacturer($orderDetails);
+                $sortField = $this->getSortFieldForGroupedOrderDetails('name');
                 break;
             case 'product':
-                $preparedOrderDetails = [];
-                foreach ($orderDetails as $orderDetail) {
-                    $key = $orderDetail->product_id;
-                    @$preparedOrderDetails[$key]['sum_price'] += $orderDetail->total_price_tax_incl;
-                    @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_amount;
-                    @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
-                    $preparedOrderDetails[$key]['product_id'] = $key;
-                    $preparedOrderDetails[$key]['name'] = $orderDetail->product->name;
-                    $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail->product->manufacturer->id_manufacturer;
-                    $preparedOrderDetails[$key]['manufacturer_name'] = $orderDetail->product->manufacturer->name;
-                }
+                $preparedOrderDetails = $this->OrderDetail->prepareOrderDetailsGroupedByProduct($orderDetails);
                 $sortField = $this->getSortFieldForGroupedOrderDetails('manufacturer_name');
-                $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
-                $preparedOrderDetails = Hash::sort($preparedOrderDetails, '{n}.' . $sortField, $sortDirection);
-                $orderDetails = $preparedOrderDetails;
                 break;
             default:
                 $i = 0;
@@ -280,31 +404,14 @@ class OrderDetailsController extends AdminAppController
                 }
                 break;
         }
-
-        $this->set('orderDetails', $orderDetails);
-
-        $timebasedCurrencyOrderInList = false;
-        foreach($orderDetails as $orderDetail) {
-            if (!empty($orderDetail->timebased_currency_order_detail)) {
-                $timebasedCurrencyOrderInList = true;
-                break;
-            }
+        
+        if (isset($sortField)) {
+            $sortDirection = $this->getSortDirectionForGroupedOrderDetails();
+            $orderDetails = Hash::sort($preparedOrderDetails, '{n}.' . $sortField, $sortDirection);
         }
-        $this->set('timebasedCurrencyOrderInList', $timebasedCurrencyOrderInList);
-
-        $groupByForDropdown = ['product' => __d('admin', 'Group_by_product')];
-        if (!$this->AppAuth->isManufacturer()) {
-            $groupByForDropdown['manufacturer'] = __d('admin', 'Group_by_manufacturer');
-        }
-        $this->set('groupByForDropdown', $groupByForDropdown);
-        $this->set('customersForDropdown', $this->OrderDetail->Orders->Customers->getForDropdown());
-        $this->set('manufacturersForDropdown', $this->OrderDetail->Products->Manufacturers->getForDropdown());
-
-        if (!$this->AppAuth->isManufacturer()) {
-            $this->set('customersForInstantOrderDropdown', $this->OrderDetail->Orders->Customers->getForDropdown(false, 'id_customer', $this->AppAuth->isSuperadmin()));
-        }
-
-        $this->set('title_for_layout', __d('admin', 'Ordered_products'));
+        
+        return $orderDetails;
+        
     }
 
     public function editProductQuantity()
@@ -331,14 +438,12 @@ class OrderDetailsController extends AdminAppController
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
             'contain' => [
-                'Orders',
-                'Orders.Customers',
+                'Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
                 'OrderDetailTaxes',
                 'OrderDetailUnits',
-                'TimebasedCurrencyOrderDetails',
-                'Orders.TimebasedCurrencyOrders'
+                'TimebasedCurrencyOrderDetails'
             ]
         ])->first();
 
@@ -363,7 +468,7 @@ class OrderDetailsController extends AdminAppController
         if (!$doNotChangePrice) {
             $email = new AppEmail();
             $email->setTemplate('Admin.order_detail_quantity_changed')
-            ->setTo($oldOrderDetail->order->customer->email)
+            ->setTo($oldOrderDetail->customer->email)
             ->setSubject(__d('admin', 'Weight_adapted') . ': ' . $oldOrderDetail->product_name)
             ->setViewVars([
                 'oldOrderDetail' => $oldOrderDetail,
@@ -372,7 +477,7 @@ class OrderDetailsController extends AdminAppController
                 'appAuth' => $this->AppAuth
             ]);
 
-            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->order->customer->name . '</b>']);
+            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
             // never send email to manufacturer if bulk orders are allowed
             $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
@@ -381,7 +486,7 @@ class OrderDetailsController extends AdminAppController
 
             if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
                 $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
-                    '<b>' . $oldOrderDetail->order->customer->name . '</b>',
+                    '<b>' . $oldOrderDetail->customer->name . '</b>',
                     '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
                 ]);
                 $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
@@ -427,12 +532,10 @@ class OrderDetailsController extends AdminAppController
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
             'contain' => [
-                'Orders',
-                'Orders.Customers',
+                'Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
                 'TimebasedCurrencyOrderDetails',
-                'Orders.TimebasedCurrencyOrders',
                 'OrderDetailUnits'
             ]
         ])->first();
@@ -459,7 +562,7 @@ class OrderDetailsController extends AdminAppController
         // send email to customer
         $email = new AppEmail();
         $email->setTemplate('Admin.order_detail_amount_changed')
-        ->setTo($oldOrderDetail->order->customer->email)
+        ->setTo($oldOrderDetail->customer->email)
         ->setSubject(__d('admin', 'Ordered_amount_adapted') . ': ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
@@ -468,18 +571,16 @@ class OrderDetailsController extends AdminAppController
             'editAmountReason' => $editAmountReason
         ]);
 
-        $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->order->customer->name . '</b>']);
+        $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
         // never send email to manufacturer if bulk orders are allowed
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail->product->manufacturer->bulk_orders_allowed);
         $sendOrderedProductAmountChangedNotification = $this->Manufacturer->getOptionSendOrderedProductAmountChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_amount_changed_notification);
 
-        // only send email to manufacturer on the days between orderSend and delivery (normally wednesdays, thursdays and fridays)
-        $weekday = date('N');
-        if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('app.timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed && $sendOrderedProductAmountChangedNotification) {
+        if (! $this->AppAuth->isManufacturer() && $orderDetail->order_state == ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER && ! $bulkOrdersAllowed && $sendOrderedProductAmountChangedNotification) {
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
-                '<b>' . $oldOrderDetail->order->customer->name . '</b>',
+                '<b>' . $oldOrderDetail->customer->name . '</b>',
                 '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
             ]);
             $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
@@ -533,13 +634,11 @@ class OrderDetailsController extends AdminAppController
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
             'contain' => [
-                'Orders',
-                'Orders.Customers',
+                'Customers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
                 'OrderDetailTaxes',
                 'TimebasedCurrencyOrderDetails',
-                'Orders.TimebasedCurrencyOrders'
             ]
         ])->first();
 
@@ -558,7 +657,7 @@ class OrderDetailsController extends AdminAppController
         // send email to customer
         $email = new AppEmail();
         $email->setTemplate('Admin.order_detail_price_changed')
-        ->setTo($oldOrderDetail->order->customer->email)
+        ->setTo($oldOrderDetail->customer->email)
         ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
@@ -567,7 +666,7 @@ class OrderDetailsController extends AdminAppController
             'editPriceReason' => $editPriceReason
         ]);
 
-        $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->order->customer->name . '</b>']);
+        $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
         // never send email to manufacturer if bulk orders are allowed
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
@@ -575,7 +674,7 @@ class OrderDetailsController extends AdminAppController
         $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
         if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
-                '<b>' . $oldOrderDetail->order->customer->name . '</b>',
+                '<b>' . $oldOrderDetail->customer->name . '</b>',
                 '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
             ]);
             $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
@@ -597,6 +696,92 @@ class OrderDetailsController extends AdminAppController
             'status' => 1,
             'msg' => 'ok'
         ]));
+    }
+    
+    public function editPickupDayComment()
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+        
+        $customerId = $this->getRequest()->getData('customerId');
+        $pickupDay = $this->getRequest()->getData('pickupDay');
+        $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
+        $pickupDayComment = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('pickupDayComment')), '<strong><b>'));
+        
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'id_customer' => $customerId
+            ]
+        ])->first();
+        
+        $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
+        $result = $this->PickupDay->insertOrUpdate(
+            [
+                'customer_id' => $customerId,
+                'pickup_day' => $pickupDay
+            ],
+            [
+                'comment' => $pickupDayComment
+            ]
+        );
+        
+        $message = '';
+        if (empty($result)) {
+            $message = __d('admin', 'Errors_while_saving!');
+        }
+        
+        $this->Flash->success(__d('admin', 'The_comment_was_changed_successfully.'));
+        
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', __d('admin', 'The_pickup_day_comment_of_{0}_was_changed:', [$customer->name]) . ' <div class="changed">' . $pickupDayComment . ' </div>');
+        
+        $this->set('data', [
+            'result' => $result,
+            'status' => !empty($result),
+            'msg' => 'ok'
+        ]);
+        
+        $this->set('_serialize', 'data');
+    }
+    
+    public function changeProductsPickedUp()
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+        
+        $customerIds = $this->getRequest()->getData('customerIds');
+        $state = $this->getRequest()->getData('state');
+        $pickupDay = $this->getRequest()->getData('pickupDay');
+        $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
+        
+        $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
+        $this->PickupDay->setPrimaryKey(['customer_id', 'pickup_day']);
+        
+        foreach($customerIds as $customerId) {
+            $result = $this->PickupDay->insertOrUpdate(
+                [
+                    'customer_id' => $customerId,
+                    'pickup_day' => $pickupDay
+                ],
+                [
+                    'products_picked_up' => $state
+                ]
+            );
+        }
+        
+        $message = '';
+        if (empty($result)) {
+            $message = __d('admin', 'Errors_while_saving!');
+        }
+        
+        $this->set('data', [
+            'pickupDay' => $pickupDay,
+            'result' => $result,
+            'status' => !empty($result),
+            'msg' => $message
+        ]);
+        
+        $this->set('_serialize', 'data');
+        
     }
 
     /**
@@ -624,39 +809,31 @@ class OrderDetailsController extends AdminAppController
                     'OrderDetails.id_order_detail' => $orderDetailId
                 ],
                 'contain' => [
-                    'Orders.Customers',
+                    'Customers',
                     'Products.StockAvailables',
                     'Products.Manufacturers',
                     'Products.Manufacturers.AddressManufacturers',
                     'ProductAttributes.StockAvailables',
                     'OrderDetailTaxes',
                     'TimebasedCurrencyOrderDetails',
-                    'Orders.TimebasedCurrencyOrders',
                     'OrderDetailUnits'
                 ]
             ])->first();
 
-            $message = __d('admin', 'Product_{0}_with_a_price_of_{1}_from_order_number_{2}_from_{3}_was_successfully_cancelled.', [
+            $message = __d('admin', 'Product_{0}_with_a_price_of_{1}_from_{2}_was_successfully_cancelled.', [
                 '<b>' . $orderDetail->product_name . '</b>',
                 Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_incl),
-                $orderDetail->id_order,
-                $orderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'))
+                $orderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'))
             ]);
 
             $this->OrderDetail->deleteOrderDetail($orderDetail);
-            $this->OrderDetail->Orders->updateSums($orderDetail->order);
-
-            if (!empty($orderDetail->timebased_currency_order_detail)) {
-                $this->TimebasedCurrencyOrder = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrders');
-                $this->TimebasedCurrencyOrder->updateSums($orderDetail->order);
-            }
 
             $newQuantity = $this->increaseQuantityForProduct($orderDetail, $orderDetail->product_amount * 2);
 
             // send email to customer
             $email = new AppEmail();
             $email->setTemplate('Admin.order_detail_deleted')
-            ->setTo($orderDetail->order->customer->email)
+            ->setTo($orderDetail->customer->email)
             ->setSubject(__d('admin', 'Product_was_cancelled').': ' . $orderDetail->product_name)
             ->setViewVars([
                 'orderDetail' => $orderDetail,
@@ -664,18 +841,16 @@ class OrderDetailsController extends AdminAppController
                 'cancellationReason' => $cancellationReason
             ]);
 
-            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $orderDetail->order->customer->name . '</b>']);
+            $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $orderDetail->customer->name . '</b>']);
 
             // never send email to manufacturer if bulk orders are allowed
             $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
             $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail->product->manufacturer->bulk_orders_allowed);
             $sendOrderedProductDeletedNotification = $this->Manufacturer->getOptionSendOrderedProductDeletedNotification($orderDetail->product->manufacturer->send_ordered_product_deleted_notification);
 
-            // only send email to manufacturer on the days between orderSend and delivery (normally wednesdays, thursdays and fridays)
-            $weekday = date('N');
-            if (! $this->AppAuth->isManufacturer() && in_array($weekday, Configure::read('app.timeHelper')->getWeekdaysBetweenOrderSendAndDelivery()) && ! $bulkOrdersAllowed && $sendOrderedProductDeletedNotification) {
+            if (! $this->AppAuth->isManufacturer() && $orderDetail->order_state == ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER && ! $bulkOrdersAllowed && $sendOrderedProductDeletedNotification) {
                 $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
-                    '<b>' . $orderDetail->order->customer->name . '</b>',
+                    '<b>' . $orderDetail->customer->name . '</b>',
                     '<b>' . $orderDetail->product->manufacturer->name . '</b>'
                 ]);
                 $email->addCC($orderDetail->product->manufacturer->address_manufacturer->email);
@@ -763,16 +938,13 @@ class OrderDetailsController extends AdminAppController
                 'OrderDetails.id_order_detail' => $oldOrderDetail->id_order_detail
             ],
             'contain' => [
-                'Orders',
-                'Orders.Customers',
+                'Customers',
                 'Products.StockAvailables',
                 'Products.Manufacturers',
                 'ProductAttributes.StockAvailables',
                 'OrderDetailUnits'
             ]
         ])->first();
-
-        $this->OrderDetail->Orders->updateSums($newOrderDetail);
 
         return $newOrderDetail;
     }
@@ -782,8 +954,6 @@ class OrderDetailsController extends AdminAppController
         if (!empty($object->timebased_currency_order_detail)) {
             $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
             $this->TimebasedCurrencyOrderDetail->changePrice($object, $newPrice, $amount);
-            $this->TimebasedCurrencyOrder = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrders');
-            $this->TimebasedCurrencyOrder->updateSums($oldOrderDetail->order);
         }
     }
 

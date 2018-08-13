@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-08 11:44+0200\n"
+"POT-Creation-Date: 2018-08-13 10:10+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -227,13 +227,22 @@ msgstr ""
 msgid "No_orders_within_the_given_time_range."
 msgstr ""
 
+msgid "No_member_found_with_id_{0}."
+msgstr ""
+
+msgid "Instant_order"
+msgstr ""
+
 msgid "Group_by_product"
+msgstr ""
+
+msgid "Group_by_member"
 msgstr ""
 
 msgid "Group_by_manufacturer"
 msgstr ""
 
-msgid "Ordered_products"
+msgid "Orders"
 msgstr ""
 
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
@@ -266,37 +275,16 @@ msgstr ""
 msgid "Ordered_price_adapted"
 msgstr ""
 
-msgid "Product_{0}_with_a_price_of_{1}_from_order_number_{2}_from_{3}_was_successfully_cancelled."
+msgid "The_pickup_day_comment_of_{0}_was_changed:"
+msgstr ""
+
+msgid "Product_{0}_with_a_price_of_{1}_from_{2}_was_successfully_cancelled."
 msgstr ""
 
 msgid "Product_was_cancelled"
 msgstr ""
 
 msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}}"
-msgstr ""
-
-msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
-msgstr ""
-
-msgid "Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
-msgstr ""
-
-msgid "The_order_status_of_the_order_of_{0}_was_successfully_changed_to_{1}."
-msgstr ""
-
-msgid "The_order_status_of_the_orders_{0}_was_successfully_changed_to_{1}."
-msgstr ""
-
-msgid "Orders"
-msgstr ""
-
-msgid "Instant_order"
-msgstr ""
-
-msgid "No_member_found_with_id_{0}."
-msgstr ""
-
-msgid "The_date_of_the_order_{0}_of_{1}_was_changed_to_{2}."
 msgstr ""
 
 msgid "Home"
@@ -357,9 +345,6 @@ msgid "Member_fee"
 msgstr ""
 
 msgid "Credit"
-msgstr ""
-
-msgid "Order_number_abbr"
 msgstr ""
 
 msgid "Show_order"
@@ -686,7 +671,7 @@ msgstr ""
 msgid "Last_executed_migration"
 msgstr ""
 
-msgid "Pick_up_day"
+msgid "Pickup_day"
 msgstr ""
 
 msgid "Software_update_version"
@@ -794,13 +779,7 @@ msgstr ""
 msgid "Delete_member_irrevocably?"
 msgstr ""
 
-msgid "Amount_orders_between"
-msgstr ""
-
-msgid "and"
-msgstr ""
-
-msgid "and_last_order_date_between"
+msgid "Last_pickup_day"
 msgstr ""
 
 msgid "Group"
@@ -809,19 +788,19 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
+msgid "Ordered_products"
+msgstr ""
+
 msgid "Reminder"
 msgstr ""
 
 msgid "Register_date"
 msgstr ""
 
-msgid "Last_order_date"
-msgstr ""
-
 msgid "Comment_abbreviation"
 msgstr ""
 
-msgid "Newbie_only_{0}_times_ordered."
+msgid "Newbie_only_{0}_products_ordered."
 msgstr ""
 
 msgid "Show_all_orders_from_{0}"
@@ -902,6 +881,9 @@ msgstr ""
 msgid "Amount_in_{0}"
 msgstr ""
 
+msgid "Instant_order_for_today"
+msgstr ""
+
 msgid "chose_member..."
 msgstr ""
 
@@ -956,6 +938,66 @@ msgstr ""
 msgid "Please_chose_the_months_for_your_payment."
 msgstr ""
 
+msgid "Delivery_day"
+msgstr ""
+
+msgid "Delivery_days"
+msgstr ""
+
+msgid "Pickup_days"
+msgstr ""
+
+msgid "Click_to_change_amount"
+msgstr ""
+
+msgid "Click_to_cancel_product"
+msgstr ""
+
+msgid "Deposit_return"
+msgstr ""
+
+msgid "Show_all_ordered_products_from_{0}"
+msgstr ""
+
+msgid "products_picked_up"
+msgstr ""
+
+msgid "Click_to_change_price"
+msgstr ""
+
+msgid "Additional_in_{0}"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "Click_to_change_weight"
+msgstr ""
+
+msgid "Amount"
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "Deposit"
+msgstr ""
+
+msgid "Member"
+msgstr ""
+
+msgid "Picked_up"
+msgstr ""
+
+msgid "Amount_minus_eventual_variable_member_fee"
+msgstr ""
+
 msgid "Invoice_for_the_order_period_{0}_to_{1}"
 msgstr ""
 
@@ -969,12 +1011,6 @@ msgid "Orders_from"
 msgstr ""
 
 msgid "Invoice_date"
-msgstr ""
-
-msgid "Amount"
-msgstr ""
-
-msgid "Product"
 msgstr ""
 
 msgid "Price_excl."
@@ -1016,16 +1052,10 @@ msgstr ""
 msgid "Detail_view"
 msgstr ""
 
-msgid "Member"
+msgid "Order_day"
 msgstr ""
 
 msgid "Order_list_grouped_by"
-msgstr ""
-
-msgid "Delivery_date"
-msgstr ""
-
-msgid "Price"
 msgstr ""
 
 msgid "Dear_financial_responsible"
@@ -1148,10 +1178,7 @@ msgstr ""
 msgid "Hello"
 msgstr ""
 
-msgid "this_invoice_contains_all_orders_that_have_been_placed_in_{0}."
-msgstr ""
-
-msgid "Be_careful:_it_is_the_order_date_that_counts_not_the_delivery_date."
+msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
 msgstr ""
 
 msgid "If_the_invoice_amount_should_differ_from_your_own_recordings_please_tell_us."
@@ -1182,9 +1209,6 @@ msgid "For_signing_in_please_use_the_email_address_of_this_message._If_you_want_
 msgstr ""
 
 msgid "Your_contact_person"
-msgstr ""
-
-msgid "Pick_up_date"
 msgstr ""
 
 msgid "Order_list_by_product"
@@ -1406,9 +1430,6 @@ msgstr ""
 msgid "up_to_which_it_can_be_paid_in_{0}."
 msgstr ""
 
-msgid "Deposit"
-msgstr ""
-
 msgid "Sum_of_open_orders_in_given_time_range"
 msgstr ""
 
@@ -1430,13 +1451,16 @@ msgstr ""
 msgid "Test_order_list"
 msgstr ""
 
-msgid "Manually_send_order_list"
-msgstr ""
-
 msgid "Test_invoice"
 msgstr ""
 
 msgid "Manufacturer_profile"
+msgstr ""
+
+msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
+msgstr ""
+
+msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
 msgstr ""
 
 msgid "all_members"
@@ -1445,61 +1469,28 @@ msgstr ""
 msgid "Group_by..."
 msgstr ""
 
-msgid "Deposit_return"
-msgstr ""
-
 msgid "docs_route_pick_up_products"
 msgstr ""
 
-msgid "Amount_minus_eventual_variable_member_fee"
+msgid "No_orders_found_for_pickup_day_{0}."
 msgstr ""
 
-msgid "Click_to_change_amount"
+msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
 msgstr ""
 
-msgid "Click_to_change_price"
+msgid "Multiple_pickup_days"
 msgstr ""
 
-msgid "Additional_in_{0}"
+msgid "Generate_orders_as_pdf"
 msgstr ""
 
-msgid "Click_to_change_weight"
-msgstr ""
-
-msgid "Click_to_cancel_product"
-msgstr ""
-
-msgid "Change_order_status"
+msgid "All_products_picked_up?"
 msgstr ""
 
 msgid "Back_to_deposit_account"
 msgstr ""
 
 msgid "Cancel_selected_products"
-msgstr ""
-
-msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
-msgstr ""
-
-msgid "Group_by_member"
-msgstr ""
-
-msgid "Order_count"
-msgstr ""
-
-msgid "Show_all_ordered_products_from_{0}"
-msgstr ""
-
-msgid "Set_date_of_order_back"
-msgstr ""
-
-msgid "Generate_orders_as_pdf"
-msgstr ""
-
-msgid "Close_all_orders"
-msgstr ""
-
-msgid "Order_from"
 msgstr ""
 
 msgid "Page_title"

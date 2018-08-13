@@ -3,9 +3,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-08 11:44+0200\n"
-"PO-Revision-Date: 2018-08-08 11:47+0200\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2018-08-13 10:10+0200\n"
+"PO-Revision-Date: 2018-08-13 10:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -228,14 +228,23 @@ msgstr "Your settings have been changed."
 msgid "No_orders_within_the_given_time_range."
 msgstr "No orders within the given time range"
 
+msgid "No_member_found_with_id_{0}."
+msgstr "No member found with id {0}."
+
+msgid "Instant_order"
+msgstr "Instant order"
+
 msgid "Group_by_product"
 msgstr "Group by product"
+
+msgid "Group_by_member"
+msgstr "Group by member"
 
 msgid "Group_by_manufacturer"
 msgstr "Group by manufacturer"
 
-msgid "Ordered_products"
-msgstr "Ordered products"
+msgid "Orders"
+msgstr "Orders"
 
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
 msgstr "The weight of the ordered product {0} (amount {1}) was successfully adapted from {2} to {3}."
@@ -267,38 +276,17 @@ msgstr "The price of the ordered product {0} (amount {1}) was successfully adapt
 msgid "Ordered_price_adapted"
 msgstr "Price adapted"
 
-msgid "Product_{0}_with_a_price_of_{1}_from_order_number_{2}_from_{3}_was_successfully_cancelled."
-msgstr "Product {0} (price {1}) of order number {2} from {3} was successfully cancelled."
+msgid "The_pickup_day_comment_of_{0}_was_changed:"
+msgstr "The pickup day comment {0} was changed:"
+
+msgid "Product_{0}_with_a_price_of_{1}_from_{2}_was_successfully_cancelled."
+msgstr "Product {0} (price {1}) of from {2} was successfully cancelled."
 
 msgid "Product_was_cancelled"
 msgstr "Product cancelled"
 
 msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}}"
 msgstr "{0,plural,=1{product was cancelled succesfully.} other{products were cancelled succesfully.}}"
-
-msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
-msgstr "The comment of the order number {0} by {1} was changed:"
-
-msgid "Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
-msgstr "Instant order nrº {0} successfully placed for {1} and date changed to {2}. The manufacturer was notified unless the notification was disabled."
-
-msgid "The_order_status_of_the_order_of_{0}_was_successfully_changed_to_{1}."
-msgstr "The order state of the order of {0} was successfully changed to {1}."
-
-msgid "The_order_status_of_the_orders_{0}_was_successfully_changed_to_{1}."
-msgstr "The order state of the orders {0} was successfully changed to {1}."
-
-msgid "Orders"
-msgstr "Orders"
-
-msgid "Instant_order"
-msgstr "Instant order"
-
-msgid "No_member_found_with_id_{0}."
-msgstr "No member found with id {0}."
-
-msgid "The_date_of_the_order_{0}_of_{1}_was_changed_to_{2}."
-msgstr "The date of the order {0} of {1} was changed to {2}."
 
 msgid "Home"
 msgstr "Home"
@@ -359,9 +347,6 @@ msgstr "Member fee"
 
 msgid "Credit"
 msgstr "Credit"
-
-msgid "Order_number_abbr"
-msgstr "Order nº"
 
 msgid "Show_order"
 msgstr "Show order"
@@ -687,8 +672,8 @@ msgstr "Version of FoodCoopShop"
 msgid "Last_executed_migration"
 msgstr "Last executed migration"
 
-msgid "Pick_up_day"
-msgstr "Pick-up day"
+msgid "Pickup_day"
+msgstr "Pickup day"
 
 msgid "Software_update_version"
 msgstr "Software update / Version"
@@ -795,14 +780,8 @@ msgstr "How do I use the paying-with-time-module?"
 msgid "Delete_member_irrevocably?"
 msgstr "Delete account irrevocably?"
 
-msgid "Amount_orders_between"
-msgstr "Amount orders between"
-
-msgid "and"
-msgstr "and"
-
-msgid "and_last_order_date_between"
-msgstr "and last order date between"
+msgid "Last_pickup_day"
+msgstr "Last pickup day"
 
 msgid "Group"
 msgstr "Group"
@@ -810,20 +789,20 @@ msgstr "Group"
 msgid "Status"
 msgstr "Status"
 
+msgid "Ordered_products"
+msgstr "Ordered products"
+
 msgid "Reminder"
 msgstr "Reminder"
 
 msgid "Register_date"
 msgstr "Register date"
 
-msgid "Last_order_date"
-msgstr "Last order date"
-
 msgid "Comment_abbreviation"
 msgstr "Comm."
 
-msgid "Newbie_only_{0}_times_ordered."
-msgstr "Newbie: has only ordered {0} times."
+msgid "Newbie_only_{0}_products_ordered."
+msgstr "Newbie: has only ordered {0} products"
 
 msgid "Show_all_orders_from_{0}"
 msgstr "Show all orders from {0}"
@@ -903,6 +882,9 @@ msgstr "Did the manufacturer take away empty glasses or was his deposit account 
 msgid "Amount_in_{0}"
 msgstr "Amount in {0}"
 
+msgid "Instant_order_for_today"
+msgstr "Instant order for today"
+
 msgid "chose_member..."
 msgstr "chose member..."
 
@@ -957,6 +939,66 @@ msgstr "If you chose \"payback\", please enter the amount that you just transfer
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Please chose the months for your payment."
 
+msgid "Delivery_day"
+msgstr "Delivery day"
+
+msgid "Delivery_days"
+msgstr "Delivery days"
+
+msgid "Pickup_days"
+msgstr "Pickup days"
+
+msgid "Click_to_change_amount"
+msgstr "Click to change amount"
+
+msgid "Click_to_cancel_product"
+msgstr "Click to cancel product"
+
+msgid "Deposit_return"
+msgstr "Deposit return"
+
+msgid "Show_all_ordered_products_from_{0}"
+msgstr "Show all ordered products from {0}"
+
+msgid "products_picked_up"
+msgstr "Products picked up"
+
+msgid "Click_to_change_price"
+msgstr "Click to change price"
+
+msgid "Additional_in_{0}"
+msgstr "Additional in {0}"
+
+msgid "Yes"
+msgstr "Yes"
+
+msgid "No"
+msgstr "No"
+
+msgid "Click_to_change_weight"
+msgstr "Click to change weight"
+
+msgid "Amount"
+msgstr "Amount"
+
+msgid "Product"
+msgstr "Product"
+
+msgid "Price"
+msgstr "Price"
+
+msgid "Deposit"
+msgstr "Deposit"
+
+msgid "Member"
+msgstr "Member"
+
+msgid "Picked_up"
+msgstr "Picked up"
+
+msgid "Amount_minus_eventual_variable_member_fee"
+msgstr "Amount minus eventual variable member fee"
+
 msgid "Invoice_for_the_order_period_{0}_to_{1}"
 msgstr "Invoice for the order period {0} to {1}"
 
@@ -971,12 +1013,6 @@ msgstr "Orders from"
 
 msgid "Invoice_date"
 msgstr "Invoice date"
-
-msgid "Amount"
-msgstr "Amount"
-
-msgid "Product"
-msgstr "Product"
 
 msgid "Price_excl."
 msgstr "Price excl."
@@ -1017,17 +1053,11 @@ msgstr "Thank you very much for delivering your products to us!"
 msgid "Detail_view"
 msgstr "Detail view"
 
-msgid "Member"
-msgstr "Member"
+msgid "Order_day"
+msgstr "Order day"
 
 msgid "Order_list_grouped_by"
 msgstr "Order list grouped by"
-
-msgid "Delivery_date"
-msgstr "Delivery date"
-
-msgid "Price"
-msgstr "Price"
 
 msgid "Dear_financial_responsible"
 msgstr "Dear financial responsible"
@@ -1149,11 +1179,8 @@ msgstr "Comment"
 msgid "Hello"
 msgstr "Hello"
 
-msgid "this_invoice_contains_all_orders_that_have_been_placed_in_{0}."
-msgstr "this invoice contains all orders that have been placed in {0}."
-
-msgid "Be_careful:_it_is_the_order_date_that_counts_not_the_delivery_date."
-msgstr "Be careful: It is the order date that counts, not the delivery date!"
+msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
+msgstr "this invoice contains all products that have been delivered in {0}."
 
 msgid "If_the_invoice_amount_should_differ_from_your_own_recordings_please_tell_us."
 msgstr "If the invoice amount should differ from your own recordings, please tell us."
@@ -1184,9 +1211,6 @@ msgstr "For signing in please use the email address of this message. If you want
 
 msgid "Your_contact_person"
 msgstr "Your contact person"
-
-msgid "Pick_up_date"
-msgstr "Pick-up date"
 
 msgid "Order_list_by_product"
 msgstr "Order list by product"
@@ -1407,9 +1431,6 @@ msgstr "Maximum credit balance in {0}"
 msgid "up_to_which_it_can_be_paid_in_{0}."
 msgstr "up to which the member can pay in {0}."
 
-msgid "Deposit"
-msgstr "Deposit"
-
 msgid "Sum_of_open_orders_in_given_time_range"
 msgstr "Sum of open orders in given time range"
 
@@ -1431,14 +1452,17 @@ msgstr "Edit manufacturer settings"
 msgid "Test_order_list"
 msgstr "Test order list"
 
-msgid "Manually_send_order_list"
-msgstr "Manually send order list"
-
 msgid "Test_invoice"
 msgstr "Test invoice"
 
 msgid "Manufacturer_profile"
 msgstr "Manufacturer profile"
+
+msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
+msgstr "Please chose the member you want to place the instant order for in the dropdown above."
+
+msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
+msgstr "The pickup day of the instant order will be automatically changed to <b>today, {0}</b>."
 
 msgid "all_members"
 msgstr "all members"
@@ -1446,62 +1470,29 @@ msgstr "all members"
 msgid "Group_by..."
 msgstr "Group by..."
 
-msgid "Deposit_return"
-msgstr "Deposit return"
-
 msgid "docs_route_pick_up_products"
 msgstr "pick-up-products"
 
-msgid "Amount_minus_eventual_variable_member_fee"
-msgstr "Amount minus eventual variable member fee"
+msgid "No_orders_found_for_pickup_day_{0}."
+msgstr "No orders found for the pickup day {0}."
 
-msgid "Click_to_change_amount"
-msgstr "Click to change amount"
+msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
+msgstr "No orders found for the delivery period {0} to {1}."
 
-msgid "Click_to_change_price"
-msgstr "Click to change price"
+msgid "Multiple_pickup_days"
+msgstr "Multiple pickup days"
 
-msgid "Additional_in_{0}"
-msgstr "Additional in {0}"
+msgid "Generate_orders_as_pdf"
+msgstr "Generate orders as PDF"
 
-msgid "Click_to_change_weight"
-msgstr "Click to change weight"
-
-msgid "Click_to_cancel_product"
-msgstr "Click to cancel product"
-
-msgid "Change_order_status"
-msgstr "Change order status"
+msgid "All_products_picked_up?"
+msgstr "All products picked up?"
 
 msgid "Back_to_deposit_account"
 msgstr "Back to deposit account"
 
 msgid "Cancel_selected_products"
 msgstr "Cancel selected products"
-
-msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
-msgstr "Please chose the member you want to place the instant order for in the dropdown above."
-
-msgid "Group_by_member"
-msgstr "Group by member"
-
-msgid "Order_count"
-msgstr "Order count"
-
-msgid "Show_all_ordered_products_from_{0}"
-msgstr "Show all ordered products from {0}"
-
-msgid "Set_date_of_order_back"
-msgstr "Set date of order back"
-
-msgid "Generate_orders_as_pdf"
-msgstr "Generate orders as PDF"
-
-msgid "Close_all_orders"
-msgstr "Close all orders"
-
-msgid "Order_from"
-msgstr "Order from"
 
 msgid "Page_title"
 msgstr "Page title"
@@ -1742,3 +1733,73 @@ msgstr "{0,plural,=1{record} other{records}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
+#~ msgid "The_order_status_of_the_ordered_product_{0}_of_{1}_was_successfully_changed_to_{2}."
+#~ msgstr "The order state of the ordered product of {0} of {1} was successfully changed to {2}."
+
+#~ msgid "The_order_status_of_the_ordered_products_{0}_were_successfully_changed_to_{1}."
+#~ msgstr "The order state of the ordered products of {0} was successfully changed to {1}."
+
+#~ msgid "1_ordered_product_was_successfully_closed."
+#~ msgstr "1 ordered product was changed successfully to closed."
+
+#~ msgid "{0}_ordered_product_were_successfully_closed."
+#~ msgstr "{0} ordered product were changed successfully to closed."
+
+#~ msgid "Delivery_date"
+#~ msgstr "Delivery date"
+
+#~ msgid "Be_careful:_it_is_the_order_date_that_counts_not_the_delivery_date."
+#~ msgstr "Be careful: It is the order date that counts, not the delivery date!"
+
+#~ msgid "Last_pickup_day_between"
+#~ msgstr "Last pickup day between"
+
+#~ msgid "Amount_orders_between"
+#~ msgstr "Amount orders between"
+
+#~ msgid "and"
+#~ msgstr "and"
+
+#~ msgid "Last_order_date"
+#~ msgstr "Last order date"
+
+#~ msgid "Manually_send_order_list"
+#~ msgstr "Manually send order list"
+
+#~ msgid "Order_from"
+#~ msgstr "Order from"
+
+#~ msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
+#~ msgstr "The comment of the order number {0} by {1} was changed:"
+
+#~ msgid "The_date_of_the_order_{0}_of_{1}_was_changed_to_{2}."
+#~ msgstr "The date of the order {0} of {1} was changed to {2}."
+
+#~ msgid "Change_order_status"
+#~ msgstr "Change order status"
+
+#~ msgid "Order_count"
+#~ msgstr "Order count"
+
+#~ msgid "Set_date_of_order_back"
+#~ msgstr "Set date of order back"
+
+#~ msgid "Close_all_orders"
+#~ msgstr "Close all orders"
+
+#~ msgid "Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
+#~ msgstr "Instant order nrº {0} successfully placed for {1} and date changed to {2}. The manufacturer was notified unless the notification was disabled."
+
+#~ msgid "Order_number_abbr"
+#~ msgstr "Order nº"
+
+#, fuzzy
+#~ msgid "Picked_up?"
+#~ msgstr "Pick-up day"
+
+#~ msgid "The_order_status_of_the_orders_{0}_was_successfully_changed_to_{1}."
+#~ msgstr "The order state of the orders {0} was successfully changed to {1}."
+
+#~ msgid "Pick_up_date"
+#~ msgstr "Pick-up date"

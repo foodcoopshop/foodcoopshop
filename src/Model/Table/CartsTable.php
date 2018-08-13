@@ -4,6 +4,7 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\Validation\Validator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,14 +26,28 @@ class CartsTable extends AppTable
     {
         parent::initialize($config);
         $this->setPrimaryKey('id_cart');
-        $this->belongsTo('Customer', [
+        $this->belongsTo('Customers', [
             'foreignKey' => 'id_customer'
         ]);
         $this->hasMany('CartProducts', [
             'foreignKey' => 'id_cart'
         ]);
+        $this->hasMany('PickupDayEntities', [
+            'className' => 'PickupDays', // field has same name and would clash
+            'foreignKey' => [
+                'id_customer'
+            ]
+        ]);
         $this->addBehavior('Timestamp');
     }
+    
+    public function validationDefault(Validator $validator)
+    {
+        $validator->equals('cancellation_terms_accepted', 1, __('Please_accept_the_information_about_right_of_withdrawal.'));
+        $validator->equals('general_terms_and_conditions_accepted', 1, __('Please_accept_the_general_terms_and_conditions.'));
+        return $validator;
+    }
+    
 
     public function getProductNameWithUnity($productName, $unity)
     {
@@ -76,8 +91,9 @@ class CartsTable extends AppTable
      * @param int $customerId
      * @return array
      */
-    public function getCart($customerId)
+    public function getCart($customerId, $instantOrderMode=false)
     {
+		
         $cart = $this->find('all', [
             'conditions' => [
                 'Carts.status' => APP_ON,
@@ -93,7 +109,6 @@ class CartsTable extends AppTable
         }
 
         $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
-
         $cartProducts = $cartProductsTable->find('all', [
             'conditions' => [
                 'CartProducts.id_cart' => $cart['id_cart']
@@ -102,6 +117,7 @@ class CartsTable extends AppTable
                 'Products.name' => 'ASC'
             ],
             'contain' => [
+                'OrderDetails',
                 'Products.Manufacturers',
                 'Products.DepositProducts',
                 'Products.UnitProducts',
@@ -111,7 +127,12 @@ class CartsTable extends AppTable
                 'Products.Images'
             ]
         ])->toArray();
-
+        
+        
+        if (!empty($cartProducts)) {
+            $cart->pickup_day_entities = $this->CartProducts->setPickupDays($cartProducts, $customerId, $instantOrderMode);
+        }
+        
         $preparedCart = [
             'Cart' => $cart,
             'CartProducts' => []
@@ -226,9 +247,10 @@ class CartsTable extends AppTable
             'manufacturerName' => $cartProduct->product->manufacturer->name,
             'price' => $grossPrice,
             'priceExcl' => $cartProduct->product->price * $cartProduct->amount,
-            'tax' => $tax
+            'tax' => $tax,
+            'pickupDay' => $cartProduct->pickup_day
         ];
-
+        
         $deposit = 0;
         if (!empty($cartProduct->product->deposit_product->deposit)) {
             $deposit = $cartProduct->product->deposit_product->deposit * $cartProduct->amount;
@@ -294,7 +316,8 @@ class CartsTable extends AppTable
             'manufacturerName' => $cartProduct->product->manufacturer->name,
             'price' => $grossPrice,
             'priceExcl' => $cartProduct->product_attribute->price * $cartProduct->amount,
-            'tax' => $tax
+            'tax' => $tax,
+            'pickupDay' => $cartProduct->pickup_day
         ];
 
         $deposit = 0;

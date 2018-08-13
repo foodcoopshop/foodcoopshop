@@ -18,25 +18,23 @@ use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 
 $pdf = new AppTcpdf();
+$pdf->setTextHelper($this->Text);
 $pdf->SetLeftMargin(16);
 $pdf->AddPage();
 
 $title = $results[0]['ManufacturerName'] . ': '.__d('admin', 'Order_list_grouped_by').' ' . $groupTypeLabel;
+$deliveryDateString = __d('admin', 'Delivery_day').': ' . $this->MyTime->getWeekdayName(date('N', strtotime($results[0]['OrderDetailPickupDay'])));
+$deliveryDateString .= ', ' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime($results[0]['OrderDetailPickupDay']));
 
-$pdf->infoTextForFooter = $title;
+$pdf->infoTextForFooter = $results[0]['ManufacturerName'] . ', ' . $deliveryDateString;
 $pdf->SetTitle($title);
 
-$html = '<h2>' . $title;
-
-/**
- * if order lists are sent on wednesday, thursday or friday, eventually changed deliveryDayDelta
- * important if allowManualOrderListSending = true
- */
-if (! $bulkOrdersAllowed && Configure::read('appDb.FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS') != '') {
-    $deliveryDate = strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day');
-    $html .= '<br />'.__d('admin', 'Delivery_date').': ' . $this->MyTime->getWeekdayName(date('N', $deliveryDate)) . ', ' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), $deliveryDate);
-    $html .= Configure::read('appDb.FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS') . '</h2>';
+$html = '<h2>' . $title . '</h2>';
+$html .= '<p><b>' . $deliveryDateString . '</b>';
+if (Configure::read('appDb.FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS') != '') {
+    $html .= Configure::read('appDb.FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS');
 }
+$html .= '</p>';
 $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->Ln(5);
 
@@ -51,15 +49,15 @@ $headers = [
     __d('admin', 'Amount'),
     __d('admin', 'Product'),
     __d('admin', 'Price'),
-    __d('admin', 'Date'),
+    __d('admin', 'Order_day'),
     __d('admin', 'Member')
 ];
 
 $pdf->renderDetailedOrderList($results, $widths, $headers, $groupType, false);
 $pdf->addLastSumRow(
     $headers,
-    $this->MyNumber->formatAsDecimal($sumPriceExcl),
-    $this->MyNumber->formatAsDecimal($sumTax),
+    null,
+    null,
     $this->MyNumber->formatAsDecimal($sumPriceIncl)
 );
 $pdf->renderTable();

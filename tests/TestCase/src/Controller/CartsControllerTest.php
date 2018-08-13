@@ -134,7 +134,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $amount = 1;
         $this->addProductToCart($this->productId2, $amount);
-        $this->addTooManyProducts($this->productId2, 48, 1, 'Die gewünschte Anzahl <b>49</b> der Variante <b>0,5l</b> des Produktes <b>Milch</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 20', 0);
+        $this->addTooManyProducts($this->productId2, 48, 1, 'Die gewünschte Anzahl <b>49</b> der Variante <b>0,5l</b> des Produktes <b>Milch</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 19', 0);
     }
 
     public function testProductDeactivatedWhileShopping()
@@ -234,34 +234,25 @@ class CartsControllerTest extends AppCakeTestCase
         $this->fillCart();
         $this->checkCartStatus();
 
-        $orderComment = 'this is a valid order comment';
-        $this->finishCart(1, 1, $orderComment);
-        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
-
+        $pickupDayComment = 'this is a valid pickup day comment';
+        $this->finishCart(1, 1, $pickupDayComment);
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
         $this->checkCartStatusAfterFinish();
 
-        $order = $this->Order->find('all', [
-            'conditions' => [
-                'Orders.id_order' => $orderId
-            ],
-            'contain' => [
-                'OrderDetails.OrderDetailTaxes'
-            ]
-        ])->first();
-
-        $this->checkOrder($order, $orderId, $orderComment);
-
+        $cart = $this->getCartById($cartId);
+        $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
+        
         // check order_details for product1
-        $this->checkOrderDetails($order->order_details[0], 'Artischocke : Stück', 2, 0, 1, 3.305786, 3.64, 0.17, 0.34, 2);
+        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.305786, 3.64, 0.17, 0.34, 2, $pickupDay);
 
         // check order_details for product2 (third! index)
-        $this->checkOrderDetails($order->order_details[2], 'Milch : 0,5l', 3, 10, 1.5, 1.636365, 1.86, 0.07, 0.21, 3);
+        $this->checkOrderDetails($cart->cart_products[2]->order_detail, 'Milch : 0,5l', 3, 10, 1.5, 1.636365, 1.86, 0.07, 0.21, 3, $pickupDay);
 
         // check order_details for product3 (second! index)
-        $this->checkOrderDetails($order->order_details[1], 'Knoblauch : 100 g', 1, 0, 0, 0.636364, 0.636364, 0.000000, 0.000000, 0);
+        $this->checkOrderDetails($cart->cart_products[1]->order_detail, 'Knoblauch : 100 g', 1, 0, 0, 0.636364, 0.636364, 0.000000, 0.000000, 0, $pickupDay);
 
         $this->checkStockAvailable($this->productId1, 95);
-        $this->checkStockAvailable($this->productId2, 17);
+        $this->checkStockAvailable($this->productId2, 16);
         $this->checkStockAvailable($this->productId3, 77);
 
         // check new (empty) cart
@@ -309,64 +300,49 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExp('/Bitte gib eine Zahl zwischen 0 und (.*) an./', $this->browser->getContent());
 
         $this->finishCart(1, 1, '', '1200');
-        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
 
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
         $this->checkCartStatusAfterFinish();
-
-        $order = $this->Order->find('all', [
-            'conditions' => [
-                'Orders.id_order' => $orderId
-            ],
-            'contain' => [
-                'TimebasedCurrencyOrders',
-                'OrderDetails.TimebasedCurrencyOrderDetails',
-                'OrderDetails.OrderDetailTaxes'
-            ]
-        ])->first();
-
-        // check table order
-        $this->assertEquals($order->total_paid, 18.416364, 'order->total_paid not correct');
-        $this->assertEquals($order->total_paid_tax_incl, 18.416364, 'order->total_paid_tax_incl not correct');
-        $this->assertEquals($order->total_paid_tax_excl, 16.791245, 'order->total_paid_tax_excl not correct');
-
+        
+        $cart = $this->getCartById($cartId);
+        $orderDetailA = $cart->cart_products[0]->order_detail;
+        $orderDetailB = $cart->cart_products[1]->order_detail;
+        $orderDetailC = $cart->cart_products[2]->order_detail;
+        $orderDetailD = $cart->cart_products[3]->order_detail;
+        
         // check table order_detail
-        $this->assertEquals($order->order_details[0]->total_price_tax_incl, 2.700000, 'order_detail->total_price_tax_incl not correct');
-        $this->assertEquals($order->order_details[0]->total_price_tax_excl, 2.455786, 'order_detail->total_price_tax_excl not correct');
+        $this->assertEquals($orderDetailA->total_price_tax_incl, 2.700000, 'order_detail->total_price_tax_incl not correct');
+        $this->assertEquals($orderDetailA->total_price_tax_excl, 2.455786, 'order_detail->total_price_tax_excl not correct');
 
-        $this->assertEquals($order->order_details[1]->total_price_tax_incl, 15.240000, 'order_detail->total_price_tax_incl not correct');
-        $this->assertEquals($order->order_details[1]->total_price_tax_excl,  13.859095, 'order_detail->total_price_tax_excl not correct');
+        $this->assertEquals($orderDetailB->total_price_tax_incl, 15.240000, 'order_detail->total_price_tax_incl not correct');
+        $this->assertEquals($orderDetailB->total_price_tax_excl,  13.859095, 'order_detail->total_price_tax_excl not correct');
 
-        $this->assertEquals($order->order_details[2]->total_price_tax_incl, 0.476364, 'order_detail->total_price_tax_incl not correct');
-        $this->assertEquals($order->order_details[2]->total_price_tax_excl, 0.476364, 'order_detail->total_price_tax_excl not correct');
+        $this->assertEquals($orderDetailC->total_price_tax_incl, 0.476364, 'order_detail->total_price_tax_incl not correct');
+        $this->assertEquals($orderDetailC->total_price_tax_excl, 0.476364, 'order_detail->total_price_tax_excl not correct');
 
-        $this->assertEquals($order->order_details[3]->total_price_tax_incl, 1.860000, 'order_detail->total_price_tax_incl not correct');
-        $this->assertEquals($order->order_details[3]->total_price_tax_excl, 1.636365, 'order_detail->total_price_tax_excl not correct');
-
-        // check table timebased_currency_order
-        $this->assertEquals($order->timebased_currency_order->money_excl_sum, 3.590000, 'timebased_currency_order->money_excl_sum not correct');
-        $this->assertEquals($order->timebased_currency_order->money_incl_sum, 3.940000, 'timebased_currency_order->money_incl_sum not correct');
-        $this->assertEquals($order->timebased_currency_order->seconds_sum, 1200, 'timebased_currency_order->seconds_sum not correct');
+        $this->assertEquals($orderDetailD->total_price_tax_incl, 1.860000, 'order_detail->total_price_tax_incl not correct');
+        $this->assertEquals($orderDetailD->total_price_tax_excl, 1.636365, 'order_detail->total_price_tax_excl not correct');
 
         // check table timebased_currency_order_details
-        $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->money_excl, 0.85, 'order_detail timebased_currency_order_detail->money_excl not correct');
-        $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->money_incl, 0.94, 'order_detail timebased_currency_order_detail->money_incl not correct');
-        $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->seconds, 336, 'order_detail timebased_currency_order_detail->seconds not correct');
-        $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->max_percentage, $defaultMaxPercentage, 'order_detail timebased_currency_order_detail->max_percentage not correct');
-        $this->assertEquals($order->order_details[0]->timebased_currency_order_detail->exchange_rate, Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE')), 'order_detail timebased_currency_order_detail->exchange_rate not correct');
+        $this->assertEquals($orderDetailA->timebased_currency_order_detail->money_excl, 0.85, 'order_detail timebased_currency_order_detail->money_excl not correct');
+        $this->assertEquals($orderDetailA->timebased_currency_order_detail->money_incl, 0.94, 'order_detail timebased_currency_order_detail->money_incl not correct');
+        $this->assertEquals($orderDetailA->timebased_currency_order_detail->seconds, 336, 'order_detail timebased_currency_order_detail->seconds not correct');
+        $this->assertEquals($orderDetailA->timebased_currency_order_detail->max_percentage, $defaultMaxPercentage, 'order_detail timebased_currency_order_detail->max_percentage not correct');
+        $this->assertEquals($orderDetailA->timebased_currency_order_detail->exchange_rate, Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE')), 'order_detail timebased_currency_order_detail->exchange_rate not correct');
 
-        $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->money_excl, 2.05, 'order_detail timebased_currency_order_detail->money_excl not correct');
-        $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->money_incl, 2.26, 'order_detail timebased_currency_order_detail->money_incl not correct');
-        $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->seconds, 805, 'order_detail timebased_currency_order_detail->seconds not correct');
-        $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->max_percentage, $reducedMaxPercentage, 'order_detail timebased_currency_order_detail->max_percentage not correct');
-        $this->assertEquals($order->order_details[1]->timebased_currency_order_detail->exchange_rate, Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE')), 'order_detail timebased_currency_order_detail->exchange_rate not correct');
+        $this->assertEquals($orderDetailB->timebased_currency_order_detail->money_excl, 2.05, 'order_detail timebased_currency_order_detail->money_excl not correct');
+        $this->assertEquals($orderDetailB->timebased_currency_order_detail->money_incl, 2.26, 'order_detail timebased_currency_order_detail->money_incl not correct');
+        $this->assertEquals($orderDetailB->timebased_currency_order_detail->seconds, 805, 'order_detail timebased_currency_order_detail->seconds not correct');
+        $this->assertEquals($orderDetailB->timebased_currency_order_detail->max_percentage, $reducedMaxPercentage, 'order_detail timebased_currency_order_detail->max_percentage not correct');
+        $this->assertEquals($orderDetailB->timebased_currency_order_detail->exchange_rate, Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE')), 'order_detail timebased_currency_order_detail->exchange_rate not correct');
 
-        $this->assertEquals($order->order_details[2]->timebased_currency_order_detail->money_excl, 0.160000, 'order_detail timebased_currency_order_detail->money_excl not correct');
-        $this->assertEquals($order->order_details[2]->timebased_currency_order_detail->money_incl, 0.160000, 'order_detail timebased_currency_order_detail->money_incl not correct');
-        $this->assertEquals($order->order_details[2]->timebased_currency_order_detail->seconds, 59, 'order_detail timebased_currency_order_detail->seconds not correct');
-        $this->assertEquals($order->order_details[2]->timebased_currency_order_detail->max_percentage, $defaultMaxPercentage, 'order_detail timebased_currency_order_detail->max_percentage not correct');
-        $this->assertEquals($order->order_details[2]->timebased_currency_order_detail->exchange_rate, Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE')), 'order_detail timebased_currency_order_detail->exchange_rate not correct');
+        $this->assertEquals($orderDetailC->timebased_currency_order_detail->money_excl, 0.160000, 'order_detail timebased_currency_order_detail->money_excl not correct');
+        $this->assertEquals($orderDetailC->timebased_currency_order_detail->money_incl, 0.160000, 'order_detail timebased_currency_order_detail->money_incl not correct');
+        $this->assertEquals($orderDetailC->timebased_currency_order_detail->seconds, 59, 'order_detail timebased_currency_order_detail->seconds not correct');
+        $this->assertEquals($orderDetailC->timebased_currency_order_detail->max_percentage, $defaultMaxPercentage, 'order_detail timebased_currency_order_detail->max_percentage not correct');
+        $this->assertEquals($orderDetailC->timebased_currency_order_detail->exchange_rate, Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE')), 'order_detail timebased_currency_order_detail->exchange_rate not correct');
 
-        $this->assertEmpty($order->order_details[3]->timebased_currency_order_detail);
+        $this->assertEmpty($orderDetailD->timebased_currency_order_detail);
 
     }
 
@@ -381,47 +357,38 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($productIdB, 3);
 
         $this->finishCart(1, 1);
-        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
 
         $this->checkCartStatusAfterFinish();
-
-        $order = $this->Order->find('all', [
-            'conditions' => [
-                'Orders.id_order' => $orderId
-            ],
-            'contain' => [
-                'OrderDetails.OrderDetailTaxes',
-                'OrderDetails.OrderDetailUnits'
-            ]
-        ])->first();
-
-        // check order
-        $this->assertEquals($order->total_paid_tax_excl, 36.81, 'order total_paid_tax_excl not correct');
-        $this->assertEquals($order->total_paid_tax_incl, 40.500000, 'order total_paid_tax_incl not correct');
-
+        $cart = $this->getCartById($cartId);
+        $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
+        
         // check order_details
-        $this->checkOrderDetails($order->order_details[0], 'Forelle : Stück', 2, 0, 0, 9.54, 10.5, 0.48, 0.96, 2);
-        $this->checkOrderDetails($order->order_details[1], 'Rindfleisch', 3, 11, 0, 27.27, 30, 0.91, 2.73, 2);
+        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Forelle : Stück', 2, 0, 0, 9.54, 10.5, 0.48, 0.96, 2, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[1]->order_detail, 'Rindfleisch', 3, 11, 0, 27.27, 30, 0.91, 2.73, 2, $pickupDay);
 
         // check order_details_units
-        $this->assertEquals($order->order_details[0]->order_detail_unit->product_quantity_in_units, 700);
-        $this->assertEquals($order->order_details[0]->order_detail_unit->price_incl_per_unit, 1.5);
-        $this->assertEquals($order->order_details[0]->order_detail_unit->quantity_in_units, 350);
-        $this->assertEquals($order->order_details[0]->order_detail_unit->unit_name, 'g');
-        $this->assertEquals($order->order_details[0]->order_detail_unit->unit_amount, 100);
+        $orderDetailA = $cart->cart_products[0]->order_detail;
+        $orderDetailB = $cart->cart_products[1]->order_detail;
+        
+        $this->assertEquals($orderDetailA->order_detail_unit->product_quantity_in_units, 700);
+        $this->assertEquals($orderDetailA->order_detail_unit->price_incl_per_unit, 1.5);
+        $this->assertEquals($orderDetailA->order_detail_unit->quantity_in_units, 350);
+        $this->assertEquals($orderDetailA->order_detail_unit->unit_name, 'g');
+        $this->assertEquals($orderDetailA->order_detail_unit->unit_amount, 100);
 
-        $this->assertEquals($order->order_details[1]->order_detail_unit->product_quantity_in_units, 1.5);
-        $this->assertEquals($order->order_details[1]->order_detail_unit->price_incl_per_unit, 20);
-        $this->assertEquals($order->order_details[1]->order_detail_unit->quantity_in_units, 0.5);
-        $this->assertEquals($order->order_details[1]->order_detail_unit->unit_name, 'kg');
-        $this->assertEquals($order->order_details[1]->order_detail_unit->unit_amount, 1);
+        $this->assertEquals($orderDetailB->order_detail_unit->product_quantity_in_units, 1.5);
+        $this->assertEquals($orderDetailB->order_detail_unit->price_incl_per_unit, 20);
+        $this->assertEquals($orderDetailB->order_detail_unit->quantity_in_units, 0.5);
+        $this->assertEquals($orderDetailB->order_detail_unit->unit_name, 'kg');
+        $this->assertEquals($orderDetailB->order_detail_unit->unit_amount, 1);
 
         // check order_detail_taxes
-        $this->assertEquals($order->order_details[0]->order_detail_tax->unit_amount, 0.48);
-        $this->assertEquals($order->order_details[0]->order_detail_tax->total_amount, 0.96);
+        $this->assertEquals($orderDetailA->order_detail_tax->unit_amount, 0.48);
+        $this->assertEquals($orderDetailA->order_detail_tax->total_amount, 0.96);
 
-        $this->assertEquals($order->order_details[1]->order_detail_tax->unit_amount, 0.91);
-        $this->assertEquals($order->order_details[1]->order_detail_tax->total_amount, 2.73);
+        $this->assertEquals($orderDetailB->order_detail_tax->unit_amount, 0.91);
+        $this->assertEquals($orderDetailB->order_detail_tax->total_amount, 2.73);
 
     }
 
@@ -433,44 +400,74 @@ class CartsControllerTest extends AppCakeTestCase
                 'Customers.id_customer' => Configure::read('test.customerId')
             ]
         ])->first();
-        $responseHtml = $this->browser->get($this->Slug->getOrdersList().'/initInstantOrder/' . Configure::read('test.customerId'));
-        $this->assertRegExp('/Diese Bestellung wird für \<b\>' . $testCustomer->name . '\<\/b\> getätigt./', $responseHtml);
+        $responseHtml = $this->browser->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
+        $this->assertRegExpWithUnquotedString('Diese Bestellung wird für <b>' . $testCustomer->name . '</b> getätigt.', $responseHtml);
         $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/', 'redirect did not work');
+        
+        $this->fillCart();
+        
+        $this->finishCart(1, 1);
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
+        
+        $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung für <b>Demo Mitglied</b> wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: <b>Demo Gemüse-Hersteller, Demo Milch-Hersteller</b>', $this->browser->getContent());
+        
+        $cart = $this->getCartById($cartId);
+        
+        foreach($cart->cart_products as $cartProduct) {
+            $orderDetail = $cartProduct->order_detail;
+            $this->assertEquals($orderDetail->id_customer, $testCustomer->id_customer, 'order_detail id_customer not correct');
+            $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getCurrentDateForDatabase(), 'order_detail pickup_day not correct');
+        }
+        
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEmailLogs(
+            $emailLogs[0],
+            'Benachrichtigung über Sofort-Bestellung',
+            [
+                'Artischocke : Stück',
+                'Hallo Demo,',
+                '3,64'
+            ],
+            [
+                Configure::read('test.loginEmailVegetableManufacturer')
+            ]
+        );
+        
+        $this->assertEmailLogs(
+            $emailLogs[1],
+            'Benachrichtigung über Sofort-Bestellung',
+            [
+                'Milch : 0,5l',
+                'Hallo Demo,',
+                '1,86'
+            ],
+            [
+                Configure::read('test.loginEmailMilkManufacturer')
+            ]
+        );
+        
     }
 
     /**
      * cart products should never have the amount 0
-     * with a bit of hacking it would be possible, check here that if that happens,
-     * finishing the cart does not break the order
+     * with a bit of hacking it would be possible
+     * check here that if that happens, finishing the cart does not break the order
      */
     public function testOrderIfAmountOfOneProductIsNull()
     {
         $this->loginAsCustomer();
         $this->addProductToCart($this->productId1, 1);
-        $this->addProductToCart($this->productId1, - 1);
+        $this->addProductToCart($this->productId1, -1);
         $this->addProductToCart($this->productId2, 1);
         $this->finishCart();
-        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
-        $this->assertTrue(is_int($orderId), 'order not finished correctly');
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
+        $this->assertTrue(is_int($cartId), 'cart not finished correctly');
 
         $this->checkCartStatusAfterFinish();
-
-        // only one order with the cake cart id should have been created
-        $orders = $this->Order->find('all', [
-            'conditions' => [
-                'Orders.id_cart' => 1
-            ],
-            'contain' => [
-                'OrderDetails'
-            ]
-        ]);
-        $this->assertEquals(1, $orders->count(), 'more than one order inserted');
-
-        foreach ($orders as $order) {
-            foreach ($order->order_details as $orderDetail) {
-                $this->assertFalse($orderDetail->product_amount == 0, 'product amount must not be 0!');
-            }
-        }
+        $cart = $this->getCartById($cartId);
+        $this->assertEquals(1, count($cart->cart_products));
+        $this->assertEquals(1, $cart->cart_products[0]->order_detail->product_amount);
+        
     }
 
     private function fillCart()
@@ -541,22 +538,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($stockAvailable->quantity, $result, 'stockavailable quantity wrong');
     }
 
-    private function checkOrder($order, $orderId, $orderComment)
-    {
-        $this->assertNotEquals([], $order, 'order not correct');
-        $this->assertEquals($order->id_order, $orderId, 'order id not correct');
-        $this->assertEquals($order->id_customer, $this->browser->getLoggedUserId(), 'order customer_id not correct');
-        $this->assertEquals($order->id_cart, 2, 'order cart_id not correct');
-        $this->assertEquals($order->current_state, 3, 'order current_state not correct');
-        $this->assertEquals($order->total_deposit, 2.5, 'order total_deposit not correct');
-        $this->assertEquals($order->total_paid_tax_excl, 5.578515, 'order total_paid_tax_excl not correct');
-        $this->assertEquals($order->total_paid_tax_incl, 6.136364, 'order total_paid_tax_incl not correct');
-        $this->assertEquals($order->general_terms_and_conditions_accepted, 1, 'order general_terms_and_conditions_accepted not correct');
-        $this->assertEquals($order->cancellation_terms_accepted, 1, 'order cancellation_terms_accepted not correct');
-        $this->assertEquals($order->comment, $orderComment, 'order comment not correct');
-    }
-
-    private function checkOrderDetails($orderDetail, $name, $amount, $productAttributeId, $deposit, $totalPriceTaxExcl, $totalPriceTaxIncl, $taxUnitAmount, $taxTotalAmount, $taxId)
+    private function checkOrderDetails($orderDetail, $name, $amount, $productAttributeId, $deposit, $totalPriceTaxExcl, $totalPriceTaxIncl, $taxUnitAmount, $taxTotalAmount, $taxId, $pickupDay)
     {
 
         // check order_details
@@ -567,17 +549,19 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($orderDetail->total_price_tax_excl, $totalPriceTaxExcl, 'order_detail total_price_tax_excl not correct');
         $this->assertEquals($orderDetail->total_price_tax_incl, $totalPriceTaxIncl, 'order_detail total_price_tax_incl not correct');
         $this->assertEquals($orderDetail->id_tax, $taxId, 'order_detail id_tax not correct');
-
+        $this->assertEquals($orderDetail->id_customer, $this->browser->getLoggedUserId(), 'order_detail id_customer not correct');
+        $this->assertEquals($orderDetail->order_state, ORDER_STATE_OPEN, 'order_detail order_state not correct');
+        $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), $pickupDay, 'order_detail pickup_day not correct');
+        
         // check order_details_tax
         $this->assertEquals($orderDetail->order_detail_tax->unit_amount, $taxUnitAmount, 'order_detail tax unit amount not correct');
         $this->assertEquals($orderDetail->order_detail_tax->total_amount, $taxTotalAmount, 'order_detail tax total amount not correct');
     }
 
-
     /**
      * @param int $productId
      * @param int $amount
-     * @return json string
+     * @return string
      */
     private function changeProductStatus($productId, $status)
     {
@@ -591,7 +575,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     /**
      * @param int $productId
-     * @return json string
+     * @return string
      */
     private function removeProduct($productId)
     {

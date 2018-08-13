@@ -27,6 +27,21 @@ class AppTcpdf extends TCPDF
     public $table = '';
 
     public $infoTextForFooter = '';
+    
+    public $textHelper;
+    
+    public function setTextHelper($textHelper)
+    {
+        $this->textHelper = $textHelper;
+    }
+    
+    public function writeHTML($html, $ln=true, $fill=false, $reseth=false, $cell=false, $align='')
+    {
+        // in generate_order_confirmation.ctp::88 $this->MyNumber->formatAsCurrency leads to empty output
+        // but in all other pdfs it works. this workaround helps
+        $html = preg_replace('/€/', '&euro;', $html);
+        parent::writeHTML($html, $ln, $fill, $reseth, $cell, $align);
+    }
 
     public function renderTable()
     {
@@ -139,12 +154,19 @@ class AppTcpdf extends TCPDF
 
                 $indexForWidth ++;
                 $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceIncl) . '</td>';
-
+                
+                if (in_array(__('Order_day'), $headers)) {
+                    $indexForWidth ++;
+                    $this->table .= '<td align="center" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.timeHelper')->formatToDateShort($result['OrderDetailCreated']) . '</td>';
+                }
+                
+                if (in_array(__('Delivery_day'), $headers)) {
+                    $indexForWidth ++;
+                    $this->table .= '<td align="center" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.timeHelper')->formatToDateShort($result['OrderDetailPickupDay']) . '</td>';
+                }
+                
                 $indexForWidth ++;
-                $this->table .= '<td align="center" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.timeHelper')->formatToDateShort($result['OrderDateAdd']) . '</td>';
-
-                $indexForWidth ++;
-                $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $result['CustomerName'] . '</td>';
+                $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $this->textHelper->truncate($result['CustomerName'], 27) . '</td>';
 
                 $this->table .= '</tr>';
             }

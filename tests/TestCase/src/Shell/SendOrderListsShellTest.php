@@ -16,13 +16,14 @@ class SendOrderListsShellTest extends AppCakeTestCase
     {
         parent::setUp();
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
-        $this->Order = TableRegistry::getTableLocator()->get('Orders');
+        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $this->SendOrderLists = new SendOrderListsShell(new ConsoleIo());
     }
 
     public function testSendOrderListsIfNoOrdersAvailable()
     {
-        $this->Order->deleteAll([]);
+        $this->OrderDetail->deleteAll([]);
         $this->SendOrderLists->main();
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
@@ -37,22 +38,29 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->addProductToCart($productId, 1);
         $this->addProductToCart($productId, 1);
         $this->finishCart();
-        $orderId = Configure::read('app.htmlHelper')->getOrderIdFromCartFinishedUrl($this->browser->getUrl());
-
-        // reset date if needed
-        $currentWeekday = Configure::read('app.timeHelper')->getCurrentWeekday();
-        if (in_array($currentWeekday, Configure::read('app.timeHelper')->getWeekdaysBetweenOrderSendAndDelivery())) {
-            $this->Order->save(
-                $this->Order->patchEntity(
-                    $this->Order->get($orderId),
-                    [
-                        'date_add' => Configure::read('app.timeHelper')->getDateForInstantOrder(Configure::read('app.timeHelper')->getCurrentDay()),
-                    ]
-                )
-            );
-        }
-
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
+        $cart = $this->getCartById($cartId);
+        
+        $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
+        
+        $this->OrderDetail->save(
+            $this->OrderDetail->patchEntity(
+                $this->OrderDetail->get($orderDetailId),
+                [
+                    'pickup_day' => Configure::read('app.timeHelper')->getDeliveryDateForSendOrderListsShell(),
+                ]
+            )
+        );
+        
         $this->SendOrderLists->main();
+        
+        $newOrderDetail = $this->OrderDetail->find('all', [
+            'conditions' => [
+                'OrderDetails.id_order_detail' => $orderDetailId
+            ]
+        ])->first();
+        $this->assertEquals(ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $newOrderDetail->order_state);
+        
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(2, count($emailLogs), 'amount of sent emails wrong');
         $this->assertEmailLogs(

@@ -21,7 +21,7 @@ CREATE TABLE `fcs_action_logs` (
   `text` text NOT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_address`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -45,7 +45,7 @@ CREATE TABLE `fcs_address` (
   PRIMARY KEY (`id_address`),
   KEY `address_customer` (`id_customer`),
   KEY `id_manufacturer` (`id_manufacturer`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_attribute`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -58,7 +58,7 @@ CREATE TABLE `fcs_attribute` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id_attribute`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_blog_posts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -76,7 +76,7 @@ CREATE TABLE `fcs_blog_posts` (
   `modified` datetime DEFAULT NULL,
   `is_featured` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_blog_post`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_cart_products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -90,7 +90,7 @@ CREATE TABLE `fcs_cart_products` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id_cart_product`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_carts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -102,7 +102,7 @@ CREATE TABLE `fcs_carts` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id_cart`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -174,7 +174,7 @@ CREATE TABLE `fcs_customer` (
   KEY `customer_email` (`email`),
   KEY `customer_login` (`email`,`passwd`),
   KEY `id_customer_passwd` (`id_customer`,`passwd`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_deposits`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -185,7 +185,7 @@ CREATE TABLE `fcs_deposits` (
   `id_product_attribute` int(10) unsigned NOT NULL DEFAULT '0',
   `deposit` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_email_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -200,7 +200,7 @@ CREATE TABLE `fcs_email_logs` (
   `headers` text,
   `message` longtext,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_images`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -209,7 +209,7 @@ CREATE TABLE `fcs_images` (
   `id_image` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `id_product` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_image`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_invoices`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -263,14 +263,13 @@ CREATE TABLE `fcs_manufacturer` (
   `timebased_currency_max_percentage` tinyint(3) unsigned NOT NULL DEFAULT '30',
   `timebased_currency_max_credit_balance` int(7) unsigned DEFAULT '360000',
   PRIMARY KEY (`id_manufacturer`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_order_detail`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fcs_order_detail` (
   `id_order_detail` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id_order` int(10) unsigned NOT NULL DEFAULT '0',
   `product_id` int(10) unsigned NOT NULL DEFAULT '0',
   `product_attribute_id` int(10) unsigned DEFAULT NULL,
   `product_name` varchar(255) NOT NULL DEFAULT '',
@@ -279,12 +278,21 @@ CREATE TABLE `fcs_order_detail` (
   `total_price_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `id_tax` int(11) unsigned DEFAULT '0',
   `deposit` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `id_customer` int(10) unsigned NOT NULL,
+  `id_cart_product` int(10) unsigned NOT NULL,
+  `order_state` tinyint(4) unsigned NOT NULL,
+  `pickup_day` date NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
   PRIMARY KEY (`id_order_detail`),
-  KEY `order_detail_order` (`id_order`),
   KEY `product_id` (`product_id`),
   KEY `product_attribute_id` (`product_attribute_id`),
-  KEY `id_order_id_order_detail` (`id_order`,`id_order_detail`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `id_customer` (`id_customer`),
+  KEY `pickup_day` (`pickup_day`),
+  KEY `created` (`created`),
+  KEY `order_state` (`order_state`),
+  KEY `product_name` (`product_name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_order_detail_tax`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -309,29 +317,6 @@ CREATE TABLE `fcs_order_detail_units` (
   UNIQUE KEY `id_order_detail` (`id_order_detail`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `fcs_orders`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fcs_orders` (
-  `id_order` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id_customer` int(10) unsigned NOT NULL DEFAULT '0',
-  `id_cart` int(10) NOT NULL DEFAULT '0',
-  `current_state` int(10) unsigned NOT NULL DEFAULT '0',
-  `total_paid` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_paid_tax_incl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `total_paid_tax_excl` decimal(20,6) NOT NULL DEFAULT '0.000000',
-  `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_upd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `total_deposit` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `general_terms_and_conditions_accepted` tinyint(4) unsigned NOT NULL DEFAULT '0',
-  `cancellation_terms_accepted` tinyint(4) unsigned NOT NULL DEFAULT '0',
-  `comment` text,
-  PRIMARY KEY (`id_order`),
-  KEY `id_customer` (`id_customer`),
-  KEY `date_add` (`date_add`),
-  KEY `current_state` (`current_state`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_pages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -352,7 +337,7 @@ CREATE TABLE `fcs_pages` (
   `lft` int(10) NOT NULL DEFAULT '0',
   `rght` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_page`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_payments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -372,7 +357,21 @@ CREATE TABLE `fcs_payments` (
   `changed_by` int(10) unsigned NOT NULL DEFAULT '0',
   `created_by` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fcs_pickup_days`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fcs_pickup_days` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `customer_id` int(10) unsigned NOT NULL,
+  `pickup_day` date NOT NULL,
+  `comment` text DEFAULT NULL,
+  `products_picked_up` tinyint(4) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `customer_id` (`customer_id`),
+  KEY `pickup_day` (`pickup_day`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_product`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -392,8 +391,9 @@ CREATE TABLE `fcs_product` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id_product`),
-  KEY `product_manufacturer` (`id_manufacturer`,`id_product`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `product_manufacturer` (`id_manufacturer`,`id_product`),
+  KEY `id_manufacturer` (`id_manufacturer`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_product_attribute`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -407,7 +407,7 @@ CREATE TABLE `fcs_product_attribute` (
   PRIMARY KEY (`id_product_attribute`),
   KEY `product_attribute_product` (`id_product`),
   KEY `id_product_id_product_attribute` (`id_product_attribute`,`id_product`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_product_attribute_combination`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -442,7 +442,7 @@ CREATE TABLE `fcs_stock_available` (
   UNIQUE KEY `product_sqlstock` (`id_product`,`id_product_attribute`),
   KEY `id_product` (`id_product`),
   KEY `id_product_attribute` (`id_product_attribute`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_sync_domains`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -452,7 +452,7 @@ CREATE TABLE `fcs_sync_domains` (
   `domain` varchar(128) NOT NULL DEFAULT '',
   `active` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_sync_products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -491,17 +491,6 @@ CREATE TABLE `fcs_timebased_currency_order_detail` (
   UNIQUE KEY `id_order_detail` (`id_order_detail`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `fcs_timebased_currency_orders`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fcs_timebased_currency_orders` (
-  `id_order` int(11) NOT NULL DEFAULT '0',
-  `money_excl_sum` decimal(10,6) unsigned DEFAULT NULL,
-  `money_incl_sum` decimal(10,6) unsigned DEFAULT NULL,
-  `seconds_sum` int(7) unsigned DEFAULT NULL,
-  UNIQUE KEY `id_order` (`id_order`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_timebased_currency_payments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -536,7 +525,7 @@ CREATE TABLE `fcs_units` (
   `quantity_in_units` decimal(10,3) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_product` (`id_product`,`id_product_attribute`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `phinxlog`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

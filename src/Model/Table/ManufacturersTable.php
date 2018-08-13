@@ -444,6 +444,27 @@ class ManufacturersTable extends AppTable
                 $orderClause = Configure::read('app.htmlHelper')->getCustomerNameForSql() . ' ASC, od.product_name ASC';
                 break;
         }
+        
+        // do not use params for $orderState, it will result in IN ('3,2,1') which is wrong
+        $params = [
+            'manufacturerId' => $manufacturerId,
+            'dateFrom' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom),
+        ];
+        
+        if (is_null($dateTo)) {
+            // order list
+            $dateConditions = "AND DATE_FORMAT(od.pickup_day, '%Y-%m-%d') = :dateFrom";
+        } else {
+            // invoice
+            $dateConditions  = "AND DATE_FORMAT(od.pickup_day, '%Y-%m-%d') >= :dateFrom ";
+            $dateConditions .= "AND DATE_FORMAT(od.pickup_day, '%Y-%m-%d') <= :dateTo";
+            $params['dateTo'] = Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo);
+        }
+        
+        $orderStateCondition = "";
+        if (!empty($orderState)) {
+            $orderStateCondition = "AND od.order_state IN (" . join(',', $orderState) . ")";
+        }
 
         $customerNameAsSql = Configure::read('app.htmlHelper')->getCustomerNameForSql();
 
@@ -464,33 +485,25 @@ class ManufacturersTable extends AppTable
         odu.quantity_in_units as OrderDetailUnitQuantityInUnits,
         odu.product_quantity_in_units as OrderDetailUnitProductQuantityInUnits,
         odu.unit_name as OrderDetailUnitUnitName,
-        o.date_add as OrderDateAdd,
+        od.created as OrderDetailCreated,
+        od.pickup_day as OrderDetailPickupDay,
         c.id_customer AS CustomerId,
         {$customerNameAsSql} AS CustomerName
         FROM ".$this->tablePrefix."order_detail od
             LEFT JOIN ".$this->tablePrefix."product p ON p.id_product = od.product_id
-            LEFT JOIN ".$this->tablePrefix."orders o ON o.id_order = od.id_order
             LEFT JOIN ".$this->tablePrefix."order_detail_tax odt ON odt.id_order_detail = od.id_order_detail
             LEFT JOIN ".$this->tablePrefix."order_detail_units odu ON od.id_order_detail = odu.id_order_detail
-            LEFT JOIN ".$this->tablePrefix."customer c ON c.id_customer = o.id_customer
+            LEFT JOIN ".$this->tablePrefix."customer c ON c.id_customer = od.id_customer
             LEFT JOIN ".$this->tablePrefix."manufacturer m ON m.id_manufacturer = p.id_manufacturer
             LEFT JOIN ".$this->tablePrefix."address ma ON m.id_manufacturer = ma.id_manufacturer
             LEFT JOIN ".$this->tablePrefix."tax t ON od.id_tax = t.id_tax
             WHERE 1
+            {$dateConditions}
             AND m.id_manufacturer = :manufacturerId
-            AND DATE_FORMAT(o.date_add, '%Y-%m-%d') >= :dateFrom
-            AND DATE_FORMAT(o.date_add, '%Y-%m-%d') <= :dateTo
             AND ma.id_manufacturer > 0
-            AND o.current_state IN (" . join(',', $orderState) . ")
-            ORDER BY {$orderClause}, DATE_FORMAT (o.date_add, '%d.%m.%Y, %H:%i') DESC;";
-
-        // do not use params for $orderState, it will result in IN ('3,2,1') which is wrong
-        $params = [
-            'manufacturerId' => $manufacturerId,
-            'dateFrom' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom),
-            'dateTo' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo),
-        ];
-
+            {$orderStateCondition}
+            ORDER BY {$orderClause}, DATE_FORMAT (od.created, '%d.%m.%Y, %H:%i') DESC;";
+        
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $result = $statement->fetchAll('assoc');

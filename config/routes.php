@@ -46,7 +46,7 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->setExtensions(['pdf', 'js']);
 
-    $routes->connect('/', ['controller' => 'pages', 'action' => 'home']);
+    $routes->connect('/', ['controller' => 'Pages', 'action' => 'home']);
 
     $routes->connect('/'.__('route_sign_in'), ['controller' => 'Customers', 'action' => 'login']);
     $routes->connect('/'.__('route_sign_out'), ['controller' => 'Customers', 'action' => 'logout']);

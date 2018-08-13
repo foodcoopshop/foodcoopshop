@@ -177,9 +177,8 @@ class CustomersController extends AdminAppController
 
         try {
 
-            $activeOrdersAssociation = $this->Customer->getAssociation('ActiveOrders')->setConditions([
-                'DATE_FORMAT(ActiveOrders.date_add, \'%Y-%m-%d\') > DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 2 MONTH), \'%Y-%m-%d\')',
-                'ActiveOrders.current_state <> ' . ORDER_STATE_CANCELLED
+            $activeOrdersAssociation = $this->Customer->getAssociation('ActiveOrderDetails')->setConditions([
+                'DATE_FORMAT(ActiveOrderDetails.created, \'%Y-%m-%d\') > DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 2 MONTH), \'%Y-%m-%d\')'
             ]);
 
             $customer = $this->Customer->find('all', [
@@ -188,7 +187,7 @@ class CustomersController extends AdminAppController
                 ],
                 'contain' => [
                     'Manufacturers',
-                    'ActiveOrders'
+                    'ActiveOrderDetails'
                 ]
             ])->first();
 
@@ -563,13 +562,13 @@ class CustomersController extends AdminAppController
         }
         $this->set('validOrdersCountTo', $validOrdersCountTo);
 
-        $dateFrom = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime('01/01/2014'));
+        $dateFrom = '';
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
             $dateFrom = $this->getRequest()->getQuery('dateFrom');
         }
         $this->set('dateFrom', $dateFrom);
 
-        $dateTo = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'));
+        $dateTo = '';
         if (! empty($this->getRequest()->getQuery('dateTo'))) {
             $dateTo = $this->getRequest()->getQuery('dateTo');
         }
@@ -587,15 +586,25 @@ class CustomersController extends AdminAppController
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
 
         $this->Customer->dropManufacturersInNextFind();
+        
+        $validOrderDetailsConditions = [];
+        if ($dateFrom != '') {
+            $validOrderDetailsConditions[] = 'DATE_FORMAT(ValidOrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom).'\'';
+        }
+        if ($dateTo != '') {
+            $validOrderDetailsConditions[] = 'DATE_FORMAT(ValidOrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo).'\'';
+        }
         $query = $this->Customer->find('all', [
             'conditions' => $conditions,
             'contain' => [
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
-                'ValidOrders',
-                'PaidCashFreeOrders'
+                'ValidOrderDetails' => [
+                    'conditions' => $validOrderDetailsConditions,
+                    'sort' => ['ValidOrderDetails.pickup_day' => 'DESC']
+                ]
             ]
         ]);
-
+        
         $customers = $this->paginate($query, [
             'sortWhitelist' => [
                 'Customers.' . Configure::read('app.customerMainNamePart'), 'Customers.id_default_group', 'Customers.id_default_group', 'Customers.email', 'Customers.active', 'Customers.email_order_reminder', 'Customers.date_add', 'Customers.timebased_currency_enabled'
@@ -605,10 +614,16 @@ class CustomersController extends AdminAppController
             ]
         ])->toArray();
 
+        // extract all email addresses for button
+        $emailAddresses = [];
+        $emailAddresses = $query->all()->extract('email')->toArray();
+        $emailAddresses = array_unique($emailAddresses);
+        $this->set('emailAddresses', $emailAddresses);
+        
         $i = 0;
         $this->Payment = TableRegistry::getTableLocator()->get('Payments');
-        $this->Order = TableRegistry::getTableLocator()->get('Orders');
-
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
             $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
         }
@@ -620,53 +635,13 @@ class CustomersController extends AdminAppController
                     $customer->timebased_currency_credit_balance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customer->id_customer);
                 }
             }
-
-            $customer->order_count = $this->Order->getCountByCustomerId($customer->id_customer);
-
-            $voc = count($customer->valid_orders);
-            $customer->valid_orders_count = $voc;
-
-            $customer->last_valid_order_date = '';
-
-            $validOrdersCountCondition = true;
-            if ($validOrdersCountFrom != '') {
-                $validOrdersCountCondition = $voc >= $validOrdersCountFrom;
-            }
-            if ($validOrdersCountTo != '') {
-                if ($validOrdersCountCondition === true) {
-                    $validOrdersCountCondition = $voc <= $validOrdersCountTo;
-                }
-            }
-
-            if (! $validOrdersCountCondition) {
+            $customer->order_detail_count = count($customer->valid_order_details);
+            if (!empty($validOrderDetailsConditions) && $customer->order_detail_count == 0) {
                 unset($customers[$i]);
-                $i ++;
-                continue;
             }
-
-            if (isset($customer->valid_orders[$voc - 1])) {
-                $lastOrderDate = $customer->valid_orders[$voc - 1]->date_add->i18nFormat(Configure::read('DateFormat.Database'));
-
-                $lastOrderDateCondition = true;
-                if ($dateFrom != '') {
-                    $lastOrderDateCondition = strtotime($dateFrom) <= strtotime($lastOrderDate);
-                }
-                if ($dateTo != '') {
-                    if ($lastOrderDateCondition === true) {
-                        $lastOrderDateCondition = strtotime($dateTo) >= strtotime($lastOrderDate);
-                    }
-                }
-
-                $customer->last_valid_order_date = $lastOrderDate;
-
-                if (! $lastOrderDateCondition) {
-                    unset($customer);
-                }
-            }
-
             $i ++;
         }
-
+        
         $this->set('customers', $customers);
 
         $this->set('title_for_layout', __d('admin', 'Members'));

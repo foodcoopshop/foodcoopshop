@@ -303,7 +303,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
      *
      * @param int $productId
      * @param int $amount
-     * @return json string
+     * @return string
      */
     protected function addProductToCart($productId, $amount)
     {
@@ -318,24 +318,44 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '', $timebaseCurrencyTimeSum = null)
     {
         $data = [
-            'Orders' => [
+            'Carts' => [
                 'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
                 'cancellation_terms_accepted' => $cancellation_terms_accepted
-            ]
+            ],
         ];
 
         if ($comment != '') {
-            $data['Orders']['comment'] = $comment;
+            $data['Carts']['pickup_day_entities'][0] = [
+                'customer_id' => $this->browser->getLoggedUserId(),
+                'comment' => $comment
+            ];
         }
 
         if ($timebaseCurrencyTimeSum !== null) {
-            $data['timebased_currency_order']['seconds_sum_tmp'] = $timebaseCurrencyTimeSum;
+            $data['Carts']['timebased_currency_seconds_sum_tmp'] = $timebaseCurrencyTimeSum;
         }
 
         $this->browser->post(
             $this->Slug->getCartFinish(), $data
         );
     }
+    
+    
+    protected function getCartById($cartId)
+    {
+        $cart = $this->Cart->find('all', [
+            'conditions' => [
+                'Carts.id_cart' => $cartId
+            ],
+            'contain' => [
+                'CartProducts.OrderDetails.OrderDetailTaxes',
+                'CartProducts.OrderDetails.OrderDetailUnits',
+                'CartProducts.OrderDetails.TimebasedCurrencyOrderDetails'
+            ]
+        ])->first();
+        return $cart;
+    }
+    
 
     /**
      * @param string $productId

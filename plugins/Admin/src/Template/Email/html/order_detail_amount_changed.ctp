@@ -18,14 +18,14 @@ use Cake\Core\Configure;
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
     
-    <?php echo $this->element('email/greeting', ['data' => $oldOrderDetail->order->customer]); ?>
+    <?php echo $this->element('email/greeting', ['data' => $oldOrderDetail->customer]); ?>
     
     <tr>
         <td>
 
             <p>
             	<?php echo __d('admin', 'The_amount_of_the_product_{0}_has_been_adapted.', ['<b>'.$oldOrderDetail->product_name.'</b>']); ?> <?php echo __d('admin', 'You_have_ordered_it_on_{0}_at_manufacturer_{1}.', [
-            	    $oldOrderDetail->order->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')),
+            	    $oldOrderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')),
             	    '<b>'.$oldOrderDetail->product->manufacturer->name.'</b>'
             	]); ?>
             </p>

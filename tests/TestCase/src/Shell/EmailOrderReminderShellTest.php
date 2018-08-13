@@ -33,19 +33,16 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
         $this->assertEmailLogs($emailLogs[2], 'Bestell-Erinnerung', ['Hallo Demo Superadmin,', 'ist schon wieder der letzte Bestelltag'], [Configure::read('test.loginEmailSuperadmin')]);
     }
 
-    public function testActiveOrder()
+    public function testActiveOrderDetail()
     {
-        $orderPeriodFirstDay = Configure::read('app.timeHelper')->formatToDbFormatDate(
-            Configure::read('app.timeHelper')->getOrderPeriodFirstDay(
-                Configure::read('app.timeHelper')->getCurrentDay()
-            )
-        );
-        $this->Order = TableRegistry::getTableLocator()->get('Orders');
-        $this->Order->save(
-            $this->Order->patchEntity(
-                $this->Order->get(1),
+        $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        
+        $this->OrderDetail->save(
+            $this->OrderDetail->patchEntity(
+                $this->OrderDetail->get(1),
                 [
-                    'date_add' => $orderPeriodFirstDay
+                    'pickup_day' => $pickupDay
                 ]
             )
         );

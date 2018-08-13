@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-07-06 11:36+0200\n"
-"PO-Revision-Date: 2018-07-06 11:36+0200\n"
+"POT-Creation-Date: 2018-08-10 16:28+0200\n"
+"PO-Revision-Date: 2018-08-13 11:39+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.1.1\n"
 
 msgid "You_have_been_signed_out."
 msgstr "Du hast dich erfolgreich abgemeldet."
@@ -42,12 +42,6 @@ msgstr "Bestelluebersicht"
 msgid "Filename_General-terms-and-conditions"
 msgstr "Allgemeine-Geschaeftsbedingungen"
 
-msgid "Error_while_creating_the_order."
-msgstr "Bei der Erstellung der Bestellung ist ein Fehler aufgetreten."
-
-msgid "Error_while_saving_the_ordered_products."
-msgstr "Beim Speichern der bestellten Produkte ist ein Fehler aufgetreten."
-
 msgid "Finish_cart"
 msgstr "Warenkorb abschließen"
 
@@ -75,14 +69,23 @@ msgstr "Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist ni
 msgid "Errors_occurred."
 msgstr "Es sind Fehler aufgetreten."
 
+msgid "Instant_order_successfully_placed_for_{0}."
+msgstr "Die Sofort-Bestellung für {0} wurde erfolgreich getätigt."
+
+msgid "Instant_order_successfully_placed_for_{0}._The_following_manufacturers_were_notified:_{1}"
+msgstr "Die Sofort-Bestellung für {0} wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: {1}"
+
+msgid "Pickup_day"
+msgstr "Abholtag"
+
 msgid "Your_order_has_been_placed_succesfully."
 msgstr "Deine Bestellung wurde erfolgreich abgeschlossen."
 
 msgid "{0}_has_placed_a_new_order_({1})."
 msgstr "{0} hat eine neue Bestellung getätigt ({1})."
 
-msgid "Notification_about_instant_order_order_number_{0}"
-msgstr "Benachrichtigung über Sofort-Bestellung Nr. {0}"
+msgid "Notification_about_instant_order_order"
+msgstr "Benachrichtigung über Sofort-Bestellung"
 
 msgid "Your_order_has_been_placed"
 msgstr "Deine Bestellung ist abgeschlossen"
@@ -390,9 +393,6 @@ msgstr "abgeschlossen"
 msgid "Place_instant_order_for"
 msgstr "Sofort-Bestellung tätigen für"
 
-msgid "Instant_order_date_is_set_back_after_placing_it."
-msgstr "Nach dem Abschließen der Bestellung wird sie automatisch rückdatiert."
-
 msgid "Close_all_orders?"
 msgstr "Alle Bestellungen abschließen?"
 
@@ -499,7 +499,7 @@ msgid "You_selected_1_product_for_cancellation"
 msgstr "Du hast 1 Produkt zum Stornieren ausgewählt"
 
 msgid "You_selected_{0}_products_for_cancellation"
-msgstr "Du hast {0] Produkte zum Stornieren ausgewählt"
+msgstr "Du hast {0} Produkte zum Stornieren ausgewählt"
 
 msgid "Adapt_amount_reason_is_mandatory."
 msgstr "Bitte gib an, warum die Anzahl vermindert wird."
@@ -654,14 +654,23 @@ msgstr "Gruppe ändern für"
 msgid "The_member_needs_to_sign_again."
 msgstr "Das Mitglied muss sich nach der Änderung neu einloggen."
 
-msgid "Change_comment_of_order"
-msgstr "Kommentar zu Bestellung ändern"
+msgid "Member"
+msgstr "Mitglied"
 
-msgid "Set_date_of_order_back_to"
-msgstr "Bestellung rückdatieren auf"
+msgid "Were_the_products_picked_up?"
+msgstr "Wurden die Produkte abgeholt?"
 
-msgid "Set_date_of_order_back"
-msgstr "Bestellung rückdatieren"
+msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
+msgstr "Diese Funktion ist nicht zwingend notwendig, doch für den Abholdienst hilfreich."
+
+msgid "All_products_picked_up?"
+msgstr "Alle Produkte abgeholt?"
+
+msgid "Were_the_products_of_all_members_picked_up?"
+msgstr "Wurden die Produkte von allem Mitgliedern abgeholt?"
+
+msgid "Change_pickup_day_comment"
+msgstr "Kommentar zu Abholtag ändern"
 
 msgid "Change_member_comment"
 msgstr "Mitglieder-Kommentar ändern"
@@ -759,8 +768,11 @@ msgstr "Preis exkl."
 msgid "VAT"
 msgstr "USt."
 
-msgid "Member"
-msgstr "Mitglied"
+msgid "Order_day"
+msgstr "Bestelltag"
+
+msgid "Delivery_day"
+msgstr "Liefertag"
 
 msgid "Total_sum"
 msgstr "Gesamtsumme"
@@ -831,8 +843,14 @@ msgstr "Netzwerk-Modul: Produkte synchronisiert"
 msgid "Action_Log_Order_status_changed"
 msgstr "Bestellung: Status geändert"
 
+msgid "Action_Log_Order_detail_status_changed"
+msgstr "Bestelltes Produkt: Status geändert"
+
 msgid "Action_Log_Orders_closed"
 msgstr "Bestellungen: abgeschlossen"
+
+msgid "Action_Log_Order_details_closed"
+msgstr "Bestelltes Produkt: abgeschlossen"
 
 msgid "Action_Log_Order_comment_changed"
 msgstr "Bestellung: Kommentar geändert"
@@ -1095,6 +1113,12 @@ msgstr "Das Produkt mit der ID {0} ist nicht vorhanden."
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "Die Variante existiert nicht: {0}"
 
+msgid "Please_accept_the_information_about_right_of_withdrawal."
+msgstr "Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss."
+
+msgid "Please_accept_the_general_terms_and_conditions."
+msgstr "Bitte akzeptiere die AGB."
+
 msgid "offline"
 msgstr "offline"
 
@@ -1191,17 +1215,8 @@ msgstr "Lieferpause"
 msgid "online"
 msgstr "online"
 
-msgid "Pick_up_day"
-msgstr "Abholtag"
-
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{1 Produkt} other{# Produkte}}"
-
-msgid "Please_accept_the_information_about_right_of_withdrawal."
-msgstr "Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss."
-
-msgid "Please_accept_the_general_terms_and_conditions."
-msgstr "Bitte akzeptiere die AGB."
 
 msgid "Please_enter_a_correct_number."
 msgstr "Bitte gib eine korrekte Zahl ein."
@@ -1326,41 +1341,8 @@ msgstr "Davon in"
 msgid "Including_vat"
 msgstr "Enthaltene Umsatzsteuer"
 
-msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
-msgstr "Wieviel davon möchtest du in {0} bezahlen?"
-
 msgid "To_finish_order_click_here."
 msgstr "Um die Bestellung abzuschließen, klicke bitte auf \"Zahlungspflichtig bestellen\"."
-
-msgid "The_amount_will_be_reduced_from_your_credit_balance."
-msgstr "Der Betrag wird dann automatisch von deinem Guthaben abgebucht."
-
-msgid "Please_pay_when_picking_up_products."
-msgstr "Den Betrag bitte bei der Abholung in bar bezahlen."
-
-msgid "Please_pick_up_your_products_on_{0}_at_{1}."
-msgstr "Bitte hole deine Produkte am {0} bei uns ({1}) ab. Die genaue Uhrzeit steht in der Box rechts."
-
-msgid "general_terms_and_conditions"
-msgstr "AGB"
-
-msgid "I_accept_the_{0}"
-msgstr "Ich akzeptiere die {0}"
-
-msgid "right_of_withdrawal"
-msgstr "Rücktrittsrecht"
-
-msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
-msgstr "Ich nehme das {0} zur Kenntnis und akzeptiere dessen Ausschluss für leicht verderbliche Waren."
-
-msgid "Write_message_to_pick_up_team?"
-msgstr "Nachricht an Abholdienst schreiben?"
-
-msgid "Placeholder_message_order_comment."
-msgstr "Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. Die Hersteller sehen diese Nachricht nicht."
-
-msgid "Order_button"
-msgstr "Zahlungspflichtig bestellen"
 
 msgid "Order_placed"
 msgstr "Bestellung abgeschlossen"
@@ -1371,14 +1353,8 @@ msgstr "Vielen Dank, deine Bestellung wurde erfolgreich abgeschlossen."
 msgid "The_order_confirmation_was_sent_by_email_to_{0}."
 msgstr "Die Bestellbestätigung wurde per E-Mail an {0} versendet."
 
-msgid "Please_pick_up_the_ordered_products_on_{0}_in_our_pick_up_store."
-msgstr "Bitte hole die bestellten Waren verlässlich am {0} in unserem Abhollager ab."
-
-msgid "The_product_value_{0}_with_an_additional_deposit_of_{1}_was_automatically_reduced_from_your_credit."
-msgstr "Der Warenwert von {0} zuzüglich {1} Pfand wurde automatisch von deinem Guthaben abgezogen."
-
-msgid "The_product_value_{0}_was_automatically_reduced_from_your_credit."
-msgstr "Der Warenwert von {0} wurde automatisch von deinem Guthaben abgezogen."
+msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
+msgstr "Bitte hole die bestellten Waren verlässlich in unserem Abhollager ab."
 
 msgid "Increase_credit"
 msgstr "Guthaben aufladen"
@@ -1433,6 +1409,9 @@ msgstr "Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden?"
 
 msgid "terms_of_use"
 msgstr "Nutzungsbedingungen"
+
+msgid "I_accept_the_{0}"
+msgstr "Ich akzeptiere die {0}"
 
 msgid "Please_enter_your_email_address_and_click_on_send_button."
 msgstr "Bitte gib deine E-Mail-Adresse an und klicke dann auf \"Senden\"."
@@ -1539,6 +1518,36 @@ msgstr "Um dein Profil zu ändern, beende bitte den Sofort-Bestellungsmodus."
 msgid "Signed_in"
 msgstr "Eingeloggt"
 
+msgid "right_of_withdrawal"
+msgstr "Rücktrittsrecht"
+
+msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
+msgstr "Ich nehme das {0} zur Kenntnis und akzeptiere dessen Ausschluss für leicht verderbliche Waren."
+
+msgid "general_terms_and_conditions"
+msgstr "AGB"
+
+msgid "Order_button"
+msgstr "Zahlungspflichtig bestellen"
+
+msgid "The_amount_will_be_reduced_from_the_credit_balance."
+msgstr "Der Betrag wird dann automatisch vom Guthaben abgebucht."
+
+msgid "Please_pay_when_picking_up_products."
+msgstr "Den Betrag bitte bei der Abholung in bar bezahlen."
+
+msgid "Write_message_to_pick_up_team_for_{0}?"
+msgstr "Nachricht an Abholdienst für den {0} schreiben?"
+
+msgid "Placeholder_message_pickup_day_comment."
+msgstr "Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. Die Hersteller sehen diese Nachricht nicht."
+
+msgid "Pickup_place:_{0}"
+msgstr "Abholort: {0}"
+
+msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
+msgstr "Wieviel davon möchtest du in {0} bezahlen?"
+
 msgid "Product"
 msgstr "Produkt"
 
@@ -1581,15 +1590,6 @@ msgstr "davon {0} %"
 msgid "Your_account_at_{0}_has_just_been_activated."
 msgstr "Dein Mitgliedkonto bei {0} wurde soeben aktiviert."
 
-msgid "thank_you_for_your_order_number_{0}_from_{1}."
-msgstr "vielen Dank für deine Bestellung Nr. {0} vom {1}."
-
-msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
-msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
-
-msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
-msgstr "Eine detaillierte Auflistung deiner Bestellung findest du in der angehängten Bestellübersicht (PDF). Die Informationen zum Rücktrittsrecht sind gesetzlich vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen."
-
 msgid "Your_registration_at_{0}_has_just_been_successful!"
 msgstr "Deine Registrierung bei {0} war erfolgreich!"
 
@@ -1605,11 +1605,11 @@ msgstr "Hier kannst du das neue Mitglied aktivieren und die Daten einsehen"
 msgid "Here_you_can_see_the_data_of_the_new_member"
 msgstr "Hier kannst du die Daten des neuen Mitglieds einsehen"
 
-msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1}_(order_number_{2})."
-msgstr "Soeben wurde von {1} eine Sofort-Bestellung für {0} getätigt (Bestellung Nr. {2})."
+msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1})."
+msgstr "Soeben wurde von {1} eine Sofort-Bestellung für {0} getätigt."
 
-msgid "You_receive_this_message_because_this_order_was_automatically_moved_into_the_previous_order_period_and_therefore_it_does_not_appear_on_your_order_lists."
-msgstr "Du erhältst diese Nachricht, weil diese Bestellung automatisch in die Vorwoche rückdatiert wurde und sie daher nicht in deinen Bestelllisten aufscheint."
+msgid "You_receive_this_message_because_the_delivery_day_of_this_order_was_automatically_set_to_today_{0}_and_therefore_it_does_not_appear_on_your_order_lists."
+msgstr "Du erhältst diese Nachricht, weil der Liefertag dieser Bestellung automatisch auf <b>heute ({0})</b>, gesetzt wurde und sie daher nicht in deinen Bestelllisten aufscheint."
 
 msgid "please_click_on_this_link_to_generate_a_new_password"
 msgstr "bitte klicke auf folgenden Link, um dein neues Passwort zu generieren"
@@ -1619,6 +1619,18 @@ msgstr "du hast gerade ein neues Passwort generiert, es lautet"
 
 msgid "You_can_sign_in_and_change_your_password_here"
 msgstr "Du kannst dich hier anmelden und das Passwort gleich ändern"
+
+msgid "thank_you_for_your_order_from_{0}."
+msgstr "vielen Dank für deine Bestellung vom {0}."
+
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+msgid "The_amount_was_reduced_from_your_credit_balance."
+msgstr "Der Betrag wurde von deinem Guthaben abgebucht."
+
+msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
+msgstr "Eine detaillierte Auflistung deiner Bestellung findest du in der angehängten Bestellübersicht (PDF). Die Informationen zum Rücktrittsrecht sind gesetzlich vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen."
 
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."
 msgstr "Das ist der Text der E-Mail (mit FoodCoopShop-Logo als Anhang)."
@@ -1875,6 +1887,9 @@ msgstr "produkt"
 msgid "Mouseover_shows_the_paid_amont_in_{0}."
 msgstr "Mouseover zeigt den bezahlten Betrag in {0} an."
 
+msgid "Order_contains_amount_in_{0}."
+msgstr "Bestellung wurde teilweise in {0} bezahlt."
+
 msgid "Paying_with_time_account_name_{0}"
 msgstr "{0}konto"
 
@@ -1890,8 +1905,41 @@ msgstr "Die Bestellung beinhaltet den variablen Mitgliedsbeitrag."
 msgid "order_state_closed"
 msgstr "abgeschlossen"
 
+msgid "order_state_order_list_sent_to_manufacturer"
+msgstr "Bestellliste an Hersteller versendet"
+
+msgid "order_state_billed_cashless"
+msgstr "verrechnet"
+
+msgid "order_state_billed_cash"
+msgstr "verrechnet und bar bezahlt"
+
 msgid "route_information_about_right_of_withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "Set_date_of_order_back_to"
+#~ msgstr "Bestellung rückdatieren auf"
+
+#~ msgid "Set_date_of_order_back"
+#~ msgstr "Bestellung rückdatieren"
+
+#~ msgid "Instant_order_date_is_set_back_after_placing_it."
+#~ msgstr "Nach dem Abschließen der Bestellung wird sie automatisch rückdatiert."
+
+#~ msgid "Please_pick_up_your_products_on_{0}_at_{1}."
+#~ msgstr "Bitte hole deine Produkte am {0} bei uns ({1}) ab. Die genaue Uhrzeit steht in der Box rechts."
+
+#~ msgid "Error_while_creating_the_order."
+#~ msgstr "Bei der Erstellung der Bestellung ist ein Fehler aufgetreten."
+
+#~ msgid "Error_while_saving_the_ordered_products."
+#~ msgstr "Beim Speichern der bestellten Produkte ist ein Fehler aufgetreten."
+
+#~ msgid "The_product_value_{0}_with_an_additional_deposit_of_{1}_was_automatically_reduced_from_your_credit."
+#~ msgstr "Der Warenwert von {0} zuzüglich {1} Pfand wurde automatisch von deinem Guthaben abgezogen."
+
+#~ msgid "The_product_value_{0}_was_automatically_reduced_from_your_credit."
+#~ msgstr "Der Warenwert von {0} wurde automatisch von deinem Guthaben abgezogen."

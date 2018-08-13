@@ -195,7 +195,7 @@ class ManufacturersController extends AdminAppController
         $this->set('manufacturer', $manufacturer);
     }
 
-    public function setKcFinderUploadPath($manufacturerId)
+    public function setElFinderUploadPath($manufacturerId)
     {
         $this->RequestHandler->renderAs($this, 'json');
 
@@ -223,13 +223,13 @@ class ManufacturersController extends AdminAppController
 
     public function index()
     {
-        $dateFrom = Configure::read('app.timeHelper')->getOrderPeriodFirstDay(Configure::read('app.timeHelper')->getCurrentDay());
+        $dateFrom = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getCurrentDay());
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
             $dateFrom = $this->getRequest()->getQuery('dateFrom');
         }
         $this->set('dateFrom', $dateFrom);
 
-        $dateTo = Configure::read('app.timeHelper')->getOrderPeriodLastDay(Configure::read('app.timeHelper')->getCurrentDay());
+        $dateTo = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getCurrentDay());
         if (! empty($this->getRequest()->getQuery('dateTo'))) {
             $dateTo = $this->getRequest()->getQuery('dateTo');
         }
@@ -270,6 +270,12 @@ class ManufacturersController extends AdminAppController
                 'Manufacturers.name' => 'ASC'
             ]
         ])->toArray();
+        
+        // extract all email addresses for button
+        $emailAddresses = [];
+        $emailAddresses = $query->all()->extract('address_manufacturer.email')->toArray();
+        $emailAddresses = array_unique($emailAddresses);
+        $this->set('emailAddresses', $emailAddresses);
 
         $this->Product = TableRegistry::getTableLocator()->get('Products');
         $this->Payment = TableRegistry::getTableLocator()->get('Payments');
@@ -315,12 +321,13 @@ class ManufacturersController extends AdminAppController
             ]
         ])->first();
 
-        // generate and save PDF - should be done here because count of results will be checked
-        $product_results = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, [
+        $validOrderStates = [
             ORDER_STATE_OPEN,
-            ORDER_STATE_CASH,
-            ORDER_STATE_CASH_FREE
-        ], 'F');
+            ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER
+        ];
+        
+        // generate and save PDF - should be done here because count of results will be checked
+        $product_results = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $validOrderStates, 'F');
 
         // no orders in current period => do not send pdf but send information email
         if (count($product_results) == 0) {
@@ -335,11 +342,7 @@ class ManufacturersController extends AdminAppController
             $this->set('newInvoiceNumber', $newInvoiceNumber);
 
             $this->RequestHandler->renderAs($this, 'pdf');
-            $customer_results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, [
-                ORDER_STATE_OPEN,
-                ORDER_STATE_CASH,
-                ORDER_STATE_CASH_FREE
-            ], 'F');
+            $customer_results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, $validOrderStates, 'F');
 
             // generate invoice
             $this->render('get_invoice');
@@ -359,6 +362,9 @@ class ManufacturersController extends AdminAppController
             );
 
             $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
+            
+            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+            $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, Configure::read('app.htmlHelper')->getOrderStateBilled(), $manufacturerId);
 
             $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
             if ($sendEmail) {
@@ -366,7 +372,7 @@ class ManufacturersController extends AdminAppController
                 $email->setTemplate('Admin.send_invoice')
                     ->setTo($manufacturer->address_manufacturer->email)
                     ->setAttachments([
-                    $invoicePdfFile
+                        $invoicePdfFile
                     ])
                     ->setSubject(__d('admin', 'Invoice_number_abbreviataion_{1}_{2}', [$newInvoiceNumber, $invoicePeriodMonthAndYear]))
                     ->setViewVars([
@@ -374,8 +380,7 @@ class ManufacturersController extends AdminAppController
                     'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
                     'appAuth' => $this->AppAuth,
                     'showManufacturerUnsubscribeLink' => true
-                    ]);
-
+                ]);
                 $email->send();
             }
         }
@@ -422,10 +427,10 @@ class ManufacturersController extends AdminAppController
             ]
         ])->first();
 
+        $validOrderStates = [ORDER_STATE_OPEN];
+        
         // generate and save PDF - should be done here because count of results will be checked
-        $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, [
-            ORDER_STATE_OPEN
-        ], 'F');
+        $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $validOrderStates, 'F');
 
         // no orders in current period => do not send pdf but send information email
         if (count($productResults) == 0) {
@@ -438,15 +443,16 @@ class ManufacturersController extends AdminAppController
             $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), __d('admin', 'product'));
 
             // generate order list by customer
-            $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, [
-                ORDER_STATE_OPEN
-            ], 'F');
+            $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, $validOrderStates, 'F');
             $this->render('get_order_list_by_customer');
             $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('app.deliveryDayDelta') . ' day')), __d('admin', 'member'));
 
             $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
             $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
 
+            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+            $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturerId);
+            
             $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}.', ['<b>'.$manufacturer->name.'</b>']);
 
             if ($sendEmail) {
@@ -722,27 +728,19 @@ class ManufacturersController extends AdminAppController
         $dateFrom = $this->getRequest()->getQuery('dateFrom');
         $dateTo = $this->getRequest()->getQuery('dateTo');
 
-        $results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, [
-            ORDER_STATE_OPEN,
-            ORDER_STATE_CASH,
-            ORDER_STATE_CASH_FREE
-        ]);
+        $results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, []);
         if (empty($results)) {
             // do not throw exception because no debug mails wanted
             die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }
-        $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, [
-            ORDER_STATE_OPEN,
-            ORDER_STATE_CASH,
-            ORDER_STATE_CASH_FREE
-        ]);
+        $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, []);
     }
 
     public function getOrderListByProduct()
     {
         $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
         $dateFrom = $this->getRequest()->getQuery('dateFrom');
-        $dateTo = $this->getRequest()->getQuery('dateTo');
+        $dateTo = null;
         $orderStates = $this->getAllowedOrderStates($manufacturerId);
         $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $orderStates);
     }

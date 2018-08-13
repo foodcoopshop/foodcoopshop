@@ -31,23 +31,23 @@ class CustomersTable extends AppTable
         $this->hasOne('AddressCustomers', [
             'foreignKey' => 'id_customer'
         ]);
-        $this->hasMany('ActiveOrders', [
-            'className' => 'Orders',
+        $this->hasMany('ActiveOrderDetails', [
+            'className' => 'OrderDetails',
             'foreignKey' => 'id_customer',
             'sort' => [
-                'ActiveOrders.date_add' => 'DESC'
+                'ActiveOrderDetails.created' => 'DESC'
             ]
         ]);
-        $this->hasMany('PaidCashFreeOrders', [
-            'className' => 'Orders',
+        $this->hasMany('PaidCashlessOrderDetails', [
+            'className' => 'OrderDetails',
             'foreignKey' => 'id_customer',
             'sort' => [
-                'PaidCashFreeOrders.date_add' => 'DESC'
+                'PaidCashlessOrderDetails.created' => 'DESC'
             ]
         ]);
         // has many does not produce multiple records - this should be hasOne ideally...
-        $this->hasMany('ValidOrders', [
-            'className' => 'Orders',
+        $this->hasMany('ValidOrderDetails', [
+            'className' => 'OrderDetails',
             'foreignKey' => 'id_customer',
             'limit' => 1
         ]);
@@ -191,14 +191,14 @@ class CustomersTable extends AppTable
     {
         parent::__construct($id, $table, $ds);
 
-        $this->getAssociation('ValidOrders')->setConditions([
-            'ValidOrders.current_state IN (' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . ')'
+        $this->getAssociation('ValidOrderDetails')->setConditions([
+            'ValidOrderDetails.order_state IN (' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . ')'
         ]);
-        $this->getAssociation('ActiveOrders')->setConditions([
-            'ActiveOrders.current_state IN (' . ORDER_STATE_OPEN . ')'
+        $this->getAssociation('ActiveOrderDetails')->setConditions([
+            'ActiveOrderDetails.order_state IN (' . ORDER_STATE_OPEN . ')'
         ]);
-        $this->getAssociation('PaidCashFreeOrders')->setConditions([
-            'PaidCashFreeOrders.current_state IN (' . ORDER_STATE_CASH_FREE . ', ' . ORDER_STATE_OPEN . ')'
+        $this->getAssociation('PaidCashlessOrderDetails')->setConditions([
+            'PaidCashlessOrderDetails.order_state IN (' . join(',', Configure::read('app.htmlHelper')->getOrderStatesCashless()). ')'
         ]);
     }
 
@@ -285,9 +285,9 @@ class CustomersTable extends AppTable
     {
 
         $productBalanceSum = 0;
-        $orderTable = TableRegistry::getTableLocator()->get('Orders');
+        $orderDetailTable = TableRegistry::getTableLocator()->get('OrderDetails');
 
-        $query = $orderTable->find('all', [
+        $query = $orderDetailTable->find('all', [
             'contain' => [
                 'Customers'
             ],
@@ -295,11 +295,11 @@ class CustomersTable extends AppTable
                 'Customers.id_customer IS NULL'
             ]
         ]);
-        $query->group('Orders.id_customer');
+        $query->group('OrderDetails.id_customer');
 
         $removedCustomerIds = [];
-        foreach($query as $order) {
-            $removedCustomerIds[] = $order->id_customer;
+        foreach($query as $orderDetail) {
+            $removedCustomerIds[] = $orderDetail->id_customer;
         }
 
         $productBalanceSum = $this->getProductBalanceSumForCustomerIds($removedCustomerIds);
@@ -311,13 +311,13 @@ class CustomersTable extends AppTable
     {
 
         $paymentTable = TableRegistry::getTableLocator()->get('Payments');
-        $orderTable = TableRegistry::getTableLocator()->get('Orders');
+        $orderDetailTable = TableRegistry::getTableLocator()->get('OrderDetails');
 
         $productBalanceSum = 0;
         foreach($customerIds as $customerId) {
             $productPaymentSum = $paymentTable->getSum($customerId, 'product');
             $paybackPaymentSum = $paymentTable->getSum($customerId, 'payback');
-            $productOrderSum = $orderTable->getSumProduct($customerId);
+            $productOrderSum = $orderDetailTable->getSumProduct($customerId);
             $productBalance = $productPaymentSum - $paybackPaymentSum - $productOrderSum;
             $productBalanceSum += $productBalance;
         }
@@ -391,12 +391,12 @@ class CustomersTable extends AppTable
     {
 
         $paymentTable = TableRegistry::getTableLocator()->get('Payments');
-        $orderTable = TableRegistry::getTableLocator()->get('Orders');
+        $orderDetailTable = TableRegistry::getTableLocator()->get('OrderDetails');
 
         $depositBalanceSum = 0;
         foreach($customerIds as $customerId) {
             $paymentSumDeposit = $paymentTable->getSum($customerId, 'deposit');
-            $depositSum = $orderTable->getSumDeposit($customerId);
+            $depositSum = $orderDetailTable->getSumDeposit($customerId);
             $depositBalance = $paymentSumDeposit - $depositSum;
             $depositBalanceSum += $depositBalance;
         }
@@ -405,14 +405,14 @@ class CustomersTable extends AppTable
 
     public function getCreditBalance($customerId)
     {
+        $orderDetailTable = TableRegistry::getTableLocator()->get('OrderDetails');
         $payment = TableRegistry::getTableLocator()->get('Payments');
         $paymentProductSum = $payment->getSum($customerId, 'product');
         $paybackProductSum = $payment->getSum($customerId, 'payback');
         $paymentDepositSum = $payment->getSum($customerId, 'deposit');
 
-        $order = TableRegistry::getTableLocator()->get('Orders');
-        $productSum = $order->getSumProduct($customerId);
-        $depositSum = $order->getSumDeposit($customerId);
+        $productSum = $orderDetailTable->getSumProduct($customerId);
+        $depositSum = $orderDetailTable->getSumDeposit($customerId);
 
         // rounding avoids problems with very tiny numbers (eg. 2.8421709430404E-14)
         return round($paymentProductSum - $paybackProductSum + $paymentDepositSum - $productSum - $depositSum, 2);
@@ -423,7 +423,7 @@ class CustomersTable extends AppTable
         $contain = [];
         if (! $includeManufacturers) {
             $this->dropManufacturersInNextFind();
-            $contain[] = 'ValidOrders';
+            $contain[] = 'ValidOrderDetails';
             $contain[] = 'AddressCustomers'; // to make exclude happen using dropManufacturersInNextFind
         }
 

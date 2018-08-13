@@ -229,22 +229,12 @@ $this->element('addScript', [
         </tr>
 
         <tr>
-            <td>app.additionalOrderStatusChangeInfo</td>
-            <td><?php echo Configure::read('app.additionalOrderStatusChangeInfo'); ?></td>
-        </tr>
-
-        <tr>
-            <td>app.allowManualOrderListSending</td>
-            <td><?php echo Configure::read('app.allowManualOrderListSending') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
-        </tr>
-
-        <tr>
             <td>app.sendOrderListsWeekday</td>
             <td><?php echo $this->MyTime->getWeekdayName(Configure::read('app.sendOrderListsWeekday')); ?></td>
         </tr>
 
         <tr>
-            <td><?php echo __d('admin', 'Pick_up_day'); ?></td>
+            <td><?php echo __d('admin', 'Pickup_day'); ?></td>
             <td><?php echo $this->MyTime->getWeekdayName(Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta')); ?> (app.sendOrderListsWeekday + app.deliveryDayDelta)</td>
         </tr>
 
@@ -254,8 +244,8 @@ $this->element('addScript', [
         </tr>
 
         <tr>
-            <td>app.visibleOrderStates</td>
-            <td><?php echo json_encode(Configure::read('app.visibleOrderStates')); ?></td>
+            <td>app.orderStates</td>
+            <td><?php echo json_encode(Configure::read('app.orderStates')); ?></td>
         </tr>
 
         <tr>

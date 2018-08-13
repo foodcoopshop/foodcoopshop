@@ -18,14 +18,14 @@ use Cake\Core\Configure;
 if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
     $this->element('addScript', [
         'script' =>
-            Configure::read('app.jsNamespace') . ".Admin.initAddOrder('#add-order-button-wrapper .btn', " . date('N', time()).");"
+            Configure::read('app.jsNamespace') . ".Admin.initAddInstantOrder('#add-instant-order-button-wrapper .btn');"
     ]);
-    echo '<div id="add-order-button-wrapper" class="add-button-wrapper">';
+    echo '<div id="add-instant-order-button-wrapper" class="add-button-wrapper">';
     $options = [
         'escape' => false
     ];
     $options['class'] = 'btn btn-default';
-    echo $this->Html->link('<i class="fa fa-shopping-cart fa-lg"></i> '.__d('admin', 'Instant_order'), 'javascript:void(0);', $options);
+    echo $this->Html->link('<i class="fa fa-shopping-cart fa-lg"></i> '.__d('admin', 'Instant_order_for_today'), 'javascript:void(0);', $options);
     echo $this->Form->control(null, [
         'type' => 'select',
         'label' => '',

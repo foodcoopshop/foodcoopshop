@@ -28,7 +28,7 @@ use Cake\Core\Configure;
     
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
-            <?php echo __d('admin', 'Pick_up_day'); ?> <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'showDateTo' => false, 'nameFrom' => 'dateFrom']); ?>
+            <?php echo __d('admin', 'Pickup_day'); ?> <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'showDateTo' => false, 'nameFrom' => 'dateFrom']); ?>
             <div class="right">
             <?php
                 echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_products'))]);
@@ -41,7 +41,7 @@ use Cake\Core\Configure;
     echo '<table class="list">';
 
     echo '<tr class="sort">';
-    echo '<th>'.__d('admin', 'Pick_up_date').'</th>';
+    echo '<th>'.__d('admin', 'Pickup_day').'</th>';
     echo '<th>'.__d('admin', 'Manufacturer').'</th>';
     echo '<th>'.__d('admin', 'Order_list_by_product').'</th>';
     echo '<th>'.__d('admin', 'Order_list_by_member').'</th>';

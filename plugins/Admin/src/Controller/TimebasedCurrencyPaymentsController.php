@@ -4,6 +4,7 @@ namespace Admin\Controller;
 
 use App\Mailer\AppEmail;
 use Cake\Event\Event;
+use Cake\I18n\FrozenDate;
 use Cake\I18n\Time;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
@@ -73,7 +74,6 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
     public function beforeFilter(Event $event)
     {
         $this->TimebasedCurrencyPayment = TableRegistry::getTableLocator()->get('TimebasedCurrencyPayments');
-        $this->TimebasedCurrencyOrder = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrders');
         $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
         parent::beforeFilter($event);
     }
@@ -466,34 +466,39 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $manufacturersForDropdown = $this->Manufacturer->getTimebasedCurrencyManufacturersForDropdown();
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
 
-        $timebasedCurrencyOrders = $this->TimebasedCurrencyOrderDetail->getOrders($manufacturerId, $customerId);
-
+        $timebasedCurrencyOrderDetailsGroupedByMonth = $this->TimebasedCurrencyOrderDetail->getMonthlySum($manufacturerId, $customerId);
+        
         $payments = [];
-        foreach($timebasedCurrencyOrders as $orderId => $timebasedCurrencyOrder) {
-            $payments[] = [
-                'dateRaw' => $timebasedCurrencyOrder['order']->date_add,
-                'date' => $timebasedCurrencyOrder['order']->date_add->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
-                'year' => $timebasedCurrencyOrder['order']->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year')),
-                'secondsOpen' => $timebasedCurrencyOrder['SumSeconds'] * - 1,
-                'secondsDone' => null,
-                'type' => 'order',
-                'approval' => '',
-                'approvalComment' => null,
-                'isDeleteAllowed' => null,
-                'isEditAllowed' => null,
-                'showDeletedRecords' => null,
-                'text' => Configure::read('app.htmlHelper')->link(
-                    'Bestellung Nr. ' . $orderId . ' (' .
-                        Configure::read('app.htmlHelper')->getOrderStates()[$timebasedCurrencyOrder['order']->current_state] . ')',
-                        '/admin/order-details/?dateFrom=' . $timebasedCurrencyOrder['order']->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
-                        '&dateTo=' . $timebasedCurrencyOrder['order']->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
-                        '&orderId=' . $orderId . '&customerId=' . $timebasedCurrencyOrder['order']->id_customer, [
-                    'title' => 'Bestellung anzeigen'
-                ]),
-                'manufacturerName' => '',
-                'status' => null,
-                'paymentId' => null
-            ];
+        if (! empty($timebasedCurrencyOrderDetailsGroupedByMonth)) {
+            foreach($timebasedCurrencyOrderDetailsGroupedByMonth as $timebasedCurrencyOrderDetail) {
+                $monthAndYear = explode('-', $timebasedCurrencyOrderDetail['MonthAndYear']);
+                $frozenDateFrom = FrozenDate::create($monthAndYear[0], $monthAndYear[1], 1);
+                $lastDayOfMonth = Configure::read('app.timeHelper')->getLastDayOfGivenMonth($timebasedCurrencyOrderDetail['MonthAndYear']);
+                $frozenDateTo = FrozenDate::create($monthAndYear[0], $monthAndYear[1], $lastDayOfMonth);
+                $payments[] = [
+                    'dateRaw' => $frozenDateFrom,
+                    'date' => $frozenDateFrom->i18nFormat(Configure::read('DateFormat.DatabaseWithTime')),
+                    'year' => $frozenDateFrom->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Year')),
+                    'secondsOpen' => $timebasedCurrencyOrderDetail['SumSeconds'] * - 1,
+                    'secondsDone' => null,
+                    'type' => 'orders',
+                    'approval' => '',
+                    'approvalComment' => null,
+                    'isDeleteAllowed' => null,
+                    'isEditAllowed' => null,
+                    'showDeletedRecords' => null,
+                    'text' => Configure::read('app.htmlHelper')->link(
+                            __d('admin', 'Orders') . ' ' . Configure::read('app.timeHelper')->getMonthName($monthAndYear[1]) . ' ' . $monthAndYear[0],
+                            '/admin/order-details/?pickupDay[]=' . $frozenDateFrom->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
+                            '&pickupDay[]=' . $frozenDateTo->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
+                            '&customerId=' . $customerId . '&manufacturerId=' . $manufacturerId, [
+                        'title' => 'Bestellung anzeigen'
+                    ]),
+                    'manufacturerName' => '',
+                    'status' => null,
+                    'paymentId' => null
+                ];
+            }
         }
 
         $conditions = [

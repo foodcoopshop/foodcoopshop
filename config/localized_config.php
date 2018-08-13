@@ -27,9 +27,12 @@ __('order_state_cash');
 return [
     'app' => [
         'manufacturerComponensationInfoText' => __('This_order_contains_the_variable_member_fee.'),
-        'visibleOrderStates' => [
+        'orderStates' => [
             ORDER_STATE_OPEN => __('order_state_open'),
             ORDER_STATE_CASH_FREE => __('order_state_closed'),
+            ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER => __('order_state_order_list_sent_to_manufacturer'),
+            ORDER_STATE_BILLED_CASHLESS => __('order_state_billed_cashless'),
+            ORDER_STATE_BILLED_CASH => __('order_state_billed_cash')
         ],
         'currencyName' => Configure::read('app.htmlHelper')->getCurrencyName(Configure::read('appDb.FCS_CURRENCY_SYMBOL'))
     ]

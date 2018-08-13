@@ -21,17 +21,29 @@ use Cake\ORM\TableRegistry;
 class OrderDetailsTable extends AppTable
 {
 
+    public $states = [
+        'actual' => 3,
+        'paid' => 2,
+        'closed' => 5
+    ];
+    
     public function initialize(array $config)
     {
         $this->setTable('order_detail');
         parent::initialize($config);
         $this->setPrimaryKey('id_order_detail');
 
-        $this->belongsTo('Orders', [
-            'foreignKey' => 'id_order'
+        $this->belongsTo('Customers', [
+            'foreignKey' => 'id_customer'
         ]);
-        $this->belongsTo('OrderDetailTaxes', [
+        $this->hasOne('OrderDetailTaxes', [
             'foreignKey' => 'id_order_detail'
+        ]);
+        $this->belongsTo('PickupDayEntities', [
+            'className' => 'PickupDays', // field has same name and would clash
+            'foreignKey' => [
+                'id_customer'
+            ]
         ]);
         $this->belongsTo('Products', [
             'foreignKey' => 'product_id',
@@ -46,6 +58,7 @@ class OrderDetailsTable extends AppTable
         $this->hasOne('OrderDetailUnits', [
             'foreignKey' => 'id_order_detail'
         ]);
+        $this->addBehavior('Timestamp');
     }
 
     /**
@@ -75,7 +88,7 @@ class OrderDetailsTable extends AppTable
 
             if (count($orderDetails) > 0) {
                 $deliveryDay = Configure::read('app.timeHelper')->formatToDateShort(date('Y-m-d', Configure::read('app.timeHelper')->getDeliveryDay($dateTo)));
-                $result[$deliveryDay] = __('Pick_up_day') . ' ' . $deliveryDay . ' - ' . __('{0,plural,=1{1_product} other{#_products}}', [count($orderDetails)]);
+                $result[$deliveryDay] = __('Pickup_day') . ' ' . $deliveryDay . ' - ' . __('{0,plural,=1{1_product} other{#_products}}', [count($orderDetails)]);
                 $foundOrders++;
             }
 
@@ -86,30 +99,74 @@ class OrderDetailsTable extends AppTable
         return $result;
 
     }
+    
+    public function updateOrderState($dateFrom, $dateTo, $oldOrderStates, $newOrderState, $manufacturerId)
+    {
+        
+        // update with condition on association does not work with ->update or ->updateAll
+        $orderDetails = $this->find('all', [
+            'contain' => [
+                'Products'
+            ],
+            'conditions' => [
+                'Products.id_manufacturer' => $manufacturerId,
+                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
+                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
+                'OrderDetails.order_state IN (' . join(', ', $oldOrderStates) . ')'
+            ],
+            'contain' => [
+                'Products'
+            ]
+        ]);
+        
+        foreach($orderDetails as $orderDetail) {
+            $this->save(
+                $this->patchEntity(
+                    $orderDetail,
+                    [
+                        'order_state' => $newOrderState
+                    ]
+                )
+            );
+        }
+            
+    }
+    
+    public function legacyUpdateOrderStateToNewBilledState($dateFrom, $statusOld, $statusNew)
+    {
+        $conditions = ['order_state' => $statusOld];
+        if (!is_null($dateFrom)) {
+            $conditions[] = 'DATE_FORMAT(created, \'%Y-%m-%d\') < \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
+        }
+        $this->updateAll(
+            [
+                'order_state' => $statusNew
+            ],
+            $conditions
+        );
+    }
 
     public function getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId)
     {
         $conditions = [
-            'Orders.id_customer' => $customerId,
-            'RIGHT(Orders.date_add, 8) <> \'00:00:00\'' // exlude shop orders
+            'OrderDetails.id_customer' => $customerId,
+            'RIGHT(OrderDetails.created, 8) <> \'00:00:00\'' // exlude instant orders
         ];
-        $conditions[] = 'Orders.current_state IN ('.ORDER_STATE_CASH_FREE.','.ORDER_STATE_CASH.','.ORDER_STATE_OPEN.')';
 
-        $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
+        $conditions[] = 'DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
             date('Y-m-d', $dateFrom)
         ).'\'';
 
-        $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
+        $conditions[] = 'DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
             date('Y-m-d', $dateTo)
         ).'\'';
 
         $orderDetails = $this->find('all', [
             'conditions' => $conditions,
             'order' => [
-                'Orders.date_add' => 'DESC'
+                'OrderDetails.created' => 'DESC'
             ],
             'contain' => [
-                'Orders',
                 'Products.Manufacturers'
             ]
         ])->toArray();
@@ -155,18 +212,17 @@ class OrderDetailsTable extends AppTable
 
         $sql =  'SELECT SUM(od.deposit) as sumDepositDelivered ';
         if ($groupByMonth) {
-            $sql .= ', DATE_FORMAT(o.date_add, \'%Y-%c\') as monthAndYear ';
+            $sql .= ', DATE_FORMAT(od.created, \'%Y-%c\') as monthAndYear ';
         }
         $sql .= 'FROM '.$this->tablePrefix.'order_detail od ';
-        $sql .= 'LEFT JOIN '.$this->tablePrefix.'orders o ON o.id_order = od.id_order ';
         $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';
         $sql .= 'WHERE p.id_manufacturer = :manufacturerId ';
-        $sql .= 'AND DATE_FORMAT(o.date_add, \'%Y-%m-%d\') >= :depositForManufacturersStartDate ';
+        $sql .= 'AND DATE_FORMAT(od.created, \'%Y-%m-%d\') >= :depositForManufacturersStartDate ';
         if ($groupByMonth) {
             $sql .= 'GROUP BY monthAndYear ';
             $sql .= 'ORDER BY monthAndYear DESC;';
         } else {
-            $sql .= 'ORDER BY o.date_add DESC;';
+            $sql .= 'ORDER BY od.created DESC;';
         }
         $params = [
             'manufacturerId' => $manufacturerId,
@@ -190,12 +246,11 @@ class OrderDetailsTable extends AppTable
     {
         $sql = 'SELECT SUM(od.total_price_tax_incl) as sumOrderDetail ';
         $sql .= 'FROM '.$this->tablePrefix.'order_detail od ';
-        $sql .= 'LEFT JOIN '.$this->tablePrefix.'orders o ON o.id_order = od.id_order ';
         $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';
         $sql .= 'WHERE p.id_manufacturer = :manufacturerId ';
-        $sql .= 'AND o.current_state = :orderStateOpen ';
-        $sql .= 'AND DATE_FORMAT(o.date_add, \'%Y-%m-%d\') >= :dateFrom ';
-        $sql .= 'AND DATE_FORMAT(o.date_add, \'%Y-%m-%d\') <= :dateTo ';
+        $sql .= 'AND od.order_state = :orderStateOpen ';
+        $sql .= 'AND DATE_FORMAT(od.created, \'%Y-%m-%d\') >= :dateFrom ';
+        $sql .= 'AND DATE_FORMAT(od.created, \'%Y-%m-%d\') <= :dateTo ';
         $sql .= 'GROUP BY p.id_manufacturer ';
         $params = [
             'manufacturerId' => $manufacturerId,
@@ -214,20 +269,168 @@ class OrderDetailsTable extends AppTable
             return 0;
         }
     }
+    
+    private function prepareSumProduct($customerId)
+    {
+        $conditions = [
+            'OrderDetails.id_customer' => $customerId,
+            'OrderDetails.order_state IN (' . join(',', Configure::read('app.htmlHelper')->getOrderStatesCashless()) . ')'
+        ];
+        $query = $this->find('all', [
+            'conditions' => $conditions
+        ]);
+        
+        return $query;
+    }
+    
+    public function getCountByCustomerId($customerId)
+    {
+        $conditions = [
+            'OrderDetails.id_customer' => $customerId
+        ];
+        $query = $this->find('all', [
+            'conditions' => $conditions
+        ]);
+        return $query->count();
+    }
+    
+    public function getMonthlySumProduct($customerId)
+    {
+        $query = $this->prepareSumProduct($customerId);
+        $query->contain('TimebasedCurrencyOrderDetails');
+        $query->group('MonthAndYear');
+        $query->select([
+            'SumTotalPaid' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
+            'SumDeposit' => $query->func()->sum('OrderDetails.deposit'),
+            'SumTimebasedCurrencySeconds' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds'),
+            'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')'
+        ]);
+        return $query->toArray();
+    }
+    
+    public function getSumProduct($customerId)
+    {
+        $query = $this->prepareSumProduct($customerId);
+        $query->select(
+            ['SumTotalPaid' => $query->func()->sum('OrderDetails.total_price_tax_incl')]
+        );
+        return $query->toArray()[0]['SumTotalPaid'];
+    }
+    
+    public function getSumDeposit($customerId)
+    {
+        $conditions = [
+            'OrderDetails.id_customer' => $customerId,
+            $this->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStatesCashless()),
+            'DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.depositPaymentCashlessStartDate') . '\''
+        ];
+        
+        $query = $this->find('all', [
+            'conditions' => $conditions
+        ]);
+        $query->select(
+            ['SumTotalDeposit' => $query->func()->sum('OrderDetails.deposit')]
+        );
+        
+        return $query->toArray()[0]['SumTotalDeposit'];
+    }
+    
+    public function getOrderStateCondition($orderStates)
+    {
+        if ($orderStates == '' || empty($orderStates) || empty($orderStates[0])) {
+            return false;
+        }
+        if (!is_array($orderStates)) {
+            $orderStates = [$orderStates];
+        }
+        $condition = 'OrderDetails.order_state IN (' . join(', ', $orderStates) . ')';
+        return $condition;
+    }
+    
+    public function prepareOrderDetailsGroupedByProduct($orderDetails)
+    {
+        $preparedOrderDetails = [];
+        foreach ($orderDetails as $orderDetail) {
+            $key = $orderDetail->product_id;
+            @$preparedOrderDetails[$key]['sum_price'] += $orderDetail->total_price_tax_incl;
+            @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_amount;
+            @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
+            $preparedOrderDetails[$key]['product_id'] = $key;
+            $preparedOrderDetails[$key]['name'] = $orderDetail->product->name;
+            $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail->product->manufacturer->id_manufacturer;
+            $preparedOrderDetails[$key]['manufacturer_name'] = $orderDetail->product->manufacturer->name;
+        }
+        return $preparedOrderDetails;
+    }
+    
+    public function prepareOrderDetailsGroupedByManufacturer($orderDetails)
+    {
+        $preparedOrderDetails = [];
+        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        foreach ($orderDetails as $orderDetail) {
+            $key = $orderDetail->product->id_manufacturer;
+            @$preparedOrderDetails[$key]['sum_price'] += $orderDetail->total_price_tax_incl;
+            @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_amount;
+            $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($orderDetail->product->manufacturer->variable_member_fee);
+            $preparedOrderDetails[$key]['variable_member_fee'] = $variableMemberFee;
+            @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
+            $preparedOrderDetails[$key]['manufacturer_id'] = $key;
+            $preparedOrderDetails[$key]['name'] = $orderDetail->product->manufacturer->name;
+        }
+        
+        foreach($preparedOrderDetails as &$pod) {
+            $pod['reduced_price'] = $pod['sum_price'] * (100 - $pod['variable_member_fee']) / 100;
+        }
+        
+        return $preparedOrderDetails;
+    }
+    
+    public function prepareOrderDetailsGroupedByCustomer($orderDetails)
+    {
+        $preparedOrderDetails = [];
+        foreach ($orderDetails as $orderDetail) {
+            $key = $orderDetail->id_customer;
+            @$preparedOrderDetails[$key]['sum_price'] += $orderDetail->total_price_tax_incl;
+            @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_amount;
+            @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
+            $preparedOrderDetails[$key]['customer_id'] = $key;
+            $preparedOrderDetails[$key]['name'] = Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($orderDetail->customer);
+            $preparedOrderDetails[$key]['email'] = $orderDetail->customer->email;
+            $productsPickedUp = false;
+            if (!empty($orderDetail->pickup_day_entity)) {
+                $preparedOrderDetails[$key]['comment'] = $orderDetail->pickup_day_entity->comment;
+                $preparedOrderDetails[$key]['products_picked_up_tmp'] = $orderDetail->pickup_day_entity->products_picked_up;
+            }
+            if (!empty($orderDetail->timebased_currency_order_detail)) {
+                @$preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] += $orderDetail->timebased_currency_order_detail->seconds;
+            }
+            if (isset($preparedOrderDetails[$key]['products_picked_up_tmp']) && $preparedOrderDetails[$key]['products_picked_up_tmp']) {
+                $productsPickedUp = true;
+                $preparedOrderDetails[$key]['row_class'] = ['selected'];
+            }
+            $preparedOrderDetails[$key]['products_picked_up'] = $productsPickedUp;
+            unset($preparedOrderDetails[$key]['products_picked_up_tmp']);
+        }
+        
+        foreach($preparedOrderDetails as &$orderDetail) {
+            $orderDetail['order_detail_count'] = $this->getCountByCustomerId($orderDetail['customer_id']);
+        }
+        return $preparedOrderDetails;
+    }
 
-    public function getOrderDetailParams($appAuth, $manufacturerId, $productId, $customerId, $orderState, $dateFrom, $dateTo, $orderDetailId, $orderId, $deposit)
+    public function getOrderDetailParams($appAuth, $manufacturerId, $productId, $customerId, $orderState, $pickupDay, $orderDetailId, $deposit)
     {
         $conditions = [];
 
-        if ($dateFrom != '') {
-            $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
-        }
-        if ($dateTo != '') {
-            $conditions[] = 'DATE_FORMAT(Orders.date_add, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'';
+        if (count($pickupDay) == 2) {
+            $conditions[] = 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]) . '\'';
+            $conditions[] = 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[1]) . '\'';
+        } else {
+            $conditions[] = 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') = \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]) . '\'';
         }
 
         if ($orderState != '') {
-            $conditions[] = $this->Orders->getOrderStateCondition($orderState);
+            $conditions[] = $this->getOrderStateCondition($orderState);
         }
 
         if ($productId != '') {
@@ -238,24 +441,19 @@ class OrderDetailsTable extends AppTable
             $conditions['OrderDetails.id_order_detail'] = $orderDetailId;
         }
 
-        if ($orderId != '') {
-            $conditions['Orders.id_order'] = $orderId;
-        }
-
         if ($deposit != '') {
             $conditions[] = 'OrderDetails.deposit > 0';
         }
 
         $contain = [
-            'Orders',
-            'Orders.Customers',
+            'Customers',
             'Products.Manufacturers.AddressManufacturers',
             'TimebasedCurrencyOrderDetails',
             'OrderDetailUnits'
         ];
 
         if ($customerId != '') {
-            $conditions['Orders.id_customer'] = $customerId;
+            $conditions['OrderDetails.id_customer'] = $customerId;
         }
 
         if ($manufacturerId != '') {
@@ -266,13 +464,13 @@ class OrderDetailsTable extends AppTable
         if ($appAuth->isManufacturer()) {
             $conditions['Products.id_manufacturer'] = $appAuth->getManufacturerId();
             if ($customerId =! '') {
-                unset($conditions['Orders.id_customer']);
+                unset($conditions['OrderDetails.id_customer']);
             }
         }
 
         // customers are only allowed to see their own data
         if ($appAuth->isCustomer()) {
-            $conditions['Orders.id_customer'] = $appAuth->getUserId();
+            $conditions['OrderDetails.id_customer'] = $appAuth->getUserId();
         }
 
         $odParams = [

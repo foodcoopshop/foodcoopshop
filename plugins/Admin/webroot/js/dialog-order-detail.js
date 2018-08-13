@@ -13,6 +13,22 @@
  */
 foodcoopshop.DialogOrderDetail = {
 
+    getHtmlForOrderDetailProductsPickupDayEdit : function(dialogId, title) {
+        var dialogHtml = '<p></p>';
+        dialogHtml += '<input type="hidden" id="customerId"></input>';
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(title, dialogId, dialogHtml);
+        return dialogHtml;
+    },
+    
+    getHtmlForOrderDetailPickupDayCommentEdit : function(dialogId) {
+        var dialogHtml = '<div class="textarea-wrapper">';
+        dialogHtml += '<textarea class="ckeditor" name="dialogPickupDayComment" id="dialogPickupDayComment" />';
+        dialogHtml += '</div>';
+        dialogHtml += '<input type="hidden" name="dialogCustomerId" id="dialogCustomerId" value="" />';
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.pickupDay.ChangePickupDayComment, dialogId, dialogHtml);
+        return dialogHtml;
+    },
+
     getHtmlForOrderDetailProductAmountEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogOrderDetailProductAmount"></label><br />';
         dialogHtml += '<select name="dialogOrderDetailProductAmountAmount" id="dialogOrderDetailProductAmountAmount" /></select>';

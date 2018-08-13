@@ -295,11 +295,18 @@ body.products.index td.status {
   position: fixed;
   top: 10px;
   left: 590px;
-  color: #719f41;
   font-size: 8em;
+  background: white;
+  border-radius: 10px;
+  width: 150px;
+  height: 150px;
+  text-align: center;
+}
+#filter-loader i {
   animation:reload-loader-animation 10s infinite, fa-spin 2s infinite linear;
   -moz-animation:reload-loader-animation 10s infinite, fa-spin 2s infinite linear; /* Firefox */
   -webkit-animation:reload-loader-animation 10s infinite, fa-spin 2s infinite linear; /* Safari and Chrome */
+  color: #719f41;
 }
 @-moz-keyframes reload-loader-animation /* Firefox */ {
     0% {color:#719f41;}
@@ -329,7 +336,7 @@ td span.description-for-dialog {
     float: right;
     margin: 10px 10px 7px 0;
 }
-.bottom-button-container button {
+.bottom-button-container .btn {
     float: right;
     margin-left: 10px;
     margin-bottom: 5px;
@@ -450,8 +457,6 @@ body.configurations.index td.sync-domain-list a.btn {
     padding: 10px;
     margin-bottom: 10px;
 }
-#actionLogs table.list tr.info {
-}
 #actionLogs table.list tr.warn {
     background-color: #800080;
     color: white;
@@ -560,11 +565,10 @@ body.payments.member_fee #add-payment-button-wrapper {
     float: left;
     margin-right: 3px;
 }
-body.orders.index #add-order-button-wrapper div.select,
-body.order_details.index #add-order-button-wrapper div.select {
+body.order_details #add-instant-order-button-wrapper div.select {
     display: none;
 }
-body.orders.index td .order-comment-edit-button.disabled img,
+body.order_details td .pickup-day-comment-edit-button.disabled img,
 body.customers.index td .customer-comment-edit-button.disabled img {
   opacity: 0.2;
 }
@@ -572,8 +576,7 @@ body.customers.index span.edit-wrapper {
     float: left;
     margin-right: 3px;
 }
-body.orders.index td span.order-comment-wrapper,
-body.orders.index td span.customer-is-new {
+body.order_details.index td span.pickup-day-comment-wrapper {
   float: left;
   margin-right: 5px;
 }
@@ -685,7 +688,7 @@ body.products.index .table-cell-wrapper.price {
     text-align: right;
 }
 body.order_details.index .table-cell-wrapper.price {
-    width: 60px;
+    width: 75px;
 }
 .table-cell-wrapper.amount {
     width: 48px;
