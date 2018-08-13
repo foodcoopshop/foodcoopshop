@@ -70,6 +70,8 @@ class RemoveOrdersTable extends AbstractMigration
 
             DELETE FROM fcs_configuration WHERE name = 'FCS_INSTANT_ORDER_DEFAULT_STATE';
 
+            UPDATE fcs_action_logs SET type = 'instant_order_added' WHERE type = 'orders_shop_added';
+
         ");
         
         $this->migrateDataToOrderDetails();

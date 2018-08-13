@@ -482,7 +482,7 @@ class CartsController extends FrontendController
                     ]);
                 }
                 $message .= '<br />' . __('Pickup_day') . ': <b>' . Configure::read('app.timeHelper')->getDateFormattedWithWeekday(Configure::read('app.timeHelper')->getCurrentDay()).'</b>';
-                $this->ActionLog->customSave('orders_shop_added', $this->AppAuth->getUserId(), 0, '', $message);
+                $this->ActionLog->customSave('instant_order_added', $this->AppAuth->getUserId(), 0, '', $message);
             } else {
                 $message = __('Your_order_has_been_placed_succesfully.');
                 $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->AppAuth->Cart->getProductSum())]);

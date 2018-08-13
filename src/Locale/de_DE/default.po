@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-13 10:10+0200\n"
-"PO-Revision-Date: 2018-08-13 09:39+0200\n"
+"POT-Creation-Date: 2018-08-10 16:28+0200\n"
+"PO-Revision-Date: 2018-08-13 11:39+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -850,7 +850,7 @@ msgid "Action_Log_Orders_closed"
 msgstr "Bestellungen: abgeschlossen"
 
 msgid "Action_Log_Order_details_closed"
-msgstr "Bestelltest Produkt: abgeschlossen"
+msgstr "Bestelltes Produkt: abgeschlossen"
 
 msgid "Action_Log_Order_comment_changed"
 msgstr "Bestellung: Kommentar geändert"
@@ -1710,6 +1710,12 @@ msgstr "Unzutreffendes streichen"
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
 
+msgid "yes"
+msgstr "ja"
+
+msgid "no"
+msgstr "nein"
+
 msgid "Members"
 msgstr "Mitglieder"
 
@@ -1724,12 +1730,6 @@ msgstr "Guthaben"
 
 msgid "Member_fee"
 msgstr "Mitgliedsbeitrag"
-
-msgid "yes"
-msgstr "ja"
-
-msgid "no"
-msgstr "nein"
 
 msgid "Deleted_Member"
 msgstr "Gelöschtes Mitglied"

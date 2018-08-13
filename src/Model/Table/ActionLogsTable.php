@@ -198,14 +198,8 @@ class ActionLogsTable extends AppTable
             'orders_state_changed' => [
                 'name' => __('Action_Log_Order_status_changed')
             ],
-            'order_details_state_changed' => [
-                'name' => __('Action_Log_Order_detail_status_changed')
-            ],
             'orders_closed' => [
                 'name' => __('Action_Log_Orders_closed')
-            ],
-            'order_details_closed' => [
-                'name' => __('Action_Log_Order_details_closed')
             ],
             'order_comment_changed' => [
                 'name' => __('Action_Log_Order_comment_changed')
@@ -213,7 +207,7 @@ class ActionLogsTable extends AppTable
             'orders_date_changed' => [
                 'name' => __('Action_Log_Order_date_changed')
             ],
-            'orders_shop_added' => [
+            'instant_order_added' => [
                 'name' => __('Action_Log_Order_instant_order_placed')
             ],
             'order_detail_product_price_changed' => [
