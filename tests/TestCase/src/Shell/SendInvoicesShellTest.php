@@ -21,16 +21,9 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $this->SendInvoices = new SendInvoicesShell(new ConsoleIo());
     }
 
-    public function testSendInvoices()
+    public function testSendInvoicesOk()
     {
-        $this->loginAsSuperadmin();
-        
-        // add new orders
-        $this->addProductToCart(346, 1);
-        $this->addProductToCart(346, 1);
-        $this->finishCart();
-        
-        $this->SendInvoices->cronjobRunDay = '2018-03-11';
+        $this->prepareSendInvoices();
         $this->SendInvoices->main();
         
         $orderDetails = $this->OrderDetail->find('all')->toArray();
@@ -56,17 +49,30 @@ class SendInvoicesShellTest extends AppCakeTestCase
             ]
         );
         
-        // run again
+    }
+
+    public function testSendInvoicesNoInvoicesSentIfCalledMultipleTimes()
+    {
+
+        $this->prepareSendInvoices();
         $this->SendInvoices->main();
+        $this->SendInvoices->main(); // sic! run again
+        
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        // no additional emails should be sent
+        
+        // no additional (would be 8) emails should be sent if called twice on same day
         $this->assertEquals(4, count($emailLogs), 'amount of sent emails wrong');
         
     }
-
-    public function tearDown()
+    
+    private function prepareSendInvoices()
     {
-        parent::tearDown();
-        unset($this->SendInvoices);
+        $this->loginAsSuperadmin();
+        // add new orders
+        $this->addProductToCart(346, 1);
+        $this->addProductToCart(346, 1);
+        $this->finishCart();
+        $this->SendInvoices->cronjobRunDay = '2018-03-11';
     }
+
 }
