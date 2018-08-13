@@ -593,9 +593,9 @@ class MyHtmlHelper extends HtmlHelper
         ];
     }
 
-    public function getVisibleOrderStates()
+    public function getOrderStates()
     {
-        return Configure::read('app.visibleOrderStates');
+        return Configure::read('app.orderStates');
     }
     
     public function getOrderStatesCashless()
@@ -609,6 +609,6 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getOrderStateIds()
     {
-        return array_keys(self::getVisibleOrderStates());
+        return array_keys(self::getOrderStates());
     }
 }

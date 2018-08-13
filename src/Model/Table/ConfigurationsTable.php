@@ -138,11 +138,6 @@ class ConfigurationsTable extends AppTable
         return $this->getNumberRangeValidator($validator, 'value', CUSTOMER_GROUP_MEMBER, CUSTOMER_GROUP_ADMIN);
     }
 
-    public function validationFcsInstantOrderDefaultState(Validator $validator)
-    {
-        return $this->getRuleEqualsToMultipleValuesValidator($validator, 'value', Configure::read('app.htmlHelper')->getVisibleOrderStates());
-    }
-
     public function validationFcsAppName(Validator $validator)
     {
         $validator->notEmpty('value', __('Please_enter_the_name_of_the_foodcoop.'));

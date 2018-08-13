@@ -15,7 +15,7 @@
 
 if ($groupBy == '') {
     echo '<td>';
-        echo $this->MyHtml->getVisibleOrderStates()[$orderDetail->order_state];
+        echo $this->MyHtml->getOrderStates()[$orderDetail->order_state];
         if (!empty($orderDetail->pickup_day_entity) && $orderDetail->pickup_day_entity->products_picked_up) {
             echo ', ' . __d('admin', 'products_picked_up');
         }

@@ -21,11 +21,13 @@ define('APP_OFF', 0);
 define('APP_DEL', -1);
 
 define('ORDER_STATE_OPEN', 3);
-define('ORDER_STATE_CASH_FREE', 1);
-define('ORDER_STATE_CASH', 2);
 define('ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER', 10);
 define('ORDER_STATE_BILLED_CASHLESS', 11);
 define('ORDER_STATE_BILLED_CASH', 12);
+
+// ORDER_STATE_CASH_FREE and ORDER_STATE_CASH can be safely removed in v3
+define('ORDER_STATE_CASH_FREE', 1);
+define('ORDER_STATE_CASH', 2);
 
 define('CUSTOMER_GROUP_MEMBER', 3);
 define('CUSTOMER_GROUP_ADMIN', 4);

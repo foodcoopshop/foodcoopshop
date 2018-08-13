@@ -229,11 +229,6 @@ $this->element('addScript', [
         </tr>
 
         <tr>
-            <td>app.additionalOrderStatusChangeInfo</td>
-            <td><?php echo Configure::read('app.additionalOrderStatusChangeInfo'); ?></td>
-        </tr>
-
-        <tr>
             <td>app.sendOrderListsWeekday</td>
             <td><?php echo $this->MyTime->getWeekdayName(Configure::read('app.sendOrderListsWeekday')); ?></td>
         </tr>
@@ -249,8 +244,8 @@ $this->element('addScript', [
         </tr>
 
         <tr>
-            <td>app.visibleOrderStates</td>
-            <td><?php echo json_encode(Configure::read('app.visibleOrderStates')); ?></td>
+            <td>app.orderStates</td>
+            <td><?php echo json_encode(Configure::read('app.orderStates')); ?></td>
         </tr>
 
         <tr>
