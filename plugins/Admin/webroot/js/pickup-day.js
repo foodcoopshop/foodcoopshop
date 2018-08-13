@@ -51,7 +51,7 @@ foodcoopshop.PickupDay = {
         
     },
     
-    initChangeProductsPickedUpDialog : function(title, customerIds, customerName) {
+    initChangeProductsPickedUpDialog : function(container, title, customerIds, customerName) {
         
         var dialogId = 'change-products-picked-up-form';
         var dialogHtml = foodcoopshop.DialogOrderDetail.getHtmlForOrderDetailProductsPickupDayEdit(dialogId, title);
@@ -81,7 +81,7 @@ foodcoopshop.PickupDay = {
         $('#' + dialogId + ' #customerId').val(customerIds.join(','));
         
         var infoMessage = $('#' + dialogId + ' p').html('');
-        var dialogHtml = '<p>' + foodcoopshop.LocalizedJs.pickupDay.ThisInformationServesThePickupTeamToSeeWhoWasAlreadyHere + '</p>';
+        dialogHtml = '<p>' + foodcoopshop.LocalizedJs.pickupDay.ThisInformationServesThePickupTeamToSeeWhoWasAlreadyHere + '</p>';
         if (customerName != '') {
             dialogHtml += '<p>' + foodcoopshop.LocalizedJs.admin.Member + ': <b>' + customerName + '</b></p>';
         }
@@ -98,7 +98,7 @@ foodcoopshop.PickupDay = {
             });
             var customerName = '';
             var title = foodcoopshop.LocalizedJs.pickupDay.WereTheProductsOfAllMembersPickedUp;
-            foodcoopshop.PickupDay.initChangeProductsPickedUpDialog(title, customerIds, customerName);
+            foodcoopshop.PickupDay.initChangeProductsPickedUpDialog(container, title, customerIds, customerName);
         });
     },
     
@@ -107,7 +107,7 @@ foodcoopshop.PickupDay = {
             var customerIds = [$(this).closest('tr').find('td:nth-child(2)').html()];
             var customerName = $(this).closest('tr').find('td:nth-child(3)').text();
             var title = foodcoopshop.LocalizedJs.pickupDay.WereTheProductsPickedUp;
-            foodcoopshop.PickupDay.initChangeProductsPickedUpDialog(title, customerIds, customerName);
+            foodcoopshop.PickupDay.initChangeProductsPickedUpDialog(container, title, customerIds, customerName);
         });
     },
     
