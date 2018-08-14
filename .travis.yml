@@ -40,6 +40,8 @@ before_script:
   - sudo cp ./config/travis/php7.conf ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/
   - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - sudo ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+  # Disable XDebug to speed up Composer and test suites.
+  - phpenv config-rm xdebug.ini
   - php --version
   # configure apache virtual hosts
   - sudo cp -f ./config/travis/apache /etc/apache2/sites-available/www.foodcoopshop.test.conf
@@ -54,7 +56,7 @@ before_script:
 
 script:
   - vendor/bin/phpunit --stderr
-  - sudo cat ./logs/error.log
+  # - sudo cat ./logs/error.log
   
 notifications:
   email: false
