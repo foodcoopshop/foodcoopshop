@@ -125,7 +125,7 @@ class RemoveOrdersTable extends AbstractMigration
             
         }
         
-        echo 'Comments from ' . $i . ' orders migrated.';
+        echo "- Comments from " . $i . " orders migrated.\n";
         
     }
     
@@ -133,24 +133,35 @@ class RemoveOrdersTable extends AbstractMigration
     private function migrateDataToOrderDetails()
     {
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        
+        $orderDetailCountPerMigrationStep = 1000;
         $orderDetails = $this->OrderDetail->find('all');
+        $loopsCount = ceil($orderDetails->count() / $orderDetailCountPerMigrationStep);
         
-        foreach($orderDetails as $orderDetail) {
-            if ($orderDetail->created) {
-                $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($orderDetail->created->i18nFormat(Configure::read('DateFormat.Database')));
-                $created = $orderDetail->created;
-                $modified = $orderDetail->modified;
+        $i = 0;
+        while($i <= $loopsCount) {
+            $orderDetails = $this->OrderDetail->find('all', [
+                'limit' => $orderDetailCountPerMigrationStep,
+                'offset' => $i * $orderDetailCountPerMigrationStep
+            ]);
+            foreach($orderDetails as $orderDetail) {
+                if ($orderDetail->created) {
+                    $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($orderDetail->created->i18nFormat(Configure::read('DateFormat.Database')));
+                    $created = $orderDetail->created;
+                    $modified = $orderDetail->modified;
+                }
+                $this->OrderDetail->save(
+                    $this->OrderDetail->patchEntity($orderDetail, [
+                        'pickup_day' => $pickupDay,
+                        'created' => $created,
+                        'modified' => $modified
+                    ])
+                );
             }
-            $this->OrderDetail->save(
-                $this->OrderDetail->patchEntity($orderDetail, [
-                    'pickup_day' => $pickupDay,
-                    'created' => $created,
-                    'modified' => $modified
-                ])
-            );
+            
+            echo "- Pickup day for " . $orderDetailCountPerMigrationStep . " order details (starting with id " . $i * $orderDetailCountPerMigrationStep. ") calculated.\n";
+            $i++;
         }
-        
-        echo 'Pickup day for ' . $orderDetails->count() . ' order details calculated.';
         
     }
     
