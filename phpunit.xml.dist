@@ -3,6 +3,7 @@
     colors="true"
     processIsolation="false"
     stopOnFailure="false"
+    verbose="true"
     bootstrap="./tests/bootstrap.php"
     >
     <php>

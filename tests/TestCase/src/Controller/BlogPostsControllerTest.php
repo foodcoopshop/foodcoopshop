@@ -84,7 +84,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
             'manufacturerId' => $manufacturerId,
             'active' => $active
         ];
-        $statement = self::$dbConnection->prepare($query);
+        $statement = $this->dbConnection->prepare($query);
         $statement->execute($params);
     }
 }

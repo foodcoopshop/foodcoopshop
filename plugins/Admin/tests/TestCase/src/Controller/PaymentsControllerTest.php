@@ -182,7 +182,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             'approval' => APP_ON,
             'paymentId' => $addResponse->paymentId
         ];
-        $statement = self::$dbConnection->prepare($query);
+        $statement = $this->dbConnection->prepare($query);
         $statement->execute($params);
 
         $this->deletePayment($addResponse->paymentId);

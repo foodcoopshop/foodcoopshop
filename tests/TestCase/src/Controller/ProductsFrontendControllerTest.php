@@ -90,7 +90,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
             'productId' => $productId,
             'active' => $active
         ];
-        $statement = self::$dbConnection->prepare($query);
+        $statement = $this->dbConnection->prepare($query);
         $statement->execute($params);
     }
 }
