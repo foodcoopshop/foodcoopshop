@@ -48,9 +48,9 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         $this->createPayment(0.5);
         $this->createPayment(3.2);
         $this->browser->get($this->Slug->getMyTimebasedCurrencyBalanceForCustomers());
-        $this->assertRegExpWithUnquotedString('0,50&nbsp;h', $this->browser->getContent());
-        $this->assertRegExpWithUnquotedString('3,20&nbsp;h', $this->browser->getContent());
-        $this->assertRegExpWithUnquotedString('<b>3,70&nbsp;h</b>', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('0,50 h', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('3,20 h', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('<b>3,70 h</b>', $this->browser->getContent());
     }
 
     public function testEditPaymentAsWrongManufacturer()
@@ -86,7 +86,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
             'Wichtige Informationen zu deiner Zeit-Eintragung vom',
             [
                 'Hallo Demo Mitglied,',
-                'Die eingetragene Zeit wurde von <b>0,50&nbsp;h</b> auf <b>0,25&nbsp;h</b> angepasst.',
+                'Die eingetragene Zeit wurde von <b>0,50 h</b> auf <b>0,25 h</b> angepasst.',
                 'Deine Zeit-Aufladung wurde als "da stimmt was nicht..." markiert.',
             ],
             [

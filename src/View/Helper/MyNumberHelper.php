@@ -26,13 +26,12 @@ class MyNumberHelper extends NumberHelper
     {
         $currency = self::currency($amount, 'USD'); // e.g. PLN for polish zloty does not return the currency symbol
         $currency = str_replace('$', Configure::read('appDb.FCS_CURRENCY_SYMBOL'), $currency);
-        $currency = str_replace(' ', '&nbsp;', $currency); // careful: pattern is not a normal space but a no-break space 0xA0
         return $currency;
     }
 
     public function formatAsUnit($amount, $shortcode)
     {
-        return self::formatAsDecimal($amount) . '&nbsp;' . $shortcode;
+        return self::formatAsDecimal($amount) . ' ' . $shortcode;
     }
 
     public function formatAsPercent($amount)

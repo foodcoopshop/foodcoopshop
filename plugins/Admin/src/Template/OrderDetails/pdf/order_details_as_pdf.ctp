@@ -101,7 +101,7 @@ foreach ($orderDetails as $od) {
         $pdf->table .= $this->Number->formatAsCurrency($orderDetail->total_price_tax_incl);
         
         if (!empty($orderDetail->timebased_currency_order_detail)) {
-            $pdf->table .= '&nbsp;*';
+            $pdf->table .= ' *';
             $timebasedCurrencyOrderDetailInList = true;
         }
         

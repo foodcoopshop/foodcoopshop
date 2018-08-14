@@ -79,7 +79,6 @@ class TimebasedCurrencyHelper extends Helper
         $usedValues = [];
         for($second = 0; $second <= $maxSeconds; $second++) {
             $valueWithCurrency = $this->formatSecondsToTimebasedCurrency($second) . ' (' . $this->getCartTimebasedCurrencySecondsAsCurrencyForDropdown($second, $exchangeRate) . ')';
-            $valueWithCurrency = str_replace('&nbsp;', ' ', $valueWithCurrency);
             if ($second % $stepsInSeconds == 0 && !isset($usedValues[$second])) {
                 $dropdown[$second] = $valueWithCurrency;
                 $usedValues[$second] = true;
@@ -87,7 +86,6 @@ class TimebasedCurrencyHelper extends Helper
         }
         $maxHoursValue = $this->formatSecondsToTimebasedCurrency($maxSeconds);
         $maxHoursValue .= ' (' . $this->getCartTimebasedCurrencySecondsAsCurrencyForDropdown($maxSeconds, $exchangeRate) . ')';
-        $maxHoursValue = str_replace('&nbsp;', ' ', $maxHoursValue);
 
         if (!isset($usedValues[$maxHoursValue])) {
             $dropdown[$this->MyNumber->parseFloatRespectingLocale((string) $maxSeconds)] = $maxHoursValue;
@@ -103,10 +101,10 @@ class TimebasedCurrencyHelper extends Helper
      */
     public function getCartTimebasedCurrencySecondsAsCurrencyForDropdown($seconds, $exchangeRate)
     {
-        return str_replace('&nbsp;', ' ', $this->MyNumber->formatAsCurrency(
+        return $this->MyNumber->formatAsCurrency(
             $seconds / 3600 *
             $this->MyNumber->parseFloatRespectingLocale($exchangeRate)
-        ));
+        );
     }
 
 }

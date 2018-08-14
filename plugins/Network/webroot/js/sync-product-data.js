@@ -328,7 +328,7 @@ foodcoopshop.SyncProductData = {
                                 localProduct.addClass('dirty');
                                 $(this).find('td.price').addClass('dirty');
                             }
-                            var variableMemberFeeInfo = '&nbsp;(' + response.app.variableMemberFee + '%)';
+                            var variableMemberFeeInfo = ' (' + response.app.variableMemberFee + '%)';
                             $(this).find('td.price').html(foodcoopshop.Helper.formatFloatAsCurrency(remoteGrossPriceAsFloat) + variableMemberFeeInfo);
                         } else {
                             var price = foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.gross_price));
