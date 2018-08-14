@@ -535,7 +535,13 @@ class ProductsController extends AdminAppController
         try {
             $this->Product->changeQuantity(
                 [
-                    [$originalProductId => $this->getRequest()->getData('quantity')]
+                    [
+                        $originalProductId => [
+                            'quantity' => $this->getRequest()->getData('quantity'),
+                            'is_negative_quantity_allowed' => $this->getRequest()->getData('isNegativeQuantityAllowed'),
+                            'sold_out_limit' => $this->getRequest()->getData('soldOutLimit')
+                        ]
+                    ]
                 ]
             );
         } catch (InvalidParameterException $e) {

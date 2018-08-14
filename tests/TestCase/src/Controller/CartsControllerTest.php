@@ -519,7 +519,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     private function changeStockAvailable($productId, $amount)
     {
-        $this->Product->changeQuantity([[$productId => $amount]]);
+        $this->Product->changeQuantity([[$productId => ['quantity' => $amount]]]);
     }
 
     private function checkStockAvailable($productId, $result)

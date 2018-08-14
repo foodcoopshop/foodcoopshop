@@ -81,7 +81,16 @@ foodcoopshop.DialogProduct = {
 
     getHtmlForProductQuantityEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogQuantityQuantity"></label>';
-        dialogHtml += '<input type="text" name="dialogQuantityQuantity" id="dialogQuantityQuantity" value="" />';
+        dialogHtml += '<div class="quantity-wrapper">';
+            dialogHtml += '<label>Verfügbare Anzahl<br /><span class="small">Aktueller Lagerstand</span></label>';
+            dialogHtml += '<input type="number" step="1" name="dialogQuantityQuantity" id="dialogQuantityQuantity" /><br />';
+            dialogHtml += '<label class="checkbox">';
+                dialogHtml += '<input type="checkbox" name="dialogQuantityIsNegativeQuantityAllowed" id="dialogQuantityIsNegativeQuantityAllowed" />';
+                dialogHtml += ' Negative Anzahl erlauben?<br /><span class="small">Falls das Produkt nachgeliefert werden kann.</span>';
+            dialogHtml += '</label>';
+            dialogHtml += '<label>E-Mail-Benachrichtigung ab Anzahl<br /><span class="small">leer: keine Benachrichtigung</span></label>';
+            dialogHtml += '<input type="number" step="1" name="dialogQuantitySoldOutLimit" id="dialogQuantitySoldOutLimit" /><br />';
+        dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogQuantityProductId" id="dialogQuantityProductId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.ChangeAmount, dialogId, dialogHtml);
         return dialogHtml;

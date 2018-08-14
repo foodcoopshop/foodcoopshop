@@ -179,8 +179,7 @@ form.fcs-form .bootstrap-select {
 #product-name-edit-form input[type="text"],
 #product-price-edit-form input[type="text"],
 #product-deposit-edit-form input[type="text"],
-#product-name-edit-form textarea,
-#product-quantity-edit-form input[type="text"] {
+#product-name-edit-form textarea {
     width: 300px;
     margin-bottom: 10px;
 }
@@ -851,7 +850,8 @@ body.payments .bottom-button-container {
 #product-price-edit-form input[type="text"],
 #product-price-edit-form input[type="number"],
 #product-price-edit-form input[type="text"],
-#product-deposit-edit-form input[type="text"] {
+#product-deposit-edit-form input[type="text"],
+#product-quantity-edit-form input[type="number"] {
     margin-bottom: 5px;
     margin-right: 5px;
     text-align: right;
@@ -871,21 +871,38 @@ body.payments .bottom-button-container {
 	line-height: 28px;
 	position: static;
 }
-#product-price-edit-form label.radio input {
+#product-quantity-edit-form label.checkbox {
+	font-weight: normal;
+	clear: both;
+	margin-bottom: 10px;
+}
+#product-price-edit-form label.radio input,
+#product-quantity-edit-form label.checkbox input {
 	margin-right: 5px;
 	position: static;
 	float: left;
     width: 20px;
     height: 20px;
 }
+#product-quantity-edit-form input {
+	float: right ! important;
+}
 #product-price-edit-form label.radio input:focus {
     outline: none;
 }
 #product-price-edit-form .price-per-unit-wrapper,
-#product-price-edit-form .price-wrapper {
+#product-price-edit-form .price-wrapper,
+#product-quantity-edit-form .quantity-wrapper {
 	width: 100%;
 	float: left;
 	margin-top: 5px;
+}
+#product-quantity-edit-form .quantity-wrapper {
+	margin-top: 10px;
+}
+#product-quantity-edit-form .quantity-wrapper label {
+	font-weight: normal;
+	margin-bottom: 10px;
 }
 #product-price-edit-form .deactivated {
     opacity: 0.3;

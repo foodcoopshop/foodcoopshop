@@ -260,8 +260,6 @@ class SyncsController extends AppController
           'CategoryProducts',
           'Categories',
           'Manufacturers',
-          'StockAvailables.depends_on_stock',
-          'StockAvailables.out_of_stock',
           'Taxes',
           'selectedCategories'
         ];
