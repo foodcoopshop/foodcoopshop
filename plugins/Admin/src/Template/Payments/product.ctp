@@ -136,7 +136,7 @@ if (count($payments) == 0) {
             $sumOrders += $payment['amount'];
             echo $this->Number->formatAsCurrency($payment['amount']);
             if (!empty($payment['timebased_currency_sum_seconds'])) {
-                echo '<b class="timebased-currency-time-element" title="Zusätzlich in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($payment['timebased_currency_sum_seconds']).'">&nbsp;*</b>';
+                echo '<b class="timebased-currency-time-element" title="Zusätzlich in '.Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($payment['timebased_currency_sum_seconds']).'"> *</b>';
             }
         }
         echo '</td>';

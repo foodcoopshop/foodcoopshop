@@ -28,7 +28,7 @@ class PricePerUnitHelper extends Helper
         if (!empty($unitSum)) {
             $preparedUnitSum = [];
             foreach($unitSum as $unitName => $unitSum) {
-                $preparedUnitSum[] = $this->MyNumber->formatUnitAsDecimal($unitSum) . ' ' . $unitName;
+                $preparedUnitSum[] = $this->MyNumber->formatUnitAsDecimal($unitSum) . ' ' . $unitName;
             }
             $unitSumString = join($separator, $preparedUnitSum);
         }
@@ -65,9 +65,9 @@ class PricePerUnitHelper extends Helper
         $result = '';
         if ($quantityInUnitsEnabled && $quantityInUnits > 0) {
             if ($amount > 1) {
-                $result  = __('for_each') . ' ' . $result;
+                $result  = __('for_each') . ' ' . $result;
             }
-            $result .= __('approx.') . ' ' . $this->MyNumber->formatUnitAsDecimal($quantityInUnits) . ' ' . $unitName;
+            $result .= __('approx.') . ' ' . $this->MyNumber->formatUnitAsDecimal($quantityInUnits) . ' ' . $unitName;
         }
         return $result;
     }
@@ -90,7 +90,7 @@ class PricePerUnitHelper extends Helper
 
     public function getPricePerUnitBaseInfo($priceInclPerUnit, $unitName, $unitAmount)
     {
-        return $this->MyNumber->formatAsCurrency($priceInclPerUnit) . ' / ' . ($unitAmount > 1 ? $this->MyNumber->formatAsDecimal($unitAmount, 0) . ' ' : '') . $unitName;
+        return $this->MyNumber->formatAsCurrency($priceInclPerUnit) . ' / ' . ($unitAmount > 1 ? $this->MyNumber->formatAsDecimal($unitAmount, 0) . ' ' : '') . $unitName;
     }
 
 }

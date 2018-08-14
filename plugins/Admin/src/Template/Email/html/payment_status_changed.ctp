@@ -27,7 +27,7 @@ use Cake\Core\Configure;
             	<?php
             	   echo __d('admin', 'The_status_of_your_credit_upload_of_{0}_({1}_amount)_was_changed_to_{2}.', [
             	       '<b>'.$payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')).'</b>',
-            	       '<b>'.Configure::read('app.numberHelper')->formatAsDecimal($payment->amount). ' ' . Configure::read('appDb.FCS_CURRENCY_SYMBOL') . '</b>',
+            	       '<b>'.Configure::read('app.numberHelper')->formatAsCurrency($payment->amount).'</b>',
             	       $newStatusAsString
             	   ]);
             	?>

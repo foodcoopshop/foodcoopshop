@@ -48,7 +48,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
     public function testProductDetailOnlineManufacturerPublicLoggedOut()
     {
         $response = $this->browser->get($this->Slug->getProductDetail(60, 'Demo Product'));
-        $this->assertNotRegExpWithUnquotedString('0,62&nbsp;€', $response); // price must not be shown
+        $this->assertNotRegExpWithUnquotedString('0,62 €', $response); // price must not be shown
         $this->assert200OkHeader();
     }
 
@@ -56,7 +56,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS', 1);
         $response = $this->browser->get($this->Slug->getProductDetail(60, 'Demo Product'));
-        $this->assertRegExpWithUnquotedString('<div class="price">0,62&nbsp;€</div><div class="deposit">+ <b>0,50&nbsp;€</b> Pfand</div><div class="tax">0,07&nbsp;€</div>', $response);
+        $this->assertRegExpWithUnquotedString('<div class="price">0,62 €</div><div class="deposit">+ <b>0,50 €</b> Pfand</div><div class="tax">0,07 €</div>', $response);
         $this->assert200OkHeader();
     }
 

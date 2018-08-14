@@ -28,7 +28,7 @@ use Cake\Core\Configure;
             </p>
 
             <ul style="padding-left: 10px;">
-                <li><?php echo __d('admin', 'Price'); ?>: <b><?php echo $this->MyNumber->formatAsDecimal($orderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
+                <li><?php echo __d('admin', 'Price'); ?>: <b><?php echo $this->MyNumber->formatAsCurrency($orderDetail->total_price_tax_incl); ?></b></li>
                 <li><?php echo __d('admin', 'Amount'); ?>: <b><?php echo $orderDetail->product_amount; ?></b></li>
                 <li><?php echo __d('admin', 'Manufacturer'); ?>: <b><?php echo $orderDetail->product->manufacturer->name; ?></b></li>
                 <li><?php echo __d('admin', 'Order_date'); ?>: <b><?php echo $orderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')); ?></b></li>

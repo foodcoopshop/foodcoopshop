@@ -32,8 +32,8 @@ use Cake\Core\Configure;
             </p>
 
             <ul style="padding-left: 10px;">
-                <li><?php echo __d('admin', 'Old_price'); ?>: <b><?php echo $this->MyNumber->formatAsDecimal($oldOrderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
-                <li><?php echo __d('admin', 'New_price'); ?>: <b><?php echo $this->MyNumber->formatAsDecimal($newOrderDetail->total_price_tax_incl); ?> <?php echo Configure::read('appDb.FCS_CURRENCY_SYMBOL'); ?></b></li>
+                <li><?php echo __d('admin', 'Old_price'); ?>: <b><?php echo $this->MyNumber->formatAsCurrency($oldOrderDetail->total_price_tax_incl); ?></b></li>
+                <li><?php echo __d('admin', 'New_price'); ?>: <b><?php echo $this->MyNumber->formatAsCurrency($newOrderDetail->total_price_tax_incl); ?></b></li>
             </ul>
 
             <p>

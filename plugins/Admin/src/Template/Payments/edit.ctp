@@ -72,7 +72,7 @@ $checkboxLabel = __d('admin', 'Send_email?').' <span class="after small multiple
             'target' => '_blank'
         ],
         '/admin/payments/previewEmail/'.$payment->id.'/1'
-    ).'&nbsp;'.
+    ).' '.
     $this->Html->getJqueryUiIcon(
         $this->Html->image($this->Html->getFamFamFamPath('delete.png')),
         [

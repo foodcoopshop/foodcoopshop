@@ -35,7 +35,7 @@ echo '<td class="right' . ($groupBy == '' && $orderDetail->total_price_tax_incl 
         }
     }
     if (isset($timebasedCurrencySeconds)) {
-        echo '<b class="timebased-currency-time-element" title="'.__d('admin', 'Additional_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($timebasedCurrencySeconds)]).'">&nbsp;*</b>';
+        echo '<b class="timebased-currency-time-element" title="'.__d('admin', 'Additional_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME'). ': ' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($timebasedCurrencySeconds)]).'"> *</b>';
     }
     echo '</div>';
 echo '</td>';
