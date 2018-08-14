@@ -54,7 +54,7 @@ before_script:
 
 script:
   - vendor/bin/phpunit --stderr
-  - sudo cat ./logs/error.log
+  # - sudo cat ./logs/error.log
   
 notifications:
   email: false

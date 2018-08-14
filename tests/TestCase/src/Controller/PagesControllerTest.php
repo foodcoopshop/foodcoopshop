@@ -199,7 +199,7 @@ class PagesControllerTest extends AppCakeTestCase
             'isPrivate' => $isPrivate,
             'active' => $active
         ];
-        $statement = self::$dbConnection->prepare($query);
+        $statement = $this->dbConnection->prepare($query);
         $statement->execute($params);
     }
 }
