@@ -21,6 +21,18 @@ use Cake\View\Helper\TimeHelper;
 class MyTimeHelper extends TimeHelper
 {
 
+    /**
+     * @param $array
+     * @return array
+     */
+    public function sortArrayByDate($array)
+    {
+        usort($array, function($a, $b) {
+            return strtotime($a) - strtotime($b);
+        });
+        return $array;    
+    }
+    
     public function getI18Format($formatString)
     {
         return Configure::read('DateFormat.' . $formatString);

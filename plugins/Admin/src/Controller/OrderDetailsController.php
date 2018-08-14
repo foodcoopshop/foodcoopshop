@@ -218,6 +218,8 @@ class OrderDetailsController extends AdminAppController
             }
             // END legacy code
         }
+        
+        $pickupDay = Configure::read('app.timeHelper')->sortArrayByDate($pickupDay);
         $this->set('pickupDay', $pickupDay);
 
         $manufacturerId = '';
