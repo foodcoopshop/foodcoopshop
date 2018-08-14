@@ -69,8 +69,8 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
-        
         $this->assertOrderDetailDeletedEmails(0, $expectedToEmails, $expectedCcEmails);
+        
         $this->assertChangedStockAvailable($this->productIdA, 98);
     }
     
@@ -82,10 +82,11 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->deleteAndAssertRemoveFromDatabase([$this->orderDetailIdA]);
 
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
-        $expectedCcEmails = [];
-        $expectedCcEmails[] = Configure::read('test.loginEmailVegetableManufacturer');
-
+        $expectedCcEmails = [
+            Configure::read('test.loginEmailVegetableManufacturer')
+        ];
         $this->assertOrderDetailDeletedEmails(0, $expectedToEmails, $expectedCcEmails);
+        
         $this->assertChangedStockAvailable($this->productIdA, 98);
     }
 
@@ -102,6 +103,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
         $this->assertOrderDetailDeletedEmails(0, $expectedToEmails, $expectedCcEmails);
+        
         $this->assertChangedStockAvailable($this->productIdA, 98);
     }
 
@@ -118,6 +120,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
         $this->assertOrderDetailDeletedEmails(0, $expectedToEmails, $expectedCcEmails);
+        
         $this->assertChangedStockAvailable($this->productIdA, 98);
     }
 
@@ -232,7 +235,6 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [Configure::read('test.loginEmailVegetableManufacturer')];
-
         $this->assertOrderDetailProductPriceChangedEmails(0, $expectedToEmails, $expectedCcEmails);
     }
 
@@ -348,7 +350,9 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->assertEquals($this->newAmount, $changedOrder->cart_products[0]->order_detail->product_amount, 'order detail amount was not changed properly');
         
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
-        $expectedCcEmails = [];
+        $expectedCcEmails = [
+            Configure::read('test.loginEmailVegetableManufacturer')
+        ];
         $this->assertOrderDetailProductAmountChangedEmails(1, $expectedToEmails, $expectedCcEmails);
         
         $this->assertChangedStockAvailable($this->productIdA, 96);
