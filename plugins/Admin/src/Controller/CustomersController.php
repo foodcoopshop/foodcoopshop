@@ -196,9 +196,9 @@ class CustomersController extends AdminAppController
             }
 
             $errors = [];
-            $openOrders = count($customer->active_orders);
-            if ($openOrders > 0) {
-                $errors[] = __d('admin', 'Amount_of_orders_that_have_not_been_placed_before_two_months:'). ' '. $openOrders . '.';
+            $openOrderDetails = count($customer->active_order_details);
+            if ($openOrderDetails > 0) {
+                $errors[] = __d('admin', 'Amount_of_orders_that_have_not_been_placed_before_two_months:'). ' '. $openOrderDetails . '.';
             }
 
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
