@@ -203,6 +203,20 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertEquals($customerPhoneMobile, $customer->address_customer->phone_mobile, 'saving field phone_mobile failed');
         $this->assertEquals($customerPhone, $customer->address_customer->phone, 'saving field phone failed');
     }
+    
+    public function testDeleteOk()
+    {
+        $this->loginAsSuperadmin();
+        $this->browser->ajaxPost('/admin/customers/delete/' . Configure::read('test.customerId'), [
+            'referer' => '/'
+        ]);
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => Configure::read('test.customerId')
+            ]
+        ])->first();
+        $this->assertEmpty($customer);
+    }
 
     private function checkForMainErrorMessage($response)
     {

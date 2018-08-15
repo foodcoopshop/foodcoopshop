@@ -34,9 +34,9 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
 
     protected $dbConnection;
 
-    protected  $testDumpDir;
+    protected $testDumpDir;
 
-    protected  $appDumpDir;
+    protected $appDumpDir;
 
     public $Slug;
 
@@ -79,23 +79,21 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
 
     protected function resetLogs()
     {
-        $file = $this->getLogFile('debug');
-        $file->write('');
-        $file = $this->getLogFile('error');
-        $file->write('');
+        $this->getLogFile('debug')->write('');
+        $this->getLogFile('error')->write('');
     }
     
     public function tearDown()
     {
         parent::tearDown();
-        $this->assertDebugLogForErrors();
+        $this->assertLogFilesForErrors();
     }
     
-    protected function assertDebugLogForErrors()
+    protected function assertLogFilesForErrors()
     {
-        $file = $this->getLogFile('debug');
-        $debugLog = $file->read(true, 'r');
-        $this->assertNotRegExpWithUnquotedString('Notice', $debugLog);
+        $log = $this->getLogFile('debug')->read(true, 'r');
+        $log .= $this->getLogFile('error')->read(true, 'r');
+        $this->assertNotRegExp('/(Warning|Notice)/', $log);
     }
     
     protected function resetTestDatabaseData()
