@@ -360,6 +360,8 @@ input.datepicker {
 .featherlight-content #flashMessage {
 	position: absolute;
 	top: 10px;
+	width: 98%;
+	left: 1% ! important;
 }
 .featherlight-content #flashMessage {
 	z-index: 10000;

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-16 15:26+0200\n"
-"PO-Revision-Date: 2018-08-16 15:44+0200\n"
+"POT-Creation-Date: 2018-08-16 17:04+0200\n"
+"PO-Revision-Date: 2018-08-16 17:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1236,11 +1236,20 @@ msgstr "Please upload an image."
 msgid "The_quantity_needs_to_be_a_number."
 msgstr "The quantity needs to be a number."
 
+msgid "Field:_Stock"
+msgstr "Field: stock"
+
 msgid "The_quantity_limit_needs_to_be_a_number."
 msgstr "The quantity limit needs to be a number."
 
+msgid "Field:_Order_possible_until"
+msgstr "Field: order possible until stock"
+
 msgid "The_sold_out_quantity_needs_to_be_a_number."
 msgstr "The quantity for sending a notification needs to be a number."
+
+msgid "Field:_Notification_if_quantity_limit_reached"
+msgstr "Field: notification if quantity limit reached"
 
 msgid "Please_enter_a_tax_rate."
 msgstr "Please enter a tax rate."

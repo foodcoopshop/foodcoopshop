@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-16 15:26+0200\n"
+"POT-Creation-Date: 2018-08-16 17:04+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1235,10 +1235,19 @@ msgstr ""
 msgid "The_quantity_needs_to_be_a_number."
 msgstr ""
 
+msgid "Field:_Stock"
+msgstr ""
+
 msgid "The_quantity_limit_needs_to_be_a_number."
 msgstr ""
 
+msgid "Field:_Order_possible_until"
+msgstr ""
+
 msgid "The_sold_out_quantity_needs_to_be_a_number."
+msgstr ""
+
+msgid "Field:_Notification_if_quantity_limit_reached"
 msgstr ""
 
 msgid "Please_enter_a_tax_rate."

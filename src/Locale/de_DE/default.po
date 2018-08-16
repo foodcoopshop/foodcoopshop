@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-16 15:26+0200\n"
-"PO-Revision-Date: 2018-08-16 15:44+0200\n"
+"POT-Creation-Date: 2018-08-16 17:04+0200\n"
+"PO-Revision-Date: 2018-08-16 17:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1236,11 +1236,20 @@ msgstr "Bitte lade ein Bild hoch."
 msgid "The_quantity_needs_to_be_a_number."
 msgstr "Der Lagerstand muss eine Zahl sein."
 
+msgid "Field:_Stock"
+msgstr "Feld: Lagerstand"
+
 msgid "The_quantity_limit_needs_to_be_a_number."
 msgstr "Die bestellbar-bis-Anzahl muss eine Zahl sein."
 
+msgid "Field:_Order_possible_until"
+msgstr "Feld: Bestellbar bis zu einer Anzahl von"
+
 msgid "The_sold_out_quantity_needs_to_be_a_number."
 msgstr "Die Anzahl für die E-Mail-Benachrichtigung muss eine Zahl sein."
+
+msgid "Field:_Notification_if_quantity_limit_reached"
+msgstr "Feld: E-Mail-Benachrichtigung"
 
 msgid "Please_enter_a_tax_rate."
 msgstr "Bitte gib einen Steuersatz ein."

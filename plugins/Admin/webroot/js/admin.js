@@ -682,7 +682,7 @@ foodcoopshop.Admin = {
 
         var dialog = $('#' + dialogId).dialog({
             autoOpen: false,
-            height: 390,
+            height: 420,
             width: 390,
             modal: true,
             close: function () {
@@ -699,6 +699,8 @@ foodcoopshop.Admin = {
             $('#' + dialogId + ' #dialogQuantityQuantity').val(row.find('span.quantity-for-dialog').html().replace(/\./, ''));
             if (row.find('i.quantity-limit-for-dialog').length > 0) {
                 $('#' + dialogId + ' #dialogQuantityQuantityLimit').val(row.find('i.quantity-limit-for-dialog').html().replace(/\./, ''));
+            } else {
+                $('#' + dialogId + ' #dialogQuantityQuantityLimit').val(0);
             }
             if (row.find('i.sold-out-limit-for-dialog').length > 0) {
                 $('#' + dialogId + ' #dialogQuantitySoldOutLimit').val(row.find('i.sold-out-limit-for-dialog').html().replace(/\./, ''));
