@@ -19,9 +19,10 @@ use Cake\Core\Configure;
 
     <span class="left-of-input"><?php echo __('Amount'); ?></span>
     <input name="amount" value="1" type="text">
-
-<?php if ($stockAvailable > 0 && $stockAvailable <= Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW')) { ?>
-        <span class="right-of-input">(<?php echo $stockAvailable . ' ' . __('available'); ?>)</span>
+<?php
+    $availableQuantity = $stockAvailable['quantity'] - $stockAvailable['quantity_limit'];
+    if ($availableQuantity <= Configure::read('appDb.FCS_PRODUCT_AVAILABILITY_LOW')) { ?>
+    	<span class="right-of-input">(<?php echo $availableQuantity . ' ' . __('available'); ?>)</span>
 <?php } ?>
 
 </div>

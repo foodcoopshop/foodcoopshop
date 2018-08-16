@@ -298,10 +298,11 @@ class CartsController extends FrontendController
             ->first();
             $products[] = $product;
             $stockAvailableQuantity = $product->stock_available->quantity;
+            $stockAvailableAvailableQuantity = $product->stock_available->quantity - $product->stock_available->quantity_limit;
 
             // stock available check for product (without attributeId)
-            if ($ids['attributeId'] == 0 && $stockAvailableQuantity < $cartProduct['amount']) {
-                $message = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}.', ['<b>' . $cartProduct['amount'] . '</b>', '<b>' . $product->name . '</b>', $stockAvailableQuantity]);
+            if ($ids['attributeId'] == 0 && $stockAvailableAvailableQuantity < $cartProduct['amount']) {
+                $message = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}.', ['<b>' . $cartProduct['amount'] . '</b>', '<b>' . $product->name . '</b>', $stockAvailableAvailableQuantity]);
                 $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
@@ -312,15 +313,16 @@ class CartsController extends FrontendController
                     if ($attribute->id_product_attribute == $ids['attributeId']) {
                         $attributeIdFound = true;
                         $stockAvailableQuantity = $attribute->stock_available->quantity;
+                        $stockAvailableAvailableQuantity = $attribute->stock_available->quantity - $attribute->stock_available->quantity_limit;
                         // stock available check for attribute
-                        if ($stockAvailableQuantity < $cartProduct['amount']) {
+                        if ($stockAvailableAvailableQuantity < $cartProduct['amount']) {
                             $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
                             $attribute = $this->Attribute->find('all', [
                                 'conditions' => [
                                     'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute
                                 ]
                             ])->first();
-                            $message = __('The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}.', ['<b>' . $cartProduct['amount'] . '</b>', '<b>' . $attribute->name . '</b> ', '<b>' . $product->name . '</b>', $stockAvailableQuantity]);
+                            $message = __('The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}.', ['<b>' . $cartProduct['amount'] . '</b>', '<b>' . $attribute->name . '</b> ', '<b>' . $product->name . '</b>', $stockAvailableAvailableQuantity]);
                             $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
                             $cartErrors[$cartProduct['productId']][] = $message;
                         }
@@ -392,10 +394,6 @@ class CartsController extends FrontendController
             $orderDetails2save[] = $orderDetail2save;
 
             $newQuantity = $stockAvailableQuantity - $cartProduct['amount'];
-            if ($newQuantity < 0) {
-                $message = 'attention, this should never happen! stock available would have been negative: productId: ' . $ids['productId'] . ', attributeId: ' . $ids['attributeId'] . '; changed it manually to 0 to avoid negative stock available value.';
-                $newQuantity = 0; // never ever allow negative stock available
-            }
             $stockAvailable2saveData[] = [
                 'quantity' => $newQuantity
             ];

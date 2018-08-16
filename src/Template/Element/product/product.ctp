@@ -149,8 +149,8 @@ if ($product['description'] != '') {
             }
             if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
                 echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute']]);
-                echo $this->element('product/amountWrapper', ['stockAvailable' => $attribute['StockAvailables']['quantity']]);
-                echo $this->element('product/cartButton', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute'], 'stockAvailable' => $attribute['StockAvailables']['quantity']]);
+                echo $this->element('product/amountWrapper', ['stockAvailable' => $attribute['StockAvailables']]);
+                echo $this->element('product/cartButton', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute'], 'stockAvailableQuantity' => $attribute['StockAvailables']['quantity'], 'stockAvailableQuantityLimit' => $attribute['StockAvailables']['quantity_limit']]);
                 echo $this->element('product/notAvailableInfo', ['stockAvailable' => $attribute['StockAvailables']['quantity']]);
             }
             if ($showProductPrice) {
@@ -206,8 +206,8 @@ if ($product['description'] != '') {
         }
         if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
             echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product']]);
-            echo $this->element('product/amountWrapper', ['stockAvailable' => $product['quantity']]);
-            echo $this->element('product/cartButton', ['productId' => $product['id_product'], 'stockAvailable' => $product['quantity']]);
+            echo $this->element('product/amountWrapper', ['stockAvailable' => $product]);
+            echo $this->element('product/cartButton', ['productId' => $product['id_product'], 'stockAvailableQuantity' => $product['quantity'], 'stockAvailableQuantityLimit' => $product['quantity_limit']]);
             echo $this->element('product/notAvailableInfo', ['stockAvailable' => $product['quantity']]);
         }
         if ($showProductPrice) {

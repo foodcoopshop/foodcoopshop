@@ -146,24 +146,15 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertSame(true, $exceptionThrown);
     }
 
-    public function testChangeQuantityWithOneProductAndInvalidNegativeQuantity()
+    public function testChangeQuantityWithOneProductAndNegativeQuantity()
     {
         $products = [
             [346 => [
                 'quantity' => -50
             ]]
         ];
-
-        $exceptionThrown = false;
-
-        try {
-            $this->Product->changeQuantity($products);
-        } catch (InvalidParameterException $e) {
-            $exceptionThrown = true;
-        }
-
-        $this->assertProductQuantity($products, '97');
-        $this->assertSame(true, $exceptionThrown);
+        $this->Product->changeQuantity($products);
+        $this->assertProductQuantity($products, -50);
     }
 
     public function testChangeQuantityWithOneProduct()
@@ -203,50 +194,6 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->Product->changeQuantity($products);
         $this->assertProductQuantity($products);
-    }
-
-    public function testChangeQuantityWithMultipleProductsAndOneWithInvalidNegativeQuantity()
-    {
-
-        // 1) change quantity to same quantityto be able to test if the quantity has not changed
-        $sameQuantity = '20';
-        $products = [
-            [102 => [
-                'quantity' => $sameQuantity
-            ]],
-            [346 => [
-                'quantity' => $sameQuantity
-            ]],
-            [103 => [
-                'quantity' => $sameQuantity
-            ]]
-        ];
-        $this->Product->changeQuantity($products);
-        $this->assertProductQuantity($products);
-
-        // try to change prices, but include one invalid quantity
-        $products = [
-            [102 => [
-                'quantity' => '14'
-            ]],
-            [346 => [
-                'quantity' => '-1' // invalid quantity
-            ]],
-            [103 => [
-                'quantity' => '1'
-            ]]
-        ];
-
-        $exceptionThrown = false;
-
-        try {
-            $this->Product->changeQuantity($products);
-        } catch (InvalidParameterException $e) {
-            $exceptionThrown = true;
-        }
-
-        $this->assertProductQuantity($products, $sameQuantity);
-        $this->assertSame(true, $exceptionThrown);
     }
 
     /**

@@ -80,7 +80,8 @@ class FrontendController extends AppController
                     'id_product_attribute' => $attribute->id_product_attribute
                 ];
                 $preparedAttributes['StockAvailables'] = [
-                    'quantity' => $attribute->stock_available->quantity
+                    'quantity' => $attribute->stock_available->quantity,
+                    'quantity_limit' => $attribute->stock_available->quantity_limit
                 ];
                 $preparedAttributes['DepositProductAttributes'] = [
                     'deposit' => !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0

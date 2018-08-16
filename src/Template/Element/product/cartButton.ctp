@@ -22,7 +22,7 @@ if (!$appAuth->user() || !Configure::read('appDb.FCS_CART_ENABLED')) {
 
 <div class="line">
     <?php
-    if ($stockAvailable == 0 || (isset($shoppingLimitReached) && $shoppingLimitReached) || $appAuth->isManufacturer()) {
+    if ($stockAvailableQuantity - $stockAvailableQuantityLimit == 0 || (isset($shoppingLimitReached) && $shoppingLimitReached) || $appAuth->isManufacturer()) {
         $this->element('addScript', ['script' =>
             Configure::read('app.jsNamespace') . ".Helper.disableButton($('#btn-cart-".$productId."'));"
         ]);

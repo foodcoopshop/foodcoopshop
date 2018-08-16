@@ -267,7 +267,7 @@ use Cake\Core\Configure;
             echo '</td>';
         }
 
-        echo '<td class="' . (empty($product->product_attributes) && $product->stock_available->quantity == 0 ? 'not-available' : '') . '">';
+        echo '<td class="' . (empty($product->product_attributes) && $product->stock_available->quantity <= 0 ? 'not-available' : '') . '">';
 
         if (empty($product->product_attributes)) {
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
@@ -282,7 +282,7 @@ use Cake\Core\Configure;
                     echo $this->Number->formatAsDecimal($product->stock_available->quantity_limit, 0);
                 echo '</i>';
             }
-            if ($product->stock_available->sold_out_limit != 0) {
+            if (!is_null($product->stock_available->sold_out_limit)) {
                 echo ' / <i class="small sold-out-limit-for-dialog">';
                     echo $this->Number->formatAsDecimal($product->stock_available->sold_out_limit, 0);
                 echo '</i>';
