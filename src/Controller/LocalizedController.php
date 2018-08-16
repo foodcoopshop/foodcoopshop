@@ -127,6 +127,7 @@ class LocalizedController extends Controller
                 'orderStateCancelled' => __('order_state_cancelled'),
                 'orderStateOpen' => __('order_state_open'),
                 'DecreaseAmount' => __('Decrease_amount'),
+                'Stock' => __('Stock'),
                 'DecreaseAmountExplainationText' => __('The_amount_can_only_be_decreased_to_increase_plaese_order_product_again.'),
                 'NewAmount' => __('New_amount'),
                 'WhyIsAmountDecreased' => __('Why_is_amount_decreased_(mandatory_field)?'),
@@ -218,7 +219,7 @@ class LocalizedController extends Controller
                 'ChangeGroup' => __('Change_group')
             ],
             'dialogProduct' => [
-                'ChangeAmount' => __('Change_amount'),
+                'ChangeStock' => __('Change_stock'),
                 'ChangePrice' => __('Change_price'),
                 'PricePerUnit' => __('Price_per_unit'),
                 'inclVAT' => __('incl_vat'),

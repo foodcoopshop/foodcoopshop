@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-10 16:28+0200\n"
-"PO-Revision-Date: 2018-08-13 11:39+0200\n"
+"POT-Creation-Date: 2018-08-16 15:26+0200\n"
+"PO-Revision-Date: 2018-08-16 15:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -29,6 +29,9 @@ msgstr "Herstellern steht diese Funktion leider nicht zur Verfügung."
 
 msgid "Your_cart"
 msgstr "Dein Warenkorb"
+
+msgid "Product_{0}:_Only_{1}_units_on_stock"
+msgstr "Lagerstand für Produkt \"{0}\": {1}"
 
 msgid "Order_confirmation"
 msgstr "Bestellbestätigung"
@@ -423,6 +426,9 @@ msgstr "offen"
 msgid "Decrease_amount"
 msgstr "Anzahl vermindern"
 
+msgid "Stock"
+msgstr "Lagerstand"
+
 msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
 msgstr "Die Anzahl kann nur vermindert werden. Um die Anzahl zu erhöhen, bitte das Produkt nachbuchen."
 
@@ -678,8 +684,8 @@ msgstr "Mitglieder-Kommentar ändern"
 msgid "Change_group"
 msgstr "Gruppe ändern"
 
-msgid "Change_amount"
-msgstr "Anzahl ändern"
+msgid "Change_stock"
+msgstr "Lagerstand ändern"
 
 msgid "Change_price"
 msgstr "Preis ändern"
@@ -843,14 +849,8 @@ msgstr "Netzwerk-Modul: Produkte synchronisiert"
 msgid "Action_Log_Order_status_changed"
 msgstr "Bestellung: Status geändert"
 
-msgid "Action_Log_Order_detail_status_changed"
-msgstr "Bestelltes Produkt: Status geändert"
-
 msgid "Action_Log_Orders_closed"
 msgstr "Bestellungen: abgeschlossen"
-
-msgid "Action_Log_Order_details_closed"
-msgstr "Bestelltes Produkt: abgeschlossen"
 
 msgid "Action_Log_Order_comment_changed"
 msgstr "Bestellung: Kommentar geändert"
@@ -1232,6 +1232,15 @@ msgstr "Neues Produkt von"
 
 msgid "Please_upload_an_image."
 msgstr "Bitte lade ein Bild hoch."
+
+msgid "The_quantity_needs_to_be_a_number."
+msgstr "Der Lagerstand muss eine Zahl sein."
+
+msgid "The_quantity_limit_needs_to_be_a_number."
+msgstr "Die bestellbar-bis-Anzahl muss eine Zahl sein."
+
+msgid "The_sold_out_quantity_needs_to_be_a_number."
+msgstr "Die Anzahl für die E-Mail-Benachrichtigung muss eine Zahl sein."
 
 msgid "Please_enter_a_tax_rate."
 msgstr "Bitte gib einen Steuersatz ein."
@@ -1635,6 +1644,21 @@ msgstr "Eine detaillierte Auflistung deiner Bestellung findest du in der angehä
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."
 msgstr "Das ist der Text der E-Mail (mit FoodCoopShop-Logo als Anhang)."
 
+msgid "Product_{0}_is_almost_sold_out."
+msgstr "Der Lagerstand von {0} geht dem Ende zu."
+
+msgid "Units_on_stock:"
+msgstr "Lagerstand:"
+
+msgid "Product_orders_possible_until:"
+msgstr "Bestellungen möglich bis zu einem Lagerstand von:"
+
+msgid "Notification_triggered_if_less_than:"
+msgstr "E-Mail-Benachrichtigung wird verschickt, falls diese Anzahl erreicht ist:"
+
+msgid "Click_here_to_edit_the_product."
+msgstr "Hier kannst du das Produkt bearbeiten."
+
 msgid "route_search"
 msgstr "suche"
 
@@ -1710,12 +1734,6 @@ msgstr "Unzutreffendes streichen"
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
 
-msgid "yes"
-msgstr "ja"
-
-msgid "no"
-msgstr "nein"
-
 msgid "Members"
 msgstr "Mitglieder"
 
@@ -1730,6 +1748,12 @@ msgstr "Guthaben"
 
 msgid "Member_fee"
 msgstr "Mitgliedsbeitrag"
+
+msgid "yes"
+msgstr "ja"
+
+msgid "no"
+msgstr "nein"
 
 msgid "Deleted_Member"
 msgstr "Gelöschtes Mitglied"
@@ -1919,6 +1943,15 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "Change_amount"
+#~ msgstr "Anzahl ändern"
+
+#~ msgid "Action_Log_Order_detail_status_changed"
+#~ msgstr "Bestelltes Produkt: Status geändert"
+
+#~ msgid "Action_Log_Order_details_closed"
+#~ msgstr "Bestelltes Produkt: abgeschlossen"
 
 #~ msgid "Set_date_of_order_back_to"
 #~ msgstr "Bestellung rückdatieren auf"

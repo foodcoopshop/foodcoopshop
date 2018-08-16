@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-13 10:10+0200\n"
-"PO-Revision-Date: 2018-08-13 09:40+0200\n"
+"POT-Creation-Date: 2018-08-16 15:26+0200\n"
+"PO-Revision-Date: 2018-08-16 15:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -29,6 +29,9 @@ msgstr "Sorry, but manufacturers do not have access."
 
 msgid "Your_cart"
 msgstr "Your cart"
+
+msgid "Product_{0}:_Only_{1}_units_on_stock"
+msgstr "Product \"{0}\" - available stock {1}"
 
 msgid "Order_confirmation"
 msgstr "Order confirmation"
@@ -423,6 +426,9 @@ msgstr "open"
 msgid "Decrease_amount"
 msgstr "Decrease amount"
 
+msgid "Stock"
+msgstr "Stock"
+
 msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
 msgstr "The amount can only be decreased. To increase, please order product again."
 
@@ -678,8 +684,8 @@ msgstr "Change member comment"
 msgid "Change_group"
 msgstr "Change group"
 
-msgid "Change_amount"
-msgstr "Change amount"
+msgid "Change_stock"
+msgstr "Change stock"
 
 msgid "Change_price"
 msgstr "Change price"
@@ -843,14 +849,8 @@ msgstr "Network module: Products synchronized"
 msgid "Action_Log_Order_status_changed"
 msgstr "Order: Status changed"
 
-msgid "Action_Log_Order_detail_status_changed"
-msgstr "Ordered product: Status changed"
-
 msgid "Action_Log_Orders_closed"
 msgstr "Orders: closed"
-
-msgid "Action_Log_Order_details_closed"
-msgstr "Ordered product: closed"
 
 msgid "Action_Log_Order_comment_changed"
 msgstr "Order: Comment changed"
@@ -1232,6 +1232,15 @@ msgstr "New product of"
 
 msgid "Please_upload_an_image."
 msgstr "Please upload an image."
+
+msgid "The_quantity_needs_to_be_a_number."
+msgstr "The quantity needs to be a number."
+
+msgid "The_quantity_limit_needs_to_be_a_number."
+msgstr "The quantity limit needs to be a number."
+
+msgid "The_sold_out_quantity_needs_to_be_a_number."
+msgstr "The quantity for sending a notification needs to be a number."
 
 msgid "Please_enter_a_tax_rate."
 msgstr "Please enter a tax rate."
@@ -1635,6 +1644,21 @@ msgstr "You can find a detailed list of your ordered products in the attached or
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."
 msgstr "This is the text of the email (with attached logo)."
 
+msgid "Product_{0}_is_almost_sold_out."
+msgstr "{0} is almost sold out."
+
+msgid "Units_on_stock:"
+msgstr "Units on stock:"
+
+msgid "Product_orders_possible_until:"
+msgstr "Product orders possible until:"
+
+msgid "Notification_triggered_if_less_than:"
+msgstr "Email notification triggered if stock is less or equals:"
+
+msgid "Click_here_to_edit_the_product."
+msgstr "Click here to edit the product."
+
 msgid "route_search"
 msgstr "search"
 
@@ -1919,6 +1943,15 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "Change_amount"
+#~ msgstr "Change amount"
+
+#~ msgid "Action_Log_Order_detail_status_changed"
+#~ msgstr "Ordered product: Status changed"
+
+#~ msgid "Action_Log_Order_details_closed"
+#~ msgstr "Ordered product: closed"
 
 #~ msgid "Set_date_of_order_back_to"
 #~ msgstr "Set date of order back to"

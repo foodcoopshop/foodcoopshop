@@ -82,15 +82,15 @@ foodcoopshop.DialogProduct = {
     getHtmlForProductQuantityEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogQuantityQuantity"></label>';
         dialogHtml += '<div class="quantity-wrapper">';
-            dialogHtml += '<label>Verfügbare Anzahl<br /><span class="small">Aktueller Lagerstand</span></label>';
+            dialogHtml += '<label>Verfügbare Anzahl<br /><span class="small">= aktueller Lagerstand</span></label>';
             dialogHtml += '<input type="number" step="1" name="dialogQuantityQuantity" id="dialogQuantityQuantity" /><br />';
-            dialogHtml += '<label>Minimal zulässige Anzahl<br /><span class="small">Kann auch negativ sein.</span></label>';
+            dialogHtml += '<label>Bestellbar bis zu einer Anzahl von<br /><span class="small">Darf auch kleiner als 0 sein.</span></label>';
             dialogHtml += '<input type="number" step="1" name="dialogQuantityQuantityLimit" id="dialogQuantityQuantityLimit" /><br />';
-            dialogHtml += '<label>E-Mail-Benachrichtigung ab Anzahl<br /><span class="small">leer: keine Benachrichtigung</span></label>';
+            dialogHtml += '<label>E-Mail-Benachrichtigung<br /><span class="small">sobald diese Anzahl erreicht oder unterschritten wird. <br />leer bedeutet "keine Benachrichtigung"</span></label>';
             dialogHtml += '<input type="number" step="1" name="dialogQuantitySoldOutLimit" id="dialogQuantitySoldOutLimit" /><br />';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogQuantityProductId" id="dialogQuantityProductId" value="" />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.ChangeAmount, dialogId, dialogHtml);
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.ChangeStock, dialogId, dialogHtml);
         return dialogHtml;
     }
 

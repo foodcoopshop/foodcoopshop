@@ -139,7 +139,7 @@ use Cake\Core\Configure;
     if ($manufacturerId == 'all') {
         echo '<th>' . $this->Paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer')) . '</th>';
     }
-    echo '<th>'.__d('admin', 'Amount').'</th>';
+    echo '<th>'.__d('admin', 'Stock').'</th>';
     echo '<th>'.__d('admin', 'Price').'</th>';
     echo '<th>' . $this->Paginator->sort('Taxes.rate', __d('admin', 'Tax_rate')) . '</th>';
     echo '<th class="center" style="width:69px;">' . $this->Paginator->sort('Products.created', __d('admin', 'New?')) . '</th>';

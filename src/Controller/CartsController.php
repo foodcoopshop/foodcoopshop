@@ -180,10 +180,14 @@ class CartsController extends FrontendController
                 $email = new AppEmail();
                 $email->setTemplate('stock_available_limit_reached_notification')
                 ->setTo($cartProduct->product->manufacturer->address_manufacturer->email)
-                ->setSubject(__('Product_{0}_has_reached_stock_available_limit', [$cartProduct->product->name]))
+                ->setSubject(__('Product_{0}:_Only_{1}_units_on_stock', [
+                    $cartProduct->product->name,
+                    $stockAvailable->quantity
+                ]))
                 ->setViewVars([
                     'appAuth' => $this->AppAuth,
                     'cartProduct' => $cartProduct,
+                    'stockAvailable' => $stockAvailable,
                     'manufacturer' => $cartProduct->product->manufacturer
                 ]);
                 $email->send();

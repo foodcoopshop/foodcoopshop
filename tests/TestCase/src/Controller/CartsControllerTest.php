@@ -279,6 +279,59 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->browser->doFoodCoopShopLogout();
     }
+    
+    public function testProductsWithAllowedNegativeStock() {
+        $this->loginAsCustomer();
+        $this->addProductToCart(349, 8);
+        $this->assertJsonOk();
+    }
+    
+    public function testProductsWithAllowedNegativeStockButTooHighAmount() {
+        $this->loginAsCustomer();
+        $response = $this->addProductToCart(349, 11);
+        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>11</b> des Produktes <b>Lagerprodukt</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 10', $response->msg);
+        $this->assertJsonError();
+    }
+    
+    public function testFinishOrderWithStockNotificationToManufacturer()
+    {
+        
+        $this->loginAsSuperadmin();
+        $stockProductId = 349;
+        $stockProductAttributeId = '350-13';
+        $this->addProductToCart($stockProductId, 6);
+        $this->addProductToCart($stockProductAttributeId, 5);
+        
+        $this->finishCart(1, 1);
+        
+        // check email to customer
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEmailLogs(
+            $emailLogs[0],
+            'Lagerstand für Produkt "Lagerprodukt": -1',
+            [
+                'Lagerstand: <b>-1</b>',
+                'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>'
+            ],
+            [
+                Configure::read('test.loginEmailMeatManufacturer')
+            ]
+        );
+        
+        $this->assertEmailLogs(
+            $emailLogs[1],
+            'Lagerstand für Produkt "Lagerprodukt mit Varianten": 0',
+            [
+                'Lagerstand: <b>0</b>',
+                'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>'
+            ],
+            [
+                Configure::read('test.loginEmailMeatManufacturer')
+            ]
+        );
+        
+        $this->browser->doFoodCoopShopLogout();
+    }
 
     public function testFinishOrderTimebasedCurrencyEnabled()
     {

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-13 10:10+0200\n"
-"PO-Revision-Date: 2018-08-13 10:11+0200\n"
+"POT-Creation-Date: 2018-08-16 15:26+0200\n"
+"PO-Revision-Date: 2018-08-16 15:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -948,6 +948,21 @@ msgstr "Delivery days"
 msgid "Pickup_days"
 msgstr "Pickup days"
 
+msgid "All_products_picked_up?"
+msgstr "All products picked up?"
+
+msgid "Back_to_deposit_account"
+msgstr "Back to deposit account"
+
+msgid "Cancel_selected_products"
+msgstr "Cancel selected products"
+
+msgid "Generate_orders_as_pdf"
+msgstr "Generate orders as PDF"
+
+msgid "Multiple_pickup_days"
+msgstr "Multiple pickup days"
+
 msgid "Click_to_change_amount"
 msgstr "Click to change amount"
 
@@ -1479,21 +1494,6 @@ msgstr "No orders found for the pickup day {0}."
 msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
 msgstr "No orders found for the delivery period {0} to {1}."
 
-msgid "Multiple_pickup_days"
-msgstr "Multiple pickup days"
-
-msgid "Generate_orders_as_pdf"
-msgstr "Generate orders as PDF"
-
-msgid "All_products_picked_up?"
-msgstr "All products picked up?"
-
-msgid "Back_to_deposit_account"
-msgstr "Back to deposit account"
-
-msgid "Cancel_selected_products"
-msgstr "Cancel selected products"
-
 msgid "Page_title"
 msgstr "Page title"
 
@@ -1631,6 +1631,9 @@ msgstr "Name and categories"
 
 msgid "Product_declaration"
 msgstr "Product declaration"
+
+msgid "Stock"
+msgstr "Stock"
 
 msgid "Tax_rate"
 msgstr "Tax rate"

@@ -12,6 +12,8 @@
  * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 ?>
 <?php echo $this->element('email/tableHead'); ?>
     <tbody>
@@ -23,7 +25,19 @@
         </tr>
 
         <tr>
-        	<?php print_r($cartProduct); ?>
+        	<td>
+        		<p>
+                	<?php echo __('Product_{0}_is_almost_sold_out.', ['<b>' . $cartProduct->product->name . '</b>']); ?>
+               	</p>
+               	<p> 
+                	<?php echo __('Units_on_stock:') . ' <b>' . $this->MyNumber->formatAsDecimal($stockAvailable->quantity, 0) . '</b>'; ?><br />
+                	<?php echo __('Product_orders_possible_until:') . ' <b>' . $this->MyNumber->formatAsDecimal($stockAvailable->quantity_limit, 0) . '</b>'; ?><br />
+                	<?php echo __('Notification_triggered_if_less_than:') . ' <b>' . $this->MyNumber->formatAsDecimal($stockAvailable->sold_out_limit, 0) . '</b>'; ?>
+                </p>
+                <p>
+                	<a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getProductAdmin(null, $cartProduct->product->id_product); ?>"><?php echo __('Click_here_to_edit_the_product.'); ?></a>
+                </p>
+        	</td>
         </tr>
         
     </tbody>

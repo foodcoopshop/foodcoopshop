@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-13 10:10+0200\n"
-"PO-Revision-Date: 2018-08-15 21:08+0200\n"
+"POT-Creation-Date: 2018-08-16 15:26+0200\n"
+"PO-Revision-Date: 2018-08-16 15:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -948,6 +948,21 @@ msgstr "Liefertage"
 msgid "Pickup_days"
 msgstr "Abholtage"
 
+msgid "All_products_picked_up?"
+msgstr "Alle Produkte abgeholt?"
+
+msgid "Back_to_deposit_account"
+msgstr "Zurück zum Pfandkonto"
+
+msgid "Cancel_selected_products"
+msgstr "Ausgewählte Produkte stornieren"
+
+msgid "Generate_orders_as_pdf"
+msgstr "Bestellungen als PDF generieren"
+
+msgid "Multiple_pickup_days"
+msgstr "Mehrere Abholtage"
+
 msgid "Click_to_change_amount"
 msgstr "Zum Ändern der Anzahl anklicken"
 
@@ -1479,21 +1494,6 @@ msgstr "Es wurden keine Bestellungen für den Abholtag {0} gefunden."
 msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
 msgstr "Es wurden keine Bestellungen für den Lieferzeitraum {0} bis {1} gefunden."
 
-msgid "Multiple_pickup_days"
-msgstr "Mehrere Abholtage"
-
-msgid "Generate_orders_as_pdf"
-msgstr "Bestellungen als PDF generieren"
-
-msgid "All_products_picked_up?"
-msgstr "Alle Produkte abgeholt?"
-
-msgid "Back_to_deposit_account"
-msgstr "Zurück zum Pfandkonto"
-
-msgid "Cancel_selected_products"
-msgstr "Ausgewählte Produkte stornieren"
-
 msgid "Page_title"
 msgstr "Seitentitel"
 
@@ -1631,6 +1631,9 @@ msgstr "Name und Kategorien"
 
 msgid "Product_declaration"
 msgstr "Produktdeklaration"
+
+msgid "Stock"
+msgstr "Lagerstand"
 
 msgid "Tax_rate"
 msgstr "Steuersatz"

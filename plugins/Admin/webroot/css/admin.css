@@ -907,6 +907,7 @@ body.payments .bottom-button-container {
 #product-quantity-edit-form .quantity-wrapper label {
 	font-weight: normal;
 	margin-bottom: 10px;
+	margin-top: 3px;
 }
 #product-price-edit-form .deactivated {
     opacity: 0.3;
