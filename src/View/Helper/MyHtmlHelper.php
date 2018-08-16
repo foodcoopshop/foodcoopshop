@@ -30,8 +30,28 @@ class MyHtmlHelper extends HtmlHelper
         $this->helpers[] = 'MyNumber';
         parent::__construct($View, $config);
     }
+    
+    public function getOrderStateIcon($orderState)
+    {
+        switch($orderState)
+        {
+            case ORDER_STATE_OPEN:
+                return 'lock_open.png';
+                break;
+            case ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER:
+                return 'email_go.png';
+                break;
+            case ORDER_STATE_BILLED_CASHLESS:
+            case ORDER_STATE_BILLED_CASH:
+            case ORDER_STATE_CASH_FREE:
+            case ORDER_STATE_CASH:
+                return 'lock.png';
+                break;
+        }
+        return '';
+    }
 
-    function wrapJavascriptBlock($content) {
+    public function wrapJavascriptBlock($content) {
         return "<script>
             //<![CDATA[
                 $(document).ready(function() {
