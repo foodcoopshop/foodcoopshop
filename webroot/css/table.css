@@ -32,7 +32,7 @@ table.list tr.selected {
 table.list tr.paid {
     background-color: blue;
 }
-table.list tr.selected a {
+table.list tr.selected a:not(.btn) {
     color: white;
 }
 /* click on checkbox should overwrite hover */
@@ -45,7 +45,7 @@ body:not(.order_details) table.list:not(.no-hover) tr:not(:last-child):not(:firs
   color: white;
 }
 
-table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover a:not(.icon-with-text) {
+table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover a:not(.icon-with-text):not(.btn) {
     color: white ! important;
 }
 table.list tr.custom-odd {
@@ -104,6 +104,11 @@ table.list td.icon,
 table.list th.icon {
   padding: 2px ! important;
   width: 20px;
+}
+table.list a.btn {
+	background: #e6e6e6 ! important;
+	padding-top: 0 ! important;
+	padding-bottom: 0 ! important;
 }
 .sort a {
   background-repeat: no-repeat;

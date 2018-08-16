@@ -31,21 +31,21 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
     
-    public function getOrderStateIcon($orderState)
+    public function getOrderStateFontawesomeIcon($orderState)
     {
         switch($orderState)
         {
             case ORDER_STATE_OPEN:
-                return 'lock_open.png';
+                return 'fa-unlock ok';
                 break;
             case ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER:
-                return 'email_go.png';
+                return 'fa-envelope ok';
                 break;
             case ORDER_STATE_BILLED_CASHLESS:
             case ORDER_STATE_BILLED_CASH:
             case ORDER_STATE_CASH_FREE:
             case ORDER_STATE_CASH:
-                return 'lock.png';
+                return 'fa-lock not-ok';
                 break;
         }
         return '';

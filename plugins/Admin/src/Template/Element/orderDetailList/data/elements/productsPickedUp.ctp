@@ -18,15 +18,20 @@ if ($groupBy == 'customer' && count($pickupDay) == 1) {
     echo '<td>';
         if ($orderDetail['products_picked_up']) {
             $buttonText = __d('admin', 'Yes');
-            $icon = 'cart_go';
+            $iconClass = 'fa-home ok';
         } else {
             $buttonText = __d('admin', 'No');
-            $icon = 'error';
+            $iconClass = 'fa-exclamation-triangle not-ok';
         }
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath($icon.'.png')) . (!$isMobile ? ' ' . $buttonText : ''), [
-            'title' => $buttonText,
-            'class' => 'change-products-picked-up-button icon-with-text'
-        ], 'javascript:void(0);');
+        echo $this->Html->link(
+            '<i class="fa fa-fw ' . $iconClass . '"></i> ' . $buttonText,
+            'javascript:void(0);',
+            [
+                'escape' => false,
+                'class' => 'change-products-picked-up-button btn btn-default'
+            ]
+        );
+        
     echo '</td>';
 }
 

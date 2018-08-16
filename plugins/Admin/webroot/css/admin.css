@@ -414,6 +414,10 @@ body.order_details.index td.date-short2,
 body.orders.index td.date-short2 {
 	width: 100px;
 }
+body.order_details.index a.change-products-picked-up-button {
+	width: 64px;
+	text-align: left;
+}
 body.order_details.index .timebased-currency-object {
 	display: none;
 }

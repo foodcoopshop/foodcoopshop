@@ -487,9 +487,15 @@ pre {
 }
 .vertical.menu a.active i.gold,
 .vertical.menu a:hover i.gold,
-a.btn.btn-success:hover i.cgold,
+a.btn.btn-success:hover i.gold,
 i.gold {
   color: #FFD700 ! important;
+}
+i.fa.ok {
+	color: #719f41;
+}
+i.fa.not-ok {
+	color: red;
 }
 .tooltipster-sidetip.tooltipster-light .tooltipster-box {
 	background: #fff ! important;
