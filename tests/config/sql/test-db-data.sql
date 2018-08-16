@@ -90,7 +90,14 @@ INSERT INTO `fcs_category` VALUES
 
 /*!40000 ALTER TABLE `fcs_category_product` DISABLE KEYS */;
 INSERT INTO `fcs_category_product` VALUES
+(16,102),
+(16,103),
 (16,339),
+(16,340),
+(16,347),
+(16,348),
+(16,349),
+(16,350),
 (20,60),
 (20,102),
 (20,103),
@@ -100,7 +107,9 @@ INSERT INTO `fcs_category_product` VALUES
 (20,344),
 (20,346),
 (20,347),
-(20,348);
+(20,348),
+(20,349),
+(20,350);
 /*!40000 ALTER TABLE `fcs_category_product` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_configuration` DISABLE KEYS */;
@@ -223,21 +232,27 @@ INSERT INTO `fcs_product` VALUES
 (344,5,0,0.636364,'Knoblauch','','','100 g',0,1,'2015-10-05 17:22:40','2015-07-06 10:24:44'),
 (346,5,2,1.652893,'Artischocke','','','Stück',0,1,'2015-08-19 09:35:46','2015-08-19 09:35:45'),
 (347,4,2,0.000000,'Forelle','','','Stück',0,1,'2018-05-17 16:13:39','2018-05-17 16:15:21'),
-(348,4,2,0.000000,'Rindfleisch','','','',0,1,'2018-05-17 16:15:33','2018-05-17 16:16:38');
+(348,4,2,0.000000,'Rindfleisch','','','',0,1,'2018-05-17 16:15:33','2018-05-17 16:16:38'),
+(349,4,2,4.545455,'Lagerprodukt','','','',0,1,'2018-08-16 12:15:48','2018-08-16 12:16:51'),
+(350,4,2,0.000000,'Lagerprodukt mit Varianten','','','',0,1,'2018-08-16 12:19:06','2018-08-16 12:19:23');
 /*!40000 ALTER TABLE `fcs_product` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product_attribute` DISABLE KEYS */;
 INSERT INTO `fcs_product_attribute` VALUES
 (10,60,0.545455,0,0),
 (11,348,0.000000,0,1),
-(12,348,0.000000,0,0);
+(12,348,0.000000,0,0),
+(13,350,1.818182,0,1),
+(14,350,3.636364,0,0);
 /*!40000 ALTER TABLE `fcs_product_attribute` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product_attribute_combination` DISABLE KEYS */;
 INSERT INTO `fcs_product_attribute_combination` VALUES
 (33,10),
 (35,12),
-(36,11);
+(35,14),
+(36,11),
+(36,13);
 /*!40000 ALTER TABLE `fcs_product_attribute_combination` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sliders` DISABLE KEYS */;
@@ -260,7 +275,11 @@ INSERT INTO `fcs_stock_available` VALUES
 (704,347,0,999,0,NULL),
 (705,348,0,1998,0,NULL),
 (706,348,11,999,0,NULL),
-(707,348,12,999,0,NULL);
+(707,348,12,999,0,NULL),
+(708,349,0,5,-5,0),
+(709,350,0,1004,0,NULL),
+(710,350,13,5,-5,0),
+(711,350,14,999,0,NULL);
 /*!40000 ALTER TABLE `fcs_stock_available` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sync_domains` DISABLE KEYS */;
@@ -288,7 +307,10 @@ INSERT INTO `fcs_tax` VALUES
 INSERT INTO `fcs_units` VALUES
 (1,347,0,1.50,'g',100,1,350.000),
 (2,0,11,20.00,'kg',1,1,0.500),
-(3,0,12,20.00,'kg',1,1,1.000);
+(3,0,12,20.00,'kg',1,1,1.000),
+(4,349,0,0.00,'kg',1,0,0.000),
+(5,0,13,0.00,'kg',1,0,0.000),
+(6,0,14,0.00,'kg',1,0,0.000);
 /*!40000 ALTER TABLE `fcs_units` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `phinxlog` DISABLE KEYS */;

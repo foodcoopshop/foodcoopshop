@@ -154,6 +154,44 @@ class CartsController extends FrontendController
         $this->render('generateRightOfWithdrawalInformationAndForm');
     }
 
+    private function sendStockAvailableLimitReachedEmailToManufacturer($cartId)
+    {
+        $cart = $this->Cart->find('all', [
+            'conditions' => [
+                'Carts.id_cart' => $cartId
+            ],
+            'contain' => [
+                'CartProducts.Products.Manufacturers.AddressManufacturers',
+                'CartProducts.Products.StockAvailables',
+                'CartProducts.ProductAttributes.StockAvailables'
+            ]
+        ])->first();
+        
+        foreach($cart->cart_products as $cartProduct) {
+            $stockAvailable = $cartProduct->product->stock_available;
+            if (!empty($cartProduct->product_attribute)) {
+                $stockAvailable = $cartProduct->product_attribute->stock_available;
+            }
+            if (is_null($stockAvailable->sold_out_limit)) {
+                continue;
+            }
+            $stockAvailableLimitReached = $stockAvailable->quantity <= $stockAvailable->sold_out_limit;
+            if ($stockAvailableLimitReached) {
+                $email = new AppEmail();
+                $email->setTemplate('stock_available_limit_reached_notification')
+                ->setTo($cartProduct->product->manufacturer->address_manufacturer->email)
+                ->setSubject(__('Product_{0}_has_reached_stock_available_limit', [$cartProduct->product->name]))
+                ->setViewVars([
+                    'appAuth' => $this->AppAuth,
+                    'cartProduct' => $cartProduct,
+                    'manufacturer' => $cartProduct->product->manufacturer
+                ]);
+                $email->send();
+            }
+        }
+        
+    }
+    
     /**
      * does not send email to inactive users (superadmins can place shop orders for inactive users!)
      * @param array $cart
@@ -456,7 +494,8 @@ class CartsController extends FrontendController
             $this->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
 
             $manufacturersThatReceivedInstantOrderNotification = $this->sendInstantOrderNotificationToManufacturers($cart['CartProducts']);
-
+            $this->sendStockAvailableLimitReachedEmailToManufacturer($cart['Cart']->id_cart);
+            
             if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
                 // save pickup day: primary key needs to be changed!
                 $this->Cart->PickupDayEntities->setPrimaryKey(['customer_id', 'pickup_day']);

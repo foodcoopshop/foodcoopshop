@@ -84,12 +84,12 @@ if ($product['description'] != '') {
     if (!empty($product['attributes'])) {
         // PRODUCT WITH ATTRIBUTES
 
-        // 1) kick attributes if quantity = 0
+        // 1) kick attributes if not available
         $hasCheckedAttribute = false;
         $i = 0;
         $preparedProductAttributes = [];
         foreach ($product['attributes'] as $attribute) {
-            if ($attribute['StockAvailables']['quantity'] > 0) {
+            if ($attribute['StockAvailables']['quantity'] - $attribute['StockAvailables']['quantity_limit'] > 0) {
                 $preparedProductAttributes[] = $attribute;
             }
             $i++;
@@ -151,7 +151,7 @@ if ($product['description'] != '') {
                 echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute']]);
                 echo $this->element('product/amountWrapper', ['stockAvailable' => $attribute['StockAvailables']]);
                 echo $this->element('product/cartButton', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute'], 'stockAvailableQuantity' => $attribute['StockAvailables']['quantity'], 'stockAvailableQuantityLimit' => $attribute['StockAvailables']['quantity_limit']]);
-                echo $this->element('product/notAvailableInfo', ['stockAvailable' => $attribute['StockAvailables']['quantity']]);
+                echo $this->element('product/notAvailableInfo', ['stockAvailable' => $attribute['StockAvailables']]);
             }
             if ($showProductPrice) {
                 echo $pricePerUnitInfoText;
@@ -208,7 +208,7 @@ if ($product['description'] != '') {
             echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product']]);
             echo $this->element('product/amountWrapper', ['stockAvailable' => $product]);
             echo $this->element('product/cartButton', ['productId' => $product['id_product'], 'stockAvailableQuantity' => $product['quantity'], 'stockAvailableQuantityLimit' => $product['quantity_limit']]);
-            echo $this->element('product/notAvailableInfo', ['stockAvailable' => $product['quantity']]);
+            echo $this->element('product/notAvailableInfo', ['stockAvailable' => $product]);
         }
         if ($showProductPrice) {
             echo $pricePerUnitInfoText;

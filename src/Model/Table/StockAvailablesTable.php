@@ -30,11 +30,16 @@ class StockAvailablesTable extends AppTable
     public function validationDefault(Validator $validator)
     {
         $validator->numeric('quantity', __('The_quantity_unit_needs_to_be_a_number.'));
-        $validator->numeric('quantity_limit', __('The_quantity_limit_needs_to_be_a_number.'));
-        $validator->numeric('sold_out_quantity', __('The_sold_out_quantity_needs_to_be_a_number.'));
         $validator = $this->getNumberRangeValidator($validator, 'quantity', -5000, 5000);
+        
+        $validator->numeric('quantity_limit', __('The_quantity_limit_needs_to_be_a_number.'));
         $validator = $this->getNumberRangeValidator($validator, 'quantity_limit', -5000, 5000);
+        $validator->allowEmpty('quantity_limit');
+        
+        $validator->numeric('sold_out_quantity', __('The_sold_out_quantity_needs_to_be_a_number.'));
         $validator = $this->getNumberRangeValidator($validator, 'sold_out_quantity', -5000, 5000);
+        $validator->allowEmpty('sold_out_quantity');
+        
         return $validator;
     }
 
