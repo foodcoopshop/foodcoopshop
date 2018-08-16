@@ -18,7 +18,7 @@ if ($groupBy == 'customer' && count($pickupDay) == 1) {
     echo '<td>';
         if ($orderDetail['products_picked_up']) {
             $buttonText = __d('admin', 'Yes');
-            $icon = 'accept';
+            $icon = 'cart_go';
         } else {
             $buttonText = __d('admin', 'No');
             $icon = 'error';

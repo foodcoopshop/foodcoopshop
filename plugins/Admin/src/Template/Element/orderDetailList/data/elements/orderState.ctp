@@ -14,10 +14,24 @@
  */
 
 if ($groupBy == '') {
-    echo '<td>';
-        echo $this->MyHtml->getOrderStates()[$orderDetail->order_state];
+    $widthStyle = '';
+    if (!empty($orderDetail->pickup_day_entity) && $orderDetail->pickup_day_entity->products_picked_up) {
+        $widthStyle = 'width:45px;';
+    }
+    echo '<td style="text-align:center;'.$widthStyle.'">';
+        echo $this->Html->image(
+            $this->MyHtml->getFamFamFamPath($this->MyHtml->getOrderStateIcon($orderDetail->order_state)),
+            [
+                'title' => $this->MyHtml->getOrderStates()[$orderDetail->order_state]
+            ]
+        );
         if (!empty($orderDetail->pickup_day_entity) && $orderDetail->pickup_day_entity->products_picked_up) {
-            echo ', ' . __d('admin', 'products_picked_up');
+            echo '&nbsp;' . $this->Html->image(
+                $this->MyHtml->getFamFamFamPath('cart_go.png'),
+                [
+                    'title' => __d('admin', 'products_picked_up')
+                ]
+            );
         }
     echo '</td>';
 }

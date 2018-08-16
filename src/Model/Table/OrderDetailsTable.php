@@ -242,21 +242,18 @@ class OrderDetailsTable extends AppTable
      * @param $dateTo
      * @return float
      */
-    public function getOpenOrderDetailSum($manufacturerId, $dateFrom, $dateTo)
+    public function getOpenOrderDetailSum($manufacturerId, $dateFrom)
     {
         $sql = 'SELECT SUM(od.total_price_tax_incl) as sumOrderDetail ';
         $sql .= 'FROM '.$this->tablePrefix.'order_detail od ';
         $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';
         $sql .= 'WHERE p.id_manufacturer = :manufacturerId ';
-        $sql .= 'AND od.order_state = :orderStateOpen ';
-        $sql .= 'AND DATE_FORMAT(od.created, \'%Y-%m-%d\') >= :dateFrom ';
-        $sql .= 'AND DATE_FORMAT(od.created, \'%Y-%m-%d\') <= :dateTo ';
+        $sql .= 'AND od.order_state NOT IN ('.ORDER_STATE_CASH.', ' . ORDER_STATE_CASH_FREE.', ' . ORDER_STATE_BILLED_CASHLESS.',' . ORDER_STATE_BILLED_CASH . ') ';
+        $sql .= 'AND DATE_FORMAT(od.pickup_day, \'%Y-%m-%d\') = :dateFrom ';
         $sql .= 'GROUP BY p.id_manufacturer ';
         $params = [
             'manufacturerId' => $manufacturerId,
-            'orderStateOpen' => ORDER_STATE_OPEN,
-            'dateFrom' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom),
-            'dateTo' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo),
+            'dateFrom' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom)
         ];
 
         $statement = $this->getConnection()->prepare($sql);
