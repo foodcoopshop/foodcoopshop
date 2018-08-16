@@ -22,8 +22,8 @@ class ImprovedStockManagement extends AbstractMigration
         
         $this->execute("
             ALTER TABLE `fcs_product` DROP `quantity`;
-            ALTER TABLE `fcs_stock_available` ADD `is_negative_quantity_allowed` TINYINT UNSIGNED NOT NULL DEFAULT '0' AFTER `quantity`;
-            ALTER TABLE `fcs_stock_available` ADD `sold_out_limit` INT(10) NULL DEFAULT NULL AFTER `is_negative_quantity_allowed`;
+            ALTER TABLE `fcs_stock_available` ADD `quantity_limit` INT(10) NOT NULL DEFAULT '0' AFTER `quantity`;
+            ALTER TABLE `fcs_stock_available` ADD `sold_out_limit` INT(10) NULL DEFAULT NULL AFTER `quantity_limit`;
         ");
         
     }

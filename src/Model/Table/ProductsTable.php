@@ -711,7 +711,7 @@ class ProductsTable extends AppTable
                         'default_on' => $attribute->default_on,
                         'stock_available' => [
                             'quantity' => $attribute->stock_available->quantity,
-                            'is_negative_quantity_allowed' => $attribute->stock_available->is_negative_quantity_allowed,
+                            'quantity_limit' => $attribute->stock_available->quantity_limit,
                             'sold_out_limit' => $attribute->stock_available->sold_out_limit
                         ],
                         'deposit' => !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0,

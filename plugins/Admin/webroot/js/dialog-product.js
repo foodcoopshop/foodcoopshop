@@ -84,10 +84,8 @@ foodcoopshop.DialogProduct = {
         dialogHtml += '<div class="quantity-wrapper">';
             dialogHtml += '<label>Verfügbare Anzahl<br /><span class="small">Aktueller Lagerstand</span></label>';
             dialogHtml += '<input type="number" step="1" name="dialogQuantityQuantity" id="dialogQuantityQuantity" /><br />';
-            dialogHtml += '<label class="checkbox">';
-                dialogHtml += '<input type="checkbox" name="dialogQuantityIsNegativeQuantityAllowed" id="dialogQuantityIsNegativeQuantityAllowed" />';
-                dialogHtml += ' Negative Anzahl erlauben?<br /><span class="small">Falls das Produkt nachgeliefert werden kann.</span>';
-            dialogHtml += '</label>';
+            dialogHtml += '<label>Minimal zulässige Anzahl<br /><span class="small">Kann auch negativ sein.</span></label>';
+            dialogHtml += '<input type="number" step="1" name="dialogQuantityQuantityLimit" id="dialogQuantityQuantityLimit" /><br />';
             dialogHtml += '<label>E-Mail-Benachrichtigung ab Anzahl<br /><span class="small">leer: keine Benachrichtigung</span></label>';
             dialogHtml += '<input type="number" step="1" name="dialogQuantitySoldOutLimit" id="dialogQuantitySoldOutLimit" /><br />';
         dialogHtml += '</div>';

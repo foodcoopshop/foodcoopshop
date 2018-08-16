@@ -662,7 +662,7 @@ foodcoopshop.Admin = {
                     {
                         productId: $('#dialogQuantityProductId').val(),
                         quantity: $('#dialogQuantityQuantity').val(),
-                        isNegativeQuantityAllowed: $('#dialogQuantityIsNegativeQuantityAllowed:checked').length > 0 ? 1 : 0,
+                        quantityLimit: $('#dialogQuantityQuantityLimit').val(),
                         soldOutLimit: $('#dialogQuantitySoldOutLimit').val()
                     },
                     {
@@ -687,7 +687,7 @@ foodcoopshop.Admin = {
             modal: true,
             close: function () {
                 $('#dialogQuantityQuantity').val('');
-                $('#dialogQuantityIsNegativeQuantityAllowed').val('');
+                $('#dialogQuantityQuantityLimit').val('');
                 $('#dialogQuantitySoldOutLimit').val('');
                 $('#dialogQuantityProductId').val('');
             },
@@ -697,8 +697,8 @@ foodcoopshop.Admin = {
         $('.product-quantity-edit-button').on('click', function () {
             var row = $(this).closest('tr');
             $('#' + dialogId + ' #dialogQuantityQuantity').val(row.find('span.quantity-for-dialog').html().replace(/\./, ''));
-            if (row.find('i.is-negative-quantity-allowed-for-dialog').length > 0) {
-                $('#' + dialogId + ' #dialogQuantityIsNegativeQuantityAllowed').prop('checked', true);
+            if (row.find('i.quantity-limit-for-dialog').length > 0) {
+                $('#' + dialogId + ' #dialogQuantityQuantityLimit').val(row.find('i.quantity-limit-for-dialog').html().replace(/\./, ''));
             }
             if (row.find('i.sold-out-limit-for-dialog').length > 0) {
                 $('#' + dialogId + ' #dialogQuantitySoldOutLimit').val(row.find('i.sold-out-limit-for-dialog').html().replace(/\./, ''));

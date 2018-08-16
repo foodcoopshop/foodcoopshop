@@ -538,7 +538,7 @@ class ProductsController extends AdminAppController
                     [
                         $originalProductId => [
                             'quantity' => $this->getRequest()->getData('quantity'),
-                            'is_negative_quantity_allowed' => $this->getRequest()->getData('isNegativeQuantityAllowed'),
+                            'quantity_limit' => $this->getRequest()->getData('quantityLimit'),
                             'sold_out_limit' => $this->getRequest()->getData('soldOutLimit')
                         ]
                     ]

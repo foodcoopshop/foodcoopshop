@@ -277,9 +277,9 @@ use Cake\Core\Configure;
             echo '<span class="quantity-for-dialog">';
                 echo $this->Number->formatAsDecimal($product->stock_available->quantity, 0);
             echo '</span>';
-            if ($product->stock_available->is_negative_quantity_allowed == 1) {
-                echo ' <i class="small is-negative-quantity-allowed-for-dialog">';
-                    echo '<i class="fa fa-check"></i>';
+            if ($product->stock_available->quantity_limit != 0) {
+                echo ' <i class="small quantity-limit-for-dialog">';
+                    echo $this->Number->formatAsDecimal($product->stock_available->quantity_limit, 0);
                 echo '</i>';
             }
             if ($product->stock_available->sold_out_limit != 0) {
