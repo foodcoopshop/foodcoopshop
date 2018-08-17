@@ -80,6 +80,14 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
+    public function testAddAmountNotAvailableAnyMore()
+    {
+        $this->loginAsCustomer();
+        $response = $this->addProductToCart($this->productId1, 98);
+        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>98</b> des Produktes <b>Artischocke</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 97', $response->msg);
+        $this->assertJsonError();
+    }
+    
     public function testRemoveProduct()
     {
         $this->loginAsCustomer();
