@@ -353,7 +353,7 @@ use Cake\Core\Configure;
 
         echo '<td>';
         if (empty($product->product_attributes)) {
-            echo '<div class="table-cell-wrapper price">';
+            echo '<div class="table-cell-wrapper deposit">';
             if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || Configure::read('app.isDepositPaymentCashless')) {
                 echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
                     'class' => 'product-deposit-edit-button',
