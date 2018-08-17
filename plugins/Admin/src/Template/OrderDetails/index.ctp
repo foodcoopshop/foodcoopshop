@@ -159,66 +159,66 @@ foreach ($orderDetails as $orderDetail) {
         }
     echo '</td>';
 
-    echo $this->element('orderDetailList/data/elements/id', [
+    echo $this->element('orderDetailList/data/id', [
         'orderDetail' => $orderDetail,
         'groupBy' => $groupBy
     ]);
 
-    echo $this->element('orderDetailList/data/elements/amount', [
+    echo $this->element('orderDetailList/data/amount', [
         'orderDetail' => $orderDetail,
         'editRecordAllowed' => $editRecordAllowed,
         'groupBy' => $groupBy
     ]);
 
-    echo $this->element('orderDetailList/data/elements/mainObject', [
+    echo $this->element('orderDetailList/data/mainObject', [
         'orderDetail' => $orderDetail,
         'groupBy' => $groupBy
     ]);
     
-    echo $this->element('orderDetailList/data/elements/price', [
+    echo $this->element('orderDetailList/data/price', [
         'orderDetail' => $orderDetail,
         'editRecordAllowed' => $editRecordAllowed,
         'groupBy' => $groupBy
     ]);
 
     if ($groupBy == 'manufacturer') {
-        echo $this->element('orderDetailList/data/elements/variableMemberFee', [
+        echo $this->element('orderDetailList/data/variableMemberFee', [
             'orderDetail' => $orderDetail,
             'groupBy' => $groupBy
         ]);
     }
     
-    echo $this->element('orderDetailList/data/elements/deposit', [
+    echo $this->element('orderDetailList/data/deposit', [
         'orderDetail' => $orderDetail,
         'groupBy' => $groupBy
     ]);
     
-    echo $this->element('orderDetailList/data/elements/quantity', [
-        'orderDetail' => $orderDetail,
-        'editRecordAllowed' => $editRecordAllowed,
-        'groupBy' => $groupBy
-    ]);
-
-    echo $this->element('orderDetailList/data/elements/productsPickedUp', [
-        'orderDetail' => $orderDetail,
-        'groupBy' => $groupBy
-    ]);
-    
-    echo $this->element('orderDetailList/data/elements/customer', [
-        'orderDetail' => $orderDetail
-    ]);
-    
-    echo $this->element('orderDetailList/data/elements/pickupDay', [
-        'orderDetail' => $orderDetail
-    ]);
-    
-    echo $this->element('orderDetailList/data/elements/orderState', [
+    echo $this->element('orderDetailList/data/quantity', [
         'orderDetail' => $orderDetail,
         'editRecordAllowed' => $editRecordAllowed,
         'groupBy' => $groupBy
     ]);
 
-    echo $this->element('orderDetailList/data/elements/cancelButton', [
+    echo $this->element('orderDetailList/data/productsPickedUp', [
+        'orderDetail' => $orderDetail,
+        'groupBy' => $groupBy
+    ]);
+    
+    echo $this->element('orderDetailList/data/customer', [
+        'orderDetail' => $orderDetail
+    ]);
+    
+    echo $this->element('orderDetailList/data/pickupDay', [
+        'orderDetail' => $orderDetail
+    ]);
+    
+    echo $this->element('orderDetailList/data/orderState', [
+        'orderDetail' => $orderDetail,
+        'editRecordAllowed' => $editRecordAllowed,
+        'groupBy' => $groupBy
+    ]);
+
+    echo $this->element('orderDetailList/data/cancelButton', [
         'orderDetail' => $orderDetail,
         'editRecordAllowed' => $editRecordAllowed,
         'groupBy' => $groupBy
