@@ -24,6 +24,8 @@ class ImprovedStockManagement extends AbstractMigration
             ALTER TABLE `fcs_product` DROP `quantity`;
             ALTER TABLE `fcs_stock_available` ADD `quantity_limit` INT(10) NOT NULL DEFAULT '0' AFTER `quantity`;
             ALTER TABLE `fcs_stock_available` ADD `sold_out_limit` INT(10) NULL DEFAULT NULL AFTER `quantity_limit`;
+            ALTER TABLE `fcs_product` ADD `is_stock_product` TINYINT(4) UNSIGNED NOT NULL DEFAULT '0' AFTER `is_declaration_ok`;
+            ALTER TABLE `fcs_manufacturer` ADD `stock_management_enabled` TINYINT(4) UNSIGNED NOT NULL DEFAULT '0' AFTER `timebased_currency_max_credit_balance`;
         ");
         
     }
