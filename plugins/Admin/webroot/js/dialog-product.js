@@ -90,7 +90,7 @@ foodcoopshop.DialogProduct = {
             dialogHtml += '<input type="number" step="1" name="dialogQuantitySoldOutLimit" id="dialogQuantitySoldOutLimit" /><br />';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogQuantityProductId" id="dialogQuantityProductId" value="" />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.ChangeStock, dialogId, dialogHtml);
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.ChangeAmount, dialogId, dialogHtml);
         return dialogHtml;
     }
 
