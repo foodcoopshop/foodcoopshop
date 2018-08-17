@@ -153,6 +153,12 @@ echo '<div class="holiday-wrapper">';
         'options' => $taxesForDropdown
     ]);
 
+    echo $this->Form->control('Manufacturers.stock_management_enabled', [
+        'label' => __d('admin', 'Stock_management_active?').' <span class="after small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_products')).'" target="_blank">'.__d('admin', 'Infos_to_the_stock_management').'</a></span>',
+        'type' => 'checkbox',
+        'escape' => false
+    ]);
+    
     if (!$appAuth->isManufacturer()) {
         echo $this->Form->control('Manufacturers.bulk_orders_allowed', [
         'label' => __d('admin', 'Manufacturer_optimized_for_bulk_orders?').' <span class="after small">'.__d('admin', 'Disables_all_notifications_except_sent_invoices.').' <a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_bulk_orders')).'" target="_blank">'.__d('admin', 'Info_page_for_bulk_orders').'</a>.</span>',

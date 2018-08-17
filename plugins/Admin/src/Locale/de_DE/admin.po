@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-16 15:26+0200\n"
-"PO-Revision-Date: 2018-08-16 15:31+0200\n"
+"POT-Creation-Date: 2018-08-17 16:30+0200\n"
+"PO-Revision-Date: 2018-08-17 16:30+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1074,6 +1074,57 @@ msgstr "Bestelltag"
 msgid "Order_list_grouped_by"
 msgstr "Bestellliste gruppiert nach"
 
+msgid "Add_new_attribute_for_product_{0}"
+msgstr "Neue Variante für Produkt {0} erstellen"
+
+msgid "change_deposit"
+msgstr "Pfand ändern"
+
+msgid "add_image"
+msgstr "Bild hinzufügen"
+
+msgid "New"
+msgstr "Neu"
+
+msgid "Mark_product_as_new_for_the_next_{0}_days?"
+msgstr "Produkt die nächsten {0} Tage als \"neu\" anzeigen?"
+
+msgid "Do_not_mark_product_as_new_any_more?"
+msgstr "Produkt nicht mehr als \"neu\" anzeigen?"
+
+msgid "Long_description"
+msgstr "Lange Beschreibung"
+
+msgid "Delete_attribute_for_product_{0}"
+msgstr "Variante für Produkt {0} löschen"
+
+msgid "This_attribute_is_the_default_attribute."
+msgstr "Diese Variante ist die Standardvariante."
+
+msgid "Define_as_new_default_attribute"
+msgstr "Als neue Standard-Variante festlegen"
+
+msgid "change_category"
+msgstr "Kategorie ändern"
+
+msgid "chose_category..."
+msgstr "Kategorie auswählen..."
+
+msgid "Category_\"all_products\"_is_missing!"
+msgstr "Kategorie \"Alle Produkte\" fehlt!"
+
+msgid "product_preview"
+msgstr "Produkt-Vorschau"
+
+msgid "change_price"
+msgstr "Preis ändern"
+
+msgid "change_amount"
+msgstr "Anzahl ändern"
+
+msgid "change_tax_rate"
+msgstr "Steuersatz ändern"
+
 msgid "Dear_financial_responsible"
 msgstr "Liebe(r) Finanz-Verantwortliche(r)"
 
@@ -1281,9 +1332,6 @@ msgstr "Logo löschen?"
 msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
 msgstr "Wird auf der Hersteller-Übersichtsseite angezeigt und kann vom Hersteller selbst nicht verändert werden."
 
-msgid "Long_description"
-msgstr "Lange Beschreibung"
-
 msgid "To_save_long_description_press_save_and_then_edit_manufacturer."
 msgstr "Um die lange Beschreibung hinzuzufügen, bitte den Hersteller zuerst speichern und dann auf \"bearbeiten\" klicken."
 
@@ -1415,6 +1463,12 @@ msgstr "Die Rechnung für den Hersteller wird um den angegebenen Prozentwert red
 
 msgid "Preselected_tax_rate_for_new_products"
 msgstr "Voreingestellter Steuersatz für neue Produkte"
+
+msgid "Stock_management_active?"
+msgstr "Lagerstands-Verwaltung aktiv?"
+
+msgid "Infos_to_the_stock_management"
+msgstr "Infos zur erweiterten Lagerstands-Verwaltung"
 
 msgid "Manufacturer_optimized_for_bulk_orders?"
 msgstr "Hersteller optimiert für Sammelbestellungen?"
@@ -1611,9 +1665,6 @@ msgstr "Dein Kontostand"
 msgid "chose_manufacturer..."
 msgstr "Hersteller auswählen..."
 
-msgid "chose_category..."
-msgstr "Kategorie auswählen..."
-
 msgid "amount"
 msgstr "Anzahl"
 
@@ -1632,59 +1683,11 @@ msgstr "Name und Kategorien"
 msgid "Product_declaration"
 msgstr "Produktdeklaration"
 
-msgid "Stock"
-msgstr "Lagerstand"
-
 msgid "Tax_rate"
 msgstr "Steuersatz"
 
 msgid "New?"
 msgstr "Neu?"
-
-msgid "Add_new_attribute_for_product_{0}"
-msgstr "Neue Variante für Produkt {0} erstellen"
-
-msgid "add_image"
-msgstr "Bild hinzufügen"
-
-msgid "Delete_attribute_for_product_{0}"
-msgstr "Variante für Produkt {0} löschen"
-
-msgid "This_attribute_is_the_default_attribute."
-msgstr "Diese Variante ist die Standardvariante."
-
-msgid "Define_as_new_default_attribute"
-msgstr "Als neue Standard-Variante festlegen"
-
-msgid "change_category"
-msgstr "Kategorie ändern"
-
-msgid "Category_\"all_products\"_is_missing!"
-msgstr "Kategorie \"Alle Produkte\" fehlt!"
-
-msgid "change_amount"
-msgstr "Anzahl ändern"
-
-msgid "change_price"
-msgstr "Preis ändern"
-
-msgid "change_tax_rate"
-msgstr "Steuersatz ändern"
-
-msgid "New"
-msgstr "Neu"
-
-msgid "Mark_product_as_new_for_the_next_{0}_days?"
-msgstr "Produkt die nächsten {0} Tage als \"neu\" anzeigen?"
-
-msgid "Do_not_mark_product_as_new_any_more?"
-msgstr "Produkt nicht mehr als \"neu\" anzeigen?"
-
-msgid "change_deposit"
-msgstr "Pfand ändern"
-
-msgid "product_preview"
-msgstr "Produkt-Vorschau"
 
 msgid "docs_route_financial_reports"
 msgstr "finanzberichte"
@@ -1736,6 +1739,9 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+#~ msgid "Stock"
+#~ msgstr "Lagerstand"
 
 #~ msgid "The_order_status_of_the_ordered_product_{0}_of_{1}_was_successfully_changed_to_{2}."
 #~ msgstr "Der Bestellstatus des bestellten Produktes {0} vom {1} wurde erfolgreich auf {2} geändert."
