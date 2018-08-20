@@ -139,6 +139,9 @@ use Cake\Core\Configure;
         if ($manufacturerId == 'all') {
             echo '<th>' . $this->Paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer')) . '</th>';
         }
+        if ($advancedStockManagementEnabled) {
+            echo '<th>'.__d('admin', 'Stock_product').'</th>';
+        }
         echo '<th>'.__d('admin', 'Amount').'</th>';
         echo '<th>'.__d('admin', 'Price').'</th>';
         echo '<th>' . $this->Paginator->sort('Taxes.rate', __d('admin', 'Tax_rate')) . '</th>';
@@ -175,7 +178,12 @@ use Cake\Core\Configure;
             'manufacturerId' => $manufacturerId
         ]);
         
-        echo $this->element('productList/data/stock', [
+        echo $this->element('productList/data/isStockProduct', [
+            'product' => $product,
+            'advancedStockManagementEnabled' => $advancedStockManagementEnabled
+        ]);
+        
+        echo $this->element('productList/data/amount', [
             'product' => $product
         ]);
         
@@ -210,6 +218,9 @@ use Cake\Core\Configure;
 
     $colspan = 12;
     if ($manufacturerId == 'all') {
+        $colspan++;
+    }
+    if ($advancedStockManagementEnabled) {
         $colspan++;
     }
 

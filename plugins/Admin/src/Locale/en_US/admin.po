@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-20 11:01+0200\n"
-"PO-Revision-Date: 2018-08-20 10:21+0200\n"
+"POT-Creation-Date: 2018-08-20 12:34+0200\n"
+"PO-Revision-Date: 2018-08-20 12:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1077,6 +1077,9 @@ msgstr "Order list grouped by"
 msgid "Add_new_attribute_for_product_{0}"
 msgstr "Add new attribute for product {0}"
 
+msgid "change_amount"
+msgstr "change amount"
+
 msgid "change_deposit"
 msgstr "change deposit"
 
@@ -1091,6 +1094,9 @@ msgstr "Mark product as new for the next {0} days?"
 
 msgid "Do_not_mark_product_as_new_any_more?"
 msgstr "Do not mark product as new any more?"
+
+msgid "Is_stock_product"
+msgstr "Is stock product"
 
 msgid "Long_description"
 msgstr "Long description"
@@ -1118,9 +1124,6 @@ msgstr "product preview"
 
 msgid "change_price"
 msgstr "change price"
-
-msgid "change_amount"
-msgstr "change amount"
 
 msgid "change_tax_rate"
 msgstr "change tax rate"
@@ -1464,25 +1467,23 @@ msgstr "The invoice for the manufacturer will be reduced by the given percentage
 msgid "Preselected_tax_rate_for_new_products"
 msgstr "Preselected tax rate for new products"
 
-#, fuzzy
 msgid "Advanced_stock_management_active?"
 msgstr "Advanced stock management active?"
 
-#, fuzzy
 msgid "Infos_to_the_advanced_stock_management"
 msgstr "Information to the advanced stock management"
 
 msgid "Sold_out_limit_reached_notification_for_manufacturer?"
-msgstr ""
+msgstr "Sold out limit reached notification for manufacturer?"
 
 msgid "to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
-msgstr ""
+msgstr "to receive an email when the stock limit for a product is reached."
 
 msgid "Sold_out_limit_reached_notification_for_contact_person?"
-msgstr ""
+msgstr "Sold out limit reached notification for contact person?"
 
 msgid "The_contact_person_wants_to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
-msgstr ""
+msgstr "The contact person wants to receive an email when the stock limit for a product is reached."
 
 msgid "Manufacturer_optimized_for_bulk_orders?"
 msgstr "Manufacturer optimized for bulk orders?"
@@ -1702,6 +1703,9 @@ msgstr "Name and categories"
 
 msgid "Product_declaration"
 msgstr "Product declaration"
+
+msgid "Stock_product"
+msgstr "Stock product"
 
 msgid "Tax_rate"
 msgstr "Tax rate"

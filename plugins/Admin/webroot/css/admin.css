@@ -219,8 +219,12 @@ span.product-declaration-header {
   float: right;
   margin-left: 5px;
 }
-span.is-declaration-ok-wrapper .fa-check {
+span.is-declaration-ok-wrapper .fa-check,
+td.is-stock-product .fa-check {
   color: #719f41;
+}
+td.is-stock-product .fa-check {
+	margin-left: 5px;
 }
 span.is-declaration-ok-wrapper .fa-close {
   color: #f3515c;

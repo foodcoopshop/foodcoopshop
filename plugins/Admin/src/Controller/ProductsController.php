@@ -873,6 +873,9 @@ class ProductsController extends AdminAppController
             $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
             $this->set('variableMemberFee', $variableMemberFee);
         }
+        
+        $advancedStockManagementEnabled = $manufacturerId == 'all' || (!empty($manufacturer) && $manufacturer->stock_management_enabled);
+        $this->set('advancedStockManagementEnabled', $advancedStockManagementEnabled);
 
         $this->set('title_for_layout', __d('admin', 'Products'));
 

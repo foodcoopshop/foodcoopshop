@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-20 11:01+0200\n"
-"PO-Revision-Date: 2018-08-20 11:04+0200\n"
+"POT-Creation-Date: 2018-08-20 12:34+0200\n"
+"PO-Revision-Date: 2018-08-20 12:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1077,6 +1077,9 @@ msgstr "Bestellliste gruppiert nach"
 msgid "Add_new_attribute_for_product_{0}"
 msgstr "Neue Variante für Produkt {0} erstellen"
 
+msgid "change_amount"
+msgstr "Anzahl ändern"
+
 msgid "change_deposit"
 msgstr "Pfand ändern"
 
@@ -1091,6 +1094,9 @@ msgstr "Produkt die nächsten {0} Tage als \"neu\" anzeigen?"
 
 msgid "Do_not_mark_product_as_new_any_more?"
 msgstr "Produkt nicht mehr als \"neu\" anzeigen?"
+
+msgid "Is_stock_product"
+msgstr "Produkt ist ein Lagerprodukt"
 
 msgid "Long_description"
 msgstr "Lange Beschreibung"
@@ -1118,9 +1124,6 @@ msgstr "Produkt-Vorschau"
 
 msgid "change_price"
 msgstr "Preis ändern"
-
-msgid "change_amount"
-msgstr "Anzahl ändern"
 
 msgid "change_tax_rate"
 msgstr "Steuersatz ändern"
@@ -1700,6 +1703,9 @@ msgstr "Name und Kategorien"
 
 msgid "Product_declaration"
 msgstr "Produktdeklaration"
+
+msgid "Stock_product"
+msgstr "Lagerprodukt"
 
 msgid "Tax_rate"
 msgstr "Steuersatz"

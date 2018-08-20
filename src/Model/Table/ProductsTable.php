@@ -698,6 +698,7 @@ class ProductsTable extends AppTable
                         'id_product' => $product->id_product . '-' . $attribute->id_product_attribute,
                         'gross_price' => $grossPrice,
                         'active' => - 1,
+                        'is_stock_product' => 0,
                         'price_is_zero' => $priceIsZero,
                         'row_class' => join(' ', $rowClass),
                         'unchanged_name' => $product->unchanged_name,
