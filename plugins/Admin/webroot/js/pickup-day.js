@@ -51,20 +51,24 @@ foodcoopshop.PickupDay = {
         
     },
     
-    initChangeProductsPickedUpDialog : function(container, title, customerIds, customerName) {
+    initChangeProductsPickedUpDialog : function(container, title, customerIds, customerName, allowStatusFalse) {
         
         var dialogId = 'change-products-picked-up-form';
         var dialogHtml = foodcoopshop.DialogOrderDetail.getHtmlForOrderDetailProductsPickupDayEdit(dialogId, title);
         $(container).append(dialogHtml);
 
         var buttons = {};
-        buttons['no'] = {
-            text: foodcoopshop.LocalizedJs.helper.no,
-            click: foodcoopshop.PickupDay.changeProductsPickedUpCallbackNo
-        };
+        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+        if (allowStatusFalse) {
+            buttons['no'] = {
+                text: foodcoopshop.LocalizedJs.helper.no,
+                click: foodcoopshop.PickupDay.changeProductsPickedUpCallbackNo
+            };
+        }
         buttons['yes'] = {
             text: foodcoopshop.LocalizedJs.helper.yes,
-            click: foodcoopshop.PickupDay.changeProductsPickedUpCallbackYes
+            click: foodcoopshop.PickupDay.changeProductsPickedUpCallbackYes,
+            style: 'float:left;margin-left:50px;'
         };
         
         var dialog = $('#' + dialogId).dialog({
@@ -96,9 +100,8 @@ foodcoopshop.PickupDay = {
             $(container).find('table.list tr.data').each(function() {
                 customerIds.push($(this).find('td:nth-child(2)').html());
             });
-            var customerName = '';
             var title = foodcoopshop.LocalizedJs.pickupDay.WereTheProductsOfAllMembersPickedUp;
-            foodcoopshop.PickupDay.initChangeProductsPickedUpDialog(container, title, customerIds, customerName);
+            foodcoopshop.PickupDay.initChangeProductsPickedUpDialog(container, title, customerIds, '', false);
         });
     },
     
@@ -107,7 +110,7 @@ foodcoopshop.PickupDay = {
             var customerIds = [$(this).closest('tr').find('td:nth-child(2)').html()];
             var customerName = $(this).closest('tr').find('td:nth-child(3)').text();
             var title = foodcoopshop.LocalizedJs.pickupDay.WereTheProductsPickedUp;
-            foodcoopshop.PickupDay.initChangeProductsPickedUpDialog(container, title, customerIds, customerName);
+            foodcoopshop.PickupDay.initChangeProductsPickedUpDialog(container, title, customerIds, customerName, true);
         });
     },
     
