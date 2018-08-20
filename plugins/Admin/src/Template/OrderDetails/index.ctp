@@ -140,7 +140,7 @@ echo '</tr>';
 foreach ($orderDetails as $orderDetail) {
     
     $editRecordAllowed = $groupBy == '' && (
-        in_array($orderDetail->order_state, [ORDER_STATE_OPEN, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER]) ||
+        in_array($orderDetail->order_state, [ORDER_STATE_ORDER_PLACED, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER]) ||
         $orderDetail->bulkOrdersAllowed);
 
     $rowClasses = [];

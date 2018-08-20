@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-10 16:28+0200\n"
-"PO-Revision-Date: 2018-08-13 11:39+0200\n"
+"POT-Creation-Date: 2018-08-20 09:49+0200\n"
+"PO-Revision-Date: 2018-08-20 09:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -407,18 +407,6 @@ msgstr "Möchtest du die angezeigten Bestellungen wirklich als PDF generieren?"
 
 msgid "Email_addresses"
 msgstr "E-Mail-Adressen"
-
-msgid "Change_order_status?"
-msgstr "Bestellstatus ändern?"
-
-msgid "Really_change_order_status_from_{0}?"
-msgstr "Willst du den Bestellstatus der Bestellung von {0} wirklich ändern?"
-
-msgid "order_state_cancelled"
-msgstr "storniert"
-
-msgid "order_state_open"
-msgstr "offen"
 
 msgid "Decrease_amount"
 msgstr "Anzahl vermindern"
@@ -843,14 +831,8 @@ msgstr "Netzwerk-Modul: Produkte synchronisiert"
 msgid "Action_Log_Order_status_changed"
 msgstr "Bestellung: Status geändert"
 
-msgid "Action_Log_Order_detail_status_changed"
-msgstr "Bestelltes Produkt: Status geändert"
-
 msgid "Action_Log_Orders_closed"
 msgstr "Bestellungen: abgeschlossen"
-
-msgid "Action_Log_Order_details_closed"
-msgstr "Bestelltes Produkt: abgeschlossen"
 
 msgid "Action_Log_Order_comment_changed"
 msgstr "Bestellung: Kommentar geändert"
@@ -1710,12 +1692,6 @@ msgstr "Unzutreffendes streichen"
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
 
-msgid "yes"
-msgstr "ja"
-
-msgid "no"
-msgstr "nein"
-
 msgid "Members"
 msgstr "Mitglieder"
 
@@ -1730,6 +1706,12 @@ msgstr "Guthaben"
 
 msgid "Member_fee"
 msgstr "Mitgliedsbeitrag"
+
+msgid "yes"
+msgstr "ja"
+
+msgid "no"
+msgstr "nein"
 
 msgid "Deleted_Member"
 msgstr "Gelöschtes Mitglied"
@@ -1902,6 +1884,9 @@ msgstr "bar bezahlt"
 msgid "This_order_contains_the_variable_member_fee."
 msgstr "Die Bestellung beinhaltet den variablen Mitgliedsbeitrag."
 
+msgid "order_state_order_placed"
+msgstr "Bestellung getätigt"
+
 msgid "order_state_closed"
 msgstr "abgeschlossen"
 
@@ -1919,6 +1904,24 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "Change_order_status?"
+#~ msgstr "Bestellstatus ändern?"
+
+#~ msgid "Really_change_order_status_from_{0}?"
+#~ msgstr "Willst du den Bestellstatus der Bestellung von {0} wirklich ändern?"
+
+#~ msgid "order_state_cancelled"
+#~ msgstr "storniert"
+
+#~ msgid "order_state_open"
+#~ msgstr "offen"
+
+#~ msgid "Action_Log_Order_detail_status_changed"
+#~ msgstr "Bestelltes Produkt: Status geändert"
+
+#~ msgid "Action_Log_Order_details_closed"
+#~ msgstr "Bestelltes Produkt: abgeschlossen"
 
 #~ msgid "Set_date_of_order_back_to"
 #~ msgstr "Bestellung rückdatieren auf"

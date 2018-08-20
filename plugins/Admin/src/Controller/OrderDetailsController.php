@@ -236,7 +236,7 @@ class OrderDetailsController extends AdminAppController
 
         $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
         if ($this->AppAuth->isManufacturer()) {
-            $orderStates = ORDER_STATE_OPEN;
+            $orderStates = ORDER_STATE_ORDER_PLACED;
         }
 
         $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();

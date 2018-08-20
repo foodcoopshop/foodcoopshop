@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-13 10:10+0200\n"
+"POT-Creation-Date: 2018-08-20 09:49+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -405,18 +405,6 @@ msgid "Really_generate_orders_as_pdf?"
 msgstr ""
 
 msgid "Email_addresses"
-msgstr ""
-
-msgid "Change_order_status?"
-msgstr ""
-
-msgid "Really_change_order_status_from_{0}?"
-msgstr ""
-
-msgid "order_state_cancelled"
-msgstr ""
-
-msgid "order_state_open"
 msgstr ""
 
 msgid "Decrease_amount"
@@ -842,13 +830,7 @@ msgstr ""
 msgid "Action_Log_Order_status_changed"
 msgstr ""
 
-msgid "Action_Log_Order_detail_status_changed"
-msgstr ""
-
 msgid "Action_Log_Orders_closed"
-msgstr ""
-
-msgid "Action_Log_Order_details_closed"
 msgstr ""
 
 msgid "Action_Log_Order_comment_changed"
@@ -1899,6 +1881,9 @@ msgid "order_state_cash"
 msgstr ""
 
 msgid "This_order_contains_the_variable_member_fee."
+msgstr ""
+
+msgid "order_state_order_placed"
 msgstr ""
 
 msgid "order_state_closed"

@@ -322,7 +322,7 @@ class ManufacturersController extends AdminAppController
         ])->first();
 
         $validOrderStates = [
-            ORDER_STATE_OPEN,
+            ORDER_STATE_ORDER_PLACED,
             ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER
         ];
         
@@ -427,7 +427,7 @@ class ManufacturersController extends AdminAppController
             ]
         ])->first();
 
-        $validOrderStates = [ORDER_STATE_OPEN];
+        $validOrderStates = [ORDER_STATE_ORDER_PLACED];
         
         // generate and save PDF - should be done here because count of results will be checked
         $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $validOrderStates, 'F');
@@ -776,7 +776,7 @@ class ManufacturersController extends AdminAppController
             $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
         } else {
             $orderStates = [
-                ORDER_STATE_OPEN
+                ORDER_STATE_ORDER_PLACED
             ];
         }
 

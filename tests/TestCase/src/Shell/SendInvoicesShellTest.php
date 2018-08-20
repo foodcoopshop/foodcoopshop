@@ -30,7 +30,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
         foreach($orderDetails as $orderDetail) {
             $expectedOrderState = ORDER_STATE_BILLED_CASHLESS;
             if ($orderDetail->id_order_detail == 4) {
-                $expectedOrderState = ORDER_STATE_OPEN;
+                $expectedOrderState = ORDER_STATE_ORDER_PLACED;
             }
             $this->assertEquals($orderDetail->order_state, $expectedOrderState);
         }
