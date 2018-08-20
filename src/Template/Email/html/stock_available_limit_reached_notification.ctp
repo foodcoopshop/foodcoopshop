@@ -20,7 +20,7 @@ use Cake\Core\Configure;
     
         <tr>
             <td style="font-weight: bold; font-size: 18px; padding-bottom: 20px;">
-                <?php echo __('Hello'); ?> <?php echo $manufacturer->address_manufacturer->firstname; ?>,
+                <?php echo $greeting; ?>,
             </td>
         </tr>
 

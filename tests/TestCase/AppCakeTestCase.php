@@ -253,8 +253,10 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         if ($expectedSubjectPattern != '') {
             $this->assertRegExpWithUnquotedString($expectedSubjectPattern, $emailLog->subject, 'email subject wrong');
         }
-        foreach ($expectedMessagePatterns as $expectedMessagePattern) {
-            $this->assertRegExpWithUnquotedString($expectedMessagePattern, $emailLog->message, 'email message wrong');
+        if (!empty($expectedMessagePatterns)) {
+            foreach ($expectedMessagePatterns as $expectedMessagePattern) {
+                $this->assertRegExpWithUnquotedString($expectedMessagePattern, $emailLog->message, 'email message wrong');
+            }
         }
 
         $preparedToAddresses = [];

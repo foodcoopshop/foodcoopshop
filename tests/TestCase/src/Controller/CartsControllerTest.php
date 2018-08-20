@@ -301,18 +301,34 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
     
-    public function testFinishOrderWithStockNotificationToManufacturer()
-    {
-        
-        $this->loginAsSuperadmin();
+    private function placeOrderWithStockProducts() {
         $stockProductId = 349;
         $stockProductAttributeId = '350-13';
         $this->addProductToCart($stockProductId, 6);
         $this->addProductToCart($stockProductAttributeId, 5);
-        
         $this->finishCart(1, 1);
+    }
+    
+    public function testFinishOrderWithDisabledStockNotifications() {
         
-        // check email to customer
+        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
+        $this->changeManufacturer($manufacturerId, 'send_product_sold_out_limit_reached_for_manufacturer', 0);
+        $this->changeManufacturer($manufacturerId, 'send_product_sold_out_limit_reached_for_contact_person', 0);
+        
+        $this->loginAsSuperadmin();
+        $this->placeOrderWithStockProducts();
+        
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(1, count($emailLogs));
+    }
+    
+    public function testFinishOrderWithEnabledStockNotifications()
+    {
+        
+        $this->loginAsSuperadmin();
+        $this->placeOrderWithStockProducts();
+        
+        // check email to manufacturer
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEmailLogs(
             $emailLogs[0],
@@ -322,21 +338,42 @@ class CartsControllerTest extends AppCakeTestCase
                 'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>'
             ],
             [
-                Configure::read('test.loginEmailMeatManufacturer')
+                Configure::read('test.loginEmailVegetableManufacturer')
+            ]
+        );
+
+        // check email to contact person
+        $this->assertEmailLogs(
+            $emailLogs[1],
+            '',
+            [],
+            [
+                Configure::read('test.loginEmailAdmin')
             ]
         );
         
         $this->assertEmailLogs(
-            $emailLogs[1],
+            $emailLogs[2],
             'Lagerstand für Produkt "Lagerprodukt mit Varianten": 0',
             [
                 'Lagerstand: <b>0</b>',
                 'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>'
             ],
             [
-                Configure::read('test.loginEmailMeatManufacturer')
+                Configure::read('test.loginEmailVegetableManufacturer')
             ]
         );
+        
+        // check email to contact person
+        $this->assertEmailLogs(
+            $emailLogs[3],
+            '',
+            [],
+            [
+                Configure::read('test.loginEmailAdmin')
+            ]
+        );
+        
         
         $this->browser->doFoodCoopShopLogout();
     }

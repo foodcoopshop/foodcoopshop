@@ -162,6 +162,7 @@ class CartsController extends FrontendController
             ],
             'contain' => [
                 'CartProducts.Products.Manufacturers.AddressManufacturers',
+                'CartProducts.Products.Manufacturers.Customers.AddressCustomers',
                 'CartProducts.Products.StockAvailables',
                 'CartProducts.ProductAttributes.StockAvailables'
             ]
@@ -176,7 +177,9 @@ class CartsController extends FrontendController
                 continue;
             }
             $stockAvailableLimitReached = $stockAvailable->quantity <= $stockAvailable->sold_out_limit;
-            if ($stockAvailableLimitReached) {
+            
+            // send email to manufacturer
+            if ($stockAvailableLimitReached && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_manufacturer) {
                 $email = new AppEmail();
                 $email->setTemplate('stock_available_limit_reached_notification')
                 ->setTo($cartProduct->product->manufacturer->address_manufacturer->email)
@@ -186,12 +189,33 @@ class CartsController extends FrontendController
                 ]))
                 ->setViewVars([
                     'appAuth' => $this->AppAuth,
+                    'greeting' => __('Hello') . ' ' . $cartProduct->product->manufacturer->address_manufacturer->firstname,
                     'cartProduct' => $cartProduct,
                     'stockAvailable' => $stockAvailable,
                     'manufacturer' => $cartProduct->product->manufacturer
                 ]);
                 $email->send();
             }
+            
+            // send email to contact person
+            if ($stockAvailableLimitReached && !empty($cartProduct->product->manufacturer->customer) && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_contact_person) {
+                $email = new AppEmail();
+                $email->setTemplate('stock_available_limit_reached_notification')
+                ->setTo($cartProduct->product->manufacturer->customer->address_customer->email)
+                ->setSubject(__('Product_{0}:_Only_{1}_units_on_stock', [
+                    $cartProduct->product->name,
+                    $stockAvailable->quantity
+                ]))
+                ->setViewVars([
+                    'appAuth' => $this->AppAuth,
+                    'greeting' => __('Hello') . ' ' . $cartProduct->product->manufacturer->customer->firstname,
+                    'cartProduct' => $cartProduct,
+                    'stockAvailable' => $stockAvailable,
+                    'manufacturer' => $cartProduct->product->manufacturer
+                ]);
+                $email->send();
+            }
+            
         }
         
     }

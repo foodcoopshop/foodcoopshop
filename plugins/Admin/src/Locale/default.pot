@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-20 10:19+0200\n"
+"POT-Creation-Date: 2018-08-20 11:01+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1463,10 +1463,22 @@ msgstr ""
 msgid "Preselected_tax_rate_for_new_products"
 msgstr ""
 
-msgid "Stock_management_active?"
+msgid "Advanced_stock_management_active?"
 msgstr ""
 
-msgid "Infos_to_the_stock_management"
+msgid "Infos_to_the_advanced_stock_management"
+msgstr ""
+
+msgid "Sold_out_limit_reached_notification_for_manufacturer?"
+msgstr ""
+
+msgid "to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
+msgstr ""
+
+msgid "Sold_out_limit_reached_notification_for_contact_person?"
+msgstr ""
+
+msgid "The_contact_person_wants_to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
 msgstr ""
 
 msgid "Manufacturer_optimized_for_bulk_orders?"
