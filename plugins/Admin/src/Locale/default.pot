@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-13 10:10+0200\n"
+"POT-Creation-Date: 2018-08-20 08:55+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -278,7 +278,7 @@ msgstr ""
 msgid "The_pickup_day_comment_of_{0}_was_changed:"
 msgstr ""
 
-msgid "Product_{0}_with_a_price_of_{1}_from_{2}_was_successfully_cancelled."
+msgid "Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled."
 msgstr ""
 
 msgid "Product_was_cancelled"
@@ -947,6 +947,21 @@ msgstr ""
 msgid "Pickup_days"
 msgstr ""
 
+msgid "All_products_picked_up?"
+msgstr ""
+
+msgid "Back_to_deposit_account"
+msgstr ""
+
+msgid "Cancel_selected_products"
+msgstr ""
+
+msgid "Generate_orders_as_pdf"
+msgstr ""
+
+msgid "Multiple_pickup_days"
+msgstr ""
+
 msgid "Click_to_change_amount"
 msgstr ""
 
@@ -1476,21 +1491,6 @@ msgid "No_orders_found_for_pickup_day_{0}."
 msgstr ""
 
 msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
-msgstr ""
-
-msgid "Multiple_pickup_days"
-msgstr ""
-
-msgid "Generate_orders_as_pdf"
-msgstr ""
-
-msgid "All_products_picked_up?"
-msgstr ""
-
-msgid "Back_to_deposit_account"
-msgstr ""
-
-msgid "Cancel_selected_products"
 msgstr ""
 
 msgid "Page_title"

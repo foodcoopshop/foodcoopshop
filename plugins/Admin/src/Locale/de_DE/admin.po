@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-13 10:10+0200\n"
-"PO-Revision-Date: 2018-08-13 10:11+0200\n"
+"POT-Creation-Date: 2018-08-20 08:55+0200\n"
+"PO-Revision-Date: 2018-08-20 08:56+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -279,8 +279,8 @@ msgstr "Preis angepasst"
 msgid "The_pickup_day_comment_of_{0}_was_changed:"
 msgstr "Der Abholtag-Kommentar des Mitglieds {0} wurde geändert: "
 
-msgid "Product_{0}_with_a_price_of_{1}_from_{2}_was_successfully_cancelled."
-msgstr "Produkt {0} (Preis: {1}) aus vom {2} wurde erfolgreich storniert."
+msgid "Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled."
+msgstr "Produkt {0} (Hersteller: {1}, Preis: {2}, bestellt am: {3}) wurde erfolgreich storniert."
 
 msgid "Product_was_cancelled"
 msgstr "Produkt storniert"
@@ -948,6 +948,21 @@ msgstr "Liefertage"
 msgid "Pickup_days"
 msgstr "Abholtage"
 
+msgid "All_products_picked_up?"
+msgstr "Alle Produkte abgeholt?"
+
+msgid "Back_to_deposit_account"
+msgstr "Zurück zum Pfandkonto"
+
+msgid "Cancel_selected_products"
+msgstr "Ausgewählte Produkte stornieren"
+
+msgid "Generate_orders_as_pdf"
+msgstr "Bestellungen als PDF generieren"
+
+msgid "Multiple_pickup_days"
+msgstr "Mehrere Abholtage"
+
 msgid "Click_to_change_amount"
 msgstr "Zum Ändern der Anzahl anklicken"
 
@@ -1478,21 +1493,6 @@ msgstr "Es wurden keine Bestellungen für den Abholtag {0} gefunden."
 
 msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
 msgstr "Es wurden keine Bestellungen für den Lieferzeitraum {0} bis {1} gefunden."
-
-msgid "Multiple_pickup_days"
-msgstr "Mehrere Abholtage"
-
-msgid "Generate_orders_as_pdf"
-msgstr "Bestellungen als PDF generieren"
-
-msgid "All_products_picked_up?"
-msgstr "Alle Produkte abgeholt?"
-
-msgid "Back_to_deposit_account"
-msgstr "Zurück zum Pfandkonto"
-
-msgid "Cancel_selected_products"
-msgstr "Ausgewählte Produkte stornieren"
 
 msgid "Page_title"
 msgstr "Seitentitel"
