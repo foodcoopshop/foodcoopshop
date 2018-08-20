@@ -40,7 +40,7 @@ if ($groupBy == '' || $groupBy == 'product') {
 
 echo '<td class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">';
 if ($groupBy == '') {
-    echo $this->MyHtml->link($orderDetail->product->manufacturer->name, '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&manufacturerId=' . $orderDetail->product->id_manufacturer . '&orderStates[]=' . join(',', $orderStates) . '&customerId=' . $customerId . '&groupBy='.$groupBy);
+    echo $this->MyHtml->link($orderDetail->product->manufacturer->name, '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&manufacturerId=' . $orderDetail->product->id_manufacturer . '&customerId=' . $customerId . '&groupBy='.$groupBy);
 }
 if ($groupBy == 'manufacturer') {
     echo $groupByObjectLink;

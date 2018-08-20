@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-20 08:55+0200\n"
-"PO-Revision-Date: 2018-08-20 08:56+0200\n"
+"POT-Creation-Date: 2018-08-20 09:17+0200\n"
+"PO-Revision-Date: 2018-08-20 09:17+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1493,6 +1493,12 @@ msgstr "Es wurden keine Bestellungen für den Abholtag {0} gefunden."
 
 msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
 msgstr "Es wurden keine Bestellungen für den Lieferzeitraum {0} bis {1} gefunden."
+
+msgid "All_products"
+msgstr "Alle Produkte"
+
+msgid "Show_all_ordered_products"
+msgstr "Alle bestellten Produkte anzeigen"
 
 msgid "Page_title"
 msgstr "Seitentitel"
