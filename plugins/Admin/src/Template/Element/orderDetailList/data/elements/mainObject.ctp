@@ -19,7 +19,8 @@ if ($groupBy != '') {
     $groupByObjectHref = '/admin/order-details/index/' .
         '?pickupDay[]=' . join(',', $pickupDay) .
         '&' . $groupBy.'Id=' . $orderDetail[$groupBy . '_id'] .
-        '&orderStates[]=' . join(',', $orderStates) .
+        '&productId=' . $productId .
+        (isset($orderDetail['manufacturer_id']) ? '' : '&manufacturerd=' . $manufacturerId );
         (isset($orderDetail['customer_id']) ? '' : '&customerId=' . $customerId );
         $groupByObjectLink = $this->Html->link($orderDetail['name'], $groupByObjectHref);
 }
@@ -27,7 +28,7 @@ if ($groupBy != '') {
 if ($groupBy == '' || $groupBy == 'product') {
     echo '<td>';
     if ($groupBy == '') {
-        echo $this->MyHtml->link($orderDetail->product_name, '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&productId=' . $orderDetail->product_id . '&orderStates[]=' . join(',', $orderStates), [
+        echo $this->MyHtml->link($orderDetail->product_name, '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&productId=' . $orderDetail->product_id, [
             'class' => 'name-for-dialog'
         ]);
     }
@@ -68,7 +69,7 @@ if ($groupBy == 'customer') {
     echo $name;
 }
 if ($groupBy == 'product') {
-    echo $this->MyHtml->link($orderDetail['manufacturer_name'], '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&' . 'manufacturerId=' . $orderDetail['manufacturer_id'] . '&orderStates[]=' . join(',', $orderStates) . '&customerId=' . $customerId . '&groupBy=product');
+    echo $this->MyHtml->link($orderDetail['manufacturer_name'], '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&manufacturerId=' . $orderDetail['manufacturer_id'] . '&customerId=' . $customerId . '&groupBy=product');
 }
 echo '</td>';
 
