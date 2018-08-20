@@ -13,8 +13,9 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 * [wintersim](https://github.com/wintersim)
 
 ### Neue Funktionen
-- Bei Blogartikel von Herstellern ohne Bild wird jetzt das Hersteller Profilbild angezeigt / [PR#255](https://github.com/foodcoopshop/foodcoopshop/pull/255) / <a href="https://github.com/wintersim"><img src="https://github.com/wintersim.png" width="20"></a> / <a href="https://github.com/tantelisl"><img src="https://github.com/tantelisl.png" width="20"></a>
+- Erweiterte Lagerstandverwaltung: Hersteller und deren Ansprechpersonen haben jetzt die Möglichkeit, bei geringem Lagerstand automatisch benachrichtigt zu werden. [Mehr dazu hier (ganz unten)](https://foodcoopshop.github.io/de/produkte). / [PR#261](https://github.com/foodcoopshop/foodcoopshop/pull/261) / [I#70](https://github.com/foodcoopshop/foodcoopshop/issues/70) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Umfangreiche Änderungen bei der Bestellabwicklung (inkl. Sofort-Bestellungen). [Mehr dazu hier](https://foodcoopshop.github.io/de/bestellabwicklung). / [PR#251](https://github.com/foodcoopshop/foodcoopshop/pull/251) / [I#92](https://github.com/foodcoopshop/foodcoopshop/issues/92) / [I#211](https://github.com/foodcoopshop/foodcoopshop/issues/211) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Bei Blogartikel von Herstellern ohne Bild wird jetzt das Hersteller Profilbild angezeigt / [PR#255](https://github.com/foodcoopshop/foodcoopshop/pull/255) / <a href="https://github.com/wintersim"><img src="https://github.com/wintersim.png" width="20"></a> / <a href="https://github.com/tantelisl"><img src="https://github.com/tantelisl.png" width="20"></a>
 
 ### Für Entwickler
 - Tabellen für die Produkt-Verwaltung sind jetzt stark vereinfacht. / [PR#247](https://github.com/foodcoopshop/foodcoopshop/pull/247) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
