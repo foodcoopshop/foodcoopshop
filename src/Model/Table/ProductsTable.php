@@ -679,7 +679,7 @@ class ProductsTable extends AppTable
                         $priceIsZero = true;
                     }
                     if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
-                        $productName =  $unity = Configure::read('app.pricePerUnitHelper')->getQuantityInUnitsStringForAttributes(
+                        $productName = Configure::read('app.pricePerUnitHelper')->getQuantityInUnitsStringForAttributes(
                             $attribute->product_attribute_combination->attribute->name,
                             $attribute->product_attribute_combination->attribute->can_be_used_as_unit,
                             $attribute->unit_product_attribute->price_per_unit_enabled,
@@ -698,7 +698,7 @@ class ProductsTable extends AppTable
                         'id_product' => $product->id_product . '-' . $attribute->id_product_attribute,
                         'gross_price' => $grossPrice,
                         'active' => - 1,
-                        'is_stock_product' => 0,
+                        'is_stock_product' => $product->is_stock_product,
                         'price_is_zero' => $priceIsZero,
                         'row_class' => join(' ', $rowClass),
                         'unchanged_name' => $product->unchanged_name,
