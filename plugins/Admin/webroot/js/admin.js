@@ -783,7 +783,11 @@ foodcoopshop.Admin = {
                     $('#' + dialogId + ' #dialogQuantityQuantityLimit').val(0);
                 }
                 if (row.find('i.sold-out-limit-for-dialog').length > 0) {
-                    $('#' + dialogId + ' #dialogQuantitySoldOutLimit').val(row.find('i.sold-out-limit-for-dialog').html().replace(/\./, ''));
+                    if (row.find('i.sold-out-limit-for-dialog').html().match('fa-close')) {
+                        $('#' + dialogId + ' #dialogQuantitySoldOutLimit').val('');
+                    } else {
+                        $('#' + dialogId + ' #dialogQuantitySoldOutLimit').val(row.find('i.sold-out-limit-for-dialog').html().replace(/\./, ''));
+                    }
                 } else {
                     $('#' + dialogId + ' #dialogQuantitySoldOutLimit').val(0);
                 }
