@@ -37,9 +37,17 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId > 0 ? $manufacturerId : '0') . ");
         "
         ]);
+        
         $this->element('highlightRowAfterEdit', [
-        'rowIdPrefix' => '#product-'
+            'rowIdPrefix' => '#product-'
         ]);
+        
+        if ($advancedStockManagementEnabled) {
+            $this->element('addScript', [
+                'script' =>
+                    Configure::read('app.jsNamespace') . ".Admin.initProductIsStockProductEditDialog('#products');"
+            ]);
+        }
     ?>
     
     <div class="filter-container">

@@ -498,6 +498,47 @@ class ProductsController extends AdminAppController
             'msg' => __('Saving_successful.')
         ]));
     }
+    
+    public function editIsStockProduct()
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+        
+        $originalProductId = $this->getRequest()->getData('productId');
+        
+        $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
+        $productId = $ids['productId'];
+        
+        $oldProduct = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'StockAvailables',
+                'Manufacturers',
+                'ProductAttributes',
+                'ProductAttributes.StockAvailables',
+                'ProductAttributes.ProductAttributeCombinations.Attributes'
+            ]
+        ])->first();
+        
+        $product2update = [];
+        if (in_array('isStockProduct', array_keys($this->getRequest()->getData()))) {
+            $product2update['is_stock_product'] = $this->getRequest()->getData('isStockProduct');
+        }
+        if (!empty($product2update)) {
+            $this->Product->save(
+                $this->Product->patchEntity($oldProduct, $product2update)
+            );
+        }
+        $this->Flash->success(__d('admin', 'The_product_{0}_was_changed_successfully_to_a_stock_product.', ['<b>' . $oldProduct->name . '</b>']));
+        
+        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
+        
+        die(json_encode([
+            'status' => 1,
+            'msg' => 'ok'
+        ]));
+    }
 
     public function editQuantity()
     {
@@ -542,7 +583,6 @@ class ProductsController extends AdminAppController
             if (in_array('soldOutLimit', array_keys($this->getRequest()->getData()))) {
                 $object2save['sold_out_limit'] = $this->getRequest()->getData('soldOutLimit');
             }
-            $this->log($object2save);
             $this->Product->changeQuantity(
                 [
                     [

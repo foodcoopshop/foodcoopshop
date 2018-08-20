@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-20 16:08+0200\n"
+"POT-Creation-Date: 2018-08-20 16:32+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -753,6 +753,9 @@ msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_set
 msgstr ""
 
 msgid "Notification_if_amount_lower_than"
+msgstr ""
+
+msgid "Is_product_a_stock_product?"
 msgstr ""
 
 msgid "delete"

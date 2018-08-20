@@ -900,7 +900,7 @@ body.payments .bottom-button-container {
     width: 20px;
     height: 20px;
 }
-#product-quantity-edit-form input {
+#product-is-stock-product-edit-form input {
 	float: right ! important;
 }
 #product-price-edit-form label.radio input:focus {
@@ -920,10 +920,9 @@ body.payments .bottom-button-container {
 	font-weight: normal;
 	margin-bottom: 10px;
 	margin-top: 3px;
-}
-#product-quantity-edit-form .quantity-wrapper label .small {
-	width: 255px;
-	float: left;
+    width: 250px;
+    float: left;
+    margin-right: 5px;
 }
 #product-price-edit-form .deactivated {
     opacity: 0.3;

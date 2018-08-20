@@ -166,11 +166,13 @@ echo '<div class="holiday-wrapper">';
             'type' => 'checkbox',
             'escape' => false
         ]);
-        echo $this->Form->control('Manufacturers.send_product_sold_out_limit_reached_for_contact_person', [
-            'label' => __d('admin', 'Sold_out_limit_reached_notification_for_contact_person?').' <span class="after small">'. __d('admin', 'The_contact_person_wants_to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached.').'</a></span>',
-            'type' => 'checkbox',
-            'escape' => false
-        ]);
+        if (!$appAuth->isManufacturer()) {
+            echo $this->Form->control('Manufacturers.send_product_sold_out_limit_reached_for_contact_person', [
+                'label' => __d('admin', 'Sold_out_limit_reached_notification_for_contact_person?').' <span class="after small">'. __d('admin', 'The_contact_person_wants_to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached.').'</a></span>',
+                'type' => 'checkbox',
+                'escape' => false
+            ]);
+        }
     }
 
     if (!$appAuth->isManufacturer()) {

@@ -241,7 +241,8 @@ class LocalizedController extends Controller
                 'OrdersPossibleUntilAmountOf' => __('Orders_possible_until_amount_of'),
                 'zeroOrSmallerZero' => __('zero_or_smaller_zero'),
                 'ForManufacturersAndContactPersonsCanBeChangedInManufacturerSettings' => __('For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings.'),
-                'NotificationIfAmountLowerThan' => __('Notification_if_amount_lower_than')
+                'NotificationIfAmountLowerThan' => __('Notification_if_amount_lower_than'),
+                'IsProductStockProduct' => __('Is_product_a_stock_product?')
             ],
             'upload' => [
                 'delete' => __('delete'),
