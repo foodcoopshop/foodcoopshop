@@ -85,7 +85,7 @@ foodcoopshop.DialogProduct = {
             dialogHtml += '<input type="checkbox" name="dialogIsStockProductIsStockProduct" id="dialogIsStockProductIsStockProduct" />';
             dialogHtml += ' ' + foodcoopshop.LocalizedJs.dialogProduct.IsProductStockProduct;
         dialogHtml += '</label>';
-        dialogHtml += '<input type="hidden" name="dialogQuantityProductId" id="dialogQuantityProductId" value="" />';
+        dialogHtml += '<input type="hidden" name="dialogIsStockProductProductId" id="dialogIsStockProductProductId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.StockProduct, dialogId, dialogHtml);
         return dialogHtml;
     },

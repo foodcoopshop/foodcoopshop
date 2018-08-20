@@ -662,7 +662,7 @@ foodcoopshop.Admin = {
                     $('.ui-dialog button').attr('disabled', 'disabled');
 
                     var data = {
-                        productId: $('#dialogQuantityProductId').val(),
+                        productId: $('#dialogIsStockProductProductId').val(),
                         isStockProduct: $('#dialogIsStockProductIsStockProduct:checked').length > 0 ? 1 : 0
                     }
                     
@@ -697,7 +697,7 @@ foodcoopshop.Admin = {
             }            
             
             $('#' + dialogId + ' #dialogIsStockProductIsStockProduct').prop('checked', row.find('td.is-stock-product').html().match('fa-check'));
-            $('#' + dialogId + ' #dialogQuantityProductId').val(row.find('td:nth-child(1)').html());
+            $('#' + dialogId + ' #dialogIsStockProductProductId').val(row.find('td:nth-child(1)').html());
             var label = foodcoopshop.Admin.getProductNameForDialog(row);
             $('#' + dialogId + ' label[for="dialogIsStockProductIsStockProduct"]').html(label);
 
