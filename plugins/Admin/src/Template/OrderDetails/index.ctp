@@ -140,7 +140,7 @@ echo '</tr>';
 foreach ($orderDetails as $orderDetail) {
     
     $editRecordAllowed = $groupBy == '' && (
-        in_array($orderDetail->order_state, [ORDER_STATE_OPEN, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER]) ||
+        in_array($orderDetail->order_state, [ORDER_STATE_ORDER_PLACED, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER]) ||
         $orderDetail->bulkOrdersAllowed);
 
     $rowClasses = [];
@@ -245,10 +245,18 @@ if ($groupBy == 'manufacturer') {
 }
 
 if ($groupBy == 'customer') {
-    echo '<td></td>';
-    if (count($pickupDay) == 1) {
-        echo '<td></td>';
+    $showAllOrderDetailsLink = '';
+    if (!empty($orderDetails)) {
+        $showAllOrderDetailsLink = $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' ' . __d('admin', 'All_products') : ''),
+            [
+                'title' => __d('admin', 'Show_all_ordered_products'),
+                'class' => 'icon-with-text'
+            ],
+            '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&productId=' . $productId. '&manufacturerId=' . $manufacturerId
+        );
     }
+    echo '<td></td>';
+    echo '<td>'.$showAllOrderDetailsLink.'</td>';
 }
 if ($groupBy == 'product') {
     if ($appAuth->isManufacturer()) {

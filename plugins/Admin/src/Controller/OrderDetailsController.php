@@ -236,7 +236,7 @@ class OrderDetailsController extends AdminAppController
 
         $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
         if ($this->AppAuth->isManufacturer()) {
-            $orderStates = ORDER_STATE_OPEN;
+            $orderStates = ORDER_STATE_ORDER_PLACED;
         }
 
         $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
@@ -822,8 +822,9 @@ class OrderDetailsController extends AdminAppController
                 ]
             ])->first();
 
-            $message = __d('admin', 'Product_{0}_with_a_price_of_{1}_from_{2}_was_successfully_cancelled.', [
+            $message = __d('admin', 'Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled.', [
                 '<b>' . $orderDetail->product_name . '</b>',
+                '<b>' . $orderDetail->product->manufacturer->name . '</b>',
                 Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_incl),
                 $orderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'))
             ]);

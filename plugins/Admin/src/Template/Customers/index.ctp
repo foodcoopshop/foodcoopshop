@@ -92,7 +92,7 @@ foreach ($customers as $customer) {
             $customerName = '<i class="fa fa-pagelines" title="'.__d('admin', 'Newbie_only_{0}_products_ordered.', [$customer->order_detail_count]).'"></i> ' . $customerName;
         }
 
-        echo '<span class="name">' . $this->Html->link($customerName, '/admin/order-details?orderStates[]=' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . '&pickupDay[]=01.01.2014&pickupDay[]=' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt')) . '&customerId=' . $customer->id_customer . '&sort=OrderDetails.pickup_day&direction=desc', [
+        echo '<span class="name">' . $this->Html->link($customerName, '/admin/order-details?&pickupDay[]=01.01.2014&pickupDay[]=' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt')) . '&customerId=' . $customer->id_customer . '&sort=OrderDetails.pickup_day&direction=desc', [
             'title' => __d('admin', 'Show_all_orders_from_{0}', [$this->Html->getNameRespectingIsDeleted($customer)]),
             'escape' => false
         ]) . '</span>';

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-17 16:30+0200\n"
-"PO-Revision-Date: 2018-08-17 16:30+0200\n"
+"POT-Creation-Date: 2018-08-20 10:19+0200\n"
+"PO-Revision-Date: 2018-08-20 10:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -279,8 +279,8 @@ msgstr "Price adapted"
 msgid "The_pickup_day_comment_of_{0}_was_changed:"
 msgstr "The pickup day comment {0} was changed:"
 
-msgid "Product_{0}_with_a_price_of_{1}_from_{2}_was_successfully_cancelled."
-msgstr "Product {0} (price {1}) of from {2} was successfully cancelled."
+msgid "Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled."
+msgstr "Product {0} (manufacturer: {1}, price {2}) from {2} was successfully cancelled."
 
 msgid "Product_was_cancelled"
 msgstr "Product cancelled"
@@ -1547,6 +1547,12 @@ msgstr "No orders found for the pickup day {0}."
 
 msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
 msgstr "No orders found for the delivery period {0} to {1}."
+
+msgid "All_products"
+msgstr "All products"
+
+msgid "Show_all_ordered_products"
+msgstr "Show all ordered products"
 
 msgid "Page_title"
 msgstr "Page title"

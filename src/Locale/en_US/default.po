@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-17 15:18+0200\n"
-"PO-Revision-Date: 2018-08-17 15:18+0200\n"
+"POT-Creation-Date: 2018-08-20 10:19+0200\n"
+"PO-Revision-Date: 2018-08-20 10:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -410,18 +410,6 @@ msgstr "Really generate orders as PDF?"
 
 msgid "Email_addresses"
 msgstr "E-mail addresses"
-
-msgid "Change_order_status?"
-msgstr "Change order status?"
-
-msgid "Really_change_order_status_from_{0}?"
-msgstr "Do you really want to change the status of the order from {0}?"
-
-msgid "order_state_cancelled"
-msgstr "cancelled"
-
-msgid "order_state_open"
-msgstr "open"
 
 msgid "Decrease_amount"
 msgstr "Decrease amount"
@@ -1935,6 +1923,9 @@ msgstr "paid in cash"
 msgid "This_order_contains_the_variable_member_fee."
 msgstr "This order contains the variable member fee."
 
+msgid "order_state_order_placed"
+msgstr "order placed"
+
 msgid "order_state_closed"
 msgstr "closed"
 
@@ -1952,6 +1943,18 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "Change_order_status?"
+#~ msgstr "Change order status?"
+
+#~ msgid "Really_change_order_status_from_{0}?"
+#~ msgstr "Do you really want to change the status of the order from {0}?"
+
+#~ msgid "order_state_cancelled"
+#~ msgstr "cancelled"
+
+#~ msgid "order_state_open"
+#~ msgstr "open"
 
 #~ msgid "Change_stock"
 #~ msgstr "Change stock"

@@ -49,7 +49,7 @@ class SendOrderListsShell extends AppShell
         $orderDetails = $this->OrderDetail->find('all', [
             'conditions' => [
                 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') = \'' . $pickupDay . '\'',
-                'OrderDetails.order_state' => ORDER_STATE_OPEN
+                'OrderDetails.order_state' => ORDER_STATE_ORDER_PLACED
             ],
             'contain' => [
                 'Products'

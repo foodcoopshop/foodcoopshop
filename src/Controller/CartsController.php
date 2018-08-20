@@ -399,7 +399,7 @@ class CartsController extends FrontendController
                 'total_price_tax_excl' => $cartProduct['priceExcl'],
                 'total_price_tax_incl' => $cartProduct['price'],
                 'id_tax' => $product->id_tax,
-                'order_state' => ORDER_STATE_OPEN,
+                'order_state' => ORDER_STATE_ORDER_PLACED,
                 'id_customer' => $this->AppAuth->getUserId(),
                 'id_cart_product' => $cartProduct['cartProductId'],
                 'pickup_day' => $cartProduct['pickupDay'],

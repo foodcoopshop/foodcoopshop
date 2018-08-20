@@ -227,7 +227,7 @@ a.toggle-link.collapsed i:before {
     display: none;
 }
 .ui-dialog .ajax-loader {
-    bottom: 14px;
+    bottom: 20px;
 }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
 	font-family: 'Open Sans';

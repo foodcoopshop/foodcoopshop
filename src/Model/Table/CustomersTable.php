@@ -195,7 +195,7 @@ class CustomersTable extends AppTable
             'ValidOrderDetails.order_state IN (' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . ')'
         ]);
         $this->getAssociation('ActiveOrderDetails')->setConditions([
-            'ActiveOrderDetails.order_state IN (' . ORDER_STATE_OPEN . ')'
+            'ActiveOrderDetails.order_state IN (' . ORDER_STATE_ORDER_PLACED . ')'
         ]);
         $this->getAssociation('PaidCashlessOrderDetails')->setConditions([
             'PaidCashlessOrderDetails.order_state IN (' . join(',', Configure::read('app.htmlHelper')->getOrderStatesCashless()). ')'
