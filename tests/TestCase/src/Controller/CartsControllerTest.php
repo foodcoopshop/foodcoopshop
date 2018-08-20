@@ -309,7 +309,24 @@ class CartsControllerTest extends AppCakeTestCase
         $this->finishCart(1, 1);
     }
     
-    public function testFinishOrderWithDisabledStockNotifications() {
+    public function testFinishOrderStockNotificationsIsStockProductDisabled() {
+        
+        $this->loginAsSuperadmin();
+        $this->browser->ajaxPost('/admin/products/editIsStockProduct', [
+            'productId' => '350-13',
+            'isStockProduct' => 0
+        ]);
+        $this->browser->ajaxPost('/admin/products/editIsStockProduct', [
+            'productId' => 349,
+            'isStockProduct' => 0
+        ]);
+        $this->placeOrderWithStockProducts();
+        
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(1, count($emailLogs));
+    }
+    
+    public function testFinishOrderStockNotificationsDisabled() {
         
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'send_product_sold_out_limit_reached_for_manufacturer', 0);
@@ -322,7 +339,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals(1, count($emailLogs));
     }
     
-    public function testFinishOrderWithEnabledStockNotifications()
+    public function testFinishOrderStockNotificationsEnabled()
     {
         
         $this->loginAsSuperadmin();
