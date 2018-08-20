@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
-echo '<td class="' . (empty($product->product_attributes) && $product->stock_available->quantity <= 0 ? 'not-available' : '') . '">';
+echo '<td class="amount ' . (empty($product->product_attributes) && $product->stock_available->quantity <= 0 ? 'not-available' : '') . '">';
 
     if (empty($product->product_attributes)) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
@@ -29,9 +29,13 @@ echo '<td class="' . (empty($product->product_attributes) && $product->stock_ava
                     echo $this->Number->formatAsDecimal($product->stock_available->quantity_limit, 0);
                 echo '</i>';
             }
-            if (!is_null($product->stock_available->sold_out_limit)) {
+            if (is_null($product->stock_available->sold_out_limit) || $product->stock_available->sold_out_limit != 0) {
                 echo ' / <i class="small sold-out-limit-for-dialog">';
-                   echo $this->Number->formatAsDecimal($product->stock_available->sold_out_limit, 0);
+                    if (is_null($product->stock_available->sold_out_limit)) {
+                        echo '<i class="fa fa-close" title="'.__d('admin', 'No_email_notifications_are_sent_for_this_product.').'"></i>';
+                    } else {
+                        echo $this->Number->formatAsDecimal($product->stock_available->sold_out_limit, 0);
+                    }
                 echo '</i>';
             }
         }

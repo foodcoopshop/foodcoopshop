@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-20 12:34+0200\n"
+"POT-Creation-Date: 2018-08-20 16:08+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1077,6 +1077,9 @@ msgid "Add_new_attribute_for_product_{0}"
 msgstr ""
 
 msgid "change_amount"
+msgstr ""
+
+msgid "No_email_notifications_are_sent_for_this_product."
 msgstr ""
 
 msgid "change_deposit"

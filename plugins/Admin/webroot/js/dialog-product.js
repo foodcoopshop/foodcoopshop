@@ -79,29 +79,38 @@ foodcoopshop.DialogProduct = {
         return dialogHtml;
     },
 
+    getHtmlForProductIsStockProductEdit : function(dialogId) {
+        var dialogHtml = '<label for="dialogIsStockProductIsStockProduct"></label>';
+        dialogHtml += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.IsProductStockProduct + '</label>';
+        dialogHtml += '<input type="number" step="1" name="dialogIsStockProductIsStockProduct" id="dialogIsStockProductIsStockProduct" />';
+        dialogHtml += '<input type="hidden" name="dialogQuantityProductId" id="dialogQuantityProductId" value="" />';
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.StockProduct, dialogId, dialogHtml);
+        return dialogHtml;
+    },
+    
     getHtmlForProductQuantityEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogQuantityQuantity"></label>';
-        dialogHtml += '<div class="quantity-wrapper"></div>';
+        dialogHtml += '<div class="quantity-wrapper">';
+            dialogHtml += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.AvailableAmount + '</label>';
+            dialogHtml += '<input type="number" step="1" name="dialogQuantityQuantity" id="dialogQuantityQuantity" />';
+        dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogQuantityProductId" id="dialogQuantityProductId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.ChangeAmount, dialogId, dialogHtml);
         return dialogHtml;
     },
     
-    addAdvancedStockManagementDisabledFields : function() {
-        var dialogHtml = '';
-        dialogHtml += '<label>Verfügbare Anzahl</label>';
-        dialogHtml += '<input type="number" step="1" name="dialogQuantityQuantity" id="dialogQuantityQuantity" />';
-        return dialogHtml;
-    },
-
-    addAdvancedStockManagementEnabledFields : function() {
-        var dialogHtml = '';
-        dialogHtml += '<label>Aktueller Lagerstand</label>';
-        dialogHtml += '<input type="number" step="1" name="dialogQuantityQuantity" id="dialogQuantityQuantity" /><br />';
-        dialogHtml += '<label>Bestellbar bis zu einer Anzahl von<br /><span class="small">0 oder kleiner als 0.</span></label>';
-        dialogHtml += '<input type="number" step="1" name="dialogQuantityQuantityLimit" id="dialogQuantityQuantityLimit" /><br />';
-        dialogHtml += '<label>E-Mail-Benachrichtigung ab Anzahl<br /><span class="small">An Hersteller bzw. Ansprechperson, kann in den Hersteller-Einstellungen geändert werden.</span></label>';
-        dialogHtml += '<input type="number" step="1" name="dialogQuantitySoldOutLimit" id="dialogQuantitySoldOutLimit" /><br />';
+    getHtmlForProductIsStockProductEdit : function(dialogId) {
+        var dialogHtml = '<label for="dialogQuantityQuantity"></label>';
+        dialogHtml += '<div class="quantity-wrapper">';
+            dialogHtml += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.CurrentStock + '</label>';
+            dialogHtml += '<input type="number" step="1" name="dialogQuantityQuantity" id="dialogQuantityQuantity" /><br />';
+            dialogHtml += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.OrdersPossibleUntilAmountOf + '<br /><span class="small">' + foodcoopshop.LocalizedJs.dialogProduct.zeroOrSmallerZero + '.</span></label>';
+            dialogHtml += '<input max="0" type="number" step="1" name="dialogQuantityQuantityLimit" id="dialogQuantityQuantityLimit" /><br />';
+            dialogHtml += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.NotificationIfAmountLowerThan + '<br /><span class="small">' + foodcoopshop.LocalizedJs.dialogProduct.ForManufacturersAndContactPersonsCanBeChangedInManufacturerSettings + '</span></label>';
+            dialogHtml += '<input type="number" step="1" name="dialogQuantitySoldOutLimit" id="dialogQuantitySoldOutLimit" /><br />';
+        dialogHtml += '</div>';
+        dialogHtml += '<input type="hidden" name="dialogQuantityProductId" id="dialogQuantityProductId" value="" />';
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.admin.Stock, dialogId, dialogHtml);
         return dialogHtml;
     }
 

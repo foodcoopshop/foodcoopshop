@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-20 11:01+0200\n"
-"PO-Revision-Date: 2018-08-20 10:19+0200\n"
+"POT-Creation-Date: 2018-08-20 16:08+0200\n"
+"PO-Revision-Date: 2018-08-20 15:47+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -32,6 +32,9 @@ msgstr "Your cart"
 
 msgid "Product_{0}:_Only_{1}_units_on_stock"
 msgstr "Product \"{0}\" - available stock {1}"
+
+msgid "Hello"
+msgstr "Hello"
 
 msgid "Order_confirmation"
 msgstr "Order confirmation"
@@ -728,6 +731,30 @@ msgstr "Deposit"
 
 msgid "Enter_zero_for_delete"
 msgstr "0 deletes deposit"
+
+msgid "Is_the_product_a_stock_product?"
+msgstr "Is the product a stock product?"
+
+msgid "Stock_product"
+msgstr "Stock product"
+
+msgid "Current_stock"
+msgstr "Current stock"
+
+msgid "Available_amount"
+msgstr "Available amount"
+
+msgid "Orders_possible_until_amount_of"
+msgstr "Order possible until amount of"
+
+msgid "zero_or_smaller_zero"
+msgstr "0 or smaller than 0"
+
+msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
+msgstr "For manufacturers and contact persons. Can be changed in the manufacturer settings."
+
+msgid "Notification_if_amount_lower_than"
+msgstr "Notification if amount is lower than"
 
 msgid "delete"
 msgstr "delete"
@@ -1436,9 +1463,6 @@ msgstr "Your account was created but not activated yet. This means, you can't lo
 
 msgid "You_will_get_an_email_as_soon_as_we_activated_you."
 msgstr "You will get an e-mail as soon as we activate you."
-
-msgid "Hello"
-msgstr "Hello"
 
 msgid "terms_and_conditions"
 msgstr "terms and conditions"

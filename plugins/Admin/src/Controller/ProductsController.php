@@ -536,12 +536,13 @@ class ProductsController extends AdminAppController
             $object2save = [
                 'quantity' => $this->getRequest()->getData('quantity'),
             ];
-            if (!empty($this->getRequest()->getData('quantityLimit'))) {
+            if (in_array('quantityLimit', array_keys($this->getRequest()->getData()))) {
                 $object2save['quantity_limit'] = $this->getRequest()->getData('quantityLimit');
             }
-            if (!empty($this->getRequest()->getData('soldOutLimit'))) {
+            if (in_array('soldOutLimit', array_keys($this->getRequest()->getData()))) {
                 $object2save['sold_out_limit'] = $this->getRequest()->getData('soldOutLimit');
             }
+            $this->log($object2save);
             $this->Product->changeQuantity(
                 [
                     [

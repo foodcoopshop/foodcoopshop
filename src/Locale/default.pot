@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-20 11:01+0200\n"
+"POT-Creation-Date: 2018-08-20 16:08+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -30,6 +30,9 @@ msgid "Your_cart"
 msgstr ""
 
 msgid "Product_{0}:_Only_{1}_units_on_stock"
+msgstr ""
+
+msgid "Hello"
 msgstr ""
 
 msgid "Order_confirmation"
@@ -726,6 +729,30 @@ msgid "Deposit"
 msgstr ""
 
 msgid "Enter_zero_for_delete"
+msgstr ""
+
+msgid "Is_the_product_a_stock_product?"
+msgstr ""
+
+msgid "Stock_product"
+msgstr ""
+
+msgid "Current_stock"
+msgstr ""
+
+msgid "Available_amount"
+msgstr ""
+
+msgid "Orders_possible_until_amount_of"
+msgstr ""
+
+msgid "zero_or_smaller_zero"
+msgstr ""
+
+msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
+msgstr ""
+
+msgid "Notification_if_amount_lower_than"
 msgstr ""
 
 msgid "delete"
@@ -1434,9 +1461,6 @@ msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_ye
 msgstr ""
 
 msgid "You_will_get_an_email_as_soon_as_we_activated_you."
-msgstr ""
-
-msgid "Hello"
 msgstr ""
 
 msgid "terms_and_conditions"

@@ -227,7 +227,8 @@ td.is-stock-product i.fa {
 	margin-left: 5px;
 }
 span.is-declaration-ok-wrapper .fa-close,
-td.is-stock-product .fa-close {
+td.is-stock-product .fa-close,
+td.amount .fa-close {
 	color: #f3515c;
 }
 
@@ -886,13 +887,13 @@ body.payments .bottom-button-container {
 	line-height: 28px;
 	position: static;
 }
-#product-quantity-edit-form label.checkbox {
+#product-is-stock-product-edit-form label.checkbox {
 	font-weight: normal;
 	clear: both;
 	margin-bottom: 10px;
 }
 #product-price-edit-form label.radio input,
-#product-quantity-edit-form label.checkbox input {
+#product-is-stock-product-edit-form label.checkbox input {
 	margin-right: 5px;
 	position: static;
 	float: left;

@@ -233,7 +233,15 @@ class LocalizedController extends Controller
                 'Help' => __('Help'),
                 'ChangeNameAndDescription' => __('Change_name_and_description'),
                 'Deposit' => __('Deposit'),
-                'EnterZeroForDelete' => __('Enter_zero_for_delete')
+                'EnterZeroForDelete' => __('Enter_zero_for_delete'),
+                'IsProductAStockProduct' => __('Is_the_product_a_stock_product?'),
+                'StockProduct' => __('Stock_product'),
+                'CurrentStock' => __('Current_stock'),
+                'AvailableAmount' => __('Available_amount'),
+                'OrdersPossibleUntilAmountOf' => __('Orders_possible_until_amount_of'),
+                'zeroOrSmallerZero' => __('zero_or_smaller_zero'),
+                'ForManufacturersAndContactPersonsCanBeChangedInManufacturerSettings' => __('For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings.'),
+                'NotificationIfAmountLowerThan' => __('Notification_if_amount_lower_than')
             ],
             'upload' => [
                 'delete' => __('delete'),

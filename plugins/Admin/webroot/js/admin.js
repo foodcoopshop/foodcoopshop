@@ -643,10 +643,16 @@ foodcoopshop.Admin = {
 
         $('.product-quantity-edit-button').on('click', function () {
             
-            var dialogId = 'product-quantity-edit-form';
-            var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductQuantityEdit(dialogId);
-            $(container).append(dialogHtml);
             var row = $(this).closest('tr');
+
+            var dialogId = 'product-quantity-edit-form';
+            var dialogHtml = '';
+            if (foodcoopshop.Admin.isAdvancedStockManagementEnabled(row)) {
+                dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductIsStockProductEdit(dialogId);
+            } else {
+                dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductQuantityEdit(dialogId);
+            }
+            $(container).append(dialogHtml);
 
             var buttons = {};
             buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
@@ -703,7 +709,6 @@ foodcoopshop.Admin = {
             }            
             
             if (foodcoopshop.Admin.isAdvancedStockManagementEnabled(row)) {
-                $('#' + dialogId + ' .quantity-wrapper').append(foodcoopshop.DialogProduct.addAdvancedStockManagementEnabledFields());
                 if (row.find('i.quantity-limit-for-dialog').length > 0) {
                     $('#' + dialogId + ' #dialogQuantityQuantityLimit').val(row.find('i.quantity-limit-for-dialog').html().replace(/\./, ''));
                 } else {
@@ -711,12 +716,11 @@ foodcoopshop.Admin = {
                 }
                 if (row.find('i.sold-out-limit-for-dialog').length > 0) {
                     $('#' + dialogId + ' #dialogQuantitySoldOutLimit').val(row.find('i.sold-out-limit-for-dialog').html().replace(/\./, ''));
+                } else {
+                    $('#' + dialogId + ' #dialogQuantitySoldOutLimit').val(0);
                 }
                 dialogOptions.height = 350;
-            } else {
-                $('#' + dialogId + ' .quantity-wrapper').append(foodcoopshop.DialogProduct.addAdvancedStockManagementDisabledFields());
             }
-            
             
             $('#' + dialogId + ' #dialogQuantityQuantity').val(row.find('span.quantity-for-dialog').html().replace(/\./, ''));
             $('#' + dialogId + ' #dialogQuantityProductId').val(row.find('td:nth-child(1)').html());
