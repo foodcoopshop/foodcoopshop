@@ -25,6 +25,8 @@ echo '<td class="is-stock-product">';
         ], 'javascript:void(0);');
         if ($product->is_stock_product) {
             echo '<i class="fa fa-check"></i>';
+        } else {
+            echo '<i class="fa fa-close"></i>';
         }
     }
 echo '</td>';

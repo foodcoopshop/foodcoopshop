@@ -33,7 +33,7 @@ class StockAvailablesTable extends AppTable
         $validator = $this->getNumberRangeValidator($validator, 'quantity', -5000, 5000, __('Field:_Stock'));
         
         $validator->numeric('quantity_limit', __('The_quantity_limit_needs_to_be_a_number.'));
-        $validator = $this->getNumberRangeValidator($validator, 'quantity_limit', -5000, 5000, __('Field:_Order_possible_until'));
+        $validator = $this->getNumberRangeValidator($validator, 'quantity_limit', -5000, 0, __('Field:_Order_possible_until'));
         
         $validator->numeric('sold_out_quantity', __('The_sold_out_quantity_needs_to_be_a_number.'));
         $validator = $this->getNumberRangeValidator($validator, 'sold_out_quantity', -5000, 5000, __('Field:_Notification_if_quantity_limit_reached'));

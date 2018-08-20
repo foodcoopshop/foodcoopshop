@@ -81,20 +81,26 @@ foodcoopshop.DialogProduct = {
 
     getHtmlForProductQuantityEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogQuantityQuantity"></label>';
-        dialogHtml += '<div class="quantity-wrapper">';
-            dialogHtml += '<label>Verfügbare Anzahl<br /><span class="small">= aktueller Lagerstand</span></label>';
-            dialogHtml += '<input type="number" step="1" name="dialogQuantityQuantity" id="dialogQuantityQuantity" /><br />';
-        dialogHtml += '</div>';
+        dialogHtml += '<div class="quantity-wrapper"></div>';
         dialogHtml += '<input type="hidden" name="dialogQuantityProductId" id="dialogQuantityProductId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.ChangeAmount, dialogId, dialogHtml);
         return dialogHtml;
     },
     
-    addAdvancedStockManagementFields : function() {
+    addAdvancedStockManagementDisabledFields : function() {
         var dialogHtml = '';
-        dialogHtml += '<label>Bestellbar bis zu einer Anzahl von<br /><span class="small">Darf auch kleiner als 0 sein.</span></label>';
+        dialogHtml += '<label>Verfügbare Anzahl</label>';
+        dialogHtml += '<input type="number" step="1" name="dialogQuantityQuantity" id="dialogQuantityQuantity" />';
+        return dialogHtml;
+    },
+
+    addAdvancedStockManagementEnabledFields : function() {
+        var dialogHtml = '';
+        dialogHtml += '<label>Aktueller Lagerstand</label>';
+        dialogHtml += '<input type="number" step="1" name="dialogQuantityQuantity" id="dialogQuantityQuantity" /><br />';
+        dialogHtml += '<label>Bestellbar bis zu einer Anzahl von<br /><span class="small">0 oder kleiner als 0.</span></label>';
         dialogHtml += '<input type="number" step="1" name="dialogQuantityQuantityLimit" id="dialogQuantityQuantityLimit" /><br />';
-        dialogHtml += '<label>E-Mail-Benachrichtigung<br /><span class="small">sobald diese Anzahl erreicht oder unterschritten wird. <br />leer bedeutet "keine Benachrichtigung"</span></label>';
+        dialogHtml += '<label>E-Mail-Benachrichtigung ab Anzahl<br /><span class="small">An Hersteller bzw. Ansprechperson, kann in den Hersteller-Einstellungen geändert werden.</span></label>';
         dialogHtml += '<input type="number" step="1" name="dialogQuantitySoldOutLimit" id="dialogQuantitySoldOutLimit" /><br />';
         return dialogHtml;
     }

@@ -646,6 +646,7 @@ foodcoopshop.Admin = {
             var dialogId = 'product-quantity-edit-form';
             var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductQuantityEdit(dialogId);
             $(container).append(dialogHtml);
+            var row = $(this).closest('tr');
 
             var buttons = {};
             buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
@@ -659,14 +660,19 @@ foodcoopshop.Admin = {
                     $('#product-quantity-edit-form .ajax-loader').show();
                     $('.ui-dialog button').attr('disabled', 'disabled');
 
+                    var data = {
+                        productId: $('#dialogQuantityProductId').val(),
+                        quantity: $('#dialogQuantityQuantity').val(),
+                    }
+                    
+                    if (foodcoopshop.Admin.isAdvancedStockManagementEnabled(row)) {
+                        data.quantityLimit = $('#dialogQuantityQuantityLimit').val(); 
+                        data.soldOutLimit = $('#dialogQuantitySoldOutLimit').val(); 
+                    }
+                    
                     foodcoopshop.Helper.ajaxCall(
                         '/admin/products/editQuantity/',
-                        {
-                            productId: $('#dialogQuantityProductId').val(),
-                            quantity: $('#dialogQuantityQuantity').val(),
-                            quantityLimit: $('#dialogQuantityQuantityLimit').val(),
-                            soldOutLimit: $('#dialogQuantitySoldOutLimit').val()
-                        },
+                        data,
                         {
                             onOk: function (data) {
                                 document.location.reload();
@@ -684,7 +690,7 @@ foodcoopshop.Admin = {
             
             var dialogOptions = {
                 autoOpen: false,
-                height: 300,
+                height: 250,
                 width: 390,
                 modal: true,
                 close: function () {
@@ -695,16 +701,9 @@ foodcoopshop.Admin = {
                 },
                 buttons: buttons
             }            
-            var row = $(this).closest('tr');
-            
-            $('#' + dialogId + ' #dialogQuantityQuantity').val(row.find('span.quantity-for-dialog').html().replace(/\./, ''));
-            $('#' + dialogId + ' #dialogQuantityProductId').val(row.find('td:nth-child(1)').html());
-            var label = foodcoopshop.Admin.getProductNameForDialog(row);
-            $('#' + dialogId + ' label[for="dialogQuantityQuantity"]').html(label);
-            
             
             if (foodcoopshop.Admin.isAdvancedStockManagementEnabled(row)) {
-                $('#' + dialogId + ' #dialogQuantityQuantity').after(foodcoopshop.DialogProduct.addAdvancedStockManagementFields());
+                $('#' + dialogId + ' .quantity-wrapper').append(foodcoopshop.DialogProduct.addAdvancedStockManagementEnabledFields());
                 if (row.find('i.quantity-limit-for-dialog').length > 0) {
                     $('#' + dialogId + ' #dialogQuantityQuantityLimit').val(row.find('i.quantity-limit-for-dialog').html().replace(/\./, ''));
                 } else {
@@ -713,10 +712,16 @@ foodcoopshop.Admin = {
                 if (row.find('i.sold-out-limit-for-dialog').length > 0) {
                     $('#' + dialogId + ' #dialogQuantitySoldOutLimit').val(row.find('i.sold-out-limit-for-dialog').html().replace(/\./, ''));
                 }
-                
-                dialogOptions.height = 420;
+                dialogOptions.height = 350;
+            } else {
+                $('#' + dialogId + ' .quantity-wrapper').append(foodcoopshop.DialogProduct.addAdvancedStockManagementDisabledFields());
             }
             
+            
+            $('#' + dialogId + ' #dialogQuantityQuantity').val(row.find('span.quantity-for-dialog').html().replace(/\./, ''));
+            $('#' + dialogId + ' #dialogQuantityProductId').val(row.find('td:nth-child(1)').html());
+            var label = foodcoopshop.Admin.getProductNameForDialog(row);
+            $('#' + dialogId + ' label[for="dialogQuantityQuantity"]').html(label);
 
             var dialog = $('#' + dialogId).dialog(dialogOptions);
             dialog.dialog('open');

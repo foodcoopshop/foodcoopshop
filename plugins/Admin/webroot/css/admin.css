@@ -223,11 +223,12 @@ span.is-declaration-ok-wrapper .fa-check,
 td.is-stock-product .fa-check {
   color: #719f41;
 }
-td.is-stock-product .fa-check {
+td.is-stock-product i.fa {
 	margin-left: 5px;
 }
-span.is-declaration-ok-wrapper .fa-close {
-  color: #f3515c;
+span.is-declaration-ok-wrapper .fa-close,
+td.is-stock-product .fa-close {
+	color: #f3515c;
 }
 
 .filter-container {
@@ -918,6 +919,10 @@ body.payments .bottom-button-container {
 	font-weight: normal;
 	margin-bottom: 10px;
 	margin-top: 3px;
+}
+#product-quantity-edit-form .quantity-wrapper label .small {
+	width: 255px;
+	float: left;
 }
 #product-price-edit-form .deactivated {
     opacity: 0.3;
