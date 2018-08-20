@@ -190,6 +190,7 @@ class CartsController extends FrontendController
                 ->setViewVars([
                     'appAuth' => $this->AppAuth,
                     'greeting' => __('Hello') . ' ' . $cartProduct->product->manufacturer->address_manufacturer->firstname,
+                    'productEditLink' => Configure::read('app.slugHelper')->getProductAdmin(null, $cartProduct->product->id_product),
                     'cartProduct' => $cartProduct,
                     'stockAvailable' => $stockAvailable,
                     'manufacturer' => $cartProduct->product->manufacturer
@@ -209,6 +210,7 @@ class CartsController extends FrontendController
                 ->setViewVars([
                     'appAuth' => $this->AppAuth,
                     'greeting' => __('Hello') . ' ' . $cartProduct->product->manufacturer->customer->firstname,
+                    'productEditLink' => Configure::read('app.slugHelper')->getProductAdmin($cartProduct->product->id_manufacturer, $cartProduct->product->id_product),
                     'cartProduct' => $cartProduct,
                     'stockAvailable' => $stockAvailable,
                     'manufacturer' => $cartProduct->product->manufacturer

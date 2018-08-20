@@ -35,7 +35,7 @@ use Cake\Core\Configure;
                 	<?php echo __('Notification_triggered_if_less_than:') . ' <b>' . $this->MyNumber->formatAsDecimal($stockAvailable->sold_out_limit, 0) . '</b>'; ?>
                 </p>
                 <p>
-                	<a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getProductAdmin(null, $cartProduct->product->id_product); ?>"><?php echo __('Click_here_to_edit_the_product.'); ?></a>
+                	<a href="<?php echo Configure::read('app.cakeServerName').$productEditLink; ?>"><?php echo __('Click_here_to_edit_the_product.'); ?></a>
                 </p>
         	</td>
         </tr>
