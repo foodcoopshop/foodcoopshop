@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-20 16:32+0200\n"
-"PO-Revision-Date: 2018-08-20 17:51+0200\n"
+"POT-Creation-Date: 2018-08-21 09:05+0200\n"
+"PO-Revision-Date: 2018-08-21 09:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -35,6 +35,9 @@ msgstr "Low stock for product \"{0}\": {1}"
 
 msgid "Hello"
 msgstr "Hello"
+
+msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
+msgstr "You can unsubscribe this e-mail <a href=\"{0}\">in the manufacturer's settings</a>."
 
 msgid "Order_confirmation"
 msgstr "Order confirmation"
@@ -1699,7 +1702,7 @@ msgid "This_email_was_created_automatcially."
 msgstr "This e-mail was automatically created."
 
 msgid "You_can_unsubscribe_it_<a href=\"{0}\">in_your_settings</a>."
-msgstr "You can unsubscribe it <href=\"{0}\">in your settings</a>."
+msgstr "You can unsubscribe it <a href=\"{0}\">in your settings</a>."
 
 msgid "News_from"
 msgstr "News from"

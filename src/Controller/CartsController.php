@@ -164,7 +164,8 @@ class CartsController extends FrontendController
                 'CartProducts.Products.Manufacturers.AddressManufacturers',
                 'CartProducts.Products.Manufacturers.Customers.AddressCustomers',
                 'CartProducts.Products.StockAvailables',
-                'CartProducts.ProductAttributes.StockAvailables'
+                'CartProducts.ProductAttributes.StockAvailables',
+                'CartProducts.OrderDetails'
             ]
         ])->first();
         
@@ -184,7 +185,7 @@ class CartsController extends FrontendController
                 $email->setTemplate('stock_available_limit_reached_notification')
                 ->setTo($cartProduct->product->manufacturer->address_manufacturer->email)
                 ->setSubject(__('Product_{0}:_Only_{1}_units_on_stock', [
-                    $cartProduct->product->name,
+                    $cartProduct->order_detail->product_name,
                     $stockAvailable->quantity
                 ]))
                 ->setViewVars([
@@ -193,7 +194,8 @@ class CartsController extends FrontendController
                     'productEditLink' => Configure::read('app.slugHelper')->getProductAdmin(null, $cartProduct->product->id_product),
                     'cartProduct' => $cartProduct,
                     'stockAvailable' => $stockAvailable,
-                    'manufacturer' => $cartProduct->product->manufacturer
+                    'manufacturer' => $cartProduct->product->manufacturer,
+                    'showManufacturerUnsubscribeLink' => true
                 ]);
                 $email->send();
             }
@@ -204,7 +206,7 @@ class CartsController extends FrontendController
                 $email->setTemplate('stock_available_limit_reached_notification')
                 ->setTo($cartProduct->product->manufacturer->customer->address_customer->email)
                 ->setSubject(__('Product_{0}:_Only_{1}_units_on_stock', [
-                    $cartProduct->product->name,
+                    $cartProduct->order_detail->product_name,
                     $stockAvailable->quantity
                 ]))
                 ->setViewVars([
@@ -213,7 +215,9 @@ class CartsController extends FrontendController
                     'productEditLink' => Configure::read('app.slugHelper')->getProductAdmin($cartProduct->product->id_manufacturer, $cartProduct->product->id_product),
                     'cartProduct' => $cartProduct,
                     'stockAvailable' => $stockAvailable,
-                    'manufacturer' => $cartProduct->product->manufacturer
+                    'manufacturer' => $cartProduct->product->manufacturer,
+                    'showManufacturerName' => true,
+                    'notificationEditLink' => __('You_can_unsubscribe_this_email_<a href="{0}">in_the_settings_of_the_manufacturer</a>.', [Configure::read('app.cakeServerName') . Configure::read('app.slugHelper')->getManufacturerEditOptions($cartProduct->product->id_manufacturer)])
                 ]);
                 $email->send();
             }

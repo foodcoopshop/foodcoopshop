@@ -371,7 +371,7 @@ class CartsControllerTest extends AppCakeTestCase
         
         $this->assertEmailLogs(
             $emailLogs[2],
-            'Lagerstand für Produkt "Lagerprodukt mit Varianten": 0',
+            'Lagerstand für Produkt "Lagerprodukt mit Varianten : 0,5 kg": 0',
             [
                 'Lagerstand: <b>0</b>',
                 'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>'

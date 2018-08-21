@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-20 16:32+0200\n"
+"POT-Creation-Date: 2018-08-21 09:05+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -33,6 +33,9 @@ msgid "Product_{0}:_Only_{1}_units_on_stock"
 msgstr ""
 
 msgid "Hello"
+msgstr ""
+
+msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
 msgstr ""
 
 msgid "Order_confirmation"
