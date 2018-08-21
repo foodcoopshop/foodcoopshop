@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
-echo '<td style="text-align:center;padding-left:16px;width:50px;">';
+echo '<td style="text-align:center;padding-left:16px;width:54px;">';
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('add.png')), [
             'class' => 'add-product-attribute-button',
