@@ -33,7 +33,7 @@ use Cake\Core\Configure;
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php echo __d('admin', 'Pickup_days') . ': ' .  $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameTo' => 'dateTo', 'nameFrom' => 'dateFrom']); ?>
-            <?php echo $this->Form->control('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'default' => isset($active) ? $active : '']); ?>
+            <?php echo $this->Form->control('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStatesOnOff(), 'default' => isset($active) ? $active : '']); ?>
             <div class="right">
                 <?php
                 echo '<div id="add-manufacturer-button-wrapper" class="add-button-wrapper">';
@@ -54,15 +54,13 @@ echo '<table class="list">';
 echo '<tr class="sort">';
     echo '<th class="hide">' . $this->Paginator->sort('Manufacturers.id_manufacturer', 'ID') . '</th>';
     echo '<th>Logo</th>';
-    echo '<th></th>';
     echo '<th>' . $this->Paginator->sort('Manufacturers.name', __d('admin', 'Name')) . '</th>';
     echo '<th style="width:83px;">'.__d('admin', 'Products').'</th>';
     echo '<th>'.__d('admin', 'Deposit').'</th>';
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
         echo '<th>' . $this->Paginator->sort('Manufacturers.timebased_currency_enabled', Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')) . '</th>';
     }
-    echo '<th>' . $this->Paginator->sort('Manufacturers.iban', __d('admin', 'IBAN')) . '</th>';
-    echo '<th>' . $this->Paginator->sort('Manufacturers.active', __d('admin', 'Active')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('Manufacturers.stock_management_enabled', __d('admin', 'Stock_products')) . '</th>';
     echo '<th>' . $this->Paginator->sort('Manufacturers.holiday_from', __d('admin', 'Delivery_break')) . '</th>';
     echo '<th>' . $this->Paginator->sort('Manufacturers.is_private', __d('admin', 'Only_for_members')) . '</th>';
     echo '<th title="'.__d('admin', 'Sum_of_open_orders_in_given_time_range').'">'.__d('admin', 'Open_orders_abbreviation').'</th>';
@@ -95,21 +93,16 @@ foreach ($manufacturers as $manufacturer) {
             echo '</a>';
         }
     echo '</td>';
-    echo '<td>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-            'title' => __d('admin', 'Edit')
-        ], $this->Slug->getManufacturerEdit($manufacturer->id_manufacturer));
-    echo '</td>';
 
     echo '<td>';
 
-    $details = $manufacturer->address_manufacturer->firstname . ' ' . $manufacturer->address_manufacturer->lastname;
-    if ($manufacturer->address_manufacturer->phone_mobile != '') {
-        $details .= '<br />'.$manufacturer->address_manufacturer->phone_mobile;
-    }
-    if ($manufacturer->address_manufacturer->phone != '') {
-        $details .= '<br />' . $manufacturer->address_manufacturer->phone;
-    }
+        $details = $manufacturer->address_manufacturer->firstname . ' ' . $manufacturer->address_manufacturer->lastname;
+        if ($manufacturer->address_manufacturer->phone_mobile != '') {
+            $details .= '<br />'.$manufacturer->address_manufacturer->phone_mobile;
+        }
+        if ($manufacturer->address_manufacturer->phone != '') {
+            $details .= '<br />' . $manufacturer->address_manufacturer->phone;
+        }
         echo '<div class="manufacturer-details-wrapper">';
             echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('telephone.png')), [
                 'class' => 'manufacturer-details-read-button',
@@ -117,7 +110,10 @@ foreach ($manufacturers as $manufacturer) {
             ], 'javascript:void(0);');
         echo '</div>';
 
-        echo '<b>' . $manufacturer->name . '</b><br />';
+        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
+            'title' => __d('admin', 'Edit')
+        ], $this->Slug->getManufacturerEdit($manufacturer->id_manufacturer));
+        echo '&nbsp;<b>' . $manufacturer->name . '</b><br />';
         echo $manufacturer->address_manufacturer->city;
         echo '<br /><span class="email">' . $manufacturer->address_manufacturer->email . '</span>';
 
@@ -188,17 +184,9 @@ foreach ($manufacturers as $manufacturer) {
     }
 
     echo '<td style="text-align:center;width:42px;">';
-    if ($manufacturer->iban != '') {
-        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
-    }
-    echo '</td>';
-    echo '<td style="text-align:center;padding-left:5px;width:42px;">';
-    if ($manufacturer->active == 1) {
-        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
-    }
-    if ($manufacturer->active == '') {
-        echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
-    }
+        if ($manufacturer->stock_management_enabled == 1) {
+            echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
+        }
     echo '</td>';
 
     echo '<td>';
@@ -262,9 +250,9 @@ foreach ($manufacturers as $manufacturer) {
 }
 
 echo '<tr>';
-echo '<td colspan="3"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
+echo '<td colspan="2"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '<td><b>' . $sumProductCount . '</b></td>';
-$colspan = 10;
+$colspan = 8;
 echo '<td>';
     if ($sumDeposit > 0) {
         echo '<b class="' . ($sumDeposit < 0 ? 'negative' : '') . '">'.$this->Number->formatAsCurrency($sumDeposit) . '</b>';

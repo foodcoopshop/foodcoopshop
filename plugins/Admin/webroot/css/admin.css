@@ -179,8 +179,7 @@ form.fcs-form .bootstrap-select {
 #product-name-edit-form input[type="text"],
 #product-price-edit-form input[type="text"],
 #product-deposit-edit-form input[type="text"],
-#product-name-edit-form textarea,
-#product-quantity-edit-form input[type="text"] {
+#product-name-edit-form textarea {
     width: 300px;
     margin-bottom: 10px;
 }
@@ -220,11 +219,17 @@ span.product-declaration-header {
   float: right;
   margin-left: 5px;
 }
-span.is-declaration-ok-wrapper .fa-check {
+span.is-declaration-ok-wrapper .fa-check,
+td.is-stock-product .fa-check {
   color: #719f41;
 }
-span.is-declaration-ok-wrapper .fa-close {
-  color: #f3515c;
+td.is-stock-product i.fa {
+	margin-left: 5px;
+}
+span.is-declaration-ok-wrapper .fa-close,
+td.is-stock-product .fa-close,
+td.amount .fa-close {
+	color: #f3515c;
 }
 
 .filter-container {
@@ -361,6 +366,8 @@ input.datepicker {
 .featherlight-content #flashMessage {
 	position: absolute;
 	top: 10px;
+	width: 98%;
+	left: 1% ! important;
 }
 .featherlight-content #flashMessage {
 	z-index: 10000;
@@ -691,6 +698,10 @@ body.products.index .table-cell-wrapper.price {
     width: 85px;
     text-align: right;
 }
+body.products.index .table-cell-wrapper.deposit {
+    width: 60px;
+    text-align: right;
+}
 body.order_details.index .table-cell-wrapper.price {
     width: 75px;
 }
@@ -855,7 +866,8 @@ body.payments .bottom-button-container {
 #product-price-edit-form input[type="text"],
 #product-price-edit-form input[type="number"],
 #product-price-edit-form input[type="text"],
-#product-deposit-edit-form input[type="text"] {
+#product-deposit-edit-form input[type="text"],
+#product-quantity-edit-form input[type="number"] {
     margin-bottom: 5px;
     margin-right: 5px;
     text-align: right;
@@ -875,21 +887,42 @@ body.payments .bottom-button-container {
 	line-height: 28px;
 	position: static;
 }
-#product-price-edit-form label.radio input {
+#product-is-stock-product-edit-form label.checkbox {
+	font-weight: normal;
+	clear: both;
+	margin-bottom: 10px;
+}
+#product-price-edit-form label.radio input,
+#product-is-stock-product-edit-form label.checkbox input {
 	margin-right: 5px;
 	position: static;
 	float: left;
     width: 20px;
     height: 20px;
 }
+#product-is-stock-product-edit-form input {
+	float: right ! important;
+}
 #product-price-edit-form label.radio input:focus {
     outline: none;
 }
 #product-price-edit-form .price-per-unit-wrapper,
-#product-price-edit-form .price-wrapper {
+#product-price-edit-form .price-wrapper,
+#product-quantity-edit-form .quantity-wrapper {
 	width: 100%;
 	float: left;
 	margin-top: 5px;
+}
+#product-quantity-edit-form .quantity-wrapper {
+	margin-top: 10px;
+}
+#product-quantity-edit-form .quantity-wrapper label {
+	font-weight: normal;
+	margin-bottom: 10px;
+	margin-top: 3px;
+    width: 250px;
+    float: left;
+    margin-right: 5px;
 }
 #product-price-edit-form .deactivated {
     opacity: 0.3;

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-20 09:49+0200\n"
+"POT-Creation-Date: 2018-08-21 09:05+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -27,6 +27,15 @@ msgid "No_access_for_manufacturers."
 msgstr ""
 
 msgid "Your_cart"
+msgstr ""
+
+msgid "Product_{0}:_Only_{1}_units_on_stock"
+msgstr ""
+
+msgid "Hello"
+msgstr ""
+
+msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
 msgstr ""
 
 msgid "Order_confirmation"
@@ -410,6 +419,9 @@ msgstr ""
 msgid "Decrease_amount"
 msgstr ""
 
+msgid "Stock"
+msgstr ""
+
 msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
 msgstr ""
 
@@ -720,6 +732,33 @@ msgid "Deposit"
 msgstr ""
 
 msgid "Enter_zero_for_delete"
+msgstr ""
+
+msgid "Is_the_product_a_stock_product?"
+msgstr ""
+
+msgid "Stock_product"
+msgstr ""
+
+msgid "Current_stock"
+msgstr ""
+
+msgid "Available_amount"
+msgstr ""
+
+msgid "Orders_possible_until_amount_of"
+msgstr ""
+
+msgid "zero_or_smaller_zero"
+msgstr ""
+
+msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
+msgstr ""
+
+msgid "Notification_if_amount_lower_than"
+msgstr ""
+
+msgid "Is_product_a_stock_product?"
 msgstr ""
 
 msgid "delete"
@@ -1214,6 +1253,24 @@ msgstr ""
 msgid "Please_upload_an_image."
 msgstr ""
 
+msgid "The_quantity_needs_to_be_a_number."
+msgstr ""
+
+msgid "Field:_Stock"
+msgstr ""
+
+msgid "The_quantity_limit_needs_to_be_a_number."
+msgstr ""
+
+msgid "Field:_Order_possible_until"
+msgstr ""
+
+msgid "The_sold_out_quantity_needs_to_be_a_number."
+msgstr ""
+
+msgid "Field:_Notification_if_quantity_limit_reached"
+msgstr ""
+
 msgid "Please_enter_a_tax_rate."
 msgstr ""
 
@@ -1410,9 +1467,6 @@ msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_ye
 msgstr ""
 
 msgid "You_will_get_an_email_as_soon_as_we_activated_you."
-msgstr ""
-
-msgid "Hello"
 msgstr ""
 
 msgid "terms_and_conditions"
@@ -1614,6 +1668,21 @@ msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirma
 msgstr ""
 
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."
+msgstr ""
+
+msgid "Product_{0}_is_almost_sold_out."
+msgstr ""
+
+msgid "Units_on_stock:"
+msgstr ""
+
+msgid "Product_orders_possible_until:"
+msgstr ""
+
+msgid "Notification_triggered_if_less_than:"
+msgstr ""
+
+msgid "Click_here_to_edit_the_product."
 msgstr ""
 
 msgid "route_search"

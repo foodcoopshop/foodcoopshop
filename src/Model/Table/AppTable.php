@@ -40,9 +40,15 @@ class AppTable extends Table
         parent::initialize($config);
     }
 
-    public function getNumberRangeValidator(Validator $validator, $field, $min, $max)
+    public function getNumberRangeValidator(Validator $validator, $field, $min, $max, $additionalErrorMessageSuffix='')
     {
-        $message = __('Please_enter_a_number_between_{0}_and_{1}.', [$min, $max]);
+        $message = __('Please_enter_a_number_between_{0}_and_{1}.', [
+            Configure::read('app.numberHelper')->formatAsDecimal($min, 0),
+            Configure::read('app.numberHelper')->formatAsDecimal($max, 0)
+        ]);
+        if ($additionalErrorMessageSuffix != '') {
+            $message .= ' ' . $additionalErrorMessageSuffix;
+        }
         $validator->lessThanOrEqual($field, $max, $message);
         $validator->greaterThanOrEqual($field, $min, $message);
         $validator->notEmpty($field, $message);
@@ -114,7 +120,7 @@ class AppTable extends Table
                 Manufacturers.id_manufacturer, Manufacturers.name as ManufacturersName,
                 Manufacturers.timebased_currency_enabled,
                 Units.price_per_unit_enabled, Units.price_incl_per_unit, Units.name as unit_name, Units.amount as unit_amount, Units.quantity_in_units,
-                StockAvailables.quantity";
+                StockAvailables.quantity, StockAvailables.quantity_limit";
 
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
             $fields .= ", Manufacturers.timebased_currency_max_percentage, Manufacturers.timebased_currency_max_credit_balance";

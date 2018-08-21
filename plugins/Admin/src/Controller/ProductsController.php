@@ -498,6 +498,47 @@ class ProductsController extends AdminAppController
             'msg' => __('Saving_successful.')
         ]));
     }
+    
+    public function editIsStockProduct()
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+        
+        $originalProductId = $this->getRequest()->getData('productId');
+        
+        $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
+        $productId = $ids['productId'];
+        
+        $oldProduct = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'StockAvailables',
+                'Manufacturers',
+                'ProductAttributes',
+                'ProductAttributes.StockAvailables',
+                'ProductAttributes.ProductAttributeCombinations.Attributes'
+            ]
+        ])->first();
+        
+        $product2update = [];
+        if (in_array('isStockProduct', array_keys($this->getRequest()->getData()))) {
+            $product2update['is_stock_product'] = $this->getRequest()->getData('isStockProduct');
+        }
+        if (!empty($product2update)) {
+            $this->Product->save(
+                $this->Product->patchEntity($oldProduct, $product2update)
+            );
+        }
+        $this->Flash->success(__d('admin', 'The_product_{0}_was_changed_successfully_to_a_stock_product.', ['<b>' . $oldProduct->name . '</b>']));
+        
+        $this->getRequest()->getSession()->write('highlightedRowId', $productId);
+        
+        die(json_encode([
+            'status' => 1,
+            'msg' => 'ok'
+        ]));
+    }
 
     public function editQuantity()
     {
@@ -533,9 +574,20 @@ class ProductsController extends AdminAppController
         }
 
         try {
+            $object2save = [
+                'quantity' => $this->getRequest()->getData('quantity'),
+            ];
+            if (in_array('quantityLimit', array_keys($this->getRequest()->getData()))) {
+                $object2save['quantity_limit'] = $this->getRequest()->getData('quantityLimit');
+            }
+            if (in_array('soldOutLimit', array_keys($this->getRequest()->getData()))) {
+                $object2save['sold_out_limit'] = $this->getRequest()->getData('soldOutLimit');
+            }
             $this->Product->changeQuantity(
                 [
-                    [$originalProductId => $this->getRequest()->getData('quantity')]
+                    [
+                        $originalProductId => $object2save
+                    ]
                 ]
             );
         } catch (InvalidParameterException $e) {
@@ -545,7 +597,9 @@ class ProductsController extends AdminAppController
         $quantity = $this->Product->getQuantityAsInteger($this->getRequest()->getData('quantity'));
         $this->Flash->success(__d('admin', 'The_amount_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']));
 
-        $this->ActionLog->customSave('product_quantity_changed', $this->AppAuth->getUserId(), $productId, 'products', __d('admin', 'The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', ['<b>' . $oldProduct->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', $oldProduct->stock_available->quantity, $quantity]));
+        if ($oldProduct->stock_available->quantity != $quantity) {
+            $this->ActionLog->customSave('product_quantity_changed', $this->AppAuth->getUserId(), $productId, 'products', __d('admin', 'The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', ['<b>' . $oldProduct->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>', $oldProduct->stock_available->quantity, $quantity]));
+        }
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
         die(json_encode([
@@ -867,6 +921,9 @@ class ProductsController extends AdminAppController
             $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
             $this->set('variableMemberFee', $variableMemberFee);
         }
+        
+        $advancedStockManagementEnabled = $manufacturerId == 'all' || (!empty($manufacturer) && $manufacturer->stock_management_enabled);
+        $this->set('advancedStockManagementEnabled', $advancedStockManagementEnabled);
 
         $this->set('title_for_layout', __d('admin', 'Products'));
 

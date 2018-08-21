@@ -21,7 +21,7 @@ CREATE TABLE `fcs_action_logs` (
   `text` text NOT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_address`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -200,7 +200,7 @@ CREATE TABLE `fcs_email_logs` (
   `headers` text,
   `message` longtext,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_images`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -262,6 +262,9 @@ CREATE TABLE `fcs_manufacturer` (
   `timebased_currency_enabled` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `timebased_currency_max_percentage` tinyint(3) unsigned NOT NULL DEFAULT '30',
   `timebased_currency_max_credit_balance` int(7) unsigned DEFAULT '360000',
+  `stock_management_enabled` tinyint(4) unsigned NOT NULL DEFAULT '0',
+  `send_product_sold_out_limit_reached_for_manufacturer` tinyint(4) unsigned NOT NULL DEFAULT '0',
+  `send_product_sold_out_limit_reached_for_contact_person` tinyint(4) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_manufacturer`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -366,12 +369,12 @@ CREATE TABLE `fcs_pickup_days` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `customer_id` int(10) unsigned NOT NULL,
   `pickup_day` date NOT NULL,
-  `comment` text DEFAULT NULL,
+  `comment` text,
   `products_picked_up` tinyint(4) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `customer_id` (`customer_id`),
   KEY `pickup_day` (`pickup_day`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_product`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -380,13 +383,13 @@ CREATE TABLE `fcs_product` (
   `id_product` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_manufacturer` int(10) unsigned DEFAULT NULL,
   `id_tax` int(11) unsigned NOT NULL DEFAULT '0',
-  `quantity` int(10) NOT NULL DEFAULT '0',
   `price` decimal(20,6) NOT NULL DEFAULT '0.000000',
   `name` text NOT NULL,
   `description` text,
   `description_short` text,
   `unity` varchar(255) DEFAULT NULL,
   `is_declaration_ok` tinyint(4) unsigned NOT NULL DEFAULT '0',
+  `is_stock_product` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
@@ -438,6 +441,8 @@ CREATE TABLE `fcs_stock_available` (
   `id_product` int(11) unsigned NOT NULL DEFAULT '0',
   `id_product_attribute` int(11) unsigned NOT NULL DEFAULT '0',
   `quantity` int(10) NOT NULL DEFAULT '0',
+  `quantity_limit` int(10) NOT NULL DEFAULT '0',
+  `sold_out_limit` int(10) DEFAULT NULL,
   PRIMARY KEY (`id_stock_available`),
   UNIQUE KEY `product_sqlstock` (`id_product`,`id_product_attribute`),
   KEY `id_product` (`id_product`),

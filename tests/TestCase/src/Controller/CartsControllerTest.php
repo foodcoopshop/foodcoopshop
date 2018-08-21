@@ -80,6 +80,14 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
+    public function testAddAmountNotAvailableAnyMore()
+    {
+        $this->loginAsCustomer();
+        $response = $this->addProductToCart($this->productId1, 98);
+        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>98</b> des Produktes <b>Artischocke</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 97', $response->msg);
+        $this->assertJsonError();
+    }
+    
     public function testRemoveProduct()
     {
         $this->loginAsCustomer();
@@ -277,6 +285,113 @@ class CartsControllerTest extends AppCakeTestCase
             ]
         );
 
+        $this->browser->doFoodCoopShopLogout();
+    }
+    
+    public function testProductsWithAllowedNegativeStock() {
+        $this->loginAsCustomer();
+        $this->addProductToCart(349, 8);
+        $this->assertJsonOk();
+    }
+    
+    public function testProductsWithAllowedNegativeStockButTooHighAmount() {
+        $this->loginAsCustomer();
+        $response = $this->addProductToCart(349, 11);
+        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>11</b> des Produktes <b>Lagerprodukt</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 10', $response->msg);
+        $this->assertJsonError();
+    }
+    
+    private function placeOrderWithStockProducts() {
+        $stockProductId = 349;
+        $stockProductAttributeId = '350-13';
+        $this->addProductToCart($stockProductId, 6);
+        $this->addProductToCart($stockProductAttributeId, 5);
+        $this->finishCart(1, 1);
+    }
+    
+    public function testFinishOrderStockNotificationsIsStockProductDisabled() {
+        
+        $this->loginAsSuperadmin();
+        $this->browser->ajaxPost('/admin/products/editIsStockProduct', [
+            'productId' => '350-13',
+            'isStockProduct' => 0
+        ]);
+        $this->browser->ajaxPost('/admin/products/editIsStockProduct', [
+            'productId' => 349,
+            'isStockProduct' => 0
+        ]);
+        $this->placeOrderWithStockProducts();
+        
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(1, count($emailLogs));
+    }
+    
+    public function testFinishOrderStockNotificationsDisabled() {
+        
+        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
+        $this->changeManufacturer($manufacturerId, 'send_product_sold_out_limit_reached_for_manufacturer', 0);
+        $this->changeManufacturer($manufacturerId, 'send_product_sold_out_limit_reached_for_contact_person', 0);
+        
+        $this->loginAsSuperadmin();
+        $this->placeOrderWithStockProducts();
+        
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(1, count($emailLogs));
+    }
+    
+    public function testFinishOrderStockNotificationsEnabled()
+    {
+        
+        $this->loginAsSuperadmin();
+        $this->placeOrderWithStockProducts();
+        
+        // check email to manufacturer
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEmailLogs(
+            $emailLogs[0],
+            'Lagerstand für Produkt "Lagerprodukt": -1',
+            [
+                'Lagerstand: <b>-1</b>',
+                'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>'
+            ],
+            [
+                Configure::read('test.loginEmailVegetableManufacturer')
+            ]
+        );
+
+        // check email to contact person
+        $this->assertEmailLogs(
+            $emailLogs[1],
+            '',
+            [],
+            [
+                Configure::read('test.loginEmailAdmin')
+            ]
+        );
+        
+        $this->assertEmailLogs(
+            $emailLogs[2],
+            'Lagerstand für Produkt "Lagerprodukt mit Varianten : 0,5 kg": 0',
+            [
+                'Lagerstand: <b>0</b>',
+                'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>'
+            ],
+            [
+                Configure::read('test.loginEmailVegetableManufacturer')
+            ]
+        );
+        
+        // check email to contact person
+        $this->assertEmailLogs(
+            $emailLogs[3],
+            '',
+            [],
+            [
+                Configure::read('test.loginEmailAdmin')
+            ]
+        );
+        
+        
         $this->browser->doFoodCoopShopLogout();
     }
 
@@ -519,7 +634,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     private function changeStockAvailable($productId, $amount)
     {
-        $this->Product->changeQuantity([[$productId => $amount]]);
+        $this->Product->changeQuantity([[$productId => ['quantity' => $amount]]]);
     }
 
     private function checkStockAvailable($productId, $result)

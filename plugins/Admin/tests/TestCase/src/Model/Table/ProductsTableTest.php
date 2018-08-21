@@ -129,7 +129,9 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeQuantityWithOneProductAndInvalidStringQuantity()
     {
         $products = [
-            [346 => 'invalid-quantity']
+            [346 => [
+                'quantity' => 'invalid-quantity'
+            ]]
         ];
 
         $exceptionThrown = false;
@@ -144,28 +146,23 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertSame(true, $exceptionThrown);
     }
 
-    public function testChangeQuantityWithOneProductAndInvalidNegativeQuantity()
+    public function testChangeQuantityWithOneProductAndNegativeQuantity()
     {
         $products = [
-            [346 => -50]
+            [346 => [
+                'quantity' => -50
+            ]]
         ];
-
-        $exceptionThrown = false;
-
-        try {
-            $this->Product->changeQuantity($products);
-        } catch (InvalidParameterException $e) {
-            $exceptionThrown = true;
-        }
-
-        $this->assertProductQuantity($products, '97');
-        $this->assertSame(true, $exceptionThrown);
+        $this->Product->changeQuantity($products);
+        $this->assertProductQuantity($products, -50);
     }
 
     public function testChangeQuantityWithOneProduct()
     {
         $products = [
-            [102 => '5']
+            [102 => [
+                'quantity' => '5'
+            ]]
         ];
         $this->Product->changeQuantity($products);
         $this->assertProductQuantity($products);
@@ -174,7 +171,9 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeQuantityWithOneProductAttribute()
     {
         $products = [
-            ['60-10' => '38']
+            ['60-10' => [
+                'quantity' => '5'
+            ]]
         ];
         $this->Product->changeQuantity($products);
         $this->assertProductQuantity($products);
@@ -183,44 +182,18 @@ class ProductsTableTest extends AppCakeTestCase
     public function testChangeQuantityWithMultipleProductsAndAttributes()
     {
         $products = [
-            [102 => '5'],
-            [346 => '1'],
-            ['60-10' => '90']
+            [102 => [
+                'quantity' => '5'
+            ]],
+            [346 => [
+                'quantity' => '1'
+            ]],
+            ['60-10' => [
+                'quantity' => '90'
+            ]]
         ];
         $this->Product->changeQuantity($products);
         $this->assertProductQuantity($products);
-    }
-
-    public function testChangeQuantityWithMultipleProductsAndOneWithInvalidNegativeQuantity()
-    {
-
-        // 1) change quantity to same quantityto be able to test if the quantity has not changed
-        $sameQuantity = '20';
-        $products = [
-            [102 => $sameQuantity],
-            [346 => $sameQuantity],
-            [103 => $sameQuantity]
-        ];
-        $this->Product->changeQuantity($products);
-        $this->assertProductQuantity($products);
-
-        // try to change prices, but include one invalid quantity
-        $products = [
-            [102 => '14'],
-            [346 => '-1'], // invalid quantity
-            [103 => '1']
-        ];
-
-        $exceptionThrown = false;
-
-        try {
-            $this->Product->changeQuantity($products);
-        } catch (InvalidParameterException $e) {
-            $exceptionThrown = true;
-        }
-
-        $this->assertProductQuantity($products, $sameQuantity);
-        $this->assertSame(true, $exceptionThrown);
     }
 
     /**
@@ -575,7 +548,7 @@ class ProductsTableTest extends AppCakeTestCase
             $originalProductId = key($product);
             $productAndAttributeId = $this->Product->getProductIdAndAttributeId($originalProductId);
             $productId = $productAndAttributeId['productId'];
-            $expectedQuantity = $product[$originalProductId];
+            $expectedQuantity = $product[$originalProductId]['quantity'];
             if ($forceUseThisQuantity) {
                 $expectedQuantity = $forceUseThisQuantity;
             }

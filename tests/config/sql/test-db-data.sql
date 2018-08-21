@@ -90,7 +90,14 @@ INSERT INTO `fcs_category` VALUES
 
 /*!40000 ALTER TABLE `fcs_category_product` DISABLE KEYS */;
 INSERT INTO `fcs_category_product` VALUES
+(16,102),
+(16,103),
 (16,339),
+(16,340),
+(16,347),
+(16,348),
+(16,349),
+(16,350),
 (20,60),
 (20,102),
 (20,103),
@@ -100,7 +107,9 @@ INSERT INTO `fcs_category_product` VALUES
 (20,344),
 (20,346),
 (20,347),
-(20,348);
+(20,348),
+(20,349),
+(20,350);
 /*!40000 ALTER TABLE `fcs_category_product` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_configuration` DISABLE KEYS */;
@@ -176,10 +185,10 @@ INSERT INTO `fcs_images` VALUES
 
 /*!40000 ALTER TABLE `fcs_manufacturer` DISABLE KEYS */;
 INSERT INTO `fcs_manufacturer` VALUES
-(4,'Demo Fleisch-Hersteller','<p>tests</p>\r\n','','2014-05-14 13:23:02','2015-05-15 13:31:41',1,NULL,NULL,0,'','','','','','','','','','',NULL,0,1,1,2,'testfcs1@mailinator.com;testfcs2@mailinator.com',0,NULL,NULL,NULL,NULL,NULL,0,30,100),
-(5,'Demo Gemüse-Hersteller','<p>Gem&uuml;se-Hersteller Beschreibung&nbsp;lang</p>','<div class=\"entry-content\">\r\n<p>Gem&uuml;se-Hersteller Beschreibung kurz</p>\r\n</div>','2014-05-14 13:36:44','2016-09-27 09:34:51',1,NULL,NULL,0,'','','','','','','','','','',NULL,10,1,1,1,'',0,NULL,NULL,NULL,NULL,'1',0,30,100),
-(15,'Demo Milch-Hersteller','<p>Ja, ich bin der Milchhersteller!</p>','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,NULL,NULL,0,'','','','','','','','','','',NULL,0,1,1,4,'test@test.at',0,NULL,NULL,NULL,NULL,NULL,0,30,100),
-(16,'Hersteller ohne Customer-Eintrag','','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,NULL,NULL,0,'','','','','','','','','','',NULL,10,1,1,1,'',0,NULL,NULL,NULL,NULL,NULL,0,30,100);
+(4,'Demo Fleisch-Hersteller','<p>tests</p>\r\n','','2014-05-14 13:23:02','2015-05-15 13:31:41',1,NULL,NULL,0,'','','','','','','','','','',NULL,0,1,1,2,'testfcs1@mailinator.com;testfcs2@mailinator.com',0,NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0),
+(5,'Demo Gemüse-Hersteller','<p>Gem&uuml;se-Hersteller Beschreibung&nbsp;lang</p>','<div class=\"entry-content\">\r\n<p>Gem&uuml;se-Hersteller Beschreibung kurz</p>\r\n</div>','2014-05-14 13:36:44','2016-09-27 09:34:51',1,NULL,NULL,0,'','','','','','','','','','',88,10,1,1,1,'',0,NULL,NULL,NULL,NULL,'1',0,30,100,0,1,1),
+(15,'Demo Milch-Hersteller','<p>Ja, ich bin der Milchhersteller!</p>','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,NULL,NULL,0,'','','','','','','','','','',NULL,0,1,1,4,'test@test.at',0,NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0),
+(16,'Hersteller ohne Customer-Eintrag','','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,NULL,NULL,0,'','','','','','','','','','',NULL,10,1,1,1,'',0,NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0);
 /*!40000 ALTER TABLE `fcs_manufacturer` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_order_detail` DISABLE KEYS */;
@@ -214,30 +223,36 @@ INSERT INTO `fcs_payments` VALUES
 
 /*!40000 ALTER TABLE `fcs_product` DISABLE KEYS */;
 INSERT INTO `fcs_product` VALUES
-(60,15,3,0,0.909091,'Milch','','1 Liter','',0,1,'2014-06-11 21:20:24','2014-12-14 19:47:33'),
-(102,4,2,0,0.000000,'Frankfurter','','<p>2 Paar</p>','',0,1,'2016-04-27 21:13:37','2014-09-19 14:32:51'),
-(103,4,2,0,3.181819,'Bratwürstel','','2 Paar','',0,1,'2016-05-05 08:28:49','2014-08-16 14:05:58'),
-(163,5,0,0,1.363637,'Mangold','','0,25kg','',0,1,'2014-07-12 20:41:43','2017-07-26 13:24:10'),
-(339,5,0,0,0.000000,'Kartoffel','','','',0,1,'2015-09-07 12:05:38','2015-02-26 13:54:07'),
-(340,4,0,0,4.545455,'Beuschl','','','',0,1,'2016-05-05 08:28:45','2015-06-23 14:52:53'),
-(344,5,0,0,0.636364,'Knoblauch','','','100 g',0,1,'2015-10-05 17:22:40','2015-07-06 10:24:44'),
-(346,5,2,0,1.652893,'Artischocke','','','Stück',0,1,'2015-08-19 09:35:46','2015-08-19 09:35:45'),
-(347,4,2,0,0.000000,'Forelle','','','Stück',0,1,'2018-05-17 16:13:39','2018-05-17 16:15:21'),
-(348,4,2,0,0.000000,'Rindfleisch','','','',0,1,'2018-05-17 16:15:33','2018-05-17 16:16:38');
+(60,15,3,0.909091,'Milch','','1 Liter','',0,0,1,'2014-06-11 21:20:24','2014-12-14 19:47:33'),
+(102,4,2,0.000000,'Frankfurter','','<p>2 Paar</p>','',0,0,1,'2016-04-27 21:13:37','2014-09-19 14:32:51'),
+(103,4,2,3.181819,'Bratwürstel','','2 Paar','',0,0,1,'2016-05-05 08:28:49','2014-08-16 14:05:58'),
+(163,5,0,1.363637,'Mangold','','0,25kg','',0,0,1,'2014-07-12 20:41:43','2017-07-26 13:24:10'),
+(339,5,0,0.000000,'Kartoffel','','','',0,0,1,'2015-09-07 12:05:38','2015-02-26 13:54:07'),
+(340,4,0,4.545455,'Beuschl','','','',0,0,1,'2016-05-05 08:28:45','2015-06-23 14:52:53'),
+(344,5,0,0.636364,'Knoblauch','','','100 g',0,0,1,'2015-10-05 17:22:40','2015-07-06 10:24:44'),
+(346,5,2,1.652893,'Artischocke','','','Stück',0,0,1,'2015-08-19 09:35:46','2015-08-19 09:35:45'),
+(347,4,2,0.000000,'Forelle','','','Stück',0,0,1,'2018-05-17 16:13:39','2018-05-17 16:15:21'),
+(348,4,2,0.000000,'Rindfleisch','','','',0,0,1,'2018-05-17 16:15:33','2018-05-17 16:16:38'),
+(349,5,2,4.545455,'Lagerprodukt','','','',0,1,1,'2018-08-16 12:15:48','2018-08-16 12:16:51'),
+(350,5,2,0.000000,'Lagerprodukt mit Varianten','','','',0,1,1,'2018-08-16 12:19:06','2018-08-16 12:19:23');
 /*!40000 ALTER TABLE `fcs_product` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product_attribute` DISABLE KEYS */;
 INSERT INTO `fcs_product_attribute` VALUES
 (10,60,0.545455,0,0),
 (11,348,0.000000,0,1),
-(12,348,0.000000,0,0);
+(12,348,0.000000,0,0),
+(13,350,1.818182,0,1),
+(14,350,3.636364,0,0);
 /*!40000 ALTER TABLE `fcs_product_attribute` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product_attribute_combination` DISABLE KEYS */;
 INSERT INTO `fcs_product_attribute_combination` VALUES
 (33,10),
 (35,12),
-(36,11);
+(35,14),
+(36,11),
+(36,13);
 /*!40000 ALTER TABLE `fcs_product_attribute_combination` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sliders` DISABLE KEYS */;
@@ -247,20 +262,24 @@ INSERT INTO `fcs_sliders` VALUES
 
 /*!40000 ALTER TABLE `fcs_stock_available` DISABLE KEYS */;
 INSERT INTO `fcs_stock_available` VALUES
-(132,60,0,1015),
-(195,102,0,2996),
-(196,103,0,990),
-(318,163,0,988),
-(674,339,0,2959),
-(678,340,0,990),
-(680,344,0,78),
-(686,346,0,97),
-(692,60,9,996),
-(693,60,10,19),
-(704,347,0,999),
-(705,348,0,1998),
-(706,348,11,999),
-(707,348,12,999);
+(132,60,0,1015,0,NULL),
+(195,102,0,2996,0,NULL),
+(196,103,0,990,0,NULL),
+(318,163,0,988,0,NULL),
+(674,339,0,2959,0,NULL),
+(678,340,0,990,0,NULL),
+(680,344,0,78,0,NULL),
+(686,346,0,97,0,NULL),
+(692,60,9,996,0,NULL),
+(693,60,10,19,0,NULL),
+(704,347,0,999,0,NULL),
+(705,348,0,1998,0,NULL),
+(706,348,11,999,0,NULL),
+(707,348,12,999,0,NULL),
+(708,349,0,5,-5,0),
+(709,350,0,1004,0,NULL),
+(710,350,13,5,-5,0),
+(711,350,14,999,0,NULL);
 /*!40000 ALTER TABLE `fcs_stock_available` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sync_domains` DISABLE KEYS */;
@@ -288,7 +307,10 @@ INSERT INTO `fcs_tax` VALUES
 INSERT INTO `fcs_units` VALUES
 (1,347,0,1.50,'g',100,1,350.000),
 (2,0,11,20.00,'kg',1,1,0.500),
-(3,0,12,20.00,'kg',1,1,1.000);
+(3,0,12,20.00,'kg',1,1,1.000),
+(4,349,0,0.00,'kg',1,0,0.000),
+(5,0,13,0.00,'kg',1,0,0.000),
+(6,0,14,0.00,'kg',1,0,0.000);
 /*!40000 ALTER TABLE `fcs_units` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `phinxlog` DISABLE KEYS */;
@@ -310,7 +332,8 @@ INSERT INTO `phinxlog` VALUES
 (20180702075300,'RenameShopOrderToInstantOrder','2018-07-02 07:23:18','2018-07-02 07:23:18',0),
 (20180717100910,'ProductTablesOptimization','2018-08-01 07:44:17','2018-08-01 07:44:17',0),
 (20180720130810,'RemoveOrdersTable','2018-08-01 07:44:17','2018-08-01 07:44:17',0),
-(20180727070325,'CorrectBicLength','2018-08-01 07:44:17','2018-08-01 07:44:17',0);
+(20180727070325,'CorrectBicLength','2018-08-01 07:44:17','2018-08-01 07:44:17',0),
+(20180814121543,'ImprovedStockManagement','2018-08-14 14:57:59','2018-08-14 14:57:59',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

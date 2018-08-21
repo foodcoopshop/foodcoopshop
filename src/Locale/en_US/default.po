@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-20 09:49+0200\n"
-"PO-Revision-Date: 2018-08-20 09:49+0200\n"
+"POT-Creation-Date: 2018-08-21 09:05+0200\n"
+"PO-Revision-Date: 2018-08-21 09:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -29,6 +29,15 @@ msgstr "Sorry, but manufacturers do not have access."
 
 msgid "Your_cart"
 msgstr "Your cart"
+
+msgid "Product_{0}:_Only_{1}_units_on_stock"
+msgstr "Low stock for product \"{0}\": {1}"
+
+msgid "Hello"
+msgstr "Hello"
+
+msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
+msgstr "You can unsubscribe this e-mail <a href=\"{0}\">in the manufacturer's settings</a>."
 
 msgid "Order_confirmation"
 msgstr "Order confirmation"
@@ -411,6 +420,9 @@ msgstr "E-mail addresses"
 msgid "Decrease_amount"
 msgstr "Decrease amount"
 
+msgid "Stock"
+msgstr "Stock"
+
 msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
 msgstr "The amount can only be decreased. To increase, please order product again."
 
@@ -722,6 +734,33 @@ msgstr "Deposit"
 
 msgid "Enter_zero_for_delete"
 msgstr "0 deletes deposit"
+
+msgid "Is_the_product_a_stock_product?"
+msgstr "Is the product a stock product?"
+
+msgid "Stock_product"
+msgstr "Stock product"
+
+msgid "Current_stock"
+msgstr "Current stock"
+
+msgid "Available_amount"
+msgstr "Available amount"
+
+msgid "Orders_possible_until_amount_of"
+msgstr "Order possible until amount of"
+
+msgid "zero_or_smaller_zero"
+msgstr "0 or smaller than 0"
+
+msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
+msgstr "For manufacturers and contact persons. Can be changed in the manufacturer settings."
+
+msgid "Notification_if_amount_lower_than"
+msgstr "Notification if amount is lower than"
+
+msgid "Is_product_a_stock_product?"
+msgstr "Is the product a stock product?"
 
 msgid "delete"
 msgstr "delete"
@@ -1215,6 +1254,24 @@ msgstr "New product of"
 msgid "Please_upload_an_image."
 msgstr "Please upload an image."
 
+msgid "The_quantity_needs_to_be_a_number."
+msgstr "The quantity needs to be a number."
+
+msgid "Field:_Stock"
+msgstr "Field: stock"
+
+msgid "The_quantity_limit_needs_to_be_a_number."
+msgstr "The quantity limit needs to be a number."
+
+msgid "Field:_Order_possible_until"
+msgstr "Field: order possible until stock"
+
+msgid "The_sold_out_quantity_needs_to_be_a_number."
+msgstr "The quantity for sending a notification needs to be a number."
+
+msgid "Field:_Notification_if_quantity_limit_reached"
+msgstr "Field: notification if quantity limit reached"
+
 msgid "Please_enter_a_tax_rate."
 msgstr "Please enter a tax rate."
 
@@ -1412,9 +1469,6 @@ msgstr "Your account was created but not activated yet. This means, you can't lo
 
 msgid "You_will_get_an_email_as_soon_as_we_activated_you."
 msgstr "You will get an e-mail as soon as we activate you."
-
-msgid "Hello"
-msgstr "Hello"
 
 msgid "terms_and_conditions"
 msgstr "terms and conditions"
@@ -1617,6 +1671,21 @@ msgstr "You can find a detailed list of your ordered products in the attached or
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."
 msgstr "This is the text of the email (with attached logo)."
 
+msgid "Product_{0}_is_almost_sold_out."
+msgstr "The product {0} is almost sold out."
+
+msgid "Units_on_stock:"
+msgstr "Units on stock:"
+
+msgid "Product_orders_possible_until:"
+msgstr "Product orders possible until:"
+
+msgid "Notification_triggered_if_less_than:"
+msgstr "Email notification triggered if stock is less or equals:"
+
+msgid "Click_here_to_edit_the_product."
+msgstr "Click here to edit the product."
+
 msgid "route_search"
 msgstr "search"
 
@@ -1633,7 +1702,7 @@ msgid "This_email_was_created_automatcially."
 msgstr "This e-mail was automatically created."
 
 msgid "You_can_unsubscribe_it_<a href=\"{0}\">in_your_settings</a>."
-msgstr "You can unsubscribe it <href=\"{0}\">in your settings</a>."
+msgstr "You can unsubscribe it <a href=\"{0}\">in your settings</a>."
 
 msgid "News_from"
 msgstr "News from"
@@ -1916,6 +1985,9 @@ msgstr "product"
 
 #~ msgid "order_state_open"
 #~ msgstr "open"
+
+#~ msgid "Change_stock"
+#~ msgstr "Change stock"
 
 #~ msgid "Action_Log_Order_detail_status_changed"
 #~ msgstr "Ordered product: Status changed"

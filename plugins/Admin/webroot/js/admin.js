@@ -638,67 +638,178 @@ foodcoopshop.Admin = {
             $(this).removeAttr('style');
         });
     },
+    
+    initProductIsStockProductEditDialog: function (container) {
+        
+        $('.product-is-stock-product-edit-button').on('click', function () {
+            
+            var row = $(this).closest('tr');
+
+            var dialogId = 'product-is-stock-product-edit-form';
+            var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductIsStockProductEdit(dialogId);
+            $(container).append(dialogHtml);
+
+            var buttons = {};
+            buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+            buttons['save'] = {
+                text: foodcoopshop.LocalizedJs.helper.save,
+                click: function() {
+                    if ($('#dialogIsStockProductProductId').val() == '') {
+                        return false;
+                    }
+
+                    $('#product-is-stock-product-edit-form .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+
+                    var data = {
+                        productId: $('#dialogIsStockProductProductId').val(),
+                        isStockProduct: $('#dialogIsStockProductIsStockProduct:checked').length > 0 ? 1 : 0
+                    }
+                    
+                    foodcoopshop.Helper.ajaxCall(
+                        '/admin/products/editIsStockProduct/',
+                        data,
+                        {
+                            onOk: function (data) {
+                                document.location.reload();
+                            },
+                            onError: function (data) {
+                                var form = $('#product-is-stock-product-edit-form form');
+                                form.find('.ajax-loader').hide();
+                                foodcoopshop.Admin.appendFlashMessageToDialog(form, data.msg);
+                            }
+                        }
+                    );
+
+                }
+            };
+            
+            var dialogOptions = {
+                autoOpen: false,
+                height: 250,
+                width: 350,
+                modal: true,
+                close: function () {
+                    $('#dialogIsStockProductIsStockProduct').val('');
+                    $('#dialogIsStockProductProductId').val('');
+                },
+                buttons: buttons
+            }            
+            
+            $('#' + dialogId + ' #dialogIsStockProductIsStockProduct').prop('checked', row.find('td.is-stock-product').html().match('fa-check'));
+            $('#' + dialogId + ' #dialogIsStockProductProductId').val(row.find('td:nth-child(1)').html());
+            var label = foodcoopshop.Admin.getProductNameForDialog(row);
+            $('#' + dialogId + ' label[for="dialogIsStockProductIsStockProduct"]').html(label);
+
+            var dialog = $('#' + dialogId).dialog(dialogOptions);
+            dialog.dialog('open');
+        });
+
+    },    
 
     initProductQuantityEditDialog: function (container) {
 
-        var dialogId = 'product-quantity-edit-form';
-        var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductQuantityEdit(dialogId);
-        $(container).append(dialogHtml);
+        $('.product-quantity-edit-button').on('click', function () {
+            
+            var row = $(this).closest('tr');
 
-        var buttons = {};
-        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
-        buttons['save'] = {
-            text: foodcoopshop.LocalizedJs.helper.save,
-            click: function() {
-                if ($('#dialogQuantityQuantity').val() == '' || $('#dialogQuantityProductId').val() == '') {
-                    return false;
-                }
+            var dialogId = 'product-quantity-edit-form';
+            var dialogHtml = '';
+            if (foodcoopshop.Admin.isAdvancedStockManagementEnabled(row)) {
+                dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductQuantityIsStockProductEdit(dialogId);
+            } else {
+                dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductQuantityEdit(dialogId);
+            }
+            $(container).append(dialogHtml);
 
-                $('#product-quantity-edit-form .ajax-loader').show();
-                $('.ui-dialog button').attr('disabled', 'disabled');
+            var buttons = {};
+            buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+            buttons['save'] = {
+                text: foodcoopshop.LocalizedJs.helper.save,
+                click: function() {
+                    if ($('#dialogQuantityQuantity').val() == '' || $('#dialogQuantityProductId').val() == '') {
+                        return false;
+                    }
 
-                foodcoopshop.Helper.ajaxCall(
-                    '/admin/products/editQuantity/',
-                    {
+                    $('#product-quantity-edit-form .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+
+                    var data = {
                         productId: $('#dialogQuantityProductId').val(),
                         quantity: $('#dialogQuantityQuantity').val(),
-                    },
-                    {
-                        onOk: function (data) {
-                            document.location.reload();
-                        },
-                        onError: function (data) {
-                            dialog.dialog('close');
-                            $('#product-quantity-edit-form .ajax-loader').hide();
-                            foodcoopshop.Helper.showErrorMessage(data.msg);
-                        }
                     }
-                );
+                    
+                    if (foodcoopshop.Admin.isAdvancedStockManagementEnabled(row)) {
+                        data.quantityLimit = $('#dialogQuantityQuantityLimit').val(); 
+                        data.soldOutLimit = $('#dialogQuantitySoldOutLimit').val(); 
+                    }
+                    
+                    foodcoopshop.Helper.ajaxCall(
+                        '/admin/products/editQuantity/',
+                        data,
+                        {
+                            onOk: function (data) {
+                                document.location.reload();
+                            },
+                            onError: function (data) {
+                                var form = $('#product-quantity-edit-form form');
+                                form.find('.ajax-loader').hide();
+                                foodcoopshop.Admin.appendFlashMessageToDialog(form, data.msg);
+                            }
+                        }
+                    );
 
+                }
+            };
+            
+            var dialogOptions = {
+                autoOpen: false,
+                height: 250,
+                width: 390,
+                modal: true,
+                close: function () {
+                    $('#dialogQuantityQuantity').val('');
+                    $('#dialogQuantityQuantityLimit').val('');
+                    $('#dialogQuantitySoldOutLimit').val('');
+                    $('#dialogQuantityProductId').val('');
+                },
+                buttons: buttons
+            }            
+            
+            if (foodcoopshop.Admin.isAdvancedStockManagementEnabled(row)) {
+                if (row.find('i.quantity-limit-for-dialog').length > 0) {
+                    $('#' + dialogId + ' #dialogQuantityQuantityLimit').val(row.find('i.quantity-limit-for-dialog').html().replace(/\./, ''));
+                } else {
+                    $('#' + dialogId + ' #dialogQuantityQuantityLimit').val(0);
+                }
+                if (row.find('i.sold-out-limit-for-dialog').length > 0) {
+                    if (row.find('i.sold-out-limit-for-dialog').html().match('fa-close')) {
+                        $('#' + dialogId + ' #dialogQuantitySoldOutLimit').val('');
+                    } else {
+                        $('#' + dialogId + ' #dialogQuantitySoldOutLimit').val(row.find('i.sold-out-limit-for-dialog').html().replace(/\./, ''));
+                    }
+                } else {
+                    $('#' + dialogId + ' #dialogQuantitySoldOutLimit').val(0);
+                }
+                dialogOptions.height = 350;
             }
-        };
-
-        var dialog = $('#' + dialogId).dialog({
-            autoOpen: false,
-            height: 250,
-            width: 350,
-            modal: true,
-            close: function () {
-                $('#dialogQuantityQuantity').val('');
-                $('#dialogQuantityProductId').val('');
-            },
-            buttons: buttons
-        });
-
-        $('.product-quantity-edit-button').on('click', function () {
-            var row = $(this).closest('tr');
+            
             $('#' + dialogId + ' #dialogQuantityQuantity').val(row.find('span.quantity-for-dialog').html().replace(/\./, ''));
             $('#' + dialogId + ' #dialogQuantityProductId').val(row.find('td:nth-child(1)').html());
             var label = foodcoopshop.Admin.getProductNameForDialog(row);
             $('#' + dialogId + ' label[for="dialogQuantityQuantity"]').html(label);
+
+            var dialog = $('#' + dialogId).dialog(dialogOptions);
             dialog.dialog('open');
         });
 
+    },
+    
+    isAdvancedStockManagementEnabled : function(row) {
+        if (row.hasClass('sub-row')) {
+            row = row.prevAll('.main-product').first();
+        }
+        return row.find('td.is-stock-product').length > 0 && row.find('td.is-stock-product').html().match('fa-check');
     },
 
     openBulkDeleteOrderDetailDialog : function (orderDetailIds) {

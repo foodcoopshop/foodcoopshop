@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-20 09:17+0200\n"
+"POT-Creation-Date: 2018-08-21 09:05+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -378,6 +378,9 @@ msgid "Saving_successful."
 msgstr ""
 
 msgid "The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}"
+msgstr ""
+
+msgid "The_product_{0}_was_changed_successfully_to_a_stock_product."
 msgstr ""
 
 msgid "The_amount_of_the_product_{0}_was_changed_successfully."
@@ -1073,6 +1076,63 @@ msgstr ""
 msgid "Order_list_grouped_by"
 msgstr ""
 
+msgid "Add_new_attribute_for_product_{0}"
+msgstr ""
+
+msgid "change_amount"
+msgstr ""
+
+msgid "No_email_notifications_are_sent_for_this_product."
+msgstr ""
+
+msgid "change_deposit"
+msgstr ""
+
+msgid "add_image"
+msgstr ""
+
+msgid "New"
+msgstr ""
+
+msgid "Mark_product_as_new_for_the_next_{0}_days?"
+msgstr ""
+
+msgid "Do_not_mark_product_as_new_any_more?"
+msgstr ""
+
+msgid "Is_stock_product"
+msgstr ""
+
+msgid "Long_description"
+msgstr ""
+
+msgid "Delete_attribute_for_product_{0}"
+msgstr ""
+
+msgid "This_attribute_is_the_default_attribute."
+msgstr ""
+
+msgid "Define_as_new_default_attribute"
+msgstr ""
+
+msgid "change_category"
+msgstr ""
+
+msgid "chose_category..."
+msgstr ""
+
+msgid "Category_\"all_products\"_is_missing!"
+msgstr ""
+
+msgid "product_preview"
+msgstr ""
+
+msgid "change_price"
+msgstr ""
+
+msgid "change_tax_rate"
+msgstr ""
+
 msgid "Dear_financial_responsible"
 msgstr ""
 
@@ -1280,9 +1340,6 @@ msgstr ""
 msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
 msgstr ""
 
-msgid "Long_description"
-msgstr ""
-
 msgid "To_save_long_description_press_save_and_then_edit_manufacturer."
 msgstr ""
 
@@ -1415,6 +1472,24 @@ msgstr ""
 msgid "Preselected_tax_rate_for_new_products"
 msgstr ""
 
+msgid "Advanced_stock_management_active?"
+msgstr ""
+
+msgid "Infos_to_the_advanced_stock_management"
+msgstr ""
+
+msgid "Sold_out_limit_reached_notification_for_manufacturer?"
+msgstr ""
+
+msgid "to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
+msgstr ""
+
+msgid "Sold_out_limit_reached_notification_for_contact_person?"
+msgstr ""
+
+msgid "The_contact_person_wants_to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
+msgstr ""
+
 msgid "Manufacturer_optimized_for_bulk_orders?"
 msgstr ""
 
@@ -1443,6 +1518,9 @@ msgid "Maximum_credit_balance_in_{0}"
 msgstr ""
 
 msgid "up_to_which_it_can_be_paid_in_{0}."
+msgstr ""
+
+msgid "Stock_products"
 msgstr ""
 
 msgid "Sum_of_open_orders_in_given_time_range"
@@ -1616,9 +1694,6 @@ msgstr ""
 msgid "chose_manufacturer..."
 msgstr ""
 
-msgid "chose_category..."
-msgstr ""
-
 msgid "amount"
 msgstr ""
 
@@ -1637,55 +1712,13 @@ msgstr ""
 msgid "Product_declaration"
 msgstr ""
 
+msgid "Stock_product"
+msgstr ""
+
 msgid "Tax_rate"
 msgstr ""
 
 msgid "New?"
-msgstr ""
-
-msgid "Add_new_attribute_for_product_{0}"
-msgstr ""
-
-msgid "add_image"
-msgstr ""
-
-msgid "Delete_attribute_for_product_{0}"
-msgstr ""
-
-msgid "This_attribute_is_the_default_attribute."
-msgstr ""
-
-msgid "Define_as_new_default_attribute"
-msgstr ""
-
-msgid "change_category"
-msgstr ""
-
-msgid "Category_\"all_products\"_is_missing!"
-msgstr ""
-
-msgid "change_amount"
-msgstr ""
-
-msgid "change_price"
-msgstr ""
-
-msgid "change_tax_rate"
-msgstr ""
-
-msgid "New"
-msgstr ""
-
-msgid "Mark_product_as_new_for_the_next_{0}_days?"
-msgstr ""
-
-msgid "Do_not_mark_product_as_new_any_more?"
-msgstr ""
-
-msgid "change_deposit"
-msgstr ""
-
-msgid "product_preview"
 msgstr ""
 
 msgid "docs_route_financial_reports"

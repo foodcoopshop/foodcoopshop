@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-20 09:17+0200\n"
-"PO-Revision-Date: 2018-08-20 09:17+0200\n"
+"POT-Creation-Date: 2018-08-21 09:05+0200\n"
+"PO-Revision-Date: 2018-08-21 08:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -280,7 +280,7 @@ msgid "The_pickup_day_comment_of_{0}_was_changed:"
 msgstr "Der Abholtag-Kommentar des Mitglieds {0} wurde geändert: "
 
 msgid "Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled."
-msgstr "Produkt {0} (Hersteller: {1}, Preis: {2}, bestellt am: {3}) wurde erfolgreich storniert."
+msgstr "Produkt {0} (Hersteller: {1}, Preis: {2}) vom {3} wurde erfolgreich storniert."
 
 msgid "Product_was_cancelled"
 msgstr "Produkt storniert"
@@ -370,7 +370,7 @@ msgid "A_new_product_was_created_for_{0}."
 msgstr "Ein neues Produkt für {0} wurde erfolgreich erstellt."
 
 msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
-msgstr "Der Steuersatz des Produktes {1} vom Hersteller {2} wurde erfolgreich von {2} auf {3} geändert."
+msgstr "Der Steuersatz des Produktes {0} vom Hersteller {1} wurde erfolgreich von {2} auf {3} geändert."
 
 msgid "Nothing_changed."
 msgstr "Es wurden keine Änderungen gespeichert."
@@ -380,6 +380,9 @@ msgstr "Speichern erfolgreich."
 
 msgid "The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}"
 msgstr "Die Kategorien des Produktes {0} vom Hersteller {1} wurden geändert: {2}"
+
+msgid "The_product_{0}_was_changed_successfully_to_a_stock_product."
+msgstr "Das Produkt {0} wurde erfolgreich zu einem Lagerprodukt geändert."
 
 msgid "The_amount_of_the_product_{0}_was_changed_successfully."
 msgstr "Die Anzahl des Produktes {0} wurde erfolgreich geändert."
@@ -1074,6 +1077,63 @@ msgstr "Bestelltag"
 msgid "Order_list_grouped_by"
 msgstr "Bestellliste gruppiert nach"
 
+msgid "Add_new_attribute_for_product_{0}"
+msgstr "Neue Variante für Produkt {0} erstellen"
+
+msgid "change_amount"
+msgstr "Anzahl ändern"
+
+msgid "No_email_notifications_are_sent_for_this_product."
+msgstr "Für dieses Produkt werden niemals Benachrichtigungen bezüglich Lagerstand verschickt."
+
+msgid "change_deposit"
+msgstr "Pfand ändern"
+
+msgid "add_image"
+msgstr "Bild hinzufügen"
+
+msgid "New"
+msgstr "Neu"
+
+msgid "Mark_product_as_new_for_the_next_{0}_days?"
+msgstr "Produkt die nächsten {0} Tage als \"neu\" anzeigen?"
+
+msgid "Do_not_mark_product_as_new_any_more?"
+msgstr "Produkt nicht mehr als \"neu\" anzeigen?"
+
+msgid "Is_stock_product"
+msgstr "Produkt ist ein Lagerprodukt"
+
+msgid "Long_description"
+msgstr "Lange Beschreibung"
+
+msgid "Delete_attribute_for_product_{0}"
+msgstr "Variante für Produkt {0} löschen"
+
+msgid "This_attribute_is_the_default_attribute."
+msgstr "Diese Variante ist die Standardvariante."
+
+msgid "Define_as_new_default_attribute"
+msgstr "Als neue Standard-Variante festlegen"
+
+msgid "change_category"
+msgstr "Kategorie ändern"
+
+msgid "chose_category..."
+msgstr "Kategorie auswählen..."
+
+msgid "Category_\"all_products\"_is_missing!"
+msgstr "Kategorie \"Alle Produkte\" fehlt!"
+
+msgid "product_preview"
+msgstr "Produkt-Vorschau"
+
+msgid "change_price"
+msgstr "Preis ändern"
+
+msgid "change_tax_rate"
+msgstr "Steuersatz ändern"
+
 msgid "Dear_financial_responsible"
 msgstr "Liebe(r) Finanz-Verantwortliche(r)"
 
@@ -1281,9 +1341,6 @@ msgstr "Logo löschen?"
 msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
 msgstr "Wird auf der Hersteller-Übersichtsseite angezeigt und kann vom Hersteller selbst nicht verändert werden."
 
-msgid "Long_description"
-msgstr "Lange Beschreibung"
-
 msgid "To_save_long_description_press_save_and_then_edit_manufacturer."
 msgstr "Um die lange Beschreibung hinzuzufügen, bitte den Hersteller zuerst speichern und dann auf \"bearbeiten\" klicken."
 
@@ -1416,6 +1473,24 @@ msgstr "Die Rechnung für den Hersteller wird um den angegebenen Prozentwert red
 msgid "Preselected_tax_rate_for_new_products"
 msgstr "Voreingestellter Steuersatz für neue Produkte"
 
+msgid "Advanced_stock_management_active?"
+msgstr "Erweiterte Lagerstandverwaltung aktiv?"
+
+msgid "Infos_to_the_advanced_stock_management"
+msgstr "Infos zur erweiterten Lagerstandverwaltung"
+
+msgid "Sold_out_limit_reached_notification_for_manufacturer?"
+msgstr "Geringer Lagerstand: Benachrichtigung für Hersteller?"
+
+msgid "to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
+msgstr "möchte eine E-Mail bekommen, sobald der Lagerstand eines Produktes zu Ende geht."
+
+msgid "Sold_out_limit_reached_notification_for_contact_person?"
+msgstr "Geringer Lagerstand: Benachrichtigung für Ansprechperson?"
+
+msgid "The_contact_person_wants_to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
+msgstr "Die Ansprechperson möchte eine E-Mail bekommen, sobald der Lagerstand eines Produktes zu Ende geht."
+
 msgid "Manufacturer_optimized_for_bulk_orders?"
 msgstr "Hersteller optimiert für Sammelbestellungen?"
 
@@ -1446,11 +1521,14 @@ msgstr "Maximaler Kontostand in {0}"
 msgid "up_to_which_it_can_be_paid_in_{0}."
 msgstr "bis zu dem in {0} bezahlt werden kann."
 
+msgid "Stock_products"
+msgstr "Lagerprodukte"
+
 msgid "Sum_of_open_orders_in_given_time_range"
 msgstr "Summe der offenen Bestellungen im angegebenen Zeitraum"
 
 msgid "Open_orders_abbreviation"
-msgstr "O.B."
+msgstr "OB"
 
 msgid "Settings_abbreviation"
 msgstr "Opt."
@@ -1617,9 +1695,6 @@ msgstr "Dein Kontostand"
 msgid "chose_manufacturer..."
 msgstr "Hersteller auswählen..."
 
-msgid "chose_category..."
-msgstr "Kategorie auswählen..."
-
 msgid "amount"
 msgstr "Anzahl"
 
@@ -1638,56 +1713,14 @@ msgstr "Name und Kategorien"
 msgid "Product_declaration"
 msgstr "Produktdeklaration"
 
+msgid "Stock_product"
+msgstr "Lagerprodukt"
+
 msgid "Tax_rate"
 msgstr "Steuersatz"
 
 msgid "New?"
 msgstr "Neu?"
-
-msgid "Add_new_attribute_for_product_{0}"
-msgstr "Neue Variante für Produkt {0} erstellen"
-
-msgid "add_image"
-msgstr "Bild hinzufügen"
-
-msgid "Delete_attribute_for_product_{0}"
-msgstr "Variante für Produkt {0} löschen"
-
-msgid "This_attribute_is_the_default_attribute."
-msgstr "Diese Variante ist die Standardvariante."
-
-msgid "Define_as_new_default_attribute"
-msgstr "Als neue Standard-Variante festlegen"
-
-msgid "change_category"
-msgstr "Kategorie ändern"
-
-msgid "Category_\"all_products\"_is_missing!"
-msgstr "Kategorie \"Alle Produkte\" fehlt!"
-
-msgid "change_amount"
-msgstr "Anzahl ändern"
-
-msgid "change_price"
-msgstr "Preis ändern"
-
-msgid "change_tax_rate"
-msgstr "Steuersatz ändern"
-
-msgid "New"
-msgstr "Neu"
-
-msgid "Mark_product_as_new_for_the_next_{0}_days?"
-msgstr "Produkt die nächsten {0} Tage als \"neu\" anzeigen?"
-
-msgid "Do_not_mark_product_as_new_any_more?"
-msgstr "Produkt nicht mehr als \"neu\" anzeigen?"
-
-msgid "change_deposit"
-msgstr "Pfand ändern"
-
-msgid "product_preview"
-msgstr "Produkt-Vorschau"
 
 msgid "docs_route_financial_reports"
 msgstr "finanzberichte"
@@ -1739,6 +1772,9 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+#~ msgid "Stock"
+#~ msgstr "Lagerstand"
 
 #~ msgid "The_order_status_of_the_ordered_product_{0}_of_{1}_was_successfully_changed_to_{2}."
 #~ msgstr "Der Bestellstatus des bestellten Produktes {0} vom {1} wurde erfolgreich auf {2} geändert."

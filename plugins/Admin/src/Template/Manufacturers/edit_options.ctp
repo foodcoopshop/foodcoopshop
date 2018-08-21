@@ -153,6 +153,28 @@ echo '<div class="holiday-wrapper">';
         'options' => $taxesForDropdown
     ]);
 
+    echo $this->Form->control('Manufacturers.stock_management_enabled', [
+        'label' => __d('admin', 'Advanced_stock_management_active?').' <span class="after small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_products')).'" target="_blank">'.__d('admin', 'Infos_to_the_advanced_stock_management').'</a></span>',
+        'type' => 'checkbox',
+        'escape' => false
+    ]);
+
+    
+    if ($manufacturer->stock_management_enabled) {
+        echo $this->Form->control('Manufacturers.send_product_sold_out_limit_reached_for_manufacturer', [
+            'label' => __d('admin', 'Sold_out_limit_reached_notification_for_manufacturer?').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' . __d('admin', 'to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached.').'</a></span>',
+            'type' => 'checkbox',
+            'escape' => false
+        ]);
+        if (!$appAuth->isManufacturer()) {
+            echo $this->Form->control('Manufacturers.send_product_sold_out_limit_reached_for_contact_person', [
+                'label' => __d('admin', 'Sold_out_limit_reached_notification_for_contact_person?').' <span class="after small">'. __d('admin', 'The_contact_person_wants_to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached.').'</a></span>',
+                'type' => 'checkbox',
+                'escape' => false
+            ]);
+        }
+    }
+
     if (!$appAuth->isManufacturer()) {
         echo $this->Form->control('Manufacturers.bulk_orders_allowed', [
         'label' => __d('admin', 'Manufacturer_optimized_for_bulk_orders?').' <span class="after small">'.__d('admin', 'Disables_all_notifications_except_sent_invoices.').' <a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_bulk_orders')).'" target="_blank">'.__d('admin', 'Info_page_for_bulk_orders').'</a>.</span>',

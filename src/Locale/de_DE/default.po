@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-20 09:49+0200\n"
-"PO-Revision-Date: 2018-08-20 09:49+0200\n"
+"POT-Creation-Date: 2018-08-21 09:05+0200\n"
+"PO-Revision-Date: 2018-08-21 09:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -29,6 +29,15 @@ msgstr "Herstellern steht diese Funktion leider nicht zur Verfügung."
 
 msgid "Your_cart"
 msgstr "Dein Warenkorb"
+
+msgid "Product_{0}:_Only_{1}_units_on_stock"
+msgstr "Geringer Lagerstand für Produkt \"{0}\": {1}"
+
+msgid "Hello"
+msgstr "Hallo"
+
+msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
+msgstr "Du kannst diese E-Mail <a href=\"{0}\">in den Hersteller-Einstellungen abbestellen</a>."
 
 msgid "Order_confirmation"
 msgstr "Bestellbestätigung"
@@ -411,6 +420,9 @@ msgstr "E-Mail-Adressen"
 msgid "Decrease_amount"
 msgstr "Anzahl vermindern"
 
+msgid "Stock"
+msgstr "Lagerstand"
+
 msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
 msgstr "Die Anzahl kann nur vermindert werden. Um die Anzahl zu erhöhen, bitte das Produkt nachbuchen."
 
@@ -722,6 +734,33 @@ msgstr "Pfand"
 
 msgid "Enter_zero_for_delete"
 msgstr "zum Löschen 0 eintragen"
+
+msgid "Is_the_product_a_stock_product?"
+msgstr "Produkt ist ein Lagerprodukt?"
+
+msgid "Stock_product"
+msgstr "Lagerprodukt"
+
+msgid "Current_stock"
+msgstr "Aktueller Lagerstand"
+
+msgid "Available_amount"
+msgstr "Verfügbare Menge"
+
+msgid "Orders_possible_until_amount_of"
+msgstr "Bestellbar bis zu einer Anzahl von"
+
+msgid "zero_or_smaller_zero"
+msgstr "0 oder kleiner als 0"
+
+msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
+msgstr "An Hersteller bzw. Ansprechperson, kann in den Hersteller-Einstellungen geändert werden."
+
+msgid "Notification_if_amount_lower_than"
+msgstr "E-Mail-Benachrichtigung ab Anzahl"
+
+msgid "Is_product_a_stock_product?"
+msgstr "Ist das Produkt ein Lagerprodukt?"
 
 msgid "delete"
 msgstr "löschen"
@@ -1215,6 +1254,24 @@ msgstr "Neues Produkt von"
 msgid "Please_upload_an_image."
 msgstr "Bitte lade ein Bild hoch."
 
+msgid "The_quantity_needs_to_be_a_number."
+msgstr "Der Lagerstand muss eine Zahl sein."
+
+msgid "Field:_Stock"
+msgstr "Feld: Lagerstand"
+
+msgid "The_quantity_limit_needs_to_be_a_number."
+msgstr "Die bestellbar-bis-Anzahl muss eine Zahl sein."
+
+msgid "Field:_Order_possible_until"
+msgstr "Feld: Bestellbar bis zu einer Anzahl von"
+
+msgid "The_sold_out_quantity_needs_to_be_a_number."
+msgstr "Die Anzahl für die E-Mail-Benachrichtigung muss eine Zahl sein."
+
+msgid "Field:_Notification_if_quantity_limit_reached"
+msgstr "Feld: E-Mail-Benachrichtigung"
+
 msgid "Please_enter_a_tax_rate."
 msgstr "Bitte gib einen Steuersatz ein."
 
@@ -1412,9 +1469,6 @@ msgstr "Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert. Das he
 
 msgid "You_will_get_an_email_as_soon_as_we_activated_you."
 msgstr "Du wirst per E-Mail benachrichtigt, sobald wir dich aktiviert haben."
-
-msgid "Hello"
-msgstr "Hallo"
 
 msgid "terms_and_conditions"
 msgstr "Nutzungsbedingungen"
@@ -1617,6 +1671,21 @@ msgstr "Eine detaillierte Auflistung deiner Bestellung findest du in der angehä
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."
 msgstr "Das ist der Text der E-Mail (mit FoodCoopShop-Logo als Anhang)."
 
+msgid "Product_{0}_is_almost_sold_out."
+msgstr "Der Lagerstand vom Produkt {0} geht dem Ende zu."
+
+msgid "Units_on_stock:"
+msgstr "Lagerstand:"
+
+msgid "Product_orders_possible_until:"
+msgstr "Weitere Bestellungen möglich bis zu einem Lagerstand von:"
+
+msgid "Notification_triggered_if_less_than:"
+msgstr "E-Mail-Benachrichtigung wird verschickt, sobald diese Anzahl erreicht ist:"
+
+msgid "Click_here_to_edit_the_product."
+msgstr "Hier kannst du das Produkt bearbeiten."
+
 msgid "route_search"
 msgstr "suche"
 
@@ -1633,7 +1702,7 @@ msgid "This_email_was_created_automatcially."
 msgstr "Diese E-Mail wurde automatisch erstellt."
 
 msgid "You_can_unsubscribe_it_<a href=\"{0}\">in_your_settings</a>."
-msgstr "Du kannst sie <href=\"{0}\">in deinen Einstellungen abbestellen.</a>."
+msgstr "Du kannst sie <a href=\"{0}\">in deinen Einstellungen abbestellen.</a>."
 
 msgid "News_from"
 msgstr "Aktuelles von"
@@ -1916,6 +1985,9 @@ msgstr "produkt"
 
 #~ msgid "order_state_open"
 #~ msgstr "offen"
+
+#~ msgid "Change_stock"
+#~ msgstr "Lagerstand ändern"
 
 #~ msgid "Action_Log_Order_detail_status_changed"
 #~ msgstr "Bestelltes Produkt: Status geändert"

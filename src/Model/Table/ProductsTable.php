@@ -325,43 +325,37 @@ class ProductsTable extends AppTable
      *  (
      *      [0] => Array
      *          (
-     *              [productId] => (int) quantity
+     *              [productId] => [
+     *                  'quantity' => (int) quantity
+     *              ]
      *          )
      *  )
      * @return boolean $success
      */
     public function changeQuantity($products)
     {
-
+        
         foreach ($products as $product) {
             $productId = key($product);
-            $quantity = $this->getQuantityAsInteger($product[$productId]);
-            if ($quantity < 0) {
-                throw new InvalidParameterException('input format not correct: '.$product[$productId]);
+            $entity = $this->ProductAttributes->StockAvailables->newEntity($product[$productId]);
+            if (!empty($entity->getErrors())) {
+                throw new InvalidParameterException(join(' ', $this->ProductAttributes->StockAvailables->getAllValidationErrors($entity)));
             }
         }
 
         foreach ($products as $product) {
             $productId = key($product);
-            $quantity = $product[$productId];
-
             $ids = $this->getProductIdAndAttributeId($productId);
-
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
-                $this->ProductAttributes->StockAvailables->updateAll([
-                    'quantity' => $quantity
-                ], [
+                $this->ProductAttributes->StockAvailables->updateAll($product[$productId], [
                     'id_product_attribute' => $ids['attributeId'],
                     'id_product' => $ids['productId']
                 ]);
                 $this->StockAvailables->updateQuantityForMainProduct($ids['productId']);
             } else {
-                $product2update = [
-                    'quantity' => $quantity
-                ];
                 $entity = $this->StockAvailables->get($ids['productId']);
-                $this->StockAvailables->save($this->StockAvailables->patchEntity($entity, $product2update));
+                $this->StockAvailables->save($this->StockAvailables->patchEntity($entity, $product[$productId]));
             }
         }
     }
@@ -561,7 +555,7 @@ class ProductsTable extends AppTable
         if ($controller) {
             $query = $controller->paginate($query, [
                 'sortWhitelist' => [
-                    'Images.id_image', 'Products.name', 'Products.is_declaration_ok', 'Taxes.rate', 'Products.active', 'Manufacturers.name'
+                    'Images.id_image', 'Products.name', 'Products.is_declaration_ok', 'Taxes.rate', 'Products.active', 'Manufacturers.name', 'Products.is_stock_product'
                 ],
                 'order' => $order
             ]);
@@ -685,7 +679,7 @@ class ProductsTable extends AppTable
                         $priceIsZero = true;
                     }
                     if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
-                        $productName =  $unity = Configure::read('app.pricePerUnitHelper')->getQuantityInUnitsStringForAttributes(
+                        $productName = Configure::read('app.pricePerUnitHelper')->getQuantityInUnitsStringForAttributes(
                             $attribute->product_attribute_combination->attribute->name,
                             $attribute->product_attribute_combination->attribute->can_be_used_as_unit,
                             $attribute->unit_product_attribute->price_per_unit_enabled,
@@ -704,6 +698,7 @@ class ProductsTable extends AppTable
                         'id_product' => $product->id_product . '-' . $attribute->id_product_attribute,
                         'gross_price' => $grossPrice,
                         'active' => - 1,
+                        'is_stock_product' => $product->is_stock_product,
                         'price_is_zero' => $priceIsZero,
                         'row_class' => join(' ', $rowClass),
                         'unchanged_name' => $product->unchanged_name,
@@ -716,7 +711,9 @@ class ProductsTable extends AppTable
                         ],
                         'default_on' => $attribute->default_on,
                         'stock_available' => [
-                            'quantity' => $attribute->stock_available->quantity
+                            'quantity' => $attribute->stock_available->quantity,
+                            'quantity_limit' => $attribute->stock_available->quantity_limit,
+                            'sold_out_limit' => $attribute->stock_available->sold_out_limit
                         ],
                         'deposit' => !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0,
                         'unit' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute : [],

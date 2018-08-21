@@ -154,6 +154,78 @@ class CartsController extends FrontendController
         $this->render('generateRightOfWithdrawalInformationAndForm');
     }
 
+    private function sendStockAvailableLimitReachedEmailToManufacturer($cartId)
+    {
+        $cart = $this->Cart->find('all', [
+            'conditions' => [
+                'Carts.id_cart' => $cartId
+            ],
+            'contain' => [
+                'CartProducts.Products.Manufacturers.AddressManufacturers',
+                'CartProducts.Products.Manufacturers.Customers.AddressCustomers',
+                'CartProducts.Products.StockAvailables',
+                'CartProducts.ProductAttributes.StockAvailables',
+                'CartProducts.OrderDetails'
+            ]
+        ])->first();
+        
+        foreach($cart->cart_products as $cartProduct) {
+            $stockAvailable = $cartProduct->product->stock_available;
+            if (!empty($cartProduct->product_attribute)) {
+                $stockAvailable = $cartProduct->product_attribute->stock_available;
+            }
+            if (is_null($stockAvailable->sold_out_limit)) {
+                continue;
+            }
+            $stockAvailableLimitReached = $stockAvailable->quantity <= $stockAvailable->sold_out_limit;
+            
+            // send email to manufacturer
+            if ($stockAvailableLimitReached && $cartProduct->product->is_stock_product && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_manufacturer) {
+                $email = new AppEmail();
+                $email->setTemplate('stock_available_limit_reached_notification')
+                ->setTo($cartProduct->product->manufacturer->address_manufacturer->email)
+                ->setSubject(__('Product_{0}:_Only_{1}_units_on_stock', [
+                    $cartProduct->order_detail->product_name,
+                    $stockAvailable->quantity
+                ]))
+                ->setViewVars([
+                    'appAuth' => $this->AppAuth,
+                    'greeting' => __('Hello') . ' ' . $cartProduct->product->manufacturer->address_manufacturer->firstname,
+                    'productEditLink' => Configure::read('app.slugHelper')->getProductAdmin(null, $cartProduct->product->id_product),
+                    'cartProduct' => $cartProduct,
+                    'stockAvailable' => $stockAvailable,
+                    'manufacturer' => $cartProduct->product->manufacturer,
+                    'showManufacturerUnsubscribeLink' => true
+                ]);
+                $email->send();
+            }
+            
+            // send email to contact person
+            if ($stockAvailableLimitReached && $cartProduct->product->is_stock_product && !empty($cartProduct->product->manufacturer->customer) && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_contact_person) {
+                $email = new AppEmail();
+                $email->setTemplate('stock_available_limit_reached_notification')
+                ->setTo($cartProduct->product->manufacturer->customer->address_customer->email)
+                ->setSubject(__('Product_{0}:_Only_{1}_units_on_stock', [
+                    $cartProduct->order_detail->product_name,
+                    $stockAvailable->quantity
+                ]))
+                ->setViewVars([
+                    'appAuth' => $this->AppAuth,
+                    'greeting' => __('Hello') . ' ' . $cartProduct->product->manufacturer->customer->firstname,
+                    'productEditLink' => Configure::read('app.slugHelper')->getProductAdmin($cartProduct->product->id_manufacturer, $cartProduct->product->id_product),
+                    'cartProduct' => $cartProduct,
+                    'stockAvailable' => $stockAvailable,
+                    'manufacturer' => $cartProduct->product->manufacturer,
+                    'showManufacturerName' => true,
+                    'notificationEditLink' => __('You_can_unsubscribe_this_email_<a href="{0}">in_the_settings_of_the_manufacturer</a>.', [Configure::read('app.cakeServerName') . Configure::read('app.slugHelper')->getManufacturerEditOptions($cartProduct->product->id_manufacturer)])
+                ]);
+                $email->send();
+            }
+            
+        }
+        
+    }
+    
     /**
      * does not send email to inactive users (superadmins can place shop orders for inactive users!)
      * @param array $cart
@@ -298,10 +370,11 @@ class CartsController extends FrontendController
             ->first();
             $products[] = $product;
             $stockAvailableQuantity = $product->stock_available->quantity;
+            $stockAvailableAvailableQuantity = $product->stock_available->quantity - $product->stock_available->quantity_limit;
 
             // stock available check for product (without attributeId)
-            if ($ids['attributeId'] == 0 && $stockAvailableQuantity < $cartProduct['amount']) {
-                $message = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}.', ['<b>' . $cartProduct['amount'] . '</b>', '<b>' . $product->name . '</b>', $stockAvailableQuantity]);
+            if ($ids['attributeId'] == 0 && $stockAvailableAvailableQuantity < $cartProduct['amount']) {
+                $message = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}.', ['<b>' . $cartProduct['amount'] . '</b>', '<b>' . $product->name . '</b>', $stockAvailableAvailableQuantity]);
                 $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
@@ -312,15 +385,16 @@ class CartsController extends FrontendController
                     if ($attribute->id_product_attribute == $ids['attributeId']) {
                         $attributeIdFound = true;
                         $stockAvailableQuantity = $attribute->stock_available->quantity;
+                        $stockAvailableAvailableQuantity = $attribute->stock_available->quantity - $attribute->stock_available->quantity_limit;
                         // stock available check for attribute
-                        if ($stockAvailableQuantity < $cartProduct['amount']) {
+                        if ($stockAvailableAvailableQuantity < $cartProduct['amount']) {
                             $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
                             $attribute = $this->Attribute->find('all', [
                                 'conditions' => [
                                     'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute
                                 ]
                             ])->first();
-                            $message = __('The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}.', ['<b>' . $cartProduct['amount'] . '</b>', '<b>' . $attribute->name . '</b> ', '<b>' . $product->name . '</b>', $stockAvailableQuantity]);
+                            $message = __('The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}.', ['<b>' . $cartProduct['amount'] . '</b>', '<b>' . $attribute->name . '</b> ', '<b>' . $product->name . '</b>', $stockAvailableAvailableQuantity]);
                             $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
                             $cartErrors[$cartProduct['productId']][] = $message;
                         }
@@ -392,10 +466,6 @@ class CartsController extends FrontendController
             $orderDetails2save[] = $orderDetail2save;
 
             $newQuantity = $stockAvailableQuantity - $cartProduct['amount'];
-            if ($newQuantity < 0) {
-                $message = 'attention, this should never happen! stock available would have been negative: productId: ' . $ids['productId'] . ', attributeId: ' . $ids['attributeId'] . '; changed it manually to 0 to avoid negative stock available value.';
-                $newQuantity = 0; // never ever allow negative stock available
-            }
             $stockAvailable2saveData[] = [
                 'quantity' => $newQuantity
             ];
@@ -458,7 +528,8 @@ class CartsController extends FrontendController
             $this->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
 
             $manufacturersThatReceivedInstantOrderNotification = $this->sendInstantOrderNotificationToManufacturers($cart['CartProducts']);
-
+            $this->sendStockAvailableLimitReachedEmailToManufacturer($cart['Cart']->id_cart);
+            
             if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
                 // save pickup day: primary key needs to be changed!
                 $this->Cart->PickupDayEntities->setPrimaryKey(['customer_id', 'pickup_day']);
