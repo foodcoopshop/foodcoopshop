@@ -148,7 +148,7 @@ use Cake\Core\Configure;
             echo '<th>' . $this->Paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer')) . '</th>';
         }
         if ($advancedStockManagementEnabled) {
-            echo '<th>'.__d('admin', 'Stock_product').'</th>';
+            echo '<th>' . $this->Paginator->sort('Products.is_stock_product', __d('admin', 'Stock_product')) . '</th>';
         }
         echo '<th>'.__d('admin', 'Amount').'</th>';
         echo '<th>'.__d('admin', 'Price').'</th>';
