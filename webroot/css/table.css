@@ -87,6 +87,7 @@ table.list th,
 table.list tr.fake-th td {
   font-size: 11px;
   padding: 5px 2px;
+  word-break: break-word;
 }
 table.list th {
   background-color: #ebebeb;

@@ -617,6 +617,14 @@ class MyHtmlHelper extends HtmlHelper
         ];
     }
 
+    public function getActiveStatesOnOff()
+    {
+        return [
+            1 => __('active_state_active'),
+            0 => __('active_state_inactive')
+        ];
+    }
+    
     public function getActiveStates()
     {
         return [
