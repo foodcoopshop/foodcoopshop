@@ -170,3 +170,7 @@ form.fcs-form .input .after.small {
 	width: 96%;
 	left: 2%;
 }
+table.list th,
+table.list tr.fake-th td {
+	word-break: normal;
+}
