@@ -180,7 +180,7 @@ class CartsController extends FrontendController
             $stockAvailableLimitReached = $stockAvailable->quantity <= $stockAvailable->sold_out_limit;
             
             // send email to manufacturer
-            if ($stockAvailableLimitReached && $cartProduct->product->is_stock_product && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_manufacturer) {
+            if ($stockAvailableLimitReached && $cartProduct->product->manufacturer->stock_management_enabled && $cartProduct->product->is_stock_product && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_manufacturer) {
                 $email = new AppEmail();
                 $email->setTemplate('stock_available_limit_reached_notification')
                 ->setTo($cartProduct->product->manufacturer->address_manufacturer->email)
@@ -201,7 +201,7 @@ class CartsController extends FrontendController
             }
             
             // send email to contact person
-            if ($stockAvailableLimitReached && $cartProduct->product->is_stock_product && !empty($cartProduct->product->manufacturer->customer) && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_contact_person) {
+            if ($stockAvailableLimitReached && $cartProduct->product->manufacturer->stock_management_enabled && $cartProduct->product->is_stock_product && !empty($cartProduct->product->manufacturer->customer) && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_contact_person) {
                 $email = new AppEmail();
                 $email->setTemplate('stock_available_limit_reached_notification')
                 ->setTo($cartProduct->product->manufacturer->customer->address_customer->email)

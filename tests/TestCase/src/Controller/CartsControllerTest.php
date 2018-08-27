@@ -326,6 +326,18 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals(1, count($emailLogs));
     }
     
+    public function testFinishOrderStockNotificationsStockManagementDisabled() {
+        
+        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
+        $this->changeManufacturer($manufacturerId, 'stock_management_enabled', 0);
+        
+        $this->loginAsSuperadmin();
+        $this->placeOrderWithStockProducts();
+        
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(1, count($emailLogs));
+    }
+    
     public function testFinishOrderStockNotificationsDisabled() {
         
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));

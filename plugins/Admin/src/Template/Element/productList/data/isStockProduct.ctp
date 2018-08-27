@@ -19,10 +19,12 @@ if (!$advancedStockManagementEnabled) {
 
 echo '<td class="is-stock-product">';
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-            'class' => 'product-is-stock-product-edit-button',
-            'title' => __d('admin', 'Is_stock_product'),
-        ], 'javascript:void(0);');
+        if ($product->manufacturer->stock_management_enabled) {
+            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
+                'class' => 'product-is-stock-product-edit-button',
+                'title' => __d('admin', 'Is_stock_product'),
+            ], 'javascript:void(0);');
+        }
         if ($product->is_stock_product) {
             echo '<i class="fa fa-check"></i>';
         } else {

@@ -92,12 +92,9 @@ INSERT INTO `fcs_category` VALUES
 INSERT INTO `fcs_category_product` VALUES
 (16,102),
 (16,103),
-(16,339),
 (16,340),
 (16,347),
 (16,348),
-(16,349),
-(16,350),
 (20,60),
 (20,102),
 (20,103),
@@ -186,7 +183,7 @@ INSERT INTO `fcs_images` VALUES
 /*!40000 ALTER TABLE `fcs_manufacturer` DISABLE KEYS */;
 INSERT INTO `fcs_manufacturer` VALUES
 (4,'Demo Fleisch-Hersteller','<p>tests</p>\r\n','','2014-05-14 13:23:02','2015-05-15 13:31:41',1,NULL,NULL,0,'','','','','','','','','','',NULL,0,1,1,2,'testfcs1@mailinator.com;testfcs2@mailinator.com',0,NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0),
-(5,'Demo Gemüse-Hersteller','<p>Gem&uuml;se-Hersteller Beschreibung&nbsp;lang</p>','<div class=\"entry-content\">\r\n<p>Gem&uuml;se-Hersteller Beschreibung kurz</p>\r\n</div>','2014-05-14 13:36:44','2016-09-27 09:34:51',1,NULL,NULL,0,'','','','','','','','','','',88,10,1,1,1,'',0,NULL,NULL,NULL,NULL,'1',0,30,100,0,1,1),
+(5,'Demo Gemüse-Hersteller','<p>Gem&uuml;se-Hersteller Beschreibung&nbsp;lang</p>','<div class=\"entry-content\">\r\n<p>Gem&uuml;se-Hersteller Beschreibung kurz</p>\r\n</div>','2014-05-14 13:36:44','2016-09-27 09:34:51',1,NULL,NULL,0,'','','','','','','','','','',88,10,1,1,1,'',0,NULL,NULL,NULL,NULL,'1',0,30,100,1,1,1),
 (15,'Demo Milch-Hersteller','<p>Ja, ich bin der Milchhersteller!</p>','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,NULL,NULL,0,'','','','','','','','','','',NULL,0,1,1,4,'test@test.at',0,NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0),
 (16,'Hersteller ohne Customer-Eintrag','','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,NULL,NULL,0,'','','','','','','','','','',NULL,10,1,1,1,'',0,NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0);
 /*!40000 ALTER TABLE `fcs_manufacturer` ENABLE KEYS */;
