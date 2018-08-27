@@ -391,6 +391,9 @@ CREATE TABLE `fcs_product` (
   `is_declaration_ok` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `is_stock_product` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `order_period_type` varchar(10) NOT NULL DEFAULT 'week',
+  `order_period_amount` tinyint(10) NOT NULL DEFAULT '1',
+  `first_delivery_day` date DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id_product`),
@@ -470,7 +473,7 @@ CREATE TABLE `fcs_sync_products` (
   `local_product_attribute_id` int(10) unsigned NOT NULL DEFAULT '0',
   `remote_product_attribute_id` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_tax`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
