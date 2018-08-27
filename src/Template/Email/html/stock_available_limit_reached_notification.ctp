@@ -26,18 +26,23 @@ use Cake\Core\Configure;
 
         <tr>
         	<td>
-        		<p>
-                	<?php echo __('Product_{0}_is_almost_sold_out.', ['<b>' . $cartProduct->order_detail->product_name . '</b>']); ?>
-               	</p>
                	<p> 
-                    <?php
+					<?php
                 	    if (isset($showManufacturerName) && $showManufacturerName) {
                 	        echo __('Manufacturer') . ': <b>' . $cartProduct->product->manufacturer->name . '</b><br />'; 
                 	    }
             	    ?>
+					<?php echo __('Product') . ': <b>' . $cartProduct->order_detail->product_name . '</b><br />'; ?>
                 	<?php echo __('Units_on_stock:') . ' <b>' . $this->MyNumber->formatAsDecimal($stockAvailable->quantity, 0) . '</b>'; ?><br />
-                	<?php echo __('Product_orders_possible_until:') . ' <b>' . $this->MyNumber->formatAsDecimal($stockAvailable->quantity_limit, 0) . '</b>'; ?><br />
-                	<?php echo __('Notification_triggered_if_less_than:') . ' <b>' . $this->MyNumber->formatAsDecimal($stockAvailable->sold_out_limit, 0) . '</b>'; ?>
+                	<?php
+                    	if ($stockAvailable->quantity_limit == $stockAvailable->quantity) {
+                    	    echo __('Product_orders_are_not_possible_any_more!');
+                    	} else {
+                    	    echo __('Product_orders_possible_until:') . ' <b>' . $this->MyNumber->formatAsDecimal($stockAvailable->quantity_limit, 0) . '</b>';
+                    	}
+                	?>
+                	<br />
+                	<?php echo __('This_notification_triggered_if_stock_available_is_less_than:') . ' <b>' . $this->MyNumber->formatAsDecimal($stockAvailable->sold_out_limit, 0) . '</b>'; ?>
                 </p>
                 <p>
                 	<a href="<?php echo Configure::read('app.cakeServerName').$productEditLink; ?>"><?php echo __('Click_here_to_edit_the_product.'); ?></a>

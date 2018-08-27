@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-21 09:05+0200\n"
-"PO-Revision-Date: 2018-08-21 09:06+0200\n"
+"POT-Creation-Date: 2018-08-27 09:03+0200\n"
+"PO-Revision-Date: 2018-08-27 09:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -31,7 +31,7 @@ msgid "Your_cart"
 msgstr "Dein Warenkorb"
 
 msgid "Product_{0}:_Only_{1}_units_on_stock"
-msgstr "Geringer Lagerstand für Produkt \"{0}\": {1}"
+msgstr "Lagerstand für Produkt \"{0}\": {1}"
 
 msgid "Hello"
 msgstr "Hallo"
@@ -1671,17 +1671,17 @@ msgstr "Eine detaillierte Auflistung deiner Bestellung findest du in der angehä
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."
 msgstr "Das ist der Text der E-Mail (mit FoodCoopShop-Logo als Anhang)."
 
-msgid "Product_{0}_is_almost_sold_out."
-msgstr "Der Lagerstand vom Produkt {0} geht dem Ende zu."
-
 msgid "Units_on_stock:"
 msgstr "Lagerstand:"
+
+msgid "Product_orders_are_not_possible_any_more!"
+msgstr "Das Produkt kann nicht mehr bestellt werden!"
 
 msgid "Product_orders_possible_until:"
 msgstr "Weitere Bestellungen möglich bis zu einem Lagerstand von:"
 
-msgid "Notification_triggered_if_less_than:"
-msgstr "E-Mail-Benachrichtigung wird verschickt, sobald diese Anzahl erreicht ist:"
+msgid "This_notification_triggered_if_stock_available_is_less_than:"
+msgstr "Diese E-Mail-Benachrichtigung wird verschickt, sobald diese Anzahl erreicht ist:"
 
 msgid "Click_here_to_edit_the_product."
 msgstr "Hier kannst du das Produkt bearbeiten."
@@ -1973,6 +1973,9 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "Product_{0}_is_almost_sold_out."
+#~ msgstr "Der Lagerstand vom Produkt {0} geht dem Ende zu."
 
 #~ msgid "Change_order_status?"
 #~ msgstr "Bestellstatus ändern?"

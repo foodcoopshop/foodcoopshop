@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-21 09:05+0200\n"
+"POT-Creation-Date: 2018-08-27 09:03+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1670,16 +1670,16 @@ msgstr ""
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."
 msgstr ""
 
-msgid "Product_{0}_is_almost_sold_out."
+msgid "Units_on_stock:"
 msgstr ""
 
-msgid "Units_on_stock:"
+msgid "Product_orders_are_not_possible_any_more!"
 msgstr ""
 
 msgid "Product_orders_possible_until:"
 msgstr ""
 
-msgid "Notification_triggered_if_less_than:"
+msgid "This_notification_triggered_if_stock_available_is_less_than:"
 msgstr ""
 
 msgid "Click_here_to_edit_the_product."
