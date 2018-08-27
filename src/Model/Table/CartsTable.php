@@ -126,10 +126,10 @@ class CartsTable extends AppTable
                 'ProductAttributes.UnitProductAttributes',
                 'Products.Images'
             ]
-        ])->toArray();
+        ]);
         
-        
-        if (!empty($cartProducts)) {
+        $cartProducts = $this->sortByVirtualField($cartProducts, 'product.next_delivery_day');
+        if (!empty((array) $cartProducts)) {
             $cart->pickup_day_entities = $this->CartProducts->setPickupDays($cartProducts, $customerId, $instantOrderMode);
         }
         
@@ -139,7 +139,7 @@ class CartsTable extends AppTable
         ];
 
         foreach ($cartProducts as &$cartProduct) {
-
+            
             $imageId = 0;
             if (!empty($cartProduct->product->image)) {
                 $imageId = $cartProduct->product->image->id_image;
@@ -164,7 +164,8 @@ class CartsTable extends AppTable
             $productData['image'] = $productImage;
             $productData['productLink'] = $productLink;
             $productData['manufacturerLink'] = $manufacturerLink;
-
+            $productData['nextDeliveryDay'] = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($cartProduct->product->next_delivery_day));
+            
             $preparedCart['CartProducts'][] = $productData;
 
         }

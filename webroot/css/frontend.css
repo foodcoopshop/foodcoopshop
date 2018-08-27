@@ -682,6 +682,16 @@ body.manufacturers.detail .imprint {
 #cart {
     min-height: 150px;
 }
+body.carts p.pickup-day-header {
+	margin-top: 15px;
+	margin-left: 15px;
+	float: left;
+}
+#cart p.pickup-day-header {
+	margin-top: 5px;
+	margin-left: 0;
+	padding: 0;
+}
 #cart .instant-order-customer-info {
     color: #fff;
     background-color: #f3515c;

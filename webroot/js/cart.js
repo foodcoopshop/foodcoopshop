@@ -30,15 +30,25 @@ foodcoopshop.Cart = {
         var depositSum = 0;
         var taxSum = 0;
         var timebasedCurrencyHoursSum = 0;
+        var pickupDay = oldPickupDay = cartProducts[0].nextDeliveryDay;
+        
         for (var i = 0; i < cartProducts.length; i++) {
             var cp = cartProducts[i];
             var timebasedCurrencyHours = parseFloat(cp.timebasedCurrencySeconds / 3600);
+            
+            oldPickupDay = cartProducts[i].nextDeliveryDay;
+
+            if (i == 0 || oldPickupDay != pickupDay) {
+                $('.cart p.products').append('<p class="pickup-day-header">' + foodcoopshop.LocalizedJs.cart.PickupDay + ': <b>' + oldPickupDay + '</b></p>');
+            }
+            
             $('.cart p.products').append(
                 this.getCartProductHtml(cp.productId, cp.amount, cp.price, cp.productLink, cp.unity_with_unit, cp.manufacturerLink, cp.image, cp.deposit, cp.tax, timebasedCurrencyHours)
             );
             sum += cp.price;
             depositSum += cp.deposit;
             taxSum += cp.tax;
+
         }
         this.updateCartSum(sum);
         this.updateCartDepositSum(depositSum);

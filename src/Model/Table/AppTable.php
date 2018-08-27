@@ -57,7 +57,8 @@ class AppTable extends Table
 
     public function sortByVirtualField($object, $name)
     {
-        return (object) Hash::sort($object->toArray(), '{n}.' . $name, 'ASC');
+        $sortedObject = (object) Hash::sort($object->toArray(), '{n}.' . $name, 'ASC');
+        return $sortedObject;
     }
 
     public function getAllValidationErrors($entity)
