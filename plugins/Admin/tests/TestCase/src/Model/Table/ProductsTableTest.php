@@ -4,6 +4,7 @@ use App\Lib\Error\Exception\InvalidParameterException;
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\I18n\FrozenDate;
 
 /**
  * ProductTest
@@ -29,6 +30,71 @@ class ProductsTableTest extends AppCakeTestCase
     {
         parent::setUp();
         $this->Product = TableRegistry::getTableLocator()->get('Products');
+    }
+    
+    public function testCalculatePickupDayRespectingOrderPeriod()
+    {
+        $tests = [
+            [
+                'product' => $this->Product->newEntity(
+                    [
+                        'order_period_type' => 'week',
+                        'order_period_amount' => '1'
+                    ]
+                ),
+                'currentDay' => '2018-08-14',
+                'result' => '2018-08-17'
+            ],
+            [
+                'product' => $this->Product->newEntity(
+                    [
+                        'order_period_type' => 'week',
+                        'order_period_amount' => '2',
+                        'first_delivery_day' => new FrozenDate('2018-08-10')
+                    ]
+                ),
+                'currentDay' => '2018-08-14',
+                'result' => '2018-08-24'
+            ],
+            [
+                'product' => $this->Product->newEntity(
+                    [
+                        'order_period_type' => 'week',
+                        'order_period_amount' => '2',
+                        'first_delivery_day' => new FrozenDate('2018-08-03')
+                    ]
+                ),
+                'currentDay' => '2018-08-14',
+                'result' => '2018-08-17'
+            ],
+            [
+                'product' => $this->Product->newEntity(
+                    [
+                        'order_period_type' => 'week',
+                        'order_period_amount' => '2',
+                        'first_delivery_day' => new FrozenDate('2018-07-06')
+                    ]
+                ),
+                'currentDay' => '2018-09-15',
+                'result' => '2018-09-28'
+            ],
+            [
+                'product' => $this->Product->newEntity(
+                    [
+                        'order_period_type' => 'week',
+                        'order_period_amount' => '3',
+                        'first_delivery_day' => new FrozenDate('2018-08-03')
+                    ]
+                ),
+                'currentDay' => '2018-08-07',
+                'result' => '2018-08-24'
+            ]
+        ];
+        
+        foreach ($tests as $test) {
+            $result = $this->Product->calculatePickupDayRespectingOrderPeriod($test['product'], $test['currentDay']);
+            $this->assertEquals($test['result'], $result);
+        }
     }
 
     public function testGetCompositeProductIdAndAttributeId()
@@ -62,6 +128,7 @@ class ProductsTableTest extends AppCakeTestCase
             $this->assertEquals($test['result'], $result);
         }
     }
+    
     public function testGetProductIdAndAttributeId()
     {
         $tests = [

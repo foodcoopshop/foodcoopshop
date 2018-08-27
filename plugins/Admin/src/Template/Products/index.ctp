@@ -156,6 +156,7 @@ use Cake\Core\Configure;
         echo '<th class="center" style="width:69px;">' . $this->Paginator->sort('Products.created', __d('admin', 'New?')) . '</th>';
         echo '<th>'.__d('admin', 'Deposit').'</th>';
         echo '<th>' . $this->Paginator->sort('Products.active', __d('admin', 'Status')) . '</th>';
+        echo '<th>' . $this->Paginator->sort('Products.order_period_type', __d('admin', 'Order_period')) . '</th>';
         echo '<th style="width:29px;"></th>';
     echo '</tr>';
 
@@ -215,6 +216,10 @@ use Cake\Core\Configure;
             'product' => $product
         ]);
 
+        echo $this->element('productList/data/orderPeriod', [
+            'product' => $product
+        ]);
+        
         echo $this->element('productList/data/preview', [
             'product' => $product
         ]);
@@ -224,7 +229,7 @@ use Cake\Core\Configure;
 
     echo '<tr>';
 
-    $colspan = 12;
+    $colspan = 13;
     if ($manufacturerId == 'all') {
         $colspan++;
     }

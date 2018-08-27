@@ -60,12 +60,14 @@ if ($product['description'] != '') {
     echo '<div class="toggle-content description">'.$product['description'].'</div>';
 }
 
+    echo '<br />'.__('Pickup_day').': ';
+    echo $this->Time->getDateFormattedWithWeekday(strtotime($product['next_delivery_day'])) . ' (' . $this->Html->getOrderPeriodString($product['order_period_type'], $product['order_period_amount']) . ')';
+    
     echo '<br />'.__('Manufacturer').': ';
     echo $this->Html->link(
         $product['ManufacturersName'],
         $this->Slug->getManufacturerDetail($product['id_manufacturer'], $product['ManufacturersName'])
     );
-
 
     if ($appAuth->isSuperadmin() || ($appAuth->isManufacturer() && $product['id_manufacturer'] == $appAuth->getManufacturerId())) {
         echo $this->Html->getJqueryUiIcon(

@@ -31,6 +31,39 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
     
+    public function getOrderPeriodString($orderPeriodType, $orderPeriodAmount)
+    {
+        
+        if ($orderPeriodAmount == 1) {
+            if ($orderPeriodType == 'week') {
+                $orderPeriodString = __('weekly');
+            }
+            if ($orderPeriodType == 'month') {
+                $orderPeriodString = __('monthly');
+            }
+        }
+        
+        if ($orderPeriodAmount > 1) {
+            $orderPeriodString = __('every') . ' ' . $orderPeriodAmount . ' ';
+            if ($orderPeriodType == 'week') {
+                $orderPeriodString .= __('weeks');
+            }
+            if ($orderPeriodType == 'month') {
+                $orderPeriodString .= __('months');
+            }
+        }
+        
+        return $orderPeriodString;
+    }
+    
+    public function getOrderPeriodTypes()
+    {
+        return [
+            'week' => __('order_period_type_week'),
+            'month' => __('order_period_type_month')
+        ];
+    }
+    
     public function getOrderStateFontawesomeIcon($orderState)
     {
         switch($orderState)

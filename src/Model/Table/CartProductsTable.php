@@ -179,9 +179,10 @@ class CartProductsTable extends AppTable
     public function setPickupDays($cartProducts, $customerId, $instantOrderMode)
     {
         $pickupDayTable = TableRegistry::getTableLocator()->get('PickupDays');
+        
         foreach($cartProducts as &$cartProduct) {
             if (!$instantOrderMode) {
-                $cartProduct->pickup_day = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
+                $cartProduct->pickup_day = $cartProduct->product->next_delivery_day;
             } else {
                 $cartProduct->pickup_day = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
             }

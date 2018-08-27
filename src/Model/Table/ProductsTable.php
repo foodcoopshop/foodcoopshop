@@ -64,6 +64,30 @@ class ProductsTable extends AppTable
         parent::__construct($id, $table, $ds);
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
     }
+    
+    public function calculatePickupDayRespectingOrderPeriod($product, $currentDay=null)
+    {
+        
+        if (is_null($currentDay)) {
+            $currentDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+        }
+        $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($currentDay);
+        
+        if ($product->order_period_amount > 1 && $product->order_period_type == 'week') {
+            if (!is_null($product->first_delivery_day)) {
+                $firstDeliveryDayFormatted = $product->first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+                $calculatedPickupDay = $firstDeliveryDayFormatted;
+                while($calculatedPickupDay < $pickupDay) {
+                    $calculatedPickupDay = strtotime($calculatedPickupDay . '+' . $product->order_period_amount . ' week');
+                    $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $calculatedPickupDay);
+                }
+                $pickupDay = $calculatedPickupDay;
+            }
+        }
+        
+        return $pickupDay;
+        
+    }
 
     /**
      * @param int $productId

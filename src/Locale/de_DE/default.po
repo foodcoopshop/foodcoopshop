@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-27 09:03+0200\n"
-"PO-Revision-Date: 2018-08-27 09:04+0200\n"
+"POT-Creation-Date: 2018-08-27 10:23+0200\n"
+"PO-Revision-Date: 2018-08-27 10:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1775,6 +1775,27 @@ msgstr "Guthaben"
 
 msgid "Member_fee"
 msgstr "Mitgliedsbeitrag"
+
+msgid "weekly"
+msgstr "wöchentlich"
+
+msgid "monthly"
+msgstr "monatlich"
+
+msgid "every"
+msgstr "alle"
+
+msgid "weeks"
+msgstr "Wochen"
+
+msgid "months"
+msgstr "Monate"
+
+msgid "order_period_type_week"
+msgstr "Woche"
+
+msgid "order_period_type_month"
+msgstr "Monat"
 
 msgid "yes"
 msgstr "ja"

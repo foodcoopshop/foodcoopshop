@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-21 09:05+0200\n"
+"POT-Creation-Date: 2018-08-27 10:23+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1719,6 +1719,9 @@ msgid "Tax_rate"
 msgstr ""
 
 msgid "New?"
+msgstr ""
+
+msgid "Order_period"
 msgstr ""
 
 msgid "docs_route_financial_reports"

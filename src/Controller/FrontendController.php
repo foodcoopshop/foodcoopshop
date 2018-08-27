@@ -5,10 +5,9 @@ namespace App\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
+use Cake\I18n\FrozenDate;
 
 /**
- * FrontendController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -46,6 +45,15 @@ class FrontendController extends AppController
             $product['gross_price'] = $grossPrice;
             $product['tax'] = $grossPrice - $product['price'];
             $product['is_new'] = $this->Product->isNew($product['created']);
+            
+            $product['next_delivery_day'] = $this->Product->calculatePickupDayRespectingOrderPeriod(
+                $this->Product->newEntity([
+                    'first_delivery_day' => new FrozenDate($product['first_delivery_day']),
+                    'order_period_type' => $product['order_period_type'],
+                    'order_period_amount' => $product['order_period_amount']
+                ]
+            ));
+            
             $product['attributes'] = [];
 
             if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
