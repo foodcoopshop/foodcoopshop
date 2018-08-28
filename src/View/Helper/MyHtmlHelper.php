@@ -56,6 +56,16 @@ class MyHtmlHelper extends HtmlHelper
         return $deliveryRhythmString;
     }
     
+    public function getDeliveryRhythmTypesForDropdown()
+    {
+        return [
+            '1-week' => $this->getDeliveryRhythmString('week', 1),
+            '2-week' => $this->getDeliveryRhythmString('week', 2),
+            '3-week' => $this->getDeliveryRhythmString('week', 3),
+            '1-month' => $this->getDeliveryRhythmString('month', 1)
+        ];
+    }
+    
     public function getDeliveryRhythmTypes()
     {
         return [

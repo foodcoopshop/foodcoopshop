@@ -243,7 +243,11 @@ class LocalizedController extends Controller
                 'zeroOrSmallerZero' => __('zero_or_smaller_zero'),
                 'ForManufacturersAndContactPersonsCanBeChangedInManufacturerSettings' => __('For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings.'),
                 'NotificationIfAmountLowerThan' => __('Notification_if_amount_lower_than'),
-                'IsProductStockProduct' => __('Is_product_a_stock_product?')
+                'IsProductStockProduct' => __('Is_product_a_stock_product?'),
+                'DeliveryRhythm' => __('Delivery_rhythm'),
+                'FirstDeliveryDay' => __('First_delivery_day'),
+                'AlwaysOnline' => __('Always_online'),
+                'AlwaysOnlineExplanation' => __('Always_online_explanation')
             ],
             'upload' => [
                 'delete' => __('delete'),

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-28 11:51+0200\n"
+"POT-Creation-Date: 2018-08-28 15:16+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -759,6 +759,21 @@ msgid "Notification_if_amount_lower_than"
 msgstr ""
 
 msgid "Is_product_a_stock_product?"
+msgstr ""
+
+msgid "Delivery_rhythm"
+msgstr ""
+
+msgid "First_delivery_day"
+msgstr ""
+
+msgid "First_delivery_day_explanation"
+msgstr ""
+
+msgid "Always_online"
+msgstr ""
+
+msgid "Always_online_explanation"
 msgstr ""
 
 msgid "delete"

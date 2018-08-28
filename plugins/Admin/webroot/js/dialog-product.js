@@ -92,7 +92,7 @@ foodcoopshop.DialogProduct = {
     
     getHtmlForProductQuantityEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogQuantityQuantity"></label>';
-        dialogHtml += '<div class="quantity-wrapper">';
+        dialogHtml += '<div class="field-wrapper">';
             dialogHtml += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.AvailableAmount + '</label>';
             dialogHtml += '<input type="number" step="1" name="dialogQuantityQuantity" id="dialogQuantityQuantity" />';
         dialogHtml += '</div>';
@@ -103,7 +103,7 @@ foodcoopshop.DialogProduct = {
     
     getHtmlForProductQuantityIsStockProductEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogQuantityQuantity"></label>';
-        dialogHtml += '<div class="quantity-wrapper">';
+        dialogHtml += '<div class="field-wrapper">';
             dialogHtml += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.CurrentStock + '</label>';
             dialogHtml += '<input type="number" step="1" name="dialogQuantityQuantity" id="dialogQuantityQuantity" /><br />';
             dialogHtml += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.OrdersPossibleUntilAmountOf + '<br /><span class="small">' + foodcoopshop.LocalizedJs.dialogProduct.zeroOrSmallerZero + '.</span></label>';
@@ -114,6 +114,23 @@ foodcoopshop.DialogProduct = {
         dialogHtml += '<input type="hidden" name="dialogQuantityProductId" id="dialogQuantityProductId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.admin.Stock, dialogId, dialogHtml);
         return dialogHtml;
-    }
+    },
 
+    getHtmlForProductDeliveryRhythmEdit : function(dialogId) {
+        var dialogHtml = '<label for="dialogDeliveryRhythm"></label>';
+        dialogHtml += '<div class="field-wrapper">';
+            dialogHtml += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.DeliveryRhythm + '</label>';
+            dialogHtml += '<select name="dialogDeliveryRhythmType" id="dialogDeliveryRhythmType" /></select>';
+            dialogHtml += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.FirstDeliveryDay + '</label>';
+            dialogHtml += '<input class="datepicker" type="text" name="dialogDeliveryRhythmFirstDeliveryDay" id="dialogDeliveryRhythmFirstDeliveryDay" /><br />';
+            dialogHtml += '<label class="checkbox">';
+                dialogHtml += '<input type="checkbox" name="dialogDeliveryRhythmAlwaysOnline" id="dialogDeliveryRhythmAlwaysOnline" />';
+            dialogHtml += ' ' + foodcoopshop.LocalizedJs.dialogProduct.AlwaysOnline + '<br /><span class="small">' + foodcoopshop.LocalizedJs.dialogProduct.AlwaysOnlineExplanation + '</span>';
+        dialogHtml += '</label>';
+        dialogHtml += '</div>';
+        dialogHtml += '<input type="hidden" name="dialogDeliveryRhythmProductId" id="dialogDeliveryRhythmProductId" value="" />';
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.DeliveryRhythm, dialogId, dialogHtml);
+        return dialogHtml;
+    }
+    
 };

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-28 08:51+0200\n"
+"POT-Creation-Date: 2018-08-28 15:16+0200\n"
 "PO-Revision-Date: 2018-08-28 08:52+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1085,6 +1085,10 @@ msgstr "Anzahl ändern"
 
 msgid "No_email_notifications_are_sent_for_this_product."
 msgstr "Für dieses Produkt werden niemals Benachrichtigungen bezüglich Lagerstand verschickt."
+
+#, fuzzy
+msgid "change_delivery_rhythm"
+msgstr "Lieferrhythmus"
 
 msgid "change_deposit"
 msgstr "Pfand ändern"
