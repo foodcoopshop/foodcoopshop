@@ -233,7 +233,7 @@ INSERT INTO `fcs_product` VALUES
 (348,4,2,0.000000,'Rindfleisch','','','',0,0,1,'week',1,NULL,'2018-05-17 16:15:33','2018-05-17 16:16:38'),
 (349,5,2,4.545455,'Lagerprodukt','','','',0,1,1,'week',1,NULL,'2018-08-16 12:15:48','2018-08-16 12:16:51'),
 (350,5,2,0.000000,'Lagerprodukt mit Varianten','','','',0,1,1,'week',1,NULL,'2018-08-16 12:19:06','2018-08-16 12:19:23'),
-(351,4,2,9.090909,'Product order period every 2 weeks','','','',0,0,1,'week',2,'2018-08-24','2018-08-27 10:30:32','2018-08-27 10:31:46');
+(351,4,2,9.090909,'Product delivery rhythm: every 2 weeks','','','',0,0,1,'week',2,'2018-08-24','2018-08-27 10:30:32','2018-08-27 10:31:46');
 /*!40000 ALTER TABLE `fcs_product` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product_attribute` DISABLE KEYS */;
