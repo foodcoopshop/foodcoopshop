@@ -107,7 +107,9 @@ INSERT INTO `fcs_category_product` VALUES
 (20,348),
 (20,349),
 (20,350),
-(20,351);
+(20,351),
+(20,352),
+(20,353);
 /*!40000 ALTER TABLE `fcs_category_product` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_configuration` DISABLE KEYS */;
@@ -233,7 +235,9 @@ INSERT INTO `fcs_product` VALUES
 (348,4,2,0.000000,'Rindfleisch','','','',0,0,1,'week',1,NULL,0,'2018-05-17 16:15:33','2018-05-17 16:16:38'),
 (349,5,2,4.545455,'Lagerprodukt','','','',0,1,1,'week',1,NULL,0,'2018-08-16 12:15:48','2018-08-16 12:16:51'),
 (350,5,2,0.000000,'Lagerprodukt mit Varianten','','','',0,1,1,'week',1,NULL,0,'2018-08-16 12:19:06','2018-08-16 12:19:23'),
-(351,4,2,9.090909,'Product delivery rhythm: every 2 weeks','','','',0,0,1,'week',2,'2018-08-24',0,'2018-08-27 10:30:32','2018-08-27 10:31:46');
+(351,4,2,9.090909,'Product with delivery rhythm: every 2 weeks','','','',0,0,1,'week',2,'2018-08-24',0,'2018-08-27 10:30:32','2018-08-27 10:31:46'),
+(352,4,2,0.000000,'Product with delivery rhythm: first friday of month','','','',0,0,1,'month',1,NULL,0,'2018-08-28 18:13:33','2018-08-28 18:13:56'),
+(353,4,2,0.000000,'Product with delivery rhythm: last friday of month','','','',0,0,1,'month',0,NULL,0,'2018-08-28 18:14:10','2018-08-28 18:14:25');
 /*!40000 ALTER TABLE `fcs_product` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product_attribute` DISABLE KEYS */;
@@ -279,7 +283,9 @@ INSERT INTO `fcs_stock_available` VALUES
 (709,350,0,1004,0,NULL),
 (710,350,13,5,-5,0),
 (711,350,14,999,0,NULL),
-(712,351,0,999,0,NULL);
+(712,351,0,999,0,NULL),
+(713,352,0,999,0,NULL),
+(714,353,0,999,0,NULL);
 /*!40000 ALTER TABLE `fcs_stock_available` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sync_domains` DISABLE KEYS */;

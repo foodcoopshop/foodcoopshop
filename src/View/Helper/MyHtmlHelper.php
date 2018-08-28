@@ -45,14 +45,15 @@ class MyHtmlHelper extends HtmlHelper
         }
         
         if ($deliveryRhythmType == 'month') {
+            $deliveryDayAsWeekday = $this->MyTime->getWeekdayName($this->MyTime->getDeliveryWeekday());
             if ($deliveryRhythmCount > 0) {
                 $deliveryRhythmString = __('every_{0}_{1}_of_a_month', [
                     $this->MyNumber->ordinal($deliveryRhythmCount),
-                    $this->MyTime->getWeekdayName($this->MyTime->getDeliveryWeekday())
+                    $deliveryDayAsWeekday
                 ]);
             } else {
                 $deliveryRhythmString = __('every_last_{0}_of_a_month', [
-                    $this->MyTime->getWeekdayName($this->MyTime->getDeliveryWeekday())
+                    $deliveryDayAsWeekday
                 ]);
             }
         }

@@ -88,6 +88,36 @@ class ProductsTableTest extends AppCakeTestCase
                 ),
                 'currentDay' => '2018-08-07',
                 'result' => '2018-08-24'
+            ],
+            [
+                'product' => $this->Product->newEntity(
+                    [
+                        'delivery_rhythm_type' => 'month',
+                        'delivery_rhythm_count' => '1'
+                    ]
+                ),
+                'currentDay' => '2017-08-07',
+                'result' => '2017-09-01'
+            ],
+            [
+                'product' => $this->Product->newEntity(
+                    [
+                        'delivery_rhythm_type' => 'month',
+                        'delivery_rhythm_count' => '2'
+                    ]
+                ),
+                'currentDay' => '2018-08-07',
+                'result' => '2018-08-10'
+            ],
+            [
+                'product' => $this->Product->newEntity(
+                    [
+                        'delivery_rhythm_type' => 'month',
+                        'delivery_rhythm_count' => '0'
+                    ]
+                ),
+                'currentDay' => '2018-08-07',
+                'result' => '2018-08-10'
             ]
         ];
         
@@ -95,6 +125,7 @@ class ProductsTableTest extends AppCakeTestCase
             $result = $this->Product->calculatePickupDayRespectingDeliveryRhythm($test['product'], $test['currentDay']);
             $this->assertEquals($test['result'], $result);
         }
+        
     }
 
     public function testGetCompositeProductIdAndAttributeId()

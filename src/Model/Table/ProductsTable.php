@@ -85,6 +85,26 @@ class ProductsTable extends AppTable
             }
         }
         
+        if ($product->delivery_rhythm_type == 'month') {
+            
+            switch($product->delivery_rhythm_count) {
+                case '1':
+                    $ordinal = 'first';
+                    break;
+                case '2':
+                    $ordinal = 'second';
+                    break;
+                case '0':
+                    $ordinal = 'last';
+                    break;
+            }
+            $deliveryDayAsWeekdayInEnglish = strtolower(date('l', strtotime($pickupDay)));
+            $nthDeliveryDayOfThisMonth = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($currentDay . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
+            if ($nthDeliveryDayOfThisMonth < $pickupDay) {
+                $pickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($currentDay . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of next month'));
+            }
+        }
+        
         return $pickupDay;
         
     }
