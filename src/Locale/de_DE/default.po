@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-28 08:51+0200\n"
-"PO-Revision-Date: 2018-08-28 08:52+0200\n"
+"POT-Creation-Date: 2018-08-28 11:51+0200\n"
+"PO-Revision-Date: 2018-08-28 11:52+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1783,18 +1783,12 @@ msgid "monthly"
 msgstr "monatlich"
 
 msgid "every"
-msgstr "alle"
+msgstr "jede"
 
-msgid "weeks"
-msgstr "Wochen"
-
-msgid "months"
-msgstr "Monate"
-
-msgid "delivery_rhythm_type_week"
+msgid "week"
 msgstr "Woche"
 
-msgid "delivery_rhythm_type_month"
+msgid "month"
 msgstr "Monat"
 
 msgid "yes"
@@ -1994,6 +1988,12 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "delivery_rhythm_type_week"
+#~ msgstr "Woche"
+
+#~ msgid "delivery_rhythm_type_month"
+#~ msgstr "Monat"
 
 #~ msgid "Product_{0}_is_almost_sold_out."
 #~ msgstr "Der Lagerstand vom Produkt {0} geht dem Ende zu."

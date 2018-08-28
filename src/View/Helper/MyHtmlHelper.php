@@ -44,12 +44,12 @@ class MyHtmlHelper extends HtmlHelper
         }
         
         if ($deliveryRhythmCount > 1) {
-            $deliveryRhythmString = __('every') . ' ' . $deliveryRhythmCount . ' ';
+            $deliveryRhythmString = __('every') . ' ' . $this->MyNumber->ordinal($deliveryRhythmCount) . ' ';
             if ($deliveryRhythmType == 'week') {
-                $deliveryRhythmString .= __('weeks');
+                $deliveryRhythmString .= __('week');
             }
             if ($deliveryRhythmType == 'month') {
-                $deliveryRhythmString .= __('months');
+                $deliveryRhythmString .= __('month');
             }
         }
         
@@ -59,8 +59,8 @@ class MyHtmlHelper extends HtmlHelper
     public function getDeliveryRhythmTypes()
     {
         return [
-            'week' => __('delivery_rhythm_type_week'),
-            'month' => __('delivery_rhythm_type_month')
+            'week' => __('week'),
+            'month' => __('month')
         ];
     }
     

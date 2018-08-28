@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-28 08:51+0200\n"
+"POT-Creation-Date: 2018-08-28 11:51+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1784,16 +1784,10 @@ msgstr ""
 msgid "every"
 msgstr ""
 
-msgid "weeks"
+msgid "week"
 msgstr ""
 
-msgid "months"
-msgstr ""
-
-msgid "delivery_rhythm_type_week"
-msgstr ""
-
-msgid "delivery_rhythm_type_month"
+msgid "month"
 msgstr ""
 
 msgid "yes"
