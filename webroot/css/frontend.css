@@ -684,13 +684,15 @@ body.manufacturers.detail .imprint {
 }
 body.carts p.pickup-day-header {
 	margin-top: 15px;
-	margin-left: 15px;
-	float: left;
+    float: left;
 }
 #cart p.pickup-day-header {
 	margin-top: 5px;
-	margin-left: 0;
 	padding: 0;
+    float: left;
+}
+#cart p.pickup-day-header:first-of-type {
+	margin-top: -5px;
 }
 #cart .instant-order-customer-info {
     color: #fff;
@@ -956,6 +958,7 @@ body.carts.detail .cart:not(#cart) .product {
 body.carts.detail .cart:not(#cart) .products {
     max-height: none;
     overflow-x: hidden; /* error wrapper tricky to style */
+    margin-bottom: 20px;
 }
 body.carts.detail .cart:not(#cart) p.sum-wrapper span.sum,
 body.carts.detail .cart:not(#cart) p.sum-deposit-wrapper span.sum {
