@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-28 15:16+0200\n"
-"PO-Revision-Date: 2018-08-28 15:17+0200\n"
+"POT-Creation-Date: 2018-08-28 17:13+0200\n"
+"PO-Revision-Date: 2018-08-28 17:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -767,9 +767,6 @@ msgstr "Lieferrhythmus"
 
 msgid "First_delivery_day"
 msgstr "Erster Liefertag"
-
-msgid "First_delivery_day_explanation"
-msgstr "Datum des ersten Liefertages"
 
 msgid "Always_online"
 msgstr "Immer bestellbar?"
@@ -1794,17 +1791,14 @@ msgstr "Mitgliedsbeitrag"
 msgid "weekly"
 msgstr "wöchentlich"
 
-msgid "monthly"
-msgstr "monatlich"
+msgid "every_{0}_week"
+msgstr "jede {0} Woche"
 
-msgid "every"
-msgstr "jede"
+msgid "every_{0}_{1}_of_a_month"
+msgstr "jeden {0} {1} im Monat"
 
-msgid "week"
-msgstr "Woche"
-
-msgid "month"
-msgstr "Monat"
+msgid "every_last_{0}_of_a_month"
+msgstr "jeden letzten {0} im Monat"
 
 msgid "yes"
 msgstr "ja"
@@ -2003,6 +1997,21 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "First_delivery_day_explanation"
+#~ msgstr "Datum des ersten Liefertages"
+
+#~ msgid "monthly"
+#~ msgstr "monatlich"
+
+#~ msgid "every"
+#~ msgstr "jede"
+
+#~ msgid "week"
+#~ msgstr "Woche"
+
+#~ msgid "month"
+#~ msgstr "Monat"
 
 #~ msgid "delivery_rhythm_type_week"
 #~ msgstr "Woche"

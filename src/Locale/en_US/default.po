@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-28 15:16+0200\n"
-"PO-Revision-Date: 2018-08-28 15:00+0200\n"
+"POT-Creation-Date: 2018-08-28 17:13+0200\n"
+"PO-Revision-Date: 2018-08-28 17:13+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -768,16 +768,11 @@ msgstr "Delivery rhythm"
 msgid "First_delivery_day"
 msgstr "First delivery day"
 
-#, fuzzy
-msgid "First_delivery_day_explanation"
-msgstr "First delivery day"
-
-#, fuzzy
 msgid "Always_online"
-msgstr "online"
+msgstr "Always online"
 
 msgid "Always_online_explanation"
-msgstr ""
+msgstr "Should the product always appear online to be ordered, or just in the last week before the delivery day?"
 
 msgid "delete"
 msgstr "delete"
@@ -1796,17 +1791,14 @@ msgstr "Member fee"
 msgid "weekly"
 msgstr "weekly"
 
-msgid "monthly"
-msgstr "monthly"
+msgid "every_{0}_week"
+msgstr "every {0} week"
 
-msgid "every"
-msgstr "every"
+msgid "every_{0}_{1}_of_a_month"
+msgstr "every {0} {1} of a month"
 
-msgid "week"
-msgstr "week"
-
-msgid "month"
-msgstr "month"
+msgid "every_last_{0}_of_a_month"
+msgstr "every last {0} of a month"
 
 msgid "yes"
 msgstr "yes"
@@ -2005,6 +1997,22 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#, fuzzy
+#~ msgid "First_delivery_day_explanation"
+#~ msgstr "First delivery day"
+
+#~ msgid "monthly"
+#~ msgstr "monthly"
+
+#~ msgid "every"
+#~ msgstr "every"
+
+#~ msgid "week"
+#~ msgstr "week"
+
+#~ msgid "month"
+#~ msgstr "month"
 
 #~ msgid "delivery_rhythm_type_week"
 #~ msgstr "week"

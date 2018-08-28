@@ -159,7 +159,7 @@ class MyTimeHelper extends TimeHelper
         return time();
     }
 
-    private function getDeliveryWeekday()
+    public function getDeliveryWeekday()
     {
         return (Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta')) % 7;
     }

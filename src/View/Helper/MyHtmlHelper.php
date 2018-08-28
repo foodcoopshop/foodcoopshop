@@ -28,28 +28,32 @@ class MyHtmlHelper extends HtmlHelper
     {
         $this->_defaultConfig['templates']['javascriptblock'] = "{{content}}";
         $this->helpers[] = 'MyNumber';
+        $this->helpers[] = 'MyTime';
         parent::__construct($View, $config);
     }
     
     public function getDeliveryRhythmString($deliveryRhythmType, $deliveryRhythmCount)
     {
         
-        if ($deliveryRhythmCount == 1) {
-            if ($deliveryRhythmType == 'week') {
+        if ($deliveryRhythmType == 'week') {
+            if ($deliveryRhythmCount == 1) {
                 $deliveryRhythmString = __('weekly');
             }
-            if ($deliveryRhythmType == 'month') {
-                $deliveryRhythmString = __('monthly');
+            if ($deliveryRhythmCount > 1) {
+                $deliveryRhythmString = __('every_{0}_week', [$this->MyNumber->ordinal($deliveryRhythmCount)]);
             }
         }
         
-        if ($deliveryRhythmCount > 1) {
-            $deliveryRhythmString = __('every') . ' ' . $this->MyNumber->ordinal($deliveryRhythmCount) . ' ';
-            if ($deliveryRhythmType == 'week') {
-                $deliveryRhythmString .= __('week');
-            }
-            if ($deliveryRhythmType == 'month') {
-                $deliveryRhythmString .= __('month');
+        if ($deliveryRhythmType == 'month') {
+            if ($deliveryRhythmCount > 0) {
+                $deliveryRhythmString = __('every_{0}_{1}_of_a_month', [
+                    $this->MyNumber->ordinal($deliveryRhythmCount),
+                    $this->MyTime->getWeekdayName($this->MyTime->getDeliveryWeekday())
+                ]);
+            } else {
+                $deliveryRhythmString = __('every_last_{0}_of_a_month', [
+                    $this->MyTime->getWeekdayName($this->MyTime->getDeliveryWeekday())
+                ]);
             }
         }
         
@@ -62,15 +66,9 @@ class MyHtmlHelper extends HtmlHelper
             '1-week' => $this->getDeliveryRhythmString('week', 1),
             '2-week' => $this->getDeliveryRhythmString('week', 2),
             '3-week' => $this->getDeliveryRhythmString('week', 3),
-            '1-month' => $this->getDeliveryRhythmString('month', 1)
-        ];
-    }
-    
-    public function getDeliveryRhythmTypes()
-    {
-        return [
-            'week' => __('week'),
-            'month' => __('month')
+            '1-month' => $this->getDeliveryRhythmString('month', 1),
+            '2-month' => $this->getDeliveryRhythmString('month', 2),
+            '0-month' => $this->getDeliveryRhythmString('month', 0),
         ];
     }
     

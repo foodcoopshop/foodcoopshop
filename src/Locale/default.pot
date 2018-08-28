@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-28 15:16+0200\n"
+"POT-Creation-Date: 2018-08-28 17:13+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -765,9 +765,6 @@ msgid "Delivery_rhythm"
 msgstr ""
 
 msgid "First_delivery_day"
-msgstr ""
-
-msgid "First_delivery_day_explanation"
 msgstr ""
 
 msgid "Always_online"
@@ -1793,16 +1790,13 @@ msgstr ""
 msgid "weekly"
 msgstr ""
 
-msgid "monthly"
+msgid "every_{0}_week"
 msgstr ""
 
-msgid "every"
+msgid "every_{0}_{1}_of_a_month"
 msgstr ""
 
-msgid "week"
-msgstr ""
-
-msgid "month"
+msgid "every_last_{0}_of_a_month"
 msgstr ""
 
 msgid "yes"
