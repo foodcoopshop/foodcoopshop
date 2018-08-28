@@ -46,11 +46,11 @@ class FrontendController extends AppController
             $product['tax'] = $grossPrice - $product['price'];
             $product['is_new'] = $this->Product->isNew($product['created']);
             
-            $product['next_delivery_day'] = $this->Product->calculatePickupDayRespectingOrderPeriod(
+            $product['next_delivery_day'] = $this->Product->calculatePickupDayRespectingDeliveryRhythm(
                 $this->Product->newEntity([
-                    'first_delivery_day' => new FrozenDate($product['first_delivery_day']),
-                    'order_period_type' => $product['order_period_type'],
-                    'order_period_amount' => $product['order_period_amount']
+                    'delivery_rhythm_first_delivery_day' => new FrozenDate($product['delivery_rhythm_first_delivery_day']),
+                    'delivery_rhythm_type' => $product['delivery_rhythm_type'],
+                    'delivery_rhythm_count' => $product['delivery_rhythm_count']
                 ]
             ));
             

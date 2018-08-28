@@ -61,7 +61,7 @@ if ($product['description'] != '') {
 }
 
     echo '<br />'.__('Pickup_day').': ';
-    echo $this->Time->getDateFormattedWithWeekday(strtotime($product['next_delivery_day'])) . ' (' . $this->Html->getOrderPeriodString($product['order_period_type'], $product['order_period_amount']) . ')';
+    echo $this->Time->getDateFormattedWithWeekday(strtotime($product['next_delivery_day'])) . ' (' . $this->Html->getDeliveryRhythmString($product['delivery_rhythm_type'], $product['delivery_rhythm_count']) . ')';
     
     echo '<br />'.__('Manufacturer').': ';
     echo $this->Html->link(

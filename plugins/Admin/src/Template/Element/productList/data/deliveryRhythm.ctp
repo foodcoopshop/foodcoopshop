@@ -15,7 +15,7 @@
 
 echo '<td>';
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
-        echo $this->Html->getOrderPeriodString($product->order_period_type, $product->order_period_amount);
+        echo $this->Html->getDeliveryRhythmString($product->delivery_rhythm_type, $product->delivery_rhythm_count);
     }
 echo '</td>';
 

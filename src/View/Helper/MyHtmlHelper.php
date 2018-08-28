@@ -31,36 +31,36 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
     
-    public function getOrderPeriodString($orderPeriodType, $orderPeriodAmount)
+    public function getDeliveryRhythmString($deliveryRhythmType, $deliveryRhythmCount)
     {
         
-        if ($orderPeriodAmount == 1) {
-            if ($orderPeriodType == 'week') {
-                $orderPeriodString = __('weekly');
+        if ($deliveryRhythmCount == 1) {
+            if ($deliveryRhythmType == 'week') {
+                $deliveryRhythmString = __('weekly');
             }
-            if ($orderPeriodType == 'month') {
-                $orderPeriodString = __('monthly');
-            }
-        }
-        
-        if ($orderPeriodAmount > 1) {
-            $orderPeriodString = __('every') . ' ' . $orderPeriodAmount . ' ';
-            if ($orderPeriodType == 'week') {
-                $orderPeriodString .= __('weeks');
-            }
-            if ($orderPeriodType == 'month') {
-                $orderPeriodString .= __('months');
+            if ($deliveryRhythmType == 'month') {
+                $deliveryRhythmString = __('monthly');
             }
         }
         
-        return $orderPeriodString;
+        if ($deliveryRhythmCount > 1) {
+            $deliveryRhythmString = __('every') . ' ' . $deliveryRhythmCount . ' ';
+            if ($deliveryRhythmType == 'week') {
+                $deliveryRhythmString .= __('weeks');
+            }
+            if ($deliveryRhythmType == 'month') {
+                $deliveryRhythmString .= __('months');
+            }
+        }
+        
+        return $deliveryRhythmString;
     }
     
-    public function getOrderPeriodTypes()
+    public function getDeliveryRhythmTypes()
     {
         return [
-            'week' => __('order_period_type_week'),
-            'month' => __('order_period_type_month')
+            'week' => __('delivery_rhythm_type_week'),
+            'month' => __('delivery_rhythm_type_month')
         ];
     }
     

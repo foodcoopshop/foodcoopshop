@@ -25,7 +25,7 @@ class Product extends Entity
     protected function _getNextDeliveryDay()
     {
         $productTable = TableRegistry::getTableLocator()->get('Products');
-        return $productTable->calculatePickupDayRespectingOrderPeriod($this);
+        return $productTable->calculatePickupDayRespectingDeliveryRhythm($this);
     }
     
 }

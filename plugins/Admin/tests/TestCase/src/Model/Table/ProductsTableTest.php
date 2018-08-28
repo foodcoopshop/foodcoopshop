@@ -32,14 +32,14 @@ class ProductsTableTest extends AppCakeTestCase
         $this->Product = TableRegistry::getTableLocator()->get('Products');
     }
     
-    public function testCalculatePickupDayRespectingOrderPeriod()
+    public function testCalculatePickupDayRespectingDeliveryRhythm()
     {
         $tests = [
             [
                 'product' => $this->Product->newEntity(
                     [
-                        'order_period_type' => 'week',
-                        'order_period_amount' => '1'
+                        'delivery_rhythm_type' => 'week',
+                        'delivery_rhythm_count' => '1'
                     ]
                 ),
                 'currentDay' => '2018-08-14',
@@ -48,9 +48,9 @@ class ProductsTableTest extends AppCakeTestCase
             [
                 'product' => $this->Product->newEntity(
                     [
-                        'order_period_type' => 'week',
-                        'order_period_amount' => '2',
-                        'first_delivery_day' => new FrozenDate('2018-08-10')
+                        'delivery_rhythm_type' => 'week',
+                        'delivery_rhythm_count' => '2',
+                        'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-10')
                     ]
                 ),
                 'currentDay' => '2018-08-14',
@@ -59,9 +59,9 @@ class ProductsTableTest extends AppCakeTestCase
             [
                 'product' => $this->Product->newEntity(
                     [
-                        'order_period_type' => 'week',
-                        'order_period_amount' => '2',
-                        'first_delivery_day' => new FrozenDate('2018-08-03')
+                        'delivery_rhythm_type' => 'week',
+                        'delivery_rhythm_count' => '2',
+                        'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03')
                     ]
                 ),
                 'currentDay' => '2018-08-14',
@@ -70,9 +70,9 @@ class ProductsTableTest extends AppCakeTestCase
             [
                 'product' => $this->Product->newEntity(
                     [
-                        'order_period_type' => 'week',
-                        'order_period_amount' => '2',
-                        'first_delivery_day' => new FrozenDate('2018-07-06')
+                        'delivery_rhythm_type' => 'week',
+                        'delivery_rhythm_count' => '2',
+                        'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-07-06')
                     ]
                 ),
                 'currentDay' => '2018-09-15',
@@ -81,9 +81,9 @@ class ProductsTableTest extends AppCakeTestCase
             [
                 'product' => $this->Product->newEntity(
                     [
-                        'order_period_type' => 'week',
-                        'order_period_amount' => '3',
-                        'first_delivery_day' => new FrozenDate('2018-08-03')
+                        'delivery_rhythm_type' => 'week',
+                        'delivery_rhythm_count' => '3',
+                        'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03')
                     ]
                 ),
                 'currentDay' => '2018-08-07',
@@ -92,7 +92,7 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         
         foreach ($tests as $test) {
-            $result = $this->Product->calculatePickupDayRespectingOrderPeriod($test['product'], $test['currentDay']);
+            $result = $this->Product->calculatePickupDayRespectingDeliveryRhythm($test['product'], $test['currentDay']);
             $this->assertEquals($test['result'], $result);
         }
     }

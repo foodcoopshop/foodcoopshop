@@ -65,7 +65,7 @@ class ProductsTable extends AppTable
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
     }
     
-    public function calculatePickupDayRespectingOrderPeriod($product, $currentDay=null)
+    public function calculatePickupDayRespectingDeliveryRhythm($product, $currentDay=null)
     {
         
         if (is_null($currentDay)) {
@@ -73,12 +73,12 @@ class ProductsTable extends AppTable
         }
         $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($currentDay);
         
-        if ($product->order_period_amount > 1 && $product->order_period_type == 'week') {
-            if (!is_null($product->first_delivery_day)) {
-                $firstDeliveryDayFormatted = $product->first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+        if ($product->delivery_rhythm_count > 1 && $product->delivery_rhythm_type == 'week') {
+            if (!is_null($product->delivery_rhythm_first_delivery_day)) {
+                $firstDeliveryDayFormatted = $product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
                 $calculatedPickupDay = $firstDeliveryDayFormatted;
                 while($calculatedPickupDay < $pickupDay) {
-                    $calculatedPickupDay = strtotime($calculatedPickupDay . '+' . $product->order_period_amount . ' week');
+                    $calculatedPickupDay = strtotime($calculatedPickupDay . '+' . $product->delivery_rhythm_count . ' week');
                     $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $calculatedPickupDay);
                 }
                 $pickupDay = $calculatedPickupDay;

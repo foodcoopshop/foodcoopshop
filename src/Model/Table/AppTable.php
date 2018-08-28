@@ -116,7 +116,7 @@ class AppTable extends Table
     {
         $fields = "Products.id_product,
                 Products.name, Products.description_short, Products.description, Products.unity, Products.price, Products.created,
-                Products.order_period_type, Products.order_period_amount, Products.first_delivery_day,
+                Products.delivery_rhythm_type, Products.delivery_rhythm_count, Products.delivery_rhythm_first_delivery_day,
                 Deposits.deposit,
                 Images.id_image,
                 Manufacturers.id_manufacturer, Manufacturers.name as ManufacturersName,
