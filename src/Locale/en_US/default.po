@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-29 15:57+0200\n"
-"PO-Revision-Date: 2018-08-29 15:58+0200\n"
+"POT-Creation-Date: 2018-08-29 16:05+0200\n"
+"PO-Revision-Date: 2018-08-29 16:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -761,6 +761,9 @@ msgstr "Notification if amount is lower than"
 
 msgid "Is_product_a_stock_product?"
 msgstr "Is the product a stock product?"
+
+msgid "The_delivery_rhythm_of_stock_products_is_always_weekly."
+msgstr "The delivery rhythm of stock products is always \"weekly\" and can't be changed."
 
 msgid "Delivery_rhythm"
 msgstr "Delivery rhythm"
