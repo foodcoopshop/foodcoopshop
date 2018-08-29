@@ -124,6 +124,7 @@ foodcoopshop.DialogProduct = {
             dialogHtml += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.FirstDeliveryDay + '</label>';
             dialogHtml += '<input class="datepicker" type="text" name="dialogDeliveryRhythmFirstDeliveryDay" id="dialogDeliveryRhythmFirstDeliveryDay" /><br />';
         dialogHtml += '</div>';
+        dialogHtml += '<p style="margin-top:10px;float:left;"><a target="_blank" href="' + foodcoopshop.LocalizedJs.dialogProduct.DocsUrlOrderHandling + '">' + foodcoopshop.LocalizedJs.dialogProduct.InfoPageForOrderHandling + '</a></p>';
         dialogHtml += '<input type="hidden" name="dialogDeliveryRhythmProductId" id="dialogDeliveryRhythmProductId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.DeliveryRhythm, dialogId, dialogHtml);
         return dialogHtml;

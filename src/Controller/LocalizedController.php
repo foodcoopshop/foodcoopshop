@@ -245,7 +245,10 @@ class LocalizedController extends Controller
                 'NotificationIfAmountLowerThan' => __('Notification_if_amount_lower_than'),
                 'IsProductStockProduct' => __('Is_product_a_stock_product?'),
                 'DeliveryRhythm' => __('Delivery_rhythm'),
-                'FirstDeliveryDay' => __('First_delivery_day')
+                'FirstDeliveryDay' => __('First_delivery_day'),
+                'InfoPageForOrderHandling' => __('Info_page_for_order_handling'),
+                'DocsUrlOrderHandling' => Configure::read('app.htmlHelper')->getDocsUrl(__('docs_route_order_handling'))
+                
             ],
             'upload' => [
                 'delete' => __('delete'),
