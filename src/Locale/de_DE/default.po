@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-29 13:15+0200\n"
-"PO-Revision-Date: 2018-08-29 13:15+0200\n"
+"POT-Creation-Date: 2018-08-29 13:18+0200\n"
+"PO-Revision-Date: 2018-08-29 13:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1793,6 +1793,9 @@ msgstr "jeden {0} {1} im Monat"
 
 msgid "every_last_{0}_of_a_month"
 msgstr "jeden letzten {0} im Monat"
+
+msgid "individual_date"
+msgstr "individuelles Datum"
 
 msgid "yes"
 msgstr "ja"

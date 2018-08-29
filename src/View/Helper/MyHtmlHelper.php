@@ -32,7 +32,7 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
     
-    public function getDeliveryRhythmString($deliveryRhythmType, $deliveryRhythmCount)
+    public function getDeliveryRhythmString($deliveryRhythmType, $deliveryRhythmCount = NULL)
     {
         
         if ($deliveryRhythmType == 'week') {
@@ -58,6 +58,10 @@ class MyHtmlHelper extends HtmlHelper
             }
         }
         
+        if ($deliveryRhythmType == 'individual') {
+            $deliveryRhythmString = __('individual_date');
+        }
+        
         return $deliveryRhythmString;
     }
     
@@ -66,10 +70,9 @@ class MyHtmlHelper extends HtmlHelper
         return [
             '1-week' => $this->getDeliveryRhythmString('week', 1),
             '2-week' => $this->getDeliveryRhythmString('week', 2),
-            '3-week' => $this->getDeliveryRhythmString('week', 3),
             '1-month' => $this->getDeliveryRhythmString('month', 1),
-            '2-month' => $this->getDeliveryRhythmString('month', 2),
             '0-month' => $this->getDeliveryRhythmString('month', 0),
+            'individual' => $this->getDeliveryRhythmString('individual'),
         ];
     }
     
