@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-28 17:13+0200\n"
-"PO-Revision-Date: 2018-08-28 17:14+0200\n"
+"POT-Creation-Date: 2018-08-29 13:15+0200\n"
+"PO-Revision-Date: 2018-08-29 13:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -767,12 +767,6 @@ msgstr "Lieferrhythmus"
 
 msgid "First_delivery_day"
 msgstr "Erster Liefertag"
-
-msgid "Always_online"
-msgstr "Immer bestellbar?"
-
-msgid "Always_online_explanation"
-msgstr "Soll das Produkt immer bestellbar sein und nicht nur in der Woche vor der Lieferung?"
 
 msgid "delete"
 msgstr "löschen"
@@ -1997,6 +1991,12 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "Always_online"
+#~ msgstr "Immer bestellbar?"
+
+#~ msgid "Always_online_explanation"
+#~ msgstr "Soll das Produkt immer bestellbar sein und nicht nur in der Woche vor der Lieferung?"
 
 #~ msgid "First_delivery_day_explanation"
 #~ msgstr "Datum des ersten Liefertages"

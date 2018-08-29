@@ -394,7 +394,6 @@ CREATE TABLE `fcs_product` (
   `delivery_rhythm_type` varchar(10) NOT NULL DEFAULT 'week',
   `delivery_rhythm_count` tinyint(10) NOT NULL DEFAULT '1',
   `delivery_rhythm_first_delivery_day` date DEFAULT NULL,
-  `delivery_rhythm_always_online` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id_product`),

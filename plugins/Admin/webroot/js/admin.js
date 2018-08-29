@@ -714,7 +714,6 @@ foodcoopshop.Admin = {
                 }
             });
             
-            $('#' + dialogId + ' #dialogDeliveryRhythmAlwaysOnline').prop('checked', row.find('td.delivery-rhythm span.always-online').html().match('fa-check'));
             $('#' + dialogId + ' #dialogDeliveryRhythmProductId').val(row.find('td:nth-child(1)').html());
             $('#' + dialogId + ' label[for="dialogDeliveryRhythm"]').html(foodcoopshop.Admin.getProductNameForDialog(row));
 

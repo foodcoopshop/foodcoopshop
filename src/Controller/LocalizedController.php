@@ -245,9 +245,7 @@ class LocalizedController extends Controller
                 'NotificationIfAmountLowerThan' => __('Notification_if_amount_lower_than'),
                 'IsProductStockProduct' => __('Is_product_a_stock_product?'),
                 'DeliveryRhythm' => __('Delivery_rhythm'),
-                'FirstDeliveryDay' => __('First_delivery_day'),
-                'AlwaysOnline' => __('Always_online'),
-                'AlwaysOnlineExplanation' => __('Always_online_explanation')
+                'FirstDeliveryDay' => __('First_delivery_day')
             ],
             'upload' => [
                 'delete' => __('delete'),

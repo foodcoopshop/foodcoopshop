@@ -123,10 +123,6 @@ foodcoopshop.DialogProduct = {
             dialogHtml += '<select name="dialogDeliveryRhythmType" id="dialogDeliveryRhythmType" /></select>';
             dialogHtml += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.FirstDeliveryDay + '</label>';
             dialogHtml += '<input class="datepicker" type="text" name="dialogDeliveryRhythmFirstDeliveryDay" id="dialogDeliveryRhythmFirstDeliveryDay" /><br />';
-            dialogHtml += '<label class="checkbox">';
-                dialogHtml += '<input type="checkbox" name="dialogDeliveryRhythmAlwaysOnline" id="dialogDeliveryRhythmAlwaysOnline" />';
-            dialogHtml += ' ' + foodcoopshop.LocalizedJs.dialogProduct.AlwaysOnline + '<br /><span class="small">' + foodcoopshop.LocalizedJs.dialogProduct.AlwaysOnlineExplanation + '</span>';
-        dialogHtml += '</label>';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogDeliveryRhythmProductId" id="dialogDeliveryRhythmProductId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.DeliveryRhythm, dialogId, dialogHtml);

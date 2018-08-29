@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-28 17:13+0200\n"
-"PO-Revision-Date: 2018-08-28 17:13+0200\n"
+"POT-Creation-Date: 2018-08-29 13:15+0200\n"
+"PO-Revision-Date: 2018-08-29 13:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -767,12 +767,6 @@ msgstr "Delivery rhythm"
 
 msgid "First_delivery_day"
 msgstr "First delivery day"
-
-msgid "Always_online"
-msgstr "Always online"
-
-msgid "Always_online_explanation"
-msgstr "Should the product always appear online to be ordered, or just in the last week before the delivery day?"
 
 msgid "delete"
 msgstr "delete"
@@ -1997,6 +1991,12 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "Always_online"
+#~ msgstr "Always online"
+
+#~ msgid "Always_online_explanation"
+#~ msgstr "Should the product always appear online to be ordered, or just in the last week before the delivery day?"
 
 #, fuzzy
 #~ msgid "First_delivery_day_explanation"

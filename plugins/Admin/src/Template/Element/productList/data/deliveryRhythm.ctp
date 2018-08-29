@@ -30,11 +30,6 @@ echo '<td class="delivery-rhythm">';
                 echo $this->Time->formatToDateShort($product->delivery_rhythm_first_delivery_day);
             }
             echo '</span>';
-            echo '<span class="always-online">';
-                if ($product->delivery_rhythm_always_online) {
-                    echo '<i class="fa fa-check"></i>';
-                }
-            echo '</span>';
         echo '</span>';
     }
 echo '</td>';
