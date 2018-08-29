@@ -17,6 +17,7 @@
  */
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
+use Cake\I18n\FrozenDate;
 use Cake\ORM\TableRegistry;
 
 class ProductsControllerTest extends AppCakeTestCase
@@ -100,6 +101,84 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
         $this->assertPriceChange('163', '1,60', '1,60');
+    }
+    
+    public function testEditDeliveryRhythmInvalidDeliveryRhythmA()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->changeProductDeliveryRhythm(346, '3-week');
+        $this->assertRegExpWithUnquotedString('Der Lieferrhythmus ist nicht gültig.', $response->msg);
+        $this->assertJsonError();
+    }
+    
+    public function testEditDeliveryRhythmInvalidDeliveryRhythmB()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->changeProductDeliveryRhythm(346, '0-week', '31.08.2018');
+        $this->assertRegExpWithUnquotedString('Der Lieferrhythmus ist nicht gültig.', $response->msg);
+        $this->assertJsonError();
+    }
+    
+    public function testEditDeliveryRhythmInvalidFirstDeliveryDay()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->changeProductDeliveryRhythm(346, '1-week', '30.08.2018');
+        $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein Freitag sein.', $response->msg);
+        $this->assertJsonError();
+    }
+    
+    public function testEditDeliveryRhythmOk1Week()
+    {
+        $this->loginAsSuperadmin();
+        $this->changeProductDeliveryRhythm(346, '1-week');
+        $this->assertJsonOk();
+    }
+    
+    public function testEditDeliveryRhythmOk2Week()
+    {
+        $this->loginAsSuperadmin();
+        $this->changeProductDeliveryRhythm(346, '2-week');
+        $this->assertJsonOk();
+    }
+    
+    public function testEditDeliveryRhythmOk1Month()
+    {
+        $this->loginAsSuperadmin();
+        $this->changeProductDeliveryRhythm(346, '1-month');
+        $this->assertJsonOk();
+    }
+    
+    public function testEditDeliveryRhythmOkLastMonth()
+    {
+        $this->loginAsSuperadmin();
+        $this->changeProductDeliveryRhythm(346, '0-month');
+        $this->assertJsonOk();
+    }
+    
+    public function testEditDeliveryRhythmOkWithDatabaseAsserts()
+    {
+        $productId = 346;
+        $this->loginAsSuperadmin();
+        $this->changeProductDeliveryRhythm($productId, '1-month', '31.08.2018');
+        $this->assertJsonOk();
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId
+            ]
+        ])->first();
+        $this->assertEquals($product->delivery_rhythm_type, 'month');
+        $this->assertEquals($product->delivery_rhythm_count, 1);
+        $this->assertEquals($product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')), '31.08.2018');
+    }
+    
+    private function changeProductDeliveryRhythm($productId, $deliveryRhythmType, $deliveryRhythmFirstDeliveryDay = '')
+    {
+        $this->browser->ajaxPost('/admin/products/editDeliveryRhythm', [
+            'productId' => $productId,
+            'deliveryRhythmType' => $deliveryRhythmType,
+            'deliveryRhythmFirstDeliveryDay' => $deliveryRhythmFirstDeliveryDay
+        ]);
+        return $this->browser->getJsonDecodedContent();
     }
 
     /**
