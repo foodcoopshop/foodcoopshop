@@ -32,7 +32,7 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
     
-    public function getDeliveryRhythmString($deliveryRhythmType, $deliveryRhythmCount = NULL)
+    public function getDeliveryRhythmString($deliveryRhythmType, $deliveryRhythmCount)
     {
         
         if ($deliveryRhythmType == 'week') {
@@ -72,7 +72,7 @@ class MyHtmlHelper extends HtmlHelper
             '2-week' => $this->getDeliveryRhythmString('week', 2),
             '1-month' => $this->getDeliveryRhythmString('month', 1),
             '0-month' => $this->getDeliveryRhythmString('month', 0),
-            'individual' => $this->getDeliveryRhythmString('individual'),
+            'individual' => $this->getDeliveryRhythmString('individual', 0)
         ];
     }
     

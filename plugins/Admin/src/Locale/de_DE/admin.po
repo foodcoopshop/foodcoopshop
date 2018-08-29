@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-29 13:15+0200\n"
-"PO-Revision-Date: 2018-08-29 13:15+0200\n"
+"POT-Creation-Date: 2018-08-29 15:04+0200\n"
+"PO-Revision-Date: 2018-08-29 15:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -369,14 +369,17 @@ msgstr "Die Variante {0} für das Produkt {1} vom Hersteller {2} wurde erfolgrei
 msgid "A_new_product_was_created_for_{0}."
 msgstr "Ein neues Produkt für {0} wurde erfolgreich erstellt."
 
+msgid "The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully."
+msgstr "Der Lieferrhythmus des Produktes {0} vom Hersteller {1} wurde erfolgreich geändert."
+
+msgid "Saving_successful."
+msgstr "Speichern erfolgreich."
+
 msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
 msgstr "Der Steuersatz des Produktes {0} vom Hersteller {1} wurde erfolgreich von {2} auf {3} geändert."
 
 msgid "Nothing_changed."
 msgstr "Es wurden keine Änderungen gespeichert."
-
-msgid "Saving_successful."
-msgstr "Speichern erfolgreich."
 
 msgid "The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}"
 msgstr "Die Kategorien des Produktes {0} vom Hersteller {1} wurden geändert: {2}"
@@ -409,7 +412,7 @@ msgid "The_product_{0}_from_manufacturer_{1}_was_renamed_to_{2}."
 msgstr "Das Produkt {0} vom Hersteller {1} wurde umbenannt in {2}."
 
 msgid "The_unity_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
-msgstr "Die Einheit des Produktes {0} vom Hersteller {1} wurde geändet in {2}."
+msgstr "Die Einheit des Produktes {0} vom Hersteller {1} wurde geändert in {2}."
 
 msgid "The_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
 msgstr "Die Beschreibung des Produktes {0} vom Hersteller {1} wurde geändert: {2}"

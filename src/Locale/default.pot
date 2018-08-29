@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-29 13:18+0200\n"
+"POT-Creation-Date: 2018-08-29 15:04+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -872,6 +872,9 @@ msgstr ""
 msgid "Action_Log_Network_module_product_synchronized"
 msgstr ""
 
+msgid "Action_Log_Delivery_rhythm_changed"
+msgstr ""
+
 msgid "Action_Log_Order_status_changed"
 msgstr ""
 
@@ -1248,6 +1251,15 @@ msgid "Please_enter_a_correct_number."
 msgstr ""
 
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
+msgstr ""
+
+msgid "The_delivery_ryhthm_is_not_valid."
+msgstr ""
+
+msgid "The_first_delivery_day_is_not_valid."
+msgstr ""
+
+msgid "The_first_delivery_day_needs_to_be_a_{0}."
 msgstr ""
 
 msgid "The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long."

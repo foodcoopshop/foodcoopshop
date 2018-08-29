@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-29 13:15+0200\n"
-"PO-Revision-Date: 2018-08-29 13:15+0200\n"
+"POT-Creation-Date: 2018-08-29 15:04+0200\n"
+"PO-Revision-Date: 2018-08-29 15:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -369,14 +369,17 @@ msgstr "The attribute {0} of the product {1} from manufacturer {2} was successfu
 msgid "A_new_product_was_created_for_{0}."
 msgstr "A new product was created for {0}."
 
+msgid "The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully."
+msgstr "The delivery rhythm of the product {0} from manufacturer {1} was changed successfully."
+
+msgid "Saving_successful."
+msgstr "Saving successful."
+
 msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
 msgstr "The tax rate of product {0} from manufacturer {1} was changed from {2} to {3}."
 
 msgid "Nothing_changed."
 msgstr "Nothing changed."
-
-msgid "Saving_successful."
-msgstr "Saving successful."
 
 msgid "The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}"
 msgstr "The categories of the product {0} from manufacturer {1} have been changed: {2}"

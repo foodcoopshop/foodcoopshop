@@ -187,14 +187,19 @@ class ActionLogsTable extends AppTable
                     'manufacturer'
                 ]
             ],
-
             'product_remotely_changed' => [
                 'name' => __('Action_Log_Network_module_product_synchronized'),
                 'access' => [
                     'manufacturer'
                 ]
             ],
-
+            'product_delivery_rhythm_changed' => [
+                'name' => __('Action_Log_Delivery_rhythm_changed'),
+                'access' => [
+                    'manufacturer'
+                ]
+            ],
+            
             'orders_state_changed' => [
                 'name' => __('Action_Log_Order_status_changed')
             ],

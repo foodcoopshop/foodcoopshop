@@ -350,6 +350,65 @@ class ProductsController extends AdminAppController
         $this->getRequest()->getSession()->write('highlightedRowId', $newProduct->id_product);
         $this->redirect($this->referer());
     }
+    
+    public function editDeliveryRhythm() 
+    {
+        $this->RequestHandler->renderAs($this, 'ajax');
+        
+        $this->loadComponent('Sanitize');
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
+        
+        $productId = (int) $this->getRequest()->getData('productId');
+        $deliveryRhythmType = $this->getRequest()->getData('deliveryRhythmType');
+        $deliveryRhythmFirstDeliveryDay = $this->getRequest()->getData('deliveryRhythmFirstDeliveryDay');
+        
+        $splittedDeliveryRhythmType = explode('-', $deliveryRhythmType);
+        
+        $oldProduct = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'Manufacturers'
+            ]
+        ])->first();
+        
+        $product2update = [
+            'delivery_rhythm_count' => $splittedDeliveryRhythmType[0],
+            'delivery_rhythm_type' => $splittedDeliveryRhythmType[1]
+        ];
+        if ($deliveryRhythmFirstDeliveryDay != '') {
+            $product2update['delivery_rhythm_first_delivery_day'] = Configure::read('app.timeHelper')->formatToDbFormatDate($deliveryRhythmFirstDeliveryDay);
+        }
+        try {
+            $entity = $this->Product->patchEntity(
+                $oldProduct,
+                $product2update,
+                [
+                    'validate' => 'deliveryRhythm'
+                ]
+            );
+            if (!empty($entity->getErrors())) {
+                throw new InvalidParameterException(join(' ', $this->Product->getAllValidationErrors($entity)));
+            }
+            $this->Product->save($entity);
+            
+            $messageString = __d('admin', 'The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>']);
+            $this->ActionLog->customSave('product_delivery_rhythm_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
+            $this->Flash->success($messageString);
+            
+            $this->getRequest()->getSession()->write('highlightedRowId', $productId);
+            
+            die(json_encode([
+                'status' => 1,
+                'msg' => __d('admin', 'Saving_successful.')
+            ]));
+        } catch (InvalidParameterException $e) {
+            $this->sendAjaxError($e);
+        }
+        
+    }
 
     public function editTax()
     {

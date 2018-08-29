@@ -663,12 +663,9 @@ foodcoopshop.Admin = {
 
                     var data = {
                         productId: $('#dialogDeliveryRhythmProductId').val(),
-                        alwaysOnline: $('#dialogDeliveryRhythmAlwaysOnline:checked').length > 0 ? 1 : 0,
                         deliveryRhythmType: $('#dialogDeliveryRhythmType').val(),
                         deliveryRhythmFirstDeliveryDay: $('#dialogDeliveryRhythmFirstDeliveryDay').val()
                     };
-                    console.log(data);
-                    return;
                     
                     foodcoopshop.Helper.ajaxCall(
                         '/admin/products/editDeliveryRhythm/',

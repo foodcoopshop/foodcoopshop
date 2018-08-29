@@ -7,6 +7,7 @@ use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
+use Cake\Validation\Validator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -63,6 +64,39 @@ class ProductsTable extends AppTable
     {
         parent::__construct($id, $table, $ds);
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
+    }
+    
+    public function validationDeliveryRhythm(Validator $validator)
+    {
+        $validator->add('delivery_rhythm_type', 'allowed-count-values', [
+            'rule' => function ($value, $context) {
+                if ($value == 'week') {
+                    return in_array($context['data']['delivery_rhythm_count'], [1,2]);
+                }
+                if ($value == 'month') {
+                    return in_array($context['data']['delivery_rhythm_count'], [1,0]);
+                }
+                if ($value == 'individual') {
+                    return in_array($context['data']['delivery_rhythm_count'], [0]);
+                }
+                return false;
+            },
+            'message' => __('The_delivery_ryhthm_is_not_valid.')
+        ]);
+        $validator->allowEmpty('delivery_rhythm_first_delivery_day');
+        $validator->notEquals('delivery_rhythm_first_delivery_day', '1970-01-01', __('The_first_delivery_day_is_not_valid.'));
+        $validator->add('delivery_rhythm_first_delivery_day', 'allow-only-delivery-day-weekday', [
+            'rule' => function ($value, $context) {
+                if (Configure::read('app.timeHelper')->getDeliveryWeekday() != Configure::read('app.timeHelper')->formatAsWeekday(strtotime($value))) {
+                    return false;
+                }
+                return true;
+            },
+            'message' => __('The_first_delivery_day_needs_to_be_a_{0}.', [
+                Configure::read('app.timeHelper')->getWeekdayName(Configure::read('app.timeHelper')->getDeliveryWeekday())
+            ])
+        ]);
+        return $validator;
     }
     
     public function calculatePickupDayRespectingDeliveryRhythm($product, $currentDay=null)
