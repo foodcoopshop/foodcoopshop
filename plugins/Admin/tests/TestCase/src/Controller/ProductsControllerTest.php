@@ -155,6 +155,13 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertJsonOk();
     }
     
+    public function testEditDeliveryRhythmOkIndividual()
+    {
+        $this->loginAsSuperadmin();
+        $this->changeProductDeliveryRhythm(346, '0-individual');
+        $this->assertJsonOk();
+    }
+    
     public function testEditDeliveryRhythmOkWithDatabaseAsserts()
     {
         $productId = 346;
