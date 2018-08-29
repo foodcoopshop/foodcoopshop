@@ -3,7 +3,9 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
+use Cake\I18n\FrozenDate;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -114,11 +116,7 @@ class CategoriesTable extends AppTable
         }
 
         $sql = 'SELECT ';
-        if ($countMode) {
-            $sql .= 'DISTINCT COUNT(*) as count ';
-        } else {
-            $sql .= $this->getFieldsForProductListQuery();
-        }
+        $sql .= $this->getFieldsForProductListQuery();
         $sql .= "FROM ".$this->tablePrefix."product Products ";
 
         if (! $filterByNewProducts) {
@@ -154,13 +152,46 @@ class CategoriesTable extends AppTable
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $products = $statement->fetchAll('assoc');
+        $products = $this->hideProductsWithActivatedDeliveryRhythm($products);
 
         if (! $countMode) {
             return $products;
         } else {
-            return $products[0]['count'];
+            return count($products);
         }
 
+        return $products;
+    }
+    
+    private function hideProductsWithActivatedDeliveryRhythm($products)
+    {
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $i = 0;
+        foreach($products as $product) {
+            if ($product['is_stock_product']) {
+                continue;
+            }
+            $deliveryDate = $this->Product->calculatePickupDayRespectingDeliveryRhythm(
+                $this->Product->newEntity(
+                    [
+                        'delivery_rhythm_first_delivery_day' => new FrozenDate($product['delivery_rhythm_first_delivery_day']),
+                        'delivery_rhythm_type' => $product['delivery_rhythm_type'],
+                        'delivery_rhythm_count' => $product['delivery_rhythm_count'],
+                        'is_stock_product' => $product['is_stock_product']
+                    ]
+                )
+            );
+            if ($product['delivery_rhythm_type'] == 'individual' && $product['delivery_rhythm_first_delivery_day'] < Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb()) {
+                unset($products[$i]);
+            }
+            if ($product['delivery_rhythm_type'] == 'week' && $product['delivery_rhythm_first_delivery_day'] > $deliveryDate) {
+                unset($products[$i]);
+            }
+            if ($product['delivery_rhythm_type'] == 'month' && $product['delivery_rhythm_first_delivery_day'] > $deliveryDate) {
+                unset($products[$i]);
+            }
+            $i++;
+        }
         return $products;
     }
 

@@ -138,6 +138,18 @@ class ProductsTableTest extends AppCakeTestCase
                 'currentDay' => '2017-08-07',
                 'result' => '2017-08-11'
             ],
+            [
+                'product' => $this->Product->newEntity(
+                    [
+                        'delivery_rhythm_type' => 'individual',
+                        'delivery_rhythm_count' => '0',
+                        'is_stock_product' => '0',
+                        'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03')
+                    ]
+                ),
+                'currentDay' => '2017-08-07',
+                'result' => '2018-08-03'
+            ],
         ];
         
         foreach ($tests as $test) {

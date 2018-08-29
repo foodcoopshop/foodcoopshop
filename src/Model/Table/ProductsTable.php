@@ -107,7 +107,11 @@ class ProductsTable extends AppTable
         }
         $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($currentDay);
         
-        if (!$product->is_stock_product && $product->delivery_rhythm_count > 1 && $product->delivery_rhythm_type == 'week') {
+        if ($product->is_stock_product) {
+            return $pickupDay;
+        }
+            
+        if ($product->delivery_rhythm_count > 1 && $product->delivery_rhythm_type == 'week') {
             if (!is_null($product->delivery_rhythm_first_delivery_day)) {
                 $firstDeliveryDayFormatted = $product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
                 $calculatedPickupDay = $firstDeliveryDayFormatted;
@@ -119,7 +123,7 @@ class ProductsTable extends AppTable
             }
         }
         
-        if (!$product->is_stock_product && $product->delivery_rhythm_type == 'month') {
+        if ($product->delivery_rhythm_type == 'month') {
             switch($product->delivery_rhythm_count) {
                 case '1':
                     $ordinal = 'first';
@@ -138,6 +142,10 @@ class ProductsTable extends AppTable
             }
         }
         
+        if ($product->delivery_rhythm_type == 'individual') {
+            $pickupDay = $product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+        }
+            
         return $pickupDay;
         
     }

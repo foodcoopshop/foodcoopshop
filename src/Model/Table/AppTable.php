@@ -117,6 +117,7 @@ class AppTable extends Table
         $fields = "Products.id_product,
                 Products.name, Products.description_short, Products.description, Products.unity, Products.price, Products.created,
                 Products.delivery_rhythm_type, Products.delivery_rhythm_count, Products.delivery_rhythm_first_delivery_day,
+                Products.is_stock_product,
                 Deposits.deposit,
                 Images.id_image,
                 Manufacturers.id_manufacturer, Manufacturers.name as ManufacturersName,
@@ -160,7 +161,7 @@ class AppTable extends Table
         }
         return $conditions;
     }
-
+    
     /**
      * @return string
      */
