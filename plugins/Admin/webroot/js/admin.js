@@ -711,6 +711,10 @@ foodcoopshop.Admin = {
                 },
                 onClose: function(input, inst) {
                     $('.ui-dialog').removeClass('has-datepicker');
+                    // if datepicker is closed without selecting a date, it's focused and another click does not trigger to open calendar again
+                    $(this).off('click').on('click', function() {
+                        datepickerInput.datepicker('show');
+                    });
                 }
             });
             
