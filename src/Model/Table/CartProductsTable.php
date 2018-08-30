@@ -205,12 +205,12 @@ class CartProductsTable extends AppTable
         if (!empty($missingPickupDays)) {
             foreach($missingPickupDays as $missingPickupDay) {
                 $pickupDays[] = $pickupDayTable->newEntity([
-                        'customer_id' => $customerId,
-                        'pickup_day' => $missingPickupDay
-                    ]);;
+                    'customer_id' => $customerId,
+                    'pickup_day' => $missingPickupDay
+                ]);
             }
         }
-
+        
         return $pickupDays;
     }
 

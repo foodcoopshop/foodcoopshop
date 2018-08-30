@@ -115,8 +115,7 @@ class CartsTable extends AppTable
                 'CartProducts.id_cart' => $cart['id_cart']
             ],
             'order' => [
-                'OrderDetails.pickup_day' => 'DESC',
-                'OrderDetails.product_name' => 'ASC'
+                'Products.name',
             ],
             'contain' => [
                 'OrderDetails',
@@ -171,8 +170,6 @@ class CartsTable extends AppTable
             $preparedCart['CartProducts'][] = $productData;
 
         }
-        
-        $preparedCart['CartProducts'] = Hash::sort($preparedCart['CartProducts'], '{n}.pickupDay', 'asc');
         
         // sum up deposits and products
         $preparedCart['ProductsWithUnitCount'] = $this->getProductsWithUnitCount($preparedCart['CartProducts']);

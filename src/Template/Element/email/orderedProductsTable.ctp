@@ -27,7 +27,7 @@ if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAut
 
 ?>
   <tbody>
-          
+        
 		<tr>
             <td colspan="<?php echo count($columns); ?>" style="padding-top:20px;padding-bottom:10px;">
             	<?php
