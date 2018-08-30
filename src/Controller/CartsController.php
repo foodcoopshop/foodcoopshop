@@ -6,6 +6,7 @@ use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
+use Cake\I18n\FrozenDate;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -490,11 +491,19 @@ class CartsController extends FrontendController
         
         $options = [];
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
+            // save pickup day: primary key needs to be changed!
+            $this->Cart->PickupDayEntities->setPrimaryKey(['customer_id', 'pickup_day']);
             $options = [
                 'associated' => [
                     'PickupDayEntities'
                 ]
             ];
+            $fixedPickupDayRequest = [];
+            foreach($this->getRequest()->getData('Carts.pickup_day_entities') as $pickupDay) {
+                $pickupDay['pickup_day'] = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
+                $fixedPickupDayRequest[] = $pickupDay;
+            }
+            $this->setRequest($this->getRequest()->withData('Carts.pickup_day_entities', $fixedPickupDayRequest));
         }
         $cart['Cart'] = $this->Cart->patchEntity(
             $cart['Cart'],
@@ -531,8 +540,6 @@ class CartsController extends FrontendController
             $this->sendStockAvailableLimitReachedEmailToManufacturer($cart['Cart']->id_cart);
             
             if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
-                // save pickup day: primary key needs to be changed!
-                $this->Cart->PickupDayEntities->setPrimaryKey(['customer_id', 'pickup_day']);
                 $this->Cart->PickupDayEntities->saveMany($cart['Cart']->pickup_day_entities);
             }
             
