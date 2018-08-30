@@ -197,16 +197,20 @@ class CartProductsTable extends AppTable
             'order' => [
                 'PickupDays.pickup_day' => 'ASC'
             ]
-        ])->toArray();
+        ]);
         
-        if (empty($pickupDays)) {
-            $pickupDays = [
-                $pickupDayTable->newEntity([
-                    'customer_id' => $customerId,
-                    'pickup_day' => $uniquePickupDays[0]
-                ])
-            ];
+        $missingPickupDays = array_diff($uniquePickupDays, $pickupDays->all()->extract('pickup_day')->toArray());
+        $pickupDays = $pickupDays->toArray();
+        
+        if (!empty($missingPickupDays)) {
+            foreach($missingPickupDays as $missingPickupDay) {
+                $pickupDays[] = $pickupDayTable->newEntity([
+                        'customer_id' => $customerId,
+                        'pickup_day' => $missingPickupDay
+                    ]);;
+            }
         }
+
         return $pickupDays;
     }
 
