@@ -141,18 +141,34 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertJsonOk();
     }
     
-    public function testEditDeliveryRhythmOk1Month()
+    public function testEditDeliveryRhythmOkFirstOfMonth()
     {
         $this->loginAsSuperadmin();
-        $this->changeProductDeliveryRhythm(346, '1-month');
+        $this->changeProductDeliveryRhythm(346, '1-month', '03.08.2018');
         $this->assertJsonOk();
     }
     
-    public function testEditDeliveryRhythmOkLastMonth()
+    public function testEditDeliveryRhythmInvalidFirstOfMonth()
     {
         $this->loginAsSuperadmin();
-        $this->changeProductDeliveryRhythm(346, '0-month');
+        $response = $this->changeProductDeliveryRhythm(346, '1-month', '10.08.2018');
+        $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein erster Freitag im Monat sein.', $response->msg);
+        $this->assertJsonError();
+    }
+    
+    public function testEditDeliveryRhythmOkLastOfMonth()
+    {
+        $this->loginAsSuperadmin();
+        $this->changeProductDeliveryRhythm(346, '0-month', '31.08.2018');
         $this->assertJsonOk();
+    }
+    
+    public function testEditDeliveryRhythmInvalidLastOfMonth()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->changeProductDeliveryRhythm(346, '0-month', '10.08.2018');
+        $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein letzter Freitag im Monat sein.', $response->msg);
+        $this->assertJsonError();
     }
     
     public function testEditDeliveryRhythmOkIndividual()
@@ -166,7 +182,7 @@ class ProductsControllerTest extends AppCakeTestCase
     {
         $productId = 346;
         $this->loginAsSuperadmin();
-        $this->changeProductDeliveryRhythm($productId, '1-month', '31.08.2018');
+        $this->changeProductDeliveryRhythm($productId, '1-month', '03.08.2018');
         $this->assertJsonOk();
         $product = $this->Product->find('all', [
             'conditions' => [
@@ -175,7 +191,7 @@ class ProductsControllerTest extends AppCakeTestCase
         ])->first();
         $this->assertEquals($product->delivery_rhythm_type, 'month');
         $this->assertEquals($product->delivery_rhythm_count, 1);
-        $this->assertEquals($product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')), '31.08.2018');
+        $this->assertEquals($product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')), '03.08.2018');
     }
     
     private function changeProductDeliveryRhythm($productId, $deliveryRhythmType, $deliveryRhythmFirstDeliveryDay = '')

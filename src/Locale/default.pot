@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-29 16:05+0200\n"
+"POT-Creation-Date: 2018-08-30 09:24+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1269,6 +1269,12 @@ msgid "The_first_delivery_day_is_not_valid."
 msgstr ""
 
 msgid "The_first_delivery_day_needs_to_be_a_{0}."
+msgstr ""
+
+msgid "The_first_delivery_day_needs_to_be_a_last_{0}_of_the_month."
+msgstr ""
+
+msgid "The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month."
 msgstr ""
 
 msgid "The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long."
