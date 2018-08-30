@@ -17,7 +17,6 @@
  */
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
-use Cake\I18n\FrozenDate;
 use Cake\ORM\TableRegistry;
 
 class ProductsControllerTest extends AppCakeTestCase
@@ -171,10 +170,18 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
     
+    public function testEditDeliveryRhythmInvalidIndividualWithoutDeliveryDay()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->changeProductDeliveryRhythm(346, '0-individual');
+        $this->assertRegExpWithUnquotedString('Der erste Liefertag ist nicht gültig.', $response->msg);
+        $this->assertJsonError();
+    }
+    
     public function testEditDeliveryRhythmOkIndividual()
     {
         $this->loginAsSuperadmin();
-        $this->changeProductDeliveryRhythm(346, '0-individual');
+        $this->changeProductDeliveryRhythm(346, '0-individual', '2018-08-31');
         $this->assertJsonOk();
     }
     

@@ -378,9 +378,10 @@ class ProductsController extends AdminAppController
             'delivery_rhythm_count' => $splittedDeliveryRhythmType[0],
             'delivery_rhythm_type' => $splittedDeliveryRhythmType[1]
         ];
-        if ($deliveryRhythmFirstDeliveryDay != '') {
+        if ($deliveryRhythmFirstDeliveryDay != '' || $splittedDeliveryRhythmType[1] == 'individual') {
             $product2update['delivery_rhythm_first_delivery_day'] = Configure::read('app.timeHelper')->formatToDbFormatDate($deliveryRhythmFirstDeliveryDay);
         }
+        
         try {
             $entity = $this->Product->patchEntity(
                 $oldProduct,
@@ -390,7 +391,7 @@ class ProductsController extends AdminAppController
                 ]
             );
             if (!empty($entity->getErrors())) {
-                throw new InvalidParameterException(join(' ', $this->Product->getAllValidationErrors($entity)));
+                throw new InvalidParameterException(join('<br />', $this->Product->getAllValidationErrors($entity)));
             }
             $this->Product->save($entity);
             
