@@ -309,6 +309,22 @@ class CartsControllerTest extends AppCakeTestCase
         $this->finishCart(1, 1);
     }
     
+    public function testFinishOrderWithMultiplePickupDays() {
+        
+        $this->loginAsSuperadmin();
+        $productIdA = 346;
+        $productIdB = 347;
+        $productIdC = '60-10';
+        $this->changeProductDeliveryRhythm($productIdA, '0-individual', '28.09.2018');
+        $this->addProductToCart($productIdA, 3);
+        $this->addProductToCart($productIdB, 2);
+        $this->addProductToCart($productIdC, 1);
+        $this->finishCart(1, 1);
+        
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(1, count($emailLogs));
+    }
+    
     public function testFinishOrderStockNotificationsIsStockProductDisabled() {
         
         $this->loginAsSuperadmin();

@@ -4,6 +4,7 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 
 /**
@@ -114,7 +115,8 @@ class CartsTable extends AppTable
                 'CartProducts.id_cart' => $cart['id_cart']
             ],
             'order' => [
-                'Products.name' => 'ASC'
+                'OrderDetails.pickup_day' => 'DESC',
+                'OrderDetails.product_name' => 'ASC'
             ],
             'contain' => [
                 'OrderDetails',
@@ -169,7 +171,9 @@ class CartsTable extends AppTable
             $preparedCart['CartProducts'][] = $productData;
 
         }
-
+        
+        $preparedCart['CartProducts'] = Hash::sort($preparedCart['CartProducts'], '{n}.pickupDay', 'asc');
+        
         // sum up deposits and products
         $preparedCart['ProductsWithUnitCount'] = $this->getProductsWithUnitCount($preparedCart['CartProducts']);
         $preparedCart['CartDepositSum'] = 0;
@@ -195,6 +199,18 @@ class CartsTable extends AppTable
             }
         }
         return $preparedCart;
+    }
+    
+    public function getCartGroupedByPickupDay($cart)
+    {
+        $preparedCartProducts = [];
+        foreach($cart['CartProducts'] as $cartProduct) {
+            @$preparedCartProducts[$cartProduct['pickupDay']]['CartDepositSum'] += $cartProduct['deposit'];
+            @$preparedCartProducts[$cartProduct['pickupDay']]['CartProductSum'] += $cartProduct['price'];
+            @$preparedCartProducts[$cartProduct['pickupDay']]['Products'][] = $cartProduct;
+        }
+        $cart['CartProducts'] = $preparedCartProducts;
+        return $cart;
     }
 
     private function addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece)
@@ -332,7 +348,6 @@ class CartsTable extends AppTable
         $unitAmount = 0;
         $priceInclPerUnit = 0;
         $quantityInUnits = 0;
-        $productQuantityInUnits = 0;
 
         if (!empty($cartProduct->product_attribute->unit_product_attribute) && $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled) {
             $unitName = $cartProduct->product_attribute->unit_product_attribute->name;

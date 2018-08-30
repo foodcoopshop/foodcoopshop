@@ -240,7 +240,7 @@ class CartsController extends FrontendController
             ->setTo($this->AppAuth->getEmail())
             ->setSubject(__('Order_confirmation'))
             ->setViewVars([
-                'cart' => $cart,
+                'cart' => $this->Cart->getCartGroupedByPickupDay($cart),
                 'appAuth' => $this->AppAuth,
                 'originalLoggedCustomer' => $this->getRequest()->getSession()->check('Auth.originalLoggedCustomer') ? $this->getRequest()->getSession()->read('Auth.originalLoggedCustomer') : null
             ]);
@@ -761,7 +761,6 @@ class CartsController extends FrontendController
         $errorMessages = [];
         $loadedProducts = count($orderDetails);
         if (count($orderDetails) > 0) {
-            $newCartProductsData = [];
             foreach($orderDetails as $orderDetail) {
                 $result = $this->CartProduct->add($this->AppAuth, $orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_amount);
                 if (is_array($result)) {

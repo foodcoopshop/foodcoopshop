@@ -15,10 +15,17 @@
 use Cake\Core\Configure;
 
 ?>
-
-<tbody>
-    
-    <tr>
+  <tbody>
+          
+		<tr>
+            <td style="padding-top:10px;padding-bottom:10px;">
+            	<?php
+            	   echo __('Pickup_day') . ': <b> ' . $this->MyTime->getDateFormattedWithWeekday(strtotime($pickupDay)).'</b>';
+            	?>
+            </td>
+        </tr>
+        
+        <tr>
         <?php
         $columns = [
             __('Amount'),
@@ -41,8 +48,8 @@ use Cake\Core\Configure;
         if ($manufacturerId > 0 && $manufacturerId != $product['manufacturerId']) {
             continue;
         }
-        ?>
-        
+		?>
+		        
         <tr>
             <?php
             $amountStyle = '';
