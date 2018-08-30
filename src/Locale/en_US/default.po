@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-30 10:47+0200\n"
-"PO-Revision-Date: 2018-08-30 10:48+0200\n"
+"POT-Creation-Date: 2018-08-30 15:31+0200\n"
+"PO-Revision-Date: 2018-08-30 15:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1631,6 +1631,9 @@ msgstr "Product"
 
 msgid "Price"
 msgstr "Price"
+
+msgid "Total"
+msgstr "Total"
 
 msgid "You_can_sign_in_here_for_ordering"
 msgstr "You can sign in here for placing a new order"

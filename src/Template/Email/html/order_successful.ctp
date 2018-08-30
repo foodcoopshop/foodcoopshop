@@ -23,7 +23,7 @@ use Cake\Core\Configure;
             </td>
         </tr>
         <tr>
-            <td style="padding-bottom:10px;">
+            <td>
             	<?php
             	   echo __('thank_you_for_your_order_from_{0}.', [
             	       $cart['Cart']->modified->i18nFormat(

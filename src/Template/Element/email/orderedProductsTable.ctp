@@ -29,7 +29,7 @@ if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAut
   <tbody>
           
 		<tr>
-            <td colspan="<?php echo count($columns); ?>" style="padding-top:10px;padding-bottom:10px;">
+            <td colspan="<?php echo count($columns); ?>" style="padding-top:20px;padding-bottom:10px;">
             	<?php
             	   echo __('Pickup_day') . ': <b> ' . $this->MyTime->getDateFormattedWithWeekday(strtotime($pickupDay)).'</b>';
             	?>
@@ -127,7 +127,7 @@ if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAut
     
     <tr>
         <td style="background-color:#fbfbfb;border:1px solid #d6d4d4;" colspan="2"></td>
-        <td align="right" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;">Gesamt</td>
+        <td align="right" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;"><?php echo __('Total'); ?></td>
         <td align="center" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;" colspan="2">
             <?php
                 echo $this->MyNumber->formatAsCurrency($productAndDepositSum);
