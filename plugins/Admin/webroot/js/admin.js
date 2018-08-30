@@ -697,7 +697,20 @@ foodcoopshop.Admin = {
             select.find('option').remove();
             select.append($('#rhythmtypes').html());
             var selectedDeliveryRhythmType = $(this).closest('tr').find('td span.delivery-rhythm-for-dialog span.dropdown').html();
+            select.on('change', function() {
+                var labelToShow = 'default';
+                var placeholder = foodcoopshop.LocalizedJs.dialogProduct.canBeLeftBlank;
+                if ($(this).val().match('individual')) {
+                    labelToShow = 'individual';
+                    placeholder = '';
+                }
+                $('#' + dialogId + ' input.datepicker').attr('placeholder', placeholder);
+                $('#' + dialogId + ' .dynamic-label').hide();
+                $('#' + dialogId + ' .dynamic-label.' + labelToShow).show();
+                
+            });
             select.val(selectedDeliveryRhythmType);
+            select.trigger('change');
             
             foodcoopshop.Helper.initDatepicker();
             var datepickerInput = $('#' + dialogId + ' input.datepicker');

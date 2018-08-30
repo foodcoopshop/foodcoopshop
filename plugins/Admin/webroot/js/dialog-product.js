@@ -122,10 +122,13 @@ foodcoopshop.DialogProduct = {
         dialogHtml += '<div class="field-wrapper">';
             dialogHtml += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.DeliveryRhythm + '</label>';
             dialogHtml += '<select name="dialogDeliveryRhythmType" id="dialogDeliveryRhythmType" /></select>';
-            dialogHtml += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.FirstDeliveryDay + '</label>';
+            dialogHtml += '<label class="dynamic-label default">' + foodcoopshop.LocalizedJs.dialogProduct.FirstDeliveryDay + '</label>';
+            dialogHtml += '<label class="dynamic-label individual">' + foodcoopshop.LocalizedJs.dialogProduct.DeliveryDay + '</label>';
             dialogHtml += '<input class="datepicker" type="text" name="dialogDeliveryRhythmFirstDeliveryDay" id="dialogDeliveryRhythmFirstDeliveryDay" /><br />';
+            dialogHtml += '<div style="float:left;" class="dynamic-label default"><span class="small">' + foodcoopshop.LocalizedJs.dialogProduct.FirstDeliveryDayInfo + '</span><br /></div>';
+            dialogHtml += '<div style="float:left;" class="dynamic-label individual"><span class="small">' + foodcoopshop.LocalizedJs.dialogProduct.IndividualDeliveryDayInfo + '</span><br /></div>';
         dialogHtml += '</div>';
-        dialogHtml += '<p style="margin-top:10px;float:left;"><a target="_blank" href="' + foodcoopshop.LocalizedJs.dialogProduct.DocsUrlOrderHandling + '">' + foodcoopshop.LocalizedJs.dialogProduct.InfoPageForOrderHandling + '</a></p>';
+        dialogHtml += '<p style="margin-top:10px;float:right;"><a target="_blank" href="' + foodcoopshop.LocalizedJs.dialogProduct.DocsUrlOrderHandling + '">' + foodcoopshop.LocalizedJs.dialogProduct.InfoPageForOrderHandling + '</a></p>';
         dialogHtml += '<input type="hidden" name="dialogDeliveryRhythmProductId" id="dialogDeliveryRhythmProductId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.DeliveryRhythm, dialogId, dialogHtml);
         return dialogHtml;

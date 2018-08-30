@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-30 09:24+0200\n"
-"PO-Revision-Date: 2018-08-30 09:24+0200\n"
+"POT-Creation-Date: 2018-08-30 10:47+0200\n"
+"PO-Revision-Date: 2018-08-30 10:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -771,6 +771,18 @@ msgstr "Delivery rhythm"
 msgid "First_delivery_day"
 msgstr "First delivery day"
 
+msgid "Delivery_day"
+msgstr "Delivery day"
+
+msgid "Individual_delivery_day_info."
+msgstr "The product can be ordered from now on and will be deactivated automatically as soon as the last order day of the given delivery day is reached."
+
+msgid "First_delivery_day_info."
+msgstr "Even if a first delivery day is provided, the product can be ordered from now on."
+
+msgid "can_be_left_blank"
+msgstr "can be left blank"
+
 msgid "Info_page_for_order_handling"
 msgstr "Info page for order handling"
 
@@ -812,9 +824,6 @@ msgstr "VAT"
 
 msgid "Order_day"
 msgstr "Order day"
-
-msgid "Delivery_day"
-msgstr "Delivery day"
 
 msgid "Total_sum"
 msgstr "Total sum"

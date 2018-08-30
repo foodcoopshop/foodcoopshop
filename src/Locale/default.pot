@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-30 09:24+0200\n"
+"POT-Creation-Date: 2018-08-30 10:47+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -770,6 +770,18 @@ msgstr ""
 msgid "First_delivery_day"
 msgstr ""
 
+msgid "Delivery_day"
+msgstr ""
+
+msgid "Individual_delivery_day_info."
+msgstr ""
+
+msgid "First_delivery_day_info."
+msgstr ""
+
+msgid "can_be_left_blank"
+msgstr ""
+
 msgid "Info_page_for_order_handling"
 msgstr ""
 
@@ -810,9 +822,6 @@ msgid "VAT"
 msgstr ""
 
 msgid "Order_day"
-msgstr ""
-
-msgid "Delivery_day"
 msgstr ""
 
 msgid "Total_sum"

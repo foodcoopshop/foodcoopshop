@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-30 09:24+0200\n"
-"PO-Revision-Date: 2018-08-30 09:29+0200\n"
+"POT-Creation-Date: 2018-08-30 10:47+0200\n"
+"PO-Revision-Date: 2018-08-30 10:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -771,6 +771,18 @@ msgstr "Lieferrhythmus"
 msgid "First_delivery_day"
 msgstr "Erster Liefertag"
 
+msgid "Delivery_day"
+msgstr "Liefertag"
+
+msgid "Individual_delivery_day_info."
+msgstr "Das Produkt ist ab sofort bestellbar und wird automatisch deaktiviert, sobald der letzte Bestelltag des angegebenen Lieferdatums erreicht ist."
+
+msgid "First_delivery_day_info."
+msgstr "Das Produkt kann auch bei Angabe eines ersten Liefertages ab sofort bestellt werden."
+
+msgid "can_be_left_blank"
+msgstr "kann freigelassen werden"
+
 msgid "Info_page_for_order_handling"
 msgstr "Infos zur Bestellabwicklung"
 
@@ -812,9 +824,6 @@ msgstr "USt."
 
 msgid "Order_day"
 msgstr "Bestelltag"
-
-msgid "Delivery_day"
-msgstr "Liefertag"
 
 msgid "Total_sum"
 msgstr "Gesamtsumme"

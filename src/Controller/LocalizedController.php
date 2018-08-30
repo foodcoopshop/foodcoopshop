@@ -247,9 +247,12 @@ class LocalizedController extends Controller
                 'TheDeliveryRhythmOfStockProductsIsAlwaysWeekly' => __('The_delivery_rhythm_of_stock_products_is_always_weekly.'),
                 'DeliveryRhythm' => __('Delivery_rhythm'),
                 'FirstDeliveryDay' => __('First_delivery_day'),
+                'DeliveryDay' => __('Delivery_day'),
+                'IndividualDeliveryDayInfo' => __('Individual_delivery_day_info.'),
+                'FirstDeliveryDayInfo' => __('First_delivery_day_info.'),
+                'canBeLeftBlank' => __('can_be_left_blank'),
                 'InfoPageForOrderHandling' => __('Info_page_for_order_handling'),
-                'DocsUrlOrderHandling' => Configure::read('app.htmlHelper')->getDocsUrl(__('docs_route_order_handling'))
-                
+                'DocsUrlOrderHandling' => Configure::read('app.htmlHelper')->getDocsUrl(__('docs_route_order_handling')),
             ],
             'upload' => [
                 'delete' => __('delete'),
