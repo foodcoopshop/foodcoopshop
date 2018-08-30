@@ -355,6 +355,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         if ($comment != '') {
             $data['Carts']['pickup_day_entities'][0] = [
                 'customer_id' => $this->browser->getLoggedUserId(),
+                'pickup_day' => Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb(),
                 'comment' => $comment
             ];
         }

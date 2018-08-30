@@ -499,11 +499,14 @@ class CartsController extends FrontendController
                 ]
             ];
             $fixedPickupDayRequest = [];
-            foreach($this->getRequest()->getData('Carts.pickup_day_entities') as $pickupDay) {
-                $pickupDay['pickup_day'] = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
-                $fixedPickupDayRequest[] = $pickupDay;
+            $pickupEntities = $this->getRequest()->getData('Carts.pickup_day_entities');
+            if (!empty($pickupEntities)) {
+                foreach($pickupEntities as $pickupDay) {
+                    $pickupDay['pickup_day'] = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
+                    $fixedPickupDayRequest[] = $pickupDay;
+                }
+                $this->setRequest($this->getRequest()->withData('Carts.pickup_day_entities', $fixedPickupDayRequest));
             }
-            $this->setRequest($this->getRequest()->withData('Carts.pickup_day_entities', $fixedPickupDayRequest));
         }
         $cart['Cart'] = $this->Cart->patchEntity(
             $cart['Cart'],
