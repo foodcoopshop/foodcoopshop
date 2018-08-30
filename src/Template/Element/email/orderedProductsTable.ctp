@@ -14,11 +14,22 @@
  */
 use Cake\Core\Configure;
 
+$columns = [
+    __('Amount'),
+    __('Product'),
+    __('Manufacturer'),
+    __('Price'),
+    __('Deposit')
+];
+if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) {
+    $columns[] = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME');
+}
+
 ?>
   <tbody>
           
 		<tr>
-            <td style="padding-top:10px;padding-bottom:10px;">
+            <td colspan="<?php echo count($columns); ?>" style="padding-top:10px;padding-bottom:10px;">
             	<?php
             	   echo __('Pickup_day') . ': <b> ' . $this->MyTime->getDateFormattedWithWeekday(strtotime($pickupDay)).'</b>';
             	?>
@@ -26,28 +37,18 @@ use Cake\Core\Configure;
         </tr>
         
         <tr>
-        <?php
-        $columns = [
-            __('Amount'),
-            __('Product'),
-            __('Manufacturer'),
-            __('Price'),
-            __('Deposit')
-        ];
-        if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) {
-            $columns[] = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME');
-        }
-        foreach ($columns as $column) {
-            echo '<td align="center" style="padding: 10px;font-weight:bold;border:1px solid #d6d4d4;background-color:#fbfbfb;">'.$column.'</td>';
-        }
-        ?>
+            <?php
+                foreach ($columns as $column) {
+                    echo '<td align="center" style="padding: 10px;font-weight:bold;border:1px solid #d6d4d4;background-color:#fbfbfb;">'.$column.'</td>';
+                }
+            ?>
     </tr>
     
     <?php foreach ($cartProducts as $product) { ?>
         <?php
-        if ($manufacturerId > 0 && $manufacturerId != $product['manufacturerId']) {
-            continue;
-        }
+            if ($manufacturerId > 0 && $manufacturerId != $product['manufacturerId']) {
+                continue;
+            }
 		?>
 		        
         <tr>
