@@ -204,7 +204,7 @@ foodcoopshop.Cart = {
                 foodcoopshop.Cart.updateExistingProduct(productContainer, amount, price, deposit, tax, timebasedCurrencyHours);
             } else {
                 // product not yet in cart
-                foodcoopshop.Cart.addOrAppendProductToPickupDay(productId, amount, amount * price, productLink, unity, '', image, deposit, tax, timebasedCurrencyHours, pickupDay)
+                foodcoopshop.Cart.addOrAppendProductToPickupDay(productId, amount, amount * price, productLink, unity, '', image, deposit, tax, timebasedCurrencyHours, pickupDay);
                 foodcoopshop.Helper.applyBlinkEffect($('#cart .product.' + productId), function () {
                     foodcoopshop.Cart.initRemoveFromCartLinks(); // bind click event
                 });
