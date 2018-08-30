@@ -682,6 +682,13 @@ body.manufacturers.detail .imprint {
 #cart {
     min-height: 150px;
 }
+#cart a.question {
+	color: #fff;
+	float: right;
+}
+#cart a.question i {
+	padding-right: 0;
+}
 body.carts p.pickup-day-header {
 	margin-top: 15px;
     float: left;
