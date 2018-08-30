@@ -135,9 +135,16 @@ class ProductsControllerTest extends AppCakeTestCase
     
     public function testEditDeliveryRhythmOk2Week()
     {
+        $productId = 346;
         $this->loginAsSuperadmin();
-        $this->changeProductDeliveryRhythm(346, '2-week');
+        $this->changeProductDeliveryRhythm($productId, '2-week');
         $this->assertJsonOk();
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId
+            ]
+        ])->first();
+        $this->assertEquals($product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
     }
     
     public function testEditDeliveryRhythmOkFirstOfMonth()
@@ -201,16 +208,6 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertEquals($product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')), '03.08.2018');
     }
     
-    private function changeProductDeliveryRhythm($productId, $deliveryRhythmType, $deliveryRhythmFirstDeliveryDay = '')
-    {
-        $this->browser->ajaxPost('/admin/products/editDeliveryRhythm', [
-            'productId' => $productId,
-            'deliveryRhythmType' => $deliveryRhythmType,
-            'deliveryRhythmFirstDeliveryDay' => $deliveryRhythmFirstDeliveryDay
-        ]);
-        return $this->browser->getJsonDecodedContent();
-    }
-
     /**
      * asserts price in database (getGrossPrice)
      */

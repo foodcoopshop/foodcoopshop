@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-29 16:05+0200\n"
-"PO-Revision-Date: 2018-08-29 15:05+0200\n"
+"POT-Creation-Date: 2018-08-30 10:02+0200\n"
+"PO-Revision-Date: 2018-08-30 10:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1091,6 +1091,9 @@ msgstr "Für dieses Produkt werden niemals Benachrichtigungen bezüglich Lagerst
 
 msgid "change_delivery_rhythm"
 msgstr "Lieferrhythmus ändern"
+
+msgid "delivery_rhythm_from"
+msgstr "ab"
 
 msgid "change_deposit"
 msgstr "Pfand ändern"

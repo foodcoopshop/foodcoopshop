@@ -34,11 +34,14 @@ echo '<td class="delivery-rhythm">';
                 echo '</span>';
                 if (!is_null($product->delivery_rhythm_first_delivery_day)) {
                     echo ', ';
+                    if ($product->delivery_rhythm_type != 'individual') {
+                        echo __d('admin', 'delivery_rhythm_from') . ' ';
+                    }
                 }
                 echo '<span class="first-delivery-day">';
-                if (!is_null($product->delivery_rhythm_first_delivery_day)) {
-                    echo $this->Time->formatToDateShort($product->delivery_rhythm_first_delivery_day);
-                }
+                    if (!is_null($product->delivery_rhythm_first_delivery_day)) {
+                        echo $this->Time->formatToDateShort($product->delivery_rhythm_first_delivery_day);
+                    }
                 echo '</span>';
             echo '</span>';
         }

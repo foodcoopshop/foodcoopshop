@@ -360,10 +360,10 @@ class ProductsController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
         
         $productId = (int) $this->getRequest()->getData('productId');
-        $deliveryRhythmType = $this->getRequest()->getData('deliveryRhythmType');
+        $deliveryRhythmTypeCombined = $this->getRequest()->getData('deliveryRhythmType');
         $deliveryRhythmFirstDeliveryDay = $this->getRequest()->getData('deliveryRhythmFirstDeliveryDay');
         
-        $splittedDeliveryRhythmType = explode('-', $deliveryRhythmType);
+        $splittedDeliveryRhythmType = explode('-', $deliveryRhythmTypeCombined);
         
         $oldProduct = $this->Product->find('all', [
             'conditions' => [
@@ -374,12 +374,21 @@ class ProductsController extends AdminAppController
             ]
         ])->first();
         
+        $deliveryRhythmCount = $splittedDeliveryRhythmType[0];
+        $deliveryRhythmType = $splittedDeliveryRhythmType[1];
+        
         $product2update = [
-            'delivery_rhythm_count' => $splittedDeliveryRhythmType[0],
-            'delivery_rhythm_type' => $splittedDeliveryRhythmType[1]
+            'delivery_rhythm_count' => $deliveryRhythmCount,
+            'delivery_rhythm_type' => $deliveryRhythmType
         ];
-        if ($deliveryRhythmFirstDeliveryDay != '' || $splittedDeliveryRhythmType[1] == 'individual') {
+        if ($deliveryRhythmFirstDeliveryDay != '' || $deliveryRhythmType == 'individual') {
             $product2update['delivery_rhythm_first_delivery_day'] = Configure::read('app.timeHelper')->formatToDbFormatDate($deliveryRhythmFirstDeliveryDay);
+        }
+        if ($deliveryRhythmFirstDeliveryDay == '' && $deliveryRhythmType != 'individual') {
+            $product2update['delivery_rhythm_first_delivery_day'] = '';
+        }
+        if ($deliveryRhythmFirstDeliveryDay == '' && $deliveryRhythmTypeCombined == '2-week') {
+            $product2update['delivery_rhythm_first_delivery_day'] = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
         }
         
         try {
