@@ -199,7 +199,11 @@ class CartProductsTable extends AppTable
             ]
         ]);
         
-        $missingPickupDays = array_diff($uniquePickupDays, $pickupDays->all()->extract('pickup_day')->toArray());
+        $existingPickupDays = [];
+        foreach($pickupDays->all()->extract('pickup_day')->toArray() as $p) {
+            $existingPickupDays[] = $p->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+        }
+        $missingPickupDays = array_diff($uniquePickupDays, $existingPickupDays);
         $pickupDays = $pickupDays->toArray();
         
         if (!empty($missingPickupDays)) {
@@ -210,7 +214,6 @@ class CartProductsTable extends AppTable
                 ]);
             }
         }
-        
         return $pickupDays;
     }
 
