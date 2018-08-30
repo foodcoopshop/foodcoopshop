@@ -165,7 +165,11 @@ class CartsTable extends AppTable
             $productData['image'] = $productImage;
             $productData['productLink'] = $productLink;
             $productData['manufacturerLink'] = $manufacturerLink;
-            $productData['nextDeliveryDay'] = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($cartProduct->product->next_delivery_day));
+            if (!$instantOrderMode) {
+                $productData['nextDeliveryDay'] = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($cartProduct->product->next_delivery_day));
+            } else {
+                $productData['nextDeliveryDay'] = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(Configure::read('app.timeHelper')->getCurrentDay());
+            }
             
             $preparedCart['CartProducts'][] = $productData;
 

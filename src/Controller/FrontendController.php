@@ -46,14 +46,18 @@ class FrontendController extends AppController
             $product['tax'] = $grossPrice - $product['price'];
             $product['is_new'] = $this->Product->isNew($product['created']);
             
-            $product['next_delivery_day'] = $this->Product->calculatePickupDayRespectingDeliveryRhythm(
-                $this->Product->newEntity([
-                    'delivery_rhythm_first_delivery_day' => new FrozenDate($product['delivery_rhythm_first_delivery_day']),
-                    'delivery_rhythm_type' => $product['delivery_rhythm_type'],
-                    'delivery_rhythm_count' => $product['delivery_rhythm_count'],
-                    'is_stock_product' => $product['is_stock_product']
-                ]
-            ));
+            if ($this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
+                $product['next_delivery_day'] = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+            } else {
+                $product['next_delivery_day'] = $this->Product->calculatePickupDayRespectingDeliveryRhythm(
+                    $this->Product->newEntity([
+                        'delivery_rhythm_first_delivery_day' => new FrozenDate($product['delivery_rhythm_first_delivery_day']),
+                        'delivery_rhythm_type' => $product['delivery_rhythm_type'],
+                        'delivery_rhythm_count' => $product['delivery_rhythm_count'],
+                        'is_stock_product' => $product['is_stock_product']
+                    ]
+                ));
+            }
             
             $product['attributes'] = [];
 

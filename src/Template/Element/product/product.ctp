@@ -61,7 +61,15 @@ if ($product['description'] != '') {
 }
 
     echo '<br />'.__('Pickup_day').': ';
-    echo '<span class="pickup-day">' . $this->Time->getDateFormattedWithWeekday(strtotime($product['next_delivery_day'])) . '</span> (' . $this->Html->getDeliveryRhythmString($product['delivery_rhythm_type'], $product['delivery_rhythm_count']) . ')';
+    echo '<span class="pickup-day">';
+        if ($this->request->getSession()->check('Auth.instantOrderCustomer')) {
+            $pickupDayDetailText = __('Instant_order');
+        } else {
+            $pickupDayDetailText = $this->Html->getDeliveryRhythmString($product['delivery_rhythm_type'], $product['delivery_rhythm_count']);
+        }
+        echo $this->Time->getDateFormattedWithWeekday(strtotime($product['next_delivery_day']));
+    echo '</span>';
+    echo ' (' . $pickupDayDetailText . ')';
     
     echo '<br />'.__('Manufacturer').': ';
     echo $this->Html->link(
