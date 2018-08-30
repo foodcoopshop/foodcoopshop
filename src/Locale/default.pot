@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-30 16:32+0200\n"
+"POT-Creation-Date: 2018-08-30 17:17+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1542,6 +1542,9 @@ msgid "Value_added_tax"
 msgstr ""
 
 msgid "Show_cart_button"
+msgstr ""
+
+msgid "Already_ordered_products"
 msgstr ""
 
 msgid "Information"

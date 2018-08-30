@@ -100,6 +100,25 @@ class OrderDetailsTable extends AppTable
 
     }
     
+    public function getGroupedFutureOrdersByCustomerId($customerId)
+    {
+        $query = $this->find('all', [
+            'fields' => ['OrderDetails.pickup_day'],
+            'conditions' => [
+                'OrderDetails.id_customer' => $customerId,
+                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') > DATE_FORMAT(NOW(), \'%Y-%m-%d\')'
+            ],
+            'order' => [
+                'OrderDetails.pickup_day' => 'ASC'
+            ]
+        ]);
+        $query->select(
+            ['orderDetailsCount' => $query->func()->count('OrderDetails.pickup_day')]
+        );
+        $query->group('OrderDetails.pickup_day');
+        return $query->toArray();
+    }
+    
     public function updateOrderState($dateFrom, $dateTo, $oldOrderStates, $newOrderState, $manufacturerId)
     {
         

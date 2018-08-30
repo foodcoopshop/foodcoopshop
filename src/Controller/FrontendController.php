@@ -208,7 +208,7 @@ class FrontendController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-
+        
         if (($this->name == 'Categories' && $this->getRequest()->getParam('action') == 'detail') || $this->name == 'Carts') {
             // do not allow but call isAuthorized
         } else {
@@ -230,6 +230,10 @@ class FrontendController extends AppController
 
             $shoppingLimitReached = Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') != - 1 && $creditBalance < Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') * - 1;
             $this->set('shoppingLimitReached', $shoppingLimitReached);
+            
+            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+            $futureOrderDetails = $this->OrderDetail->getGroupedFutureOrdersByCustomerId($this->AppAuth->getUserId());
+            $this->set('futureOrderDetails', $futureOrderDetails);
         }
         $this->AppAuth->setCart($this->AppAuth->getCart());
     }

@@ -113,5 +113,21 @@ if ($appAuth->Cart->getProducts() !== null) {
             
         <?php } ?>
         
+        <?php
+            if (!empty($futureOrderDetails)) {
+                echo '<p class="future-orders">';
+                    echo '<b>'.__('Already_ordered_products').'</b><br />';
+                    $links = [];
+                    foreach($futureOrderDetails as $futureOrderDetail) {
+                        $links[] = $this->Html->link(
+                            $futureOrderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' (' . $futureOrderDetail->orderDetailsCount . ')' ,
+                            '/admin/order-details?customerId='.$appAuth->getUserId().'&pickupDay[]=' . $futureOrderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'))
+                        );
+                    }
+                    echo join(' / ', $links);
+                echo '</p>';
+            }
+        ?>
+        
     </div>
 </div>
