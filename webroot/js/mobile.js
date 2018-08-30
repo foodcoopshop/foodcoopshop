@@ -192,10 +192,11 @@ foodcoopshop.Mobile = {
         $('#container').after(this.getSlidebarMenu('right')).attr('canvas', '');
         $('.sb-right').html('<div class="inner">' + $('#info-box').html() + '</div>');
 
-        // add credit balance info and shop order info to cart page
+        // add special infos to cart page
         var cartPage = $('body.carts.detail #inner-content h1:first');
         cartPage.after($('#cart p.instant-order-customer-info'));
         cartPage.after($('#cart div.credit-balance-wrapper'));
+        cartPage.after($('#cart p.future-orders'));
 
         var loadLastOrderDetailsDropdown = $('#cart .inner #load-last-order-details');
         if (loadLastOrderDetailsDropdown.length > 0) {
