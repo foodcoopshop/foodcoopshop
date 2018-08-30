@@ -382,11 +382,6 @@ input.datepicker {
     font-family: 'Open Sans';
 }
 
-.last-n-days-dropdown,
-.categories-checkboxes,
-.tax-dropdown-wrapper {
-    display: none;
-}
 .tax-dropdown-wrapper {
     width: 240px;
 }
