@@ -1,8 +1,5 @@
 <?php
-
 /**
- * CartsControllerTest
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -547,12 +544,13 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Diese Bestellung wird für <b>' . $testCustomer->name . '</b> getätigt.', $responseHtml);
         $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/', 'redirect did not work');
         
-        $this->fillCart();
+        $this->addProductToCart($this->productId2, 3); // attribute
+        $this->addProductToCart(349, 1); // stock product - no notification!
         
         $this->finishCart(1, 1);
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
         
-        $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung für <b>Demo Mitglied</b> wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: <b>Demo Gemüse-Hersteller, Demo Milch-Hersteller</b>', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung für <b>Demo Mitglied</b> wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: <b>Demo Milch-Hersteller</b>', $this->browser->getContent());
         
         $cart = $this->getCartById($cartId);
         
@@ -563,21 +561,10 @@ class CartsControllerTest extends AppCakeTestCase
         }
         
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs(
-            $emailLogs[0],
-            'Benachrichtigung über Sofort-Bestellung',
-            [
-                'Artischocke : Stück',
-                'Hallo Demo,',
-                '3,64'
-            ],
-            [
-                Configure::read('test.loginEmailVegetableManufacturer')
-            ]
-        );
+        $this->assertEquals(2, count($emailLogs));
         
         $this->assertEmailLogs(
-            $emailLogs[1],
+            $emailLogs[0],
             'Benachrichtigung über Sofort-Bestellung',
             [
                 'Milch : 0,5l',

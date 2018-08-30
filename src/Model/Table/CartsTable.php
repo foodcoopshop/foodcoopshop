@@ -266,7 +266,8 @@ class CartsTable extends AppTable
             'price' => $grossPrice,
             'priceExcl' => $cartProduct->product->price * $cartProduct->amount,
             'tax' => $tax,
-            'pickupDay' => $cartProduct->pickup_day
+            'pickupDay' => $cartProduct->pickup_day,
+            'isStockProduct' => $cartProduct->product->is_stock_product
         ];
         
         $deposit = 0;
@@ -279,7 +280,6 @@ class CartsTable extends AppTable
         $unitAmount = 0;
         $priceInclPerUnit = 0;
         $quantityInUnits = 0;
-        $productQuantityInUnits = 0;
         $unity = $cartProduct->product->unity;
         $productData['unity'] = $unity;
         if (!empty($cartProduct->product->unit_product) && $cartProduct->product->unit_product->price_per_unit_enabled) {
@@ -335,7 +335,8 @@ class CartsTable extends AppTable
             'price' => $grossPrice,
             'priceExcl' => $cartProduct->product_attribute->price * $cartProduct->amount,
             'tax' => $tax,
-            'pickupDay' => $cartProduct->pickup_day
+            'pickupDay' => $cartProduct->pickup_day,
+            'isStockProduct' => $cartProduct->product->is_stock_product
         ];
 
         $deposit = 0;

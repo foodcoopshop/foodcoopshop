@@ -595,12 +595,16 @@ class CartsController extends FrontendController
 
         $manufacturers = [];
         foreach ($cartProducts as $cartProduct) {
+            if ($cartProduct['isStockProduct']) {
+                continue;
+            }
             $manufacturers[$cartProduct['manufacturerId']][] = $cartProduct;
         }
 
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturersThatReceivedInstantOrderNotification = [];
         foreach ($manufacturers as $manufacturerId => $cartProducts) {
+            
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
                     'Manufacturers.id_manufacturer' => $manufacturerId
