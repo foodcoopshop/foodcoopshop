@@ -128,7 +128,7 @@ use Cake\Core\Configure;
     <?php
 
     if (!empty($manufacturer)) {
-        $manufacturerHolidayString = $this->Html->getManufacturerHolidayString($manufacturer->holiday_from, $manufacturer->holiday_to, $manufacturer->is_holiday_active, true, $manufacturer->name);
+        $manufacturerHolidayString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true);
         if ($manufacturerHolidayString != '') {
             echo '<h2 class="info">'.$manufacturerHolidayString.'</h2>';
         }

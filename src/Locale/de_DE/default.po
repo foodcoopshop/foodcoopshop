@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-31 08:20+0200\n"
-"PO-Revision-Date: 2018-08-31 08:23+0200\n"
+"POT-Creation-Date: 2018-08-31 11:29+0200\n"
+"PO-Revision-Date: 2018-08-31 11:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1854,17 +1854,8 @@ msgstr "Gelöschtes Mitglied"
 msgid "Deleted_Email_Address"
 msgstr "Gelöschte E-Mail-Adresse"
 
-msgid "delivery_break_since_holiday_active"
-msgstr "seit"
-
-msgid "delivery_break_since_holiday_not_active"
-msgstr "von"
-
-msgid "delivery_break_until"
-msgstr "bis"
-
-msgid "The_manufacturer_{0}_has_{1}_delivery_break."
-msgstr "Der Hersteller {0} hat {1} Lieferpause."
+msgid "The_manufacturer_{0}_has_delivery_break:_{1}"
+msgstr "Der Hersteller {0} hat Lieferpause: {1}"
 
 msgid "Website"
 msgstr "Homepage"
@@ -2039,6 +2030,15 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "delivery_break_since_holiday_active"
+#~ msgstr "seit"
+
+#~ msgid "delivery_break_since_holiday_not_active"
+#~ msgstr "von"
+
+#~ msgid "delivery_break_until"
+#~ msgstr "bis"
 
 #~ msgid "Always_online"
 #~ msgstr "Immer bestellbar?"

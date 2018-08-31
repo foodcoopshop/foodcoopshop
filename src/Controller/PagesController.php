@@ -6,6 +6,8 @@ use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\I18n\FrozenDate;
+use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Security;
 

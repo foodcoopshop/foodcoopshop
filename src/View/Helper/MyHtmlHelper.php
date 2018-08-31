@@ -170,49 +170,35 @@ class MyHtmlHelper extends HtmlHelper
         return sprintf('%0'.$maxDigits.'d', $number);
     }
 
-    public function getManufacturerHolidayString($dateFrom, $dateTo, $isHolidayActive, $long = false, $name = '')
+    public function getManufacturerNoDeliveryDaysString($manufacturer, $long = false)
     {
 
-        if (!is_null($dateFrom)) {
-            $dateFrom = $dateFrom->i18nFormat(Configure::read('DateFormat.Database'));
-        }
-        if (!is_null($dateTo)) {
-            $dateTo = $dateTo->i18nFormat(Configure::read('DateFormat.Database'));
-        }
-
         $result = '';
-
-        // both from and to date not set
-        if (Configure::read('app.timeHelper')->isDatabaseDateNotSet($dateTo) && Configure::read('app.timeHelper')->isDatabaseDateNotSet($dateFrom)) {
+        if ($manufacturer->no_delivery_days == '') {
             return $result;
         }
-
-        // holiday over?
-        if (!Configure::read('app.timeHelper')->isDatabaseDateNotSet($dateTo) && $dateTo < date('Y-m-d')) {
-            return $result;
-        }
-
-        $shortResult = '';
-        if (!Configure::read('app.timeHelper')->isDatabaseDateNotSet($dateFrom)) {
-            if ($isHolidayActive) {
-                $shortResult .=  __('delivery_break_since_holiday_active');
-            } else {
-                $shortResult .=  __('delivery_break_since_holiday_not_active');
+        
+        $explodedNoDeliveryDays = explode(',', $manufacturer->no_delivery_days);
+        $formattedAndCleanedDeliveryDays = [];
+        foreach($explodedNoDeliveryDays as $noDeliveryDay) {
+            if (date('Y-m-d') <= $noDeliveryDay) {
+                $formattedAndCleanedDeliveryDays[] = $this->MyTime->formatToDateShort($noDeliveryDay);
             }
-            $shortResult .= ' ' . Configure::read('app.timeHelper')->formatToDateShort($dateFrom);
         }
-        if (!Configure::read('app.timeHelper')->isDatabaseDateNotSet($dateTo)) {
-            $shortResult .= ' ' . __('delivery_break_until') . ' ' . Configure::read('app.timeHelper')->formatToDateShort($dateTo);
-        }
-
-        $result = $shortResult;
-        if ($long) {
-            $result = __('The_manufacturer_{0}_has_{1}_delivery_break.', ['<b>' . $name . '</b>', $shortResult]);
-        }
-
-        $result = str_replace('  ', ' ', $result);
-
+        
+        $csvNoDeliveryDays = join(', ', $formattedAndCleanedDeliveryDays);
+        
+        if (!$long) {
+            return $csvNoDeliveryDays;
+        } 
+        
+        $result = __('The_manufacturer_{0}_has_delivery_break:_{1}', [
+            '<b>' . $manufacturer->name . '</b>',
+            $csvNoDeliveryDays
+        ]);
+        
         return $result;
+
     }
 
     public function getCustomerAddress($customer)

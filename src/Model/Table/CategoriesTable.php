@@ -3,9 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
-use Cake\I18n\FrozenDate;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -152,7 +150,7 @@ class CategoriesTable extends AppTable
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $products = $statement->fetchAll('assoc');
-        $products = $this->hideProductsWithActivatedDeliveryRhythm($products);
+        $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
 
         if (! $countMode) {
             return $products;
@@ -160,43 +158,6 @@ class CategoriesTable extends AppTable
             return count($products);
         }
 
-        return $products;
-    }
-    
-    private function hideProductsWithActivatedDeliveryRhythm($products)
-    {
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
-        $i = 0;
-        foreach($products as $product) {
-            if ($product['is_stock_product']) {
-                continue;
-            }
-            /*
-            $deliveryDate = $this->Product->calculatePickupDayRespectingDeliveryRhythm(
-                $this->Product->newEntity(
-                    [
-                        'delivery_rhythm_first_delivery_day' => new FrozenDate($product['delivery_rhythm_first_delivery_day']),
-                        'delivery_rhythm_type' => $product['delivery_rhythm_type'],
-                        'delivery_rhythm_count' => $product['delivery_rhythm_count'],
-                        'is_stock_product' => $product['is_stock_product']
-                    ]
-                )
-            );
-            */
-            // hides products where individual delivery day is over
-            if ($product['delivery_rhythm_type'] == 'individual' && $product['delivery_rhythm_first_delivery_day'] < Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb()) {
-                unset($products[$i]);
-            }
-            /*
-            if ($product['delivery_rhythm_type'] == 'week' && $product['delivery_rhythm_first_delivery_day'] > $deliveryDate) {
-                unset($products[$i]);
-            }
-            if ($product['delivery_rhythm_type'] == 'month' && $product['delivery_rhythm_first_delivery_day'] > $deliveryDate) {
-                unset($products[$i]);
-            }
-            */
-            $i++;
-        }
         return $products;
     }
 

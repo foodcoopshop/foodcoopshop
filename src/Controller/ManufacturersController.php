@@ -63,7 +63,6 @@ class ManufacturersController extends FrontendController
             'order' => [
                 'Manufacturers.name' => 'ASC'
             ],
-            'fields' => ['is_holiday_active' => '!'.$this->Manufacturer->getManufacturerHolidayConditions()],
             'contain' => [
                 'AddressManufacturers'
             ]
@@ -74,9 +73,8 @@ class ManufacturersController extends FrontendController
         }
 
         if ($this->AppAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-            $productModel = TableRegistry::getTableLocator()->get('Products');
             foreach ($manufacturers as $manufacturer) {
-                $manufacturer->product_count = $productModel->getCountByManufacturerId($manufacturer->id_manufacturer, true);
+                $manufacturer->product_count = $this->Manufacturer->getProductsByManufacturerId($manufacturer->id_manufacturer, true);
             }
         }
 
@@ -96,7 +94,6 @@ class ManufacturersController extends FrontendController
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => $conditions,
-            'fields' => ['is_holiday_active' => '!'.$this->Manufacturer->getManufacturerHolidayConditions()],
             'contain' => [
                 'AddressManufacturers'
             ]

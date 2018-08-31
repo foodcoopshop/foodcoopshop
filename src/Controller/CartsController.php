@@ -354,7 +354,6 @@ class CartsController extends FrontendController
                 'conditions' => [
                     'Products.id_product' => $ids['productId']
                 ],
-                'fields' => ['is_holiday_active' => '!'.$this->Product->getManufacturerHolidayConditions()],
                 'contain' => [
                     'Manufacturers',
                     'Manufacturers.AddressManufacturers',

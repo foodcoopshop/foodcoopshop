@@ -102,6 +102,20 @@ class MyTimeHelper extends TimeHelper
         return self::getDeliveryDay($this->getCurrentDay());
     }
     
+    public function getNextDeliveryDays($maxDays=30) {
+        $nextDeliveryDay = $this->getDeliveryDateByCurrentDayForDb();
+        $nextDeliveryDays = [
+            $nextDeliveryDay => $this->getDateFormattedWithWeekday(strtotime($nextDeliveryDay))
+        ];
+        $count = 1;
+        while($count < $maxDays) {
+            $nextCalculatedDeliveryDay = date(Configure::read('DateFormat.DatabaseAlt'), strtotime($nextDeliveryDay . ' + ' . $count * 7 . ' day'));
+            $nextDeliveryDays[$nextCalculatedDeliveryDay] = $this->getDateFormattedWithWeekday(strtotime($nextCalculatedDeliveryDay));
+            $count++;
+        }
+        return $nextDeliveryDays;
+    }
+    
     public function getDbFormattedPickupDayByDbFormattedDate($date)
     {
         $pickupDay = $this->getDeliveryDay(strtotime($date));

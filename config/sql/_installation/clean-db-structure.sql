@@ -234,8 +234,6 @@ CREATE TABLE `fcs_manufacturer` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '0',
-  `holiday_from` date DEFAULT NULL,
-  `holiday_to` date DEFAULT NULL,
   `is_private` int(11) unsigned NOT NULL DEFAULT '0',
   `uid_number` varchar(30) NOT NULL DEFAULT '',
   `additional_text_for_invoice` text NOT NULL,
@@ -265,6 +263,7 @@ CREATE TABLE `fcs_manufacturer` (
   `stock_management_enabled` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `send_product_sold_out_limit_reached_for_manufacturer` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `send_product_sold_out_limit_reached_for_contact_person` tinyint(4) unsigned NOT NULL DEFAULT '0',
+  `no_delivery_days` text NOT NULL,
   PRIMARY KEY (`id_manufacturer`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -473,7 +472,7 @@ CREATE TABLE `fcs_sync_products` (
   `local_product_attribute_id` int(10) unsigned NOT NULL DEFAULT '0',
   `remote_product_attribute_id` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_tax`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

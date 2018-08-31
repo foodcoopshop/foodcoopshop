@@ -64,9 +64,6 @@ class CartProductsTable extends AppTable
             'conditions' => [
                 'Products.id_product' => $productId
             ],
-            'fields' => [
-                'is_holiday_active' => '!'.$this->Products->getManufacturerHolidayConditions()
-            ],
             'contain' => [
                 'Manufacturers',
                 'StockAvailables',

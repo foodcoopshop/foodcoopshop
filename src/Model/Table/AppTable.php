@@ -7,9 +7,11 @@ use App\ORM\AppMarshaller;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Validation\Validation;
 use Cake\Validation\Validator;
+use Cake\I18n\FrozenDate;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -121,7 +123,7 @@ class AppTable extends Table
                 Deposits.deposit,
                 Images.id_image,
                 Manufacturers.id_manufacturer, Manufacturers.name as ManufacturersName,
-                Manufacturers.timebased_currency_enabled,
+                Manufacturers.timebased_currency_enabled, Manufacturers.no_delivery_days,
                 Units.price_per_unit_enabled, Units.price_incl_per_unit, Units.name as unit_name, Units.amount as unit_amount, Units.quantity_in_units,
                 StockAvailables.quantity, StockAvailables.quantity_limit";
 
@@ -153,30 +155,12 @@ class AppTable extends Table
                     AND StockAvailables.id_product_attribute = 0
                     AND (Units.id_product_attribute = 0 OR Units.id_product_attribute IS NULL)
                     AND Products.active = :active
-                    AND ".$this->getManufacturerHolidayConditions()."
                     AND Manufacturers.active = :active ";
 
         if (! $this->getLoggedUser()) {
             $conditions .= 'AND Manufacturers.is_private = :isPrivate ';
         }
         return $conditions;
-    }
-    
-    /**
-     * @return string
-     */
-    public function getManufacturerHolidayConditions()
-    {
-        $condition  = ' IF ( ';
-        $condition .=       '`Manufacturers`.`holiday_from` IS NULL && `Manufacturers`.`holiday_to` IS NULL, 1,'; // from and to date are not set
-        $condition .=       'IF (';
-        $condition .=              '(`Manufacturers`.`holiday_from` IS NOT NULL AND `Manufacturers`.`holiday_to`   IS NULL AND `Manufacturers`.`holiday_from` > DATE_FORMAT(NOW(), "%Y-%m-%d"))'; // from and to date are set
-        $condition .=           'OR (`Manufacturers`.`holiday_to`   IS NOT NULL AND `Manufacturers`.`holiday_from` IS NULL AND `Manufacturers`.`holiday_to`   < DATE_FORMAT(NOW(), "%Y-%m-%d"))'; // from and to date are set
-        $condition .=           'OR (`Manufacturers`.`holiday_from` IS NOT NULL AND `Manufacturers`.`holiday_from` > DATE_FORMAT(NOW(), "%Y-%m-%d")) ';  // only from date is set
-        $condition .=           'OR (`Manufacturers`.`holiday_to`   IS NOT NULL AND `Manufacturers`.`holiday_to`   < DATE_FORMAT(NOW(), "%Y-%m-%d")), '; // to date is over
-        $condition .=       '1, 0)';
-        $condition .=   ')';
-        return $condition;
     }
 
     /**
@@ -185,5 +169,46 @@ class AppTable extends Table
     protected function getOrdersForProductListQuery()
     {
         return " ORDER BY Products.name ASC, Images.id_image DESC;";
+    }
+    
+    protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products)
+    {
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $i = 0;
+        foreach($products as $product) {
+            if ($product['is_stock_product']) {
+                continue;
+            }
+            $deliveryDate = $this->Product->calculatePickupDayRespectingDeliveryRhythm(
+                $this->Product->newEntity(
+                    [
+                        'delivery_rhythm_first_delivery_day' => new FrozenDate($product['delivery_rhythm_first_delivery_day']),
+                        'delivery_rhythm_type' => $product['delivery_rhythm_type'],
+                        'delivery_rhythm_count' => $product['delivery_rhythm_count'],
+                        'is_stock_product' => $product['is_stock_product']
+                    ]
+                    )
+                );
+            
+            // hides the product if manufacturer has enabled delivery break
+            if ($product['no_delivery_days'] != '' && preg_match('`' . $deliveryDate . '`', $product['no_delivery_days'])) {
+                unset($products[$i]);
+            }
+            
+            // hides products where individual delivery day is over
+            if ($product['delivery_rhythm_type'] == 'individual' && $product['delivery_rhythm_first_delivery_day'] < Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb()) {
+                unset($products[$i]);
+            }
+            /*
+             if ($product['delivery_rhythm_type'] == 'week' && $product['delivery_rhythm_first_delivery_day'] > $deliveryDate) {
+             unset($products[$i]);
+             }
+             if ($product['delivery_rhythm_type'] == 'month' && $product['delivery_rhythm_first_delivery_day'] > $deliveryDate) {
+             unset($products[$i]);
+             }
+             */
+            $i++;
+        }
+        return $products;
     }
 }

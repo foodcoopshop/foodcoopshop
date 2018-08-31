@@ -58,27 +58,26 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
 
 echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
 
-echo $this->Form->control('Manufacturers.active', [
-    'label' => ''.__d('admin', 'Active').'? <span class="after small">'.__d('admin', 'Manufacturer_profile_and_products_are_visible_(cannot_be_changed_by_manufacturer).').'</span>',
-    'disabled' => ($appAuth->isManufacturer() ? 'disabled' : ''),
-    'type' => 'checkbox',
-    'escape' => false
-]);
-
-echo '<div class="holiday-wrapper">';
-    echo '<div class="input">';
-        echo '<label>'.__d('admin', 'Delivery_break').'?';
-    echo '</div>';
-    echo $this->element('dateFields', [
-        'dateFrom' => !empty($manufacturer->holiday_from) ? $manufacturer->holiday_from->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) : '',
-        'nameFrom' => 'Manufacturers[holiday_from]',
-        'dateTo' => !empty($manufacturer->holiday_to) ? $manufacturer->holiday_to->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) : '',
-        'nameTo' => 'Manufacturers[holiday_to]'
+    echo $this->Form->control('Manufacturers.active', [
+        'label' => ''.__d('admin', 'Active').'? <span class="after small">'.__d('admin', 'Manufacturer_profile_and_products_are_visible_(cannot_be_changed_by_manufacturer).').'</span>',
+        'disabled' => ($appAuth->isManufacturer() ? 'disabled' : ''),
+        'type' => 'checkbox',
+        'escape' => false
     ]);
-    echo '<span class="description small">';
-    echo '<a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_function_delivery_break?').'</a>';
-    echo '</span>';
-    echo '</div>';
+
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#manufacturers-no-delivery-days');"
+    ]);
+    echo $this->Form->control('Manufacturers.no_delivery_days', [
+        'type' => 'select',
+        'multiple' => true,
+        'data-val' => $manufacturer->no_delivery_days,
+        'label' => __d('admin', 'Delivery_break').' <span class="after small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_function_delivery_break?').'</a></span>',
+        'options' => $noDeliveryBreakOptions,
+        'escape' => false
+    ]);
+    echo '<div class="sc"></div>';
+
 
     echo $this->Form->control('Manufacturers.is_private', [
         'label' => __d('admin', 'Only_for_members').'? <span class="after small">'.__d('admin', 'Manufacturer_profile_and_products_are_only_visible_for_signed_in_members.').'</span>',

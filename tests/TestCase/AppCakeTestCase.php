@@ -315,13 +315,12 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         ob_flush();
     }
 
-    protected function changeManufacturerHolidayMode($manufacturerId, $dateFrom = null, $dateTo = null)
+    protected function changeManufacturerNoDeliveryDays($manufacturerId, $noDeliveryDays = '')
     {
-        $query = 'UPDATE fcs_manufacturer SET holiday_from = :dateFrom, holiday_to = :dateTo WHERE id_manufacturer = :manufacturerId;';
+        $query = 'UPDATE fcs_manufacturer SET no_delivery_days = :noDeliveryDays, WHERE id_manufacturer = :manufacturerId;';
         $params = [
             'manufacturerId' => $manufacturerId,
-            'dateFrom' => $dateFrom,
-            'dateTo' => $dateTo
+            'noDeliveryDays' => $noDeliveryDays
         ];
         $statement = $this->dbConnection->prepare($query);
         $statement->execute($params);

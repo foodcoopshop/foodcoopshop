@@ -544,7 +544,6 @@ class ProductsTable extends AppTable
         $productCount = $this->find('all', [
             'conditions' => [
                 'Products.active' => APP_ON,
-                $useHolidayMode ? $this->getManufacturerHolidayConditions() : null,
                 'Products.id_manufacturer' => $manufacturerId
             ],
             'contain' => [

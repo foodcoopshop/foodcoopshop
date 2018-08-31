@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-31 08:20+0200\n"
+"POT-Creation-Date: 2018-08-31 11:29+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1853,16 +1853,7 @@ msgstr ""
 msgid "Deleted_Email_Address"
 msgstr ""
 
-msgid "delivery_break_since_holiday_active"
-msgstr ""
-
-msgid "delivery_break_since_holiday_not_active"
-msgstr ""
-
-msgid "delivery_break_until"
-msgstr ""
-
-msgid "The_manufacturer_{0}_has_{1}_delivery_break."
+msgid "The_manufacturer_{0}_has_delivery_break:_{1}"
 msgstr ""
 
 msgid "Website"
