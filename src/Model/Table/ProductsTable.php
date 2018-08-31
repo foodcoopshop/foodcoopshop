@@ -88,17 +88,7 @@ class ProductsTable extends AppTable
         $validator->notEquals('delivery_rhythm_first_delivery_day', '1970-01-01', __('The_first_delivery_day_is_not_valid.'));
         $validator = $this->getLastOrFirstDayOfMonthValidator($validator, 'delivery_rhythm_first_delivery_day', 'first');
         $validator = $this->getLastOrFirstDayOfMonthValidator($validator, 'delivery_rhythm_first_delivery_day', 'last');
-        $validator->add('delivery_rhythm_first_delivery_day', 'allow-only-one-weekday', [
-            'rule' => function ($value, $context) {
-                if (Configure::read('app.timeHelper')->getDeliveryWeekday() != Configure::read('app.timeHelper')->formatAsWeekday(strtotime($value))) {
-                    return false;
-                }
-                return true;
-            },
-            'message' => __('The_first_delivery_day_needs_to_be_a_{0}.', [
-                Configure::read('app.timeHelper')->getWeekdayName(Configure::read('app.timeHelper')->getDeliveryWeekday())
-            ])
-        ]);
+        $validator = $this->getAllowOnlyOneWeekdayValidator($validator, 'delivery_rhythm_first_delivery_day', __('The_first_delivery_day'));
         return $validator;
     }
     

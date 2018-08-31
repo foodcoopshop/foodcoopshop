@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-31 16:47+0200\n"
-"PO-Revision-Date: 2018-08-31 16:46+0200\n"
+"POT-Creation-Date: 2018-08-31 20:27+0200\n"
+"PO-Revision-Date: 2018-08-31 20:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1140,6 +1140,9 @@ msgstr "Bitte gib den Nachnamen des Rechnungsempfängers an."
 msgid "Please_enter_an_email_address."
 msgstr "Bitte gib eine E-Mail-Adresse an."
 
+msgid "{0}_needs_to_be_a_{1}."
+msgstr "{0} muss ein {1} sein."
+
 msgid "Please_enter_a_number_between_{0}_and_{1}."
 msgstr "Bitte gib eine Zahl zwischen {0} und {1} an."
 
@@ -1269,6 +1272,12 @@ msgstr "Lieferpause"
 msgid "online"
 msgstr "online"
 
+msgid "The_pickup_day_is_not_valid."
+msgstr "Der Abholtag ist nicht gültig."
+
+msgid "The_pickup_day"
+msgstr "Der Abholtag"
+
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{1 Produkt} other{# Produkte}}"
 
@@ -1284,8 +1293,8 @@ msgstr "Der Lieferrhythmus ist nicht gültig."
 msgid "The_first_delivery_day_is_not_valid."
 msgstr "Der erste Liefertag ist nicht gültig."
 
-msgid "The_first_delivery_day_needs_to_be_a_{0}."
-msgstr "Der erste Liefertag muss ein {0} sein."
+msgid "The_first_delivery_day"
+msgstr "Der erste Liefertag"
 
 msgid "The_first_delivery_day_needs_to_be_a_last_{0}_of_the_month."
 msgstr "Der erste Liefertag muss ein letzter {0} im Monat sein."

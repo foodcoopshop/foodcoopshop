@@ -4,6 +4,7 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\Validation\Validator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -61,6 +62,13 @@ class OrderDetailsTable extends AppTable
         $this->addBehavior('Timestamp');
     }
 
+    public function validationPickupDay(Validator $validator)
+    {
+        $validator->notEquals('pickup_day', '1970-01-01', __('The_pickup_day_is_not_valid.'));
+        $validator = $this->getAllowOnlyOneWeekdayValidator($validator, 'pickup_day', __('The_pickup_day'));
+        return $validator;
+    }
+    
     /**
      * @param int $customerId
      * @return array

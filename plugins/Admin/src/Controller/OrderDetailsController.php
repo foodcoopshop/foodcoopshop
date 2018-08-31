@@ -709,16 +709,16 @@ class OrderDetailsController extends AdminAppController
         $orderDetailIds = $this->getRequest()->getData('orderDetailIds');
         $pickupDay = $this->getRequest()->getData('pickupDay');
         $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
-        $pickupDayAsFrozenDate = FrozenDate::createFromFormat(
-            Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'),
-            $pickupDay
-        );
         $changePickupDayReason = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('changePickupDayReason')), '<strong><b>'));
         
         try {
+            if (empty($orderDetailIds)) {
+                throw new InvalidParameterException('error - no order detail id passed');
+            }
             
+            $errorMessages = [];
             if ($changePickupDayReason == '') {
-                throw new InvalidParameterException(__d('admin', 'Please_enter_why_pickup_day_is_changed.'));
+                $errorMessages[] = __d('admin', 'Please_enter_why_pickup_day_is_changed.');
             }
             
             $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
@@ -731,10 +731,22 @@ class OrderDetailsController extends AdminAppController
                         'Customers'
                     ]
                 ])->first();
-                $this->OrderDetail->save(
-                    $this->OrderDetail->patchEntity($orderDetail, [
-                        'pickup_day' => $pickupDayAsFrozenDate
-                    ]));
+                $entity = $this->OrderDetail->patchEntity(
+                    $orderDetail,
+                    [
+                        'pickup_day' => $pickupDay
+                    ],
+                    [
+                        'validate' => 'pickupDay'
+                    ]
+                );
+                if (!empty($entity->getErrors())) {
+                    $errorMessages = array_merge($errorMessages, $this->OrderDetail->getAllValidationErrors($entity));
+                }
+                if (!empty($errorMessages)) {
+                    throw new InvalidParameterException(join('<br />', $errorMessages));
+                }
+                $this->OrderDetail->save($entity);
             }
             
             $result = true;

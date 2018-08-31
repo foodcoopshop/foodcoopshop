@@ -41,6 +41,23 @@ class AppTable extends Table
         }
         parent::initialize($config);
     }
+    
+    public function getAllowOnlyOneWeekdayValidator(Validator $validator, $field, $fieldName)
+    {
+        $validator->add($field, 'allow-only-one-weekday', [
+            'rule' => function ($value, $context) {
+            if (Configure::read('app.timeHelper')->getDeliveryWeekday() != Configure::read('app.timeHelper')->formatAsWeekday(strtotime($value))) {
+                return false;
+            }
+            return true;
+            },
+            'message' => __('{0}_needs_to_be_a_{1}.', [
+                $fieldName,
+                Configure::read('app.timeHelper')->getWeekdayName(Configure::read('app.timeHelper')->getDeliveryWeekday())
+            ])
+        ]);
+        return $validator;    
+    }
 
     public function getNumberRangeValidator(Validator $validator, $field, $min, $max, $additionalErrorMessageSuffix='')
     {

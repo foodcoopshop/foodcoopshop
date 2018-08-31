@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-31 16:47+0200\n"
+"POT-Creation-Date: 2018-08-31 20:27+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1139,6 +1139,9 @@ msgstr ""
 msgid "Please_enter_an_email_address."
 msgstr ""
 
+msgid "{0}_needs_to_be_a_{1}."
+msgstr ""
+
 msgid "Please_enter_a_number_between_{0}_and_{1}."
 msgstr ""
 
@@ -1268,6 +1271,12 @@ msgstr ""
 msgid "online"
 msgstr ""
 
+msgid "The_pickup_day_is_not_valid."
+msgstr ""
+
+msgid "The_pickup_day"
+msgstr ""
+
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr ""
 
@@ -1283,7 +1292,7 @@ msgstr ""
 msgid "The_first_delivery_day_is_not_valid."
 msgstr ""
 
-msgid "The_first_delivery_day_needs_to_be_a_{0}."
+msgid "The_first_delivery_day"
 msgstr ""
 
 msgid "The_first_delivery_day_needs_to_be_a_last_{0}_of_the_month."
