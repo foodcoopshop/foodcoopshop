@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-30 10:02+0200\n"
-"PO-Revision-Date: 2018-08-30 10:03+0200\n"
+"POT-Creation-Date: 2018-08-31 08:49+0200\n"
+"PO-Revision-Date: 2018-08-31 08:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -369,8 +369,14 @@ msgstr "The attribute {0} of the product {1} from manufacturer {2} was successfu
 msgid "A_new_product_was_created_for_{0}."
 msgstr "A new product was created for {0}."
 
-msgid "The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully."
-msgstr "The delivery rhythm of the product {0} from manufacturer {1} was changed successfully."
+msgid "The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}."
+msgstr "The delivery rhythm of the product {0} from manufacturer {1} was changed successfully to {2}."
+
+msgid "Delivery_day"
+msgstr "Delivery day"
+
+msgid "First_delivery_day"
+msgstr "First delivery day"
 
 msgid "Saving_successful."
 msgstr "Saving successful."
@@ -945,9 +951,6 @@ msgstr "If you chose \"payback\", please enter the amount that you just transfer
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Please chose the months for your payment."
 
-msgid "Delivery_day"
-msgstr "Delivery day"
-
 msgid "Delivery_days"
 msgstr "Delivery days"
 
@@ -1283,6 +1286,9 @@ msgstr "Online help"
 
 msgid "docs_route_manufacturers"
 msgstr "manufacturers"
+
+msgid "docs_route_order_handling"
+msgstr "order-handling"
 
 msgid "You_can_change_your_imprint_by_yourself."
 msgstr "You can change your imprint by yourself."

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-30 10:02+0200\n"
-"PO-Revision-Date: 2018-08-30 10:02+0200\n"
+"POT-Creation-Date: 2018-08-31 08:49+0200\n"
+"PO-Revision-Date: 2018-08-31 08:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -369,8 +369,14 @@ msgstr "Die Variante {0} für das Produkt {1} vom Hersteller {2} wurde erfolgrei
 msgid "A_new_product_was_created_for_{0}."
 msgstr "Ein neues Produkt für {0} wurde erfolgreich erstellt."
 
-msgid "The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully."
-msgstr "Der Lieferrhythmus des Produktes {0} vom Hersteller {1} wurde erfolgreich geändert."
+msgid "The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}."
+msgstr "Der Lieferrhythmus des Produktes {0} vom Hersteller {1} wurde erfolgreich auf {2} geändert."
+
+msgid "Delivery_day"
+msgstr "Liefertag"
+
+msgid "First_delivery_day"
+msgstr "Erster Liefertag"
 
 msgid "Saving_successful."
 msgstr "Speichern erfolgreich."
@@ -945,9 +951,6 @@ msgstr "Wenn es sich um eine Rückzahlung handelt, trage bitte ein, wie viel du 
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Bitte wähle die Monate aus, für die deine Zahlung gedacht ist."
 
-msgid "Delivery_day"
-msgstr "Liefertag"
-
 msgid "Delivery_days"
 msgstr "Liefertage"
 
@@ -1283,6 +1286,9 @@ msgstr "Online-Hilfe"
 
 msgid "docs_route_manufacturers"
 msgstr "hersteller"
+
+msgid "docs_route_order_handling"
+msgstr "bestellabwicklung"
 
 msgid "You_can_change_your_imprint_by_yourself."
 msgstr "Die Daten für dein <b>Impressum</b> (rechts unten auf deinem Hersteller-Profil) kannst du selbst ändern."

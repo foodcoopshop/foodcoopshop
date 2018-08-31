@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-30 10:02+0200\n"
+"POT-Creation-Date: 2018-08-31 08:49+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -368,7 +368,13 @@ msgstr ""
 msgid "A_new_product_was_created_for_{0}."
 msgstr ""
 
-msgid "The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully."
+msgid "The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}."
+msgstr ""
+
+msgid "Delivery_day"
+msgstr ""
+
+msgid "First_delivery_day"
 msgstr ""
 
 msgid "Saving_successful."
@@ -944,9 +950,6 @@ msgstr ""
 msgid "Please_chose_the_months_for_your_payment."
 msgstr ""
 
-msgid "Delivery_day"
-msgstr ""
-
 msgid "Delivery_days"
 msgstr ""
 
@@ -1281,6 +1284,9 @@ msgid "Help_pages"
 msgstr ""
 
 msgid "docs_route_manufacturers"
+msgstr ""
+
+msgid "docs_route_order_handling"
 msgstr ""
 
 msgid "You_can_change_your_imprint_by_yourself."

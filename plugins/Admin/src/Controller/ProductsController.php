@@ -398,13 +398,31 @@ class ProductsController extends AdminAppController
                     'validate' => 'deliveryRhythm'
                 ]
             );
+            $entityWasDirty = $entity->isDirty();
             if (!empty($entity->getErrors())) {
                 throw new InvalidParameterException(join('<br />', $this->Product->getAllValidationErrors($entity)));
             }
             $this->Product->save($entity);
             
-            $messageString = __d('admin', 'The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>']);
-            $this->ActionLog->customSave('product_delivery_rhythm_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
+            $messageString = __d('admin', 'The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}.', [
+                '<b>' . $oldProduct->name . '</b>',
+                '<b>' . $oldProduct->manufacturer->name . '</b>',
+                '<b>' . Configure::read('app.htmlHelper')->getDeliveryRhythmString($deliveryRhythmType, $deliveryRhythmCount) . '</b>'
+            ]);
+            
+            if ($deliveryRhythmFirstDeliveryDay != '') {
+                $messageString .= ' ';
+                if ($deliveryRhythmType == 'individual') {
+                    $messageString .= __d('admin', 'Delivery_day');
+                } else {
+                    $messageString .= __d('admin', 'First_delivery_day');
+                }
+                $messageString .= ': <b>'. Configure::read('app.timeHelper')->formatToDateShort($deliveryRhythmFirstDeliveryDay) . '</b>';
+            }
+            
+            if ($entityWasDirty) {
+                $this->ActionLog->customSave('product_delivery_rhythm_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
+            }
             $this->Flash->success($messageString);
             
             $this->getRequest()->getSession()->write('highlightedRowId', $productId);
