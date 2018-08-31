@@ -48,7 +48,59 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
     }
+    
+    public function testEditPickupDayAsSuperadminWrongWeekday()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-01-01', 'bla');
+        $this->assertRegExpWithUnquotedString('Der Abholtag muss ein Freitag sein.', $response->msg);
+        $this->assertJsonError();    
+    }
 
+    public function testEditPickupDayAsSuperadminEmptyReason()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-01-01', '');
+        $this->assertRegExpWithUnquotedString('Bitte gib an, warum der Abholtag geändert wird.', $response->msg);
+        $this->assertJsonError();
+    }
+    
+    public function testEditPickupDayAsSuperadminNoOrderDetailIds()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->editPickupDayOfOrderDetails([], '2018-01-01', 'asdf');
+        $this->assertRegExpWithUnquotedString('error - no order detail id passed', $response->msg);
+        $this->assertJsonError();
+    }
+    
+    public function testEditPickupDayAsSuperadminWrongOrderDetailIds()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->editPickupDayOfOrderDetails([200,40], '2018-01-01', 'asdf');
+        $this->assertRegExpWithUnquotedString('error - order details wrong', $response->msg);
+        $this->assertJsonError();
+    }
+    
+    public function testEditPickupDayAsSuperadminOk()
+    {
+        $this->loginAsSuperadmin();
+        $reason = 'this is the reason';
+        $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-09-07', $reason);
+        $this->assertJsonOk();
+        
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEmailLogs(
+            $emailLogs[0],
+            'Der Abholtag deiner Bestellung wurde geändert auf: Freitag, 07.09.2018',
+            [
+                $reason,
+                'Neuer Abholtag : <b>Freitag, 07.09.2018</b>',
+                'Alter Abholtag: Freitag, 02.02.2018',
+            ],
+            [Configure::read('test.loginEmailSuperadmin')]
+        );
+    }
+    
     public function testCancellationAsManufacturer()
     {
         $this->loginAsVegetableManufacturer();
@@ -527,10 +579,23 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         
     }
 
+    private function editPickupDayOfOrderDetails($orderDetailIds, $pickupDay, $reason)
+    {
+        $this->browser->ajaxPost(
+            '/admin/order-details/editPickupDay/',
+            [
+                'orderDetailIds' => $orderDetailIds,
+                'pickupDay' => $pickupDay,
+                'changePickupDayReason' => $reason
+            ]
+        );
+        return $this->browser->getJsonDecodedContent();
+    }
+    
     private function deleteOrderDetail($orderDetailIds, $cancellationReason)
     {
         $this->browser->post(
-            '/admin/orderDetails/delete/',
+            '/admin/order-details/delete/',
             [
                 'orderDetailIds' => $orderDetailIds,
                 'cancellationReason' => $cancellationReason
@@ -541,7 +606,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     private function editOrderDetailPrice($orderDetailId, $productPrice, $editPriceReason)
     {
         $this->browser->post(
-            '/admin/orderDetails/editProductPrice/',
+            '/admin/order-details/editProductPrice/',
             [
                 'orderDetailId' => $orderDetailId,
                 'productPrice' => $productPrice,
@@ -553,7 +618,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     private function editOrderDetailQuantity($orderDetailId, $productQuantity, $doNotChangePrice)
     {
         $this->browser->post(
-            '/admin/orderDetails/editProductQuantity/',
+            '/admin/order-details/editProductQuantity/',
             [
                 'orderDetailId' => $orderDetailId,
                 'productQuantity' => $productQuantity,
@@ -565,7 +630,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     private function editOrderDetailAmount($orderDetailId, $productAmount, $editAmountReason)
     {
         $this->browser->post(
-            '/admin/orderDetails/editProductAmount/',
+            '/admin/order-details/editProductAmount/',
             [
                 'orderDetailId' => $orderDetailId,
                 'productAmount' => $productAmount,

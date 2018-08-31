@@ -715,44 +715,77 @@ class OrderDetailsController extends AdminAppController
             if (empty($orderDetailIds)) {
                 throw new InvalidParameterException('error - no order detail id passed');
             }
-            
             $errorMessages = [];
             if ($changePickupDayReason == '') {
                 $errorMessages[] = __d('admin', 'Please_enter_why_pickup_day_is_changed.');
             }
             
             $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-            foreach ($orderDetailIds as $orderDetailId) {
-                $orderDetail = $this->OrderDetail->find('all', [
-                    'conditions' => [
-                        'OrderDetails.id_order_detail' => $orderDetailId
-                    ],
-                    'contain' => [
-                        'Customers'
-                    ]
-                ])->first();
+            $orderDetails = $this->OrderDetail->find('all', [
+                'conditions' => [
+                    'OrderDetails.id_order_detail IN' => $orderDetailIds
+                ],
+                'contain' => [
+                    'Customers',
+                    'Products.Manufacturers'
+                ]
+            ]);
+            if ($orderDetails->count() != count($orderDetailIds)) {
+                throw new InvalidParameterException('error - order details wrong');
+            }
+            $oldPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($orderDetails->toArray()[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'))));
+            
+            // validate only once for the first order detail
+            $entity = $this->OrderDetail->patchEntity(
+                $orderDetails->toArray()[0],
+                [
+                    'pickup_day' => $pickupDay
+                ],
+                [
+                    'validate' => 'pickupDay'
+                ]
+            );
+            if (!empty($entity->getErrors())) {
+                $errorMessages = array_merge($errorMessages, $this->OrderDetail->getAllValidationErrors($entity));
+            }
+            if (!empty($errorMessages)) {
+                throw new InvalidParameterException(join('<br />', $errorMessages));
+            }
+            
+            $customers = [];
+            foreach ($orderDetails as $orderDetail) {
                 $entity = $this->OrderDetail->patchEntity(
                     $orderDetail,
                     [
                         'pickup_day' => $pickupDay
-                    ],
-                    [
-                        'validate' => 'pickupDay'
                     ]
                 );
-                if (!empty($entity->getErrors())) {
-                    $errorMessages = array_merge($errorMessages, $this->OrderDetail->getAllValidationErrors($entity));
-                }
-                if (!empty($errorMessages)) {
-                    throw new InvalidParameterException(join('<br />', $errorMessages));
-                }
                 $this->OrderDetail->save($entity);
+                @$customers[$orderDetail->id_customer][] = $orderDetail;
             }
             
-            $result = true;
+            // send email to customer
+            $newPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($pickupDay));
+            
+            foreach($customers as $orderDetails) {
+                $email = new AppEmail();
+                $email->setTemplate('Admin.order_detail_pickup_day_changed')
+                ->setTo($orderDetails[0]->customer->email)
+                ->setSubject(__d('admin', 'The_pickup_day_of_your_order_was_changed_to').': ' . $newPickupDay)
+                ->setViewVars([
+                    'orderDetails' => $orderDetails,
+                    'customer' => $orderDetails[0]->customer,
+                    'appAuth' => $this->AppAuth,
+                    'oldPickupDay' => $oldPickupDay,
+                    'newPickupDay' => $newPickupDay,
+                    'changePickupDayReason' => $changePickupDayReason
+                ]);
+                $email->send();
+            }
+            
             $this->set('data', [
-                'result' => $result,
-                'status' => !empty($result),
+                'result' => [],
+                'status' => true,
                 'msg' => 'ok'
             ]);
             
