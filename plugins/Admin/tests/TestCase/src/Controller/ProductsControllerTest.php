@@ -133,18 +133,13 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertJsonOk();
     }
     
-    public function testEditDeliveryRhythmOk2Week()
+    public function testEditDeliveryRhythmInvalid2WeekWithoutDate()
     {
         $productId = 346;
         $this->loginAsSuperadmin();
-        $this->changeProductDeliveryRhythm($productId, '2-week');
-        $this->assertJsonOk();
-        $product = $this->Product->find('all', [
-            'conditions' => [
-                'Products.id_product' => $productId
-            ]
-        ])->first();
-        $this->assertEquals($product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
+        $response = $this->changeProductDeliveryRhythm($productId, '2-week');
+        $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein Freitag sein.', $response->msg);
+        $this->assertJsonError();
     }
     
     public function testEditDeliveryRhythmOkFirstOfMonth()

@@ -381,14 +381,13 @@ class ProductsController extends AdminAppController
             'delivery_rhythm_count' => $deliveryRhythmCount,
             'delivery_rhythm_type' => $deliveryRhythmType
         ];
-        if ($deliveryRhythmFirstDeliveryDay != '' || $deliveryRhythmType == 'individual') {
+        
+        $isFirstDeliveryDayMandatory = in_array($deliveryRhythmTypeCombined, ['0-individual', '2-week']);
+        if ($deliveryRhythmFirstDeliveryDay != '' || $isFirstDeliveryDayMandatory) {
             $product2update['delivery_rhythm_first_delivery_day'] = Configure::read('app.timeHelper')->formatToDbFormatDate($deliveryRhythmFirstDeliveryDay);
         }
-        if ($deliveryRhythmFirstDeliveryDay == '' && $deliveryRhythmType != 'individual') {
+        if ($deliveryRhythmFirstDeliveryDay == '' && !$isFirstDeliveryDayMandatory) {
             $product2update['delivery_rhythm_first_delivery_day'] = '';
-        }
-        if ($deliveryRhythmFirstDeliveryDay == '' && $deliveryRhythmTypeCombined == '2-week') {
-            $product2update['delivery_rhythm_first_delivery_day'] = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
         }
         
         try {
