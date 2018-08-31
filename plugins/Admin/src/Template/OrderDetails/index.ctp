@@ -22,10 +22,8 @@ use Cake\Core\Configure;
         'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
             $('input.datepicker').datepicker();".
             Configure::read('app.jsNamespace').".Admin.init();" .
-            Configure::read('app.jsNamespace').".Admin.initCancelSelectionButton();" .
             Configure::read('app.jsNamespace').".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');" .
             Configure::read('app.jsNamespace').".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" .
-            Configure::read('app.jsNamespace').".Admin.initEmailToAllButton();" .
             Configure::read('app.jsNamespace').".Admin.selectMainMenuAdmin('".__d('admin', 'Orders')."');" .
             Configure::read('app.jsNamespace').".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");
         "
@@ -313,6 +311,12 @@ echo '<div class="bottom-button-container">';
     
     echo $this->element('orderDetailList/button/allProductsPickedUp', [
         'pickupDay' => $pickupDay
+    ]);
+    
+    echo $this->element('orderDetailList/button/changePickupDayOfSelectedOrderDetails', [
+        'deposit' => $deposit,
+        'orderDetails' => $orderDetails,
+        'groupBy' => $groupBy
     ]);
     
     echo $this->element('orderDetailList/button/cancelSelectedOrderDetails', [

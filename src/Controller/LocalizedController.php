@@ -202,7 +202,10 @@ class LocalizedController extends Controller
                 'AnExistingOrderListWillBeOverwritten' => __('An_existing_order_list_will_be_overwritten!'),
                 'ChangeGroupFor' => __('Change_group_for'),
                 'TheMemberNeedsToSignInAgain' => __('The_member_needs_to_sign_again.'),
-                'Member' => __('Member')
+                'Member' => __('Member'),
+                'WhyIsPickupDayChanged' => __('Why_is_pickup_day_changed?'),
+                'ChangePickupDay' => __('Change_pickup_day'),
+                'PickupDay' => __('Pickup_day'),
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),

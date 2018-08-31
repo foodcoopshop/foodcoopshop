@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-31 11:29+0200\n"
-"PO-Revision-Date: 2018-08-31 08:50+0200\n"
+"POT-Creation-Date: 2018-08-31 16:47+0200\n"
+"PO-Revision-Date: 2018-08-31 16:47+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -275,6 +275,9 @@ msgstr "The price of the ordered product {0} (amount {1}) was successfully adapt
 
 msgid "Ordered_price_adapted"
 msgstr "Price adapted"
+
+msgid "Please_enter_why_pickup_day_is_changed."
+msgstr "Please enter why the pickup day is changed."
 
 msgid "The_pickup_day_comment_of_{0}_was_changed:"
 msgstr "The pickup day comment {0} was changed:"
@@ -965,6 +968,9 @@ msgstr "Back to deposit account"
 
 msgid "Cancel_selected_products"
 msgstr "Cancel selected products"
+
+msgid "Change_pickup_day"
+msgstr "Change pickup day"
 
 msgid "Generate_orders_as_pdf"
 msgstr "Generate orders as PDF"

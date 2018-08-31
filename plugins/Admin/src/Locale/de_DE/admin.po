@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-31 11:29+0200\n"
-"PO-Revision-Date: 2018-08-31 08:49+0200\n"
+"POT-Creation-Date: 2018-08-31 16:47+0200\n"
+"PO-Revision-Date: 2018-08-31 16:47+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -275,6 +275,9 @@ msgstr "Der Preis des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich v
 
 msgid "Ordered_price_adapted"
 msgstr "Preis angepasst"
+
+msgid "Please_enter_why_pickup_day_is_changed."
+msgstr "Bitte gib an, warum der Abholtag geändert wird."
 
 msgid "The_pickup_day_comment_of_{0}_was_changed:"
 msgstr "Der Abholtag-Kommentar des Mitglieds {0} wurde geändert: "
@@ -965,6 +968,9 @@ msgstr "Zurück zum Pfandkonto"
 
 msgid "Cancel_selected_products"
 msgstr "Ausgewählte Produkte stornieren"
+
+msgid "Change_pickup_day"
+msgstr "Abholtag ändern"
 
 msgid "Generate_orders_as_pdf"
 msgstr "Bestellungen als PDF generieren"

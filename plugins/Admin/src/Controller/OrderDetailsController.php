@@ -2,12 +2,14 @@
 
 namespace Admin\Controller;
 
+use App\Lib\Error\Exception\InvalidParameterException;
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use App\Model\Table\OrderDetailsTable;
+use Cake\I18n\FrozenDate;
 
 /**
  * OrderDetailsController
@@ -700,6 +702,56 @@ class OrderDetailsController extends AdminAppController
         ]));
     }
     
+    public function editPickupDay()
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+        
+        $orderDetailIds = $this->getRequest()->getData('orderDetailIds');
+        $pickupDay = $this->getRequest()->getData('pickupDay');
+        $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
+        $pickupDayAsFrozenDate = FrozenDate::createFromFormat(
+            Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'),
+            $pickupDay
+        );
+        $changePickupDayReason = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('changePickupDayReason')), '<strong><b>'));
+        
+        try {
+            
+            if ($changePickupDayReason == '') {
+                throw new InvalidParameterException(__d('admin', 'Please_enter_why_pickup_day_is_changed.'));
+            }
+            
+            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+            foreach ($orderDetailIds as $orderDetailId) {
+                $orderDetail = $this->OrderDetail->find('all', [
+                    'conditions' => [
+                        'OrderDetails.id_order_detail' => $orderDetailId
+                    ],
+                    'contain' => [
+                        'Customers'
+                    ]
+                ])->first();
+                $this->OrderDetail->save(
+                    $this->OrderDetail->patchEntity($orderDetail, [
+                        'pickup_day' => $pickupDayAsFrozenDate
+                    ]));
+            }
+            
+            $result = true;
+            $this->set('data', [
+                'result' => $result,
+                'status' => !empty($result),
+                'msg' => 'ok'
+            ]);
+            
+            $this->set('_serialize', 'data');
+            
+        } catch (InvalidParameterException $e) {
+            $this->sendAjaxError($e);
+        }
+        
+    }
+    
     public function editPickupDayComment()
     {
         $this->RequestHandler->renderAs($this, 'json');
@@ -726,11 +778,6 @@ class OrderDetailsController extends AdminAppController
                 'comment' => $pickupDayComment
             ]
         );
-        
-        $message = '';
-        if (empty($result)) {
-            $message = __d('admin', 'Errors_while_saving!');
-        }
         
         $this->Flash->success(__d('admin', 'The_comment_was_changed_successfully.'));
         

@@ -125,7 +125,38 @@ foodcoopshop.Admin = {
         });
         return rowMarkerAll;
     },
+    
+    getSelectedOrderDetailIds : function() {
+        var orderDetailIds = [];
+        $('table.list').find('input.row-marker[type="checkbox"]:checked').each(function () {
+            var orderDetailId = $(this).closest('tr').find('td:nth-child(2)').html();
+            orderDetailIds.push(orderDetailId);
+        });
+        return orderDetailIds;
+    },
 
+    initChangePickupDayOfSelectedProductsButton : function () {
+        var button = $('#changePickupDayOfSelectedProductsButton');
+        foodcoopshop.Helper.disableButton(button);
+
+        $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
+            foodcoopshop.Admin.updateChangePickupDayOfSelectedProductsButton(button);
+        });
+
+        button.on('click', function () {
+            var orderDetailIds = foodcoopshop.Admin.getSelectedOrderDetailIds();
+            foodcoopshop.Admin.openBulkChangePickupDayDialog(orderDetailIds);
+        });
+
+    },
+
+    updateChangePickupDayOfSelectedProductsButton : function(button) {
+        foodcoopshop.Helper.disableButton(button);
+        if ($('table.list').find('input.row-marker[type="checkbox"]:checked').length > 0) {
+            foodcoopshop.Helper.enableButton(button);
+        }
+    },
+    
     initCancelSelectionButton : function () {
 
         var button = $('#cancelSelectedProductsButton');
@@ -136,23 +167,17 @@ foodcoopshop.Admin = {
         });
 
         button.on('click', function () {
-            var orderDetailIds = [];
-            $('table.list').find('input.row-marker[type="checkbox"]:checked').each(function () {
-                var orderDetailId = $(this).closest('tr').find('td:nth-child(2)').html();
-                orderDetailIds.push(orderDetailId);
-            });
+            var orderDetailIds = foodcoopshop.Admin.getSelectedOrderDetailIds();
             foodcoopshop.Admin.openBulkDeleteOrderDetailDialog(orderDetailIds);
         });
 
     },
 
     updateCancelSelectionButton : function (button) {
-
         foodcoopshop.Helper.disableButton(button);
         if ($('table.list').find('input.row-marker[type="checkbox"]:checked').length > 0) {
             foodcoopshop.Helper.enableButton(button);
         }
-
     },
 
     initFilter: function (callback) {
@@ -904,6 +929,87 @@ foodcoopshop.Admin = {
         }
         return row.find('td.is-stock-product').length > 0 && row.find('td.is-stock-product').html().match('fa-check');
     },
+    
+    openBulkChangePickupDayDialog : function(orderDetailIds) {
+        
+        $('#cke_dialogChangePickupDayReason').val('');
+        var dialogId = 'order-detail-pickup-day-edit-form'
+
+        var dialogHtml = '';
+        dialogHtml += '<div class="field-wrapper">';
+            dialogHtml += '<label>' + foodcoopshop.LocalizedJs.admin.PickupDay + '</label>';
+            dialogHtml += '<input style="margin-left:10px;" class="datepicker" type="text" name="dialogChangePickupDay" id="dialogChangePickupDay" /><br />';
+        dialogHtml += '</div>';
+        dialogHtml += '<div style="margin-top:10px;float:left;" class="textarea-wrapper">';
+            dialogHtml += '<label for="dialogChangePickupDayReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPickupDayChanged +'</label>';
+                dialogHtml += '<textarea class="ckeditor" name="dialogChangePickupDayReason" id="dialogChangePickupDayReason" />';
+            dialogHtml += '</div>';
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.admin.ChangePickupDay, dialogId, dialogHtml);
+        $('body').append(dialogHtml);
+
+        var buttons = {};
+        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+        buttons['save'] = {
+            text: foodcoopshop.LocalizedJs.helper.save,
+            click: function() {
+                var ckeditorData = CKEDITOR.instances['dialogChangePickupDayReason'].getData().trim();
+                $('.ui-dialog .ajax-loader').show();
+                $('.ui-dialog button').attr('disabled', 'disabled');
+                foodcoopshop.Helper.ajaxCall(
+                    '/admin/order-details/editPickupDay',
+                    {
+                        orderDetailIds: orderDetailIds,
+                        pickupDay: $('#dialogChangePickupDay').val(),
+                        changePickupDayReason: ckeditorData
+                    },
+                    {
+                        onOk: function (data) {
+                            document.location.reload();
+                        },
+                        onError: function (data) {
+                            var form = $('#order-detail-pickup-day-edit-form form');
+                            form.find('.ajax-loader').hide();
+                            foodcoopshop.Admin.appendFlashMessageToDialog(form, data.msg);
+                        }
+                    }
+                );
+            }
+        };
+        
+        var dialog = $('#' + dialogId).dialog({
+            modal: true,
+            title: foodcoopshop.LocalizedJs.admin.ChangePickupDay,
+            autoOpen: true,
+            width: 400,
+            open: function () {
+                foodcoopshop.Helper.initCkeditor('dialogChangePickupDayReason');
+            },
+            resizable: false,
+            buttons: buttons,
+            close: function (event, ui) {
+                foodcoopshop.Helper.destroyCkeditor('dialogChangePickupDayReason');
+            }
+        });
+        
+        dialog.dialog('open');
+        
+        foodcoopshop.Helper.initDatepicker();
+        var datepickerInput = $('#dialogChangePickupDay');
+        datepickerInput.val($('.filter-container input[name="pickupDay[]"').val());
+        datepickerInput.datepicker({
+            beforeShow: function(input, inst) {
+                $('.ui-dialog').addClass('has-datepicker');
+            },
+            onClose: function(input, inst) {
+                $('.ui-dialog').removeClass('has-datepicker');
+                // if datepicker is closed without selecting a date, it's focused and another click does not trigger to open calendar again
+                $(this).off('click').on('click', function() {
+                    datepickerInput.datepicker('show');
+                });
+            }
+        });
+        
+    },
 
     openBulkDeleteOrderDetailDialog : function (orderDetailIds) {
 
@@ -918,7 +1024,7 @@ foodcoopshop.Admin = {
         infoText += '<ul>';
         for (var i in orderDetailIds) {
             var dataRow = $('#delete-order-detail-' + orderDetailIds[i]).closest('tr');
-            infoText += '<li>' + dataRow.find('td:nth-child(4) a').html() + ' / ' + dataRow.find('td:nth-child(10)').html() + '</li>';
+            infoText += '<li>' + dataRow.find('td:nth-child(4) a').html() + ' / ' + dataRow.find('td:nth-child(9)').html() + '</li>';
         }
         infoText += '</ul>';
 
@@ -1544,7 +1650,7 @@ foodcoopshop.Admin = {
                 newHtml = quantityString.html().replace(regExpDeliveredTotalWeight, foodcoopshop.LocalizedJs.admin.DeliveredWeight);
             }
             quantityString.html(newHtml);
-            label += foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td:nth-child(10)').html() + ')';
+            label += foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td:nth-child(9)').html() + ')';
             $('#' + dialogId + ' label[for="dialogOrderDetailProductQuantityQuantity"]').html(label);
 
             var stepValue = '0.001';
@@ -1643,7 +1749,7 @@ foodcoopshop.Admin = {
             var productPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPricePrice');
 
             $('#' + dialogId + ' #dialogOrderDetailProductPriceOrderDetailId').val(orderDetailId);
-            $('#' + dialogId + ' label[for="dialogOrderDetailProductPricePrice"]').html(row.find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td:nth-child(10)').html() + ')');
+            $('#' + dialogId + ' label[for="dialogOrderDetailProductPricePrice"]').html(row.find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td:nth-child(9)').html() + ')');
 
             var productTimebasedCurrencyPriceField;
 
@@ -1762,7 +1868,7 @@ foodcoopshop.Admin = {
             var infoTextForEditProductAmount = '<span style="font-weight:normal"><br />' + foodcoopshop.LocalizedJs.admin.DecreaseAmountExplainationText + '<br /><br /></span>';
             infoTextForEditProductAmount += $(this).closest('tr').find('td:nth-child(4) a.name-for-dialog').html();
             infoTextForEditProductAmount += ' <span style="font-weight:normal;">(' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ';
-            infoTextForEditProductAmount += $(this).closest('tr').find('td:nth-child(10)').html() + ')<br />' + foodcoopshop.LocalizedJs.admin.NewAmount + ':';
+            infoTextForEditProductAmount += $(this).closest('tr').find('td:nth-child(9)').html() + ')<br />' + foodcoopshop.LocalizedJs.admin.NewAmount + ':';
             $('#' + dialogId + ' label[for="dialogOrderDetailProductAmount"]').html(infoTextForEditProductAmount);
             dialog.dialog('open');
         });

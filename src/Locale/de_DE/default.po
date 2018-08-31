@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-31 14:42+0200\n"
-"PO-Revision-Date: 2018-08-31 14:41+0200\n"
+"POT-Creation-Date: 2018-08-31 16:47+0200\n"
+"PO-Revision-Date: 2018-08-31 16:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -657,6 +657,12 @@ msgstr "Das Mitglied muss sich nach der Änderung neu einloggen."
 msgid "Member"
 msgstr "Mitglied"
 
+msgid "Why_is_pickup_day_changed?"
+msgstr "Warum wird der Abholtag geändert?"
+
+msgid "Change_pickup_day"
+msgstr "Abholtag ändern"
+
 msgid "Were_the_products_picked_up?"
 msgstr "Wurden die Produkte abgeholt?"
 
@@ -1160,9 +1166,6 @@ msgstr "Das Produkt mit der ID {0} ist nicht vorhanden."
 
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "Die Variante existiert nicht: {0}"
-
-msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
-msgstr "Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar."
 
 msgid "Please_accept_the_information_about_right_of_withdrawal."
 msgstr "Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss."
@@ -2033,6 +2036,9 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
+#~ msgstr "Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar."
 
 #~ msgid "delivery_break_since_holiday_active"
 #~ msgstr "seit"

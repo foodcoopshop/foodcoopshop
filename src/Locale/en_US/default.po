@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-31 14:42+0200\n"
-"PO-Revision-Date: 2018-08-31 14:42+0200\n"
+"POT-Creation-Date: 2018-08-31 16:47+0200\n"
+"PO-Revision-Date: 2018-08-31 16:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -657,6 +657,12 @@ msgstr "The member needs to sign in again."
 msgid "Member"
 msgstr "Member"
 
+msgid "Why_is_pickup_day_changed?"
+msgstr "Why is the pickup day changed?"
+
+msgid "Change_pickup_day"
+msgstr "Change pickup day"
+
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
 
@@ -1160,9 +1166,6 @@ msgstr "The product with id {0} does not exist."
 
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "The attribute does not exist: {0}"
-
-msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
-msgstr "The manufacturer of the product {0} either has a delivery break or the product is not activated any more."
 
 msgid "Please_accept_the_information_about_right_of_withdrawal."
 msgstr "Please accept the information about the right of withdrawal."
@@ -2033,6 +2036,9 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
+#~ msgstr "The manufacturer of the product {0} either has a delivery break or the product is not activated any more."
 
 #~ msgid "delivery_break_since_holiday_active"
 #~ msgstr "since"
