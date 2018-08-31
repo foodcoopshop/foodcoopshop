@@ -539,25 +539,6 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    /**
-     * @param int $manufacturerId
-     * @param boolean $useHolidayMode
-     * @return array
-     */
-    public function getCountByManufacturerId($manufacturerId, $useHolidayMode = false)
-    {
-        $productCount = $this->find('all', [
-            'conditions' => [
-                'Products.active' => APP_ON,
-                'Products.id_manufacturer' => $manufacturerId
-            ],
-            'contain' => [
-                'Manufacturers'
-            ]
-        ])->count();
-        return $productCount;
-    }
-
     public function isNew($date)
     {
 

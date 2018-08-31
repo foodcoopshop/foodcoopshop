@@ -78,9 +78,9 @@ if ($blogPosts->count() > 0) {
     ]);
 }
 
-$manufacturerHolidayString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true);
-if ($manufacturerHolidayString != '') {
-    echo '<h2 class="info">'.$manufacturerHolidayString.'</h2>';
+$manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true);
+if ($manufacturerNoDeliveryDaysString != '') {
+    echo '<h2 class="info">'.$manufacturerNoDeliveryDaysString.'</h2>';
 }
 
 if (!empty($manufacturer['Products'])) {

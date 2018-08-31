@@ -52,10 +52,10 @@ foreach ($manufacturers as $manufacturer) {
             ).'</h4>';
             echo $manufacturer->short_description;
 
-            $manufacturerHolidayString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer);
-    if ($manufacturerHolidayString != '') {
-        echo '<h2 class="info">'.__('Delivery_break') . ': ' . $manufacturerHolidayString.'</h2>';
-    }
+            $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer);
+            if ($manufacturerNoDeliveryDaysString != '') {
+                echo '<h2 class="info">'.__('Delivery_break') . ': ' . $manufacturerNoDeliveryDaysString.'</h2>';
+            }
 
         echo '</div>';
 

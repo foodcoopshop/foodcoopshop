@@ -298,13 +298,13 @@ class ManufacturersTable extends AppTable
             if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
                 $additionalInfo = $this->getProductsByManufacturerId($manufacturer->id_manufacturer, true);
             }
-            $holidayInfo = Configure::read('app.htmlHelper')->getManufacturerNoDeliveryDaysString($manufacturer);
-            if ($holidayInfo != '') {
-                $holidayInfo = __('Delivery_break') . ': ' . $holidayInfo;
+            $noDeliveryDaysString = Configure::read('app.htmlHelper')->getManufacturerNoDeliveryDaysString($manufacturer);
+            if ($noDeliveryDaysString != '') {
+                $noDeliveryDaysString = __('Delivery_break') . ': ' . $noDeliveryDaysString;
                 if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
                     $additionalInfo .= ' - ';
                 }
-                $additionalInfo .= $holidayInfo;
+                $additionalInfo .= $noDeliveryDaysString;
             }
             if ($additionalInfo != '') {
                 $manufacturerName .= ' <span class="additional-info">('.$additionalInfo.')</span>';
