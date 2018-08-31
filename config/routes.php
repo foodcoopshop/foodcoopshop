@@ -78,6 +78,7 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/js/localized-javascript', ['controller' => 'Localized', 'action' => 'renderAsJsFile'])->setExtensions(['js']);
 
+    $routes->redirect('/admin/orders', '/admin/order-details?groupBy=customer');
     $routes->connect('/admin', array('plugin' => 'Admin', 'controller' => 'Pages', 'action' => 'home'));
 
     /**
