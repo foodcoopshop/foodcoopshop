@@ -251,7 +251,7 @@ class LocalizedController extends Controller
                 'IndividualDeliveryDayInfo' => __('Individual_delivery_day_info.'),
                 'FirstDeliveryDayInfo' => __('First_delivery_day_info.'),
                 'canBeLeftBlank' => __('can_be_left_blank'),
-                'InfoPageForOrderHandling' => __('Info_page_for_order_handling'),
+                'InfoPageForDeliveryRhythm' => __('Info_page_for_delivery_rhythm'),
                 'DocsUrlOrderHandling' => Configure::read('app.htmlHelper')->getDocsUrl(__('docs_route_order_handling')),
             ],
             'upload' => [

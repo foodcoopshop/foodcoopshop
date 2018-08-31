@@ -128,7 +128,7 @@ foodcoopshop.DialogProduct = {
             dialogHtml += '<div style="float:left;" class="dynamic-label default"><span class="small">' + foodcoopshop.LocalizedJs.dialogProduct.FirstDeliveryDayInfo + '</span><br /></div>';
             dialogHtml += '<div style="float:left;" class="dynamic-label individual"><span class="small">' + foodcoopshop.LocalizedJs.dialogProduct.IndividualDeliveryDayInfo + '</span><br /></div>';
         dialogHtml += '</div>';
-        dialogHtml += '<p style="margin-top:10px;float:right;"><a target="_blank" href="' + foodcoopshop.LocalizedJs.dialogProduct.DocsUrlOrderHandling + '">' + foodcoopshop.LocalizedJs.dialogProduct.InfoPageForOrderHandling + '</a></p>';
+        dialogHtml += '<p style="margin-top:10px;float:right;"><a target="_blank" href="' + foodcoopshop.LocalizedJs.dialogProduct.DocsUrlOrderHandling + '">' + foodcoopshop.LocalizedJs.dialogProduct.InfoPageForDeliveryRhythm + '</a></p>';
         dialogHtml += '<input type="hidden" name="dialogDeliveryRhythmProductId" id="dialogDeliveryRhythmProductId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.DeliveryRhythm, dialogId, dialogHtml);
         return dialogHtml;
