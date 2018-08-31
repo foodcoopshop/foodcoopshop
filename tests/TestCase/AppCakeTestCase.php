@@ -317,7 +317,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
 
     protected function changeManufacturerNoDeliveryDays($manufacturerId, $noDeliveryDays = '')
     {
-        $query = 'UPDATE fcs_manufacturer SET no_delivery_days = :noDeliveryDays, WHERE id_manufacturer = :manufacturerId;';
+        $query = 'UPDATE fcs_manufacturer SET no_delivery_days = :noDeliveryDays WHERE id_manufacturer = :manufacturerId;';
         $params = [
             'manufacturerId' => $manufacturerId,
             'noDeliveryDays' => $noDeliveryDays

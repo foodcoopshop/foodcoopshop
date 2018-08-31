@@ -130,6 +130,11 @@ class ProductsTable extends AppTable
         return $validator;
     }
     
+    public function deliveryBreakEnabled($noDeliveryDaysAsString, $deliveryDate)
+    {
+        return $noDeliveryDaysAsString != '' && preg_match('`' . $deliveryDate . '`', $noDeliveryDaysAsString);
+    }
+    
     public function calculatePickupDayRespectingDeliveryRhythm($product, $currentDay=null)
     {
         

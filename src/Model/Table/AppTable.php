@@ -191,7 +191,7 @@ class AppTable extends Table
                 );
             
             // hides the product if manufacturer has enabled delivery break
-            if ($product['no_delivery_days'] != '' && preg_match('`' . $deliveryDate . '`', $product['no_delivery_days'])) {
+            if ($this->Product->deliveryBreakEnabled($product['no_delivery_days'], $deliveryDate)) {
                 unset($products[$i]);
             }
             

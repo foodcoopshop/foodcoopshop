@@ -169,15 +169,14 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeManufacturerStatus($manufacturerId, APP_ON);
     }
 
-    public function testManufacturerHolidayModeActivatedWhileShopping()
+    public function testManufacturerDeliveryBreakActivatedWhileShopping()
     {
-        $this->markTestSkipped();
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
 
         $manufacturerId = 5;
-        $this->changeManufacturerNoDeliveryDays($manufacturerId, date('Y-m-d'));
+        $this->changeManufacturerNoDeliveryDays($manufacturerId, Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
         $this->finishCart();
         $this->checkValidationError();
         $this->assertRegExp('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->browser->getContent());

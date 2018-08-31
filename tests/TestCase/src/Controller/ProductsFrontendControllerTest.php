@@ -14,6 +14,7 @@
  * @link          https://www.foodcoopshop.com
  */
 use App\Test\TestCase\AppCakeTestCase;
+use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
 class ProductsFrontendControllerTest extends AppCakeTestCase
@@ -83,11 +84,21 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assert404NotFoundHeader();
     }
     
-    public function testProductDetailIndividualDeliveryBreakOver()
+    public function testProductDetailIndividualDeliveryRhythmOver()
     {
         $this->loginAsSuperadmin();
         $productId = 346;
         $this->changeProductDeliveryRhythm($productId, '0-individual', '31.08.2018');
+        $this->browser->get($this->Slug->getProductDetail($productId, 'Demo Product'));
+        $this->assert404NotFoundHeader();
+    }
+    
+    public function testProductDetailDeliveryBreakActive()
+    {
+        $this->loginAsSuperadmin();
+        $productId = 346;
+        $manufacturerId = 5;
+        $this->changeManufacturerNoDeliveryDays($manufacturerId, Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
         $this->browser->get($this->Slug->getProductDetail($productId, 'Demo Product'));
         $this->assert404NotFoundHeader();
     }
