@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-31 21:43+0200\n"
-"PO-Revision-Date: 2018-08-31 21:45+0200\n"
+"POT-Creation-Date: 2018-08-31 22:12+0200\n"
+"PO-Revision-Date: 2018-08-31 22:13+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1236,14 +1236,20 @@ msgstr "Sorry, but sometimes our manufacturers are not able to deliver the order
 msgid "Thanks_for_respecting_that!"
 msgstr "Thanks for respecting that!"
 
-msgid "Why_was_the_pickup_day_changed?"
-msgstr "Why was the pickup day changed?"
-
 msgid "New_pickup_day"
 msgstr "New pickup day"
 
 msgid "Old_pickup_day"
 msgstr "Old pickup day"
+
+msgid "Why_was_the_pickup_day_changed?"
+msgstr "Why was the pickup day changed?"
+
+msgid "The_following_product_is_affected"
+msgstr "The following product is affected"
+
+msgid "The_following_{0}_products_are_affected"
+msgstr "The following products are affected"
 
 msgid "The_price_of_the_product_{0}_has_been_adapted."
 msgstr "The price of the product {0} has been adapted."

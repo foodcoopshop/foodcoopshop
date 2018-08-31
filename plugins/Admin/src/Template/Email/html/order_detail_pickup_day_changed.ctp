@@ -23,15 +23,22 @@
         <td>
 			
             <p>
+                <?php echo __d('admin', 'New_pickup_day'); ?>: <b><?php echo $newPickupDay; ?></b></br />
+                <?php echo __d('admin', 'Old_pickup_day'); ?>: <?php echo $oldPickupDay; ?></br /><br />
+                
                 <?php echo __d('admin', 'Why_was_the_pickup_day_changed?'); ?><br />
                 <b><?php echo '"' . $changePickupDayReason . '"'; ?></b>
             </p>
 
-            <ul style="padding-left: 10px;">
-                <li><?php echo __d('admin', 'New_pickup_day'); ?>: <b><?php echo $newPickupDay; ?></b></li>
-                <li><?php echo __d('admin', 'Old_pickup_day'); ?>: <?php echo $oldPickupDay; ?></li>
-            </ul>
             
+            <p>
+            <?php
+            if (count($orderDetails) == 1) {
+                echo __d('admin', 'The_following_product_is_affected');
+            } else {
+                echo __d('admin', 'The_following_{0}_products_are_affected', [count($orderDetails)]);
+            }
+            ?>:</p>
             <ul style="padding-left: 10px;">
     			<?php
     			     foreach($orderDetails as $orderDetail) {
