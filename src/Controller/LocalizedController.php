@@ -98,7 +98,7 @@ class LocalizedController extends Controller
                 'removeFromCart' => __('Remove_from_cart?'),
                 'forEach' => __('for_each'),
                 'approx' => __('approx.'),
-                'NewPickupDay' => __('New_pickup_day')
+                'PickupDay' => __('Pickup_day')
             ],
             'mobile' => [
                 'home' => __('Home'),
@@ -205,7 +205,8 @@ class LocalizedController extends Controller
                 'Member' => __('Member'),
                 'WhyIsPickupDayChanged' => __('Why_is_pickup_day_changed?'),
                 'ChangePickupDay' => __('Change_pickup_day'),
-                'PickupDay' => __('Pickup_day'),
+                'NewPickupDay' => __('New_pickup_day'),
+                'ChangePickupDayInvoicesInfoText' => __('Change_pickup_day_invoices_info_text')
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),

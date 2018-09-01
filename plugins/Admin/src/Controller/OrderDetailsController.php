@@ -732,6 +732,7 @@ class OrderDetailsController extends AdminAppController
             if ($orderDetails->count() != count($orderDetailIds)) {
                 throw new InvalidParameterException('error - order details wrong');
             }
+            
             $oldPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($orderDetails->toArray()[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'))));
             $newPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($pickupDay));
             

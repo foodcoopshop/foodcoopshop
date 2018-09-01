@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-01 14:37+0200\n"
+"POT-Creation-Date: 2018-09-01 14:52+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -371,9 +371,6 @@ msgstr ""
 msgid "approx."
 msgstr ""
 
-msgid "New_pickup_day"
-msgstr ""
-
 msgid "Home"
 msgstr ""
 
@@ -663,6 +660,12 @@ msgid "Why_is_pickup_day_changed?"
 msgstr ""
 
 msgid "Change_pickup_day"
+msgstr ""
+
+msgid "New_pickup_day"
+msgstr ""
+
+msgid "Change_pickup_day_invoices_info_text"
 msgstr ""
 
 msgid "Were_the_products_picked_up?"
