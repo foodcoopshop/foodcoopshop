@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-01 14:52+0200\n"
-"PO-Revision-Date: 2018-09-01 14:59+0200\n"
+"POT-Creation-Date: 2018-09-01 15:32+0200\n"
+"PO-Revision-Date: 2018-09-01 15:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -668,6 +668,12 @@ msgstr "Neuer Abholtag"
 
 msgid "Change_pickup_day_invoices_info_text"
 msgstr "Bitte berücksichtige beim Ändern des Abholtages, dass dieser die Grundlage für die automatische Erstellung der Rechnung darstellt!"
+
+msgid "products"
+msgstr "Produkte"
+
+msgid "product"
+msgstr "Produkt"
 
 msgid "Were_the_products_picked_up?"
 msgstr "Wurden die Produkte abgeholt?"

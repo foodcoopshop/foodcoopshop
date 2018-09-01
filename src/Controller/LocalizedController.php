@@ -206,7 +206,9 @@ class LocalizedController extends Controller
                 'WhyIsPickupDayChanged' => __('Why_is_pickup_day_changed?'),
                 'ChangePickupDay' => __('Change_pickup_day'),
                 'NewPickupDay' => __('New_pickup_day'),
-                'ChangePickupDayInvoicesInfoText' => __('Change_pickup_day_invoices_info_text')
+                'ChangePickupDayInvoicesInfoText' => __('Change_pickup_day_invoices_info_text'),
+                'products' => __('products'),
+                'product' => __('product')
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),

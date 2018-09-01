@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-01 14:52+0200\n"
-"PO-Revision-Date: 2018-09-01 15:00+0200\n"
+"POT-Creation-Date: 2018-09-01 15:32+0200\n"
+"PO-Revision-Date: 2018-09-01 15:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -668,6 +668,12 @@ msgstr "New pickup day"
 
 msgid "Change_pickup_day_invoices_info_text"
 msgstr "When you change the pickup day, please consider that the pickup day is relvevant for the automatically generated invoices!"
+
+msgid "products"
+msgstr "products"
+
+msgid "product"
+msgstr "product"
 
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"

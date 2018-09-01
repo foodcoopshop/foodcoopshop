@@ -934,7 +934,11 @@ foodcoopshop.Admin = {
             dialogHtml += '<label for="dialogChangePickupDayReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPickupDayChanged +'</label>';
                 dialogHtml += '<textarea class="ckeditor" name="dialogChangePickupDayReason" id="dialogChangePickupDayReason" />';
             dialogHtml += '</div>';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.admin.ChangePickupDay, dialogId, dialogHtml);
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(
+            foodcoopshop.LocalizedJs.admin.ChangePickupDay + ': ' + orderDetailIds.length + ' ' + (
+                orderDetailIds.length == 1 ? foodcoopshop.LocalizedJs.admin.product : foodcoopshop.LocalizedJs.admin.products
+            ) , dialogId, dialogHtml
+        );
         $('body').append(dialogHtml);
 
         var buttons = {};
@@ -968,7 +972,6 @@ foodcoopshop.Admin = {
         
         var dialog = $('#' + dialogId).dialog({
             modal: true,
-            title: foodcoopshop.LocalizedJs.admin.ChangePickupDay,
             autoOpen: true,
             width: 400,
             open: function () {
