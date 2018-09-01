@@ -978,6 +978,7 @@ foodcoopshop.Admin = {
             resizable: false,
             buttons: buttons,
             close: function (event, ui) {
+                $('#' + dialogId).remove(); // ckeditor was always empty if opened more than once
                 foodcoopshop.Helper.destroyCkeditor('dialogChangePickupDayReason');
             }
         });
