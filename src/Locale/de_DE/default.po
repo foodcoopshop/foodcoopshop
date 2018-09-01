@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-31 22:12+0200\n"
-"PO-Revision-Date: 2018-08-31 20:27+0200\n"
+"POT-Creation-Date: 2018-09-01 14:37+0200\n"
+"PO-Revision-Date: 2018-09-01 14:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -371,6 +371,9 @@ msgstr "je"
 
 msgid "approx."
 msgstr "ca."
+
+msgid "New_pickup_day"
+msgstr "Neuer Abholtag"
 
 msgid "Home"
 msgstr "Home"
@@ -926,6 +929,9 @@ msgstr "Bestelltes Produkt: Anzahl geändert"
 
 msgid "Action_Log_Ordered_product_cancelled"
 msgstr "Bestelltes Produkt: storniert"
+
+msgid "Action_Log_Ordered_product_pickup_day_changed"
+msgstr "Bestelltes Produkt: Abholtag geändert"
 
 msgid "Action_Log_Member_credit_upload_added"
 msgstr "Mitglied: Guthaben-Aufladung eingetragen"

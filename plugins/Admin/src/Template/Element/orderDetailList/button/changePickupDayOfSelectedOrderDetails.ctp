@@ -14,7 +14,7 @@
  */
 use Cake\Core\Configure;
 
-if ($deposit == '' && $groupBy == '' && count($orderDetails) > 0 && count($pickupDay) == 1) {
+if ($deposit == '' && $groupBy == '' && count($orderDetails) > 0) {
     $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace').".Admin.initChangePickupDayOfSelectedProductsButton();"
     ]);

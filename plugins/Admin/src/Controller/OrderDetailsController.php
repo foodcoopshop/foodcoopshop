@@ -9,7 +9,6 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use App\Model\Table\OrderDetailsTable;
-use Cake\I18n\FrozenDate;
 
 /**
  * OrderDetailsController
@@ -734,6 +733,7 @@ class OrderDetailsController extends AdminAppController
                 throw new InvalidParameterException('error - order details wrong');
             }
             $oldPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($orderDetails->toArray()[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'))));
+            $newPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($pickupDay));
             
             // validate only once for the first order detail
             $entity = $this->OrderDetail->patchEntity(
@@ -764,9 +764,6 @@ class OrderDetailsController extends AdminAppController
                 @$customers[$orderDetail->id_customer][] = $orderDetail;
             }
             
-            // send email to customer
-            $newPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($pickupDay));
-            
             foreach($customers as $orderDetails) {
                 $email = new AppEmail();
                 $email->setTemplate('Admin.order_detail_pickup_day_changed')
@@ -782,6 +779,12 @@ class OrderDetailsController extends AdminAppController
                 ]);
                 $email->send();
             }
+            
+            $message = __d('admin', 'The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified.', [count($orderDetailIds), '<b>'.$newPickupDay.'</b>', count($customers)]);
+            $this->Flash->success($message);
+            
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog->customSave('order_detail_pickup_day_changed', $this->AppAuth->getUserId(), 0, 'order_details', $message . ' Ids: ' . join(', ', $orderDetailIds));
             
             $this->set('data', [
                 'result' => [],

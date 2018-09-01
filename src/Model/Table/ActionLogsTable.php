@@ -239,7 +239,13 @@ class ActionLogsTable extends AppTable
                     'manufacturer'
                 ]
             ],
-
+            'order_detail_pickup_day_changed' => [
+                'name' => __('Action_Log_Ordered_product_pickup_day_changed'),
+                'access' => [
+                    'manufacturer'
+                ]
+            ],
+            
             'payment_product_added' => [
                 'name' => __('Action_Log_Member_credit_upload_added')
             ],

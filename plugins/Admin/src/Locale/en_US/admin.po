@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-31 22:12+0200\n"
-"PO-Revision-Date: 2018-08-31 22:13+0200\n"
+"POT-Creation-Date: 2018-09-01 14:37+0200\n"
+"PO-Revision-Date: 2018-09-01 14:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -281,6 +281,9 @@ msgstr "Please enter why the pickup day is changed."
 
 msgid "The_pickup_day_of_your_order_was_changed_to"
 msgstr "The pickup day of your order was changed to"
+
+msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified."
+msgstr "The pickup day of {0,plural,=1{one product} other{# products}} was successfully changed to {1] and {2,plural,=1{one member was} other{# members were}} got an email."
 
 msgid "The_pickup_day_comment_of_{0}_was_changed:"
 msgstr "The pickup day comment {0} was changed:"
@@ -1814,6 +1817,9 @@ msgstr "{0,plural,=1{record} other{records}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
+#~ msgid "The_pickup_day_was_not_changed."
+#~ msgstr "The pickup day was not changed."
 
 #~ msgid "Order_period"
 #~ msgstr "Order period"
