@@ -736,18 +736,7 @@ foodcoopshop.Admin = {
             foodcoopshop.Helper.initDatepicker();
             var datepickerInput = $('#' + dialogId + ' input.datepicker');
             datepickerInput.val($(this).closest('tr').find('td span.delivery-rhythm-for-dialog span.first-delivery-day').html());
-            datepickerInput.datepicker({
-                beforeShow: function(input, inst) {
-                    $('.ui-dialog').addClass('has-datepicker');
-                },
-                onClose: function(input, inst) {
-                    $('.ui-dialog').removeClass('has-datepicker');
-                    // if datepicker is closed without selecting a date, it's focused and another click does not trigger to open calendar again
-                    $(this).off('click').on('click', function() {
-                        datepickerInput.datepicker('show');
-                    });
-                }
-            });
+            foodcoopshop.Admin.addDatepickerInDialog(datepickerInput);
             
             $('#' + dialogId + ' #dialogDeliveryRhythmProductId').val(row.find('td:nth-child(1)').html());
             $('#' + dialogId + ' label[for="dialogDeliveryRhythm"]').html(foodcoopshop.Admin.getProductNameForDialog(row));
@@ -984,6 +973,7 @@ foodcoopshop.Admin = {
             width: 400,
             open: function () {
                 foodcoopshop.Helper.initCkeditor('dialogChangePickupDayReason');
+                $('#dialogChangePickupDay').blur();
             },
             resizable: false,
             buttons: buttons,
@@ -997,7 +987,12 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initDatepicker();
         var datepickerInput = $('#dialogChangePickupDay');
         datepickerInput.val($('.filter-container input[name="pickupDay[]"').val());
-        datepickerInput.datepicker({
+        foodcoopshop.Admin.addDatepickerInDialog(datepickerInput);
+        
+    },
+    
+    addDatepickerInDialog : function(inputField) {
+        inputField.datepicker({
             beforeShow: function(input, inst) {
                 $('.ui-dialog').addClass('has-datepicker');
             },
@@ -1009,7 +1004,6 @@ foodcoopshop.Admin = {
                 });
             }
         });
-        
     },
 
     openBulkDeleteOrderDetailDialog : function (orderDetailIds) {
