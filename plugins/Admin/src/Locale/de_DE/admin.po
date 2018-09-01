@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-21 09:05+0200\n"
-"PO-Revision-Date: 2018-08-21 08:46+0200\n"
+"POT-Creation-Date: 2018-09-01 14:32+0200\n"
+"PO-Revision-Date: 2018-09-01 15:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -276,6 +276,18 @@ msgstr "Der Preis des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich v
 msgid "Ordered_price_adapted"
 msgstr "Preis angepasst"
 
+msgid "Please_enter_why_pickup_day_is_changed."
+msgstr "Bitte gib an, warum der Abholtag geändert wird."
+
+msgid "The_pickup_day_was_not_changed."
+msgstr "Der Abholtag wurde nicht geändert."
+
+msgid "The_pickup_day_of_your_order_was_changed_to"
+msgstr "Der Abholtag deiner Bestellung wurde geändert auf"
+
+msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified."
+msgstr "Der Abholtag von {0,plural,=1{einem Produkt} other{# Produkten}} wurde erfolgreich auf {1} geändert und {2,plural,=1{ein Mitglied wurde} other{# Mitglieder wurden}} darüber per E-Mail informiert."
+
 msgid "The_pickup_day_comment_of_{0}_was_changed:"
 msgstr "Der Abholtag-Kommentar des Mitglieds {0} wurde geändert: "
 
@@ -369,14 +381,23 @@ msgstr "Die Variante {0} für das Produkt {1} vom Hersteller {2} wurde erfolgrei
 msgid "A_new_product_was_created_for_{0}."
 msgstr "Ein neues Produkt für {0} wurde erfolgreich erstellt."
 
+msgid "The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}."
+msgstr "Der Lieferrhythmus des Produktes {0} vom Hersteller {1} wurde erfolgreich auf {2} geändert."
+
+msgid "Delivery_day"
+msgstr "Liefertag"
+
+msgid "First_delivery_day"
+msgstr "Erster Liefertag"
+
+msgid "Saving_successful."
+msgstr "Speichern erfolgreich."
+
 msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
 msgstr "Der Steuersatz des Produktes {0} vom Hersteller {1} wurde erfolgreich von {2} auf {3} geändert."
 
 msgid "Nothing_changed."
 msgstr "Es wurden keine Änderungen gespeichert."
-
-msgid "Saving_successful."
-msgstr "Speichern erfolgreich."
 
 msgid "The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}"
 msgstr "Die Kategorien des Produktes {0} vom Hersteller {1} wurden geändert: {2}"
@@ -409,7 +430,7 @@ msgid "The_product_{0}_from_manufacturer_{1}_was_renamed_to_{2}."
 msgstr "Das Produkt {0} vom Hersteller {1} wurde umbenannt in {2}."
 
 msgid "The_unity_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
-msgstr "Die Einheit des Produktes {0} vom Hersteller {1} wurde geändet in {2}."
+msgstr "Die Einheit des Produktes {0} vom Hersteller {1} wurde geändert in {2}."
 
 msgid "The_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
 msgstr "Die Beschreibung des Produktes {0} vom Hersteller {1} wurde geändert: {2}"
@@ -942,9 +963,6 @@ msgstr "Wenn es sich um eine Rückzahlung handelt, trage bitte ein, wie viel du 
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Bitte wähle die Monate aus, für die deine Zahlung gedacht ist."
 
-msgid "Delivery_day"
-msgstr "Liefertag"
-
 msgid "Delivery_days"
 msgstr "Liefertage"
 
@@ -959,6 +977,9 @@ msgstr "Zurück zum Pfandkonto"
 
 msgid "Cancel_selected_products"
 msgstr "Ausgewählte Produkte stornieren"
+
+msgid "Change_pickup_day"
+msgstr "Abholtag ändern"
 
 msgid "Generate_orders_as_pdf"
 msgstr "Bestellungen als PDF generieren"
@@ -1085,6 +1106,12 @@ msgstr "Anzahl ändern"
 
 msgid "No_email_notifications_are_sent_for_this_product."
 msgstr "Für dieses Produkt werden niemals Benachrichtigungen bezüglich Lagerstand verschickt."
+
+msgid "change_delivery_rhythm"
+msgstr "Lieferrhythmus ändern"
+
+msgid "delivery_rhythm_from"
+msgstr "ab"
 
 msgid "change_deposit"
 msgstr "Pfand ändern"
@@ -1215,6 +1242,21 @@ msgstr "Unsere Produzenten können leider ab und zu die bestellte Ware nicht lie
 msgid "Thanks_for_respecting_that!"
 msgstr "Vielen Dank für dein Verständnis!"
 
+msgid "New_pickup_day"
+msgstr "Neuer Abholtag "
+
+msgid "Old_pickup_day"
+msgstr "Alter Abholtag"
+
+msgid "Why_was_the_pickup_day_changed?"
+msgstr "Warum wurde der Abholtag geändert?"
+
+msgid "The_following_product_is_affected"
+msgstr "Das folgende Produkt ist betroffen"
+
+msgid "The_following_{0}_products_are_affected"
+msgstr "Die folgenden {0} Produkte sind betroffen"
+
 msgid "The_price_of_the_product_{0}_has_been_adapted."
 msgstr "Der Preis des Produktes {0} wurde erfolgreich angepasst."
 
@@ -1274,6 +1316,9 @@ msgstr "Online-Hilfe"
 
 msgid "docs_route_manufacturers"
 msgstr "hersteller"
+
+msgid "docs_route_order_handling"
+msgstr "bestellabwicklung"
 
 msgid "You_can_change_your_imprint_by_yourself."
 msgstr "Die Daten für dein <b>Impressum</b> (rechts unten auf deinem Hersteller-Profil) kannst du selbst ändern."
@@ -1459,7 +1504,7 @@ msgid "Instant_orders"
 msgstr "Sofort-Bestellungen"
 
 msgid "to_receive_an_email_on_every_instant_order."
-msgstr "bei jeder Sofort-Bestellung eine Info-Mail erhalten."
+msgstr "bei jeder Sofort-Bestellung eine Info-Mail erhalten (gilt nicht für Lagerprodukte)."
 
 msgid "Other_settings"
 msgstr "Sonstige Einstellungen"
@@ -1722,6 +1767,9 @@ msgstr "Steuersatz"
 msgid "New?"
 msgstr "Neu?"
 
+msgid "Delivery_rhythm"
+msgstr "Lieferrhythmus"
+
 msgid "docs_route_financial_reports"
 msgstr "finanzberichte"
 
@@ -1773,6 +1821,15 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
 
+#~ msgid "The_pickup_day_was_changed_successfully_and_{0,plural,=1{1_customer} other{#_customers}}_were_notified."
+#~ msgstr "Der Abholtag wurde erfolgreich geändert und {0,plural,=1{1 Mitglied wurde} other{# Mitglieder wurden}} darüber per E-Mail informiert."
+
+#~ msgid "Order_period"
+#~ msgstr "Bestellzeitraum"
+
+#~ msgid "per"
+#~ msgstr "pro"
+
 #~ msgid "Stock"
 #~ msgstr "Lagerstand"
 
@@ -1808,9 +1865,6 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 #~ msgid "Manually_send_order_list"
 #~ msgstr "Bestellliste manuell versenden"
-
-#~ msgid "Order_from"
-#~ msgstr "Bestellung vom"
 
 #~ msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
 #~ msgstr "Der Kommentar der Bestellung Nr. {0} von {1} wurde geändert:"

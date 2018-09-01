@@ -61,7 +61,7 @@ echo '<tr class="sort">';
         echo '<th>' . $this->Paginator->sort('Manufacturers.timebased_currency_enabled', Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')) . '</th>';
     }
     echo '<th>' . $this->Paginator->sort('Manufacturers.stock_management_enabled', __d('admin', 'Stock_products')) . '</th>';
-    echo '<th>' . $this->Paginator->sort('Manufacturers.holiday_from', __d('admin', 'Delivery_break')) . '</th>';
+    echo '<th>' . $this->Paginator->sort('Manufacturers.no_delivery_days', __d('admin', 'Delivery_break')) . '</th>';
     echo '<th>' . $this->Paginator->sort('Manufacturers.is_private', __d('admin', 'Only_for_members')) . '</th>';
     echo '<th title="'.__d('admin', 'Sum_of_open_orders_in_given_time_range').'">'.__d('admin', 'Open_orders_abbreviation').'</th>';
     echo '<th>'.__d('admin', 'Settings_abbreviation').'</th>';
@@ -190,7 +190,7 @@ foreach ($manufacturers as $manufacturer) {
     echo '</td>';
 
     echo '<td>';
-        echo $this->Html->getManufacturerHolidayString($manufacturer->holiday_from, $manufacturer->holiday_to, $manufacturer->is_holiday_active);
+        echo $this->Html->getManufacturerNoDeliveryDaysString($manufacturer);
     echo '</td>';
 
     echo '<td align="center">';

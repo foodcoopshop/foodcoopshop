@@ -4,6 +4,7 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\Validation\Validator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -61,6 +62,13 @@ class OrderDetailsTable extends AppTable
         $this->addBehavior('Timestamp');
     }
 
+    public function validationPickupDay(Validator $validator)
+    {
+        $validator->notEquals('pickup_day', '1970-01-01', __('The_pickup_day_is_not_valid.'));
+        $validator = $this->getAllowOnlyOneWeekdayValidator($validator, 'pickup_day', __('The_pickup_day'));
+        return $validator;
+    }
+    
     /**
      * @param int $customerId
      * @return array
@@ -98,6 +106,25 @@ class OrderDetailsTable extends AppTable
 
         return $result;
 
+    }
+    
+    public function getGroupedFutureOrdersByCustomerId($customerId)
+    {
+        $query = $this->find('all', [
+            'fields' => ['OrderDetails.pickup_day'],
+            'conditions' => [
+                'OrderDetails.id_customer' => $customerId,
+                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') > DATE_FORMAT(NOW(), \'%Y-%m-%d\')'
+            ],
+            'order' => [
+                'OrderDetails.pickup_day' => 'ASC'
+            ]
+        ]);
+        $query->select(
+            ['orderDetailsCount' => $query->func()->count('OrderDetails.pickup_day')]
+        );
+        $query->group('OrderDetails.pickup_day');
+        return $query->toArray();
     }
     
     public function updateOrderState($dateFrom, $dateTo, $oldOrderStates, $newOrderState, $manufacturerId)

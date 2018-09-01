@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-27 09:03+0200\n"
+"POT-Creation-Date: 2018-09-01 15:32+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -71,7 +71,7 @@ msgstr ""
 msgid "The_product_{0}_is_not_activated_any_more."
 msgstr ""
 
-msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
+msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
 msgstr ""
 
 msgid "Errors_occurred."
@@ -656,6 +656,24 @@ msgstr ""
 msgid "Member"
 msgstr ""
 
+msgid "Why_is_pickup_day_changed?"
+msgstr ""
+
+msgid "Change_pickup_day"
+msgstr ""
+
+msgid "New_pickup_day"
+msgstr ""
+
+msgid "Change_pickup_day_invoices_info_text"
+msgstr ""
+
+msgid "products"
+msgstr ""
+
+msgid "product"
+msgstr ""
+
 msgid "Were_the_products_picked_up?"
 msgstr ""
 
@@ -761,6 +779,33 @@ msgstr ""
 msgid "Is_product_a_stock_product?"
 msgstr ""
 
+msgid "The_delivery_rhythm_of_stock_products_is_always_weekly."
+msgstr ""
+
+msgid "Delivery_rhythm"
+msgstr ""
+
+msgid "First_delivery_day"
+msgstr ""
+
+msgid "Delivery_day"
+msgstr ""
+
+msgid "Individual_delivery_day_info."
+msgstr ""
+
+msgid "First_delivery_day_info."
+msgstr ""
+
+msgid "can_be_left_blank"
+msgstr ""
+
+msgid "Info_page_for_delivery_rhythm"
+msgstr ""
+
+msgid "docs_route_order_handling"
+msgstr ""
+
 msgid "delete"
 msgstr ""
 
@@ -795,9 +840,6 @@ msgid "VAT"
 msgstr ""
 
 msgid "Order_day"
-msgstr ""
-
-msgid "Delivery_day"
 msgstr ""
 
 msgid "Total_sum"
@@ -866,6 +908,9 @@ msgstr ""
 msgid "Action_Log_Network_module_product_synchronized"
 msgstr ""
 
+msgid "Action_Log_Delivery_rhythm_changed"
+msgstr ""
+
 msgid "Action_Log_Order_status_changed"
 msgstr ""
 
@@ -891,6 +936,9 @@ msgid "Action_Log_Order_detail_product_amount_changed"
 msgstr ""
 
 msgid "Action_Log_Ordered_product_cancelled"
+msgstr ""
+
+msgid "Action_Log_Ordered_product_pickup_day_changed"
 msgstr ""
 
 msgid "Action_Log_Member_credit_upload_added"
@@ -1106,6 +1154,9 @@ msgstr ""
 msgid "Please_enter_an_email_address."
 msgstr ""
 
+msgid "{0}_needs_to_be_a_{1}."
+msgstr ""
+
 msgid "Please_enter_a_number_between_{0}_and_{1}."
 msgstr ""
 
@@ -1235,6 +1286,12 @@ msgstr ""
 msgid "online"
 msgstr ""
 
+msgid "The_pickup_day_is_not_valid."
+msgstr ""
+
+msgid "The_pickup_day"
+msgstr ""
+
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr ""
 
@@ -1242,6 +1299,21 @@ msgid "Please_enter_a_correct_number."
 msgstr ""
 
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
+msgstr ""
+
+msgid "The_delivery_ryhthm_is_not_valid."
+msgstr ""
+
+msgid "The_first_delivery_day_is_not_valid."
+msgstr ""
+
+msgid "The_first_delivery_day"
+msgstr ""
+
+msgid "The_first_delivery_day_needs_to_be_a_last_{0}_of_the_month."
+msgstr ""
+
+msgid "The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month."
 msgstr ""
 
 msgid "The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long."
@@ -1502,6 +1574,9 @@ msgstr ""
 msgid "Show_cart_button"
 msgstr ""
 
+msgid "Already_ordered_products"
+msgstr ""
+
 msgid "Information"
 msgstr ""
 
@@ -1589,6 +1664,9 @@ msgstr ""
 msgid "Price"
 msgstr ""
 
+msgid "Total"
+msgstr ""
+
 msgid "You_can_sign_in_here_for_ordering"
 msgstr ""
 
@@ -1614,6 +1692,9 @@ msgid "New"
 msgstr ""
 
 msgid "More_infos_to_product_{0}"
+msgstr ""
+
+msgid "Instant_order"
 msgstr ""
 
 msgid "Edit_product"
@@ -1775,6 +1856,21 @@ msgstr ""
 msgid "Member_fee"
 msgstr ""
 
+msgid "weekly"
+msgstr ""
+
+msgid "every_{0}_week"
+msgstr ""
+
+msgid "every_{0}_{1}_of_a_month"
+msgstr ""
+
+msgid "every_last_{0}_of_a_month"
+msgstr ""
+
+msgid "individual_date"
+msgstr ""
+
 msgid "yes"
 msgstr ""
 
@@ -1787,16 +1883,7 @@ msgstr ""
 msgid "Deleted_Email_Address"
 msgstr ""
 
-msgid "delivery_break_since_holiday_active"
-msgstr ""
-
-msgid "delivery_break_since_holiday_not_active"
-msgstr ""
-
-msgid "delivery_break_until"
-msgstr ""
-
-msgid "The_manufacturer_{0}_has_{1}_delivery_break."
+msgid "The_manufacturer_{0}_has_delivery_break:_{1}"
 msgstr ""
 
 msgid "Website"

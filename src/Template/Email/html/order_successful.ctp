@@ -23,7 +23,7 @@ use Cake\Core\Configure;
             </td>
         </tr>
         <tr>
-            <td style="padding-bottom:20px;">
+            <td>
             	<?php
             	   echo __('thank_you_for_your_order_from_{0}.', [
             	       $cart['Cart']->modified->i18nFormat(
@@ -32,25 +32,23 @@ use Cake\Core\Configure;
             	?>
             </td>
         </tr>
-        <tr>
-            <td style="padding-bottom:10px;">
-            	<?php
-            	   echo __('Pickup_day') . ': <b> ' . $this->MyTime->getDeliveryDateByCurrentDayFormattedWithWeekday().'</b>';
-            	?>
-            </td>
-        </tr>
     </tbody>
 <?php echo $this->element('email/tableFoot'); ?>
 
-<?php echo $this->element('email/tableHead', ['cellpadding' => 6]); ?>
-    <?php echo $this->element('email/orderedProductsTable', [
-        'manufacturerId' => null,
-        'cartProducts' => $cart['CartProducts'],
-        'depositSum' => $appAuth->Cart->getDepositSum(),
-        'productSum' => $appAuth->Cart->getProductSum(),
-        'productAndDepositSum' => $appAuth->Cart->getProductAndDepositSum()
-    ]); ?>
-<?php echo $this->element('email/tableFoot'); ?>
+<?php
+foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
+    echo $this->element('email/tableHead', ['cellpadding' => 6]);
+        echo $this->element('email/orderedProductsTable', [
+            'manufacturerId' => null,
+            'pickupDay' => $pickupDay,
+            'cartProducts' => $cartProducts['Products'],
+            'depositSum' => $cartProducts['CartDepositSum'],
+            'productSum' => $cartProducts['CartProductSum'],
+            'productAndDepositSum' => $cartProducts['CartDepositSum'] + $cartProducts['CartProductSum']
+        ]);
+	echo $this->element('email/tableFoot');
+}
+?>
 
 <?php echo $this->element('email/tableHead'); ?>
     <tbody>

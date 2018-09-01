@@ -4,6 +4,7 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 
 /**
@@ -114,7 +115,7 @@ class CartsTable extends AppTable
                 'CartProducts.id_cart' => $cart['id_cart']
             ],
             'order' => [
-                'Products.name' => 'ASC'
+                'Products.name',
             ],
             'contain' => [
                 'OrderDetails',
@@ -126,10 +127,10 @@ class CartsTable extends AppTable
                 'ProductAttributes.UnitProductAttributes',
                 'Products.Images'
             ]
-        ])->toArray();
+        ]);
         
-        
-        if (!empty($cartProducts)) {
+        $cartProducts = $this->sortByVirtualField($cartProducts, 'product.next_delivery_day');
+        if (!empty((array) $cartProducts)) {
             $cart->pickup_day_entities = $this->CartProducts->setPickupDays($cartProducts, $customerId, $instantOrderMode);
         }
         
@@ -139,7 +140,7 @@ class CartsTable extends AppTable
         ];
 
         foreach ($cartProducts as &$cartProduct) {
-
+            
             $imageId = 0;
             if (!empty($cartProduct->product->image)) {
                 $imageId = $cartProduct->product->image->id_image;
@@ -164,11 +165,16 @@ class CartsTable extends AppTable
             $productData['image'] = $productImage;
             $productData['productLink'] = $productLink;
             $productData['manufacturerLink'] = $manufacturerLink;
-
+            if (!$instantOrderMode) {
+                $productData['nextDeliveryDay'] = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($cartProduct->product->next_delivery_day));
+            } else {
+                $productData['nextDeliveryDay'] = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(Configure::read('app.timeHelper')->getCurrentDay());
+            }
+            
             $preparedCart['CartProducts'][] = $productData;
 
         }
-
+        
         // sum up deposits and products
         $preparedCart['ProductsWithUnitCount'] = $this->getProductsWithUnitCount($preparedCart['CartProducts']);
         $preparedCart['CartDepositSum'] = 0;
@@ -194,6 +200,18 @@ class CartsTable extends AppTable
             }
         }
         return $preparedCart;
+    }
+    
+    public function getCartGroupedByPickupDay($cart)
+    {
+        $preparedCartProducts = [];
+        foreach($cart['CartProducts'] as $cartProduct) {
+            @$preparedCartProducts[$cartProduct['pickupDay']]['CartDepositSum'] += $cartProduct['deposit'];
+            @$preparedCartProducts[$cartProduct['pickupDay']]['CartProductSum'] += $cartProduct['price'];
+            @$preparedCartProducts[$cartProduct['pickupDay']]['Products'][] = $cartProduct;
+        }
+        $cart['CartProducts'] = $preparedCartProducts;
+        return $cart;
     }
 
     private function addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece)
@@ -248,7 +266,8 @@ class CartsTable extends AppTable
             'price' => $grossPrice,
             'priceExcl' => $cartProduct->product->price * $cartProduct->amount,
             'tax' => $tax,
-            'pickupDay' => $cartProduct->pickup_day
+            'pickupDay' => $cartProduct->pickup_day,
+            'isStockProduct' => $cartProduct->product->is_stock_product
         ];
         
         $deposit = 0;
@@ -261,7 +280,6 @@ class CartsTable extends AppTable
         $unitAmount = 0;
         $priceInclPerUnit = 0;
         $quantityInUnits = 0;
-        $productQuantityInUnits = 0;
         $unity = $cartProduct->product->unity;
         $productData['unity'] = $unity;
         if (!empty($cartProduct->product->unit_product) && $cartProduct->product->unit_product->price_per_unit_enabled) {
@@ -317,7 +335,8 @@ class CartsTable extends AppTable
             'price' => $grossPrice,
             'priceExcl' => $cartProduct->product_attribute->price * $cartProduct->amount,
             'tax' => $tax,
-            'pickupDay' => $cartProduct->pickup_day
+            'pickupDay' => $cartProduct->pickup_day,
+            'isStockProduct' => $cartProduct->product->is_stock_product
         ];
 
         $deposit = 0;
@@ -331,7 +350,6 @@ class CartsTable extends AppTable
         $unitAmount = 0;
         $priceInclPerUnit = 0;
         $quantityInUnits = 0;
-        $productQuantityInUnits = 0;
 
         if (!empty($cartProduct->product_attribute->unit_product_attribute) && $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled) {
             $unitName = $cartProduct->product_attribute->unit_product_attribute->name;

@@ -2,6 +2,7 @@
 
 namespace Admin\Controller;
 
+use App\Lib\Error\Exception\InvalidParameterException;
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
@@ -700,6 +701,106 @@ class OrderDetailsController extends AdminAppController
         ]));
     }
     
+    public function editPickupDay()
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+        
+        $orderDetailIds = $this->getRequest()->getData('orderDetailIds');
+        $pickupDay = $this->getRequest()->getData('pickupDay');
+        $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
+        $changePickupDayReason = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('changePickupDayReason')), '<strong><b>'));
+        
+        try {
+            if (empty($orderDetailIds)) {
+                throw new InvalidParameterException('error - no order detail id passed');
+            }
+            $errorMessages = [];
+            if ($changePickupDayReason == '') {
+                $errorMessages[] = __d('admin', 'Please_enter_why_pickup_day_is_changed.');
+            }
+            
+            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+            $orderDetails = $this->OrderDetail->find('all', [
+                'conditions' => [
+                    'OrderDetails.id_order_detail IN' => $orderDetailIds
+                ],
+                'contain' => [
+                    'Customers',
+                    'Products.Manufacturers'
+                ]
+            ]);
+            if ($orderDetails->count() != count($orderDetailIds)) {
+                throw new InvalidParameterException('error - order details wrong');
+            }
+            
+            $oldPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($orderDetails->toArray()[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'))));
+            $newPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday(strtotime($pickupDay));
+            
+            // validate only once for the first order detail
+            $entity = $this->OrderDetail->patchEntity(
+                $orderDetails->toArray()[0],
+                [
+                    'pickup_day' => $pickupDay
+                ],
+                [
+                    'validate' => 'pickupDay'
+                ]
+            );
+            if (!empty($entity->getErrors())) {
+                $errorMessages = array_merge($errorMessages, $this->OrderDetail->getAllValidationErrors($entity));
+            }
+            if (!empty($errorMessages)) {
+                throw new InvalidParameterException(join('<br />', $errorMessages));
+            }
+            
+            $customers = [];
+            foreach ($orderDetails as $orderDetail) {
+                $entity = $this->OrderDetail->patchEntity(
+                    $orderDetail,
+                    [
+                        'pickup_day' => $pickupDay
+                    ]
+                );
+                $this->OrderDetail->save($entity);
+                @$customers[$orderDetail->id_customer][] = $orderDetail;
+            }
+            
+            foreach($customers as $orderDetails) {
+                $email = new AppEmail();
+                $email->setTemplate('Admin.order_detail_pickup_day_changed')
+                ->setTo($orderDetails[0]->customer->email)
+                ->setSubject(__d('admin', 'The_pickup_day_of_your_order_was_changed_to').': ' . $newPickupDay)
+                ->setViewVars([
+                    'orderDetails' => $orderDetails,
+                    'customer' => $orderDetails[0]->customer,
+                    'appAuth' => $this->AppAuth,
+                    'oldPickupDay' => $oldPickupDay,
+                    'newPickupDay' => $newPickupDay,
+                    'changePickupDayReason' => $changePickupDayReason
+                ]);
+                $email->send();
+            }
+            
+            $message = __d('admin', 'The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified.', [count($orderDetailIds), '<b>'.$newPickupDay.'</b>', count($customers)]);
+            $this->Flash->success($message);
+            
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog->customSave('order_detail_pickup_day_changed', $this->AppAuth->getUserId(), 0, 'order_details', $message . ' Ids: ' . join(', ', $orderDetailIds));
+            
+            $this->set('data', [
+                'result' => [],
+                'status' => true,
+                'msg' => 'ok'
+            ]);
+            
+            $this->set('_serialize', 'data');
+            
+        } catch (InvalidParameterException $e) {
+            $this->sendAjaxError($e);
+        }
+        
+    }
+    
     public function editPickupDayComment()
     {
         $this->RequestHandler->renderAs($this, 'json');
@@ -726,11 +827,6 @@ class OrderDetailsController extends AdminAppController
                 'comment' => $pickupDayComment
             ]
         );
-        
-        $message = '';
-        if (empty($result)) {
-            $message = __d('admin', 'Errors_while_saving!');
-        }
         
         $this->Flash->success(__d('admin', 'The_comment_was_changed_successfully.'));
         

@@ -101,7 +101,108 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->assertPriceChange('163', '1,60', '1,60');
     }
-
+    
+    public function testEditDeliveryRhythmInvalidDeliveryRhythmA()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->changeProductDeliveryRhythm(346, '3-week');
+        $this->assertRegExpWithUnquotedString('Der Lieferrhythmus ist nicht gültig.', $response->msg);
+        $this->assertJsonError();
+    }
+    
+    public function testEditDeliveryRhythmInvalidDeliveryRhythmB()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->changeProductDeliveryRhythm(346, '0-week', '31.08.2018');
+        $this->assertRegExpWithUnquotedString('Der Lieferrhythmus ist nicht gültig.', $response->msg);
+        $this->assertJsonError();
+    }
+    
+    public function testEditDeliveryRhythmInvalidFirstDeliveryDay()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->changeProductDeliveryRhythm(346, '1-week', '30.08.2018');
+        $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein Freitag sein.', $response->msg);
+        $this->assertJsonError();
+    }
+    
+    public function testEditDeliveryRhythmOk1Week()
+    {
+        $this->loginAsSuperadmin();
+        $this->changeProductDeliveryRhythm(346, '1-week');
+        $this->assertJsonOk();
+    }
+    
+    public function testEditDeliveryRhythmInvalid2WeekWithoutDate()
+    {
+        $productId = 346;
+        $this->loginAsSuperadmin();
+        $response = $this->changeProductDeliveryRhythm($productId, '2-week');
+        $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein Freitag sein.', $response->msg);
+        $this->assertJsonError();
+    }
+    
+    public function testEditDeliveryRhythmOkFirstOfMonth()
+    {
+        $this->loginAsSuperadmin();
+        $this->changeProductDeliveryRhythm(346, '1-month', '03.08.2018');
+        $this->assertJsonOk();
+    }
+    
+    public function testEditDeliveryRhythmInvalidFirstOfMonth()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->changeProductDeliveryRhythm(346, '1-month', '10.08.2018');
+        $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein erster Freitag im Monat sein.', $response->msg);
+        $this->assertJsonError();
+    }
+    
+    public function testEditDeliveryRhythmOkLastOfMonth()
+    {
+        $this->loginAsSuperadmin();
+        $this->changeProductDeliveryRhythm(346, '0-month', '31.08.2018');
+        $this->assertJsonOk();
+    }
+    
+    public function testEditDeliveryRhythmInvalidLastOfMonth()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->changeProductDeliveryRhythm(346, '0-month', '10.08.2018');
+        $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein letzter Freitag im Monat sein.', $response->msg);
+        $this->assertJsonError();
+    }
+    
+    public function testEditDeliveryRhythmInvalidIndividualWithoutDeliveryDay()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->changeProductDeliveryRhythm(346, '0-individual');
+        $this->assertRegExpWithUnquotedString('Der erste Liefertag ist nicht gültig.', $response->msg);
+        $this->assertJsonError();
+    }
+    
+    public function testEditDeliveryRhythmOkIndividual()
+    {
+        $this->loginAsSuperadmin();
+        $this->changeProductDeliveryRhythm(346, '0-individual', '2018-08-31');
+        $this->assertJsonOk();
+    }
+    
+    public function testEditDeliveryRhythmOkWithDatabaseAsserts()
+    {
+        $productId = 346;
+        $this->loginAsSuperadmin();
+        $this->changeProductDeliveryRhythm($productId, '1-month', '03.08.2018');
+        $this->assertJsonOk();
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId
+            ]
+        ])->first();
+        $this->assertEquals($product->delivery_rhythm_type, 'month');
+        $this->assertEquals($product->delivery_rhythm_count, 1);
+        $this->assertEquals($product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')), '03.08.2018');
+    }
+    
     /**
      * asserts price in database (getGrossPrice)
      */

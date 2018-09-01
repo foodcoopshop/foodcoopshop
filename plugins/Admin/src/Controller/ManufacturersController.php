@@ -250,9 +250,6 @@ class ManufacturersController extends AdminAppController
 
         $query = $this->Manufacturer->find('all', [
             'conditions' => $conditions,
-            'fields' => [
-                'is_holiday_active' => '!'.$this->Manufacturer->getManufacturerHolidayConditions()
-            ],
             'contain' => [
                 'AddressManufacturers',
                 'Customers'
@@ -264,7 +261,7 @@ class ManufacturersController extends AdminAppController
 
         $manufacturers = $this->paginate($query, [
             'sortWhitelist' => [
-                'Manufacturers.name', 'Manufacturers.stock_management_enabled', 'Manufacturers.holiday_from', 'Manufacturers.is_private', 'Customers.' . Configure::read('app.customerMainNamePart'), 'Manufacturers.timebased_currency_enabled'
+                'Manufacturers.name', 'Manufacturers.stock_management_enabled', 'Manufacturers.no_delivery_days', 'Manufacturers.is_private', 'Customers.' . Configure::read('app.customerMainNamePart'), 'Manufacturers.timebased_currency_enabled'
             ],
             'order' => [
                 'Manufacturers.name' => 'ASC'
@@ -286,7 +283,7 @@ class ManufacturersController extends AdminAppController
         }
 
         foreach ($manufacturers as $manufacturer) {
-            $manufacturer->product_count = $this->Product->getCountByManufacturerId($manufacturer->id_manufacturer);
+            $manufacturer->product_count = $this->Manufacturer->getProductsByManufacturerId($manufacturer->id_manufacturer, true);
             $sumDepositDelivered = $this->OrderDetail->getDepositSum($manufacturer->id_manufacturer, false);
             $sumDepositReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturer->id_manufacturer, false);
             $manufacturer->sum_deposit_delivered = $sumDepositDelivered[0]['sumDepositDelivered'];
@@ -511,6 +508,9 @@ class ManufacturersController extends AdminAppController
 
         $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
+        
+        $noDeliveryBreakOptions = Configure::read('app.timeHelper')->getNextDeliveryDays();
+        $this->set('noDeliveryBreakOptions', $noDeliveryBreakOptions);
 
         // set default data if manufacturer options are null
         if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && is_null($manufacturer->variable_member_fee)) {
@@ -557,7 +557,7 @@ class ManufacturersController extends AdminAppController
             $isAllowedEditManufacturerOptionsDropdown = $this->SyncDomain->isAllowedEditManufacturerOptionsDropdown($this->AppAuth);
             $this->set('isAllowedEditManufacturerOptionsDropdown', $isAllowedEditManufacturerOptionsDropdown);
         }
-
+        
         if (empty($this->getRequest()->getData())) {
             $this->set('manufacturer', $manufacturer);
             return;
@@ -567,14 +567,6 @@ class ManufacturersController extends AdminAppController
         // as i could not find out how to unset a specific request data index, override with value from database
         if ($this->AppAuth->isManufacturer()) {
             $this->setRequest($this->getRequest()->withData('Manufacturers.active', $manufacturer->active));
-        }
-
-        if (!empty($this->getRequest()->getData('Manufacturers.holiday_from'))) {
-            $this->setRequest($this->getRequest()->withData('Manufacturers.holiday_from', new Time($this->getRequest()->getData('Manufacturers.holiday_from'))));
-
-        }
-        if (!empty($this->getRequest()->getData('Manufacturers.holiday_to'))) {
-            $this->setRequest($this->getRequest()->withData('Manufacturers.holiday_to', new Time($this->getRequest()->getData('Manufacturers.holiday_to'))));
         }
 
         $this->loadComponent('Sanitize');
@@ -637,7 +629,11 @@ class ManufacturersController extends AdminAppController
                     $this->setRequest($this->getRequest()->withData('Manufacturers.enabled_sync_domains', implode(',', $this->getRequest()->getData('Manufacturers.enabled_sync_domains'))));
                 }
             }
-
+            
+            if ($this->getRequest()->getData('Manufacturers.no_delivery_days')) {
+                $this->setRequest($this->getRequest()->withData('Manufacturers.no_delivery_days', implode(',', $this->getRequest()->getData('Manufacturers.no_delivery_days'))));
+            }
+            
             // remove post data that could be set by hacking attempt
             if ($this->AppAuth->isManufacturer()) {
                 $this->setRequest($this->getRequest()->withData('Manufacturers.bulk_orders_allowed', null));

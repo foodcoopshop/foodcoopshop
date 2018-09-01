@@ -234,8 +234,6 @@ CREATE TABLE `fcs_manufacturer` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '0',
-  `holiday_from` date DEFAULT NULL,
-  `holiday_to` date DEFAULT NULL,
   `is_private` int(11) unsigned NOT NULL DEFAULT '0',
   `uid_number` varchar(30) NOT NULL DEFAULT '',
   `additional_text_for_invoice` text NOT NULL,
@@ -265,6 +263,7 @@ CREATE TABLE `fcs_manufacturer` (
   `stock_management_enabled` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `send_product_sold_out_limit_reached_for_manufacturer` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `send_product_sold_out_limit_reached_for_contact_person` tinyint(4) unsigned NOT NULL DEFAULT '0',
+  `no_delivery_days` text NOT NULL,
   PRIMARY KEY (`id_manufacturer`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -391,6 +390,9 @@ CREATE TABLE `fcs_product` (
   `is_declaration_ok` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `is_stock_product` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `delivery_rhythm_type` varchar(10) NOT NULL DEFAULT 'week',
+  `delivery_rhythm_count` tinyint(10) NOT NULL DEFAULT '1',
+  `delivery_rhythm_first_delivery_day` date DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id_product`),

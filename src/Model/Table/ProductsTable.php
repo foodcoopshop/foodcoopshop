@@ -7,6 +7,8 @@ use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
+use Cake\Validation\Validator;
+use Cake\I18n\I18n;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -63,6 +65,115 @@ class ProductsTable extends AppTable
     {
         parent::__construct($id, $table, $ds);
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
+    }
+    
+    public function validationDeliveryRhythm(Validator $validator)
+    {
+        $validator->add('delivery_rhythm_type', 'allowed-count-values', [
+            'rule' => function ($value, $context) {
+                if ($value == 'week') {
+                    return in_array($context['data']['delivery_rhythm_count'], [1,2]);
+                }
+                if ($value == 'month') {
+                    return in_array($context['data']['delivery_rhythm_count'], [1,0]);
+                }
+                if ($value == 'individual') {
+                    return in_array($context['data']['delivery_rhythm_count'], [0]);
+                }
+                return false;
+            },
+            'message' => __('The_delivery_ryhthm_is_not_valid.')
+        ]);
+        $validator->allowEmpty('delivery_rhythm_first_delivery_day');
+        $validator->notEquals('delivery_rhythm_first_delivery_day', '1970-01-01', __('The_first_delivery_day_is_not_valid.'));
+        $validator = $this->getLastOrFirstDayOfMonthValidator($validator, 'delivery_rhythm_first_delivery_day', 'first');
+        $validator = $this->getLastOrFirstDayOfMonthValidator($validator, 'delivery_rhythm_first_delivery_day', 'last');
+        $validator = $this->getAllowOnlyOneWeekdayValidator($validator, 'delivery_rhythm_first_delivery_day', __('The_first_delivery_day'));
+        return $validator;
+    }
+    
+    private function getLastOrFirstDayOfMonthValidator(Validator $validator, $field, $firstOrLast)
+    {
+        $checkedCountValue = 0;
+        $deliveryWeekdayName = Configure::read('app.timeHelper')->getWeekdayName(Configure::read('app.timeHelper')->getDeliveryWeekday());
+        $message = __('The_first_delivery_day_needs_to_be_a_last_{0}_of_the_month.', [$deliveryWeekdayName]);
+        if ($firstOrLast == 'first') {
+            $checkedCountValue = 1;
+            $message = __('The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month.', [$deliveryWeekdayName]);
+        }
+        $validator->add($field, 'allow-only-' . $firstOrLast . '-weekday-of-month', [
+            'rule' => function ($value, $context) use ($checkedCountValue, $firstOrLast) {
+                if ($context['data']['delivery_rhythm_type'] == 'month' && $context['data']['delivery_rhythm_count'] == $checkedCountValue) {
+                    $originalLocale = I18n::getLocale();
+                    I18n::setLocale('en_US');
+                    $deliveryDayAsWeekdayInEnglish = strtolower(Configure::read('app.timeHelper')->getWeekdayName(Configure::read('app.timeHelper')->getDeliveryWeekday()));
+                    I18n::setLocale($originalLocale);
+                    $firstDayOfMonth = Configure::read('app.timeHelper')->formatToDbFormatDate($value . ' ' . $firstOrLast . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month');
+                    if ($firstDayOfMonth != $value) {
+                        return false;
+                    }
+                }
+                return true;
+            },
+            'message' => $message
+        ]);
+        return $validator;
+    }
+    
+    public function deliveryBreakEnabled($noDeliveryDaysAsString, $deliveryDate)
+    {
+        return $noDeliveryDaysAsString != '' && preg_match('`' . $deliveryDate . '`', $noDeliveryDaysAsString);
+    }
+    
+    public function calculatePickupDayRespectingDeliveryRhythm($product, $currentDay=null)
+    {
+        
+        if (is_null($currentDay)) {
+            $currentDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+        }
+        $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($currentDay);
+        
+        if ($product->is_stock_product) {
+            return $pickupDay;
+        }
+            
+        if ($product->delivery_rhythm_count > 1 && $product->delivery_rhythm_type == 'week') {
+            if (!is_null($product->delivery_rhythm_first_delivery_day)) {
+                $firstDeliveryDayFormatted = $product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+                $calculatedPickupDay = $firstDeliveryDayFormatted;
+                while($calculatedPickupDay < $pickupDay) {
+                    $calculatedPickupDay = strtotime($calculatedPickupDay . '+' . $product->delivery_rhythm_count . ' week');
+                    $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $calculatedPickupDay);
+                }
+                $pickupDay = $calculatedPickupDay;
+            }
+        }
+        
+        if ($product->delivery_rhythm_type == 'month') {
+            switch($product->delivery_rhythm_count) {
+                case '1':
+                    $ordinal = 'first';
+                    break;
+                case '2':
+                    $ordinal = 'second';
+                    break;
+                case '0':
+                    $ordinal = 'last';
+                    break;
+            }
+            $deliveryDayAsWeekdayInEnglish = strtolower(date('l', strtotime($pickupDay)));
+            $nthDeliveryDayOfThisMonth = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($currentDay . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
+            if ($nthDeliveryDayOfThisMonth < $pickupDay) {
+                $pickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($currentDay . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of next month'));
+            }
+        }
+        
+        if ($product->delivery_rhythm_type == 'individual') {
+            $pickupDay = $product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+        }
+            
+        return $pickupDay;
+        
     }
 
     /**
@@ -416,26 +527,6 @@ class ProductsTable extends AppTable
         }
         
         return $success;
-    }
-
-    /**
-     * @param int $manufacturerId
-     * @param boolean $useHolidayMode
-     * @return array
-     */
-    public function getCountByManufacturerId($manufacturerId, $useHolidayMode = false)
-    {
-        $productCount = $this->find('all', [
-            'conditions' => [
-                'Products.active' => APP_ON,
-                $useHolidayMode ? $this->getManufacturerHolidayConditions() : null,
-                'Products.id_manufacturer' => $manufacturerId
-            ],
-            'contain' => [
-                'Manufacturers'
-            ]
-        ])->count();
-        return $productCount;
     }
 
     public function isNew($date)

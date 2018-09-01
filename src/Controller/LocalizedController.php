@@ -97,7 +97,8 @@ class LocalizedController extends Controller
                 'loadPastOrderDescriptionHtml' => __('Load_past_order_dialog_description_html'),
                 'removeFromCart' => __('Remove_from_cart?'),
                 'forEach' => __('for_each'),
-                'approx' => __('approx.')
+                'approx' => __('approx.'),
+                'PickupDay' => __('Pickup_day')
             ],
             'mobile' => [
                 'home' => __('Home'),
@@ -201,7 +202,13 @@ class LocalizedController extends Controller
                 'AnExistingOrderListWillBeOverwritten' => __('An_existing_order_list_will_be_overwritten!'),
                 'ChangeGroupFor' => __('Change_group_for'),
                 'TheMemberNeedsToSignInAgain' => __('The_member_needs_to_sign_again.'),
-                'Member' => __('Member')
+                'Member' => __('Member'),
+                'WhyIsPickupDayChanged' => __('Why_is_pickup_day_changed?'),
+                'ChangePickupDay' => __('Change_pickup_day'),
+                'NewPickupDay' => __('New_pickup_day'),
+                'ChangePickupDayInvoicesInfoText' => __('Change_pickup_day_invoices_info_text'),
+                'products' => __('products'),
+                'product' => __('product')
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),
@@ -242,7 +249,16 @@ class LocalizedController extends Controller
                 'zeroOrSmallerZero' => __('zero_or_smaller_zero'),
                 'ForManufacturersAndContactPersonsCanBeChangedInManufacturerSettings' => __('For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings.'),
                 'NotificationIfAmountLowerThan' => __('Notification_if_amount_lower_than'),
-                'IsProductStockProduct' => __('Is_product_a_stock_product?')
+                'IsProductStockProduct' => __('Is_product_a_stock_product?'),
+                'TheDeliveryRhythmOfStockProductsIsAlwaysWeekly' => __('The_delivery_rhythm_of_stock_products_is_always_weekly.'),
+                'DeliveryRhythm' => __('Delivery_rhythm'),
+                'FirstDeliveryDay' => __('First_delivery_day'),
+                'DeliveryDay' => __('Delivery_day'),
+                'IndividualDeliveryDayInfo' => __('Individual_delivery_day_info.'),
+                'FirstDeliveryDayInfo' => __('First_delivery_day_info.'),
+                'canBeLeftBlank' => __('can_be_left_blank'),
+                'InfoPageForDeliveryRhythm' => __('Info_page_for_delivery_rhythm'),
+                'DocsUrlOrderHandling' => Configure::read('app.htmlHelper')->getDocsUrl(__('docs_route_order_handling')),
             ],
             'upload' => [
                 'delete' => __('delete'),

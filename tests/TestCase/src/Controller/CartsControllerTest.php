@@ -1,8 +1,5 @@
 <?php
-
 /**
- * CartsControllerTest
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -172,18 +169,18 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeManufacturerStatus($manufacturerId, APP_ON);
     }
 
-    public function testManufacturerHolidayModeActivatedWhileShopping()
+    public function testManufacturerDeliveryBreakActivatedWhileShopping()
     {
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
 
         $manufacturerId = 5;
-        $this->changeManufacturerHolidayMode($manufacturerId, date('Y-m-d'));
+        $this->changeManufacturerNoDeliveryDays($manufacturerId, Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
         $this->finishCart();
         $this->checkValidationError();
         $this->assertRegExp('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->browser->getContent());
-        $this->changeManufacturerHolidayMode($manufacturerId, null);
+        $this->changeManufacturerNoDeliveryDays($manufacturerId);
     }
 
     public function testProductStockAvailableDecreasedWhileShopping()
@@ -307,6 +304,22 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($stockProductId, 6);
         $this->addProductToCart($stockProductAttributeId, 5);
         $this->finishCart(1, 1);
+    }
+    
+    public function testFinishOrderWithMultiplePickupDays() {
+        
+        $this->loginAsSuperadmin();
+        $productIdA = 346;
+        $productIdB = 347;
+        $productIdC = '60-10';
+        $this->changeProductDeliveryRhythm($productIdA, '0-individual', '28.09.2018');
+        $this->addProductToCart($productIdA, 3);
+        $this->addProductToCart($productIdB, 2);
+        $this->addProductToCart($productIdC, 1);
+        $this->finishCart(1, 1);
+        
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(1, count($emailLogs));
     }
     
     public function testFinishOrderStockNotificationsIsStockProductDisabled() {
@@ -531,12 +544,13 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Diese Bestellung wird für <b>' . $testCustomer->name . '</b> getätigt.', $responseHtml);
         $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/', 'redirect did not work');
         
-        $this->fillCart();
+        $this->addProductToCart($this->productId2, 3); // attribute
+        $this->addProductToCart(349, 1); // stock product - no notification!
         
         $this->finishCart(1, 1);
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
         
-        $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung für <b>Demo Mitglied</b> wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: <b>Demo Gemüse-Hersteller, Demo Milch-Hersteller</b>', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung für <b>Demo Mitglied</b> wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: <b>Demo Milch-Hersteller</b>', $this->browser->getContent());
         
         $cart = $this->getCartById($cartId);
         
@@ -547,21 +561,10 @@ class CartsControllerTest extends AppCakeTestCase
         }
         
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs(
-            $emailLogs[0],
-            'Benachrichtigung über Sofort-Bestellung',
-            [
-                'Artischocke : Stück',
-                'Hallo Demo,',
-                '3,64'
-            ],
-            [
-                Configure::read('test.loginEmailVegetableManufacturer')
-            ]
-        );
+        $this->assertEquals(2, count($emailLogs));
         
         $this->assertEmailLogs(
-            $emailLogs[1],
+            $emailLogs[0],
             'Benachrichtigung über Sofort-Bestellung',
             [
                 'Milch : 0,5l',

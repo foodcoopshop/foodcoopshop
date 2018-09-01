@@ -202,7 +202,8 @@ span.deposit-for-dialog,
 span.categories-for-dialog,
 span.tax-for-dialog,
 span.product-price-for-dialog,
-span.product-quantity-for-dialog {
+span.product-quantity-for-dialog,
+span.delivery-rhythm-for-dialog {
     line-height: 21px;
     margin-left: 5px;
 }
@@ -220,15 +221,17 @@ span.product-declaration-header {
   margin-left: 5px;
 }
 span.is-declaration-ok-wrapper .fa-check,
-td.is-stock-product .fa-check {
+td.is-stock-product .fa-check,
+td.delivery-rhythm .fa-check {
   color: #719f41;
 }
-td.is-stock-product i.fa {
+td.is-stock-product i.fa,
+td.delivery-rhythm i.fa {
 	margin-left: 5px;
 }
 span.is-declaration-ok-wrapper .fa-close,
 td.is-stock-product .fa-close,
-td.amount .fa-close {
+td.amount .fa-close  {
 	color: #f3515c;
 }
 
@@ -379,11 +382,6 @@ input.datepicker {
     font-family: 'Open Sans';
 }
 
-.last-n-days-dropdown,
-.categories-checkboxes,
-.tax-dropdown-wrapper {
-    display: none;
-}
 .tax-dropdown-wrapper {
     width: 240px;
 }
@@ -401,7 +399,8 @@ div.cke {
 #cke_dialogCancellationReason,
 #cke_dialogEditPriceReason,
 #cke_dialogEditQuantityReason,
-#cke_dialogEditAmountReason {
+#cke_dialogEditAmountReason,
+#cke_dialogChangePickupDayReason {
     float: left;
 }
 #product-name-edit-form div.textarea-wrapper {
@@ -867,11 +866,12 @@ body.payments .bottom-button-container {
 #product-price-edit-form input[type="number"],
 #product-price-edit-form input[type="text"],
 #product-deposit-edit-form input[type="text"],
-#product-quantity-edit-form input[type="number"] {
+#product-quantity-edit-form input[type="number"],
+#product-delivery-rhythm-edit-form input[type="text"] {
     margin-bottom: 5px;
     margin-right: 5px;
     text-align: right;
-    width: 85px;
+    width: 70px;
 }
 #order-detail-product-price-edit-form .price-per-unit-info-text {
 	color:red;
@@ -887,20 +887,28 @@ body.payments .bottom-button-container {
 	line-height: 28px;
 	position: static;
 }
-#product-is-stock-product-edit-form label.checkbox {
+#product-is-stock-product-edit-form label.checkbox,
+#product-delivery-rhythm-edit-form label.checkbox {
 	font-weight: normal;
 	clear: both;
 	margin-bottom: 10px;
 }
 #product-price-edit-form label.radio input,
-#product-is-stock-product-edit-form label.checkbox input {
-	margin-right: 5px;
+#product-is-stock-product-edit-form label.checkbox input,
+#product-delivery-rhythm-edit-form label.checkbox input {
 	position: static;
 	float: left;
     width: 20px;
     height: 20px;
 }
-#product-is-stock-product-edit-form input {
+#product-price-edit-form label.radio input {
+	margin-right: 5px;
+}
+.ui-dialog.has-datepicker {
+	z-index: 2147483646 ! important;
+}
+#product-is-stock-product-edit-form input,
+#product-delivery-rhythm-edit-form input {
 	float: right ! important;
 }
 #product-price-edit-form label.radio input:focus {
@@ -908,21 +916,38 @@ body.payments .bottom-button-container {
 }
 #product-price-edit-form .price-per-unit-wrapper,
 #product-price-edit-form .price-wrapper,
-#product-quantity-edit-form .quantity-wrapper {
+#product-quantity-edit-form .field-wrapper,
+#product-delivery-rhythm-edit-form .field-wrapper,
+#order-detail-pickup-day-edit-form .field-wrapper {
 	width: 100%;
 	float: left;
 	margin-top: 5px;
 }
-#product-quantity-edit-form .quantity-wrapper {
+#product-quantity-edit-form .field-wrapper,
+#product-delivery-rhythm-edit-form .field-wrapper {
 	margin-top: 10px;
 }
-#product-quantity-edit-form .quantity-wrapper label {
+#product-quantity-edit-form .field-wrapper label,
+#product-delivery-rhythm-edit-form .field-wrapper label:not(.checkbox) {
 	font-weight: normal;
 	margin-bottom: 10px;
 	margin-top: 3px;
     width: 250px;
     float: left;
     margin-right: 5px;
+}
+#product-delivery-rhythm-edit-form .field-wrapper label:not(.checkbox) {
+	width: 110px;
+	clear: both;
+}
+#product-delivery-rhythm-edit-form .field-wrapper select,
+#product-delivery-rhythm-edit-form .field-wrapper input {
+	width: 265px;
+	float: right;
+	margin-right: 0;
+}
+#product-delivery-rhythm-edit-form .field-wrapper input[type="text"]:first-of-type {
+	margin-top: 3px;
 }
 #product-price-edit-form .deactivated {
     opacity: 0.3;

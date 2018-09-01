@@ -102,6 +102,20 @@ class MyTimeHelper extends TimeHelper
         return self::getDeliveryDay($this->getCurrentDay());
     }
     
+    public function getNextDeliveryDays($maxDays=30) {
+        $nextDeliveryDay = $this->getDeliveryDateByCurrentDayForDb();
+        $nextDeliveryDays = [
+            $nextDeliveryDay => $this->getDateFormattedWithWeekday(strtotime($nextDeliveryDay))
+        ];
+        $count = 1;
+        while($count < $maxDays) {
+            $nextCalculatedDeliveryDay = date(Configure::read('DateFormat.DatabaseAlt'), strtotime($nextDeliveryDay . ' + ' . $count * 7 . ' day'));
+            $nextDeliveryDays[$nextCalculatedDeliveryDay] = $this->getDateFormattedWithWeekday(strtotime($nextCalculatedDeliveryDay));
+            $count++;
+        }
+        return $nextDeliveryDays;
+    }
+    
     public function getDbFormattedPickupDayByDbFormattedDate($date)
     {
         $pickupDay = $this->getDeliveryDay(strtotime($date));
@@ -159,7 +173,7 @@ class MyTimeHelper extends TimeHelper
         return time();
     }
 
-    private function getDeliveryWeekday()
+    public function getDeliveryWeekday()
     {
         return (Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta')) % 7;
     }
@@ -329,7 +343,7 @@ class MyTimeHelper extends TimeHelper
      */
     public function isDatabaseDateNotSet($date)
     {
-        return $date == '01.01.1970' || $date == '30.11.-0001' || $date == '0000-00-00' || $date == '1000-01-01' || $date == null;
+        return $date == '1970-01-01' || $date == '01.01.1970' || $date == '30.11.-0001' || $date == '0000-00-00' || $date == '1000-01-01' || $date == null;
     }
 
     public function prepareDbDateForDatepicker($date)

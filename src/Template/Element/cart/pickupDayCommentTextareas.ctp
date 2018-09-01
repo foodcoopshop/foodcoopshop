@@ -49,6 +49,7 @@ foreach($cart->pickup_day_entities as $pickupDay) {
     );
     echo '<div class="toggle-content pickup-day-comment">';
     echo $this->Form->hidden('Carts.pickup_day_entities.'.$i.'.customer_id');
+    echo $this->Form->hidden('Carts.pickup_day_entities.'.$i.'.pickup_day', ['value' => $formattedPickupDay]);
     echo $this->Form->control('Carts.pickup_day_entities.'.$i.'.comment', [
         'type' => 'textarea',
         'placeholder' => __('Placeholder_message_pickup_day_comment.'),

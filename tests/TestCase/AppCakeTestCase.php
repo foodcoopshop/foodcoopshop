@@ -315,13 +315,12 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         ob_flush();
     }
 
-    protected function changeManufacturerHolidayMode($manufacturerId, $dateFrom = null, $dateTo = null)
+    protected function changeManufacturerNoDeliveryDays($manufacturerId, $noDeliveryDays = '')
     {
-        $query = 'UPDATE fcs_manufacturer SET holiday_from = :dateFrom, holiday_to = :dateTo WHERE id_manufacturer = :manufacturerId;';
+        $query = 'UPDATE fcs_manufacturer SET no_delivery_days = :noDeliveryDays WHERE id_manufacturer = :manufacturerId;';
         $params = [
             'manufacturerId' => $manufacturerId,
-            'dateFrom' => $dateFrom,
-            'dateTo' => $dateTo
+            'noDeliveryDays' => $noDeliveryDays
         ];
         $statement = $this->dbConnection->prepare($query);
         $statement->execute($params);
@@ -355,6 +354,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         if ($comment != '') {
             $data['Carts']['pickup_day_entities'][0] = [
                 'customer_id' => $this->browser->getLoggedUserId(),
+                'pickup_day' => Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb(),
                 'comment' => $comment
             ];
         }
@@ -405,6 +405,16 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
             'priceUnitName' => $priceUnitName,
             'priceUnitAmount' => $priceUnitAmount,
             'priceQuantityInUnits' => $priceQuantityInUnits
+        ]);
+        return $this->browser->getJsonDecodedContent();
+    }
+    
+    protected function changeProductDeliveryRhythm($productId, $deliveryRhythmType, $deliveryRhythmFirstDeliveryDay = '')
+    {
+        $this->browser->ajaxPost('/admin/products/editDeliveryRhythm', [
+            'productId' => $productId,
+            'deliveryRhythmType' => $deliveryRhythmType,
+            'deliveryRhythmFirstDeliveryDay' => $deliveryRhythmFirstDeliveryDay
         ]);
         return $this->browser->getJsonDecodedContent();
     }

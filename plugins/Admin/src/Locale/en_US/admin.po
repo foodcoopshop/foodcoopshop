@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-08-21 09:05+0200\n"
-"PO-Revision-Date: 2018-08-21 08:46+0200\n"
+"POT-Creation-Date: 2018-09-01 14:32+0200\n"
+"PO-Revision-Date: 2018-09-01 15:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -276,6 +276,18 @@ msgstr "The price of the ordered product {0} (amount {1}) was successfully adapt
 msgid "Ordered_price_adapted"
 msgstr "Price adapted"
 
+msgid "Please_enter_why_pickup_day_is_changed."
+msgstr "Please enter why the pickup day is changed."
+
+msgid "The_pickup_day_was_not_changed."
+msgstr "The pickup day was not changed."
+
+msgid "The_pickup_day_of_your_order_was_changed_to"
+msgstr "The pickup day of your order was changed to"
+
+msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified."
+msgstr "The pickup day of {0,plural,=1{one product} other{# products}} was successfully changed to {1] and {2,plural,=1{one member was} other{# members were}} got an email."
+
 msgid "The_pickup_day_comment_of_{0}_was_changed:"
 msgstr "The pickup day comment {0} was changed:"
 
@@ -369,14 +381,23 @@ msgstr "The attribute {0} of the product {1} from manufacturer {2} was successfu
 msgid "A_new_product_was_created_for_{0}."
 msgstr "A new product was created for {0}."
 
+msgid "The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}."
+msgstr "The delivery rhythm of the product {0} from manufacturer {1} was changed successfully to {2}."
+
+msgid "Delivery_day"
+msgstr "Delivery day"
+
+msgid "First_delivery_day"
+msgstr "First delivery day"
+
+msgid "Saving_successful."
+msgstr "Saving successful."
+
 msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
 msgstr "The tax rate of product {0} from manufacturer {1} was changed from {2} to {3}."
 
 msgid "Nothing_changed."
 msgstr "Nothing changed."
-
-msgid "Saving_successful."
-msgstr "Saving successful."
 
 msgid "The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}"
 msgstr "The categories of the product {0} from manufacturer {1} have been changed: {2}"
@@ -942,9 +963,6 @@ msgstr "If you chose \"payback\", please enter the amount that you just transfer
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Please chose the months for your payment."
 
-msgid "Delivery_day"
-msgstr "Delivery day"
-
 msgid "Delivery_days"
 msgstr "Delivery days"
 
@@ -959,6 +977,9 @@ msgstr "Back to deposit account"
 
 msgid "Cancel_selected_products"
 msgstr "Cancel selected products"
+
+msgid "Change_pickup_day"
+msgstr "Change pickup day"
 
 msgid "Generate_orders_as_pdf"
 msgstr "Generate orders as PDF"
@@ -1085,6 +1106,12 @@ msgstr "change amount"
 
 msgid "No_email_notifications_are_sent_for_this_product."
 msgstr "Notifications are never sent for this product if the stock is low."
+
+msgid "change_delivery_rhythm"
+msgstr "change delivery rhythm"
+
+msgid "delivery_rhythm_from"
+msgstr "beginning"
 
 msgid "change_deposit"
 msgstr "change deposit"
@@ -1215,6 +1242,21 @@ msgstr "Sorry, but sometimes our manufacturers are not able to deliver the order
 msgid "Thanks_for_respecting_that!"
 msgstr "Thanks for respecting that!"
 
+msgid "New_pickup_day"
+msgstr "New pickup day"
+
+msgid "Old_pickup_day"
+msgstr "Old pickup day"
+
+msgid "Why_was_the_pickup_day_changed?"
+msgstr "Why was the pickup day changed?"
+
+msgid "The_following_product_is_affected"
+msgstr "The following product is affected"
+
+msgid "The_following_{0}_products_are_affected"
+msgstr "The following products are affected"
+
 msgid "The_price_of_the_product_{0}_has_been_adapted."
 msgstr "The price of the product {0} has been adapted."
 
@@ -1274,6 +1316,9 @@ msgstr "Online help"
 
 msgid "docs_route_manufacturers"
 msgstr "manufacturers"
+
+msgid "docs_route_order_handling"
+msgstr "order-handling"
 
 msgid "You_can_change_your_imprint_by_yourself."
 msgstr "You can change your imprint by yourself."
@@ -1459,7 +1504,7 @@ msgid "Instant_orders"
 msgstr "Instant orders"
 
 msgid "to_receive_an_email_on_every_instant_order."
-msgstr "to receive an email on every instant order."
+msgstr "to receive an email on every instant order (except for stock products)."
 
 msgid "Other_settings"
 msgstr "Other settings"
@@ -1722,6 +1767,9 @@ msgstr "Tax rate"
 msgid "New?"
 msgstr "New?"
 
+msgid "Delivery_rhythm"
+msgstr "Delivery rhythm"
+
 msgid "docs_route_financial_reports"
 msgstr "financial-reports"
 
@@ -1773,6 +1821,12 @@ msgstr "{0,plural,=1{record} other{records}}"
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
 
+#~ msgid "Order_period"
+#~ msgstr "Order period"
+
+#~ msgid "per"
+#~ msgstr "per"
+
 #~ msgid "Stock"
 #~ msgstr "Stock"
 
@@ -1808,9 +1862,6 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 #~ msgid "Manually_send_order_list"
 #~ msgstr "Manually send order list"
-
-#~ msgid "Order_from"
-#~ msgstr "Order from"
 
 #~ msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
 #~ msgstr "The comment of the order number {0} by {1} was changed:"

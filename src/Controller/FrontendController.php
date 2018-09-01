@@ -5,10 +5,9 @@ namespace App\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
+use Cake\I18n\FrozenDate;
 
 /**
- * FrontendController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -46,6 +45,20 @@ class FrontendController extends AppController
             $product['gross_price'] = $grossPrice;
             $product['tax'] = $grossPrice - $product['price'];
             $product['is_new'] = $this->Product->isNew($product['created']);
+            
+            if ($this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
+                $product['next_delivery_day'] = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+            } else {
+                $product['next_delivery_day'] = $this->Product->calculatePickupDayRespectingDeliveryRhythm(
+                    $this->Product->newEntity([
+                        'delivery_rhythm_first_delivery_day' => new FrozenDate($product['delivery_rhythm_first_delivery_day']),
+                        'delivery_rhythm_type' => $product['delivery_rhythm_type'],
+                        'delivery_rhythm_count' => $product['delivery_rhythm_count'],
+                        'is_stock_product' => $product['is_stock_product']
+                    ]
+                ));
+            }
+            
             $product['attributes'] = [];
 
             if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
@@ -195,7 +208,7 @@ class FrontendController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-
+        
         if (($this->name == 'Categories' && $this->getRequest()->getParam('action') == 'detail') || $this->name == 'Carts') {
             // do not allow but call isAuthorized
         } else {
@@ -217,6 +230,10 @@ class FrontendController extends AppController
 
             $shoppingLimitReached = Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') != - 1 && $creditBalance < Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') * - 1;
             $this->set('shoppingLimitReached', $shoppingLimitReached);
+            
+            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+            $futureOrderDetails = $this->OrderDetail->getGroupedFutureOrdersByCustomerId($this->AppAuth->getUserId());
+            $this->set('futureOrderDetails', $futureOrderDetails);
         }
         $this->AppAuth->setCart($this->AppAuth->getCart());
     }

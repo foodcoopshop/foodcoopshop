@@ -40,7 +40,11 @@ if ($appAuth->Cart->getProducts() !== null) {
 
 <div id="cart" class="box cart">
     
-    <h3><i class="fa fa-shopping-cart"></i><?php echo __('Cart'); ?></h3>
+    <h3>
+    	<i class="fa fa-shopping-cart"></i>
+    	<?php echo __('Cart'); ?>
+    	<a class="question" href="<?php echo $this->Html->getDocsUrl(__('docs_route_order_handling')); ?>"><i class="fa fa-question-circle"></i></a>
+	</h3>
     
     <div class="inner">
     
@@ -108,6 +112,22 @@ if ($appAuth->Cart->getProducts() !== null) {
             </a></p>
             
         <?php } ?>
+        
+        <?php
+            if (!empty($futureOrderDetails)) {
+                echo '<p class="future-orders">';
+                    echo '<b>'.__('Already_ordered_products').'</b><br />';
+                    $links = [];
+                    foreach($futureOrderDetails as $futureOrderDetail) {
+                        $links[] = $this->Html->link(
+                            $futureOrderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' (' . $futureOrderDetail->orderDetailsCount . ')' ,
+                            '/admin/order-details?customerId='.$appAuth->getUserId().'&pickupDay[]=' . $futureOrderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'))
+                        );
+                    }
+                    echo join(' / ', $links);
+                echo '</p>';
+            }
+        ?>
         
     </div>
 </div>

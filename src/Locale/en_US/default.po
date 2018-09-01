@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-27 09:03+0200\n"
-"PO-Revision-Date: 2018-08-27 09:05+0200\n"
+"POT-Creation-Date: 2018-09-01 15:32+0200\n"
+"PO-Revision-Date: 2018-09-01 15:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -72,7 +72,7 @@ msgstr "The attribute does not exist."
 msgid "The_product_{0}_is_not_activated_any_more."
 msgstr "The product {0} is not activated any more."
 
-msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
+msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
 msgstr "The manufacturer of the product {0} either has a delivery break or the product is not activated any more."
 
 msgid "Errors_occurred."
@@ -657,6 +657,24 @@ msgstr "The member needs to sign in again."
 msgid "Member"
 msgstr "Member"
 
+msgid "Why_is_pickup_day_changed?"
+msgstr "Why is the pickup day changed?"
+
+msgid "Change_pickup_day"
+msgstr "Change pickup day"
+
+msgid "New_pickup_day"
+msgstr "New pickup day"
+
+msgid "Change_pickup_day_invoices_info_text"
+msgstr "When you change the pickup day, please consider that the pickup day is relvevant for the automatically generated invoices!"
+
+msgid "products"
+msgstr "products"
+
+msgid "product"
+msgstr "product"
+
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
 
@@ -762,6 +780,33 @@ msgstr "Notification if amount is lower than"
 msgid "Is_product_a_stock_product?"
 msgstr "Is the product a stock product?"
 
+msgid "The_delivery_rhythm_of_stock_products_is_always_weekly."
+msgstr "The delivery rhythm of stock products is always \"weekly\" and can't be changed."
+
+msgid "Delivery_rhythm"
+msgstr "Delivery rhythm"
+
+msgid "First_delivery_day"
+msgstr "First delivery day"
+
+msgid "Delivery_day"
+msgstr "Delivery day"
+
+msgid "Individual_delivery_day_info."
+msgstr "The product can be ordered from now on and will be deactivated automatically as soon as the last order day of the given delivery day is reached."
+
+msgid "First_delivery_day_info."
+msgstr "The product can be ordered from now on."
+
+msgid "can_be_left_blank"
+msgstr "can be left blank"
+
+msgid "Info_page_for_delivery_rhythm"
+msgstr "Info page for delivery rhythms"
+
+msgid "docs_route_order_handling"
+msgstr "order-handling"
+
 msgid "delete"
 msgstr "delete"
 
@@ -797,9 +842,6 @@ msgstr "VAT"
 
 msgid "Order_day"
 msgstr "Order day"
-
-msgid "Delivery_day"
-msgstr "Delivery day"
 
 msgid "Total_sum"
 msgstr "Total sum"
@@ -867,6 +909,9 @@ msgstr "Product: Default attribute changed"
 msgid "Action_Log_Network_module_product_synchronized"
 msgstr "Network module: Products synchronized"
 
+msgid "Action_Log_Delivery_rhythm_changed"
+msgstr "Product: Delivery rhythm changed"
+
 msgid "Action_Log_Order_status_changed"
 msgstr "Order: Status changed"
 
@@ -893,6 +938,9 @@ msgstr "Ordered product: Amount changed"
 
 msgid "Action_Log_Ordered_product_cancelled"
 msgstr "Ordered product: Cancelled"
+
+msgid "Action_Log_Ordered_product_pickup_day_changed"
+msgstr "Ordered product: Pickup day changed"
 
 msgid "Action_Log_Member_credit_upload_added"
 msgstr "Member: Credit uploaded"
@@ -1107,6 +1155,9 @@ msgstr "Please enter the last name of the invoice holder."
 msgid "Please_enter_an_email_address."
 msgstr "Please enter an email address."
 
+msgid "{0}_needs_to_be_a_{1}."
+msgstr "{0} needs to be a {1}."
+
 msgid "Please_enter_a_number_between_{0}_and_{1}."
 msgstr "Please enter a number between {0} and {1}."
 
@@ -1236,6 +1287,12 @@ msgstr "Delivery break"
 msgid "online"
 msgstr "online"
 
+msgid "The_pickup_day_is_not_valid."
+msgstr "The pickup day is not valid."
+
+msgid "The_pickup_day"
+msgstr "The pickup day"
+
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{1 product} other{# products}}"
 
@@ -1244,6 +1301,21 @@ msgstr "Please enter a correct number."
 
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr "The amount needs to be greater than 0."
+
+msgid "The_delivery_ryhthm_is_not_valid."
+msgstr "The delivery rhythm is not valid."
+
+msgid "The_first_delivery_day_is_not_valid."
+msgstr "The first delivery day is not valid."
+
+msgid "The_first_delivery_day"
+msgstr "The first delivery day"
+
+msgid "The_first_delivery_day_needs_to_be_a_last_{0}_of_the_month."
+msgstr "The first delivery day needs to be a last {0} of the month."
+
+msgid "The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month."
+msgstr "The first delivery day needs to be a first {0} of the month."
 
 msgid "The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long."
 msgstr "The name of the product {0} needs to be at least {1} characters long."
@@ -1503,6 +1575,9 @@ msgstr "Value added tax"
 msgid "Show_cart_button"
 msgstr "Show cart"
 
+msgid "Already_ordered_products"
+msgstr "Already ordered products"
+
 msgid "Information"
 msgstr "Information"
 
@@ -1590,6 +1665,9 @@ msgstr "Product"
 msgid "Price"
 msgstr "Price"
 
+msgid "Total"
+msgstr "Total"
+
 msgid "You_can_sign_in_here_for_ordering"
 msgstr "You can sign in here for placing a new order"
 
@@ -1616,6 +1694,9 @@ msgstr "New"
 
 msgid "More_infos_to_product_{0}"
 msgstr "More infos to product {0}"
+
+msgid "Instant_order"
+msgstr "Instant order"
 
 msgid "Edit_product"
 msgstr "Edit product"
@@ -1776,6 +1857,21 @@ msgstr "Credit"
 msgid "Member_fee"
 msgstr "Member fee"
 
+msgid "weekly"
+msgstr "weekly"
+
+msgid "every_{0}_week"
+msgstr "every {0} week"
+
+msgid "every_{0}_{1}_of_a_month"
+msgstr "every {0} {1} of a month"
+
+msgid "every_last_{0}_of_a_month"
+msgstr "every last {0} of a month"
+
+msgid "individual_date"
+msgstr "individual date"
+
 msgid "yes"
 msgstr "yes"
 
@@ -1788,17 +1884,8 @@ msgstr "Deleted member"
 msgid "Deleted_Email_Address"
 msgstr "Deleted e-mail address"
 
-msgid "delivery_break_since_holiday_active"
-msgstr "since"
-
-msgid "delivery_break_since_holiday_not_active"
-msgstr "since"
-
-msgid "delivery_break_until"
-msgstr "until"
-
-msgid "The_manufacturer_{0}_has_{1}_delivery_break."
-msgstr "The manufacturer {0} is on delivery break {1}."
+msgid "The_manufacturer_{0}_has_delivery_break:_{1}"
+msgstr "The manufacturer {0} is on delivery break: {1}"
 
 msgid "Website"
 msgstr "Website"
@@ -1973,6 +2060,46 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
+#~ msgstr "The manufacturer of the product {0} either has a delivery break or the product is not activated any more."
+
+#~ msgid "delivery_break_since_holiday_active"
+#~ msgstr "since"
+
+#~ msgid "delivery_break_since_holiday_not_active"
+#~ msgstr "since"
+
+#~ msgid "delivery_break_until"
+#~ msgstr "until"
+
+#~ msgid "Always_online"
+#~ msgstr "Always online"
+
+#~ msgid "Always_online_explanation"
+#~ msgstr "Should the product always appear online to be ordered, or just in the last week before the delivery day?"
+
+#, fuzzy
+#~ msgid "First_delivery_day_explanation"
+#~ msgstr "First delivery day"
+
+#~ msgid "monthly"
+#~ msgstr "monthly"
+
+#~ msgid "every"
+#~ msgstr "every"
+
+#~ msgid "week"
+#~ msgstr "week"
+
+#~ msgid "month"
+#~ msgstr "month"
+
+#~ msgid "delivery_rhythm_type_week"
+#~ msgstr "week"
+
+#~ msgid "delivery_rhythm_type_month"
+#~ msgstr "month"
 
 #~ msgid "Product_{0}_is_almost_sold_out."
 #~ msgstr "The product {0} is almost sold out."

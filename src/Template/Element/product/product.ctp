@@ -60,12 +60,22 @@ if ($product['description'] != '') {
     echo '<div class="toggle-content description">'.$product['description'].'</div>';
 }
 
+    echo '<br />'.__('Pickup_day').': ';
+    echo '<span class="pickup-day">';
+        if ($this->request->getSession()->check('Auth.instantOrderCustomer')) {
+            $pickupDayDetailText = __('Instant_order');
+        } else {
+            $pickupDayDetailText = $this->Html->getDeliveryRhythmString($product['delivery_rhythm_type'], $product['delivery_rhythm_count']);
+        }
+        echo $this->Time->getDateFormattedWithWeekday(strtotime($product['next_delivery_day']));
+    echo '</span>';
+    echo ' (' . $pickupDayDetailText . ')';
+    
     echo '<br />'.__('Manufacturer').': ';
     echo $this->Html->link(
         $product['ManufacturersName'],
         $this->Slug->getManufacturerDetail($product['id_manufacturer'], $product['ManufacturersName'])
     );
-
 
     if ($appAuth->isSuperadmin() || ($appAuth->isManufacturer() && $product['id_manufacturer'] == $appAuth->getManufacturerId())) {
         echo $this->Html->getJqueryUiIcon(

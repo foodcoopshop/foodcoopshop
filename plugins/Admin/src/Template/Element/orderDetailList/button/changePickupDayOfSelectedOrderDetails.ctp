@@ -16,9 +16,9 @@ use Cake\Core\Configure;
 
 if ($deposit == '' && $groupBy == '' && count($orderDetails) > 0) {
     $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace').".Admin.initCancelSelectionButton();"
+        'script' => Configure::read('app.jsNamespace').".Admin.initChangePickupDayOfSelectedProductsButton();"
     ]);
-    echo '<a id="cancelSelectedProductsButton" class="btn btn-default" href="javascript:void(0);"><i class="fa fa-minus-circle"></i> ' . __d('admin', 'Cancel_selected_products') . '</a>';
+    echo '<a id="changePickupDayOfSelectedProductsButton" class="btn btn-default" href="javascript:void(0);"><i class="fa fa-calendar"></i> ' . __d('admin', 'Change_pickup_day') . '</a>';
 }
 
 ?>

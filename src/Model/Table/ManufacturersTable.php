@@ -283,9 +283,7 @@ class ManufacturersTable extends AppTable
             'fields' => [
                 'Manufacturers.id_manufacturer',
                 'Manufacturers.name',
-                'Manufacturers.holiday_from',
-                'Manufacturers.holiday_to',
-                'is_holiday_active' => '!' . $this->getManufacturerHolidayConditions()
+                'Manufacturers.no_delivery_days'
             ],
             'order' => [
                 'Manufacturers.name' => 'ASC'
@@ -298,19 +296,15 @@ class ManufacturersTable extends AppTable
             $manufacturerName = $manufacturer->name;
             $additionalInfo = '';
             if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-                $additionalInfo = $productModel->getCountByManufacturerId($manufacturer->id_manufacturer);
+                $additionalInfo = $this->getProductsByManufacturerId($manufacturer->id_manufacturer, true);
             }
-            $holidayInfo = Configure::read('app.htmlHelper')->getManufacturerHolidayString($manufacturer->holiday_from, $manufacturer->holiday_to, $manufacturer->is_holiday_active);
-            if ($holidayInfo != '') {
-                $holidayInfo = __('Delivery_break') . ' ' . $holidayInfo;
-                if ($manufacturer->iss_holiday_active) {
-                    $additionalInfo = $holidayInfo;
-                } else {
-                    if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-                        $additionalInfo .= ' - ';
-                    }
-                    $additionalInfo .= $holidayInfo;
+            $noDeliveryDaysString = Configure::read('app.htmlHelper')->getManufacturerNoDeliveryDaysString($manufacturer);
+            if ($noDeliveryDaysString != '') {
+                $noDeliveryDaysString = __('Delivery_break') . ': ' . $noDeliveryDaysString;
+                if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+                    $additionalInfo .= ' - ';
                 }
+                $additionalInfo .= $noDeliveryDaysString;
             }
             if ($additionalInfo != '') {
                 $manufacturerName .= ' <span class="additional-info">('.$additionalInfo.')</span>';
@@ -399,7 +393,7 @@ class ManufacturersTable extends AppTable
         return $manufacturersForDropdown;
     }
 
-    public function getProductsByManufacturerId($manufacturerId)
+    public function getProductsByManufacturerId($manufacturerId, $countMode = false)
     {
         $sql = "SELECT ";
         $sql .= $this->getFieldsForProductListQuery();
@@ -420,8 +414,14 @@ class ManufacturersTable extends AppTable
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $products = $statement->fetchAll('assoc');
-
-        return $products;
+        $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
+        
+        if (! $countMode) {
+            return $products;
+        } else {
+            return count($products);
+        }
+        
     }
 
     /**

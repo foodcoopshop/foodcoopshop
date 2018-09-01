@@ -682,6 +682,25 @@ body.manufacturers.detail .imprint {
 #cart {
     min-height: 150px;
 }
+#cart a.question {
+	color: #fff;
+	float: right;
+}
+#cart a.question i {
+	padding-right: 0;
+}
+body.carts p.pickup-day-header {
+	margin-top: 15px;
+    float: left;
+}
+#cart p.pickup-day-header {
+	margin-top: 5px;
+	padding: 0;
+    float: left;
+}
+#cart p.pickup-day-header:first-of-type {
+	margin-top: -5px;
+}
 #cart .instant-order-customer-info {
     color: #fff;
     background-color: #f3515c;
@@ -946,6 +965,7 @@ body.carts.detail .cart:not(#cart) .product {
 body.carts.detail .cart:not(#cart) .products {
     max-height: none;
     overflow-x: hidden; /* error wrapper tricky to style */
+    margin-bottom: 20px;
 }
 body.carts.detail .cart:not(#cart) p.sum-wrapper span.sum,
 body.carts.detail .cart:not(#cart) p.sum-deposit-wrapper span.sum {

@@ -64,9 +64,6 @@ class CartProductsTable extends AppTable
             'conditions' => [
                 'Products.id_product' => $productId
             ],
-            'fields' => [
-                'is_holiday_active' => '!'.$this->Products->getManufacturerHolidayConditions()
-            ],
             'contain' => [
                 'Manufacturers',
                 'StockAvailables',
@@ -145,8 +142,8 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        if (! $product->manufacturer->active || $product->is_holiday_active) {
-            $message = __('The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated.', ['<b>' . $product->name . '</b>']);
+        if (! $product->manufacturer->active || $this->Products->deliveryBreakEnabled($product->manufacturer->no_delivery_days, $product->next_delivery_day)) {
+            $message = __('The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated.', ['<b>' . $product->name . '</b>']);
             return [
                 'status' => 0,
                 'msg' => $message,
@@ -179,9 +176,10 @@ class CartProductsTable extends AppTable
     public function setPickupDays($cartProducts, $customerId, $instantOrderMode)
     {
         $pickupDayTable = TableRegistry::getTableLocator()->get('PickupDays');
+        
         foreach($cartProducts as &$cartProduct) {
             if (!$instantOrderMode) {
-                $cartProduct->pickup_day = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
+                $cartProduct->pickup_day = $cartProduct->product->next_delivery_day;
             } else {
                 $cartProduct->pickup_day = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
             }
@@ -196,15 +194,22 @@ class CartProductsTable extends AppTable
             'order' => [
                 'PickupDays.pickup_day' => 'ASC'
             ]
-        ])->toArray();
+        ]);
         
-        if (empty($pickupDays)) {
-            $pickupDays = [
-                $pickupDayTable->newEntity([
+        $existingPickupDays = [];
+        foreach($pickupDays->all()->extract('pickup_day')->toArray() as $p) {
+            $existingPickupDays[] = $p->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+        }
+        $missingPickupDays = array_diff($uniquePickupDays, $existingPickupDays);
+        $pickupDays = $pickupDays->toArray();
+        
+        if (!empty($missingPickupDays)) {
+            foreach($missingPickupDays as $missingPickupDay) {
+                $pickupDays[] = $pickupDayTable->newEntity([
                     'customer_id' => $customerId,
-                    'pickup_day' => $uniquePickupDays[0]
-                ])
-            ];
+                    'pickup_day' => $missingPickupDay
+                ]);
+            }
         }
         return $pickupDays;
     }

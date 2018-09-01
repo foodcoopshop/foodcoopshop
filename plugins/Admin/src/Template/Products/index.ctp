@@ -34,7 +34,8 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".Admin.initSetDefaultAttribute('#products');" .
             Configure::read('app.jsNamespace') . ".Admin.initProductPriceEditDialog('#products');" .
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.add-image-button, .product-name-edit-button');".
-            Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId > 0 ? $manufacturerId : '0') . ");
+            Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId > 0 ? $manufacturerId : '0') . ");".
+            Configure::read('app.jsNamespace') . ".Admin.initProductDeliveryRhythmEditDialog('#products');
         "
         ]);
         
@@ -127,9 +128,9 @@ use Cake\Core\Configure;
     <?php
 
     if (!empty($manufacturer)) {
-        $manufacturerHolidayString = $this->Html->getManufacturerHolidayString($manufacturer->holiday_from, $manufacturer->holiday_to, $manufacturer->is_holiday_active, true, $manufacturer->name);
-        if ($manufacturerHolidayString != '') {
-            echo '<h2 class="info">'.$manufacturerHolidayString.'</h2>';
+        $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true);
+        if ($manufacturerNoDeliveryDaysString != '') {
+            echo '<h2 class="info">'.$manufacturerNoDeliveryDaysString.'</h2>';
         }
     }
 
@@ -155,6 +156,7 @@ use Cake\Core\Configure;
         echo '<th>' . $this->Paginator->sort('Taxes.rate', __d('admin', 'Tax_rate')) . '</th>';
         echo '<th class="center" style="width:69px;">' . $this->Paginator->sort('Products.created', __d('admin', 'New?')) . '</th>';
         echo '<th>'.__d('admin', 'Deposit').'</th>';
+        echo '<th>' . $this->Paginator->sort('Products.delivery_rhythm_type', __d('admin', 'Delivery_rhythm')) . '</th>';
         echo '<th>' . $this->Paginator->sort('Products.active', __d('admin', 'Status')) . '</th>';
         echo '<th style="width:29px;"></th>';
     echo '</tr>';
@@ -210,11 +212,15 @@ use Cake\Core\Configure;
         echo $this->element('productList/data/deposit', [
             'product' => $product
         ]);
-
+        
+        echo $this->element('productList/data/deliveryRhythm', [
+            'product' => $product
+        ]);
+        
         echo $this->element('productList/data/status', [
             'product' => $product
         ]);
-
+        
         echo $this->element('productList/data/preview', [
             'product' => $product
         ]);
@@ -224,7 +230,7 @@ use Cake\Core\Configure;
 
     echo '<tr>';
 
-    $colspan = 12;
+    $colspan = 13;
     if ($manufacturerId == 'all') {
         $colspan++;
     }
@@ -243,20 +249,31 @@ use Cake\Core\Configure;
 </div>
 
 <?php
+    
     // dropdowns and checkboxes for overlays are only rendered once (performance)
     echo $this->Form->control('productAttributeId', ['type' => 'select', 'class' => 'hide', 'label' => '', 'options' => $attributesForDropdown]);
-    echo '<div class="categories-checkboxes">';
+    
+    echo '<div class="categories-checkboxes hide">';
         echo $this->Form->control('Products.CategoryProducts', [
             'label' => '',
             'multiple' => 'checkbox',
             'options' => $categoriesForSelect
         ]);
         echo '</div>';
-        echo '<div class="tax-dropdown-wrapper">';
+        echo '<div class="tax-dropdown-wrapper hide">';
         echo $this->Form->control('Taxes.id_tax', [
             'type' => 'select',
             'label' => '',
             'options' => $taxesForDropdown,
         ]);
-        echo '</div>';
+    echo '</div>';
+    
+    echo '<div class="delivery-rhythm-dropdown-wrapper hide">';
+        echo $this->Form->control('RhythmTypes', [
+            'type' => 'select',
+            'label' => '',
+            'options' => $this->Html->getDeliveryRhythmTypesForDropdown()
+        ]);
+    echo '</div>';
+    
 ?>

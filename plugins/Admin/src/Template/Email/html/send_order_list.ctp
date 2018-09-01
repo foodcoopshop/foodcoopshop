@@ -36,6 +36,7 @@ use Cake\Core\Configure;
 			<p>
 				<?php echo __d('admin', 'Help_pages'); ?>: <br />
 				<a href="<?php echo $this->MyHtml->getDocsUrl(__d('admin', 'docs_route_manufacturers'));?>"><?php echo $this->MyHtml->getDocsUrl(__d('admin', 'docs_route_manufacturers')); ?></a><br />
+				<a href="<?php echo $this->MyHtml->getDocsUrl(__d('admin', 'docs_route_order_handling'));?>"><?php echo $this->MyHtml->getDocsUrl(__d('admin', 'docs_route_order_handling')); ?></a><br />
 				<a href="<?php echo $this->MyHtml->getDocsUrl(__d('admin', 'docs_route_products'));?>"><?php echo $this->MyHtml->getDocsUrl(__d('admin', 'docs_route_products')); ?></a>
 			</p>
 			

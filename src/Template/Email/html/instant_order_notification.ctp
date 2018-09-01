@@ -35,6 +35,7 @@
 <?php echo $this->element('email/tableHead', ['cellpadding' => 6]); ?>
     <?php echo $this->element('email/orderedProductsTable', [
         'manufacturerId' => $manufacturer->id_manufacturer,
+        'pickupDay' => $this->MyTime->getCurrentDateForDatabase(),
         'cartProducts' => $cart['CartProducts'],
         'depositSum' => $depositSum,
         'productSum' => $productSum,

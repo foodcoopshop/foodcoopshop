@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-21 09:05+0200\n"
+"POT-Creation-Date: 2018-09-01 15:32+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -275,6 +275,15 @@ msgstr ""
 msgid "Ordered_price_adapted"
 msgstr ""
 
+msgid "Please_enter_why_pickup_day_is_changed."
+msgstr ""
+
+msgid "The_pickup_day_of_your_order_was_changed_to"
+msgstr ""
+
+msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified."
+msgstr ""
+
 msgid "The_pickup_day_comment_of_{0}_was_changed:"
 msgstr ""
 
@@ -368,13 +377,22 @@ msgstr ""
 msgid "A_new_product_was_created_for_{0}."
 msgstr ""
 
+msgid "The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}."
+msgstr ""
+
+msgid "Delivery_day"
+msgstr ""
+
+msgid "First_delivery_day"
+msgstr ""
+
+msgid "Saving_successful."
+msgstr ""
+
 msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
 msgstr ""
 
 msgid "Nothing_changed."
-msgstr ""
-
-msgid "Saving_successful."
 msgstr ""
 
 msgid "The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}"
@@ -941,9 +959,6 @@ msgstr ""
 msgid "Please_chose_the_months_for_your_payment."
 msgstr ""
 
-msgid "Delivery_day"
-msgstr ""
-
 msgid "Delivery_days"
 msgstr ""
 
@@ -957,6 +972,9 @@ msgid "Back_to_deposit_account"
 msgstr ""
 
 msgid "Cancel_selected_products"
+msgstr ""
+
+msgid "Change_pickup_day"
 msgstr ""
 
 msgid "Generate_orders_as_pdf"
@@ -1083,6 +1101,12 @@ msgid "change_amount"
 msgstr ""
 
 msgid "No_email_notifications_are_sent_for_this_product."
+msgstr ""
+
+msgid "change_delivery_rhythm"
+msgstr ""
+
+msgid "delivery_rhythm_from"
 msgstr ""
 
 msgid "change_deposit"
@@ -1214,6 +1238,21 @@ msgstr ""
 msgid "Thanks_for_respecting_that!"
 msgstr ""
 
+msgid "New_pickup_day"
+msgstr ""
+
+msgid "Old_pickup_day"
+msgstr ""
+
+msgid "Why_was_the_pickup_day_changed?"
+msgstr ""
+
+msgid "The_following_product_is_affected"
+msgstr ""
+
+msgid "The_following_{0}_products_are_affected"
+msgstr ""
+
 msgid "The_price_of_the_product_{0}_has_been_adapted."
 msgstr ""
 
@@ -1272,6 +1311,9 @@ msgid "Help_pages"
 msgstr ""
 
 msgid "docs_route_manufacturers"
+msgstr ""
+
+msgid "docs_route_order_handling"
 msgstr ""
 
 msgid "You_can_change_your_imprint_by_yourself."
@@ -1719,6 +1761,9 @@ msgid "Tax_rate"
 msgstr ""
 
 msgid "New?"
+msgstr ""
+
+msgid "Delivery_rhythm"
 msgstr ""
 
 msgid "docs_route_financial_reports"

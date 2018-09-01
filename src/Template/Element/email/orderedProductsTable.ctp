@@ -14,35 +14,43 @@
  */
 use Cake\Core\Configure;
 
-?>
+$columns = [
+    __('Amount'),
+    __('Product'),
+    __('Manufacturer'),
+    __('Price'),
+    __('Deposit')
+];
+if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) {
+    $columns[] = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME');
+}
 
-<tbody>
-    
-    <tr>
-        <?php
-        $columns = [
-            __('Amount'),
-            __('Product'),
-            __('Manufacturer'),
-            __('Price'),
-            __('Deposit')
-        ];
-        if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) {
-            $columns[] = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME');
-        }
-        foreach ($columns as $column) {
-            echo '<td align="center" style="padding: 10px;font-weight:bold;border:1px solid #d6d4d4;background-color:#fbfbfb;">'.$column.'</td>';
-        }
-        ?>
+?>
+  <tbody>
+        
+		<tr>
+            <td colspan="<?php echo count($columns); ?>" style="padding-top:20px;padding-bottom:10px;">
+            	<?php
+            	   echo __('Pickup_day') . ': <b> ' . $this->MyTime->getDateFormattedWithWeekday(strtotime($pickupDay)).'</b>';
+            	?>
+            </td>
+        </tr>
+        
+        <tr>
+            <?php
+                foreach ($columns as $column) {
+                    echo '<td align="center" style="padding: 10px;font-weight:bold;border:1px solid #d6d4d4;background-color:#fbfbfb;">'.$column.'</td>';
+                }
+            ?>
     </tr>
     
     <?php foreach ($cartProducts as $product) { ?>
         <?php
-        if ($manufacturerId > 0 && $manufacturerId != $product['manufacturerId']) {
-            continue;
-        }
-        ?>
-        
+            if ($manufacturerId > 0 && $manufacturerId != $product['manufacturerId']) {
+                continue;
+            }
+		?>
+		        
         <tr>
             <?php
             $amountStyle = '';
@@ -119,7 +127,7 @@ use Cake\Core\Configure;
     
     <tr>
         <td style="background-color:#fbfbfb;border:1px solid #d6d4d4;" colspan="2"></td>
-        <td align="right" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;">Gesamt</td>
+        <td align="right" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;"><?php echo __('Total'); ?></td>
         <td align="center" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;" colspan="2">
             <?php
                 echo $this->MyNumber->formatAsCurrency($productAndDepositSum);

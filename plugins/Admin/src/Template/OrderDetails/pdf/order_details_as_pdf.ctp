@@ -38,8 +38,8 @@ foreach ($orderDetails as $od) {
 
     $widths = [
         45,
-        270,
-        100,
+        220,
+        150,
         45,
         45
     ];

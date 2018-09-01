@@ -114,11 +114,7 @@ class CategoriesTable extends AppTable
         }
 
         $sql = 'SELECT ';
-        if ($countMode) {
-            $sql .= 'DISTINCT COUNT(*) as count ';
-        } else {
-            $sql .= $this->getFieldsForProductListQuery();
-        }
+        $sql .= $this->getFieldsForProductListQuery();
         $sql .= "FROM ".$this->tablePrefix."product Products ";
 
         if (! $filterByNewProducts) {
@@ -154,11 +150,12 @@ class CategoriesTable extends AppTable
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $products = $statement->fetchAll('assoc');
+        $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
 
         if (! $countMode) {
             return $products;
         } else {
-            return $products[0]['count'];
+            return count($products);
         }
 
         return $products;

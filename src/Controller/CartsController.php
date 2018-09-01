@@ -6,6 +6,7 @@ use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
+use Cake\I18n\FrozenDate;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -240,7 +241,7 @@ class CartsController extends FrontendController
             ->setTo($this->AppAuth->getEmail())
             ->setSubject(__('Order_confirmation'))
             ->setViewVars([
-                'cart' => $cart,
+                'cart' => $this->Cart->getCartGroupedByPickupDay($cart),
                 'appAuth' => $this->AppAuth,
                 'originalLoggedCustomer' => $this->getRequest()->getSession()->check('Auth.originalLoggedCustomer') ? $this->getRequest()->getSession()->read('Auth.originalLoggedCustomer') : null
             ]);
@@ -353,7 +354,6 @@ class CartsController extends FrontendController
                 'conditions' => [
                     'Products.id_product' => $ids['productId']
                 ],
-                'fields' => ['is_holiday_active' => '!'.$this->Product->getManufacturerHolidayConditions()],
                 'contain' => [
                     'Manufacturers',
                     'Manufacturers.AddressManufacturers',
@@ -414,8 +414,8 @@ class CartsController extends FrontendController
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
-            if (! $product->manufacturer->active || $product->is_holiday_active) {
-                $message = __('The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated.', ['<b>' . $product->name . '</b>']);
+            if (! $product->manufacturer->active || $this->Product->deliveryBreakEnabled($product->manufacturer->no_delivery_days, $product->next_delivery_day)) {
+                $message = __('The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated.', ['<b>' . $product->name . '</b>']);
                 $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
@@ -490,11 +490,22 @@ class CartsController extends FrontendController
         
         $options = [];
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
+            // save pickup day: primary key needs to be changed!
+            $this->Cart->PickupDayEntities->setPrimaryKey(['customer_id', 'pickup_day']);
             $options = [
                 'associated' => [
                     'PickupDayEntities'
                 ]
             ];
+            $fixedPickupDayRequest = [];
+            $pickupEntities = $this->getRequest()->getData('Carts.pickup_day_entities');
+            if (!empty($pickupEntities)) {
+                foreach($pickupEntities as $pickupDay) {
+                    $pickupDay['pickup_day'] = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
+                    $fixedPickupDayRequest[] = $pickupDay;
+                }
+                $this->setRequest($this->getRequest()->withData('Carts.pickup_day_entities', $fixedPickupDayRequest));
+            }
         }
         $cart['Cart'] = $this->Cart->patchEntity(
             $cart['Cart'],
@@ -531,8 +542,6 @@ class CartsController extends FrontendController
             $this->sendStockAvailableLimitReachedEmailToManufacturer($cart['Cart']->id_cart);
             
             if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
-                // save pickup day: primary key needs to be changed!
-                $this->Cart->PickupDayEntities->setPrimaryKey(['customer_id', 'pickup_day']);
                 $this->Cart->PickupDayEntities->saveMany($cart['Cart']->pickup_day_entities);
             }
             
@@ -585,12 +594,16 @@ class CartsController extends FrontendController
 
         $manufacturers = [];
         foreach ($cartProducts as $cartProduct) {
+            if ($cartProduct['isStockProduct']) {
+                continue;
+            }
             $manufacturers[$cartProduct['manufacturerId']][] = $cartProduct;
         }
 
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturersThatReceivedInstantOrderNotification = [];
         foreach ($manufacturers as $manufacturerId => $cartProducts) {
+            
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
                     'Manufacturers.id_manufacturer' => $manufacturerId
@@ -761,7 +774,6 @@ class CartsController extends FrontendController
         $errorMessages = [];
         $loadedProducts = count($orderDetails);
         if (count($orderDetails) > 0) {
-            $newCartProductsData = [];
             foreach($orderDetails as $orderDetail) {
                 $result = $this->CartProduct->add($this->AppAuth, $orderDetail->product_id, $orderDetail->product_attribute_id, $orderDetail->product_amount);
                 if (is_array($result)) {
