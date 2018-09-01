@@ -497,6 +497,9 @@ i.fa.ok {
 i.fa.not-ok {
 	color: red;
 }
+tr.selected i.fa {
+	color: #fff;
+}
 .tooltipster-sidetip.tooltipster-light .tooltipster-box {
 	background: #fff ! important;
 }
