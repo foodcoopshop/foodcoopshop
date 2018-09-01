@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-09-01 15:32+0200\n"
-"PO-Revision-Date: 2018-09-01 14:32+0200\n"
+"POT-Creation-Date: 2018-09-01 14:32+0200\n"
+"PO-Revision-Date: 2018-09-01 15:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -278,6 +278,9 @@ msgstr "Preis angepasst"
 
 msgid "Please_enter_why_pickup_day_is_changed."
 msgstr "Bitte gib an, warum der Abholtag geändert wird."
+
+msgid "The_pickup_day_was_not_changed."
+msgstr "Der Abholtag wurde nicht geändert."
 
 msgid "The_pickup_day_of_your_order_was_changed_to"
 msgstr "Der Abholtag deiner Bestellung wurde geändert auf"
@@ -1501,7 +1504,7 @@ msgid "Instant_orders"
 msgstr "Sofort-Bestellungen"
 
 msgid "to_receive_an_email_on_every_instant_order."
-msgstr "bei jeder Sofort-Bestellung eine Info-Mail erhalten."
+msgstr "bei jeder Sofort-Bestellung eine Info-Mail erhalten (gilt nicht für Lagerprodukte)."
 
 msgid "Other_settings"
 msgstr "Sonstige Einstellungen"
@@ -1817,9 +1820,6 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
-
-#~ msgid "The_pickup_day_was_not_changed."
-#~ msgstr "Der Abholtag wurde nicht geändert."
 
 #~ msgid "The_pickup_day_was_changed_successfully_and_{0,plural,=1{1_customer} other{#_customers}}_were_notified."
 #~ msgstr "Der Abholtag wurde erfolgreich geändert und {0,plural,=1{1 Mitglied wurde} other{# Mitglieder wurden}} darüber per E-Mail informiert."
