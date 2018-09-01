@@ -21,21 +21,30 @@
 
 <h1></h1>
 
-**FoodCoopShop** provides plenty of useful tools to help the people behind this fantastic way of self-organized food supply, such as: A user-friendly web shop, a login area for producers, billing, a credit system for payments, dealing with changings of ordered products... The software can be used with any modern web browser, tablet or smartphone. It's available in **German** and **English**.
+## Functions
 
+**FoodCoopShop** provides plenty of useful functions to help the people running a [food-coop](https://en.wikipedia.org/wiki/Food_cooperative). Such as:
+
+* a user-friendly web shop and admin area for producers
+* fully automated payment system, based on a credit system where the members can upload money
+* different delivery rhythms for products
+* adapting orders in many ways
+* stock management... and much more!
+
+The software can be used with any modern web browser, tablet or smartphone. It's available in **German** and **English**.
+
+## Links
 * Official homepage: [https://www.foodcoopshop.com](https://www.foodcoopshop.com/)
 * Demo version in [German](https://demo-de.foodcoopshop.com) or [English](https://demo-en.foodcoopshop.com) - English translation can be improved
 * Software documentation: [https://foodcoopshop.github.io](https://foodcoopshop.github.io)
 
-## Roadmap for 2018
-
-There's still a lot going on! In its 4th year of existance, FoodCoopShop continues to grow. You can take a look on the planned work for [Q3/2018 - v2.2](https://github.com/foodcoopshop/foodcoopshop/milestone/3) and [Q4/2018 - v2.3](https://github.com/foodcoopshop/foodcoopshop/milestone/4).
+## Roadmap
+Since the start of the FoodCoopShop project in 2014 it continues to grow. You can take a look on the planned work for [Q4/2018 - v2.3](https://github.com/foodcoopshop/foodcoopshop/milestone/4).
 
 ## Who uses FoodCoopShop?
 [https://foodcoopshop.github.io/en/foodcoops](https://foodcoopshop.github.io/en/foodcoops)
 
 ## Legal information
-
 * Before installing please read the legal information in [German](https://foodcoopshop.github.io/de/rechtliches) or [English](https://foodcoopshop.github.io/en/legal-information).
 
 ## Requirements
