@@ -394,9 +394,6 @@ class OrderDetailsController extends AdminAppController
                     $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail->product->manufacturer->bulk_orders_allowed);
                     $orderDetail->bulkOrdersAllowed = $bulkOrdersAllowed;
                     $orderDetail->row_class = [];
-                    if ($bulkOrdersAllowed) {
-                        $orderDetail->row_class[] = 'deactivated';
-                    }
                     $orderDetail->quantityInUnitsNotYetChanged = false;
                     if (!empty($orderDetail->order_detail_unit)) {
                         if (round($orderDetail->order_detail_unit->product_quantity_in_units, 3) == round($orderDetail->order_detail_unit->quantity_in_units * $orderDetail->product_amount, 3)) {
