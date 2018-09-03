@@ -163,23 +163,31 @@ class OrderDetailsController extends AdminAppController
             'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
         ]);
         $contain[] = 'PickupDayEntities';
-        $query = $this->OrderDetail->find('all', [
+        $orderDetails = $this->OrderDetail->find('all', [
             'conditions' => $odParams['conditions'],
             'contain' => $contain
-        ]);
-        
-        $orderDetails = $this->paginate($query, [
-            'order' => [
-                'Products.id_manufacturer' => 'ASC',
-                'OrderDetails.product_name' => 'ASC'
-            ]
         ])->toArray();
+        
+        $customerName = [];
+        $manufacturerName = [];
+        $productName = [];
+        foreach($orderDetails as $orderDetail) {
+            $customerName[] = strtolower($orderDetail->customer->name);
+            $manufacturerName[] = strtolower($orderDetail->product->manufacturer->name);
+            $productName[] = strtolower($orderDetail->product_name);
+        }
+        array_multisort(
+            $customerName, SORT_ASC,
+            $manufacturerName, SORT_ASC,
+            $productName, SORT_ASC,
+            $orderDetails
+        );
         
         $preparedOrderDetails = [];
         foreach($orderDetails as $orderDetail) {
             @$preparedOrderDetails[$orderDetail->id_customer][] = $orderDetail;
         }
-        
+
         $this->set('orderDetails', $preparedOrderDetails);
         
     }
@@ -286,21 +294,15 @@ class OrderDetailsController extends AdminAppController
             ]);
             $contain[] = 'PickupDayEntities';
         }
-        
+
         $query = $this->OrderDetail->find('all', [
             'conditions' => $odParams['conditions'],
-            'contain' => $contain
+            'contain' => $contain,
         ]);
 
         $orderDetails = $this->paginate($query, [
             'sortWhitelist' => [
                 'OrderDetails.product_amount', 'OrderDetails.product_name', 'OrderDetails.total_price_tax_incl', 'OrderDetails.deposit', 'OrderDetails.order_state', 'OrderDetails.pickup_day', 'Manufacturers.name', 'Customers.' . Configure::read('app.customerMainNamePart'), 'OrderDetailUnits.product_quantity_in_units'
-            ],
-            'order' => [
-                // first param needs to be included in sortWhitelist!
-                'OrderDetails.created' => 'DESC',
-                'Products.id_manufacturer' => 'ASC',
-                'OrderDetails.product_name' => 'ASC'
             ]
         ])->toArray();
         
@@ -388,19 +390,27 @@ class OrderDetailsController extends AdminAppController
                 $sortField = $this->getSortFieldForGroupedOrderDetails('manufacturer_name');
                 break;
             default:
-                $i = 0;
+                $deliveryDay = [];
+                $manufacturerName = [];
+                $productName = [];
                 foreach ($orderDetails as $orderDetail) {
-                    $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-                    $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail->product->manufacturer->bulk_orders_allowed);
-                    $orderDetail->bulkOrdersAllowed = $bulkOrdersAllowed;
-                    $orderDetail->row_class = [];
                     $orderDetail->quantityInUnitsNotYetChanged = false;
                     if (!empty($orderDetail->order_detail_unit)) {
                         if (round($orderDetail->order_detail_unit->product_quantity_in_units, 3) == round($orderDetail->order_detail_unit->quantity_in_units * $orderDetail->product_amount, 3)) {
                             $orderDetail->quantityInUnitsNotYetChanged = true;
                         }
                     }
-                    $i ++;
+                    $deliveryDay[] = $orderDetail->pickup_day;
+                    $manufacturerName[] = strtolower($orderDetail->product->manufacturer->name);
+                    $productName[] = strtolower($orderDetail->product_name);
+                }
+                if (!in_array('sort', array_keys($this->getRequest()->getQueryParams()))) {
+                    array_multisort(
+                        $deliveryDay, SORT_ASC,
+                        $manufacturerName, SORT_ASC,
+                        $productName, SORT_ASC,
+                        $orderDetails
+                    );
                 }
                 break;
         }

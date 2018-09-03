@@ -248,10 +248,10 @@ class CartsControllerTest extends AppCakeTestCase
         $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
         
         // check order_details for product1
-        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.305786, 3.64, 0.17, 0.34, 2, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[2]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.305786, 3.64, 0.17, 0.34, 2, $pickupDay);
 
         // check order_details for product2 (third! index)
-        $this->checkOrderDetails($cart->cart_products[2]->order_detail, 'Milch : 0,5l', 3, 10, 1.5, 1.636365, 1.86, 0.07, 0.21, 3, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Milch : 0,5l', 3, 10, 1.5, 1.636365, 1.86, 0.07, 0.21, 3, $pickupDay);
 
         // check order_details for product3 (second! index)
         $this->checkOrderDetails($cart->cart_products[1]->order_detail, 'Knoblauch : 100 g', 1, 0, 0, 0.636364, 0.636364, 0.000000, 0.000000, 0, $pickupDay);
@@ -370,20 +370,21 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->placeOrderWithStockProducts();
         
-        // check email to manufacturer
         $emailLogs = $this->EmailLog->find('all')->toArray();
+        
+        // check email to manufacturer
         $this->assertEmailLogs(
             $emailLogs[0],
-            'Lagerstand für Produkt "Lagerprodukt": -1',
+            'Lagerstand für Produkt "Lagerprodukt mit Varianten : 0,5 kg": 0',
             [
-                'Lagerstand: <b>-1</b>',
+                'Lagerstand: <b>0</b>',
                 'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>'
             ],
             [
                 Configure::read('test.loginEmailVegetableManufacturer')
             ]
         );
-
+        
         // check email to contact person
         $this->assertEmailLogs(
             $emailLogs[1],
@@ -394,11 +395,12 @@ class CartsControllerTest extends AppCakeTestCase
             ]
         );
         
+        // check email to manufacturer
         $this->assertEmailLogs(
             $emailLogs[2],
-            'Lagerstand für Produkt "Lagerprodukt mit Varianten : 0,5 kg": 0',
+            'Lagerstand für Produkt "Lagerprodukt": -1',
             [
-                'Lagerstand: <b>0</b>',
+                'Lagerstand: <b>-1</b>',
                 'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>'
             ],
             [
@@ -415,7 +417,6 @@ class CartsControllerTest extends AppCakeTestCase
                 Configure::read('test.loginEmailAdmin')
             ]
         );
-        
         
         $this->browser->doFoodCoopShopLogout();
     }
@@ -445,10 +446,10 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatusAfterFinish();
         
         $cart = $this->getCartById($cartId);
-        $orderDetailA = $cart->cart_products[0]->order_detail;
-        $orderDetailB = $cart->cart_products[1]->order_detail;
-        $orderDetailC = $cart->cart_products[2]->order_detail;
-        $orderDetailD = $cart->cart_products[3]->order_detail;
+        $orderDetailA = $cart->cart_products[3]->order_detail;
+        $orderDetailB = $cart->cart_products[2]->order_detail;
+        $orderDetailC = $cart->cart_products[1]->order_detail;
+        $orderDetailD = $cart->cart_products[0]->order_detail;
         
         // check table order_detail
         $this->assertEquals($orderDetailA->total_price_tax_incl, 2.700000, 'order_detail->total_price_tax_incl not correct');
@@ -504,12 +505,12 @@ class CartsControllerTest extends AppCakeTestCase
         $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
         
         // check order_details
-        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Forelle : Stück', 2, 0, 0, 9.54, 10.5, 0.48, 0.96, 2, $pickupDay);
-        $this->checkOrderDetails($cart->cart_products[1]->order_detail, 'Rindfleisch', 3, 11, 0, 27.27, 30, 0.91, 2.73, 2, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[1]->order_detail, 'Forelle : Stück', 2, 0, 0, 9.54, 10.5, 0.48, 0.96, 2, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Rindfleisch', 3, 11, 0, 27.27, 30, 0.91, 2.73, 2, $pickupDay);
 
         // check order_details_units
-        $orderDetailA = $cart->cart_products[0]->order_detail;
-        $orderDetailB = $cart->cart_products[1]->order_detail;
+        $orderDetailA = $cart->cart_products[1]->order_detail;
+        $orderDetailB = $cart->cart_products[0]->order_detail;
         
         $this->assertEquals($orderDetailA->order_detail_unit->product_quantity_in_units, 700);
         $this->assertEquals($orderDetailA->order_detail_unit->price_incl_per_unit, 1.5);
