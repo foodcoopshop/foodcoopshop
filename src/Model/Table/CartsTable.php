@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
@@ -177,8 +178,8 @@ class CartsTable extends AppTable
         $productName = [];
         $deliveryDay = [];
         foreach($preparedCart['CartProducts'] as $cartProduct) {
-            $deliveryDay[] = $cartProduct['nextDeliveryDay'];
-            $productName[] = $cartProduct['productName'];
+            $deliveryDay[] = StringComponent::slugify($cartProduct['nextDeliveryDay']);
+            $productName[] = StringComponent::slugify($cartProduct['productName']);
         }
         
         array_multisort(
@@ -219,8 +220,8 @@ class CartsTable extends AppTable
         $manufacturerName = [];
         $productName = [];
         foreach($cart['CartProducts'] as $cartProduct) {
-            $manufacturerName[] = $cartProduct['manufacturerName'];
-            $productName[] = $cartProduct['productName'];
+            $manufacturerName[] = StringComponent::slugify($cartProduct['manufacturerName']);
+            $productName[] = StringComponent::slugify($cartProduct['productName']);
         }
         
         array_multisort(

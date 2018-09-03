@@ -2,6 +2,7 @@
 
 namespace Admin\Controller;
 
+use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
@@ -172,9 +173,9 @@ class OrderDetailsController extends AdminAppController
         $manufacturerName = [];
         $productName = [];
         foreach($orderDetails as $orderDetail) {
-            $customerName[] = strtolower($orderDetail->customer->name);
-            $manufacturerName[] = strtolower($orderDetail->product->manufacturer->name);
-            $productName[] = strtolower($orderDetail->product_name);
+            $customerName[] = StringComponent::slugify($orderDetail->customer->name);
+            $manufacturerName[] = StringComponent::slugify($orderDetail->product->manufacturer->name);
+            $productName[] = StringComponent::slugify($orderDetail->product_name);
         }
         array_multisort(
             $customerName, SORT_ASC,
@@ -401,8 +402,8 @@ class OrderDetailsController extends AdminAppController
                         }
                     }
                     $deliveryDay[] = $orderDetail->pickup_day;
-                    $manufacturerName[] = strtolower($orderDetail->product->manufacturer->name);
-                    $productName[] = strtolower($orderDetail->product_name);
+                    $manufacturerName[] = StringComponent::slugify($orderDetail->product->manufacturer->name);
+                    $productName[] = StringComponent::slugify($orderDetail->product_name);
                 }
                 if (!in_array('sort', array_keys($this->getRequest()->getQueryParams()))) {
                     array_multisort(
