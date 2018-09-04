@@ -14,7 +14,7 @@ use Cake\Validation\Validator;
  * @since         FoodCoopShop 2.2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
- * @copyright     Copyright (c) Mario Rothauer, http://www.rothauer-it.com
+ * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
 class PickupDaysTable extends AppTable
