@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
@@ -127,10 +128,9 @@ class CartsTable extends AppTable
                 'ProductAttributes.UnitProductAttributes',
                 'Products.Images'
             ]
-        ]);
+        ])->toArray();
         
-        $cartProducts = $this->sortByVirtualField($cartProducts, 'product.next_delivery_day');
-        if (!empty((array) $cartProducts)) {
+        if (!empty($cartProducts)) {
             $cart->pickup_day_entities = $this->CartProducts->setPickupDays($cartProducts, $customerId, $instantOrderMode);
         }
         
@@ -175,6 +175,19 @@ class CartsTable extends AppTable
 
         }
         
+        $productName = [];
+        $deliveryDay = [];
+        foreach($preparedCart['CartProducts'] as $cartProduct) {
+            $deliveryDay[] = StringComponent::slugify($cartProduct['nextDeliveryDay']);
+            $productName[] = StringComponent::slugify($cartProduct['productName']);
+        }
+        
+        array_multisort(
+            $deliveryDay, SORT_ASC,
+            $productName, SORT_DESC, // !SIC - array is reversed later
+            $preparedCart['CartProducts']
+        );
+        
         // sum up deposits and products
         $preparedCart['ProductsWithUnitCount'] = $this->getProductsWithUnitCount($preparedCart['CartProducts']);
         $preparedCart['CartDepositSum'] = 0;
@@ -204,11 +217,25 @@ class CartsTable extends AppTable
     
     public function getCartGroupedByPickupDay($cart)
     {
+        $manufacturerName = [];
+        $productName = [];
+        foreach($cart['CartProducts'] as $cartProduct) {
+            $manufacturerName[] = StringComponent::slugify($cartProduct['manufacturerName']);
+            $productName[] = StringComponent::slugify($cartProduct['productName']);
+        }
+        
+        array_multisort(
+            $manufacturerName, SORT_ASC,
+            $productName, SORT_ASC,
+            $cart['CartProducts']
+        );
+        
         $preparedCartProducts = [];
         foreach($cart['CartProducts'] as $cartProduct) {
-            @$preparedCartProducts[$cartProduct['pickupDay']]['CartDepositSum'] += $cartProduct['deposit'];
-            @$preparedCartProducts[$cartProduct['pickupDay']]['CartProductSum'] += $cartProduct['price'];
-            @$preparedCartProducts[$cartProduct['pickupDay']]['Products'][] = $cartProduct;
+            $pickupDay = $cartProduct['pickupDay'];
+            @$preparedCartProducts[$pickupDay]['CartDepositSum'] += $cartProduct['deposit'];
+            @$preparedCartProducts[$pickupDay]['CartProductSum'] += $cartProduct['price'];
+            @$preparedCartProducts[$pickupDay]['Products'][] = $cartProduct;
         }
         $cart['CartProducts'] = $preparedCartProducts;
         return $cart;
