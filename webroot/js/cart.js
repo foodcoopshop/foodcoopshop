@@ -25,7 +25,7 @@ foodcoopshop.Cart = {
             $('.cart p.products').append('<p class="pickup-day-header">' + foodcoopshop.LocalizedJs.cart.PickupDay + ': <b>' + pickupDay + '</b></p>');
             pickupDayHeader = $(this.getPickupDayHeaderSelector(pickupDay)); // re-init after append
         }
-        pickupDayHeader.after(
+        pickupDayHeader.append(
             foodcoopshop.Cart.getCartProductHtml(productId, amount, price, productLink, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, pickupDay)
         );
     },
@@ -35,7 +35,7 @@ foodcoopshop.Cart = {
      */
     initCartProducts: function (cartProducts) {
 
-        cartProducts = $.parseJSON(cartProducts);
+        cartProducts = $.parseJSON(cartProducts).reverse();
         if (cartProducts.length == 0) {
             return;
         }
@@ -49,13 +49,10 @@ foodcoopshop.Cart = {
         for (var i = 0; i < cartProducts.length; i++) {
             var cp = cartProducts[i];
             var timebasedCurrencyHours = parseFloat(cp.timebasedCurrencySeconds / 3600);
-            
             this.addOrAppendProductToPickupDay(cp.productId, cp.amount, cp.price, cp.productLink, cp.unity_with_unit, cp.manufacturerLink, cp.image, cp.deposit, cp.tax, timebasedCurrencyHours, cp.nextDeliveryDay);
-            
             sum += cp.price;
             depositSum += cp.deposit;
             taxSum += cp.tax;
-
         }
         this.updateCartSum(sum);
         this.updateCartDepositSum(depositSum);
