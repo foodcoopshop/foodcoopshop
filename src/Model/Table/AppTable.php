@@ -191,8 +191,9 @@ class AppTable extends Table
     protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products)
     {
         $this->Product = TableRegistry::getTableLocator()->get('Products');
-        $i = 0;
+        $i = -1;
         foreach($products as $product) {
+            $i++;
             if ($product['is_stock_product']) {
                 continue;
             }
@@ -224,7 +225,6 @@ class AppTable extends Table
              unset($products[$i]);
              }
              */
-            $i++;
         }
         return $products;
     }
