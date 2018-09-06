@@ -248,6 +248,17 @@ class CartProductsTable extends AppTable
             'CartProducts.id_product_attribute' => $attributeId,
             'CartProducts.id_cart' => $cartId
         ];
+        
+        // if product attribute was deleted after adding product to cart,
+        // remove product without check for product_attribute_id so that the cart can be emptied!
+        $cartProducts = $this->find('all', [
+            'conditions' => $cartProduct2remove
+        ])->first();
+        
+        if (empty($cartProducts)) {
+            unset($cartProduct2remove['CartProducts.id_product_attribute']);
+        }
+        
         return $this->deleteAll($cartProduct2remove);
     }
 }

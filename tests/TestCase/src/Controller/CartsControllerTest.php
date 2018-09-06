@@ -98,6 +98,20 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Produkt 346 war nicht in Warenkorb vorhanden.', $response->msg);
         $this->assertJsonError();
     }
+    
+    public function testRemoveProductIfProductAttributeWasDeletedAndOtherProductAttributesExistAfterAddingToCart()
+    {
+        $this->loginAsCustomer();
+        $this->addProductToCart($this->productId2, 1);
+        $query = 'UPDATE ' . $this->Product->getTable().' SET active = 0 WHERE id_product = 60';
+        $this->dbConnection->execute($query);
+        $query = 'UPDATE ' . $this->Cart->CartProducts->getTable().' SET id_product_attribute = 5000 WHERE id_cart_product = 3';
+        $this->dbConnection->execute($query);
+        $this->removeProduct($this->productId2);
+        $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
+        $this->assertEquals([], $cart['CartProducts'], 'cart must be empty');
+        $this->assertJsonOk();
+    }
 
     public function testProductPlacedInCart()
     {
