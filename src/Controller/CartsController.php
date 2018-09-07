@@ -481,10 +481,29 @@ class CartsController extends FrontendController
         
         if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
             $validator = $this->Cart->getValidator('default');
-            $validator->notEmpty('timebased_currency_seconds_sum_tmp', 'Bitte gib an, wie viel du in Stunden zahlen möchtest.');
-            $validator->numeric('timebased_currency_seconds_sum_tmp', 'Bitte trage eine Zahl ein.');
+            $validator->notEmpty(
+                'timebased_currency_seconds_sum_tmp',
+                __('Please_enter_how_much_you_want_to_pay_in_{0}.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')])
+            );
+            $validator->numeric('timebased_currency_seconds_sum_tmp',
+                __('Please_enter_a_number.')
+            );
             $maxValue = $this->AppAuth->Cart->getTimebasedCurrencySecondsSumRoundedUp();
-            $validator = $this->Cart->getNumberRangeValidator($validator, 'timebased_currency_seconds_sum_tmp', 0, $maxValue);
+            $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
+            $customerCreditBalance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $this->AppAuth->getUserId());
+            $maxValueForCustomers = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_CUSTOMER') * 3600 + $customerCreditBalance;
+            if ($maxValueForCustomers <= $maxValue) {
+                $validator = $this->Cart->getNumberRangeValidator(
+                    $validator,
+                    'timebased_currency_seconds_sum_tmp',
+                    0,
+                    $maxValueForCustomers,
+                    __('Your_overdraft_frame_of_{0}_is_reached.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_CUSTOMER') . ' ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_SHORTCODE')]),
+                    false
+                );
+            } else {
+                $validator = $this->Cart->getNumberRangeValidator($validator, 'timebased_currency_seconds_sum_tmp', 0, $maxValue);
+            }
             $this->Cart->setValidator('default', $validator);
         }
         

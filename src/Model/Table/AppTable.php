@@ -59,13 +59,16 @@ class AppTable extends Table
         return $validator;    
     }
 
-    public function getNumberRangeValidator(Validator $validator, $field, $min, $max, $additionalErrorMessageSuffix='')
+    public function getNumberRangeValidator(Validator $validator, $field, $min, $max, $additionalErrorMessageSuffix='', $showDefaultErrorMessage=true)
     {
         $message = __('Please_enter_a_number_between_{0}_and_{1}.', [
             Configure::read('app.numberHelper')->formatAsDecimal($min, 0),
             Configure::read('app.numberHelper')->formatAsDecimal($max, 0)
         ]);
         if ($additionalErrorMessageSuffix != '') {
+            if (!$showDefaultErrorMessage) {
+                $message = '';
+            }
             $message .= ' ' . $additionalErrorMessageSuffix;
         }
         $validator->lessThanOrEqual($field, $max, $message);
