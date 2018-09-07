@@ -73,12 +73,7 @@ foodcoopshop.Admin = {
 
     appendFlashMessageToDialog : function(element, message) {
         foodcoopshop.Helper.showErrorMessage(message);
-        var flashMessage = $('#flashMessage');
-        if (!foodcoopshop.Helper.isMobile()) {
-            var left = (element.width() - flashMessage.width()) / 2;
-            flashMessage.css('left', left + 'px');
-        }
-        element.prepend(flashMessage);
+        element.prepend($('#flashMessage'));
     },
 
     addWrappersAndLoaderToDialogHtml : function(title, dialogId, dialogHtml) {
