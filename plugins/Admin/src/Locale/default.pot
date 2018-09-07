@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-07 12:22+0200\n"
+"POT-Creation-Date: 2018-09-07 14:29+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -480,6 +480,36 @@ msgid "The_tax_rate_{0}_has_been_{1}."
 msgstr ""
 
 msgid "Tax_rates"
+msgstr ""
+
+msgid "The_time_entry_has_been_deleted"
+msgstr ""
+
+msgid "The_time_entry_for_the_{0}_has_been_deleted"
+msgstr ""
+
+msgid "Your_time_entry_from_{0}_has_been_deleted."
+msgstr ""
+
+msgid "and_an_email_was_sent_to_{0}"
+msgstr ""
+
+msgid "Add_time_entry"
+msgstr ""
+
+msgid "Edit_time_entry"
+msgstr ""
+
+msgid "Credit_balance_of_{0}"
+msgstr ""
+
+msgid "of"
+msgstr ""
+
+msgid "My_{0}_(time_account)"
+msgstr ""
+
+msgid "My_credit_balance"
 msgstr ""
 
 msgid "all_activities"

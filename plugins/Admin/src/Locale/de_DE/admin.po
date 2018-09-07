@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-09-07 12:22+0200\n"
-"PO-Revision-Date: 2018-09-07 12:23+0200\n"
+"POT-Creation-Date: 2018-09-07 14:29+0200\n"
+"PO-Revision-Date: 2018-09-07 14:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -482,6 +482,36 @@ msgstr "Der Steuersatz {0} wurde {1}."
 
 msgid "Tax_rates"
 msgstr "Steuersätze"
+
+msgid "The_time_entry_has_been_deleted"
+msgstr "Die Zeit-Eintragung wurde gelöscht."
+
+msgid "The_time_entry_for_the_{0}_has_been_deleted"
+msgstr "Die Zeit-Eintragung für den {0} wurde gelöscht"
+
+msgid "Your_time_entry_from_{0}_has_been_deleted."
+msgstr "Deine Zeit-Eintragung vom {0} wurde gelöscht."
+
+msgid "and_an_email_was_sent_to_{0}"
+msgstr "und eine E-Mail wurde an {0} verschickt"
+
+msgid "Add_time_entry"
+msgstr "Zeit-Eintragung erstellen"
+
+msgid "Edit_time_entry"
+msgstr "Zeit-Eintragung bearbeiten"
+
+msgid "Credit_balance_of_{0}"
+msgstr "Kontostand voin {0}"
+
+msgid "of"
+msgstr "von"
+
+msgid "My_{0}_(time_account)"
+msgstr "Mein {0}"
+
+msgid "My_credit_balance"
+msgstr "Mein Kontostand"
 
 msgid "all_activities"
 msgstr "alle Aktivitäten"
@@ -1817,6 +1847,9 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+#~ msgid "Customer"
+#~ msgstr "Mitglied"
 
 #~ msgid "Zero_means_no_limit."
 #~ msgstr "0 bedeutet \"kein Limit\"."

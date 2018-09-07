@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-09-07 12:22+0200\n"
-"PO-Revision-Date: 2018-09-07 12:23+0200\n"
+"POT-Creation-Date: 2018-09-07 14:29+0200\n"
+"PO-Revision-Date: 2018-09-07 14:30+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -482,6 +482,36 @@ msgstr "The tax rate {0} has been {1}."
 
 msgid "Tax_rates"
 msgstr "Tax rates"
+
+msgid "The_time_entry_has_been_deleted"
+msgstr "The time entry has been deleted"
+
+msgid "The_time_entry_for_the_{0}_has_been_deleted"
+msgstr "The time entry for the {0} has been deleted"
+
+msgid "Your_time_entry_from_{0}_has_been_deleted."
+msgstr "Your time entry from {0} has been deleted."
+
+msgid "and_an_email_was_sent_to_{0}"
+msgstr "and an email was sent to {0}"
+
+msgid "Add_time_entry"
+msgstr "Add time entry"
+
+msgid "Edit_time_entry"
+msgstr "Edit time entry"
+
+msgid "Credit_balance_of_{0}"
+msgstr "Credit balance of {0}"
+
+msgid "of"
+msgstr "of"
+
+msgid "My_{0}_(time_account)"
+msgstr "My {0}"
+
+msgid "My_credit_balance"
+msgstr "My credit balance"
 
 msgid "all_activities"
 msgstr "all activities"
