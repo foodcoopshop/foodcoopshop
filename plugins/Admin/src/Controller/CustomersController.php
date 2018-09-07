@@ -37,6 +37,8 @@ class CustomersController extends AdminAppController
                 return $this->AppAuth->isSuperadmin();
                 break;
             case 'profile':
+                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer();
+                break;
             case 'delete':
                 return $this->AppAuth->isSuperadmin();
                 break;
