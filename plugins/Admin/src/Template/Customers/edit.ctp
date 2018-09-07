@@ -99,7 +99,9 @@ if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
     ]);
 }
 
-echo '<a class="delete-customer-button btn btn-danger">'.__d('admin', 'Delete_member_irrevocably?').'</a>';
+if ($appAuth->isSuperadmin()) {
+    echo '<a class="delete-customer-button btn btn-danger">'.__d('admin', 'Delete_member_irrevocably?').'</a>';
+}
 
 echo $this->Form->end(); ?>
 

@@ -38,7 +38,7 @@ class CustomersController extends AdminAppController
                 break;
             case 'profile':
             case 'delete':
-                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer();
+                return $this->AppAuth->isSuperadmin();
                 break;
             case 'changePassword':
                 return $this->AppAuth->user();
@@ -169,7 +169,7 @@ class CustomersController extends AdminAppController
 
         $isOwnProfile = $this->AppAuth->getUserId() == $customerId;
 
-        if (!$isOwnProfile && !$this->AppAuth->isSuperadmin()) {
+        if (!$this->AppAuth->isSuperadmin()) {
             throw new ForbiddenException('deleting user ' . $customerId . 'denied');
         }
 
@@ -177,7 +177,7 @@ class CustomersController extends AdminAppController
 
         try {
 
-            $activeOrdersAssociation = $this->Customer->getAssociation('ActiveOrderDetails')->setConditions([
+            $this->Customer->getAssociation('ActiveOrderDetails')->setConditions([
                 'DATE_FORMAT(ActiveOrderDetails.created, \'%Y-%m-%d\') > DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 2 MONTH), \'%Y-%m-%d\')'
             ]);
 
