@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-01 15:32+0200\n"
+"POT-Creation-Date: 2018-09-07 10:00+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -791,7 +791,7 @@ msgstr ""
 msgid "I_want_to_be_able_to_pay_my_products_also_in_{0}."
 msgstr ""
 
-msgid "docs_route_paying-with-time-module"
+msgid "docs_route_paying_with_time_module"
 msgstr ""
 
 msgid "How_do_I_use_the_paying_with_time_module?"
@@ -1800,9 +1800,6 @@ msgid "e.g._10_for_10%"
 msgstr ""
 
 msgid "Tax_rates_can_not_be_changed_later."
-msgstr ""
-
-msgid "docs_route_paying_with_time_module"
 msgstr ""
 
 msgid "Show_product"

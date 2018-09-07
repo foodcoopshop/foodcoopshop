@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-09-01 14:32+0200\n"
+"POT-Creation-Date: 2018-09-07 10:00+0200\n"
 "PO-Revision-Date: 2018-09-01 15:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -278,9 +278,6 @@ msgstr "Price adapted"
 
 msgid "Please_enter_why_pickup_day_is_changed."
 msgstr "Please enter why the pickup day is changed."
-
-msgid "The_pickup_day_was_not_changed."
-msgstr "The pickup day was not changed."
 
 msgid "The_pickup_day_of_your_order_was_changed_to"
 msgstr "The pickup day of your order was changed to"
@@ -795,7 +792,7 @@ msgstr "Paying-with-time-module active?"
 msgid "I_want_to_be_able_to_pay_my_products_also_in_{0}."
 msgstr "I want to bea able to pay my products also in {0}."
 
-msgid "docs_route_paying-with-time-module"
+msgid "docs_route_paying_with_time_module"
 msgstr "paying-with-time-module"
 
 msgid "How_do_I_use_the_paying_with_time_module?"
@@ -1806,9 +1803,6 @@ msgstr "e.g. 10 for 10%"
 msgid "Tax_rates_can_not_be_changed_later."
 msgstr "Tax rates can not be changed later."
 
-msgid "docs_route_paying_with_time_module"
-msgstr "paying-with-time-module"
-
 msgid "Show_product"
 msgstr "Show product"
 
@@ -1820,6 +1814,12 @@ msgstr "{0,plural,=1{record} other{records}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
+#~ msgid "The_pickup_day_was_not_changed."
+#~ msgstr "The pickup day was not changed."
+
+#~ msgid "docs_route_paying-with-time-module"
+#~ msgstr "paying-with-time-module"
 
 #~ msgid "Order_period"
 #~ msgstr "Order period"

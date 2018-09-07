@@ -213,7 +213,7 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
         echo '<h2>'.__d('admin', 'Paying_with_time').'</h2>';
         echo $this->Form->control('Manufacturers.timebased_currency_enabled', [
-            'label' => __d('admin', 'Paying_with_time_module_active?').' <span class="after small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_paying-with-time-module')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_paying_with_time_module?').'</a></span>',
+            'label' => __d('admin', 'Paying_with_time_module_active?').' <span class="after small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_paying_with_time_module')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_paying_with_time_module?').'</a></span>',
             'type' => 'checkbox',
             'escape' => false
         ]);
