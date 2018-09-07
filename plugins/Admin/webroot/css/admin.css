@@ -382,6 +382,14 @@ input.datepicker {
     font-family: 'Open Sans';
 }
 
+
+#content ul.help-text-wrapper li {
+    margin-left: 20px;
+    margin-top: 0px;
+    list-style: disc;
+}
+
+
 .tax-dropdown-wrapper {
     width: 240px;
 }
