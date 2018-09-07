@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-09-07 11:26+0200\n"
-"PO-Revision-Date: 2018-09-07 10:01+0200\n"
+"POT-Creation-Date: 2018-09-07 12:22+0200\n"
+"PO-Revision-Date: 2018-09-07 12:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1563,6 +1563,9 @@ msgstr "Maximaler Kontostand in {0}"
 msgid "up_to_which_it_can_be_paid_in_{0}."
 msgstr "bis zu dem in {0} bezahlt werden kann."
 
+msgid "Zero_means_no_limit_and_global_limit_of_{0}_is_used."
+msgstr "0 bedeutet: globales Limit von {0} wird verwendet."
+
 msgid "Stock_products"
 msgstr "Lagerprodukte"
 
@@ -1814,6 +1817,12 @@ msgstr "{0,plural,=1{Datensatz} other{Datensätze}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+#~ msgid "Zero_means_no_limit."
+#~ msgstr "0 bedeutet \"kein Limit\"."
+
+#~ msgid "Global_limit: {0}"
+#~ msgstr "Globales Limit: {0}"
 
 #~ msgid "The_pickup_day_was_not_changed."
 #~ msgstr "Der Abholtag wurde nicht geändert."

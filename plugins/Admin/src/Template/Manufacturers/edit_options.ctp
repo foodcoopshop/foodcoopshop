@@ -225,7 +225,9 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
                 'escape' => false
             ]);
             echo $this->Form->control('Manufacturers.timebased_currency_max_credit_balance', [
-                'label' => __d('admin', 'Maximum_credit_balance_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).' <span class="after small">'.__d('admin', 'up_to_which_it_can_be_paid_in_{0}.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).'</span>',
+                'label' => __d('admin', 'Maximum_credit_balance_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).' <span class="after small">'.__d('admin', 'up_to_which_it_can_be_paid_in_{0}.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]).
+                ' ' . __d('admin', 'Zero_means_no_limit_and_global_limit_of_{0}_is_used.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_MANUFACTURER') . ' ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]) .
+                '</span>',
                 'type' => 'text',
                 'class' => 'short',
                 'escape' => false

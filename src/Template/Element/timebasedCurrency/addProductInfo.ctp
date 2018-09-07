@@ -16,7 +16,7 @@ use Cake\Core\Configure;
 
 if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) {
     echo '<div class="'.$class.'">';
-        if ($manufacturerOverdraftReached) {
+        if ($manufacturerLimitReached) {
             echo '<span>' . __('The_manufacturer_has_reached_the_limit_to_pay_in_{0}.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]) . '</span>';
         } else {
             echo '<span class="timebasedCurrencySeconds">' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($seconds) . '</span>';

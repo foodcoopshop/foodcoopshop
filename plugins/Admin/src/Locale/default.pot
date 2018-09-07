@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-07 11:26+0200\n"
+"POT-Creation-Date: 2018-09-07 12:22+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1560,6 +1560,9 @@ msgid "Maximum_credit_balance_in_{0}"
 msgstr ""
 
 msgid "up_to_which_it_can_be_paid_in_{0}."
+msgstr ""
+
+msgid "Zero_means_no_limit_and_global_limit_of_{0}_is_used."
 msgstr ""
 
 msgid "Stock_products"

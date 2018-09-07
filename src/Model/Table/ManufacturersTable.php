@@ -79,10 +79,27 @@ class ManufacturersTable extends AppTable
         return $validator;
     }
     
-    public function hasManufacturerReachedTimebasedCurrencyOverdraft($manufacturerId)
+    public function hasManufacturerReachedTimebasedCurrencyLimit($manufacturerId)
     {
+        $manufacturer = $this->find('all', [
+            'conditions' => ['id_manufacturer' => $manufacturerId]
+        ])->first();
+        
         $timebasedCurrencyOrderDetailsTable = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
-        return $timebasedCurrencyOrderDetailsTable->getCreditBalance($manufacturerId, null) >= Configure::read('appDb.FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_MANUFACTURER');
+        $creditBalance = $timebasedCurrencyOrderDetailsTable->getCreditBalance($manufacturerId, null);
+        
+        $activeLimit = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_MANUFACTURER') * 3600;
+        
+        if ($manufacturer->timebased_currency_max_credit_balance > 0) {
+            $activeLimit = $manufacturer->timebased_currency_max_credit_balance;
+        }
+        
+        if ($activeLimit > $creditBalance) {
+            return false;
+        }
+        
+        return true;
+        
     }
     
 

@@ -148,7 +148,7 @@ if ($product['description'] != '') {
                 }
                 if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && !empty($attribute['timebased_currency_money_incl'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
-                        'manufacturerOverdraftReached' => $attribute['timebased_currency_manufacturer_overdraft_reached'],
+                        'manufacturerLimitReached' => $attribute['timebased_currency_manufacturer_limit_reached'],
                         'class' => 'timebased-currency-product-info',
                         'money' => $attribute['timebased_currency_money_incl'],
                         'seconds' => $attribute['timebased_currency_seconds'],
@@ -207,7 +207,7 @@ if ($product['description'] != '') {
                 echo '</div>';
                 if (!$this->request->getSession()->read('Auth.instantOrderCustomer') && !empty($product['timebased_currency_money_incl'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
-                        'manufacturerOverdraftReached' => $product['timebased_currency_manufacturer_overdraft_reached'],
+                        'manufacturerLimitReached' => $product['timebased_currency_manufacturer_limit_reached'],
                         'class' => 'timebased-currency-product-info',
                         'money' => $product['timebased_currency_money_incl'],
                         'seconds' => $product['timebased_currency_seconds'],
