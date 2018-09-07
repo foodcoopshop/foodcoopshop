@@ -190,7 +190,7 @@ class LocalizedController extends Controller
                 'DeleteMember' => __('Delete_member?'),
                 'ReallyDeleteMember' => __('Really_delete_member?'),
                 'BeCarefulNoWayBack' => __('Be_careful_there_is_no_way_back!'),
-                'ErrorsOcurredWhileMemberWasDeleted' => __('Errors_occurred_while_member_was_deleted'),
+                'ErrorsOccurredWhileMemberWasDeleted' => __('Errors_occurred_while_member_was_deleted'),
                 'AddComment' => __('Add_comment'),
                 'PleaseCancelAllOrderedProductsBeforeCancellingTheOrder' => __('Please_cancel_all_ordered_products_before_cancelling_the_order.'),
                 'AddNewProduct' => __('Add_new_product?'),
