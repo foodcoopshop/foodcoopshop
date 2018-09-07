@@ -34,7 +34,7 @@ if ($isDeleteAllowedGlobally) {
 }
 ?>
 
-<ul>
+<ul class="help-text-wrapper">
     <?php echo '<li>' . join('</li><li>', $helpText) . '</li>'; ?>
 </ul>
 

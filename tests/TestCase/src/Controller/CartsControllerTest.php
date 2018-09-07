@@ -435,6 +435,23 @@ class CartsControllerTest extends AppCakeTestCase
         $this->browser->doFoodCoopShopLogout();
     }
 
+    public function testFinishOrderTimebasedCurrencyEnabledCustomerOverdraftReached()
+    {
+        $reducedMaxPercentage = 15;
+        $this->prepareTimebasedCurrencyConfiguration($reducedMaxPercentage);
+        
+        $this->loginAsSuperadmin();
+        $this->fillCart();
+        
+        // bratwürstel, manufacturerId 4
+        $this->addProductToCart(103, 50); 
+        $this->addProductToCart(103, 99);
+        $this->addProductToCart(103, 99);
+        
+        $this->finishCart(1, 1, '', '38000');
+        $this->assertRegExpWithUnquotedString('Dein Überziehungsrahmen von 10 h ist erreicht.', $this->browser->getContent());
+    }
+    
     public function testFinishOrderTimebasedCurrencyEnabled()
     {
         $reducedMaxPercentage = 15;

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-09-01 14:32+0200\n"
-"PO-Revision-Date: 2018-09-01 15:42+0200\n"
+"POT-Creation-Date: 2018-09-07 14:29+0200\n"
+"PO-Revision-Date: 2018-09-07 14:30+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -279,9 +279,6 @@ msgstr "Price adapted"
 msgid "Please_enter_why_pickup_day_is_changed."
 msgstr "Please enter why the pickup day is changed."
 
-msgid "The_pickup_day_was_not_changed."
-msgstr "The pickup day was not changed."
-
 msgid "The_pickup_day_of_your_order_was_changed_to"
 msgstr "The pickup day of your order was changed to"
 
@@ -485,6 +482,36 @@ msgstr "The tax rate {0} has been {1}."
 
 msgid "Tax_rates"
 msgstr "Tax rates"
+
+msgid "The_time_entry_has_been_deleted"
+msgstr "The time entry has been deleted"
+
+msgid "The_time_entry_for_the_{0}_has_been_deleted"
+msgstr "The time entry for the {0} has been deleted"
+
+msgid "Your_time_entry_from_{0}_has_been_deleted."
+msgstr "Your time entry from {0} has been deleted."
+
+msgid "and_an_email_was_sent_to_{0}"
+msgstr "and an email was sent to {0}"
+
+msgid "Add_time_entry"
+msgstr "Add time entry"
+
+msgid "Edit_time_entry"
+msgstr "Edit time entry"
+
+msgid "Credit_balance_of_{0}"
+msgstr "Credit balance of {0}"
+
+msgid "of"
+msgstr "of"
+
+msgid "My_{0}_(time_account)"
+msgstr "My {0}"
+
+msgid "My_credit_balance"
+msgstr "My credit balance"
 
 msgid "all_activities"
 msgstr "all activities"
@@ -795,7 +822,7 @@ msgstr "Paying-with-time-module active?"
 msgid "I_want_to_be_able_to_pay_my_products_also_in_{0}."
 msgstr "I want to bea able to pay my products also in {0}."
 
-msgid "docs_route_paying-with-time-module"
+msgid "docs_route_paying_with_time_module"
 msgstr "paying-with-time-module"
 
 msgid "How_do_I_use_the_paying_with_time_module?"
@@ -1566,6 +1593,9 @@ msgstr "Maximum credit balance in {0}"
 msgid "up_to_which_it_can_be_paid_in_{0}."
 msgstr "up to which the member can pay in {0}."
 
+msgid "Zero_means_no_limit_and_global_limit_of_{0}_is_used."
+msgstr "0 means: global limit of {0} is used."
+
 msgid "Stock_products"
 msgstr "Stock products"
 
@@ -1806,9 +1836,6 @@ msgstr "e.g. 10 for 10%"
 msgid "Tax_rates_can_not_be_changed_later."
 msgstr "Tax rates can not be changed later."
 
-msgid "docs_route_paying_with_time_module"
-msgstr "paying-with-time-module"
-
 msgid "Show_product"
 msgstr "Show product"
 
@@ -1820,6 +1847,18 @@ msgstr "{0,plural,=1{record} other{records}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
+#~ msgid "Zero_means_no_limit."
+#~ msgstr "0 means \"no limit\"."
+
+#~ msgid "Global_limit: {0}"
+#~ msgstr "Global limit: {0}"
+
+#~ msgid "The_pickup_day_was_not_changed."
+#~ msgstr "The pickup day was not changed."
+
+#~ msgid "docs_route_paying-with-time-module"
+#~ msgstr "paying-with-time-module"
 
 #~ msgid "Order_period"
 #~ msgstr "Order period"

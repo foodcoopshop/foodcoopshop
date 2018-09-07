@@ -113,29 +113,28 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         );
 
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-        $message = 'Die Zeit-Eintragung';
+        $message = __d('admin', 'The_time_entry_has_been_deleted');
         if ($payment->working_day) {
-            $message .= ' für den ' . $payment->working_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' ';
+            $message = __d('admin', 'The_time_entry_for_the_{0}_has_been_deleted', [$payment->working_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'))]);
         }
-        $message .= ' <b>(' . Configure::read('app.timebasedCurrencyHelper')->formatSecondsToTimebasedCurrency($payment->seconds). ')</b> ';
+        $message .= ' <b>(' . Configure::read('app.timebasedCurrencyHelper')->formatSecondsToTimebasedCurrency($payment->seconds). ')</b>';
 
         if ($this->AppAuth->getUserId() != $payment->id_customer) {
-            $message .= ' von ' . $payment->customer->name;
+            $message .= ' ' . __('Member') . ': '. $payment->customer->name;
         }
-        $message .= ' wurde erfolgreich gelöscht';
 
         if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $payment->id_customer) {
             $email = new AppEmail();
             $email->setTemplate('Admin.timebased_currency_payment_deleted')
             ->setTo($payment->customer->email)
-            ->setSubject('Deine Zeit-Eintragung vom ' . $payment->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) . ' wurde gelöscht.')
+            ->setSubject(__d('admin', 'Your_time_entry_from_{0}_has_been_deleted.', [$payment->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'))]))
             ->setViewVars([
                 'appAuth' => $this->AppAuth,
                 'data' => $payment->customer,
                 'payment' => $payment
             ]);
             $email->send();
-            $message .= ' und eine E-Mail an '.$payment->customer->name.' verschickt';
+            $message .= __d('admin', 'and_an_email_was_sent_to_{0}', [$payment->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')), $payment->customer->name]);
         }
         $message .= '.';
 
@@ -269,7 +268,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
             ],
             ['validate' => false]
         );
-        $this->set('title_for_layout', 'Zeit-Eintragung erstellen');
+        $this->set('title_for_layout', __d('admin', 'Add_time_entry'));
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturersForDropdown = $this->Manufacturer->getTimebasedCurrencyManufacturersForDropdown();
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
@@ -305,7 +304,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         if (empty($payment)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', 'Zeit-Eintragung bearbeiten');
+        $this->set('title_for_layout', __d('admin', 'Edit_time_entry'));
         $this->_processForm($payment, true);
     }
 
@@ -367,16 +366,16 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
                 'Manufacturers.id_manufacturer' => $manufacturerId
             ],
         ])->first();
-        $this->set('paymentBalanceTitle', 'Kontostand von ' . $manufacturer->name);
-        $this->set('title_for_layout', Configure::read('app.timebasedCurrencyHelper')->getName() . ' von ' . $manufacturer->name);
+        $this->set('paymentBalanceTitle', __d('admin', 'Credit_balance_of_{0}', [$manufacturer->name]));
+        $this->set('title_for_layout', Configure::read('app.timebasedCurrencyHelper')->getName() . ' ' . __d('admin', 'of') . ' ' . $manufacturer->name);
         $this->paymentListManufacturer($manufacturerId);
         $this->render('paymentsManufacturer');
     }
 
     public function myPaymentsManufacturer()
     {
-        $this->set('title_for_layout', 'Mein ' . Configure::read('app.timebasedCurrencyHelper')->getName());
-        $this->set('paymentBalanceTitle', 'Mein Kontostand');
+        $this->set('title_for_layout', __d('admin', 'My_{0}_(time_account)', [Configure::read('app.timebasedCurrencyHelper')->getName()]));
+        $this->set('paymentBalanceTitle', __d('admin', 'My_credit_balance'));
         $this->paymentListManufacturer($this->AppAuth->getManufacturerId());
         $this->render('paymentsManufacturer');
     }
@@ -389,7 +388,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->set('isEditAllowedGlobally', false);
         $this->set('title_for_layout', 'Mein ' . Configure::read('app.timebasedCurrencyHelper')->getName() . ' für');
         $this->paymentListCustomer($manufacturerId, $this->AppAuth->getUserId());
-        $this->set('paymentBalanceTitle', 'Mein Kontostand');
+        $this->set('paymentBalanceTitle', __d('admin', 'My_credit_balance'));
         $this->set('helpText', [
             'Hier kannst du deine Zeit-Eintragungen erstellen und löschen.',
             'Du siehst auch, wenn der Hersteller Anpassungen vorgenommen bzw. Kommentare zu deinen Zeit-Eintragungen erstellt hat.',

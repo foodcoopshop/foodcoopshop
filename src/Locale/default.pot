@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-01 15:32+0200\n"
+"POT-Creation-Date: 2018-09-07 12:22+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -72,6 +72,15 @@ msgid "The_product_{0}_is_not_activated_any_more."
 msgstr ""
 
 msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
+msgstr ""
+
+msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
+msgstr ""
+
+msgid "Please_enter_a_number."
+msgstr ""
+
+msgid "Your_overdraft_frame_of_{0}_is_reached."
 msgstr ""
 
 msgid "Errors_occurred."
@@ -510,9 +519,6 @@ msgid "Adapt_price_reason_is_mandatory."
 msgstr ""
 
 msgid "Cancellation_reason_is_mandatory."
-msgstr ""
-
-msgid "Please_enter_a_number."
 msgstr ""
 
 msgid "Add_new_attribute_for_product"
@@ -1701,6 +1707,15 @@ msgid "Edit_product"
 msgstr ""
 
 msgid "from_which_{0}_%"
+msgstr ""
+
+msgid "The_manufacturer_has_reached_the_limit_to_pay_in_{0}."
+msgstr ""
+
+msgid "Part_in_{0}"
+msgstr ""
+
+msgid "in"
 msgstr ""
 
 msgid "Your_account_at_{0}_has_just_been_activated."
