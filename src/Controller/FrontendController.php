@@ -66,7 +66,9 @@ class FrontendController extends AppController
                     $product['timebased_currency_money_incl'] = $this->Manufacturer->getTimebasedCurrencyMoney($product['gross_price'], $product['timebased_currency_max_percentage']);
                     $product['timebased_currency_money_excl'] = $this->Manufacturer->getTimebasedCurrencyMoney($product['price'], $product['timebased_currency_max_percentage']);
                     $product['timebased_currency_seconds'] = $this->Manufacturer->getCartTimebasedCurrencySeconds($product['gross_price'], $product['timebased_currency_max_percentage']);
+                    $product['timebased_currency_manufacturer_overdraft_reached'] = $this->Manufacturer->hasManufacturerReachedTimebasedCurrencyOverdraft($product['id_manufacturer']);
                 }
+                
             }
 
             $attributes = $this->ProductAttribute->find('all', [
@@ -118,6 +120,7 @@ class FrontendController extends AppController
                         $preparedAttributes['timebased_currency_money_incl'] = $this->Manufacturer->getTimebasedCurrencyMoney($grossPrice, $product['timebased_currency_max_percentage']);
                         $preparedAttributes['timebased_currency_money_excl'] = $this->Manufacturer->getTimebasedCurrencyMoney($attribute->price, $product['timebased_currency_max_percentage']);
                         $preparedAttributes['timebased_currency_seconds'] = $this->Manufacturer->getCartTimebasedCurrencySeconds($grossPrice, $product['timebased_currency_max_percentage']);
+                        $preparedAttributes['timebased_currency_manufacturer_overdraft_reached'] = $this->Manufacturer->hasManufacturerReachedTimebasedCurrencyOverdraft($product['id_manufacturer']);
                     }
                 }
 

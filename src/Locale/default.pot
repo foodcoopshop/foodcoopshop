@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-07 10:44+0200\n"
+"POT-Creation-Date: 2018-09-07 11:26+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1707,6 +1707,15 @@ msgid "Edit_product"
 msgstr ""
 
 msgid "from_which_{0}_%"
+msgstr ""
+
+msgid "The_manufacturer_has_reached_the_limit_to_pay_in_{0}."
+msgstr ""
+
+msgid "Part_in_{0}"
+msgstr ""
+
+msgid "in"
 msgstr ""
 
 msgid "Your_account_at_{0}_has_just_been_activated."

@@ -78,6 +78,13 @@ class ManufacturersTable extends AppTable
         $validator = $this->getNumberRangeValidator($validator, 'timebased_currency_max_credit_balance', 0, 400);
         return $validator;
     }
+    
+    public function hasManufacturerReachedTimebasedCurrencyOverdraft($manufacturerId)
+    {
+        $timebasedCurrencyOrderDetailsTable = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
+        return $timebasedCurrencyOrderDetailsTable->getCreditBalance($manufacturerId, null) >= Configure::read('appDb.FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_MANUFACTURER');
+    }
+    
 
     public function getTimebasedCurrencyMoney($price, $percentage)
     {

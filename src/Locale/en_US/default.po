@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-07 10:44+0200\n"
-"PO-Revision-Date: 2018-09-07 10:46+0200\n"
+"POT-Creation-Date: 2018-09-07 11:26+0200\n"
+"PO-Revision-Date: 2018-09-07 11:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1709,6 +1709,15 @@ msgstr "Edit product"
 
 msgid "from_which_{0}_%"
 msgstr "from which {0} %"
+
+msgid "The_manufacturer_has_reached_the_limit_to_pay_in_{0}."
+msgstr "The manufacturer has reached the limit to pay in {0}."
+
+msgid "Part_in_{0}"
+msgstr "Part in {0}"
+
+msgid "in"
+msgstr "in"
 
 msgid "Your_account_at_{0}_has_just_been_activated."
 msgstr "Your account at {0} has just been activated."

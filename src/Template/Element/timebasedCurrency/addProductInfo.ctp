@@ -15,15 +15,18 @@
 use Cake\Core\Configure;
 
 if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) {
-    echo '<span class="timebasedCurrencySeconds">' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($seconds) . '</span>';
     echo '<div class="'.$class.'">';
-        $titleForOverlay =
-            '<span style="padding:2px;float:left;">'.
-                'Anteil in '.Configure::read('app.currencyName').': <span class="money">' . $this->Number->formatAsCurrency($money).'</span><br />' .
-                'Anteil in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . ':<span class="seconds">' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($seconds) . '</span>'.
-            '</span>';
-        ;
-        echo '<span title="'.h($titleForOverlay).'">' . $labelPrefix . ' in ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . '</span>';
+        if ($manufacturerOverdraftReached) {
+            echo '<span>' . __('The_manufacturer_has_reached_the_limit_to_pay_in_{0}.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]) . '</span>';
+        } else {
+            echo '<span class="timebasedCurrencySeconds">' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($seconds) . '</span>';
+                $titleForOverlay =
+                    '<span style="padding:2px;float:left;">'.
+                        __('Part_in_{0}', [Configure::read('app.currencyName')]).': <span class="money">' . $this->Number->formatAsCurrency($money).'</span><br />' .
+                        __('Part_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]) . ':<span class="seconds">' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($seconds) . '</span>'.
+                    '</span>';
+                echo '<span title="'.h($titleForOverlay).'">' . $labelPrefix . ' ' . __('in') . ' ' . Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME') . '</span>';
+        }
     echo '</div>';
 }
 
