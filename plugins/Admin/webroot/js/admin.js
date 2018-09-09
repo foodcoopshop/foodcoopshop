@@ -684,7 +684,8 @@ foodcoopshop.Admin = {
                     var data = {
                         productId: $('#dialogDeliveryRhythmProductId').val(),
                         deliveryRhythmType: $('#dialogDeliveryRhythmType').val(),
-                        deliveryRhythmFirstDeliveryDay: $('#dialogDeliveryRhythmFirstDeliveryDay').val()
+                        deliveryRhythmFirstDeliveryDay: $('#dialogDeliveryRhythmFirstDeliveryDay').val(),
+                        deliveryRhythmOrderPossibleUntil: $('#dialogDeliveryRhythmOrderPossibleUntil').val()
                     };
                     
                     foodcoopshop.Helper.ajaxCall(
@@ -707,7 +708,7 @@ foodcoopshop.Admin = {
             
             var dialogOptions = {
                 autoOpen: false,
-                height: 350,
+                height: 400,
                 width: 420,
                 modal: true,
                 buttons: buttons
@@ -718,21 +719,29 @@ foodcoopshop.Admin = {
             select.append($('#rhythmtypes').html());
             var selectedDeliveryRhythmType = $(this).closest('tr').find('td span.delivery-rhythm-for-dialog span.dropdown').html();
             select.on('change', function() {
-                var labelToShow = 'default';
+                var elementToShow = 'default';
                 if ($(this).val().match('individual')) {
-                    labelToShow = 'individual';
+                    elementToShow = 'individual';
                 }
-                $('#' + dialogId + ' .dynamic-label').hide();
-                $('#' + dialogId + ' .dynamic-label.' + labelToShow).show();
+                $('#' + dialogId + ' .dynamic-element').hide();
+                $('#' + dialogId + ' .dynamic-element.' + elementToShow).show();
             });
             select.val(selectedDeliveryRhythmType);
             select.trigger('change');
             
             foodcoopshop.Helper.initDatepicker();
-            var datepickerInput = $('#' + dialogId + ' input.datepicker');
-            datepickerInput.val($(this).closest('tr').find('td span.delivery-rhythm-for-dialog span.first-delivery-day').html());
-            foodcoopshop.Admin.addDatepickerInDialog(datepickerInput);
             
+            var firstDeliveryDayInput = $('#' + dialogId + ' #dialogDeliveryRhythmFirstDeliveryDay');
+            firstDeliveryDayInput.val($(this).closest('tr').find('td span.delivery-rhythm-for-dialog span.first-delivery-day').html());
+            foodcoopshop.Admin.addDatepickerInDialog(firstDeliveryDayInput);
+            
+            var orderPossibleUntilInput = $('#' + dialogId + ' #dialogDeliveryRhythmOrderPossibleUntil');
+            var orderPossibleUntilDataElement = $(this).closest('tr').find('td span.delivery-rhythm-for-dialog span.order-possible-until');
+            if (orderPossibleUntilDataElement.length > 0) {
+                orderPossibleUntilInput.val(orderPossibleUntilDataElement.html());
+            }
+            foodcoopshop.Admin.addDatepickerInDialog(orderPossibleUntilInput);
+
             $('#' + dialogId + ' #dialogDeliveryRhythmProductId').val(row.find('td:nth-child(1)').html());
             $('#' + dialogId + ' label[for="dialogDeliveryRhythm"]').html(foodcoopshop.Admin.getProductNameForDialog(row));
 

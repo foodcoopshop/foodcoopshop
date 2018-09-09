@@ -60,6 +60,9 @@ if ($product['description'] != '') {
     echo '<div class="toggle-content description">'.$product['description'].'</div>';
 }
 
+    if ($product['delivery_rhythm_type'] == 'individual' && !$this->Time->isDatabaseDateNotSet($product['delivery_rhythm_order_possible_until'])) {
+        echo '<br />' . __('Order_possible_until') . ': ' . $this->Time->getDateFormattedWithWeekday(strtotime($product['delivery_rhythm_order_possible_until']));
+    }
     echo '<br />'.__('Pickup_day').': ';
     echo '<span class="pickup-day">';
         if ($this->request->getSession()->check('Auth.instantOrderCustomer')) {

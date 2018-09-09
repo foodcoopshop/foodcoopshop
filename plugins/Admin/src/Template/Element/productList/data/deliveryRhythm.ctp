@@ -43,6 +43,16 @@ echo '<td class="delivery-rhythm">';
                         echo $this->Time->formatToDateShort($product->delivery_rhythm_first_delivery_day);
                     }
                 echo '</span>';
+                
+                if ($product->delivery_rhythm_type == 'individual') {
+                    echo ', ' . __d('admin', 'Order_possible_until') . ' ';
+                    echo '<span class="order-possible-until">';
+                        if (!is_null($product->delivery_rhythm_order_possible_until)) {
+                            echo $this->Time->formatToDateShort($product->delivery_rhythm_order_possible_until);
+                        }
+                    echo '</span>';
+                }
+                
             echo '</span>';
         }
     }

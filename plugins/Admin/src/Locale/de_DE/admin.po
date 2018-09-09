@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-09-07 14:29+0200\n"
+"POT-Creation-Date: 2018-09-09 21:52+0200\n"
 "PO-Revision-Date: 2018-09-07 14:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1140,6 +1140,10 @@ msgstr "Lieferrhythmus ändern"
 msgid "delivery_rhythm_from"
 msgstr "ab"
 
+#, fuzzy
+msgid "Order_possible_until"
+msgstr "Anzahl Bestellungen"
+
 msgid "change_deposit"
 msgstr "Pfand ändern"
 
@@ -1916,9 +1920,6 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 #~ msgid "Change_order_status"
 #~ msgstr "Bestellstatus ändern"
-
-#~ msgid "Order_count"
-#~ msgstr "Anzahl Bestellungen"
 
 #~ msgid "Set_date_of_order_back"
 #~ msgstr "Bestellung rückdatieren"

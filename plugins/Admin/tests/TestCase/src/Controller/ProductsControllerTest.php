@@ -180,10 +180,26 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
     
+    public function testEditDeliveryRhythmInvalidIndividualWithEmptyOrderPossibleUntil()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->changeProductDeliveryRhythm(346, '0-individual', '2018-08-31', '');
+        $this->assertRegExpWithUnquotedString('Das Bestellbar-bis-Datum ist nicht gültig.', $response->msg);
+        $this->assertJsonError();
+    }
+    
+    public function testEditDeliveryRhythmInvalidIndividualWithWrongOrderPossibleUntil()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->changeProductDeliveryRhythm(346, '0-individual', '2018-08-31', '2018-09-30');
+        $this->assertRegExpWithUnquotedString('Das Bestellbar-bis-Datum muss kleiner als der Liefertag sein.', $response->msg);
+        $this->assertJsonError();
+    }
+    
     public function testEditDeliveryRhythmOkIndividual()
     {
         $this->loginAsSuperadmin();
-        $this->changeProductDeliveryRhythm(346, '0-individual', '2018-08-31');
+        $this->changeProductDeliveryRhythm(346, '0-individual', '2018-08-31', '2018-08-28');
         $this->assertJsonOk();
     }
     
