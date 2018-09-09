@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-07 12:22+0200\n"
-"PO-Revision-Date: 2018-09-07 11:27+0200\n"
+"POT-Creation-Date: 2018-09-09 21:52+0200\n"
+"PO-Revision-Date: 2018-09-09 21:53+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -807,6 +807,12 @@ msgstr "Das Produkt ist ab sofort bestellbar."
 msgid "can_be_left_blank"
 msgstr "kann freigelassen werden"
 
+msgid "Order_possible_until"
+msgstr "Bestellbar bis"
+
+msgid "Order_possible_until_info."
+msgstr "Das Produkt kann nur bis zu diesem Datum bestellt werden."
+
 msgid "Info_page_for_delivery_rhythm"
 msgstr "Infos zu den Lieferrhythmen"
 
@@ -1313,6 +1319,12 @@ msgstr "Der Lieferrhythmus ist nicht gültig."
 
 msgid "The_first_delivery_day_is_not_valid."
 msgstr "Der erste Liefertag ist nicht gültig."
+
+msgid "The_order_possible_until_field_is_not_valid."
+msgstr "Das Bestellbar-bis-Datum ist nicht gültig."
+
+msgid "The_order_possible_until_field_needs_to_be_smaller_than_the_delivery_date."
+msgstr "Das Bestellbar-bis-Datum muss kleiner als der Liefertag sein."
 
 msgid "The_first_delivery_day"
 msgstr "Der erste Liefertag"

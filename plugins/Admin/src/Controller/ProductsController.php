@@ -362,6 +362,7 @@ class ProductsController extends AdminAppController
         $productId = (int) $this->getRequest()->getData('productId');
         $deliveryRhythmTypeCombined = $this->getRequest()->getData('deliveryRhythmType');
         $deliveryRhythmFirstDeliveryDay = $this->getRequest()->getData('deliveryRhythmFirstDeliveryDay');
+        $deliveryRhythmOrderPossibleUntil = $this->getRequest()->getData('deliveryRhythmOrderPossibleUntil');
         
         $splittedDeliveryRhythmType = explode('-', $deliveryRhythmTypeCombined);
         
@@ -388,6 +389,11 @@ class ProductsController extends AdminAppController
         }
         if ($deliveryRhythmFirstDeliveryDay == '' && !$isFirstDeliveryDayMandatory) {
             $product2update['delivery_rhythm_first_delivery_day'] = '';
+        }
+        
+        $product2update['delivery_rhythm_order_possible_until'] = '';
+        if (in_array($deliveryRhythmTypeCombined, ['0-individual'])) {
+            $product2update['delivery_rhythm_order_possible_until'] = Configure::read('app.timeHelper')->formatToDbFormatDate($deliveryRhythmOrderPossibleUntil);
         }
         
         try {
@@ -418,6 +424,9 @@ class ProductsController extends AdminAppController
                     $messageString .= __d('admin', 'First_delivery_day');
                 }
                 $messageString .= ': <b>'. Configure::read('app.timeHelper')->formatToDateShort($deliveryRhythmFirstDeliveryDay) . '</b>';
+                if ($product2update['delivery_rhythm_order_possible_until'] != '') {
+                    $messageString .= ', ' . __d('admin', 'Order_possible_until') . ': <b>'. Configure::read('app.timeHelper')->formatToDateShort($deliveryRhythmOrderPossibleUntil) . '</b>';
+                }
             }
             
             if ($entityWasDirty) {

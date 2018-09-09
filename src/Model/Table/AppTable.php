@@ -138,7 +138,7 @@ class AppTable extends Table
     {
         $fields = "Products.id_product,
                 Products.name, Products.description_short, Products.description, Products.unity, Products.price, Products.created,
-                Products.delivery_rhythm_type, Products.delivery_rhythm_count, Products.delivery_rhythm_first_delivery_day,
+                Products.delivery_rhythm_type, Products.delivery_rhythm_count, Products.delivery_rhythm_first_delivery_day, Products.delivery_rhythm_order_possible_until,
                 Products.is_stock_product,
                 Deposits.deposit,
                 Images.id_image,
@@ -216,9 +216,11 @@ class AppTable extends Table
                 unset($products[$i]);
             }
             
-            // hides products where individual delivery day is over
-            if ($product['delivery_rhythm_type'] == 'individual' && $product['delivery_rhythm_first_delivery_day'] < Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb()) {
-                unset($products[$i]);
+            if ($product['delivery_rhythm_type'] == 'individual') {
+                // hides products when order_possible_until is reached
+                if ($product['delivery_rhythm_order_possible_until'] < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
+                    unset($products[$i]);
+                }
             }
             /*
              if ($product['delivery_rhythm_type'] == 'week' && $product['delivery_rhythm_first_delivery_day'] > $deliveryDate) {
