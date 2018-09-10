@@ -93,6 +93,15 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->assert404NotFoundHeader();
     }
     
+    public function testProductDetailIndividualDeliveryRhythmOrderPossibleUntilNotOver()
+    {
+        $this->loginAsSuperadmin();
+        $productId = 346;
+        $this->changeProductDeliveryRhythm($productId, '0-individual', date('Y-m-d', strtotime('next friday')), date('Y-m-d'));
+        $this->browser->get($this->Slug->getProductDetail($productId, 'Demo Product'));
+        $this->assert200OkHeader();
+    }
+    
     public function testProductDetailDeliveryBreakActive()
     {
         $this->loginAsSuperadmin();
