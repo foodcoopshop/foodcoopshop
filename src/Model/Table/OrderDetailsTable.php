@@ -158,19 +158,22 @@ class OrderDetailsTable extends AppTable
         }
             
     }
-    
+    /**
+     * can be removed safely in FCS v3.0
+     */
     public function legacyUpdateOrderStateToNewBilledState($dateFrom, $statusOld, $statusNew)
     {
         $conditions = ['order_state' => $statusOld];
         if (!is_null($dateFrom)) {
             $conditions[] = 'DATE_FORMAT(created, \'%Y-%m-%d\') < \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
         }
-        $this->updateAll(
+        $rows = $this->updateAll(
             [
                 'order_state' => $statusNew
             ],
             $conditions
         );
+        return $rows;
     }
 
     public function getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId)

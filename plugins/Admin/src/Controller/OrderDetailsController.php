@@ -301,6 +301,10 @@ class OrderDetailsController extends AdminAppController
             'contain' => $contain,
         ]);
 
+        if (in_array('excludeCreatedLastMonth', array_keys($this->getRequest()->getQueryParams()))) {
+            $query->where(['DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]) . '\'']);
+        }
+        
         $orderDetails = $this->paginate($query, [
             'sortWhitelist' => [
                 'OrderDetails.product_amount', 'OrderDetails.product_name', 'OrderDetails.total_price_tax_incl', 'OrderDetails.deposit', 'OrderDetails.order_state', 'OrderDetails.pickup_day', 'Manufacturers.name', 'Customers.' . Configure::read('app.customerMainNamePart'), 'OrderDetailUnits.product_quantity_in_units'
