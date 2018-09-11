@@ -12,7 +12,7 @@ class AdditionalOrderPeriods extends AbstractMigration
         $this->execute("
             ALTER TABLE `fcs_product` ADD `delivery_rhythm_type` VARCHAR(10) NOT NULL DEFAULT 'week' AFTER `active`,
                 ADD `delivery_rhythm_count` TINYINT(10) NOT NULL DEFAULT '1' AFTER `delivery_rhythm_type`,
-                ADD `delivery_rhythm_first_delivery_day` DATE NULL AFTER `delivery_rhythm_count`
+                ADD `delivery_rhythm_first_delivery_day` DATE NULL AFTER `delivery_rhythm_count`,
                 ADD `delivery_rhythm_order_possible_until` DATE NULL AFTER `delivery_rhythm_first_delivery_day`;
             ALTER TABLE `fcs_manufacturer` ADD `no_delivery_days` TEXT NOT NULL AFTER `send_product_sold_out_limit_reached_for_contact_person`;
         ");
