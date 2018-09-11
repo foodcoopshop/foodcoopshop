@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-09-09 21:52+0200\n"
-"PO-Revision-Date: 2018-09-07 14:29+0200\n"
+"POT-Creation-Date: 2018-09-11 17:44+0200\n"
+"PO-Revision-Date: 2018-09-11 17:39+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -386,6 +386,9 @@ msgstr "Liefertag"
 
 msgid "First_delivery_day"
 msgstr "Erster Liefertag"
+
+msgid "Order_possible_until"
+msgstr "Bestellbar bis"
 
 msgid "Saving_successful."
 msgstr "Speichern erfolgreich."
@@ -1140,10 +1143,6 @@ msgstr "Lieferrhythmus ändern"
 msgid "delivery_rhythm_from"
 msgstr "ab"
 
-#, fuzzy
-msgid "Order_possible_until"
-msgstr "Anzahl Bestellungen"
-
 msgid "change_deposit"
 msgstr "Pfand ändern"
 
@@ -1323,6 +1322,12 @@ msgstr "Bitte überprüfe die Guthaben-Aufladung, die du im System eingetragen h
 
 msgid "Comment"
 msgstr "Kommentar"
+
+msgid "Please_do_not_forget_that_you_have_products_to_pick_up_on_{0}."
+msgstr "bitte vergiss nicht, dass am {0} folgende Produkte zum Abholen bereit sind:"
+
+msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
+msgstr "Du bekommst diese E-Mail, weil deine Bestellung länger als {0} Tage her ist."
 
 msgid "Hello"
 msgstr "Hallo"

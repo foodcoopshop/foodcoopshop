@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-09 21:52+0200\n"
-"PO-Revision-Date: 2018-09-09 21:54+0200\n"
+"POT-Creation-Date: 2018-09-11 17:44+0200\n"
+"PO-Revision-Date: 2018-09-11 17:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -798,9 +798,6 @@ msgstr "First delivery day"
 msgid "Delivery_day"
 msgstr "Delivery day"
 
-msgid "Individual_delivery_day_info."
-msgstr "The product can be ordered from now on and will be deactivated automatically as soon as the last order day of the given delivery day is reached."
-
 msgid "First_delivery_day_info."
 msgstr "The product can be ordered from now on."
 
@@ -809,9 +806,6 @@ msgstr "can be left blank"
 
 msgid "Order_possible_until"
 msgstr "Order possible until"
-
-msgid "Order_possible_until_info."
-msgstr "The product can only be ordered until this date."
 
 msgid "Info_page_for_delivery_rhythm"
 msgstr "Info page for delivery rhythms"
@@ -1106,6 +1100,9 @@ msgstr "Cronjob: Invoices sent"
 
 msgid "Action_Log_Cronjob_email_order_reminder_sent"
 msgstr "Cronjob: Email order reminder sent"
+
+msgid "Action_Log_Cronjob_pickup_reminder_sent"
+msgstr "Cronjob: Pickup day reminder sent"
 
 msgid "Action_Log_Cronjob_check_credit_balance"
 msgstr "Cronjob: Credit balances checked"
@@ -1415,6 +1412,9 @@ msgstr "today"
 
 msgid "tomorrow"
 msgstr "tomorrow"
+
+msgid "Pickup_reminder_for"
+msgstr "Pickup day reminder for"
 
 msgid "to_(time_context)"
 msgstr "to"
@@ -2087,6 +2087,12 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "Individual_delivery_day_info."
+#~ msgstr "The product can be ordered from now on and will be deactivated automatically as soon as the last order day of the given delivery day is reached."
+
+#~ msgid "Order_possible_until_info."
+#~ msgstr "The product can only be ordered until this date."
 
 #~ msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
 #~ msgstr "The manufacturer of the product {0} either has a delivery break or the product is not activated any more."

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-09 21:52+0200\n"
+"POT-Creation-Date: 2018-09-11 17:44+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -384,6 +384,9 @@ msgid "Delivery_day"
 msgstr ""
 
 msgid "First_delivery_day"
+msgstr ""
+
+msgid "Order_possible_until"
 msgstr ""
 
 msgid "Saving_successful."
@@ -1139,9 +1142,6 @@ msgstr ""
 msgid "delivery_rhythm_from"
 msgstr ""
 
-msgid "Order_possible_until"
-msgstr ""
-
 msgid "change_deposit"
 msgstr ""
 
@@ -1320,6 +1320,12 @@ msgid "Please_compare_the_credit_upload_that_you_added_to_our_system_with_the_ac
 msgstr ""
 
 msgid "Comment"
+msgstr ""
+
+msgid "Please_do_not_forget_that_you_have_products_to_pick_up_on_{0}."
+msgstr ""
+
+msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
 msgstr ""
 
 msgid "Hello"

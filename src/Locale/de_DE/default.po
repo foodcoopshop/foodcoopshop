@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-09 21:52+0200\n"
-"PO-Revision-Date: 2018-09-09 21:53+0200\n"
+"POT-Creation-Date: 2018-09-11 17:44+0200\n"
+"PO-Revision-Date: 2018-09-11 17:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -798,9 +798,6 @@ msgstr "Erster Liefertag"
 msgid "Delivery_day"
 msgstr "Liefertag"
 
-msgid "Individual_delivery_day_info."
-msgstr "Das Produkt ist ab sofort bestellbar und wird automatisch deaktiviert, sobald der letzte Bestelltag des angegebenen Lieferdatums erreicht ist."
-
 msgid "First_delivery_day_info."
 msgstr "Das Produkt ist ab sofort bestellbar."
 
@@ -809,9 +806,6 @@ msgstr "kann freigelassen werden"
 
 msgid "Order_possible_until"
 msgstr "Bestellbar bis"
-
-msgid "Order_possible_until_info."
-msgstr "Das Produkt kann nur bis zu diesem Datum bestellt werden."
 
 msgid "Info_page_for_delivery_rhythm"
 msgstr "Infos zu den Lieferrhythmen"
@@ -1106,6 +1100,9 @@ msgstr "Cronjob: Rechnungen verschickt"
 
 msgid "Action_Log_Cronjob_email_order_reminder_sent"
 msgstr "Cronjob: Bestell-Erinnerung"
+
+msgid "Action_Log_Cronjob_pickup_reminder_sent"
+msgstr "Cronjob: Abholtag-Erinnerung"
 
 msgid "Action_Log_Cronjob_check_credit_balance"
 msgstr "Cronjob: Guthaben überprüfen"
@@ -1415,6 +1412,9 @@ msgstr "heute"
 
 msgid "tomorrow"
 msgstr "morgen"
+
+msgid "Pickup_reminder_for"
+msgstr "Abholtag-Erinnerung für"
 
 msgid "to_(time_context)"
 msgstr "bis"
@@ -2087,6 +2087,12 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "Individual_delivery_day_info."
+#~ msgstr "Das Produkt ist ab sofort bestellbar und wird automatisch deaktiviert, sobald der letzte Bestelltag des angegebenen Lieferdatums erreicht ist."
+
+#~ msgid "Order_possible_until_info."
+#~ msgstr "Das Produkt kann nur bis zu diesem Datum bestellt werden."
 
 #~ msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
 #~ msgstr "Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar."

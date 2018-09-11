@@ -28,6 +28,7 @@
             <file>tests/TestCase/src/Controller/ProductsFrontendControllerTest.php</file>
             
             <file>tests/TestCase/src/Shell/EmailOrderReminderShellTest.php</file>
+            <file>tests/TestCase/src/Shell/PickupReminderShellTest.php</file>
             <file>tests/TestCase/src/Shell/SendInvoicesShellTest.php</file>
             <file>tests/TestCase/src/Shell/SendOrderListsShellTest.php</file>
 

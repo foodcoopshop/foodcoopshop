@@ -1,7 +1,5 @@
 <?php
 /**
- * NpmPostInstallShell
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License

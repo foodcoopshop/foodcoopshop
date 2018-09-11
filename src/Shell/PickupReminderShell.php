@@ -9,7 +9,7 @@
  * Cronjob works properly if it's called on Configure::read('app.sendOrderListsWeekDay') -1 or -2
  * eg: Order lists are sent on Wednesday => EmailOrderReminder can be called on Tuesday or Monday
  *
- * @since         FoodCoopShop 1.0.0
+ * @since         FoodCoopShop 2.2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -20,62 +20,77 @@ namespace App\Shell;
 
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
-class EmailOrderReminderShell extends AppShell
+class PickupReminderShell extends AppShell
 {
 
+    public $cronjobRunDay;
+    
     public function main()
     {
-
-        if (! Configure::read('app.emailOrderReminderEnabled') || ! Configure::read('appDb.FCS_CART_ENABLED')) {
-            return;
-        }
 
         parent::main();
 
         $this->initSimpleBrowser(); // for loggedUserId
+        
+        // $this->cronjobRunDay can is set in unit test
+        if (empty($this->cronjobRunDay)) {
+            $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+        }
 
         $this->startTimeLogging();
 
         $conditions = [
-            'Customers.email_order_reminder' => 1,
             'Customers.active' => 1
         ];
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
-
-        $this->Customer->getAssociation('ActiveOrderDetails')->setConditions(
-            [
-                'DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\') = \'' . 
-                    Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb()
-                . '\'',
-            ]
-        );
-
+        
         $customers = $this->Customer->find('all', [
             'conditions' => $conditions,
             'contain' => [
-                'ActiveOrderDetails',
                 'AddressCustomers' // to make exclude happen using dropManufacturersInNextFind
             ]
         ]);
         $customers = $this->Customer->sortByVirtualField($customers, 'name');
-
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        
+        $nextPickupDay = Configure::read('app.timeHelper')->getDeliveryDay(strtotime($this->cronjobRunDay));
+        $formattedPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday($nextPickupDay);
+        $diffOrderAndPickupInDays = 6;
+        
         $i = 0;
         $outString = '';
         foreach ($customers as $customer) {
-            // customer has open orders, do not send email
-            if (count($customer->active_order_details) > 0) {
+            
+            $futureOrderDetails = $this->OrderDetail->find('all', [
+                'conditions' => [
+                    'OrderDetails.id_customer' => $customer->id_customer,
+                    'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') = \''.date('Y-m-d', $nextPickupDay).'\'',
+                    'DATEDIFF(OrderDetails.pickup_day, DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\')) > ' . $diffOrderAndPickupInDays
+                ],
+                'contain' => [
+                    'Products.Manufacturers'
+                ],
+                'order' => [
+                    'OrderDetails.product_name' => 'ASC'
+                ]
+            ])->toArray();
+            
+            if (empty($futureOrderDetails)) {
                 continue;
             }
 
             $email = new AppEmail();
             $email->setTo($customer->email)
-            ->setTemplate('Admin.email_order_reminder')
-            ->setSubject(__('Order_reminder') . ' ' . Configure::read('appDb.FCS_APP_NAME'))
+            ->setTemplate('Admin.pickup_reminder')
+            ->setSubject(__('Pickup_reminder_for') . ' ' . $formattedPickupDay)
             ->setViewVars([
                 'customer' => $customer,
-                'lastOrderDayAsString' => (Configure::read('app.sendOrderListsWeekday') - date('N')) == 1 ? __('today') : __('tomorrow')
+                'diffOrderAndPickupInDays' => $diffOrderAndPickupInDays,
+                'formattedPickupDay' => $formattedPickupDay,
+                'futureOrderDetails' => $futureOrderDetails
             ])
             ->send();
 
@@ -88,7 +103,7 @@ class EmailOrderReminderShell extends AppShell
 
         $this->stopTimeLogging();
 
-        $this->ActionLog->customSave('cronjob_email_order_reminder', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
+        $this->ActionLog->customSave('cronjob_pickup_reminder', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
 
         $this->out($outString);
         $this->out($this->getRuntime());
