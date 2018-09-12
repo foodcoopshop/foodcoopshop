@@ -183,7 +183,7 @@ class CartsTable extends AppTable
         }
         
         array_multisort(
-            $deliveryDay, SORT_ASC,
+            $deliveryDay, SORT_DESC, // !SIC - array is reversed later
             $productName, SORT_DESC, // !SIC - array is reversed later
             $preparedCart['CartProducts']
         );
