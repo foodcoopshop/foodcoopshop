@@ -431,7 +431,7 @@ foodcoopshop.Cart = {
             productContainer.each(function (index) {
                 var p = $(this);
                 var pickupDayHeader = $(foodcoopshop.Cart.getPickupDayHeaderSelector(p.find('.pickup-day').html()));
-                if (pickupDayHeader.first().nextUntil('.pickup-day-header', 'span').length == 1) {
+                if (pickupDayHeader.first().find('span.product').length == 1) {
                     foodcoopshop.Helper.applyBlinkEffect(pickupDayHeader, function() {
                         pickupDayHeader.slideUp(500, function () {
                             pickupDayHeader.remove();
