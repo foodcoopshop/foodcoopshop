@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-11 17:44+0200\n"
+"POT-Creation-Date: 2018-09-12 15:03+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -86,10 +86,10 @@ msgstr ""
 msgid "Errors_occurred."
 msgstr ""
 
-msgid "Instant_order_successfully_placed_for_{0}."
+msgid "Instant_order_({0})_successfully_placed_for_{1}."
 msgstr ""
 
-msgid "Instant_order_successfully_placed_for_{0}._The_following_manufacturers_were_notified:_{1}"
+msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
 msgstr ""
 
 msgid "Pickup_day"

@@ -571,11 +571,13 @@ class CartsController extends FrontendController
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             if ($this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
                 if (empty($manufacturersThatReceivedInstantOrderNotification)) {
-                    $message = __('Instant_order_successfully_placed_for_{0}.', [
+                    $message = __('Instant_order_({0})_successfully_placed_for_{1}.', [
+                        Configure::read('app.numberHelper')->formatAsCurrency($this->AppAuth->Cart->getProductSum()),
                         '<b>' . $this->request->getSession()->read('Auth.instantOrderCustomer')->name . '</b>'
                     ]);
                 } else {
-                    $message = __('Instant_order_successfully_placed_for_{0}._The_following_manufacturers_were_notified:_{1}', [
+                    $message = __('Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}', [
+                        Configure::read('app.numberHelper')->formatAsCurrency($this->AppAuth->Cart->getProductSum()),
                         '<b>' . $this->request->getSession()->read('Auth.instantOrderCustomer')->name . '</b>',
                         '<b>' . join(', ', $manufacturersThatReceivedInstantOrderNotification) . '</b>'
                     ]);
