@@ -1185,6 +1185,9 @@ body.products.detail .product-wrapper {
     line-height: 19px;
     padding-bottom: 5px;
 }
+#info-box p:last-of-type {
+	padding-bottom: 5px;
+}
 body.blog_posts.detail p.neighbors {
     margin-top: 10px;
 }
