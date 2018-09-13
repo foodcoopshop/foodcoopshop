@@ -389,7 +389,12 @@ input.datepicker {
     list-style: disc;
 }
 
-
+.last-n-days-dropdown,
+.categories-checkboxes,
+.tax-dropdown-wrapper,
+.delivery-rhythm-dropdown-wrapper {
+    display: none;
+}
 .tax-dropdown-wrapper {
     width: 240px;
 }
@@ -536,7 +541,6 @@ form div.error-message {
 .tax-dropdown-wrapper.featherlight-inner,
 .add-payment-form.featherlight-inner {
     padding: 10px;
-    width: 100%;
 }
 .add-payment-form.featherlight-inner,
 .categories-checkboxes.featherlight-inner {
