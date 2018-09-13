@@ -676,9 +676,6 @@ body.manufacturers.detail .imprint {
     padding: 5px;
     padding-bottom: 0px;
 }
-.box p:last-of-type {
-    padding-bottom: 5px;
-}
 #cart {
     min-height: 150px;
 }
@@ -724,7 +721,8 @@ body.carts.detail #load-last-order-details,
 }
 .cart p.products {
     display: none;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
     max-height: 410px;
     min-height: 34px;
     overflow-y: auto;
@@ -780,6 +778,9 @@ body.carts.detail #load-last-order-details,
 }
 #cart a.btn {
     width: 100%;
+}
+#cart a.btn.btn-success {
+    margin-bottom: 5px;
 }
 #cart .tmp-wrapper {
     display: none;
