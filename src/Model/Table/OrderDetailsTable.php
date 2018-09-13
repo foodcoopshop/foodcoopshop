@@ -445,7 +445,7 @@ class OrderDetailsTable extends AppTable
         return $preparedOrderDetails;
     }
 
-    public function getOrderDetailParams($appAuth, $manufacturerId, $productId, $customerId, $orderState, $pickupDay, $orderDetailId, $deposit)
+    public function getOrderDetailParams($appAuth, $manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit)
     {
         $conditions = [];
 
@@ -454,10 +454,6 @@ class OrderDetailsTable extends AppTable
             $conditions[] = 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[1]) . '\'';
         } else {
             $conditions[] = 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') = \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]) . '\'';
-        }
-
-        if ($orderState != '') {
-            $conditions[] = $this->getOrderStateCondition($orderState);
         }
 
         if ($productId != '') {

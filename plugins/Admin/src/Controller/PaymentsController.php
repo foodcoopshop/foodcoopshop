@@ -607,7 +607,7 @@ class PaymentsController extends AdminAppController
                             __d('admin', 'Orders') . ' ' . Configure::read('app.timeHelper')->getMonthName($monthAndYear[1]) . ' ' . $monthAndYear[0],
                             '/admin/order-details/?pickupDay[]=' . $frozenDateFrom->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
                             '&pickupDay[]=' . $frozenDateTo->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . 
-                            '&customerId=' . $this->getCustomerId() . '&orderStates[]=' . join(',', Configure::read('app.htmlHelper')->getOrderStatesCashless()),
+                            '&customerId=' . $this->getCustomerId()),
                             [
                                 'title' => __d('admin', 'Show_order')
                             ]
