@@ -165,9 +165,6 @@ class ProductsTable extends AppTable
                 case '1':
                     $ordinal = 'first';
                     break;
-                case '2':
-                    $ordinal = 'second';
-                    break;
                 case '0':
                     $ordinal = 'last';
                     break;
@@ -176,6 +173,8 @@ class ProductsTable extends AppTable
             $nthDeliveryDayOfThisMonth = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($currentDay . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
             if ($nthDeliveryDayOfThisMonth < $pickupDay) {
                 $pickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($currentDay . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of next month'));
+            } else {
+                $pickupDay = $nthDeliveryDayOfThisMonth;
             }
         }
         

@@ -109,12 +109,12 @@ class ProductsTableTest extends AppCakeTestCase
                 'product' => $this->Product->newEntity(
                     [
                         'delivery_rhythm_type' => 'month',
-                        'delivery_rhythm_count' => '2',
+                        'delivery_rhythm_count' => '0',
                         'is_stock_product' => '0',
                     ]
                 ),
-                'currentDay' => '2018-08-07',
-                'result' => '2018-08-10'
+                'currentDay' => '2018-09-13',
+                'result' => '2018-09-28'
             ],
             [
                 'product' => $this->Product->newEntity(
@@ -125,7 +125,7 @@ class ProductsTableTest extends AppCakeTestCase
                     ]
                 ),
                 'currentDay' => '2018-08-07',
-                'result' => '2018-08-10'
+                'result' => '2018-08-31'
             ],
             [
                 'product' => $this->Product->newEntity(
