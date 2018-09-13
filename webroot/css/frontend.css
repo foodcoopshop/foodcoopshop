@@ -821,7 +821,7 @@ body.carts.detail .cart:not(#cart) a.btn {
 }
 #CartsDetailForm {
     float: left;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 #CartsDetailForm .input.checkbox,
 #RegistrationForm .input.checkbox {

@@ -44,6 +44,12 @@ if (!$appAuth->termsOfUseAccepted()) {
     <?php if (!empty($appAuth->Cart->getProducts())) { ?>
         <p class="tax-sum-wrapper"><?php echo __('Including_vat'); ?>: <span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
 
+        <?php if ($appAuth->Cart->getProductsWithUnitCount() > 0) { ?>
+            <p>
+            	<?php echo __('The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly.'); ?>
+            </p>
+        <?php } ?>
+
         <?php
             echo $this->Form->create($cart, [
                 'class' => 'fcs-form',
@@ -54,7 +60,7 @@ if (!$appAuth->termsOfUseAccepted()) {
             echo $this->element('cart/variableMemberFeeInfoText');
         ?>
 
-        <p style="margin-top: 20px;">
+        <p style="margin-top:10px;">
         	<?php echo __('To_finish_order_click_here.'); ?> 
         	<?php echo $this->element('cart/paymentInfoText'); ?>
         </p>
