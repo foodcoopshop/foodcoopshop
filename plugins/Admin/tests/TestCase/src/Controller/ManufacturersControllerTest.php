@@ -51,7 +51,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'kammer' => '',
                 'homepage' => '',
                 'short_description' => '<i>Test Description</i>',
-                'description' => '<b>Text</b>',
+                'description' => '<b>Text</b><script>alert("evil");</script>',
                 'address_manufacturer' => [
                     'firstname' => '',
                     'lastname' => '',
