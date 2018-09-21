@@ -997,7 +997,9 @@ body.carts.detail .cart:not(#cart) .btn-success.btn-order {
     padding: 5px 10px;
     margin-top: 10px;
 }
-
+#cart .future-orders {
+	padding-bottom: 5px;
+}
 .ui-front {
     z-index: 2000;
 }
