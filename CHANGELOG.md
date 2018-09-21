@@ -2,7 +2,7 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Unveröffentlicht / [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.1.2...HEAD)
+## v2.2.0 / 2018-09-21 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.1.2...v2.2.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
 * [firerain-tgz](https://github.com/firerain-tgz)
@@ -17,6 +17,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Erweiterte Lagerstandverwaltung: Hersteller und deren Ansprechpersonen werden jetzt bei geringem Lagerstand automatisch benachrichtigt. [Mehr dazu hier (ganz unten)](https://foodcoopshop.github.io/de/produkte). / [PR#261](https://github.com/foodcoopshop/foodcoopshop/pull/261) / [I#70](https://github.com/foodcoopshop/foodcoopshop/issues/70) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Bei Blogartikel von Herstellern ohne Bild wird jetzt das Hersteller Profilbild angezeigt / [PR#255](https://github.com/foodcoopshop/foodcoopshop/pull/255) / <a href="https://github.com/wintersim"><img src="https://github.com/wintersim.png" width="20"></a> / <a href="https://github.com/tantelisl"><img src="https://github.com/tantelisl.png" width="20"></a>
 - Diverse Anpassungen für das Stundenabrechnungs-Modul. / [PR#265](https://github.com/foodcoopshop/foodcoopshop/pull/265) / [I#264](https://github.com/foodcoopshop/foodcoopshop/issues/264) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Zahlreiche kleinere Optimierungen und Verbesserungen sowie Sicherheitsupdates
 
 ### Für Entwickler
 - Tabellen für die Produkt-Verwaltung sind jetzt stark vereinfacht. / [PR#247](https://github.com/foodcoopshop/foodcoopshop/pull/247) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
