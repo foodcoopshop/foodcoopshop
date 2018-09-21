@@ -121,13 +121,14 @@ class PagesController extends FrontendController
         }
         $page['children'] = $this->Page->find('children', [
             'for' => $pageId,
+            'direct' => true,
             'parentField' => 'id_parent',
             'conditions' => $conditionsForChildren,
             'order' => [
                 'Pages.position' => 'ASC',
                 'Pages.title' => 'ASC'
-                ]
-            ]);
+            ]
+        ]);
 
         $correctSlug = Configure::read('app.slugHelper')->getPageDetail($page->id_page, $page->title);
         if ($correctSlug != Configure::read('app.slugHelper')->getPageDetail($pageId, StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]))) {
