@@ -52,11 +52,6 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".PickupDay.initPickupDayCommentEditDialog('#order-details-list');"
         ]);
     }
-    if ($groupBy == 'customer') {
-        $this->element('addScript', [ 'script' =>
-            Configure::read('app.jsNamespace').".PickupDay.initChangeProductsPickedUpByCustomer('#order-details-list');"
-        ]);
-    }
     
     ?>
     

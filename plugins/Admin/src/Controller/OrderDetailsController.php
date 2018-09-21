@@ -878,10 +878,16 @@ class OrderDetailsController extends AdminAppController
             $message = __d('admin', 'Errors_while_saving!');
         }
         
+        $redirectUrl = '';
+        if (preg_match('/customerId\='.$customerIds[0].'/', $this->referer())) {
+            $redirectUrl = '/admin/order-details?pickupDay[]='.$this->getRequest()->getData('pickupDay').'&groupBy=customer';
+        }
+        
         $this->set('data', [
             'pickupDay' => $pickupDay,
             'result' => $result,
             'status' => !empty($result),
+            'redirectUrl' => $redirectUrl,
             'msg' => $message
         ]);
         
