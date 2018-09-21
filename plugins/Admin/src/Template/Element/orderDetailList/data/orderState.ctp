@@ -19,7 +19,9 @@ if ($groupBy == '') {
         $widthStyle = 'width:45px;';
     }
     echo '<td style="text-align:center;font-size:17px;'.$widthStyle.'">';
-        echo '<i title="'.$this->MyHtml->getOrderStates()[$orderDetail->order_state].'" class="fa ' . $this->MyHtml->getOrderStateFontawesomeIcon($orderDetail->order_state).'"></i>';
+        if (isset($this->MyHtml->getOrderStates()[$orderDetail->order_state])) {
+            echo '<i title="'.$this->MyHtml->getOrderStates()[$orderDetail->order_state].'" class="fa ' . $this->MyHtml->getOrderStateFontawesomeIcon($orderDetail->order_state).'"></i>';
+        }
         if (!empty($orderDetail->pickup_day_entity) && $orderDetail->pickup_day_entity->products_picked_up) {
             echo '&nbsp;<i title="'.__d('admin', 'products_picked_up').'" class="fa fa-home ok"></i>';
         }
