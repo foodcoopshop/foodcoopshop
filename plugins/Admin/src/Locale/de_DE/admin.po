@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-09-11 17:44+0200\n"
-"PO-Revision-Date: 2018-09-11 17:39+0200\n"
+"POT-Creation-Date: 2018-09-24 08:52+0200\n"
+"PO-Revision-Date: 2018-09-24 08:52+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -204,13 +204,13 @@ msgstr "Hersteller"
 msgid "Invoice_for_manufacturer_{0}_successfully_sent_to_{1}."
 msgstr "Rechnung für Hersteller {0} erfolgreich versendet an {1}."
 
-msgid "Invoice_number_abbreviataion_{1}_{2}"
+msgid "Invoice_number_abbreviataion_{0}_{1}"
 msgstr "Rechnung Nr. {0}, {1}"
 
 msgid "Order_lists_successfully_generated_for_manufacturer_{0}."
 msgstr "Bestelllisten für Hersteller {0} erfolgreich generiert."
 
-msgid "Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{0}."
+msgid "Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{1}."
 msgstr "Bestelllisten für Hersteller {0} erfolgreich generiert und an {1} versendet."
 
 msgid "Order_lists_for_the_day"

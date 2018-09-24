@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-09-11 17:44+0200\n"
-"PO-Revision-Date: 2018-09-11 17:40+0200\n"
+"POT-Creation-Date: 2018-09-24 08:52+0200\n"
+"PO-Revision-Date: 2018-09-24 08:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -204,13 +204,13 @@ msgstr "Manufacturers"
 msgid "Invoice_for_manufacturer_{0}_successfully_sent_to_{1}."
 msgstr "Invoice for manufacturer {0} successfully sent to {1}."
 
-msgid "Invoice_number_abbreviataion_{1}_{2}"
+msgid "Invoice_number_abbreviataion_{0}_{1}"
 msgstr "Invoice nº {0}, {1}"
 
 msgid "Order_lists_successfully_generated_for_manufacturer_{0}."
 msgstr "Order lists successfully generated for manufacturer {0}."
 
-msgid "Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{0}."
+msgid "Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{1}."
 msgstr "Order_lists_successfully_generated_for_manufacturer_{0} and sent to {1}."
 
 msgid "Order_lists_for_the_day"
@@ -283,7 +283,7 @@ msgid "The_pickup_day_of_your_order_was_changed_to"
 msgstr "The pickup day of your order was changed to"
 
 msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified."
-msgstr "The pickup day of {0,plural,=1{one product} other{# products}} was successfully changed to {1] and {2,plural,=1{one member was} other{# members were}} got an email."
+msgstr "The pickup day of {0,plural,=1{one product} other{# products}} was successfully changed to {1} and {2,plural,=1{one member was} other{# members were}} got an email."
 
 msgid "The_pickup_day_comment_of_{0}_was_changed:"
 msgstr "The pickup day comment {0} was changed:"
@@ -454,10 +454,10 @@ msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the
 msgstr "The product {0} from manufacturer {1} is shown as \"new\" from now on for the next {2} days."
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_deactivated."
-msgstr "The product {0} has been deactivated."
+msgstr "The product {0} of manufacturer {1} has been deactivated."
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
-msgstr "The product {0} has been activated."
+msgstr "The product {0} of manufacturer {1} has been activated."
 
 msgid "Report"
 msgstr "Report"

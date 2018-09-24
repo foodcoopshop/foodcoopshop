@@ -371,7 +371,7 @@ class ManufacturersController extends AdminAppController
                     ->setAttachments([
                         $invoicePdfFile
                     ])
-                    ->setSubject(__d('admin', 'Invoice_number_abbreviataion_{1}_{2}', [$newInvoiceNumber, $invoicePeriodMonthAndYear]))
+                    ->setSubject(__d('admin', 'Invoice_number_abbreviataion_{0}_{1}', [$newInvoiceNumber, $invoicePeriodMonthAndYear]))
                     ->setViewVars([
                     'manufacturer' => $manufacturer,
                     'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
@@ -453,7 +453,7 @@ class ManufacturersController extends AdminAppController
             $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}.', ['<b>'.$manufacturer->name.'</b>']);
 
             if ($sendEmail) {
-                $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{0}.', ['<b>'.$manufacturer->name.'</b>'. $manufacturer->address_manufacturer->email]);
+                $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{1}.', ['<b>'.$manufacturer->name.'</b>'. $manufacturer->address_manufacturer->email]);
                 $email = new AppEmail();
                 $email->setTemplate('Admin.send_order_list')
                 ->setTo($manufacturer->address_manufacturer->email)
