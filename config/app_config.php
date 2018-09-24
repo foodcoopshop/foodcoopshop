@@ -89,6 +89,9 @@ return [
          * - lastname
          */
         'customerMainNamePart' => 'firstname',
+        
+        'showManufacturerImprint' => true,
+        
 
         /**
          * id of the category "all products"
