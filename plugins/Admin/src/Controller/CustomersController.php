@@ -408,7 +408,6 @@ class CustomersController extends AdminAppController
             )
         );
 
-        $statusText = 'deaktiviert';
         $message = __d('admin', 'The_member_{0}_has_been_deactivated_succesfully.', ['<b>' . $customer->name . '</b>']);
         $actionLogType = 'customer_set_inactive';
         if ($status) {
@@ -429,7 +428,9 @@ class CustomersController extends AdminAppController
                 'newPassword' => $newPassword
                 ]);
 
-            $email->addAttachments([__d('admin', 'Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf($customer), 'mimetype' => 'application/pdf']]);
+            if (Configure::read('app.termsOfUseEnabled')) {
+                $email->addAttachments([__d('admin', 'Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf($customer), 'mimetype' => 'application/pdf']]);
+            }
             $email->send();
 
             $message = __d('admin', 'The_member_{0}_has_been_activated_succesfully_and_the_member_was_notified_by_email.', ['<b>' . $customer->name . '</b>']);
