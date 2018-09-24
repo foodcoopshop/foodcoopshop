@@ -89,9 +89,11 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
             ?>
         </p></td></tr>
         
-        <tr><td style="font-size:12px;">
-        	<?php echo __('You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation.'); ?>
-        </td></tr>
+        <?php if (Configure::read('app.generalTermsAndConditionsEnabled') && Configure::read('app.rightOfWithdrawalEnabled')) { ?>
+            <tr><td style="font-size:12px;">
+            	<?php echo __('You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation.'); ?>
+            </td></tr>
+        <?php } ?>
         
     </tbody>
 <?php echo $this->element('email/tableFoot'); ?>
