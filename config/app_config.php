@@ -91,9 +91,12 @@ return [
         'customerMainNamePart' => 'firstname',
         
         'showManufacturerImprint' => true,
-        'addAttachmentsToOrderConfirmationEmail' => true,
         'termsOfUseEnabled' => true,
-
+        'generalTermsAndConditionsEnabled' => true,
+        'rightOfWithdrawalEnabled' => true,
+        'promiseToPickUpProductsCheckboxEnabled' => false,
+        'showPaymentInfoText' => true,
+        
         /**
          * id of the category "all products"
          */

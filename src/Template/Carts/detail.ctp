@@ -60,16 +60,19 @@ if (!$appAuth->termsOfUseAccepted()) {
             echo $this->element('cart/variableMemberFeeInfoText');
         ?>
 
-        <p style="margin-top:10px;">
-        	<?php echo __('To_finish_order_click_here.'); ?> 
-        	<?php echo $this->element('cart/paymentInfoText'); ?>
-        </p>
+		<?php if (Configure::read('app.showPaymentInfoText')) { ?>
+            <p style="margin-top:10px;">
+            	<?php echo __('To_finish_order_click_here.'); ?> 
+            	<?php echo $this->element('cart/paymentInfoText'); ?>
+            </p>
+        <?php } ?>
          
         <?php echo $this->element('cart/pickupPlaceInfoText'); ?>
     
     	<?php
             echo $this->element('cart/generalTermsOfUseCheckbox');
             echo $this->element('cart/cancellationTermsCheckbox');
+            echo $this->element('cart/promiseToPickupProductsCheckbox');
         ?>
         <div class="sc"></div>
         

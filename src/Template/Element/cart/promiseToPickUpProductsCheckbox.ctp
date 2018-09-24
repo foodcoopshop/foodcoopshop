@@ -6,7 +6,7 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 2.2.0
+ * @since         FoodCoopShop 2.3.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -14,20 +14,14 @@
  */
 
 use Cake\Core\Configure;
-use Cake\I18n\I18n;
 
-if (!Configure::read('app.rightOfWithdrawalEnabled')) {
+if (!Configure::read('app.promiseToPickUpProductsCheckboxEnabled')) {
     return false;
 }
 
-echo '<div id="cancellation-terms" class="featherlight-overlay">';
-    echo $this->element('legal/'.I18n::getLocale().'/rightOfWithdrawalTerms');
-echo '</div>';
-$cancellationTermsLink = '<a href="#cancellation-terms">'.__('right_of_withdrawal').'</a>';
-echo $this->Form->control('Carts.cancellation_terms_accepted', [
-    'label' => __('I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods.', [$cancellationTermsLink]),
+echo $this->Form->control('Carts.promise_to_pickup_products', [
+    'label' => __('I_promise_to_pick_up_the_products_on_the_selected_pickup_day_and_to_pay_in_cash_in_the_shop.'),
     'type' => 'checkbox',
     'escape' => false
 ]);
-
 ?>
