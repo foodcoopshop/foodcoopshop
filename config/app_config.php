@@ -91,7 +91,8 @@ return [
         'customerMainNamePart' => 'firstname',
         
         'showManufacturerImprint' => true,
-        
+        'addAttachmentsToOrderConfirmationEmail' => true,
+        'termsOfUseEnabled' => true,
 
         /**
          * id of the category "all products"

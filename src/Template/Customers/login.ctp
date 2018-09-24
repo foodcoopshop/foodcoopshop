@@ -98,16 +98,17 @@ $this->element('addScript', ['script' =>
                       echo $this->Form->control('Customers.email_order_reminder', ['label' => __('Want_to_receive_reminder_emails?'), 'type' => 'checkbox']);
                   }
 
-                  echo '<div id="terms-of-use" class="featherlight-overlay">';
-                    echo $this->element('legal/'.I18n::getLocale().'/termsOfUse');
-                  echo '</div>';
-                  $termsOfUseLink = '<a href="#terms-of-use">'.__('terms_of_use').'</a>';
-                  echo $this->Form->control('Customers.terms_of_use_accepted_date_checkbox', [
-                      'label' => __('I_accept_the_{0}', [$termsOfUseLink]),
-                      'type' => 'checkbox',
-                      'escape' => false
-                  ]);
-
+                  if (Configure::read('app.termsOfUseEnabled')) {
+                      echo '<div id="terms-of-use" class="featherlight-overlay">';
+                        echo $this->element('legal/'.I18n::getLocale().'/termsOfUse');
+                      echo '</div>';
+                      $termsOfUseLink = '<a href="#terms-of-use">'.__('terms_of_use').'</a>';
+                      echo $this->Form->control('Customers.terms_of_use_accepted_date_checkbox', [
+                          'label' => __('I_accept_the_{0}', [$termsOfUseLink]),
+                          'type' => 'checkbox',
+                          'escape' => false
+                      ]);
+                  }
                 ?>
               
               <div class="sc"></div>
