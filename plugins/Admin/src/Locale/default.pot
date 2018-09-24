@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-24 08:52+0200\n"
+"POT-Creation-Date: 2018-09-24 11:05+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1616,6 +1616,9 @@ msgstr ""
 msgid "Settings_abbreviation"
 msgstr ""
 
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr ""
+
 msgid "Show_all_products_from_{0}"
 msgstr ""
 
@@ -1848,9 +1851,6 @@ msgid "Show_product"
 msgstr ""
 
 msgid "Show_manufacturer"
-msgstr ""
-
-msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr ""
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
