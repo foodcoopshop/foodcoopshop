@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-09-24 08:52+0200\n"
-"PO-Revision-Date: 2018-09-24 08:58+0200\n"
+"POT-Creation-Date: 2018-09-24 11:05+0200\n"
+"PO-Revision-Date: 2018-09-24 11:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1617,6 +1617,9 @@ msgstr "Oo"
 msgid "Settings_abbreviation"
 msgstr "Set."
 
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr "{0,plural,=1{product} other{# products}}"
+
 msgid "Show_all_products_from_{0}"
 msgstr "Show all products from {0}"
 
@@ -1850,9 +1853,6 @@ msgstr "Show product"
 
 msgid "Show_manufacturer"
 msgstr "Show manufacturer"
-
-msgid "{0,plural,=1{1_product} other{#_products}}"
-msgstr "{0,plural,=1{record} other{records}}"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."

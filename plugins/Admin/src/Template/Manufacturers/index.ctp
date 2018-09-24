@@ -125,7 +125,7 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td style="width:140px;">';
     $sumProductCount += $manufacturer->product_count;
-    $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->product_count]);
+    $productString = __d('admin', '{0,plural,=1{1_product} other{#_products}}', [$manufacturer->product_count]);
     echo $this->Html->getJqueryUiIcon(
         $this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . str_replace(' ', '&nbsp;', $productString),
         [

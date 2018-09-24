@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-12 15:03+0200\n"
-"PO-Revision-Date: 2018-09-12 15:05+0200\n"
+"POT-Creation-Date: 2018-09-24 11:05+0200\n"
+"PO-Revision-Date: 2018-09-24 11:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1470,6 +1470,9 @@ msgstr "From which in"
 msgid "Including_vat"
 msgstr "Included VAT"
 
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
 msgid "To_finish_order_click_here."
 msgstr "To finish your order please click the button below."
 
@@ -1766,9 +1769,6 @@ msgstr "You can sign in and change your password here"
 
 msgid "thank_you_for_your_order_from_{0}."
 msgstr "thank you for order from {0}."
-
-msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
-msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
 
 msgid "The_amount_was_reduced_from_your_credit_balance."
 msgstr "The amount was reduced from your credit balance."
