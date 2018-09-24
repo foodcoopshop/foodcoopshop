@@ -72,7 +72,7 @@ if (!$appAuth->termsOfUseAccepted()) {
     	<?php
             echo $this->element('cart/generalTermsOfUseCheckbox');
             echo $this->element('cart/cancellationTermsCheckbox');
-            echo $this->element('cart/promiseToPickupProductsCheckbox');
+            echo $this->element('cart/promiseToPickUpProductsCheckbox');
         ?>
         <div class="sc"></div>
         
