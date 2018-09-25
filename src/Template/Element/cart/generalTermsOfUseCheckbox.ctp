@@ -13,7 +13,12 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
 use Cake\I18n\I18n;
+
+if (!Configure::read('app.generalTermsAndConditionsEnabled')) {
+    return false;
+}
 
 echo '<div id="general-terms-and-conditions" class="featherlight-overlay">';
     echo $this->element('legal/'.I18n::getLocale().'/generalTermsAndConditions');

@@ -18,6 +18,7 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use Cake\Core\Configure;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\Routing\Route\DashedRoute;
@@ -53,7 +54,9 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/'.__('route_registration'), ['controller' => 'Customers', 'action' => 'login']);
     $routes->connect('/'.__('route_registration_successful'), ['controller' => 'Customers', 'action' => 'registrationSuccessful']);
     $routes->connect('/'.__('route_information_about_right_of_withdrawal'), ['controller' => 'Carts', 'action' => 'generateRightOfWithdrawalInformationPdf']);
-    $routes->connect('/'.__('route_terms_of_use'), ['controller' => 'Pages', 'action' => 'termsOfUse']);
+    if (Configure::read('app.termsOfUseEnabled')) {
+        $routes->connect('/'.__('route_terms_of_use'), ['controller' => 'Pages', 'action' => 'termsOfUse']);
+    }
     $routes->connect('/'.__('route_privacy_policy'), ['controller' => 'Pages', 'action' => 'privacyPolicy']);
     $routes->connect('/'.__('route_list_of_allergens'), ['controller' => 'Pages', 'action' => 'listOfAllergens']);
     $routes->connect('/'.__('route_accept_terms_of_use'), ['controller' => 'Customers', 'action' => 'acceptUpdatedTermsOfUse']);

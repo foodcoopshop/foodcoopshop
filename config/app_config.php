@@ -89,7 +89,14 @@ return [
          * - lastname
          */
         'customerMainNamePart' => 'firstname',
-
+        
+        'showManufacturerImprint' => true,
+        'termsOfUseEnabled' => true,
+        'generalTermsAndConditionsEnabled' => true,
+        'rightOfWithdrawalEnabled' => true,
+        'promiseToPickUpProductsCheckboxEnabled' => false,
+        'showPaymentInfoText' => true,
+        
         /**
          * id of the category "all products"
          */

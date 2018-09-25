@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-24 11:05+0200\n"
-"PO-Revision-Date: 2018-09-24 11:05+0200\n"
+"POT-Creation-Date: 2018-09-24 11:59+0200\n"
+"PO-Revision-Date: 2018-09-24 12:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1200,6 +1200,9 @@ msgstr "Please accept the information about the right of withdrawal."
 msgid "Please_accept_the_general_terms_and_conditions."
 msgstr "Please accept the general terms and conditions."
 
+msgid "Please_promise_to_pick_up_the_ordered_products."
+msgstr "Please promise to pick up the ordered products."
+
 msgid "offline"
 msgstr "offline"
 
@@ -1676,6 +1679,9 @@ msgstr "Your message will be shown next to your order in the admin panel. Manufa
 
 msgid "Pickup_place:_{0}"
 msgstr "Pickup place: {0}"
+
+msgid "I_promise_to_pick_up_the_products_on_the_selected_pickup_day_and_to_pay_in_cash_in_the_shop."
+msgstr "I promise to pick up the products on the selected pickup day and I will pay in cash in the shop."
 
 msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
 msgstr "How much of it do I want to pay in {0}?"

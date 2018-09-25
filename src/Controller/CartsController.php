@@ -246,10 +246,14 @@ class CartsController extends FrontendController
                 'originalLoggedCustomer' => $this->getRequest()->getSession()->check('Auth.originalLoggedCustomer') ? $this->getRequest()->getSession()->read('Auth.originalLoggedCustomer') : null
             ]);
 
-            $email->addAttachments([__('Filename_Right-of-withdrawal-information-and-form').'.pdf' => ['data' => $this->generateRightOfWithdrawalInformationAndForm($cart, $products), 'mimetype' => 'application/pdf']]);
+            if (Configure::read('app.rightOfWithdrawalEnabled')) {
+                $email->addAttachments([__('Filename_Right-of-withdrawal-information-and-form').'.pdf' => ['data' => $this->generateRightOfWithdrawalInformationAndForm($cart, $products), 'mimetype' => 'application/pdf']]);
+            }
             $email->addAttachments([__('Filename_Order-confirmation').'.pdf' => ['data' => $this->generateOrderConfirmation($cart), 'mimetype' => 'application/pdf']]);
-            $email->addAttachments([__('Filename_General-terms-and-conditions').'.pdf' => ['data' => $this->generateGeneralTermsAndConditions(), 'mimetype' => 'application/pdf']]);
-
+            if (Configure::read('app.generalTermsAndConditionsEnabled')) {
+                $email->addAttachments([__('Filename_General-terms-and-conditions').'.pdf' => ['data' => $this->generateGeneralTermsAndConditions(), 'mimetype' => 'application/pdf']]);
+            }
+            
             $email->send();
         }
     }

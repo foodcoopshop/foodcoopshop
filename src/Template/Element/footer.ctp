@@ -19,7 +19,9 @@ use Cake\Core\Configure;
 <div class="first-column">
     <?php
         $menu = $this->Menu->buildPageMenu($pagesForFooter);
-        $menu[] = ['name' => __('Terms_of_use'), 'slug' => $this->Slug->getTermsOfUse()];
+        if (Configure::read('app.termsOfUseEnabled')) {
+            $menu[] = ['name' => __('Terms_of_use'), 'slug' => $this->Slug->getTermsOfUse()];
+        }
         $menu[] = ['name' => __('Privacy_policy'), 'slug' => $this->Slug->getPrivacyPolicy()];
         $menu[] = ['name' => __('List_of_allergens'), 'slug' => $this->Slug->getListOfAllergens()];
         echo '<h2>'.__('Information').'</h2>';

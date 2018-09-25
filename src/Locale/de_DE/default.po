@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-24 11:05+0200\n"
-"PO-Revision-Date: 2018-09-24 11:05+0200\n"
+"POT-Creation-Date: 2018-09-24 11:59+0200\n"
+"PO-Revision-Date: 2018-09-24 12:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1200,6 +1200,9 @@ msgstr "Bitte akzeptiere die Information über das Rücktrittsrecht und dessen A
 msgid "Please_accept_the_general_terms_and_conditions."
 msgstr "Bitte akzeptiere die AGB."
 
+msgid "Please_promise_to_pick_up_the_ordered_products."
+msgstr "Bitte verspreche, die bestellten Produkte abzuholen und bei der Abholung bar zu bezahlen."
+
 msgid "offline"
 msgstr "offline"
 
@@ -1676,6 +1679,9 @@ msgstr "Deine Nachricht wird bei deiner Bestellung im Admin-Bereich angezeigt. D
 
 msgid "Pickup_place:_{0}"
 msgstr "Abholort: {0}"
+
+msgid "I_promise_to_pick_up_the_products_on_the_selected_pickup_day_and_to_pay_in_cash_in_the_shop."
+msgstr "Ich verspreche die Produkte am gebuchten Abholtag abzuholen und zahle den Betrag bar an der Kassa im Laden."
 
 msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
 msgstr "Wieviel davon möchtest du in {0} bezahlen?"
