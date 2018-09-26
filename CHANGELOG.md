@@ -2,6 +2,15 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+## v2.2.1 / 2018-09-26 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.2.0...v2.2.1)
+
+### Herzlichen Dank an alle beteiligten Personen
+* [mrothauer](https://github.com/mrothauer)
+
+### Bugfixes
+- Zahlreiche kleinere Bugfixes
+
+
 ## v2.2.0 / 2018-09-21 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.1.2...v2.2.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
