@@ -459,7 +459,7 @@ class CustomersTable extends AppTable
                     $offlineCustomers[$customer->$index] = $userNameForDropdown;
                 } else {
                     if (! $includeManufacturers) {
-                        if (empty($customer->valid_orders)) {
+                        if (empty($customer->valid_order_details)) {
                             $notYetOrderedCustomers[$customer->$index] = $userNameForDropdown;
                         } else {
                             $onlineCustomers[$customer->$index] = $userNameForDropdown;
