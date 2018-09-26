@@ -14,7 +14,7 @@
  */
 return [
     'DateFormat' => [
-        'DateShort' => 'MM/dd//yy',
+        'DateShort' => 'MM/dd/yy',
         'DateLong2' => 'MM/dd/yyyy',
         'DateNTimeShort' => 'MM/dd/y HH:mm',
         'DateNTimeShort2' => 'MM/dd/yy HH:mm',
