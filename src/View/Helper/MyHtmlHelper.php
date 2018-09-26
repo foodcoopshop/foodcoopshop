@@ -186,6 +186,10 @@ class MyHtmlHelper extends HtmlHelper
             }
         }
         
+        if (empty($formattedAndCleanedDeliveryDays)) {
+            return $result;
+        }
+        
         $csvNoDeliveryDays = join(', ', $formattedAndCleanedDeliveryDays);
         
         if (!$long) {
