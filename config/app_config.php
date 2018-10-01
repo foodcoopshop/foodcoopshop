@@ -33,7 +33,6 @@ define('CUSTOMER_GROUP_MEMBER', 3);
 define('CUSTOMER_GROUP_ADMIN', 4);
 define('CUSTOMER_GROUP_SUPERADMIN', 5);
 
-define('PASSWORD_REGEX', '/^([^\\s]){8,32}$/');
 define('PHONE_REGEX', '/^[0-9 ()+-\/]{7,20}$/');
 define('ZIP_REGEX', '/^[0-9]{4,5}$/');
 define('IBAN_REGEX', '/^([a-zA-Z]\s?){2}(([0-9]){18}|([0-9]){22})$/'); // austria and germany supported
