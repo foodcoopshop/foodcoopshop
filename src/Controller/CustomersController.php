@@ -187,6 +187,7 @@ class CustomersController extends FrontendController
         /**
          * login start
          */
+        $ph = new DefaultPasswordHasher();
         if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
             if ($this->AppAuth->user()) {
                 $this->Flash->error(__('You_are_already_signed_in.'));
@@ -210,7 +211,6 @@ class CustomersController extends FrontendController
                 }
 
                 if (!empty($this->getRequest()->getData('remember_me')) && $this->getRequest()->getData('remember_me')) {
-                    $ph = new DefaultPasswordHasher();
                     $cookie = (new Cookie('remember_me'))
                     ->withValue(
                         [
@@ -234,7 +234,8 @@ class CustomersController extends FrontendController
                 'Customers' => [
                     'active' => Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE'),
                     'id_default_group' => Configure::read('appDb.FCS_CUSTOMER_GROUP'),
-                    'terms_of_use_accepted_date' => Date::now()
+                    'terms_of_use_accepted_date' => Date::now(),
+                    'passwd' => $ph->hash($newPassword)
                 ]
             ]
         );
