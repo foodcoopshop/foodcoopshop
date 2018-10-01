@@ -82,7 +82,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
         
         $this->assertEmailLogs(
             $emailLogs[3],
-            'Rechnungen für August 2018 wurden verschickt',
+            'wurden verschickt',
             [
                 'excludeCreatedLastMonth=1',
             ],
@@ -107,7 +107,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
         
         $this->assertEmailLogs(
             $emailLogs[4],
-            'Rechnungen für August 2018 wurden verschickt',
+            'wurden verschickt',
             [
                 'pickupDay[]=28.02.2018&groupBy=manufacturer</a>', // assures that excludeCreatedLastMonth=1 is not existing
             ],
