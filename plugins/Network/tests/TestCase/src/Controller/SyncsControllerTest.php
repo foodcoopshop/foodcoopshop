@@ -32,7 +32,7 @@ class SyncsControllerTest extends AppCakeTestCase
 
     public function testDenyAccessIfVariableMemberFeeEnabled()
     {
-        $this->loginAsVegetableManufacturer();
+        $this->loginAsMeatManufacturer();
         $this->browser->get($this->Network->getSyncProducts());
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
