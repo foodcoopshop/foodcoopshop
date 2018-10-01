@@ -162,7 +162,7 @@ CREATE TABLE `fcs_customer` (
   `firstname` varchar(32) NOT NULL DEFAULT '',
   `lastname` varchar(32) NOT NULL DEFAULT '',
   `email` varchar(128) NOT NULL DEFAULT '',
-  `passwd` varchar(32) NOT NULL DEFAULT '',
+  `passwd` char(60) NOT NULL DEFAULT '',
   `change_password_code` varchar(12) DEFAULT NULL,
   `email_order_reminder` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `terms_of_use_accepted_date` date NOT NULL DEFAULT '1000-01-01',

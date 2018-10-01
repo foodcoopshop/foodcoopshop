@@ -1,11 +1,11 @@
 <?php
 namespace App\Test\TestCase;
 
-use App\Auth\AppPasswordHasher;
 use App\Lib\SimpleBrowser\AppSimpleBrowser;
 use App\View\Helper\MyHtmlHelper;
 use App\View\Helper\MyTimeHelper;
 use App\View\Helper\SlugHelper;
+use Cake\Auth\DefaultPasswordHasher;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Filesystem\File;
@@ -104,7 +104,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->importDump($this->testDumpDir . 'test-db-data.sql');
 
         // regenerate password hashes
-        $ph = new AppPasswordHasher();
+        $ph = new DefaultPasswordHasher();
         $query = 'UPDATE fcs_customer SET passwd = :passwd;';
         $params = [
             'passwd' => $ph->hash(Configure::read('test.loginPassword'))

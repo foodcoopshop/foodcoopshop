@@ -1,8 +1,8 @@
 <?php
 namespace Admin\Controller;
 
-use App\Auth\AppPasswordHasher;
 use App\Mailer\AppEmail;
+use Cake\Auth\DefaultPasswordHasher;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Datasource\Exception\RecordNotFoundException;
@@ -133,7 +133,7 @@ class CustomersController extends AdminAppController
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('customer', $customer);
         } else {
-            $ph = new AppPasswordHasher();
+            $ph = new DefaultPasswordHasher();
             $this->Customer->save(
                 $this->Customer->patchEntity(
                     $customer,

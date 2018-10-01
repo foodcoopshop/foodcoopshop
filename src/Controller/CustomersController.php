@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Auth\AppPasswordHasher;
 use App\Controller\Component\StringComponent;
 use App\Mailer\AppEmail;
+use Cake\Auth\DefaultPasswordHasher;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
@@ -187,22 +187,30 @@ class CustomersController extends FrontendController
         /**
          * login start
          */
+        $ph = new DefaultPasswordHasher();
         if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
             if ($this->AppAuth->user()) {
                 $this->Flash->error(__('You_are_already_signed_in.'));
             }
 
             if ($this->getRequest()->is('post')) {
-                $user = $this->AppAuth->identify();
-                if ($user) {
-                    $this->AppAuth->setUser($user);
+                $customer = $this->AppAuth->identify();
+                if ($customer) {
+                    $this->AppAuth->setUser($customer);
+                    // change weak hash to strong hash
+                    if ($this->AppAuth->authenticationProvider()->needsPasswordRehash()) {
+                        $ph = new DefaultPasswordHasher();
+                        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+                        $customer = $this->Customer->get($this->AppAuth->getUserId());
+                        $entity = $this->Customer->patchEntity($customer, ['passwd' => $ph->hash($this->request->getData('passwd'))]);
+                        $this->Customer->save($entity);
+                    }
                     $this->redirect($this->AppAuth->redirectUrl());
                 } else {
                     $this->Flash->error(__('Signing_in_failed_account_inactive_or_password_wrong?'));
                 }
 
                 if (!empty($this->getRequest()->getData('remember_me')) && $this->getRequest()->getData('remember_me')) {
-                    $ph = new AppPasswordHasher();
                     $cookie = (new Cookie('remember_me'))
                     ->withValue(
                         [
@@ -220,7 +228,6 @@ class CustomersController extends FrontendController
          * registration start
          */
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
-        $ph = new AppPasswordHasher();
         $newPassword = StringComponent::createRandomString(12);
         $customer = $this->Customer->newEntity(
             [

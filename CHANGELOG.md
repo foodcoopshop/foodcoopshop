@@ -2,6 +2,15 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+## Noch nicht veröffentlicht
+
+### Herzlichen Dank an alle beteiligten Personen
+* [mrothauer](https://github.com/mrothauer)
+
+### Für Entwickler
+- Verwenden des Default-Passwort-Hashings von CakePHP3. / [PR#269](https://github.com/foodcoopshop/foodcoopshop/pull/269) / [I#268](https://github.com/foodcoopshop/foodcoopshop/issues/268) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+
 ## v2.2.1 / 2018-09-26 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.2.0...v2.2.1)
 
 ### Herzlichen Dank an alle beteiligten Personen
