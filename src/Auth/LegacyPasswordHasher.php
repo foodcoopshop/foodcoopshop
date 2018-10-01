@@ -3,12 +3,12 @@
 namespace App\Auth;
 
 use Cake\Core\Configure;
-
-use Cake\Auth\AbstractPasswordHasher;
+use Cake\Auth\WeakPasswordHasher;
 
 /**
- * AppPasswordHasher
- *
+ * 
+ * Legacy Password Hasher for CakePHP2 - can be removed in v3
+ * 
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -21,7 +21,7 @@ use Cake\Auth\AbstractPasswordHasher;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class AppPasswordHasher extends AbstractPasswordHasher
+class LegacyPasswordHasher extends WeakPasswordHasher
 {
 
     public function hash($password)

@@ -8,8 +8,6 @@ use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 
 /**
- * CartComponent
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -54,7 +52,11 @@ class AppController extends Controller
                         'password' => 'passwd'
                     ],
                     'passwordHasher' => [
-                        'className' => 'App'
+                        'className' => 'Fallback',
+                        'hashers' => [
+                            'Default',
+                            'Legacy'
+                        ]
                     ],
                     'finder' => 'auth' // CustomersTable::findAuth
                 ]

@@ -65,6 +65,7 @@ return [
     'app' => [
         /**
          * please create a unique cookie key and put it here
+         * can be removed in v3
          */
         'cookieKey' => '',
 

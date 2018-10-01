@@ -6,8 +6,6 @@ use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\I18n\FrozenDate;
-use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Security;
 
@@ -58,6 +56,7 @@ class PagesController extends FrontendController
          */
         $securityErrors = 0;
         if (Configure::read('app.cookieKey') == '') {
+            // can be removed in v3
             echo '<p>Please copy this <b>app.cookieKey</b> to your custom_config.php: '.StringComponent::createRandomString(58).'</p>';
             $securityErrors++;
         }

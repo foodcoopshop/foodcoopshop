@@ -35,4 +35,5 @@ class Customer extends Entity
         }
         return $virtualNameFields;
     }
+    
 }
