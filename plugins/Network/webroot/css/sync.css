@@ -194,8 +194,9 @@ body.syncs.product_data table.product-list {
   width: 650px;
 }
 
-body.syncs.product_data i.description {
-  padding-left: 5px;
+body.syncs.product_data table.product-list td.image img {
+  width: 50px;
+  height: auto;
 }
 
 body.syncs.product_data table.product-list td.quantity, body.syncs.product_data table.product-list td.price,
@@ -224,22 +225,22 @@ body.syncs.product_data table.product-list tr.horizontal-checkboxes.error,
   background-color: #f3515c;
 }
 /* additional info in horizontal checkboxes */
-body.syncs.product_data table.product-list tr:nth-of-type(2) td:nth-of-type(2) input {
+body.syncs.product_data table.product-list tr:nth-of-type(2) td:nth-of-type(3) input {
   float: left;
   margin-bottom: 4px;
 }
 
-body.syncs.product_data table.product-list tr:nth-of-type(2) td:nth-of-type(2) span,
-body.syncs.product_data table.product-list tr:nth-of-type(1) th:nth-of-type(2) span {
+body.syncs.product_data table.product-list tr:nth-of-type(2) td:nth-of-type(3) span,
+body.syncs.product_data table.product-list tr:nth-of-type(1) th:nth-of-type(3) span {
   float: left;
   font-size: 11px;
   padding-left: 5px;
   padding-top: 4px;
 }
-body.syncs.product_data table.product-list tr:nth-of-type(1) th:nth-of-type(2) span {
+body.syncs.product_data table.product-list tr:nth-of-type(1) th:nth-of-type(3) span {
   padding-top: 5px;
 }
-body.syncs.product_data table.product-list tr.error:nth-of-type(2) td:nth-of-type(2) span {
+body.syncs.product_data table.product-list tr.error:nth-of-type(2) td:nth-of-type(3) span {
   color: #fff;
 }
 body.syncs.product_data span.toggle-clean-rows {

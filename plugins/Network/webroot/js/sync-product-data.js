@@ -27,6 +27,12 @@ foodcoopshop.SyncProductData = {
 
     implementedSyncAttributes : [
         {
+            name: 'image',
+            label: 'Bild',
+            data: 'image.src',
+            column: 2
+        },
+        {
             name: 'name',
             label: 'Name',
             additionalInfo: 'Name, Einheit, Beschreibungen, Produkt-Deklaration',
@@ -37,31 +43,31 @@ foodcoopshop.SyncProductData = {
                 description_short: 'description_short',
                 is_declaration_ok: 'is_declaration_ok'
             },
-            column: 2
+            column: 3
         },
         {
             name: 'quantity',
             label: 'Anzahl',
             data: 'stock_available.quantity',
-            column: 3
+            column: 4
         },
         {
             name: 'price',
             label: 'Preis',
             data: 'gross_price',
-            column: 4
+            column: 5
         },
         {
             name: 'deposit',
             label: 'Pfand',
             data: 'deposit',
-            column: 5
+            column: 6
         },
         {
             name: 'active',
             label: 'Status',
             data: 'active',
-            column: 6
+            column: 7
         }
     ],
 
@@ -82,7 +88,7 @@ foodcoopshop.SyncProductData = {
     },
 
     getProductTableHeadElements : function () {
-        return  ['<input type="checkbox" id="row-marker-all" />', '<span class="name">Name</span><span class="toggle-clean-rows">nur Produkte mit Abweichungen anzeigen</span><input type="checkbox" checked="checked" id="toggle-clean-rows" />', 'Anzahl', 'Preis', 'Pfand', 'Status'];
+        return  ['<input type="checkbox" id="row-marker-all" />', 'Bild', '<span class="name">Name</span><span class="toggle-clean-rows">nur Produkte mit Abweichungen anzeigen</span><input type="checkbox" checked="checked" id="toggle-clean-rows" />', 'Anzahl', 'Preis', 'Pfand', 'Status'];
     },
 
     showEverythingAllrightMessage : function () {
@@ -154,6 +160,11 @@ foodcoopshop.SyncProductData = {
                 var hasAttributes = foodcoopshop.SyncProduct.hasAttributes(product);
                 var tableData = '<tr class="' + [product.row_class].join(' ') + '" data-product-id="' + product.id_product + '">';
                 tableData += '<td class="sync-checkbox"><input type="checkbox" class="row-marker" disabled="disabled" /></td>';
+                tableData += '<td class="image">';
+                    if (!isAttribute && product.image) {
+                        tableData += foodcoopshop.SyncProduct.getProductImageTag(product.image.src);
+                    }
+                tableData += '</td>';
                 tableData += '<td class="name">';
                     tableData += foodcoopshop.SyncProduct.getProductNameWithUnity(product, isAttribute, hasAttributes);
                     if (!isAttribute) {
@@ -186,15 +197,15 @@ foodcoopshop.SyncProductData = {
 
         var html = '<tr class="assigned-products" data-domain="' + syncServer + '" data-remote-product-id="' + remoteProductId + '">';
         html += '<td></td>'; // empty for checkboxes
+        html += '<td class="image"></td>';
         html += '<td class="name">';
-        html += '<span class="app-name"></span>';
-        html += '<span class="product-name">' + productName + '</span>';
+            html += '<span class="app-name"></span>';
+            html += '<span class="product-name">' + productName + '</span>';
         html += '</td>';
         html += '<td class="quantity"></td>';
         html += '<td class="price"></td>';
         html += '<td class="deposit"></td>';
         html += '<td class="active"></td>';
-        html += '</td>';
         html += '</tr>';
         return html;
     },
@@ -302,6 +313,12 @@ foodcoopshop.SyncProductData = {
                     var isAttribute = foodcoopshop.SyncProduct.isAttribute(product);
                     var hasAttributes = foodcoopshop.SyncProduct.hasAttributes(product);
 
+                    // image
+                    if (!isAttribute && product.image) {
+                        $(this).find('td.image').html(foodcoopshop.SyncProduct.getProductImageTag(product.image.src));
+//                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.quantity', product.stock_available.quantity, localProduct.stock_available.quantity, $(this), localProductRow);
+                    }
+                    
                     // name
                     var remoteProductName = foodcoopshop.SyncProduct.getProductNameWithUnity(product, isAttribute, hasAttributes);
                     

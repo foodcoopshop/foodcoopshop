@@ -25,6 +25,10 @@ foodcoopshop.SyncProduct = {
         return hasAttributes;
     },
     
+    getProductImageTag : function(src) {
+        return '<img src="' + src + '"></img>';
+    },
+    
     getIsDeclarationOkString : function(isDeclarationOk) {
         var result = '<i class="fa fa-close not-ok"></i>';
         if (isDeclarationOk) {

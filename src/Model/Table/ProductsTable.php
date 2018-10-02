@@ -699,6 +699,15 @@ class ProductsTable extends AppTable
             } else {
                 $product->deposit = 0;
             }
+            
+            // prepare base64 encode image for network plugin
+            if (!empty($product->image)) {
+                $imageFile = $_SERVER['DOCUMENT_ROOT'] . Configure::read('app.htmlHelper')->getProductImageSrc($product->image->id_image, 'thickbox');
+                $imageFile = substr($imageFile, 0, -11);
+                if ($imageFile != '') {
+                    $product->image->src = 'data:image/' . mime_content_type($imageFile) . ';base64,' . base64_encode(file_get_contents($imageFile));
+                }
+            }
 
             // show unity only for main products
             $additionalProductNameInfos = [];
