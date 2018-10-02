@@ -11,6 +11,7 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Filesystem\File;
 use Cake\ORM\TableRegistry;
 use Cake\View\View;
+use Network\View\Helper\NetworkHelper;
 
 require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 
@@ -63,6 +64,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->Slug = new SlugHelper($View);
         $this->Html = new MyHtmlHelper($View);
         $this->Time = new MyTimeHelper($View);
+        $this->Network = new NetworkHelper($View);
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');

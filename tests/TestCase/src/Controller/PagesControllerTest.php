@@ -99,6 +99,8 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getSlidersList(),
             $this->Slug->getSliderAdd(),
             $this->Slug->getSliderEdit(6),
+            $this->Network->getSyncDomainAdd(),
+            $this->Network->getSyncDomainEdit(1),
             $this->Slug->getConfigurationsList(),
             $this->Slug->getConfigurationEdit(544)
         ];
@@ -119,7 +121,9 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getManufacturerMyOptions(),
             $this->Slug->getMyDepositList(),
             $this->Slug->getManufacturerProfile(),
-            $this->Slug->getProductAdmin()
+            $this->Slug->getProductAdmin(),
+            $this->Network->getSyncProductData(),
+            $this->Network->getSyncProducts()
         ];
 
         $this->assertPagesForErrors($testUrls);
