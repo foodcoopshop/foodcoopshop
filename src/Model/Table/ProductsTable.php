@@ -5,10 +5,12 @@ namespace App\Model\Table;
 use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
+use Cake\Filesystem\Folder;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 use Cake\I18n\I18n;
+use Intervention\Image\ImageManagerStatic as Image;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -705,7 +707,7 @@ class ProductsTable extends AppTable
                 $imageFile = $_SERVER['DOCUMENT_ROOT'] . Configure::read('app.htmlHelper')->getProductImageSrc($product->image->id_image, 'thickbox');
                 $imageFile = substr($imageFile, 0, -11);
                 if ($imageFile != '' && !preg_match('/de-default-thickbox/', $imageFile)) {
-                    $product->image->src = 'data:image/' . mime_content_type($imageFile) . ';base64,' . base64_encode(file_get_contents($imageFile));
+                    $product->image->src = 'data:' . mime_content_type($imageFile) . ';base64,' . base64_encode(file_get_contents($imageFile));
                 }
             }
 
@@ -1080,6 +1082,70 @@ class ProductsTable extends AppTable
         $this->StockAvailables->setPrimaryKey($originalPrimaryKey);
 
         $this->StockAvailables->updateQuantityForMainProduct($productId);
+    }
+    
+    public function changeImage($products)
+    {
+        
+        foreach ($products as $product) {
+            $productId = key($product);
+            // add validations
+        }
+        
+        $success = false;
+        foreach ($products as $product) {
+            
+            $productId = key($product);
+            $ids = $this->getProductIdAndAttributeId($productId);
+            
+            if ($ids['attributeId'] == 0) {
+                $base64encodedImage = $product[$productId];
+                $extension = 'jpg';
+                
+                $product = $this->find('all', [
+                    'conditions' => [
+                        'Products.id_product' => $ids['productId']
+                    ],
+                    'contain' => [
+                        'Images',
+                        'Manufacturers'
+                    ]
+                ])->first();
+                
+                if (empty($product->image)) {
+                    // product does not yet have image => create the necessary record
+                    $image = $this->Product->Images->save(
+                        $this->Product->Images->newEntity(
+                            ['id_product' => $ids['productId']]
+                        )
+                    );
+                } else {
+                    $image = $product->image;
+                }
+                
+                // not (yet) implemented for attributes, only for productIds!
+                $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($image->id_image);
+                $thumbsPath = Configure::read('app.htmlHelper')->getProductThumbsPath($imageIdAsPath);
+                
+                // recursively create path
+                $dir = new Folder();
+                $dir->create($thumbsPath);
+                $dir->chmod($thumbsPath, 0755);
+                
+                foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
+                    $physicalImage = Image::make($base64encodedImage);
+                    // make portrait images smaller
+                    if ($physicalImage->getHeight() > $physicalImage->getWidth()) {
+                        $thumbSize = round($thumbSize * ($physicalImage->getWidth() / $physicalImage->getHeight()), 0);
+                    }
+                    $physicalImage->widen($thumbSize);
+                    $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . $extension;
+                    $physicalImage->save($thumbsFileName);
+                }
+            }
+        }
+        
+        return $success;
     }
 
     public function add($manufacturer)

@@ -117,6 +117,7 @@ class ApiController extends Controller
         $this->Product = TableRegistry::getTableLocator()->get('Products');
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
 
+        $products2saveForImage = [];
         $products2saveForName = [];
         $products2saveForQuantity = [];
         $products2saveForPrice = [];
@@ -146,6 +147,13 @@ class ApiController extends Controller
                 $attributes[] = $product;
             }
 
+            if (isset($product['image'])) {
+                if ($productIds['attributeId'] == 0) {
+                    $products2saveForImage[] = [
+                        $productIds['productId'] => $product['image']
+                    ];
+                }
+            }
             if (isset($product['name'])) {
                 if ($productIds['attributeId'] == 0) {
                     $products2saveForName[] = [
@@ -187,13 +195,24 @@ class ApiController extends Controller
         $syncFieldsOk = [];
         $syncFieldsError = [];
 
-        if (empty($products2saveForName) &&
+        if (empty($products2saveForImage) &&
+            empty($products2saveForName) &&
             empty($products2saveForQuantity) &&
             empty($products2saveForPrice) &&
             empty($products2saveForDeposit) &&
             empty($products2saveForStatus)) {
             $message = 'Es wurden keine Felder zum Synchronisieren angegeben.';
         } else {
+            
+            if (!empty($products2saveForImage)) {
+                $syncFieldsOk[] = 'Bild';
+                $updateStatus = $this->Product->changeImage($products2saveForImage);
+                $productIds = [];
+                foreach ($products2saveForImage as $p) {
+                    $productIds[] = key($p);
+                }
+            }
+            
             if (!empty($products2saveForName)) {
                 $syncFieldsOk[] = 'Name';
                 $updateStatus = $this->Product->changeName($products2saveForName);
