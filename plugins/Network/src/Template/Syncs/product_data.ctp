@@ -92,8 +92,6 @@ use Cake\Core\Configure;
         echo '</p>';
     ?>
     
-    <h2 class="warning">Der <b>Preis nach Gewicht (z. B. <?php echo $this->PricePerUnit->getPricePerUnitBaseInfo(6, 'kg', 1); ?>)</b> wird erst ab Herbst 2018 synchronisiert.</h2>
-    
     <h2 class="info" id="everything-allright"><b>Super!</b> Du kannst dich entspannt zurücklehen. Deine Produktdaten sind bei allen Foodcoops synchron.</h2>
     
     <div class="product-list"></div>
