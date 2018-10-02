@@ -156,7 +156,9 @@ foodcoopshop.SyncProductData = {
                 tableData += '<td class="sync-checkbox"><input type="checkbox" class="row-marker" disabled="disabled" /></td>';
                 tableData += '<td class="name">';
                     tableData += foodcoopshop.SyncProduct.getProductNameWithUnity(product, isAttribute, hasAttributes);
-                    tableData += foodcoopshop.SyncProduct.getIsDeclarationOkString(product.is_declaration_ok);
+                    if (!isAttribute) {
+                        tableData += foodcoopshop.SyncProduct.getIsDeclarationOkString(product.is_declaration_ok);
+                    }
                 tableData += '</td>';
                 tableData += '<td class="quantity">' + (isAttribute || !hasAttributes ? product.stock_available.quantity : '') + '</td>';
                 tableData += '<td class="price">' + (isAttribute || !hasAttributes ? foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.gross_price)) : '') + '</td>';
