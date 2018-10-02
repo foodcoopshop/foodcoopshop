@@ -99,27 +99,6 @@ foodcoopshop.SyncProductData = {
         this.everythingAllrightContainer.hide();
     },
 
-    cleanDescriptionField : function (field) {
-        field = $('<div/>').html(field).text(); // replace html special chars
-        field = field.replace(/\u00a0/g, ' '); // replace &nbsp; with ' '
-        field = field.replace(/(?:\r\n|\r|\n)/g, '<br />'); // replace all linefeeds (for edge)
-        field = field.replace(/"/g, '\''); // replace double quotes
-        return field;
-    },
-
-    getDescriptionsAsString : function (description_short, description) {
-        var result = '';
-        if (description_short != '') {
-            result += '<b>Kurze Beschreibung</b><br />';
-            result += '<p>' + this.cleanDescriptionField(description_short) + '</p>';
-        }
-        if (description != '') {
-            result += '<b>Beschreibung</b><br />';
-            result += '<p>' + this.cleanDescriptionField(description) + '</p>';
-        }
-        return result;
-    },
-
     bindToggleCleanRows : function () {
         $(this.toggleCleanRowsSelector).on('click', function () {
             var checked = $(foodcoopshop.SyncProductData.toggleCleanRowsSelector + ':checked').length > 0;
