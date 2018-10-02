@@ -29,6 +29,8 @@ use App\Lib\Error\Exception\InvalidParameterException;
  */
 class PaymentsController extends AdminAppController
 {
+    
+    public $customerId;
 
     public function isAuthorized($user)
     {
