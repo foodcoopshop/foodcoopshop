@@ -215,8 +215,6 @@ foodcoopshop.SyncProductData = {
         var productList = $('body .product-list');
         productList.html(productListHtml);
 
-        foodcoopshop.SyncBase.initTooltip('tr.main-product i.description');
-
         // add horizontal checkboxes
         $(foodcoopshop.SyncProductData.implementedSyncAttributes).each(function () {
             var checkboxHtml = '<input type="checkbox" data-name="' + $(this)[0].column + '"/>';
@@ -393,7 +391,6 @@ foodcoopshop.SyncProductData = {
             foodcoopshop.SyncProductData.showEverythingAllrightMessage();
         }
 
-        foodcoopshop.SyncBase.initTooltip('tr.assigned-products i.description');
         foodcoopshop.Helper.enableButton(foodcoopshop.SyncProductData.syncProductsButton);
 
         if ($(foodcoopshop.SyncProductData.toggleCleanRowsSelector + ':checked').length > 0) {

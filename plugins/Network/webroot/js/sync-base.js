@@ -27,21 +27,6 @@ foodcoopshop.SyncBase = {
         foodcoopshop.Admin.adaptContentMargin();
     },
 
-    /**
-     * tooltipster plugin from foodcoopshop.Helper.initTooltip messes up comparison of name attribute
-     * because it removes the title
-     */
-    initTooltip: function (container, position, hover) {
-        hover = hover || true;
-        $(container).tooltip({
-            content: function () {
-                return $(this).attr('title');
-            },
-            tooltipHover: hover,
-            position: position
-        });
-    },
-
     resetForm : function () {
         this.resetButton($('.sync-button-wrapper a'), 'fa-refresh');
     },
