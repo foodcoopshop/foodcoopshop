@@ -704,7 +704,7 @@ class ProductsTable extends AppTable
             if (!empty($product->image)) {
                 $imageFile = $_SERVER['DOCUMENT_ROOT'] . Configure::read('app.htmlHelper')->getProductImageSrc($product->image->id_image, 'thickbox');
                 $imageFile = substr($imageFile, 0, -11);
-                if ($imageFile != '') {
+                if ($imageFile != '' && !preg_match('/de-default-thickbox/', $imageFile)) {
                     $product->image->src = 'data:image/' . mime_content_type($imageFile) . ';base64,' . base64_encode(file_get_contents($imageFile));
                 }
             }
