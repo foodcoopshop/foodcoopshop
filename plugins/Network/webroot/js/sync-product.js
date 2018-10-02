@@ -24,6 +24,14 @@ foodcoopshop.SyncProduct = {
         }
         return hasAttributes;
     },
+    
+    getIsDeclarationOkString : function(isDeclarationOk) {
+        var result = '<i class="fa fa-close not-ok"></i>';
+        if (isDeclarationOk) {
+            result = '<i class="fa fa-check ok"></i>';
+        }
+        return result;
+    },
 
     getProductNameWithUnity : function (product, isAttribute, hasAttributes) {
         var productName = product.unchanged_name;

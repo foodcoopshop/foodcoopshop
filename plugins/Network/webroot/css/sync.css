@@ -203,6 +203,10 @@ body.syncs.product_data table.product-list td.quantity, body.syncs.product_data 
   text-align: right;
 }
 
+body.syncs.product_data table.product-list td.name .fa {
+	float: right;
+	margin-left: 5px;
+}
 body.syncs.product_data table.product-list td.active {
   text-align: center;
 }
