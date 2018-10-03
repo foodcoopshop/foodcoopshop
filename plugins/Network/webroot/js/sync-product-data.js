@@ -140,7 +140,7 @@ foodcoopshop.SyncProductData = {
                 var tableData = '<tr class="' + [product.row_class].join(' ') + '" data-product-id="' + product.id_product + '">';
                 tableData += '<td class="sync-checkbox"><input type="checkbox" class="row-marker" disabled="disabled" /></td>';
                 tableData += '<td class="image">';
-                    if (!isAttribute && product.image) {
+                    if (!isAttribute && product.image && product.image.src) {
                         tableData += foodcoopshop.SyncProduct.getProductImageTag(product.image.src);
                     }
                 tableData += '</td>';
@@ -293,9 +293,13 @@ foodcoopshop.SyncProductData = {
                     var hasAttributes = foodcoopshop.SyncProduct.hasAttributes(product);
 
                     // image
-                    if (!isAttribute && product.image) {
-                        $(this).find('td.image').html(foodcoopshop.SyncProduct.getProductImageTag(product.image.src));
-                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.image', product.image.hash, localProduct.image.hash, $(this), localProductRow);
+                    if (!isAttribute) {
+                        if (product.image && product.image.src) {
+                            $(this).find('td.image').html(foodcoopshop.SyncProduct.getProductImageTag(product.image.src));
+                        }
+                        var localProductImageHash = localProduct.image && localProduct.image.hash || '';
+                        var productImageHash = product.image && product.image.hash || '';
+                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.image', productImageHash, localProductImageHash, $(this), localProductRow);
                     }
                     
                     // name

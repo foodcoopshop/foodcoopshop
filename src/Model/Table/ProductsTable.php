@@ -709,12 +709,11 @@ class ProductsTable extends AppTable
                 $product->deposit = 0;
             }
             
-            // prepare base64 encode image for network plugin
             if (!empty($product->image)) {
                 $imageSrc = Configure::read('app.htmlHelper')->getProductImageSrc($product->image->id_image, 'thickbox');
-                $imageFile = $_SERVER['DOCUMENT_ROOT'] . $imageSrc;
+                $imageFile = str_replace('//', '/', $_SERVER['DOCUMENT_ROOT'] . $imageSrc);
                 $imageFile = substr($imageFile, 0, -11);
-                if ($imageFile != '' && !preg_match('/de-default-thickbox/', $imageFile)) {
+                if ($imageFile != '' && !preg_match('/de-default-thickbox/', $imageFile) && file_exists($imageFile)) {
                     $product->image->hash = sha1_file($imageFile);
                     $product->image->src = Configure::read('app.cakeServerName') . $imageSrc;
                 }
@@ -1111,8 +1110,6 @@ class ProductsTable extends AppTable
                 
                 $imageFromRemoteServer = $product[$productId];
                 
-                $extension = 'jpg';
-                
                 $product = $this->find('all', [
                     'conditions' => [
                         'Products.id_product' => $ids['productId']
@@ -1144,7 +1141,7 @@ class ProductsTable extends AppTable
                 $dir->chmod($thumbsPath, 0755);
                 
                 foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
-                    $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . $extension;
+                    $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . '.jpg';
                     $remoteFileName = preg_replace('/-thickbox_default/', $options['suffix'], $imageFromRemoteServer);
                     copy($remoteFileName, $thumbsFileName);
                 }
