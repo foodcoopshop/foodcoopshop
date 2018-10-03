@@ -7,11 +7,8 @@ use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
-use Cake\Utility\Hash;
 
 /**
- * SyncsController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -241,7 +238,10 @@ class SyncsController extends AppController
      */
     private function getEmptyProductsString($syncDomains)
     {
-        $syncDomainNames = Hash::extract($syncDomains, '{n}.SyncDomains.domain');
+        $syncDomainNames = [];
+        foreach($syncDomains as $syncDomain) {
+            $syncDomainNames[] = $syncDomain->domain;
+        }
         $emptyProductsString = 'Du hast deinen Produkten auf der Master-Foodcoop <b>'.Configure::read('appDb.FCS_APP_NAME').'</b> noch keine Produkte ';
         $emptyProductsString .= ' der Remote-Foodcoop' . (count($syncDomainNames) != 1 ? 's' : '') . ' <b>(' . join(', ', $syncDomainNames) . ')</b> zugeordnet.<br /><br />';
         return $emptyProductsString;
