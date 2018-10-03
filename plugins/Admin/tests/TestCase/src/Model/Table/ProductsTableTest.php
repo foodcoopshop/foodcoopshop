@@ -7,8 +7,6 @@ use Cake\ORM\TableRegistry;
 use Cake\I18n\FrozenDate;
 
 /**
- * ProductTest
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License

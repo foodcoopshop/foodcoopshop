@@ -460,14 +460,9 @@ class ProductsTable extends AppTable
         foreach ($products as $product) {
             $productId = key($product);
             $ids = $this->getProductIdAndAttributeId($productId);
-            $entity = $this->ProductAttributes->StockAvailables->newEntity(
-                [
-                    'id_product' => $ids['productId'],
-                    'id_product_attribute' => $ids['attributeId']
-                ]
-            );
+            $entity = $this->StockAvailables->newEntity($product[$productId]);
             if (!empty($entity->getErrors())) {
-                throw new InvalidParameterException(join(' ', $this->ProductAttributes->StockAvailables->getAllValidationErrors($entity)));
+                throw new InvalidParameterException(join(' ', $this->StockAvailables->getAllValidationErrors($entity)));
             }
         }
 
