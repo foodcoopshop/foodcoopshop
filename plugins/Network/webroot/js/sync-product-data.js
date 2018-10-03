@@ -295,7 +295,7 @@ foodcoopshop.SyncProductData = {
                     // image
                     if (!isAttribute && product.image) {
                         $(this).find('td.image').html(foodcoopshop.SyncProduct.getProductImageTag(product.image.src));
-                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.image', product.image.src, localProduct.image.src, $(this), localProductRow);
+                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.image', product.image.hash, localProduct.image.hash, $(this), localProductRow);
                     }
                     
                     // name
