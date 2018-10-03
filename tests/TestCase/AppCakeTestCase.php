@@ -100,20 +100,9 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     
     protected function resetTestDatabaseData()
     {
-
         $this->dbConnection = ConnectionManager::get('test');
         $this->testDumpDir = ROOT . DS .  'tests' . DS . 'config' . DS . 'sql' . DS;
         $this->importDump($this->testDumpDir . 'test-db-data.sql');
-
-        // regenerate password hashes
-        $ph = new DefaultPasswordHasher();
-        $query = 'UPDATE fcs_customer SET passwd = :passwd;';
-        $params = [
-            'passwd' => $ph->hash(Configure::read('test.loginPassword'))
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        $statement->execute($params);
-
     }
 
     public function initSimpleBrowser()
