@@ -10,7 +10,6 @@ use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 use Cake\I18n\I18n;
-use Intervention\Image\ImageManagerStatic as Image;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -1102,7 +1101,7 @@ class ProductsTable extends AppTable
             
             if ($ids['attributeId'] == 0) {
                 
-                $imageFile = $product[$productId];
+                $imageFromRemoteServer = $product[$productId];
                 
                 $extension = 'jpg';
                 
@@ -1118,8 +1117,8 @@ class ProductsTable extends AppTable
                 
                 if (empty($product->image)) {
                     // product does not yet have image => create the necessary record
-                    $image = $this->Product->Images->save(
-                        $this->Product->Images->newEntity(
+                    $image = $this->Images->save(
+                        $this->Images->newEntity(
                             ['id_product' => $ids['productId']]
                         )
                     );
@@ -1137,15 +1136,9 @@ class ProductsTable extends AppTable
                 $dir->chmod($thumbsPath, 0755);
                 
                 foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
-                    $imageFile = substr($imageFile, 0, -11);
-                    $physicalImage = Image::make($imageFile);
-                    // make portrait images smaller
-                    if ($physicalImage->getHeight() > $physicalImage->getWidth()) {
-                        $thumbSize = round($thumbSize * ($physicalImage->getWidth() / $physicalImage->getHeight()), 0);
-                    }
-                    $physicalImage->widen($thumbSize);
                     $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . $extension;
-                    $physicalImage->save($thumbsFileName);
+                    $remoteFileName = preg_replace('/-thickbox_default/', $options['suffix'], $imageFromRemoteServer);
+                    copy($remoteFileName, $thumbsFileName);
                 }
             }
         }
