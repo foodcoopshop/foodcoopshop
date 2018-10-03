@@ -163,7 +163,9 @@ class ApiController extends Controller
             }
             if (isset($product['quantity'])) {
                 $products2saveForQuantity[] = [
-                    $product['remoteProductId'] => $product['quantity']
+                    $product['remoteProductId'] => [
+                        'quantity' => $product['quantity']
+                    ]
                 ];
             }
             if (isset($product['price'])) {

@@ -459,7 +459,13 @@ class ProductsTable extends AppTable
         
         foreach ($products as $product) {
             $productId = key($product);
-            $entity = $this->ProductAttributes->StockAvailables->newEntity($product[$productId]);
+            $ids = $this->getProductIdAndAttributeId($productId);
+            $entity = $this->ProductAttributes->StockAvailables->newEntity(
+                [
+                    'id_product' => $ids['productId'],
+                    'id_product_attribute' => $ids['attributeId']
+                ]
+            );
             if (!empty($entity->getErrors())) {
                 throw new InvalidParameterException(join(' ', $this->ProductAttributes->StockAvailables->getAllValidationErrors($entity)));
             }
@@ -477,7 +483,9 @@ class ProductsTable extends AppTable
                 $this->StockAvailables->updateQuantityForMainProduct($ids['productId']);
             } else {
                 $entity = $this->StockAvailables->get($ids['productId']);
-                $this->StockAvailables->save($this->StockAvailables->patchEntity($entity, $product[$productId]));
+                $this->StockAvailables->save(
+                    $this->StockAvailables->patchEntity($entity, $product[$productId])
+                );
             }
         }
     }
