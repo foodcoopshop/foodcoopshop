@@ -704,11 +704,12 @@ class ProductsTable extends AppTable
             
             // prepare base64 encode image for network plugin
             if (!empty($product->image)) {
-                $imageFile = $_SERVER['DOCUMENT_ROOT'] . Configure::read('app.htmlHelper')->getProductImageSrc($product->image->id_image, 'thickbox');
+                $imageSrc = Configure::read('app.htmlHelper')->getProductImageSrc($product->image->id_image, 'thickbox');
+                $imageFile = $_SERVER['DOCUMENT_ROOT'] . $imageSrc;
                 $imageFile = substr($imageFile, 0, -11);
                 if ($imageFile != '' && !preg_match('/de-default-thickbox/', $imageFile)) {
                     $product->image->hash = sha1_file($imageFile);
-                    $product->image->src = 'data:' . mime_content_type($imageFile) . ';base64,' . base64_encode(file_get_contents($imageFile));
+                    $product->image->src = Configure::read('app.cakeServerName') . $imageSrc;
                 }
             }
 
@@ -1100,7 +1101,9 @@ class ProductsTable extends AppTable
             $ids = $this->getProductIdAndAttributeId($productId);
             
             if ($ids['attributeId'] == 0) {
-                $base64encodedImage = $product[$productId];
+                
+                $imageFile = $product[$productId];
+                
                 $extension = 'jpg';
                 
                 $product = $this->find('all', [
@@ -1134,7 +1137,8 @@ class ProductsTable extends AppTable
                 $dir->chmod($thumbsPath, 0755);
                 
                 foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
-                    $physicalImage = Image::make($base64encodedImage);
+                    $imageFile = substr($imageFile, 0, -11);
+                    $physicalImage = Image::make($imageFile);
                     // make portrait images smaller
                     if ($physicalImage->getHeight() > $physicalImage->getWidth()) {
                         $thumbSize = round($thumbSize * ($physicalImage->getWidth() / $physicalImage->getHeight()), 0);
