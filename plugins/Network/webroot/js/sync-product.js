@@ -26,7 +26,7 @@ foodcoopshop.SyncProduct = {
     },
     
     getProductImageTag : function(src) {
-        return '<img src="' + src + '"></img>';
+        return '<img src="' + src + '" />';
     },
     
     getIsDeclarationOkString : function(isDeclarationOk) {
