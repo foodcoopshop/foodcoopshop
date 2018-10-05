@@ -70,6 +70,7 @@ class MyHtmlHelper extends HtmlHelper
         return [
             '1-week' => $this->getDeliveryRhythmString('week', 1),
             '2-week' => $this->getDeliveryRhythmString('week', 2),
+            '4-week' => $this->getDeliveryRhythmString('week', 4),
             '1-month' => $this->getDeliveryRhythmString('month', 1),
             '0-month' => $this->getDeliveryRhythmString('month', 0),
             '0-individual' => $this->getDeliveryRhythmString('individual', 0)

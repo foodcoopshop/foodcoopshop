@@ -86,13 +86,13 @@ class ProductsTableTest extends AppCakeTestCase
                 'product' => $this->Product->newEntity(
                     [
                         'delivery_rhythm_type' => 'week',
-                        'delivery_rhythm_count' => '3',
+                        'delivery_rhythm_count' => '4',
                         'is_stock_product' => '0',
                         'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03')
                     ]
                 ),
                 'currentDay' => '2018-08-07',
-                'result' => '2018-08-24'
+                'result' => '2018-08-31'
             ],
             [
                 'product' => $this->Product->newEntity(
