@@ -15,7 +15,7 @@
 
 use Cake\Core\Configure;
 
-if ($appAuth->isAdmin() || $appAuth->isSuperadmin()) {
+if ($appAuth->isAdmin() || $appAuth->isSuperadmin() || $appAuth->isCustomer()) {
     $this->element('addScript', [
         'script' =>
             Configure::read('app.jsNamespace') . ".Admin.initAddInstantOrder('#add-instant-order-button-wrapper .btn');"
