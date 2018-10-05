@@ -15,7 +15,7 @@
 
 use Cake\Core\Configure;
 
-if (count($pickupDay) == 1 && $groupBy == 'customer' && ($appAuth->isSuperadmin() || $appAuth->isAdmin())) {
+if (count($pickupDay) == 1 && $groupBy == 'customer' && ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer())) {
     $this->element('addScript', [ 'script' =>
         Configure::read('app.jsNamespace').".PickupDay.initChangeProductsPickedUpByCustomer('#order-details-list');"
     ]);

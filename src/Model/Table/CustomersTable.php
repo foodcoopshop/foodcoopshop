@@ -418,7 +418,7 @@ class CustomersTable extends AppTable
         return round($paymentProductSum - $paybackProductSum + $paymentDepositSum - $productSum - $depositSum, 2);
     }
 
-    public function getForDropdown($includeManufacturers = false, $index = 'id_customer', $includeOfflineCustomers = true)
+    public function getForDropdown($includeManufacturers = false, $index = 'id_customer', $includeOfflineCustomers = true, $conditions = [])
     {
         $contain = [];
         if (! $includeManufacturers) {
@@ -427,8 +427,9 @@ class CustomersTable extends AppTable
             $contain[] = 'AddressCustomers'; // to make exclude happen using dropManufacturersInNextFind
         }
 
+        $conditions = array_merge($conditions, $this->getConditionToExcludeHostingUser());
         $customers = $this->find('all', [
-            'conditions' => $this->getConditionToExcludeHostingUser(),
+            'conditions' => $conditions,
             'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy(),
             'contain' => $contain
         ]);

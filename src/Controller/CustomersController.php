@@ -177,7 +177,7 @@ class CustomersController extends FrontendController
             $this->Flash->success(__('We_sent_a_new_password_to_you.'));
         }
 
-        $this->redirect(Configure::read('app.slugHelper')->getLogin());
+        $this->redirect('/');
     }
 
     public function login()
