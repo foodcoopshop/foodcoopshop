@@ -59,7 +59,7 @@ class CustomersControllerTest extends AppCakeTestCase
 
         $this->browser->get($this->Slug->getApproveNewPassword($customer->change_password_code));
         $this->assertRegExpWithUnquotedString('Wir haben dir dein neues Passwort zugeschickt.', $this->browser->getContent());
-        $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . $this->Slug->getLogin());
+        $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/');
 
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEmailLogs($emailLogs[1], 'Neues Passwort für FoodCoop Test generiert', ['du hast gerade ein neues Passwort generiert, es lautet:'], [Configure::read('test.loginEmailCustomer')]);
