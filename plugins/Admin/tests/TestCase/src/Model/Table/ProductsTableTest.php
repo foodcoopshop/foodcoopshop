@@ -38,6 +38,29 @@ class ProductsTableTest extends AppCakeTestCase
                     [
                         'delivery_rhythm_type' => 'week',
                         'delivery_rhythm_count' => '1',
+                        'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-11-02'),
+                        'is_stock_product' => '0'
+                    ]
+                    ),
+                'currentDay' => '2018-10-07',
+                'result' => '2018-11-02'
+            ],
+            [
+                'product' => $this->Product->newEntity(
+                    [
+                        'delivery_rhythm_type' => 'week',
+                        'delivery_rhythm_count' => '1',
+                        'is_stock_product' => '0'
+                    ]
+                    ),
+                'currentDay' => '2018-10-07',
+                'result' => '2018-10-12'
+            ],
+            [
+                'product' => $this->Product->newEntity(
+                    [
+                        'delivery_rhythm_type' => 'week',
+                        'delivery_rhythm_count' => '1',
                         'is_stock_product' => '0'
                     ]
                 ),

@@ -203,7 +203,7 @@ class AppTable extends Table
             $deliveryDate = $this->Product->calculatePickupDayRespectingDeliveryRhythm(
                 $this->Product->newEntity(
                     [
-                        'delivery_rhythm_first_delivery_day' => new FrozenDate($product['delivery_rhythm_first_delivery_day']),
+                        'delivery_rhythm_first_delivery_day' => $product['delivery_rhythm_first_delivery_day'] == '' ? null : new FrozenDate($product['delivery_rhythm_first_delivery_day']),
                         'delivery_rhythm_type' => $product['delivery_rhythm_type'],
                         'delivery_rhythm_count' => $product['delivery_rhythm_count'],
                         'is_stock_product' => $product['is_stock_product']
