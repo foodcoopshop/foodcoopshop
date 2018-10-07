@@ -21,6 +21,8 @@ class Product extends Entity
 {
 
     protected $_virtual = ['next_delivery_day'];
+    
+    protected $next_delivery_day;
 
     protected function _getNextDeliveryDay()
     {

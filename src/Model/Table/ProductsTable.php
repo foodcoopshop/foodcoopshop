@@ -148,7 +148,7 @@ class ProductsTable extends AppTable
             return $pickupDay;
         }
             
-        if ($product->delivery_rhythm_count > 1 && $product->delivery_rhythm_type == 'week') {
+        if ($product->delivery_rhythm_type == 'week') {
             if (!is_null($product->delivery_rhythm_first_delivery_day)) {
                 $firstDeliveryDayFormatted = $product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
                 $calculatedPickupDay = $firstDeliveryDayFormatted;
