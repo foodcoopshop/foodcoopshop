@@ -51,15 +51,14 @@ class FrontendController extends AppController
             } else {
                 $product['next_delivery_day'] = $this->Product->calculatePickupDayRespectingDeliveryRhythm(
                     $this->Product->newEntity([
-                        'delivery_rhythm_order_possible_until' => new FrozenDate($product['delivery_rhythm_order_possible_until']),
-                        'delivery_rhythm_first_delivery_day' => new FrozenDate($product['delivery_rhythm_first_delivery_day']),
+                        'delivery_rhythm_order_possible_until' => $product['delivery_rhythm_order_possible_until'] == '' ? null : new FrozenDate($product['delivery_rhythm_order_possible_until']),
+                        'delivery_rhythm_first_delivery_day' => $product['delivery_rhythm_first_delivery_day'] == '' ? null : new FrozenDate($product['delivery_rhythm_first_delivery_day']),
                         'delivery_rhythm_type' => $product['delivery_rhythm_type'],
                         'delivery_rhythm_count' => $product['delivery_rhythm_count'],
                         'is_stock_product' => $product['is_stock_product']
                     ]
                 ));
             }
-            
             $product['attributes'] = [];
 
             if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
