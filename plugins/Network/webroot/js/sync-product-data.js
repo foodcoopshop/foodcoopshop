@@ -335,17 +335,17 @@ foodcoopshop.SyncProductData = {
                         if (response.app.variableMemberFee > 0) {
                             // if remote manufacturer has variable member fee, compare local price and add remote variable member fee
                             var localPriceIncludingRemoteVariableMemberFee = foodcoopshop.SyncProductData.roundToTwo(localProduct.gross_price + (localProduct.gross_price * response.app.variableMemberFee / 100));
-                            var remoteGrossPriceAsFloat = parseFloat(product.gross_price);
-                            if (remoteGrossPriceAsFloat != localPriceIncludingRemoteVariableMemberFee) {
+                            var remoteGrossPrice = product.gross_price;
+                            if (remoteGrossPrice != localPriceIncludingRemoteVariableMemberFee) {
                                 localProduct.addClass('dirty');
                                 $(this).find('td.price').addClass('dirty');
                             }
                             var variableMemberFeeInfo = ' (' + response.app.variableMemberFee + '%)';
-                            $(this).find('td.price').html(foodcoopshop.Helper.formatFloatAsCurrency(remoteGrossPriceAsFloat) + variableMemberFeeInfo);
+                            $(this).find('td.price').html(foodcoopshop.Helper.formatFloatAsCurrency(remoteGrossPrice) + variableMemberFeeInfo);
                         } else {
-                            var remotePrice = foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.gross_price));
+                            var remotePrice = foodcoopshop.Helper.formatFloatAsCurrency(product.gross_price);
                             $(this).find('td.price').html(remotePrice);
-                            foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.price', product.gross_price, localProduct.gross_price, $(this), localProductRow);
+                            foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.price', foodcoopshop.SyncProductData.roundToTwo(product.gross_price), foodcoopshop.SyncProductData.roundToTwo(localProduct.gross_price), $(this), localProductRow);
                         }
                     }
 
