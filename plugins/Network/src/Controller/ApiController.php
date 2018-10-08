@@ -169,7 +169,8 @@ class ApiController extends Controller
                 ];
             }
             if (isset($product['price'])) {
-                $price = $this->Product->getStringAsFloat($product['price']);
+                
+                $price = $this->Product->getStringAsFloat($product['price']['gross_price']);
 
                 $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($this->AppAuth->manufacturer->variable_member_fee);
                 if ($variableMemberFee > 0) {
@@ -177,7 +178,7 @@ class ApiController extends Controller
                 }
 
                 $products2saveForPrice[] = [
-                    $product['remoteProductId'] => $price
+                    $productIds['productId'] => $product['price']
                 ];
             }
             if (isset($product['deposit'])) {

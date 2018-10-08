@@ -54,7 +54,14 @@ foodcoopshop.SyncProductData = {
         {
             name: 'price',
             label: 'Preis',
-            data: 'gross_price',
+            data: {
+                gross_price: 'gross_price',
+                unit_product_price_incl_per_unit: 'unit_product.price_per_unit',
+                unit_product_name: 'unit_product.name',
+                unit_product_amount: 'unit_product.amount',
+                unit_product_quantity_in_units: 'unit_product.quantity_in_units',
+                unit_product_price_per_unit_enabled: 'unit_product.price_per_unit_enabled'
+            },
             column: 5
         },
         {
@@ -151,7 +158,15 @@ foodcoopshop.SyncProductData = {
                     }
                 tableData += '</td>';
                 tableData += '<td class="quantity">' + (isAttribute || !hasAttributes ? product.stock_available.quantity : '') + '</td>';
-                tableData += '<td class="price">' + (isAttribute || !hasAttributes ? foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.gross_price)) : '') + '</td>';
+                tableData += '<td class="price">';
+                    if (isAttribute || !hasAttributes) {
+                        if (product.unit && product.unit_product.price_per_unit_enabled) {
+                            tableData += foodcoopshop.SyncProduct.getPricePerUnitBaseInfo(product.unit_product.price_incl_per_unit, product.unit_product.name, product.unit_product.amount, product.unit_product.quantity_in_units);
+                        } else {
+                          tableData += foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.gross_price));
+                        }
+                    }
+                tableData += '</td>';
                 tableData += '<td class="deposit">' + (product.deposit > 0 ? foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.deposit)) : '') + '</td>';
                 tableData += '<td class="active">' + (!isAttribute ? (product.active ? '<i class="fa fa-check ok"></i>' : '<i class="fa fa-close not-ok"></i>') : '') + '</td>';
                 tableData += '</tr>';
@@ -333,7 +348,7 @@ foodcoopshop.SyncProductData = {
                     // price
                     if (!hasAttributes) {
                         if (response.app.variableMemberFee > 0) {
-                            // if remote manufacturer has variable member fee, compare local price and add remote variable member fee
+                            // if remote manufacturer has variable member fee enabled, compare local price including the remote variable member fee
                             var localPriceIncludingRemoteVariableMemberFee = foodcoopshop.SyncProductData.roundToTwo(localProduct.gross_price + (localProduct.gross_price * response.app.variableMemberFee / 100));
                             var remoteGrossPrice = product.gross_price;
                             if (remoteGrossPrice != localPriceIncludingRemoteVariableMemberFee) {
@@ -343,9 +358,17 @@ foodcoopshop.SyncProductData = {
                             var variableMemberFeeInfo = ' (' + response.app.variableMemberFee + '%)';
                             $(this).find('td.price').html(foodcoopshop.Helper.formatFloatAsCurrency(remoteGrossPrice) + variableMemberFeeInfo);
                         } else {
-                            var remotePrice = foodcoopshop.Helper.formatFloatAsCurrency(product.gross_price);
+                            var remotePrice;
+                            var localPrice;
+                            if (product.unit && product.unit_product.price_per_unit_enabled) {
+                                remotePrice = foodcoopshop.SyncProduct.getPricePerUnitBaseInfo(product.unit_product.price_incl_per_unit, product.unit_product.name, product.unit_product.amount, product.unit_product.quantity_in_units);
+                                localPrice = foodcoopshop.SyncProduct.getPricePerUnitBaseInfo(localProduct.unit_product.price_incl_per_unit, localProduct.unit_product.name, localProduct.unit_product.amount, localProduct.unit_product.quantity_in_units);
+                            } else {
+                                remotePrice = foodcoopshop.Helper.formatFloatAsCurrency(product.gross_price);
+                                localPrice = foodcoopshop.Helper.formatFloatAsCurrency(localProduct.gross_price);
+                            }
                             $(this).find('td.price').html(remotePrice);
-                            foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.price', foodcoopshop.SyncProductData.roundToTwo(product.gross_price), foodcoopshop.SyncProductData.roundToTwo(localProduct.gross_price), $(this), localProductRow);
+                            foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.price', remotePrice, localPrice, $(this), localProductRow);
                         }
                     }
 

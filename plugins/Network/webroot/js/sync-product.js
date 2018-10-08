@@ -36,6 +36,11 @@ foodcoopshop.SyncProduct = {
         }
         return result;
     },
+    
+    getPricePerUnitBaseInfo(priceInclPerUnit, unitName, unitAmount, unitQuantityInUnits)
+    {
+        return foodcoopshop.Helper.formatFloatAsCurrency(priceInclPerUnit) + ' / ' + (unitAmount > 1 ? unitAmount + ' ' : '') + unitName + ' - ca. ' + unitQuantityInUnits + ' ' + unitName;
+    },
 
     getProductNameWithUnity : function (product, isAttribute, hasAttributes) {
         var productName = product.unchanged_name;

@@ -394,7 +394,11 @@ class ProductsTable extends AppTable
      *  (
      *      [0] => Array
      *          (
-     *              [productId] => (float) price
+     *              [
+     *                  productId] => [
+     *                      'gross_price' => (float) price
+     *                      'product unit fields'
+     *                  ]
      *          )
      *  )
      * @return boolean $success
@@ -404,16 +408,17 @@ class ProductsTable extends AppTable
 
         foreach ($products as $product) {
             $productId = key($product);
-            $price = $this->getStringAsFloat($product[$productId]);
+            $price = $this->getStringAsFloat($product[$productId]['gross_price']);
             if ($price < 0) {
-                throw new InvalidParameterException('input format not correct: '.$product[$productId]);
+                throw new InvalidParameterException('input format not correct: '.$product[$productId]['gross_price']);
             }
         }
 
         $success = false;
         foreach ($products as $product) {
+            
             $productId = key($product);
-            $price = $this->getStringAsFloat($product[$productId]);
+            $price = $this->getStringAsFloat($product[$productId]['gross_price']);
 
             $ids = $this->getProductIdAndAttributeId($productId);
 
@@ -435,6 +440,21 @@ class ProductsTable extends AppTable
                     $this->patchEntity($entity, $product2update)
                 );
                 $success |= is_object($result);
+            }
+            
+            if (isset($product[$productId]['unit_product_price_per_unit_enabled'])) {
+                $this->Unit = TableRegistry::getTableLocator()->get('Units');
+                $pricePerUnitEnabled = $product[$productId]['unit_product_price_per_unit_enabled'];
+                $priceInclPerUnit = $this->getStringAsFloat($product[$productId]['unit_product_price_incl_per_unit']);
+                $this->Unit->saveUnits(
+                    $ids['productId'],
+                    $ids['attributeId'],
+                    $pricePerUnitEnabled,
+                    $priceInclPerUnit,
+                    $product[$productId]['unit_product_name'],
+                    $product[$productId]['unit_product_amount'],
+                    $this->getStringAsFloat($product[$productId]['unit_product_quantity_in_units'])
+                );
             }
         }
 

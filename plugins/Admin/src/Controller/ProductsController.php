@@ -742,20 +742,17 @@ class ProductsController extends AdminAppController
         try {
             $this->Product->changePrice(
                 [
-                    [$originalProductId => $this->getRequest()->getData('price')]
+                    [
+                        $originalProductId => [
+                            'gross_price' => $this->getRequest()->getData('price'),
+                            'unit_product_price_incl_per_unit' => $this->getRequest()->getData('priceInclPerUnit'),
+                            'unit_product_name' => $this->getRequest()->getData('priceUnitName'),
+                            'unit_product_amount' => $this->getRequest()->getData('priceUnitAmount'),
+                            'unit_product_quantity_in_units' => $this->getRequest()->getData('priceQuantityInUnits'),
+                            'unit_product_price_per_unit_enabled' => $this->getRequest()->getData('pricePerUnitEnabled')
+                        ]
+                    ]
                 ]
-            );
-            $this->Unit = TableRegistry::getTableLocator()->get('Units');
-            $priceInclPerUnit = $this->Product->getStringAsFloat($this->getRequest()->getData('priceInclPerUnit'));
-            $pricePerUnitEnabled = $this->getRequest()->getData('pricePerUnitEnabled');
-            $this->Unit->saveUnits(
-                $ids['productId'],
-                $ids['attributeId'],
-                $pricePerUnitEnabled,
-                $priceInclPerUnit,
-                $this->getRequest()->getData('priceUnitName'),
-                $this->getRequest()->getData('priceUnitAmount'),
-                $this->Product->getStringAsFloat($this->getRequest()->getData('priceQuantityInUnits'))
             );
         } catch (InvalidParameterException $e) {
             $this->sendAjaxError($e);
@@ -771,7 +768,7 @@ class ProductsController extends AdminAppController
         }
 
         if ($this->getRequest()->getData('pricePerUnitEnabled')) {
-            $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($priceInclPerUnit, $this->getRequest()->getData('priceUnitName'), $this->getRequest()->getData('priceUnitAmount'));
+            $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($this->Product->getStringAsFloat($this->getRequest()->getData('priceInclPerUnit')), $this->getRequest()->getData('priceUnitName'), $this->getRequest()->getData('priceUnitAmount'));
         } else {
             $newPrice = Configure::read('app.numberHelper')->formatAsCurrency($price);
         }
