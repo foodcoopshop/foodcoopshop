@@ -16,10 +16,18 @@
         font-size: 20px ! important;
     }
     #logo,
-    .btn-arrow {
+    .btn-arrow,
+    #menu {
         display: none ! important;
+    }
+    #content {
+        margin-left: 0;
     }
     input[type="text"], select {
         width: 95px ! important;
+    }
+    .filter-container {
+        position: static;
+        margin-top: -80px;
     }
 }
