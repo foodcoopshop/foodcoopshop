@@ -54,6 +54,19 @@ class MyTimeHelperTest extends AppCakeTestCase
         Configure::write('app.deliveryDayDelta', 1);
         Configure::write('app.sendOrderListsWeekday', 1);
     }
+    
+    public function testGetPreselectedDeliveryDayForOrderDetailsWednesdayFriday()
+    {
+        $this->assertGetPreselectedDeliveryDayForOrderDetails('08.10.2018', '12.10.2018'); // monday
+        $this->assertGetPreselectedDeliveryDayForOrderDetails('09.10.2018', '12.10.2018'); // tuesday
+        $this->assertGetPreselectedDeliveryDayForOrderDetails('10.10.2018', '12.10.2018'); // wednesday
+        $this->assertGetPreselectedDeliveryDayForOrderDetails('11.10.2018', '12.10.2018'); // thursday
+        $this->assertGetPreselectedDeliveryDayForOrderDetails('12.10.2018', '12.10.2018'); // friday
+        $this->assertGetPreselectedDeliveryDayForOrderDetails('13.10.2018', '19.10.2018'); // saturday
+        $this->assertGetPreselectedDeliveryDayForOrderDetails('14.10.2018', '19.10.2018'); // sunday
+        $this->assertGetPreselectedDeliveryDayForOrderDetails('15.10.2018', '19.10.2018'); // monday
+        $this->assertGetPreselectedDeliveryDayForOrderDetails('16.10.2018', '19.10.2018'); // tuesday
+    }
 
     public function testGetOrderPeriodFirstDayWednesdayFriday()
     {
@@ -188,4 +201,11 @@ class MyTimeHelperTest extends AppCakeTestCase
         $result = $this->MyTimeHelper->getOrderPeriodLastDay(strtotime($currentDay));
         $this->assertEquals($expected, $result);
     }
+    
+    private function assertGetPreselectedDeliveryDayForOrderDetails($currentDay, $expected)
+    {
+        $result = $this->MyTimeHelper->getPreselectedDeliveryDayForOrderDetails(strtotime($currentDay));
+        $this->assertEquals($expected, $result);
+    }
+
 }

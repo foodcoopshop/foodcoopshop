@@ -177,6 +177,12 @@ class MyTimeHelper extends TimeHelper
     {
         return (Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta')) % 7;
     }
+    
+    public function getPreselectedDeliveryDayForOrderDetails($day)
+    {
+        $orderPeriodFirstDay = $this->getOrderPeriodFirstDay($day);
+        return date($this->getI18Format('DateShortAlt'), $this->getDeliveryDay(strtotime($orderPeriodFirstDay)));
+    }
 
     /**
      * see tests for implementations
