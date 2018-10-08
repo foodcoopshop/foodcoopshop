@@ -218,7 +218,7 @@ class OrderDetailsController extends AdminAppController
                 }
             } else {
                 // default value
-                $pickupDay[0] = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getCurrentDay());
+                $pickupDay[0] = Configure::read('app.timeHelper')->getPreselectedDeliveryDayForOrderDetails(Configure::read('app.timeHelper')->getCurrentDay());
             }
             // START legacy code - can be safely removed in v3
             // assures that old links (before v2.2) in emails to the financial responsible person still work after v2.2

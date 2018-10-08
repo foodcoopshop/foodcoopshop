@@ -223,13 +223,13 @@ class ManufacturersController extends AdminAppController
 
     public function index()
     {
-        $dateFrom = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getCurrentDay());
+        $dateFrom = Configure::read('app.timeHelper')->getPreselectedDeliveryDayForOrderDetails(Configure::read('app.timeHelper')->getCurrentDay());
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
             $dateFrom = $this->getRequest()->getQuery('dateFrom');
         }
         $this->set('dateFrom', $dateFrom);
 
-        $dateTo = date(Configure::read('DateFormat.DateShortAlt'), Configure::read('app.timeHelper')->getCurrentDay());
+        $dateTo = Configure::read('app.timeHelper')->getPreselectedDeliveryDayForOrderDetails(Configure::read('app.timeHelper')->getCurrentDay());
         if (! empty($this->getRequest()->getQuery('dateTo'))) {
             $dateTo = $this->getRequest()->getQuery('dateTo');
         }
