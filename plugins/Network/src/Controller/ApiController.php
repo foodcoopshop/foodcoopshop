@@ -9,8 +9,6 @@ use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 
 /**
- * ApiController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -177,6 +175,8 @@ class ApiController extends Controller
                     $price = $this->Manufacturer->increasePriceWithVariableMemberFee($price, $variableMemberFee);
                 }
 
+                $product['price']['gross_price'] = $price;
+                
                 $products2saveForPrice[] = [
                     $productIds['productId'] => $product['price']
                 ];
