@@ -56,7 +56,7 @@ foodcoopshop.SyncProductData = {
             label: 'Preis',
             data: {
                 gross_price: 'gross_price',
-                unit_product_price_incl_per_unit: 'unit_product.price_per_unit',
+                unit_product_price_incl_per_unit: 'unit_product.price_incl_per_unit',
                 unit_product_name: 'unit_product.name',
                 unit_product_amount: 'unit_product.amount',
                 unit_product_quantity_in_units: 'unit_product.quantity_in_units',
