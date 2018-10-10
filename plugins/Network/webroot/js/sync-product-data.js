@@ -327,7 +327,7 @@ foodcoopshop.SyncProductData = {
                         $(foodcoopshop.SyncProductData.implementedSyncAttributes).each(function() {
                             if ($(this)[0].name == 'name') {
                                 var keys = Object.keys($(this)[0].data);
-                                for(key in keys) {
+                                for(var key in keys) {
                                     localProductNameFields += product[keys[key]];
                                     remoteProductNameFields += localProduct[keys[key]];
                                 }
