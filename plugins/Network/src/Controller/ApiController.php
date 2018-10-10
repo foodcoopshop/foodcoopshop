@@ -168,14 +168,23 @@ class ApiController extends Controller
             }
             if (isset($product['price'])) {
                 
-                $price = $this->Product->getStringAsFloat($product['price']['gross_price']);
-
                 $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($this->AppAuth->manufacturer->variable_member_fee);
+                
                 if ($variableMemberFee > 0) {
-                    $price = $this->Manufacturer->increasePriceWithVariableMemberFee($price, $variableMemberFee);
+                    
+                    $price = $this->Product->getStringAsFloat($product['price']['gross_price']);
+                    $product['price']['gross_price'] = $this->Manufacturer->increasePriceWithVariableMemberFee($price, $variableMemberFee);
+                    
+                    if (isset($product['price']['unit_product_price_incl_per_unit'])) {
+                        $pricePerUnit = $this->Product->getStringAsFloat($product['price']['unit_product_price_incl_per_unit']);
+                        $product['price']['unit_product_price_incl_per_unit'] = $this->Manufacturer->increasePriceWithVariableMemberFee($pricePerUnit, $variableMemberFee);
+                    }
+                    
                 }
 
-                $product['price']['gross_price'] = $price;
+                if (!isset($product['price']['unit_product_price_per_unit_enabled'])) {
+                    $product['price']['unit_product_price_per_unit_enabled'] = 0;
+                }
                 
                 $products2saveForPrice[] = [
                     $productIds['productId'] => $product['price']

@@ -347,29 +347,42 @@ foodcoopshop.SyncProductData = {
 
                     // price
                     if (!hasAttributes) {
-                        if (response.app.variableMemberFee > 0) {
-                            // if remote manufacturer has variable member fee enabled, compare local price including the remote variable member fee
-                            var localPriceIncludingRemoteVariableMemberFee = foodcoopshop.SyncProductData.roundToTwo(localProduct.gross_price + (localProduct.gross_price * response.app.variableMemberFee / 100));
-                            var remoteGrossPrice = product.gross_price;
-                            if (remoteGrossPrice != localPriceIncludingRemoteVariableMemberFee) {
-                                localProduct.addClass('dirty');
-                                $(this).find('td.price').addClass('dirty');
-                            }
-                            var variableMemberFeeInfo = ' (' + response.app.variableMemberFee + '%)';
-                            $(this).find('td.price').html(foodcoopshop.Helper.formatFloatAsCurrency(remoteGrossPrice) + variableMemberFeeInfo);
-                        } else {
-                            var remotePrice;
-                            var localPrice;
-                            if (product.unit && product.unit_product && product.unit_product.price_per_unit_enabled) {
-                                remotePrice = foodcoopshop.SyncProduct.getPricePerUnitBaseInfo(product.unit_product.price_incl_per_unit, product.unit_product.name, product.unit_product.amount, product.unit_product.quantity_in_units);
-                                localPrice = foodcoopshop.SyncProduct.getPricePerUnitBaseInfo(localProduct.unit_product.price_incl_per_unit, localProduct.unit_product.name, localProduct.unit_product.amount, localProduct.unit_product.quantity_in_units);
-                            } else {
-                                remotePrice = foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.gross_price));
-                                localPrice = foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(localProduct.gross_price));
-                            }
-                            $(this).find('td.price').html(remotePrice);
-                            foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.price', remotePrice, localPrice, $(this), localProductRow);
+                        
+                        var remotePriceAsString;
+                        var localPriceAsString;
+                        
+                        var localProductGrossPrice = localProduct.gross_price;
+                        var remoteProductGrossPrice = product.gross_price;
+                        if (product.unit && product.unit_product && product.unit_product.price_per_unit_enabled) {
+                            remoteProductGrossPrice = product.unit_product.price_incl_per_unit;
                         }
+                        if (localProduct.unit && localProduct.unit_product && localProduct.unit_product.price_per_unit_enabled) {
+                            localProductGrossPrice = localProduct.unit_product.price_incl_per_unit;
+                        }
+                        
+                        // if remote manufacturer has variable member fee enabled, compare local price including the remote variable member fee
+                        if (response.app.variableMemberFee > 0) {
+                            localProductGrossPrice = foodcoopshop.SyncProductData.roundToTwo(localProductGrossPrice + (localProductGrossPrice * response.app.variableMemberFee / 100));
+                        }
+                        
+                        if (product.unit && product.unit_product && product.unit_product.price_per_unit_enabled) {
+                            remotePriceAsString = foodcoopshop.SyncProduct.getPricePerUnitBaseInfo(remoteProductGrossPrice, product.unit_product.name, product.unit_product.amount, product.unit_product.quantity_in_units);
+                        } else {
+                            remotePriceAsString = foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(remoteProductGrossPrice));
+                        }
+                        
+                        if (localProduct.unit && localProduct.unit_product && localProduct.unit_product.price_per_unit_enabled) {
+                            localPriceAsString = foodcoopshop.SyncProduct.getPricePerUnitBaseInfo(localProductGrossPrice, localProduct.unit_product.name, localProduct.unit_product.amount, localProduct.unit_product.quantity_in_units);
+                        } else {
+                            localPriceAsString = foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(localProductGrossPrice));
+                        }
+                        
+                        var additionalInfo = '';
+                        if (response.app.variableMemberFee > 0) {
+                            additionalInfo += ' (' + response.app.variableMemberFee + '%)';
+                        }
+                        $(this).find('td.price').html(remotePriceAsString + additionalInfo);
+                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.price', remotePriceAsString, localPriceAsString, $(this), localProductRow);
                     }
 
                     // deposit
