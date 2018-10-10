@@ -160,7 +160,7 @@ foodcoopshop.SyncProductData = {
                 tableData += '<td class="quantity">' + (isAttribute || !hasAttributes ? product.stock_available.quantity : '') + '</td>';
                 tableData += '<td class="price">';
                     if (isAttribute || !hasAttributes) {
-                        if (product.unit && product.unit_product.price_per_unit_enabled) {
+                        if (product.unit && product.unit_product && product.unit_product.price_per_unit_enabled) {
                             tableData += foodcoopshop.SyncProduct.getPricePerUnitBaseInfo(product.unit_product.price_incl_per_unit, product.unit_product.name, product.unit_product.amount, product.unit_product.quantity_in_units);
                         } else {
                           tableData += foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.gross_price));
@@ -360,12 +360,12 @@ foodcoopshop.SyncProductData = {
                         } else {
                             var remotePrice;
                             var localPrice;
-                            if (product.unit && product.unit_product.price_per_unit_enabled) {
+                            if (product.unit && product.unit_product && product.unit_product.price_per_unit_enabled) {
                                 remotePrice = foodcoopshop.SyncProduct.getPricePerUnitBaseInfo(product.unit_product.price_incl_per_unit, product.unit_product.name, product.unit_product.amount, product.unit_product.quantity_in_units);
                                 localPrice = foodcoopshop.SyncProduct.getPricePerUnitBaseInfo(localProduct.unit_product.price_incl_per_unit, localProduct.unit_product.name, localProduct.unit_product.amount, localProduct.unit_product.quantity_in_units);
                             } else {
-                                remotePrice = foodcoopshop.Helper.formatFloatAsCurrency(product.gross_price);
-                                localPrice = foodcoopshop.Helper.formatFloatAsCurrency(localProduct.gross_price);
+                                remotePrice = foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.gross_price));
+                                localPrice = foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(localProduct.gross_price));
                             }
                             $(this).find('td.price').html(remotePrice);
                             foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.price', remotePrice, localPrice, $(this), localProductRow);
