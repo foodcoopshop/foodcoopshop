@@ -76,7 +76,7 @@ class PickupReminderShellTest extends AppCakeTestCase
         
         $this->assertEmailLogs(
             $emailLogs[0],
-            'Abholtag-Erinnerung für Freitag, 16.03.2018',
+            'Abhol-Erinnerung für Freitag, 16.03.2018',
             [
     			'<li>1x Beuschl, Demo Fleisch-Hersteller</li>',
             ],
