@@ -14,8 +14,6 @@ use Cake\ORM\TableRegistry;
 use DateTime;
 
 /**
- * CustomersController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -108,31 +106,43 @@ class CustomersController extends FrontendController
             if (!empty($customer->getErrors())) {
                 $this->Flash->error(__('Errors_while_saving!'));
             } else {
-                $changePasswordCode = StringComponent::createRandomString(12);
+                
                 $originalPrimaryKey = $this->Customer->getPrimaryKey();
                 $this->Customer->setPrimaryKey('email');
                 $oldEntity = $this->Customer->get($this->getRequest()->getData('Customers.email'));
+                $activateNewPasswordCode = $oldEntity->activate_new_password_code;
+                $data2save = [];
+                
+                if ($activateNewPasswordCode == '') {
+                    $activateNewPasswordCode = StringComponent::createRandomString(12);
+                    $data2save['activate_new_password_code'] = $activateNewPasswordCode;
+                }
+                
+                // always generate new password as it's saved as hash and cannot be sent in clear text
+                $tmpNewPassword = StringComponent::createRandomString(12);
+                $ph = new DefaultPasswordHasher();
+                $data2save['tmp_new_passwd'] = $ph->hash($tmpNewPassword);
+                
                 $this->Customer->setPrimaryKey($originalPrimaryKey);
                 $patchedEntity = $this->Customer->patchEntity(
                     $oldEntity,
-                    [
-                        'change_password_code' => $changePasswordCode
-                    ]
+                    $data2save
                 );
                 $this->Customer->save($patchedEntity);
-
+                
                 // send email
                 $email = new AppEmail();
                 $email->setTemplate('new_password_request_successful')
-                    ->setSubject(__('Request_for_new_password_for_{0}', [Configure::read('appDb.FCS_APP_NAME')]))
+                    ->setSubject(__('New_password_for_{0}', [Configure::read('appDb.FCS_APP_NAME')]))
                     ->setTo($this->getRequest()->getData('Customers.email'))
                     ->setViewVars([
-                        'changePasswordCode' => $changePasswordCode,
+                        'activateNewPasswordCode' => $activateNewPasswordCode,
+                        'tmpNewPassword' => $tmpNewPassword,
                         'customer' => $oldEntity
                     ]);
 
                 if ($email->send()) {
-                    $this->Flash->success(__('We_sent_a_link_to_you_for_generating_a_new_password.'));
+                    $this->Flash->success(__('We_sent_your_new_password_to_you_it_needs_to_be_activated.'));
                 }
 
                 $this->redirect('/');
@@ -142,41 +152,38 @@ class CustomersController extends FrontendController
         $this->set('customer', $customer);
     }
 
-    public function generateNewPassword()
+    public function activateNewPassword()
     {
-        $changePasswordCode = $this->getRequest()->getParam('pass')[0];
+        $activateNewPasswordCode = $this->getRequest()->getParam('pass')[0];
 
-        if (!isset($changePasswordCode)) {
-            throw new RecordNotFoundException('change password code not passed');
+        if (!isset($activateNewPasswordCode)) {
+            throw new RecordNotFoundException('activate new password code not passed');
         }
 
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
-                'Customers.change_password_code' => $changePasswordCode
+                'Customers.activate_new_password_code' => $activateNewPasswordCode
             ],
         ])->first();
 
         if (empty($customer)) {
-            throw new RecordNotFoundException('change password code not found');
+            $this->Flash->success(__('Your_new_password_was_already_activated_or_the_activation_code_was_not_valid.'));
+        } else {
+        
+            $patchedEntity = $this->Customer->patchEntity(
+                $customer,
+                [
+                    'passwd' => $customer->tmp_new_passwd,
+                    'tmp_new_passwd' => null,
+                    'activate_new_password_code' => null
+                ]
+            );
+            $this->Customer->save($patchedEntity);
+            $this->AppAuth->setUser($patchedEntity);
+            $this->Flash->success(__('Your_new_password_was_successfully_activated.'));
         }
-
-        $newPassword = $this->Customer->setNewPassword($customer->id_customer);
-
-        // send email
-        $email = new AppEmail();
-            $email->setTemplate('new_password_set_successful')
-            ->setSubject(__('Generated_new_password_for_{0}', [Configure::read('appDb.FCS_APP_NAME')]))
-            ->setTo($customer->email)
-            ->setViewVars([
-                'password' => $newPassword,
-                'customer' => $customer
-            ]);
-
-        if ($email->send()) {
-            $this->Flash->success(__('We_sent_a_new_password_to_you.'));
-        }
-
+        
         $this->redirect('/');
     }
 

@@ -253,9 +253,9 @@ class SlugHelper extends Helper
         return '/admin/manufacturers/myOptions';
     }
 
-    public function getApproveNewPassword($changePasswordCode)
+    public function getActivateNewPassword($activateNewPasswordCode)
     {
-        return '/'.__('route_generate_new_password') . '/' . $changePasswordCode;
+        return '/'.__('route_activate_new_password') . '/' . $activateNewPasswordCode;
     }
 
     public function getNewPasswordRequest()
