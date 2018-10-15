@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-24 11:59+0200\n"
-"PO-Revision-Date: 2018-09-24 12:00+0200\n"
+"POT-Creation-Date: 2018-10-15 11:04+0200\n"
+"PO-Revision-Date: 2018-10-15 11:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.2\n"
 
 msgid "You_have_been_signed_out."
 msgstr "Du hast dich erfolgreich abgemeldet."
@@ -147,17 +147,17 @@ msgstr "Neues Passwort anfordern"
 msgid "Errors_while_saving!"
 msgstr "Beim Speichern sind Fehler aufgetreten!"
 
-msgid "Request_for_new_password_for_{0}"
-msgstr "Anfrage für neues Passwort für {0}"
+msgid "New_password_for_{0}"
+msgstr "Neues Passwort für {0}"
 
-msgid "We_sent_a_link_to_you_for_generating_a_new_password."
-msgstr "Wir haben dir einen Link zugeschickt, mit dem du dein neues Passwort generieren kannst."
+msgid "We_sent_your_new_password_to_you_it_needs_to_be_activated."
+msgstr "Wir haben dir per E-Mail ein neues Passwort zugeschickt, es muss aber noch aktiviert werden."
 
-msgid "Generated_new_password_for_{0}"
-msgstr "Neues Passwort für {0} generiert"
+msgid "Your_new_password_was_already_activated_or_the_activation_code_was_not_valid."
+msgstr "Dein neues Passwort wurde bereits aktiviert oder der Aktivierungscode war nicht gültig."
 
-msgid "We_sent_a_new_password_to_you."
-msgstr "Wir haben dir dein neues Passwort zugeschickt."
+msgid "Your_new_password_was_successfully_activated."
+msgstr "Dein neues Passwort wurde erfolgreich aktiviert und du bist bereits eingeloggt."
 
 msgid "Sign_in"
 msgstr "Anmelden"
@@ -1764,14 +1764,11 @@ msgstr "Soeben wurde von {1} eine Sofort-Bestellung für {0} getätigt."
 msgid "You_receive_this_message_because_the_delivery_day_of_this_order_was_automatically_set_to_today_{0}_and_therefore_it_does_not_appear_on_your_order_lists."
 msgstr "Du erhältst diese Nachricht, weil der Liefertag dieser Bestellung automatisch auf <b>heute ({0})</b>, gesetzt wurde und sie daher nicht in deinen Bestelllisten aufscheint."
 
-msgid "please_click_on_this_link_to_generate_a_new_password"
-msgstr "bitte klicke auf folgenden Link, um dein neues Passwort zu generieren"
+msgid "your_new_password_is:"
+msgstr "dein neues Passwort lautet:"
 
-msgid "you_just_generated_a_new_password_which_is"
-msgstr "du hast gerade ein neues Passwort generiert, es lautet"
-
-msgid "You_can_sign_in_and_change_your_password_here"
-msgstr "Du kannst dich hier anmelden und das Passwort gleich ändern"
+msgid "Please_click_on_this_link_to_activate_your_new_password"
+msgstr "Bitte klicke auf folgenden Link, um dein neues Passwort zu aktivieren:"
 
 msgid "thank_you_for_your_order_from_{0}."
 msgstr "vielen Dank für deine Bestellung vom {0}."
@@ -2043,8 +2040,8 @@ msgstr "registrierung/abgeschlossen"
 msgid "route_registration"
 msgstr "registrierung"
 
-msgid "route_generate_new_password"
-msgstr "neues-passwort-generieren"
+msgid "route_activate_new_password"
+msgstr "neues-passwort-aktivieren"
 
 msgid "route_request_new_password"
 msgstr "neues-passwort-anfordern"
@@ -2093,6 +2090,21 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "Request_for_new_password_for_{0}"
+#~ msgstr "Anfrage für neues Passwort für {0}"
+
+#~ msgid "We_sent_a_link_to_you_for_generating_a_new_password."
+#~ msgstr "Wir haben dir einen Link zugeschickt, mit dem du dein neues Passwort generieren kannst."
+
+#~ msgid "you_just_generated_a_new_password_which_is"
+#~ msgstr "du hast gerade ein neues Passwort generiert, es lautet"
+
+#~ msgid "You_can_sign_in_and_change_your_password_here"
+#~ msgstr "Du kannst dich hier anmelden und das Passwort gleich ändern"
+
+#~ msgid "route_generate_new_password"
+#~ msgstr "neues-passwort-generieren"
 
 #~ msgid "Individual_delivery_day_info."
 #~ msgstr "Das Produkt ist ab sofort bestellbar und wird automatisch deaktiviert, sobald der letzte Bestelltag des angegebenen Lieferdatums erreicht ist."
