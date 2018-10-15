@@ -46,6 +46,12 @@ foodcoopshop.SyncProductData = {
             column: 3
         },
         {
+            name: 'is_stock_product',
+            label: 'Lagerprodukt',
+            data: 'is_stock_product',
+            column: 4
+        },
+        {
             name: 'quantity',
             label: 'Anzahl',
             data: {
@@ -53,7 +59,7 @@ foodcoopshop.SyncProductData = {
                 'stock_available_quantity_limit': 'stock_available.quantity_limit',
                 'stock_available_sold_out_limit': 'stock_available.sold_out_limit'
             },
-            column: 4
+            column: 5
         },
         {
             name: 'price',
@@ -66,19 +72,19 @@ foodcoopshop.SyncProductData = {
                 unit_product_quantity_in_units: 'unit_product.quantity_in_units',
                 unit_product_price_per_unit_enabled: 'unit_product.price_per_unit_enabled'
             },
-            column: 5
+            column: 6
         },
         {
             name: 'deposit',
             label: 'Pfand',
             data: 'deposit',
-            column: 6
+            column: 7
         },
         {
             name: 'active',
             label: 'Status',
             data: 'active',
-            column: 7
+            column: 8
         }
     ],
 
@@ -99,7 +105,7 @@ foodcoopshop.SyncProductData = {
     },
 
     getProductTableHeadElements : function () {
-        return  ['<input type="checkbox" id="row-marker-all" />', 'Bild', '<span class="name">Name</span><span class="toggle-clean-rows">nur Produkte mit Abweichungen anzeigen</span><input type="checkbox" checked="checked" id="toggle-clean-rows" />', 'Anzahl', 'Preis', 'Pfand', 'Status'];
+        return  ['<input type="checkbox" id="row-marker-all" />', 'Bild', '<span class="name">Name</span><span class="toggle-clean-rows">nur Produkte mit Abweichungen anzeigen</span><input type="checkbox" checked="checked" id="toggle-clean-rows" />', 'Lagerprodukt', 'Anzahl', 'Preis', 'Pfand', 'Status'];
     },
 
     showEverythingAllrightMessage : function () {
@@ -161,9 +167,14 @@ foodcoopshop.SyncProductData = {
                         tableData += foodcoopshop.SyncProduct.getIsDeclarationOkString(product.is_declaration_ok);
                     }
                 tableData += '</td>';
+                tableData += '<td class="is_stock_product">';
+                    if (!isAttribute) {
+                        tableData += foodcoopshop.SyncProduct.getIsStockProductString(product.is_stock_product);
+                    }
+                tableData += '</td>';
                 tableData += '<td class="quantity">';
                     if (isAttribute || !hasAttributes) {
-                        tableData += foodcoopshop.SyncProduct.getQuantityString(product.is_stock_product, product.stock_available.quantity, product.stock_available.quantity_limit, product.stock_available.sold_out_limit);
+                        tableData += foodcoopshop.SyncProduct.getQuantityString(product.stock_available.quantity, product.stock_available.quantity_limit, product.stock_available.sold_out_limit);
                     }
                 tableData += '</td>';
                 tableData += '<td class="price">';
@@ -204,6 +215,7 @@ foodcoopshop.SyncProductData = {
             html += '<span class="app-name"></span>';
             html += '<span class="product-name">' + productName + '</span>';
         html += '</td>';
+        html += '<td class="is_stock_product"></td>';
         html += '<td class="quantity"></td>';
         html += '<td class="price"></td>';
         html += '<td class="deposit"></td>';
@@ -347,9 +359,17 @@ foodcoopshop.SyncProductData = {
                     $(this).find('td.name').html(remoteProductName);
                     $(this).find('td.name').prepend('<span class="app-name">' + response.app.name + ': </span>');
 
+                    // is_stock_product
+                    if (!isAttribute) {
+                        var remoteProductIsStockProductString = foodcoopshop.SyncProduct.getIsStockProductString(product.is_stock_product);
+                        var localProductIsStockProductString = foodcoopshop.SyncProduct.getIsStockProductString(localProduct.is_stock_product);
+                        $(this).find('td.is_stock_product').html(remoteProductIsStockProductString);
+                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.is_stock_product', remoteProductIsStockProductString, localProductIsStockProductString, $(this), localProductRow);
+                    }
+                    
                     // quantity
                     if (!hasAttributes) {
-                        var remoteProductQuantityString = foodcoopshop.SyncProduct.getQuantityString(product.is_stock_product, product.stock_available.quantity, product.stock_available.quantity_limit, product.stock_available.sold_out_limit);
+                        var remoteProductQuantityString = foodcoopshop.SyncProduct.getQuantityString(product.stock_available.quantity, product.stock_available.quantity_limit, product.stock_available.sold_out_limit);
                         var localProductQuantityString = foodcoopshop.SyncProduct.getQuantityString(localProduct.is_stock_product, localProduct.stock_available.quantity, localProduct.stock_available.quantity_limit, localProduct.stock_available.sold_out_limit);
                         $(this).find('td.quantity').html(remoteProductQuantityString);
                         foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.quantity', remoteProductQuantityString, localProductQuantityString, $(this), localProductRow);

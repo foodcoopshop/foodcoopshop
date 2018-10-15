@@ -192,7 +192,7 @@ body.syncs.product a.delete-product-button:hover i {
 }
 
 body.syncs.product_data table.product-list {
-  width: 750px;
+  width: 800px;
 }
 
 body.syncs.product_data table.product-list td.image img {
@@ -209,7 +209,8 @@ body.syncs.product_data table.product-list td.name .fa {
 	float: right;
 	margin-left: 5px;
 }
-body.syncs.product_data table.product-list td.active {
+body.syncs.product_data table.product-list td.active,
+body.syncs.product_data table.product-list td.is_stock_product {
   text-align: center;
 }
 

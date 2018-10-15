@@ -117,6 +117,7 @@ class ApiController extends Controller
 
         $products2saveForImage = [];
         $products2saveForName = [];
+        $products2saveForIsStockProduct = [];
         $products2saveForQuantity = [];
         $products2saveForPrice = [];
         $products2saveForDeposit = [];
@@ -159,6 +160,15 @@ class ApiController extends Controller
                     ];
                 }
             }
+            
+            if (isset($product['is_stock_product'])) {
+                if ($productIds['attributeId'] == 0) {
+                    $products2saveForIsStockProduct[] = [
+                        $productIds['productId'] => (int) $product['is_stock_product']
+                    ];
+                }
+            }
+            
             if (isset($product['quantity'])) {
                 $product['quantity'] = [
                     'quantity' => $product['quantity']['stock_available_quantity'],
@@ -212,6 +222,7 @@ class ApiController extends Controller
 
         if (empty($products2saveForImage) &&
             empty($products2saveForName) &&
+            empty($products2saveForIsStockProduct) &&
             empty($products2saveForQuantity) &&
             empty($products2saveForPrice) &&
             empty($products2saveForDeposit) &&
@@ -237,6 +248,15 @@ class ApiController extends Controller
                 }
             }
 
+            if (!empty($products2saveForIsStockProduct)) {
+                $syncFieldsOk[] = 'Lagerproduct';
+                $updateStatus = $this->Product->changeIsStockProduct($products2saveForIsStockProduct);
+                $productIds = [];
+                foreach ($products2saveForIsStockProduct as $p) {
+                    $productIds[] = key($p);
+                }
+            }
+            
             if (!empty($products2saveForQuantity)) {
                 $syncFieldsOk[] = 'Anzahl';
                 $updateStatus = $this->Product->changeQuantity($products2saveForQuantity);

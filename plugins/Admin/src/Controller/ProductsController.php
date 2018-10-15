@@ -614,15 +614,21 @@ class ProductsController extends AdminAppController
             ]
         ])->first();
         
-        $product2update = [];
-        if (in_array('isStockProduct', array_keys($this->getRequest()->getData()))) {
-            $product2update['is_stock_product'] = $this->getRequest()->getData('isStockProduct');
-        }
-        if (!empty($product2update)) {
-            $this->Product->save(
-                $this->Product->patchEntity($oldProduct, $product2update)
+        try {
+            $object2save = [
+                'is_stock_product' => $this->getRequest()->getData('isStockProduct'),
+            ];
+            $this->Product->changeIsStockProduct(
+                [
+                    [
+                        $originalProductId => $object2save
+                    ]
+                ]
             );
+        } catch (InvalidParameterException $e) {
+            $this->sendAjaxError($e);
         }
+        
         $this->Flash->success(__d('admin', 'The_product_{0}_was_changed_successfully_to_a_stock_product.', ['<b>' . $oldProduct->name . '</b>']));
         
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
