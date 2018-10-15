@@ -120,7 +120,8 @@ body.syncs.product_data tr.assigned-products td {
 }
 
 body.syncs.product_data tr.assigned-products td.dirty,
-body.syncs.product_data span.dirty {
+body.syncs.product_data span.dirty,
+table.list td.dirty i.fa {
   background-color: #f3515c;
   color: #fff;
 }
@@ -191,7 +192,7 @@ body.syncs.product a.delete-product-button:hover i {
 }
 
 body.syncs.product_data table.product-list {
-  width: 650px;
+  width: 750px;
 }
 
 body.syncs.product_data table.product-list td.image img {

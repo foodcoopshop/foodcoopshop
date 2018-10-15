@@ -37,9 +37,12 @@ foodcoopshop.SyncProduct = {
         return result;
     },
     
-    getPricePerUnitBaseInfo(priceInclPerUnit, unitName, unitAmount, unitQuantityInUnits)
-    {
+    getPricePerUnitBaseInfo : function(priceInclPerUnit, unitName, unitAmount, unitQuantityInUnits) {
         return foodcoopshop.Helper.formatFloatAsCurrency(priceInclPerUnit) + ' / ' + (unitAmount > 1 ? unitAmount + ' ' : '') + unitName + ' - ca. ' + unitQuantityInUnits + ' ' + unitName;
+    },
+    
+    getQuantityString : function(isStockProduct, quantity, quantityLimit, soldOutLimit) {
+        return quantity + ' / <i>' + (quantityLimit === null ? '-' : quantityLimit) + '</i> / <i>' + (soldOutLimit === null ? '-' : soldOutLimit) + '</i>';
     },
 
     getProductNameWithUnity : function (product, isAttribute, hasAttributes) {
