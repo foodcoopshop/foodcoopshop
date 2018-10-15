@@ -197,6 +197,10 @@ class ApiController extends Controller
 
                 if (!isset($product['price']['unit_product_price_per_unit_enabled'])) {
                     $product['price']['unit_product_price_per_unit_enabled'] = 0;
+                    $product['price']['unit_product_price_incl_per_unit'] = 0;
+                    $product['price']['unit_product_name'] = '';
+                    $product['price']['unit_product_amount'] = 0;
+                    $product['price']['unit_product_quantity_in_units'] = 0;
                 }
                 
                 $products2saveForPrice[] = [
@@ -249,7 +253,7 @@ class ApiController extends Controller
             }
 
             if (!empty($products2saveForIsStockProduct)) {
-                $syncFieldsOk[] = 'Lagerprodukt';
+                $fieldName = 'Lagerprodukt';
                 try {
                     $updateIsStockProduct = $this->Product->changeIsStockProduct($products2saveForIsStockProduct);
                     if ($updateIsStockProduct) {
