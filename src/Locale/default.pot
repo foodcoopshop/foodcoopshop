@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-10-15 11:04+0200\n"
+"POT-Creation-Date: 2018-10-15 11:36+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1548,9 +1548,6 @@ msgid "I_accept_the_{0}"
 msgstr ""
 
 msgid "Please_enter_your_email_address_and_click_on_send_button."
-msgstr ""
-
-msgid "You_will_then_get_a_link_to_change_your_password."
 msgstr ""
 
 msgid "Send"

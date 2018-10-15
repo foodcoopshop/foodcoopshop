@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-10-15 11:04+0200\n"
-"PO-Revision-Date: 2018-10-15 11:24+0200\n"
+"POT-Creation-Date: 2018-10-15 11:36+0200\n"
+"PO-Revision-Date: 2018-10-15 11:38+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1551,9 +1551,6 @@ msgstr "Ich akzeptiere die {0}"
 msgid "Please_enter_your_email_address_and_click_on_send_button."
 msgstr "Bitte gib deine E-Mail-Adresse an und klicke dann auf \"Senden\"."
 
-msgid "You_will_then_get_a_link_to_change_your_password."
-msgstr "Wir senden dir dann einen Link zu, mit dem du das neue Passwort generieren kannst."
-
 msgid "Send"
 msgstr "Senden"
 
@@ -1768,7 +1765,7 @@ msgid "your_new_password_is:"
 msgstr "dein neues Passwort lautet:"
 
 msgid "Please_click_on_this_link_to_activate_your_new_password"
-msgstr "Bitte klicke auf folgenden Link, um dein neues Passwort zu aktivieren:"
+msgstr "Bitte klicke auf folgenden Link, um dein neues Passwort zu aktivieren"
 
 msgid "thank_you_for_your_order_from_{0}."
 msgstr "vielen Dank für deine Bestellung vom {0}."
@@ -2090,6 +2087,9 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "You_will_then_get_a_link_to_change_your_password."
+#~ msgstr "Wir senden dir dann einen Link zu, mit dem du das neue Passwort generieren kannst."
 
 #~ msgid "Request_for_new_password_for_{0}"
 #~ msgstr "Anfrage für neues Passwort für {0}"

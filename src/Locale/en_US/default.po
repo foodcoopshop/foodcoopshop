@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-10-15 11:04+0200\n"
-"PO-Revision-Date: 2018-10-15 11:24+0200\n"
+"POT-Creation-Date: 2018-10-15 11:36+0200\n"
+"PO-Revision-Date: 2018-10-15 11:38+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1551,9 +1551,6 @@ msgstr "I accept the {0}"
 msgid "Please_enter_your_email_address_and_click_on_send_button."
 msgstr "Please enter your email address and click on send button."
 
-msgid "You_will_then_get_a_link_to_change_your_password."
-msgstr "You will then get a link to change your password."
-
 msgid "Send"
 msgstr "Send"
 
@@ -1768,7 +1765,7 @@ msgid "your_new_password_is:"
 msgstr "your new password:"
 
 msgid "Please_click_on_this_link_to_activate_your_new_password"
-msgstr "Please click on this link to activate your new password:"
+msgstr "Please click on this link to activate your new password"
 
 msgid "thank_you_for_your_order_from_{0}."
 msgstr "thank you for order from {0}."
@@ -2090,6 +2087,9 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "You_will_then_get_a_link_to_change_your_password."
+#~ msgstr "You will then get a link to change your password."
 
 #~ msgid "Request_for_new_password_for_{0}"
 #~ msgstr "Request for new password for {0}"
