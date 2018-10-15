@@ -63,7 +63,7 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/'.__('route_new_products'), ['controller' => 'Categories', 'action' => 'newProducts']);
     $routes->connect('/'.__('route_request_new_password'), ['controller' => 'Customers', 'action' => 'newPasswordRequest']);
-    $routes->connect('/'.__('route_generate_new_password').'/*', ['controller' => 'Customers', 'action' => 'generateNewPassword']);
+    $routes->connect('/'.__('route_activate_new_password').'/*', ['controller' => 'Customers', 'action' => 'activateNewPassword']);
 
     $routes->connect('/'.__('route_news_list'), ['controller' => 'BlogPosts', 'action' => 'index']);
     $routes->connect('/'.__('route_news_detail').'/*', ['controller' => 'BlogPosts', 'action' => 'detail']);

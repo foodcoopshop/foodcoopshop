@@ -5,8 +5,6 @@ use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
 /**
- * CustomersControllerTest
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -45,26 +43,23 @@ class CustomersControllerTest extends AppCakeTestCase
     public function testNewPasswordRequestWithValidEmail()
     {
         $this->doPostNewPasswordRequest(Configure::read('test.loginEmailCustomer'));
-        $this->assertRegExpWithUnquotedString('Wir haben dir einen Link zugeschickt, mit dem du dein neues Passwort generieren kannst.', $this->browser->getContent());
-
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs($emailLogs[0], 'Anfrage für neues Passwort für FoodCoop Test', ['bitte klicke auf folgenden Link, um dein neues Passwort zu generieren'], [Configure::read('test.loginEmailCustomer')]);
+        $this->assertRegExpWithUnquotedString('Wir haben dir per E-Mail ein neues Passwort zugeschickt, es muss aber noch aktiviert werden.', $this->browser->getContent());
 
         $customer = $this->Customer->find('all', [
             'email' => Configure::read('test.loginEmailCustomer')
         ])->first();
 
-        $this->browser->get($this->Slug->getApproveNewPassword('non-existing-code'));
-        $this->assert404NotFoundHeader();
-
-        $this->browser->get($this->Slug->getApproveNewPassword($customer->change_password_code));
-        $this->assertRegExpWithUnquotedString('Wir haben dir dein neues Passwort zugeschickt.', $this->browser->getContent());
+        $this->browser->get($this->Slug->getActivateNewPassword('non-existing-code'));
+        $this->assertRegExpWithUnquotedString('Dein neues Passwort wurde bereits aktiviert oder der Aktivierungscode war nicht gültig.', $this->browser->getContent());
+        
+        $this->browser->get($this->Slug->getActivateNewPassword($customer->activate_new_password_code));
+        $this->assertRegExpWithUnquotedString('Dein neues Passwort wurde erfolgreich aktiviert und du bist bereits eingeloggt.', $this->browser->getContent());
         $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/');
 
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs($emailLogs[1], 'Neues Passwort für FoodCoop Test generiert', ['du hast gerade ein neues Passwort generiert, es lautet:'], [Configure::read('test.loginEmailCustomer')]);
-        preg_match_all('/\<b\>(.*)\<\/b\>/', $emailLogs[1]->message, $matches);
-
+        $this->assertEmailLogs($emailLogs[0], 'Neues Passwort für FoodCoop Test', ['Bitte klicke auf folgenden Link, um dein neues Passwort zu aktivieren'], [Configure::read('test.loginEmailCustomer')]);
+        preg_match_all('/\<b\>(.*)\<\/b\>/', $emailLogs[0]->message, $matches);
+        
         // script would break if login does not work - no complaints means login works :-)
         $this->browser->loginEmail = Configure::read('test.loginEmailCustomer');
         $this->browser->loginPassword = $matches[1][0];

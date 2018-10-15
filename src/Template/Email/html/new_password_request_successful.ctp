@@ -24,10 +24,14 @@ use Cake\Core\Configure;
             <td>
                 
                 <p>
-                    <?php echo __('please_click_on_this_link_to_generate_a_new_password'); ?>:<br />
+                    <?php echo __('your_new_password_is:'); ?>:<br />
+                    <b><?php echo $tmpNewPassword; ?></b>
                 </p>
                 
-                <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getApproveNewPassword($changePasswordCode); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getApproveNewPassword($changePasswordCode); ?></a>
+                <p>
+                    <?php echo __('Please_click_on_this_link_to_activate_your_new_password'); ?>:<br />
+	                <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getActivateNewPassword($activateNewPasswordCode); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getActivateNewPassword($activateNewPasswordCode); ?></a>
+                </p>
                 
             </td>
             
