@@ -340,7 +340,7 @@ class CartsControllerTest extends AppCakeTestCase
         
         $this->loginAsSuperadmin();
         $this->browser->ajaxPost('/admin/products/editIsStockProduct', [
-            'productId' => '350-13',
+            'productId' => 350,
             'isStockProduct' => 0
         ]);
         $this->browser->ajaxPost('/admin/products/editIsStockProduct', [
