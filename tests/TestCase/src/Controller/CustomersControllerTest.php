@@ -53,7 +53,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Dein neues Passwort wurde bereits aktiviert oder der Aktivierungscode war nicht gültig.', $this->browser->getContent());
         
         $this->browser->get($this->Slug->getActivateNewPassword($customer->activate_new_password_code));
-        $this->assertRegExpWithUnquotedString('Dein neues Passwort wurde erfolgreich aktiviert.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Dein neues Passwort wurde erfolgreich aktiviert und du bist bereits eingeloggt.', $this->browser->getContent());
         $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/');
 
         $emailLogs = $this->EmailLog->find('all')->toArray();
