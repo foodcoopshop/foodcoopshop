@@ -511,7 +511,7 @@ class ProductsTable extends AppTable
      *  (
      *      [0] => Array
      *          (
-     *              [productId] => (boolean) is_stock_product
+     *              [productId] => (int) is_stock_product
      *          )
      *  )
      * @return boolean $success

@@ -105,7 +105,16 @@ foodcoopshop.SyncProductData = {
     },
 
     getProductTableHeadElements : function () {
-        return  ['<input type="checkbox" id="row-marker-all" />', 'Bild', '<span class="name">Name</span><span class="toggle-clean-rows">nur Produkte mit Abweichungen anzeigen</span><input type="checkbox" checked="checked" id="toggle-clean-rows" />', 'Lagerprodukt', 'Anzahl', 'Preis', 'Pfand', 'Status'];
+        return  [
+            '<input type="checkbox" id="row-marker-all" />',
+            'Bild',
+            '<span class="name">Name</span><span class="toggle-clean-rows">nur Produkte mit Abweichungen anzeigen</span><input type="checkbox" checked="checked" id="toggle-clean-rows" />',
+            'Lagerprodukt',
+            'Anzahl',
+            'Preis',
+            'Pfand',
+            'Status'
+        ];
     },
 
     showEverythingAllrightMessage : function () {
@@ -370,7 +379,7 @@ foodcoopshop.SyncProductData = {
                     // quantity
                     if (!hasAttributes) {
                         var remoteProductQuantityString = foodcoopshop.SyncProduct.getQuantityString(product.stock_available.quantity, product.stock_available.quantity_limit, product.stock_available.sold_out_limit);
-                        var localProductQuantityString = foodcoopshop.SyncProduct.getQuantityString(localProduct.is_stock_product, localProduct.stock_available.quantity, localProduct.stock_available.quantity_limit, localProduct.stock_available.sold_out_limit);
+                        var localProductQuantityString = foodcoopshop.SyncProduct.getQuantityString(localProduct.stock_available.quantity, localProduct.stock_available.quantity_limit, localProduct.stock_available.sold_out_limit);
                         $(this).find('td.quantity').html(remoteProductQuantityString);
                         foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.quantity', remoteProductQuantityString, localProductQuantityString, $(this), localProductRow);
                     }
@@ -520,7 +529,7 @@ foodcoopshop.SyncProductData = {
                                         var newValue;
                                         if ($.type(dataIndex) == 'string') {
                                             newValue = foodcoopshop.Helper.resolveIndex(dataIndex, syncProduct);
-                                            if (attributeName == 'active') {
+                                            if ($.inArray(attributeName, ['active', 'is_stock_product']) !== -1) {
                                                 newValue = newValue ? 1 : 0; // transform true or false to 1 or 0
                                             }
                                             if (attributeName == 'deposit') {

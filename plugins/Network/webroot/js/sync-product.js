@@ -50,7 +50,8 @@ foodcoopshop.SyncProduct = {
     },
     
     getQuantityString : function(quantity, quantityLimit, soldOutLimit) {
-        return quantity + ' / <i>' + (quantityLimit === null ? '-' : quantityLimit) + '</i> / <i>' + (soldOutLimit === null ? '-' : soldOutLimit) + '</i>';
+        var result = quantity + ' / <i>' + (quantityLimit === null ? '-' : quantityLimit) + '</i> / <i>' + (soldOutLimit === null ? '-' : soldOutLimit) + '</i>';
+        return result;
     },
 
     getProductNameWithUnity : function (product, isAttribute, hasAttributes) {

@@ -164,7 +164,7 @@ class ApiController extends Controller
             if (isset($product['is_stock_product'])) {
                 if ($productIds['attributeId'] == 0) {
                     $products2saveForIsStockProduct[] = [
-                        $productIds['productId'] => (int) $product['is_stock_product']
+                        $productIds['productId'] => $product['is_stock_product']
                     ];
                 }
             }
@@ -249,11 +249,20 @@ class ApiController extends Controller
             }
 
             if (!empty($products2saveForIsStockProduct)) {
-                $syncFieldsOk[] = 'Lagerproduct';
-                $updateStatus = $this->Product->changeIsStockProduct($products2saveForIsStockProduct);
-                $productIds = [];
-                foreach ($products2saveForIsStockProduct as $p) {
-                    $productIds[] = key($p);
+                $syncFieldsOk[] = 'Lagerprodukt';
+                try {
+                    $updateIsStockProduct = $this->Product->changeIsStockProduct($products2saveForIsStockProduct);
+                    if ($updateIsStockProduct) {
+                        $syncFieldsOk[] = $fieldName;
+                        $productIds = [];
+                        foreach ($products2saveForIsStockProduct as $p) {
+                            $productIds[] = key($p);
+                        }
+                    } else {
+                        $syncFieldsError[] = $fieldName;
+                    }
+                } catch (InvalidParameterException $e) {
+                    $syncFieldsError[] = $fieldName;
                 }
             }
             
