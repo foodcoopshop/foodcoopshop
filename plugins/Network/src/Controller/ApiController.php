@@ -163,6 +163,9 @@ class ApiController extends Controller
             
             if (isset($product['is_stock_product'])) {
                 if ($productIds['attributeId'] == 0) {
+                    if (!isset($product['is_stock_product'])) {
+                        $product['is_stock_product'] = 0;
+                    }
                     $products2saveForIsStockProduct[] = [
                         $productIds['productId'] => $product['is_stock_product']
                     ];
