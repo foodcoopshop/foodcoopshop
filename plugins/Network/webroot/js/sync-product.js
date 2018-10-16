@@ -37,6 +37,17 @@ foodcoopshop.SyncProduct = {
         return result;
     },
     
+    getDeliveryRhythmString : function(type, count, firstDeliveryDay, orderPossibleUntil) {
+        var result = type + ' / ' + count;
+        if (firstDeliveryDay !== null) {
+            result += ' / ' + firstDeliveryDay;
+        }
+        if (orderPossibleUntil !== null) {
+            result += ' / ' + orderPossibleUntil;
+        }
+        return result;
+    },
+    
     getPricePerUnitBaseInfo : function(priceInclPerUnit, unitName, unitAmount, unitQuantityInUnits) {
         return foodcoopshop.Helper.formatFloatAsCurrency(priceInclPerUnit) + ' / ' + (unitAmount > 1 ? unitAmount + ' ' : '') + unitName + ' - ca. ' + unitQuantityInUnits + ' ' + unitName;
     },

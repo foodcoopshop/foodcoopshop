@@ -81,10 +81,21 @@ foodcoopshop.SyncProductData = {
             column: 7
         },
         {
+            name: 'delivery_rhythm',
+            label: 'Lieferrhythmus',
+            data: {
+                delivery_rhythm_type: 'delivery_rhythm_type',
+                delivery_rhythm_count: 'delivery_rhythm_count',
+                delivery_rhythm_first_delivery_day: 'delivery_rhythm_first_delivery_day',
+                delivery_rhythm_order_possible_until: 'delivery_rhythm_order_possible_until'
+            },
+            column: 8
+        },
+        {
             name: 'active',
             label: 'Status',
             data: 'active',
-            column: 8
+            column: 9
         }
     ],
 
@@ -113,6 +124,7 @@ foodcoopshop.SyncProductData = {
             'Anzahl',
             'Preis',
             'Pfand',
+            'Lieferrhythmus',
             'Status'
         ];
     },
@@ -196,6 +208,11 @@ foodcoopshop.SyncProductData = {
                     }
                 tableData += '</td>';
                 tableData += '<td class="deposit">' + (product.deposit > 0 ? foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.deposit)) : '') + '</td>';
+                tableData += '<td class="delivery_rhythm">';
+                if (!isAttribute) {
+                    tableData += foodcoopshop.SyncProduct.getDeliveryRhythmString(product.delivery_rhythm_type, product.delivery_rhythm_count, product.delivery_rhythm_first_delivery_day, product.delivery_rhythm_order_possible_until);
+                }
+            tableData += '</td>';
                 tableData += '<td class="active">' + (!isAttribute ? (product.active ? '<i class="fa fa-check ok"></i>' : '<i class="fa fa-close not-ok"></i>') : '') + '</td>';
                 tableData += '</tr>';
 
@@ -228,6 +245,7 @@ foodcoopshop.SyncProductData = {
         html += '<td class="quantity"></td>';
         html += '<td class="price"></td>';
         html += '<td class="deposit"></td>';
+        html += '<td class="delivery_rhythm"></td>';
         html += '<td class="active"></td>';
         html += '</tr>';
         return html;
@@ -431,6 +449,14 @@ foodcoopshop.SyncProductData = {
                     $(this).find('td.deposit').html(remoteDeposit);
                     foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.deposit', product.deposit, localProduct.deposit, $(this), localProductRow);
 
+                    // delivery_rhythm
+                    if (!isAttribute) {
+                        var remoteProductDeliveryRhythmString = foodcoopshop.SyncProduct.getDeliveryRhythmString(product.delivery_rhythm_type, product.delivery_rhythm_count, product.delivery_rhythm_first_delivery_day, product.delivery_rhythm_order_possible_until);
+                        var localProductDeliveryRhythmString = foodcoopshop.SyncProduct.getDeliveryRhythmString(product.delivery_rhythm_type, localProduct.delivery_rhythm_count, localProduct.delivery_rhythm_first_delivery_day, localProduct.delivery_rhythm_order_possible_until);
+                        $(this).find('td.delivery_rhythm').html(remoteProductDeliveryRhythmString);
+                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.delivery_rhythm', remoteProductDeliveryRhythmString, localProductDeliveryRhythmString, $(this), localProductRow);
+                    }
+                    
                     // active
                     var remoteActive = (!isAttribute ? (product.active ? '<i class="fa fa-check ok"></i>' : '<i class="fa fa-close not-ok"></i>') : '');
                     $(this).find('td.active').html(remoteActive);
