@@ -61,8 +61,6 @@ use Cake\Core\Configure;
 
     </div>
     <div class="sc"></div>
-
-    <h2>Produkte synchronisieren</h2>
     
     <?php
     echo $this->element('tabs', [

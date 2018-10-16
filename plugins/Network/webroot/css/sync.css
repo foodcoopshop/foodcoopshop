@@ -43,8 +43,11 @@ body.syncs h2 {
 }
 .nav-tabs {
 	margin-bottom: 10px;
-	margin-top: 0px ! important;
+	margin-top: 8px ! important;
 	margin-left: -5px ! important;
+}
+.nav-tabs li.active {
+	font-weight: bold;
 }
 form.sync-login-form {
   border: 1px solid #dfdfdf;
