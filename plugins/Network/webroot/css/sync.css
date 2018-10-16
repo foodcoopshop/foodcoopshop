@@ -28,7 +28,11 @@ body.syncs h2 {
   margin-bottom: 0;
   border-bottom: 0;
 }
-
+.nav-tabs {
+	margin-bottom: 10px;
+	margin-top: 0px ! important;
+	margin-left: -5px ! important;
+}
 form.sync-login-form {
   border: 1px solid #dfdfdf;
   border-radius: 3px;

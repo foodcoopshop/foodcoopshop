@@ -47,16 +47,8 @@ use Cake\Core\Configure;
                 'escape' => false
             ]);
         }
-        echo $this->Html->link(
-            '<i class="fa fa-arrow-circle-left"></i> Meine Produkte',
-            $this->Slug->getProductAdmin(),
-            [
-                'class' => 'btn btn-default',
-                'escape' => false
-            ]
-        );
         if (!empty($localSyncProducts)) {
-            echo $this->Html->link('<i class="fa fa-refresh"></i> Produktdaten synchronisieren', 'javascript:void(0);', [
+            echo $this->Html->link('<i class="fa fa-refresh"></i> Produkte synchronisieren', 'javascript:void(0);', [
             'class' => 'btn btn-danger sync-products-button',
             'escape' => false
             ]);
@@ -73,22 +65,15 @@ use Cake\Core\Configure;
     <h2>Produktdaten synchronisieren</h2>
     
     <?php
-        echo '<p>';
-    if (!empty($emptyProductsString)) {
-        echo $emptyProductsString;
-    }
-        $syncProductsLink = $this->Html->link(
-            '<i class="fa fa-arrow-circle-right"></i> Produkte zuordnen',
-            $this->Network->getSyncProducts(),
-            [
-                'class' => 'btn btn-default sync-product-button',
-                'escape' => false,
-                'style' => 'margin-left: 2px'
-            ]
-        );
-        echo 'Klicke auf '.$syncProductsLink . ', um deine Produkte zuzuordnen.';
-        echo '<br /><b><a target="_blank" href="'.$this->Network->getNetworkPluginDocs().'">Hier geht\'s zur Anleitung.</a></b> <b>Varianten</b> werden klein und kursiv angezeigt, <b>Produkte</b> groß und nicht kursiv.';
-        echo '<br />Rot hinterlegte Felder (Vorschau) zeigen Unterschiede zwischen Master-Foodcoop und Remote-Foodcoop an.';
+    echo $this->element('tabs', [
+        'url' => $this->request->getUri()->getPath()
+    ]);
+    
+    echo '<p>';
+        if (!empty($emptyProductsString)) {
+            echo $emptyProductsString;
+        }
+        echo 'Rot hinterlegte Felder (Vorschau) zeigen Unterschiede zwischen Master-Foodcoop und Remote-Foodcoop an.';
         echo '</p>';
     ?>
     

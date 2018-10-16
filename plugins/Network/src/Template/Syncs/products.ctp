@@ -36,14 +36,6 @@ use Cake\Core\Configure;
                    'class' => 'btn btn-success',
                    'escape' => false
                 ]);
-               echo $this->Html->link(
-                   '<i class="fa fa-arrow-circle-left"></i> Produktdaten synchronisieren',
-                   $this->Network->getSyncProductData(),
-                   [
-                       'class' => 'btn btn-default',
-                       'escape' => false
-                   ]
-               );
                echo '</div>';
         ?>
         <div class="right">
@@ -56,12 +48,14 @@ use Cake\Core\Configure;
     <h2>Produkte zuordnen</h2>
     
     <?php
+    echo $this->element('tabs', [
+        'url' => $this->request->getUri()->getPath()
+    ]);
 
     echo '<p>';
     if (!empty($emptyProductsString)) {
         echo $emptyProductsString;
     }
-    echo '<b><a target="_blank" href="'.$this->Network->getNetworkPluginDocs().'">Hier geht\'s zur Anleitung.</a></b> <b>Varianten</b> werden klein und kursiv angezeigt, <b>Produkte</b> groß und nicht kursiv.';
     echo '</p>';
 
         echo '<div class="product-list local" data-sync-domain="'.'http' . (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 's' : ''). '://'.$_SERVER['SERVER_NAME'].'"></div>';

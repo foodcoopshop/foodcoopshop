@@ -25,6 +25,20 @@ class NetworkHelper extends Helper
 {
 
     public $helpers = ['MyHtml'];
+    
+    public function getTabs()
+    {
+        return [
+            [
+                'url' => $this->getSyncProducts(),
+                'name' => 'Produkte zuordnen'
+            ],
+            [
+                'url' => $this->getSyncProductData(),
+                'name' => 'Produkte synchronisieren'
+            ]
+        ];
+    }
 
     public function getSyncProducts()
     {
