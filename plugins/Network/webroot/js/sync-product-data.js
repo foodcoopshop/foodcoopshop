@@ -361,8 +361,6 @@ foodcoopshop.SyncProductData = {
                         }
                         var localProductImageHash = localProduct.image && localProduct.image.hash || '';
                         var remoteProductImageHash = product.image && product.image.hash || '';
-                        console.log('localProductImageHash: ' + localProductImageHash);
-                        console.log('remoteProductImageHash: ' + remoteProductImageHash);
                         foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.image', remoteProductImageHash, localProductImageHash, $(this), localProductRow);
                     }
                     
@@ -575,6 +573,15 @@ foodcoopshop.SyncProductData = {
                                             $(dataIndexKeys).each(function (index, dataI) {
                                                 var newIndex = dataIndexKeys[index];
                                                 newValue[newIndex] = foodcoopshop.Helper.resolveIndex(dataIndex[dataI], syncProduct);
+                                                
+                                                if ($.type(newValue[newIndex] == 'string')) {
+                                                    // converting delivery_rhythm_first_delivery_day and delivery_rhythm_order_possible_until to 'YYYY-mm-dd'
+                                                    var regex = new RegExp(/00\:00\:00\+00\:00/);
+                                                    if (regex.test(newValue[newIndex])) {
+                                                        newValue[newIndex] = newValue[newIndex].substr(0, 10);
+                                                    }
+                                                }
+
                                             });
                                             attributes[attributeName] = $.extend({}, newValue); // to post data correctly convert array to object
                                         }
