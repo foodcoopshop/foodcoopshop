@@ -68,7 +68,7 @@ if ($product['description'] != '') {
         if ($this->request->getSession()->check('Auth.instantOrderCustomer')) {
             $pickupDayDetailText = __('Instant_order');
         } else {
-            $pickupDayDetailText = $this->Html->getDeliveryRhythmString($product['delivery_rhythm_type'], $product['delivery_rhythm_count']);
+            $pickupDayDetailText = $this->Html->getDeliveryRhythmString($product['is_stock_product'], $product['delivery_rhythm_type'], $product['delivery_rhythm_count']);
         }
         echo $this->Time->getDateFormattedWithWeekday(strtotime($product['next_delivery_day']));
     echo '</span>';

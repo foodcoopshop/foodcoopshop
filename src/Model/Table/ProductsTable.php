@@ -757,6 +757,8 @@ class ProductsTable extends AppTable
             }
 
             $product->gross_price = $this->getGrossPrice($product->id_product, $product->price);
+            
+            $product->delivery_rhythm_string = Configure::read('app.htmlHelper')->getDeliveryRhythmString($product->is_stock_product, $product->delivery_rhythm_type, $product->delivery_rhythm_count);
 
             $rowClass = [];
             if (! $product->active) {

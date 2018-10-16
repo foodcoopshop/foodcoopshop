@@ -37,14 +37,19 @@ foodcoopshop.SyncProduct = {
         return result;
     },
     
-    getDeliveryRhythmString : function(type, count, firstDeliveryDay, orderPossibleUntil) {
-        var result = type + ' / ' + count;
-        if (firstDeliveryDay !== null) {
-            result += ' / ' + firstDeliveryDay;
+    getDeliveryRhythmString : function(deliveryRhythmString, isStockProduct, type, count, firstDeliveryDay, orderPossibleUntil) {
+        
+        var result = deliveryRhythmString;
+        
+        if (!isStockProduct) {
+            if (firstDeliveryDay !== null) {
+                result += ' / ' + new Date(firstDeliveryDay).toLocaleDateString(foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47);
+            }
+            if (type == 'individual' && orderPossibleUntil !== null) {
+                result += ' / ' + new Date(orderPossibleUntil).toLocaleDateString(foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47);
+            }
         }
-        if (orderPossibleUntil !== null) {
-            result += ' / ' + orderPossibleUntil;
-        }
+        
         return result;
     },
     

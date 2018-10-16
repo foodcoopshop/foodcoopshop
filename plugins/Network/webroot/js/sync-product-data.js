@@ -210,7 +210,7 @@ foodcoopshop.SyncProductData = {
                 tableData += '<td class="deposit">' + (product.deposit > 0 ? foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.deposit)) : '') + '</td>';
                 tableData += '<td class="delivery_rhythm">';
                 if (!isAttribute) {
-                    tableData += foodcoopshop.SyncProduct.getDeliveryRhythmString(product.delivery_rhythm_type, product.delivery_rhythm_count, product.delivery_rhythm_first_delivery_day, product.delivery_rhythm_order_possible_until);
+                    tableData += foodcoopshop.SyncProduct.getDeliveryRhythmString(product.delivery_rhythm_string, product.is_stock_product, product.delivery_rhythm_type, product.delivery_rhythm_count, product.delivery_rhythm_first_delivery_day, product.delivery_rhythm_order_possible_until);
                 }
             tableData += '</td>';
                 tableData += '<td class="active">' + (!isAttribute ? (product.active ? '<i class="fa fa-check ok"></i>' : '<i class="fa fa-close not-ok"></i>') : '') + '</td>';
@@ -451,8 +451,8 @@ foodcoopshop.SyncProductData = {
 
                     // delivery_rhythm
                     if (!isAttribute) {
-                        var remoteProductDeliveryRhythmString = foodcoopshop.SyncProduct.getDeliveryRhythmString(product.delivery_rhythm_type, product.delivery_rhythm_count, product.delivery_rhythm_first_delivery_day, product.delivery_rhythm_order_possible_until);
-                        var localProductDeliveryRhythmString = foodcoopshop.SyncProduct.getDeliveryRhythmString(product.delivery_rhythm_type, localProduct.delivery_rhythm_count, localProduct.delivery_rhythm_first_delivery_day, localProduct.delivery_rhythm_order_possible_until);
+                        var remoteProductDeliveryRhythmString = foodcoopshop.SyncProduct.getDeliveryRhythmString(product.delivery_rhythm_string, product.is_stock_product, product.delivery_rhythm_type, product.delivery_rhythm_count, product.delivery_rhythm_first_delivery_day, product.delivery_rhythm_order_possible_until);
+                        var localProductDeliveryRhythmString = foodcoopshop.SyncProduct.getDeliveryRhythmString(localProduct.delivery_rhythm_string, localProduct.is_stock_product, localProduct.delivery_rhythm_type, localProduct.delivery_rhythm_count, localProduct.delivery_rhythm_first_delivery_day, localProduct.delivery_rhythm_order_possible_until);
                         $(this).find('td.delivery_rhythm').html(remoteProductDeliveryRhythmString);
                         foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.delivery_rhythm', remoteProductDeliveryRhythmString, localProductDeliveryRhythmString, $(this), localProductRow);
                     }
