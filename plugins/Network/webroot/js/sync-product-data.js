@@ -119,7 +119,7 @@ foodcoopshop.SyncProductData = {
         return  [
             '<input type="checkbox" id="row-marker-all" />',
             'Bild',
-            '<span class="name">Name</span><span class="toggle-clean-rows">nur Produkte mit Abweichungen anzeigen</span><input type="checkbox" checked="checked" id="toggle-clean-rows" />',
+            '<span class="name">Name</span>',
             'Lagerprodukt',
             'Anzahl',
             'Preis',

@@ -211,10 +211,6 @@ body.syncs.product a.delete-product-button:hover i {
   cursor: grabbing;
 }
 
-body.syncs.product_data table.product-list {
-  width: 800px;
-}
-
 body.syncs.product_data table.product-list td.image img {
   width: 50px;
   height: auto;
@@ -268,7 +264,9 @@ body.syncs.product_data table.product-list tr.error:nth-of-type(2) td:nth-of-typ
 body.syncs.product_data span.toggle-clean-rows {
   float: right ! important;
   font-weight: normal;
-  margin-right: 2px;
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-top: 3px;
 }
 body.syncs.product_data input#toggle-clean-rows {
   float: right ! important;
@@ -276,7 +274,7 @@ body.syncs.product_data input#toggle-clean-rows {
 
 body.syncs.product_data h2.info,
 body.syncs.product_data h2.warning {
-    width: 800px;
+    width: 100%;
     margin-top: 0;
     margin-bottom: 10px;
     float: left;

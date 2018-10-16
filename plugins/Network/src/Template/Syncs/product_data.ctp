@@ -71,6 +71,7 @@ use Cake\Core\Configure;
         if (!empty($emptyProductsString)) {
             echo $emptyProductsString;
         }
+        echo '<span class="toggle-clean-rows">nur Produkte mit Abweichungen anzeigen</span><input type="checkbox" checked="checked" id="toggle-clean-rows" />';
         echo 'Rot hinterlegte Felder (Vorschau) zeigen Unterschiede zwischen Master-Foodcoop und Remote-Foodcoop an.';
         echo '</p>';
     ?>
