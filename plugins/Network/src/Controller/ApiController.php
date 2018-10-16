@@ -121,6 +121,7 @@ class ApiController extends Controller
         $products2saveForQuantity = [];
         $products2saveForPrice = [];
         $products2saveForDeposit = [];
+        $products2saveForDeliveryRhythm = [];
         $products2saveForStatus = [];
 
         $products = [];
@@ -207,11 +208,19 @@ class ApiController extends Controller
                     $productIds['productId'] => $product['price']
                 ];
             }
+            
             if (isset($product['deposit'])) {
                 $products2saveForDeposit[] = [
                     $product['remoteProductId'] => $this->Product->getStringAsFloat($product['deposit'])
                 ];
             }
+            
+            if (isset($product['delivery_rhythm'])) {
+                $products2saveForDeliveryRhythm[] = [
+                    $product['remoteProductId'] => $product['delivery_rhythm']
+                ];
+            }
+            
             if (isset($product['active'])) {
                 if ($productIds['attributeId'] == 0) {
                     $products2saveForStatus[] = [
@@ -230,6 +239,7 @@ class ApiController extends Controller
             empty($products2saveForQuantity) &&
             empty($products2saveForPrice) &&
             empty($products2saveForDeposit) &&
+            empty($products2saveForDeliveryRhythm) &&
             empty($products2saveForStatus)) {
             $message = 'Es wurden keine Felder zum Synchronisieren angegeben.';
         } else {
@@ -306,6 +316,15 @@ class ApiController extends Controller
                 }
             }
 
+            if (!empty($products2saveForDeposit)) {
+                $syncFieldsOk[] = 'Lieferrhythmus';
+                $updateStatus = $this->Product->changeDeliveryRhythm($products2saveForDeliveryRhythm);
+                $productIds = [];
+                foreach ($products2saveForDeliveryRhythm as $p) {
+                    $productIds[] = key($p);
+                }
+            }
+            
             if (!empty($products2saveForStatus)) {
                 $fieldName = 'Status';
                 try {

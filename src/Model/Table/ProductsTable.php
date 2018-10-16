@@ -511,6 +511,53 @@ class ProductsTable extends AppTable
      *  (
      *      [0] => Array
      *          (
+     *              [productId] => (int) delivery_rhythm
+     *          )
+     *  )
+     * @return boolean $success
+     */
+    public function changeDeliveryRhythm($products)
+    {
+        
+        $products2save = [];
+        
+        foreach ($products as $product) {
+            $productId = key($product);
+            $ids = $this->getProductIdAndAttributeId($productId);
+            if ($ids['attributeId'] > 0) {
+                throw new InvalidParameterException('change delivery_rhythm is not allowed for product attributes');
+            }
+            $entity = $this->newEntity(
+                $product[$productId],
+                [
+                    'validate' => 'deliveryRhythm'
+                ]
+            );
+            if (!empty($entity->getErrors())) {
+                throw new InvalidParameterException(join(' ', $this->getAllValidationErrors($entity)));
+            } else {
+                $products2save[] = array_merge(
+                    ['id_product' => $ids['productId']], $product[$productId]
+                );
+            }
+        }
+        
+        $success = false;
+        if (!empty($products2save)) {
+            $entities = $this->newEntities($products2save);
+            $result = $this->saveMany($entities);
+            $success = !empty($result);
+        }
+        
+        return $success;
+    }
+    
+    /**
+     * @param array $products
+     *  Array
+     *  (
+     *      [0] => Array
+     *          (
      *              [productId] => (int) is_stock_product
      *          )
      *  )

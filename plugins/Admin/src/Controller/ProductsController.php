@@ -395,23 +395,18 @@ class ProductsController extends AdminAppController
         }
         
         try {
-            $entity = $this->Product->patchEntity(
-                $oldProduct,
-                $product2update,
+            $this->Product->changeDeliveryRhythm(
                 [
-                    'validate' => 'deliveryRhythm'
+                    [
+                        $productId => $product2update
+                    ]
                 ]
             );
-            $entityWasDirty = $entity->isDirty();
-            if (!empty($entity->getErrors())) {
-                throw new InvalidParameterException(join('<br />', $this->Product->getAllValidationErrors($entity)));
-            }
-            $this->Product->save($entity);
             
             $messageString = __d('admin', 'The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}.', [
                 '<b>' . $oldProduct->name . '</b>',
                 '<b>' . $oldProduct->manufacturer->name . '</b>',
-                '<b>' . Configure::read('app.htmlHelper')->getDeliveryRhythmString($entity->is_stock_product, $deliveryRhythmType, $deliveryRhythmCount) . '</b>'
+                '<b>' . Configure::read('app.htmlHelper')->getDeliveryRhythmString($oldProduct->is_stock_product, $deliveryRhythmType, $deliveryRhythmCount) . '</b>'
             ]);
             
             if ($deliveryRhythmFirstDeliveryDay != '') {
@@ -427,9 +422,7 @@ class ProductsController extends AdminAppController
                 }
             }
             
-            if ($entityWasDirty) {
-                $this->ActionLog->customSave('product_delivery_rhythm_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
-            }
+            $this->ActionLog->customSave('product_delivery_rhythm_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
             $this->Flash->success($messageString);
             
             $this->getRequest()->getSession()->write('highlightedRowId', $productId);
@@ -438,6 +431,7 @@ class ProductsController extends AdminAppController
                 'status' => 1,
                 'msg' => __d('admin', 'Saving_successful.')
             ]));
+            
         } catch (InvalidParameterException $e) {
             $this->sendAjaxError($e);
         }
