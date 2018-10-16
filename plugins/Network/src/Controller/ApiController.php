@@ -316,7 +316,7 @@ class ApiController extends Controller
                 }
             }
 
-            if (!empty($products2saveForDeposit)) {
+            if (!empty($products2saveForDeliveryRhythm)) {
                 $syncFieldsOk[] = 'Lieferrhythmus';
                 $updateStatus = $this->Product->changeDeliveryRhythm($products2saveForDeliveryRhythm);
                 $productIds = [];
