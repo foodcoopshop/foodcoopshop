@@ -342,8 +342,10 @@ foodcoopshop.SyncProductData = {
                             $(this).find('td.image').html(foodcoopshop.SyncProduct.getProductImageTag(product.image.src));
                         }
                         var localProductImageHash = localProduct.image && localProduct.image.hash || '';
-                        var productImageHash = product.image && product.image.hash || '';
-                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.image', productImageHash, localProductImageHash, $(this), localProductRow);
+                        var remoteProductImageHash = product.image && product.image.hash || '';
+                        console.log('localProductImageHash: ' + localProductImageHash);
+                        console.log('remoteProductImageHash: ' + remoteProductImageHash);
+                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.image', remoteProductImageHash, localProductImageHash, $(this), localProductRow);
                     }
                     
                     // name
@@ -534,6 +536,9 @@ foodcoopshop.SyncProductData = {
                                             }
                                             if (attributeName == 'deposit') {
                                                 newValue = newValue === null ? 0 : newValue; // transform null to 0
+                                            }
+                                            if (attributeName == 'image') {
+                                                newValue = newValue === undefined ? 'no-image' : newValue; // transform null to 0
                                             }
                                             attributes[attributeName] = newValue;
                                         }

@@ -1191,20 +1191,37 @@ class ProductsTable extends AppTable
                     $image = $product->image;
                 }
                 
-                // not (yet) implemented for attributes, only for productIds!
                 $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($image->id_image);
                 $thumbsPath = Configure::read('app.htmlHelper')->getProductThumbsPath($imageIdAsPath);
                 
-                // recursively create path
-                $dir = new Folder();
-                $dir->create($thumbsPath);
-                $dir->chmod($thumbsPath, 0755);
+                if ($imageFromRemoteServer != 'no-image') {
+                    
+                    // recursively create path
+                    $dir = new Folder();
+                    $dir->create($thumbsPath);
+                    $dir->chmod($thumbsPath, 0755);
+                    
+                    foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
+                        $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . 'jpg';
+                        $remoteFileName = preg_replace('/-thickbox_default/', $options['suffix'], $imageFromRemoteServer);
+                        copy($remoteFileName, $thumbsFileName);
+                    }
+                    
+                } else {
                 
-                foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
-                    $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . '.jpg';
-                    $remoteFileName = preg_replace('/-thickbox_default/', $options['suffix'], $imageFromRemoteServer);
-                    copy($remoteFileName, $thumbsFileName);
+                    // delete db records
+                    $this->Images->deleteAll([
+                        'Images.id_image' => $image->id_image
+                    ]);
+                    
+                    // delete physical files
+                    foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
+                        $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . 'jpg';
+                        unlink($thumbsFileName);
+                    }
+                    
                 }
+                
             }
         }
         

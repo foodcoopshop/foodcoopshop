@@ -148,7 +148,7 @@ class ProductsController extends AdminAppController
             ]
         ])->first();
 
-        // delete db entries
+        // delete db records
         $this->Product->Images->deleteAll([
             'Images.id_image' => $product->image->id_image
         ]);
