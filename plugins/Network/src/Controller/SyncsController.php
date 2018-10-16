@@ -229,7 +229,7 @@ class SyncsController extends AppController
         }
         $this->set('emptyProductsString', $emptyProductsString);
 
-        $this->set('title_for_layout', 'Produktdaten synchronisieren');
+        $this->set('title_for_layout', 'Produkte synchronisieren');
     }
 
     /**
