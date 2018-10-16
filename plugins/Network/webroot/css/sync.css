@@ -273,7 +273,7 @@ body.syncs.product_data input#toggle-clean-rows {
 
 body.syncs.product_data h2.info,
 body.syncs.product_data h2.warning {
-    width: 650px;
+    width: 800px;
     margin-top: 0;
     margin-bottom: 10px;
     float: left;
