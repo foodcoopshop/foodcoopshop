@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-10-17 11:43+0200\n"
+"POT-Creation-Date: 2018-10-17 11:53+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -63,6 +63,12 @@ msgid "deleted"
 msgstr ""
 
 msgid "The_remote_foodcoop_{0}_has_been_{1}."
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "Attribute"
 msgstr ""
 
 msgid "{0}_{1}_was_successfully_associated."

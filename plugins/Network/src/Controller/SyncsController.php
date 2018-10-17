@@ -103,9 +103,9 @@ class SyncsController extends AppController
             )
         );
 
-        $type = __d('network', 'product');
+        $type = __d('network', 'Product');
         if ($remoteProductIds['attributeId'] > 0) {
-            $type = __d('network', 'attribute');
+            $type = __d('network', 'Attribute');
         }
         $message = __d('network', '{0}_{1}_was_successfully_associated.', [$type, '<b>'.$product['productName'].'</b>']);
         if (!$status) {
