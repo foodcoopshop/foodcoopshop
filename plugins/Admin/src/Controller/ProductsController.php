@@ -147,19 +147,12 @@ class ProductsController extends AdminAppController
                 'Manufacturers'
             ]
         ])->first();
-
-        // delete db records
-        $this->Product->Images->deleteAll([
-            'Images.id_image' => $product->image->id_image
-        ]);
-
-        // delete physical files
-        $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($product->image->id_image);
-        $thumbsPath = Configure::read('app.htmlHelper')->getProductThumbsPath($imageIdAsPath);
-        foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
-            $thumbsFileName = $thumbsPath . DS . $product->image->id_image . $options['suffix'] . '.jpg';
-            unlink($thumbsFileName);
-        }
+        
+        $this->Product->changeImage(
+            [
+                [$productId => 'no-image']
+            ]
+        );
 
         $actionLogMessage = __d('admin', 'Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}.', [
             $product->image->id_image,

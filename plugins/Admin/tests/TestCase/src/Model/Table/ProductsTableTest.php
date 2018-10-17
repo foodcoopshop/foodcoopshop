@@ -30,8 +30,10 @@ class ProductsTableTest extends AppCakeTestCase
         $this->Product = TableRegistry::getTableLocator()->get('Products');
     }
     
-    public function testChangeImageValidImage()
+    public function testChangeImageValidImageAndDeleteImage()
     {
+        
+        // add image
         $productId = 346;
         $products = [
             [$productId => ROOT . DS .  'tests' . DS . 'config' . DS . 'assets' . DS . 'test-product-image.jpg']
@@ -46,15 +48,72 @@ class ProductsTableTest extends AppCakeTestCase
                 'Images'
             ]
         ])->first();
+        $imageId = $product->image->id_image;
         
-        $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($product->image->id_image);
+        $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($imageId);
         $thumbsPath = Configure::read('app.htmlHelper')->getProductThumbsPath($imageIdAsPath);
         
         foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
-            $thumbsFileName = $thumbsPath . DS . $product->image->id_image . $options['suffix'] . '.' . 'jpg';
-            $this->assertTrue(file_exists($thumbsFileName));
+            $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . 'jpg';
+            $this->assertTrue(file_exists($thumbsFileName), 'physical file not added');
         }
         
+        // delete image
+        $products = [
+            [$productId => 'no-image']
+        ];
+        $this->Product->changeImage($products);
+        
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'Images'
+            ]
+        ])->first();
+        
+        $this->assertTrue(empty($product->image));
+        
+        foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
+            $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . 'jpg';
+            $this->assertFalse(file_exists($thumbsFileName), 'physical file not deleted');
+        }
+        
+    }
+    
+    public function testChangeImageInvalidImage()
+    {
+        $productId = 346;
+        $products = [
+            [$productId => ROOT . DS .  'tests' . DS . 'bootstrap.php']
+        ];
+        $exceptionThrown = false;
+        
+        try {
+            $this->Product->changeImage($products);
+        } catch (InvalidParameterException $e) {
+            $exceptionThrown = true;
+        }
+        
+        $this->assertSame(true, $exceptionThrown);
+    }
+    
+    public function testChangeImageNonExistingFile()
+    {
+        $productId = 346;
+        $products = [
+            [$productId => ROOT . DS .  'tests' . DS . 'config' . DS . 'assets' . DS . 'non-existing-image.jpg']
+        ];
+        $exceptionThrown = false;
+        
+        try {
+            $this->Product->changeImage($products);
+        } catch (InvalidParameterException $e) {
+            $exceptionThrown = true;
+        }
+        
+        $this->assertSame(true, $exceptionThrown);
     }
     
     public function testCalculatePickupDayRespectingDeliveryRhythm()

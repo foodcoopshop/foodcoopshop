@@ -1207,7 +1207,7 @@ class ProductsTable extends AppTable
         foreach ($products as $product) {
             $productId = key($product);
             $imageFromRemoteServer = $product[$productId];
-            if ($imageFromRemoteServer != 'no-image' && !exif_imagetype($imageFromRemoteServer)) {
+            if ($imageFromRemoteServer != 'no-image' && (!file_exists($imageFromRemoteServer) || !exif_imagetype($imageFromRemoteServer))) {
                 throw new InvalidParameterException('image is not valid: ' . $imageFromRemoteServer);
             }
         }
