@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-20 11:01+0200\n"
+"POT-Creation-Date: 2018-10-17 11:43+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,7 +14,76 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
+msgid "No_fields_were_selected_for_synchronizing."
+msgstr ""
+
+msgid "product"
+msgstr ""
+
+msgid "products"
+msgstr ""
+
+msgid "attribute"
+msgstr ""
+
+msgid "attributes"
+msgstr ""
+
+msgid "{0}_and_{1}_({2})_have_been_successfully_synchronized."
+msgstr ""
+
+msgid "Via_{0}_there_have_been_{1}_and_{2}_({3})_successfully_synchronized."
+msgstr ""
+
+msgid "Errors_occurred_while_synchronizing!"
+msgstr ""
+
+msgid "{0}_has_not_been_updated."
+msgstr ""
+
+msgid "{0}_have_not_been_updated."
+msgstr ""
+
+msgid "Add_remote_foodcoop"
+msgstr ""
+
+msgid "Edit_remote_foodcoop"
+msgstr ""
+
 msgid "Errors_while_saving!"
+msgstr ""
+
+msgid "created"
+msgstr ""
+
+msgid "changed"
+msgstr ""
+
+msgid "deleted"
+msgstr ""
+
+msgid "The_remote_foodcoop_{0}_has_been_{1}."
+msgstr ""
+
+msgid "{0}_{1}_was_successfully_associated."
+msgstr ""
+
+msgid "{0}_{1}_could_not_be_associated."
+msgstr ""
+
+msgid "Associate_products"
+msgstr ""
+
+msgid "The_product_{0}_has_been_deleted_successfully."
+msgstr ""
+
+msgid "While_deleting_the_product_{0}_there_has_an_error_occurred."
+msgstr ""
+
+msgid "Synchronize_products"
+msgstr ""
+
+msgid "There_have_not_been_any_products_associated_from_your_master_foodcoop_{0}_to_your_remote_foodcoop(s)_{1}."
 msgstr ""
 
 msgid "docs_route_network_module"

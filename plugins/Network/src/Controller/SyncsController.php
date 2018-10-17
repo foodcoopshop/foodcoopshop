@@ -67,10 +67,10 @@ class SyncsController extends AppController
 
         try {
             if (empty($syncDomain)) {
-                throw new InvalidParameterException('Die Domain ' . $product['domain'] . ' wurde nicht gefunden.');
+                throw new InvalidParameterException('the domain ' . $product['domain'] . ' was not found.');
             }
             if (!$this->Product->isOwner($localProductIds['productId'], $this->AppAuth->getManufacturerId())) {
-                throw new InvalidParameterException('Das Produkt ' . $localProductIds['productId'] . ' ist kein Produkt von Hersteller ' . $this->AppAuth->getManufacturerId());
+                throw new InvalidParameterException('product ' . $localProductIds['productId'] . ' is not associated with manufacturer ' . $this->AppAuth->getManufacturerId());
             }
         } catch (InvalidParameterException $e) {
             $this->sendAjaxError($e);
@@ -103,13 +103,13 @@ class SyncsController extends AppController
             )
         );
 
-        $message = 'Das Produkt';
+        $type = __d('network', 'product');
         if ($remoteProductIds['attributeId'] > 0) {
-            $message = 'Die Variante';
+            $type = __d('network', 'attribute');
         }
-        $message .= ' <b>'.$product['productName'].'</b> wurde erfolgreich zugeordnet.';
+        $message = __d('network', '{0}_{1}_was_successfully_associated.', [$type, '<b>'.$product['productName'].'</b>']);
         if (!$status) {
-            $message .= ' <b>'.$product['productName'].'</b> konnte <b>nicht</b> zugeordnet werden.';
+            $message = __d('network', '{0}_{1}_could_not_be_associated.', [$type, '<b>'.$product['productName'].'</b>']);
         }
 
         $this->set('data', [
@@ -152,7 +152,7 @@ class SyncsController extends AppController
         }
         $this->set('emptyProductsString', $emptyProductsString);
 
-        $this->set('title_for_layout', 'Produkte zuordnen');
+        $this->set('title_for_layout', __d('network', 'Associate_products'));
     }
 
     public function ajaxDeleteProductRelation()
@@ -177,9 +177,9 @@ class SyncsController extends AppController
 
         $status = $this->SyncProduct->deleteAll($syncProduct) === 0 ? false : true;
 
-        $message = 'Das Produkt <b>'.$product['productName'].'</b> wurde erfolgreich gelöscht.';
+        $message = __d('network', 'The_product_{0}_has_been_deleted_successfully.', ['<b>'.$product['productName'].'</b>']);
         if (!$status) {
-            $message = 'Beim Löschen des Produktes <b>'.$product['productName'].'</b> ist ein Fehler aufgetreten.';
+            $message = __d('network', 'While_deleting_the_product_{0}_there_has_an_error_occurred.', ['<b>'.$product['productName'].'</b>']);
         }
 
         $this->set('data', [
@@ -229,7 +229,7 @@ class SyncsController extends AppController
         }
         $this->set('emptyProductsString', $emptyProductsString);
 
-        $this->set('title_for_layout', 'Produkte synchronisieren');
+        $this->set('title_for_layout', __d('network', 'Synchronize_products'));
     }
 
     /**
@@ -242,8 +242,11 @@ class SyncsController extends AppController
         foreach($syncDomains as $syncDomain) {
             $syncDomainNames[] = $syncDomain->domain;
         }
-        $emptyProductsString = 'Du hast deinen Produkten auf der Master-Foodcoop <b>'.Configure::read('appDb.FCS_APP_NAME').'</b> noch keine Produkte ';
-        $emptyProductsString .= ' der Remote-Foodcoop' . (count($syncDomainNames) != 1 ? 's' : '') . ' <b>(' . join(', ', $syncDomainNames) . ')</b> zugeordnet.<br /><br />';
+        $emptyProductsString = __d('network', 'There_have_not_been_any_products_associated_from_your_master_foodcoop_{0}_to_your_remote_foodcoop(s)_{1}.', [
+            '<b>'.Configure::read('appDb.FCS_APP_NAME').'</b>',
+            '<b>(' . join(', ', $syncDomainNames) . ')</b>'
+        ]);
+        $emptyProductsString .= '<br /><br />';
         return $emptyProductsString;
     }
 

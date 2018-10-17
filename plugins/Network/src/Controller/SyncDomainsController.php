@@ -44,7 +44,7 @@ class SyncDomainsController extends AppController
             ['active' => APP_ON],
             ['validate' => false]
         );
-        $this->set('title_for_layout', 'Remote-Foodcoop erstellen');
+        $this->set('title_for_layout', __d('network', 'Add_remote_foodcoop'));
         $this->_processForm($syncDomain, false);
 
         if (empty($this->getRequest()->getData())) {
@@ -67,7 +67,7 @@ class SyncDomainsController extends AppController
         if (empty($syncDomain)) {
             throw new NotFoundException;
         }
-        $this->set('title_for_layout', 'Remote-Foodcoop bearbeiten');
+        $this->set('title_for_layout', __d('network', 'Edit_remote_foodcoop'));
         $this->_processForm($syncDomain, true);
     }
 
@@ -97,20 +97,20 @@ class SyncDomainsController extends AppController
             $syncDomain = $this->SyncDomain->save($syncDomain);
 
             if (!$isEditMode) {
-                $messageSuffix = 'erstellt';
+                $messageSuffix = __d('network', 'created');
                 $actionLogType = 'remote_foodcoop_added';
             } else {
-                $messageSuffix = 'geändert';
+                $messageSuffix = __d('network', 'changed');
                 $actionLogType = 'remote_foodcoop_changed';
             }
 
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('SyncDomains.delete_sync_domain'))) {
                 $this->SyncDomain->delete($syncDomain);
-                $messageSuffix = 'gelöscht';
+                $messageSuffix = __d('network', 'deleted');
                 $actionLogType = 'remote_foodcoop_deleted';
             }
-            $message = 'Die Remote-Foodcoop <b>' . $syncDomain->domain . '</b> wurde ' . $messageSuffix . '.';
+            $message = __d('network', 'The_remote_foodcoop_{0}_has_been_{1}.', ['<b>' . $page->title . '</b>', $messageSuffix]);
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $syncDomain->id, 'sync_domains', $message);
             $this->Flash->success($message);
 

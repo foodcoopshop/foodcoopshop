@@ -138,7 +138,7 @@ class ApiController extends Controller
                 ]
             ])->count();
             if (!$manufacturerIsOwner) {
-                throw new InvalidParameterException('Das Produkt ' . $productIds['productId'] . ' ist nicht dem Hersteller ' . $this->AppAuth->getManufacturerName() . ' zugeordnet.');
+                throw new InvalidParameterException('the product' . $productIds['productId'] . ' is not associated with manufacturer ' . $this->AppAuth->getManufacturerName());
             }
 
             if ($productIds['attributeId'] == 0) {
@@ -241,7 +241,7 @@ class ApiController extends Controller
             empty($products2saveForDeposit) &&
             empty($products2saveForDeliveryRhythm) &&
             empty($products2saveForStatus)) {
-            $message = 'Es wurden keine Felder zum Synchronisieren angegeben.';
+            $message = __d('network', 'No_fields_were_selected_for_synchronizing.');
         } else {
             
             if (!empty($products2saveForImage)) {
@@ -347,19 +347,27 @@ class ApiController extends Controller
             $actionLogMessage = '';
             $errorMessage = '';
 
-            $syncronizedProductsString = count($products) . ' '. (count($products) == 1 ? 'Produkt' : 'Produkte');
-            $syncronizedAttributesString = count($attributes) . ' '. (count($attributes) == 1 ? 'Variante' : 'Varianten');
-            $listOfSyncFieldsOk = ' ('.join(', ', $syncFieldsOk).') ';
+            $syncronizedProductsString = count($products) . ' '. (count($products) == 1 ? __d('network', 'product') : __d('network', 'products'));
+            $syncronizedAttributesString = count($attributes) . ' '. (count($attributes) == 1 ? __d('network', 'attribute') : __d('network', 'attributes'));
+            $listOfSyncFieldsOk = join(', ', $syncFieldsOk);
 
             if (count($syncFieldsOk) > 0) {
-                $message .= 'Es wurden ' . $syncronizedProductsString . ' und ' . $syncronizedAttributesString  . $listOfSyncFieldsOk . 'erfolgreich synchronisiert.';
+                $message = __d('network', '{0}_and_{1}_({2})_have_been_successfully_synchronized.', [$syncronizedProductsString, $syncronizedAttributesString, $listOfSyncFieldsOk]);
             }
             $actionLogMessage = 'Über ' . $this->getRequest()->getData('data.metaData.baseDomain') . ' wurden ' . $syncronizedProductsString . ' und ' . $syncronizedAttributesString . $listOfSyncFieldsOk . 'synchronisiert: ';
+            $actionLogMessage = __d('network', 'Via_{0}_there_have_been_{1}_and_{2}_({3})_successfully_synchronized.', [$this->getRequest()->getData('data.metaData.baseDomain'), $syncronizedProductsString, $syncronizedAttributesString, $listOfSyncFieldsOk]);
+            
             $actionLogMessage .= $this->getProductDetailLinks($productsData);
 
             if (count($syncFieldsError) > 0) {
-                $errorMessage .=  '<br /><b>Beim Synchronisieren der Produkte sind Fehler aufgetreten!</b><br />';
-                $errorMessage .= '<b>' . join(', ', $syncFieldsError).'</b> ' . (count($syncFieldsError) == 1 ? 'wurde' : 'wurden') . ' <b>nicht</b> aktualisiert.';
+                $errorMessage .=  '<br /><b>'.__d('network', 'Errors_occurred_while_synchronizing!').'</b><br />';
+                $errorMessage .= '<b>';
+                if (count($syncFieldsError) == 1) {
+                    $errorMessage .=  __d('network', '{0}_has_not_been_updated.', [join(', ', $syncFieldsError)]);
+                } else {
+                    $errorMessage .=  __d('network', '{0}_have_not_been_updated.', [join(', ', $syncFieldsError)]);
+                }
+                $errorMessage .= '</b><br />';
                 $message .= $errorMessage;
                 $actionLogMessage .= $errorMessage;
             }
