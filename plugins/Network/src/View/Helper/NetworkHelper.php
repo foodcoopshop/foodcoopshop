@@ -31,11 +31,11 @@ class NetworkHelper extends Helper
         return [
             [
                 'url' => $this->getSyncProducts(),
-                'name' => 'Produkte zuordnen'
+                'name' => __d('network', 'Associate_products')
             ],
             [
                 'url' => $this->getSyncProductData(),
-                'name' => 'Produkte synchronisieren'
+                'name' => __d('network', 'Synchronize_products')
             ]
         ];
     }

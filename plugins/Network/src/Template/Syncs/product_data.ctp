@@ -42,13 +42,13 @@ use Cake\Core\Configure;
         }
         echo '<div class="sync-button-wrapper">';
         if (!empty($localSyncProducts)) {
-            echo $this->Html->link('<i class="fa fa-check-circle"></i> Vorschau laden', 'javascript:void(0);', [
+            echo $this->Html->link('<i class="fa fa-check-circle"></i> ' . __d('network', 'Load_preview') . '', 'javascript:void(0);', [
                 'class' => 'btn btn-success show-preview-button',
                 'escape' => false
             ]);
         }
         if (!empty($localSyncProducts)) {
-            echo $this->Html->link('<i class="fa fa-refresh"></i> Produkte synchronisieren', 'javascript:void(0);', [
+            echo $this->Html->link('<i class="fa fa-refresh"></i> ' . __d('network', 'Synchronize_products') . '', 'javascript:void(0);', [
             'class' => 'btn btn-danger sync-products-button',
             'escape' => false
             ]);
@@ -70,13 +70,18 @@ use Cake\Core\Configure;
     echo '<p>';
         if (!empty($emptyProductsString)) {
             echo $emptyProductsString;
+        } else {
+            echo '<span class="toggle-clean-rows">';
+                echo __d('network', 'Show_only_products_with_differences');
+            echo '</span><input type="checkbox" checked="checked" id="toggle-clean-rows" />';
+                echo __d('network', 'Fields_with_red_background_show_differences_between_master_foodcoop_and_remote_foodcoop.');
+            echo '</p>';
         }
-        echo '<span class="toggle-clean-rows">nur Produkte mit Abweichungen anzeigen</span><input type="checkbox" checked="checked" id="toggle-clean-rows" />';
-        echo 'Rot hinterlegte Felder (Vorschau) zeigen Unterschiede zwischen Master-Foodcoop und Remote-Foodcoop an.';
-        echo '</p>';
     ?>
     
-    <h2 class="info" id="everything-allright"><b>Super!</b> Du kannst dich entspannt zurücklehen. Deine Produktdaten sind bei allen Foodcoops synchron.</h2>
+    <h2 class="info" id="everything-allright">
+    	<?php echo __d('network', 'Perfect!_You_can_lean_back_and_relax_as_all_products_are_synchronized.'); ?>
+    </h2>
     
     <div class="product-list"></div>
     

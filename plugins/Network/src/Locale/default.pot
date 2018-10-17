@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-10-17 11:53+0200\n"
+"POT-Creation-Date: 2018-10-17 12:09+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -90,6 +90,60 @@ msgid "Synchronize_products"
 msgstr ""
 
 msgid "There_have_not_been_any_products_associated_from_your_master_foodcoop_{0}_to_your_remote_foodcoop(s)_{1}."
+msgstr ""
+
+msgid "The_domain_may_only_consist_of_https://_and_the_hostname_(no_trailing_slash)."
+msgstr ""
+
+msgid "The_domain_needs_to_start_with_https://."
+msgstr ""
+
+msgid "The_domain_already_exists."
+msgstr ""
+
+msgid "Show_more"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Caution!_Editing_a_remote_foodcoop_can_result_in_problems_if_manufacturers_already_associated_products!"
+msgstr ""
+
+msgid "Remote_foodcoop"
+msgstr ""
+
+msgid "Domain_of_the_foodcoop_needs_to_start_with_https"
+msgstr ""
+
+msgid "Delete_remote_foodcoop"
+msgstr ""
+
+msgid "Check_and_do_not_forget_to_click_save_button."
+msgstr ""
+
+msgid "Load_preview"
+msgstr ""
+
+msgid "Show_only_products_with_differences"
+msgstr ""
+
+msgid "Fields_with_red_background_show_differences_between_master_foodcoop_and_remote_foodcoop."
+msgstr ""
+
+msgid "Perfect!_You_can_lean_back_and_relax_as_all_products_are_synchronized."
+msgstr ""
+
+msgid "Load_products"
 msgstr ""
 
 msgid "docs_route_network_module"
