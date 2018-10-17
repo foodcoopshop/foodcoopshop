@@ -205,7 +205,7 @@ class ApiController extends Controller
                 }
                 
                 $products2saveForPrice[] = [
-                    $productIds['productId'] => $product['price']
+                    $product['remoteProductId'] => $product['price']
                 ];
             }
             
