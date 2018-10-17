@@ -30,6 +30,33 @@ class ProductsTableTest extends AppCakeTestCase
         $this->Product = TableRegistry::getTableLocator()->get('Products');
     }
     
+    public function testChangeImageValidImage()
+    {
+        $productId = 346;
+        $products = [
+            [$productId => ROOT . DS .  'tests' . DS . 'config' . DS . 'assets' . DS . 'test-product-image.jpg']
+        ];
+        $this->Product->changeImage($products);
+        
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'Images'
+            ]
+        ])->first();
+        
+        $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($product->image->id_image);
+        $thumbsPath = Configure::read('app.htmlHelper')->getProductThumbsPath($imageIdAsPath);
+        
+        foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
+            $thumbsFileName = $thumbsPath . DS . $product->image->id_image . $options['suffix'] . '.' . 'jpg';
+            $this->assertTrue(file_exists($thumbsFileName));
+        }
+        
+    }
+    
     public function testCalculatePickupDayRespectingDeliveryRhythm()
     {
         $tests = [

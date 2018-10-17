@@ -1206,7 +1206,10 @@ class ProductsTable extends AppTable
         
         foreach ($products as $product) {
             $productId = key($product);
-            // add validations
+            $imageFromRemoteServer = $product[$productId];
+            if ($imageFromRemoteServer != 'no-image' && !exif_imagetype($imageFromRemoteServer)) {
+                throw new InvalidParameterException('image is not valid: ' . $imageFromRemoteServer);
+            }
         }
         
         $success = false;
@@ -1215,60 +1218,59 @@ class ProductsTable extends AppTable
             $productId = key($product);
             $ids = $this->getProductIdAndAttributeId($productId);
             
-            if ($ids['attributeId'] == 0) {
+            if ($ids['attributeId'] > 0) {
+                continue;
+            }
                 
-                $imageFromRemoteServer = $product[$productId];
+            $imageFromRemoteServer = $product[$productId];
+            
+            $product = $this->find('all', [
+                'conditions' => [
+                    'Products.id_product' => $ids['productId']
+                ],
+                'contain' => [
+                    'Images'
+                ]
+            ])->first();
+            
+            if (empty($product->image)) {
+                // product does not yet have image => create the necessary record
+                $image = $this->Images->save(
+                    $this->Images->newEntity(
+                        ['id_product' => $ids['productId']]
+                    )
+                );
+            } else {
+                $image = $product->image;
+            }
+            
+            $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($image->id_image);
+            $thumbsPath = Configure::read('app.htmlHelper')->getProductThumbsPath($imageIdAsPath);
+            
+            if ($imageFromRemoteServer != 'no-image') {
                 
-                $product = $this->find('all', [
-                    'conditions' => [
-                        'Products.id_product' => $ids['productId']
-                    ],
-                    'contain' => [
-                        'Images',
-                        'Manufacturers'
-                    ]
-                ])->first();
+                // recursively create path
+                $dir = new Folder();
+                $dir->create($thumbsPath);
+                $dir->chmod($thumbsPath, 0755);
                 
-                if (empty($product->image)) {
-                    // product does not yet have image => create the necessary record
-                    $image = $this->Images->save(
-                        $this->Images->newEntity(
-                            ['id_product' => $ids['productId']]
-                        )
-                    );
-                } else {
-                    $image = $product->image;
+                foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
+                    $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . 'jpg';
+                    $remoteFileName = preg_replace('/-thickbox_default/', $options['suffix'], $imageFromRemoteServer);
+                    copy($remoteFileName, $thumbsFileName);
                 }
                 
-                $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($image->id_image);
-                $thumbsPath = Configure::read('app.htmlHelper')->getProductThumbsPath($imageIdAsPath);
+            } else {
+            
+                // delete db records
+                $this->Images->deleteAll([
+                    'Images.id_image' => $image->id_image
+                ]);
                 
-                if ($imageFromRemoteServer != 'no-image') {
-                    
-                    // recursively create path
-                    $dir = new Folder();
-                    $dir->create($thumbsPath);
-                    $dir->chmod($thumbsPath, 0755);
-                    
-                    foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
-                        $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . 'jpg';
-                        $remoteFileName = preg_replace('/-thickbox_default/', $options['suffix'], $imageFromRemoteServer);
-                        copy($remoteFileName, $thumbsFileName);
-                    }
-                    
-                } else {
-                
-                    // delete db records
-                    $this->Images->deleteAll([
-                        'Images.id_image' => $image->id_image
-                    ]);
-                    
-                    // delete physical files
-                    foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
-                        $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . 'jpg';
-                        unlink($thumbsFileName);
-                    }
-                    
+                // delete physical files
+                foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
+                    $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . 'jpg';
+                    unlink($thumbsFileName);
                 }
                 
             }
