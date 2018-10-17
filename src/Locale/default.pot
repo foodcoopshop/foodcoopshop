@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-10-15 11:36+0200\n"
+"POT-Creation-Date: 2018-10-17 12:57+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -825,6 +825,57 @@ msgid "rotate_anti_clockwise?"
 msgstr ""
 
 msgid "rotate_clockwise?"
+msgstr ""
+
+msgid "Id"
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "An_attribute_cannot_be_assigned_to_a_product."
+msgstr ""
+
+msgid "A_product_cannot_be_assigned_to_an_attribute."
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Name_additional_info"
+msgstr ""
+
+msgid "Quantity"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "No_products_or_attributes_selected."
+msgstr ""
+
+msgid "No_product_data_selected."
+msgstr ""
+
+msgid "Please_enter_your_credentials."
+msgstr ""
+
+msgid "Really_synchronize?"
+msgstr ""
+
+msgid "This_action_cannot_be_undone."
+msgstr ""
+
+msgid "Really_synchronize_data_{0}_from_{1}_and_{2}_to_the_following_foodcoops:_{3}?"
+msgstr ""
+
+msgid "attribute"
+msgstr ""
+
+msgid "attributes"
 msgstr ""
 
 msgid "Manufacturer"
@@ -1680,12 +1731,6 @@ msgid "I_promise_to_pick_up_the_products_on_the_selected_pickup_day_and_to_pay_i
 msgstr ""
 
 msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
-msgstr ""
-
-msgid "Product"
-msgstr ""
-
-msgid "Price"
 msgstr ""
 
 msgid "Total"

@@ -28,14 +28,14 @@ foodcoopshop.SyncProductData = {
     implementedSyncAttributes : [
         {
             name: 'image',
-            label: 'Bild',
+            label: foodcoopshop.LocalizedJs.syncProductData.Image,
             data: 'image.src',
             column: 2
         },
         {
             name: 'name',
-            label: 'Name',
-            additionalInfo: 'Name, Einheit, Beschreibungen, Produkt-Deklaration',
+            label: foodcoopshop.LocalizedJs.syncProductData.Name,
+            additionalInfo: foodcoopshop.LocalizedJs.syncProductData.NameAdditionalInfo,
             data: {
                 name: 'unchanged_name',
                 unity: 'unity',
@@ -47,13 +47,13 @@ foodcoopshop.SyncProductData = {
         },
         {
             name: 'is_stock_product',
-            label: 'Lagerprodukt',
+            label: foodcoopshop.LocalizedJs.syncProductData.StockProduct,
             data: 'is_stock_product',
             column: 4
         },
         {
             name: 'quantity',
-            label: 'Anzahl',
+            label: foodcoopshop.LocalizedJs.syncProductData.Quantity,
             data: {
                 'stock_available_quantity': 'stock_available.quantity',
                 'stock_available_quantity_limit': 'stock_available.quantity_limit',
@@ -63,7 +63,7 @@ foodcoopshop.SyncProductData = {
         },
         {
             name: 'price',
-            label: 'Preis',
+            label: foodcoopshop.LocalizedJs.syncProductData.Price,
             data: {
                 gross_price: 'gross_price',
                 unit_product_price_incl_per_unit: 'unit_product.price_incl_per_unit',
@@ -76,13 +76,13 @@ foodcoopshop.SyncProductData = {
         },
         {
             name: 'deposit',
-            label: 'Pfand',
+            label: foodcoopshop.LocalizedJs.syncProductData.Deposit,
             data: 'deposit',
             column: 7
         },
         {
             name: 'delivery_rhythm',
-            label: 'Lieferrhythmus',
+            label: foodcoopshop.LocalizedJs.syncProductData.DeliveryRhythm,
             data: {
                 delivery_rhythm_type: 'delivery_rhythm_type',
                 delivery_rhythm_count: 'delivery_rhythm_count',
@@ -93,7 +93,7 @@ foodcoopshop.SyncProductData = {
         },
         {
             name: 'active',
-            label: 'Status',
+            label: foodcoopshop.LocalizedJs.syncProductData.Status,
             data: 'active',
             column: 9
         }
@@ -118,14 +118,14 @@ foodcoopshop.SyncProductData = {
     getProductTableHeadElements : function () {
         return  [
             '<input type="checkbox" id="row-marker-all" />',
-            'Bild',
-            '<span class="name">Name</span>',
-            'Lagerprodukt',
-            'Anzahl',
-            'Preis',
-            'Pfand',
-            'Lieferrhythmus',
-            'Status'
+            foodcoopshop.LocalizedJs.syncProductData.Image,
+            foodcoopshop.LocalizedJs.syncProductData.Name,
+            foodcoopshop.LocalizedJs.syncProductData.StockProduct,
+            foodcoopshop.LocalizedJs.syncProductData.Quantity,
+            foodcoopshop.LocalizedJs.syncProductData.Price,
+            foodcoopshop.LocalizedJs.syncProductData.Deposit,
+            foodcoopshop.LocalizedJs.syncProductData.DeliveryRhythm,
+            foodcoopshop.LocalizedJs.syncProductData.Status
         ];
     },
 
@@ -615,14 +615,14 @@ foodcoopshop.SyncProductData = {
             });
 
             if (checkedProductsCount == 0 && checkedAttributesCount == 0) {
-                foodcoopshop.Helper.showOrAppendErrorMessage('Es sind keine Produkte oder Varianten ausgewählt.');
+                foodcoopshop.Helper.showOrAppendErrorMessage(foodcoopshop.LocalizedJs.syncProductData.NoProductsOrAttributesSelected);
                 verticalCheckboxes.addClass('error');
                 return;
             }
 
             checkedAttributeLabels = $.unique(checkedAttributeLabels);
             if (checkedAttributeLabels.length == 0) {
-                foodcoopshop.Helper.showOrAppendErrorMessage('Es sind keine Produktdaten ausgewählt.');
+                foodcoopshop.Helper.showOrAppendErrorMessage(foodcoopshop.LocalizedJs.syncProductData.NoProductDataSelected);
                 horizontalCheckboxes.addClass('error');
                 return;
             }
@@ -635,40 +635,39 @@ foodcoopshop.SyncProductData = {
             });
 
             if (domains2sync.length == 0) {
-                foodcoopshop.Helper.showOrAppendErrorMessage('Bitte gib deine Login-Daten ein.');
+                foodcoopshop.Helper.showOrAppendErrorMessage(foodcoopshop.LocalizedJs.syncProductData.PleaseEnterYourCredentials);
                 return;
             }
 
-            var htmlCode = '<p>Möchtest du die Daten <b>' + checkedAttributeLabels.join(', ');
-            htmlCode += '</b> von <b>';
-            htmlCode += checkedProductsCount + ' ' + (checkedProductsCount == 1 ? 'Produkt' : 'Produkten');
-            if (checkedAttributesCount > 0) {
-                htmlCode += ' und ';
-                htmlCode += checkedAttributesCount + ' ' + (checkedAttributesCount == 1 ? 'Variante' : 'Varianten');
-            }
-            htmlCode += '</b> wirklich auf folgende FoodCoops übertragen?</p><p>';
-            htmlCode += '<p>' + domains2sync.join('<br />') + '</p>';
-            htmlCode += '<b class="negative">Diese Aktion kann nicht rückgängig gemacht werden!</b></p>';
+            var preparedString = foodcoopshop.LocalizedJs.syncProductData.SynchronizeDialogInfoText;
+            preparedString.replace(/\{0\}/, '<b>' + checkedAttributeLabels.join(', ') + '</b>');
+            preparedString.replace(/\{1\}/, checkedProductsCount + ' ' + (checkedProductsCount == 1 ? foodcoopshop.LocalizedJs.syncProductData.product : foodcoopshop.LocalizedJs.syncProductData.products));
+            preparedString.replace(/\{2\}/, checkedAttributesCount + ' ' + (checkedAttributesCount == 1 ? foodcoopshop.LocalizedJs.syncProductData.attribute : foodcoopshop.LocalizedJs.syncProductData.attributes));
+            preparedString.replace(/\{3\}/, '<p>' + domains2sync.join('<br />') + '</p>');
+            
+            var htmlCode = '<p>' + preparedString + '</p>';
+            htmlCode += '<b class="negative">' + foodcoopshop.LocalizedJs.syncProductData.ThisActionCannotBeUndone + '</b></p>';
             htmlCode += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
 
+            buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+            buttons['yes'] = {
+                text: foodcoopshop.LocalizedJs.helper.yes,
+                click: function() {
+                    $('.ui-dialog .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+                    foodcoopshop.SyncBase.doApiCall('/api/updateProducts.json', 'POST', postData, foodcoopshop.SyncProductData.onProductDataUpdated);
+                }
+            };            
+            
             $('<div></div>').appendTo('body')
                 .html(htmlCode)
                 .dialog({
                     modal: true,
-                    title: 'Wirklich synchronisieren?',
+                    title: foodcoopshop.LocalizedJs.syncProductData.ReallySynchronize,
                     autoOpen: true,
                     width: 450,
                     resizable: false,
-                    buttons: {
-                        'Abbrechen': function (button) {
-                            $(this).dialog('close');
-                        },
-                        'Ja': function () {
-                            $('.ui-dialog .ajax-loader').show();
-                            $('.ui-dialog button').attr('disabled', 'disabled');
-                            foodcoopshop.SyncBase.doApiCall('/api/updateProducts.json', 'POST', postData, foodcoopshop.SyncProductData.onProductDataUpdated);
-                        }
-                    },
+                    buttons: buttons,
                     close: function (event, ui) {
                         $(this).remove();
                     }

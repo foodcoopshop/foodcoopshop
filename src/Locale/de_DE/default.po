@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-10-15 11:36+0200\n"
-"PO-Revision-Date: 2018-10-15 15:16+0200\n"
+"POT-Creation-Date: 2018-10-17 12:57+0200\n"
+"PO-Revision-Date: 2018-10-17 12:59+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -827,6 +827,57 @@ msgstr "gegen den Uhrzeigersinn drehen?"
 
 msgid "rotate_clockwise?"
 msgstr "im Uhrzeigersinn drehen?"
+
+msgid "Id"
+msgstr "Id"
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "An_attribute_cannot_be_assigned_to_a_product."
+msgstr "Eine Variante kann keinem Produkt zugeordnet werden."
+
+msgid "A_product_cannot_be_assigned_to_an_attribute."
+msgstr "Ein Produkt kann keiner Variante zugeordnet werden."
+
+msgid "Image"
+msgstr "Bild"
+
+msgid "Name_additional_info"
+msgstr "Name, Einheit, Beschreibungen, Produkt-Deklaration"
+
+msgid "Quantity"
+msgstr "Anzahl"
+
+msgid "Price"
+msgstr "Preis"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "No_products_or_attributes_selected."
+msgstr "Es sind keine Produkte oder Varianten ausgewählt."
+
+msgid "No_product_data_selected."
+msgstr "Es sind keine Produktdaten ausgewählt."
+
+msgid "Please_enter_your_credentials."
+msgstr "Bitte gib deine Login-Daten ein."
+
+msgid "Really_synchronize?"
+msgstr "Wirklich synchronisieren?"
+
+msgid "This_action_cannot_be_undone."
+msgstr "Diese Aktion kann nicht rückgängig gemacht werden!"
+
+msgid "Really_synchronize_data_{0}_from_{1}_and_{2}_to_the_following_foodcoops:_{3}?"
+msgstr "Möchtest du die Daten {0} von {1} und {2} wirklich auf folgende FoodCoops übertragen?{3}"
+
+msgid "attribute"
+msgstr "Variante"
+
+msgid "attributes"
+msgstr "Varianten"
 
 msgid "Manufacturer"
 msgstr "Hersteller"
@@ -1682,12 +1733,6 @@ msgstr "Ich verspreche die Produkte am gebuchten Abholtag abzuholen und zahle de
 
 msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
 msgstr "Wieviel davon möchtest du in {0} bezahlen?"
-
-msgid "Product"
-msgstr "Produkt"
-
-msgid "Price"
-msgstr "Preis"
 
 msgid "Total"
 msgstr "Gesamt"

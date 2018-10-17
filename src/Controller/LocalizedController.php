@@ -266,6 +266,35 @@ class LocalizedController extends Controller
                 'ReallyDeleteImage' => __('Really_delete_image?'),
                 'rotateAntiClockwise' => __('rotate_anti_clockwise?'),
                 'rotateClockwise' => __('rotate_clockwise?')
+            ],
+            
+            'syncProducts' => [
+                'Id' => __('Id'),
+                'Product' => __('Product'),
+                'AnAttributeCannotBeAssignedToAProduct' => __('An_attribute_cannot_be_assigned_to_a_product.'),
+                'AProductCannotBeAssignedToAnAttribute' => __('A_product_cannot_be_assigned_to_an_attribute.'),
+            ],
+            
+            'syncProductData' => [
+                'Image' => __('Image'),
+                'Name' => __('Name'),
+                'NameAdditionalInfo' => __('Name_additional_info'),
+                'StockProduct' => __('Stock_product'),
+                'Quantity' => __('Quantity'),
+                'Price' => __('Price'),
+                'Deposit' => __('Deposit'),
+                'DeliveryRhythm' => __('Delivery_rhythm'),
+                'Status' => __('Status'),
+                'NoProductsOrAttributesSelected' => __('No_products_or_attributes_selected.'),
+                'NoProductDataSelected' => __('No_product_data_selected.'),
+                'PleaseEnterYourCredentials' => __('Please_enter_your_credentials.'),
+                'ReallySynchronize' => __('Really_synchronize?'),
+                'ThisActionCannotBeUndone' => __('This_action_cannot_be_undone.'),
+                'SynchronizeDialogInfoText' => __('Really_synchronize_data_{0}_from_{1}_and_{2}_to_the_following_foodcoops:_{3}?'),
+                'product' => __('product'),
+                'products' => __('products'),
+                'attribute' => __('attribute'),
+                'attributes' => __('attributes')
             ]
 
         ];
