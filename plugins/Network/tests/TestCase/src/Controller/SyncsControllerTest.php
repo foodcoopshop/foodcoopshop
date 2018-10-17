@@ -86,7 +86,7 @@ class SyncsControllerTest extends AppCakeTestCase
         $response = $this->saveProductRelation($productId, $productId, $productName, $domain);
 
         $this->assertFalse((boolean) $response->status);
-        $this->assertRegExpWithUnquotedString('Das Produkt ' . $productId . ' ist kein Produkt von Hersteller ' . $manufacturerId, $response->msg);
+        $this->assertRegExpWithUnquotedString('product ' . $productId . ' is not associated with manufacturer ' . $manufacturerId, $response->msg);
         $this->assert200OkHeader();
     }
 
