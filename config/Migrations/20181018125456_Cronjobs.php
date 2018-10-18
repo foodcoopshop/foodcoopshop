@@ -28,7 +28,7 @@ class Cronjobs extends AbstractMigration
             CREATE TABLE `fcs_cronjob_logs` (
               `id` int(11) NOT NULL,
               `cronjob_id` int(10) UNSIGNED NOT NULL,
-              `executed` datetime NOT NULL,
+              `created` datetime NOT NULL,
               `success` tinyint(3) UNSIGNED NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
             
