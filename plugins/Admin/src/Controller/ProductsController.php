@@ -602,13 +602,10 @@ class ProductsController extends AdminAppController
         ])->first();
         
         try {
-            $object2save = [
-                'is_stock_product' => $this->getRequest()->getData('isStockProduct'),
-            ];
             $this->Product->changeIsStockProduct(
                 [
                     [
-                        $originalProductId => $object2save
+                        $originalProductId => $this->getRequest()->getData('isStockProduct')
                     ]
                 ]
             );
