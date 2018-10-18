@@ -1285,7 +1285,9 @@ class ProductsTable extends AppTable
                 // delete physical files
                 foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
                     $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . 'jpg';
-                    unlink($thumbsFileName);
+                    if (file_exists($thumbsFileName)) {
+                        unlink($thumbsFileName);
+                    }
                 }
                 
             }
