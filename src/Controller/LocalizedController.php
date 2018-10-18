@@ -290,7 +290,7 @@ class LocalizedController extends Controller
                 'PleaseEnterYourCredentials' => __('Please_enter_your_credentials.'),
                 'ReallySynchronize' => __('Really_synchronize?'),
                 'ThisActionCannotBeUndone' => __('This_action_cannot_be_undone.'),
-                'SynchronizeDialogInfoText' => __('Really_synchronize_data_{0}_from_{1}_and_{2}_to_the_following_foodcoops:_{3}?'),
+                'SynchronizeDialogInfoText' => __('Really_synchronize_data_{0}_from_{1}_and_{2}_to_the_following_foodcoops?_{3}'),
                 'product' => __('product'),
                 'products' => __('products'),
                 'attribute' => __('attribute'),
