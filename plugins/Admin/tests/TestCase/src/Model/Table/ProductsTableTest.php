@@ -30,13 +30,34 @@ class ProductsTableTest extends AppCakeTestCase
         $this->Product = TableRegistry::getTableLocator()->get('Products');
     }
     
+    public function testRemoveTimestampFromFileValidTimestamp()
+    {
+        $filename = 'asdf.jpg?1539847477';
+        $result = 'asdf.jpg';
+        $this->assertEquals($result, $this->Product->removeTimestampFromFile($filename));
+    }
+    
+    public function testRemoveTimestampFromFileNoTimestamp()
+    {
+        $filename = 'asdf.jpg';
+        $result = 'asdf.jpg';
+        $this->assertEquals($result, $this->Product->removeTimestampFromFile($filename));
+    }
+    
+    public function testRemoveTimestampFromFileInvalidTimestamp()
+    {
+        $filename = 'asdf.jpg?adfs';
+        $result = 'asdf.jpg';
+        $this->assertEquals($result, $this->Product->removeTimestampFromFile($filename));
+    }
+    
     public function testChangeImageValidImageAndDeleteImage()
     {
         
         // add image
         $productId = 346;
         $products = [
-            [$productId => ROOT . DS .  'tests' . DS . 'config' . DS . 'assets' . DS . 'test-product-image.jpg']
+            [$productId => Configure::read('app.cakeServerName') . '/img/tests/test-product-image.jpg']
         ];
         $this->Product->changeImage($products);
         
@@ -86,7 +107,7 @@ class ProductsTableTest extends AppCakeTestCase
     {
         $productId = 346;
         $products = [
-            [$productId => ROOT . DS .  'tests' . DS . 'bootstrap.php']
+            [$productId => Configure::read('app.cakeServerName') . '/css/global.css']
         ];
         $exceptionThrown = false;
         
@@ -103,7 +124,7 @@ class ProductsTableTest extends AppCakeTestCase
     {
         $productId = 346;
         $products = [
-            [$productId => ROOT . DS .  'tests' . DS . 'config' . DS . 'assets' . DS . 'non-existing-image.jpg']
+            [$productId => Configure::read('app.cakeServerName') . '/img/tests/non-existing-file.jpg']
         ];
         $exceptionThrown = false;
         

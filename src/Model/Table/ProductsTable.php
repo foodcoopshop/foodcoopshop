@@ -664,6 +664,11 @@ class ProductsTable extends AppTable
         }
         return false;
     }
+    
+    public function removeTimestampFromFile($file) {
+        $file = explode('?', $file);
+        return $file[0];
+    }
 
     /**
      * @param array $products
@@ -821,7 +826,7 @@ class ProductsTable extends AppTable
             if (!empty($product->image)) {
                 $imageSrc = Configure::read('app.htmlHelper')->getProductImageSrc($product->image->id_image, 'thickbox');
                 $imageFile = str_replace('//', '/', $_SERVER['DOCUMENT_ROOT'] . $imageSrc);
-                $imageFile = substr($imageFile, 0, -11);
+                $imageFile = $this->removeTimestampFromFile($imageFile);
                 if ($imageFile != '' && !preg_match('/de-default-thickbox/', $imageFile) && file_exists($imageFile)) {
                     $product->image->hash = sha1_file($imageFile);
                     $product->image->src = Configure::read('app.cakeServerName') . $imageSrc;
@@ -1207,8 +1212,17 @@ class ProductsTable extends AppTable
         foreach ($products as $product) {
             $productId = key($product);
             $imageFromRemoteServer = $product[$productId];
-            if ($imageFromRemoteServer != 'no-image' && (!file_exists($imageFromRemoteServer) || !exif_imagetype($imageFromRemoteServer))) {
-                throw new InvalidParameterException('image is not valid: ' . $imageFromRemoteServer);
+            $imageFromRemoteServer = $this->removeTimestampFromFile($imageFromRemoteServer);
+            if ($imageFromRemoteServer == 'no-image') {
+                continue;
+            }
+            $remoteFile = @file_get_contents($imageFromRemoteServer);
+            if (!$remoteFile) {
+                throw new InvalidParameterException('image not found: ' . $imageFromRemoteServer);
+            }
+            $imageSize = getimagesize($imageFromRemoteServer);
+            if ($imageSize === false) {
+                throw new InvalidParameterException('file is not not an image: ' . $imageFromRemoteServer);
             }
         }
         
@@ -1223,6 +1237,7 @@ class ProductsTable extends AppTable
             }
                 
             $imageFromRemoteServer = $product[$productId];
+            $imageFromRemoteServer = $this->removeTimestampFromFile($imageFromRemoteServer);
             
             $product = $this->find('all', [
                 'conditions' => [
