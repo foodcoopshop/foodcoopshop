@@ -567,14 +567,13 @@ class ProductsTable extends AppTable
     {
         
         $products2save = [];
-        
         foreach ($products as $product) {
             $productId = key($product);
             $ids = $this->getProductIdAndAttributeId($productId);
             if ($ids['attributeId'] > 0) {
                 throw new InvalidParameterException('change is_stock_product is not allowed for product attributes');
             }
-            $isStockProduct = (int) $product[$ids['productId']]['is_stock_product'];
+            $isStockProduct = (int) $product[$ids['productId']];
             $whitelist = [APP_OFF, APP_ON];
             if (!in_array($isStockProduct, $whitelist, true)) { // last param for type check
                 throw new InvalidParameterException('Products.is_stock_product for product ' .$ids['productId'] . ' needs to be ' .APP_OFF . ' or ' . APP_ON.'; was: ' . $isStockProduct);
