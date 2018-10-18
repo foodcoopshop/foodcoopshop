@@ -153,6 +153,31 @@ CREATE TABLE `fcs_configuration` (
   KEY `name` (`name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fcs_cronjob_logs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fcs_cronjob_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cronjob_id` int(10) unsigned NOT NULL,
+  `executed` datetime NOT NULL,
+  `success` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fcs_cronjobs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fcs_cronjobs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `time_interval` varchar(50) NOT NULL,
+  `day_of_month` tinyint(3) unsigned DEFAULT NULL,
+  `weekday` varchar(50) DEFAULT NULL,
+  `time` time NOT NULL,
+  `active` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_customer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;

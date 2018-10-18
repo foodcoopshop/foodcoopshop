@@ -19,6 +19,8 @@ TRUNCATE TABLE `fcs_carts`;
 TRUNCATE TABLE `fcs_category`;
 TRUNCATE TABLE `fcs_category_product`;
 TRUNCATE TABLE `fcs_configuration`;
+TRUNCATE TABLE `fcs_cronjob_logs`;
+TRUNCATE TABLE `fcs_cronjobs`;
 TRUNCATE TABLE `fcs_customer`;
 TRUNCATE TABLE `fcs_deposits`;
 TRUNCATE TABLE `fcs_email_logs`;
@@ -149,6 +151,19 @@ INSERT INTO `fcs_configuration` VALUES
 (575,1,'FCS_CURRENCY_SYMBOL','Währungssymbol','€','readonly',52,'de_DE','2018-06-13 19:53:14','2018-06-13 19:53:14'),
 (576,1,'FCS_DEFAULT_LOCALE','Sprache','de_DE','readonly',55,'de_DE','2018-06-26 10:18:55','2018-06-26 10:18:55');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_cronjob_logs` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_cronjobs` DISABLE KEYS */;
+INSERT INTO `fcs_cronjobs` VALUES
+(1,'BackupDatabase','day',NULL,NULL,'04:00:00',1),
+(2,'CheckCredit','week',NULL,NULL,'22:30:00',1),
+(3,'EmailReminder','week',NULL,'Monday','18:00:00',1),
+(4,'PickupReminder','week',NULL,'Monday','09:00:00',1),
+(5,'SendInvoices','month',11,NULL,'07:30:00',1),
+(6,'SendOrderLists','day',NULL,NULL,'04:30:00',1);
+/*!40000 ALTER TABLE `fcs_cronjobs` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
 INSERT INTO `fcs_customer` VALUES
