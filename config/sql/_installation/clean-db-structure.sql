@@ -159,7 +159,7 @@ DROP TABLE IF EXISTS `fcs_cronjob_logs`;
 CREATE TABLE `fcs_cronjob_logs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cronjob_id` int(10) unsigned NOT NULL,
-  `created` datetime NOT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `success` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
