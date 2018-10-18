@@ -823,10 +823,10 @@ class ProductsTable extends AppTable
             }
             
             if (!empty($product->image)) {
-                $imageSrc = Configure::read('app.htmlHelper')->getProductImageSrc($product->image->id_image, 'thickbox');
+                $imageSrc = Configure::read('app.htmlHelper')->getProductImageSrc($product->image->id_image, 'home');
                 $imageFile = str_replace('//', '/', $_SERVER['DOCUMENT_ROOT'] . $imageSrc);
                 $imageFile = $this->removeTimestampFromFile($imageFile);
-                if ($imageFile != '' && !preg_match('/de-default-thickbox/', $imageFile) && file_exists($imageFile)) {
+                if ($imageFile != '' && !preg_match('/de-default-home/', $imageFile) && file_exists($imageFile)) {
                     $product->image->hash = sha1_file($imageFile);
                     $product->image->src = Configure::read('app.cakeServerName') . $imageSrc;
                 }
@@ -1270,7 +1270,7 @@ class ProductsTable extends AppTable
                 
                 foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
                     $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . 'jpg';
-                    $remoteFileName = preg_replace('/-thickbox_default/', $options['suffix'], $imageFromRemoteServer);
+                    $remoteFileName = preg_replace('/-home_default/', $options['suffix'], $imageFromRemoteServer);
                     copy($remoteFileName, $thumbsFileName);
                 }
                 
