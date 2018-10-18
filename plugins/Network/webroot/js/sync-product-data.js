@@ -432,8 +432,9 @@ foodcoopshop.SyncProductData = {
                         var remotePriceAsString;
                         var localPriceAsString;
                         
-                        var localProductGrossPrice = localProduct.gross_price;
-                        var remoteProductGrossPrice = product.gross_price;
+                        var localProductGrossPrice = parseFloat(localProduct.gross_price);
+                        var remoteProductGrossPrice = parseFloat(product.gross_price);
+                        
                         if (product.unit && product.unit_product && product.unit_product.price_per_unit_enabled) {
                             remoteProductGrossPrice = product.unit_product.price_incl_per_unit;
                         }
@@ -446,6 +447,7 @@ foodcoopshop.SyncProductData = {
                             localProductGrossPrice = foodcoopshop.SyncProductData.roundToTwo(localProductGrossPrice + (localProductGrossPrice * response.app.variableMemberFee / 100));
                         }
                         
+                        remotePriceAsString = foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(remoteProductGrossPrice));
                         if (product.unit && product.unit_product && product.unit_product.price_per_unit_enabled) {
                             remotePriceAsString = foodcoopshop.SyncProduct.getPricePerUnitBaseInfo(
                                     remoteProductGrossPrice,
@@ -453,10 +455,9 @@ foodcoopshop.SyncProductData = {
                                     product.unit_product.amount,
                                     product.unit_product.quantity_in_units
                                 );
-                        } else {
-                            remotePriceAsString = foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(remoteProductGrossPrice));
                         }
                         
+                        localPriceAsString = foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(localProductGrossPrice));
                         if (localProduct.unit && localProduct.unit_product && localProduct.unit_product.price_per_unit_enabled) {
                             localPriceAsString = foodcoopshop.SyncProduct.getPricePerUnitBaseInfo(
                                     localProductGrossPrice,
@@ -464,8 +465,6 @@ foodcoopshop.SyncProductData = {
                                     localProduct.unit_product.amount,
                                     localProduct.unit_product.quantity_in_units
                                 );
-                        } else {
-                            localPriceAsString = foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(localProductGrossPrice));
                         }
                         
                         var additionalInfo = '';
@@ -555,7 +554,7 @@ foodcoopshop.SyncProductData = {
         if (remoteValue != localValue) {
             localProductRow.addClass('dirty');
             remoteProductRow.find(attributeCellSelector).addClass('dirty');
-//            console.log(attributeCellSelector + ' - productId: ' + localProductRow.data('productId') + ': ' + localValue + ' / ' + remoteValue);
+//            console.log(attributeCellSelector + ' - productId: ' + localProductRow.data('productId') + ': ' + remoteValue + ' / ' + localValue);
         }
     },
 
