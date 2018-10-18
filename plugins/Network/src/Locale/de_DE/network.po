@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-08-20 11:01+0200\n"
-"PO-Revision-Date: 2018-06-07 10:01+0200\n"
+"POT-Creation-Date: 2018-10-18 09:00+0200\n"
+"PO-Revision-Date: 2018-10-17 12:12+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -13,10 +13,139 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.2\n"
+
+msgid "No_fields_were_selected_for_synchronizing."
+msgstr "Es wurden keine Felder zum Synchronisieren angegeben."
+
+msgid "product"
+msgstr "Produkt"
+
+msgid "products"
+msgstr "Produkte"
+
+msgid "attribute"
+msgstr "Variante"
+
+msgid "attributes"
+msgstr "Varianten"
+
+msgid "{0}_and_{1}_({2})_have_been_successfully_synchronized."
+msgstr "Es wurden {0} und {1} ({2}) erfolgreich synchronisiert."
+
+msgid "Via_{0}_there_have_been_{1}_and_{2}_({3})_successfully_synchronized."
+msgstr "Über {0} wurden {1} und {2} ({3}) erfolgreich synchronisiert."
+
+msgid "Errors_occurred_while_synchronizing!"
+msgstr "Beim Synchronisieren der Produkte sind Fehler aufgetreten!"
+
+msgid "{0}_has_not_been_updated."
+msgstr "{0} wurde <b>nicht</b> aktualisiert."
+
+msgid "{0}_have_not_been_updated."
+msgstr "{0} wurden <b>nicht</b> aktualisiert."
+
+msgid "Add_remote_foodcoop"
+msgstr "Remote-Foodcoop erstellen"
+
+msgid "Edit_remote_foodcoop"
+msgstr "Remote-Foodcoop bearbeiten"
 
 msgid "Errors_while_saving!"
 msgstr "Beim Speichern sind Fehler aufgetreten!"
+
+msgid "created"
+msgstr "erstellt"
+
+msgid "changed"
+msgstr "geändert"
+
+msgid "deleted"
+msgstr "gelöscht"
+
+msgid "The_remote_foodcoop_{0}_has_been_{1}."
+msgstr "Die Remote-Foodcoop {0} wurde {1}."
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "Attribute"
+msgstr "Variante"
+
+msgid "{0}_{1}_was_successfully_associated."
+msgstr "{0} {1} wurde erfolgreich zugeordnet."
+
+msgid "{0}_{1}_could_not_be_associated."
+msgstr "{0} {1} konnte <b>nicht</b> zugeordnet werden."
+
+msgid "Associate_products"
+msgstr "Produkte zuordnen"
+
+msgid "The_product_{0}_has_been_deleted_successfully."
+msgstr "Das Produkt {0} wurde erfolgreich gelöscht."
+
+msgid "While_deleting_the_product_{0}_there_has_an_error_occurred."
+msgstr "Beim Löschen des Produktes ist ein Fehler aufgetreten."
+
+msgid "Synchronize_products"
+msgstr "Produkte synchronisieren"
+
+msgid "There_have_not_been_any_products_associated_from_your_master_foodcoop_{0}_to_your_remote_foodcoop(s)_{1}."
+msgstr "Du hast deinen Produkten auf der Master-Foodcoop {0} noch keine Produkte der Remote-Foodcoop(s) {1} zugeordnet."
+
+msgid "The_domain_may_only_consist_of_https://_and_the_hostname_(no_trailing_slash)."
+msgstr "Die Domain darf nur aus https:// und dem Hostnamen bestehen (ohne / am Ende)."
+
+msgid "The_domain_needs_to_start_with_https://."
+msgstr "Die Domain muss mit https:// beginnen."
+
+msgid "The_domain_already_exists."
+msgstr "Die Domain ist bereits vorhanden."
+
+msgid "Show_more"
+msgstr "Mehr anzeigen"
+
+msgid "Email"
+msgstr "E-Mail"
+
+msgid "Password"
+msgstr "Passwort"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Caution!_Editing_a_remote_foodcoop_can_result_in_problems_if_manufacturers_already_associated_products!"
+msgstr "<b>Achtung!</b> Eine Remote-Foodcoop zu ändern, kann zu Problemen führen, wenn Hersteller bereits Produkte zugeordnet haben!"
+
+msgid "Remote_foodcoop"
+msgstr "Remote-Foodcoop"
+
+msgid "Domain_of_the_foodcoop_needs_to_start_with_https"
+msgstr "Domain der Foodcoop, <b>muss mit https</b> beginnen (z. B. https://www.fairteiler-scharnstein.at)"
+
+msgid "Delete_remote_foodcoop"
+msgstr "Remote-Foodcoop löschen"
+
+msgid "Check_and_do_not_forget_to_click_save_button."
+msgstr "Anhaken und dann auf <b>Speichern</b> klicken."
+
+msgid "Load_preview"
+msgstr "Vorschau laden"
+
+msgid "Show_only_products_with_differences"
+msgstr "Nur Produkte mit Abweichungen anzeigen"
+
+msgid "Fields_with_red_background_show_differences_between_master_foodcoop_and_remote_foodcoop."
+msgstr "Rot hinterlegte Felder (Vorschau) zeigen Unterschiede zwischen Master-Foodcoop und Remote-Foodcoop an."
+
+msgid "Perfect!_You_can_lean_back_and_relax_as_all_products_are_synchronized."
+msgstr "<b>Super!</b> Du kannst dich entspannt zurücklehen. Deine Produktdaten sind bei allen Foodcoops synchron."
+
+msgid "Load_products"
+msgstr "Produkte laden"
 
 msgid "docs_route_network_module"
 msgstr "netzwerk-modul"

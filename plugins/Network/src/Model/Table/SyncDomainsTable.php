@@ -15,7 +15,7 @@ use Cake\Validation\Validator;
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop Network Plugin 1.0.0
+ * @since         FoodCoopShop 2.2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -28,17 +28,17 @@ class SyncDomainsTable extends AppTable
     {
         $validator->add('domain', 'hostname', [
             'rule' => array('custom', HOSTNAME_REGEX),
-            'message' => 'Die Domain darf nur aus https:// und dem Hostnamen bestehen (ohne / am Ende).'
+            'message' => __d('network', 'The_domain_may_only_consist_of_https://_and_the_hostname_(no_trailing_slash).')
         ]);
         $validator->notEmpty('domain', 'Bitte gib eine Domain ein, sie muss mit https:// beginnen.');
         $validator->add('domain', 'https', [
             'rule' => array('custom', HTTPS_REGEX),
-            'message' => 'Die Domain muss mit https:// beginnen.'
+            'message' => __d('network', 'The_domain_needs_to_start_with_https://.')
         ]);
         $validator->add('domain', 'unique', [
             'rule' => 'validateUnique',
             'provider' => 'table',
-            'message' => 'Die Domain ist bereits vorhanden.'
+            'message' => __d('network', 'The_domain_already_exists.')
         ]);
         return $validator;
     }

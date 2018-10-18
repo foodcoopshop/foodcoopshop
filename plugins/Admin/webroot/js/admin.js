@@ -798,7 +798,7 @@ foodcoopshop.Admin = {
             
             var dialogOptions = {
                 autoOpen: false,
-                height: 250,
+                height: 300,
                 width: 350,
                 modal: true,
                 close: function () {

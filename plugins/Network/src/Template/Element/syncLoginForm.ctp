@@ -6,7 +6,7 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop Network Plugin 1.0.0
+ * @since         FoodCoopShop 2.2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -18,16 +18,16 @@
     <form class="sync-login-form" autocomplete="off" data-sync-domain="<?php echo $syncDomain->domain; ?>">
         <b><?php echo $syncDomain->domain; ?></b>
         <?php
-            echo $this->Html->link('<i class="fa"></i> Mehr anzeigen', 'javascript:void(0);', [
+            echo $this->Html->link('<i class="fa"></i> ' . __d('network', 'Show_more'), 'javascript:void(0);', [
                 'class' => 'toggle-link',
-                'title' => 'Mehr anzeigen',
+                'title' => __d('network', 'Show_more'),
                 'escape' => false
             ]);
         ?>
         <div class="toggle-content">
             <span style="display: none;"><?php echo $syncDomain->domain; ?></span>
-            <input type="text" class="username" value="" placeholder="E-Mail" style="margin-bottom: 5px;" />
-            <input type="password" class="password" value="" placeholder="Passwort" />
+            <input type="text" class="username" value="" placeholder="<?php echo __d('network', 'Email'); ?>" style="margin-bottom: 5px;" />
+            <input type="password" class="password" value="" placeholder="<?php echo __d('network', 'Password'); ?>" />
         </div>
     </form>
 <?php } ?>

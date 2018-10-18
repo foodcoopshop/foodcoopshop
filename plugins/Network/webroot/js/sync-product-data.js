@@ -5,7 +5,7 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop Network Plugin 1.0.0
+ * @since         FoodCoopShop 2.2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -27,40 +27,75 @@ foodcoopshop.SyncProductData = {
 
     implementedSyncAttributes : [
         {
+            name: 'image',
+            label: foodcoopshop.LocalizedJs.syncProductData.Image,
+            data: 'image.src',
+            column: 2
+        },
+        {
             name: 'name',
-            label: 'Name',
-            additionalInfo: 'Name, Einheit, kurze Beschreibung und Beschreibung <i class="fa fa-file-text-o"></i>',
+            label: foodcoopshop.LocalizedJs.syncProductData.Name,
+            additionalInfo: foodcoopshop.LocalizedJs.syncProductData.NameAdditionalInfo,
             data: {
                 name: 'unchanged_name',
                 unity: 'unity',
                 description: 'description',
-                description_short: 'description_short'
+                description_short: 'description_short',
+                is_declaration_ok: 'is_declaration_ok'
             },
-            column: 2
-        },
-        {
-            name: 'quantity',
-            label: 'Anzahl',
-            data: 'stock_available.quantity',
             column: 3
         },
         {
-            name: 'price',
-            label: 'Preis',
-            data: 'gross_price',
+            name: 'is_stock_product',
+            label: foodcoopshop.LocalizedJs.syncProductData.StockProduct,
+            data: 'is_stock_product',
             column: 4
         },
         {
-            name: 'deposit',
-            label: 'Pfand',
-            data: 'deposit',
+            name: 'quantity',
+            label: foodcoopshop.LocalizedJs.syncProductData.Quantity,
+            data: {
+                'stock_available_quantity': 'stock_available.quantity',
+                'stock_available_quantity_limit': 'stock_available.quantity_limit',
+                'stock_available_sold_out_limit': 'stock_available.sold_out_limit'
+            },
             column: 5
         },
         {
-            name: 'active',
-            label: 'Status',
-            data: 'active',
+            name: 'price',
+            label: foodcoopshop.LocalizedJs.syncProductData.Price,
+            data: {
+                gross_price: 'gross_price',
+                unit_product_price_incl_per_unit: 'unit_product.price_incl_per_unit',
+                unit_product_name: 'unit_product.name',
+                unit_product_amount: 'unit_product.amount',
+                unit_product_quantity_in_units: 'unit_product.quantity_in_units',
+                unit_product_price_per_unit_enabled: 'unit_product.price_per_unit_enabled'
+            },
             column: 6
+        },
+        {
+            name: 'deposit',
+            label: foodcoopshop.LocalizedJs.syncProductData.Deposit,
+            data: 'deposit',
+            column: 7
+        },
+        {
+            name: 'delivery_rhythm',
+            label: foodcoopshop.LocalizedJs.syncProductData.DeliveryRhythm,
+            data: {
+                delivery_rhythm_type: 'delivery_rhythm_type',
+                delivery_rhythm_count: 'delivery_rhythm_count',
+                delivery_rhythm_first_delivery_day: 'delivery_rhythm_first_delivery_day',
+                delivery_rhythm_order_possible_until: 'delivery_rhythm_order_possible_until'
+            },
+            column: 8
+        },
+        {
+            name: 'active',
+            label: foodcoopshop.LocalizedJs.syncProductData.Status,
+            data: 'active',
+            column: 9
         }
     ],
 
@@ -81,7 +116,17 @@ foodcoopshop.SyncProductData = {
     },
 
     getProductTableHeadElements : function () {
-        return  ['<input type="checkbox" id="row-marker-all" />', '<span class="name">Name</span><span class="toggle-clean-rows">nur Produkte mit Abweichungen anzeigen</span><input type="checkbox" checked="checked" id="toggle-clean-rows" />', 'Anzahl', 'Preis', 'Pfand', 'Status'];
+        return  [
+            '<input type="checkbox" id="row-marker-all" />',
+            foodcoopshop.LocalizedJs.syncProductData.Image,
+            foodcoopshop.LocalizedJs.syncProductData.Name,
+            foodcoopshop.LocalizedJs.syncProductData.StockProduct,
+            foodcoopshop.LocalizedJs.syncProductData.Quantity,
+            foodcoopshop.LocalizedJs.syncProductData.Price,
+            foodcoopshop.LocalizedJs.syncProductData.Deposit,
+            foodcoopshop.LocalizedJs.syncProductData.DeliveryRhythm,
+            foodcoopshop.LocalizedJs.syncProductData.Status
+        ];
     },
 
     showEverythingAllrightMessage : function () {
@@ -90,27 +135,6 @@ foodcoopshop.SyncProductData = {
 
     hideEverythingAllrightMessage : function () {
         this.everythingAllrightContainer.hide();
-    },
-
-    cleanDescriptionField : function (field) {
-        field = $('<div/>').html(field).text(); // replace html special chars
-        field = field.replace(/\u00a0/g, ' '); // replace &nbsp; with ' '
-        field = field.replace(/(?:\r\n|\r|\n)/g, '<br />'); // replace all linefeeds (for edge)
-        field = field.replace(/"/g, '\''); // replace double quotes
-        return field;
-    },
-
-    getDescriptionsAsString : function (description_short, description) {
-        var result = '';
-        if (description_short != '') {
-            result += '<b>Kurze Beschreibung</b><br />';
-            result += '<p>' + this.cleanDescriptionField(description_short) + '</p>';
-        }
-        if (description != '') {
-            result += '<b>Beschreibung</b><br />';
-            result += '<p>' + this.cleanDescriptionField(description) + '</p>';
-        }
-        return result;
     },
 
     bindToggleCleanRows : function () {
@@ -153,16 +177,59 @@ foodcoopshop.SyncProductData = {
                 var hasAttributes = foodcoopshop.SyncProduct.hasAttributes(product);
                 var tableData = '<tr class="' + [product.row_class].join(' ') + '" data-product-id="' + product.id_product + '">';
                 tableData += '<td class="sync-checkbox"><input type="checkbox" class="row-marker" disabled="disabled" /></td>';
-                tableData += '<td class="name">' + foodcoopshop.SyncProduct.getProductNameWithUnity(product, isAttribute, hasAttributes);
-                var descriptionAsTitle = foodcoopshop.SyncProductData.getDescriptionsAsString(product.description_short, product.description);
-                if (!isAttribute && descriptionAsTitle != '') {
-                    tableData += '<i title="' + descriptionAsTitle + '" class="fa fa-file-text-o description"></i>';
-                }
+                tableData += '<td class="image">';
+                    if (!isAttribute && product.image && product.image.src) {
+                        tableData += foodcoopshop.SyncProduct.getProductImageTag(product.image.src);
+                    }
                 tableData += '</td>';
-                tableData += '<td class="quantity">' + (isAttribute || !hasAttributes ? product.stock_available.quantity : '') + '</td>';
-                tableData += '<td class="price">' + (isAttribute || !hasAttributes ? foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.gross_price)) : '') + '</td>';
+                tableData += '<td class="name">';
+                    tableData += foodcoopshop.SyncProduct.getProductNameWithUnity(product, isAttribute, hasAttributes);
+                    if (!isAttribute) {
+                        tableData += foodcoopshop.SyncProduct.getIsDeclarationOkString(product.is_declaration_ok);
+                    }
+                tableData += '</td>';
+                tableData += '<td class="is_stock_product">';
+                    if (!isAttribute) {
+                        tableData += foodcoopshop.SyncProduct.getIsStockProductString(product.is_stock_product);
+                    }
+                tableData += '</td>';
+                tableData += '<td class="quantity">';
+                    if (isAttribute || !hasAttributes) {
+                        tableData += foodcoopshop.SyncProduct.getQuantityString(
+                                product.stock_available.quantity,
+                                product.stock_available.quantity_limit,
+                                product.stock_available.sold_out_limit
+                            );
+                    }
+                tableData += '</td>';
+                tableData += '<td class="price">';
+                    if (isAttribute || !hasAttributes) {
+                        if (product.unit && product.unit_product && product.unit_product.price_per_unit_enabled) {
+                            tableData += foodcoopshop.SyncProduct.getPricePerUnitBaseInfo(
+                                    product.unit_product.price_incl_per_unit,
+                                    product.unit_product.name,
+                                    product.unit_product.amount,
+                                    product.unit_product.quantity_in_units
+                                );
+                        } else {
+                          tableData += foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.gross_price));
+                        }
+                    }
+                tableData += '</td>';
                 tableData += '<td class="deposit">' + (product.deposit > 0 ? foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.deposit)) : '') + '</td>';
-                tableData += '<td class="active">' + (!isAttribute ? (product.active ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>') : '') + '</td>';
+                tableData += '<td class="delivery_rhythm">';
+                if (!isAttribute) {
+                    tableData += foodcoopshop.SyncProduct.getDeliveryRhythmString(
+                            product.delivery_rhythm_string,
+                            product.is_stock_product,
+                            product.delivery_rhythm_type,
+                            product.delivery_rhythm_count,
+                            product.delivery_rhythm_first_delivery_day,
+                            product.delivery_rhythm_order_possible_until
+                        );
+                }
+            tableData += '</td>';
+                tableData += '<td class="active">' + (!isAttribute ? (product.active ? '<i class="fa fa-check ok"></i>' : '<i class="fa fa-close not-ok"></i>') : '') + '</td>';
                 tableData += '</tr>';
 
                 if (product.prepared_sync_products) {
@@ -184,16 +251,18 @@ foodcoopshop.SyncProductData = {
     getHtmlForAssignedProduct : function (syncServer, productName, remoteProductId) {
 
         var html = '<tr class="assigned-products" data-domain="' + syncServer + '" data-remote-product-id="' + remoteProductId + '">';
-        html += '<td></td>'; // empty for checkboxes
+        html += '<td></td>'; // for checkboxes
+        html += '<td class="image"></td>';
         html += '<td class="name">';
-        html += '<span class="app-name"></span>';
-        html += '<span class="product-name">' + productName + '</span>';
+            html += '<span class="app-name"></span>';
+            html += '<span class="product-name">' + productName + '</span>';
         html += '</td>';
+        html += '<td class="is_stock_product"></td>';
         html += '<td class="quantity"></td>';
         html += '<td class="price"></td>';
         html += '<td class="deposit"></td>';
+        html += '<td class="delivery_rhythm"></td>';
         html += '<td class="active"></td>';
-        html += '</td>';
         html += '</tr>';
         return html;
     },
@@ -215,8 +284,6 @@ foodcoopshop.SyncProductData = {
 
         var productList = $('body .product-list');
         productList.html(productListHtml);
-
-        foodcoopshop.SyncBase.initTooltip('tr.main-product i.description');
 
         // add horizontal checkboxes
         $(foodcoopshop.SyncProductData.implementedSyncAttributes).each(function () {
@@ -286,66 +353,162 @@ foodcoopshop.SyncProductData = {
         productRows.each(function () {
 
             for (var product of response.products) {
+
                 if (product.id_product == $(this).data('remoteProductId')) {
-                    var localProduct = $(this).prevAll('.ok').first();
+                    
+                    var localProductRow = $(this).prevAll('.ok').first();
+                    var localProductId = localProductRow.data('productId');
+                    
+                    var localProduct = null;
+                    for(var tmpLocalProduct of foodcoopshop.SyncProductData.products) {
+                        if (tmpLocalProduct.id_product == localProductId) {
+                            localProduct = tmpLocalProduct;
+                            continue;
+                        }
+                    }
 
                     var isAttribute = foodcoopshop.SyncProduct.isAttribute(product);
                     var hasAttributes = foodcoopshop.SyncProduct.hasAttributes(product);
 
+                    // image
+                    if (!isAttribute) {
+                        if (product.image && product.image.src) {
+                            $(this).find('td.image').html(foodcoopshop.SyncProduct.getProductImageTag(product.image.src));
+                        }
+                        var localProductImageHash = localProduct.image && localProduct.image.hash || '';
+                        var remoteProductImageHash = product.image && product.image.hash || '';
+                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.image', remoteProductImageHash, localProductImageHash, $(this), localProductRow);
+                    }
+                    
                     // name
                     var remoteProductName = foodcoopshop.SyncProduct.getProductNameWithUnity(product, isAttribute, hasAttributes);
-
-                    var descriptionAsTitle = foodcoopshop.SyncProductData.getDescriptionsAsString(
-                        product.description_short,
-                        product.description
-                    );
-                    if (!isAttribute && descriptionAsTitle != '') {
-                        remoteProductName += '<i title="' + descriptionAsTitle + '" class="fa fa-file-text-o description"></i>';
-                    }
-
+                    
                     if (!isAttribute) {
-                        // different attribute names would cause a difference that does not make the record dirty
-                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.name', remoteProductName, localProduct, $(this));
-                    } else {
-                        $(this).find('td.name').html(remoteProductName);
+                        // check all name fields to set the field dirty or not
+                        var localProductNameFields = '';
+                        var remoteProductNameFields = '';
+                        $(foodcoopshop.SyncProductData.implementedSyncAttributes).each(function() {
+                            if ($(this)[0].name == 'name') {
+                                var keys = Object.keys($(this)[0].data);
+                                for(var key in keys) {
+                                    localProductNameFields += product[keys[key]];
+                                    remoteProductNameFields += localProduct[keys[key]];
+                                }
+                            }
+                        });
+                        remoteProductName += foodcoopshop.SyncProduct.getIsDeclarationOkString(product.is_declaration_ok);
+                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.name', remoteProductNameFields, localProductNameFields, $(this), localProductRow);
                     }
+                    $(this).find('td.name').html(remoteProductName);
                     $(this).find('td.name').prepend('<span class="app-name">' + response.app.name + ': </span>');
 
+                    // is_stock_product
+                    if (!isAttribute) {
+                        var remoteProductIsStockProductString = foodcoopshop.SyncProduct.getIsStockProductString(product.is_stock_product);
+                        var localProductIsStockProductString = foodcoopshop.SyncProduct.getIsStockProductString(localProduct.is_stock_product);
+                        $(this).find('td.is_stock_product').html(remoteProductIsStockProductString);
+                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.is_stock_product', remoteProductIsStockProductString, localProductIsStockProductString, $(this), localProductRow);
+                    }
+                    
                     // quantity
                     if (!hasAttributes) {
-                        var quantity = product.stock_available.quantity;
-                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.quantity', quantity, localProduct, $(this));
+                        var remoteProductQuantityString = foodcoopshop.SyncProduct.getQuantityString(
+                                product.stock_available.quantity,
+                                product.stock_available.quantity_limit,
+                                product.stock_available.sold_out_limit
+                            );
+                        var localProductQuantityString = foodcoopshop.SyncProduct.getQuantityString(
+                                localProduct.stock_available.quantity,
+                                localProduct.stock_available.quantity_limit,
+                                localProduct.stock_available.sold_out_limit
+                            );
+                        $(this).find('td.quantity').html(remoteProductQuantityString);
+                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.quantity', remoteProductQuantityString, localProductQuantityString, $(this), localProductRow);
                     }
 
                     // price
                     if (!hasAttributes) {
-                        if (response.app.variableMemberFee > 0) {
-                            // if remote manufacturer has variable member fee, compare local price and add remote variable member fee
-                            var localPriceAsFloat = foodcoopshop.Helper.getCurrencyAsFloat(localProduct.find('td.price').html());
-                            var localPriceIncludingRemoteVariableMemberFee = foodcoopshop.SyncProductData.roundToTwo(localPriceAsFloat + (localPriceAsFloat * response.app.variableMemberFee / 100));
-                            var remoteGrossPriceAsFloat = parseFloat(product.gross_price);
-                            if (remoteGrossPriceAsFloat != localPriceIncludingRemoteVariableMemberFee) {
-                                localProduct.addClass('dirty');
-                                $(this).find('td.price').addClass('dirty');
-                            }
-                            var variableMemberFeeInfo = ' (' + response.app.variableMemberFee + '%)';
-                            $(this).find('td.price').html(foodcoopshop.Helper.formatFloatAsCurrency(remoteGrossPriceAsFloat) + variableMemberFeeInfo);
-                        } else {
-                            var price = foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.gross_price));
-                            foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.price', price, localProduct, $(this));
+                        
+                        var remotePriceAsString;
+                        var localPriceAsString;
+                        
+                        var localProductGrossPrice = parseFloat(localProduct.gross_price);
+                        var remoteProductGrossPrice = parseFloat(product.gross_price);
+                        
+                        if (product.unit && product.unit_product && product.unit_product.price_per_unit_enabled) {
+                            remoteProductGrossPrice = product.unit_product.price_incl_per_unit;
                         }
+                        if (localProduct.unit && localProduct.unit_product && localProduct.unit_product.price_per_unit_enabled) {
+                            localProductGrossPrice = localProduct.unit_product.price_incl_per_unit;
+                        }
+                        
+                        // if remote manufacturer has variable member fee enabled, compare local price including the remote variable member fee
+                        if (response.app.variableMemberFee > 0) {
+                            localProductGrossPrice = foodcoopshop.SyncProductData.roundToTwo(localProductGrossPrice + (localProductGrossPrice * response.app.variableMemberFee / 100));
+                        }
+                        
+                        remotePriceAsString = foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(remoteProductGrossPrice));
+                        if (product.unit && product.unit_product && product.unit_product.price_per_unit_enabled) {
+                            remotePriceAsString = foodcoopshop.SyncProduct.getPricePerUnitBaseInfo(
+                                    remoteProductGrossPrice,
+                                    product.unit_product.name,
+                                    product.unit_product.amount,
+                                    product.unit_product.quantity_in_units
+                                );
+                        }
+                        
+                        localPriceAsString = foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(localProductGrossPrice));
+                        if (localProduct.unit && localProduct.unit_product && localProduct.unit_product.price_per_unit_enabled) {
+                            localPriceAsString = foodcoopshop.SyncProduct.getPricePerUnitBaseInfo(
+                                    localProductGrossPrice,
+                                    localProduct.unit_product.name,
+                                    localProduct.unit_product.amount,
+                                    localProduct.unit_product.quantity_in_units
+                                );
+                        }
+                        
+                        var additionalInfo = '';
+                        if (response.app.variableMemberFee > 0) {
+                            additionalInfo += ' (' + response.app.variableMemberFee + '%)';
+                        }
+                        $(this).find('td.price').html(remotePriceAsString + additionalInfo);
+                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.price', remotePriceAsString, localPriceAsString, $(this), localProductRow);
                     }
 
                     // deposit
-                    var deposit = (product.deposit > 0 ? foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.deposit)) : '');
-                    foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.deposit', deposit, localProduct, $(this));
+                    var remoteDeposit = (localProduct.deposit > 0 ? foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.deposit)) : '');
+                    $(this).find('td.deposit').html(remoteDeposit);
+                    foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.deposit', product.deposit, localProduct.deposit, $(this), localProductRow);
 
+                    // delivery_rhythm
+                    if (!isAttribute) {
+                        var remoteProductDeliveryRhythmString = foodcoopshop.SyncProduct.getDeliveryRhythmString(
+                                product.delivery_rhythm_string,
+                                product.is_stock_product,
+                                product.delivery_rhythm_type,
+                                product.delivery_rhythm_count,
+                                product.delivery_rhythm_first_delivery_day,
+                                product.delivery_rhythm_order_possible_until
+                            );
+                        var localProductDeliveryRhythmString = foodcoopshop.SyncProduct.getDeliveryRhythmString(
+                                localProduct.delivery_rhythm_string,
+                                localProduct.is_stock_product,
+                                localProduct.delivery_rhythm_type,
+                                localProduct.delivery_rhythm_count,
+                                localProduct.delivery_rhythm_first_delivery_day,
+                                localProduct.delivery_rhythm_order_possible_until
+                            );
+                        $(this).find('td.delivery_rhythm').html(remoteProductDeliveryRhythmString);
+                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.delivery_rhythm', remoteProductDeliveryRhythmString, localProductDeliveryRhythmString, $(this), localProductRow);
+                    }
+                    
                     // active
-                    var active = (!isAttribute ? (product.active ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>') : '');
-                    foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.active', active, localProduct, $(this));
+                    var remoteActive = (!isAttribute ? (product.active ? '<i class="fa fa-check ok"></i>' : '<i class="fa fa-close not-ok"></i>') : '');
+                    $(this).find('td.active').html(remoteActive);
+                    foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.active', product.active, localProduct.active, $(this), localProductRow);
 
-                    var checkbox = localProduct.find('.sync-checkbox input');
-                    if (localProduct.hasClass('dirty')) {
+                    var checkbox = localProductRow.find('.sync-checkbox input');
+                    if (localProductRow.hasClass('dirty')) {
                         checkbox.prop('checked', true);
                         checkbox.prop('disabled', false);
                     } else {
@@ -354,6 +517,7 @@ foodcoopshop.SyncProductData = {
                     }
 
                     continue;
+                    
                 }
             }
 
@@ -377,7 +541,6 @@ foodcoopshop.SyncProductData = {
             foodcoopshop.SyncProductData.showEverythingAllrightMessage();
         }
 
-        foodcoopshop.SyncBase.initTooltip('tr.assigned-products i.description');
         foodcoopshop.Helper.enableButton(foodcoopshop.SyncProductData.syncProductsButton);
 
         if ($(foodcoopshop.SyncProductData.toggleCleanRowsSelector + ':checked').length > 0) {
@@ -387,13 +550,11 @@ foodcoopshop.SyncProductData = {
 
     },
 
-    doIsAttributeDirtyActions : function (attributeCellSelector, remoteValue, localProductRow, remoteProductRow) {
-        remoteProductRow.find(attributeCellSelector).html(remoteValue);
-        if (remoteValue != localProductRow.find(attributeCellSelector).html()) {
+    doIsAttributeDirtyActions : function (attributeCellSelector, remoteValue, localValue, remoteProductRow, localProductRow) {
+        if (remoteValue != localValue) {
             localProductRow.addClass('dirty');
             remoteProductRow.find(attributeCellSelector).addClass('dirty');
-            //          console.log(localProductRow.find(attributeCellSelector).html());
-            //          console.log(remoteValue);
+//            console.log(attributeCellSelector + ' - productId: ' + localProductRow.data('productId') + ': ' + remoteValue + ' / ' + localValue);
         }
     },
 
@@ -406,7 +567,7 @@ foodcoopshop.SyncProductData = {
     },
 
     bindSyncProductDataButton : function () {
-
+        
         foodcoopshop.Helper.disableButton(foodcoopshop.SyncProductData.syncProductsButton);
 
         foodcoopshop.SyncProductData.syncProductsButton.on('click', function () {
@@ -441,11 +602,14 @@ foodcoopshop.SyncProductData = {
                                         var newValue;
                                         if ($.type(dataIndex) == 'string') {
                                             newValue = foodcoopshop.Helper.resolveIndex(dataIndex, syncProduct);
-                                            if (attributeName == 'active') {
+                                            if ($.inArray(attributeName, ['active', 'is_stock_product']) !== -1) {
                                                 newValue = newValue ? 1 : 0; // transform true or false to 1 or 0
                                             }
                                             if (attributeName == 'deposit') {
                                                 newValue = newValue === null ? 0 : newValue; // transform null to 0
+                                            }
+                                            if (attributeName == 'image') {
+                                                newValue = newValue === undefined ? 'no-image' : newValue; // transform null to 0
                                             }
                                             attributes[attributeName] = newValue;
                                         }
@@ -456,6 +620,15 @@ foodcoopshop.SyncProductData = {
                                             $(dataIndexKeys).each(function (index, dataI) {
                                                 var newIndex = dataIndexKeys[index];
                                                 newValue[newIndex] = foodcoopshop.Helper.resolveIndex(dataIndex[dataI], syncProduct);
+                                                
+                                                if ($.type(newValue[newIndex] == 'string')) {
+                                                    // converting delivery_rhythm_first_delivery_day and delivery_rhythm_order_possible_until to 'YYYY-mm-dd'
+                                                    var regex = new RegExp(/00\:00\:00\+00\:00/);
+                                                    if (regex.test(newValue[newIndex])) {
+                                                        newValue[newIndex] = newValue[newIndex].substr(0, 10);
+                                                    }
+                                                }
+
                                             });
                                             attributes[attributeName] = $.extend({}, newValue); // to post data correctly convert array to object
                                         }
@@ -489,14 +662,14 @@ foodcoopshop.SyncProductData = {
             });
 
             if (checkedProductsCount == 0 && checkedAttributesCount == 0) {
-                foodcoopshop.Helper.showOrAppendErrorMessage('Es sind keine Produkte oder Varianten ausgewählt.');
+                foodcoopshop.Helper.showOrAppendErrorMessage(foodcoopshop.LocalizedJs.syncProductData.NoProductsOrAttributesSelected);
                 verticalCheckboxes.addClass('error');
                 return;
             }
 
             checkedAttributeLabels = $.unique(checkedAttributeLabels);
             if (checkedAttributeLabels.length == 0) {
-                foodcoopshop.Helper.showOrAppendErrorMessage('Es sind keine Produktdaten ausgewählt.');
+                foodcoopshop.Helper.showOrAppendErrorMessage(foodcoopshop.LocalizedJs.syncProductData.NoProductDataSelected);
                 horizontalCheckboxes.addClass('error');
                 return;
             }
@@ -509,40 +682,40 @@ foodcoopshop.SyncProductData = {
             });
 
             if (domains2sync.length == 0) {
-                foodcoopshop.Helper.showOrAppendErrorMessage('Bitte gib deine Login-Daten ein.');
+                foodcoopshop.Helper.showOrAppendErrorMessage(foodcoopshop.LocalizedJs.syncProductData.PleaseEnterYourCredentials);
                 return;
             }
 
-            var htmlCode = '<p>Möchtest du die Daten <b>' + checkedAttributeLabels.join(', ');
-            htmlCode += '</b> von <b>';
-            htmlCode += checkedProductsCount + ' ' + (checkedProductsCount == 1 ? 'Produkt' : 'Produkten');
-            if (checkedAttributesCount > 0) {
-                htmlCode += ' und ';
-                htmlCode += checkedAttributesCount + ' ' + (checkedAttributesCount == 1 ? 'Variante' : 'Varianten');
-            }
-            htmlCode += '</b> wirklich auf folgende FoodCoops übertragen?</p><p>';
-            htmlCode += '<p>' + domains2sync.join('<br />') + '</p>';
-            htmlCode += '<b class="negative">Diese Aktion kann nicht rückgängig gemacht werden!</b></p>';
+            var preparedString = foodcoopshop.LocalizedJs.syncProductData.SynchronizeDialogInfoText;
+            preparedString = preparedString.replace(/\{0\}/, '<b>' + checkedAttributeLabels.join(', ') + '</b>');
+            preparedString = preparedString.replace(/\{1\}/, checkedProductsCount + ' ' + (checkedProductsCount == 1 ? foodcoopshop.LocalizedJs.syncProductData.product : foodcoopshop.LocalizedJs.syncProductData.products));
+            preparedString = preparedString.replace(/\{2\}/, checkedAttributesCount + ' ' + (checkedAttributesCount == 1 ? foodcoopshop.LocalizedJs.syncProductData.attribute : foodcoopshop.LocalizedJs.syncProductData.attributes));
+            preparedString = preparedString.replace(/\{3\}/, '<p>' + domains2sync.join('<br />') + '</p>');
+            
+            var htmlCode = '<p>' + preparedString + '</p>';
+            htmlCode += '<b class="negative">' + foodcoopshop.LocalizedJs.syncProductData.ThisActionCannotBeUndone + '</b></p>';
             htmlCode += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
 
+            var buttons = {};
+            buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+            buttons['yes'] = {
+                text: foodcoopshop.LocalizedJs.helper.yes,
+                click: function() {
+                    $('.ui-dialog .ajax-loader').show();
+                    $('.ui-dialog button').attr('disabled', 'disabled');
+                    foodcoopshop.SyncBase.doApiCall('/api/updateProducts.json', 'POST', postData, foodcoopshop.SyncProductData.onProductDataUpdated);
+                }
+            };            
+            
             $('<div></div>').appendTo('body')
                 .html(htmlCode)
                 .dialog({
                     modal: true,
-                    title: 'Wirklich synchronisieren?',
+                    title: foodcoopshop.LocalizedJs.syncProductData.ReallySynchronize,
                     autoOpen: true,
                     width: 450,
                     resizable: false,
-                    buttons: {
-                        'Abbrechen': function (button) {
-                            $(this).dialog('close');
-                        },
-                        'Ja': function () {
-                            $('.ui-dialog .ajax-loader').show();
-                            $('.ui-dialog button').attr('disabled', 'disabled');
-                            foodcoopshop.SyncBase.doApiCall('/api/updateProducts.json', 'POST', postData, foodcoopshop.SyncProductData.onProductDataUpdated);
-                        }
-                    },
+                    buttons: buttons,
                     close: function (event, ui) {
                         $(this).remove();
                     }

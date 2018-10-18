@@ -5,7 +5,7 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop Network Plugin 1.0.0
+ * @since         FoodCoopShop 2.2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -57,7 +57,10 @@ foodcoopshop.SyncProducts = {
     },
 
     getProductTableHeadElements : function () {
-        return ['Id', 'Produkt'];
+        return [
+            foodcoopshop.LocalizedJs.syncProducts.Id,
+            foodcoopshop.LocalizedJs.syncProducts.Product
+        ];
     },
 
     getProductTableRows : function (products) {
@@ -236,7 +239,7 @@ foodcoopshop.SyncProducts = {
                 if (ui.draggable.parent().hasClass('main-product')) {
                     foodcoopshop.SyncProducts.onDropRemoteProduct($(this), ui);
                 } else {
-                    foodcoopshop.Helper.showErrorMessage('Eine Variante kann keinem Produkt zugeordnet werden.');
+                    foodcoopshop.Helper.showErrorMessage(foodcoopshop.LocalizedJs.syncProducts.AnAttributeCannotBeAssignedToAProduct);
                 }
             }
         });
@@ -249,7 +252,7 @@ foodcoopshop.SyncProducts = {
                 if (ui.draggable.parent().hasClass('sub-row')) {
                     foodcoopshop.SyncProducts.onDropRemoteProduct($(this), ui);
                 } else {
-                    foodcoopshop.Helper.showErrorMessage('Ein Produkt kann keiner Variante zugeordnet werden.');
+                    foodcoopshop.Helper.showErrorMessage(foodcoopshop.LocalizedJs.syncProducts.AProductCannotBeAssignedToAnAttribute);
                 }
             }
         });

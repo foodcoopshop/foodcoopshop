@@ -1,3 +1,16 @@
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 2.2.0
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
 #sync-products, #sync-product-data {
   margin: 3px;
 }
@@ -28,7 +41,14 @@ body.syncs h2 {
   margin-bottom: 0;
   border-bottom: 0;
 }
-
+.nav-tabs {
+	margin-bottom: 10px;
+	margin-top: 8px ! important;
+	margin-left: -5px ! important;
+}
+.nav-tabs li.active {
+	font-weight: bold;
+}
 form.sync-login-form {
   border: 1px solid #dfdfdf;
   border-radius: 3px;
@@ -120,7 +140,8 @@ body.syncs.product_data tr.assigned-products td {
 }
 
 body.syncs.product_data tr.assigned-products td.dirty,
-body.syncs.product_data span.dirty {
+body.syncs.product_data span.dirty,
+table.list td.dirty i.fa {
   background-color: #f3515c;
   color: #fff;
 }
@@ -190,12 +211,9 @@ body.syncs.product a.delete-product-button:hover i {
   cursor: grabbing;
 }
 
-body.syncs.product_data table.product-list {
-  width: 650px;
-}
-
-body.syncs.product_data i.description {
-  padding-left: 5px;
+body.syncs.product_data table.product-list td.image img {
+  width: 50px;
+  height: auto;
 }
 
 body.syncs.product_data table.product-list td.quantity, body.syncs.product_data table.product-list td.price,
@@ -203,7 +221,12 @@ body.syncs.product_data table.product-list td.quantity, body.syncs.product_data 
   text-align: right;
 }
 
-body.syncs.product_data table.product-list td.active {
+body.syncs.product_data table.product-list td.name .fa {
+	float: right;
+	margin-left: 5px;
+}
+body.syncs.product_data table.product-list td.active,
+body.syncs.product_data table.product-list td.is_stock_product {
   text-align: center;
 }
 
@@ -220,28 +243,30 @@ body.syncs.product_data table.product-list tr.horizontal-checkboxes.error,
   background-color: #f3515c;
 }
 /* additional info in horizontal checkboxes */
-body.syncs.product_data table.product-list tr:nth-of-type(2) td:nth-of-type(2) input {
+body.syncs.product_data table.product-list tr:nth-of-type(2) td:nth-of-type(3) input {
   float: left;
   margin-bottom: 4px;
 }
 
-body.syncs.product_data table.product-list tr:nth-of-type(2) td:nth-of-type(2) span,
-body.syncs.product_data table.product-list tr:nth-of-type(1) th:nth-of-type(2) span {
+body.syncs.product_data table.product-list tr:nth-of-type(2) td:nth-of-type(3) span,
+body.syncs.product_data table.product-list tr:nth-of-type(1) th:nth-of-type(3) span {
   float: left;
   font-size: 11px;
   padding-left: 5px;
   padding-top: 4px;
 }
-body.syncs.product_data table.product-list tr:nth-of-type(1) th:nth-of-type(2) span {
+body.syncs.product_data table.product-list tr:nth-of-type(1) th:nth-of-type(3) span {
   padding-top: 5px;
 }
-body.syncs.product_data table.product-list tr.error:nth-of-type(2) td:nth-of-type(2) span {
+body.syncs.product_data table.product-list tr.error:nth-of-type(2) td:nth-of-type(3) span {
   color: #fff;
 }
 body.syncs.product_data span.toggle-clean-rows {
   float: right ! important;
   font-weight: normal;
-  margin-right: 2px;
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-top: 3px;
 }
 body.syncs.product_data input#toggle-clean-rows {
   float: right ! important;
@@ -249,7 +274,7 @@ body.syncs.product_data input#toggle-clean-rows {
 
 body.syncs.product_data h2.info,
 body.syncs.product_data h2.warning {
-    width: 650px;
+    width: 100%;
     margin-top: 0;
     margin-bottom: 10px;
     float: left;

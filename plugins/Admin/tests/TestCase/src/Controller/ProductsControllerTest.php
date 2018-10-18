@@ -1,8 +1,5 @@
 <?php
-
 /**
- * ProductsControllerTest
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -87,7 +84,18 @@ class ProductsControllerTest extends AppCakeTestCase
     public function testEditPricePerUnitOfProductAsSuperadmin()
     {
         $this->loginAsSuperadmin();
-        $this->assertPriceChange(346, '2,20', '2,00');
+        $productId = 346;
+        $this->assertPriceChange($productId, 0, 0, true, 15, 'g', 100, 50);
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId
+            ],
+            'contain' => [
+                'UnitProducts'
+            ]
+        ])->first();
+        $this->assertRegExpWithUnquotedString($this->PricePerUnit->getPricePerUnitBaseInfo($product->unit_product->price_incl_per_unit, $product->unit_product->name, $product->unit_product->amount), '`15,00 € / 100 g');
+        
     }
 
     public function testEditPriceOfAttributeAsSuperadmin()
@@ -222,11 +230,11 @@ class ProductsControllerTest extends AppCakeTestCase
     /**
      * asserts price in database (getGrossPrice)
      */
-    private function assertPriceChange($productId, $price, $expectedNetPrice)
+    private function assertPriceChange($productId, $price, $expectedNetPrice, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0)
     {
         $price = Configure::read('app.numberHelper')->parseFloatRespectingLocale($price);
         $expectedNetPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedNetPrice);
-        $this->changeProductPrice($productId, $price);
+        $this->changeProductPrice($productId, $price, $pricePerUnitEnabled, $priceInclPerUnit, $priceUnitName, $priceUnitAmount, $priceQuantityInUnits);
         $this->assertJsonOk();
         $netPrice = $this->Product->getNetPrice($productId, $price);
         $this->assertEquals(floatval($expectedNetPrice), $netPrice, 'editing price failed');

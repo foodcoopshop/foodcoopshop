@@ -182,8 +182,8 @@ INSERT INTO `fcs_images` VALUES
 
 /*!40000 ALTER TABLE `fcs_manufacturer` DISABLE KEYS */;
 INSERT INTO `fcs_manufacturer` VALUES
-(4,'Demo Fleisch-Hersteller','<p>tests</p>\r\n','','2014-05-14 13:23:02','2015-05-15 13:31:41',1,0,'','','','','','','','','','',NULL,0,1,1,2,'testfcs1@mailinator.com;testfcs2@mailinator.com',0,NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0,''),
-(5,'Demo Gemüse-Hersteller','<p>Gem&uuml;se-Hersteller Beschreibung&nbsp;lang</p>','<div class=\"entry-content\">\r\n<p>Gem&uuml;se-Hersteller Beschreibung kurz</p>\r\n</div>','2014-05-14 13:36:44','2016-09-27 09:34:51',1,0,'','','','','','','','','','',88,10,1,1,1,'',0,NULL,NULL,NULL,NULL,'1',0,30,100,1,1,1,''),
+(4,'Demo Fleisch-Hersteller','<p>tests</p>\r\n','','2014-05-14 13:23:02','2015-05-15 13:31:41',1,0,'','','','','','','','','','',NULL,0,1,1,2,'testfcs1@mailinator.com;testfcs2@mailinator.com',0,NULL,NULL,NULL,1,NULL,0,30,100,0,0,0,''),
+(5,'Demo Gemüse-Hersteller','<p>Gem&uuml;se-Hersteller Beschreibung&nbsp;lang</p>','<div class=\"entry-content\">\r\n<p>Gem&uuml;se-Hersteller Beschreibung kurz</p>\r\n</div>','2014-05-14 13:36:44','2016-09-27 09:34:51',1,0,'','','','','','','','','','',88,0,1,1,1,'',0,NULL,NULL,NULL,NULL,'1',0,30,100,1,1,1,''),
 (15,'Demo Milch-Hersteller','<p>Ja, ich bin der Milchhersteller!</p>','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,0,'','','','','','','','','','',NULL,0,1,1,4,'test@test.at',0,NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0,''),
 (16,'Hersteller ohne Customer-Eintrag','','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,0,'','','','','','','','','','',NULL,10,1,1,1,'',0,NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0,'');
 /*!40000 ALTER TABLE `fcs_manufacturer` ENABLE KEYS */;
@@ -285,6 +285,11 @@ INSERT INTO `fcs_sync_domains` VALUES
 /*!40000 ALTER TABLE `fcs_sync_domains` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sync_products` DISABLE KEYS */;
+INSERT INTO `fcs_sync_products` VALUES
+(1,1,346,346,0,0),
+(2,1,350,350,0,0),
+(3,1,350,350,14,14),
+(4,1,350,350,13,13);
 /*!40000 ALTER TABLE `fcs_sync_products` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_tax` DISABLE KEYS */;

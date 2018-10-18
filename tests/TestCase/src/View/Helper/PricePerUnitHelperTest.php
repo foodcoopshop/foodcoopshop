@@ -13,44 +13,38 @@
  * @link          https://www.foodcoopshop.com
  */
 use App\Test\TestCase\AppCakeTestCase;
-use App\View\Helper\PricePerUnitHelper;
 use Cake\View\View;
 
 class PricePerUnitHelperTest extends AppCakeTestCase
 {
 
-    public function setUp()
-    {
-        $this->PricePerUnitHelper = new PricePerUnitHelper(new View());
-    }
-
     public function testGetQuantityInUnitsStringForAttributesA()
     {
-        $result = $this->PricePerUnitHelper->getQuantityInUnitsStringForAttributes('500 g', true, true, 500, 'g', 2);
+        $result = $this->PricePerUnit->getQuantityInUnitsStringForAttributes('500 g', true, true, 500, 'g', 2);
         $this->assertEquals($result, 'je ca. 500 g');
     }
 
     public function testGetQuantityInUnitsStringForAttributesB()
     {
-        $result = $this->PricePerUnitHelper->getQuantityInUnitsStringForAttributes('Stück', false, true, 1, 'kg', 2);
+        $result = $this->PricePerUnit->getQuantityInUnitsStringForAttributes('Stück', false, true, 1, 'kg', 2);
         $this->assertEquals($result, 'Stück, je ca. 1 kg');
     }
 
     public function testGetQuantityInUnitsStringForAttributesC()
     {
-        $result = $this->PricePerUnitHelper->getQuantityInUnitsStringForAttributes('Stück', true, true, 250, 'g');
+        $result = $this->PricePerUnit->getQuantityInUnitsStringForAttributes('Stück', true, true, 250, 'g');
         $this->assertEquals($result, 'ca. 250 g');
     }
 
     public function testGetQuantityInUnitsStringForAttributesD()
     {
-        $result = $this->PricePerUnitHelper->getQuantityInUnitsStringForAttributes('Stück', false, false, 250, 'g');
+        $result = $this->PricePerUnit->getQuantityInUnitsStringForAttributes('Stück', false, false, 250, 'g');
         $this->assertEquals($result, 'Stück');
     }
 
     public function testGetQuantityInUnitsStringForAttributesE()
     {
-        $result = $this->PricePerUnitHelper->getQuantityInUnitsStringForAttributes('Stück', false, true, 0.5, 'kg');
+        $result = $this->PricePerUnit->getQuantityInUnitsStringForAttributes('Stück', false, true, 0.5, 'kg');
         $this->assertEquals($result, 'Stück, ca. 0,5 kg');
     }
 

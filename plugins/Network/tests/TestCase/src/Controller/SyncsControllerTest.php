@@ -15,7 +15,7 @@ use Network\View\Helper\NetworkHelper;
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop Network Plugin 1.0.0
+ * @since         FoodCoopShop 2.2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -32,7 +32,7 @@ class SyncsControllerTest extends AppCakeTestCase
 
     public function testDenyAccessIfVariableMemberFeeEnabled()
     {
-        $this->loginAsVegetableManufacturer();
+        $this->loginAsMeatManufacturer();
         $this->browser->get($this->Network->getSyncProducts());
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
@@ -86,7 +86,7 @@ class SyncsControllerTest extends AppCakeTestCase
         $response = $this->saveProductRelation($productId, $productId, $productName, $domain);
 
         $this->assertFalse((boolean) $response->status);
-        $this->assertRegExpWithUnquotedString('Das Produkt ' . $productId . ' ist kein Produkt von Hersteller ' . $manufacturerId, $response->msg);
+        $this->assertRegExpWithUnquotedString('product ' . $productId . ' is not associated with manufacturer ' . $manufacturerId, $response->msg);
         $this->assert200OkHeader();
     }
 

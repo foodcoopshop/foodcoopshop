@@ -5,6 +5,7 @@ namespace App\Model\Table;
 use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
+use Cake\Filesystem\Folder;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
@@ -393,7 +394,11 @@ class ProductsTable extends AppTable
      *  (
      *      [0] => Array
      *          (
-     *              [productId] => (float) price
+     *              [
+     *                  productId] => [
+     *                      'gross_price' => (float) price
+     *                      'product unit fields'
+     *                  ]
      *          )
      *  )
      * @return boolean $success
@@ -403,16 +408,17 @@ class ProductsTable extends AppTable
 
         foreach ($products as $product) {
             $productId = key($product);
-            $price = $this->getStringAsFloat($product[$productId]);
+            $price = $this->getStringAsFloat($product[$productId]['gross_price']);
             if ($price < 0) {
-                throw new InvalidParameterException('input format not correct: '.$product[$productId]);
+                throw new InvalidParameterException('input format not correct: '.$product[$productId]['gross_price']);
             }
         }
 
         $success = false;
         foreach ($products as $product) {
+            
             $productId = key($product);
-            $price = $this->getStringAsFloat($product[$productId]);
+            $price = $this->getStringAsFloat($product[$productId]['gross_price']);
 
             $ids = $this->getProductIdAndAttributeId($productId);
 
@@ -434,6 +440,21 @@ class ProductsTable extends AppTable
                     $this->patchEntity($entity, $product2update)
                 );
                 $success |= is_object($result);
+            }
+            
+            if (isset($product[$productId]['unit_product_price_per_unit_enabled'])) {
+                $this->Unit = TableRegistry::getTableLocator()->get('Units');
+                $pricePerUnitEnabled = $product[$productId]['unit_product_price_per_unit_enabled'];
+                $priceInclPerUnit = $this->getStringAsFloat($product[$productId]['unit_product_price_incl_per_unit']);
+                $this->Unit->saveUnits(
+                    $ids['productId'],
+                    $ids['attributeId'],
+                    $pricePerUnitEnabled,
+                    $priceInclPerUnit,
+                    $product[$productId]['unit_product_name'],
+                    $product[$productId]['unit_product_amount'],
+                    $this->getStringAsFloat($product[$productId]['unit_product_quantity_in_units'])
+                );
             }
         }
 
@@ -458,9 +479,10 @@ class ProductsTable extends AppTable
         
         foreach ($products as $product) {
             $productId = key($product);
-            $entity = $this->ProductAttributes->StockAvailables->newEntity($product[$productId]);
+            $ids = $this->getProductIdAndAttributeId($productId);
+            $entity = $this->StockAvailables->newEntity($product[$productId]);
             if (!empty($entity->getErrors())) {
-                throw new InvalidParameterException(join(' ', $this->ProductAttributes->StockAvailables->getAllValidationErrors($entity)));
+                throw new InvalidParameterException(join(' ', $this->StockAvailables->getAllValidationErrors($entity)));
             }
         }
 
@@ -476,9 +498,102 @@ class ProductsTable extends AppTable
                 $this->StockAvailables->updateQuantityForMainProduct($ids['productId']);
             } else {
                 $entity = $this->StockAvailables->get($ids['productId']);
-                $this->StockAvailables->save($this->StockAvailables->patchEntity($entity, $product[$productId]));
+                $this->StockAvailables->save(
+                    $this->StockAvailables->patchEntity($entity, $product[$productId])
+                );
             }
         }
+    }
+    
+    /**
+     * @param array $products
+     *  Array
+     *  (
+     *      [0] => Array
+     *          (
+     *              [productId] => (int) delivery_rhythm
+     *          )
+     *  )
+     * @return boolean $success
+     */
+    public function changeDeliveryRhythm($products)
+    {
+        
+        $products2save = [];
+        
+        foreach ($products as $product) {
+            $productId = key($product);
+            $ids = $this->getProductIdAndAttributeId($productId);
+            if ($ids['attributeId'] > 0) {
+                throw new InvalidParameterException('change delivery_rhythm is not allowed for product attributes');
+            }
+            $entity = $this->newEntity(
+                $product[$productId],
+                [
+                    'validate' => 'deliveryRhythm'
+                ]
+            );
+            if (!empty($entity->getErrors())) {
+                throw new InvalidParameterException(join(' ', $this->getAllValidationErrors($entity)));
+            } else {
+                $products2save[] = array_merge(
+                    ['id_product' => $ids['productId']], $product[$productId]
+                );
+            }
+        }
+        
+        $success = false;
+        if (!empty($products2save)) {
+            $entities = $this->newEntities($products2save);
+            $result = $this->saveMany($entities);
+            $success = !empty($result);
+        }
+        
+        return $success;
+    }
+    
+    /**
+     * @param array $products
+     *  Array
+     *  (
+     *      [0] => Array
+     *          (
+     *              [productId] => (int) is_stock_product
+     *          )
+     *  )
+     * @return boolean $success
+     */
+    public function changeIsStockProduct($products)
+    {
+        
+        $products2save = [];
+        foreach ($products as $product) {
+            $productId = key($product);
+            $ids = $this->getProductIdAndAttributeId($productId);
+            if ($ids['attributeId'] > 0) {
+                throw new InvalidParameterException('change is_stock_product is not allowed for product attributes');
+            }
+            $isStockProduct = (int) $product[$ids['productId']];
+            $whitelist = [APP_OFF, APP_ON];
+            if (!in_array($isStockProduct, $whitelist, true)) { // last param for type check
+                throw new InvalidParameterException('Products.is_stock_product for product ' .$ids['productId'] . ' needs to be ' .APP_OFF . ' or ' . APP_ON.'; was: ' . $isStockProduct);
+            } else {
+                $products2save[] = [
+                    'id_product' => $ids['productId'],
+                    'is_stock_product' => $isStockProduct
+                ];
+            }
+        }
+        
+        $success = false;
+        if (!empty($products2save)) {
+            $entities = $this->newEntities($products2save);
+            $result = $this->saveMany($entities);
+            $success = !empty($result);
+        }
+        
+        return $success;
+        
     }
     
     /**
@@ -547,6 +662,11 @@ class ProductsTable extends AppTable
             return true;
         }
         return false;
+    }
+    
+    public function removeTimestampFromFile($file) {
+        $file = explode('?', $file);
+        return $file[0];
     }
 
     /**
@@ -688,6 +808,8 @@ class ProductsTable extends AppTable
             }
 
             $product->gross_price = $this->getGrossPrice($product->id_product, $product->price);
+            
+            $product->delivery_rhythm_string = Configure::read('app.htmlHelper')->getDeliveryRhythmString($product->is_stock_product, $product->delivery_rhythm_type, $product->delivery_rhythm_count);
 
             $rowClass = [];
             if (! $product->active) {
@@ -698,6 +820,16 @@ class ProductsTable extends AppTable
                 $product->deposit = $product->deposit_product->deposit;
             } else {
                 $product->deposit = 0;
+            }
+            
+            if (!empty($product->image)) {
+                $imageSrc = Configure::read('app.htmlHelper')->getProductImageSrc($product->image->id_image, 'thickbox');
+                $imageFile = str_replace('//', '/', $_SERVER['DOCUMENT_ROOT'] . $imageSrc);
+                $imageFile = $this->removeTimestampFromFile($imageFile);
+                if ($imageFile != '' && !preg_match('/de-default-thickbox/', $imageFile) && file_exists($imageFile)) {
+                    $product->image->hash = sha1_file($imageFile);
+                    $product->image->src = Configure::read('app.cakeServerName') . $imageSrc;
+                }
             }
 
             // show unity only for main products
@@ -1071,6 +1203,96 @@ class ProductsTable extends AppTable
         $this->StockAvailables->setPrimaryKey($originalPrimaryKey);
 
         $this->StockAvailables->updateQuantityForMainProduct($productId);
+    }
+    
+    public function changeImage($products)
+    {
+        
+        foreach ($products as $product) {
+            $productId = key($product);
+            $imageFromRemoteServer = $product[$productId];
+            $imageFromRemoteServer = $this->removeTimestampFromFile($imageFromRemoteServer);
+            if ($imageFromRemoteServer == 'no-image') {
+                continue;
+            }
+            $remoteFile = @file_get_contents($imageFromRemoteServer);
+            if (!$remoteFile) {
+                throw new InvalidParameterException('image not found: ' . $imageFromRemoteServer);
+            }
+            $imageSize = getimagesize($imageFromRemoteServer);
+            if ($imageSize === false) {
+                throw new InvalidParameterException('file is not not an image: ' . $imageFromRemoteServer);
+            }
+        }
+        
+        $success = false;
+        foreach ($products as $product) {
+            
+            $productId = key($product);
+            $ids = $this->getProductIdAndAttributeId($productId);
+            
+            if ($ids['attributeId'] > 0) {
+                continue;
+            }
+                
+            $imageFromRemoteServer = $product[$productId];
+            $imageFromRemoteServer = $this->removeTimestampFromFile($imageFromRemoteServer);
+            
+            $product = $this->find('all', [
+                'conditions' => [
+                    'Products.id_product' => $ids['productId']
+                ],
+                'contain' => [
+                    'Images'
+                ]
+            ])->first();
+            
+            if (empty($product->image)) {
+                // product does not yet have image => create the necessary record
+                $image = $this->Images->save(
+                    $this->Images->newEntity(
+                        ['id_product' => $ids['productId']]
+                    )
+                );
+            } else {
+                $image = $product->image;
+            }
+            
+            $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($image->id_image);
+            $thumbsPath = Configure::read('app.htmlHelper')->getProductThumbsPath($imageIdAsPath);
+            
+            if ($imageFromRemoteServer != 'no-image') {
+                
+                // recursively create path
+                $dir = new Folder();
+                $dir->create($thumbsPath);
+                $dir->chmod($thumbsPath, 0755);
+                
+                foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
+                    $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . 'jpg';
+                    $remoteFileName = preg_replace('/-thickbox_default/', $options['suffix'], $imageFromRemoteServer);
+                    copy($remoteFileName, $thumbsFileName);
+                }
+                
+            } else {
+            
+                // delete db records
+                $this->Images->deleteAll([
+                    'Images.id_image' => $image->id_image
+                ]);
+                
+                // delete physical files
+                foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
+                    $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . 'jpg';
+                    if (file_exists($thumbsFileName)) {
+                        unlink($thumbsFileName);
+                    }
+                }
+                
+            }
+        }
+        
+        return $success;
     }
 
     public function add($manufacturer)

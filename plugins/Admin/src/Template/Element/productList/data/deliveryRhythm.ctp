@@ -25,12 +25,12 @@ echo '<td class="delivery-rhythm">';
         }
         
         if ($product->is_stock_product) {
-            echo $this->Html->getDeliveryRhythmString('week', 1);
+            echo $product->delivery_rhythm_string;
         } else {
             echo '<span class="delivery-rhythm-for-dialog">';
                 echo '<span class="hide dropdown">'.$product->delivery_rhythm_count . '-' . $product->delivery_rhythm_type.'</span>';
                 echo '<span class="delivery-rhythm-string">';
-                    echo $this->Html->getDeliveryRhythmString($product->delivery_rhythm_type, $product->delivery_rhythm_count);
+                    echo $product->delivery_rhythm_string;
                 echo '</span>';
                 if (!is_null($product->delivery_rhythm_first_delivery_day)) {
                     echo ', ';
