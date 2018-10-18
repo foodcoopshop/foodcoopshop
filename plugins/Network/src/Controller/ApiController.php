@@ -354,10 +354,8 @@ class ApiController extends Controller
             if (count($syncFieldsOk) > 0) {
                 $message = __d('network', '{0}_and_{1}_({2})_have_been_successfully_synchronized.', [$syncronizedProductsString, $syncronizedAttributesString, $listOfSyncFieldsOk]);
             }
-            $actionLogMessage = 'Über ' . $this->getRequest()->getData('data.metaData.baseDomain') . ' wurden ' . $syncronizedProductsString . ' und ' . $syncronizedAttributesString . $listOfSyncFieldsOk . 'synchronisiert: ';
             $actionLogMessage = __d('network', 'Via_{0}_there_have_been_{1}_and_{2}_({3})_successfully_synchronized.', [$this->getRequest()->getData('data.metaData.baseDomain'), $syncronizedProductsString, $syncronizedAttributesString, $listOfSyncFieldsOk]);
-            
-            $actionLogMessage .= $this->getProductDetailLinks($productsData);
+            $actionLogMessage .= ' ' . $this->getProductDetailLinks($productsData);
 
             if (count($syncFieldsError) > 0) {
                 $errorMessage .=  '<br /><b>'.__d('network', 'Errors_occurred_while_synchronizing!').'</b><br />';
