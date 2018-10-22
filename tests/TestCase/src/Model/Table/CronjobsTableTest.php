@@ -65,7 +65,7 @@ class CronjobsTableTest extends AppCakeTestCase
             )
         );
         $executedCronjobs = $this->Cronjob->run();
-        $this->assertEquals(1, count($executedCronjobs));
+        $this->assertEquals(4, count($executedCronjobs));
         $this->assertEquals($executedCronjobs[0]['name'], 'BackupDatabase');
     }
     
