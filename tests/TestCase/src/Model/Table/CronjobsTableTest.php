@@ -1,6 +1,7 @@
 <?php
 
 use App\Test\TestCase\AppCakeTestCase;
+use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -33,6 +34,10 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals(2, count($executedCronjobs));
         $this->assertEquals($executedCronjobs[0]['name'], 'BackupDatabase');
         $this->assertEquals($executedCronjobs[1]['name'], 'SendOrderLists');
+        
+        // run again, no cronjobs called
+        $executedCronjobs = $this->Cronjob->run();
+        $this->assertEquals(0, count($executedCronjobs));
     }
     
     public function testRunMonday()
@@ -44,10 +49,24 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals($executedCronjobs[1]['name'], 'EmailReminder');
         $this->assertEquals($executedCronjobs[2]['name'], 'PickupReminder');
         $this->assertEquals($executedCronjobs[3]['name'], 'SendOrderLists');
-        
+    }
+    
+    public function testPreviousCronjobLogError()
+    {
+        $time = '2018-10-22 17:13:19';
+        $this->Cronjob->cronjobRunDay = strtotime($time);
+        $this->Cronjob->CronjobLogs->save(
+            $this->Cronjob->CronjobLogs->newEntity(
+                [
+                    'created' => new Time($time),
+                    'cronjob_id' => 1,
+                    'success' => 0
+                ]
+            )
+        );
         $executedCronjobs = $this->Cronjob->run();
-        pr($executedCronjobs);
-        
+        $this->assertEquals(1, count($executedCronjobs));
+        $this->assertEquals($executedCronjobs[0]['name'], 'BackupDatabase');
     }
     
 }

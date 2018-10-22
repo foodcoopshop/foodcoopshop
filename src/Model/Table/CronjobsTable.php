@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use Cake\Console\Shell;
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
 
@@ -38,17 +39,9 @@ class CronjobsTable extends AppTable
             $this->cronjobRunDay = time();
         }
         
-        $cronjobLogAssociation = $this->getAssociation('CronjobLogs');
-        $cronjobLogAssociation->setSort([
-            'CronjobLogs.created' => 'DESC'
-        ]);
-        
         $cronjobs = $this->find('all', [
             'conditions' => [
                 'Cronjobs.active' => APP_ON
-            ],
-            'contain' => [
-                'CronjobLogs'
             ]
         ])->all();
         
@@ -63,40 +56,59 @@ class CronjobsTable extends AppTable
         
         foreach($cronjobs as $cronjob) {
             
-            $executeCronjob = false;
+            $shouldCronjobBeExecutedByTimeInterval = false;
             
             switch($cronjob->time_interval) {
                 case 'day':
                     $timeCondition = '1 day';
-                    $executeCronjob = true;
+                    $shouldCronjobBeExecutedByTimeInterval = true;
                     break;
                 case 'week':
                     $cronjobWeekdayIsCurrentWeekday = $cronjob->weekday == $currentWeekday;
                     $timeCondition = '1 week';
                     if ($cronjobWeekdayIsCurrentWeekday) {
-                        $executeCronjob = true;
+                        $shouldCronjobBeExecutedByTimeInterval = true;
                     }
                     break;
                 case 'month':
                     $cronjobDayOfMonthIsCurrentDayOfMonth = $cronjob->day_of_month == $currentDayOfMonth;
                     $timeCondition = '1 month';
                     if ($cronjobDayOfMonthIsCurrentDayOfMonth) {
-                        $executeCronjob = true;
+                        $shouldCronjobBeExecutedByTimeInterval = true;
                     }
                     break;
             }
             
-            if ($executeCronjob) {
-                foreach($cronjob->cronjob_logs as $cronjob_log) {
-                    if ($cronjob_log->created->wasWithinLast($timeCondition) === true) {
-                        $executeCronjob = false;
-                        break;
-                    }
-                }
-//                 $shell = new Shell();
-//                 $success = $shell->dispatchShell('BackupDatabase');
+            if (!$shouldCronjobBeExecutedByTimeInterval) {
+                continue;
+            }
                 
-                $success = true;
+            $executeCronjob = false;
+            
+            $cronjobLogs = $this->CronjobLogs->find('all', [
+                'conditions' => [
+                    'CronjobLogs.cronjob_id' => $cronjob->id
+                ],
+                'order' => [
+                    'CronjobLogs.created' => 'DESC'
+                ]
+            ])->first();
+            
+            if (empty($cronjobLogs) || $cronjobLogs->success == APP_OFF) {
+                $executeCronjob = true;
+            }
+            
+//             if ($cronjob_log->created->wasWithinLast($timeCondition) === true) {
+//                 $executeCronjob = false;
+//                 break;
+//             }
+
+            if ($executeCronjob) {
+                
+                $shell = new Shell();
+                $success = $shell->dispatchShell('BackupDatabase');
+                $success = $success === 0 ? 1 : 0;
+                
                 $executedCronjobs[] = [
                     'name' => $cronjob->name,
                     'success' => $success
@@ -105,12 +117,12 @@ class CronjobsTable extends AppTable
                 $entity = $this->CronjobLogs->newEntity(
                     [
                         'cronjob_id' => $cronjob->id,
-                        'success' => (int) $success
+                        'success' => $success
                     ]
                 );
                 $this->CronjobLogs->save($entity);
-                
             }
+                
         }
         
         return $executedCronjobs;
