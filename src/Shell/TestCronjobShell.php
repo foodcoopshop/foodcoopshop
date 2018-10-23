@@ -21,6 +21,7 @@ class TestCronjobShell extends AppShell
     public function main()
     {
         parent::main();
+        $this->ActionLog->customSave('product_added', 1, 1000, 'product', 'text');
         $this->out($this->getRuntime());
     }
     

@@ -77,8 +77,8 @@ class CronjobsTableTest extends AppCakeTestCase
                     'cronjob_id' => 1,
                     'success' => 1
                 ]
-                )
-            );
+            )
+        );
         $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals(1, count($executedCronjobs));
         $this->assertEquals($executedCronjobs[0]['time_interval'], 'day');
@@ -100,5 +100,16 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals(0, count($executedCronjobs));
     }
     
+    /*
+    public function testCronjobCausedMySqlError()
+    {
+        $query = "ALTER TABLE fcs_action_logs DROP object_type;";
+        $this->dbConnection->query($query);
+        $executedCronjobs = $this->Cronjob->run();
+        $query = "ALTER TABLE fcs_action_logs ADD `object_type varchar(255) NOT NULL DEFAULT '' AFTER object_id;";
+        $this->dbConnection->query($query);
+        $this->assertEquals(1, count($executedCronjobs));
+    }
+    */
     
 }
