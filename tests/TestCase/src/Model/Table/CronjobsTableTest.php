@@ -44,8 +44,8 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->Cronjob->cronjobRunDay = strtotime('2018-10-22');
         $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals(2, count($executedCronjobs));
-        $this->assertEquals($executedCronjobs[0]['name'], 'TestCronjob');
-        $this->assertEquals($executedCronjobs[1]['name'], 'TestCronjob');
+        $this->assertEquals($executedCronjobs[0]['time_interval'], 'day');
+        $this->assertEquals($executedCronjobs[1]['time_interval'], 'week');
     }
     
     public function testPreviousCronjobLogError()
@@ -63,8 +63,42 @@ class CronjobsTableTest extends AppCakeTestCase
         );
         $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals(2, count($executedCronjobs));
-        $this->assertEquals($executedCronjobs[0]['name'], 'TestCronjob');
-        $this->assertEquals($executedCronjobs[1]['name'], 'TestCronjob');
+        $this->assertEquals($executedCronjobs[0]['time_interval'], 'day');
+        $this->assertEquals($executedCronjobs[1]['time_interval'], 'week');
     }
+    
+    public function testCronjobNotYetExecutedWithinTimeInterval()
+    {
+        $this->Cronjob->cronjobRunDay = strtotime('2018-10-23 22:30:00');
+        $this->Cronjob->CronjobLogs->save(
+            $this->Cronjob->CronjobLogs->newEntity(
+                [
+                    'created' => new Time('2018-10-22 22:29:59'),
+                    'cronjob_id' => 1,
+                    'success' => 1
+                ]
+                )
+            );
+        $executedCronjobs = $this->Cronjob->run();
+        $this->assertEquals(1, count($executedCronjobs));
+        $this->assertEquals($executedCronjobs[0]['time_interval'], 'day');
+    }
+    
+    public function testCronjobAlreadyExecutedWithinTimeInterval()
+    {
+        $this->Cronjob->cronjobRunDay = strtotime('2018-10-23 22:29:59');
+        $this->Cronjob->CronjobLogs->save(
+            $this->Cronjob->CronjobLogs->newEntity(
+                [
+                    'created' => new Time('2018-10-22 22:30:01'),
+                    'cronjob_id' => 1,
+                    'success' => 1
+                ]
+            )
+        );
+        $executedCronjobs = $this->Cronjob->run();
+        $this->assertEquals(0, count($executedCronjobs));
+    }
+    
     
 }

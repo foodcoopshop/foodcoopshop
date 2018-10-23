@@ -63,32 +63,32 @@ class CronjobsTable extends AppTable
             
             switch($cronjob->time_interval) {
                 case 'day':
-                    $timeCondition = '1 day';
+                    $timeInterval = '1 day';
                     $shouldCronjobBeExecutedByTimeInterval = true;
                     break;
                 case 'week':
                     $cronjobWeekdayIsCurrentWeekday = $cronjob->weekday == $currentWeekday;
-                    $timeCondition = '1 week';
+                    $timeInterval = '1 week';
                     if ($cronjobWeekdayIsCurrentWeekday) {
                         $shouldCronjobBeExecutedByTimeInterval = true;
                     }
                     break;
                 case 'month':
                     $cronjobDayOfMonthIsCurrentDayOfMonth = $cronjob->day_of_month == $currentDayOfMonth;
-                    $timeCondition = '1 month';
+                    $timeInterval = '1 month';
                     if ($cronjobDayOfMonthIsCurrentDayOfMonth) {
                         $shouldCronjobBeExecutedByTimeInterval = true;
                     }
                     break;
             }
             
+            $executeCronjob = true;
+            
             if (!$shouldCronjobBeExecutedByTimeInterval) {
                 continue;
             }
-                
-            $executeCronjob = false;
             
-            $cronjobLogs = $this->CronjobLogs->find('all', [
+            $cronjobLog = $this->CronjobLogs->find('all', [
                 'conditions' => [
                     'CronjobLogs.cronjob_id' => $cronjob->id
                 ],
@@ -97,15 +97,11 @@ class CronjobsTable extends AppTable
                 ]
             ])->first();
             
-            if (empty($cronjobLogs) || $cronjobLogs->success == APP_OFF) {
-                $executeCronjob = true;
+            $interval = $cronjob->time->copy()->modify('-' . $timeInterval);
+            if (!(empty($cronjobLog) || $cronjobLog->success == APP_OFF || $cronjobLog->created->lte($interval))) {
+                $executeCronjob = false;
             }
             
-//             if ($cronjob_log->created->wasWithinLast($timeCondition) === true) {
-//                 $executeCronjob = false;
-//                 break;
-//             }
-
             if ($executeCronjob) {
                 
                 if (!file_exists(ROOT . DS . 'src' . DS . 'Shell' . DS . $cronjob->name . 'Shell.php')) {
@@ -116,6 +112,7 @@ class CronjobsTable extends AppTable
                 
                 $executedCronjobs[] = [
                     'name' => $cronjob->name,
+                    'time_interval' => $cronjob->time_interval,
                     'success' => $success
                 ];
                 
