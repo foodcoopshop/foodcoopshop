@@ -14,10 +14,10 @@
     "install": "bash ../bin/cake npm_post_install"
   },
   "dependencies": {
-    "blueimp-file-upload": "~9.18.0",
+    "blueimp-file-upload": "~9.24.0",
     "bootstrap": "^3.3.7",
     "bootstrap-select": "1.12.4",
-    "ckeditor": "^4.9.2",
+    "ckeditor": "^4.10.1",
     "components-jqueryui": "~1.12",
     "famfamfam-silk": "~1.0.0",
     "featherlight": "^1.7.13",
@@ -34,6 +34,6 @@
     "tooltipster": "^4.2.6"
   },
   "devDependencies": {
-    "eslint": "^4.19.1"
+    "eslint": "^5.7.0"
   }
 }
