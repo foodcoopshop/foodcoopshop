@@ -44,7 +44,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->Cronjob->cronjobRunDay = strtotime('2018-10-22');
         $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals(3, count($executedCronjobs));
-        $this->assertEquals($executedCronjobs[0]['name'], 'EmailReminder');
+        $this->assertEquals($executedCronjobs[0]['name'], 'EmailOrderReminder');
         $this->assertEquals($executedCronjobs[1]['name'], 'PickupReminder');
         $this->assertEquals($executedCronjobs[2]['name'], 'SendOrderLists');
     }
@@ -64,7 +64,7 @@ class CronjobsTableTest extends AppCakeTestCase
         );
         $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals(3, count($executedCronjobs));
-        $this->assertEquals($executedCronjobs[0]['name'], 'EmailReminder');
+        $this->assertEquals($executedCronjobs[0]['name'], 'EmailOrderReminder');
     }
     
 }

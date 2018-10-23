@@ -158,7 +158,7 @@ INSERT INTO `fcs_configuration` VALUES
 /*!40000 ALTER TABLE `fcs_cronjobs` DISABLE KEYS */;
 INSERT INTO `fcs_cronjobs` VALUES
 (1,'CheckCredit','week',NULL,NULL,'22:30:00',1),
-(2,'EmailReminder','week',NULL,'Monday','18:00:00',1),
+(2,'EmailOrderReminder','week',NULL,'Monday','18:00:00',1),
 (3,'PickupReminder','week',NULL,'Monday','09:00:00',1),
 (4,'SendInvoices','month',11,NULL,'07:30:00',1),
 (5,'SendOrderLists','day',NULL,NULL,'04:30:00',1);
