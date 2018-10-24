@@ -130,7 +130,7 @@ class CronjobsTable extends AppTable
         $currentWeekday = Configure::read('app.timeHelper')->getWeekdayName(date('w', $this->cronjobRunDay));
         I18n::setLocale($tmpLocale);
         
-        $currentDayOfMonth = date('w', $this->cronjobRunDay);
+        $currentDayOfMonth = date('j', $this->cronjobRunDay);
         $result = false;
         
         switch($cronjob->time_interval) {
