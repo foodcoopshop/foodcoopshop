@@ -62,19 +62,16 @@ class CronjobsTable extends AppTable
             
             switch($cronjob->time_interval) {
                 case 'day':
-                    $timeInterval = '1 day';
                     $shouldCronjobBeExecutedByTimeInterval = true;
                     break;
                 case 'week':
                     $cronjobWeekdayIsCurrentWeekday = $cronjob->weekday == $currentWeekday;
-                    $timeInterval = '1 week';
                     if ($cronjobWeekdayIsCurrentWeekday) {
                         $shouldCronjobBeExecutedByTimeInterval = true;
                     }
                     break;
                 case 'month':
                     $cronjobDayOfMonthIsCurrentDayOfMonth = $cronjob->day_of_month == $currentDayOfMonth;
-                    $timeInterval = '1 month';
                     if ($cronjobDayOfMonthIsCurrentDayOfMonth) {
                         $shouldCronjobBeExecutedByTimeInterval = true;
                     }
@@ -96,8 +93,14 @@ class CronjobsTable extends AppTable
                 ]
             ])->first();
             
-            $interval = $cronjob->time->copy()->modify('-' . $timeInterval);
-            if (!(empty($cronjobLog) || $cronjobLog->success == APP_OFF || $cronjobLog->created->lte($interval))) {
+            $cronjobRunDayObject = new FrozenTime($this->cronjobRunDay);
+            $cronjobRunDayObject = $cronjobRunDayObject->setTimezone(date('P'));
+            
+            $cronjobTimeWithCronjobRunDay = $cronjob->time->copy();
+            $cronjobTimeWithCronjobRunDay = $cronjobTimeWithCronjobRunDay->setDate($cronjobRunDayObject->year, $cronjobRunDayObject->month, $cronjobRunDayObject->day);
+            
+            $timeIntervalObject = $cronjobTimeWithCronjobRunDay->copy()->modify('- 1' . $cronjob->time_interval);
+            if (!(empty($cronjobLog) || $cronjobLog->success == APP_OFF || $cronjobLog->created->lte($timeIntervalObject))) {
                 $executeCronjob = false;
             }
             
@@ -124,7 +127,7 @@ class CronjobsTable extends AppTable
                 $entity = $this->CronjobLogs->newEntity(
                     [
                         'cronjob_id' => $cronjob->id,
-                        'created' => new FrozenTime($this->cronjobRunDay),
+                        'created' => $cronjobRunDayObject,
                         'success' => $success
                     ]
                 );
