@@ -47,40 +47,11 @@ class CronjobsTable extends AppTable
             ]
         ])->all();
         
-        $tmpLocale = I18n::getLocale();
-        I18n::setLocale('en_US');
-        $currentWeekday = Configure::read('app.timeHelper')->getWeekdayName(date('w', $this->cronjobRunDay));
-        I18n::setLocale($tmpLocale);
-        
-        $currentDayOfMonth = date('w', $this->cronjobRunDay);
-        
         $executedCronjobs = [];
         
         foreach($cronjobs as $cronjob) {
             
-            $shouldCronjobBeExecutedByTimeInterval = false;
-            
-            switch($cronjob->time_interval) {
-                case 'day':
-                    $shouldCronjobBeExecutedByTimeInterval = true;
-                    break;
-                case 'week':
-                    $cronjobWeekdayIsCurrentWeekday = $cronjob->weekday == $currentWeekday;
-                    if ($cronjobWeekdayIsCurrentWeekday) {
-                        $shouldCronjobBeExecutedByTimeInterval = true;
-                    }
-                    break;
-                case 'month':
-                    $cronjobDayOfMonthIsCurrentDayOfMonth = $cronjob->day_of_month == $currentDayOfMonth;
-                    if ($cronjobDayOfMonthIsCurrentDayOfMonth) {
-                        $shouldCronjobBeExecutedByTimeInterval = true;
-                    }
-                    break;
-            }
-            
-            $executeCronjob = true;
-            
-            if (!$shouldCronjobBeExecutedByTimeInterval) {
+            if (!$this->executeCronjobRespectingTimeInterval($cronjob)) {
                 continue;
             }
             
@@ -99,44 +70,85 @@ class CronjobsTable extends AppTable
             $cronjobTimeWithCronjobRunDay = $cronjob->time->copy();
             $cronjobTimeWithCronjobRunDay = $cronjobTimeWithCronjobRunDay->setDate($cronjobRunDayObject->year, $cronjobRunDayObject->month, $cronjobRunDayObject->day);
             
+            $executeCronjob = true;
             $timeIntervalObject = $cronjobTimeWithCronjobRunDay->copy()->modify('- 1' . $cronjob->time_interval);
             if (!(empty($cronjobLog) || $cronjobLog->success == APP_OFF || $cronjobLog->created->lte($timeIntervalObject))) {
                 $executeCronjob = false;
             }
             
-            if ($executeCronjob) {
-                
-                $shellName = $cronjob->name . 'Shell';
-                if (!file_exists(ROOT . DS . 'src' . DS . 'Shell' . DS . $shellName . '.php')) {
-                    throw new InvalidParameterException('shell not found: ' . $cronjob->name);
-                }
-                $shellClass = '\\App\\Shell\\' . $shellName;
-                $shell = new $shellClass();
-                try {
-                    $success = $shell->main();
-                    $success = $success !== true ? 0 : 1;
-                } catch (Exception $e) {
-                    $success = 0;
-                }
-                $executedCronjobs[] = [
-                    'name' => $cronjob->name,
-                    'time_interval' => $cronjob->time_interval,
-                    'success' => $success
-                ];
-                
-                $entity = $this->CronjobLogs->newEntity(
-                    [
-                        'cronjob_id' => $cronjob->id,
-                        'created' => $cronjobRunDayObject,
-                        'success' => $success
-                    ]
-                );
-                $this->CronjobLogs->save($entity);
+            if (!$executeCronjob) {
+                continue;
             }
+            
+            $executedCronjobs[] = $this->executeCronjobAndSaveLog($cronjob, $cronjobRunDayObject);
                 
         }
         
         return $executedCronjobs;
+        
+    }
+    
+    private function executeCronjobAndSaveLog($cronjob, $cronjobRunDayObject)
+    {
+        $shellName = $cronjob->name . 'Shell';
+        if (!file_exists(ROOT . DS . 'src' . DS . 'Shell' . DS . $shellName . '.php')) {
+            throw new InvalidParameterException('shell not found: ' . $cronjob->name);
+        }
+        $shellClass = '\\App\\Shell\\' . $shellName;
+        $shell = new $shellClass();
+        try {
+            $success = $shell->main();
+            $success = $success !== true ? 0 : 1;
+        } catch (Exception $e) {
+            $success = 0;
+        }
+        
+        $entity = $this->CronjobLogs->newEntity(
+            [
+                'cronjob_id' => $cronjob->id,
+                'created' => $cronjobRunDayObject,
+                'success' => $success
+            ]
+        );
+        $this->CronjobLogs->save($entity);
+        
+        return [
+            'name' => $cronjob->name,
+            'time_interval' => $cronjob->time_interval,
+            'success' => $success
+        ];
+    }
+    
+    private function executeCronjobRespectingTimeInterval($cronjob)
+    {
+        
+        $tmpLocale = I18n::getLocale();
+        I18n::setLocale('en_US');
+        $currentWeekday = Configure::read('app.timeHelper')->getWeekdayName(date('w', $this->cronjobRunDay));
+        I18n::setLocale($tmpLocale);
+        
+        $currentDayOfMonth = date('w', $this->cronjobRunDay);
+        $result = false;
+        
+        switch($cronjob->time_interval) {
+            case 'day':
+                $result = true;
+                break;
+            case 'week':
+                $cronjobWeekdayIsCurrentWeekday = $cronjob->weekday == $currentWeekday;
+                if ($cronjobWeekdayIsCurrentWeekday) {
+                    $result = true;
+                }
+                break;
+            case 'month':
+                $cronjobDayOfMonthIsCurrentDayOfMonth = $cronjob->day_of_month == $currentDayOfMonth;
+                if ($cronjobDayOfMonthIsCurrentDayOfMonth) {
+                    $result = true;
+                }
+                break;
+        }
+        
+        return $result;
         
     }
     
