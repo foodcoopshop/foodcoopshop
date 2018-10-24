@@ -15,12 +15,14 @@
 
 namespace App\Shell;
 
-class TestCronjobShell extends AppShell
+use App\Lib\Error\Exception\InvalidParameterException;
+
+class TestCronjobWithExceptionShell extends AppShell
 {
 
     public function main()
     {
-        return true;
+        throw new InvalidParameterException();
     }
     
 }

@@ -2,10 +2,11 @@
 
 namespace App\Model\Table;
 
-use Cake\Console\Shell;
 use Cake\Core\Configure;
+use Cake\Core\Exception\Exception;
 use Cake\I18n\I18n;
 use App\Lib\Error\Exception\InvalidParameterException;
+use Cake\I18n\FrozenTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,7 +25,6 @@ class CronjobsTable extends AppTable
 {
     
     public $cronjobRunDay;
-    public $Shell;
     
     public function initialize(array $config)
     {
@@ -32,7 +32,6 @@ class CronjobsTable extends AppTable
         $this->hasMany('CronjobLogs', [
             'foreignKey' => 'cronjob_id'
         ]);
-        $this->Shell = new Shell();
     }
     
     public function run()
@@ -104,12 +103,18 @@ class CronjobsTable extends AppTable
             
             if ($executeCronjob) {
                 
-                if (!file_exists(ROOT . DS . 'src' . DS . 'Shell' . DS . $cronjob->name . 'Shell.php')) {
+                $shellName = $cronjob->name . 'Shell';
+                if (!file_exists(ROOT . DS . 'src' . DS . 'Shell' . DS . $shellName . '.php')) {
                     throw new InvalidParameterException('shell not found: ' . $cronjob->name);
                 }
-                $success = $this->Shell->dispatchShell($cronjob->name);
-                $success = $success === 0 ? 1 : 0;
-                
+                $shellClass = '\\App\\Shell\\' . $shellName;
+                $shell = new $shellClass();
+                try {
+                    $success = $shell->main();
+                    $success = $success !== true ? 0 : 1;
+                } catch (Exception $e) {
+                    $success = 0;
+                }
                 $executedCronjobs[] = [
                     'name' => $cronjob->name,
                     'time_interval' => $cronjob->time_interval,
@@ -119,6 +124,7 @@ class CronjobsTable extends AppTable
                 $entity = $this->CronjobLogs->newEntity(
                     [
                         'cronjob_id' => $cronjob->id,
+                        'created' => new FrozenTime($this->cronjobRunDay),
                         'success' => $success
                     ]
                 );
