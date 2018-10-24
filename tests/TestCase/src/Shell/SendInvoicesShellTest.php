@@ -1,7 +1,6 @@
 <?php
 
 use App\Test\TestCase\AppCakeTestCase;
-use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use App\Shell\SendInvoicesShell;
@@ -36,7 +35,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $this->SendInvoices = new SendInvoicesShell(new ConsoleIo());
+        $this->SendInvoices = new SendInvoicesShell();
     }
 
     public function testSendInvoicesOk()
