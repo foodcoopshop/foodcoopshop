@@ -173,7 +173,7 @@ CREATE TABLE `fcs_cronjobs` (
   `time_interval` varchar(50) NOT NULL,
   `day_of_month` tinyint(3) unsigned DEFAULT NULL,
   `weekday` varchar(50) DEFAULT NULL,
-  `time` time NOT NULL,
+  `not_before_time` time NOT NULL,
   `active` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;

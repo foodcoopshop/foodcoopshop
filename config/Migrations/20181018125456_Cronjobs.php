@@ -13,11 +13,11 @@ class Cronjobs extends AbstractMigration
               `time_interval` varchar(50) NOT NULL,
               `day_of_month` tinyint(3) UNSIGNED DEFAULT NULL,
               `weekday` varchar(50) DEFAULT NULL,
-              `time` time NOT NULL,
+              `not_before_time` time NOT NULL,
               `active` tinyint(3) UNSIGNED NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
             
-            INSERT INTO `fcs_cronjobs` (`id`, `name`, `time_interval`, `day_of_month`, `weekday`, `time`, `active`) VALUES
+            INSERT INTO `fcs_cronjobs` (`id`, `name`, `time_interval`, `day_of_month`, `weekday`, `not_before_time`, `active`) VALUES
             (1, 'BackupDatabase', 'day', NULL, NULL, '04:00:00', 1),
             (2, 'CheckCredit', 'week', NULL, NULL, '22:30:00', 1),
             (3, 'EmailOrderReminder', 'week', NULL, 'Monday', '18:00:00', 1),

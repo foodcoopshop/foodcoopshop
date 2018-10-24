@@ -67,7 +67,7 @@ class CronjobsTable extends AppTable
             $cronjobRunDayObject = new FrozenTime($this->cronjobRunDay);
             $cronjobRunDayObject = $cronjobRunDayObject->setTimezone(date('P'));
             
-            $cronjobTimeWithCronjobRunDay = $cronjob->time->copy();
+            $cronjobTimeWithCronjobRunDay = $cronjob->not_before_time->copy();
             $cronjobTimeWithCronjobRunDay = $cronjobTimeWithCronjobRunDay->setDate($cronjobRunDayObject->year, $cronjobRunDayObject->month, $cronjobRunDayObject->day);
             
             $executeCronjob = true;
