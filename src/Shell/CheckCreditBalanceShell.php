@@ -77,5 +77,8 @@ class CheckCreditBalanceShell extends AppShell
 
         $this->out($outString);
         $this->out($this->getRuntime());
+        
+        return true;
+    
     }
 }
