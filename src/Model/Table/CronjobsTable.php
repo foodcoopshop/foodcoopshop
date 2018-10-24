@@ -77,7 +77,7 @@ class CronjobsTable extends AppTable
                 $executeCronjob = false;
             }
             
-            if (!empty($cronjobLog) && $cronjobLog->created->gt($cronjobTimeWithCronjobRunDay)) {
+            if (!empty($cronjobLog) && $cronjobLog->success == APP_ON && $cronjobLog->created->gt($cronjobTimeWithCronjobRunDay)) {
                 $executeCronjob = false;
             }
             

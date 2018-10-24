@@ -20,7 +20,7 @@ class Cronjobs extends AbstractMigration
             INSERT INTO `fcs_cronjobs` (`id`, `name`, `time_interval`, `day_of_month`, `weekday`, `time`, `active`) VALUES
             (1, 'BackupDatabase', 'day', NULL, NULL, '04:00:00', 1),
             (2, 'CheckCredit', 'week', NULL, NULL, '22:30:00', 1),
-            (3, 'EmailReminder', 'week', NULL, 'Monday', '18:00:00', 1),
+            (3, 'EmailOrderReminder', 'week', NULL, 'Monday', '18:00:00', 1),
             (4, 'PickupReminder', 'week', NULL, 'Monday', '09:00:00', 1),
             (5, 'SendInvoices', 'month', 11, NULL, '07:30:00', 1),
             (6, 'SendOrderLists', 'day', NULL, NULL, '04:30:00', 1);
