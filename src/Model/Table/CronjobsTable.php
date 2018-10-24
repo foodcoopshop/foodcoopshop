@@ -71,17 +71,20 @@ class CronjobsTable extends AppTable
             $cronjobTimeWithCronjobRunDay = $cronjobTimeWithCronjobRunDay->setDate($cronjobRunDayObject->year, $cronjobRunDayObject->month, $cronjobRunDayObject->day);
             
             $executeCronjob = true;
+            
             $timeIntervalObject = $cronjobTimeWithCronjobRunDay->copy()->modify('- 1' . $cronjob->time_interval);
             if (!(empty($cronjobLog) || $cronjobLog->success == APP_OFF || $cronjobLog->created->lte($timeIntervalObject))) {
                 $executeCronjob = false;
             }
             
-            if (!$executeCronjob) {
-                continue;
+            if (!empty($cronjobLog) && $cronjobLog->created->gt($cronjobTimeWithCronjobRunDay)) {
+                $executeCronjob = false;
             }
             
-            $executedCronjobs[] = $this->executeCronjobAndSaveLog($cronjob, $cronjobRunDayObject);
-                
+            if ($executeCronjob) {
+                $executedCronjobs[] = $this->executeCronjobAndSaveLog($cronjob, $cronjobRunDayObject);
+            }
+            
         }
         
         return $executedCronjobs;

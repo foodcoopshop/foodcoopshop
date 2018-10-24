@@ -115,4 +115,20 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals($executedCronjobs[0]['success'], 0);
     }
     
+    public function testCronjobAlreadyExecutedOnCurrentDay()
+    {
+        $this->Cronjob->cronjobRunDay = strtotime('2018-10-25 22:30:02');
+        $this->Cronjob->CronjobLogs->save(
+            $this->Cronjob->CronjobLogs->newEntity(
+                [
+                    'created' => new Time('2018-10-25 22:30:01'),
+                    'cronjob_id' => 1,
+                    'success' => 1
+                ]
+                )
+            );
+        $executedCronjobs = $this->Cronjob->run();
+        $this->assertEquals(0, count($executedCronjobs));
+    }
+
 }
