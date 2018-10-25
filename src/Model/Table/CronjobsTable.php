@@ -65,19 +65,28 @@ class CronjobsTable extends AppTable
             ])->first();
             
             $cronjobRunDayObject = new FrozenTime($this->cronjobRunDay);
-            $cronjobRunDayObject = $cronjobRunDayObject->setTimezone(date('P'));
+            $cronjobNotBeforeTimeWithCronjobRunDay = $cronjob->not_before_time->copy();
             
-            $cronjobTimeWithCronjobRunDay = $cronjob->not_before_time->copy();
-            $cronjobTimeWithCronjobRunDay = $cronjobTimeWithCronjobRunDay->setDate($cronjobRunDayObject->year, $cronjobRunDayObject->month, $cronjobRunDayObject->day);
+            // to be able to use local time in fcs_cronjobs:time_interval, it needs to be transformed afterwards for comparisons
+            $cronjobNotBeforeTimeWithCronjobRunDay = $cronjobNotBeforeTimeWithCronjobRunDay->modify(date('Z') . ' seconds');
+            $cronjobNotBeforeTimeWithCronjobRunDay = $cronjobNotBeforeTimeWithCronjobRunDay->setDate(
+                $cronjobRunDayObject->year,
+                $cronjobRunDayObject->month,
+                $cronjobRunDayObject->day
+            );
             
             $executeCronjob = true;
             
-            $timeIntervalObject = $cronjobTimeWithCronjobRunDay->copy()->modify('- 1' . $cronjob->time_interval);
-            if (!(empty($cronjobLog) || $cronjobLog->success == APP_OFF || $cronjobLog->created->lte($timeIntervalObject))) {
+            $timeIntervalObject = $cronjobNotBeforeTimeWithCronjobRunDay->copy()->modify('- 1' . $cronjob->time_interval);
+            if (!(empty($cronjobLog) || $cronjobLog->success == APP_OFF || $cronjobLog->created->lt($timeIntervalObject))) {
                 $executeCronjob = false;
             }
             
-            if (!empty($cronjobLog) && $cronjobLog->success == APP_ON && $cronjobLog->created->gt($cronjobTimeWithCronjobRunDay)) {
+            if (!empty($cronjobLog) && $cronjobLog->success == APP_ON && $cronjobLog->created->gt($cronjobNotBeforeTimeWithCronjobRunDay)) {
+                $executeCronjob = false;
+            }
+            
+            if ($cronjobNotBeforeTimeWithCronjobRunDay->gt($cronjobRunDayObject)) {
                 $executeCronjob = false;
             }
             
