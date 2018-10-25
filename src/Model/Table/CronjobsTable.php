@@ -147,12 +147,18 @@ class CronjobsTable extends AppTable
                 $result = true;
                 break;
             case 'week':
+                if ($cronjob->weekday == '') {
+                    throw new InvalidParameterException('weekday not available');
+                }
                 $cronjobWeekdayIsCurrentWeekday = $cronjob->weekday == $currentWeekday;
                 if ($cronjobWeekdayIsCurrentWeekday) {
                     $result = true;
                 }
                 break;
             case 'month':
+                if ($cronjob->day_of_month == '' || $cronjob->day_of_month > 31) {
+                    throw new InvalidParameterException('day of month not available or not valid');
+                }
                 $cronjobDayOfMonthIsCurrentDayOfMonth = $cronjob->day_of_month == $currentDayOfMonth;
                 if ($cronjobDayOfMonthIsCurrentDayOfMonth) {
                     $result = true;

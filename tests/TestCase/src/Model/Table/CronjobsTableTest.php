@@ -146,6 +146,43 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals(0, count($executedCronjobs));
     }
     
+    /**
+     * @expectedException App\Lib\Error\Exception\InvalidParameterException
+     * @expectedExceptionMessage weekday not available
+     */
+    public function testInvalidWeekday()
+    {
+        $this->Cronjob->save(
+            $this->Cronjob->patchEntity(
+                $this->Cronjob->get(2),
+                [
+                    'weekday' => ''
+                ]
+            )
+        );
+        $this->Cronjob->run();
+        $this->assertEquals(0, count($executedCronjobs));
+        $this->assertEmpty(0, $this->CronjobLogs->find('all')->all());
+    }
+    
+    /**
+     * @expectedException App\Lib\Error\Exception\InvalidParameterException
+     * @expectedExceptionMessage day of month not available or not valid
+     */
+    public function testInvalidDayOfMonth()
+    {
+        $this->Cronjob->save(
+            $this->Cronjob->patchEntity(
+                $this->Cronjob->get(3),
+                [
+                    'day_of_month' => ''
+                ]
+            )
+        );
+        $this->Cronjob->run();
+        $this->assertEmpty(0, $this->CronjobLogs->find('all')->all());
+    }
+    
     private function getTimeObject($time)
     {
         $timeObject = new Time($time);
