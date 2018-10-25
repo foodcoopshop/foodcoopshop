@@ -49,7 +49,7 @@ class CronjobsTableTest extends AppCakeTestCase
     
     public function testPreviousCronjobLogError()
     {
-        $time = '2018-10-22 17:13:19';
+        $time = '2018-10-22 23:00:00';
         $this->Cronjob->cronjobRunDay = $this->getTimeObject($time)->toUnixString();
         $this->Cronjob->cronjobRunDay = strtotime($time);
         $this->Cronjob->CronjobLogs->save(
@@ -102,6 +102,7 @@ class CronjobsTableTest extends AppCakeTestCase
     
     public function testCronjobWithException()
     {
+        $this->Cronjob->cronjobRunDay = $this->getTimeObject('2018-10-23 22:31:00')->toUnixString();
         $this->Cronjob->save(
             $this->Cronjob->patchEntity(
                 $this->Cronjob->get(1),
@@ -144,6 +145,21 @@ class CronjobsTableTest extends AppCakeTestCase
         );
         $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals(0, count($executedCronjobs));
+    }
+    
+    public function testRunMonthlyAfterNotBeforeTime()
+    {
+        $this->Cronjob->cronjobRunDay = $this->getTimeObject('2018-10-11 07:31:00')->toUnixString();
+        $this->Cronjob->save(
+            $this->Cronjob->patchEntity(
+                $this->Cronjob->get(1),
+                [
+                    'active' => APP_OFF
+                ]
+            )
+        );
+        $executedCronjobs = $this->Cronjob->run();
+        $this->assertEquals(1, count($executedCronjobs));
     }
     
     /**
