@@ -39,7 +39,7 @@ The software can be used with any modern web browser, tablet or smartphone. It's
 * Software documentation: [https://foodcoopshop.github.io](https://foodcoopshop.github.io)
 
 ## Roadmap
-Since the start of the FoodCoopShop project in 2014 it continues to grow. You can take a look on the planned work for [Q4/2018 - v2.3](https://github.com/foodcoopshop/foodcoopshop/milestone/4).
+Since the start of the FoodCoopShop project in 2014 it continues to grow. You can take a look on the planned work for [Q4/2018 - v2.3](https://github.com/foodcoopshop/foodcoopshop/milestone/4). In 2019 it's likely that the handling with stock products will be improved.
 
 ## Who uses FoodCoopShop?
 [https://foodcoopshop.github.io/en/foodcoops](https://foodcoopshop.github.io/en/foodcoops)
