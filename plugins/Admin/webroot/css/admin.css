@@ -94,7 +94,7 @@ body.pages.home #content {
 #content-logo {
     margin: 10px 0 15px -5px;
 }
-a.btn-default.help {
+a.btn-outline-light.help {
     color: #f3515c;
 }
 .input.select, .input.checkbox, .input.text {
@@ -112,16 +112,31 @@ a.btn-default.help {
   padding-left: 5px;
   padding-right: 5px;
 }
-.dropdown-menu > .active > a,
-.dropdown-menu > .active > a:hover {
-    background-color: #009335 ! important; /* bootstrap overwrite */
+.dropdown-menu > .active > a > span,
+.dropdown-menu > .active > a:hover > span {
 }
 .bootstrap-select {
     width: 193px ! important;
 }
-.bootstrap-select .btn-default {
-    padding-top: 4px;
-    padding-bottom: 4px;
+.bootstrap-select .dropdown-menu li a span.text,
+.bootstrap-select .no-results {
+    color: #262626;
+    font-size: 13px;
+}
+.bootstrap-select .form-control:focus {
+	box-shadow: inherit;
+	border-color: #dfdfdf ! important;
+}
+.bootstrap-select .dropdown-item.active,
+.bootstrap-select .dropdown-item:active {
+    background-color: #009335 ! important; /* bootstrap overwrite */
+}
+.bootstrap-select .dropdown-item.active span,
+.bootstrap-select .dropdown-item:active span {
+    color: #fff ! important;
+}
+.bootstrap-select .dropdown-header {
+	font-size: 11px;
 }
 form.fcs-form .bootstrap-select {
     width: 250px ! important;
@@ -132,9 +147,22 @@ form.fcs-form .bootstrap-select {
 .bootstrap-select.big {
     width: 250px ! important;
 }
-.bootstrap-select > .dropdown-toggle.bs-placeholder, .bootstrap-select > .dropdown-toggle.bs-placeholder:hover, .bootstrap-select > .dropdown-toggle.bs-placeholder:focus, .bootstrap-select > .dropdown-toggle.bs-placeholder:active {
+.bootstrap-select .dropdown-item {
+	padding-top: .15rem;
+	padding-bottom: .15rem;
+}
+.bootstrap-select > .dropdown-toggle.bs-placeholder,
+.bootstrap-select > .dropdown-toggle.bs-placeholder:hover,
+.bootstrap-select > .dropdown-toggle.bs-placeholder:focus,
+.bootstrap-select > .dropdown-toggle.bs-placeholder:active {
     color: #333;
 }
+.bootstrap-select .btn.dropdown-toggle {
+    background-color: #fff;
+    padding-top: 5px;
+    padding-bottom: 4px;
+}
+
 #menu {
     display: none;
     position: fixed;
@@ -972,11 +1000,11 @@ body.payments .bottom-button-container {
     line-height: 16px;
     margin-left: 5px;
 }
-.btn:not(.dropdown-toggle):not(.btn-close) {
+.btn:not(.dropdown-toggle):not(.btn-close),
+.btn.dropdown-toggle {
     padding: 3px 6px;
-    font-size: 13px;
+	font-size: 13px;
 }
-
 form.fcs-form {
     padding: 10px;
 }

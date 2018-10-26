@@ -24,6 +24,9 @@
   background: #719f41; /* Gecko Browsers */
   color: #fff;
 }
+a {
+	color: #333;
+}
 a:not(.btn), a:not(.btn):visited, a:not(.btn):active {
   color: #009335;
   text-decoration: none ! important;
@@ -32,7 +35,18 @@ a:not(.btn):hover {
   color: #006400;
   text-decoration: none;
 }
-
+h4 {
+	font-size: 18px;
+}
+button,
+:focus {
+	outline: none ! important;
+}
+.btn:focus,
+.btn:active,
+.btn:focus:active {
+	box-shadow: inherit;
+}
 .btn-success:hover,
 .btn-success:focus,
 .btn-success:active,
@@ -42,6 +56,19 @@ a:not(.btn):hover {
 }
 .btn-success {
     background-color: #719f41;
+}
+.btn-outline-light {
+	color: #333;
+  	background-color: #fff;
+  	border-color: #ccc;
+}
+.btn-outline-light.disabled {
+	color: #333;
+}
+.btn-outline-light:hover,
+.btn-outline-light:active {
+    border-color: #adadad;
+    background-color: #e6e6e6;
 }
 
 .btn-danger:hover,
@@ -56,7 +83,17 @@ a:not(.btn):hover {
   background-color: #f3515c;
   border-color: #d9534f;
 }
-
+.btn-warning {
+    background-color: #f0ad4e;
+    border-color: #eea236;
+	color: #fff;
+}
+.btn-warning:hover,
+.btn-warning:active {
+	color: #fff ! important;
+	background-color: #ec971f ! important;
+	border-color: #d58512 ! important;
+}
 .btn-success:hover,
 .btn-danger:hover {
   opacity: 0.8;

@@ -33,7 +33,7 @@ use Cake\Utility\Hash;
             <?php
             echo '<div id="add-attribute-button-wrapper" class="add-button-wrapper">';
             echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> '.__d('admin', 'Add_attribute').'', $this->Slug->getAttributeAdd(), [
-                'class' => 'btn btn-default',
+                'class' => 'btn btn-outline-light',
                 'escape' => false
             ]);
             echo '</div>';
