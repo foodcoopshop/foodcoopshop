@@ -55,7 +55,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->Cronjob->CronjobLogs->save(
             $this->Cronjob->CronjobLogs->newEntity(
                 [
-                    'created' => $this->getTimeObject($time),
+                    'created' => $this->correctTimezone($this->getTimeObject($time)),
                     'cronjob_id' => 1,
                     'success' => 0
                 ]
@@ -69,11 +69,11 @@ class CronjobsTableTest extends AppCakeTestCase
     
     public function testCronjobNotYetExecutedWithinTimeInterval()
     {
-        $this->Cronjob->cronjobRunDay = $this->getTimeObject('2018-10-23 22:30:00')->toUnixString();
+        $this->Cronjob->cronjobRunDay = $this->getTimeObject('2018-10-23 22:30:01')->toUnixString();
         $this->Cronjob->CronjobLogs->save(
             $this->Cronjob->CronjobLogs->newEntity(
                 [
-                    'created' => $this->getTimeObject('2018-10-22 01:00:00'),
+                    'created' => $this->correctTimezone($this->getTimeObject('2018-10-22 22:30:00')),
                     'cronjob_id' => 1,
                     'success' => 1
                 ]
@@ -90,7 +90,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->Cronjob->CronjobLogs->save(
             $this->Cronjob->CronjobLogs->newEntity(
                 [
-                    'created' => $this->getTimeObject('2018-10-22 22:30:01'),
+                    'created' => $this->correctTimezone($this->getTimeObject('2018-10-22 22:30:01')),
                     'cronjob_id' => 1,
                     'success' => 1
                 ]
@@ -122,7 +122,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->Cronjob->CronjobLogs->save(
             $this->Cronjob->CronjobLogs->newEntity(
                 [
-                    'created' => $this->getTimeObject('2018-10-25 22:30:01'),
+                    'created' => $this->correctTimezone($this->getTimeObject('2018-10-25 22:30:01')),
                     'cronjob_id' => 1,
                     'success' => 1
                 ]
@@ -204,6 +204,11 @@ class CronjobsTableTest extends AppCakeTestCase
         $timeObject = new Time($time);
         $timeObject->setTimezone('UTC');
         return $timeObject;
+    }
+    
+    private function correctTimezone($timeObject)
+    {
+        return $timeObject->modify(date('Z') . ' seconds');
     }
 
 }

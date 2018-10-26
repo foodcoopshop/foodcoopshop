@@ -55,15 +55,6 @@ class CronjobsTable extends AppTable
                 continue;
             }
             
-            $cronjobLog = $this->CronjobLogs->find('all', [
-                'conditions' => [
-                    'CronjobLogs.cronjob_id' => $cronjob->id
-                ],
-                'order' => [
-                    'CronjobLogs.created' => 'DESC'
-                ]
-            ])->first();
-            
             $cronjobRunDayObject = new FrozenTime($this->cronjobRunDay);
             
             // to be able to use local time in fcs_cronjobs:time_interval, the current time needs to be adabped according to the local timezone
@@ -74,6 +65,17 @@ class CronjobsTable extends AppTable
                 $cronjobRunDayObject->month,
                 $cronjobRunDayObject->day
             );
+            
+            
+            $cronjobLog = $this->CronjobLogs->find('all', [
+                'conditions' => [
+                    'CronjobLogs.cronjob_id' => $cronjob->id,
+                    'DATE_FORMAT(CronjobLogs.created, \'%Y-%m-%d\') = \'' . $cronjobRunDayObject->i18nFormat(Configure::read('DateFormat.Database')) . '\''
+                ],
+                'order' => [
+                    'CronjobLogs.created' => 'DESC'
+                ]
+            ])->first();
             
             $executeCronjob = true;
             
