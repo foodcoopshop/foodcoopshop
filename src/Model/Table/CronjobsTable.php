@@ -66,7 +66,6 @@ class CronjobsTable extends AppTable
                 $cronjobRunDayObject->day
             );
             
-            
             $cronjobLog = $this->CronjobLogs->find('all', [
                 'conditions' => [
                     'CronjobLogs.cronjob_id' => $cronjob->id,
