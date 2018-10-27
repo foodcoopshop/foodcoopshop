@@ -161,6 +161,10 @@ form.fcs-form .bootstrap-select {
     background-color: #fff;
     padding-top: 5px;
     padding-bottom: 4px;
+    border-color: #dfdfdf;
+}
+.bootstrap-select .dropdown-menu li a.opt {
+	padding-left: 1.5em;
 }
 
 #menu {
