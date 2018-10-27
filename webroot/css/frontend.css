@@ -652,7 +652,6 @@ body.manufacturers.detail .imprint {
     margin-top: -148px;
 }
 #right .inner-right {
-    margin-top: 2px;
     position: fixed;
 }
 .box {
@@ -846,7 +845,7 @@ body.carts.detail .cart:not(#cart) a.btn {
     line-height: 16px;
 }
 #RegistrationForm .input.checkbox label {
-    padding-left: 90px;
+    padding-left: 80px;
     width: 350px;
 }
 #CartsDetailForm  .input.checkbox .error-message,
@@ -856,7 +855,6 @@ body.carts.detail .cart:not(#cart) a.btn {
     font-size: 14px;
     float: left;
     margin-bottom: 10px;
-    margin-top: 5px;
     line-height: 26px;
 }
 #CartsDetailForm  .input.select .error-message {
@@ -868,8 +866,10 @@ body.carts.detail .cart:not(#cart) a.btn {
 }
 #CartsDetailForm .input.checkbox input[type="checkbox"],
 #RegistrationForm .input.checkbox input[type="checkbox"] {
-    margin-left: -30px;
+    margin-left: -10px;
     margin-top: 1px;
+    margin-right: 5px;
+    float: left;
 }
 #CartsDetailForm .pickup-day-comment textarea {
   width: 100%;
