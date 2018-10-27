@@ -189,10 +189,13 @@ foodcoopshop.Admin = {
             foodcoopshop.Admin.triggerFilter();
         });
 
+//        $.fn.selectpicker.Constructor.DEFAULTS.multipleSeparator = ',';
         filterContainer.find('select').each(function () {
             var options = {
                 liveSearch: true,
-                showIcon: true
+                showIcon: true,
+                iconBase: 'fontawesome',
+                tickIcon: 'fa fa-check'
             };
             if ($(this).attr('multiple') == 'multiple') {
                 var emptyElement = $(this).find('option').first();
