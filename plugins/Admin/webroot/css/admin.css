@@ -160,7 +160,8 @@ form.fcs-form .bootstrap-select {
 .bootstrap-select .btn.dropdown-toggle {
     background-color: #fff;
     padding-top: 5px;
-    padding-bottom: 4px;
+    padding-bottom: 5px;
+    margin-top: -1px;
     border-color: #dfdfdf;
 }
 .bootstrap-select .dropdown-menu li a.opt {
