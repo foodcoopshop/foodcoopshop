@@ -50,11 +50,17 @@ button,
 .btn:active,
 .btn:focus:active {
     box-shadow: initial ! important;
-    background-color: #719f41 ! important;
     border-color: transparent ! important;
 }
-.btn:focus:active {
+.btn-success:focus:active,
+.btn-danger:focus:active,
+.btn-warning:focus:active {
 	opacity: 1;
+}
+.btn-success:focus,
+.btn-success:active,
+.btn-success:focus:active {
+    background-color: #719f41 ! important;
 }
 .btn-success:hover,
 .btn-success:focus,
@@ -104,7 +110,8 @@ button,
 	border-color: #d58512 ! important;
 }
 .btn-success:hover,
-.btn-danger:hover {
+.btn-danger:hover,
+.btn-warning:hover {
   opacity: 0.8;
 }
 
