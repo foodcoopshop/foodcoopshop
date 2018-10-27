@@ -42,7 +42,7 @@ foodcoopshop.AppFeatherlight = {
                 {
                     openSpeed: 0,
                     loading: loading,
-                    closeIcon: '<a href="javascript:void(0)" class="btn btn-basic btn-close"><i class="fa fa-times-circle fa-2x"></i></a>'
+                    closeIcon: '<a href="javascript:void(0)" class="btn btn-outline-light btn-close"><i class="fa fa-times-circle fa-2x"></i></a>'
                 }
             );
 
