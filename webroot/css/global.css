@@ -100,7 +100,9 @@ button,
 }
 
 .sc { clear: both; height: 0px; font-size: 0px; background-color: transparent; }
-
+.hide {
+	display: none;
+}
 h1,
 body.pages.detail h4 {
     font-size: 26px;
