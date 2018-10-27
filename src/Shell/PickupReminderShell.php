@@ -6,9 +6,6 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * Cronjob works properly if it's called on Configure::read('app.sendOrderListsWeekDay') -1 or -2
- * eg: Order lists are sent on Wednesday => EmailOrderReminder can be called on Tuesday or Monday
- *
  * @since         FoodCoopShop 2.2.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
@@ -107,5 +104,8 @@ class PickupReminderShell extends AppShell
 
         $this->out($outString);
         $this->out($this->getRuntime());
+        
+        return true;
+        
     }
 }
