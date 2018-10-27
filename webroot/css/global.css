@@ -32,6 +32,9 @@ a:not([href]):not([tabindex]),a:not([href]):not([tabindex]):hover, a:not([href])
   color: #009335;
   text-decoration: none ! important;
 }
+.btn-success:active {
+	border-color: transparent;
+}
 a:not(.btn):hover {
   color: #006400;
   text-decoration: none;
@@ -46,7 +49,12 @@ button,
 .btn:focus,
 .btn:active,
 .btn:focus:active {
-	box-shadow: inherit;
+    box-shadow: initial ! important;
+    background-color: #719f41 ! important;
+    border-color: transparent ! important;
+}
+.btn:focus:active {
+	opacity: 1;
 }
 .btn-success:hover,
 .btn-success:focus,
