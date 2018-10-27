@@ -1150,6 +1150,7 @@ ul.nav-tabs {
 }
 ul.nav-tabs > li > a {
     padding: 5px 10px;
+    float: left;
 }
 ul.nav-tabs a:hover {
     background-color: #fff;
