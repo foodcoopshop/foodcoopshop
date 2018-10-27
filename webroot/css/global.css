@@ -27,7 +27,8 @@
 a {
 	color: #333;
 }
-a:not(.btn), a:not(.btn):visited, a:not(.btn):active {
+a:not(.btn), a:not(.btn):visited, a:not(.btn):active,
+a:not([href]):not([tabindex]) {
   color: #009335;
   text-decoration: none ! important;
 }
