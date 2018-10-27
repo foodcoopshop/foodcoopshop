@@ -81,9 +81,13 @@ button,
 	color: #333;
 }
 .btn-outline-light:hover,
-.btn-outline-light:active {
-    border-color: #adadad;
-    background-color: #e6e6e6;
+.btn-outline-light:active,
+.btn-outline-light:active:focus {
+    border-color: #adadad ! important;
+    background-color: #e6e6e6 ! important;
+}
+.btn-outline-light:active:focus {
+    background-color: #cec8c8 ! important;
 }
 
 .btn-danger:hover,
