@@ -138,6 +138,9 @@ a.btn-outline-light.help {
 .bootstrap-select .dropdown-header {
 	font-size: 11px;
 }
+.bootstrap-select .dropdown-menu li {
+    max-width: 95vw;
+}
 form.fcs-form .bootstrap-select {
     width: 250px ! important;
 }
