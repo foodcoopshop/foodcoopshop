@@ -1120,7 +1120,7 @@ form.fcs-form .input.select .after.small {
     line-height: 28px;
     margin-left: 5px;
 }
-.bootstrap-select span.filter-option i.fa {
+.bootstrap-select div.filter-option-inner-inner i.fa {
     position: absolute;
     right: 25px;
     top: 9px;

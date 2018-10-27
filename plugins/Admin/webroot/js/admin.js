@@ -2363,7 +2363,7 @@ foodcoopshop.Admin = {
         // one removes itself after one execution
         productDropdown.one('click', function () {
 
-            $(this).parent().find('span.filter-option').append('<i class="fa fa-spinner fa-spin"></i>');
+            $(this).parent().find('div.filter-option-inner-inner').append('<i class="fa fa-spinner fa-spin"></i>');
 
             foodcoopshop.Helper
                 .ajaxCall('/admin/products/ajaxGetProductsForDropdown/' +
