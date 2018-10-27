@@ -1,7 +1,6 @@
 <?php
 
 use App\Test\TestCase\AppCakeTestCase;
-use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use App\Shell\SendOrderListsShell;
@@ -35,7 +34,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $this->SendOrderLists = new SendOrderListsShell(new ConsoleIo());
+        $this->SendOrderLists = new SendOrderListsShell();
     }
 
     public function testSendOrderListsIfNoOrdersAvailable()

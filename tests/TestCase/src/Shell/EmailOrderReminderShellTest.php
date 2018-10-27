@@ -26,7 +26,6 @@ use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use App\Shell\EmailOrderReminderShell;
-use Cake\Console\ConsoleIo;
 
 class EmailOrderReminderShellTest extends AppCakeTestCase
 {
@@ -37,7 +36,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
     {
         parent::setUp();
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
-        $this->EmailOrderReminder = new EmailOrderReminderShell(new ConsoleIo());
+        $this->EmailOrderReminder = new EmailOrderReminderShell();
     }
 
     public function testNoActiveOrder()

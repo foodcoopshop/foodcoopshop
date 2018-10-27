@@ -5,7 +5,6 @@ use Cake\I18n\FrozenDate;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\TableRegistry;
 use App\Shell\PickupReminderShell;
-use Cake\Console\ConsoleIo;
 use Cake\Core\Configure;
 
 /**
@@ -34,7 +33,7 @@ class PickupReminderShellTest extends AppCakeTestCase
     {
         parent::setUp();
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
-        $this->PickupReminder = new PickupReminderShell(new ConsoleIo());
+        $this->PickupReminder = new PickupReminderShell();
     }
 
     public function testCustomersDoNotHaveFutureOrders()

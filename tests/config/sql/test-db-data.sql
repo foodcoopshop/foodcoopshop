@@ -19,6 +19,8 @@ TRUNCATE TABLE `fcs_carts`;
 TRUNCATE TABLE `fcs_category`;
 TRUNCATE TABLE `fcs_category_product`;
 TRUNCATE TABLE `fcs_configuration`;
+TRUNCATE TABLE `fcs_cronjob_logs`;
+TRUNCATE TABLE `fcs_cronjobs`;
 TRUNCATE TABLE `fcs_customer`;
 TRUNCATE TABLE `fcs_deposits`;
 TRUNCATE TABLE `fcs_email_logs`;
@@ -149,6 +151,16 @@ INSERT INTO `fcs_configuration` VALUES
 (575,1,'FCS_CURRENCY_SYMBOL','Währungssymbol','€','readonly',52,'de_DE','2018-06-13 19:53:14','2018-06-13 19:53:14'),
 (576,1,'FCS_DEFAULT_LOCALE','Sprache','de_DE','readonly',55,'de_DE','2018-06-26 10:18:55','2018-06-26 10:18:55');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_cronjob_logs` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_cronjobs` DISABLE KEYS */;
+INSERT INTO `fcs_cronjobs` VALUES
+(1,'TestCronjob','day',NULL,NULL,'22:30:00',1),
+(2,'TestCronjob','week',NULL,'Monday','09:00:00',1),
+(3,'TestCronjob','month',11,NULL,'07:30:00',1);
+/*!40000 ALTER TABLE `fcs_cronjobs` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
 INSERT INTO `fcs_customer` VALUES
@@ -336,7 +348,10 @@ INSERT INTO `phinxlog` VALUES
 (20180720130810,'RemoveOrdersTable','2018-08-01 07:44:17','2018-08-01 07:44:17',0),
 (20180727070325,'CorrectBicLength','2018-08-01 07:44:17','2018-08-01 07:44:17',0),
 (20180814121543,'ImprovedStockManagement','2018-08-14 14:57:59','2018-08-14 14:57:59',0),
-(20180827074035,'AdditionalOrderPeriods','2018-08-27 08:28:29','2018-08-27 08:28:29',0);
+(20180827074035,'AdditionalOrderPeriods','2018-08-27 08:28:29','2018-08-27 08:28:29',0),
+(20181001120127,'UpdatePasswordHashingMethod','2018-08-27 08:28:29','2018-08-27 08:28:29',0),
+(20181015080309,'ImproveNewPasswordRequest','2018-08-27 08:28:29','2018-08-27 08:28:29',0),
+(20181018125456,'Cronjobs','2018-08-27 08:28:29','2018-08-27 08:28:29',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
