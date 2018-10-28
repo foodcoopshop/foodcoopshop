@@ -592,6 +592,12 @@ form div.error-message {
 .featherlight-inner div.form-buttons {
     margin-top: 10px;
 }
+.featherlight-inner label {
+	font-weight: bold;
+} 
+.featherlight-inner .checkbox label {
+    font-weight: normal;
+} 
 .overlay-info {
     color: red;
     font-weight: bold;
