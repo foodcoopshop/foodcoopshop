@@ -29,7 +29,7 @@ $this->element('addScript', [
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
             class="fa fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a href="javascript:void(0);"
-            class="btn btn-default cancel"><i class="fa fa-remove"></i> <?php echo __d('admin', 'Cancel'); ?></a>
+            class="btn btn-outline-light cancel"><i class="fa fa-remove"></i> <?php echo __d('admin', 'Cancel'); ?></a>
         <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_members'))]); ?>
     </div>
 </div>
@@ -100,7 +100,7 @@ if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
 }
 
 if ($appAuth->isSuperadmin()) {
-    echo '<a class="delete-customer-button btn btn-danger">'.__d('admin', 'Delete_member_irrevocably?').'</a>';
+    echo '<a class="delete-customer-button btn btn-danger" href="javascript:void(0);">'.__d('admin', 'Delete_member_irrevocably?').'</a>';
 }
 
 echo $this->Form->end(); ?>

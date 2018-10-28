@@ -18,7 +18,7 @@ if ($deposit == '' && $groupBy == '' && count($orderDetails) > 0) {
     $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace').".Admin.initChangePickupDayOfSelectedProductsButton();"
     ]);
-    echo '<a id="changePickupDayOfSelectedProductsButton" class="btn btn-default" href="javascript:void(0);"><i class="fa fa-calendar"></i> ' . __d('admin', 'Change_pickup_day') . '</a>';
+    echo '<a id="changePickupDayOfSelectedProductsButton" class="btn btn-outline-light" href="javascript:void(0);"><i class="fa fa-calendar"></i> ' . __d('admin', 'Change_pickup_day') . '</a>';
 }
 
 ?>

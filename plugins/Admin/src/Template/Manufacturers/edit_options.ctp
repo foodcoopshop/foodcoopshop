@@ -32,7 +32,7 @@ $this->element('addScript', [
         <a href="javascript:void(0);" class="btn btn-success submit"><i
             class="fa fa-check"></i> <?php echo __d('admin', 'Save'); ?></a>
         <?php if ($this->request->getRequestTarget() != $this->Slug->getManufacturerMyOptions()) { ?>
-            <a href="javascript:void(0);" class="btn btn-default cancel"><i
+            <a href="javascript:void(0);" class="btn btn-outline-light cancel"><i
             class="fa fa-remove"></i> <?php echo __d('admin', 'Cancel'); ?></a>
         <?php } ?>
         <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers'))]); ?>

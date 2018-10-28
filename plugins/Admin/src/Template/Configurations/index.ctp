@@ -114,7 +114,7 @@ $this->element('addScript', [
                 <td colspan="2" class="sync-domain-list">
                 <?php
                     echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> '.__d('admin', 'Add_remote_foodcoop').'', $this->Network->getSyncDomainAdd(), [
-                        'class' => 'btn btn-default',
+                        'class' => 'btn btn-outline-light',
                         'escape' => false
                     ]);
                 if (!empty($syncDomains)) {

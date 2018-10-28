@@ -38,7 +38,7 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
         <a href="javascript:void(0);" class="btn btn-success submit"><i
             class="fa fa-check"></i> <?php echo __d('admin', 'Save'); ?></a>
         <?php if ($this->request->getRequestTarget() != $this->Slug->getManufacturerProfile()) { ?>
-            <a href="javascript:void(0);" class="btn btn-default cancel"><i
+            <a href="javascript:void(0);" class="btn btn-outline-light cancel"><i
             class="fa fa-remove"></i> <?php echo __d('admin', 'Cancel'); ?></a>
         <?php } ?>
         <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers'))]); ?>
@@ -95,7 +95,7 @@ if ($appAuth->isManufacturer()) {
     ]);
 
     if ($isEditMode) {
-        $buttonOptions = ['class' => 'btn btn-default', 'escape' => false];
+        $buttonOptions = ['class' => 'btn btn-outline-light', 'escape' => false];
         $buttonIcon = '<i class="fa fa-cogs fa-lg"></i> ';
         if ($appAuth->isManufacturer()) {
             $optionsLink = $this->Html->link($buttonIcon . __d('admin', 'To_your_settings'), $this->Slug->getManufacturerMyOptions(), $buttonOptions);

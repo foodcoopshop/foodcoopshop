@@ -35,7 +35,7 @@ use Cake\Core\Configure;
                 <?php
                 echo '<div id="add-page-button-wrapper" class="add-button-wrapper">';
                 echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> '.__d('admin', 'Add_page').'', $this->Slug->getPageAdd(), [
-                    'class' => 'btn btn-default',
+                    'class' => 'btn btn-outline-light',
                     'escape' => false
                 ]);
                 echo '</div>';

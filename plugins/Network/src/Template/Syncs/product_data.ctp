@@ -22,7 +22,7 @@ use Cake\Core\Configure;
             'script' =>
                 Configure::read('app.jsNamespace') . ".SyncBase.init();".
                 Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('Meine Produkte');" .
-                Configure::read('app.jsNamespace') . ".Admin.addLoaderToSyncProductDataButton($('a.sync-product-button.btn-default'));"
+                Configure::read('app.jsNamespace') . ".Admin.addLoaderToSyncProductDataButton($('a.sync-product-button.btn-outline-light'));"
         ]);
 
         if (!empty($localSyncProducts)) {

@@ -18,7 +18,7 @@ if ($deposit == '' && $groupBy == '' && count($orderDetails) > 0) {
     $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace').".Admin.initCancelSelectionButton();"
     ]);
-    echo '<a id="cancelSelectedProductsButton" class="btn btn-default" href="javascript:void(0);"><i class="fa fa-minus-circle"></i> ' . __d('admin', 'Cancel_selected_products') . '</a>';
+    echo '<a id="cancelSelectedProductsButton" class="btn btn-outline-light" href="javascript:void(0);"><i class="fa fa-minus-circle"></i> ' . __d('admin', 'Cancel_selected_products') . '</a>';
 }
 
 ?>
