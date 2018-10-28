@@ -110,7 +110,7 @@ foodcoopshop.AppFeatherlight = {
                     var formButtons = '';
                     formButtons += '<div class="form-buttons">';
                     formButtons += '<button type="button" class="btn btn-success save"><i class="fa fa-check"></i> ' + foodcoopshop.LocalizedJs.helper.save + '</button>';
-                    formButtons += '<button type="button" class="btn btn-basic cancel"><i class="fa fa-remove"></i> ' + foodcoopshop.LocalizedJs.helper.cancel + '</button>';
+                    formButtons += '<button type="button" class="btn btn-outline-light cancel"><i class="fa fa-remove"></i> ' + foodcoopshop.LocalizedJs.helper.cancel + '</button>';
                     formButtons += '</div>';
 
                     $(formButtons).appendTo(placeholder);
