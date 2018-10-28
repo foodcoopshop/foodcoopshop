@@ -1151,9 +1151,11 @@ ul.nav-tabs {
 ul.nav-tabs > li > a {
     padding: 5px 10px;
     float: left;
+    color: #333 ! important;
 }
-ul.nav-tabs a:hover {
-    background-color: #fff;
+ul.nav-tabs a:hover,
+ul.nav-tabs li.active a {
+	background-color: #fff;
 }
 a.btn-arrow {
     display: inline-block;
