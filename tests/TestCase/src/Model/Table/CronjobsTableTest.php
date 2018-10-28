@@ -208,7 +208,7 @@ class CronjobsTableTest extends AppCakeTestCase
     
     private function correctTimezone($timeObject)
     {
-        return $timeObject->modify(date('Z') . ' seconds');
+        return $timeObject->modify(date('Z') + (date('I') == 1 ? 0 : 1)  * 3600 . ' seconds');
     }
 
 }
