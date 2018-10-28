@@ -105,6 +105,7 @@ button,
 .btn-danger.disabled {
   background-color: #f3515c;
   border-color: #f3515c;
+  color: #fff;
 }
 .btn-danger {
   background-color: #f3515c;
