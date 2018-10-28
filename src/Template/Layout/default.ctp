@@ -31,7 +31,7 @@ header('Pragma: no-cache');
 <html lang="<?php echo strtolower(str_replace('_', '-', I18n::getLocale())); ?>">
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <meta name="theme-color" content="#719f41">
+    <meta name="theme-color" content="<?php echo Configure::read('app.customFrontendColorTheme'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('appDb.FCS_APP_NAME'); ?></title>
@@ -46,9 +46,10 @@ header('Pragma: no-cache');
     
     <?php
         echo $this->element('renderCss', ['configs' => ['frontend']]);
-    if ($isMobile) {
-        echo $this->Html->css(['/node_modules/slidebars/dist/slidebars', 'mobile-global', 'mobile-frontend', 'mobile-frontend-custom']);
-    }
+        if ($isMobile) {
+            echo $this->Html->css(['/node_modules/slidebars/dist/slidebars', 'mobile-global', 'mobile-frontend', 'mobile-frontend-custom']);
+        }
+        echo $this->element('customFrontendColorThemeCss');
     ?>
     
 </head>
