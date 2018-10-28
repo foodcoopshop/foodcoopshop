@@ -58,7 +58,7 @@ class CronjobsTable extends AppTable
             $cronjobRunDayObject = new FrozenTime($this->cronjobRunDay);
             
             // to be able to use local time in fcs_cronjobs:time_interval, the current time needs to be adabped according to the local timezone
-            $cronjobRunDayObject = $cronjobRunDayObject->modify(date('Z') . ' seconds');
+            $cronjobRunDayObject = $cronjobRunDayObject->modify(date('Z') + (date('I') == 1 ? 0 : 1)  * 3600 . ' seconds');
             $cronjobNotBeforeTimeWithCronjobRunDay = $cronjob->not_before_time->copy();
             $cronjobNotBeforeTimeWithCronjobRunDay = $cronjobNotBeforeTimeWithCronjobRunDay->setDate(
                 $cronjobRunDayObject->year,
