@@ -90,7 +90,7 @@ if (count($payments) == 0) {
 
 if ($this->request->getParam('action') == 'member_fee') {
     echo '<div class="bottom-button-container">';
-    echo '<a class="btn btn-default" href="'.$this->Slug->getCustomerListAdmin().'"><i class="fa fa-arrow-circle-left"></i> '.__d('admin', 'Back_to_member_overview').'</a>';
+    echo '<a class="btn btn-outline-light" href="'.$this->Slug->getCustomerListAdmin().'"><i class="fa fa-arrow-circle-left"></i> '.__d('admin', 'Back_to_member_overview').'</a>';
     echo '</div>';
 }
 ?>

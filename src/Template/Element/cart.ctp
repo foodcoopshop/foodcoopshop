@@ -72,7 +72,7 @@ if ($appAuth->Cart->getProducts() !== null) {
                 ]);
                 echo '<p class="instant-order-customer-info">';
                     echo __('This_order_will_be_placed_for_{0}', ['<b>'.$this->request->getSession()->read('Auth.instantOrderCustomer')->name.'</b>']);
-                echo '<b><a class="btn btn-default" href="javascript:void(0);">'.__('Cancel_instant_order?').'</a></b>';
+                echo '<b><a class="btn btn-outline-light" href="javascript:void(0);">'.__('Cancel_instant_order?').'</a></b>';
                 echo '</p>';
 
             }

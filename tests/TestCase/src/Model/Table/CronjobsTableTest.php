@@ -1,7 +1,6 @@
 <?php
 
 use App\Test\TestCase\AppCakeTestCase;
-use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -29,7 +28,7 @@ class CronjobsTableTest extends AppCakeTestCase
     
     public function testRunSunday()
     {
-        $this->Cronjob->cronjobRunDay = $this->getTimeObject('2018-10-21 23:00:00')->toUnixString();
+        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-21 23:00:00')->toUnixString();
         $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals(1, count($executedCronjobs));
         
@@ -40,7 +39,7 @@ class CronjobsTableTest extends AppCakeTestCase
     
     public function testRunMonday()
     {
-        $this->Cronjob->cronjobRunDay = $this->getTimeObject('2018-10-22 23:00:00')->toUnixString();
+        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-22 23:00:00')->toUnixString();
         $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals(2, count($executedCronjobs));
         $this->assertEquals($executedCronjobs[0]['time_interval'], 'day');
@@ -50,12 +49,12 @@ class CronjobsTableTest extends AppCakeTestCase
     public function testPreviousCronjobLogError()
     {
         $time = '2018-10-22 23:00:00';
-        $this->Cronjob->cronjobRunDay = $this->getTimeObject($time)->toUnixString();
+        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC($time)->toUnixString();
         $this->Cronjob->cronjobRunDay = strtotime($time);
         $this->Cronjob->CronjobLogs->save(
             $this->Cronjob->CronjobLogs->newEntity(
                 [
-                    'created' => $this->correctTimezone($this->getTimeObject($time)),
+                    'created' => $this->Time->correctTimezone($this->Time->getTimeObjectUTC($time)),
                     'cronjob_id' => 1,
                     'success' => 0
                 ]
@@ -69,11 +68,11 @@ class CronjobsTableTest extends AppCakeTestCase
     
     public function testCronjobNotYetExecutedWithinTimeInterval()
     {
-        $this->Cronjob->cronjobRunDay = $this->getTimeObject('2018-10-23 22:30:01')->toUnixString();
+        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-23 22:30:01')->toUnixString();
         $this->Cronjob->CronjobLogs->save(
             $this->Cronjob->CronjobLogs->newEntity(
                 [
-                    'created' => $this->correctTimezone($this->getTimeObject('2018-10-22 22:30:00')),
+                    'created' => $this->Time->correctTimezone($this->Time->getTimeObjectUTC('2018-10-22 22:30:00')),
                     'cronjob_id' => 1,
                     'success' => 1
                 ]
@@ -86,11 +85,11 @@ class CronjobsTableTest extends AppCakeTestCase
     
     public function testCronjobAlreadyExecutedWithinTimeInterval()
     {
-        $this->Cronjob->cronjobRunDay = $this->getTimeObject('2018-10-23 22:29:59')->toUnixString();
+        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-23 22:29:59')->toUnixString();
         $this->Cronjob->CronjobLogs->save(
             $this->Cronjob->CronjobLogs->newEntity(
                 [
-                    'created' => $this->correctTimezone($this->getTimeObject('2018-10-22 22:30:01')),
+                    'created' => $this->Time->correctTimezone($this->Time->getTimeObjectUTC('2018-10-22 22:30:01')),
                     'cronjob_id' => 1,
                     'success' => 1
                 ]
@@ -102,7 +101,7 @@ class CronjobsTableTest extends AppCakeTestCase
     
     public function testCronjobWithException()
     {
-        $this->Cronjob->cronjobRunDay = $this->getTimeObject('2018-10-23 22:31:00')->toUnixString();
+        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-23 22:31:00')->toUnixString();
         $this->Cronjob->save(
             $this->Cronjob->patchEntity(
                 $this->Cronjob->get(1),
@@ -118,11 +117,11 @@ class CronjobsTableTest extends AppCakeTestCase
     
     public function testCronjobAlreadyExecutedOnCurrentDay()
     {
-        $this->Cronjob->cronjobRunDay = $this->getTimeObject('2018-10-25 22:30:02')->toUnixString();
+        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-25 22:30:02')->toUnixString();
         $this->Cronjob->CronjobLogs->save(
             $this->Cronjob->CronjobLogs->newEntity(
                 [
-                    'created' => $this->correctTimezone($this->getTimeObject('2018-10-25 22:30:01')),
+                    'created' => $this->Time->correctTimezone($this->Time->getTimeObjectUTC('2018-10-25 22:30:01')),
                     'cronjob_id' => 1,
                     'success' => 1
                 ]
@@ -134,7 +133,7 @@ class CronjobsTableTest extends AppCakeTestCase
     
     public function testRunMonthlyBeforeNotBeforeTime()
     {
-        $this->Cronjob->cronjobRunDay = $this->getTimeObject('2018-10-11 07:29:00')->toUnixString();
+        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-11 07:29:00')->toUnixString();
         $this->Cronjob->save(
             $this->Cronjob->patchEntity(
                 $this->Cronjob->get(1),
@@ -149,7 +148,7 @@ class CronjobsTableTest extends AppCakeTestCase
     
     public function testRunMonthlyAfterNotBeforeTime()
     {
-        $this->Cronjob->cronjobRunDay = $this->getTimeObject('2018-10-11 07:31:00')->toUnixString();
+        $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-11 07:31:00')->toUnixString();
         $this->Cronjob->save(
             $this->Cronjob->patchEntity(
                 $this->Cronjob->get(1),
@@ -197,18 +196,6 @@ class CronjobsTableTest extends AppCakeTestCase
         );
         $this->Cronjob->run();
         $this->assertEmpty(0, $this->CronjobLogs->find('all')->all());
-    }
-    
-    private function getTimeObject($time)
-    {
-        $timeObject = new Time($time);
-        $timeObject->setTimezone('UTC');
-        return $timeObject;
-    }
-    
-    private function correctTimezone($timeObject)
-    {
-        return $timeObject->modify(date('Z') . ' seconds');
     }
 
 }

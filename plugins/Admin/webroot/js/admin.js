@@ -185,14 +185,12 @@ foodcoopshop.Admin = {
             }
         });
 
-        filterContainer.find('input:text, input:checkbox, select:not(.do-not-submit)').on('change', function () {
-            foodcoopshop.Admin.triggerFilter();
-        });
-
         filterContainer.find('select').each(function () {
             var options = {
                 liveSearch: true,
-                showIcon: true
+                showIcon: true,
+                iconBase: 'fontawesome',
+                tickIcon: 'fa fa-check'
             };
             if ($(this).attr('multiple') == 'multiple') {
                 var emptyElement = $(this).find('option').first();
@@ -205,6 +203,11 @@ foodcoopshop.Admin = {
         });
 
         this.setSelectPickerMultipleDropdowns('.filter-container select[multiple="multiple"]');
+        
+        filterContainer.find('input:text, input:checkbox, select:not(.do-not-submit)').on('change', function () {
+            foodcoopshop.Admin.triggerFilter();
+        });
+        
     },
 
     /**
@@ -2360,7 +2363,7 @@ foodcoopshop.Admin = {
         // one removes itself after one execution
         productDropdown.one('click', function () {
 
-            $(this).parent().find('span.filter-option').append('<i class="fa fa-spinner fa-spin"></i>');
+            $(this).parent().find('div.filter-option-inner-inner').append('<i class="fa fa-spinner fa-spin"></i>');
 
             foodcoopshop.Helper
                 .ajaxCall('/admin/products/ajaxGetProductsForDropdown/' +

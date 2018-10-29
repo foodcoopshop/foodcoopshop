@@ -119,7 +119,7 @@ INSERT INTO `fcs_configuration` VALUES
 /*!40000 ALTER TABLE `fcs_cronjobs` DISABLE KEYS */;
 INSERT INTO `fcs_cronjobs` VALUES
 (1,'BackupDatabase','day',NULL,NULL,'04:00:00',1),
-(2,'CheckCredit','week',NULL,'Friday','22:30:00',1),
+(2,'CheckCreditBalance','week',NULL,'Friday','22:30:00',1),
 (3,'EmailOrderReminder','week',NULL,'Monday','18:00:00',1),
 (4,'PickupReminder','week',NULL,'Monday','09:00:00',1),
 (5,'SendInvoices','month',11,NULL,'07:30:00',1),
@@ -225,7 +225,8 @@ INSERT INTO `phinxlog` VALUES
 (20180827074035,'AdditionalOrderPeriods','2018-08-27 08:28:29','2018-08-27 08:28:29',0),
 (20181001120127,'UpdatePasswordHashingMethod','2018-08-27 08:28:29','2018-08-27 08:28:29',0),
 (20181015080309,'ImproveNewPasswordRequest','2018-08-27 08:28:29','2018-08-27 08:28:29',0),
-(20181018125456,'Cronjobs','2018-08-27 08:28:29','2018-08-27 08:28:29',0);
+(20181018125456,'Cronjobs','2018-08-27 08:28:29','2018-08-27 08:28:29',0),
+(20181027192224,'BootstrapUpdate','2018-10-27 08:28:29','2018-10-27 08:28:29',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

@@ -88,7 +88,7 @@ if ($appAuth->isManufacturer()) {
 } else {
     $depositOverviewUrl = $this->Slug->getDepositList($manufacturerId);
 }
-    echo '<a class="btn btn-default" href="'.$depositOverviewUrl.'"><i class="fa fa-arrow-circle-left"></i> Zurück zum Pfandkonto</a>';
+    echo '<a class="btn btn-outline-light" href="'.$depositOverviewUrl.'"><i class="fa fa-arrow-circle-left"></i> Zurück zum Pfandkonto</a>';
 echo '</div>';
 echo '<div class="sc"></div>';
 

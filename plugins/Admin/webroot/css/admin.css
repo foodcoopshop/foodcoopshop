@@ -94,7 +94,7 @@ body.pages.home #content {
 #content-logo {
     margin: 10px 0 15px -5px;
 }
-a.btn-default.help {
+a.btn-outline-light.help {
     color: #f3515c;
 }
 .input.select, .input.checkbox, .input.text {
@@ -112,16 +112,34 @@ a.btn-default.help {
   padding-left: 5px;
   padding-right: 5px;
 }
-.dropdown-menu > .active > a,
-.dropdown-menu > .active > a:hover {
-    background-color: #009335 ! important; /* bootstrap overwrite */
+.dropdown-menu > .active > a > span,
+.dropdown-menu > .active > a:hover > span {
 }
 .bootstrap-select {
     width: 193px ! important;
 }
-.bootstrap-select .btn-default {
-    padding-top: 4px;
-    padding-bottom: 4px;
+.bootstrap-select .dropdown-menu li a span.text,
+.bootstrap-select .no-results {
+    color: #262626;
+    font-size: 13px;
+}
+.bootstrap-select .form-control:focus {
+	box-shadow: inherit;
+	border-color: #dfdfdf ! important;
+}
+.bootstrap-select .dropdown-item.active,
+.bootstrap-select .dropdown-item:active {
+    background-color: #009335 ! important; /* bootstrap overwrite */
+}
+.bootstrap-select .dropdown-item.active span,
+.bootstrap-select .dropdown-item:active span {
+    color: #fff ! important;
+}
+.bootstrap-select .dropdown-header {
+	font-size: 11px;
+}
+.bootstrap-select .dropdown-menu li {
+    max-width: 95vw;
 }
 form.fcs-form .bootstrap-select {
     width: 250px ! important;
@@ -132,9 +150,27 @@ form.fcs-form .bootstrap-select {
 .bootstrap-select.big {
     width: 250px ! important;
 }
-.bootstrap-select > .dropdown-toggle.bs-placeholder, .bootstrap-select > .dropdown-toggle.bs-placeholder:hover, .bootstrap-select > .dropdown-toggle.bs-placeholder:focus, .bootstrap-select > .dropdown-toggle.bs-placeholder:active {
+.bootstrap-select .dropdown-item {
+	padding-top: .15rem;
+	padding-bottom: .15rem;
+}
+.bootstrap-select > .dropdown-toggle.bs-placeholder,
+.bootstrap-select > .dropdown-toggle.bs-placeholder:hover,
+.bootstrap-select > .dropdown-toggle.bs-placeholder:focus,
+.bootstrap-select > .dropdown-toggle.bs-placeholder:active {
     color: #333;
 }
+.bootstrap-select .btn.dropdown-toggle {
+    background-color: #fff;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: -1px;
+    border-color: #dfdfdf;
+}
+.bootstrap-select .dropdown-menu li a.opt {
+	padding-left: 1.5em;
+}
+
 #menu {
     display: none;
     position: fixed;
@@ -556,6 +592,12 @@ form div.error-message {
 .featherlight-inner div.form-buttons {
     margin-top: 10px;
 }
+.featherlight-inner label {
+	font-weight: bold;
+} 
+.featherlight-inner .checkbox label {
+    font-weight: normal;
+} 
 .overlay-info {
     color: red;
     font-weight: bold;
@@ -972,11 +1014,11 @@ body.payments .bottom-button-container {
     line-height: 16px;
     margin-left: 5px;
 }
-.btn:not(.dropdown-toggle):not(.btn-close) {
+.btn:not(.dropdown-toggle):not(.btn-close),
+.btn.dropdown-toggle {
     padding: 3px 6px;
-    font-size: 13px;
+	font-size: 13px;
 }
-
 form.fcs-form {
     padding: 10px;
 }
@@ -1087,7 +1129,7 @@ form.fcs-form .input.select .after.small {
     line-height: 28px;
     margin-left: 5px;
 }
-.bootstrap-select span.filter-option i.fa {
+.bootstrap-select div.filter-option-inner-inner i.fa {
     position: absolute;
     right: 25px;
     top: 9px;
@@ -1114,9 +1156,12 @@ ul.nav-tabs {
 }
 ul.nav-tabs > li > a {
     padding: 5px 10px;
+    float: left;
+    color: #333 ! important;
 }
-ul.nav-tabs a:hover {
-    background-color: #fff;
+ul.nav-tabs a:hover,
+ul.nav-tabs li.active a {
+	background-color: #fff;
 }
 a.btn-arrow {
     display: inline-block;

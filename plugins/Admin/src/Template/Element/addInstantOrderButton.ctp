@@ -24,7 +24,7 @@ if ($appAuth->isAdmin() || $appAuth->isSuperadmin() || $appAuth->isCustomer()) {
     $options = [
         'escape' => false
     ];
-    $options['class'] = 'btn btn-default';
+    $options['class'] = 'btn btn-outline-light';
     echo $this->Html->link('<i class="fa fa-shopping-cart fa-lg"></i> '.__d('admin', 'Instant_order_for_today'), 'javascript:void(0);', $options);
     echo $this->Form->control(null, [
         'type' => 'select',
