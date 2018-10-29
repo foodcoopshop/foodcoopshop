@@ -262,7 +262,7 @@ class CartsControllerTest extends AppCakeTestCase
         $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
         
         // check order_details for product1
-        $this->checkOrderDetails($cart->cart_products[2]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.305786, 3.64, 0.17, 0.34, 2, $pickupDay);
+        $this->checkOrderDetails($cart->cart_products[2]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.3, 3.64, 0.17, 0.34, 2, $pickupDay);
 
         // check order_details for product2 (third! index)
         $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Milch : 0,5l', 3, 10, 1.5, 1.636365, 1.86, 0.07, 0.21, 3, $pickupDay);
@@ -484,7 +484,7 @@ class CartsControllerTest extends AppCakeTestCase
         
         // check table order_detail
         $this->assertEquals($orderDetailA->total_price_tax_incl, 2.700000, 'order_detail->total_price_tax_incl not correct');
-        $this->assertEquals($orderDetailA->total_price_tax_excl, 2.455786, 'order_detail->total_price_tax_excl not correct');
+        $this->assertEquals($orderDetailA->total_price_tax_excl, 2.450000, 'order_detail->total_price_tax_excl not correct');
 
         $this->assertEquals($orderDetailB->total_price_tax_incl, 15.240000, 'order_detail->total_price_tax_incl not correct');
         $this->assertEquals($orderDetailB->total_price_tax_excl,  13.859095, 'order_detail->total_price_tax_excl not correct');
