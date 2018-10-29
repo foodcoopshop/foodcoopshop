@@ -592,7 +592,8 @@ form div.error-message {
 .featherlight-inner div.form-buttons {
     margin-top: 10px;
 }
-.featherlight-inner label {
+.featherlight-inner label,
+.ui-dialog-content label {
 	font-weight: bold;
 } 
 .featherlight-inner .checkbox label {
@@ -938,8 +939,11 @@ body.payments .bottom-button-container {
 
 #product-price-edit-form label.radio {
 	margin-left: 20px;
-	line-height: 28px;
+	line-height: 21px;
 	position: static;
+	margin-top: 5px ! important;
+	float: left;
+	margin-bottom: 5px;
 }
 #product-is-stock-product-edit-form label.checkbox,
 #product-delivery-rhythm-edit-form label.checkbox {
