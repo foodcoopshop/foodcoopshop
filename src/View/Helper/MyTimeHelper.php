@@ -3,6 +3,7 @@
 namespace App\View\Helper;
 
 use Cake\Core\Configure;
+use Cake\I18n\Time;
 use Cake\View\Helper\TimeHelper;
 
 /**
@@ -31,6 +32,24 @@ class MyTimeHelper extends TimeHelper
             return strtotime($a) - strtotime($b);
         });
         return $array;    
+    }
+    
+    public function getTimeObjectUTC($time)
+    {
+        $timeObject = new Time($time);
+        $timeObject->setTimezone('UTC');
+        return $timeObject;
+    }
+    
+    public function correctTimezone($timeObject)
+    {
+        return $timeObject->modify($this->getTimezoneDiffInSeconds($timeObject->toUnixString()) . ' seconds');
+    }
+    
+    public function getTimezoneDiffInSeconds($timestamp)
+    {
+        $timezoneDiff = date('Z', $timestamp);
+        return $timezoneDiff;
     }
     
     public function getI18Format($formatString)

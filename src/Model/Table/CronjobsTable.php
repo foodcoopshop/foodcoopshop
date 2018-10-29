@@ -6,7 +6,7 @@ use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\I18n\I18n;
 use App\Lib\Error\Exception\InvalidParameterException;
-use Cake\I18n\FrozenTime;
+use Cake\I18n\Time;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -38,9 +38,9 @@ class CronjobsTable extends AppTable
     {
         
         if (empty($this->cronjobRunDay)) {
-            $this->cronjobRunDay = time();
+            $this->cronjobRunDay = Configure::read('app.timeHelper')->getTimeObjectUTC(date(Configure::read('DateFormat.DatabaseWithTimeAlt')))->toUnixString();
         }
-        
+
         $cronjobs = $this->find('all', [
             'conditions' => [
                 'Cronjobs.active' => APP_ON
@@ -55,10 +55,9 @@ class CronjobsTable extends AppTable
                 continue;
             }
             
-            $cronjobRunDayObject = new FrozenTime($this->cronjobRunDay);
-            
+            $cronjobRunDayObject = new Time($this->cronjobRunDay);
             // to be able to use local time in fcs_cronjobs:time_interval, the current time needs to be adabped according to the local timezone
-            $cronjobRunDayObject = $cronjobRunDayObject->modify(date('Z') + (date('I') == 1 ? 0 : 1)  * 3600 . ' seconds');
+            $cronjobRunDayObject = $cronjobRunDayObject->modify(Configure::read('app.timeHelper')->getTimezoneDiffInSeconds($this->cronjobRunDay) . ' seconds');
             $cronjobNotBeforeTimeWithCronjobRunDay = $cronjob->not_before_time->copy();
             $cronjobNotBeforeTimeWithCronjobRunDay = $cronjobNotBeforeTimeWithCronjobRunDay->setDate(
                 $cronjobRunDayObject->year,
