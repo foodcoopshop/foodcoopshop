@@ -15,10 +15,6 @@
 
 use Cake\Core\Configure;
 
-if (Configure::read('app.customFrontendColorTheme') == '#719f41') {
-    return;
-}
-
 ?>
 
 <style>
