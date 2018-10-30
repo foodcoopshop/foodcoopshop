@@ -378,7 +378,7 @@ class ManufacturersTable extends AppTable
                 'Manufacturers.name' => 'ASC'
             ],
             'conditions' => [
-                'Manufacturers.timebased_currency_enabled' => true
+                'Manufacturers.timebased_currency_enabled' => APP_ON
             ]
         ]);
         $result = [];
