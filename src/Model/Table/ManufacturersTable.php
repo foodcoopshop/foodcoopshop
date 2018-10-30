@@ -50,8 +50,8 @@ class ManufacturersTable extends AppTable
         $range = [3, 64];
         $validator->lengthBetween('name', $range, __('Please_enter_between_{0}_and_{1}_characters.', $range));
         $validator->allowEmpty('iban');
-        $validator->add('iban', 'validFormat', [
-            'rule' => array('custom', IBAN_REGEX),
+        $validator->add('iban', 'iban', [
+            'rule' => 'iban',
             'message' => __('Please_enter_a_valid_IBAN.')
         ]);
         $validator->allowEmpty('bic');
