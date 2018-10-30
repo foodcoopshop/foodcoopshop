@@ -203,7 +203,6 @@ class AppTcpdf extends TCPDF
         $trStyles = ' style="background-color:#cecece;font-weight:bold;"';
         if ($detailsHidden) {
             $trStyles = '';
-            $fieldPrefix = '';
         }
 
         $this->table .= '<tr' . $trStyles . '>';
