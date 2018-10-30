@@ -261,14 +261,14 @@ class CartsControllerTest extends AppCakeTestCase
         $cart = $this->getCartById($cartId);
         $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
         
-        // check order_details for product1
-        $this->checkOrderDetails($cart->cart_products[2]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.305786, 3.64, 0.17, 0.34, 2, $pickupDay);
+        // check order_details for product1 (index 2!)
+        $this->checkOrderDetails($cart->cart_products[2]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.3, 3.64, 0.17, 0.34, 2, $pickupDay);
 
-        // check order_details for product2 (third! index)
-        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Milch : 0,5l', 3, 10, 1.5, 1.636365, 1.86, 0.07, 0.21, 3, $pickupDay);
+        // check order_details for product2 (index 0!)
+        $this->checkOrderDetails($cart->cart_products[0]->order_detail, 'Milch : 0,5l', 3, 10, 1.5, 1.65, 1.86, 0.07, 0.21, 3, $pickupDay);
 
-        // check order_details for product3 (second! index)
-        $this->checkOrderDetails($cart->cart_products[1]->order_detail, 'Knoblauch : 100 g', 1, 0, 0, 0.636364, 0.636364, 0.000000, 0.000000, 0, $pickupDay);
+        // check order_details for product3 (index 1!)
+        $this->checkOrderDetails($cart->cart_products[1]->order_detail, 'Knoblauch : 100 g', 1, 0, 0, 0.64, 0.64, 0.000000, 0.000000, 0, $pickupDay);
 
         $this->checkStockAvailable($this->productId1, 95);
         $this->checkStockAvailable($this->productId2, 16);
@@ -484,16 +484,16 @@ class CartsControllerTest extends AppCakeTestCase
         
         // check table order_detail
         $this->assertEquals($orderDetailA->total_price_tax_incl, 2.700000, 'order_detail->total_price_tax_incl not correct');
-        $this->assertEquals($orderDetailA->total_price_tax_excl, 2.455786, 'order_detail->total_price_tax_excl not correct');
+        $this->assertEquals($orderDetailA->total_price_tax_excl, 2.450000, 'order_detail->total_price_tax_excl not correct');
 
         $this->assertEquals($orderDetailB->total_price_tax_incl, 15.240000, 'order_detail->total_price_tax_incl not correct');
-        $this->assertEquals($orderDetailB->total_price_tax_excl,  13.859095, 'order_detail->total_price_tax_excl not correct');
+        $this->assertEquals($orderDetailB->total_price_tax_excl,  13.850000, 'order_detail->total_price_tax_excl not correct');
 
-        $this->assertEquals($orderDetailC->total_price_tax_incl, 0.476364, 'order_detail->total_price_tax_incl not correct');
-        $this->assertEquals($orderDetailC->total_price_tax_excl, 0.476364, 'order_detail->total_price_tax_excl not correct');
+        $this->assertEquals($orderDetailC->total_price_tax_incl, 0.480000, 'order_detail->total_price_tax_incl not correct');
+        $this->assertEquals($orderDetailC->total_price_tax_excl, 0.480000, 'order_detail->total_price_tax_excl not correct');
 
         $this->assertEquals($orderDetailD->total_price_tax_incl, 1.860000, 'order_detail->total_price_tax_incl not correct');
-        $this->assertEquals($orderDetailD->total_price_tax_excl, 1.636365, 'order_detail->total_price_tax_excl not correct');
+        $this->assertEquals($orderDetailD->total_price_tax_excl, 1.650000, 'order_detail->total_price_tax_excl not correct');
 
         // check table timebased_currency_order_details
         $this->assertEquals($orderDetailA->timebased_currency_order_detail->money_excl, 0.85, 'order_detail timebased_currency_order_detail->money_excl not correct');

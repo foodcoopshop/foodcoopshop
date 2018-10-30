@@ -297,7 +297,7 @@ class CartsTable extends AppTable
             'manufacturerId' => $cartProduct->product->id_manufacturer,
             'manufacturerName' => $cartProduct->product->manufacturer->name,
             'price' => $grossPrice,
-            'priceExcl' => $cartProduct->product->price * $cartProduct->amount,
+            'priceExcl' => $grossPrice - $tax,
             'tax' => $tax,
             'pickupDay' => $cartProduct->pickup_day,
             'isStockProduct' => $cartProduct->product->is_stock_product
@@ -322,9 +322,11 @@ class CartsTable extends AppTable
             $quantityInUnits = $cartProduct->product->unit_product->quantity_in_units;
             $newPriceIncl = round($priceInclPerUnit * $quantityInUnits / $unitAmount, 2);
             $netPricePerPiece = round($productsTable->getNetPrice($cartProduct->id_product, $newPriceIncl), 2);
-            $productData['price'] =  $newPriceIncl * $cartProduct->amount;
-            $productData['priceExcl'] = $netPricePerPiece * $cartProduct->amount;
-            $productData['tax'] = ($newPriceIncl - $netPricePerPiece) * $cartProduct->amount;
+            $price = $newPriceIncl * $cartProduct->amount;
+            $tax = ($newPriceIncl - $netPricePerPiece) * $cartProduct->amount;
+            $productData['price'] = $price;
+            $productData['tax'] = $tax;
+            $productData['priceExcl'] = $price - $tax;
             if ($unity != '') {
                 $unity .= ', ';
             }
@@ -366,7 +368,7 @@ class CartsTable extends AppTable
             'manufacturerId' => $cartProduct->product->id_manufacturer,
             'manufacturerName' => $cartProduct->product->manufacturer->name,
             'price' => $grossPrice,
-            'priceExcl' => $cartProduct->product_attribute->price * $cartProduct->amount,
+            'priceExcl' => $grossPrice - $tax,
             'tax' => $tax,
             'pickupDay' => $cartProduct->pickup_day,
             'isStockProduct' => $cartProduct->product->is_stock_product
