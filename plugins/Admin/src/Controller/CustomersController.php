@@ -129,7 +129,7 @@ class CustomersController extends AdminAppController
             ]
         );
 
-        if (!empty($customer->getErrors())) {
+        if ($customer->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('customer', $customer);
         } else {
@@ -334,7 +334,7 @@ class CustomersController extends AdminAppController
             ]
         );
 
-        if (!empty($customer->getErrors())) {
+        if ($customer->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('customer', $customer);
             $this->render('edit');

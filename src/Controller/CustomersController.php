@@ -103,7 +103,7 @@ class CustomersController extends FrontendController
                 ]
             );
 
-            if (!empty($customer->getErrors())) {
+            if ($customer->hasErrors()) {
                 $this->Flash->error(__('Errors_while_saving!'));
             } else {
                 
@@ -282,7 +282,7 @@ class CustomersController extends FrontendController
                     ]
                 );
 
-                if (!empty($customer->getErrors())) {
+                if ($customer->hasErrors()) {
                     $this->Flash->error(__('Errors_while_saving!'));
                 } else {
                     $newCustomer = $this->Customer->save(

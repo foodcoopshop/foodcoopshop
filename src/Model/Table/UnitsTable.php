@@ -87,7 +87,7 @@ class UnitsTable extends AppTable
             ]
         );
 
-        if (!empty($entity->getErrors())) {
+        if ($entity->hasErrors()) {
             throw new InvalidParameterException(join(' ', $this->getAllValidationErrors($entity)));
         }
 

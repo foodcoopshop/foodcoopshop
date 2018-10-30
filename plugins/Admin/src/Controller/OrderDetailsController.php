@@ -758,7 +758,7 @@ class OrderDetailsController extends AdminAppController
                     'validate' => 'pickupDay'
                 ]
             );
-            if (!empty($entity->getErrors())) {
+            if ($entity->hasErrors()) {
                 $errorMessages = array_merge($errorMessages, $this->OrderDetail->getAllValidationErrors($entity));
             }
             if (!empty($errorMessages)) {

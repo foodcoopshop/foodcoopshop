@@ -178,7 +178,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
 
         $payment = $this->TimebasedCurrencyPayment->patchEntity($payment, $this->getRequest()->getData());
 
-        if (!empty($payment->getErrors())) {
+        if ($payment->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('payment', $payment);
             $this->render('edit');

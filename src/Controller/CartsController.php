@@ -536,7 +536,7 @@ class CartsController extends FrontendController
             $options
         );
         
-        if (!empty($cart['Cart']->getErrors())) {
+        if ($cart['Cart']->hasErrors()) {
             $formErrors = true;
         }
         $this->set('cart', $cart['Cart']); // to show error messages in form (from validation)

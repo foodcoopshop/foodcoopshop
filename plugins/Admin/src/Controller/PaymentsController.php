@@ -149,7 +149,7 @@ class PaymentsController extends AdminAppController
             ]
         );
 
-        if (!empty($payment->getErrors())) {
+        if ($payment->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('payment', $payment);
         } else {
@@ -236,7 +236,7 @@ class PaymentsController extends AdminAppController
                 ['amount' => $amount],
                 ['validate' => 'add']
             );
-            if (!empty($entity->getErrors())) {
+            if ($entity->hasErrors()) {
                 throw new InvalidParameterException($this->Payment->getAllValidationErrors($entity)[0]);
             }
         } catch (InvalidParameterException $e) {

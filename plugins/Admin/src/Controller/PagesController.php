@@ -121,7 +121,7 @@ class PagesController extends AdminAppController
         $this->setRequest($this->getRequest()->withData('Pages.id_customer', $this->AppAuth->getUserId()));
 
         $page = $this->Page->patchEntity($page, $this->getRequest()->getData());
-        if (!empty($page->getErrors())) {
+        if ($page->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('page', $page);
             $this->render('edit');

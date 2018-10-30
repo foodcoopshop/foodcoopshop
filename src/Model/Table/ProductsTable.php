@@ -481,7 +481,7 @@ class ProductsTable extends AppTable
             $productId = key($product);
             $ids = $this->getProductIdAndAttributeId($productId);
             $entity = $this->StockAvailables->newEntity($product[$productId]);
-            if (!empty($entity->getErrors())) {
+            if ($entity->hasErrors()) {
                 throw new InvalidParameterException(join(' ', $this->StockAvailables->getAllValidationErrors($entity)));
             }
         }
@@ -533,7 +533,7 @@ class ProductsTable extends AppTable
                     'validate' => 'deliveryRhythm'
                 ]
             );
-            if (!empty($entity->getErrors())) {
+            if ($entity->hasErrors()) {
                 throw new InvalidParameterException(join(' ', $this->getAllValidationErrors($entity)));
             } else {
                 $products2save[] = array_merge(
