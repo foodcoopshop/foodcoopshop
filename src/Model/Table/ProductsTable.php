@@ -1098,7 +1098,7 @@ class ProductsTable extends AppTable
 
         // if tax == 0% rate is empty...
         if (empty($rate)) {
-            $grossPrice = $netPrice;
+            $grossPrice = round($netPrice, 2);
         } else {
             $grossPrice = $rate[0]['gross_price'];
         }
