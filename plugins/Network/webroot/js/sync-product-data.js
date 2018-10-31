@@ -670,7 +670,7 @@ foodcoopshop.SyncProductData = {
                 return;
             }
 
-            checkedAttributeLabels = $.unique(checkedAttributeLabels);
+            checkedAttributeLabels = foodcoopshop.Helper.unique(checkedAttributeLabels);
             if (checkedAttributeLabels.length == 0) {
                 foodcoopshop.Helper.showOrAppendErrorMessage(foodcoopshop.LocalizedJs.syncProductData.NoProductDataSelected);
                 horizontalCheckboxes.addClass('error');

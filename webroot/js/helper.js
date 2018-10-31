@@ -29,6 +29,15 @@ foodcoopshop.Helper = {
             this.showContent();
         }
     },
+    
+    /**
+     * $.unique does not work with strings
+     */
+    unique : function(array) {
+        return $.grep(array, function(el, index) {
+            return index === $.inArray(el, array);
+        });
+    },
 
     getJqueryUiNoButton : function() {
         return this.getJqueryUiCloseDialogButton(foodcoopshop.LocalizedJs.helper.no);
