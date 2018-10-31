@@ -65,8 +65,11 @@ foodcoopshop.SyncProduct = {
         return result;
     },
     
-    getQuantityString : function(quantity, quantityLimit, soldOutLimit) {
-        var result = quantity + ' / <i>' + (quantityLimit === null ? '-' : quantityLimit) + '</i> / <i>' + (soldOutLimit === null ? '-' : soldOutLimit) + '</i>';
+    getQuantityString : function(isStockProduct, quantity, quantityLimit, soldOutLimit) {
+        var result = quantity; 
+        if (isStockProduct) {
+            result += ' / <i>' + (quantityLimit === null ? '-' : quantityLimit) + '</i> / <i>' + (soldOutLimit === null ? '-' : soldOutLimit) + '</i>';
+        }
         return result;
     },
 

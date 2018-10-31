@@ -196,6 +196,7 @@ foodcoopshop.SyncProductData = {
                 tableData += '<td class="quantity">';
                     if (isAttribute || !hasAttributes) {
                         tableData += foodcoopshop.SyncProduct.getQuantityString(
+                                product.is_stock_product,
                                 product.stock_available.quantity,
                                 product.stock_available.quantity_limit,
                                 product.stock_available.sold_out_limit
@@ -413,11 +414,13 @@ foodcoopshop.SyncProductData = {
                     // quantity
                     if (!hasAttributes) {
                         var remoteProductQuantityString = foodcoopshop.SyncProduct.getQuantityString(
+                                product.is_stock_product,
                                 product.stock_available.quantity,
                                 product.stock_available.quantity_limit,
                                 product.stock_available.sold_out_limit
                             );
                         var localProductQuantityString = foodcoopshop.SyncProduct.getQuantityString(
+                                localProduct.is_stock_product,
                                 localProduct.stock_available.quantity,
                                 localProduct.stock_available.quantity_limit,
                                 localProduct.stock_available.sold_out_limit
