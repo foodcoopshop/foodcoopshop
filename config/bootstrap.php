@@ -33,7 +33,6 @@ use Cake\Cache\Cache;
 use Cake\Console\ConsoleErrorHandler;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
-use Cake\Core\Plugin;
 use Cake\Database\Type;
 use Cake\Datasource\ConnectionManager;
 use Cake\Error\ErrorHandler;
@@ -177,23 +176,7 @@ Type::build('timestamp')
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
 
-/*
- * Only try to load DebugKit in development mode
- * Debug Kit should not be installed on a production system
- */
-if (Configure::read('debug')) {
-    Plugin::load('DebugKit', ['bootstrap' => true]);
-}
-
 // foodcoopshop
-Plugin::load('Migrations');
-Plugin::load('AssetCompress', ['bootstrap' => true]);
-Plugin::load('Admin', [
-    'bootstrap' => false,
-    'routes' => true,
-    'autoload' => true
-]);
-
 mb_internal_encoding('UTF-8');
 date_default_timezone_set('Europe/Berlin');
 
@@ -204,13 +187,6 @@ if (in_array(Configure::read('appDb.FCS_DEFAULT_LOCALE'), Configure::read('app.i
     setlocale(LC_ALL, Configure::read('appDb.FCS_DEFAULT_LOCALE').'.UTF-8');
     I18n::setLocale(Configure::read('appDb.FCS_DEFAULT_LOCALE'));
     Configure::load('Locale' . DS . Configure::read('appDb.FCS_DEFAULT_LOCALE') . DS . 'date', 'default');
-}
-
-if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
-    Plugin::load('Network', [
-        'routes' => true,
-        'autoload' => true
-    ]);
 }
 
 // gettext not available in app_config
