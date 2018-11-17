@@ -1818,16 +1818,16 @@
         },
         {
             "name": "cakephp/bake",
-            "version": "1.8.5",
+            "version": "1.8.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/bake.git",
-                "reference": "d4b1a9283bd79728d22090a35dbf0c1f0285505c"
+                "reference": "bfa552a92a01cb1c878b3a3a67899fcd21569818"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/bake/zipball/d4b1a9283bd79728d22090a35dbf0c1f0285505c",
-                "reference": "d4b1a9283bd79728d22090a35dbf0c1f0285505c",
+                "url": "https://api.github.com/repos/cakephp/bake/zipball/bfa552a92a01cb1c878b3a3a67899fcd21569818",
+                "reference": "bfa552a92a01cb1c878b3a3a67899fcd21569818",
                 "shasum": ""
             },
             "require": {
@@ -1862,7 +1862,7 @@
                 "bake",
                 "cakephp"
             ],
-            "time": "2018-11-04T20:34:12+00:00"
+            "time": "2018-11-17T03:34:24+00:00"
         },
         {
             "name": "cakephp/cakephp-codesniffer",
@@ -3293,16 +3293,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.4.3",
+            "version": "7.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "c151651fb6ed264038d486ea262e243af72e5e64"
+                "reference": "b1be2c8530c4c29c3519a052c9fb6cee55053bbd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c151651fb6ed264038d486ea262e243af72e5e64",
-                "reference": "c151651fb6ed264038d486ea262e243af72e5e64",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b1be2c8530c4c29c3519a052c9fb6cee55053bbd",
+                "reference": "b1be2c8530c4c29c3519a052c9fb6cee55053bbd",
                 "shasum": ""
             },
             "require": {
@@ -3373,7 +3373,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-10-23T05:57:41+00:00"
+            "time": "2018-11-14T16:52:02+00:00"
         },
         {
             "name": "psy/psysh",
