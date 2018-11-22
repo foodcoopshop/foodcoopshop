@@ -37,6 +37,9 @@ class SendInvoicesShellTest extends AppCakeTestCase
 
     public function testSendInvoicesOk()
     {
+        
+        Configure::write('app.dateOfFirstSendInvoiceCronjobWithPickupDayUpdate', '2018-03-11');
+        
         $this->prepareSendInvoices();
         
         // reset order detail created in order to make OrderDetail::legacyUpdateOrderStateToNewBilledState happen
