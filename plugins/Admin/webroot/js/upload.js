@@ -27,6 +27,13 @@ foodcoopshop.Upload = {
         foodcoopshop.AppFeatherlight.closeLightbox();
     },
 
+    saveManufacturerTmpTermsOfUseInForm : function() {
+        var filename = $('.featherlight-content form .drop a').attr('href');
+        $('body.manufacturers input[name="Manufacturers[tmp_terms_of_use]"').val(filename);
+        $('body.manufacturers a.add-terms-of-use-button').removeClass('uploaded').addClass('uploaded').find('a').attr('href', filename);
+        foodcoopshop.AppFeatherlight.closeLightbox();
+    },
+    
     saveCategoryTmpImageInForm : function () {
         var filename = $('.featherlight-content form .drop img').attr('src');
         $('body.categories input[name="Categories[tmp_image]"').val(filename);
