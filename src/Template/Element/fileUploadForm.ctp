@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 ?>
-<form data-object-id="<?php echo $id; ?>" id="mini-upload-form-<?php echo $id ?>" class="hide mini-upload-form" method="post" action="<?php echo $action; ?>" enctype="multipart/form-data">
+<form data-object-id="<?php echo $id; ?>" id="mini-upload-form-file-<?php echo $id ?>" class="hide mini-upload-form" method="post" action="<?php echo $action; ?>" enctype="multipart/form-data">
         <p class="heading">
             <?php if ($fileUploadExists) { ?>
                 <?php echo __('Replace_existing_file'); ?>
@@ -22,7 +22,7 @@
             <?php } ?>
         </p>
     <div class="drop">
-        <?php if ($fileExists) { ?>
+        <?php if ($fileUploadExists) { ?>
             <?php echo '<a class="existingFile" href="' . $existingFileUploadSrc . '" />'.__d('admin', 'Existing_file').'</a>'; ?>
         <?php } ?>
         <a class="upload-button"><?php echo __('Search_PC'); ?></a>

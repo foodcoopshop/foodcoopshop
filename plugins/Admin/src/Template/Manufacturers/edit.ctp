@@ -21,6 +21,7 @@ $this->element('addScript', [
         Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('manufacturers-description');" .
         Configure::read('app.jsNamespace') . ".Helper.initCkeditor('manufacturers-short-description');" .
         Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.manufacturers .add-image-button', foodcoopshop.Upload.saveManufacturerTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" .
+        Configure::read('app.jsNamespace') . ".Upload.initFileUpload('body.manufacturers .add-terms-of-use-button', foodcoopshop.Upload.saveManufacturerTmpTermsOfUseInForm, foodcoopshop.AppFeatherlight.closeLightbox);" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();"
 ]);
 

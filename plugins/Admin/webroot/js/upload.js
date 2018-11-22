@@ -69,7 +69,7 @@ foodcoopshop.Upload = {
         $(button).each(function () {
 
             var objectId = $(this).data('objectId');
-            var imageUploadForm = $('form#mini-upload-form-' + objectId);
+            var imageUploadForm = $('form#mini-upload-form-image-' + objectId);
 
             $(this).featherlight(
                 foodcoopshop.AppFeatherlight.initLightboxForForms(
@@ -85,18 +85,150 @@ foodcoopshop.Upload = {
                 )
             );
 
-            foodcoopshop.Upload.initUploadButton($(this));
+            foodcoopshop.Upload.initUploadButtonImage($(this));
 
         });
 
     },
 
-    initUploadButton : function (container) {
+    initFileUpload : function (button, saveMethod, closeMethod) {
+
+        $(button).each(function () {
+
+            var objectId = $(this).data('objectId');
+            var fileUploadForm = $('form#mini-upload-form-file-' + objectId);
+
+            $(this).featherlight(
+                foodcoopshop.AppFeatherlight.initLightboxForForms(
+                    function () {
+                        saveMethod();
+                    },
+                    function () {
+                        foodcoopshop.AppFeatherlight.disableSaveButton();
+                    },
+                    closeMethod,
+                    fileUploadForm
+                )
+            );
+
+            foodcoopshop.Upload.initUploadButtonFile($(this));
+
+        });
+
+    },
+    
+    initUploadButtonFile: function (container) {
 
         $(container).on('click', function () {
 
             var objectId = $(this).data('objectId');
-            var imageUploadForm = $('form#mini-upload-form-' + objectId);
+            var fileUploadForm = $('form#mini-upload-form-file-' + objectId);
+            var ul = fileUploadForm.find('ul');
+
+            var button = fileUploadForm.find('.drop a.upload-button');
+            button.off('click');
+            button.on('click', function () {
+                // Simulate a click on the file input button to show the file browser dialog
+                $(this).parent().find('input').click();
+            });
+
+            // Initialize the jQuery File Upload plugin
+            fileUploadForm.fileupload({
+
+                // This element will accept file drag/drop uploading
+                dropZone: fileUploadForm.find('.drop'),
+
+                autoUpload: false,
+
+                // This function is called when a file is added to the queue;
+                // either via the browse button, or via drag/drop:
+                add: function (e, data) {
+
+                    var tpl = $('<li class="working"><p></p><input type="text" value="0" data-width="48" data-height="48"'+
+                        ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></li><div class="sc"></div>');
+
+                    // Append the file name and file size
+                    tpl.find('p').text(data.files[0].name);
+
+                    // Add the HTML to the UL element
+                    data.context = tpl.appendTo(ul);
+
+                    // Initialize the knob plugin
+                    tpl.find('input').knob();
+
+                    // Listen for clicks on the cancel icon
+                    tpl.find('span').click(function () {
+
+                        if (tpl.hasClass('working')) {
+                            jqXHR.abort();
+                        }
+
+                        tpl.fadeOut(function () {
+                            tpl.remove();
+                        });
+
+                    });
+
+                    // Automatically upload the file once it is added to the queue
+                    var jqXHR = data.submit();
+                },
+
+                progress: function (e, data) {
+
+                    // Calculate the completion percentage of the upload
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+
+                    // Update the hidden input field and trigger a change
+                    // so that the jQuery knob plugin knows to update the dial
+                    data.context.find('input').val(progress).change();
+
+                    if (progress == 100) {
+                        data.context.removeClass('working');
+                    }
+                },
+
+                done: function (e, data) {
+
+                    fileUploadForm.find('ul li').remove();
+                    fileUploadForm.find('a.uploadedFile').remove();
+                    fileUploadForm.find('.modify-icon').remove();
+
+                    var result = JSON.parse(data.result);
+                    if (result.status) {
+                        var container = fileUploadForm.find('.drop');
+                        container.find('img').remove();
+                        container.prepend($('<a />').
+                            attr('href', result.filename).
+                            addClass('uploadedFile'));
+                        fileUploadForm.find('ul li').remove();
+                        foodcoopshop.AppFeatherlight.enableSaveButton();
+                    } else {
+                        fileUploadForm.find('ul li').remove();
+                        alert(result.msg);
+                    }
+                },
+
+                fail: function (e, data) {
+                    // Something has gone wrong!
+                    data.context.addClass('error');
+                }
+
+            });
+
+            // Prevent the default action when a file is dropped on the window
+            $(document).on('drop dragover', function (e) {
+                e.preventDefault();
+            });
+
+        });
+    },    
+
+    initUploadButtonImage : function (container) {
+
+        $(container).on('click', function () {
+
+            var objectId = $(this).data('objectId');
+            var imageUploadForm = $('form#mini-upload-form-image-' + objectId);
 
             var buttons = {};
             buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
@@ -158,7 +290,6 @@ foodcoopshop.Upload = {
 
                     // Append the file name and file size
                     tpl.find('p').text(data.files[0].name);
-                    //.append('<i>' + formatFileSize(data.files[0].size) + '</i>');
 
                     // Add the HTML to the UL element
                     data.context = tpl.appendTo(ul);
