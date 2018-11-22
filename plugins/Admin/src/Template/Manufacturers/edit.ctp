@@ -24,12 +24,7 @@ $this->element('addScript', [
         Configure::read('app.jsNamespace') . ".Admin.initForm();"
 ]);
 
-$idForImageUpload = !empty($manufacturer->id_manufacturer) ? $manufacturer->id_manufacturer : StringComponent::createRandomString(6);
-$imageSrc = $this->Html->getManufacturerImageSrc($idForImageUpload, 'large');
-if (!empty($manufacturer->tmp_image) && $manufacturer->tmp_image != '') {
-    $imageSrc = str_replace('\\', '/', $manufacturer->tmp_image);
-}
-$imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
+$idForUpload = !empty($manufacturer->id_manufacturer) ? $manufacturer->id_manufacturer : StringComponent::createRandomString(6);
 ?>
 
 <div class="filter-container">
@@ -115,6 +110,11 @@ if ($appAuth->isManufacturer()) {
     }
     echo '</h2>';
 
+    $imageSrc = $this->Html->getManufacturerImageSrc($idForUpload, 'large');
+    if (!empty($manufacturer->tmp_image) && $manufacturer->tmp_image != '') {
+        $imageSrc = str_replace('\\', '/', $manufacturer->tmp_image);
+    }
+    $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
     echo '<div class="input">';
     echo '<label>'.__d('admin', 'Logo');
     if ($imageExists) {
@@ -125,7 +125,7 @@ if ($appAuth->isManufacturer()) {
     echo $this->Html->getJqueryUiIcon($imageExists ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
     'class' => 'add-image-button ' . ($imageExists ? 'uploaded' : ''),
     'title' => __d('admin', 'Upload_new_logo_or_change_it'),
-    'data-object-id' => $idForImageUpload
+    'data-object-id' => $idForUpload
     ], 'javascript:void(0);');
     echo '</div>';
     echo $this->Form->hidden('Manufacturers.tmp_image');
@@ -201,6 +201,36 @@ if ($appAuth->isManufacturer()) {
     'label' => __d('admin', 'VAT_number').' <span class="after small">'.__d('admin', 'if_it_is_available').'</span>',
     'escape' => false
     ]);
+    
+    $fileUploadExists = false;
+    $fileUploadSrc = '/test.pdf';
+    if (!empty($manufacturer->tmp_terms_of_use) && $manufacturer->tmp_terms_of_use != '') {
+        $fileUploadSrc = str_replace('\\', '/', $manufacturer->tmp_terms_of_use);
+    }
+    
+    echo '<div class="input">';
+    echo '<label>'.__d('admin', 'Terms_of_use');
+    if ($fileUploadExists) {
+        echo '<br /><span class="small">'.__d('admin', 'Click_on_pdf_icon_to_change_it.').'</span>';
+    }
+    echo '</label>';
+    
+    echo '<div style="float:right;">';
+    echo $this->Html->getJqueryUiIcon($fileUploadExists ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('add.png')), [
+        'class' => 'add-terms-of-use-button ' . ($fileUploadExists ? 'uploaded' : ''),
+        'title' => __d('admin', 'Upload_terms_of_use_or_change_them'),
+        'data-object-id' => $idForUpload
+    ], 'javascript:void(0);');
+    echo '</div>';
+    echo $this->Form->hidden('Manufacturers.tmp_terms_of_use');
+    echo '</div>';
+    
+    echo $this->Form->control('Manufacturers.delete_terms_of_use', [
+        'label' => __d('admin', 'Delete_terms_of_use?'). '<span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+        'type' => 'checkbox',
+        'escape' => false
+    ]);
+    
 
     echo $this->Form->control('Manufacturers.firmenbuchnummer', [
     'label' => __d('admin', 'Commercial_register_number').' <span class="after small">'.__d('admin', 'if_it_is_available').'</span>',
@@ -239,9 +269,15 @@ if ($appAuth->isManufacturer()) {
 
 <?php
 echo $this->element('imageUploadForm', [
-    'id' => $idForImageUpload,
+    'id' => $idForUpload,
     'action' => '/admin/tools/doTmpImageUpload/',
     'imageExists' => $imageExists,
     'existingImageSrc' => $imageSrc
+]);
+echo $this->element('fileUploadForm', [
+    'id' => $idForUpload,
+    'action' => '/admin/tools/doTmpFileUpload/',
+    'fileUploadExists' => $fileUploadExists,
+    'existingFileUploadSrc' => $fileUploadSrc
 ]);
 ?>
