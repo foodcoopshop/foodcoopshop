@@ -6,20 +6,11 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * Cronjob works properly if it's called on Configure::read('app.sendOrderListsWeekDay') -1 or -2
- * eg: Order lists are sent on Wednesday => EmailOrderReminder can be called on Tuesday or Monday
- *
  * @since         FoodCoopShop 1.0.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
- */
-
-/**
- * TODO
- * - add test after order is placed
- * - consider weekday of calling the test - virutal host needs preset date
  */
 
 use App\Test\TestCase\AppCakeTestCase;

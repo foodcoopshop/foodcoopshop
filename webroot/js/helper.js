@@ -29,6 +29,15 @@ foodcoopshop.Helper = {
             this.showContent();
         }
     },
+    
+    /**
+     * $.unique does not work with strings
+     */
+    unique : function(array) {
+        return $.grep(array, function(el, index) {
+            return index === $.inArray(el, array);
+        });
+    },
 
     getJqueryUiNoButton : function() {
         return this.getJqueryUiCloseDialogButton(foodcoopshop.LocalizedJs.helper.no);
@@ -520,7 +529,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = 'v4.10.1';
+        CKEDITOR.timestamp = 'v4.11.1';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config.js'
         });
@@ -548,7 +557,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = 'v4.10.1';
+        CKEDITOR.timestamp = 'v4.11.1';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config-big.js'
         });
@@ -563,7 +572,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = 'v4.10.1';
+        CKEDITOR.timestamp = 'v4.11.1';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config-small-with-upload.js'
         });

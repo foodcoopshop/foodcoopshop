@@ -14,10 +14,10 @@
     "install": "bash ../bin/cake npm_post_install"
   },
   "dependencies": {
-    "blueimp-file-upload": "^9.25.1",
+    "blueimp-file-upload": "^9.28.0",
     "bootstrap": "^4.1.3",
-    "bootstrap-select": "1.13.2",
-    "ckeditor": "^4.10.1",
+    "bootstrap-select": "1.13.3",
+    "ckeditor": "^4.11.1",
     "components-jqueryui": "~1.12",
     "famfamfam-silk": "~1.0.0",
     "featherlight": "^1.7.13",
@@ -30,11 +30,11 @@
     "jquery.cycle2.swipe": "1.0.0",
     "jquery.scrollto": "^2.1.2",
     "owl.carousel": "^2.3.4",
-    "popper.js": "^1.14.4",
+    "popper.js": "^1.14.5",
     "slidebars": "^2.0.2",
     "tooltipster": "^4.2.6"
   },
   "devDependencies": {
-    "eslint": "^5.8.0"
+    "eslint": "^5.9.0"
   }
 }
