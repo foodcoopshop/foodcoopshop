@@ -70,7 +70,7 @@ if (!$appAuth->termsOfUseAccepted()) {
         <?php echo $this->element('cart/pickupPlaceInfoText'); ?>
     
     	<?php
-            echo $this->element('cart/generalTermsOfUseCheckbox');
+            echo $this->element('cart/generalTermsAndConditionsCheckbox');
             echo $this->element('cart/cancellationTermsCheckbox');
             echo $this->element('cart/promiseToPickUpProductsCheckbox');
         ?>
