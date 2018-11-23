@@ -14,13 +14,13 @@
  */
 ?>
 <form data-object-id="<?php echo $id; ?>" id="mini-upload-form-image-<?php echo $id ?>" class="hide mini-upload-form" method="post" action="<?php echo $action; ?>" enctype="multipart/form-data">
-        <p class="heading">
-            <?php if ($imageExists) { ?>
-                <?php echo __('Replace_existing_image'); ?>
-            <?php } else { ?>
-                <?php echo __('Upload_new_image'); ?>
-            <?php } ?>
-        </p>
+    <p class="heading">
+        <?php if ($imageExists) { ?>
+            <?php echo __('Replace_existing_image'); ?>
+        <?php } else { ?>
+            <?php echo __('Upload_new_image'); ?>
+        <?php } ?>
+    </p>
     <div class="drop">
         <?php if ($imageExists) { ?>
             <?php echo '<img class="existingImage loading" src="/img/ajax-loader.gif" data-src="' . $existingImageSrc . '" />'; ?>
