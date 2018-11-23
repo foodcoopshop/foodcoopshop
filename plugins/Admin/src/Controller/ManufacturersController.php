@@ -181,11 +181,11 @@ class ManufacturersController extends AdminAppController
             }
 
             if (!empty($this->getRequest()->getData('Manufacturers.tmp_general_terms_and_conditions'))) {
-                $this->saveUploadedTermsOfUse($manufacturer->id_manufacturer, $this->getRequest()->getData('Manufacturers.tmp_general_terms_and_conditions'));
+                $this->saveUploadedGeneralTermsAndConditions($manufacturer->id_manufacturer, $this->getRequest()->getData('Manufacturers.tmp_general_terms_and_conditions'));
             }
             
-            if (!empty($this->getRequest()->getData('Manufacturers.delete_tmp_general_terms_and_conditions'))) {
-                $this->deleteUploadedTermsOfUse($manufacturer->id_manufacturer);
+            if (!empty($this->getRequest()->getData('Manufacturers.delete_general_terms_and_conditions'))) {
+                $this->deleteUploadedGeneralTermsAndConditions($manufacturer->id_manufacturer);
             }
             
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
@@ -205,7 +205,7 @@ class ManufacturersController extends AdminAppController
         $this->set('manufacturer', $manufacturer);
     }
     
-    protected function saveUploadedTermsOfUse($manufacturerId, $filename)
+    private function saveUploadedGeneralTermsAndConditions($manufacturerId, $filename)
     {
         
         $newFileName = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrcTemplate($manufacturerId);
@@ -219,6 +219,14 @@ class ManufacturersController extends AdminAppController
         $dir->chmod($path, 0755);
         
         $fileObject->copy(WWW_ROOT . $newFileName);
+    }
+    
+    private function deleteUploadedGeneralTermsAndConditions($manufacturerId)
+    {
+        $fileName = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrcTemplate($manufacturerId);
+        if (file_exists(WWW_ROOT . $fileName)) {
+            unlink(WWW_ROOT . $fileName);
+        }
     }
 
     public function setElFinderUploadPath($manufacturerId)
