@@ -23,7 +23,7 @@
         </p>
     <div class="drop">
         <?php if ($fileUploadExists) { ?>
-            <?php echo '<a class="existingFile" href="' . $existingFileUploadSrc . '" />'.__d('admin', 'Existing_file').'</a>'; ?>
+            <?php echo '<a class="existingFile" target="_blank" href="' . $existingFileUploadSrc . '" />'.$fileName.'</a>'; ?>
         <?php } ?>
         <a class="upload-button"><?php echo __('Search_PC'); ?></a>
         <input type="file" name="upload"  accept="application/pdf" />

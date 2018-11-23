@@ -208,7 +208,8 @@ class ManufacturersController extends AdminAppController
     protected function saveUploadedTermsOfUse($manufacturerId, $filename)
     {
         
-        $newFileName = Configure::read('app.uploadedFilesDir') . DS . 'manufacturers' . DS . $manufacturerId . DS . __d('admin', 'Terms_of_use') . '.pdf';
+        $newFileName = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrcTemplate($manufacturerId);
+        
         $fileObject = new File(WWW_ROOT . $filename);
         
         // assure that folder structure exists

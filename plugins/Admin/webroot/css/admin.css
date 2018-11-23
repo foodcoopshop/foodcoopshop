@@ -783,6 +783,7 @@ body.order_details.index .table-cell-wrapper.price {
 }
 .featherlight-content .mini-upload-form .drop a.upload-button:hover {
     opacity: 0.8;
+    color: #fff;
 }
 .featherlight-content .mini-upload-form  ul li {
     background: rgba(0,100,0,0.3);
@@ -799,9 +800,13 @@ body.order_details.index .table-cell-wrapper.price {
     position: relative;
 }
 .featherlight-content .mini-upload-form .drop img.existingImage,
-.featherlight-content .mini-upload-form .drop img.uploadedFile {
+.featherlight-content .mini-upload-form .drop img.uploadedImage {
     width: 300px;
     margin-bottom: 10px;
+}
+.featherlight-content .mini-upload-form .drop a.existingFile,
+.featherlight-content .mini-upload-form .drop a.uploadedFile {
+	line-height: 75px;
 }
 .featherlight-content .mini-upload-form .drop img.existingImage.loading {
   padding: 20px 118px;

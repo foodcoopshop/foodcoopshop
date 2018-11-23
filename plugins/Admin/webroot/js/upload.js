@@ -156,15 +156,16 @@ foodcoopshop.Upload = {
                 done: function (e, data) {
 
                     fileUploadForm.find('ul li').remove();
-                    fileUploadForm.find('a.uploadedFile').remove();
-
+                    
                     var result = JSON.parse(data.result);
                     if (result.status) {
                         var container = fileUploadForm.find('.drop');
-                        container.find('a').remove();
+                        container.find('a').not('.upload-button').remove();
                         container.prepend($('<a />').
                             attr('href', result.filename).
-                            addClass('uploadedFile'));
+                            addClass('uploadedFile').
+                            attr('target', '_blank').
+                            text(result.text));
                         fileUploadForm.find('ul li').remove();
                         foodcoopshop.AppFeatherlight.enableSaveButton();
                     } else {
@@ -304,7 +305,7 @@ foodcoopshop.Upload = {
                 done: function (e, data) {
 
                     imageUploadForm.find('ul li').remove();
-                    imageUploadForm.find('img.uploadedFile').remove();
+                    imageUploadForm.find('img.uploadedImage').remove();
                     imageUploadForm.find('.modify-icon').remove();
 
                     var result = JSON.parse(data.result);
@@ -313,7 +314,7 @@ foodcoopshop.Upload = {
                         container.find('img').remove();
                         container.prepend($('<img />').
                             attr('src', result.filename).
-                            addClass('uploadedFile'));
+                            addClass('uploadedImage'));
                         container.append('<a title="' + foodcoopshop.LocalizedJs.upload.rotateAntiClockwise + '" class="modify-icon img-rotate-acw" href="javascript:void(0);"><img src="/node_modules/famfamfam-silk/dist/png/arrow_rotate_anticlockwise.png" /></a>');
                         container.append('<a title="' + foodcoopshop.LocalizedJs.upload.rotateClockwise + '" class="modify-icon img-rotate-cw" href="javascript:void(0);"><img src="/node_modules/famfamfam-silk/dist/png/arrow_rotate_clockwise.png" /></a>');
 
@@ -351,7 +352,7 @@ foodcoopshop.Upload = {
 
     rotateImage : function (button, direction) {
 
-        var image = button.parent().find('img.uploadedFile');
+        var image = button.parent().find('img.uploadedImage');
         image.css('opacity', 0.3);
 
         foodcoopshop.Helper.ajaxCall(
