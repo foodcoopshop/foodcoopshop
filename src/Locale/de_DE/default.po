@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-11-23 10:37+0100\n"
-"PO-Revision-Date: 2018-11-23 10:34+0100\n"
+"POT-Creation-Date: 2018-11-23 11:12+0100\n"
+"PO-Revision-Date: 2018-11-23 11:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1716,6 +1716,9 @@ msgstr "Ich nehme das {0} zur Kenntnis und akzeptiere dessen Ausschluss für lei
 msgid "general_terms_and_conditions"
 msgstr "AGB"
 
+msgid "General_terms_and_conditions_of_{0}"
+msgstr "AGB von {0}"
+
 msgid "Order_button"
 msgstr "Zahlungspflichtig bestellen"
 
@@ -2138,9 +2141,6 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
-
-#~ msgid "General_terms_and_conditions"
-#~ msgstr "AGB"
 
 #~ msgid "You_will_then_get_a_link_to_change_your_password."
 #~ msgstr "Wir senden dir dann einen Link zu, mit dem du das neue Passwort generieren kannst."

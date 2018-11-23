@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-11-23 10:37+0100\n"
-"PO-Revision-Date: 2018-11-23 10:42+0100\n"
+"POT-Creation-Date: 2018-11-23 11:12+0100\n"
+"PO-Revision-Date: 2018-11-23 11:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1716,6 +1716,9 @@ msgstr "I accept the {0} and accept that this is not valid for perishable goods.
 msgid "general_terms_and_conditions"
 msgstr "general terms and conditions"
 
+msgid "General_terms_and_conditions_of_{0}"
+msgstr "general terms and conditions of {0}"
+
 msgid "Order_button"
 msgstr "Buy now"
 
@@ -2138,10 +2141,6 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
-
-#, fuzzy
-#~ msgid "General_terms_and_conditions"
-#~ msgstr "general terms and conditions"
 
 #~ msgid "You_will_then_get_a_link_to_change_your_password."
 #~ msgstr "You will then get a link to change your password."
