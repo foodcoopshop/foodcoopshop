@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-10-18 09:00+0200\n"
-"PO-Revision-Date: 2018-10-18 09:01+0200\n"
+"POT-Creation-Date: 2018-11-23 10:37+0100\n"
+"PO-Revision-Date: 2018-11-23 10:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1650,6 +1650,15 @@ msgstr "Show cart"
 msgid "Already_ordered_products"
 msgstr "Already ordered products"
 
+msgid "Replace_existing_file"
+msgstr "Replace existing file"
+
+msgid "Upload_new_file"
+msgstr "Upload new file"
+
+msgid "Search_PC"
+msgstr "Search computer"
+
 msgid "Information"
 msgstr "Information"
 
@@ -1673,9 +1682,6 @@ msgstr "Upload new image"
 
 msgid "Please_only_use_self_made_images_(not_from_the_internet)."
 msgstr "Please only use self-made images (no images from the internet)."
-
-msgid "Search_PC"
-msgstr "Search computer"
 
 msgid "DELIVERY_DAY"
 msgstr "DELIVERY_DAY"
@@ -2132,6 +2138,10 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#, fuzzy
+#~ msgid "General_terms_and_conditions"
+#~ msgstr "general terms and conditions"
 
 #~ msgid "You_will_then_get_a_link_to_change_your_password."
 #~ msgstr "You will then get a link to change your password."

@@ -581,7 +581,7 @@ class MyHtmlHelper extends HtmlHelper
     
     public function getManufacturerTermsOfUseSrcTemplate($manufacturerId)
     {
-        return Configure::read('app.uploadedFilesDir') . DS . 'manufacturers' . DS . $manufacturerId . DS . __('Terms_of_use') . '.pdf';
+        return Configure::read('app.uploadedFilesDir') . DS . 'manufacturers' . DS . $manufacturerId . DS . __('Filename_General-terms-and-conditions') . '.pdf';
     }
     
     public function getManufacturerTermsOfUseSrc($manufacturerId)

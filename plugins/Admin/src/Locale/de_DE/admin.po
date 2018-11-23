@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-09-24 11:05+0200\n"
-"PO-Revision-Date: 2018-10-05 09:38+0200\n"
+"POT-Creation-Date: 2018-11-23 10:37+0100\n"
+"PO-Revision-Date: 2018-11-23 10:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.2\n"
 
 msgid "Activities"
 msgstr "Aktivitäten"
@@ -515,6 +515,9 @@ msgstr "Mein {0}"
 
 msgid "My_credit_balance"
 msgstr "Mein Kontostand"
+
+msgid "Filename_General-terms-and-conditions"
+msgstr "Allgemeine-Geschaeftsbedingungen"
 
 msgid "all_activities"
 msgstr "alle Aktivitäten"
@@ -1452,6 +1455,24 @@ msgstr "UID-Nummer"
 msgid "if_it_is_available"
 msgstr "sofern vorhanden"
 
+msgid "General_terms_and_conditions"
+msgstr "AGB"
+
+msgid "If_you_do_not_upload_your_own_general_terms_and_conditions_(as_pdf)_the_default_general_terms_and_conditions_are_applied."
+msgstr "Falls du keine eigenen AGB hochlädst (als PDF), werden beim Bestellen die Standard AGB verwendet."
+
+msgid "Change_general_terms_and_conditions"
+msgstr "AGB ändern"
+
+msgid "Upload_general_terms_and_conditions"
+msgstr "AGB hochladen"
+
+msgid "Upload_general_terms_and_conditions_or_change_them"
+msgstr "Neue AGB hochladen oder ersetzen"
+
+msgid "Delete_general_terms_and_conditions?"
+msgstr "AGB löschen?"
+
 msgid "Commercial_register_number"
 msgstr "Firmenbuchnummer"
 
@@ -1856,6 +1877,22 @@ msgstr "Hersteller anzeigen"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+#, fuzzy
+#~ msgid "Terms_of_use"
+#~ msgstr "Nutzungsbedingungen"
+
+#, fuzzy
+#~ msgid "Change_terms_of_use"
+#~ msgstr "Gruppe ändern"
+
+#, fuzzy
+#~ msgid "Upload_terms_of_use"
+#~ msgstr "Nutzungsbedingungen"
+
+#, fuzzy
+#~ msgid "Delete_terms_of_use?"
+#~ msgstr "Variante löschen?"
 
 #~ msgid "Customer"
 #~ msgstr "Mitglied"

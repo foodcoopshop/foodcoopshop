@@ -27,9 +27,9 @@ foodcoopshop.Upload = {
         foodcoopshop.AppFeatherlight.closeLightbox();
     },
 
-    saveManufacturerTmpTermsOfUseInForm : function() {
+    saveManufacturerTmpGeneralTermsAndConditionsInForm : function() {
         var filename = $('.featherlight-content form .drop a').attr('href');
-        $('body.manufacturers input[name="Manufacturers[tmp_terms_of_use]"').val(filename);
+        $('body.manufacturers input[name="Manufacturers[tmp_general_terms_and_conditions]"').val(filename);
         $('body.manufacturers a.add-terms-of-use-button').removeClass('uploaded').addClass('uploaded').find('a').attr('href', filename);
         foodcoopshop.AppFeatherlight.closeLightbox();
     },

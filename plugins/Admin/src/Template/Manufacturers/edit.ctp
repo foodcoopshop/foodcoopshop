@@ -21,7 +21,7 @@ $this->element('addScript', [
         Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('manufacturers-description');" .
         Configure::read('app.jsNamespace') . ".Helper.initCkeditor('manufacturers-short-description');" .
         Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.manufacturers .add-image-button', foodcoopshop.Upload.saveManufacturerTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" .
-        Configure::read('app.jsNamespace') . ".Upload.initFileUpload('body.manufacturers .add-terms-of-use-button', foodcoopshop.Upload.saveManufacturerTmpTermsOfUseInForm, foodcoopshop.AppFeatherlight.closeLightbox);" .
+        Configure::read('app.jsNamespace') . ".Upload.initFileUpload('body.manufacturers .add-terms-of-use-button', foodcoopshop.Upload.saveManufacturerTmpGeneralTermsAndConditionsInForm, foodcoopshop.AppFeatherlight.closeLightbox);" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();"
 ]);
 
@@ -204,31 +204,29 @@ if ($appAuth->isManufacturer()) {
     ]);
     
     $fileUploadSrc = $this->Html->getManufacturerTermsOfUseSrc($manufacturer->id_manufacturer);
-    if (!empty($manufacturer->tmp_terms_of_use) && $manufacturer->tmp_terms_of_use != '') {
-        $fileUploadSrc = str_replace('\\', '/', $manufacturer->tmp_terms_of_use);
+    if (!empty($manufacturer->tmp_general_terms_and_conditions) && $manufacturer->tmp_general_terms_and_conditions != '') {
+        $fileUploadSrc = str_replace('\\', '/', $manufacturer->tmp_general_terms_and_conditions);
     }
     $fileUploadExists = $fileUploadSrc !== false;
     
     echo '<div class="input">';
-    echo '<label>'.__d('admin', 'Terms_of_use');
-    if ($fileUploadExists) {
-        echo '<br /><span class="small">'.__d('admin', 'If_you_do_not_upload_your_own_terms_of_use_(as_pdf)_the_default_terms_of_use_are_applied.').'</span>';
-    }
+    echo '<label>'.__d('admin', 'General_terms_and_conditions');
+    echo '<br /><span class="small">'.__d('admin', 'If_you_do_not_upload_your_own_general_terms_and_conditions_(as_pdf)_the_default_general_terms_and_conditions_are_applied.').'</span>';
     echo '</label>';
     
     echo '<div style="float:right;">';
-    echo $this->Html->getJqueryUiIcon('<span style="padding:8px;float:left;">' . ($fileUploadExists ? __d('admin', 'Change_terms_of_use') : __d('admin', 'Upload_terms_of_use')).'</span>', [
+    echo $this->Html->getJqueryUiIcon('<span style="padding:8px;float:left;">' . ($fileUploadExists ? __d('admin', 'Change_general_terms_and_conditions') : __d('admin', 'Upload_general_terms_and_conditions')).'</span>', [
         'class' => 'add-terms-of-use-button ' . ($fileUploadExists ? 'uploaded' : ''),
-        'title' => __d('admin', 'Upload_terms_of_use_or_change_them'),
+        'title' => __d('admin', 'Upload_general_terms_and_conditions_or_change_them'),
         'data-object-id' => $idForUpload
     ], 'javascript:void(0);');
     echo '</div>';
-    echo $this->Form->hidden('Manufacturers.tmp_terms_of_use');
+    echo $this->Form->hidden('Manufacturers.tmp_general_terms_and_conditions');
     echo '</div>';
     
     if ($fileUploadExists) {
-        echo $this->Form->control('Manufacturers.delete_terms_of_use', [
-            'label' => __d('admin', 'Delete_terms_of_use?'). '<span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+        echo $this->Form->control('Manufacturers.delete_general_terms_and_conditions', [
+            'label' => __d('admin', 'Delete_general_terms_and_conditions?'). '<span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
             'type' => 'checkbox',
             'escape' => false
         ]);
@@ -280,7 +278,7 @@ echo $this->element('imageUploadForm', [
 echo $this->element('fileUploadForm', [
     'id' => $idForUpload,
     'action' => '/admin/tools/doTmpFileUpload/',
-    'fileName' => __d('admin', 'Terms_of_use').'.pdf',
+    'fileName' => __d('admin', 'Filename_General-terms-and-conditions').'.pdf',
     'fileUploadExists' => $fileUploadExists,
     'existingFileUploadSrc' => $fileUploadSrc
 ]);

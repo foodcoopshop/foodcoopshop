@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-10-18 09:00+0200\n"
-"PO-Revision-Date: 2018-10-18 09:00+0200\n"
+"POT-Creation-Date: 2018-11-23 10:37+0100\n"
+"PO-Revision-Date: 2018-11-23 10:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1650,6 +1650,15 @@ msgstr "Warenkorb anzeigen"
 msgid "Already_ordered_products"
 msgstr "Bereits bestellte Produkte"
 
+msgid "Replace_existing_file"
+msgstr "Bestehende Datei überschreiben"
+
+msgid "Upload_new_file"
+msgstr "Neue Datei hochladen"
+
+msgid "Search_PC"
+msgstr "PC durchsuchen"
+
 msgid "Information"
 msgstr "Informationen"
 
@@ -1673,9 +1682,6 @@ msgstr "Neues Bild hochladen"
 
 msgid "Please_only_use_self_made_images_(not_from_the_internet)."
 msgstr "Bitte nur selbstgemachte Bilder verwenden<br />(keine aus dem Internet)."
-
-msgid "Search_PC"
-msgstr "PC durchsuchen"
 
 msgid "DELIVERY_DAY"
 msgstr "ABHOLTAG"
@@ -2132,6 +2138,9 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "General_terms_and_conditions"
+#~ msgstr "AGB"
 
 #~ msgid "You_will_then_get_a_link_to_change_your_password."
 #~ msgstr "Wir senden dir dann einen Link zu, mit dem du das neue Passwort generieren kannst."

@@ -49,7 +49,7 @@ class ToolsController extends AdminAppController
         
         die(json_encode([
             'status' => 1,
-            'text' => __d('admin', 'Terms_of_use') . '.pdf',
+            'text' => __d('admin', 'Filename_General-terms-and-conditions') . '.pdf',
             'filename' => $filenameWithPath
         ]));
     }

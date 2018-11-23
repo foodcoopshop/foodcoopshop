@@ -25,6 +25,7 @@
         <?php if ($fileUploadExists) { ?>
             <?php echo '<a class="existingFile" target="_blank" href="' . $existingFileUploadSrc . '" />'.$fileName.'</a>'; ?>
         <?php } ?>
+        <br />
         <a class="upload-button"><?php echo __('Search_PC'); ?></a>
         <input type="file" name="upload"  accept="application/pdf" />
     </div>

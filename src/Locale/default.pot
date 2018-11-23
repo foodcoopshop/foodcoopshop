@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-10-18 09:00+0200\n"
+"POT-Creation-Date: 2018-11-23 10:37+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1649,6 +1649,15 @@ msgstr ""
 msgid "Already_ordered_products"
 msgstr ""
 
+msgid "Replace_existing_file"
+msgstr ""
+
+msgid "Upload_new_file"
+msgstr ""
+
+msgid "Search_PC"
+msgstr ""
+
 msgid "Information"
 msgstr ""
 
@@ -1671,9 +1680,6 @@ msgid "Upload_new_image"
 msgstr ""
 
 msgid "Please_only_use_self_made_images_(not_from_the_internet)."
-msgstr ""
-
-msgid "Search_PC"
 msgstr ""
 
 msgid "DELIVERY_DAY"
