@@ -217,7 +217,7 @@ if ($appAuth->isManufacturer()) {
     echo '</label>';
     
     echo '<div style="float:right;">';
-    echo $this->Html->getJqueryUiIcon('<span style="padding:8px;float:left;">' . ($fileUploadExists ? __d('admin', 'Change_terms_of_use') : __d('Upload_terms_of_use')).'</span>', [
+    echo $this->Html->getJqueryUiIcon('<span style="padding:8px;float:left;">' . ($fileUploadExists ? __d('admin', 'Change_terms_of_use') : __d('admin', 'Upload_terms_of_use')).'</span>', [
         'class' => 'add-terms-of-use-button ' . ($fileUploadExists ? 'uploaded' : ''),
         'title' => __d('admin', 'Upload_terms_of_use_or_change_them'),
         'data-object-id' => $idForUpload
