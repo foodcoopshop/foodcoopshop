@@ -803,7 +803,7 @@ body.order_details.index .table-cell-wrapper.price {
 .featherlight-content .mini-upload-form  ul li div {
     position: relative;
 }
-.featherlight-content .mini-upload-form  ul li div
+.featherlight-content .mini-upload-form  ul li div,
 .featherlight-content .mini-upload-form .drop img.existingImage,
 .featherlight-content .mini-upload-form .drop img.uploadedImage {
     width: 300px;
