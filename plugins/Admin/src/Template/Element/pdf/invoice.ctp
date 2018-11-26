@@ -121,6 +121,45 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee >
     $pdf->writeHTML($html, true, false, true, false, '');
 }
 
+// START tax rates table
+
+$taxRatesTableColumnWidth = 70;
+
+$html = '<p><b>Tax rates table</b></p>';
+$pdf->Ln(3);
+$pdf->writeHTML($html, true, false, true, false, '');
+
+$html = '<table border="1" cellspacing="0" cellpadding="1" style="font-size:8px">';
+
+    $html .= '<tr style="font-weight:bold;background-color:#cecece">';
+    $html .= '<th align="right" width="'.$taxRatesTableColumnWidth.'">Steuersatz</th>';
+    $html .= '<th align="right" width="'.$taxRatesTableColumnWidth.'">Sum excl.</th>';
+    $html .= '<th align="right" width="'.$taxRatesTableColumnWidth.'">Sum tax</th>';
+    $html .= '<th align="right" width="'.$taxRatesTableColumnWidth.'">Sum incl.</th>';
+    $html .= '</tr>';
+
+    $html .= '<tr>';
+    $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">';
+    $taxRate = 10;
+    if ($taxRate != intval($taxRate)) {
+        $formattedTaxRate = Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 1);
+    } else {
+        $formattedTaxRate = Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 0);
+    }
+    $html .= $formattedTaxRate . '%';
+    
+    $html .= '</td>';
+    $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. $this->MyNumber->formatAsCurrency(50) . '</td>';
+    $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. $this->MyNumber->formatAsCurrency(60) . '</td>';
+    $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. $this->MyNumber->formatAsCurrency(100) . '</td>';
+    $html .= '</tr>';
+
+$html .= '</table>';
+
+$pdf->Ln(3);
+$pdf->writeHTML($html, true, false, true, false, '');
+// END tax rates table
+
 if ($sumTimebasedCurrencyPriceIncl > 0) {
 
     $sumPriceForTimebasedCurrency = $sumPriceIncl;
