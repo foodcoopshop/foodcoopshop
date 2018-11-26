@@ -65,7 +65,7 @@ foodcoopshop.Upload = {
             { onOk : function (data) {
                 document.location.reload();
             }
-                ,onError : function (data) {
+            ,onError : function (data) {
                 console.log(data);
             }
             }

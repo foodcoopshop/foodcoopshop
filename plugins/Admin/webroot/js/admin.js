@@ -929,18 +929,18 @@ foodcoopshop.Admin = {
     openBulkChangePickupDayDialog : function(orderDetailIds) {
         
         $('#cke_dialogChangePickupDayReason').val('');
-        var dialogId = 'order-detail-pickup-day-edit-form'
+        var dialogId = 'order-detail-pickup-day-edit-form';
 
         var dialogHtml = '';
         dialogHtml += '<div class="field-wrapper">';
-            dialogHtml += '<label>' + foodcoopshop.LocalizedJs.admin.NewPickupDay + '</label>';
-            dialogHtml += '<input style="margin-left:10px;" class="datepicker" type="text" name="dialogChangePickupDay" id="dialogChangePickupDay" /><br />';
+        dialogHtml += '<label>' + foodcoopshop.LocalizedJs.admin.NewPickupDay + '</label>';
+        dialogHtml += '<input style="margin-left:10px;" class="datepicker" type="text" name="dialogChangePickupDay" id="dialogChangePickupDay" /><br />';
         dialogHtml += '</div>';
         dialogHtml += '<p style="margin-top:10px;float:left;">' + foodcoopshop.LocalizedJs.admin.ChangePickupDayInvoicesInfoText + '</p>';
         dialogHtml += '<div style="margin-top:10px;float:left;" class="textarea-wrapper">';
-            dialogHtml += '<label for="dialogChangePickupDayReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPickupDayChanged +'</label>';
-                dialogHtml += '<textarea class="ckeditor" name="dialogChangePickupDayReason" id="dialogChangePickupDayReason" />';
-            dialogHtml += '</div>';
+        dialogHtml += '<label for="dialogChangePickupDayReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPickupDayChanged +'</label>';
+        dialogHtml += '<textarea class="ckeditor" name="dialogChangePickupDayReason" id="dialogChangePickupDayReason" />';
+        dialogHtml += '</div>';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(
             foodcoopshop.LocalizedJs.admin.ChangePickupDay + ': ' + orderDetailIds.length + ' ' + (
                 orderDetailIds.length == 1 ? foodcoopshop.LocalizedJs.admin.product : foodcoopshop.LocalizedJs.admin.products
