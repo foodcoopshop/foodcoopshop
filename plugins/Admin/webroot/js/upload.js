@@ -30,7 +30,9 @@ foodcoopshop.Upload = {
     saveManufacturerTmpGeneralTermsAndConditionsInForm : function() {
         var filename = $('.featherlight-content form .drop a').attr('href');
         $('body.manufacturers input[name="Manufacturers[tmp_general_terms_and_conditions]"').val(filename);
-        $('body.manufacturers a.add-terms-of-use-button').removeClass('uploaded').addClass('uploaded').find('a').attr('href', filename);
+        var button= $('body.manufacturers a.add-general-terms-and-conditions-button');
+        button.removeClass('uploaded').addClass('uploaded').find('a').attr('href', filename);
+        button.find('span').text(foodcoopshop.LocalizedJs.upload.ChangeGeneralTermsAndConditions);
         foodcoopshop.AppFeatherlight.closeLightbox();
     },
     

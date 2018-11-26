@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-11-23 11:12+0100\n"
+"POT-Creation-Date: 2018-11-26 09:05+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -825,6 +825,9 @@ msgid "rotate_anti_clockwise?"
 msgstr ""
 
 msgid "rotate_clockwise?"
+msgstr ""
+
+msgid "Change_general_terms_and_conditions"
 msgstr ""
 
 msgid "Id"
@@ -1712,10 +1715,10 @@ msgstr ""
 msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
 msgstr ""
 
-msgid "general_terms_and_conditions"
+msgid "General_terms_and_conditions_of_{0}"
 msgstr ""
 
-msgid "General_terms_and_conditions_of_{0}"
+msgid "general_terms_and_conditions"
 msgstr ""
 
 msgid "Order_button"

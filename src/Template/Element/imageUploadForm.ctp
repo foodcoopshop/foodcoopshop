@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 ?>
-<form data-object-id="<?php echo $id; ?>" id="mini-upload-form-image-<?php echo $id ?>" class="hide mini-upload-form" method="post" action="<?php echo $action; ?>" enctype="multipart/form-data">
+<form data-object-id="<?php echo $id; ?>" id="mini-upload-form-image-<?php echo $id ?>" class="hide mini-upload-form mini-upload-form-image" method="post" action="<?php echo $action; ?>" enctype="multipart/form-data">
     <p class="heading">
         <?php if ($imageExists) { ?>
             <?php echo __('Replace_existing_image'); ?>

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-11-23 11:12+0100\n"
-"PO-Revision-Date: 2018-11-23 11:13+0100\n"
+"POT-Creation-Date: 2018-11-26 09:05+0100\n"
+"PO-Revision-Date: 2018-11-26 09:06+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -827,6 +827,9 @@ msgstr "rotate anti clockwise?"
 
 msgid "rotate_clockwise?"
 msgstr "rotate clockwise?"
+
+msgid "Change_general_terms_and_conditions"
+msgstr "Change general terms and conditions"
 
 msgid "Id"
 msgstr "Id"
@@ -1713,11 +1716,11 @@ msgstr "right of withdrawal"
 msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
 msgstr "I accept the {0} and accept that this is not valid for perishable goods."
 
-msgid "general_terms_and_conditions"
-msgstr "general terms and conditions"
-
 msgid "General_terms_and_conditions_of_{0}"
 msgstr "general terms and conditions of {0}"
+
+msgid "general_terms_and_conditions"
+msgstr "general terms and conditions"
 
 msgid "Order_button"
 msgstr "Buy now"

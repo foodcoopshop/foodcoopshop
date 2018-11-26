@@ -21,7 +21,7 @@ $this->element('addScript', [
         Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('manufacturers-description');" .
         Configure::read('app.jsNamespace') . ".Helper.initCkeditor('manufacturers-short-description');" .
         Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.manufacturers .add-image-button', foodcoopshop.Upload.saveManufacturerTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" .
-        Configure::read('app.jsNamespace') . ".Upload.initFileUpload('body.manufacturers .add-terms-of-use-button', foodcoopshop.Upload.saveManufacturerTmpGeneralTermsAndConditionsInForm, foodcoopshop.AppFeatherlight.closeLightbox);" .
+        Configure::read('app.jsNamespace') . ".Upload.initFileUpload('body.manufacturers .add-general-terms-and-conditions-button', foodcoopshop.Upload.saveManufacturerTmpGeneralTermsAndConditionsInForm, foodcoopshop.AppFeatherlight.closeLightbox);" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();"
 ]);
 
@@ -124,7 +124,7 @@ if ($appAuth->isManufacturer()) {
     echo '</label>';
     echo '<div style="float:right;">';
     echo $this->Html->getJqueryUiIcon($imageExists ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
-    'class' => 'add-image-button ' . ($imageExists ? 'uploaded' : ''),
+    'class' => 'add-image-button' . ($imageExists ? ' uploaded' : ''),
     'title' => __d('admin', 'Upload_new_logo_or_change_it'),
     'data-object-id' => $idForUpload
     ], 'javascript:void(0);');
@@ -209,17 +209,17 @@ if ($appAuth->isManufacturer()) {
     }
     $fileUploadExists = $fileUploadSrc !== false;
     
-    echo '<div class="input">';
+    echo '<div class="input fcs-upload">';
     echo '<label>'.__d('admin', 'General_terms_and_conditions');
-    echo '<br /><span class="small">'.__d('admin', 'If_you_do_not_upload_your_own_general_terms_and_conditions_(as_pdf)_the_default_general_terms_and_conditions_are_applied.').'</span>';
     echo '</label>';
     
     echo '<div style="float:right;">';
     echo $this->Html->getJqueryUiIcon('<span style="padding:8px;float:left;">' . ($fileUploadExists ? __d('admin', 'Change_general_terms_and_conditions') : __d('admin', 'Upload_general_terms_and_conditions')).'</span>', [
-        'class' => 'add-terms-of-use-button ' . ($fileUploadExists ? 'uploaded' : ''),
+        'class' => 'add-general-terms-and-conditions-button' . ($fileUploadExists ? ' uploaded' : ''),
         'title' => __d('admin', 'Upload_general_terms_and_conditions_or_change_them'),
         'data-object-id' => $idForUpload
     ], 'javascript:void(0);');
+    echo ' <span class="after small">'.__d('admin', 'If_you_do_not_upload_your_own_general_terms_and_conditions_(as_pdf)_the_default_general_terms_and_conditions_are_applied.').'</span>';
     echo '</div>';
     echo $this->Form->hidden('Manufacturers.tmp_general_terms_and_conditions');
     echo '</div>';
