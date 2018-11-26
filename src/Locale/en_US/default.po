@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-11-26 09:05+0100\n"
-"PO-Revision-Date: 2018-11-26 09:06+0100\n"
+"POT-Creation-Date: 2018-11-26 16:14+0100\n"
+"PO-Revision-Date: 2018-11-26 16:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -893,6 +893,21 @@ msgstr "Privacy policy"
 
 msgid "List_of_allergens"
 msgstr "List of allergens"
+
+msgid "Tax_rates_overview_table"
+msgstr "Tax rates overview table"
+
+msgid "Tax_rate"
+msgstr "Tax rate"
+
+msgid "Sum_price_excl."
+msgstr "Sum price excl."
+
+msgid "Sum_tax"
+msgstr "Sum tax"
+
+msgid "Sum_price_incl."
+msgstr "Sum price incl."
 
 msgid "Price_excl."
 msgstr "Price excl."

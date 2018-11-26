@@ -121,6 +121,8 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee >
     $pdf->writeHTML($html, true, false, true, false, '');
 }
 
+$pdf->renderTaxRatesTable($results_product);
+
 if ($sumTimebasedCurrencyPriceIncl > 0) {
 
     $sumPriceForTimebasedCurrency = $sumPriceIncl;
