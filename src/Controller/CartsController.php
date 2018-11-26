@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Controller\Component\StringComponent;
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
@@ -251,7 +252,25 @@ class CartsController extends FrontendController
             }
             $email->addAttachments([__('Filename_Order-confirmation').'.pdf' => ['data' => $this->generateOrderConfirmation($cart), 'mimetype' => 'application/pdf']]);
             if (Configure::read('app.generalTermsAndConditionsEnabled')) {
-                $email->addAttachments([__('Filename_General-terms-and-conditions').'.pdf' => ['data' => $this->generateGeneralTermsAndConditions(), 'mimetype' => 'application/pdf']]);
+                $generalTermsAndConditionsFiles = [];
+                $uniqueManufacturers = $this->AppAuth->Cart->getUniqueManufacturers();
+                foreach($uniqueManufacturers as $manufacturerId => $manufacturer) {
+                    $src = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrc($manufacturerId);
+                    if ($src !== false) {
+                        $generalTermsAndConditionsFiles[__('Filename_General-terms-and-conditions') . '-' . StringComponent::slugifyAndKeepCase($manufacturer['name']) . '.pdf'] = [
+                            'file' => WWW_ROOT . Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrcTemplate($manufacturerId), // avoid timestamp
+                            'mimetype' => 'application/pdf'
+                        ];
+                    }
+                }
+                if (count($uniqueManufacturers) > count($generalTermsAndConditionsFiles)) {
+                    $generalTermsAndConditionsFiles[__('Filename_General-terms-and-conditions').'.pdf'] = [
+                        'data' => $this->generateGeneralTermsAndConditions(),
+                        'mimetype' => 'application/pdf'
+                    ];
+                }
+                
+                $email->addAttachments($generalTermsAndConditionsFiles);
             }
             
             $email->send();

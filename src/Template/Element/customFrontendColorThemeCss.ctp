@@ -18,6 +18,16 @@ use Cake\Core\Configure;
 ?>
 
 <style>
+
+    ::selection {
+      background: <?php echo Configure::read('app.customFrontendColorTheme'); ?>; /* WebKit/Blink Browsers */
+      color: #fff;
+    }
+    ::-moz-selection {
+      background: <?php echo Configure::read('app.customFrontendColorTheme'); ?>; /* Gecko Browsers */
+      color: #fff;
+    }
+
     .box h3,
     .btn-success,
     #main-menu li a:hover, #main-menu li a.active,

@@ -136,6 +136,17 @@ class CartComponent extends Component
         $cc->save($patchedEntity);
         return $patchedEntity;
     }
+    
+    public function getUniqueManufacturers()
+    {
+        $manufactures = [];
+        foreach ($this->getProducts() as $product) {
+            $manufactures[$product['manufacturerId']] = [
+                'name' => $product['manufacturerName']
+            ];
+        }
+        return $manufactures;
+    }
 
     /**
      *

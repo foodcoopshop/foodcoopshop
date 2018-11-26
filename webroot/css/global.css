@@ -16,14 +16,6 @@
         content: '';
     }
 }
-::selection {
-  background: #719f41; /* WebKit/Blink Browsers */
-  color: #fff;
-}
-::-moz-selection {
-  background: #719f41; /* Gecko Browsers */
-  color: #fff;
-}
 a {
 	color: #333;
 }

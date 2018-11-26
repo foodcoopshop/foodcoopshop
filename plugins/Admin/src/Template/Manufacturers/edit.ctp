@@ -21,15 +21,11 @@ $this->element('addScript', [
         Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('manufacturers-description');" .
         Configure::read('app.jsNamespace') . ".Helper.initCkeditor('manufacturers-short-description');" .
         Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.manufacturers .add-image-button', foodcoopshop.Upload.saveManufacturerTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" .
+        Configure::read('app.jsNamespace') . ".Upload.initFileUpload('body.manufacturers .add-general-terms-and-conditions-button', foodcoopshop.Upload.saveManufacturerTmpGeneralTermsAndConditionsInForm, foodcoopshop.AppFeatherlight.closeLightbox);" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();"
 ]);
 
-$idForImageUpload = !empty($manufacturer->id_manufacturer) ? $manufacturer->id_manufacturer : StringComponent::createRandomString(6);
-$imageSrc = $this->Html->getManufacturerImageSrc($idForImageUpload, 'large');
-if (!empty($manufacturer->tmp_image) && $manufacturer->tmp_image != '') {
-    $imageSrc = str_replace('\\', '/', $manufacturer->tmp_image);
-}
-$imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
+$idForUpload = !empty($manufacturer->id_manufacturer) ? $manufacturer->id_manufacturer : StringComponent::createRandomString(6);
 ?>
 
 <div class="filter-container">
@@ -115,6 +111,11 @@ if ($appAuth->isManufacturer()) {
     }
     echo '</h2>';
 
+    $imageSrc = $this->Html->getManufacturerImageSrc($idForUpload, 'large');
+    if (!empty($manufacturer->tmp_image) && $manufacturer->tmp_image != '') {
+        $imageSrc = str_replace('\\', '/', $manufacturer->tmp_image);
+    }
+    $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
     echo '<div class="input">';
     echo '<label>'.__d('admin', 'Logo');
     if ($imageExists) {
@@ -123,9 +124,9 @@ if ($appAuth->isManufacturer()) {
     echo '</label>';
     echo '<div style="float:right;">';
     echo $this->Html->getJqueryUiIcon($imageExists ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
-    'class' => 'add-image-button ' . ($imageExists ? 'uploaded' : ''),
+    'class' => 'add-image-button' . ($imageExists ? ' uploaded' : ''),
     'title' => __d('admin', 'Upload_new_logo_or_change_it'),
-    'data-object-id' => $idForImageUpload
+    'data-object-id' => $idForUpload
     ], 'javascript:void(0);');
     echo '</div>';
     echo $this->Form->hidden('Manufacturers.tmp_image');
@@ -201,6 +202,36 @@ if ($appAuth->isManufacturer()) {
     'label' => __d('admin', 'VAT_number').' <span class="after small">'.__d('admin', 'if_it_is_available').'</span>',
     'escape' => false
     ]);
+    
+    $fileUploadSrc = $this->Html->getManufacturerTermsOfUseSrc($manufacturer->id_manufacturer);
+    if (!empty($manufacturer->tmp_general_terms_and_conditions) && $manufacturer->tmp_general_terms_and_conditions != '') {
+        $fileUploadSrc = str_replace('\\', '/', $manufacturer->tmp_general_terms_and_conditions);
+    }
+    $fileUploadExists = $fileUploadSrc !== false;
+    
+    echo '<div class="input fcs-upload">';
+    echo '<label>'.__d('admin', 'General_terms_and_conditions');
+    echo '</label>';
+    
+    echo '<div style="float:right;">';
+    echo $this->Html->getJqueryUiIcon('<span style="padding:8px;float:left;">' . ($fileUploadExists ? __d('admin', 'Change_general_terms_and_conditions') : __d('admin', 'Upload_general_terms_and_conditions')).'</span>', [
+        'class' => 'add-general-terms-and-conditions-button' . ($fileUploadExists ? ' uploaded' : ''),
+        'title' => __d('admin', 'Upload_general_terms_and_conditions_or_change_them'),
+        'data-object-id' => $idForUpload
+    ], 'javascript:void(0);');
+    echo ' <span class="after small">'.__d('admin', 'If_you_do_not_upload_your_own_general_terms_and_conditions_(as_pdf)_the_default_general_terms_and_conditions_are_applied.').'</span>';
+    echo '</div>';
+    echo $this->Form->hidden('Manufacturers.tmp_general_terms_and_conditions');
+    echo '</div>';
+    
+    if ($fileUploadExists) {
+        echo $this->Form->control('Manufacturers.delete_general_terms_and_conditions', [
+            'label' => __d('admin', 'Delete_general_terms_and_conditions?'). '<span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+            'type' => 'checkbox',
+            'escape' => false
+        ]);
+    }
+    
 
     echo $this->Form->control('Manufacturers.firmenbuchnummer', [
     'label' => __d('admin', 'Commercial_register_number').' <span class="after small">'.__d('admin', 'if_it_is_available').'</span>',
@@ -239,9 +270,16 @@ if ($appAuth->isManufacturer()) {
 
 <?php
 echo $this->element('imageUploadForm', [
-    'id' => $idForImageUpload,
+    'id' => $idForUpload,
     'action' => '/admin/tools/doTmpImageUpload/',
     'imageExists' => $imageExists,
     'existingImageSrc' => $imageSrc
+]);
+echo $this->element('fileUploadForm', [
+    'id' => $idForUpload,
+    'action' => '/admin/tools/doTmpFileUpload/',
+    'fileName' => __d('admin', 'Filename_General-terms-and-conditions').'.pdf',
+    'fileUploadExists' => $fileUploadExists,
+    'existingFileUploadSrc' => $fileUploadSrc
 ]);
 ?>
