@@ -68,7 +68,7 @@ class AppTcpdf extends TCPDF
             return false;
         }
         
-        asort($taxRates);
+        ksort($taxRates);
         
         $taxRatesTableColumnWidth = 85;
         
