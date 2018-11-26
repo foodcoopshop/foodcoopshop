@@ -34,7 +34,7 @@ class ToolsController extends AdminAppController
         $mimeType = mime_content_type($this->getRequest()->getData('upload.tmp_name'));
         // non-image files will return false
         if ($mimeType != 'application/pdf') {
-            $message = 'the uploaded file needs to have pdf format.';
+            $message = 'only pdf format is allowed';
             die(json_encode([
                 'status' => 0,
                 'msg' => $message
