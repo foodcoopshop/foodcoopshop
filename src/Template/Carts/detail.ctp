@@ -16,7 +16,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
-    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('.cart .input.checkbox label a');".
+    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('.cart .input.checkbox label a.open-with-featherlight');".
     Configure::read('app.jsNamespace').".Cart.initCartFinish();"
 ]);
 if (!$appAuth->termsOfUseAccepted()) {
@@ -70,7 +70,7 @@ if (!$appAuth->termsOfUseAccepted()) {
         <?php echo $this->element('cart/pickupPlaceInfoText'); ?>
     
     	<?php
-            echo $this->element('cart/generalTermsOfUseCheckbox');
+            echo $this->element('cart/generalTermsAndConditionsCheckbox');
             echo $this->element('cart/cancellationTermsCheckbox');
             echo $this->element('cart/promiseToPickUpProductsCheckbox');
         ?>

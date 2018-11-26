@@ -23,7 +23,7 @@ if (!Configure::read('app.rightOfWithdrawalEnabled')) {
 echo '<div id="cancellation-terms" class="featherlight-overlay">';
     echo $this->element('legal/'.I18n::getLocale().'/rightOfWithdrawalTerms');
 echo '</div>';
-$cancellationTermsLink = '<a href="#cancellation-terms">'.__('right_of_withdrawal').'</a>';
+$cancellationTermsLink = '<a href="#cancellation-terms" class="open-with-featherlight">'.__('right_of_withdrawal').'</a>';
 echo $this->Form->control('Carts.cancellation_terms_accepted', [
     'label' => __('I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods.', [$cancellationTermsLink]),
     'type' => 'checkbox',

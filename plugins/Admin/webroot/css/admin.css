@@ -781,8 +781,13 @@ body.order_details.index .table-cell-wrapper.price {
     min-height: 250px;
     margin-bottom: 15px;
 }
+.featherlight-content .mini-upload-form-file .drop {
+    padding-top: 20px;
+    min-height: 230px;
+}
 .featherlight-content .mini-upload-form .drop a.upload-button:hover {
     opacity: 0.8;
+    color: #fff;
 }
 .featherlight-content .mini-upload-form  ul li {
     background: rgba(0,100,0,0.3);
@@ -798,8 +803,9 @@ body.order_details.index .table-cell-wrapper.price {
 .featherlight-content .mini-upload-form  ul li div {
     position: relative;
 }
+.featherlight-content .mini-upload-form  ul li div,
 .featherlight-content .mini-upload-form .drop img.existingImage,
-.featherlight-content .mini-upload-form .drop img.uploadedFile {
+.featherlight-content .mini-upload-form .drop img.uploadedImage {
     width: 300px;
     margin-bottom: 10px;
 }
@@ -1128,7 +1134,8 @@ form.fcs-form .checkbox .small.multiple-lines {
 form.fcs-form .input.text .after.small,
 form.fcs-form .input.number .after.small,
 form.fcs-form .input.tel .after.small,
-form.fcs-form .input.select .after.small {
+form.fcs-form .input.select .after.small,
+form.fcs-form .input.fcs-upload .after.small {
     float: right;
     line-height: 28px;
     margin-left: 5px;

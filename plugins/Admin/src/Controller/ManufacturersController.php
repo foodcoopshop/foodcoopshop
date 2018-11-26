@@ -4,10 +4,12 @@ namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
 use App\Mailer\AppEmail;
-use Cake\Event\Event;
 use Cake\Core\Configure;
-use Cake\I18n\Time;
+use Cake\Event\Event;
+use Cake\Filesystem\File;
+use Cake\Filesystem\Folder;
 use Cake\Http\Exception\NotFoundException;
+use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -178,6 +180,14 @@ class ManufacturersController extends AdminAppController
                 $this->deleteUploadedImage($manufacturer->id_manufacturer, Configure::read('app.htmlHelper')->getManufacturerThumbsPath(), Configure::read('app.manufacturerImageSizes'));
             }
 
+            if (!empty($this->getRequest()->getData('Manufacturers.tmp_general_terms_and_conditions'))) {
+                $this->saveUploadedGeneralTermsAndConditions($manufacturer->id_manufacturer, $this->getRequest()->getData('Manufacturers.tmp_general_terms_and_conditions'));
+            }
+            
+            if (!empty($this->getRequest()->getData('Manufacturers.delete_general_terms_and_conditions'))) {
+                $this->deleteUploadedGeneralTermsAndConditions($manufacturer->id_manufacturer);
+            }
+            
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $message = __d('admin', 'The_manufacturer_{0}_has_been_{1}.', ['<b>' . $manufacturer->name . '</b>', $messageSuffix]);
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
@@ -193,6 +203,30 @@ class ManufacturersController extends AdminAppController
         }
 
         $this->set('manufacturer', $manufacturer);
+    }
+    
+    private function saveUploadedGeneralTermsAndConditions($manufacturerId, $filename)
+    {
+        
+        $newFileName = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrcTemplate($manufacturerId);
+        
+        $fileObject = new File(WWW_ROOT . $filename);
+        
+        // assure that folder structure exists
+        $dir = new Folder();
+        $path = dirname(WWW_ROOT . $newFileName);
+        $dir->create($path);
+        $dir->chmod($path, 0755);
+        
+        $fileObject->copy(WWW_ROOT . $newFileName);
+    }
+    
+    private function deleteUploadedGeneralTermsAndConditions($manufacturerId)
+    {
+        $fileName = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrcTemplate($manufacturerId);
+        if (file_exists(WWW_ROOT . $fileName)) {
+            unlink(WWW_ROOT . $fileName);
+        }
     }
 
     public function setElFinderUploadPath($manufacturerId)

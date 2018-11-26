@@ -55,6 +55,7 @@ return [
         'filesDir' => DS . 'files',
         'tmpWwwDir' => DS.'tmp',
         'uploadedImagesDir' => DS . 'files' . DS . 'images',
+        'uploadedFilesDir' => DS . 'files' . DS . 'files',
         'folder_invoices' => ROOT . DS . 'files_private'. DS . 'invoices',
         'folder_order_lists' => ROOT . DS. 'files_private' . DS .'order_lists',
         'folder_invoices_with_current_year_and_month' => ROOT . DS . 'files_private'. DS . 'invoices'.DS.date('Y').DS.date('m'),
@@ -124,8 +125,9 @@ return [
         'sliderImageSizes' => [
             '905' => ['suffix' => '-slider'] // detail AND lightbox
         ],
-        'tmpUploadImagesDir' => DS.'tmp' . DS . 'images',
-
+        'tmpUploadImagesDir' => DS . 'tmp' . DS . 'images',
+        'tmpUploadFilesDir' => DS . 'tmp' . DS . 'files',
+        
         'countryId' => 2, // austria: 2, germany: 1
 
         /**

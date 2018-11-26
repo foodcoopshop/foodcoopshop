@@ -60,7 +60,7 @@ class AdminAppController extends AppController
     protected function saveUploadedImage($imageId, $filename, $thumbsPath, $imageSizes)
     {
 
-        // if image was rotatet, cut off ?xyz (random string)
+        // if image was rotated, cut off ?xyz (random string)
         $explodedFilename = explode('?', $filename);
         if (count($explodedFilename) == 2) {
             $filename = $explodedFilename[0];

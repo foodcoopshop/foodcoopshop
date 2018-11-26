@@ -375,6 +375,9 @@ foodcoopshop.Cart = {
     updateCartSum: function (amount) {
 
         var cartSum = $('.cart p.sum-wrapper span.sum');
+        if (cartSum.length == 0) {
+            return;
+        }
         var newCartSumHtml = foodcoopshop.Helper.formatFloatAsCurrency(
             foodcoopshop.Helper.getCurrencyAsFloat(cartSum.html()) + amount
         );
@@ -388,6 +391,9 @@ foodcoopshop.Cart = {
 
     updateCartDepositSum: function (amount) {
         var cartDepositSum = $('.cart p.deposit-sum-wrapper span.sum');
+        if (cartDepositSum.length == 0) {
+            return;
+        }
         cartDepositSum.html(
             foodcoopshop.Helper.formatFloatAsCurrency(
                 foodcoopshop.Helper.getCurrencyAsFloat(cartDepositSum.html()) + amount
@@ -397,6 +403,9 @@ foodcoopshop.Cart = {
 
     updateCartTaxSum: function (amount) {
         var cartTaxSum = $('.cart p.tax-sum-wrapper span.sum');
+        if (cartTaxSum.length == 0) {
+            return;
+        }
         cartTaxSum.html(
             foodcoopshop.Helper.formatFloatAsCurrency(
                 foodcoopshop.Helper.getCurrencyAsFloat(cartTaxSum.html()) + amount

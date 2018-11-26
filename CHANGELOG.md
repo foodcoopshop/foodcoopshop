@@ -9,6 +9,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Neue Funktionen
 - Möglichkeit zur farblichen Individualisierung des Frontends (app.customFrontendColorTheme). / [PR#277](https://github.com/foodcoopshop/foodcoopshop/pull/277) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Hersteller können in ihrem Profil ab sofort eigene AGB hochladen, ansonsten gelten wie bisher die Standard-AGB. [PR#282](https://github.com/foodcoopshop/foodcoopshop/pull/282) / [I#89](https://github.com/foodcoopshop/foodcoopshop/issues/89) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Die Verwaltung und Steuerung der Cronjobs passiert jetzt in der Datenbank. Und sollten Cronjobs mal fehlschlagen, werden sie ab sofort automatisch nachgeholt. [Dokumentation auf Englisch](https://foodcoopshop.github.io/en/cronjobs) / [PR#275](https://github.com/foodcoopshop/foodcoopshop/pull/275) / [I#36](https://github.com/foodcoopshop/foodcoopshop/issues/36) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Das Netzwerk-Modul wurde aufgepeppt: Bilder, Preis nach Gewicht, Lieferrhythmen und die erweiterte Lagerstandsverwaltung können jetzt auch synchronisiert werden. Außerdem wurde es auf Englisch übersetzt. / [PR#274](https://github.com/foodcoopshop/foodcoopshop/pull/274) / [I#190](https://github.com/foodcoopshop/foodcoopshop/issues/190) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Einfachere Passwort-Vergessen-Funktion. / [PR#272](https://github.com/foodcoopshop/foodcoopshop/pull/272) / [I#271](https://github.com/foodcoopshop/foodcoopshop/issues/271) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
@@ -17,6 +18,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Vereinzelt hat auf den Rechnungen der Nettopreis um ein paar Cent nicht gestimmt (Rundungsfehler). Der Gesamtbetrag war aber immer korrekt. / [PR#278](https://github.com/foodcoopshop/foodcoopshop/pull/278) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Für Entwickler
+- Wie bei jedem Release zahlreiche Dependency-Updates und viele kleinere Bugfixes
 - Update auf Bootstrap v4.1.3 und Bootstrap Select v1.13.2 / [PR#276](https://github.com/foodcoopshop/foodcoopshop/pull/276) / [I#217](https://github.com/foodcoopshop/foodcoopshop/issues/217) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Verwenden des Default-Passwort-Hashings von CakePHP3. / [PR#269](https://github.com/foodcoopshop/foodcoopshop/pull/269) / [I#268](https://github.com/foodcoopshop/foodcoopshop/issues/268) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
