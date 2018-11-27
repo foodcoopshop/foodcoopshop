@@ -21,12 +21,11 @@
 
 <h1></h1>
 
-## Functions
+**FoodCoopShop** provides plenty of useful functions to help the people running a food-coop. Such as:
 
-**FoodCoopShop** provides plenty of useful functions to help the people running a [food-coop](https://en.wikipedia.org/wiki/Food_cooperative). Such as:
-
-* a user-friendly web shop and admin area for producers
-* fully automated payment system, based on a credit system where the members can upload money
+* a user-friendly web shop for the consumers
+* an admin area for both manufacturers and admins 
+* a fully automated payment system based on a credit system
 * different delivery rhythms for products
 * adapting orders in many ways
 * stock management... and much more!
@@ -35,11 +34,11 @@ The software can be used with any modern web browser, tablet or smartphone. It's
 
 ## Links
 * Official homepage: [https://www.foodcoopshop.com](https://www.foodcoopshop.com/)
-* Demo version in [German](https://demo-de.foodcoopshop.com) or [English](https://demo-en.foodcoopshop.com) - English translation can be improved
+* Demo version in [German](https://demo-de.foodcoopshop.com) or [English](https://demo-en.foodcoopshop.com)
 * Software documentation: [https://foodcoopshop.github.io](https://foodcoopshop.github.io)
 
 ## Roadmap
-Since the start of the FoodCoopShop project in 2014 it continues to grow. You can take a look on the planned work for [Q4/2018 - v2.3](https://github.com/foodcoopshop/foodcoopshop/milestone/4). In 2019 it's likely that the handling with stock products will be improved.
+Planned work for [Q4/2018 - v2.3](https://github.com/foodcoopshop/foodcoopshop/projects/7) and [Q1/2019 - v2.4](https://github.com/foodcoopshop/foodcoopshop/projects/8). In 2019 there will be a focus on the handling with stock products.
 
 ## Who uses FoodCoopShop?
 [https://foodcoopshop.github.io/en/foodcoops](https://foodcoopshop.github.io/en/foodcoops)
