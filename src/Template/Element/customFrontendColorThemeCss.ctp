@@ -77,12 +77,12 @@ use Cake\Core\Configure;
     <?php if ($isMobile) { ?>
         @media only screen and (max-device-width: 768px) {
             #responsive-header a,
-            :not(button) > i.fa,
+            :not(button) > i.fa:not(.gold),
             .owl-nav i.fa {
                 color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
             }
-            .sb-slidebar i.fa,
-            a.btn i.fa:not(.fa-plus-circle):not(.fa-minus-circle):not(.fa-times-circle) {
+            .sb-slidebar i.fa:not(.gold),
+            a.btn i.fa:not(.fa-plus-circle):not(.fa-minus-circle):not(.fa-times-circle):not(.gold) {
                 color: #fff ! important;
             }
             .sb-slidebar,
@@ -90,7 +90,7 @@ use Cake\Core\Configure;
                 background-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
             }
             .sb-left li.header, .sb-left a:hover, .sb-left a.active,
-            .sb-left a:hover i.fa, .sb-left a.active i.fa {
+            .sb-left a:hover i.fa:not(.gold), .sb-left a.active i.fa:not(.gold) {
                 background-color: #fff;
                 color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
             }
