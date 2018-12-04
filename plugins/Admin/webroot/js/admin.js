@@ -1338,25 +1338,14 @@ foodcoopshop.Admin = {
     },
 
     initEmailToAllButton: function () {
-        $('button.email-to-all').on('click', function () {
-            $('<div></div>').appendTo('body')
-                .html('<p>' + $(this).data('email-addresses') + '</p>')
-                .dialog({
-                    modal: true,
-                    title: foodcoopshop.LocalizedJs.admin.EmailAddresses,
-                    autoOpen: true,
-                    width: 800,
-                    resizable: false,
-                    buttons: {
-                        'OK': function () {
-                            $(this).dialog('close');
-                        }
-                    },
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
-                });
-
+        var clipboard = new ClipboardJS('.btn-clipboard');
+        clipboard.on('success', function(e) {
+            var emailAddressesCount = e.text.split(',').length;
+            var response = foodcoopshop.LocalizedJs.admin.EmailAddressesSuccessfullyCopiedToClipboard.replaceI18n(0, emailAddressesCount);
+            if (emailAddressesCount == 1) {
+                response = foodcoopshop.LocalizedJs.admin.OneEmailAddressSuccessfullyCopiedToClipboard;
+            }
+            alert(response);
         });
     },
 

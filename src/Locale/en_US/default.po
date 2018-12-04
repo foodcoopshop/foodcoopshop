@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-11-26 16:14+0100\n"
-"PO-Revision-Date: 2018-11-26 16:18+0100\n"
+"POT-Creation-Date: 2018-11-30 17:31+0100\n"
+"PO-Revision-Date: 2018-11-30 17:32+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -680,6 +680,12 @@ msgstr "products"
 
 msgid "product"
 msgstr "product"
+
+msgid "{0}_email_addresses_have_been_copied_successfully_to_your_clipboard."
+msgstr "{0} email addresses have been copied successfully to your clipboard."
+
+msgid "1_email_address_has_been_copied_successfully_to_your_clipboard."
+msgstr "One email address has been copied successfully to your clipboard."
 
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
