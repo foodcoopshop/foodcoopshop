@@ -81,6 +81,10 @@ class SendInvoicesShell extends AppShell
                 'Products'
             ]
         ]);
+        
+        if (!Configure::read('app.includeStockProductsInInvoices')) {
+            $orderDetails->where(['Products.is_stock_product' => true]);
+        }
 
         // 3) add up the order detail by manufacturer
         $manufacturerOrders = [];
@@ -105,16 +109,31 @@ class SendInvoicesShell extends AppShell
         $this->initSimpleBrowser();
         $this->browser->doFoodCoopShopLogin();
 
+        $outString .= '<table class="list no-clone-last-row">';
+        $outString .= '<tr>';
+        $outString .= '<th>' . __('Manufacturer') . '</th>';
+        $outString .= '<th>' . __('Sent') . '?</th>';
+        $outString .= '<th>' . __('Products') . '</th>';
+        $outString .= '<th style="text-align:right;">' . __('Sum') . '</th>';
+        $outString .= '</tr>';
         foreach ($manufacturers as $manufacturer) {
-            $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
-            if (!empty($manufacturer->current_order_count) && $sendInvoice) {
+            if (!empty($manufacturer->current_order_count)) {
+                $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
                 $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->order_detail_amount_sum]);
-                $outString .= ' - ' . $manufacturer->name . ': ' . $productString . ' / ' . Configure::read('app.numberHelper')->formatAsCurrency($manufacturer->order_detail_price_sum) . '<br />';
+                $outString .= '<tr>';
+                $outString .= '<td>' . $manufacturer->name . '</td>';
+                $outString .= '<td>' . ($sendInvoice ? __('yes') : __('no')) . '</td>';
+                $outString .= '<td>' . $productString . '</td>';
+                $outString .= '<td align="right">' . Configure::read('app.numberHelper')->formatAsCurrency($manufacturer->order_detail_price_sum) . '</td>';
+                $outString .= '</tr>';
+            }
+            if (!empty($manufacturer->current_order_count) && $sendInvoice) {
                 $url = $this->browser->adminPrefix . '/manufacturers/sendInvoice?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
                 $this->browser->get($url);
                 $i ++;
             }
         }
+        $outString .= '</table>';
 
         $this->browser->doFoodCoopShopLogout();
 

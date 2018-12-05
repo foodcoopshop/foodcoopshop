@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-11-30 17:31+0100\n"
-"PO-Revision-Date: 2018-11-30 17:32+0100\n"
+"POT-Creation-Date: 2018-12-05 20:54+0100\n"
+"PO-Revision-Date: 2018-12-05 20:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1497,6 +1497,18 @@ msgstr "Pickup reminder for"
 msgid "to_(time_context)"
 msgstr "to"
 
+msgid "Sent"
+msgstr "Sent"
+
+msgid "Products"
+msgstr "Products"
+
+msgid "yes"
+msgstr "yes"
+
+msgid "no"
+msgstr "no"
+
 msgid "Invoices_for_{0}_have_been_sent"
 msgstr "Invoices for {0} have been sent"
 
@@ -1709,9 +1721,6 @@ msgstr "Please only use self-made images (no images from the internet)."
 
 msgid "DELIVERY_DAY"
 msgstr "DELIVERY_DAY"
-
-msgid "Products"
-msgstr "Products"
 
 msgid "Print"
 msgstr "Print"
@@ -1976,12 +1985,6 @@ msgstr "every last {0} of a month"
 
 msgid "individual_date"
 msgstr "individual date"
-
-msgid "yes"
-msgstr "yes"
-
-msgid "no"
-msgstr "no"
 
 msgid "Deleted_Member"
 msgstr "Deleted member"

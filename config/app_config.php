@@ -76,6 +76,7 @@ return [
         'depositPaymentCashlessStartDate' => '2016-01-01',
         'depositForManufacturersStartDate' => '2016-01-01',
         'dateOfFirstSendInvoiceCronjobWithPickupDayUpdate' => '2018-11-11', //pickupDayMigration was released in v2.2
+        'includeStockProductsInInvoices' => true,
         
         /**
          * weekday on which the weekly cronjob "SendOrderList" is called
