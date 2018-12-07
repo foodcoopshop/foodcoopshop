@@ -105,23 +105,26 @@ class SendInvoicesShell extends AppShell
         $this->initSimpleBrowser();
         $this->browser->doFoodCoopShopLogin();
 
-        $outString .= '<table class="list no-clone-last-row">';
-        $outString .= '<tr>';
-        $outString .= '<th>' . __('Manufacturer') . '</th>';
-        $outString .= '<th>' . __('Sent') . '?</th>';
-        $outString .= '<th>' . __('Products') . '</th>';
-        $outString .= '<th style="text-align:right;">' . __('Sum') . '</th>';
-        $outString .= '</tr>';
+        $tableData = '';
         foreach ($manufacturers as $manufacturer) {
             if (!empty($manufacturer->current_order_count)) {
                 $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
+                $price = $manufacturer->order_detail_price_sum;
+                $variableMemberFeeAsString = '';
+                if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
+                    $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
+                    $price = $this->OrderDetail->getVariableMemberFeeReducedPrice($manufacturer->order_detail_price_sum, $variableMemberFee);
+                    if ($variableMemberFee > 0) {
+                        $variableMemberFeeAsString = ' (' . $variableMemberFee . '%)';
+                    }
+                }
                 $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->order_detail_amount_sum]);
-                $outString .= '<tr>';
-                $outString .= '<td>' . $manufacturer->name . '</td>';
-                $outString .= '<td>' . ($sendInvoice ? __('yes') : __('no')) . '</td>';
-                $outString .= '<td>' . $productString . '</td>';
-                $outString .= '<td align="right">' . Configure::read('app.numberHelper')->formatAsCurrency($manufacturer->order_detail_price_sum) . '</td>';
-                $outString .= '</tr>';
+                $tableData .= '<tr>';
+                $tableData .= '<td>' . $manufacturer->name . '</td>';
+                $tableData .= '<td>' . ($sendInvoice ? __('yes') : __('no')) . '</td>';
+                $tableData .= '<td>' . $productString . '</td>';
+                $tableData .= '<td align="right"><b>' . Configure::read('app.numberHelper')->formatAsCurrency($price) . '</b>'.$variableMemberFeeAsString.'</td>';
+                $tableData .= '</tr>';
             }
             if (!empty($manufacturer->current_order_count) && $sendInvoice) {
                 $url = $this->browser->adminPrefix . '/manufacturers/sendInvoice?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
@@ -129,8 +132,18 @@ class SendInvoicesShell extends AppShell
                 $i ++;
             }
         }
-        $outString .= '</table>';
-
+        if ($tableData != '') {
+            $outString .= '<table class="list no-clone-last-row">';
+            $outString .= '<tr>';
+            $outString .= '<th>' . __('Manufacturer') . '</th>';
+            $outString .= '<th>' . __('Sent') . '?</th>';
+            $outString .= '<th>' . __('Products') . '</th>';
+            $outString .= '<th style="text-align:right;">' . __('Sum') . '</th>';
+            $outString .= '</tr>';
+            $outString .= $tableData;
+            $outString .= '</table>';
+        }
+        
         $this->browser->doFoodCoopShopLogout();
 
         // START send email to accounting employee

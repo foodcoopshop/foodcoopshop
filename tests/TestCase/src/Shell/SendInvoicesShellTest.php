@@ -53,6 +53,10 @@ class SendInvoicesShellTest extends AppCakeTestCase
             )
         );
         
+        $this->changeConfiguration('FCS_USE_VARIABLE_MEMBER_FEE', 1);
+        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
+        $this->changeManufacturer($manufacturerId, 'variable_member_fee', 10);
+        
         $this->SendInvoices->main();
         
         $orderDetails = $this->OrderDetail->find('all')->toArray();
@@ -77,6 +81,11 @@ class SendInvoicesShellTest extends AppCakeTestCase
                 Configure::read('test.loginEmailMeatManufacturer')
             ]
         );
+        
+        $this->browser->get($this->Slug->getActionLogsList() . '?dateFrom=11.03.2018&dateTo=11.03.2018');
+        $content = $this->browser->getContent();
+        $this->assertRegExpWithUnquotedString('<b>4,09 €</b> (10%)', $content);
+        $this->assertRegExpWithUnquotedString('<b>0,62 €</b>', $content);
         
     }
 

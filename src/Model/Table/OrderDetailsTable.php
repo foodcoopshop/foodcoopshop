@@ -374,6 +374,11 @@ class OrderDetailsTable extends AppTable
         return $condition;
     }
     
+    public function getVariableMemberFeeReducedPrice($price, $variableMemberFee)
+    {
+        return $price * (100 - $variableMemberFee) / 100;
+    }
+    
     public function prepareOrderDetailsGroupedByProduct($orderDetails)
     {
         $preparedOrderDetails = [];
@@ -406,7 +411,7 @@ class OrderDetailsTable extends AppTable
         }
         
         foreach($preparedOrderDetails as &$pod) {
-            $pod['reduced_price'] = $pod['sum_price'] * (100 - $pod['variable_member_fee']) / 100;
+            $pod['reduced_price'] = $this->getVariableMemberFeeReducedPrice($pod['sum_price'], $pod['variable_member_fee']);
         }
         
         return $preparedOrderDetails;
