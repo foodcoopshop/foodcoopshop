@@ -8,6 +8,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 * [mrothauer](https://github.com/mrothauer)
 
 ### Neue Funktionen
+- Bei den Rechnungen können jetzt Lagerprodukte optional ausgenommen werden (app.includeStockProductsInInvoices). Außerdem ist die Übersicht für den Finanzverantwortlichen nun unter "Aktivitäten" zu finden. / [PR#2xx](https://github.com/foodcoopshop/foodcoopshop/pull/2xx) / [I#289](https://github.com/foodcoopshop/foodcoopshop/issues/289) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Im Admin-Bereich werden die E-Mail-Adressen von Herstellern und Mitgliedern nach Klick auf den Button automatisch in die Zwischenablage kopiert. / [PR#287](https://github.com/foodcoopshop/foodcoopshop/pull/287)  / [I#254](https://github.com/foodcoopshop/foodcoopshop/issues/254) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
