@@ -79,7 +79,7 @@ class SendInvoicesShell extends AppShell
         ]);
         
         if (!Configure::read('app.includeStockProductsInInvoices')) {
-            $orderDetails->where(['Products.is_stock_product' => true]);
+            $orderDetails->where(['Products.is_stock_product' => false]);
         }
 
         // 3) add up the order detail by manufacturer
