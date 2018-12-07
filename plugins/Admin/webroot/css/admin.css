@@ -118,6 +118,9 @@ a.btn-outline-light.help {
 .bootstrap-select {
     width: 193px ! important;
 }
+.bootstrap-select .dropdown-toggle .filter-option-inner {
+	padding-right: 12px;
+}
 .bootstrap-select .dropdown-menu li a span.text,
 .bootstrap-select .no-results {
     color: #262626;
