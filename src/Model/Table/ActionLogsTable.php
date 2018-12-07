@@ -475,7 +475,7 @@ class ActionLogsTable extends AppTable
         return $statement->execute();
     }
 
-    public function customSave($type, $customerId, $objectId, $objectType, $text)
+    public function customSave($type, $customerId, $objectId, $objectType, $text, $time=null)
     {
         $data2save = [
             'type' => $type,
@@ -483,7 +483,7 @@ class ActionLogsTable extends AppTable
             'object_id' => $objectId,
             'object_type' => $objectType,
             'text' => $text,
-            'date' => Time::now()
+            'date' => is_null($time) ? Time::now() : $time
         ];
         $this->save($this->newEntity($data2save));
     }

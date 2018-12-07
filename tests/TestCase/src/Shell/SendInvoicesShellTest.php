@@ -43,7 +43,6 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $this->prepareSendInvoices();
         
         // reset order detail created in order to make OrderDetail::legacyUpdateOrderStateToNewBilledState happen
-        // and test for param &excludeCreatedLastMonth=1 in email to financial responsible
         // can be removed safely in FCS v3.0
         $this->OrderDetail->save(
             $this->OrderDetail->patchEntity(
@@ -76,17 +75,6 @@ class SendInvoicesShellTest extends AppCakeTestCase
             ],
             [
                 Configure::read('test.loginEmailMeatManufacturer')
-            ]
-        );
-        
-        $this->assertEmailLogs(
-            $emailLogs[3],
-            'wurden verschickt',
-            [
-                'excludeCreatedLastMonth=1',
-            ],
-            [
-                Configure::read('test.loginEmailSuperadmin')
             ]
         );
         

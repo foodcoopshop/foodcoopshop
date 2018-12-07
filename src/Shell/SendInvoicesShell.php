@@ -16,6 +16,7 @@ namespace App\Shell;
 
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
+use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 
 class SendInvoicesShell extends AppShell
@@ -47,17 +48,12 @@ class SendInvoicesShell extends AppShell
         // update all order details that are already billed but cronjob did not change the order state
         // to new order state ORDER_STATE_BILLED (introduced in FCS 2.2)
         // can be removed safely in FCS v3.0
-        $firstCallAfterPickupDayUpdate = false;
         if ($this->cronjobRunDay == Configure::read('app.dateOfFirstSendInvoiceCronjobWithPickupDayUpdate')) {
-            $changedRows = 0;
-            $changedRows += $this->OrderDetail->legacyUpdateOrderStateToNewBilledState($dateFrom, ORDER_STATE_CASH_FREE, ORDER_STATE_BILLED_CASHLESS);
-            $changedRows += $this->OrderDetail->legacyUpdateOrderStateToNewBilledState($dateFrom, ORDER_STATE_CASH, ORDER_STATE_BILLED_CASH);
-            $changedRows += $this->OrderDetail->legacyUpdateOrderStateToNewBilledState($dateFrom, ORDER_STATE_ORDER_PLACED, Configure::read('app.htmlHelper')->getOrderStateBilled());
-            $changedRows += $this->OrderDetail->legacyUpdateOrderStateToNewBilledState(null, ORDER_STATE_CASH_FREE, ORDER_STATE_ORDER_PLACED);
-            $changedRows += $this->OrderDetail->legacyUpdateOrderStateToNewBilledState(null, ORDER_STATE_CASH, ORDER_STATE_ORDER_PLACED);
-            if ($changedRows > 0) {
-                $firstCallAfterPickupDayUpdate = true;
-            }
+            $this->OrderDetail->legacyUpdateOrderStateToNewBilledState($dateFrom, ORDER_STATE_CASH_FREE, ORDER_STATE_BILLED_CASHLESS);
+            $this->OrderDetail->legacyUpdateOrderStateToNewBilledState($dateFrom, ORDER_STATE_CASH, ORDER_STATE_BILLED_CASH);
+            $this->OrderDetail->legacyUpdateOrderStateToNewBilledState($dateFrom, ORDER_STATE_ORDER_PLACED, Configure::read('app.htmlHelper')->getOrderStateBilled());
+            $this->OrderDetail->legacyUpdateOrderStateToNewBilledState(null, ORDER_STATE_CASH_FREE, ORDER_STATE_ORDER_PLACED);
+            $this->OrderDetail->legacyUpdateOrderStateToNewBilledState(null, ORDER_STATE_CASH, ORDER_STATE_ORDER_PLACED);
         }
         
         // 1) get all manufacturers (not only active ones)
@@ -147,7 +143,7 @@ class SendInvoicesShell extends AppShell
                 ->setViewVars([
                 'dateFrom' => $dateFrom,
                 'dateTo' => $dateTo,
-                'firstCallAfterPickupDayUpdate' => $firstCallAfterPickupDayUpdate
+                'cronjobRunDay' => $this->cronjobRunDay
                 ])
                 ->send();
         }
@@ -157,7 +153,7 @@ class SendInvoicesShell extends AppShell
 
         $this->stopTimeLogging();
 
-        $this->ActionLog->customSave('cronjob_send_invoices', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
+        $this->ActionLog->customSave('cronjob_send_invoices', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime(), new Time($this->cronjobRunDay));
 
         $this->out($outString);
 
