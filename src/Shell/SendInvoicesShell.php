@@ -106,10 +106,12 @@ class SendInvoicesShell extends AppShell
         $this->browser->doFoodCoopShopLogin();
 
         $tableData = '';
+        $sumPrice = 0;
         foreach ($manufacturers as $manufacturer) {
             if (!empty($manufacturer->current_order_count)) {
                 $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
                 $price = $manufacturer->order_detail_price_sum;
+                $sumPrice += $price;
                 $variableMemberFeeAsString = '';
                 if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
                     $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
@@ -141,6 +143,7 @@ class SendInvoicesShell extends AppShell
             $outString .= '<th style="text-align:right;">' . __('Sum') . '</th>';
             $outString .= '</tr>';
             $outString .= $tableData;
+            $outString .= '<tr><td colspan="3" align="right">'.__('Total_sum').'</td><td align="right"><b>'.Configure::read('app.numberHelper')->formatAsCurrency($sumPrice).'</b></td></tr>';
             $outString .= '</table>';
         }
         
