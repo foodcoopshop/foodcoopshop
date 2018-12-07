@@ -108,8 +108,8 @@ class SendInvoicesShell extends AppShell
         $tableData = '';
         $sumPrice = 0;
         foreach ($manufacturers as $manufacturer) {
+            $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
             if (!empty($manufacturer->current_order_count)) {
-                $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
                 $price = $manufacturer->order_detail_price_sum;
                 $sumPrice += $price;
                 $variableMemberFeeAsString = '';
@@ -127,11 +127,11 @@ class SendInvoicesShell extends AppShell
                 $tableData .= '<td>' . $productString . '</td>';
                 $tableData .= '<td align="right"><b>' . Configure::read('app.numberHelper')->formatAsCurrency($price) . '</b>'.$variableMemberFeeAsString.'</td>';
                 $tableData .= '</tr>';
+                $i ++;
             }
             if (!empty($manufacturer->current_order_count) && $sendInvoice) {
                 $url = $this->browser->adminPrefix . '/manufacturers/sendInvoice?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
                 $this->browser->get($url);
-                $i ++;
             }
         }
         if ($tableData != '') {
