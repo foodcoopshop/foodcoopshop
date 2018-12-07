@@ -165,7 +165,7 @@ class SendInvoicesShell extends AppShell
         }
         // END send email to accounting employee
 
-        $outString .= __('Sent_invoices') . ': ' . $i;
+        $outString .= __('Generated_invoices') . ': ' . $i;
 
         $this->stopTimeLogging();
 

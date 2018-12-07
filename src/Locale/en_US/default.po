@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-12-05 20:54+0100\n"
-"PO-Revision-Date: 2018-12-05 20:54+0100\n"
+"POT-Creation-Date: 2018-12-07 13:01+0100\n"
+"PO-Revision-Date: 2018-12-07 13:02+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1497,23 +1497,23 @@ msgstr "Pickup reminder for"
 msgid "to_(time_context)"
 msgstr "to"
 
-msgid "Sent"
-msgstr "Sent"
-
-msgid "Products"
-msgstr "Products"
-
 msgid "yes"
 msgstr "yes"
 
 msgid "no"
 msgstr "no"
 
+msgid "Sent"
+msgstr "Sent"
+
+msgid "Products"
+msgstr "Products"
+
 msgid "Invoices_for_{0}_have_been_sent"
 msgstr "Invoices for {0} have been sent"
 
-msgid "Sent_invoices"
-msgstr "Sent invoices"
+msgid "Generated_invoices"
+msgstr "Generated invoices"
 
 msgid "Sent_order_lists"
 msgstr "Sent order lists"

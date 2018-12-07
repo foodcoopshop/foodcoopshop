@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-12-05 20:54+0100\n"
+"POT-Creation-Date: 2018-12-07 13:01+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1496,22 +1496,22 @@ msgstr ""
 msgid "to_(time_context)"
 msgstr ""
 
-msgid "Sent"
-msgstr ""
-
-msgid "Products"
-msgstr ""
-
 msgid "yes"
 msgstr ""
 
 msgid "no"
 msgstr ""
 
+msgid "Sent"
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
 msgid "Invoices_for_{0}_have_been_sent"
 msgstr ""
 
-msgid "Sent_invoices"
+msgid "Generated_invoices"
 msgstr ""
 
 msgid "Sent_order_lists"
