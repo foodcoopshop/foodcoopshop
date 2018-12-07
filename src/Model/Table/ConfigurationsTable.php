@@ -118,7 +118,7 @@ class ConfigurationsTable extends AppTable
     public function validationFcsProductAvailabilityLow(Validator $validator)
     {
         $validator->numeric('value', __('Decimals_are_not_allowed.'));
-        return $this->getNumberRangeValidator($validator, 'value', 0, 10);
+        return $this->getNumberRangeValidator($validator, 'value', 0, 50);
     }
 
     public function validationFcsDaysShowProductAsNew(Validator $validator)
