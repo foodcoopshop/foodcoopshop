@@ -96,7 +96,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
             $emailLogs[4],
             'wurden verschickt',
             [
-                'pickupDay[]=28.02.2018&groupBy=manufacturer</a>', // assures that excludeCreatedLastMonth=1 is not existing
+                'dateFrom=11.03.2018'
             ],
             [
                 Configure::read('test.loginEmailSuperadmin')
