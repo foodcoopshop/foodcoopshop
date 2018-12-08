@@ -1046,6 +1046,9 @@ h2 span {
     color: #333;
     letter-spacing: normal;
 }
+h2.info {
+    background-color: #719f41;
+}
 .fcs-form h2:not(:nth-of-type(1)) {
     margin-top: 25px;
 }

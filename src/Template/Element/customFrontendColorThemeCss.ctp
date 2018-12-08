@@ -37,7 +37,8 @@ use Cake\Core\Configure;
     .menu.vertical a:hover span.additional-info,
     .menu.vertical a.active span.additional-info,
     #categories-menu li.header,
-    #manufacturers-menu li.header {
+    #manufacturers-menu li.header,
+    h2.info {
         background-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
     }
     
