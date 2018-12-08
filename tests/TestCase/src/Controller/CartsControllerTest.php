@@ -85,6 +85,15 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
     
+    public function testAddProductOrderNotPossibleAnyMore()
+    {
+        $this->loginAsSuperadmin();
+        $this->changeProductDeliveryRhythm($this->productId1, '0-individual', '2018-12-14', '2018-07-12');
+        $response = $this->addProductToCart($this->productId1, 1);
+        $this->assertRegExpWithUnquotedString('Das Produkt <b>Artischocke</b> kann nicht mehr bestellt werden.', $response->msg);
+        $this->assertJsonError();
+    }
+    
     public function testRemoveProduct()
     {
         $this->loginAsCustomer();
@@ -133,11 +142,9 @@ class CartsControllerTest extends AppCakeTestCase
         $amount2 = 3;
         $this->addProductToCart($this->productId2, $amount2);
         $this->assertJsonOk();
-
         $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
         $this->assertEquals($this->productId2, $cart['CartProducts'][0]['productId'], 'product id not found in cart');
         $this->assertEquals($amount2, $cart['CartProducts'][0]['amount'], 'amount not found in cart or amount wrong');
-
     }
 
     public function testAddTooManyProducts()

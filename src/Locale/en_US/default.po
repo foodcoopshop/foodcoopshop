@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-12-07 13:01+0100\n"
-"PO-Revision-Date: 2018-12-07 13:02+0100\n"
+"POT-Creation-Date: 2018-12-08 22:31+0100\n"
+"PO-Revision-Date: 2018-12-08 22:32+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -69,11 +69,17 @@ msgstr "The desired amount {0} of the attribute {1} of the product {2} is not av
 msgid "The_attribute_does_not_exist."
 msgstr "The attribute does not exist."
 
+msgid "Please_delete_product_from_cart_to_place_order."
+msgstr "Please remove product from cart to place order."
+
 msgid "The_product_{0}_is_not_activated_any_more."
 msgstr "The product {0} is not activated any more."
 
 msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
 msgstr "The manufacturer of the product {0} either has a delivery break or the product is not activated any more."
+
+msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
+msgstr "It's not possible to order the product {0} any more."
 
 msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
 msgstr "Please enter how much you want to pay in {0}."

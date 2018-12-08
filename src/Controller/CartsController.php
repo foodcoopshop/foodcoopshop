@@ -426,21 +426,29 @@ class CartsController extends FrontendController
                 }
                 if (! $attributeIdFound) {
                     $message = __('The_attribute_does_not_exist.');
-                    $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
+                    $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                     $cartErrors[$cartProduct['productId']][] = $message;
                 }
             }
 
             if (! $product->active) {
                 $message = __('The_product_{0}_is_not_activated_any_more.', ['<b>' . $product->name . '</b>']);
-                $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
+                $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
             if (! $product->manufacturer->active || $this->Product->deliveryBreakEnabled($product->manufacturer->no_delivery_days, $product->next_delivery_day)) {
                 $message = __('The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated.', ['<b>' . $product->name . '</b>']);
-                $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
+                $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
+            }
+            
+            if ($product->delivery_rhythm_type == 'individual') {
+                if ($product->delivery_rhythm_order_possible_until < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
+                    $message = __('It_is_not_possible_to_order_the_product_{0}_any_more.', ['<b>' . $product->name . '</b>']);
+                    $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
+                    $cartErrors[$cartProduct['productId']][] = $message;
+                }
             }
 
             // prepare data for table order_detail

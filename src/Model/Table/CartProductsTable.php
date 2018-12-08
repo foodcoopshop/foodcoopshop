@@ -150,6 +150,17 @@ class CartProductsTable extends AppTable
                 'productId' => $initialProductId
             ];
         }
+        
+        if ($product->delivery_rhythm_type == 'individual') {
+            if ($product->delivery_rhythm_order_possible_until < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
+                $message = __('It_is_not_possible_to_order_the_product_{0}_any_more.', ['<b>' . $product->name . '</b>']);
+                return [
+                    'status' => 0,
+                    'msg' => $message,
+                    'productId' => $initialProductId
+                ];
+            }
+        }
 
         // update amount if cart product already exists
         $cart = $appAuth->getCart();
