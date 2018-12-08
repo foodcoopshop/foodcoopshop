@@ -34,6 +34,14 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $this->SendInvoices = new SendInvoicesShell();
     }
+    
+    public function testContentOfInvoice()
+    {
+        $this->prepareSendInvoices();
+        $this->browser->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
+        $content = $this->browser->getContent();
+        $this->assertRegExpWithUnquotedString('<td>Gesamtsumme</td><td align="right">4,54</td>', $content);
+    }
 
     public function testSendInvoicesOk()
     {
@@ -43,7 +51,6 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $this->prepareSendInvoices();
         
         // reset order detail created in order to make OrderDetail::legacyUpdateOrderStateToNewBilledState happen
-        // and test for param &excludeCreatedLastMonth=1 in email to financial responsible
         // can be removed safely in FCS v3.0
         $this->OrderDetail->save(
             $this->OrderDetail->patchEntity(
@@ -53,6 +60,10 @@ class SendInvoicesShellTest extends AppCakeTestCase
                 ]
             )
         );
+        
+        $this->changeConfiguration('FCS_USE_VARIABLE_MEMBER_FEE', 1);
+        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
+        $this->changeManufacturer($manufacturerId, 'variable_member_fee', 10);
         
         $this->SendInvoices->main();
         
@@ -79,16 +90,11 @@ class SendInvoicesShellTest extends AppCakeTestCase
             ]
         );
         
-        $this->assertEmailLogs(
-            $emailLogs[3],
-            'wurden verschickt',
-            [
-                'excludeCreatedLastMonth=1',
-            ],
-            [
-                Configure::read('test.loginEmailSuperadmin')
-            ]
-        );
+        $this->loginAsSuperadmin(); //should still be logged in as superadmin but is not...
+        $this->browser->get($this->Slug->getActionLogsList() . '?dateFrom=11.03.2018&dateTo=11.03.2018');
+        $content = $this->browser->getContent();
+        $this->assertRegExpWithUnquotedString('<b>4,09 €</b> (10%)', $content);
+        $this->assertRegExpWithUnquotedString('<b>0,62 €</b>', $content);
         
     }
 
@@ -108,7 +114,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
             $emailLogs[4],
             'wurden verschickt',
             [
-                'pickupDay[]=28.02.2018&groupBy=manufacturer</a>', // assures that excludeCreatedLastMonth=1 is not existing
+                'dateFrom=11.03.2018'
             ],
             [
                 Configure::read('test.loginEmailSuperadmin')

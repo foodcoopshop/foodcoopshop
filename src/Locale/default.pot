@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-11-30 17:31+0100\n"
+"POT-Creation-Date: 2018-12-07 13:01+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1496,10 +1496,22 @@ msgstr ""
 msgid "to_(time_context)"
 msgstr ""
 
+msgid "yes"
+msgstr ""
+
+msgid "no"
+msgstr ""
+
+msgid "Sent"
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
 msgid "Invoices_for_{0}_have_been_sent"
 msgstr ""
 
-msgid "Sent_invoices"
+msgid "Generated_invoices"
 msgstr ""
 
 msgid "Sent_order_lists"
@@ -1707,9 +1719,6 @@ msgid "Please_only_use_self_made_images_(not_from_the_internet)."
 msgstr ""
 
 msgid "DELIVERY_DAY"
-msgstr ""
-
-msgid "Products"
 msgstr ""
 
 msgid "Print"
@@ -1974,12 +1983,6 @@ msgid "every_last_{0}_of_a_month"
 msgstr ""
 
 msgid "individual_date"
-msgstr ""
-
-msgid "yes"
-msgstr ""
-
-msgid "no"
 msgstr ""
 
 msgid "Deleted_Member"

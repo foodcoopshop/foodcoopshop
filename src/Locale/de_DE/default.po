@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-11-30 17:31+0100\n"
-"PO-Revision-Date: 2018-11-30 17:34+0100\n"
+"POT-Creation-Date: 2018-12-07 13:01+0100\n"
+"PO-Revision-Date: 2018-12-07 13:02+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1497,11 +1497,23 @@ msgstr "Abhol-Erinnerung für"
 msgid "to_(time_context)"
 msgstr "bis"
 
+msgid "yes"
+msgstr "ja"
+
+msgid "no"
+msgstr "nein"
+
+msgid "Sent"
+msgstr "Versendet"
+
+msgid "Products"
+msgstr "Produkte"
+
 msgid "Invoices_for_{0}_have_been_sent"
 msgstr "Rechnungen für {0} wurden verschickt"
 
-msgid "Sent_invoices"
-msgstr "Verschickte Rechnungen"
+msgid "Generated_invoices"
+msgstr "Generierte Rechnungen"
 
 msgid "Sent_order_lists"
 msgstr "Verschickte Bestelllisten"
@@ -1709,9 +1721,6 @@ msgstr "Bitte nur selbstgemachte Bilder verwenden<br />(keine aus dem Internet).
 
 msgid "DELIVERY_DAY"
 msgstr "ABHOLTAG"
-
-msgid "Products"
-msgstr "Produkte"
 
 msgid "Print"
 msgstr "Drucken"
@@ -1976,12 +1985,6 @@ msgstr "jeden letzten {0} im Monat"
 
 msgid "individual_date"
 msgstr "individuelles Datum"
-
-msgid "yes"
-msgstr "ja"
-
-msgid "no"
-msgstr "nein"
 
 msgid "Deleted_Member"
 msgstr "Gelöschtes Mitglied"

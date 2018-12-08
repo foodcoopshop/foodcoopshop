@@ -246,5 +246,8 @@ if ($saveParam == 'F') {
     $filename = substr($filename, 11);
     $filename = $this->request->getQuery('dateFrom'). '-' . $this->request->getQuery('dateTo') . '-' . $filename;
 }
+if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
+    $pdf->outputHtml();
+}
 
 echo $pdf->Output($filename, $saveParam);

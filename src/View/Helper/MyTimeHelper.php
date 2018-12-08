@@ -67,6 +67,11 @@ class MyTimeHelper extends TimeHelper
         return date('Y', strtotime($dbDate));
     }
     
+    public function getCurrentDateTimeForDatabase()
+    {
+        return date($this->getI18Format('DatabaseWithTimeAlt'));
+    }
+    
     public function getCurrentDateForDatabase()
     {
         return date($this->getI18Format('DatabaseAlt'));
