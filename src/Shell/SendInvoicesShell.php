@@ -74,12 +74,18 @@ class SendInvoicesShell extends AppShell
                 ]) . ')' // order_state condition necessary for switch from OrderDetails.created to OrderDetails.pickup_day
             ],
             'contain' => [
+                'Products.Manufacturers',
                 'Products'
             ]
         ]);
         
         if (!Configure::read('app.includeStockProductsInInvoices')) {
-            $orderDetails->where(['Products.is_stock_product' => false]);
+            $orderDetails->where(function ($exp, $query) {
+                return $exp->or_([
+                    'Products.is_stock_product' => false,
+                    'Manufacturers.stock_management_enabled' => false
+                ]);
+            });
         }
 
         // 3) add up the order detail by manufacturer

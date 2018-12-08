@@ -485,7 +485,7 @@ class ManufacturersTable extends AppTable
             $dateConditions .= "AND DATE_FORMAT(od.pickup_day, '%Y-%m-%d') <= :dateTo";
             $params['dateTo'] = Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo);
             if (!$includeStockProductsInInvoices) {
-                $includeStockProductCondition = "AND p.is_stock_product = 0 ";
+                $includeStockProductCondition = "AND (p.is_stock_product = 0 OR m.stock_management_enabled = 0)";
             }
         }
         
