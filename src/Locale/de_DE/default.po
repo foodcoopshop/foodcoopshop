@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-12-07 13:01+0100\n"
-"PO-Revision-Date: 2018-12-07 13:02+0100\n"
+"POT-Creation-Date: 2018-12-08 22:31+0100\n"
+"PO-Revision-Date: 2018-12-08 22:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -69,11 +69,17 @@ msgstr "Die gewünschte Anzahl {0} der Variante {1} des Produktes {2} ist leider
 msgid "The_attribute_does_not_exist."
 msgstr "Die Variante existiert nicht."
 
+msgid "Please_delete_product_from_cart_to_place_order."
+msgstr "Bitte lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen."
+
 msgid "The_product_{0}_is_not_activated_any_more."
 msgstr "Das Produkt {0} ist leider nicht mehr aktiviert und somit nicht mehr bestellbar."
 
 msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
 msgstr "Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar."
+
+msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
+msgstr "Das Produkt {0} kann nicht mehr bestellt werden."
 
 msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
 msgstr "Bitte gib an, wie viel du in {0} zahlen möchtest."
