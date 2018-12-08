@@ -34,6 +34,14 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $this->SendInvoices = new SendInvoicesShell();
     }
+    
+    public function testContentOfInvoice()
+    {
+        $this->prepareSendInvoices();
+        $this->browser->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
+        $content = $this->browser->getContent();
+        $this->assertRegExpWithUnquotedString('<td>Gesamtsumme</td><td align="right">4,54</td>', $content);
+    }
 
     public function testSendInvoicesOk()
     {
