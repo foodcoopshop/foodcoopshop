@@ -152,7 +152,7 @@ class CartProductsTable extends AppTable
         }
         
         if ($product->delivery_rhythm_type == 'individual') {
-            if ($product->delivery_rhythm_order_possible_until < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
+            if ($product->delivery_rhythm_order_possible_until->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')) < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
                 $message = __('It_is_not_possible_to_order_the_product_{0}_any_more.', ['<b>' . $product->name . '</b>']);
                 return [
                     'status' => 0,
