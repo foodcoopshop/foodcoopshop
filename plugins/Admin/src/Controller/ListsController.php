@@ -83,7 +83,7 @@ class ListsController extends AdminAppController
                     ]
                 ])->first();
 
-                $productListLink = '/admin/lists/getFile/?file=' . str_replace(Configure::read('app.folder_order_lists'), '', $name);
+                $productListLink = '/admin/lists/getOrderList?file=' . str_replace(Configure::read('app.folder_order_lists'), '', $name);
                 $customerListLink = str_replace($matches[1], __d('admin', 'member'), $productListLink);
 
                 $files[] = [
@@ -100,13 +100,24 @@ class ListsController extends AdminAppController
 
         $this->set('title_for_layout', __d('admin', 'Order_lists'));
     }
+    
+    public function getOrderList()
+    {
+        $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder_order_lists')) . DS . $this->getRequest()->getQuery('file');
+        $this->getFile($filenameWithPath);
+    }
+    
+    public function getInvoice()
+    {
+        $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder_invoices')) . DS . $this->getRequest()->getQuery('file');
+        $this->getFile($filenameWithPath);
+    }
 
     /**
      * invoices and order lists are not stored in webroot
      */
-    public function getFile()
+    private function getFile($filenameWithPath)
     {
-        $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder_order_lists')) . DS . $this->getRequest()->getQuery('file');
         $explodedString = explode('\\', $filenameWithPath);
         header('Content-Type: application/pdf');
         header('Content-Disposition: inline; filename="' . $explodedString[count($explodedString) - 1] . '"');

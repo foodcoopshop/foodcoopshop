@@ -93,8 +93,8 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $this->loginAsSuperadmin(); //should still be logged in as superadmin but is not...
         $this->browser->get($this->Slug->getActionLogsList() . '?dateFrom=11.03.2018&dateTo=11.03.2018');
         $content = $this->browser->getContent();
-        $this->assertRegExpWithUnquotedString('<b>4,09 €</b> (10%)', $content);
-        $this->assertRegExpWithUnquotedString('<b>0,62 €</b>', $content);
+        $this->assertRegExpWithUnquotedString('4,09 €</a></b> (10%)', $content);
+        $this->assertRegExpWithUnquotedString('0,62 €</a></b>', $content);
         
     }
 

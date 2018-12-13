@@ -447,16 +447,6 @@ class ManufacturersTable extends AppTable
         
     }
 
-    /**
-     * turns eg 24 into 0024
-     *
-     * @param int $invoiceNumber
-     */
-    public function formatInvoiceNumber($invoiceNumber)
-    {
-        return str_pad($invoiceNumber, 4, '0', STR_PAD_LEFT);
-    }
-
     public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProductsInInvoices)
     {
         switch ($order) {

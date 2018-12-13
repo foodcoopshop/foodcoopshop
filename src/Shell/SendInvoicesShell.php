@@ -60,6 +60,9 @@ class SendInvoicesShell extends AppShell
         $manufacturers = $this->Manufacturer->find('all', [
             'order' => [
                 'Manufacturers.name' => 'ASC'
+            ],
+            'contain' => [
+                'Invoices'
             ]
         ])->toArray();
 
@@ -115,6 +118,12 @@ class SendInvoicesShell extends AppShell
         $sumPrice = 0;
         foreach ($manufacturers as $manufacturer) {
             $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
+            $invoiceNumber = $this->Manufacturer->Invoices->getNextInvoiceNumber($manufacturer->invoices);
+            $invoiceLink = '/admin/lists/getInvoice?file=' . str_replace(
+                Configure::read('app.folder_invoices'), '', Configure::read('app.htmlHelper')->getInvoiceLink(
+                    $manufacturer->name, $manufacturer->id_manufacturer, $this->cronjobRunDay, $invoiceNumber
+                )
+            );
             if (!empty($manufacturer->current_order_count)) {
                 $price = $manufacturer->order_detail_price_sum;
                 $sumPrice += $price;
@@ -131,7 +140,7 @@ class SendInvoicesShell extends AppShell
                 $tableData .= '<td>' . $manufacturer->name . '</td>';
                 $tableData .= '<td>' . ($sendInvoice ? __('yes') : __('no')) . '</td>';
                 $tableData .= '<td>' . $productString . '</td>';
-                $tableData .= '<td align="right"><b>' . Configure::read('app.numberHelper')->formatAsCurrency($price) . '</b>'.$variableMemberFeeAsString.'</td>';
+                $tableData .= '<td align="right"><b><a href="'.$invoiceLink.'">' . Configure::read('app.numberHelper')->formatAsCurrency($price) . '</a></b>'.$variableMemberFeeAsString.'</td>';
                 $tableData .= '</tr>';
                 $i ++;
             }
