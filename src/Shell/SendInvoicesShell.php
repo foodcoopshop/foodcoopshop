@@ -140,7 +140,12 @@ class SendInvoicesShell extends AppShell
                 $tableData .= '<td>' . $manufacturer->name . '</td>';
                 $tableData .= '<td>' . ($sendInvoice ? __('yes') : __('no')) . '</td>';
                 $tableData .= '<td>' . $productString . '</td>';
-                $tableData .= '<td align="right"><b><a href="'.$invoiceLink.'">' . Configure::read('app.numberHelper')->formatAsCurrency($price) . '</a></b>'.$variableMemberFeeAsString.'</td>';
+                $tableData .= '<td align="right"><b>' . Configure::read('app.numberHelper')->formatAsCurrency($price) . '</b>'.$variableMemberFeeAsString.'</td>';
+                $tableData .= '<td>';
+                    $tableData .= Configure::read('app.htmlHelper')->getJqueryUiIcon(Configure::read('app.htmlHelper')->image(Configure::read('app.htmlHelper')->getFamFamFamPath('arrow_right.png')), [
+                        'target' => '_blank'
+                    ], $invoiceLink);
+                $tableData .= '</td>';
                 $tableData .= '</tr>';
                 $i ++;
             }
@@ -156,6 +161,7 @@ class SendInvoicesShell extends AppShell
             $outString .= '<th>' . __('Sent') . '?</th>';
             $outString .= '<th>' . __('Products') . '</th>';
             $outString .= '<th style="text-align:right;">' . __('Sum') . '</th>';
+            $outString .= '<th></th>';
             $outString .= '</tr>';
             $outString .= $tableData;
             $outString .= '<tr><td colspan="3" align="right">'.__('Total_sum').'</td><td align="right"><b>'.Configure::read('app.numberHelper')->formatAsCurrency($sumPrice).'</b></td></tr>';
