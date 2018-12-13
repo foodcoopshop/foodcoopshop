@@ -121,7 +121,7 @@ class SendInvoicesShell extends AppShell
             $invoiceNumber = $this->Manufacturer->Invoices->getNextInvoiceNumber($manufacturer->invoices);
             $invoiceLink = '/admin/lists/getInvoice?file=' . str_replace(
                 Configure::read('app.folder_invoices'), '', Configure::read('app.htmlHelper')->getInvoiceLink(
-                    $manufacturer->name, $manufacturer->id_manufacturer, $this->cronjobRunDay, $invoiceNumber
+                    $manufacturer->name, $manufacturer->id_manufacturer, Configure::read('app.timeHelper')->formatToDateShort($this->cronjobRunDay), $invoiceNumber
                 )
             );
             if (!empty($manufacturer->current_order_count)) {
