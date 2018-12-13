@@ -164,7 +164,7 @@ class SendInvoicesShell extends AppShell
             $outString .= '<th></th>';
             $outString .= '</tr>';
             $outString .= $tableData;
-            $outString .= '<tr><td colspan="3" align="right">'.__('Total_sum').'</td><td align="right"><b>'.Configure::read('app.numberHelper')->formatAsCurrency($sumPrice).'</b></td></tr>';
+            $outString .= '<tr><td colspan="3" align="right">'.__('Total_sum').'</td><td align="right"><b>'.Configure::read('app.numberHelper')->formatAsCurrency($sumPrice).'</b></td><td></td></tr>';
             $outString .= '</table>';
         }
         
