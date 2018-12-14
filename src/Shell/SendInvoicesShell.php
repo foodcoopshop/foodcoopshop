@@ -138,6 +138,7 @@ class SendInvoicesShell extends AppShell
                 $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->order_detail_amount_sum]);
                 $tableData .= '<tr>';
                 $tableData .= '<td>' . $manufacturer->name . '</td>';
+                $tableData .= '<td>' . $invoiceNumber . '</td>';
                 $tableData .= '<td>' . ($sendInvoice ? __('yes') : __('no')) . '</td>';
                 $tableData .= '<td>' . $productString . '</td>';
                 $tableData .= '<td align="right"><b>' . Configure::read('app.numberHelper')->formatAsCurrency($price) . '</b>'.$variableMemberFeeAsString.'</td>';
@@ -158,13 +159,14 @@ class SendInvoicesShell extends AppShell
             $outString .= '<table class="list no-clone-last-row">';
             $outString .= '<tr>';
             $outString .= '<th>' . __('Manufacturer') . '</th>';
+            $outString .= '<th>' . __('Invoice_number_abbreviation') . '</th>';
             $outString .= '<th>' . __('Sent') . '?</th>';
             $outString .= '<th>' . __('Products') . '</th>';
             $outString .= '<th style="text-align:right;">' . __('Sum') . '</th>';
             $outString .= '<th></th>';
             $outString .= '</tr>';
             $outString .= $tableData;
-            $outString .= '<tr><td colspan="3" align="right">'.__('Total_sum').'</td><td align="right"><b>'.Configure::read('app.numberHelper')->formatAsCurrency($sumPrice).'</b></td><td></td></tr>';
+            $outString .= '<tr><td colspan="4" align="right">'.__('Total_sum').'</td><td align="right"><b>'.Configure::read('app.numberHelper')->formatAsCurrency($sumPrice).'</b></td><td></td></tr>';
             $outString .= '</table>';
         }
         
