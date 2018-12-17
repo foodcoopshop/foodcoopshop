@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-11-23 11:12+0100\n"
+"POT-Creation-Date: 2018-12-14 19:56+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1457,9 +1457,6 @@ msgstr ""
 msgid "General_terms_and_conditions"
 msgstr ""
 
-msgid "If_you_do_not_upload_your_own_general_terms_and_conditions_(as_pdf)_the_default_general_terms_and_conditions_are_applied."
-msgstr ""
-
 msgid "Change_general_terms_and_conditions"
 msgstr ""
 
@@ -1467,6 +1464,9 @@ msgid "Upload_general_terms_and_conditions"
 msgstr ""
 
 msgid "Upload_general_terms_and_conditions_or_change_them"
+msgstr ""
+
+msgid "If_you_do_not_upload_your_own_general_terms_and_conditions_(as_pdf)_the_default_general_terms_and_conditions_are_applied."
 msgstr ""
 
 msgid "Delete_general_terms_and_conditions?"

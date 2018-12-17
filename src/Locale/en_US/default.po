@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-12-08 22:31+0100\n"
-"PO-Revision-Date: 2018-12-08 22:32+0100\n"
+"POT-Creation-Date: 2018-12-14 19:56+0100\n"
+"PO-Revision-Date: 2018-12-14 19:58+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1508,6 +1508,9 @@ msgstr "yes"
 
 msgid "no"
 msgstr "no"
+
+msgid "Invoice_number_abbreviation"
+msgstr "Invoice nº"
 
 msgid "Sent"
 msgstr "Sent"

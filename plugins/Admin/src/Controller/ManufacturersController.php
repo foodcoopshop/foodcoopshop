@@ -365,11 +365,7 @@ class ManufacturersController extends AdminAppController
             // orders exist => send pdf and email
         } else {
             // generate and save invoice number
-            $invoiceNumber = 1; // default
-            if (! empty($manufacturer->invoices)) {
-                $invoiceNumber = $manufacturer->invoices[0]->invoice_number + 1;
-            }
-            $newInvoiceNumber = $this->Manufacturer->formatInvoiceNumber($invoiceNumber);
+            $newInvoiceNumber = $this->Manufacturer->Invoices->getNextInvoiceNumber($manufacturer->invoices);
             $this->set('newInvoiceNumber', $newInvoiceNumber);
 
             $this->RequestHandler->renderAs($this, 'pdf');
@@ -385,7 +381,7 @@ class ManufacturersController extends AdminAppController
             $invoice2save = [
                 'id_manufacturer' => $manufacturerId,
                 'send_date' => Time::now(),
-                'invoice_number' => $invoiceNumber,
+                'invoice_number' => (int) $newInvoiceNumber,
                 'user_id' => $this->AppAuth->getUserId()
             ];
             $this->Manufacturer->Invoices->save(

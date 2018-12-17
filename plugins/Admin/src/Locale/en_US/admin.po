@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-11-23 11:12+0100\n"
+"POT-Creation-Date: 2018-12-14 19:56+0100\n"
 "PO-Revision-Date: 2018-11-23 10:44+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1458,9 +1458,6 @@ msgstr "if available"
 msgid "General_terms_and_conditions"
 msgstr "General terms and conditions"
 
-msgid "If_you_do_not_upload_your_own_general_terms_and_conditions_(as_pdf)_the_default_general_terms_and_conditions_are_applied."
-msgstr "If you do not upload your own general terms and conditions (as pdf), the default general terms and conditions are applied when products are ordered."
-
 msgid "Change_general_terms_and_conditions"
 msgstr "Change general terms and conditions"
 
@@ -1469,6 +1466,9 @@ msgstr "Upload general terms and conditions"
 
 msgid "Upload_general_terms_and_conditions_or_change_them"
 msgstr "Upload general terms and conditions or change them"
+
+msgid "If_you_do_not_upload_your_own_general_terms_and_conditions_(as_pdf)_the_default_general_terms_and_conditions_are_applied."
+msgstr "If you do not upload your own general terms and conditions (as pdf), the default general terms and conditions are applied when products are ordered."
 
 msgid "Delete_general_terms_and_conditions?"
 msgstr "Delete general terms and conditions?"

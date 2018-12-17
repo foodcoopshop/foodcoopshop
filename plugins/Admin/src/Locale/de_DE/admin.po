@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-11-23 11:12+0100\n"
+"POT-Creation-Date: 2018-12-14 19:56+0100\n"
 "PO-Revision-Date: 2018-11-23 10:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1458,9 +1458,6 @@ msgstr "sofern vorhanden"
 msgid "General_terms_and_conditions"
 msgstr "AGB"
 
-msgid "If_you_do_not_upload_your_own_general_terms_and_conditions_(as_pdf)_the_default_general_terms_and_conditions_are_applied."
-msgstr "Falls du keine eigenen AGB hochlädst (als PDF), werden beim Bestellen die Standard AGB verwendet."
-
 msgid "Change_general_terms_and_conditions"
 msgstr "AGB ändern"
 
@@ -1469,6 +1466,9 @@ msgstr "AGB hochladen"
 
 msgid "Upload_general_terms_and_conditions_or_change_them"
 msgstr "Neue AGB hochladen oder ersetzen"
+
+msgid "If_you_do_not_upload_your_own_general_terms_and_conditions_(as_pdf)_the_default_general_terms_and_conditions_are_applied."
+msgstr "Falls du keine eigenen AGB hochlädst (als PDF), werden beim Bestellen die Standard AGB verwendet."
 
 msgid "Delete_general_terms_and_conditions?"
 msgstr "AGB löschen?"
