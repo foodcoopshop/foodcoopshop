@@ -38,8 +38,10 @@ class SendInvoicesShell extends AppShell
         $this->startTimeLogging();
 
         // $this->cronjobRunDay can is set in unit test
-        if (empty($this->cronjobRunDay)) {
+        if (!isset($this->args[0])) {
             $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
+        } else {
+            $this->cronjobRunDay = $this->args[0];
         }
         
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfLastMonth($this->cronjobRunDay);

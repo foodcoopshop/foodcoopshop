@@ -3,8 +3,9 @@
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
-use App\Shell\SendInvoicesShell;
 use Cake\I18n\FrozenTime;
+use App\Application;
+use Cake\Console\CommandRunner;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,15 +25,15 @@ class SendInvoicesShellTest extends AppCakeTestCase
 {
     public $EmailLog;
     public $Order;
-    public $SendInvoices;
-
+    public $commandRunner;
+    
     public function setUp()
     {
         parent::setUp();
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $this->SendInvoices = new SendInvoicesShell();
+        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
     
     public function testContentOfInvoice()
@@ -65,7 +66,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'variable_member_fee', 10);
         
-        $this->SendInvoices->main();
+        $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11']);
         
         $orderDetails = $this->OrderDetail->find('all')->toArray();
         foreach($orderDetails as $orderDetail) {
@@ -102,8 +103,8 @@ class SendInvoicesShellTest extends AppCakeTestCase
     {
 
         $this->prepareSendInvoices();
-        $this->SendInvoices->main();
-        $this->SendInvoices->main(); // sic! run again
+        $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11']);
+        $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11']); // sic! run again
         
         $emailLogs = $this->EmailLog->find('all')->toArray();
         
@@ -130,7 +131,6 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $this->addProductToCart(346, 1);
         $this->addProductToCart(346, 1);
         $this->finishCart();
-        $this->SendInvoices->cronjobRunDay = '2018-03-11';
     }
 
 }

@@ -32,10 +32,12 @@ class PickupReminderShell extends AppShell
         $this->initSimpleBrowser(); // for loggedUserId
         
         // $this->cronjobRunDay can is set in unit test
-        if (empty($this->cronjobRunDay)) {
-            $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+        if (!isset($this->args[0])) {
+            $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
+        } else {
+            $this->cronjobRunDay = $this->args[0];
         }
-
+        
         $this->startTimeLogging();
 
         $conditions = [
