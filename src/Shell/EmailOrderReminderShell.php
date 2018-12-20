@@ -71,7 +71,7 @@ class EmailOrderReminderShell extends AppShell
 
             $email = new AppEmail();
             $email->setTo($customer->email)
-            ->setTemplate('Admin.email_order_reminder')
+            ->viewBuilder()->setTemplate(setTemplate('Admin.email_order_reminder')
             ->setSubject(__('Order_reminder') . ' ' . Configure::read('appDb.FCS_APP_NAME'))
             ->setViewVars([
                 'customer' => $customer,

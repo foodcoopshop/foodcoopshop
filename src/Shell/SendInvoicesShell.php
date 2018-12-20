@@ -178,7 +178,7 @@ class SendInvoicesShell extends AppShell
         $accountingEmail = Configure::read('appDb.FCS_ACCOUNTING_EMAIL');
         if ($accountingEmail != '') {
             $email = new AppEmail();
-            $email->setTemplate('Admin.accounting_information_invoices_sent')
+            $email->viewBuilder()->setTemplate(setTemplate('Admin.accounting_information_invoices_sent')
                 ->setTo($accountingEmail)
                 ->setSubject(__('Invoices_for_{0}_have_been_sent', [Configure::read('app.timeHelper')->getLastMonthNameAndYear()]))
                 ->setViewVars([

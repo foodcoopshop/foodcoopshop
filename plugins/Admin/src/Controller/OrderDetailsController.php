@@ -480,7 +480,7 @@ class OrderDetailsController extends AdminAppController
         // send email to customer if price was changed
         if (!$doNotChangePrice) {
             $email = new AppEmail();
-            $email->setTemplate('Admin.order_detail_quantity_changed')
+            $email->viewBuilder()->setTemplate(setTemplate('Admin.order_detail_quantity_changed')
             ->setTo($oldOrderDetail->customer->email)
             ->setSubject(__d('admin', 'Weight_adapted') . ': ' . $oldOrderDetail->product_name)
             ->setViewVars([
@@ -574,7 +574,7 @@ class OrderDetailsController extends AdminAppController
 
         // send email to customer
         $email = new AppEmail();
-        $email->setTemplate('Admin.order_detail_amount_changed')
+        $email->viewBuilder()->setTemplate(setTemplate('Admin.order_detail_amount_changed')
         ->setTo($oldOrderDetail->customer->email)
         ->setSubject(__d('admin', 'Ordered_amount_adapted') . ': ' . $oldOrderDetail->product_name)
         ->setViewVars([
@@ -669,7 +669,7 @@ class OrderDetailsController extends AdminAppController
 
         // send email to customer
         $email = new AppEmail();
-        $email->setTemplate('Admin.order_detail_price_changed')
+        $email->viewBuilder()->setTemplate(setTemplate('Admin.order_detail_price_changed')
         ->setTo($oldOrderDetail->customer->email)
         ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
         ->setViewVars([
@@ -777,7 +777,7 @@ class OrderDetailsController extends AdminAppController
             
             foreach($customers as $orderDetails) {
                 $email = new AppEmail();
-                $email->setTemplate('Admin.order_detail_pickup_day_changed')
+                $email->viewBuilder()->setTemplate(setTemplate('Admin.order_detail_pickup_day_changed')
                 ->setTo($orderDetails[0]->customer->email)
                 ->setSubject(__d('admin', 'The_pickup_day_of_your_order_was_changed_to').': ' . $newPickupDay)
                 ->setViewVars([
@@ -947,7 +947,7 @@ class OrderDetailsController extends AdminAppController
 
             // send email to customer
             $email = new AppEmail();
-            $email->setTemplate('Admin.order_detail_deleted')
+            $email->viewBuilder()->setTemplate(setTemplate('Admin.order_detail_deleted')
             ->setTo($orderDetail->customer->email)
             ->setSubject(__d('admin', 'Product_was_cancelled').': ' . $orderDetail->product_name)
             ->setViewVars([

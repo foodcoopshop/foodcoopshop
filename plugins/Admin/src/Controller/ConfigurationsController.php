@@ -123,7 +123,7 @@ class ConfigurationsController extends AdminAppController
                 } else {
                     $template = 'customer_registered_inactive';
                 }
-                $email->setTemplate($template);
+                $email->viewBuilder()->setTemplate(setTemplate($template);
                 $data = (object) [
                     'firstname' => 'Vorname',
                     'lastname' => 'Nachname',
@@ -182,7 +182,7 @@ class ConfigurationsController extends AdminAppController
         $email = new AppEmail(false);
         $success = $email->setTo(Configure::read('app.hostingEmail'))
         ->setSubject(__d('admin', 'Test_email'))
-            ->setTemplate('send_test_email_template')
+            ->viewBuilder()->setTemplate(setTemplate('send_test_email_template')
             ->setAttachments([
                 WWW_ROOT . DS . 'files' . DS . 'images' . DS. 'logo.jpg'
             ])

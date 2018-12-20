@@ -419,7 +419,7 @@ class CustomersController extends AdminAppController
             $newPassword = $this->Customer->setNewPassword($customer->id_customer);
 
             $email = new AppEmail();
-            $email->setTemplate('customer_activated')
+            $email->viewBuilder()->setTemplate(setTemplate('customer_activated')
                 ->setTo($customer->email)
                 ->setSubject(__d('admin', 'The_account_was_activated'))
                 ->setViewVars([

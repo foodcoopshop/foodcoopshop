@@ -132,7 +132,7 @@ class CustomersController extends FrontendController
                 
                 // send email
                 $email = new AppEmail();
-                $email->setTemplate('new_password_request_successful')
+                $email->viewBuilder()->setTemplate(setTemplate('new_password_request_successful')
                     ->setSubject(__('New_password_for_{0}', [Configure::read('appDb.FCS_APP_NAME')]))
                     ->setTo($this->getRequest()->getData('Customers.email'))
                     ->setViewVars([
@@ -310,7 +310,7 @@ class CustomersController extends FrontendController
                     } else {
                         $template = 'customer_registered_inactive';
                     }
-                    $email->setTemplate($template)
+                    $email->viewBuilder()->setTemplate(setTemplate($template)
                         ->setTo($this->getRequest()->getData('Customers.address_customer.email'))
                         ->setSubject(__('Welcome'))
                         ->setViewVars([
@@ -324,7 +324,7 @@ class CustomersController extends FrontendController
                     // START send notification email
                     if (! empty(Configure::read('app.registrationNotificationEmails'))) {
                         $email = new AppEmail();
-                        $email->setTemplate('customer_registered_notification')
+                        $email->viewBuilder()->setTemplate(setTemplate('customer_registered_notification')
                             ->setTo(Configure::read('app.registrationNotificationEmails'))
                             ->setSubject(__('New_registration_{0}', [$newCustomer->firstname . ' ' . $newCustomer->lastname]))
                             ->setViewVars([
