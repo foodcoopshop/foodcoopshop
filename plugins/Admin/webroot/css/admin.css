@@ -954,15 +954,14 @@ body.payments .bottom-button-container {
 	float: left;
 	margin-bottom: 5px;
 }
-#product-is-stock-product-edit-form label.checkbox,
-#product-delivery-rhythm-edit-form label.checkbox {
+#product-is-stock-product-edit-form label.checkbox {
 	font-weight: normal;
 	clear: both;
 	margin-bottom: 10px;
+	width: 100%;
 }
 #product-price-edit-form label.radio input,
-#product-is-stock-product-edit-form label.checkbox input,
-#product-delivery-rhythm-edit-form label.checkbox input {
+#product-is-stock-product-edit-form label.checkbox input {
 	position: static;
 	float: left;
     width: 20px;
