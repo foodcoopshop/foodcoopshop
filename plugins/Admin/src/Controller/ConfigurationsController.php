@@ -92,7 +92,7 @@ class ConfigurationsController extends AdminAppController
             ]
         );
 
-        if (!empty($configuration->getErrors())) {
+        if ($configuration->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('configuration', $configuration);
         } else {
@@ -123,7 +123,7 @@ class ConfigurationsController extends AdminAppController
                 } else {
                     $template = 'customer_registered_inactive';
                 }
-                $email->setTemplate($template);
+                $email->viewBuilder()->setTemplate($template);
                 $data = (object) [
                     'firstname' => 'Vorname',
                     'lastname' => 'Nachname',
@@ -182,8 +182,8 @@ class ConfigurationsController extends AdminAppController
         $email = new AppEmail(false);
         $success = $email->setTo(Configure::read('app.hostingEmail'))
         ->setSubject(__d('admin', 'Test_email'))
-            ->setTemplate('send_test_email_template')
-            ->setAttachments([
+        ->viewBuilder()->setTemplate('send_test_email_template');
+        $email->setAttachments([
                 WWW_ROOT . DS . 'files' . DS . 'images' . DS. 'logo.jpg'
             ])
             ->send();

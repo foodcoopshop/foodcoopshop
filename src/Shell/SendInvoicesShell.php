@@ -38,8 +38,10 @@ class SendInvoicesShell extends AppShell
         $this->startTimeLogging();
 
         // $this->cronjobRunDay can is set in unit test
-        if (empty($this->cronjobRunDay)) {
+        if (!isset($this->args[0])) {
             $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
+        } else {
+            $this->cronjobRunDay = $this->args[0];
         }
         
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfLastMonth($this->cronjobRunDay);
@@ -176,8 +178,8 @@ class SendInvoicesShell extends AppShell
         $accountingEmail = Configure::read('appDb.FCS_ACCOUNTING_EMAIL');
         if ($accountingEmail != '') {
             $email = new AppEmail();
-            $email->setTemplate('Admin.accounting_information_invoices_sent')
-                ->setTo($accountingEmail)
+            $email->viewBuilder()->setTemplate('Admin.accounting_information_invoices_sent');
+            $email->setTo($accountingEmail)
                 ->setSubject(__('Invoices_for_{0}_have_been_sent', [Configure::read('app.timeHelper')->getLastMonthNameAndYear()]))
                 ->setViewVars([
                 'dateFrom' => $dateFrom,

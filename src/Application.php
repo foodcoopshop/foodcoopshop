@@ -14,6 +14,7 @@
  */
 namespace App;
 
+use Cake\Core\Configure;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
 use Cake\Routing\Middleware\AssetMiddleware;
@@ -27,6 +28,33 @@ use Cake\Routing\Middleware\RoutingMiddleware;
  */
 class Application extends BaseApplication
 {
+    
+    public function bootstrap()
+    {
+        
+        parent::bootstrap();
+        if (Configure::read('debug')) {
+            $this->addPlugin('DebugKit', ['bootstrap' => true]);
+        }
+        
+        $this->addPlugin('Migrations');
+        $this->addPlugin('AssetCompress', ['bootstrap' => true]);
+        
+        $this->addPlugin('Admin', [
+            'bootstrap' => false,
+            'routes' => true,
+            'autoload' => true
+        ]);
+        
+        if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
+            $this->addPlugin('Network', [
+                'routes' => true,
+                'autoload' => true
+            ]);
+        }
+    
+    }
+    
     /**
      * Setup the middleware queue your application will use.
      *

@@ -3,7 +3,8 @@
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
-use App\Shell\SendOrderListsShell;
+use App\Application;
+use Cake\Console\CommandRunner;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,21 +24,21 @@ class SendOrderListsShellTest extends AppCakeTestCase
 {
     public $EmailLog;
     public $Order;
-    public $SendOrderLists;
-
+    public $commandRunner;
+    
     public function setUp()
     {
         parent::setUp();
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $this->SendOrderLists = new SendOrderListsShell();
+        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
     public function testSendOrderListsIfNoOrdersAvailable()
     {
         $this->OrderDetail->deleteAll([]);
-        $this->SendOrderLists->main();
+        $this->commandRunner->run(['cake', 'send_order_lists']);
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
     }
@@ -65,7 +66,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
             )
         );
         
-        $this->SendOrderLists->main();
+        $this->commandRunner->run(['cake', 'send_order_lists']);
         
         $newOrderDetail = $this->OrderDetail->find('all', [
             'conditions' => [

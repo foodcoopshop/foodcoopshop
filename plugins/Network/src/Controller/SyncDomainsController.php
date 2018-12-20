@@ -89,7 +89,7 @@ class SyncDomainsController extends AppController
             $syncDomain,
             $this->getRequest()->getData()
         );
-        if (!empty($syncDomain->getErrors())) {
+        if ($syncDomain->hasErrors()) {
             $this->Flash->error(__d('network', 'Errors_while_saving!'));
             $this->set('syncDomain', $syncDomain);
             $this->render('edit');

@@ -16,6 +16,9 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Bugfixes
 - Produkte, die vor dem "Bestellbar-bis"-Datum in den Warenkorb gelegt wurden, konnten nach Ablauf dieses Datums auch bestellt werden. / [PR#292](https://github.com/foodcoopshop/foodcoopshop/pull/292) / [I#290](https://github.com/foodcoopshop/foodcoopshop/issues/290) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> <a href="https://github.com/Speis-Vorchdorf"><img src="https://github.com/Speis-Vorchdorf.png" width="20"></a>
 
+### Für Entwickler
+- Wie bei jedem Release zahlreiche Dependency-Updates und viele kleinere Bugfixes: CakePHP 3.7 [PR#295](https://github.com/foodcoopshop/foodcoopshop/pull/295)
+
 ## v2.3.0 / 2018-12-02 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.2.1...v2.3.0)
 
 ### Herzlichen Dank an alle beteiligten Personen

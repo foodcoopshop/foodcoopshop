@@ -4,8 +4,9 @@ use App\Test\TestCase\AppCakeTestCase;
 use Cake\I18n\FrozenDate;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\TableRegistry;
-use App\Shell\PickupReminderShell;
 use Cake\Core\Configure;
+use App\Application;
+use Cake\Console\CommandRunner;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,37 +25,33 @@ use Cake\Core\Configure;
 class PickupReminderShellTest extends AppCakeTestCase
 {
     public $EmailLog;
-    public $PickupReminder;
-
+    public $commandRunner;
+    
     public function setUp()
     {
         parent::setUp();
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
-        $this->PickupReminder = new PickupReminderShell();
+        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
     public function testCustomersDoNotHaveFutureOrders()
     {
-        $this->PickupReminder->main();
+        $this->commandRunner->run(['cake', 'pickup_reminder']);
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
     }
 
     public function testOneCustomerHasFutureOrdersLaterThanNextPickupDay()
     {
-        $this->PickupReminder->cronjobRunDay = '2018-03-10';
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $this->prepareOrderDetails();
-        $this->PickupReminder->main();
+        $this->commandRunner->run(['cake', 'pickup_reminder', '2018-03-10']);
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
     }
     
     public function testOneCustomerHasFutureOrdersForNextPickupDay()
     {
-        
-        $this->PickupReminder->cronjobRunDay = '2018-03-10';
-        
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $this->prepareOrderDetails();
         $this->OrderDetail->save(
@@ -66,7 +63,7 @@ class PickupReminderShellTest extends AppCakeTestCase
                 ]
             )
         );
-        $this->PickupReminder->main();
+        $this->commandRunner->run(['cake', 'pickup_reminder', '2018-03-10']);
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(1, count($emailLogs), 'amount of sent emails wrong');
         

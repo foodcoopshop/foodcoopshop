@@ -103,7 +103,7 @@ class CustomersController extends FrontendController
                 ]
             );
 
-            if (!empty($customer->getErrors())) {
+            if ($customer->hasErrors()) {
                 $this->Flash->error(__('Errors_while_saving!'));
             } else {
                 
@@ -132,8 +132,8 @@ class CustomersController extends FrontendController
                 
                 // send email
                 $email = new AppEmail();
-                $email->setTemplate('new_password_request_successful')
-                    ->setSubject(__('New_password_for_{0}', [Configure::read('appDb.FCS_APP_NAME')]))
+                $email->viewBuilder()->setTemplate('new_password_request_successful');
+                $email->setSubject(__('New_password_for_{0}', [Configure::read('appDb.FCS_APP_NAME')]))
                     ->setTo($this->getRequest()->getData('Customers.email'))
                     ->setViewVars([
                         'activateNewPasswordCode' => $activateNewPasswordCode,
@@ -282,7 +282,7 @@ class CustomersController extends FrontendController
                     ]
                 );
 
-                if (!empty($customer->getErrors())) {
+                if ($customer->hasErrors()) {
                     $this->Flash->error(__('Errors_while_saving!'));
                 } else {
                     $newCustomer = $this->Customer->save(
@@ -310,8 +310,8 @@ class CustomersController extends FrontendController
                     } else {
                         $template = 'customer_registered_inactive';
                     }
-                    $email->setTemplate($template)
-                        ->setTo($this->getRequest()->getData('Customers.address_customer.email'))
+                    $email->viewBuilder()->setTemplate($template);
+                    $email->setTo($this->getRequest()->getData('Customers.address_customer.email'))
                         ->setSubject(__('Welcome'))
                         ->setViewVars([
                         'appAuth' => $this->AppAuth,
@@ -324,8 +324,8 @@ class CustomersController extends FrontendController
                     // START send notification email
                     if (! empty(Configure::read('app.registrationNotificationEmails'))) {
                         $email = new AppEmail();
-                        $email->setTemplate('customer_registered_notification')
-                            ->setTo(Configure::read('app.registrationNotificationEmails'))
+                        $email->viewBuilder()->setTemplate('customer_registered_notification');
+                        $email->setTo(Configure::read('app.registrationNotificationEmails'))
                             ->setSubject(__('New_registration_{0}', [$newCustomer->firstname . ' ' . $newCustomer->lastname]))
                             ->setViewVars([
                             'appAuth' => $this->AppAuth,

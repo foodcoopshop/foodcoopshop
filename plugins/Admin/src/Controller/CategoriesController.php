@@ -93,7 +93,7 @@ class CategoriesController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData(), ['description'])));
 
         $category = $this->Category->patchEntity($category, $this->getRequest()->getData());
-        if (!empty($category->getErrors())) {
+        if ($category->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('category', $category);
             $this->render('edit');

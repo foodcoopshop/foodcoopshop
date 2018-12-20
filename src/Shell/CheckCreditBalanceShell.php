@@ -57,8 +57,8 @@ class CheckCreditBalanceShell extends AppShell
                 $delta = Configure::read('app.numberHelper')->formatAsCurrency($delta);
                 $outString .= $customer->name . ': ' . $delta . '<br />';
                 $email = new AppEmail();
-                $email->setTemplate('Admin.check_credit_balance')
-                    ->setTo($customer->email)
+                $email->viewBuilder()->setTemplate('Admin.check_credit_balance');
+                $email->setTo($customer->email)
                     ->setSubject(__('Your_credit_is_used_up'))
                     ->setViewVars([
                     'customer' => $customer,

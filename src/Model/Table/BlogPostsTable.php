@@ -77,7 +77,7 @@ class BlogPostsTable extends AppTable
             $conditions['BlogPosts.id_manufacturer'] = $manufacturerId;
         }
         if ($isFeatured) {
-            $conditions['BlogPosts.is_featured'] = true;
+            $conditions['BlogPosts.is_featured'] = APP_ON;
         }
 
         $blogPosts = $this->find('all', [

@@ -78,7 +78,7 @@ class SlidersController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
 
         $slider = $this->Slider->patchEntity($slider, $this->getRequest()->getData());
-        if (!empty($slider->getErrors())) {
+        if ($slider->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('slider', $slider);
             $this->render('edit');

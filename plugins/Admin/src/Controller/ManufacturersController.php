@@ -141,7 +141,7 @@ class ManufacturersController extends AdminAppController
                 ]
             ]
         );
-        if (!empty($manufacturer->getErrors())) {
+        if ($manufacturer->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('manufacturer', $manufacturer);
             $this->render('edit');
@@ -396,8 +396,8 @@ class ManufacturersController extends AdminAppController
             $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
             if ($sendEmail) {
                 $email = new AppEmail();
-                $email->setTemplate('Admin.send_invoice')
-                    ->setTo($manufacturer->address_manufacturer->email)
+                $email->viewBuilder()->setTemplate('Admin.send_invoice');
+                $email->setTo($manufacturer->address_manufacturer->email)
                     ->setAttachments([
                         $invoicePdfFile
                     ])
@@ -485,8 +485,8 @@ class ManufacturersController extends AdminAppController
             if ($sendEmail) {
                 $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{1}.', ['<b>'.$manufacturer->name.'</b>'. $manufacturer->address_manufacturer->email]);
                 $email = new AppEmail();
-                $email->setTemplate('Admin.send_order_list')
-                ->setTo($manufacturer->address_manufacturer->email)
+                $email->viewBuilder()->setTemplate('Admin.send_order_list');
+                $email->setTo($manufacturer->address_manufacturer->email)
                 ->setAttachments([
                     $productPdfFile,
                     $customerPdfFile
@@ -614,7 +614,7 @@ class ManufacturersController extends AdminAppController
             $this->setRequest($this->getRequest()->withData('Manufacturers.timebased_currency_max_credit_balance', $this->getRequest()->getData('Manufacturers.timebased_currency_max_credit_balance') * 3600));
         }
 
-        if (!empty($manufacturer->getErrors())) {
+        if ($manufacturer->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             if (!empty($this->getRequest()->getData('Manufacturers.timebased_currency_max_credit_balance'))) {
                 $this->setRequest($this->getRequest()->withData('Manufacturers.timebased_currency_max_credit_balance', $this->getRequest()->getData('Manufacturers.timebased_currency_max_credit_balance') / 3600));

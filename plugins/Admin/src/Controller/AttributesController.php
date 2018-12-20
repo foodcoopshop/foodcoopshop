@@ -82,7 +82,7 @@ class AttributesController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
 
         $attribute = $this->Attribute->patchEntity($attribute, $this->getRequest()->getData());
-        if (!empty($attribute->getErrors())) {
+        if ($attribute->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('attribute', $attribute);
             $this->render('edit');

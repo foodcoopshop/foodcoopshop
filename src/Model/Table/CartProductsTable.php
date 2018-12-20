@@ -62,7 +62,7 @@ class CartProductsTable extends AppTable
         // get product data from database
         $product = $this->Products->find('all', [
             'conditions' => [
-                'Products.id_product' => $productId
+                'Products.id_product' => (int) $productId
             ],
             'contain' => [
                 'Manufacturers',

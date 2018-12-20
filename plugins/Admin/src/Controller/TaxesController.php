@@ -83,7 +83,7 @@ class TaxesController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
 
         $tax = $this->Tax->patchEntity($tax, $this->getRequest()->getData());
-        if (!empty($tax->getErrors())) {
+        if ($tax->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
             $this->set('tax', $tax);
             $this->render('edit');

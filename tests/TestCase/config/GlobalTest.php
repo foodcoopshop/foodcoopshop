@@ -37,41 +37,6 @@ class GlobalTest extends AppCakeTestCase
         $this->assertBic('RZOOAT2L', true);
     }
     
-    public function testIbanAustria()
-    {
-        $this->assertIban('AT193357281080332578', true);
-    }
-
-    public function testIbanGermany()
-    {
-        $this->assertIban('DE1933572810803325787323', true);
-    }
-
-    public function testIbanTooShort()
-    {
-        $this->assertIban('DE1933572810', false);
-    }
-
-    public function testIbanInvalidCountryString()
-    {
-        $this->assertIban('6T193357281080332578', false);
-    }
-
-    public function testIbanWith20Chars()
-    {
-        $this->assertIban('AT19335728108033257844', false);
-    }
-
-    public function testIbanWithoutLetterInDigitsArea()
-    {
-        $this->assertIban('DE193357281080X325787323', false);
-    }
-
-    private function assertIban($iban, $expected)
-    {
-        $this->assertEquals($expected, (boolean) preg_match(IBAN_REGEX, $iban));
-    }
-    
     private function assertBic($iban, $expected)
     {
         $this->assertEquals($expected, (boolean) preg_match(BIC_REGEX, $iban));

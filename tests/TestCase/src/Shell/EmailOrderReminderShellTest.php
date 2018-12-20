@@ -16,23 +16,24 @@
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
-use App\Shell\EmailOrderReminderShell;
+use App\Application;
+use Cake\Console\CommandRunner;
 
 class EmailOrderReminderShellTest extends AppCakeTestCase
 {
     public $EmailLog;
-    public $EmailOrderReminder;
+    public $commandRunner;
 
     public function setUp()
     {
         parent::setUp();
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
-        $this->EmailOrderReminder = new EmailOrderReminderShell();
+        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
     public function testNoActiveOrder()
     {
-        $this->EmailOrderReminder->main();
+        $this->commandRunner->run(['cake', 'email_order_reminder']);
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(3, count($emailLogs), 'amount of sent emails wrong');
         $this->assertEmailLogs($emailLogs[0], 'Bestell-Erinnerung', ['Hallo Demo Admin,', 'ist schon wieder der letzte Bestelltag'], [Configure::read('test.loginEmailAdmin')]);
@@ -53,7 +54,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
                 ]
             )
         );
-        $this->EmailOrderReminder->main();
+        $this->commandRunner->run(['cake', 'email_order_reminder']);
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(2, count($emailLogs), 'superadmin has open order and got reminder email');
     }
@@ -62,7 +63,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
     {
         $query = 'UPDATE '.$this->Customer->getTable().' SET email_order_reminder = 0;';
         $this->dbConnection->query($query);
-        $this->EmailOrderReminder->main();
+        $this->commandRunner->run(['cake', 'email_order_reminder']);
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
     }
