@@ -37,7 +37,6 @@ class Application extends BaseApplication
             $this->addPlugin('DebugKit', ['bootstrap' => true]);
         }
         
-        $this->addPlugin('Bake');
         $this->addPlugin('Migrations');
         $this->addPlugin('AssetCompress', ['bootstrap' => true]);
         
