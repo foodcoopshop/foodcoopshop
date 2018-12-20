@@ -99,8 +99,8 @@ class PaymentsController extends AdminAppController
         $payment->approval = $approval;
         $payment->approval_comment = __d('admin', 'Your_comment_will_be_shown_here.');
         $email = new AppEmail();
-        $email->viewBuilder()->setTemplate(setTemplate('Admin.payment_status_changed')
-            ->setTo($payment->customer->email)
+        $email->viewBuilder()->setTemplate('Admin.payment_status_changed');
+        $email->setTo($payment->customer->email)
             ->setViewVars([
                 'appAuth' => $this->AppAuth,
                 'data' => $payment->customer,
@@ -181,8 +181,8 @@ class PaymentsController extends AdminAppController
 
             if ($payment->send_email) {
                 $email = new AppEmail();
-                $email->viewBuilder()->setTemplate(setTemplate('Admin.payment_status_changed')
-                    ->setTo($payment->customer->email)
+                $email->viewBuilder()->setTemplate('Admin.payment_status_changed');
+                $email->setTo($payment->customer->email)
                     ->setSubject(__d('admin', 'The_status_of_your_credit_upload_was_successfully_changed_to_{0}.', ['<b>' .$newStatusAsString.'</b>']))
                     ->setViewVars([
                         'appAuth' => $this->AppAuth,

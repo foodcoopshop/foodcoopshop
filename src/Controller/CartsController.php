@@ -184,8 +184,8 @@ class CartsController extends FrontendController
             // send email to manufacturer
             if ($stockAvailableLimitReached && $cartProduct->product->manufacturer->stock_management_enabled && $cartProduct->product->is_stock_product && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_manufacturer) {
                 $email = new AppEmail();
-                $email->viewBuilder()->setTemplate(setTemplate('stock_available_limit_reached_notification')
-                ->setTo($cartProduct->product->manufacturer->address_manufacturer->email)
+                $email->viewBuilder()->setTemplate('stock_available_limit_reached_notification');
+                $email->setTo($cartProduct->product->manufacturer->address_manufacturer->email)
                 ->setSubject(__('Product_{0}:_Only_{1}_units_on_stock', [
                     $cartProduct->order_detail->product_name,
                     $stockAvailable->quantity
@@ -205,8 +205,8 @@ class CartsController extends FrontendController
             // send email to contact person
             if ($stockAvailableLimitReached && $cartProduct->product->manufacturer->stock_management_enabled && $cartProduct->product->is_stock_product && !empty($cartProduct->product->manufacturer->customer) && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_contact_person) {
                 $email = new AppEmail();
-                $email->viewBuilder()->setTemplate(setTemplate('stock_available_limit_reached_notification')
-                ->setTo($cartProduct->product->manufacturer->customer->address_customer->email)
+                $email->viewBuilder()->setTemplate('stock_available_limit_reached_notification');
+                $email->setTo($cartProduct->product->manufacturer->customer->address_customer->email)
                 ->setSubject(__('Product_{0}:_Only_{1}_units_on_stock', [
                     $cartProduct->order_detail->product_name,
                     $stockAvailable->quantity
@@ -238,8 +238,8 @@ class CartsController extends FrontendController
     {
         if ($this->AppAuth->user('active')) {
             $email = new AppEmail();
-            $email->viewBuilder()->setTemplate(setTemplate('order_successful')
-            ->setTo($this->AppAuth->getEmail())
+            $email->viewBuilder()->setTemplate('order_successful');
+            $email->setTo($this->AppAuth->getEmail())
             ->setSubject(__('Order_confirmation'))
             ->setViewVars([
                 'cart' => $this->Cart->getCartGroupedByPickupDay($cart),
@@ -677,8 +677,8 @@ class CartsController extends FrontendController
             if ($sendInstantOrderNotification && !$bulkOrdersAllowed) {
                 $manufacturersThatReceivedInstantOrderNotification[] = $manufacturer->name;
                 $email = new AppEmail();
-                $email->viewBuilder()->setTemplate(setTemplate('instant_order_notification')
-                ->setTo($manufacturer->address_manufacturer->email)
+                $email->viewBuilder()->setTemplate('instant_order_notification');
+                $email->setTo($manufacturer->address_manufacturer->email)
                 ->setSubject(__('Notification_about_instant_order_order'))
                 ->setViewVars([
                     'appAuth' => $this->AppAuth,

@@ -83,8 +83,8 @@ class PickupReminderShell extends AppShell
 
             $email = new AppEmail();
             $email->setTo($customer->email)
-            ->viewBuilder()->setTemplate(setTemplate('Admin.pickup_reminder')
-            ->setSubject(__('Pickup_reminder_for') . ' ' . $formattedPickupDay)
+            ->viewBuilder()->setTemplate('Admin.pickup_reminder');
+            $email->setSubject(__('Pickup_reminder_for') . ' ' . $formattedPickupDay)
             ->setViewVars([
                 'customer' => $customer,
                 'diffOrderAndPickupInDays' => $diffOrderAndPickupInDays,

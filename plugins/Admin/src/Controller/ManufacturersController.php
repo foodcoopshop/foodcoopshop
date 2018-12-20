@@ -396,8 +396,8 @@ class ManufacturersController extends AdminAppController
             $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
             if ($sendEmail) {
                 $email = new AppEmail();
-                $email->viewBuilder()->setTemplate(setTemplate('Admin.send_invoice')
-                    ->setTo($manufacturer->address_manufacturer->email)
+                $email->viewBuilder()->setTemplate('Admin.send_invoice');
+                $email->setTo($manufacturer->address_manufacturer->email)
                     ->setAttachments([
                         $invoicePdfFile
                     ])
@@ -485,8 +485,8 @@ class ManufacturersController extends AdminAppController
             if ($sendEmail) {
                 $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{1}.', ['<b>'.$manufacturer->name.'</b>'. $manufacturer->address_manufacturer->email]);
                 $email = new AppEmail();
-                $email->viewBuilder()->setTemplate(setTemplate('Admin.send_order_list')
-                ->setTo($manufacturer->address_manufacturer->email)
+                $email->viewBuilder()->setTemplate('Admin.send_order_list');
+                $email->setTo($manufacturer->address_manufacturer->email)
                 ->setAttachments([
                     $productPdfFile,
                     $customerPdfFile
