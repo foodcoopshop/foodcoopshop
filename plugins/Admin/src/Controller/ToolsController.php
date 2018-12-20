@@ -4,6 +4,7 @@ namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
+use Cake\Filesystem\File;
 
 /**
  * ToolsController
@@ -25,6 +26,34 @@ use Intervention\Image\ImageManagerStatic as Image;
 class ToolsController extends AdminAppController
 {
 
+    public function doTmpFileUpload()
+    {
+        $this->RequestHandler->renderAs($this, 'ajax');
+        
+        // check if uploaded file is pdf
+        $mimeType = mime_content_type($this->getRequest()->getData('upload.tmp_name'));
+        // non-image files will return false
+        if ($mimeType != 'application/pdf') {
+            $message = 'only pdf format is allowed';
+            die(json_encode([
+                'status' => 0,
+                'msg' => $message
+            ]));
+        }
+        
+        $extension = strtolower(pathinfo($this->getRequest()->getData('upload.name'), PATHINFO_EXTENSION));
+        $filename = StringComponent::createRandomString(10) . '.' . $extension;
+        $filenameWithPath = Configure::read('app.tmpUploadFilesDir') . DS . $filename;
+        $file = new File($this->getRequest()->getData('upload.tmp_name'));
+        $file->copy(WWW_ROOT . $filenameWithPath);
+        
+        die(json_encode([
+            'status' => 1,
+            'text' => __d('admin', 'Filename_General-terms-and-conditions') . '.pdf',
+            'filename' => $filenameWithPath
+        ]));
+    }
+    
     public function doTmpImageUpload()
     {
         $this->RequestHandler->renderAs($this, 'ajax');

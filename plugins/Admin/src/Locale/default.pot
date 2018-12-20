@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-24 11:05+0200\n"
+"POT-Creation-Date: 2018-12-14 19:56+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -513,6 +513,9 @@ msgid "My_{0}_(time_account)"
 msgstr ""
 
 msgid "My_credit_balance"
+msgstr ""
+
+msgid "Filename_General-terms-and-conditions"
 msgstr ""
 
 msgid "all_activities"
@@ -1449,6 +1452,24 @@ msgid "VAT_number"
 msgstr ""
 
 msgid "if_it_is_available"
+msgstr ""
+
+msgid "General_terms_and_conditions"
+msgstr ""
+
+msgid "Change_general_terms_and_conditions"
+msgstr ""
+
+msgid "Upload_general_terms_and_conditions"
+msgstr ""
+
+msgid "Upload_general_terms_and_conditions_or_change_them"
+msgstr ""
+
+msgid "If_you_do_not_upload_your_own_general_terms_and_conditions_(as_pdf)_the_default_general_terms_and_conditions_are_applied."
+msgstr ""
+
+msgid "Delete_general_terms_and_conditions?"
 msgstr ""
 
 msgid "Commercial_register_number"

@@ -578,7 +578,21 @@ class MyHtmlHelper extends HtmlHelper
 
         return $this->prepareAsUrl($imageFilenameAndPath);
     }
-
+    
+    public function getManufacturerTermsOfUseSrcTemplate($manufacturerId)
+    {
+        return Configure::read('app.uploadedFilesDir') . DS . 'manufacturers' . DS . $manufacturerId . DS . __('Filename_General-terms-and-conditions') . '.pdf';
+    }
+    
+    public function getManufacturerTermsOfUseSrc($manufacturerId)
+    {
+        $src = $this->getManufacturerTermsOfUseSrcTemplate($manufacturerId);
+        if (file_exists(WWW_ROOT . $src)) {
+            return $this->prepareAsUrl($src);
+        }
+        return false;
+    }
+    
     public function getManufacturerImageSrc($manufacturerId, $size)
     {
         $thumbsPath = $this->getManufacturerThumbsPath();

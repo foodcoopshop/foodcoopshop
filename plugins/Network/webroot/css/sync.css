@@ -266,7 +266,6 @@ body.syncs.product_data span.toggle-clean-rows {
   font-weight: normal;
   margin-right: 5px;
   margin-left: 5px;
-  margin-top: 3px;
 }
 body.syncs.product_data input#toggle-clean-rows {
   float: right ! important;

@@ -2,14 +2,30 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Noch nicht veröffentlicht
+## Unveröffentlichte Änderungen
+
+### Herzlichen Dank an alle beteiligten Personen 
+* [AndreasEgger](https://github.com/AndreasEgger)
+* [mrothauer](https://github.com/mrothauer)
+* [Speis-Vorchdorf](https://github.com/Speis-Vorchdorf)
+
+### Neue Funktionen
+- Möglichkeit, bei Rechnungen Lagerprodukte explizit nicht anzufüren (app.includeStockProductsInInvoices). Außerdem ist die Übersicht für den Finanzverantwortlichen nun unter "Aktivitäten" zu finden und es ist möglich, die Rechnung herunterzuladen. / [PR#291](https://github.com/foodcoopshop/foodcoopshop/pull/291) / [PR#294](https://github.com/foodcoopshop/foodcoopshop/pull/294) / [I#289](https://github.com/foodcoopshop/foodcoopshop/issues/289) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> <a href="https://github.com/AndreasEgger"><img src="https://github.com/AndreasEgger.png" width="20"></a>
+- Im Admin-Bereich werden die E-Mail-Adressen von Herstellern und Mitgliedern nach Klick auf den Button automatisch in die Zwischenablage kopiert. / [PR#287](https://github.com/foodcoopshop/foodcoopshop/pull/287)  / [I#254](https://github.com/foodcoopshop/foodcoopshop/issues/254) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+### Bugfixes
+- Produkte, die vor dem "Bestellbar-bis"-Datum in den Warenkorb gelegt wurden, konnten nach Ablauf dieses Datums auch bestellt werden. / [PR#292](https://github.com/foodcoopshop/foodcoopshop/pull/292) / [I#290](https://github.com/foodcoopshop/foodcoopshop/issues/290) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> <a href="https://github.com/Speis-Vorchdorf"><img src="https://github.com/Speis-Vorchdorf.png" width="20"></a>
+
+## v2.3.0 / 2018-12-02 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.2.1...v2.3.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
 * [mrothauer](https://github.com/mrothauer)
 
 ### Neue Funktionen
 - Möglichkeit zur farblichen Individualisierung des Frontends (app.customFrontendColorTheme). / [PR#277](https://github.com/foodcoopshop/foodcoopshop/pull/277) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Die Verwaltung und Steuerung der Cronjobs passiert jetzt in der Datenbank. Und sollten Cronjobs mal fehlschlagen, werden sie ab sofort automatisch nachgeholt. / [PR#275](https://github.com/foodcoopshop/foodcoopshop/pull/275) / [I#36](https://github.com/foodcoopshop/foodcoopshop/issues/36) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Hersteller können in ihrem Profil ab sofort eigene AGB hochladen, ansonsten gelten wie bisher die Standard-AGB. [PR#282](https://github.com/foodcoopshop/foodcoopshop/pull/282) / [I#89](https://github.com/foodcoopshop/foodcoopshop/issues/89) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Falls in einer Rechnung mehr als einen Steuersatz vorkommt, wird jetzt eine eigene Tabelle mit den Summen je Steuersatz angezeigt. / [PR#283](https://github.com/foodcoopshop/foodcoopshop/pull/283) / [I#104](https://github.com/foodcoopshop/foodcoopshop/issues/104) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Die Verwaltung und Steuerung der Cronjobs passiert jetzt in der Datenbank. Und sollten Cronjobs mal fehlschlagen, werden sie ab sofort automatisch nachgeholt. [Dokumentation auf Englisch](https://foodcoopshop.github.io/en/cronjobs) / [PR#275](https://github.com/foodcoopshop/foodcoopshop/pull/275) / [I#36](https://github.com/foodcoopshop/foodcoopshop/issues/36) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Das Netzwerk-Modul wurde aufgepeppt: Bilder, Preis nach Gewicht, Lieferrhythmen und die erweiterte Lagerstandsverwaltung können jetzt auch synchronisiert werden. Außerdem wurde es auf Englisch übersetzt. / [PR#274](https://github.com/foodcoopshop/foodcoopshop/pull/274) / [I#190](https://github.com/foodcoopshop/foodcoopshop/issues/190) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Einfachere Passwort-Vergessen-Funktion. / [PR#272](https://github.com/foodcoopshop/foodcoopshop/pull/272) / [I#271](https://github.com/foodcoopshop/foodcoopshop/issues/271) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
@@ -17,6 +33,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Vereinzelt hat auf den Rechnungen der Nettopreis um ein paar Cent nicht gestimmt (Rundungsfehler). Der Gesamtbetrag war aber immer korrekt. / [PR#278](https://github.com/foodcoopshop/foodcoopshop/pull/278) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Für Entwickler
+- Wie bei jedem Release zahlreiche Dependency-Updates und viele kleinere Bugfixes
 - Update auf Bootstrap v4.1.3 und Bootstrap Select v1.13.2 / [PR#276](https://github.com/foodcoopshop/foodcoopshop/pull/276) / [I#217](https://github.com/foodcoopshop/foodcoopshop/issues/217) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Verwenden des Default-Passwort-Hashings von CakePHP3. / [PR#269](https://github.com/foodcoopshop/foodcoopshop/pull/269) / [I#268](https://github.com/foodcoopshop/foodcoopshop/issues/268) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 

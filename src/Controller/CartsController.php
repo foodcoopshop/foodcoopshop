@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Controller\Component\StringComponent;
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
@@ -251,7 +252,25 @@ class CartsController extends FrontendController
             }
             $email->addAttachments([__('Filename_Order-confirmation').'.pdf' => ['data' => $this->generateOrderConfirmation($cart), 'mimetype' => 'application/pdf']]);
             if (Configure::read('app.generalTermsAndConditionsEnabled')) {
-                $email->addAttachments([__('Filename_General-terms-and-conditions').'.pdf' => ['data' => $this->generateGeneralTermsAndConditions(), 'mimetype' => 'application/pdf']]);
+                $generalTermsAndConditionsFiles = [];
+                $uniqueManufacturers = $this->AppAuth->Cart->getUniqueManufacturers();
+                foreach($uniqueManufacturers as $manufacturerId => $manufacturer) {
+                    $src = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrc($manufacturerId);
+                    if ($src !== false) {
+                        $generalTermsAndConditionsFiles[__('Filename_General-terms-and-conditions') . '-' . StringComponent::slugifyAndKeepCase($manufacturer['name']) . '.pdf'] = [
+                            'file' => WWW_ROOT . Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrcTemplate($manufacturerId), // avoid timestamp
+                            'mimetype' => 'application/pdf'
+                        ];
+                    }
+                }
+                if (count($uniqueManufacturers) > count($generalTermsAndConditionsFiles)) {
+                    $generalTermsAndConditionsFiles[__('Filename_General-terms-and-conditions').'.pdf'] = [
+                        'data' => $this->generateGeneralTermsAndConditions(),
+                        'mimetype' => 'application/pdf'
+                    ];
+                }
+                
+                $email->addAttachments($generalTermsAndConditionsFiles);
             }
             
             $email->send();
@@ -407,21 +426,29 @@ class CartsController extends FrontendController
                 }
                 if (! $attributeIdFound) {
                     $message = __('The_attribute_does_not_exist.');
-                    $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
+                    $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                     $cartErrors[$cartProduct['productId']][] = $message;
                 }
             }
 
             if (! $product->active) {
                 $message = __('The_product_{0}_is_not_activated_any_more.', ['<b>' . $product->name . '</b>']);
-                $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
+                $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
 
             if (! $product->manufacturer->active || $this->Product->deliveryBreakEnabled($product->manufacturer->no_delivery_days, $product->next_delivery_day)) {
                 $message = __('The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated.', ['<b>' . $product->name . '</b>']);
-                $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
+                $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
+            }
+            
+            if ($product->delivery_rhythm_type == 'individual') {
+                if ($product->delivery_rhythm_order_possible_until->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')) < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
+                    $message = __('It_is_not_possible_to_order_the_product_{0}_any_more.', ['<b>' . $product->name . '</b>']);
+                    $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
+                    $cartErrors[$cartProduct['productId']][] = $message;
+                }
             }
 
             // prepare data for table order_detail

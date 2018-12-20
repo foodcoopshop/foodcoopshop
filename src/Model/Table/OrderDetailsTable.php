@@ -374,6 +374,11 @@ class OrderDetailsTable extends AppTable
         return $condition;
     }
     
+    public function getVariableMemberFeeReducedPrice($price, $variableMemberFee)
+    {
+        return $price * (100 - $variableMemberFee) / 100;
+    }
+    
     public function prepareOrderDetailsGroupedByProduct($orderDetails)
     {
         $preparedOrderDetails = [];
@@ -406,7 +411,7 @@ class OrderDetailsTable extends AppTable
         }
         
         foreach($preparedOrderDetails as &$pod) {
-            $pod['reduced_price'] = $pod['sum_price'] * (100 - $pod['variable_member_fee']) / 100;
+            $pod['reduced_price'] = $this->getVariableMemberFeeReducedPrice($pod['sum_price'], $pod['variable_member_fee']);
         }
         
         return $preparedOrderDetails;
@@ -422,7 +427,10 @@ class OrderDetailsTable extends AppTable
             @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
             $preparedOrderDetails[$key]['customer_id'] = $key;
             $preparedOrderDetails[$key]['name'] = Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($orderDetail->customer);
-            $preparedOrderDetails[$key]['email'] = $orderDetail->customer->email;
+            $preparedOrderDetails[$key]['email'] = '';
+            if ($orderDetail->customer) {
+                $preparedOrderDetails[$key]['email'] = $orderDetail->customer->email;
+            }
             $productsPickedUp = false;
             if (!empty($orderDetail->pickup_day_entity)) {
                 $preparedOrderDetails[$key]['comment'] = $orderDetail->pickup_day_entity->comment;

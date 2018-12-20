@@ -16,6 +16,7 @@ namespace App\Shell;
 
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
+use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 
 class SendInvoicesShell extends AppShell
@@ -38,7 +39,7 @@ class SendInvoicesShell extends AppShell
 
         // $this->cronjobRunDay can is set in unit test
         if (empty($this->cronjobRunDay)) {
-            $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+            $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
         }
         
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfLastMonth($this->cronjobRunDay);
@@ -47,22 +48,21 @@ class SendInvoicesShell extends AppShell
         // update all order details that are already billed but cronjob did not change the order state
         // to new order state ORDER_STATE_BILLED (introduced in FCS 2.2)
         // can be removed safely in FCS v3.0
-        $changedRows = 0;
-        $changedRows += $this->OrderDetail->legacyUpdateOrderStateToNewBilledState($dateFrom, ORDER_STATE_CASH_FREE, ORDER_STATE_BILLED_CASHLESS);
-        $changedRows += $this->OrderDetail->legacyUpdateOrderStateToNewBilledState($dateFrom, ORDER_STATE_CASH, ORDER_STATE_BILLED_CASH);
-        $changedRows += $this->OrderDetail->legacyUpdateOrderStateToNewBilledState($dateFrom, ORDER_STATE_ORDER_PLACED, Configure::read('app.htmlHelper')->getOrderStateBilled());
-        $changedRows += $this->OrderDetail->legacyUpdateOrderStateToNewBilledState(null, ORDER_STATE_CASH_FREE, ORDER_STATE_ORDER_PLACED);
-        $changedRows += $this->OrderDetail->legacyUpdateOrderStateToNewBilledState(null, ORDER_STATE_CASH, ORDER_STATE_ORDER_PLACED);
-        
-        $firstCallAfterPickupDayUpdate = false;
-        if ($changedRows > 0) {
-            $firstCallAfterPickupDayUpdate = true;
+        if ($this->cronjobRunDay == Configure::read('app.dateOfFirstSendInvoiceCronjobWithPickupDayUpdate')) {
+            $this->OrderDetail->legacyUpdateOrderStateToNewBilledState($dateFrom, ORDER_STATE_CASH_FREE, ORDER_STATE_BILLED_CASHLESS);
+            $this->OrderDetail->legacyUpdateOrderStateToNewBilledState($dateFrom, ORDER_STATE_CASH, ORDER_STATE_BILLED_CASH);
+            $this->OrderDetail->legacyUpdateOrderStateToNewBilledState($dateFrom, ORDER_STATE_ORDER_PLACED, Configure::read('app.htmlHelper')->getOrderStateBilled());
+            $this->OrderDetail->legacyUpdateOrderStateToNewBilledState(null, ORDER_STATE_CASH_FREE, ORDER_STATE_ORDER_PLACED);
+            $this->OrderDetail->legacyUpdateOrderStateToNewBilledState(null, ORDER_STATE_CASH, ORDER_STATE_ORDER_PLACED);
         }
         
         // 1) get all manufacturers (not only active ones)
         $manufacturers = $this->Manufacturer->find('all', [
             'order' => [
                 'Manufacturers.name' => 'ASC'
+            ],
+            'contain' => [
+                'Invoices'
             ]
         ])->toArray();
 
@@ -77,9 +77,19 @@ class SendInvoicesShell extends AppShell
                 ]) . ')' // order_state condition necessary for switch from OrderDetails.created to OrderDetails.pickup_day
             ],
             'contain' => [
+                'Products.Manufacturers',
                 'Products'
             ]
         ]);
+        
+        if (!Configure::read('app.includeStockProductsInInvoices')) {
+            $orderDetails->where(function ($exp, $query) {
+                return $exp->or_([
+                    'Products.is_stock_product' => false,
+                    'Manufacturers.stock_management_enabled' => false
+                ]);
+            });
+        }
 
         // 3) add up the order detail by manufacturer
         $manufacturerOrders = [];
@@ -104,17 +114,62 @@ class SendInvoicesShell extends AppShell
         $this->initSimpleBrowser();
         $this->browser->doFoodCoopShopLogin();
 
+        $tableData = '';
+        $sumPrice = 0;
         foreach ($manufacturers as $manufacturer) {
             $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
-            if (!empty($manufacturer->current_order_count) && $sendInvoice) {
+            $invoiceNumber = $this->Manufacturer->Invoices->getNextInvoiceNumber($manufacturer->invoices);
+            $invoiceLink = '/admin/lists/getInvoice?file=' . str_replace(
+                Configure::read('app.folder_invoices'), '', Configure::read('app.htmlHelper')->getInvoiceLink(
+                    $manufacturer->name, $manufacturer->id_manufacturer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $invoiceNumber
+                )
+            );
+            if (!empty($manufacturer->current_order_count)) {
+                $price = $manufacturer->order_detail_price_sum;
+                $sumPrice += $price;
+                $variableMemberFeeAsString = '';
+                if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
+                    $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
+                    $price = $this->OrderDetail->getVariableMemberFeeReducedPrice($manufacturer->order_detail_price_sum, $variableMemberFee);
+                    if ($variableMemberFee > 0) {
+                        $variableMemberFeeAsString = ' (' . $variableMemberFee . '%)';
+                    }
+                }
                 $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->order_detail_amount_sum]);
-                $outString .= ' - ' . $manufacturer->name . ': ' . $productString . ' / ' . Configure::read('app.numberHelper')->formatAsCurrency($manufacturer->order_detail_price_sum) . '<br />';
-                $url = $this->browser->adminPrefix . '/manufacturers/sendInvoice?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
-                $this->browser->get($url);
+                $tableData .= '<tr>';
+                $tableData .= '<td>' . $manufacturer->name . '</td>';
+                $tableData .= '<td>' . $invoiceNumber . '</td>';
+                $tableData .= '<td>' . ($sendInvoice ? __('yes') : __('no')) . '</td>';
+                $tableData .= '<td>' . $productString . '</td>';
+                $tableData .= '<td align="right"><b>' . Configure::read('app.numberHelper')->formatAsCurrency($price) . '</b>'.$variableMemberFeeAsString.'</td>';
+                $tableData .= '<td>';
+                    $tableData .= Configure::read('app.htmlHelper')->getJqueryUiIcon(Configure::read('app.htmlHelper')->image(Configure::read('app.htmlHelper')->getFamFamFamPath('arrow_right.png')), [
+                        'target' => '_blank'
+                    ], $invoiceLink);
+                $tableData .= '</td>';
+                $tableData .= '</tr>';
                 $i ++;
             }
+            if (!empty($manufacturer->current_order_count) && $sendInvoice) {
+                $url = $this->browser->adminPrefix . '/manufacturers/sendInvoice?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
+                $this->browser->get($url);
+            }
         }
-
+        if ($tableData != '') {
+            $outString .= '<table class="list no-clone-last-row">';
+            $outString .= '<tr>';
+            $outString .= '<th>' . __('Manufacturer') . '</th>';
+            $outString .= '<th>' . __('Invoice_number_abbreviation') . '</th>';
+            $outString .= '<th>' . __('Sent') . '?</th>';
+            $outString .= '<th>' . __('Products') . '</th>';
+            $outString .= '<th style="text-align:right;">' . __('Sum') . '</th>';
+            $outString .= '<th></th>';
+            $outString .= '</tr>';
+            $outString .= $tableData;
+            $outString .= '<tr><td colspan="4" align="right">'.__('Total_sum').'</td><td align="right"><b>'.Configure::read('app.numberHelper')->formatAsCurrency($sumPrice).'</b></td><td></td></tr>';
+            $outString .= '</table>';
+        }
+        
         $this->browser->doFoodCoopShopLogout();
 
         // START send email to accounting employee
@@ -127,17 +182,17 @@ class SendInvoicesShell extends AppShell
                 ->setViewVars([
                 'dateFrom' => $dateFrom,
                 'dateTo' => $dateTo,
-                'firstCallAfterPickupDayUpdate' => $firstCallAfterPickupDayUpdate
+                'cronjobRunDay' => $this->cronjobRunDay
                 ])
                 ->send();
         }
         // END send email to accounting employee
 
-        $outString .= __('Sent_invoices') . ': ' . $i;
+        $outString .= __('Generated_invoices') . ': ' . $i;
 
         $this->stopTimeLogging();
 
-        $this->ActionLog->customSave('cronjob_send_invoices', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
+        $this->ActionLog->customSave('cronjob_send_invoices', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime(), new Time($this->cronjobRunDay));
 
         $this->out($outString);
 

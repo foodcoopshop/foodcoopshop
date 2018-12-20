@@ -12,8 +12,6 @@ use Cake\Utility\Hash;
 use App\Model\Table\OrderDetailsTable;
 
 /**
- * OrderDetailsController
-*
 * FoodCoopShop - The open source software for your foodcoop
 *
 * Licensed under The MIT License

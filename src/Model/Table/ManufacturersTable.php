@@ -7,7 +7,6 @@ use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 
 /**
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -448,17 +447,7 @@ class ManufacturersTable extends AppTable
         
     }
 
-    /**
-     * turns eg 24 into 0024
-     *
-     * @param int $invoiceNumber
-     */
-    public function formatInvoiceNumber($invoiceNumber)
-    {
-        return str_pad($invoiceNumber, 4, '0', STR_PAD_LEFT);
-    }
-
-    public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState)
+    public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProductsInInvoices)
     {
         switch ($order) {
             case 'product':
@@ -475,6 +464,8 @@ class ManufacturersTable extends AppTable
             'dateFrom' => Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom),
         ];
         
+        $includeStockProductCondition = '';
+        
         if (is_null($dateTo)) {
             // order list
             $dateConditions = "AND DATE_FORMAT(od.pickup_day, '%Y-%m-%d') = :dateFrom";
@@ -483,6 +474,9 @@ class ManufacturersTable extends AppTable
             $dateConditions  = "AND DATE_FORMAT(od.pickup_day, '%Y-%m-%d') >= :dateFrom ";
             $dateConditions .= "AND DATE_FORMAT(od.pickup_day, '%Y-%m-%d') <= :dateTo";
             $params['dateTo'] = Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo);
+            if (!$includeStockProductsInInvoices) {
+                $includeStockProductCondition = "AND (p.is_stock_product = 0 OR m.stock_management_enabled = 0)";
+            }
         }
         
         $orderStateCondition = "";
@@ -526,6 +520,7 @@ class ManufacturersTable extends AppTable
             AND m.id_manufacturer = :manufacturerId
             AND ma.id_manufacturer > 0
             {$orderStateCondition}
+            {$includeStockProductCondition}
             ORDER BY {$orderClause}, DATE_FORMAT (od.created, '%d.%m.%Y, %H:%i') DESC;";
         
         $statement = $this->getConnection()->prepare($sql);

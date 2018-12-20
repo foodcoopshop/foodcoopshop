@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-10-18 09:00+0200\n"
-"PO-Revision-Date: 2018-10-18 09:00+0200\n"
+"POT-Creation-Date: 2018-12-14 19:56+0100\n"
+"PO-Revision-Date: 2018-12-14 19:57+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -69,11 +69,17 @@ msgstr "Die gewünschte Anzahl {0} der Variante {1} des Produktes {2} ist leider
 msgid "The_attribute_does_not_exist."
 msgstr "Die Variante existiert nicht."
 
+msgid "Please_delete_product_from_cart_to_place_order."
+msgstr "Bitte lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen."
+
 msgid "The_product_{0}_is_not_activated_any_more."
 msgstr "Das Produkt {0} ist leider nicht mehr aktiviert und somit nicht mehr bestellbar."
 
 msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
 msgstr "Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar."
+
+msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
+msgstr "Das Produkt {0} kann nicht mehr bestellt werden."
 
 msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
 msgstr "Bitte gib an, wie viel du in {0} zahlen möchtest."
@@ -681,6 +687,12 @@ msgstr "Produkte"
 msgid "product"
 msgstr "Produkt"
 
+msgid "{0}_email_addresses_have_been_copied_successfully_to_your_clipboard."
+msgstr "{0} E-Mail-Adressen wurden erfolgreich in deine Zwischenablage kopiert."
+
+msgid "1_email_address_has_been_copied_successfully_to_your_clipboard."
+msgstr "Eine E-Mail-Adresse wurde erfolgreich in deine Zwischenablage kopiert."
+
 msgid "Were_the_products_picked_up?"
 msgstr "Wurden die Produkte abgeholt?"
 
@@ -828,6 +840,9 @@ msgstr "gegen den Uhrzeigersinn drehen?"
 msgid "rotate_clockwise?"
 msgstr "im Uhrzeigersinn drehen?"
 
+msgid "Change_general_terms_and_conditions"
+msgstr "AGB ändern"
+
 msgid "Id"
 msgstr "Id"
 
@@ -890,6 +905,21 @@ msgstr "Datenschutzerklärung"
 
 msgid "List_of_allergens"
 msgstr "Allergenliste"
+
+msgid "Tax_rates_overview_table"
+msgstr "Übersichtstabelle nach Steuersatz"
+
+msgid "Tax_rate"
+msgstr "Steuersatz"
+
+msgid "Sum_price_excl."
+msgstr "Summe Preis exkl."
+
+msgid "Sum_tax"
+msgstr "Summe Steuer"
+
+msgid "Sum_price_incl."
+msgstr "Summe Preis inkl."
 
 msgid "Price_excl."
 msgstr "Preis exkl."
@@ -1473,11 +1503,26 @@ msgstr "Abhol-Erinnerung für"
 msgid "to_(time_context)"
 msgstr "bis"
 
+msgid "yes"
+msgstr "ja"
+
+msgid "no"
+msgstr "nein"
+
+msgid "Invoice_number_abbreviation"
+msgstr "Re. Nr."
+
+msgid "Sent"
+msgstr "Versendet"
+
+msgid "Products"
+msgstr "Produkte"
+
 msgid "Invoices_for_{0}_have_been_sent"
 msgstr "Rechnungen für {0} wurden verschickt"
 
-msgid "Sent_invoices"
-msgstr "Verschickte Rechnungen"
+msgid "Generated_invoices"
+msgstr "Generierte Rechnungen"
 
 msgid "Sent_order_lists"
 msgstr "Verschickte Bestelllisten"
@@ -1650,6 +1695,15 @@ msgstr "Warenkorb anzeigen"
 msgid "Already_ordered_products"
 msgstr "Bereits bestellte Produkte"
 
+msgid "Replace_existing_file"
+msgstr "Bestehende Datei überschreiben"
+
+msgid "Upload_new_file"
+msgstr "Neue Datei hochladen"
+
+msgid "Search_PC"
+msgstr "PC durchsuchen"
+
 msgid "Information"
 msgstr "Informationen"
 
@@ -1674,14 +1728,8 @@ msgstr "Neues Bild hochladen"
 msgid "Please_only_use_self_made_images_(not_from_the_internet)."
 msgstr "Bitte nur selbstgemachte Bilder verwenden<br />(keine aus dem Internet)."
 
-msgid "Search_PC"
-msgstr "PC durchsuchen"
-
 msgid "DELIVERY_DAY"
 msgstr "ABHOLTAG"
-
-msgid "Products"
-msgstr "Produkte"
 
 msgid "Print"
 msgstr "Drucken"
@@ -1706,6 +1754,9 @@ msgstr "Rücktrittsrecht"
 
 msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
 msgstr "Ich nehme das {0} zur Kenntnis und akzeptiere dessen Ausschluss für leicht verderbliche Waren."
+
+msgid "General_terms_and_conditions_of_{0}"
+msgstr "AGB von {0}"
 
 msgid "general_terms_and_conditions"
 msgstr "AGB"
@@ -1943,12 +1994,6 @@ msgstr "jeden letzten {0} im Monat"
 
 msgid "individual_date"
 msgstr "individuelles Datum"
-
-msgid "yes"
-msgstr "ja"
-
-msgid "no"
-msgstr "nein"
 
 msgid "Deleted_Member"
 msgstr "Gelöschtes Mitglied"

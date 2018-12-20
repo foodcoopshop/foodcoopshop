@@ -121,6 +121,8 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee >
     $pdf->writeHTML($html, true, false, true, false, '');
 }
 
+$pdf->renderTaxRatesTable($results_product);
+
 if ($sumTimebasedCurrencyPriceIncl > 0) {
 
     $sumPriceForTimebasedCurrency = $sumPriceIncl;
@@ -243,6 +245,9 @@ if ($saveParam == 'F') {
     $filename = end($filename);
     $filename = substr($filename, 11);
     $filename = $this->request->getQuery('dateFrom'). '-' . $this->request->getQuery('dateTo') . '-' . $filename;
+}
+if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
+    $pdf->outputHtml();
 }
 
 echo $pdf->Output($filename, $saveParam);

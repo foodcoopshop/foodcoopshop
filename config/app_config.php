@@ -54,6 +54,7 @@ return [
         'filesDir' => DS . 'files',
         'tmpWwwDir' => DS.'tmp',
         'uploadedImagesDir' => DS . 'files' . DS . 'images',
+        'uploadedFilesDir' => DS . 'files' . DS . 'files',
         'folder_invoices' => ROOT . DS . 'files_private'. DS . 'invoices',
         'folder_order_lists' => ROOT . DS. 'files_private' . DS .'order_lists',
         'folder_invoices_with_current_year_and_month' => ROOT . DS . 'files_private'. DS . 'invoices'.DS.date('Y').DS.date('m'),
@@ -73,7 +74,13 @@ return [
         'isDepositPaymentCashless' => true,
         'depositPaymentCashlessStartDate' => '2016-01-01',
         'depositForManufacturersStartDate' => '2016-01-01',
-
+        'dateOfFirstSendInvoiceCronjobWithPickupDayUpdate' => '2018-11-11', //pickupDayMigration was released in v2.2
+        /**
+         * if set to false, invoices do not contain stock products
+         * criteria for exclusion: Manufacturer.stock_management_enabled = false OR Product.is_stock_product = false
+         */
+        'includeStockProductsInInvoices' => true,
+        
         /**
          * weekday on which the weekly cronjob "SendOrderList" is called
          * the available options (in combination with deliveryDayDelta) can be found in tests/TestCase/src/View/Helper/MyTimeHelperTest.php
@@ -122,8 +129,9 @@ return [
         'sliderImageSizes' => [
             '905' => ['suffix' => '-slider'] // detail AND lightbox
         ],
-        'tmpUploadImagesDir' => DS.'tmp' . DS . 'images',
-
+        'tmpUploadImagesDir' => DS . 'tmp' . DS . 'images',
+        'tmpUploadFilesDir' => DS . 'tmp' . DS . 'files',
+        
         'countryId' => 2, // austria: 2, germany: 1
 
         /**

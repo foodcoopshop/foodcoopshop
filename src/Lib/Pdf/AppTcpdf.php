@@ -1,7 +1,5 @@
 <?php
 /**
- * AppTcpdf
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -30,6 +28,8 @@ class AppTcpdf extends TCPDF
     
     public $textHelper;
     
+    private $html = '';
+    
     public function setTextHelper($textHelper)
     {
         $this->textHelper = $textHelper;
@@ -40,19 +40,79 @@ class AppTcpdf extends TCPDF
         // in generate_order_confirmation.ctp::88 $this->MyNumber->formatAsCurrency leads to empty output
         // but in all other pdfs it works. this workaround helps
         $html = preg_replace('/€/', '&euro;', $html);
+        $this->html .= $html;
         parent::writeHTML($html, $ln, $fill, $reseth, $cell, $align);
+    }
+    
+    public function outputHtml()
+    {
+        echo $this->html;
+        exit(0);
     }
 
     public function renderTable()
     {
         $this->table .= '</table>';
 
-//         echo $this->table;
-
         $this->writeHTML($this->table, true, false, true, false, '');
 
         // reset table
         $this->table = '';
+    }
+    
+    public function renderTaxRatesTable($results)
+    {
+        
+        $taxRates = [];
+        foreach($results as $result)
+        {
+            @$taxRates[$result['TaxRate']]['sum_price_excl'] += $result['OrderDetailPriceExcl'];
+            @$taxRates[$result['TaxRate']]['sum_tax'] += $result['OrderDetailTaxAmount'];
+            @$taxRates[$result['TaxRate']]['sum_price_incl'] += $result['OrderDetailPriceIncl'];
+        }
+        
+        if (count($taxRates) == 1) {
+            return false;
+        }
+        
+        ksort($taxRates);
+        
+        $taxRatesTableColumnWidth = 85;
+        
+        $this->Ln(3);
+        $html = '<p><b>'.__('Tax_rates_overview_table').'</b></p>';
+        $this->Ln(3);
+        $this->writeHTML($html, true, false, true, false, '');
+        
+        $html = '<table border="1" cellspacing="0" cellpadding="1" style="font-size:8px">';
+        
+        $html .= '<tr style="font-weight:bold;background-color:#cecece">';
+        $html .= '<th align="right" width="'.$taxRatesTableColumnWidth.'">'.__('Tax_rate').'</th>';
+        $html .= '<th align="right" width="'.$taxRatesTableColumnWidth.'">'.__('Sum_price_excl.').'</th>';
+        $html .= '<th align="right" width="'.$taxRatesTableColumnWidth.'">'.__('Sum_tax').'</th>';
+        $html .= '<th align="right" width="'.$taxRatesTableColumnWidth.'">'.__('Sum_price_incl.').'</th>';
+        $html .= '</tr>';
+        
+        foreach($taxRates as $taxRate => $data) {
+            $html .= '<tr>';
+            $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">';
+            if ($taxRate != intval($taxRate)) {
+                $formattedTaxRate = Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 1);
+            } else {
+                $formattedTaxRate = Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 0);
+            }
+            $html .= $formattedTaxRate . '%';
+            $html .= '</td>';
+            $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. Configure::read('app.numberHelper')->formatAsDecimal($data['sum_price_excl']) . '</td>';
+            $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. Configure::read('app.numberHelper')->formatAsDecimal($data['sum_tax']) . '</td>';
+            $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. Configure::read('app.numberHelper')->formatAsDecimal($data['sum_price_incl']) . '</td>';
+            $html .= '</tr>';
+        }
+        
+        $html .= '</table>';
+        
+        $this->Ln(3);
+        $this->writeHTML($html, true, false, true, false, '');
     }
 
     public function renderDetailedOrderList($results, $widths, $headers, $groupType, $onlyShowSums = false)
@@ -84,7 +144,7 @@ class AppTcpdf extends TCPDF
             $productName = $result['ProductName'];
             $customerName = $result['CustomerName'];
             $taxRate = $result['TaxRate'];
-
+            
             if ($groupType == 'customer' && isset($lastCustomerName) && $lastCustomerName != $customerName) {
                 $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastCustomerName, $lastTaxRate, $lastUnitSum);
                 // reset everything

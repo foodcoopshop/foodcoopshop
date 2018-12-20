@@ -929,18 +929,18 @@ foodcoopshop.Admin = {
     openBulkChangePickupDayDialog : function(orderDetailIds) {
         
         $('#cke_dialogChangePickupDayReason').val('');
-        var dialogId = 'order-detail-pickup-day-edit-form'
+        var dialogId = 'order-detail-pickup-day-edit-form';
 
         var dialogHtml = '';
         dialogHtml += '<div class="field-wrapper">';
-            dialogHtml += '<label>' + foodcoopshop.LocalizedJs.admin.NewPickupDay + '</label>';
-            dialogHtml += '<input style="margin-left:10px;" class="datepicker" type="text" name="dialogChangePickupDay" id="dialogChangePickupDay" /><br />';
+        dialogHtml += '<label>' + foodcoopshop.LocalizedJs.admin.NewPickupDay + '</label>';
+        dialogHtml += '<input style="margin-left:10px;" class="datepicker" type="text" name="dialogChangePickupDay" id="dialogChangePickupDay" /><br />';
         dialogHtml += '</div>';
         dialogHtml += '<p style="margin-top:10px;float:left;">' + foodcoopshop.LocalizedJs.admin.ChangePickupDayInvoicesInfoText + '</p>';
         dialogHtml += '<div style="margin-top:10px;float:left;" class="textarea-wrapper">';
-            dialogHtml += '<label for="dialogChangePickupDayReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPickupDayChanged +'</label>';
-                dialogHtml += '<textarea class="ckeditor" name="dialogChangePickupDayReason" id="dialogChangePickupDayReason" />';
-            dialogHtml += '</div>';
+        dialogHtml += '<label for="dialogChangePickupDayReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPickupDayChanged +'</label>';
+        dialogHtml += '<textarea class="ckeditor" name="dialogChangePickupDayReason" id="dialogChangePickupDayReason" />';
+        dialogHtml += '</div>';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(
             foodcoopshop.LocalizedJs.admin.ChangePickupDay + ': ' + orderDetailIds.length + ' ' + (
                 orderDetailIds.length == 1 ? foodcoopshop.LocalizedJs.admin.product : foodcoopshop.LocalizedJs.admin.products
@@ -1338,25 +1338,14 @@ foodcoopshop.Admin = {
     },
 
     initEmailToAllButton: function () {
-        $('button.email-to-all').on('click', function () {
-            $('<div></div>').appendTo('body')
-                .html('<p>' + $(this).data('email-addresses') + '</p>')
-                .dialog({
-                    modal: true,
-                    title: foodcoopshop.LocalizedJs.admin.EmailAddresses,
-                    autoOpen: true,
-                    width: 800,
-                    resizable: false,
-                    buttons: {
-                        'OK': function () {
-                            $(this).dialog('close');
-                        }
-                    },
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
-                });
-
+        var clipboard = new ClipboardJS('.btn-clipboard');
+        clipboard.on('success', function(e) {
+            var emailAddressesCount = e.text.split(',').length;
+            var response = foodcoopshop.LocalizedJs.admin.EmailAddressesSuccessfullyCopiedToClipboard.replaceI18n(0, emailAddressesCount);
+            if (emailAddressesCount == 1) {
+                response = foodcoopshop.LocalizedJs.admin.OneEmailAddressSuccessfullyCopiedToClipboard;
+            }
+            alert(response);
         });
     },
 

@@ -208,7 +208,9 @@ class LocalizedController extends Controller
                 'NewPickupDay' => __('New_pickup_day'),
                 'ChangePickupDayInvoicesInfoText' => __('Change_pickup_day_invoices_info_text'),
                 'products' => __('products'),
-                'product' => __('product')
+                'product' => __('product'),
+                'EmailAddressesSuccessfullyCopiedToClipboard' => __('{0}_email_addresses_have_been_copied_successfully_to_your_clipboard.'),
+                'OneEmailAddressSuccessfullyCopiedToClipboard' => __('1_email_address_has_been_copied_successfully_to_your_clipboard.'),
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),
@@ -265,7 +267,8 @@ class LocalizedController extends Controller
                 'DeleteImage' => __('Delete_image?'),
                 'ReallyDeleteImage' => __('Really_delete_image?'),
                 'rotateAntiClockwise' => __('rotate_anti_clockwise?'),
-                'rotateClockwise' => __('rotate_clockwise?')
+                'rotateClockwise' => __('rotate_clockwise?'),
+                'ChangeGeneralTermsAndConditions' => __('Change_general_terms_and_conditions')
             ],
             
             'syncProducts' => [
