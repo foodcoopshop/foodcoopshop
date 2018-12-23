@@ -51,7 +51,7 @@ class BackupDatabaseShell extends AppShell
         }
 
         $cmdString = Configure::read('app.mysqlDumpCommand');
-        $cmdString .= " -u " . $dbConfig['username'] . " -p" . $dbConfig['password'] . " --allow-keywords " . " --add-drop-table --complete-insert --quote-names " . $dbConfig['database'] . " > " . $backupdir . DS . $filename;
+        $cmdString .= " -u " . $dbConfig['username'] . " -p'" . $dbConfig['password'] . "' --allow-keywords " . " --add-drop-table --complete-insert --quote-names " . $dbConfig['database'] . " > " . $backupdir . DS . $filename;
         exec($cmdString);
 
         // START zip and file sql file
