@@ -7,6 +7,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Herzlichen Dank an alle beteiligten Personen 
 * [AndreasEgger](https://github.com/AndreasEgger)
 * [mrothauer](https://github.com/mrothauer)
+* [SigiK](https://github.com/SigiK)
 * [Speis-Vorchdorf](https://github.com/Speis-Vorchdorf)
 
 ### Neue Funktionen
@@ -14,6 +15,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Im Admin-Bereich werden die E-Mail-Adressen von Herstellern und Mitgliedern nach Klick auf den Button automatisch in die Zwischenablage kopiert. / [PR#287](https://github.com/foodcoopshop/foodcoopshop/pull/287)  / [I#254](https://github.com/foodcoopshop/foodcoopshop/issues/254) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Bugfixes
+- Bei manchen MySQL-Versionen hat das Hinzufügen von einen neuen Herstellers nicht funktioniert. [PR#xxx](https://github.com/foodcoopshop/foodcoopshop/pull/xxx) / [I#288](https://github.com/foodcoopshop/foodcoopshop/issues/288) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> <a href="https://github.com/SigiK"><img src="https://github.com/SigiK.png" width="20"></a>
 - Produkte, die vor dem "Bestellbar-bis"-Datum in den Warenkorb gelegt wurden, konnten nach Ablauf dieses Datums auch bestellt werden. / [PR#292](https://github.com/foodcoopshop/foodcoopshop/pull/292) / [I#290](https://github.com/foodcoopshop/foodcoopshop/issues/290) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> <a href="https://github.com/Speis-Vorchdorf"><img src="https://github.com/Speis-Vorchdorf.png" width="20"></a>
 
 ### Für Entwickler
