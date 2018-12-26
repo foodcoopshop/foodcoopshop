@@ -4,6 +4,7 @@ namespace App\Mailer;
 
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
+use Cake\Log\Log;
 use Cake\Mailer\Email;
 use Cake\ORM\TableRegistry;
 
@@ -77,8 +78,8 @@ class AppEmail extends Email
             return $email;
         } catch (Exception $e) {
             if (Configure::check('app.EmailTransport.fallback')) {
-                $this->setConfigTransport(Configure::consume('app.EmailTransport'));
-                $this->setTransport('fallback');
+                $this->getTransport()->setConfig(Configure::consume('app.EmailTransport.fallback'));
+                Log::write('error', 'Email config was wrong, tried to send e-mail with fallback config.');
                 return $this->send($content);
             } else {
                 throw $e;
