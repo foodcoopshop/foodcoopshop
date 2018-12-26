@@ -24,7 +24,7 @@ $this->element('addScript', [
     
     <a class="btn-arrow btn-previous-day" title="<?php echo __d('admin', '1_day_ahead'); ?>"
         href="javascript:void(0)"><i class="fa fa-arrow-circle-left fa"></i></a>
-    	<input id="<?php echo (isset($nameFrom) ? $nameFrom : 'dateFrom'); ?>" type="text" class="datepicker"
+    	<input type="text" class="datepicker"
             <?php echo (isset($nameFrom) ? 'name="'.$nameFrom.'"' : ''); ?>
             value="<?php echo $dateFrom; ?>" /> <a class="btn-arrow btn-next-day"
             title="<?php echo __d('admin', '1_day_back'); ?>" href="javascript:void(0)"><i
@@ -34,7 +34,7 @@ $this->element('addScript', [
          <?php echo __d('admin', 'to'); ?> <a
         class="btn-arrow btn-previous-day" title="<?php echo __d('admin', '1_day_ahead'); ?>"
         href="javascript:void(0)"><i class="fa fa-arrow-circle-left fa"></i></a>
-        <input id="<?php echo (isset($nameTo) ? $nameTo : 'dateTo'); ?>" type="text" class="datepicker"
+        <input type="text" class="datepicker"
             <?php echo (isset($nameTo) ? 'name="'.$nameTo.'"' : ''); ?>
             value="<?php echo $dateTo; ?>" /> <a class="btn-arrow btn-next-day"
             title="<?php echo __d('admin', '1_day_back'); ?>" href="javascript:void(0)"><i
