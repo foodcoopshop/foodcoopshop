@@ -55,6 +55,10 @@ use Cake\Core\Configure;
         color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
     }
     
+    .blog-wrapper .owl-nav button {
+        color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
+    }
+    
     .btn-success,
     .btn-success:active:hover,
     #scroll-to-top a {
@@ -78,8 +82,7 @@ use Cake\Core\Configure;
     <?php if ($isMobile) { ?>
         @media only screen and (max-device-width: 768px) {
             #responsive-header a,
-            :not(button) > i.fa:not(.gold),
-            .owl-nav i.fa {
+            :not(button) > i.fa:not(.gold) {
                 color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
             }
             .sb-slidebar i.fa:not(.gold),
