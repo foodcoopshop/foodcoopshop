@@ -46,7 +46,7 @@ $this->element('addScript', ['script' =>
         
         <div class="sc"></div>
         <?php
-            echo '<a style="margin-top: 10px;float: left;" href="' . $this->Slug->getNewPasswordRequest() . '">'.__('Forgot_password?').'</a>';
+            echo '<a style="float: left;" href="' . $this->Slug->getNewPasswordRequest() . '">'.__('Forgot_password?').'</a>';
         ?>
          
         <div class="sc"></div>

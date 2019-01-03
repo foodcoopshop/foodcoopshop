@@ -283,6 +283,8 @@ body.customers.new_password_request .input {
 }
 #LoginForm  .remember-me-wrapper {
     width: 180px;
+    float: left;
+    margin-top: 10px;
 }
 #LoginForm .remember-me-wrapper label {
     float: right;
