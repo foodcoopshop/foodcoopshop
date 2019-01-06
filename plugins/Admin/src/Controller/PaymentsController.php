@@ -183,7 +183,7 @@ class PaymentsController extends AdminAppController
                 $email = new AppEmail();
                 $email->viewBuilder()->setTemplate('Admin.payment_status_changed');
                 $email->setTo($payment->customer->email)
-                    ->setSubject(__d('admin', 'The_status_of_your_credit_upload_was_successfully_changed_to_{0}.', ['<b>' .$newStatusAsString.'</b>']))
+                    ->setSubject(__d('admin', 'The_status_of_your_credit_upload_was_successfully_changed_to_{0}.', ['"' .$newStatusAsString.'"']))
                     ->setViewVars([
                         'appAuth' => $this->AppAuth,
                         'data' => $payment->customer,
