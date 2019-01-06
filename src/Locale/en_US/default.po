@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-01-06 19:13+0100\n"
-"PO-Revision-Date: 2019-01-06 19:14+0100\n"
+"POT-Creation-Date: 2019-01-06 23:23+0100\n"
+"PO-Revision-Date: 2019-01-06 23:29+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1373,6 +1373,9 @@ msgstr "Please enter a valid BIC."
 
 msgid "At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space."
 msgstr "At least one email address is not valid. Please separate multiple addresses with , (without spaces)."
+
+msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._Please_manually_cancel_them_to_save_the_delivery_break."
+msgstr "The following delivery day(s) already contain orders: {0}. You need to manually cancel them to proceed saving the delivery break."
 
 msgid "Delivery_break"
 msgstr "Delivery break"
