@@ -358,10 +358,10 @@ class CartsController extends FrontendController
             $this->AppAuth->setCart($cart);
         }
         // END check if no amount is 0
-
         if (empty($cart) || empty($this->AppAuth->Cart->getProducts())) {
-            $this->Flash->error(__('Your_cart_was_empty'));
+            $this->Flash->error(__('Your_cart_was_empty.'));
             $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
+            return;
         }
 
         $cartErrors = [];
