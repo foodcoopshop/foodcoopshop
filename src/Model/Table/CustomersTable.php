@@ -187,9 +187,9 @@ class CustomersTable extends AppTable
         return $query;
     }
 
-    public function __construct($id = false, $table = null, $ds = null)
+    public function __construct(array $config = [])
     {
-        parent::__construct($id, $table, $ds);
+        parent::__construct($config);
 
         $this->getAssociation('ValidOrderDetails')->setConditions([
             'ValidOrderDetails.order_state IN (' . join(',', Configure::read('app.htmlHelper')->getOrderStateIds()) . ')'

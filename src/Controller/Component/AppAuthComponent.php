@@ -185,11 +185,6 @@ class AppAuthComponent extends AuthComponent
         return false;
     }
 
-    public function login($user = null)
-    {
-        return parent::login($user);
-    }
-
     public function getCreditBalance()
     {
         $c = TableRegistry::getTableLocator()->get('Customers');

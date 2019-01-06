@@ -132,9 +132,6 @@ class OrderDetailsTable extends AppTable
         
         // update with condition on association does not work with ->update or ->updateAll
         $orderDetails = $this->find('all', [
-            'contain' => [
-                'Products'
-            ],
             'conditions' => [
                 'Products.id_manufacturer' => $manufacturerId,
                 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',

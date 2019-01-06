@@ -500,7 +500,7 @@ class MyHtmlHelper extends HtmlHelper
     /**
      *
      * @param int $imageId
-     * @return eg 4/1/2 for given id 421
+     * @return string '4/1/2' for given id 421
      */
     public function getProductImageIdAsPath($imageId)
     {

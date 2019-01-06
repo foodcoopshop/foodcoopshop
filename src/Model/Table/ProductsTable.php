@@ -62,9 +62,9 @@ class ProductsTable extends AppTable
         $this->addBehavior('Timestamp');
     }
 
-    public function __construct($id = false, $table = null, $ds = null)
+    public function __construct(array $config = [])
     {
-        parent::__construct($id, $table, $ds);
+        parent::__construct($config);
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
     }
     

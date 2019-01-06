@@ -33,6 +33,10 @@ class AppSimpleBrowser extends SimpleBrowser
     public $Slug;
 
     public $Customer;
+    
+    public $loginEmail;
+    
+    public $loginPassword;
 
     public function __construct()
     {
