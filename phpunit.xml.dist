@@ -10,59 +10,14 @@
         <ini name="memory_limit" value="-1"/>
         <ini name="apc.enable_cli" value="1"/>
     </php>
-
-    <!-- Add any additional test suites you want to run here -->
+   
     <testsuites>
-        
-        <testsuite name="App">
-
-            <file>tests/TestCase/config/GlobalTest.php</file>
-
-            <file>tests/TestCase/src/Model/Table/CronjobsTableTest.php</file>
-
-            <file>tests/TestCase/src/Controller/Component/StringComponentTest.php</file>
-
-            <file>tests/TestCase/src/Controller/BlogPostsControllerTest.php</file>
-            <file>tests/TestCase/src/Controller/CartsControllerTest.php</file>
-            <file>tests/TestCase/src/Controller/CustomersControllerTest.php</file>
-            <file>tests/TestCase/src/Controller/ManufacturersFrontendControllerTest.php</file>
-            <file>tests/TestCase/src/Controller/PagesControllerTest.php</file>
-            <file>tests/TestCase/src/Controller/ProductsFrontendControllerTest.php</file>
-            
-            <file>tests/TestCase/src/Shell/EmailOrderReminderShellTest.php</file>
-            <file>tests/TestCase/src/Shell/PickupReminderShellTest.php</file>
-            <file>tests/TestCase/src/Shell/SendInvoicesShellTest.php</file>
-            <file>tests/TestCase/src/Shell/SendOrderListsShellTest.php</file>
-
-            <file>tests/TestCase/src/View/Helper/MyNumberHelperTest.php</file>
-            <file>tests/TestCase/src/View/Helper/MyTimeHelperTest.php</file>
-            <file>tests/TestCase/src/View/Helper/PricePerUnitHelperTest.php</file>
-            
+        <testsuite name="foodcoopshop">
+            <directory>./tests/TestCase/</directory>
+            <directory>./plugins/Admin/tests/TestCase/</directory>
+            <directory>./plugins/Network/tests/TestCase/</directory>
         </testsuite>
-        
-        <testsuite name="Admin">
-            
-            <file>plugins/Admin/tests/TestCase/src/Controller/ConfigurationsControllerTest.php</file>
-            <file>plugins/Admin/tests/TestCase/src/Controller/ManufacturersControllerTest.php</file>
-            <file>plugins/Admin/tests/TestCase/src/Controller/OrderDetailsControllerTest.php</file>
-            <file>plugins/Admin/tests/TestCase/src/Controller/PaymentsControllerTest.php</file>
-            <file>plugins/Admin/tests/TestCase/src/Controller/ProductsControllerTest.php</file>
-            <file>plugins/Admin/tests/TestCase/src/Controller/TimebasedCurrencyPaymentsControllerTest.php</file>
-            
-            <file>plugins/Admin/tests/TestCase/src/Model/Table/CartProductsTableTest.php</file>
-            <file>plugins/Admin/tests/TestCase/src/Model/Table/ProductAttributesTableTest.php</file>
-            <file>plugins/Admin/tests/TestCase/src/Model/Table/ProductsTableTest.php</file>
-            <file>plugins/Admin/tests/TestCase/src/Model/Table/UnitsTableTest.php</file>
-            
-        </testsuite>
-        
-        <testsuite name="Network">
-            <file>plugins/Network/tests/TestCase/src/Controller/ApiControllerTest.php</file>
-            <file>plugins/Network/tests/TestCase/src/Controller/SyncDomainsControllerTest.php</file>
-            <file>plugins/Network/tests/TestCase/src/Controller/SyncsControllerTest.php</file>
-       </testsuite>
-        
-    </testsuites>
+    </testsuites>    
 
     <!-- Ignore vendor tests in code coverage reports -->
     <filter>
