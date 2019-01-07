@@ -16,6 +16,7 @@
  * @link          https://www.foodcoopshop.com
  */
 use App\Test\TestCase\AppCakeTestCase;
+use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
 class ManufacturersControllerTest extends AppCakeTestCase
@@ -179,6 +180,44 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $defaultTaxId = $this->Manufacturer->getOptionDefaultTaxId($manufacturerNew->default_tax_id);
         $this->assertEquals($defaultTaxId, $newDefaultTaxId, 'saving option default_tax_id failed');
 
+        $this->logout();
+    }
+    
+    public function testEditOptionsNoDeliveryDays()
+    {
+        $this->loginAsSuperadmin();
+        
+        $manufacturerId = 15;
+        $noDeliveryDays = date('Y-m-d', strtotime('next friday'));
+
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay;';
+        $params = [
+            'pickupDay' => $noDeliveryDays,
+        ];
+        $statement = $this->dbConnection->prepare($query);
+        $statement->execute($params);
+        
+        $this->browser->get($this->Slug->getManufacturerEditOptions($manufacturerId));
+        
+        $this->browser->setFieldById('manufacturers-no-delivery-days', [$noDeliveryDays]);
+        $this->browser->submitFormById('manufacturersEditOptionsForm');
+        $this->assertRegExpWithUnquotedString('Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: ' . Configure::read('app.timeHelper')->formatToDateShort($noDeliveryDays) . ' (1x)', $this->browser->getContent());
+        
+        $noDeliveryDays = date('Y-m-d', strtotime($noDeliveryDays . ' + 1 week'));
+        $this->browser->setFieldById('manufacturers-no-delivery-days', [$noDeliveryDays]);
+        $this->browser->submitFormById('manufacturersEditOptionsForm');
+        
+        $this->assertRegExpWithUnquotedString('wurden erfolgreich gespeichert.', $this->browser->getContent());
+        
+        $manufacturerNew = $this->Manufacturer->find('all', [
+            'conditions' => [
+                'Manufacturers.id_manufacturer' => $manufacturerId
+            ]
+        ])->first();
+        
+        $this->assertEquals($noDeliveryDays, $manufacturerNew->no_delivery_days);
+        
         $this->logout();
     }
 
