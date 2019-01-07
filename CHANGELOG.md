@@ -11,6 +11,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 * [Speis-Vorchdorf](https://github.com/Speis-Vorchdorf)
 
 ### Neue Funktionen
+- Das Aktivieren einer Lieferpause ist nur mehr möglich, wenn für den gewünschten Liefertag noch keine Bestellungen vorliegen. [PR#303](https://github.com/foodcoopshop/foodcoopshop/pull/303) / [I#297](https://github.com/foodcoopshop/foodcoopshop/issues/297) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
 - Möglichkeit, bei Rechnungen Lagerprodukte explizit nicht anzufüren (app.includeStockProductsInInvoices). Außerdem ist die Übersicht für den Finanzverantwortlichen nun unter "Aktivitäten" zu finden und es ist möglich, die Rechnung herunterzuladen. / [PR#291](https://github.com/foodcoopshop/foodcoopshop/pull/291) / [PR#294](https://github.com/foodcoopshop/foodcoopshop/pull/294) / [I#289](https://github.com/foodcoopshop/foodcoopshop/issues/289) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> <a href="https://github.com/AndreasEgger"><img src="https://github.com/AndreasEgger.png" width="20"></a>
 - Im Admin-Bereich werden die E-Mail-Adressen von Herstellern und Mitgliedern nach Klick auf den Button automatisch in die Zwischenablage kopiert. / [PR#287](https://github.com/foodcoopshop/foodcoopshop/pull/287)  / [I#254](https://github.com/foodcoopshop/foodcoopshop/issues/254) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 

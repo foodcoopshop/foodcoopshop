@@ -71,6 +71,13 @@ class ManufacturersTable extends AppTable
             'provider' => 'table',
             'message' => __('At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space.')
         ]);
+        
+        $validator->allowEmpty('no_delivery_days');
+        $validator->add('no_delivery_days', 'noDeliveryDaysOrdersExist', [
+            'provider' => 'table',
+            'rule' => 'noDeliveryDaysOrdersExist'
+        ]);
+        
         $validator->numeric('timebased_currency_max_percentage', __('Decimals_are_not_allowed.'));
         $validator = $this->getNumberRangeValidator($validator, 'timebased_currency_max_percentage', 0, 100);
         $validator->numeric('timebased_currency_max_credit_balance', __('Decimals_are_not_allowed.'));
@@ -101,7 +108,47 @@ class ManufacturersTable extends AppTable
         
     }
     
-
+    public function noDeliveryDaysOrdersExist ($value, $context) {
+        
+        $manufacturerId = $context['data']['id_manufacturer'];
+        
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        
+        $productsAssociation = $orderDetailsTable->getAssociation('Products');
+        $productsAssociation->setJoinType('INNER'); // necessary to apply condition
+        $productsAssociation->setConditions([
+            'Products.id_manufacturer' => $manufacturerId
+        ]);
+        
+        $query = $orderDetailsTable->find('all', [
+            'conditions' => [
+                'pickup_day IN' => $value
+            ],
+            'group' => 'pickup_day',
+            'contain' => [
+                'Products'
+            ]
+        ]);
+        $query->select(
+            [
+                'PickupDayCount' => $query->func()->count('OrderDetails.pickup_day'),
+                'pickup_day'
+            ]
+        );
+        
+        $result = true;
+        if (!empty($query->toArray())) {
+            $pickupDaysInfo = [];
+            foreach($query->toArray() as $orderDetail) {
+                $formattedPickupDay = $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
+                $pickupDaysInfo[] = $formattedPickupDay . ' (' . $orderDetail->PickupDayCount . 'x)';
+            }
+            $result = __('The_following_delivery_day(s)_already_contain_orders:_{0}._Please_manually_cancel_them_to_save_the_delivery_break.', [join(', ', $pickupDaysInfo)]);
+        }
+        
+        return $result;
+    }
+    
     public function getTimebasedCurrencyMoney($price, $percentage)
     {
         return $price * $percentage / 100;
