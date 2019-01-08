@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-12-14 19:56+0100\n"
-"PO-Revision-Date: 2018-11-23 10:37+0100\n"
+"POT-Creation-Date: 2019-01-08 10:18+0100\n"
+"PO-Revision-Date: 2019-01-08 10:19+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1130,6 +1130,9 @@ msgstr "Bestelltag"
 
 msgid "Order_list_grouped_by"
 msgstr "Bestellliste gruppiert nach"
+
+msgid "Edit_delivery_rhythm_for_selected_products"
+msgstr "Lieferrhythmus für ausgewählte Produkte bearbeiten"
 
 msgid "Add_new_attribute_for_product_{0}"
 msgstr "Neue Variante für Produkt {0} erstellen"

@@ -12,10 +12,13 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
 
-echo '<td style="text-align: center;">';
-if ($show) {
-    echo '<input type="checkbox" class="row-marker" />';
+if (!empty($products)) {
+    $this->element('addScript', [
+        'script' => Configure::read('app.jsNamespace').".Admin.initEditDeliveryRhythmForSelectedProducts();"
+    ]);
+    echo '<a id="editDeliveryRhythmForSelectedProducts" class="btn btn-outline-light" href="javascript:void(0);"><i class="fa fa-clock-o"></i> ' . __d('admin', 'Edit_delivery_rhythm_for_selected_products') . '</a>';
 }
-echo '</td>';
+
 ?>

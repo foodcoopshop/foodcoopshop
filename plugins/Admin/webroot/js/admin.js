@@ -130,6 +130,15 @@ foodcoopshop.Admin = {
         return orderDetailIds;
     },
 
+    getSelectedProductIds : function() {
+        var productIds = [];
+        $('table.list').find('input.row-marker[type="checkbox"]:checked').each(function () {
+            var productId = $(this).closest('tr').find('td.cell-id').html();
+            productIds.push(productId);
+        });
+        return productIds;
+    },
+    
     initChangePickupDayOfSelectedProductsButton : function () {
         var button = $('#changePickupDayOfSelectedProductsButton');
         foodcoopshop.Helper.disableButton(button);
@@ -158,7 +167,7 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.disableButton(button);
 
         $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
-            foodcoopshop.Admin.updateCancelSelectionButton(button);
+            foodcoopshop.Admin.updateObjectSelectionActionButton(button);
         });
 
         button.on('click', function () {
@@ -168,7 +177,7 @@ foodcoopshop.Admin = {
 
     },
 
-    updateCancelSelectionButton : function (button) {
+    updateObjectSelectionActionButton : function (button) {
         foodcoopshop.Helper.disableButton(button);
         if ($('table.list').find('input.row-marker[type="checkbox"]:checked').length > 0) {
             foodcoopshop.Helper.enableButton(button);
@@ -752,6 +761,24 @@ foodcoopshop.Admin = {
             dialog.dialog('open');
         });
         
+    },
+    
+    initEditDeliveryRhythmForSelectedProducts : function() {
+        
+        var button = $('#editDeliveryRhythmForSelectedProducts');
+        foodcoopshop.Helper.disableButton(button);
+
+        $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
+            foodcoopshop.Admin.updateObjectSelectionActionButton(button);
+        });
+
+        button.on('click', function () {
+            var productIds = foodcoopshop.Admin.getSelectedProductIds();
+            alert(productIds.join(', '));
+//            foodcoopshop.Admin.openBulkDeleteOrderDetailDialog(orderDetailIds);
+        });
+        
+        console.log('initEditDeliveryRhythmForSelectedProducts');
     },
     
     initProductIsStockProductEditDialog: function (container) {

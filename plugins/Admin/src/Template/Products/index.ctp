@@ -171,7 +171,7 @@ use Cake\Core\Configure;
         echo '<tr id="product-' . $product->id_product . '" class="data ' . $product->row_class . '" data-manufacturer-id="'.(isset($product->id_manufacturer) ? $product->id_manufacturer : '').'">';
 
         echo $this->element('rowMarker/rowMarker', [
-            'show' => true
+            'show' => (!empty($product->product_attributes) || isset($product->product_attributes)) && !($advancedStockManagementEnabled && $product->is_stock_product)
         ]);
         
         echo $this->element('productList/data/id', [
@@ -249,7 +249,14 @@ use Cake\Core\Configure;
     echo '</tr>';
 
     echo '</table>';
-    ?>    
+    
+    echo '<div class="bottom-button-container">';
+        echo $this->element('productList/button/editDeliveryRhythmForSelectedProducts', [
+            'products' => $products
+        ]);
+    echo '</div>';
+    
+    ?>
     
     <div class="sc"></div>
     
