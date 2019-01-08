@@ -141,6 +141,9 @@ use Cake\Core\Configure;
     echo '<table class="list no-clone-last-row">';
 
     echo '<tr class="sort">';
+        echo $this->element('rowMarker/rowMarkerAll', [
+            'enabled' => !empty($products)
+        ]);
         echo '<th class="hide">ID</th>';
         echo '<th>'.__d('admin', 'Attribute').'</th>';
         echo '<th>' . $this->Paginator->sort('Images.id_image', __d('admin', 'Image')) . '</th>';
@@ -167,6 +170,10 @@ use Cake\Core\Configure;
 
         echo '<tr id="product-' . $product->id_product . '" class="data ' . $product->row_class . '" data-manufacturer-id="'.(isset($product->id_manufacturer) ? $product->id_manufacturer : '').'">';
 
+        echo $this->element('rowMarker/rowMarker', [
+            'show' => true
+        ]);
+        
         echo $this->element('productList/data/id', [
             'product' => $product
         ]);

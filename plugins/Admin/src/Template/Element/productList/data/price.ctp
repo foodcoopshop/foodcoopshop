@@ -22,7 +22,7 @@ if (!empty($product->unit)) {
     ]);
 }
 
-echo '<td class="' . ($product->price_is_zero ? 'not-available' : '') . '">';
+echo '<td class="cell-price ' . ($product->price_is_zero ? 'not-available' : '') . '">';
     echo '<div class="table-cell-wrapper price">';
     if (empty($product->product_attributes)) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [

@@ -379,7 +379,7 @@ foodcoopshop.Admin = {
         $('.product-deposit-edit-button').on('click', function () {
             var row = $(this).closest('tr');
             $('#' + dialogId + ' #dialogDepositDeposit').val(row.find('span.deposit-for-dialog').html());
-            $('#' + dialogId + ' #dialogDepositProductId').val(row.find('td:nth-child(1)').html());
+            $('#' + dialogId + ' #dialogDepositProductId').val(row.find('td.cell-id').html());
             var label = foodcoopshop.Admin.getProductNameForDialog(row);
             $('#' + dialogId + ' label[for="dialogDepositDeposit"]').html(label);
             dialog.dialog('open');
@@ -474,7 +474,7 @@ foodcoopshop.Admin = {
         $('.product-price-edit-button').on('click', function () {
 
             var row = $(this).closest('tr');
-            var productId = row.find('td:nth-child(1)').html();
+            var productId = row.find('td.cell-id').html();
 
             var radioMainSelector = '#' + dialogId + ' input[name="dialogPricePricePerUnitEnabled"]';
             var radio;
@@ -610,7 +610,7 @@ foodcoopshop.Admin = {
 
             foodcoopshop.Helper.initCkeditor('dialogDescriptionShort');
             var row = $(this).closest('tr');
-            var nameCell = row.find('td:nth-child(4)');
+            var nameCell = row.find('td.cell-name');
             $('#' + dialogId + ' #dialogName').val(foodcoopshop.Admin.decodeEntities(nameCell.find('span.name-for-dialog .product-name').html()));
             $('#' + dialogId + ' #dialogIsDeclarationOk').prop('checked', row.find('span.is-declaration-ok-wrapper').data('is-declaration-ok'));
             var unityElement = nameCell.find('span.unity-for-dialog');
@@ -620,7 +620,7 @@ foodcoopshop.Admin = {
             }
             $('#' + dialogId + ' #dialogUnity').val(unity);
             CKEDITOR.instances['dialogDescriptionShort'].setData(nameCell.find('span.description-short-for-dialog').html());
-            $('#' + dialogId + ' #dialogProductId').val(row.find('td:nth-child(1)').html());
+            $('#' + dialogId + ' #dialogProductId').val(row.find('td.cell-id').html());
 
             var manufacturerId = row.data('manufacturerId');
             foodcoopshop.Helper.ajaxCall(
@@ -745,7 +745,7 @@ foodcoopshop.Admin = {
             }
             foodcoopshop.Admin.addDatepickerInDialog(orderPossibleUntilInput);
 
-            $('#' + dialogId + ' #dialogDeliveryRhythmProductId').val(row.find('td:nth-child(1)').html());
+            $('#' + dialogId + ' #dialogDeliveryRhythmProductId').val(row.find('td.cell-id').html());
             $('#' + dialogId + ' label[for="dialogDeliveryRhythm"]').html(foodcoopshop.Admin.getProductNameForDialog(row));
 
             var dialog = $('#' + dialogId).dialog(dialogOptions);
@@ -812,7 +812,7 @@ foodcoopshop.Admin = {
             };            
             
             $('#' + dialogId + ' #dialogIsStockProductIsStockProduct').prop('checked', row.find('td.is-stock-product').html().match('fa-check'));
-            $('#' + dialogId + ' #dialogIsStockProductProductId').val(row.find('td:nth-child(1)').html());
+            $('#' + dialogId + ' #dialogIsStockProductProductId').val(row.find('td.cell-id').html());
             $('#' + dialogId + ' label[for="dialogIsStockProductIsStockProduct"]').html(foodcoopshop.Admin.getProductNameForDialog(row));
 
             var dialog = $('#' + dialogId).dialog(dialogOptions);
@@ -905,11 +905,11 @@ foodcoopshop.Admin = {
                 } else {
                     $('#' + dialogId + ' #dialogQuantitySoldOutLimit').val(0);
                 }
-                dialogOptions.height = 350;
+                dialogOptions.height = 390;
             }
             
             $('#' + dialogId + ' #dialogQuantityQuantity').val(row.find('span.quantity-for-dialog').html().replace(/\./, ''));
-            $('#' + dialogId + ' #dialogQuantityProductId').val(row.find('td:nth-child(1)').html());
+            $('#' + dialogId + ' #dialogQuantityProductId').val(row.find('td.cell-id').html());
             var label = foodcoopshop.Admin.getProductNameForDialog(row);
             $('#' + dialogId + ' label[for="dialogQuantityQuantity"]').html(label);
 
@@ -1159,7 +1159,7 @@ foodcoopshop.Admin = {
 
             var dataRow = $('#change-new-state-' + productId).parent().parent().parent().parent();
             $('<div></div>').appendTo('body')
-                .html('<p>' + reallyNewStateText.replaceI18n(0,  '<b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b>') + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p>' + reallyNewStateText.replaceI18n(0,  '<b>' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>') + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
                     title: newStateText,
@@ -1183,7 +1183,7 @@ foodcoopshop.Admin = {
             var productAttributeId = splittedProductId[1];
 
             var dataRow = $(this).closest('tr');
-            var htmlCode = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyDeleteAttribute0.replaceI18n(0, '<b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b>');
+            var htmlCode = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyDeleteAttribute0.replaceI18n(0, '<b>' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>');
             htmlCode += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
 
             var buttons = {};
@@ -1222,7 +1222,7 @@ foodcoopshop.Admin = {
             var productId = dataRow.attr('id').replace(/product-/, '').split('-');
             productId = productId[productId.length - 1];
 
-            var htmlCode = '<p>' + foodcoopshop.LocalizedJs.admin.PleaseChoseTheNewAttributeForProduct0.replaceI18n(0, '<b> ' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b>') + '</p>';
+            var htmlCode = '<p>' + foodcoopshop.LocalizedJs.admin.PleaseChoseTheNewAttributeForProduct0.replaceI18n(0, '<b> ' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>') + '</p>';
             var productAttributesDropdown = $('#productattributeid').clone(true);
 
             if (productAttributesDropdown.find('option').length == 0) {
@@ -2122,7 +2122,7 @@ foodcoopshop.Admin = {
             var dataRow = $('#change-active-state-' + productId).closest('tr');
             $('<div></div>')
                 .appendTo('body')
-                .html('<p>' + reallyNewStateText.replaceI18n(0, '<b>' + dataRow.find('td:nth-child(4) span.name-for-dialog').html() + '</b>') + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                .html('<p>' + reallyNewStateText.replaceI18n(0, '<b>' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>') + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
                     modal: true,
                     title: newStateText,

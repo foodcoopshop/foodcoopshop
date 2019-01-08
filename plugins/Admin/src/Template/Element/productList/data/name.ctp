@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
-echo '<td>';
+echo '<td class="cell-name">';
 
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
         echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [

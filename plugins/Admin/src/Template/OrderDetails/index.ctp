@@ -112,16 +112,10 @@ if (count($orderDetails) == 0) {
 
 echo '<table class="list">';
 echo '<tr class="sort">';
-    echo '<th style="width:20px;">';
-    if (count($orderDetails) > 0 && $groupBy == '') {
-        $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".Admin.initRowMarkerAll();"
-        ]);
-        echo '<input type="checkbox" id="row-marker-all" />';
-    }
-    echo '</th>';
-    echo '<th class="hide">' . $this->Paginator->sort('OrderDetails.detail_order_id', 'ID') . '</th>';
-    
+    echo $this->element('rowMarker/rowMarkerAll', [
+        'enabled' => count($orderDetails) > 0 && $groupBy == ''
+    ]);
+    echo '<th class="hide">ID</th>';
     $orderDetailTemplateElement = 'default';
     if ($groupBy != '') {
         $orderDetailTemplateElement = 'groupBy' . ucfirst($groupBy);
@@ -146,11 +140,9 @@ foreach ($orderDetails as $orderDetail) {
     
     echo '<tr class="data ' . (!empty($rowClasses) ? implode(' ', $rowClasses) : '') . '">';
 
-    echo '<td style="text-align: center;">';
-        if ($editRecordAllowed) {
-            echo '<input type="checkbox" class="row-marker" />';
-        }
-    echo '</td>';
+    echo $this->element('rowMarker/rowMarker', [
+        'show' => $editRecordAllowed
+    ]);
 
     echo $this->element('orderDetailList/data/id', [
         'orderDetail' => $orderDetail,
