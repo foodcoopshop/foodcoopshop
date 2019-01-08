@@ -350,7 +350,7 @@ class ProductsController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
         
-        $productId = (int) $this->getRequest()->getData('productId');
+        $productId = (int) $this->getRequest()->getData('productIds')[0];
         $deliveryRhythmTypeCombined = $this->getRequest()->getData('deliveryRhythmType');
         $deliveryRhythmFirstDeliveryDay = $this->getRequest()->getData('deliveryRhythmFirstDeliveryDay');
         $deliveryRhythmOrderPossibleUntil = $this->getRequest()->getData('deliveryRhythmOrderPossibleUntil');

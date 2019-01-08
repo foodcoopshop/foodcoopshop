@@ -402,7 +402,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     protected function changeProductDeliveryRhythm($productId, $deliveryRhythmType, $deliveryRhythmFirstDeliveryDay = '', $deliveryRhythmOrderPossibleUntil = '')
     {
         $this->browser->ajaxPost('/admin/products/editDeliveryRhythm', [
-            'productId' => $productId,
+            'productIds' => [$productId],
             'deliveryRhythmType' => $deliveryRhythmType,
             'deliveryRhythmFirstDeliveryDay' => $deliveryRhythmFirstDeliveryDay,
             'deliveryRhythmOrderPossibleUntil' => $deliveryRhythmOrderPossibleUntil

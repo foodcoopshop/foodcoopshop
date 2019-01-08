@@ -598,6 +598,7 @@ form div.error-message {
 .featherlight-inner label,
 .ui-dialog-content label {
 	font-weight: bold;
+	margin-bottom: 0;
 } 
 .featherlight-inner .checkbox label {
     font-weight: normal;

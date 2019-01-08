@@ -144,7 +144,7 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.disableButton(button);
 
         $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
-            foodcoopshop.Admin.updateChangePickupDayOfSelectedProductsButton(button);
+            foodcoopshop.Admin.updateObjectSelectionActionButton(button);
         });
 
         button.on('click', function () {
@@ -152,13 +152,6 @@ foodcoopshop.Admin = {
             foodcoopshop.Admin.openBulkChangePickupDayDialog(orderDetailIds);
         });
 
-    },
-
-    updateChangePickupDayOfSelectedProductsButton : function(button) {
-        foodcoopshop.Helper.disableButton(button);
-        if ($('table.list').find('input.row-marker[type="checkbox"]:checked').length > 0) {
-            foodcoopshop.Helper.enableButton(button);
-        }
     },
     
     initCancelSelectionButton : function () {
@@ -671,96 +664,103 @@ foodcoopshop.Admin = {
         });
     },
     
-    initProductDeliveryRhythmEditDialog: function (container) {
+    openEditDeliveryRhythmDialog : function(productIds, infoText, selectedDeliveryRhythmType, selectedFirstDeliveryDay, selectedOrderPossibleUntilDataElement) {
         
-        $('.product-delivery-rhythm-edit-button').on('click', function () {
-            
-            var row = $(this).closest('tr');
+        var buttons = {};
+        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+        buttons['save'] = {
+            text: foodcoopshop.LocalizedJs.helper.save,
+            click: function() {
+                
+                if (productIds.length == 0) {
+                    return false;
+                }
 
-            var dialogId = 'product-delivery-rhythm-edit-form';
-            var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductDeliveryRhythmEdit(dialogId);
-            $(container).append(dialogHtml);
+                $('#product-delivery-rhythm-edit-form .ajax-loader').show();
+                $('.ui-dialog button').attr('disabled', 'disabled');
 
-            var buttons = {};
-            buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
-            buttons['save'] = {
-                text: foodcoopshop.LocalizedJs.helper.save,
-                click: function() {
-                    if ($('#dialogDeliveryRhythmProductId').val() == '') {
-                        return false;
-                    }
-
-                    $('#product-delivery-rhythm-edit-form .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-
-                    var data = {
-                        productId: $('#dialogDeliveryRhythmProductId').val(),
-                        deliveryRhythmType: $('#dialogDeliveryRhythmType').val(),
-                        deliveryRhythmFirstDeliveryDay: $('#dialogDeliveryRhythmFirstDeliveryDay').val(),
-                        deliveryRhythmOrderPossibleUntil: $('#dialogDeliveryRhythmOrderPossibleUntil').val()
-                    };
-                    
-                    foodcoopshop.Helper.ajaxCall(
-                        '/admin/products/editDeliveryRhythm/',
-                        data,
-                        {
-                            onOk: function (data) {
-                                document.location.reload();
-                            },
-                            onError: function (data) {
-                                var form = $('#product-delivery-rhythm-edit-form form');
-                                form.find('.ajax-loader').hide();
-                                foodcoopshop.Admin.appendFlashMessageToDialog(form, data.msg);
-                            }
+                var data = {
+                    productIds: productIds,
+                    deliveryRhythmType: $('#dialogDeliveryRhythmType').val(),
+                    deliveryRhythmFirstDeliveryDay: $('#dialogDeliveryRhythmFirstDeliveryDay').val(),
+                    deliveryRhythmOrderPossibleUntil: $('#dialogDeliveryRhythmOrderPossibleUntil').val()
+                };
+                
+                foodcoopshop.Helper.ajaxCall(
+                    '/admin/products/editDeliveryRhythm/',
+                    data,
+                    {
+                        onOk: function (data) {
+                            document.location.reload();
+                        },
+                        onError: function (data) {
+                            var form = $('#product-delivery-rhythm-edit-form form');
+                            form.find('.ajax-loader').hide();
+                            foodcoopshop.Admin.appendFlashMessageToDialog(form, data.msg);
                         }
-                    );
+                    }
+                );
 
-                }
-            };
-            
-            var dialogOptions = {
-                autoOpen: false,
-                height: 400,
-                width: 420,
-                modal: true,
-                buttons: buttons
-            };            
-            
-            var select = $('#' + dialogId + ' #dialogDeliveryRhythmType');
-            select.find('option').remove();
-            select.append($('#rhythmtypes').html());
-            var selectedDeliveryRhythmType = $(this).closest('tr').find('td span.delivery-rhythm-for-dialog span.dropdown').html();
-            select.on('change', function() {
-                var elementToShow = 'default';
-                if ($(this).val().match('individual')) {
-                    elementToShow = 'individual';
-                }
-                $('#' + dialogId + ' .dynamic-element').hide();
-                $('#' + dialogId + ' .dynamic-element.' + elementToShow).show();
-            });
+            }
+        };
+        
+        var dialogOptions = {
+            autoOpen: false,
+            height: 400,
+            width: 420,
+            modal: true,
+            buttons: buttons
+        };            
+        
+        var dialogId = 'product-delivery-rhythm-edit-form';
+        $('#' + dialogId + ' label[for="dialogDeliveryRhythm"]').html(infoText);
+        var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductDeliveryRhythmEdit(dialogId);
+        $('body').append(dialogHtml);
+
+        var dialog = $('#' + dialogId).dialog(dialogOptions);
+        dialog.dialog('open');
+        
+        var select = $('#' + dialogId + ' #dialogDeliveryRhythmType');
+        select.find('option').remove();
+        select.append($('#rhythmtypes').html());
+        select.on('change', function() {
+            var elementToShow = 'default';
+            if ($(this).val().match('individual')) {
+                elementToShow = 'individual';
+            }
+            $('#' + dialogId + ' .dynamic-element').hide();
+            $('#' + dialogId + ' .dynamic-element.' + elementToShow).show();
+        });
+        if (selectedDeliveryRhythmType) {
             select.val(selectedDeliveryRhythmType);
             select.trigger('change');
-            
-            foodcoopshop.Helper.initDatepicker();
-            
-            var firstDeliveryDayInput = $('#' + dialogId + ' #dialogDeliveryRhythmFirstDeliveryDay');
-            firstDeliveryDayInput.val($(this).closest('tr').find('td span.delivery-rhythm-for-dialog span.first-delivery-day').html());
-            foodcoopshop.Admin.addDatepickerInDialog(firstDeliveryDayInput);
-            
-            var orderPossibleUntilInput = $('#' + dialogId + ' #dialogDeliveryRhythmOrderPossibleUntil');
-            var orderPossibleUntilDataElement = $(this).closest('tr').find('td span.delivery-rhythm-for-dialog span.order-possible-until');
-            if (orderPossibleUntilDataElement.length > 0) {
-                orderPossibleUntilInput.val(orderPossibleUntilDataElement.html());
-            }
-            foodcoopshop.Admin.addDatepickerInDialog(orderPossibleUntilInput);
-
-            $('#' + dialogId + ' #dialogDeliveryRhythmProductId').val(row.find('td.cell-id').html());
-            $('#' + dialogId + ' label[for="dialogDeliveryRhythm"]').html(foodcoopshop.Admin.getProductNameForDialog(row));
-
-            var dialog = $('#' + dialogId).dialog(dialogOptions);
-            dialog.dialog('open');
-        });
+        }
+        foodcoopshop.Helper.initDatepicker();
         
+        var firstDeliveryDayInput = $('#' + dialogId + ' #dialogDeliveryRhythmFirstDeliveryDay');
+        if (selectedFirstDeliveryDay) {
+            firstDeliveryDayInput.val(selectedFirstDeliveryDay);
+        }
+        foodcoopshop.Admin.addDatepickerInDialog(firstDeliveryDayInput);
+        
+        var orderPossibleUntilInput = $('#' + dialogId + ' #dialogDeliveryRhythmOrderPossibleUntil');
+        if (selectedOrderPossibleUntilDataElement && selectedOrderPossibleUntilDataElement.length > 0) {
+            orderPossibleUntilInput.val(selectedOrderPossibleUntilDataElement.html());
+        }
+        foodcoopshop.Admin.addDatepickerInDialog(orderPossibleUntilInput);
+
+    },
+    
+    initProductDeliveryRhythmEditDialog: function (container) {
+        $('.product-delivery-rhythm-edit-button').on('click', function () {
+            var row = $(this).closest('tr');
+            var productId = row.find('td.cell-id').html();
+            var infoText = foodcoopshop.Admin.getProductNameForDialog(row);
+            var selectedDeliveryRhythmType = row.find('td span.delivery-rhythm-for-dialog span.dropdown').html();
+            var selectedFirstDeliveryDay = row.find('td span.delivery-rhythm-for-dialog span.first-delivery-day').html()
+            var selectedOrderPossibleUntilDataElement = row.find('td span.delivery-rhythm-for-dialog span.order-possible-until');
+            foodcoopshop.Admin.openEditDeliveryRhythmDialog([productId], infoText, selectedDeliveryRhythmType, selectedFirstDeliveryDay, selectedOrderPossibleUntilDataElement);
+        });
     },
     
     initEditDeliveryRhythmForSelectedProducts : function() {
@@ -774,11 +774,21 @@ foodcoopshop.Admin = {
 
         button.on('click', function () {
             var productIds = foodcoopshop.Admin.getSelectedProductIds();
-            alert(productIds.join(', '));
-//            foodcoopshop.Admin.openBulkDeleteOrderDetailDialog(orderDetailIds);
+            foodcoopshop.Admin.openBulkEditDeliveryRhythmDialog(productIds);
         });
         
-        console.log('initEditDeliveryRhythmForSelectedProducts');
+    },
+    
+    openBulkEditDeliveryRhythmDialog : function(productIds) {
+        var infoText = '<p>';
+        if (productIds.length == 1) {
+            infoText = foodcoopshop.LocalizedJs.admin.YouSelectedOneProductForCancellation;
+        } else {
+            infoText = foodcoopshop.LocalizedJs.admin.YouSelected0ProductsForCancellation.replace(/\{0\}/, '<b>' + productIds.length + '</b>');
+        }
+        infoText += ':</p>';
+
+        foodcoopshop.Admin.openEditDeliveryRhythmDialog(productIds, infoText, null, null, null, null);
     },
     
     initProductIsStockProductEditDialog: function (container) {
