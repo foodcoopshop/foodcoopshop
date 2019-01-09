@@ -712,6 +712,7 @@ foodcoopshop.Admin = {
             buttons: buttons
         };            
         
+        $('#product-delivery-rhythm-edit-form').remove();
         var dialogId = 'product-delivery-rhythm-edit-form';
         $('#' + dialogId + ' label[for="dialogDeliveryRhythm"]').html(infoText);
         var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductDeliveryRhythmEdit(dialogId, productIds);
