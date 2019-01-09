@@ -406,6 +406,20 @@ class ProductsController extends AdminAppController
             
             $this->Product->changeDeliveryRhythm($products2update);
             
+            $additionalMessageString = '';
+            if ($deliveryRhythmFirstDeliveryDay != '') {
+                $additionalMessageString .= ' ';
+                if ($deliveryRhythmType == 'individual') {
+                    $additionalMessageString .= __d('admin', 'Delivery_day');
+                } else {
+                    $additionalMessageString .= __d('admin', 'First_delivery_day');
+                }
+                $additionalMessageString .= ': <b>'. Configure::read('app.timeHelper')->formatToDateShort($deliveryRhythmFirstDeliveryDay) . '</b>';
+                if ($product2update['delivery_rhythm_order_possible_until'] != '') {
+                    $additionalMessageString .= ', ' . __d('admin', 'Order_possible_until') . ': <b>'. Configure::read('app.timeHelper')->formatToDateShort($deliveryRhythmOrderPossibleUntil) . '</b>';
+                }
+            }
+            
             if ($singleEditMode) {
                 
                 $messageString = __d('admin', 'The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}.', [
@@ -413,23 +427,16 @@ class ProductsController extends AdminAppController
                     '<b>' . $oldProduct->manufacturer->name . '</b>',
                     '<b>' . Configure::read('app.htmlHelper')->getDeliveryRhythmString($oldProduct->is_stock_product, $deliveryRhythmType, $deliveryRhythmCount) . '</b>'
                 ]);
-            
-                if ($deliveryRhythmFirstDeliveryDay != '') {
-                    $messageString .= ' ';
-                    if ($deliveryRhythmType == 'individual') {
-                        $messageString .= __d('admin', 'Delivery_day');
-                    } else {
-                        $messageString .= __d('admin', 'First_delivery_day');
-                    }
-                    $messageString .= ': <b>'. Configure::read('app.timeHelper')->formatToDateShort($deliveryRhythmFirstDeliveryDay) . '</b>';
-                    if ($product2update['delivery_rhythm_order_possible_until'] != '') {
-                        $messageString .= ', ' . __d('admin', 'Order_possible_until') . ': <b>'. Configure::read('app.timeHelper')->formatToDateShort($deliveryRhythmOrderPossibleUntil) . '</b>';
-                    }
-                }
+                $messageString .= $additionalMessageString;
                 $this->ActionLog->customSave('product_delivery_rhythm_changed', $this->AppAuth->getUserId(), $productId, 'products', $messageString);
                 $this->getRequest()->getSession()->write('highlightedRowId', $productId);
             } else {
-                $messageString = __d('admin', 'Delivery_rhythm_of_{0}_products_has_been_changed_successfully.', [count($productIds)]);
+                $messageString = __d('admin', 'Delivery_rhythm_of_{0}_products_has_been_changed_successfully_to_{1}.', [
+                    count($productIds),
+                    '<b>' . Configure::read('app.htmlHelper')->getDeliveryRhythmString(false, $deliveryRhythmType, $deliveryRhythmCount) . '</b>'
+                ]);
+                $messageString .= $additionalMessageString;
+                $this->ActionLog->customSave('product_delivery_rhythm_changed', $this->AppAuth->getUserId(), 0, 'products', $messageString . ' Ids: ' . join(', ', $productIds));
             }
             
             $this->Flash->success($messageString);
