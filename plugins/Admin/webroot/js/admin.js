@@ -714,7 +714,7 @@ foodcoopshop.Admin = {
         
         var dialogId = 'product-delivery-rhythm-edit-form';
         $('#' + dialogId + ' label[for="dialogDeliveryRhythm"]').html(infoText);
-        var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductDeliveryRhythmEdit(dialogId);
+        var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductDeliveryRhythmEdit(dialogId, productIds);
         $('body').append(dialogHtml);
 
         var dialog = $('#' + dialogId).dialog(dialogOptions);
@@ -781,9 +781,9 @@ foodcoopshop.Admin = {
     openBulkEditDeliveryRhythmDialog : function(productIds) {
         var infoText = '<p>';
         if (productIds.length == 1) {
-            infoText = foodcoopshop.LocalizedJs.admin.YouSelectedOneProductForCancellation;
+            infoText = foodcoopshop.LocalizedJs.admin.YouSelectedOneProduct;
         } else {
-            infoText = foodcoopshop.LocalizedJs.admin.YouSelected0ProductsForCancellation.replace(/\{0\}/, '<b>' + productIds.length + '</b>');
+            infoText = foodcoopshop.LocalizedJs.admin.YouSelected0Products.replace(/\{0\}/, '<b>' + productIds.length + '</b>');
         }
         infoText += ':</p>';
         foodcoopshop.Admin.openEditDeliveryRhythmDialog(productIds, infoText, '1-week', '', '');
@@ -1056,9 +1056,9 @@ foodcoopshop.Admin = {
 
         var infoText = '<p>';
         if (orderDetailIds.length == 1) {
-            infoText = foodcoopshop.LocalizedJs.admin.YouSelectedOneProductForCancellation;
+            infoText = foodcoopshop.LocalizedJs.admin.YouSelectedOneProduct;
         } else {
-            infoText = foodcoopshop.LocalizedJs.admin.YouSelected0ProductsForCancellation.replace(/\{0\}/, '<b>' + orderDetailIds.length + '</b>');
+            infoText = foodcoopshop.LocalizedJs.admin.YouSelected0Products.replace(/\{0\}/, '<b>' + orderDetailIds.length + '</b>');
         }
 
         infoText += ':</p>';

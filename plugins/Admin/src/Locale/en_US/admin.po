@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-01-08 10:18+0100\n"
-"PO-Revision-Date: 2019-01-08 10:19+0100\n"
+"POT-Creation-Date: 2019-01-09 20:29+0100\n"
+"PO-Revision-Date: 2019-01-09 20:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -389,6 +389,9 @@ msgstr "First delivery day"
 
 msgid "Order_possible_until"
 msgstr "Order possible until"
+
+msgid "Delivery_rhythm_of_{0}_products_has_been_changed_successfully."
+msgstr "The delivery rhythm of {0} products has been changed successfully."
 
 msgid "Saving_successful."
 msgstr "Saving successful."

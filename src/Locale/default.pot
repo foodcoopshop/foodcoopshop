@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-01-06 23:23+0100\n"
+"POT-Creation-Date: 2019-01-09 20:29+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -509,10 +509,10 @@ msgstr ""
 msgid "Really_cancel_selected_products?"
 msgstr ""
 
-msgid "You_selected_1_product_for_cancellation"
+msgid "You_selected_1_product"
 msgstr ""
 
-msgid "You_selected_{0}_products_for_cancellation"
+msgid "You_selected_{0}_products"
 msgstr ""
 
 msgid "Adapt_amount_reason_is_mandatory."
@@ -809,7 +809,10 @@ msgstr ""
 msgid "Delivery_day"
 msgstr ""
 
-msgid "First_delivery_day_info."
+msgid "First_delivery_day_info_(one_product)."
+msgstr ""
+
+msgid "First_delivery_day_info_(multiple_products)."
 msgstr ""
 
 msgid "can_be_left_blank"

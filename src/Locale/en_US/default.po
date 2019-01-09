@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-01-06 23:23+0100\n"
-"PO-Revision-Date: 2019-01-06 23:29+0100\n"
+"POT-Creation-Date: 2019-01-09 20:29+0100\n"
+"PO-Revision-Date: 2019-01-09 20:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -510,11 +510,11 @@ msgstr "Please only cancel if this is ok for the manfacturer!"
 msgid "Really_cancel_selected_products?"
 msgstr "Really cancel the selected products?"
 
-msgid "You_selected_1_product_for_cancellation"
-msgstr "You selected 1 product for cancellation"
+msgid "You_selected_1_product"
+msgstr "You selected 1 product"
 
-msgid "You_selected_{0}_products_for_cancellation"
-msgstr "You selected {0} products for cancellation"
+msgid "You_selected_{0}_products"
+msgstr "You selected {0} products"
 
 msgid "Adapt_amount_reason_is_mandatory."
 msgstr "Please tell us, why you want to decrease the amount."
@@ -810,8 +810,11 @@ msgstr "First delivery day"
 msgid "Delivery_day"
 msgstr "Delivery day"
 
-msgid "First_delivery_day_info."
+msgid "First_delivery_day_info_(one_product)."
 msgstr "The product can be ordered from now on."
+
+msgid "First_delivery_day_info_(multiple_products)."
+msgstr "The products can be ordered from now on."
 
 msgid "can_be_left_blank"
 msgstr "can be left blank"
@@ -2180,6 +2183,14 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#, fuzzy
+#~ msgid "You_selected_1_product_for_changing_the_delivery_rhythm"
+#~ msgstr "You selected 1 product for cancellation"
+
+#, fuzzy
+#~ msgid "You_selected_{0}_products_for_for_changing_the_delivery_rhythm"
+#~ msgstr "You selected {0} products for cancellation"
 
 #~ msgid "You_will_then_get_a_link_to_change_your_password."
 #~ msgstr "You will then get a link to change your password."

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-01-06 23:23+0100\n"
-"PO-Revision-Date: 2019-01-06 23:25+0100\n"
+"POT-Creation-Date: 2019-01-09 20:29+0100\n"
+"PO-Revision-Date: 2019-01-09 20:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -510,11 +510,11 @@ msgstr "Bitte nur stornieren, wenn es mit dem Hersteller abgesprochen ist!"
 msgid "Really_cancel_selected_products?"
 msgstr "Ausgewählte Produkte wirklich stornieren?"
 
-msgid "You_selected_1_product_for_cancellation"
-msgstr "Du hast 1 Produkt zum Stornieren ausgewählt"
+msgid "You_selected_1_product"
+msgstr "Du hast 1 Produkt ausgewählt"
 
-msgid "You_selected_{0}_products_for_cancellation"
-msgstr "Du hast {0} Produkte zum Stornieren ausgewählt"
+msgid "You_selected_{0}_products"
+msgstr "Du hast {0} Produkte ausgewählt"
 
 msgid "Adapt_amount_reason_is_mandatory."
 msgstr "Bitte gib an, warum die Anzahl vermindert wird."
@@ -810,8 +810,11 @@ msgstr "Erster Liefertag"
 msgid "Delivery_day"
 msgstr "Liefertag"
 
-msgid "First_delivery_day_info."
-msgstr "Das Produkt ist ab sofort bestellbar."
+msgid "First_delivery_day_info_(one_product)."
+msgstr "Produkt ist ab sofort bestellbar."
+
+msgid "First_delivery_day_info_(multiple_products)."
+msgstr "Produkte sind ab sofort bestellbar."
 
 msgid "can_be_left_blank"
 msgstr "kann freigelassen werden"
@@ -2180,6 +2183,13 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "You_selected_1_product_for_changing_the_delivery_rhythm"
+#~ msgstr "Du hast 1 Produkt ausgewählt"
+
+#, fuzzy
+#~ msgid "You_selected_{0}_products_for_for_changing_the_delivery_rhythm"
+#~ msgstr "Du hast {0} Produkte zum Stornieren ausgewählt"
 
 #~ msgid "You_will_then_get_a_link_to_change_your_password."
 #~ msgstr "Wir senden dir dann einen Link zu, mit dem du das neue Passwort generieren kannst."

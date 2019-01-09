@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-01-08 10:18+0100\n"
+"POT-Creation-Date: 2019-01-09 20:29+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -387,6 +387,9 @@ msgid "First_delivery_day"
 msgstr ""
 
 msgid "Order_possible_until"
+msgstr ""
+
+msgid "Delivery_rhythm_of_{0}_products_has_been_changed_successfully."
 msgstr ""
 
 msgid "Saving_successful."
