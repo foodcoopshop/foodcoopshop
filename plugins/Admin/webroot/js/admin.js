@@ -714,12 +714,11 @@ foodcoopshop.Admin = {
         
         $('#product-delivery-rhythm-edit-form').remove();
         var dialogId = 'product-delivery-rhythm-edit-form';
-        $('#' + dialogId + ' label[for="dialogDeliveryRhythm"]').html(infoText);
         var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductDeliveryRhythmEdit(dialogId, productIds);
         $('body').append(dialogHtml);
-
         var dialog = $('#' + dialogId).dialog(dialogOptions);
         dialog.dialog('open');
+        $('#' + dialogId + ' label[for="dialogDeliveryRhythm"]').html(infoText);
         
         var select = $('#' + dialogId + ' #dialogDeliveryRhythmType');
         select.find('option').remove();
@@ -780,13 +779,13 @@ foodcoopshop.Admin = {
     },
     
     openBulkEditDeliveryRhythmDialog : function(productIds) {
-        var infoText = '<p>';
+        var infoText = '';
         if (productIds.length == 1) {
             infoText = foodcoopshop.LocalizedJs.admin.YouSelectedOneProduct;
         } else {
             infoText = foodcoopshop.LocalizedJs.admin.YouSelected0Products.replace(/\{0\}/, '<b>' + productIds.length + '</b>');
         }
-        infoText += ':</p>';
+        infoText += ':<br />';
         foodcoopshop.Admin.openEditDeliveryRhythmDialog(productIds, infoText, '1-week', '', '');
     },
     
