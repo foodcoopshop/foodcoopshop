@@ -57,29 +57,40 @@ class ProductsController extends AdminAppController
                  * START manufacturer OWNER check
                  */
                 if ($this->AppAuth->isManufacturer()) {
+                    // param productIds is passed via ajaxCall
+                    if (!empty($this->getRequest()->getData('productIds'))) {
+                        $productIds = $this->getRequest()->getData('productIds');
+                    }
                     // param productId is passed via ajaxCall
                     if (!empty($this->getRequest()->getData('productId'))) {
                         $ids = $this->Product->getProductIdAndAttributeId($this->getRequest()->getData('productId'));
-                        $productId = $ids['productId'];
+                        $productIds = [$ids['productId']];
                     }
                     // param objectId is passed via ajaxCall
                     if (!empty($this->getRequest()->getData('objectId'))) {
                         $ids = $this->Product->getProductIdAndAttributeId($this->getRequest()->getData('objectId'));
-                        $productId = $ids['productId'];
+                        $productIds = [$ids['productId']];
                     }
                     // param productId is passed as first argument of url
                     if (!empty($this->getRequest()->getParam('pass')[0])) {
-                        $productId = $this->getRequest()->getParam('pass')[0];
+                        $productIds = [$this->getRequest()->getParam('pass')[0]];
                     }
-                    if (!isset($productId)) {
+                    if (!isset($productIds)) {
                         return false;
                     }
-                    $product = $this->Product->find('all', [
-                        'conditions' => [
-                            'Products.id_product' => $productId
-                        ]
-                    ])->first();
-                    if (!empty($product) && $product->id_manufacturer == $this->AppAuth->getManufacturerId()) {
+                    $result = true;
+                    foreach($productIds as $productId) {
+                        $product = $this->Product->find('all', [
+                            'conditions' => [
+                                'Products.id_product' => $productId
+                            ]
+                        ])->first();
+                        if (empty($product) || $product->id_manufacturer != $this->AppAuth->getManufacturerId()) {
+                            $result = false;
+                            break;
+                        }
+                    }
+                    if ($result) {
                         return true;
                     }
                 }
