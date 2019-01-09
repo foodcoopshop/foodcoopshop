@@ -188,7 +188,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         
         $manufacturerId = 15;
-        $noDeliveryDays = date('Y-m-d', strtotime('next friday'));
+        $noDeliveryDays = date('Y-m-d', strtotime('friday next week'));
 
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay;';
@@ -204,7 +204,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->browser->submitFormById('manufacturersEditOptionsForm');
         $this->assertRegExpWithUnquotedString('Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: ' . Configure::read('app.timeHelper')->formatToDateShort($noDeliveryDays) . ' (1x)', $this->browser->getContent());
         
-        $noDeliveryDays = date('Y-m-d', strtotime($noDeliveryDays . ' + 1 week'));
+        $noDeliveryDays = date('Y-m-d', strtotime($noDeliveryDays . ' + 2 week'));
         $this->browser->setFieldById('manufacturers-no-delivery-days', [$noDeliveryDays]);
         $this->browser->submitFormById('manufacturersEditOptionsForm');
         
