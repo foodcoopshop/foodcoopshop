@@ -87,8 +87,8 @@ class SendInvoicesShell extends AppShell
         if (!Configure::read('app.includeStockProductsInInvoices')) {
             $orderDetails->where(function ($exp, $query) {
                 return $exp->or_([
-                    'Products.is_stock_product' => false,
-                    'Manufacturers.stock_management_enabled' => false
+                    'Products.is_stock_product' => 0, // do not use "false" here!
+                    'Manufacturers.stock_management_enabled' => 0 // do not use "false" here!
                 ]);
             });
         }
