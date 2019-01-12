@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-12-14 19:56+0100\n"
-"PO-Revision-Date: 2018-11-23 10:37+0100\n"
+"POT-Creation-Date: 2019-01-09 20:44+0100\n"
+"PO-Revision-Date: 2019-01-09 20:45+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -378,9 +378,6 @@ msgstr "Die Variante {0} für das Produkt {1} vom Hersteller {2} wurde erfolgrei
 msgid "A_new_product_was_created_for_{0}."
 msgstr "Ein neues Produkt für {0} wurde erfolgreich erstellt."
 
-msgid "The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}."
-msgstr "Der Lieferrhythmus des Produktes {0} vom Hersteller {1} wurde erfolgreich auf {2} geändert."
-
 msgid "Delivery_day"
 msgstr "Liefertag"
 
@@ -389,6 +386,12 @@ msgstr "Erster Liefertag"
 
 msgid "Order_possible_until"
 msgstr "Bestellbar bis"
+
+msgid "The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}."
+msgstr "Der Lieferrhythmus des Produktes {0} vom Hersteller {1} wurde erfolgreich auf {2} geändert."
+
+msgid "Delivery_rhythm_of_{0}_products_has_been_changed_successfully_to_{1}."
+msgstr "Der Lieferrhythmus von {0} Produkten wurde erfolgreich auf {1} geändert."
 
 msgid "Saving_successful."
 msgstr "Speichern erfolgreich."
@@ -1130,6 +1133,9 @@ msgstr "Bestelltag"
 
 msgid "Order_list_grouped_by"
 msgstr "Bestellliste gruppiert nach"
+
+msgid "Edit_delivery_rhythm_for_selected_products"
+msgstr "Lieferrhythmus für ausgewählte Produkte bearbeiten"
 
 msgid "Add_new_attribute_for_product_{0}"
 msgstr "Neue Variante für Produkt {0} erstellen"

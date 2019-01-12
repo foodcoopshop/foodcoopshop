@@ -6,15 +6,19 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 2.2.0
+ * @since         FoodCoopShop 2.4.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
 
-echo '<td class="hide cell-id">';
-    echo $product->id_product;
-echo '</td>';
+if (!empty($products)) {
+    $this->element('addScript', [
+        'script' => Configure::read('app.jsNamespace').".Admin.initEditDeliveryRhythmForSelectedProducts();"
+    ]);
+    echo '<a id="editDeliveryRhythmForSelectedProducts" class="btn btn-outline-light" href="javascript:void(0);"><i class="fa fa-clock-o"></i> ' . __d('admin', 'Edit_delivery_rhythm_for_selected_products') . '</a>';
+}
 
 ?>
