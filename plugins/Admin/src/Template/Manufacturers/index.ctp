@@ -104,7 +104,7 @@ foreach ($manufacturers as $manufacturer) {
             $details .= '<br />' . $manufacturer->address_manufacturer->phone;
         }
         echo '<div class="manufacturer-details-wrapper">';
-            echo '<i class="fas fa-phone-square ok fa-lg manufacturer-details-read-button" title="'.$details.'"></i>';
+            echo '<i class="fas fa-phone-square ok fa-lg manufacturer-details-read-button" title="'.h($details).'"></i>';
         echo '</div>';
 
         echo $this->Html->link(

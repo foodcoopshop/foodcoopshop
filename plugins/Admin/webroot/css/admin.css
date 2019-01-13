@@ -641,7 +641,7 @@ body.order_details td .pickup-day-comment-edit-button.btn-disabled i.fas,
 body.customers.index td .customer-comment-edit-button.btn-disabled i.fas {
   opacity: 0.3;
 }
-body.customers.index span.edit-wrapper {
+body.customers.index a.edit-link {
     float: left;
     margin-right: 3px;
 }
