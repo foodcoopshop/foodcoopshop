@@ -154,9 +154,9 @@ use Cake\Core\Configure;
         if ($advancedStockManagementEnabled) {
             echo '<th>' . $this->Paginator->sort('Products.is_stock_product', __d('admin', 'Stock_product')) . '</th>';
         }
-        echo '<th>'.__d('admin', 'Amount').'</th>';
+        echo '<th style="width:62px;">'.__d('admin', 'Amount').'</th>';
         echo '<th>'.__d('admin', 'Price').'</th>';
-        echo '<th>' . $this->Paginator->sort('Taxes.rate', __d('admin', 'Tax_rate')) . '</th>';
+        echo '<th style="width:70px;">' . $this->Paginator->sort('Taxes.rate', __d('admin', 'Tax_rate')) . '</th>';
         echo '<th class="center" style="width:69px;">' . $this->Paginator->sort('Products.created', __d('admin', 'New?')) . '</th>';
         echo '<th>'.__d('admin', 'Deposit').'</th>';
         echo '<th>' . $this->Paginator->sort('Products.delivery_rhythm_type', __d('admin', 'Delivery_rhythm')) . '</th>';

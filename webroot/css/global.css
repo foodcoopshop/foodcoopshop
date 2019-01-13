@@ -532,13 +532,16 @@ a.btn.btn-success:hover i.gold,
 i.gold {
   color: #FFD700 ! important;
 }
-i.fas.ok {
+i.fas.ok,
+i.far.ok {
 	color: #719f41;
 }
-i.fas.not-ok {
+i.fas.not-ok,
+i.far.not-ok {
 	color: red;
 }
-tr.selected i.fas {
+tr.selected td > i.fas,
+tr.selected td > i.far {
 	color: #fff;
 }
 .tooltipster-sidetip.tooltipster-light .tooltipster-box {

@@ -107,9 +107,7 @@ table.list th.icon {
   width: 20px;
 }
 table.list a.btn {
-	background: #e6e6e6 ! important;
-	padding-top: 0 ! important;
-	padding-bottom: 0 ! important;
+	padding: 0 4px ! important;
 }
 .sort a {
   background-repeat: no-repeat;

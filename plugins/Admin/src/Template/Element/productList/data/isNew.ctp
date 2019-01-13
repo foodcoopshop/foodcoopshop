@@ -18,17 +18,27 @@ use Cake\Core\Configure;
 echo '<td>';
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
         if (! $product->is_new) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')) . ' ' . __d('admin', 'New'), [
-                'class' => 'icon-with-text change-new-state change-new-state-active',
-                'id' => 'change-new-state-' . $product->id_product,
-                'title' => __d('admin', 'Mark_product_as_new_for_the_next_{0}_days?', [Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW')])
-            ], 'javascript:void(0);');
+            echo $this->Html->link(
+                '<i class="fas fa-minus-circle not-ok"></i>'  . ' ' . __d('admin', 'New'),
+                'javascript:void(0);',
+                [
+                    'class' => 'btn btn-outline-light change-new-state change-new-state-active',
+                    'id' => 'change-new-state-' . $product->id_product,
+                    'title' => __d('admin', 'Mark_product_as_new_for_the_next_{0}_days?', [Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW')]),
+                    'escape' => false
+                ]
+            );
         } else {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')) . ' Neu', [
-                'class' => 'icon-with-text change-new-state change-new-state-inactive',
-                'id' => 'change-new-state-' . $product->id_product,
-                'title' => __d('admin', 'Do_not_mark_product_as_new_any_more?')
-            ], 'javascript:void(0);');
+            echo $this->Html->link(
+                '<i class="fas fa-check-circle ok"></i>'  . ' ' . __d('admin', 'New'),
+                'javascript:void(0);',
+                [
+                    'class' => 'btn btn-outline-light change-new-state change-new-state-inactive',
+                    'id' => 'change-new-state-' . $product->id_product,
+                    'title' => __d('admin', 'Do_not_mark_product_as_new_any_more?'),
+                    'escape' => false
+                ]
+            );
         }
     }
 echo '</td>';

@@ -242,7 +242,8 @@ span.categories-for-dialog,
 span.tax-for-dialog,
 span.product-price-for-dialog,
 span.product-quantity-for-dialog,
-span.delivery-rhythm-for-dialog {
+span.delivery-rhythm-for-dialog,
+span.quantity-in-units {
     line-height: 21px;
     margin-left: 5px;
 }
@@ -264,8 +265,7 @@ td.is-stock-product .fa-check,
 td.delivery-rhythm .fa-check {
   color: #719f41;
 }
-td.is-stock-product i.fa,
-td.delivery-rhythm i.fas {
+td.is-stock-product i.fas.no-button {
 	margin-left: 5px;
 }
 span.is-declaration-ok-wrapper .fa-close,
@@ -637,15 +637,15 @@ body.payments.member_fee #add-payment-button-wrapper {
 body.order_details #add-instant-order-button-wrapper div.select {
     display: none;
 }
-body.order_details td .pickup-day-comment-edit-button.disabled img,
-body.customers.index td .customer-comment-edit-button.disabled img {
-  opacity: 0.2;
+body.order_details td .pickup-day-comment-edit-button.btn-disabled i.fas,
+body.customers.index td .customer-comment-edit-button.btn-disabled i.fas {
+  opacity: 0.3;
 }
 body.customers.index span.edit-wrapper {
     float: left;
     margin-right: 3px;
 }
-body.order_details.index td span.pickup-day-comment-wrapper {
+body.order_details.index td a.pickup-day-comment-edit-button {
   float: left;
   margin-right: 5px;
 }
@@ -761,10 +761,10 @@ body.products.index .table-cell-wrapper.deposit {
     text-align: right;
 }
 body.order_details.index .table-cell-wrapper.price {
-    width: 75px;
+    width: 80px;
 }
 .table-cell-wrapper.amount {
-    width: 48px;
+    width: 50px;
 }
 .table-cell-wrapper.group {
     width: 102px;

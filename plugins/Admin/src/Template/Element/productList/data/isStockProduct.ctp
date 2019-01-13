@@ -20,15 +20,20 @@ if (!$advancedStockManagementEnabled) {
 echo '<td class="is-stock-product">';
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
         if ($product->manufacturer->stock_management_enabled) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                'class' => 'product-is-stock-product-edit-button',
-                'title' => __d('admin', 'Is_stock_product'),
-            ], 'javascript:void(0);');
+            echo $this->Html->link(
+                '<i class="fas fa-edit ok"></i>',
+                'javascript:void(0);',
+                [
+                    'class' => 'btn btn-outline-light product-is-stock-product-edit-button',
+                    'title' => __d('admin', 'Is_stock_product'),
+                    'escape' => false
+                ]
+            );
         }
         if ($product->is_stock_product) {
-            echo '<i class="fas fa-check"></i>';
+            echo '<i class="fas fa-check no-button"></i>';
         } else {
-            echo '<i class="fas fa-close"></i>';
+            echo '<i class="fas fa-close no-button"></i>';
         }
     }
 echo '</td>';

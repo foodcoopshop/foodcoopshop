@@ -19,11 +19,17 @@ $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-deposit-button');"
 ]);
 
-echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('money_'.strtolower(Configure::read('app.currencyName')).'.png')) . $buttonText, [
-    'title' => __d('admin', 'Add_deposit_amount'),
-    'class' => 'add-payment-deposit-button icon-with-text',
-    'data-object-id' => $rowId
-], 'javascript:void(0);');
+echo $this->Html->link(
+    '<i class="fas fa-fw fa-'.strtolower(Configure::read('app.currencyName')).'-sign"></i>' . $buttonText,
+    'javascript:void(0);',
+    [
+        'data-object-id' => $rowId,
+        'class' => 'btn btn-outline-light add-payment-deposit-button',
+        'title' => __d('admin', 'Add_deposit_amount'),
+        'escape' => false
+    ]
+);
+
 echo '<div id="add-payment-deposit-form-' . $rowId . '" class="add-payment-form add-payment-deposit-form">';
 echo '<h3>'.__d('admin', 'Add_deposit').'</h3>';
 echo '<p>'.__d('admin', 'Add_deposit_amount_for_{0}', ['<b>' . $userName . '</b>']).':</p>';

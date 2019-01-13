@@ -18,10 +18,15 @@ echo '<td class="delivery-rhythm">';
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
         
         if (!$product->is_stock_product) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                'class' => 'product-delivery-rhythm-edit-button',
-                'title' => __d('admin', 'change_delivery_rhythm')
-            ], 'javascript:void(0);');
+            echo $this->Html->link(
+                '<i class="fas fa-edit ok"></i>',
+                'javascript:void(0);',
+                [
+                    'class' => 'btn btn-outline-light product-delivery-rhythm-edit-button',
+                    'title' => __d('admin', 'change_delivery_rhythm'),
+                    'escape' => false
+                ]
+            );
         }
         
         if ($product->is_stock_product) {

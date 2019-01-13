@@ -104,15 +104,19 @@ foreach ($manufacturers as $manufacturer) {
             $details .= '<br />' . $manufacturer->address_manufacturer->phone;
         }
         echo '<div class="manufacturer-details-wrapper">';
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('telephone.png')), [
-                'class' => 'manufacturer-details-read-button',
-                'title' => $details
-            ], 'javascript:void(0);');
+            echo '<i class="fas fa-phone-square ok fa-lg manufacturer-details-read-button" title="'.$details.'"></i>';
         echo '</div>';
 
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-            'title' => __d('admin', 'Edit')
-        ], $this->Slug->getManufacturerEdit($manufacturer->id_manufacturer));
+        echo $this->Html->link(
+            '<i class="fas fa-edit ok"></i>',
+            $this->Slug->getManufacturerEdit($manufacturer->id_manufacturer),
+            [
+                'class' => 'btn btn-outline-light',
+                'title' => __d('admin', 'Edit'),
+                'escape' => false
+            ]
+        );
+        
         echo '&nbsp;<b>' . $manufacturer->name . '</b><br />';
         echo $manufacturer->address_manufacturer->city;
         echo '<br /><span class="email">' . $manufacturer->address_manufacturer->email . '</span>';
@@ -123,17 +127,20 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '</td>';
 
-    echo '<td style="width:140px;">';
+    echo '<td style="width:145px;">';
     $sumProductCount += $manufacturer->product_count;
     $productString = __d('admin', '{0,plural,=1{1_product} other{#_products}}', [$manufacturer->product_count]);
-    echo $this->Html->getJqueryUiIcon(
-        $this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . str_replace(' ', '&nbsp;', $productString),
+    
+    echo $this->Html->link(
+        '<i class="fas fa-tag ok"></i> ' . str_replace(' ', '&nbsp;', $productString),
+        $this->Slug->getProductAdmin($manufacturer->id_manufacturer),
         [
-        'title' => __d('admin', 'Show_all_products_from_{0}', [$manufacturer->name]),
-        'class' => 'icon-with-text'
-        ],
-        $this->Slug->getProductAdmin($manufacturer->id_manufacturer)
+            'class' => 'btn btn-outline-light order-detail-product-price-edit-button',
+            'title' => __d('admin', 'Show_all_products_from_{0}', [$manufacturer->name]),
+            'escape' => false
+        ]
     );
+    
     echo '</td>';
 
     echo '<td>';
@@ -144,14 +151,14 @@ foreach ($manufacturers as $manufacturer) {
             $depositCreditBalanceClasses[] = 'negative';
         }
         $depositCreditBalanceHtml = '<span class="'.implode(' ', $depositCreditBalanceClasses).'">' . $this->Number->formatAsCurrency($manufacturer->deposit_credit_balance);
-
-        echo $this->Html->getJqueryUiIcon(
+        echo $this->Html->link(
             __d('admin', 'Deposit') . ':&nbsp;' . $depositCreditBalanceHtml,
+            $this->Slug->getDepositList($manufacturer->id_manufacturer),
             [
-            'class' => 'icon-with-text',
-            'title' => __d('admin', 'Show_deposit_account')
-            ],
-            $this->Slug->getDepositList($manufacturer->id_manufacturer)
+                'class' => 'btn btn-outline-light',
+                'title' => __d('admin', 'Show_deposit_account'),
+                'escape' => false
+            ]
         );
     }
     echo '</td>';
@@ -206,15 +213,17 @@ foreach ($manufacturers as $manufacturer) {
     echo '</td>';
 
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon(
-        $this->Html->image($this->Html->getFamFamFamPath('page_white_gear.png')),
+    
+    echo $this->Html->link(
+        '<i class="fas fa-cog ok"></i>',
+        $this->Slug->getManufacturerEditOptions($manufacturer->id_manufacturer),
         [
-            'title' => __d('admin', 'Edit_manufacturer_settings')
-        ],
-        $this->Slug->getManufacturerEditOptions($manufacturer->id_manufacturer)
+            'class' => 'btn btn-outline-light',
+            'title' => __d('admin', 'Edit_manufacturer_settings'),
+            'escape' => false
+        ]
     );
-    echo '</td>';
-
+    
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
         echo '<td>';
             echo $manufacturer->variable_member_fee.'%';
@@ -240,10 +249,16 @@ foreach ($manufacturers as $manufacturer) {
     echo '<td style="width: 29px;">';
     if ($manufacturer->active) {
         $manufacturerLink = $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name);
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
-            'title' => __d('admin', 'Manufacturer_profile'),
-            'target' => '_blank'
-        ], $manufacturerLink);
+        echo $this->Html->link(
+            '<i class="fas fa-arrow-right ok"></i>',
+            $manufacturerLink,
+            [
+                'class' => 'btn btn-outline-light',
+                'title' => __d('admin', 'Manufacturer_profile'),
+                'target' => '_blank',
+                'escape' => false
+            ]
+        );
     }
     echo '</td>';
     echo '</tr>';

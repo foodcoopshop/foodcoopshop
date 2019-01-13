@@ -25,10 +25,15 @@ if (!empty($product->unit)) {
 echo '<td class="cell-price ' . ($product->price_is_zero ? 'not-available' : '') . '">';
     echo '<div class="table-cell-wrapper price">';
     if (empty($product->product_attributes)) {
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-            'class' => 'product-price-edit-button',
-            'title' => __d('admin', 'change_price')
-        ], 'javascript:void(0);');
+        echo $this->Html->link(
+            '<i class="fas fa-edit ok"></i>',
+            'javascript:void(0);',
+            [
+                'class' => 'btn btn-outline-light product-price-edit-button',
+                'title' => __d('admin', 'change_price'),
+                'escape' => false
+            ]
+        );
         echo '<span class="price-for-dialog '.(!empty($product->unit) && $product->unit->price_per_unit_enabled ? 'hide' : '').'">';
         echo $this->Number->formatAsCurrency($product->gross_price);
         echo '</span>';

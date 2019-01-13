@@ -16,11 +16,16 @@
 if ($groupBy == '') {
     echo '<td style="text-align:center;">';
         if ($editRecordAllowed) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
-                'class' => 'delete-order-detail',
-                'id' => 'delete-order-detail-' . $orderDetail->id_order_detail,
-                'title' => __d('admin', 'Click_to_cancel_product')
-            ], 'javascript:void(0);');
+            echo $this->Html->link(
+                '<i class="fas fa-times-circle not-ok"></i>',
+                'javascript:void(0);',
+                [
+                    'class' => 'btn btn-outline-light delete-order-detail',
+                    'id' => 'delete-order-detail-' . $orderDetail->id_order_detail,
+                    'title' => __d('admin', 'Click_to_cancel_product'),
+                    'escape' => false
+                ]
+            );
         }
     echo '</td>';    
 }

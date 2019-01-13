@@ -16,10 +16,15 @@
 echo '<td class="amount ' . (empty($product->product_attributes) && $product->stock_available->quantity <= 0 ? 'not-available' : '') . '">';
 
     if (empty($product->product_attributes)) {
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-            'class' => 'product-quantity-edit-button',
-            'title' => __d('admin', 'change_amount')
-        ], 'javascript:void(0);');
+        echo $this->Html->link(
+            '<i class="fas fa-edit ok"></i>',
+            'javascript:void(0);',
+            [
+                'class' => 'btn btn-outline-light product-quantity-edit-button',
+                'title' => __d('admin', 'change_amount'),
+                'escape' => false
+            ]
+        );
         echo '<span class="quantity-for-dialog">';
         echo $this->Number->formatAsDecimal($product->stock_available->quantity, 0);
         echo '</span>';
