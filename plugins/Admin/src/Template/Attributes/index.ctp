@@ -73,9 +73,15 @@ foreach ($attributes as $attribute) {
     echo '</td>';
 
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-        'title' => __d('admin', 'Edit')
-    ], $this->Slug->getAttributeEdit($attribute->id_attribute));
+    echo $this->Html->link(
+        '<i class="fas fa-edit ok"></i>',
+        $this->Slug->getAttributeEdit($attribute->id_attribute),
+        [
+            'class' => 'btn btn-outline-light',
+            'title' => __d('admin', 'Edit'),
+            'escape' => false
+        ]
+    );
     echo '</td>';
 
     echo '<td>';
@@ -84,7 +90,7 @@ foreach ($attributes as $attribute) {
 
     echo '<td style="text-align:center;padding-left:5px;width:42px;">';
         if ($attribute->can_be_used_as_unit == 1) {
-            echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
+            echo '<i class="fas fa-check-circle ok"></i>';
         }
     echo '</td>';
 

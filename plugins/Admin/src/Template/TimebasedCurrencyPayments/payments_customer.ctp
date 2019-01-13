@@ -61,7 +61,7 @@ if ($isDeleteAllowedGlobally) {
 <?php
     if ($showAddForm) {
         echo '<div id="add-timebased-currency-payment-button-wrapper">';
-        echo $this->Html->link('<i class="fas fa-clock-o fa-lg"></i> Geleistete Zeit eintragen',
+        echo $this->Html->link('<i class="far fa-clock fa-lg"></i> Geleistete Zeit eintragen',
             $this->Slug->getTimebasedCurrencyPaymentAdd($customerId),
             [
                 'class' => 'btn btn-success',
@@ -169,22 +169,29 @@ echo '<table class="list">';
                 }
             echo '</td>';
 
-            echo '<td style="text-align:center;width:'.($isEditAllowedGlobally && $isDeleteAllowedGlobally ? 50 : 25).'px;">';
+            echo '<td style="text-align:center;width:'.($isEditAllowedGlobally && $isDeleteAllowedGlobally ? 60 : 30).'px;">';
                 if ($payment['isEditAllowed'] && $isEditAllowedGlobally) {
-                    echo $this->Html->getJqueryUiIcon(
-                        $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
+                    echo $this->Html->link(
+                        '<i class="fas fa-edit ok"></i>',
+                        $this->Slug->getTimebasedCurrencyPaymentEdit($payment['paymentId']),
                         [
-                            'title' => 'bearbeiten?'
-                        ],
-                        $this->Slug->getTimebasedCurrencyPaymentEdit($payment['paymentId'])
+                            'class' => 'btn btn-outline-light',
+                            'title' => __d('admin', 'Edit'),
+                            'escape' => false
+                        ]
                     );
                 }
                 if ($isDeleteAllowedGlobally) {
                     if ($payment['isDeleteAllowed']) {
-                        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
-                            'class' => 'delete-payment-button',
-                            'title' => 'löschen?'
-                        ], 'javascript:void(0);');
+                        echo $this->Html->link(
+                            '<i class="fas fa-minus-circle not-ok"></i>',
+                            'javascript:void(0);',
+                            [
+                                'class' => 'btn btn-outline-light delete-payment-button',
+                                'title' => __d('admin', 'Delete'),
+                                'escape' => false
+                            ]
+                        );
                     }
                 }
             echo '</td>';

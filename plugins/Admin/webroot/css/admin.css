@@ -511,7 +511,6 @@ body.products.index .toggle-sync-button-wrapper {
 }
 body.configurations.index td.sync-domain-list a.btn {
   float: right;
-  margin-bottom: 5px;
 }
 
 #actionLogs div.changed {
@@ -1257,14 +1256,14 @@ body.payments tr.last-row-of-year td {
     border-top-color: #719f41;
     border-top-style: solid;
 }
-body.payments img.payment-approval,
-body.reports.payment img.payment-approval {
+body.payments i.payment-approval,
+body.reports.payment i.payment-approval {
     float: left;
     margin-top: 2px;
     margin-right: 2px;
 }
-body.payments .payment-approval-comment-wrapper,
-body.reports.payment .payment-approval-comment-wrapper {
+body.payments .payment-approval-comment,
+body.reports.payment .payment-approval-comment {
     float: left;
     margin-right: 2px;
 }
@@ -1273,6 +1272,7 @@ body.payments.edit form {
 }
 body.payments.edit .email-template-info {
     float: left;
+    margin-left: 3px;
 }
 body.payments .after .jquery-ui-icon {
     float: left;

@@ -95,16 +95,15 @@ if (count($payments) == 0) {
                     break;
             }
             if ($payment['approval_comment'] != '') {
-                echo '<span class="payment-approval-comment-wrapper">';
-                    echo $this->Html->getJqueryUiIcon(
-                        $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
-                        [
-                            'class' => 'payment-approval-comment',
-                            'title' => $payment['approval_comment']
-                        ],
-                        'javascript:void(0);'
-                    );
-                echo '</span>';
+                echo $this->Html->link(
+                    '<i class="fas fa-comment-dots ok"></i>',
+                    'javascript:void(0);',
+                    [
+                        'class' => 'btn btn-outline-light payment-approval-comment',
+                        'title' => $payment['approval_comment'],
+                        'escape' => false
+                    ]
+                );
             }
         }
 

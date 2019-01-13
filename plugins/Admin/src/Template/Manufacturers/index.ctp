@@ -135,7 +135,7 @@ foreach ($manufacturers as $manufacturer) {
         '<i class="fas fa-tag ok"></i> ' . str_replace(' ', '&nbsp;', $productString),
         $this->Slug->getProductAdmin($manufacturer->id_manufacturer),
         [
-            'class' => 'btn btn-outline-light order-detail-product-price-edit-button',
+            'class' => 'btn btn-outline-light',
             'title' => __d('admin', 'Show_all_products_from_{0}', [$manufacturer->name]),
             'escape' => false
         ]
@@ -175,13 +175,14 @@ foreach ($manufacturers as $manufacturer) {
                 $timebasedCurrencyCreditBalanceHtml = '<span class="'.implode(' ', $timebasedCurrencyCreditBalanceClasses).'">' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($manufacturer->timebased_currency_credit_balance);
 
                 if ($appAuth->isSuperadmin()) {
-                    echo $this->Html->getJqueryUiIcon(
+                    echo $this->Html->link(
                         $timebasedCurrencyCreditBalanceHtml,
+                        $this->Slug->getTimebasedCurrencyBalanceForManufacturers($manufacturer->id_manufacturer),
                         [
-                            'class' => 'icon-with-text',
-                            'title' => __d('admin', 'Show_{0}', [$this->TimebasedCurrency->getName()])
-                        ],
-                        $this->Slug->getTimebasedCurrencyBalanceForManufacturers($manufacturer->id_manufacturer)
+                            'class' => 'btn btn-outline-light',
+                            'title' => __d('admin', 'Show_{0}', [$this->TimebasedCurrency->getName()]),
+                            'escape' => false
+                        ]
                     );
                 } else {
                     echo $timebasedCurrencyCreditBalanceHtml;

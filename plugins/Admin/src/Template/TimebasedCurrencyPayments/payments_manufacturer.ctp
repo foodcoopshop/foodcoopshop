@@ -51,28 +51,26 @@ echo '<table class="list">';
 
                 $details = $this->Html->getCustomerAddress($payment['customer']);
                 $details .= '<br />' . (empty($payment['customer']) ? '' : $payment['customer']->email);
-
-                echo '<span style="float: left;margin-right: 5px;">';
-                    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('telephone.png')), [
-                        'class' => 'customer-detail',
-                        'title' => $details
-                    ], 'javascript:void(0);');
+                
+                echo '<span style="float:left;margin-right:5px;margin-top:1px;">';
+                    echo '<i class="fas fa-phone-square ok fa-lg customer-detail" title="'.h($details).'"></i>';
                 echo '</span>';
 
-                echo '<span style="float: left;">' . $this->Html->getNameRespectingIsDeleted($payment['customer']).'</span>';
+                echo '<span style="float:left;margin-right:3px;">' . $this->Html->getNameRespectingIsDeleted($payment['customer']).'</span>';
 
                 if ($appAuth->isManufacturer()) {
                     $detailLink = $this->Slug->getTimebasedCurrencyPaymentDetailsForManufacturers($payment['customerId']);
                 } else {
                     $detailLink = $this->Slug->getTimebasedCurrencyPaymentDetailsForSuperadmins($payment['manufacturerId'], $payment['customerId']);
                 }
-                echo '<span style="float: right;">'.$this->Html->getJqueryUiIcon(
-                    $this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Details',
+                echo $this->Html->link(
+                    '<i class="fas fa-search ok"></i> ' . __d('admin', 'Details'),
+                    $detailLink,
                     [
-                        'title' => 'Details anzeigen',
-                        'class' => 'icon-with-text',
-                    ],
-                    $detailLink
+                        'class' => 'btn btn-outline-light',
+                        'title' => __d('admin', 'Details'),
+                        'escape' => false
+                    ]
                 ).'</span>';
 
             echo '</td>';

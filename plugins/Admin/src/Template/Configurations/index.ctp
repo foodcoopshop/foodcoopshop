@@ -75,10 +75,15 @@ $this->element('addScript', [
                 echo '</td>';
 
                 echo '<td style="width:30px;">';
-                    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                        'title' => __d('admin', 'Edit'),
-                        'class' => 'edit-configuration-button'
-                    ], $this->Slug->getConfigurationEdit($configuration->id_configuration, $configuration->name));
+                    echo $this->Html->link(
+                        '<i class="fas fa-edit ok"></i>',
+                        $this->Slug->getConfigurationEdit($configuration->id_configuration, $configuration->name),
+                        [
+                            'class' => 'btn btn-outline-light',
+                            'title' => __d('admin', 'Edit'),
+                            'escape' => false
+                        ]
+                    );
                 echo '</td>';
 
                 echo '<td>';
@@ -131,18 +136,20 @@ $this->element('addScript', [
                     echo '<td>'.$syncDomain->domain.'</td>';
                     echo '<td align="center">';
                     if ($syncDomain->active == 1) {
-                        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
+                        echo '<i class="fas fa-check-circle ok"></i>';
                     } else {
-                        echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
+                        echo '<i class="fas fa-minus-circle not-ok"></i>';
                     }
                     echo '</td>';
                     echo '<td>';
-                    echo $this->Html->getJqueryUiIcon(
-                        $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
+                    echo $this->Html->link(
+                        '<i class="fas fa-edit ok"></i>',
+                        $this->Network->getSyncDomainEdit($syncDomain->id),
                         [
-                        'title' => __d('admin', 'Edit')
-                        ],
-                        $this->Network->getSyncDomainEdit($syncDomain->id)
+                            'class' => 'btn btn-outline-light',
+                            'title' => __d('admin', 'Edit'),
+                            'escape' => false
+                        ]
                     );
                     echo '</td>';
                     echo '<tr>';

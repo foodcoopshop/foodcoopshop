@@ -64,9 +64,15 @@ foreach ($sliders as $slider) {
     echo '<tr id="slider-' . $slider->id_slider . '" class="' . implode(' ', $rowClass) . '">';
 
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-        'title' => __d('admin', 'Edit')
-    ], $this->Slug->getSliderEdit($slider->id_slider));
+    echo $this->Html->link(
+        '<i class="fas fa-edit ok"></i>',
+        $this->Slug->getSliderEdit($slider->id_slider),
+        [
+            'class' => 'btn btn-outline-light',
+            'title' => __d('admin', 'Edit'),
+            'escape' => false
+        ]
+    );
     echo '</td>';
 
     echo '<td class="hide">';
@@ -83,9 +89,9 @@ foreach ($sliders as $slider) {
 
     echo '<td align="center">';
     if ($slider->active == 1) {
-        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
+        echo '<i class="fas fa-check-circle ok"></i>';
     } else {
-        echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
+        echo '<i class="fas fa-minus-circle ok"></i>';
     }
     echo '</td>';
 

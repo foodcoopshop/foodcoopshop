@@ -37,9 +37,15 @@ foreach ($pages as $page) {
     echo '</td>';
 
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-        'title' => __d('admin', 'Edit')
-    ], $this->Slug->getPageEdit($page->id_page));
+    echo $this->Html->link(
+        '<i class="fas fa-edit ok"></i>',
+        $this->Slug->getPageEdit($page->id_page),
+        [
+            'class' => 'btn btn-outline-light',
+            'title' => __d('admin', 'Edit'),
+            'escape' => false
+        ]
+    );
     echo '</td>';
 
     echo '<td>';
@@ -61,22 +67,28 @@ foreach ($pages as $page) {
 
     echo '<td align="center">';
     if ($page->is_private == 1) {
-        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
+        echo '<i class="fas fa-check-circle ok"></i>';
     }
     echo '</td>';
 
     echo '<td align="center">';
     if ($page->full_width == 1) {
-        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
+        echo '<i class="fas fa-check-circle ok"></i>';
     }
     echo '</td>';
 
     echo '<td align="center">';
     if ($page->extern_url != '') {
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('link.png')), [
-            'target' => '_blank',
-            'title' => $page->extern_url
-        ], $page->extern_url);
+        echo $this->Html->link(
+            '<i class="fas fa-link ok"></i>',
+            $page->extern_url,
+            [
+                'class' => 'btn btn-outline-light',
+                'target' => '_blank',
+                'title' => $page->extern_url,
+                'escape' => false
+            ]
+        );
     }
     echo '</td>';
 
@@ -92,18 +104,24 @@ foreach ($pages as $page) {
 
     echo '<td align="center">';
     if ($page->active == 1) {
-        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
+        echo '<i class="fas fa-check-circle ok"></i>';
     } else {
-        echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
+        echo '<i class="fas fa-minus-circle not-ok"></i>';
     }
     echo '</td>';
 
     echo '<td>';
     if ($page->active) {
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
-            'title' => __d('admin', 'Show_page'),
-            'target' => '_blank'
-        ], $this->Slug->getPageDetail($page->id_page, $page->title));
+        echo $this->Html->link(
+            '<i class="fas fa-arrow-right ok"></i>',
+            $this->Slug->getPageDetail($page->id_page, $page->title),
+            [
+                'class' => 'btn btn-outline-light',
+                'title' => __d('admin', 'Show_page'),
+                'target' => '_blank',
+                'escape' => false
+            ]
+        );
     }
     echo '</td>';
 

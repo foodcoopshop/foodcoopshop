@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-01-13 22:26+0100\n"
-"PO-Revision-Date: 2019-01-13 22:26+0100\n"
+"POT-Creation-Date: 2019-01-13 23:18+0100\n"
+"PO-Revision-Date: 2019-01-13 23:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1880,6 +1880,9 @@ msgstr "z.B. \"10\" für 10%"
 
 msgid "Tax_rates_can_not_be_changed_later."
 msgstr "Steuersätze sind später nicht änderbar."
+
+msgid "Delete"
+msgstr "Löschen"
 
 msgid "Show_product"
 msgstr "Produkt anzeigen"

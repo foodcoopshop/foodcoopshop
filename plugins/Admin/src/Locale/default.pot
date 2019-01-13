@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-01-13 22:26+0100\n"
+"POT-Creation-Date: 2019-01-13 23:18+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1878,6 +1878,9 @@ msgid "e.g._10_for_10%"
 msgstr ""
 
 msgid "Tax_rates_can_not_be_changed_later."
+msgstr ""
+
+msgid "Delete"
 msgstr ""
 
 msgid "Show_product"

@@ -205,7 +205,7 @@ foreach ($customers as $customer) {
             if ($appAuth->isSuperadmin()) {
                 echo $this->Html->link(
                     $timebasedCurrencyCreditBalanceHtml,
-                    $this->Slug->getTimebasedCurrencyPaymentDetailsForSuperadmins($customer->id_customer),
+                    $this->Slug->getTimebasedCurrencyPaymentDetailsForSuperadmins(0, $customer->id_customer),
                     [
                         'class' => 'btn btn-outline-light',
                         'title' => __d('admin', 'Show_{0}', [$this->TimebasedCurrency->getName()]),

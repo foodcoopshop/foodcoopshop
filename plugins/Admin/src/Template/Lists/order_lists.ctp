@@ -62,19 +62,29 @@ use Cake\Core\Configure;
         echo '</td>';
 
         echo '<td>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' ' . __d('admin', 'Show_list_(grouped_by_product)'), [
-            'title' => __d('admin', 'Show_list_(grouped_by_product)'),
-            'target' => '_blank',
-            'class' => 'icon-with-text'
-        ], $file['product_list_link']);
+        echo $this->Html->link(
+            '<i class="fas fa-search ok"></i> ' . __d('admin', 'Show_list_(grouped_by_product)'),
+            $file['product_list_link'],
+            [
+                'class' => 'btn btn-outline-light',
+                'target' => '_blank',
+                'title' => __d('admin', 'Show_list_(grouped_by_product)'),
+                'escape' => false
+            ]
+        );
         echo '</td>';
 
         echo '<td>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' ' . __d('admin', 'Show_list_(grouped_by_member)'), [
-            'title' => __d('admin', 'Show_list_(grouped_by_member)'),
-            'target' => '_blank',
-            'class' => 'icon-with-text'
-        ], $file['customer_list_link']);
+        echo $this->Html->link(
+            '<i class="fas fa-search ok"></i> ' . __d('admin', 'Show_list_(grouped_by_member)'),
+            $file['customer_list_link'],
+            [
+                'class' => 'btn btn-outline-light',
+                'target' => '_blank',
+                'title' => __d('admin', 'Show_list_(grouped_by_member)'),
+                'escape' => false
+            ]
+        );
         echo '</td>';
 
         echo '</tr>';
