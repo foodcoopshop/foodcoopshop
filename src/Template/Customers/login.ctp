@@ -50,7 +50,7 @@ $this->element('addScript', ['script' =>
         ?>
          
         <div class="sc"></div>
-        <button type="submit" class="btn <?php echo $btnClass; ?>"><i class="fas fa-sign-in fa-lg"></i> <?php echo __('Sign_in'); ?></button>
+        <button type="submit" class="btn <?php echo $btnClass; ?>"><i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in'); ?></button>
         
   </form>
   
