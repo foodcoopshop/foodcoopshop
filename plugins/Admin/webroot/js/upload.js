@@ -16,14 +16,22 @@ foodcoopshop.Upload = {
     saveBlogPostTmpImageInForm : function () {
         var filename = $('.featherlight-content form .drop img').attr('src');
         $('body.blog_posts input[name="BlogPosts[tmp_image]"').val(filename);
-        $('body.blog_posts a.add-image-button').removeClass('uploaded').addClass('uploaded').find('img').attr('src', filename);
+        var button = $('body.blog_posts a.add-image-button');
+        button.removeClass('uploaded').addClass('uploaded');
+        button.html('');
+        var newImage = $('<img />').attr('src', filename);
+        button.append(newImage);
         foodcoopshop.AppFeatherlight.closeLightbox();
     },
 
     saveManufacturerTmpImageInForm : function () {
         var filename = $('.featherlight-content form .drop img').attr('src');
         $('body.manufacturers input[name="Manufacturers[tmp_image]"').val(filename);
-        $('body.manufacturers a.add-image-button').removeClass('uploaded').addClass('uploaded').find('img').attr('src', filename);
+        var button = $('body.manufacturers a.add-image-button');
+        button.removeClass('uploaded').addClass('uploaded');
+        button.html('');
+        var newImage = $('<img />').attr('src', filename);
+        button.append(newImage);
         foodcoopshop.AppFeatherlight.closeLightbox();
     },
 
@@ -39,14 +47,22 @@ foodcoopshop.Upload = {
     saveCategoryTmpImageInForm : function () {
         var filename = $('.featherlight-content form .drop img').attr('src');
         $('body.categories input[name="Categories[tmp_image]"').val(filename);
-        $('body.categories a.add-image-button').removeClass('uploaded').addClass('uploaded').find('img').attr('src', filename);
+        var button = $('body.categories a.add-image-button');
+        button.removeClass('uploaded').addClass('uploaded');
+        button.html('');
+        var newImage = $('<img />').attr('src', filename);
+        button.append(newImage);
         foodcoopshop.AppFeatherlight.closeLightbox();
     },
 
     saveSliderTmpImageInForm : function () {
         var filename = $('.featherlight-content form .drop img').attr('src');
         $('body.sliders input[name="Sliders[tmp_image]"').val(filename);
-        $('body.sliders a.add-image-button').removeClass('uploaded').addClass('uploaded').find('img').attr('src', filename);
+        var button = $('body.sliders a.add-image-button');
+        button.removeClass('uploaded').addClass('uploaded');
+        button.html('');
+        var newImage = $('<img />').attr('src', filename);
+        button.append(newImage);
         foodcoopshop.AppFeatherlight.closeLightbox();
     },
 

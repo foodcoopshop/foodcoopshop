@@ -73,11 +73,16 @@ if ($imageSrc) {
 }
 echo '</label>';
 echo '<div style="float:right;">';
-echo $this->Html->getJqueryUiIcon($imageSrc ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
-    'class' => 'add-image-button ' . ($imageSrc ? 'uploaded' : ''),
-    'title' => __d('admin', 'Upload_new_image_or_change_it'),
-    'data-object-id' => $idForImageUpload
-], 'javascript:void(0);');
+echo $this->Html->link(
+    $imageSrc ? $this->Html->image($imageSrc) : '<i class="fas fa-plus-square"></i>',
+    'javascript:void(0);',
+    [
+        'class' => 'btn btn-outline-light add-image-button ' . ($imageSrc ? 'uploaded' : ''),
+        'title' => __d('admin', 'Upload_new_image_or_change_it'),
+        'data-object-id' => $idForImageUpload,
+        'escape' => false
+    ]
+);
 echo '</div>';
 echo $this->Form->hidden('Categories.tmp_image');
 echo '</div>';

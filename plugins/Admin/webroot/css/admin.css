@@ -840,25 +840,28 @@ body.order_details.index .table-cell-wrapper.price {
 .featherlight-content .mini-upload-form .img-delete {
     right: 30px;
 }
+.add-image-button {
+	float: left;
+}
 body.manufacturers.index span.email {
     word-wrap: break-word;
 }
-body.manufacturers li.ui-state-default a.uploaded,
-body.blog_posts li.ui-state-default a.uploaded,
-body.categories li.ui-state-default a.uploaded {
+body.manufacturers a.uploaded,
+body.blog_posts a.uploaded,
+body.categories a.uploaded {
     float: left;
     margin-top: 2px; /* layout fix: top line was not shown */
 }
-body.manufacturers li.ui-state-default a.uploaded img {
+body.manufacturers a.uploaded img {
     width: 247px;
     height: auto;
 }
-body.blog_posts li.ui-state-default a.uploaded img {
+body.blog_posts a.uploaded img {
     width: 245px;
     height: auto;
 }
-body.categories li.ui-state-default a.uploaded img,
-body.sliders li.ui-state-default a.uploaded img {
+body.categories a.uploaded img,
+body.sliders a.uploaded img {
     width: auto;
     max-width: 758px;
     height: auto;

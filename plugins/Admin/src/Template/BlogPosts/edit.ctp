@@ -71,11 +71,16 @@ if ($imageExists) {
 }
 echo '</label>';
 echo '<div class="blog-post-image-wrapper">';
-    echo $this->Html->getJqueryUiIcon($imageExists ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
-        'class' => 'add-image-button ' . ($imageExists ? 'uploaded' : ''),
-        'title' => __d('admin', 'Upload_new_image_or_change_it'),
-        'data-object-id' => $idForImageUpload
-    ], 'javascript:void(0);');
+    echo $this->Html->link(
+        $imageExists ? $this->Html->image($imageSrc) : '<i class="fas fa-plus-square"></i>',
+        'javascript:void(0);',
+        [
+            'class' => 'btn btn-outline-light add-image-button ' . ($imageExists ? 'uploaded' : ''),
+            'title' => __d('admin', 'Upload_new_image_or_change_it'),
+            'data-object-id' => $idForImageUpload,
+            'escape' => false
+        ]
+    );
     $defaultImageExplanationText = __d('admin', 'If_the_blog_post_is_associated_to_a_manufacturer_and_no_image_selected_the_default_image_of_the_manufacturer_profile_is_shown.');
     if ($appAuth->isManufacturer()) {
         $defaultImageExplanationText = __d('admin', 'If_no_image_selected_the_default_image_of_your_manufacturer_profile_is_shown.');
