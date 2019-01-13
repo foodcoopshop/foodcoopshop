@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-01-09 20:44+0100\n"
-"PO-Revision-Date: 2019-01-12 18:49+0100\n"
+"POT-Creation-Date: 2019-01-13 21:32+0100\n"
+"PO-Revision-Date: 2019-01-13 21:32+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -359,6 +359,9 @@ msgstr "Mehr anzeigen"
 
 msgid "Show_less"
 msgstr "Weniger anzeigen"
+
+msgid "Close"
+msgstr "Schließen"
 
 msgid "route_cart"
 msgstr "warenkorb"

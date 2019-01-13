@@ -184,6 +184,11 @@ h2.info2 {
 }
 #flashMessage .closer {
     float: right;
+    height: 20px;
+    width: 20px;
+    border-radius: 100px;
+    text-align: center;
+    background: white;
 }
 #flashMessage.error {
     color: #fff;
