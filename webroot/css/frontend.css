@@ -795,7 +795,9 @@ body.carts.detail #load-last-order-details,
     padding: 4px 8px;
     font-size: 13px;
 }
-
+.btn-outline-light {
+	padding: 0px 4px;
+}
 .entity-wrapper .btn,
 #cart .btn-success {
     padding-top: 6px;
@@ -1125,14 +1127,14 @@ body.pages.detail #inner-content,
 body.manufacturers.detail #inner-content {
     position: relative;
 }
-body.blog_posts ul.jquery-ui-icon,
-body.pages.detail ul.jquery-ui-icon,
-body.manufacturers.detail .manufacturer-infos ul.jquery-ui-icon {
-    top: -15px;
-    right: 5px;
+body.blog_posts a.edit-shortcut-button,
+body.pages.detail a.edit-shortcut-button,
+body.manufacturers.detail .manufacturer-infos a.edit-shortcut-button {
+    top: -17px;
+    right: 3px;
     position: absolute;
 }
-.product-wrapper .second-column ul.jquery-ui-icon {
+.product-wrapper .second-column a.edit-shortcut-button {
   position: absolute;
   top: 0;
   right: 5px;

@@ -38,12 +38,14 @@ if (!empty($page['children'])) {
 }
 
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-    echo $this->Html->getJqueryUiIcon(
-        $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
+    echo $this->Html->link(
+        '<i class="fas fa-edit ok"></i>',
+        $this->Slug->getPageEdit($page->id_page),
         [
-            'title' => __('Edit')
-        ],
-        $this->Slug->getPageEdit($page->id_page)
+            'class' => 'btn btn-outline-light edit-shortcut-button',
+            'title' => __d('admin', 'Edit'),
+            'escape' => false
+        ]
     );
 }
 

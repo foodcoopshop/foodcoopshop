@@ -81,12 +81,14 @@ if ($product['description'] != '') {
     );
 
     if ($appAuth->isSuperadmin() || ($appAuth->isManufacturer() && $product['id_manufacturer'] == $appAuth->getManufacturerId())) {
-        echo $this->Html->getJqueryUiIcon(
-            $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
+        echo $this->Html->link(
+            '<i class="fas fa-edit ok"></i>',
+            $this->Slug->getProductAdmin(($appAuth->isSuperadmin() ? $product['id_manufacturer'] : null), $product['id_product']),
             [
-                'title' => __('Edit_product')
-            ],
-            $this->Slug->getProductAdmin(($appAuth->isSuperadmin() ? $product['id_manufacturer'] : null), $product['id_product'])
+                'class' => 'btn btn-outline-light edit-shortcut-button',
+                'title' => __d('admin', 'Edit'),
+                'escape' => false
+            ]
         );
     }
 
