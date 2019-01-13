@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-01-09 20:44+0100\n"
-"PO-Revision-Date: 2019-01-09 20:45+0100\n"
+"POT-Creation-Date: 2019-01-13 22:26+0100\n"
+"PO-Revision-Date: 2019-01-13 22:26+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -888,6 +888,9 @@ msgstr "Kommentar hinzufügen"
 msgid "Copy_all_email_addresses"
 msgstr "Alle E-Mail-Adressen kopieren"
 
+msgid "Delete_deposit_take_back?"
+msgstr "Pfand-Rücknahme löschen?"
+
 msgid "docs_route_deposit"
 msgstr "pfand"
 
@@ -911,6 +914,9 @@ msgstr "Produkt mit Pfand geliefert"
 
 msgid "Empty_glasses_returned"
 msgstr "Leergebinde zurückgenommen"
+
+msgid "Details"
+msgstr "Details"
 
 msgid "Show_details"
 msgstr "Details anzeigen"
@@ -1883,6 +1889,10 @@ msgstr "Hersteller anzeigen"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+#, fuzzy
+#~ msgid "aactivate"
+#~ msgstr "aktivieren"
 
 #, fuzzy
 #~ msgid "Terms_of_use"

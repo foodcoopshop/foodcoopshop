@@ -35,7 +35,7 @@ echo '<td class="status">';
             [
                 'class' => 'btn btn-outline-light set-state-to-active change-active-state',
                 'id' => 'change-active-state-' . $product->id_product,
-                'title' => __d('admin', 'aactivate'),
+                'title' => __d('admin', 'activate'),
                 'escape' => false
             ]
         );

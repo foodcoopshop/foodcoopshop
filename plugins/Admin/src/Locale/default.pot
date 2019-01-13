@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-01-09 20:44+0100\n"
+"POT-Creation-Date: 2019-01-13 22:26+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -887,6 +887,9 @@ msgstr ""
 msgid "Copy_all_email_addresses"
 msgstr ""
 
+msgid "Delete_deposit_take_back?"
+msgstr ""
+
 msgid "docs_route_deposit"
 msgstr ""
 
@@ -909,6 +912,9 @@ msgid "Product_with_deposit_delivered"
 msgstr ""
 
 msgid "Empty_glasses_returned"
+msgstr ""
+
+msgid "Details"
 msgstr ""
 
 msgid "Show_details"

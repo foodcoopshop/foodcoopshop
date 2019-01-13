@@ -84,35 +84,39 @@ if ($appAuth->isSuperadmin()) {
 
                 echo '<td class="right">';
             if (isset($deposit['delivered'])) {
-                echo '<span style="float: left;">'.$this->Html->getJqueryUiIcon(
-                    $this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Details',
+                echo $this->Html->link(
+                    '<i class="fas fa-search ok"></i> '  . __d('admin', 'Details'),
+                    '/admin/order-details/?manufacturerId='.$manufacturerId.'&pickupDay[]='.$deposit['dateFrom'].'&pickupDay[]='.$deposit['dateTo'].'&deposit=1',
                     [
+                        'class' => 'btn btn-outline-light',
                         'title' => __d('admin', 'Show_details'),
-                    'class' => 'icon-with-text',
-                    ],
-                    '/admin/order-details/?manufacturerId='.$manufacturerId.'&pickupDay[]='.$deposit['dateFrom'].'&pickupDay[]='.$deposit['dateTo'].'&deposit=1'
-                ).'</span>';
-                echo '<span style="float: right;">';
-                echo $this->Number->formatAsCurrency($deposit['delivered']);
+                        'style' => 'float:left;',
+                        'escape' => false
+                    ]
+                );
+                echo '<span style="float:right;">';
+                    echo $this->Number->formatAsCurrency($deposit['delivered']);
                 echo '</span>';
             }
                 echo '</td>';
 
                 echo '<td class="right negative">';
-            if (isset($deposit['returned'])) {
-                echo '<span style="float: left;">'.$this->Html->getJqueryUiIcon(
-                    $this->Html->image($this->Html->getFamFamFamPath('zoom.png')) . ' Details',
-                    [
-                    'title' => __d('admin', 'Show_details'),
-                    'class' => 'icon-with-text',
-                    ],
-                    $appAuth->isManufacturer() ? $this->Slug->getMyDepositDetail($monthAndYear) : $this->Slug->getDepositDetail($manufacturerId, $monthAndYear)
-                ).'</span>';
-                echo '<span style="float: right;">';
-                echo $this->Number->formatAsCurrency($deposit['returned']);
-                echo '</span>';
-            }
-                echo '</td>';
+                    if (isset($deposit['returned'])) {
+                        echo $this->Html->link(
+                            '<i class="fas fa-search ok"></i> ' . __d('admin', 'Details'),
+                            $appAuth->isManufacturer() ? $this->Slug->getMyDepositDetail($monthAndYear) : $this->Slug->getDepositDetail($manufacturerId, $monthAndYear),
+                            [
+                                'class' => 'btn btn-outline-light',
+                                'title' => __d('admin', 'Show_details'),
+                                'style' => 'float:left;',
+                                'escape' => false
+                            ]
+                        );
+                    	echo '<span style="float: right;">';
+                    	echo $this->Number->formatAsCurrency($deposit['returned']);
+                    	echo '</span>';
+                    }
+                    echo '</td>';
             echo '</tr>';
         }
 

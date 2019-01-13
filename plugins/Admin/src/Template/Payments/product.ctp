@@ -160,10 +160,15 @@ if (count($payments) == 0) {
             $deletablePaymentTypes[] = 'payback';
         }
         if (in_array($payment['type'], $deletablePaymentTypes) && $payment['approval'] != APP_ON) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
-                'class' => 'delete-payment-button',
-                'title' => __d('admin', 'Delete_upload?')
-            ], 'javascript:void(0);');
+            echo $this->Html->link(
+                '<i class="fas fa-times-circle not-ok"></i>',
+                'javascript:void(0);',
+                [
+                    'class' => 'btn btn-outline-light delete-payment-button',
+                    'title' => __d('admin', 'Delete_upload?'),
+                    'escape' => false
+                ]
+            );
         }
         echo '</td>';
 
