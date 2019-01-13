@@ -20,7 +20,7 @@ if (count($pickupDay) == 1 && $groupBy == 'customer' && ($appAuth->isSuperadmin(
         Configure::read('app.jsNamespace').".PickupDay.initChangeProductsPickedUpForAllCustomers('#order-details-list');" .
         Configure::read('app.jsNamespace') . ".Admin.initGenerateOrderDetailsAsPdf();"
     ]);
-    echo '<button class="btn btn-outline-light generate-order-details-as-pdf"><i class="fa fa-file-pdf-o"></i> '.__d('admin', 'Generate_orders_as_pdf').'</button>';
+    echo '<button class="btn btn-outline-light generate-order-details-as-pdf"><i class="far fa-file-pdf"></i> '.__d('admin', 'Generate_orders_as_pdf').'</button>';
 }
 
 ?>

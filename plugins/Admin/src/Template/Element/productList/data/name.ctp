@@ -49,7 +49,7 @@ echo '<td class="cell-name">';
     echo '</span>';
     
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
-        echo '<span data-is-declaration-ok="'.$product->is_declaration_ok.'" class="is-declaration-ok-wrapper">' . ($product->is_declaration_ok ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>').'</span>';
+        echo '<span data-is-declaration-ok="'.$product->is_declaration_ok.'" class="is-declaration-ok-wrapper">' . ($product->is_declaration_ok ? '<i class="fas fa-check"></i>' : '<i class="fas fa-close"></i>').'</span>';
     }
     
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {

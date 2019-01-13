@@ -24,7 +24,7 @@ if ($groupBy == 'customer' && count($pickupDay) == 1) {
             $iconClass = 'fa-exclamation-triangle not-ok';
         }
         echo $this->Html->link(
-            '<i class="fa fa-fw ' . $iconClass . '"></i> ' . $buttonText,
+            '<i class="fas fa-fw ' . $iconClass . '"></i> ' . $buttonText,
             'javascript:void(0);',
             [
                 'escape' => false,

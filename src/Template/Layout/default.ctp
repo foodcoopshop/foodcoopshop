@@ -77,7 +77,7 @@ header('Pragma: no-cache');
             <?php if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) { ?>
                 <form id="product-search" action="/<?php echo __('route_search');?>">
                     <input placeholder="<?php echo __('Search'); ?>" name="keyword" type="text" required="required" <?php echo isset($keyword) ? 'value="'.$keyword.'"' : ''; ?> />
-                    <button type="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-search"></i></button>
                 </form>
             <?php } ?>
             <?php echo $this->element('userMenu'); ?>

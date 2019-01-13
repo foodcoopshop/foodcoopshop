@@ -158,7 +158,7 @@ foodcoopshop.SyncProducts = {
             $('<td/>').html(
                 $('<a/>').
                     attr('href', 'javascript:void(0);').
-                    html($('<i/>').addClass('fa fa-minus-circle fa-lg')).
+                    html($('<i/>').addClass('fas fa-minus-circle fa-lg')).
                     addClass('delete-product-button').on('click', function () {
                         var button = $(this);
                         var remoteProduct = $(this).parent().next();
@@ -274,7 +274,7 @@ foodcoopshop.SyncProducts = {
         var parsedHtml = $($.parseHTML(addedHtml));
         parsedHtml.css('opacity', .5);
 
-        var spinner = $('<span/>').addClass('spinner').html($('<i/>').addClass('fa fa-check fa-lg'));
+        var spinner = $('<span/>').addClass('spinner').html($('<i/>').addClass('fas fa-check fa-lg'));
         foodcoopshop.Helper.addSpinnerToButton(spinner, 'fa-check');
         parsedHtml.find('.app-name').append(spinner);
 

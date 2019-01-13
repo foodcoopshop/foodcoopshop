@@ -236,11 +236,11 @@ h2.info2 {
     background-color: #719f41;
     color: #fff ! important;
 }
-.vertical.menu a i.fa {
-    font-size: 17px;
+.vertical.menu a i.fas {
+    font-size: 15px;
     position: absolute;
-    left: 3px;
-    top: 6px;
+    left: 5px;
+    top: 7px;
     color: #009335;
 }
 .vertical.menu li.has-icon a,
@@ -336,36 +336,20 @@ ul.jquery-ui-icon {
 #scroll-to-top a {
   width: 45px;
   height: 45px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
   display: block;
-  text-align: center;
-  font: 24px FontAwesome;
-  line-height: 24px;
-  color: #719f41;
-  border: 3px solid #719f41;
-  border-radius: 100%;
   -webkit-transition: 0.6s;
   -moz-transition: 0.6s;
   -o-transition: 0.6s;
   transition: 0.6s;
   background: #fff;
+  border-radius: 100px;
+  font-size: 34px;
+  text-align: center;
+  background: #fff;
 }
-#scroll-to-top a:before {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-left: -12px;
-  margin-top: -12px;
-  content: '\f062';
+#scroll-to-top a i {
+  font-size: 41px;
 }
-#scroll-to-top a:hover {
-  border-width: 22px;
-  background: #719f41;
-  color: #fff;
-}
-
 .truncate {
   width: 250px;
   white-space: nowrap;
@@ -548,13 +532,13 @@ a.btn.btn-success:hover i.gold,
 i.gold {
   color: #FFD700 ! important;
 }
-i.fa.ok {
+i.fas.ok {
 	color: #719f41;
 }
-i.fa.not-ok {
+i.fas.not-ok {
 	color: red;
 }
-tr.selected i.fa {
+tr.selected i.fas {
 	color: #fff;
 }
 .tooltipster-sidetip.tooltipster-light .tooltipster-box {

@@ -196,7 +196,7 @@ form.fcs-form .bootstrap-select {
 .vertical.menu li.has-children ul a {
     padding-left: 33px;
 }
-.vertical.menu li.has-children ul a i.fa {
+.vertical.menu li.has-children ul a i.fas {
     font-size: 13px;
     left: 13px;
     top: 5px;
@@ -265,7 +265,7 @@ td.delivery-rhythm .fa-check {
   color: #719f41;
 }
 td.is-stock-product i.fa,
-td.delivery-rhythm i.fa {
+td.delivery-rhythm i.fas {
 	margin-left: 5px;
 }
 span.is-declaration-ok-wrapper .fa-close,
@@ -1146,7 +1146,7 @@ form.fcs-form .input.fcs-upload .after.small {
     line-height: 28px;
     margin-left: 5px;
 }
-.bootstrap-select div.filter-option-inner-inner i.fa {
+.bootstrap-select div.filter-option-inner-inner i.fas {
     position: absolute;
     right: 25px;
     top: 9px;
@@ -1203,7 +1203,7 @@ a.btn-next-day:nth-of-type(2) {
     left: 92px;
 }
 a.btn-arrow i {
-    font-size: 17px;
+    font-size: 15px;
 }
 
 body.customers.index #selectgroupid,

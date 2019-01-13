@@ -47,11 +47,12 @@ use Cake\Core\Configure;
     a.blog-post-wrapper h3,
     .product-wrapper .price,
     #scroll-to-top a,
+    #scroll-to-top a i,
     body.pages.home .cycle-pager span.cycle-pager-active,
-    .vertical.menu a i.fa,
+    .vertical.menu a i.fas,
     .vertical.menu span.additional-info,
     a:not(.btn), a:not(.btn):visited, a:not(.btn):active,
-    #footer i.fa {
+    #footer i.fas {
         color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
     }
     
@@ -60,8 +61,7 @@ use Cake\Core\Configure;
     }
     
     .btn-success,
-    .btn-success:active:hover,
-    #scroll-to-top a {
+    .btn-success:active:hover {
         border-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
     }
     
@@ -82,11 +82,11 @@ use Cake\Core\Configure;
     <?php if ($isMobile) { ?>
         @media only screen and (max-device-width: 768px) {
             #responsive-header a,
-            :not(button) > i.fa:not(.gold) {
+            :not(button) > i.fas:not(.gold) {
                 color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
             }
-            .sb-slidebar i.fa:not(.gold),
-            a.btn i.fa:not(.fa-plus-circle):not(.fa-minus-circle):not(.fa-times-circle):not(.gold) {
+            .sb-slidebar i.fas:not(.gold),
+            a.btn i.fas:not(.fa-plus-circle):not(.fa-minus-circle):not(.fa-times-circle):not(.gold) {
                 color: #fff ! important;
             }
             .sb-slidebar,
@@ -94,7 +94,7 @@ use Cake\Core\Configure;
                 background-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
             }
             .sb-left li.header, .sb-left a:hover, .sb-left a.active,
-            .sb-left a:hover i.fa:not(.gold), .sb-left a.active i.fa:not(.gold) {
+            .sb-left a:hover i.fas:not(.gold), .sb-left a.active i.fas:not(.gold) {
                 background-color: #fff;
                 color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
             }

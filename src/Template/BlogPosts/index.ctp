@@ -50,7 +50,7 @@ foreach ($blogPosts as $blogPost) {
         ).'</h4>';
         echo $blogPost->short_description.'<br />';
         echo $this->Html->link(
-            '<i class="fa fa-plus-circle"></i> ' . __('Show_more'),
+            '<i class="fas fa-plus-circle"></i> ' . __('Show_more'),
             $blogDetailLink,
             ['escape' => false]
         );

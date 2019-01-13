@@ -38,7 +38,7 @@ use Cake\Core\Configure;
 <?php
 
 echo '<div id="add-payment-button-wrapper">';
-echo $this->Html->link('<i class="fa ' . $icon . ' fa-lg"></i> ' . $buttonText, 'javascript:void(0);', [
+echo $this->Html->link('<i class="fas ' . $icon . '"></i> ' . $buttonText, 'javascript:void(0);', [
     'class' => 'btn btn-success',
     'escape' => false
 ]);

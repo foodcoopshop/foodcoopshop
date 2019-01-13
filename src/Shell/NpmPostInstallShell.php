@@ -30,14 +30,6 @@ class NpmPostInstallShell extends AppShell
         $this->vendorDir = WWW_ROOT . 'node_modules';
         $this->copyAdaptedElfinderFiles();
         $this->copyJqueryUiImages();
-        $this->copyFontawesomeFonts();
-    }
-
-    private function copyFontawesomeFonts()
-    {
-        $folder = new Folder($this->vendorDir . DS . 'font-awesome' . DS . 'fonts' . DS);
-        $folder->copy(WWW_ROOT . 'fonts');
-        $this->out('Fontawesome fonts copied.');
     }
 
     /**

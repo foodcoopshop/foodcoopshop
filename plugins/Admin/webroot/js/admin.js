@@ -192,7 +192,7 @@ foodcoopshop.Admin = {
                 liveSearch: true,
                 showIcon: true,
                 iconBase: 'fontawesome',
-                tickIcon: 'fa fa-check'
+                tickIcon: 'fas fa-check'
             };
             if ($(this).attr('multiple') == 'multiple') {
                 var emptyElement = $(this).find('option').first();
@@ -1394,7 +1394,7 @@ foodcoopshop.Admin = {
 
         $('.filter-container .right a.cancel').on('click', function () {
             foodcoopshop.Helper.disableButton($(this));
-            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-remove');
+            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-times');
             var referer = $('input[name=referer').val();
             if (referer == '') {
                 referer = '/';
@@ -1557,7 +1557,7 @@ foodcoopshop.Admin = {
     triggerFilter : function () {
         $('#filter-loader').remove();
         $('#content').css('opacity', '.3');
-        $('#container').append('<div id="filter-loader"><i class="fa fa-spinner"></i></div>');
+        $('#container').append('<div id="filter-loader"><i class="fas fa-spinner"></i></div>');
         var marginTop = $('.filter-container').outerHeight();
         $('#filter-loader').css('top', marginTop + 20);
         foodcoopshop.Admin.submitFilterForm();
@@ -2387,7 +2387,7 @@ foodcoopshop.Admin = {
         // one removes itself after one execution
         productDropdown.one('click', function () {
 
-            $(this).parent().find('div.filter-option-inner-inner').append('<i class="fa fa-spinner fa-spin"></i>');
+            $(this).parent().find('div.filter-option-inner-inner').append('<i class="fas fa-spinner fa-spin"></i>');
 
             foodcoopshop.Helper
                 .ajaxCall('/admin/products/ajaxGetProductsForDropdown/' +

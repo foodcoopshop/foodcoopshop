@@ -19,7 +19,7 @@ echo $this->element('paymentHeader', [
     'icons' => $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_credit_system'))]),
     'extraInfo' => Configure::read('appDb.FCS_BANK_ACCOUNT_DATA'),
     'buttonText' => __d('admin', 'Add_transfered_credit'),
-    'icon' => 'fa-'.strtolower(Configure::read('app.currencyName'))
+    'icon' => 'fa-'.strtolower(Configure::read('app.currencyName')).'-sign'
 ]);
 
 if (count($payments) == 0) {
@@ -217,7 +217,7 @@ if (count($payments) == 0) {
 
 if ($this->request->getParam('action') == 'product') {
     echo '<div class="bottom-button-container">';
-    echo '<a class="btn btn-outline-light" href="'.$this->Slug->getCustomerListAdmin().'"><i class="fa fa-arrow-circle-left"></i> '.__d('admin', 'Back_to_member_overview').'</a>';
+    echo '<a class="btn btn-outline-light" href="'.$this->Slug->getCustomerListAdmin().'"><i class="fas fa-arrow-circle-left"></i> '.__d('admin', 'Back_to_member_overview').'</a>';
     echo '</div>';
 }
 

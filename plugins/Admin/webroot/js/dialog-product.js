@@ -24,7 +24,7 @@ foodcoopshop.DialogProduct = {
         dialogHtml += '</div>';
         dialogHtml += '<div class="textarea-wrapper">';
         dialogHtml += '<label for="dialogDescription">' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionLong + '</label><br />';
-        dialogHtml += '<label class="is-declaration-ok"><input type="checkbox" name="dialogIsDeclarationOk" id="dialogIsDeclarationOk" />' + foodcoopshop.LocalizedJs.dialogProduct.ProductDeclarationOK + '</label><a href="' + foodcoopshop.LocalizedJs.dialogProduct.DocsUrlProductDeclaration + '" target="_blank"><i class="fa fa-arrow-circle-right"></i> ' + foodcoopshop.LocalizedJs.dialogProduct.Help + '</a><br />';
+        dialogHtml += '<label class="is-declaration-ok"><input type="checkbox" name="dialogIsDeclarationOk" id="dialogIsDeclarationOk" />' + foodcoopshop.LocalizedJs.dialogProduct.ProductDeclarationOK + '</label><a href="' + foodcoopshop.LocalizedJs.dialogProduct.DocsUrlProductDeclaration + '" target="_blank"><i class="fas fa-arrow-circle-right"></i> ' + foodcoopshop.LocalizedJs.dialogProduct.Help + '</a><br />';
         dialogHtml += '<textarea class="ckeditor" name="dialogDescription" id="dialogDescription" />';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogProductId" id="dialogProductId" value="" />';

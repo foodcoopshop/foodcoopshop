@@ -37,7 +37,7 @@ use Cake\Core\Configure;
             <div class="right">
                 <?php
                 echo '<div id="add-manufacturer-button-wrapper" class="add-button-wrapper">';
-                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> ' . __d('admin', 'Add_manufacturer'), $this->Slug->getManufacturerAdd(), [
+                echo $this->Html->link('<i class="fas fa-plus-circle"></i> ' . __d('admin', 'Add_manufacturer'), $this->Slug->getManufacturerAdd(), [
                     'class' => 'btn btn-outline-light',
                     'escape' => false
                 ]);
@@ -118,7 +118,7 @@ foreach ($manufacturers as $manufacturer) {
         echo '<br /><span class="email">' . $manufacturer->address_manufacturer->email . '</span>';
 
         if (!empty($manufacturer->customer)) {
-            echo '<br /><i class="fa fa-fw fa-male" title="' . __d('admin', 'Contact_person') . '"></i>' . $manufacturer->customer->firstname . ' ' . $manufacturer->customer->lastname;
+            echo '<br /><i class="fas fa-fw fa-user" title="' . __d('admin', 'Contact_person') . '"></i>' . $manufacturer->customer->firstname . ' ' . $manufacturer->customer->lastname;
         }
 
     echo '</td>';
@@ -270,7 +270,7 @@ echo '</tr>';
 echo '</table>';
 echo '<div class="sc"></div>';
 echo '<div class="bottom-button-container">';
-echo '<button data-clipboard-text="'.join(',', $emailAddresses).'" class="btn-clipboard btn btn-outline-light"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
+echo '<button data-clipboard-text="'.join(',', $emailAddresses).'" class="btn-clipboard btn btn-outline-light"><i class="far fa-envelope"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
 echo '</div>';
 echo '<div class="sc"></div>';
 

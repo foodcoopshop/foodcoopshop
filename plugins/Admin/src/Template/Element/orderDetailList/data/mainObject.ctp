@@ -60,7 +60,7 @@ if ($groupBy == 'customer') {
     }
     $name = $orderDetail['name'];
     if ($orderDetail['order_detail_count'] <= 25) {
-        $name = '<i class="fa fa-pagelines" title="'.__d('admin', 'Newbie_only_{0}_products_ordered.', [
+        $name = '<i class="fas fa-carrot" title="'.__d('admin', 'Newbie_only_{0}_products_ordered.', [
             $orderDetail['order_detail_count']
         ]).'"></i> ' . $name;
     }

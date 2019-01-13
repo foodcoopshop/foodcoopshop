@@ -18,7 +18,7 @@ if ($deposit != '') {
     if ($appAuth->isManufacturer()) {
         $depositOverviewUrl = $this->Slug->getMyDepositList();
     }
-    echo '<a class="btn btn-outline-light" href="'.$depositOverviewUrl.'"><i class="fa fa-arrow-circle-left"></i> ' . __d('admin', 'Back_to_deposit_account') . '</a>';
+    echo '<a class="btn btn-outline-light" href="'.$depositOverviewUrl.'"><i class="fas fa-arrow-circle-left"></i> ' . __d('admin', 'Back_to_deposit_account') . '</a>';
 }
 
 ?>

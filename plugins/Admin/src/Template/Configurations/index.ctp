@@ -113,7 +113,7 @@ $this->element('addScript', [
                 <?php if (!Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) { ?>
                 <td colspan="2" class="sync-domain-list">
                 <?php
-                    echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> '.__d('admin', 'Add_remote_foodcoop').'', $this->Network->getSyncDomainAdd(), [
+                    echo $this->Html->link('<i class="fas fa-plus-circle"></i> '.__d('admin', 'Add_remote_foodcoop').'', $this->Network->getSyncDomainAdd(), [
                         'class' => 'btn btn-outline-light',
                         'escape' => false
                     ]);

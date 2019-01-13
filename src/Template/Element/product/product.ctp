@@ -31,7 +31,7 @@ if (!$largeImageExists) {
 }
 if ($product['is_new']) {
     echo '<a href="'.$this->Slug->getNewProducts().'" class="image-badge btn btn-success" title="'.__('New').'">
-                    <i class="fa fa-star gold"></i> '.__('New').'
+                    <i class="fas fa-star gold"></i> '.__('New').'
                 </a>';
 }
     echo '</div>';

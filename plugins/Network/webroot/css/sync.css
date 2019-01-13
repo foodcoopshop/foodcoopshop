@@ -141,7 +141,7 @@ body.syncs.product_data tr.assigned-products td {
 
 body.syncs.product_data tr.assigned-products td.dirty,
 body.syncs.product_data span.dirty,
-table.list td.dirty i.fa {
+table.list td.dirty i.fas {
   background-color: #f3515c;
   color: #fff;
 }
@@ -221,7 +221,7 @@ body.syncs.product_data table.product-list td.quantity, body.syncs.product_data 
   text-align: right;
 }
 
-body.syncs.product_data table.product-list td.name .fa {
+body.syncs.product_data table.product-list td.name .fas {
 	float: right;
 	margin-left: 5px;
 }

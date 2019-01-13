@@ -61,7 +61,7 @@ if ($isDeleteAllowedGlobally) {
 <?php
     if ($showAddForm) {
         echo '<div id="add-timebased-currency-payment-button-wrapper">';
-        echo $this->Html->link('<i class="fa fa-clock-o fa-lg"></i> Geleistete Zeit eintragen',
+        echo $this->Html->link('<i class="fas fa-clock-o fa-lg"></i> Geleistete Zeit eintragen',
             $this->Slug->getTimebasedCurrencyPaymentAdd($customerId),
             [
                 'class' => 'btn btn-success',

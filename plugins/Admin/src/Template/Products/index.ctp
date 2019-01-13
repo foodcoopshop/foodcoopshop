@@ -97,7 +97,7 @@ use Cake\Core\Configure;
                         'script' => Configure::read('app.jsNamespace') . ".Admin.initAddProduct('#products');"
                     ]);
                     echo '<div id="add-product-button-wrapper" class="add-button-wrapper">';
-                    echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> ' . __d('admin', 'Add_product'), 'javascript:void(0);', [
+                    echo $this->Html->link('<i class="fas fa-plus-circle"></i> ' . __d('admin', 'Add_product'), 'javascript:void(0);', [
                         'class' => 'btn btn-outline-light',
                         'escape' => false
                     ]);
@@ -110,7 +110,7 @@ use Cake\Core\Configure;
                     ]);
                     echo '<div class="toggle-sync-button-wrapper">';
                         echo $this->Html->link(
-                            '<i class="fa fa-arrow-circle-right"></i> ' . __d('admin', 'Synchronize_products'),
+                            '<i class="fas fa-arrow-circle-right"></i> ' . __d('admin', 'Synchronize_products'),
                             $this->Network->getSyncProductData(),
                             [
                                 'class' => 'btn btn-outline-light',

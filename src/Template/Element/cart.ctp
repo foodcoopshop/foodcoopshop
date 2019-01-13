@@ -41,9 +41,9 @@ if ($appAuth->Cart->getProducts() !== null) {
 <div id="cart" class="box cart">
     
     <h3>
-    	<i class="fa fa-shopping-cart"></i>
+    	<i class="fas fa-shopping-cart"></i>
     	<?php echo __('Cart'); ?>
-    	<a class="question" href="<?php echo $this->Html->getDocsUrl(__('docs_route_order_handling')); ?>"><i class="fa fa-question-circle"></i></a>
+    	<a class="question" href="<?php echo $this->Html->getDocsUrl(__('docs_route_order_handling')); ?>"><i class="fas fa-question-circle"></i></a>
 	</h3>
     
     <div class="inner">
@@ -108,7 +108,7 @@ if ($appAuth->Cart->getProducts() !== null) {
             <div class="sc"></div>
             
             <p><a class="btn btn-success" href="<?php echo $this->Slug->getCartDetail(); ?>">
-                <i class="fa fa-shopping-cart fa-lg"></i> <?php echo __('Show_cart_button'); ?>
+                <i class="fas fa-shopping-cart fa-lg"></i> <?php echo __('Show_cart_button'); ?>
             </a></p>
             
         <?php } ?>

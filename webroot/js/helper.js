@@ -65,8 +65,8 @@ foodcoopshop.Helper = {
             responsiveClass: true,
             nav: true,
             navText: [
-                '<i class="fa fa-arrow-circle-o-left fa-3x"></i>',
-                '<i class="fa fa-arrow-circle-o-right fa-3x"></i>'
+                '<i class="fas fa-arrow-circle-o-left fa-3x"></i>',
+                '<i class="fas fa-arrow-circle-o-right fa-3x"></i>'
             ],
             responsive: {
                 320: {
@@ -221,7 +221,22 @@ foodcoopshop.Helper = {
                 $('#scroll-to-top').fadeOut();
             }
         });
+        
+        $('#scroll-to-top a').on('click', function () {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 400);
+            return false;
+        });
 
+        $('#scroll-to-top a').mouseenter(function () {
+            $(this).children('i').removeClass('fas');
+            $(this).children('i').addClass('far');
+        }).mouseleave(function () {
+            $(this).children('i').removeClass('far');
+            $(this).children('i').addClass('fas');
+        });
+        
         $('#scroll-to-top a').on('click', function () {
             $('body,html').animate({
                 scrollTop: 0

@@ -23,7 +23,7 @@ foodcoopshop.Mobile = {
     getResponsiveMenuButton: function () {
         var showResponsiveMenuButton = $('<a/>');
         showResponsiveMenuButton.addClass('sb-toggle-left');
-        showResponsiveMenuButton.html('<i class="fa fa-navicon fa-2x"></i>');
+        showResponsiveMenuButton.html('<i class="fas fa-navicon fa-2x"></i>');
         return showResponsiveMenuButton;
     },
 
@@ -164,13 +164,13 @@ foodcoopshop.Mobile = {
 
         var infoButton = $('<a/>');
         infoButton.addClass('sb-toggle-right');
-        infoButton.html('<i class="fa fa-info-circle fa-2x"></i>');
+        infoButton.html('<i class="fas fa-info-circle fa-2x"></i>');
         $('#' + headerId).append(infoButton);
 
         var cartButton = $('#cart .inner .btn-success');
         cartButton.addClass('responsive-cart');
         cartButton.removeClass('btn btn-success');
-        cartButton.html('<span class="sum">' + foodcoopshop.Helper.formatFloatAsCurrency(0) + '</span><i class="fa fa-shopping-cart fa-2x"></i>');
+        cartButton.html('<span class="sum">' + foodcoopshop.Helper.formatFloatAsCurrency(0) + '</span><i class="fas fa-shopping-cart fa-2x"></i>');
         $('#' + headerId).append(cartButton);
 
         var shoppingLimitReachedInfo = $('#cart .inner .credit-balance-wrapper .negative:not(.payment)').length;
@@ -186,7 +186,7 @@ foodcoopshop.Mobile = {
             $(this).html($(this).html().replace(regexp, foodcoopshop.LocalizedJs.mobile.show));
         });
         $('.blog-post-wrapper div.third-column a.btn').html(foodcoopshop.LocalizedJs.mobile.show);
-        $('.entity-wrapper .btn, #cart .btn-success').html('<i class="fa fa-shopping-cart"></i>');
+        $('.entity-wrapper .btn, #cart .btn-success').html('<i class="fas fa-shopping-cart"></i>');
 
         // add info box to right side bar
         $('#container').after(this.getSlidebarMenu('right')).attr('canvas', '');

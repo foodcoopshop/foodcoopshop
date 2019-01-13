@@ -89,7 +89,7 @@ foreach ($customers as $customer) {
             echo '</span>';
         }
         if ($customer->order_detail_count <= 25) {
-            $customerName = '<i class="fa fa-pagelines" title="'.__d('admin', 'Newbie_only_{0}_products_ordered.', [$customer->order_detail_count]).'"></i> ' . $customerName;
+            $customerName = '<i class="fas fa-carrot" title="'.__d('admin', 'Newbie_only_{0}_products_ordered.', [$customer->order_detail_count]).'"></i> ' . $customerName;
         }
 
         echo '<span class="name">' . $this->Html->link($customerName, '/admin/order-details?&pickupDay[]='.Configure::read('app.timeHelper')->formatToDateShort('2014-01-01').'&pickupDay[]=' . Configure::read('app.timeHelper')->formatToDateShort('2022-12-31') . '&customerId=' . $customer->id_customer . '&sort=OrderDetails.pickup_day&direction=desc', [
@@ -255,7 +255,7 @@ echo '</table>';
 echo '<div class="sc"></div>';
 
 echo '<div class="bottom-button-container">';
-echo '<button data-clipboard-text="'.join(',', $emailAddresses).'" class="btn-clipboard btn btn-outline-light"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
+echo '<button data-clipboard-text="'.join(',', $emailAddresses).'" class="btn-clipboard btn btn-outline-light"><i class="far fa-envelope"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
 echo '</div>';
 echo '<div class="sc"></div>';
 
