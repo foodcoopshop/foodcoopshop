@@ -359,15 +359,6 @@ class MyHtmlHelper extends HtmlHelper
         ];
     }
 
-    /**
-     * @param string $icon
-     * @return string
-     */
-    public function getFamFamFamPath($icon)
-    {
-        return '/node_modules/famfamfam-silk/dist/png/'.$icon;
-    }
-
     public function getGroupName($groupId)
     {
         return $this->getGroups()[$groupId];

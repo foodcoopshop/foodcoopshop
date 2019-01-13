@@ -193,7 +193,7 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td style="text-align:center;width:42px;">';
         if ($manufacturer->stock_management_enabled == 1) {
-            echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
+            echo '<i class="fas fa-check-circle ok"></i>';
         }
     echo '</td>';
 
@@ -203,7 +203,7 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td align="center">';
     if ($manufacturer->is_private == 1) {
-        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
+        echo '<i class="fas fa-check-circle ok"></i>';
     }
     echo '</td>';
 

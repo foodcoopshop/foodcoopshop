@@ -145,9 +145,15 @@ class SendInvoicesShell extends AppShell
                 $tableData .= '<td>' . $productString . '</td>';
                 $tableData .= '<td align="right"><b>' . Configure::read('app.numberHelper')->formatAsCurrency($price) . '</b>'.$variableMemberFeeAsString.'</td>';
                 $tableData .= '<td>';
-                    $tableData .= Configure::read('app.htmlHelper')->getJqueryUiIcon(Configure::read('app.htmlHelper')->image(Configure::read('app.htmlHelper')->getFamFamFamPath('arrow_right.png')), [
-                        'target' => '_blank'
-                    ], $invoiceLink);
+                    $tableData .= $this->Html->link(
+                        '<i class="fas fa-arrow-right ok"></i>',
+                        $invoiceLink,
+                        [
+                            'class' => 'btn btn-outline-light',
+                            'target' => '_blank',
+                            'escape' => false
+                        ]
+                    );
                 $tableData .= '</td>';
                 $tableData .= '</tr>';
                 $i ++;

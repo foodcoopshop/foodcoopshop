@@ -76,22 +76,12 @@ if (count($payments) == 0) {
         if ($payment['type'] == 'product') {
             switch ($payment['approval']) {
                 case APP_DEL:
-                    echo $this->Html->image(
-                        $this->Html->getFamFamFamPath('delete.png'),
-                        [
-                            'class' => 'payment-approval'
-                        ]
-                    );
+                    echo '<i class="fas fa-minus-circle not-ok payment-approval"></i>';
                     break;
                 case APP_OFF:
                     break;
                 case APP_ON:
-                    echo $this->Html->image(
-                        $this->Html->getFamFamFamPath('accept.png'),
-                        [
-                            'class' => 'payment-approval'
-                        ]
-                    );
+                    echo '<i class="fas fa-check-circle ok payment-approval"></i>';
                     break;
             }
             if ($payment['approval_comment'] != '') {
