@@ -108,13 +108,6 @@
         width: 100% ! important;
         height: auto ! important;
     }
-    body.pages.detail #inner-content ul.jquery-ui-icon,
-    body.blog_posts.detail #inner-content ul.jquery-ui-icon {
-        top: 0;
-    }
-    body.manufacturers.detail #inner-content .manufacturer-infos ul.jquery-ui-icon {
-        top: -3px;
-    }
     body.superadmin .product-wrapper .heading h4,
     .blog-post-wrapper .second-column h4 {
         max-width: 89%;

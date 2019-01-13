@@ -479,12 +479,6 @@ body.order_details.index a.change-products-picked-up-button {
 body.order_details.index .timebased-currency-object {
 	display: none;
 }
-body.order_details.index .add-payment-deposit-button-wrapper .jquery-ui-icon a.icon-with-text {
-  padding-top: 3px;
-  padding-bottom: 3px;
-  background: #fff;
-  border-radius: 5px;
-}
 #product-name-edit-form div.textarea-wrapper a {
   color: red;
   font-weight: bold;
@@ -626,9 +620,6 @@ body.payments.product #add-payment-button-wrapper,
 body.payments.member_fee #add-payment-button-wrapper {
     margin-top: 8px;
 }
-#payments-list #add-payment-button-wrapper .jquery-ui-icon a.icon-with-text {
-    font-weight: bold;
-}
 .add-button-wrapper {
     float: left;
     margin-right: 3px;
@@ -698,14 +689,6 @@ body.order_details.index td a.pickup-day-comment-edit-button {
     float: left;
     width: auto;
     margin-right: 5px;
-}
-.jquery-ui-icon a.icon-with-text {
-    float: left;
-    padding: 0 5px;
-    color: #009335 ! important;
-}
-.jquery-ui-icon a.icon-with-text.button {
-    padding: 7px;
 }
 .featherlight-content h3 {
     margin: 0;
@@ -1276,10 +1259,6 @@ body.payments.edit form {
 body.payments.edit .email-template-info {
     float: left;
     margin-left: 3px;
-}
-body.payments .after .jquery-ui-icon {
-    float: left;
-    margin-left: 2px ! important;
 }
 body.manufacturers .holiday-wrapper {
   float: left;

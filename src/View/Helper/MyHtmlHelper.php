@@ -394,27 +394,6 @@ class MyHtmlHelper extends HtmlHelper
         }
     }
 
-    public function getJqueryUiIcon($icon, $options, $url = '')
-    {
-        $options['escape'] = [
-            true
-        ];
-
-        $return = '<ul class="jquery-ui-icon">';
-        $return .= '<li class="ui-state-default ui-corner-all">';
-
-        if ($url == '') {
-            $return .= $icon;
-        } else {
-            $return .= self::link($icon, $url, $options);
-        }
-
-        $return .= '</li>';
-        $return .= '</ul>';
-
-        return $return;
-    }
-
     public function getMemberFeeTextForFrontend($text)
     {
         $explodedText = explode(',', $text);

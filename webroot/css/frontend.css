@@ -1140,13 +1140,6 @@ body.manufacturers.detail .manufacturer-infos a.edit-shortcut-button {
   right: 5px;
 }
 
-ul.jquery-ui-icon li {
-    line-height: 16px ! important;
-}
-body.blog_posts.index .second-column ul.jquery-ui-icon {
-    right: 5px;
-    top: 2px;
-}
 body.blog_posts.detail #inner-content ul {
     clear: both;
 }
