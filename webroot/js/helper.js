@@ -65,8 +65,8 @@ foodcoopshop.Helper = {
             responsiveClass: true,
             nav: true,
             navText: [
-                '<i class="fas fa-arrow-circle-o-left fa-3x"></i>',
-                '<i class="fas fa-arrow-circle-o-right fa-3x"></i>'
+                '<i class="far fa-arrow-alt-circle-left fa-3x"></i>',
+                '<i class="far fa-arrow-alt-circle-right fa-3x"></i>'
             ],
             responsive: {
                 320: {
