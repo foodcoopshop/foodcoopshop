@@ -87,16 +87,16 @@ class MyHtmlHelper extends HtmlHelper
         switch($orderState)
         {
             case ORDER_STATE_ORDER_PLACED:
-                return 'fa-cart-arrow-down ok';
+                return 'fas fa-cart-arrow-down ok';
                 break;
             case ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER:
-                return 'fa-envelope-o ok';
+                return 'far fa-envelope ok';
                 break;
             case ORDER_STATE_BILLED_CASHLESS:
             case ORDER_STATE_BILLED_CASH:
             case ORDER_STATE_CASH_FREE:
             case ORDER_STATE_CASH:
-                return 'fa-lock not-ok';
+                return 'fa fa-lock not-ok';
                 break;
         }
         return '';
