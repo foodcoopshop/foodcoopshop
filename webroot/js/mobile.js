@@ -23,7 +23,7 @@ foodcoopshop.Mobile = {
     getResponsiveMenuButton: function () {
         var showResponsiveMenuButton = $('<a/>');
         showResponsiveMenuButton.addClass('sb-toggle-left');
-        showResponsiveMenuButton.html('<i class="fas fa-navicon fa-2x"></i>');
+        showResponsiveMenuButton.html('<i class="fas fa-bars fa-2x"></i>');
         return showResponsiveMenuButton;
     },
 
@@ -113,7 +113,7 @@ foodcoopshop.Mobile = {
             menuItems.push(ps.wrap('<li>').parent());
         }
 
-        menuItems.push('<li><a href="/"><i class="fa"></i>' + foodcoopshop.LocalizedJs.mobile.home + '</a></li>');
+        menuItems.push('<li><a href="/"><i class="fas"></i>' + foodcoopshop.LocalizedJs.mobile.home + '</a></li>');
 
         $('#user-menu > li').each(function () {
             var item = $(this);
@@ -186,7 +186,8 @@ foodcoopshop.Mobile = {
             $(this).html($(this).html().replace(regexp, foodcoopshop.LocalizedJs.mobile.show));
         });
         $('.blog-post-wrapper div.third-column a.btn').html(foodcoopshop.LocalizedJs.mobile.show);
-        $('.entity-wrapper .btn, #cart .btn-success').html('<i class="fas fa-shopping-cart"></i>');
+        $('.entity-wrapper .btn').html('<i class="fas fa-cart-plus"></i>');
+        $('#cart .btn-success').html('<i class="fas fa-shopping-cart"></i>');
 
         // add info box to right side bar
         $('#container').after(this.getSlidebarMenu('right')).attr('canvas', '');

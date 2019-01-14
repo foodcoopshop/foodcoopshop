@@ -54,7 +54,7 @@ if (!empty($blogPost->manufacturer)) {
 
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     echo $this->Html->link(
-        '<i class="fas fa-edit ok"></i>',
+        '<i class="fas fa-edit"></i>',
         $this->Slug->getBlogPostEdit($blogPost->id_blog_post),
         [
             'class' => 'btn btn-outline-light edit-shortcut-button',

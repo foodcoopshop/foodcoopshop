@@ -52,7 +52,8 @@ use Cake\Core\Configure;
     .vertical.menu a i.fas,
     .vertical.menu span.additional-info,
     a:not(.btn), a:not(.btn):visited, a:not(.btn):active,
-    #footer i.fas {
+    #footer i.fas,
+    a.btn.edit-shortcut-button {
         color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
     }
     
@@ -82,11 +83,11 @@ use Cake\Core\Configure;
     <?php if ($isMobile) { ?>
         @media only screen and (max-device-width: 768px) {
             #responsive-header a,
-            :not(button) > i.fas:not(.gold) {
+            :not(button)> i.fas:not(.gold):not(.fa-circle-notch) {
                 color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
             }
             .sb-slidebar i.fas:not(.gold),
-            a.btn i.fas:not(.fa-plus-circle):not(.fa-minus-circle):not(.fa-times-circle):not(.gold):not(.fa-edit) {
+            a.btn i.fas:not(.fa-plus-circle):not(.fa-minus-circle):not(.fa-times-circle):not(.gold):not(.fa-edit):not(.fa-circle-notch) {
                 color: #fff ! important;
             }
             .sb-slidebar,

@@ -82,7 +82,7 @@ if ($product['description'] != '') {
 
     if ($appAuth->isSuperadmin() || ($appAuth->isManufacturer() && $product['id_manufacturer'] == $appAuth->getManufacturerId())) {
         echo $this->Html->link(
-            '<i class="fas fa-edit ok"></i>',
+            '<i class="fas fa-edit"></i>',
             $this->Slug->getProductAdmin(($appAuth->isSuperadmin() ? $product['id_manufacturer'] : null), $product['id_product']),
             [
                 'class' => 'btn btn-outline-light edit-shortcut-button',

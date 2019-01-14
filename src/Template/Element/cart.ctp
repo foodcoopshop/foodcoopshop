@@ -43,7 +43,7 @@ if ($appAuth->Cart->getProducts() !== null) {
     <h3>
     	<i class="fas fa-shopping-cart"></i>
     	<?php echo __('Cart'); ?>
-    	<a class="question" href="<?php echo $this->Html->getDocsUrl(__('docs_route_order_handling')); ?>"><i class="fas fa-question-circle"></i></a>
+    	<a class="question" href="<?php echo $this->Html->getDocsUrl(__('docs_route_order_handling')); ?>"><i class="far fa-question-circle"></i></a>
 	</h3>
     
     <div class="inner">
