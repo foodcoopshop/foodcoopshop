@@ -1,6 +1,7 @@
 <?php
 use Cake\ORM\TableRegistry;
 use Migrations\AbstractMigration;
+use Cake\I18n\I18n;
 
 class Fontawesome5 extends AbstractMigration
 {
@@ -28,6 +29,9 @@ class Fontawesome5 extends AbstractMigration
                 )
             );
         }
+                
+        $this->execute('UPDATE fcs_configuration SET text = "Additional text that is sent in the registration e-mail after a successful registration. <br /> <a href=\"/admin/configurations/previewEmail/FCS_REGISTRATION_EMAIL_TEXT\" target=\"_blank\"><i class=\"fas fa-info-circle\"></i> E-mail preview</a>" WHERE name = "FCS_REGISTRATION_EMAIL_TEXT" AND locale = "en_US";');
+        $this->execute('UPDATE fcs_configuration SET text = "Zusätzlicher Text, der in der Bestätigungsmail nach einer Registrierung versendet wird. <br /> <a href=\"/admin/configurations/previewEmail/FCS_REGISTRATION_EMAIL_TEXT\" target=\"_blank\"><i class=\"fas fa-info-circle\"></i> E-Mail-Vorschau anzeigen</a>" WHERE name = "FCS_REGISTRATION_EMAIL_TEXT" AND locale = "de_DE";');
         
     }
 }
