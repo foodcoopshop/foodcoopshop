@@ -184,11 +184,13 @@ h2.info2 {
 }
 #flashMessage .closer {
     float: right;
-    height: 20px;
-    width: 20px;
-    border-radius: 100px;
-    text-align: center;
-    background: white;
+}
+#flashMessage .closer .fa-times-circle {
+    color: #fff;
+    font-size: 17px;
+}
+#flashMessage .closer .fa-times-circle:hover {
+	color: #ccc;
 }
 #flashMessage.error {
     color: #fff;

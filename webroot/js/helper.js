@@ -689,7 +689,7 @@ foodcoopshop.Helper = {
     },
 
     appendFlashMessageCloser: function () {
-        $('#flashMessage').prepend('<a class="closer" title="' + foodcoopshop.LocalizedJs.helper.Close + '" href="javascript:void(0);"><i class="fas fa-times-circle not-ok"></i></a>');
+        $('#flashMessage').prepend('<a class="closer" title="' + foodcoopshop.LocalizedJs.helper.Close + '" href="javascript:void(0);"><i class="far fa-times-circle"></i></a>');
     },
 
     bindFlashMessageCloser: function () {
