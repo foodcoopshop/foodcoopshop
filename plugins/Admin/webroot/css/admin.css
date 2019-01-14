@@ -810,18 +810,21 @@ body.order_details.index .table-cell-wrapper.price {
     padding: 2px;
     line-height: 10px;
 }
-.featherlight-content .mini-upload-form .modify-icon:hover {
+.featherlight-content .mini-upload-form .modify-icon {
     border: 1px solid black;
     background: white;
 }
+.featherlight-content .mini-upload-form .modify-icon:hover {
+    background: #ccc;
+}
 .featherlight-content .mini-upload-form .img-rotate-acw {
-    left: 30px;
+    left: 22px;
 }
 .featherlight-content .mini-upload-form .img-rotate-cw {
-    left: 50px;
+    left: 44px;
 }
 .featherlight-content .mini-upload-form .img-delete {
-    right: 30px;
+    right: 21px;
 }
 .add-image-button {
 	float: left;
