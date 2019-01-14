@@ -2026,7 +2026,7 @@ foodcoopshop.Admin = {
                             var cartFinishedRegExp = new RegExp(foodcoopshop.LocalizedJs.admin.routeCartFinished);
                             if (currentUrl.match(cartFinishedRegExp)) {
                                 $.featherlight.showLoader();
-                                var message = $(this).contents().find('#flashMessage').html().replace(/<(a|img)[^>]*>/g,'');
+                                var message = $(this).contents().find('#flashMessage').html().replace(/<(a|i)[^>]*>/g,'');
                                 document.location.href = foodcoopshop.Admin.addParameterToURL(
                                     foodcoopshop.Admin.getParentLocation(),
                                     'message=' + encodeURIComponent(message)
