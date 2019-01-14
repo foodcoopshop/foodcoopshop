@@ -113,7 +113,7 @@ $this->element('addScript', ['script' =>
               
               <div class="sc"></div>
               <br />
-              <button type="submit" class="btn btn-success"><i class="fas fa-user fa-lg"></i> <?php echo __('Create_account'); ?></button>
+              <button type="submit" class="btn btn-success"><i class="fas fa-user"></i> <?php echo __('Create_account'); ?></button>
           
           </div>
         <?php echo $this->Form->end(); ?>

@@ -15,7 +15,7 @@ foodcoopshop.AppFeatherlight = {
 
     initLightbox: function (configuration) {
 
-        var loading = '<i class="fas fa-spinner fa-spin fa-3x"></i>';
+        var loading = '<i class="fas fa-circle-notch fa-spin fa-3x"></i>';
 
         // show loader currently only works for shop order iframe
         $.featherlight.showLoader = function () {

@@ -195,12 +195,6 @@ h2.info2 {
     background: #f3515c;
     border-color: #f3515c;
 }
-#flashMessage.error .closer {
-    border: 1px solid #fff;
-    border-radius: 6px;
-    width: 20px;
-    text-align: center;
-}
 #flashMessage.success {
     background: #009335;
     color: #fff;
@@ -378,7 +372,7 @@ input[type="checkbox"] {
 }
 .featherlight-close-icon {
     background: transparent ! important;
-    right: 0px ! important;
+    right: 7px ! important;
     width: 60px ! important;
     top: 3px ! important;
 }

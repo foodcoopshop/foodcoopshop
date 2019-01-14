@@ -119,7 +119,7 @@ foodcoopshop.Helper = {
 
     initLoginForm: function () {
         $('#LoginForm button[type="submit"]').on('click', function () {
-            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-sign-in');
+            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-sign-in-alt');
             foodcoopshop.Helper.disableButton($(this));
             $(this).closest('form').submit();
         });
@@ -314,12 +314,12 @@ foodcoopshop.Helper = {
 
     addSpinnerToButton: function (button, iconClass) {
         button.find('i').removeClass(iconClass);
-        button.find('i').addClass('fa-spinner');
+        button.find('i').addClass('fa-circle-notch');
         button.find('i').addClass('fa-spin');
     },
 
     removeSpinnerFromButton: function (button, iconClass) {
-        button.find('i').removeClass('fa-spinner');
+        button.find('i').removeClass('fa-circle-notch');
         button.find('i').removeClass('fa-spin');
         button.find('i').addClass(iconClass);
     },
