@@ -1192,7 +1192,7 @@ foodcoopshop.Admin = {
                 }
             };
 
-            var dataRow = $('#change-new-state-' + productId).parent().parent().parent().parent();
+            var dataRow = $(this).closest('tr');
             $('<div></div>').appendTo('body')
                 .html('<p>' + reallyNewStateText.replaceI18n(0,  '<b>' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>') + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
@@ -1213,7 +1213,7 @@ foodcoopshop.Admin = {
 
         $(container).find('.delete-product-attribute-button').on('click', function () {
 
-            var splittedProductId = $(this).parent().parent().parent().parent().parent().attr('id').replace(/product-/, '').split('-');
+            var splittedProductId = $(this).closest('tr').attr('id').replace(/product-/, '').split('-');
             var productId = splittedProductId[0];
             var productAttributeId = splittedProductId[1];
 
