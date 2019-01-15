@@ -46,7 +46,7 @@ echo '<td class="cell-name">';
         } else {
             
             echo $this->Html->link(
-                '<i class="fas fa-star ok"></i>',
+                '<i class="fas fa-star gold fa-xs"></i>',
                 'javascript:void(0);',
                 [
                     'class' => 'btn btn-outline-light set-as-default-attribute-button',
