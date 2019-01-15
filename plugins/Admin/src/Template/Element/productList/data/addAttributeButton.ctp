@@ -16,7 +16,7 @@
 echo '<td style="text-align:center;width:54px;">';
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
         echo $this->Html->link(
-            '<i class="fas fa-plus-square ok"></i>',
+            '<i class="fas fa-plus-circle ok"></i>',
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light add-product-attribute-button',
