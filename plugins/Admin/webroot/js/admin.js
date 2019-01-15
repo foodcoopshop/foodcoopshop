@@ -785,7 +785,7 @@ foodcoopshop.Admin = {
         } else {
             infoText = foodcoopshop.LocalizedJs.admin.YouSelected0Products.replace(/\{0\}/, '<b>' + productIds.length + '</b>');
         }
-        infoText += ':<br />';
+        infoText += '<br />';
         foodcoopshop.Admin.openEditDeliveryRhythmDialog(productIds, infoText, '1-week', '', '');
     },
     
