@@ -39,7 +39,7 @@ foreach ($categories as $category) {
 
     echo '<td>';
     echo $this->Html->link(
-        '<i class="fas fa-edit ok"></i>',
+        '<i class="fas fa-pencil-alt ok"></i>',
         $this->Slug->getCategoryEdit($category->id_category),
         [
             'class' => 'btn btn-outline-light',

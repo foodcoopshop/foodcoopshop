@@ -84,7 +84,7 @@ foreach ($payments as $payment) {
     if ($paymentType == 'product') {
         echo '<td>';
             echo $this->Html->link(
-                '<i class="fas fa-edit ok"></i>',
+                '<i class="fas fa-pencil-alt ok"></i>',
                 $this->Slug->getPaymentEdit($payment->id),
                 [
                     'class' => 'btn btn-outline-light',

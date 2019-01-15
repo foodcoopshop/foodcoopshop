@@ -65,7 +65,7 @@ foreach ($sliders as $slider) {
 
     echo '<td>';
     echo $this->Html->link(
-        '<i class="fas fa-edit ok"></i>',
+        '<i class="fas fa-pencil-alt ok"></i>',
         $this->Slug->getSliderEdit($slider->id_slider),
         [
             'class' => 'btn btn-outline-light',

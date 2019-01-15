@@ -57,7 +57,7 @@ foreach ($blogPosts as $blogPost) {
 
     if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         echo $this->Html->link(
-            '<i class="fas fa-edit"></i>',
+            '<i class="fas fa-pencil-alt"></i>',
             $this->Slug->getBlogPostEdit($blogPost->id_blog_post),
             [
                 'class' => 'btn btn-outline-light edit-shortcut-button',

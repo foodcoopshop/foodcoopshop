@@ -76,7 +76,7 @@ $this->element('addScript', [
 
                 echo '<td style="width:30px;">';
                     echo $this->Html->link(
-                        '<i class="fas fa-edit ok"></i>',
+                        '<i class="fas fa-pencil-alt ok"></i>',
                         $this->Slug->getConfigurationEdit($configuration->id_configuration, $configuration->name),
                         [
                             'class' => 'btn btn-outline-light',
@@ -143,7 +143,7 @@ $this->element('addScript', [
                     echo '</td>';
                     echo '<td>';
                     echo $this->Html->link(
-                        '<i class="fas fa-edit ok"></i>',
+                        '<i class="fas fa-pencil-alt ok"></i>',
                         $this->Network->getSyncDomainEdit($syncDomain->id),
                         [
                             'class' => 'btn btn-outline-light',

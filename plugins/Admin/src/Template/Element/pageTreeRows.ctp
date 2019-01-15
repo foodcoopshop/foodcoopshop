@@ -38,7 +38,7 @@ foreach ($pages as $page) {
 
     echo '<td>';
     echo $this->Html->link(
-        '<i class="fas fa-edit ok"></i>',
+        '<i class="fas fa-pencil-alt ok"></i>',
         $this->Slug->getPageEdit($page->id_page),
         [
             'class' => 'btn btn-outline-light',

@@ -20,7 +20,7 @@ echo '<td>';
         echo '<div class="table-cell-wrapper deposit">';
         if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || Configure::read('app.isDepositPaymentCashless')) {
             echo $this->Html->link(
-                '<i class="fas fa-edit ok"></i>',
+                '<i class="fas fa-pencil-alt ok"></i>',
                 'javascript:void(0);',
                 [
                     'class' => 'btn btn-outline-light product-deposit-edit-button',

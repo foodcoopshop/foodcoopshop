@@ -17,7 +17,7 @@ echo '<td class="cell-name">';
 
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
         echo $this->Html->link(
-            '<i class="fas fa-edit ok"></i>',
+            '<i class="fas fa-pencil-alt ok"></i>',
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light product-name-edit-button',
@@ -73,7 +73,7 @@ echo '<td class="cell-name">';
         ]);
         echo '<br />';
         echo $this->Html->link(
-            '<i class="fas fa-edit ok"></i>',
+            '<i class="fas fa-pencil-alt ok"></i>',
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light product-categories-edit-button',

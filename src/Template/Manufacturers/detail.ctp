@@ -59,7 +59,7 @@ if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
 
     if (isset($manufacturerEditSlug)) {
         echo $this->Html->link(
-            '<i class="fas fa-edit"></i>',
+            '<i class="fas fa-pencil-alt"></i>',
             $manufacturerEditSlug,
             [
                 'class' => 'btn btn-outline-light edit-shortcut-button',

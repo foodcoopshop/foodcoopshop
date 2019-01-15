@@ -74,7 +74,7 @@ foreach ($attributes as $attribute) {
 
     echo '<td>';
     echo $this->Html->link(
-        '<i class="fas fa-edit ok"></i>',
+        '<i class="fas fa-pencil-alt ok"></i>',
         $this->Slug->getAttributeEdit($attribute->id_attribute),
         [
             'class' => 'btn btn-outline-light',

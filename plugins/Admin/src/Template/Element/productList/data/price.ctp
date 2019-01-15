@@ -26,7 +26,7 @@ echo '<td class="cell-price ' . ($product->price_is_zero ? 'not-available' : '')
     echo '<div class="table-cell-wrapper price">';
     if (empty($product->product_attributes)) {
         echo $this->Html->link(
-            '<i class="fas fa-edit ok"></i>',
+            '<i class="fas fa-pencil-alt ok"></i>',
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light product-price-edit-button',

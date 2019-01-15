@@ -88,7 +88,7 @@ use Cake\Core\Configure;
             }
             .sb-slidebar i.fas:not(.gold),
             .sb-slidebar i.fas.fa-tags,
-            a.btn i.fas:not(.fa-plus-circle):not(.fa-minus-circle):not(.fa-times-circle):not(.gold):not(.fa-edit):not(.fa-circle-notch) {
+            a.btn i.fas:not(.fa-plus-circle):not(.fa-minus-circle):not(.fa-times-circle):not(.gold):not(.fa-pencil-alt):not(.fa-circle-notch) {
                 color: #fff ! important;
             }
             .sb-slidebar,
@@ -96,7 +96,7 @@ use Cake\Core\Configure;
                 background-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
             }
             .sb-left li.header, .sb-left a:hover, .sb-left a.active,
-            .sb-left a:hover i.fas:not(.gold), .sb-left a.active i.fas:not(.gold):not(.fa-edit) {
+            .sb-left a:hover i.fas:not(.gold), .sb-left a.active i.fas:not(.gold):not(.fa-pencil-alt) {
                 background-color: #fff;
                 color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
             }

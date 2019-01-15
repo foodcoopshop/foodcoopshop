@@ -78,7 +78,7 @@ $homepageAdministrationElement = [
     'slug' => $this->Slug->getPagesListAdmin(),
     'name' => __d('admin', 'Website_administration'),
     'options' => [
-        'fa-icon' => 'fa-fw fa-edit'
+        'fa-icon' => 'fa-fw fa-pencil-alt'
     ]
 ];
 $menu = [];
@@ -180,7 +180,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         'slug' => $this->Slug->getPagesListAdmin(),
         'name' => __d('admin', 'Pages'),
         'options' => [
-            'fa-icon' => 'fa-fw fa-edit'
+            'fa-icon' => 'fa-fw fa-pencil-alt'
         ]
     ];
 

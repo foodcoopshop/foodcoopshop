@@ -21,7 +21,7 @@ echo '<td>';
         ]);
         $taxRate = $product->tax->rate;
         echo $this->Html->link(
-            '<i class="fas fa-edit ok"></i>',
+            '<i class="fas fa-pencil-alt ok"></i>',
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light product-tax-edit-button',

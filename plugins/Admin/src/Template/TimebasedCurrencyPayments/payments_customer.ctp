@@ -150,7 +150,7 @@ echo '<table class="list">';
             echo '<td style="text-align:center;width:'.($isEditAllowedGlobally && $isDeleteAllowedGlobally ? 60 : 30).'px;">';
                 if ($payment['isEditAllowed'] && $isEditAllowedGlobally) {
                     echo $this->Html->link(
-                        '<i class="fas fa-edit ok"></i>',
+                        '<i class="fas fa-pencil-alt ok"></i>',
                         $this->Slug->getTimebasedCurrencyPaymentEdit($payment['paymentId']),
                         [
                             'class' => 'btn btn-outline-light',

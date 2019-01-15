@@ -39,7 +39,7 @@ if (!empty($page['children'])) {
 
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     echo $this->Html->link(
-        '<i class="fas fa-edit"></i>',
+        '<i class="fas fa-pencil-alt"></i>',
         $this->Slug->getPageEdit($page->id_page),
         [
             'class' => 'btn btn-outline-light edit-shortcut-button',

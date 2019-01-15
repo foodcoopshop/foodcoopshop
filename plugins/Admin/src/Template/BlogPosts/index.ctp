@@ -108,7 +108,7 @@ foreach ($blogPosts as $blogPost) {
 
     echo '<td>';
         echo $this->Html->link(
-            '<i class="fas fa-edit ok"></i>',
+            '<i class="fas fa-pencil-alt ok"></i>',
             $this->Slug->getBlogPostEdit($blogPost->id_blog_post),
             [
                 'class' => 'btn btn-outline-light',
