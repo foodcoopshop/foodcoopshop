@@ -60,6 +60,10 @@ class PagesController extends FrontendController
             echo '<p>Please copy this <b>app.cookieKey</b> to your custom_config.php: '.StringComponent::createRandomString(58).'</p>';
             $securityErrors++;
         }
+        if (Configure::read('app.discourseUrl') != '' && Configure::read('app.discourseSsoSecret') == '') {
+            echo '<p>Please copy this <b>app.discourseSsoSecret</b> to your custom_config.php: '.StringComponent::createRandomString(20).'</p>';
+            $securityErrors++;
+        }
         if (Security::getSalt() == '') {
             echo '<p>Please copy this <b>Security => salt</b> to your custom_config.php: '.hash('sha256', Security::randomBytes(64)).'</p>';
             $securityErrors++;
@@ -136,6 +140,44 @@ class PagesController extends FrontendController
 
         $this->set('page', $page);
         $this->set('title_for_layout', $page->title);
+    }
+
+    public function discourseSso()
+    {
+        $user = $this->AppAuth->user();
+        if (!$user) {
+            die('No User');
+        }
+        if (!$user['active']) {
+            die('Inactive User');
+        }
+
+        $discourse_url = Configure::read('app.discourseUrl');
+        $discourse_sso_secret = Configure::read('app.discourseSsoSecret');
+
+        $sso = new \Cviebrock\DiscoursePHP\SSOHelper();
+        $sso->setSecret($discourse_sso_secret);
+
+        $payload = $_GET['sso'];
+        $signature = $_GET['sig'];
+
+        if (!($sso->validatePayload($payload, $signature))) {
+            die('Bad SSO request');
+        }
+
+        $userId = $user['id_customer'];
+        $userEmail = $user['email'];
+        $extraParameters = array(
+            'name' => $user['name']
+        );
+
+        $nonce = $sso->getNonce($payload);
+        $return_sso_url = $sso->getReturnSSOURL($payload);
+
+        $query = $sso->getSignInString($nonce, $userId, $userEmail, $extraParameters);
+        $query = (strpos($return_sso_url, '?') !== false ? '&' : '?') . $query;
+
+        $this->redirect($return_sso_url . $query);
     }
 
     public function termsOfUse()

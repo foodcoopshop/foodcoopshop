@@ -59,6 +59,16 @@ return [
         'cookieKey' => '77LIqHJAoVS89iRp3QKcdXaAvZTTqRdiweyZo87CoY9c4fieao5KKPWcdS',
 
         /**
+         * URL of Discourse instance
+         */
+        'discourseUrl' => '',
+
+        /**
+         * A random string used for Discourse SSO
+         */
+        'discourseSsoSecret' => 'S2kbvAj6qYAW1Mw2F2Tx',
+
+        /**
          * defines how many days after the sendOrderListsWeekday the products are delivered
          * sendOrderListsWeekday is defined in config.php and preset to 3, i.e. "wednesday"
          */
