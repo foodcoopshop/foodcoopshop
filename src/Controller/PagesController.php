@@ -61,7 +61,7 @@ class PagesController extends FrontendController
             echo '<p>Please copy this <b>app.cookieKey</b> to your custom_config.php: '.StringComponent::createRandomString(58).'</p>';
             $securityErrors++;
         }
-        if (Configure::read('app.discourseUrl') != '' && Configure::read('app.discourseSsoSecret') == '') {
+        if (Configure::read('app.discourseSsoEnabled') && Configure::read('app.discourseSsoSecret') == '') {
             echo '<p>Please copy this <b>app.discourseSsoSecret</b> to your custom_config.php: '.StringComponent::createRandomString(20).'</p>';
             $securityErrors++;
         }
@@ -153,7 +153,6 @@ class PagesController extends FrontendController
             die('Inactive User');
         }
 
-        $discourse_url = Configure::read('app.discourseUrl');
         $discourse_sso_secret = Configure::read('app.discourseSsoSecret');
 
         $sso = new SSOHelper();

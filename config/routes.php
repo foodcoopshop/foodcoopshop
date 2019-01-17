@@ -79,7 +79,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/'.__('route_cart').'/'.__('route_cart_finished').'/*', ['controller' => 'Carts', 'action' => 'orderSuccessful']);
     $routes->connect('/'.__('route_cart').'/:action/*', ['controller' => 'Carts']);
 
-    if (Configure::read('app.discourseUrl')) {
+    if (Configure::read('app.discourseSsoEnabled')) {
         $routes->connect('/discourse/sso', ['controller' => 'Pages', 'action' => 'discourseSso']);
     }
 

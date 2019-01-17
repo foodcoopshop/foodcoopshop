@@ -69,10 +69,7 @@ return [
          */
         'cookieKey' => '',
 
-        /**
-         * URL of Discourse instance
-         */
-        'discourseUrl' => '',
+        'discourseSsoEnabled' => false
 
         /**
          * A random string used for Discourse SSO
