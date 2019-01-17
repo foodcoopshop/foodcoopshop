@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Security;
+use Cviebrock\DiscoursePHP\SSOHelper as SSOHelper;
 
 /**
  * PagesController
@@ -155,11 +156,11 @@ class PagesController extends FrontendController
         $discourse_url = Configure::read('app.discourseUrl');
         $discourse_sso_secret = Configure::read('app.discourseSsoSecret');
 
-        $sso = new \Cviebrock\DiscoursePHP\SSOHelper();
+        $sso = new SSOHelper();
         $sso->setSecret($discourse_sso_secret);
 
-        $payload = $_GET['sso'];
-        $signature = $_GET['sig'];
+        $payload = $this->getRequest()->getQuery('sso');
+        $signature = $this->getRequest()->getQuery('sig');
 
         if (!($sso->validatePayload($payload, $signature))) {
             die('Bad SSO request');
