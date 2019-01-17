@@ -234,7 +234,7 @@ if ($groupBy == 'customer') {
     if (!empty($orderDetails)) {
         
         $showAllOrderDetailsLink = $this->Html->link(
-            '<i class="fas fa-shopping-cart"></i>' . (!$isMobile ? ' ' . __d('admin', 'All_products') : ''),
+            '<i class="fas fa-shopping-cart ok"></i>' . (!$isMobile ? ' ' . __d('admin', 'All_products') : ''),
             '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&productId=' . $productId. '&manufacturerId=' . $manufacturerId,
             [
                 'class' => 'btn btn-outline-light',

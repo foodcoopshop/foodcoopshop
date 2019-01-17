@@ -73,7 +73,7 @@ echo '</td>';
 if ($groupBy == 'customer') {
     echo '<td'.(!$isMobile ? ' style="width: 157px;"' : '').'>';
     echo $this->Html->link(
-        '<i class="fas fa-shopping-cart"></i>' . (!$isMobile ? ' ' . __d('admin', 'Ordered_products') : ''),
+        '<i class="fas fa-shopping-cart ok"></i>' . (!$isMobile ? ' ' . __d('admin', 'Ordered_products') : ''),
         $groupByObjectHref,
         [
             'class' => 'btn btn-outline-light',
