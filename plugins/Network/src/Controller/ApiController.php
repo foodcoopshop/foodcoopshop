@@ -61,7 +61,9 @@ class ApiController extends Controller
         if (isset($_SERVER['HTTP_AUTHORIZATION']))
         {
             $ha = base64_decode( substr($_SERVER['HTTP_AUTHORIZATION'],6) );
-            list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', $ha);
+            if (isset($ha[0]) && isset($ha[1])) {
+                list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', $ha);
+            }
         }
         
         $this->RequestHandler->renderAs($this, 'json');
