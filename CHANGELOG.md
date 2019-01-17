@@ -7,10 +7,12 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Herzlichen Dank an alle beteiligten Personen 
 * [AndreasEgger](https://github.com/AndreasEgger)
 * [mrothauer](https://github.com/mrothauer)
+* [paroga](https://github.com/paroga)
 * [SigiK](https://github.com/SigiK)
 * [Speis-Vorchdorf](https://github.com/Speis-Vorchdorf)
 
 ### Neue Funktionen
+- Einloggen ins Forum der Österreichischen Foodcoops (https://forum.foodcoops.at) ist jetzt über das Einloggen im FoodCoopShop möglich (Single-Sign-On). Die Funktion ist natürlich auch für andere Discourse-Foren verwendbar. [PR#306](https://github.com/foodcoopshop/foodcoopshop/pull/306) / [I#164](https://github.com/foodcoopshop/foodcoopshop/issues/164) <a href="https://github.com/paroga"><img src="https://github.com/paroga.png" width="20"></a> 
 - Der Lieferrhythmus kann jetzt auch für mehrere Produkte gleichzeitig geändert werden. [PR#304](https://github.com/foodcoopshop/foodcoopshop/pull/304) / [I#284](https://github.com/foodcoopshop/foodcoopshop/issues/284) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
 - Das Aktivieren einer Lieferpause ist nur mehr möglich, wenn für den gewünschten Liefertag noch keine Bestellungen vorliegen. [PR#303](https://github.com/foodcoopshop/foodcoopshop/pull/303) / [I#297](https://github.com/foodcoopshop/foodcoopshop/issues/297) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
 - Möglichkeit, bei Rechnungen Lagerprodukte explizit nicht anzufüren (app.includeStockProductsInInvoices). Außerdem ist die Übersicht für den Finanzverantwortlichen nun unter "Aktivitäten" zu finden und es ist möglich, die Rechnung herunterzuladen. / [PR#291](https://github.com/foodcoopshop/foodcoopshop/pull/291) / [PR#294](https://github.com/foodcoopshop/foodcoopshop/pull/294) / [I#289](https://github.com/foodcoopshop/foodcoopshop/issues/289) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> <a href="https://github.com/AndreasEgger"><img src="https://github.com/AndreasEgger.png" width="20"></a>

@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Security;
+use Cviebrock\DiscoursePHP\SSOHelper as SSOHelper;
 
 /**
  * PagesController
@@ -45,6 +46,11 @@ class PagesController extends FrontendController
                     $this->AppAuth->deny($this->getRequest()->getParam('action'));
                 }
                 break;
+            case 'discourseSso':
+                if (!$this->AppAuth->user()) {
+                    $this->AppAuth->deny($this->getRequest()->getParam('action'));
+                }
+                break;
         }
     }
 
@@ -58,6 +64,10 @@ class PagesController extends FrontendController
         if (Configure::read('app.cookieKey') == '') {
             // can be removed in v3
             echo '<p>Please copy this <b>app.cookieKey</b> to your custom_config.php: '.StringComponent::createRandomString(58).'</p>';
+            $securityErrors++;
+        }
+        if (Configure::read('app.discourseSsoEnabled') && Configure::read('app.discourseSsoSecret') == '') {
+            echo '<p>Please copy this <b>app.discourseSsoSecret</b> to your custom_config.php: '.StringComponent::createRandomString(20).'</p>';
             $securityErrors++;
         }
         if (Security::getSalt() == '') {
@@ -136,6 +146,43 @@ class PagesController extends FrontendController
 
         $this->set('page', $page);
         $this->set('title_for_layout', $page->title);
+    }
+
+    public function discourseSso()
+    {
+        $user = $this->AppAuth->user();
+        if (!$user) {
+            die('No User');
+        }
+        if (!$user['active']) {
+            die('Inactive User');
+        }
+
+        $discourse_sso_secret = Configure::read('app.discourseSsoSecret');
+
+        $sso = new SSOHelper();
+        $sso->setSecret($discourse_sso_secret);
+
+        $payload = $this->getRequest()->getQuery('sso');
+        $signature = $this->getRequest()->getQuery('sig');
+
+        if (!($sso->validatePayload($payload, $signature))) {
+            die('Bad SSO request');
+        }
+
+        $userId = $user['id_customer'];
+        $userEmail = $user['email'];
+        $extraParameters = array(
+            'name' => $user['name']
+        );
+
+        $nonce = $sso->getNonce($payload);
+        $return_sso_url = $sso->getReturnSSOURL($payload);
+
+        $query = $sso->getSignInString($nonce, $userId, $userEmail, $extraParameters);
+        $query = (strpos($return_sso_url, '?') !== false ? '&' : '?') . $query;
+
+        $this->redirect($return_sso_url . $query);
     }
 
     public function termsOfUse()
