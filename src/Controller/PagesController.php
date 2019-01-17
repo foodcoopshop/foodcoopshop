@@ -46,6 +46,11 @@ class PagesController extends FrontendController
                     $this->AppAuth->deny($this->getRequest()->getParam('action'));
                 }
                 break;
+            case 'discourseSso':
+                if (!$this->AppAuth->user()) {
+                    $this->AppAuth->deny($this->getRequest()->getParam('action'));
+                }
+                break;
         }
     }
 
