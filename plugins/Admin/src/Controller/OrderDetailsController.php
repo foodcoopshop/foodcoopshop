@@ -310,7 +310,7 @@ class OrderDetailsController extends AdminAppController
                     'sum_deposit' => $query->func()->sum('OrderDetails.deposit'),
                     'order_detail_count' => $query->func()->count('OrderDetails.id_order_detail')
                 ]);
-                $query->select($this->OrderDetail);
+                $query->select('OrderDetails.id_customer');
                 $query->select($this->OrderDetail->Customers);
                 if (count($pickupDay) == 1) {
                     $query->select($this->OrderDetail->PickupDayEntities);
