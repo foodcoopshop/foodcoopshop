@@ -414,14 +414,19 @@ class OrderDetailsTable extends AppTable
         return $preparedOrderDetails;
     }
     
+    /**
+     * $param $orderDetails is already grouped!
+     * @return array|boolean
+     */
     public function prepareOrderDetailsGroupedByCustomer($orderDetails)
     {
         $preparedOrderDetails = [];
         foreach ($orderDetails as $orderDetail) {
             $key = $orderDetail->id_customer;
-            @$preparedOrderDetails[$key]['sum_price'] += $orderDetail->total_price_tax_incl;
-            @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_amount;
-            @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
+            $preparedOrderDetails[$key]['sum_price'] = $orderDetail->sum_price;
+            $preparedOrderDetails[$key]['sum_amount'] = $orderDetail->sum_amount;
+            $preparedOrderDetails[$key]['sum_deposit'] = $orderDetail->sum_deposit;
+            $preparedOrderDetails[$key]['order_detail_count'] = $orderDetail->order_detail_count;
             $preparedOrderDetails[$key]['customer_id'] = $key;
             $preparedOrderDetails[$key]['name'] = Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($orderDetail->customer);
             $preparedOrderDetails[$key]['email'] = '';

@@ -289,11 +289,36 @@ class OrderDetailsController extends AdminAppController
             }
         }
         
+        $group = null;
+        switch($groupBy) {
+            case 'customer':
+                $group = 'Customers.id_customer';
+                break;
+        }
+        
         $query = $this->OrderDetail->find('all', [
             'conditions' => $odParams['conditions'],
             'contain' => $contain,
+            'group' => $group
         ]);
-
+        
+        switch($groupBy) {
+            case 'customer':
+                $query->select([
+                    'sum_price' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
+                    'sum_amount' => $query->func()->sum('OrderDetails.product_amount'),
+                    'sum_deposit' => $query->func()->sum('OrderDetails.deposit'),
+                    'order_detail_count' => $query->func()->count('OrderDetails.id_order_detail')
+                ]);
+                $query->select($this->OrderDetail);
+                $query->select($this->OrderDetail->Customers);
+                if (count($pickupDay) == 1) {
+                    $query->select($this->OrderDetail->PickupDayEntities);
+                }
+                $query->select($this->OrderDetail->TimebasedCurrencyOrderDetails);
+            	break;
+        }
+        
         if (in_array('excludeCreatedLastMonth', array_keys($this->getRequest()->getQueryParams()))) {
             $query->where(['DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]) . '\'']);
         }
