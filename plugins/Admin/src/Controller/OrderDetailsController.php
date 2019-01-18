@@ -292,7 +292,7 @@ class OrderDetailsController extends AdminAppController
         $group = null;
         switch($groupBy) {
             case 'customer':
-                $group = 'Customers.id_customer';
+                $group = 'OrderDetails.id_customer';
                 break;
         }
         
