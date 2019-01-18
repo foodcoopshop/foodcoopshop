@@ -62,10 +62,15 @@ if (count($payments) == 0) {
         echo '</td>';
 
         echo '<td style="text-align:center;">';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
-            'class' => 'delete-payment-button',
-            'title' => __d('admin', 'Delete_payment?')
-        ], 'javascript:void(0);');
+            echo $this->Html->link(
+                '<i class="fas fa-times-circle not-ok"></i>',
+                'javascript:void(0);',
+                [
+                    'class' => 'btn btn-outline-light delete-payment-button',
+                    'title' => __d('admin', 'Delete_payment?'),
+                    'escape' => false
+                ]
+            );
         echo '</td>';
 
         echo '</tr>';
@@ -90,7 +95,7 @@ if (count($payments) == 0) {
 
 if ($this->request->getParam('action') == 'member_fee') {
     echo '<div class="bottom-button-container">';
-    echo '<a class="btn btn-outline-light" href="'.$this->Slug->getCustomerListAdmin().'"><i class="fa fa-arrow-circle-left"></i> '.__d('admin', 'Back_to_member_overview').'</a>';
+    echo '<a class="btn btn-outline-light" href="'.$this->Slug->getCustomerListAdmin().'"><i class="fas fa-arrow-circle-left"></i> '.__d('admin', 'Back_to_member_overview').'</a>';
     echo '</div>';
 }
 ?>

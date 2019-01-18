@@ -46,7 +46,7 @@ use Cake\Core\Configure;
             <div class="right">
                 <?php
                 echo '<div id="add-blog-post-button-wrapper" class="add-button-wrapper">';
-                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> '.__d('admin', 'Add_blog_post').'', $this->Slug->getBlogPostAdd(), [
+                echo $this->Html->link('<i class="fas fa-plus-circle"></i> '.__d('admin', 'Add_blog_post').'', $this->Slug->getBlogPostAdd(), [
                     'class' => 'btn btn-outline-light',
                     'escape' => false
                 ]);
@@ -107,20 +107,26 @@ foreach ($blogPosts as $blogPost) {
     echo '</td>';
 
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-        'title' => __d('admin', 'Edit')
-    ], $this->Slug->getBlogPostEdit($blogPost->id_blog_post));
+        echo $this->Html->link(
+            '<i class="fas fa-pencil-alt ok"></i>',
+            $this->Slug->getBlogPostEdit($blogPost->id_blog_post),
+            [
+                'class' => 'btn btn-outline-light',
+                'title' => __d('admin', 'Edit'),
+                'escape' => false
+            ]
+        );
     echo '</td>';
 
     echo '<td align="center">';
     if ($blogPost->is_featured == 1) {
-        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
+        echo '<i class="fas fa-check-circle ok"></i>';
     }
     echo '</td>';
 
     echo '<td align="center">';
     if ($blogPost->is_private == 1) {
-        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
+        echo '<i class="fas fa-check-circle ok"></i>';
     }
     echo '</td>';
 
@@ -154,18 +160,24 @@ foreach ($blogPosts as $blogPost) {
 
     echo '<td align="center">';
     if ($blogPost->active == 1) {
-        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
+        echo '<i class="fas fa-check-circle ok"></i>';
     } else {
-        echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
+        echo '<i class="fas fa-minus-circle not-ok"></i>';
     }
     echo '</td>';
 
     echo '<td>';
     if ($blogPost->active) {
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
-            'title' => __d('admin', 'Show_blog_post'),
-            'target' => '_blank'
-        ], $this->Slug->getBlogPostDetail($blogPost->id_blog_post, $blogPost->title));
+        echo $this->Html->link(
+            '<i class="fas fa-arrow-right ok"></i>',
+            $this->Slug->getBlogPostDetail($blogPost->id_blog_post, $blogPost->title),
+            [
+                'class' => 'btn btn-outline-light',
+                'title' => __d('admin', 'Show_blog_post'),
+                'target' => '_blank',
+                'escape' => false
+            ]
+        );
     }
     echo '</td>';
 

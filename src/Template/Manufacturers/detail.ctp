@@ -58,12 +58,14 @@ if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
     }
 
     if (isset($manufacturerEditSlug)) {
-        echo $this->Html->getJqueryUiIcon(
-            $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
+        echo $this->Html->link(
+            '<i class="fas fa-pencil-alt"></i>',
+            $manufacturerEditSlug,
             [
-                'title' => __('Edit')
-            ],
-            $manufacturerEditSlug
+                'class' => 'btn btn-outline-light edit-shortcut-button',
+                'title' => __d('admin', 'Edit'),
+                'escape' => false
+            ]
         );
     }
     ?>

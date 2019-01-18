@@ -45,22 +45,21 @@ if ($groupBy == 'manufacturer') {
 }
 if ($groupBy == 'customer') {
     if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED') && count($pickupDay) == 1) {
-        echo '<span class="pickup-day-comment-wrapper">';
         $commentText = !empty($orderDetail['comment']) ? $orderDetail['comment'] : __d('admin', 'Add_comment');
-        echo $this->Html->getJqueryUiIcon(
-            $this->Html->image($this->Html->getFamFamFamPath('exclamation.png')),
+        echo $this->Html->link(
+            '<i class="fas fa-exclamation-circle not-ok"></i>',
+            'javascript:void(0);',
             [
-                'class' => 'pickup-day-comment-edit-button' . (empty($orderDetail['comment']) ? ' disabled' : ''),
+                'class' => 'btn btn-outline-light pickup-day-comment-edit-button' . (empty($orderDetail['comment']) ? ' btn-disabled' : ''),
                 'title' => $commentText,
-                'originalTitle' => $commentText
-            ],
-            'javascript:void(0);'
-            );
-        echo '</span>';
+                'originalTitle' => $commentText,
+                'escape' => false
+            ]
+        );
     }
     $name = $orderDetail['name'];
     if ($orderDetail['order_detail_count'] <= 25) {
-        $name = '<i class="fa fa-pagelines" title="'.__d('admin', 'Newbie_only_{0}_products_ordered.', [
+        $name = '<i class="fas fa-carrot" title="'.__d('admin', 'Newbie_only_{0}_products_ordered.', [
             $orderDetail['order_detail_count']
         ]).'"></i> ' . $name;
     }
@@ -73,10 +72,15 @@ echo '</td>';
 
 if ($groupBy == 'customer') {
     echo '<td'.(!$isMobile ? ' style="width: 157px;"' : '').'>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' ' . __d('admin', 'Ordered_products') : ''), [
-        'title' => __d('admin', 'Show_all_ordered_products_from_{0}', [$orderDetail['name']]),
-        'class' => 'icon-with-text'
-    ], $groupByObjectHref);
+    echo $this->Html->link(
+        '<i class="fas fa-shopping-cart ok"></i>' . (!$isMobile ? ' ' . __d('admin', 'Ordered_products') : ''),
+        $groupByObjectHref,
+        [
+            'class' => 'btn btn-outline-light',
+            'title' => __d('admin', 'Show_all_ordered_products_from_{0}', [$orderDetail['name']]),
+            'escape' => false
+        ]
+    );
     echo '</td>';
 }
 

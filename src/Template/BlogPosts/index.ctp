@@ -50,18 +50,20 @@ foreach ($blogPosts as $blogPost) {
         ).'</h4>';
         echo $blogPost->short_description.'<br />';
         echo $this->Html->link(
-            '<i class="fa fa-plus-circle"></i> ' . __('Show_more'),
+            '<i class="fas fa-plus-circle"></i> ' . __('Show_more'),
             $blogDetailLink,
             ['escape' => false]
         );
 
     if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-        echo $this->Html->getJqueryUiIcon(
-            $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
+        echo $this->Html->link(
+            '<i class="fas fa-pencil-alt"></i>',
+            $this->Slug->getBlogPostEdit($blogPost->id_blog_post),
             [
-                'title' => __('Edit')
-            ],
-            $this->Slug->getBlogPostEdit($blogPost->id_blog_post)
+                'class' => 'btn btn-outline-light edit-shortcut-button',
+                'title' => __d('admin', 'Edit'),
+                'escape' => false
+            ]
         );
     }
 

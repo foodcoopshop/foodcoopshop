@@ -16,14 +16,22 @@ foodcoopshop.Upload = {
     saveBlogPostTmpImageInForm : function () {
         var filename = $('.featherlight-content form .drop img').attr('src');
         $('body.blog_posts input[name="BlogPosts[tmp_image]"').val(filename);
-        $('body.blog_posts a.add-image-button').removeClass('uploaded').addClass('uploaded').find('img').attr('src', filename);
+        var button = $('body.blog_posts a.add-image-button');
+        button.removeClass('uploaded').addClass('uploaded');
+        button.html('');
+        var newImage = $('<img />').attr('src', filename);
+        button.append(newImage);
         foodcoopshop.AppFeatherlight.closeLightbox();
     },
 
     saveManufacturerTmpImageInForm : function () {
         var filename = $('.featherlight-content form .drop img').attr('src');
         $('body.manufacturers input[name="Manufacturers[tmp_image]"').val(filename);
-        $('body.manufacturers a.add-image-button').removeClass('uploaded').addClass('uploaded').find('img').attr('src', filename);
+        var button = $('body.manufacturers a.add-image-button');
+        button.removeClass('uploaded').addClass('uploaded');
+        button.html('');
+        var newImage = $('<img />').attr('src', filename);
+        button.append(newImage);
         foodcoopshop.AppFeatherlight.closeLightbox();
     },
 
@@ -39,14 +47,22 @@ foodcoopshop.Upload = {
     saveCategoryTmpImageInForm : function () {
         var filename = $('.featherlight-content form .drop img').attr('src');
         $('body.categories input[name="Categories[tmp_image]"').val(filename);
-        $('body.categories a.add-image-button').removeClass('uploaded').addClass('uploaded').find('img').attr('src', filename);
+        var button = $('body.categories a.add-image-button');
+        button.removeClass('uploaded').addClass('uploaded');
+        button.html('');
+        var newImage = $('<img />').attr('src', filename);
+        button.append(newImage);
         foodcoopshop.AppFeatherlight.closeLightbox();
     },
 
     saveSliderTmpImageInForm : function () {
         var filename = $('.featherlight-content form .drop img').attr('src');
         $('body.sliders input[name="Sliders[tmp_image]"').val(filename);
-        $('body.sliders a.add-image-button').removeClass('uploaded').addClass('uploaded').find('img').attr('src', filename);
+        var button = $('body.sliders a.add-image-button');
+        button.removeClass('uploaded').addClass('uploaded');
+        button.html('');
+        var newImage = $('<img />').attr('src', filename);
+        button.append(newImage);
         foodcoopshop.AppFeatherlight.closeLightbox();
     },
 
@@ -261,7 +277,7 @@ foodcoopshop.Upload = {
             // bind delete button
             if (imageUploadForm.find('a.img-delete').length == 0) {
                 if (imageUploadForm.find('img.existingImage').length == 1) {
-                    $('<a title="' + foodcoopshop.LocalizedJs.upload.delete + '" class="modify-icon img-delete" href="javascript:void(0);"><img src="/node_modules/famfamfam-silk/dist/png/delete.png" /></a>').appendTo(imageUploadForm.find('.drop'));
+                    $('<a title="' + foodcoopshop.LocalizedJs.upload.delete + '" class="modify-icon img-delete" href="javascript:void(0);"><i class="fas fa-times-circle not-ok"></i></a>').appendTo(imageUploadForm.find('.drop'));
                     imageUploadForm.find('a.img-delete').on('click', function (e) {
                         e.preventDefault();
                         $('<div></div>').appendTo('body')
@@ -317,8 +333,8 @@ foodcoopshop.Upload = {
                         container.prepend($('<img />').
                             attr('src', result.filename).
                             addClass('uploadedImage'));
-                        container.append('<a title="' + foodcoopshop.LocalizedJs.upload.rotateAntiClockwise + '" class="modify-icon img-rotate-acw" href="javascript:void(0);"><img src="/node_modules/famfamfam-silk/dist/png/arrow_rotate_anticlockwise.png" /></a>');
-                        container.append('<a title="' + foodcoopshop.LocalizedJs.upload.rotateClockwise + '" class="modify-icon img-rotate-cw" href="javascript:void(0);"><img src="/node_modules/famfamfam-silk/dist/png/arrow_rotate_clockwise.png" /></a>');
+                        container.append('<a title="' + foodcoopshop.LocalizedJs.upload.rotateAntiClockwise + '" class="modify-icon img-rotate-acw" href="javascript:void(0);"><i class="fas fa-undo"></a>');
+                        container.append('<a title="' + foodcoopshop.LocalizedJs.upload.rotateClockwise + '" class="modify-icon img-rotate-cw" href="javascript:void(0);"><i class="fas fa-redo"></a>');
 
                         container.find('.img-rotate-acw').on('click', function () {
                             foodcoopshop.Upload.rotateImage($(this), 'CW'); //SIC

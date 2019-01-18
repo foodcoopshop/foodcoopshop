@@ -15,7 +15,7 @@ foodcoopshop.AppFeatherlight = {
 
     initLightbox: function (configuration) {
 
-        var loading = '<i class="fa fa-spinner fa-spin fa-3x"></i>';
+        var loading = '<i class="fas fa-circle-notch fa-spin fa-3x"></i>';
 
         // show loader currently only works for shop order iframe
         $.featherlight.showLoader = function () {
@@ -42,7 +42,7 @@ foodcoopshop.AppFeatherlight = {
                 {
                     openSpeed: 0,
                     loading: loading,
-                    closeIcon: '<a href="javascript:void(0)" class="btn btn-outline-light btn-close"><i class="fa fa-times-circle fa-2x"></i></a>'
+                    closeIcon: '<a href="javascript:void(0)" class="btn btn-outline-light btn-close"><i class="fas fa-times-circle fa-2x"></i></a>'
                 }
             );
 
@@ -109,8 +109,8 @@ foodcoopshop.AppFeatherlight = {
 
                     var formButtons = '';
                     formButtons += '<div class="form-buttons">';
-                    formButtons += '<button type="button" class="btn btn-success save"><i class="fa fa-check"></i> ' + foodcoopshop.LocalizedJs.helper.save + '</button>';
-                    formButtons += '<button type="button" class="btn btn-outline-light cancel"><i class="fa fa-remove"></i> ' + foodcoopshop.LocalizedJs.helper.cancel + '</button>';
+                    formButtons += '<button type="button" class="btn btn-success save"><i class="fas fa-check"></i> ' + foodcoopshop.LocalizedJs.helper.save + '</button>';
+                    formButtons += '<button type="button" class="btn btn-outline-light cancel"><i class="fas fa-times"></i> ' + foodcoopshop.LocalizedJs.helper.cancel + '</button>';
                     formButtons += '</div>';
 
                     $(formButtons).appendTo(placeholder);
@@ -153,7 +153,7 @@ foodcoopshop.AppFeatherlight = {
 
     closeAndReloadLightbox: function () {
         var button = $('.featherlight-inner .btn.cancel');
-        foodcoopshop.Helper.addSpinnerToButton(button, 'fa-remove');
+        foodcoopshop.Helper.addSpinnerToButton(button, 'fa-times');
         foodcoopshop.Helper.disableButton(button);
         document.location.reload();
     },

@@ -31,7 +31,7 @@ if (!$largeImageExists) {
 }
 if ($product['is_new']) {
     echo '<a href="'.$this->Slug->getNewProducts().'" class="image-badge btn btn-success" title="'.__('New').'">
-                    <i class="fa fa-star gold"></i> '.__('New').'
+                    <i class="fas fa-star gold"></i> '.__('New').'
                 </a>';
 }
     echo '</div>';
@@ -81,12 +81,14 @@ if ($product['description'] != '') {
     );
 
     if ($appAuth->isSuperadmin() || ($appAuth->isManufacturer() && $product['id_manufacturer'] == $appAuth->getManufacturerId())) {
-        echo $this->Html->getJqueryUiIcon(
-            $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
+        echo $this->Html->link(
+            '<i class="fas fa-pencil-alt"></i>',
+            $this->Slug->getProductAdmin(($appAuth->isSuperadmin() ? $product['id_manufacturer'] : null), $product['id_product']),
             [
-                'title' => __('Edit_product')
-            ],
-            $this->Slug->getProductAdmin(($appAuth->isSuperadmin() ? $product['id_manufacturer'] : null), $product['id_product'])
+                'class' => 'btn btn-outline-light edit-shortcut-button',
+                'title' => __d('admin', 'Edit'),
+                'escape' => false
+            ]
         );
     }
 

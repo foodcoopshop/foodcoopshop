@@ -19,10 +19,15 @@ echo '<td class="right' . ($groupBy == '' && $orderDetail->total_price_tax_incl 
     echo '<div class="table-cell-wrapper price">';
     if ($groupBy == '') {
         if ($editRecordAllowed) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                'class' => 'order-detail-product-price-edit-button',
-                'title' => __d('admin', 'Click_to_change_price')
-            ], 'javascript:void(0);');
+            echo $this->Html->link(
+                '<i class="fas fa-pencil-alt ok"></i>',
+                'javascript:void(0);',
+                [
+                    'class' => 'btn btn-outline-light order-detail-product-price-edit-button',
+                    'title' => __d('admin', 'Click_to_change_price'),
+                    'escape' => false
+                ]
+            );
         }
         echo '<span class="product-price-for-dialog">' . $this->Number->formatAsCurrency($orderDetail->total_price_tax_incl) . '</span>';
         if (!empty($orderDetail->timebased_currency_order_detail)) {

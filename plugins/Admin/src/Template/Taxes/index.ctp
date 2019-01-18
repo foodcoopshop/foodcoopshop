@@ -31,7 +31,7 @@ use Cake\Core\Configure;
         <div class="right">
             <?php
             echo '<div id="add-tax-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> '.__d('admin', 'Add_tax_rate').'', $this->Slug->getTaxAdd(), [
+            echo $this->Html->link('<i class="fas fa-plus-circle"></i> '.__d('admin', 'Add_tax_rate').'', $this->Slug->getTaxAdd(), [
                 'class' => 'btn btn-outline-light',
                 'escape' => false
             ]);
@@ -69,9 +69,15 @@ foreach ($taxes as $tax) {
     echo '</td>';
 
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-        'title' => __d('admin', 'Edit')
-    ], $this->Slug->getTaxEdit($tax->id_tax));
+    echo $this->Html->link(
+        '<i class="fas fa-pencil-alt ok"></i>',
+        $this->Slug->getTaxEdit($tax->id_tax),
+        [
+            'class' => 'btn btn-outline-light',
+            'title' => __d('admin', 'Edit'),
+            'escape' => false
+        ]
+    );
     echo '</td>';
 
     echo '<td>';
@@ -80,9 +86,9 @@ foreach ($taxes as $tax) {
 
     echo '<td align="center">';
     if ($tax->active == 1) {
-        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
+        echo '<i class="fas fa-check-circle ok"></i>';
     } else {
-        echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
+        echo '<i class="fas fa-minus-circle not-ok"></i>';
     }
     echo '</td>';
 

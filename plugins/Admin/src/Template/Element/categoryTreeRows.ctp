@@ -38,14 +38,18 @@ foreach ($categories as $category) {
     echo '</td>';
 
     echo '<td>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-            'title' => __d('admin', 'Edit')
-        ], $this->Slug->getCategoryEdit($category->id_category));
-    echo '</td>';
-
+    echo $this->Html->link(
+        '<i class="fas fa-pencil-alt ok"></i>',
+        $this->Slug->getCategoryEdit($category->id_category),
+        [
+            'class' => 'btn btn-outline-light',
+            'title' => __d('admin', 'Edit'),
+            'escape' => false
+        ]
+    );
     echo '<td>';
     if ($level > 0) {
-        echo '<i class="fa fa-level-up fa-rotate-90" style="margin-right:5px;margin-left:'.(($level - 1) * 10).'px;"></i>';
+        echo '<i class="fas fa-level-up-alt fa-rotate-90" style="margin-right:5px;margin-left:'.(($level - 1) * 10).'px;"></i>';
     }
     echo $category->name;
     echo '</td>';
@@ -56,18 +60,24 @@ foreach ($categories as $category) {
 
     echo '<td align="center">';
     if ($category->active == 1) {
-        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
+        echo '<i class="fas fa-check-circle ok"></i>';
     } else {
-        echo $this->Html->image($this->Html->getFamFamFamPath('delete.png'));
+        echo '<i class="fas fa-minus-circle not-ok"></i>';
     }
     echo '</td>';
 
     echo '<td style="width:20px;">';
     if ($category->active) {
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
-            'title' => __d('admin', 'Show_category'),
-            'target' => '_blank'
-        ], $this->Slug->getCategoryDetail($category->id_category, $category->name));
+        echo $this->Html->link(
+            '<i class="fas fa-arrow-right ok"></i>',
+            $this->Slug->getCategoryDetail($category->id_category, $category->name),
+            [
+                'class' => 'btn btn-outline-light',
+                'title' => __d('admin', 'Show_category'),
+                'target' => '_blank',
+                'escape' => false
+            ]
+        );
     }
     echo '</td>';
 

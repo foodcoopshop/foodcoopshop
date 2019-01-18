@@ -15,10 +15,18 @@
 
 echo '<td>';
 if ($product->active && (! empty($product->product_attributes) || isset($product->product_attributes))) {
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
-        'title' => __d('admin', 'product_preview'),
-        'target' => '_blank'
-    ], $url = $this->Slug->getProductDetail($product->id_product, $product->unchanged_name));
+    
+    echo $this->Html->link(
+        '<i class="fas fa-arrow-right ok"></i>',
+        $this->Slug->getProductDetail($product->id_product, $product->unchanged_name),
+        [
+            'class' => 'btn btn-outline-light',
+            'title' => __d('admin', 'product_preview'),
+            'target' => '_blank',
+            'escape' => false
+        ]
+    );
+    
 }
 echo '</td>';
 

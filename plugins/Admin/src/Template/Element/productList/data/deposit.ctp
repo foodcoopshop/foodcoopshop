@@ -19,10 +19,15 @@ echo '<td>';
     if (empty($product->product_attributes)) {
         echo '<div class="table-cell-wrapper deposit">';
         if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || Configure::read('app.isDepositPaymentCashless')) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                'class' => 'product-deposit-edit-button',
-                'title' => __d('admin', 'change_deposit')
-            ], 'javascript:void(0);');
+            echo $this->Html->link(
+                '<i class="fas fa-pencil-alt ok"></i>',
+                'javascript:void(0);',
+                [
+                    'class' => 'btn btn-outline-light product-deposit-edit-button',
+                    'title' => __d('admin', 'change_deposit'),
+                    'escape' => false
+                ]
+            );
         }
         if ($product->deposit > 0) {
             echo '<span class="deposit-for-dialog">';

@@ -16,6 +16,6 @@
         
 <p>
     <button type="submit" class="btn btn-success btn-order">
-    	<i class="fa fa-check fa-lg"></i> <?php echo __('Order_button'); ?>
+    	<i class="fas fa-check"></i> <?php echo __('Order_button'); ?>
 	</button>
 </p>

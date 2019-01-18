@@ -37,7 +37,7 @@ use Cake\Core\Configure;
             <div class="right">
                 <?php
                 echo '<div id="add-manufacturer-button-wrapper" class="add-button-wrapper">';
-                echo $this->Html->link('<i class="fa fa-plus-square fa-lg"></i> ' . __d('admin', 'Add_manufacturer'), $this->Slug->getManufacturerAdd(), [
+                echo $this->Html->link('<i class="fas fa-plus-circle"></i> ' . __d('admin', 'Add_manufacturer'), $this->Slug->getManufacturerAdd(), [
                     'class' => 'btn btn-outline-light',
                     'escape' => false
                 ]);
@@ -104,36 +104,43 @@ foreach ($manufacturers as $manufacturer) {
             $details .= '<br />' . $manufacturer->address_manufacturer->phone;
         }
         echo '<div class="manufacturer-details-wrapper">';
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('telephone.png')), [
-                'class' => 'manufacturer-details-read-button',
-                'title' => $details
-            ], 'javascript:void(0);');
+            echo '<i class="fas fa-phone-square ok fa-lg manufacturer-details-read-button" title="'.h($details).'"></i>';
         echo '</div>';
 
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-            'title' => __d('admin', 'Edit')
-        ], $this->Slug->getManufacturerEdit($manufacturer->id_manufacturer));
+        echo $this->Html->link(
+            '<i class="fas fa-pencil-alt ok"></i>',
+            $this->Slug->getManufacturerEdit($manufacturer->id_manufacturer),
+            [
+                'class' => 'btn btn-outline-light',
+                'title' => __d('admin', 'Edit'),
+                'escape' => false
+            ]
+        );
+        
         echo '&nbsp;<b>' . $manufacturer->name . '</b><br />';
         echo $manufacturer->address_manufacturer->city;
         echo '<br /><span class="email">' . $manufacturer->address_manufacturer->email . '</span>';
 
         if (!empty($manufacturer->customer)) {
-            echo '<br /><i class="fa fa-fw fa-male" title="' . __d('admin', 'Contact_person') . '"></i>' . $manufacturer->customer->firstname . ' ' . $manufacturer->customer->lastname;
+            echo '<br /><i class="fas fa-fw fa-user" title="' . __d('admin', 'Contact_person') . '"></i>' . $manufacturer->customer->firstname . ' ' . $manufacturer->customer->lastname;
         }
 
     echo '</td>';
 
-    echo '<td style="width:140px;">';
+    echo '<td style="width:145px;">';
     $sumProductCount += $manufacturer->product_count;
     $productString = __d('admin', '{0,plural,=1{1_product} other{#_products}}', [$manufacturer->product_count]);
-    echo $this->Html->getJqueryUiIcon(
-        $this->Html->image($this->Html->getFamFamFamPath('tag_green.png')) . str_replace(' ', '&nbsp;', $productString),
+    
+    echo $this->Html->link(
+        '<i class="fas fa-tag ok"></i> ' . str_replace(' ', '&nbsp;', $productString),
+        $this->Slug->getProductAdmin($manufacturer->id_manufacturer),
         [
-        'title' => __d('admin', 'Show_all_products_from_{0}', [$manufacturer->name]),
-        'class' => 'icon-with-text'
-        ],
-        $this->Slug->getProductAdmin($manufacturer->id_manufacturer)
+            'class' => 'btn btn-outline-light',
+            'title' => __d('admin', 'Show_all_products_from_{0}', [$manufacturer->name]),
+            'escape' => false
+        ]
     );
+    
     echo '</td>';
 
     echo '<td>';
@@ -144,14 +151,14 @@ foreach ($manufacturers as $manufacturer) {
             $depositCreditBalanceClasses[] = 'negative';
         }
         $depositCreditBalanceHtml = '<span class="'.implode(' ', $depositCreditBalanceClasses).'">' . $this->Number->formatAsCurrency($manufacturer->deposit_credit_balance);
-
-        echo $this->Html->getJqueryUiIcon(
+        echo $this->Html->link(
             __d('admin', 'Deposit') . ':&nbsp;' . $depositCreditBalanceHtml,
+            $this->Slug->getDepositList($manufacturer->id_manufacturer),
             [
-            'class' => 'icon-with-text',
-            'title' => __d('admin', 'Show_deposit_account')
-            ],
-            $this->Slug->getDepositList($manufacturer->id_manufacturer)
+                'class' => 'btn btn-outline-light',
+                'title' => __d('admin', 'Show_deposit_account'),
+                'escape' => false
+            ]
         );
     }
     echo '</td>';
@@ -168,13 +175,14 @@ foreach ($manufacturers as $manufacturer) {
                 $timebasedCurrencyCreditBalanceHtml = '<span class="'.implode(' ', $timebasedCurrencyCreditBalanceClasses).'">' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($manufacturer->timebased_currency_credit_balance);
 
                 if ($appAuth->isSuperadmin()) {
-                    echo $this->Html->getJqueryUiIcon(
+                    echo $this->Html->link(
                         $timebasedCurrencyCreditBalanceHtml,
+                        $this->Slug->getTimebasedCurrencyBalanceForManufacturers($manufacturer->id_manufacturer),
                         [
-                            'class' => 'icon-with-text',
-                            'title' => __d('admin', 'Show_{0}', [$this->TimebasedCurrency->getName()])
-                        ],
-                        $this->Slug->getTimebasedCurrencyBalanceForManufacturers($manufacturer->id_manufacturer)
+                            'class' => 'btn btn-outline-light',
+                            'title' => __d('admin', 'Show_{0}', [$this->TimebasedCurrency->getName()]),
+                            'escape' => false
+                        ]
                     );
                 } else {
                     echo $timebasedCurrencyCreditBalanceHtml;
@@ -185,7 +193,7 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td style="text-align:center;width:42px;">';
         if ($manufacturer->stock_management_enabled == 1) {
-            echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
+            echo '<i class="fas fa-check-circle ok"></i>';
         }
     echo '</td>';
 
@@ -195,7 +203,7 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td align="center">';
     if ($manufacturer->is_private == 1) {
-        echo $this->Html->image($this->Html->getFamFamFamPath('accept.png'));
+        echo '<i class="fas fa-check-circle ok"></i>';
     }
     echo '</td>';
 
@@ -206,15 +214,17 @@ foreach ($manufacturers as $manufacturer) {
     echo '</td>';
 
     echo '<td>';
-    echo $this->Html->getJqueryUiIcon(
-        $this->Html->image($this->Html->getFamFamFamPath('page_white_gear.png')),
+    
+    echo $this->Html->link(
+        '<i class="fas fa-cog ok"></i>',
+        $this->Slug->getManufacturerEditOptions($manufacturer->id_manufacturer),
         [
-            'title' => __d('admin', 'Edit_manufacturer_settings')
-        ],
-        $this->Slug->getManufacturerEditOptions($manufacturer->id_manufacturer)
+            'class' => 'btn btn-outline-light',
+            'title' => __d('admin', 'Edit_manufacturer_settings'),
+            'escape' => false
+        ]
     );
-    echo '</td>';
-
+    
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
         echo '<td>';
             echo $manufacturer->variable_member_fee.'%';
@@ -240,10 +250,16 @@ foreach ($manufacturers as $manufacturer) {
     echo '<td style="width: 29px;">';
     if ($manufacturer->active) {
         $manufacturerLink = $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name);
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
-            'title' => __d('admin', 'Manufacturer_profile'),
-            'target' => '_blank'
-        ], $manufacturerLink);
+        echo $this->Html->link(
+            '<i class="fas fa-arrow-right ok"></i>',
+            $manufacturerLink,
+            [
+                'class' => 'btn btn-outline-light',
+                'title' => __d('admin', 'Manufacturer_profile'),
+                'target' => '_blank',
+                'escape' => false
+            ]
+        );
     }
     echo '</td>';
     echo '</tr>';
@@ -270,7 +286,7 @@ echo '</tr>';
 echo '</table>';
 echo '<div class="sc"></div>';
 echo '<div class="bottom-button-container">';
-echo '<button data-clipboard-text="'.join(',', $emailAddresses).'" class="btn-clipboard btn btn-outline-light"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
+echo '<button data-clipboard-text="'.join(',', $emailAddresses).'" class="btn-clipboard btn btn-outline-light"><i class="far fa-envelope"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
 echo '</div>';
 echo '<div class="sc"></div>';
 

@@ -123,7 +123,7 @@ class MenuHelper extends Helper
         if ($fontAwesomeIconClass != '') {
             $class[] = 'has-icon';
         }
-        $fontAwesomeIconString = '<i class="fa '.@$fontAwesomeIconClass.'"></i>';
+        $fontAwesomeIconString = '<i class="fas '.@$fontAwesomeIconClass.'"></i>';
 
         $classString = '';
         if (!empty($class)) {
@@ -143,7 +143,7 @@ class MenuHelper extends Helper
                 $userName = $appAuth->getManufacturerName();
             }
             if ($this->getView()->getPlugin() != '') {
-                $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out') . '<br /><span>'.$userName.'</span>', 'options' => ['fa-icon' => 'fa-fw fa-sign-out', 'class' => ['logout-button']]];
+                $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out') . '<br /><span>'.$userName.'</span>', 'options' => ['fa-icon' => 'fa-fw fa-sign-out-alt', 'class' => ['logout-button']]];
             } else {
                 $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out'), 'options' => ['class' => ['logout-button']]];
             }
@@ -158,7 +158,7 @@ class MenuHelper extends Helper
     public function getPaymentProductMenuElement()
     {
         if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
-            return ['slug' => Configure::read('app.slugHelper')->getMyCreditBalance(), 'name' => __('Credit'), 'options' => ['fa-icon' => 'fa-fw fa-' . strtolower(Configure::read('app.currencyName'))]];
+            return ['slug' => Configure::read('app.slugHelper')->getMyCreditBalance(), 'name' => __('Credit'), 'options' => ['fa-icon' => 'fa-fw fa-' . strtolower(Configure::read('app.currencyName')) . '-sign']];
         }
         return [];
     }
@@ -174,7 +174,7 @@ class MenuHelper extends Helper
     public function getTimebasedCurrencyPaymentForCustomersMenuElement($appAuth)
     {
         if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) {
-            return ['slug' => Configure::read('app.slugHelper')->getMyTimebasedCurrencyBalanceForCustomers(), 'name' => Configure::read('app.timebasedCurrencyHelper')->getName(), 'options' => ['fa-icon' => 'fa-fw fa-clock-o']];
+            return ['slug' => Configure::read('app.slugHelper')->getMyTimebasedCurrencyBalanceForCustomers(), 'name' => Configure::read('app.timebasedCurrencyHelper')->getName(), 'options' => ['fa-icon' => 'fa-fw fa-clock']];
         }
         return [];
     }
@@ -182,7 +182,7 @@ class MenuHelper extends Helper
     public function getTimebasedCurrencyPaymentForManufacturersMenuElement($appAuth)
     {
         if ($appAuth->isTimebasedCurrencyEnabledForManufacturer()) {
-            return ['slug' => Configure::read('app.slugHelper')->getMyTimebasedCurrencyBalanceForManufacturers(), 'name' => Configure::read('app.timebasedCurrencyHelper')->getName(), 'options' => ['fa-icon' => 'fa-fw fa-clock-o']];
+            return ['slug' => Configure::read('app.slugHelper')->getMyTimebasedCurrencyBalanceForManufacturers(), 'name' => Configure::read('app.timebasedCurrencyHelper')->getName(), 'options' => ['fa-icon' => 'fa-fw fa-clock']];
         }
         return [];
     }

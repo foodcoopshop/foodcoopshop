@@ -192,7 +192,7 @@ foodcoopshop.Admin = {
                 liveSearch: true,
                 showIcon: true,
                 iconBase: 'fontawesome',
-                tickIcon: 'fa fa-check'
+                tickIcon: 'fas fa-check'
             };
             if ($(this).attr('multiple') == 'multiple') {
                 var emptyElement = $(this).find('option').first();
@@ -785,7 +785,7 @@ foodcoopshop.Admin = {
         } else {
             infoText = foodcoopshop.LocalizedJs.admin.YouSelected0Products.replace(/\{0\}/, '<b>' + productIds.length + '</b>');
         }
-        infoText += ':<br />';
+        infoText += '<br />';
         foodcoopshop.Admin.openEditDeliveryRhythmDialog(productIds, infoText, '1-week', '', '');
     },
     
@@ -1192,7 +1192,7 @@ foodcoopshop.Admin = {
                 }
             };
 
-            var dataRow = $('#change-new-state-' + productId).parent().parent().parent().parent();
+            var dataRow = $(this).closest('tr');
             $('<div></div>').appendTo('body')
                 .html('<p>' + reallyNewStateText.replaceI18n(0,  '<b>' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>') + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
                 .dialog({
@@ -1213,7 +1213,7 @@ foodcoopshop.Admin = {
 
         $(container).find('.delete-product-attribute-button').on('click', function () {
 
-            var splittedProductId = $(this).parent().parent().parent().parent().parent().attr('id').replace(/product-/, '').split('-');
+            var splittedProductId = $(this).closest('tr').attr('id').replace(/product-/, '').split('-');
             var productId = splittedProductId[0];
             var productAttributeId = splittedProductId[1];
 
@@ -1394,7 +1394,7 @@ foodcoopshop.Admin = {
 
         $('.filter-container .right a.cancel').on('click', function () {
             foodcoopshop.Helper.disableButton($(this));
-            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-remove');
+            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-times');
             var referer = $('input[name=referer').val();
             if (referer == '') {
                 referer = '/';
@@ -1557,7 +1557,7 @@ foodcoopshop.Admin = {
     triggerFilter : function () {
         $('#filter-loader').remove();
         $('#content').css('opacity', '.3');
-        $('#container').append('<div id="filter-loader"><i class="fa fa-spinner"></i></div>');
+        $('#container').append('<div id="filter-loader"><i class="fas fa-circle-notch"></i></div>');
         var marginTop = $('.filter-container').outerHeight();
         $('#filter-loader').css('top', marginTop + 20);
         foodcoopshop.Admin.submitFilterForm();
@@ -2026,7 +2026,7 @@ foodcoopshop.Admin = {
                             var cartFinishedRegExp = new RegExp(foodcoopshop.LocalizedJs.admin.routeCartFinished);
                             if (currentUrl.match(cartFinishedRegExp)) {
                                 $.featherlight.showLoader();
-                                var message = $(this).contents().find('#flashMessage').html().replace(/<(a|img)[^>]*>/g,'');
+                                var message = $(this).contents().find('#flashMessage').html().replace(/<(a|i)[^>]*>/g,'');
                                 document.location.href = foodcoopshop.Admin.addParameterToURL(
                                     foodcoopshop.Admin.getParentLocation(),
                                     'message=' + encodeURIComponent(message)
@@ -2387,7 +2387,7 @@ foodcoopshop.Admin = {
         // one removes itself after one execution
         productDropdown.one('click', function () {
 
-            $(this).parent().find('div.filter-option-inner-inner').append('<i class="fa fa-spinner fa-spin"></i>');
+            $(this).parent().find('div.filter-option-inner-inner').append('<i class="fas fa-circle-notch fa-spin"></i>');
 
             foodcoopshop.Helper
                 .ajaxCall('/admin/products/ajaxGetProductsForDropdown/' +
@@ -2397,7 +2397,7 @@ foodcoopshop.Admin = {
                         select.append(data.products);
                         select.attr('disabled', false);
                         select.selectpicker('refresh');
-                        select.find('i.fa-spinner').remove();
+                        select.find('i.fa-circle-notch').remove();
                     },
                     onError: function (data) {
                         console.log(data.msg);

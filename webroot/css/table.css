@@ -107,21 +107,16 @@ table.list th.icon {
   width: 20px;
 }
 table.list a.btn {
-	background: #e6e6e6 ! important;
-	padding-top: 0 ! important;
-	padding-bottom: 0 ! important;
+	padding: 0 4px ! important;
 }
-.sort a {
-  background-repeat: no-repeat;
+.sort a.asc:before,
+.sort a.desc:before {
+    font-family: 'Font Awesome 5 Free';
+    padding-right: 5px;
 }
-.sort a.asc, .sort a.desc {
-  padding-left: 15px;
+.sort a.asc:before {
+    content: "\f0aa";
 }
-.sort a.asc {
-  background-image: url(/node_modules/famfamfam-silk/dist/png/bullet_arrow_up.png);
-  background-position: 0px -1px;
-}
-.sort a.desc {
-  background-image: url(/node_modules/famfamfam-silk/dist/png/bullet_arrow_down.png);
-  background-position: 0px 0px;
+.sort a.desc:before {
+	content: "\f0ab";
 }

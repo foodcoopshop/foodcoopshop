@@ -32,10 +32,10 @@ $idForUpload = !empty($manufacturer->id_manufacturer) ? $manufacturer->id_manufa
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa fa-check"></i> <?php echo __d('admin', 'Save'); ?></a>
+            class="fas fa-check"></i> <?php echo __d('admin', 'Save'); ?></a>
         <?php if ($this->request->getRequestTarget() != $this->Slug->getManufacturerProfile()) { ?>
             <a href="javascript:void(0);" class="btn btn-outline-light cancel"><i
-            class="fa fa-remove"></i> <?php echo __d('admin', 'Cancel'); ?></a>
+            class="fas fa-times"></i> <?php echo __d('admin', 'Cancel'); ?></a>
         <?php } ?>
         <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers'))]); ?>
     </div>
@@ -92,7 +92,7 @@ if ($appAuth->isManufacturer()) {
 
     if ($isEditMode) {
         $buttonOptions = ['class' => 'btn btn-outline-light', 'escape' => false];
-        $buttonIcon = '<i class="fa fa-cogs fa-lg"></i> ';
+        $buttonIcon = '<i class="fas fa-cog"></i> ';
         if ($appAuth->isManufacturer()) {
             $optionsLink = $this->Html->link($buttonIcon . __d('admin', 'To_your_settings'), $this->Slug->getManufacturerMyOptions(), $buttonOptions);
         } else {
@@ -123,11 +123,16 @@ if ($appAuth->isManufacturer()) {
     }
     echo '</label>';
     echo '<div style="float:right;">';
-    echo $this->Html->getJqueryUiIcon($imageExists ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
-    'class' => 'add-image-button' . ($imageExists ? ' uploaded' : ''),
-    'title' => __d('admin', 'Upload_new_logo_or_change_it'),
-    'data-object-id' => $idForUpload
-    ], 'javascript:void(0);');
+    echo $this->Html->link(
+        $imageExists ? $this->Html->image($imageSrc) : '<i class="fas fa-plus-square"></i>',
+        'javascript:void(0);',
+        [
+            'class' => 'btn btn-outline-light add-image-button ' . ($imageExists ? 'uploaded' : ''),
+            'title' => __d('admin', 'Upload_new_logo_or_change_it'),
+            'data-object-id' => $idForUpload,
+            'escape' => false
+        ]
+    );
     echo '</div>';
     echo $this->Form->hidden('Manufacturers.tmp_image');
     echo '</div>';
@@ -214,11 +219,16 @@ if ($appAuth->isManufacturer()) {
     echo '</label>';
     
     echo '<div style="float:right;">';
-    echo $this->Html->getJqueryUiIcon('<span style="padding:8px;float:left;">' . ($fileUploadExists ? __d('admin', 'Change_general_terms_and_conditions') : __d('admin', 'Upload_general_terms_and_conditions')).'</span>', [
-        'class' => 'add-general-terms-and-conditions-button' . ($fileUploadExists ? ' uploaded' : ''),
-        'title' => __d('admin', 'Upload_general_terms_and_conditions_or_change_them'),
-        'data-object-id' => $idForUpload
-    ], 'javascript:void(0);');
+    echo $this->Html->link(
+        '<span style="padding:8px;float:left;">' . ($fileUploadExists ? __d('admin', 'Change_general_terms_and_conditions') : __d('admin', 'Upload_general_terms_and_conditions')).'</span>',
+        'javascript:void(0);',
+        [
+            'class' => 'btn btn-outline-light add-general-terms-and-conditions-button' . ($fileUploadExists ? ' uploaded' : ''),
+            'title' => __d('admin', 'Upload_general_terms_and_conditions_or_change_them'),
+            'data-object-id' => $idForUpload,
+            'escape' => false
+        ]
+    );
     echo ' <span class="after small">'.__d('admin', 'If_you_do_not_upload_your_own_general_terms_and_conditions_(as_pdf)_the_default_general_terms_and_conditions_are_applied.').'</span>';
     echo '</div>';
     echo $this->Form->hidden('Manufacturers.tmp_general_terms_and_conditions');
@@ -231,7 +241,6 @@ if ($appAuth->isManufacturer()) {
             'escape' => false
         ]);
     }
-    
 
     echo $this->Form->control('Manufacturers.firmenbuchnummer', [
     'label' => __d('admin', 'Commercial_register_number').' <span class="after small">'.__d('admin', 'if_it_is_available').'</span>',

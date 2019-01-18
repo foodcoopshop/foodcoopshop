@@ -158,10 +158,16 @@ foreach ($actionLogs as $actionLog) {
     }
 
     if ($showLink) {
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('arrow_right.png')), [
-            'title' => $title,
-            'target' => $targetBlank ? '_blank' : ''
-        ], $url);
+        echo $this->Html->link(
+            '<i class="fas fa-arrow-right ok"></i>',
+            $url,
+            [
+                'class' => 'btn btn-outline-light',
+                'title' => $title,
+                'target' => $targetBlank ? '_blank' : '',
+                'escape' => false
+            ]
+        );
     }
     echo '</td>';
 

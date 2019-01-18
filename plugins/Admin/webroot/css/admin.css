@@ -196,7 +196,7 @@ form.fcs-form .bootstrap-select {
 .vertical.menu li.has-children ul a {
     padding-left: 33px;
 }
-.vertical.menu li.has-children ul a i.fa {
+.vertical.menu li.has-children ul a i.fas {
     font-size: 13px;
     left: 13px;
     top: 5px;
@@ -242,7 +242,8 @@ span.categories-for-dialog,
 span.tax-for-dialog,
 span.product-price-for-dialog,
 span.product-quantity-for-dialog,
-span.delivery-rhythm-for-dialog {
+span.delivery-rhythm-for-dialog,
+span.quantity-in-units {
     line-height: 21px;
     margin-left: 5px;
 }
@@ -264,8 +265,7 @@ td.is-stock-product .fa-check,
 td.delivery-rhythm .fa-check {
   color: #719f41;
 }
-td.is-stock-product i.fa,
-td.delivery-rhythm i.fa {
+td.is-stock-product i.fas.no-button {
 	margin-left: 5px;
 }
 span.is-declaration-ok-wrapper .fa-close,
@@ -342,7 +342,7 @@ body.products.index td.status {
   position: fixed;
   top: 10px;
   left: 590px;
-  font-size: 8em;
+  font-size: 7.5em;
   background: white;
   border-radius: 10px;
   width: 150px;
@@ -479,12 +479,6 @@ body.order_details.index a.change-products-picked-up-button {
 body.order_details.index .timebased-currency-object {
 	display: none;
 }
-body.order_details.index .add-payment-deposit-button-wrapper .jquery-ui-icon a.icon-with-text {
-  padding-top: 3px;
-  padding-bottom: 3px;
-  background: #fff;
-  border-radius: 5px;
-}
 #product-name-edit-form div.textarea-wrapper a {
   color: red;
   font-weight: bold;
@@ -511,7 +505,6 @@ body.products.index .toggle-sync-button-wrapper {
 }
 body.configurations.index td.sync-domain-list a.btn {
   float: right;
-  margin-bottom: 5px;
 }
 
 #actionLogs div.changed {
@@ -627,9 +620,6 @@ body.payments.product #add-payment-button-wrapper,
 body.payments.member_fee #add-payment-button-wrapper {
     margin-top: 8px;
 }
-#payments-list #add-payment-button-wrapper .jquery-ui-icon a.icon-with-text {
-    font-weight: bold;
-}
 .add-button-wrapper {
     float: left;
     margin-right: 3px;
@@ -637,15 +627,15 @@ body.payments.member_fee #add-payment-button-wrapper {
 body.order_details #add-instant-order-button-wrapper div.select {
     display: none;
 }
-body.order_details td .pickup-day-comment-edit-button.disabled img,
-body.customers.index td .customer-comment-edit-button.disabled img {
-  opacity: 0.2;
+body.order_details td .pickup-day-comment-edit-button.btn-disabled i.fas,
+body.customers.index td .customer-comment-edit-button.btn-disabled i.fas {
+  opacity: 0.3;
 }
-body.customers.index span.edit-wrapper {
+body.customers.index a.edit-link {
     float: left;
     margin-right: 3px;
 }
-body.order_details.index td span.pickup-day-comment-wrapper {
+body.order_details.index td a.pickup-day-comment-edit-button {
   float: left;
   margin-right: 5px;
 }
@@ -700,14 +690,6 @@ body.order_details.index td span.pickup-day-comment-wrapper {
     width: auto;
     margin-right: 5px;
 }
-.jquery-ui-icon a.icon-with-text {
-    float: left;
-    padding: 0 5px;
-    color: #009335 ! important;
-}
-.jquery-ui-icon a.icon-with-text.button {
-    padding: 7px;
-}
 .featherlight-content h3 {
     margin: 0;
     margin-top: 5px;
@@ -761,10 +743,10 @@ body.products.index .table-cell-wrapper.deposit {
     text-align: right;
 }
 body.order_details.index .table-cell-wrapper.price {
-    width: 75px;
+    width: 80px;
 }
 .table-cell-wrapper.amount {
-    width: 48px;
+    width: 50px;
 }
 .table-cell-wrapper.group {
     width: 102px;
@@ -828,38 +810,44 @@ body.order_details.index .table-cell-wrapper.price {
     padding: 2px;
     line-height: 10px;
 }
-.featherlight-content .mini-upload-form .modify-icon:hover {
+.featherlight-content .mini-upload-form .modify-icon {
     border: 1px solid black;
     background: white;
 }
+.featherlight-content .mini-upload-form .modify-icon:hover {
+    background: #ccc;
+}
 .featherlight-content .mini-upload-form .img-rotate-acw {
-    left: 30px;
+    left: 22px;
 }
 .featherlight-content .mini-upload-form .img-rotate-cw {
-    left: 50px;
+    left: 44px;
 }
 .featherlight-content .mini-upload-form .img-delete {
-    right: 30px;
+    right: 21px;
+}
+.add-image-button {
+	float: left;
 }
 body.manufacturers.index span.email {
     word-wrap: break-word;
 }
-body.manufacturers li.ui-state-default a.uploaded,
-body.blog_posts li.ui-state-default a.uploaded,
-body.categories li.ui-state-default a.uploaded {
+body.manufacturers a.uploaded,
+body.blog_posts a.uploaded,
+body.categories a.uploaded {
     float: left;
     margin-top: 2px; /* layout fix: top line was not shown */
 }
-body.manufacturers li.ui-state-default a.uploaded img {
+body.manufacturers a.uploaded img {
     width: 247px;
     height: auto;
 }
-body.blog_posts li.ui-state-default a.uploaded img {
+body.blog_posts a.uploaded img {
     width: 245px;
     height: auto;
 }
-body.categories li.ui-state-default a.uploaded img,
-body.sliders li.ui-state-default a.uploaded img {
+body.categories a.uploaded img,
+body.sliders a.uploaded img {
     width: auto;
     max-width: 758px;
     height: auto;
@@ -1146,7 +1134,7 @@ form.fcs-form .input.fcs-upload .after.small {
     line-height: 28px;
     margin-left: 5px;
 }
-.bootstrap-select div.filter-option-inner-inner i.fa {
+.bootstrap-select div.filter-option-inner-inner i.fas {
     position: absolute;
     right: 25px;
     top: 9px;
@@ -1203,7 +1191,7 @@ a.btn-next-day:nth-of-type(2) {
     left: 92px;
 }
 a.btn-arrow i {
-    font-size: 17px;
+    font-size: 15px;
 }
 
 body.customers.index #selectgroupid,
@@ -1257,14 +1245,14 @@ body.payments tr.last-row-of-year td {
     border-top-color: #719f41;
     border-top-style: solid;
 }
-body.payments img.payment-approval,
-body.reports.payment img.payment-approval {
+body.payments i.payment-approval,
+body.reports.payment i.payment-approval {
     float: left;
     margin-top: 2px;
     margin-right: 2px;
 }
-body.payments .payment-approval-comment-wrapper,
-body.reports.payment .payment-approval-comment-wrapper {
+body.payments .payment-approval-comment,
+body.reports.payment .payment-approval-comment {
     float: left;
     margin-right: 2px;
 }
@@ -1273,10 +1261,7 @@ body.payments.edit form {
 }
 body.payments.edit .email-template-info {
     float: left;
-}
-body.payments .after .jquery-ui-icon {
-    float: left;
-    margin-left: 2px ! important;
+    margin-left: 3px;
 }
 body.manufacturers .holiday-wrapper {
   float: left;

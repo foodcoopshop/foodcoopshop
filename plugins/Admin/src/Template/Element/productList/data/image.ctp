@@ -16,11 +16,16 @@
 $imageExists = !empty($product->image);
 echo '<td width="29px;" class="' . ((! empty($product->product_attributes) || isset($product->product_attributes)) && !$imageExists ? 'not-available' : '') . '">';
 if ((! empty($product->product_attributes) || isset($product->product_attributes))) {
-    echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
-        'class' => 'add-image-button',
-        'title' => $imageExists ? '<img class="no-max-width" height="120" src="' . $this->Html->getProductImageSrc($product->image->id_image, 'home') . '" />' : __d('admin', 'add_image'),
-        'data-object-id' => $product->id_product
-    ], 'javascript:void(0);');
+    echo $this->Html->link(
+        '<i class="fas fa-image ok"></i>',
+        'javascript:void(0);',
+        [
+            'class' => 'btn btn-outline-light add-image-button',
+            'title' => $imageExists ? h('<img class="no-max-width" height="120" src="' . $this->Html->getProductImageSrc($product->image->id_image, 'home') . '" />') : __d('admin', 'add_image'),
+            'data-object-id' => $product->id_product,
+            'escape' => false
+        ]
+    );
     echo $this->element('imageUploadForm', [
         'id' => $product->id_product,
         'action' => '/admin/tools/doTmpImageUpload/' . $product->id_product,

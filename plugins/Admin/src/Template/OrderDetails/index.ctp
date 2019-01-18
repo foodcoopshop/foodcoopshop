@@ -232,12 +232,15 @@ if ($groupBy == 'manufacturer') {
 if ($groupBy == 'customer') {
     $showAllOrderDetailsLink = '';
     if (!empty($orderDetails)) {
-        $showAllOrderDetailsLink = $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('cart.png')) . (!$isMobile ? ' ' . __d('admin', 'All_products') : ''),
+        
+        $showAllOrderDetailsLink = $this->Html->link(
+            '<i class="fas fa-shopping-cart ok"></i>' . (!$isMobile ? ' ' . __d('admin', 'All_products') : ''),
+            '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&productId=' . $productId. '&manufacturerId=' . $manufacturerId,
             [
+                'class' => 'btn btn-outline-light',
                 'title' => __d('admin', 'Show_all_ordered_products'),
-                'class' => 'icon-with-text'
-            ],
-            '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&productId=' . $productId. '&manufacturerId=' . $manufacturerId
+                'escape' => false
+            ]
         );
     }
     echo '<td></td>';

@@ -61,10 +61,15 @@ foreach ($payments as $payment) {
         echo '</td>';
 
         echo '<td style="text-align:center;">';
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
-                'class' => 'delete-payment-button',
-                'title' => 'Pfand-Rücknahme löschen?'
-            ], 'javascript:void(0);');
+            echo $this->Html->link(
+                '<i class="fas fa-times-circle not-ok"></i>',
+                'javascript:void(0);',
+                [
+                    'class' => 'btn btn-outline-light delete-payment-button',
+                    'title' => __d('admin', 'Delete_deposit_take_back?'),
+                    'escape' => false
+                ]
+            );
         echo '</td>';
 
     echo '</tr>';
@@ -88,7 +93,7 @@ if ($appAuth->isManufacturer()) {
 } else {
     $depositOverviewUrl = $this->Slug->getDepositList($manufacturerId);
 }
-    echo '<a class="btn btn-outline-light" href="'.$depositOverviewUrl.'"><i class="fa fa-arrow-circle-left"></i> Zurück zum Pfandkonto</a>';
+    echo '<a class="btn btn-outline-light" href="'.$depositOverviewUrl.'"><i class="fas fa-arrow-circle-left"></i> Zurück zum Pfandkonto</a>';
 echo '</div>';
 echo '<div class="sc"></div>';
 

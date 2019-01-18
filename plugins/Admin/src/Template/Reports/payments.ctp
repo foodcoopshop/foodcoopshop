@@ -83,46 +83,37 @@ foreach ($payments as $payment) {
 
     if ($paymentType == 'product') {
         echo '<td>';
-            echo $this->Html->getJqueryUiIcon(
-                $this->Html->image($this->Html->getFamFamFamPath('page_edit.png')),
+            echo $this->Html->link(
+                '<i class="fas fa-pencil-alt ok"></i>',
+                $this->Slug->getPaymentEdit($payment->id),
                 [
-                'title' => __d('admin', 'Edit')
-                ],
-                $this->Slug->getPaymentEdit($payment->id)
+                    'class' => 'btn btn-outline-light',
+                    'title' => __d('admin', 'Edit'),
+                    'escape' => false
+                ]
             );
         echo '</td>';
         echo '<td>';
         switch ($payment->approval) {
             case -1:
-                echo $this->Html->image(
-                    $this->Html->getFamFamFamPath('delete.png'),
-                    [
-                        'class' => 'payment-approval'
-                    ]
-                );
+                echo '<i class="fas fa-minus-circle not-ok payment-approval"></i>';
                 break;
             case 0:
                 break;
             case 1:
-                echo $this->Html->image(
-                    $this->Html->getFamFamFamPath('accept.png'),
-                    [
-                        'class' => 'payment-approval'
-                    ]
-                );
+                echo '<i class="fas fa-check-circle ok payment-approval"></i>';
                 break;
         }
         if ($payment->approval_comment != '') {
-            echo '<span class="payment-approval-comment-wrapper">';
-            echo $this->Html->getJqueryUiIcon(
-                $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
+            echo $this->Html->link(
+                '<i class="fas fa-comment-dots ok"></i>',
+                'javascript:void(0);',
                 [
-                    'class' => 'payment-approval-comment',
-                    'title' => $payment->approval_comment
-                ],
-                'javascript:void(0);'
+                    'class' => 'btn btn-outline-light payment-approval-comment',
+                    'title' => $payment->approval_comment,
+                    'escape' => false
+                ]
             );
-            echo '</span>';
         }
         echo '</td>';
     }

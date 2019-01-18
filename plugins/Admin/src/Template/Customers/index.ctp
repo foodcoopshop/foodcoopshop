@@ -82,14 +82,18 @@ foreach ($customers as $customer) {
         $customerName = $this->Html->getNameRespectingIsDeleted($customer);
 
         if ($appAuth->isSuperadmin()) {
-            echo '<span class="edit-wrapper">';
-                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                    'title' => __d('admin', 'Edit')
-                ], $this->Slug->getCustomerEdit($customer->id_customer));
-            echo '</span>';
+            echo $this->Html->link(
+                '<i class="fas fa-pencil-alt ok"></i>',
+                $this->Slug->getCustomerEdit($customer->id_customer),
+                [
+                    'class' => 'btn btn-outline-light edit-link',
+                    'title' => __d('admin', 'Edit'),
+                    'escape' => false
+                ]
+            );
         }
         if ($customer->order_detail_count <= 25) {
-            $customerName = '<i class="fa fa-pagelines" title="'.__d('admin', 'Newbie_only_{0}_products_ordered.', [$customer->order_detail_count]).'"></i> ' . $customerName;
+            $customerName = '<i class="fas fa-carrot" title="'.__d('admin', 'Newbie_only_{0}_products_ordered.', [$customer->order_detail_count]).'"></i> ' . $customerName;
         }
 
         echo '<span class="name">' . $this->Html->link($customerName, '/admin/order-details?&pickupDay[]='.Configure::read('app.timeHelper')->formatToDateShort('2014-01-01').'&pickupDay[]=' . Configure::read('app.timeHelper')->formatToDateShort('2022-12-31') . '&customerId=' . $customer->id_customer . '&sort=OrderDetails.pickup_day&direction=desc', [
@@ -98,22 +102,24 @@ foreach ($customers as $customer) {
         ]) . '</span>';
 
         echo '<div class="customer-details-wrapper">';
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('telephone.png')), [
-                'class' => 'customer-details-read-button',
-                'title' => $this->Html->getCustomerAddress($customer)
-            ], 'javascript:void(0);');
+            echo '<i class="fas fa-phone-square ok fa-lg customer-details-read-button" title="'.h($this->Html->getCustomerAddress($customer)).'"></i>';
         echo '</div>';
-
+    
     echo '</td>';
 
     echo '<td>';
 
     if ($appAuth->getGroupId() >= $customer->id_default_group) {
         echo '<div class="table-cell-wrapper group">';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-            'class' => 'customer-group-edit-button',
-            'title' => __d('admin', 'Change_group')
-        ], 'javascript:void(0);');
+        echo $this->Html->link(
+            '<i class="fas fa-pencil-alt ok"></i>',
+            'javascript:void(0);',
+            [
+                'class' => 'btn btn-outline-light customer-group-edit-button',
+                'title' => __d('admin', 'Change_group'),
+                'escape' => false
+            ]
+        );
         echo '<span>' . $this->Html->getGroupName($customer->id_default_group) . '</span>';
         echo '</div>';
     } else {
@@ -126,22 +132,32 @@ foreach ($customers as $customer) {
     echo '<span class="email">' . $customer->email . '</span>';
     echo '</td>';
 
-    echo '<td style="text-align:center;padding-left:10px;width:42px;">';
+    echo '<td style="text-align:center;width:42px;">';
 
     if ($customer->active == 1) {
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('accept.png')), [
-            'class' => 'set-state-to-inactive change-active-state',
-            'id' => 'change-active-state-' . $customer->id_customer,
-            'title' => __d('admin', 'deactivate')
-        ], 'javascript:void(0);');
+        echo $this->Html->link(
+            '<i class="fas fa-check-circle ok"></i>',
+            'javascript:void(0);',
+            [
+                'class' => 'btn btn-outline-light set-state-to-inactive change-active-state',
+                'id' => 'change-active-state-' . $customer->id_customer,
+                'title' => __d('admin', 'deactivate'),
+                'escape' => false
+            ]
+        );
     }
 
     if ($customer->active == '') {
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
-            'class' => 'set-state-to-active change-active-state',
-            'id' => 'change-active-state-' . $customer->id_customer,
-            'title' => __d('admin', 'activate')
-        ], 'javascript:void(0);');
+        echo $this->Html->link(
+            '<i class="fas fa-minus-circle not-ok"></i>',
+            'javascript:void(0);',
+            [
+                'class' => 'btn btn-outline-light set-state-to-active change-active-state',
+                'id' => 'change-active-state-' . $customer->id_customer,
+                'title' => __d('admin', 'activate'),
+                'escape' => false
+            ]
+        );
     }
 
     echo '</td>';
@@ -157,13 +173,14 @@ foreach ($customers as $customer) {
 
         if ($appAuth->isSuperadmin()) {
             $creditBalanceHtml = '<span class="'.$negativeClass.'">' . $this->Number->formatAsCurrency($customer->credit_balance);
-            echo $this->Html->getJqueryUiIcon(
+            echo $this->Html->link(
                 $creditBalanceHtml,
+                $this->Slug->getCreditBalance($customer->id_customer),
                 [
-                'class' => 'icon-with-text',
-                'title' => __d('admin', 'Show_credit')
-                ],
-                $this->Slug->getCreditBalance($customer->id_customer)
+                    'class' => 'btn btn-outline-light',
+                    'title' => __d('admin', 'Show_credit'),
+                    'escape' => false
+                ]
             );
         } else {
             if ($customer->credit_balance != 0) {
@@ -186,13 +203,14 @@ foreach ($customers as $customer) {
             $timebasedCurrencyCreditBalanceHtml = '<span class="'.implode(' ', $timebasedCurrencyCreditBalanceClasses).'">' . $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($customer->timebased_currency_credit_balance);
 
             if ($appAuth->isSuperadmin()) {
-                echo $this->Html->getJqueryUiIcon(
+                echo $this->Html->link(
                     $timebasedCurrencyCreditBalanceHtml,
+                    $this->Slug->getTimebasedCurrencyPaymentDetailsForSuperadmins(0, $customer->id_customer),
                     [
-                        'class' => 'icon-with-text',
-                        'title' => __d('admin', 'Show_{0}', [$this->TimebasedCurrency->getName()])
-                    ],
-                    $this->Slug->getTimebasedCurrencyPaymentDetailsForSuperadmins(0, $customer->id_customer)
+                        'class' => 'btn btn-outline-light',
+                        'title' => __d('admin', 'Show_{0}', [$this->TimebasedCurrency->getName()]),
+                        'escape' => false
+                    ]
                 );
             } else {
                 echo $timebasedCurrencyCreditBalanceHtml;
@@ -221,14 +239,15 @@ foreach ($customers as $customer) {
 
     echo '<td style="padding-left: 11px;">';
         $commentText = $customer->address_customer->comment != '' ? $customer->address_customer->comment : __d('admin', 'Add_comment');
-        echo $this->Html->getJqueryUiIcon(
-            $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
+        echo $this->Html->link(
+            '<i class="fas fa-comment-dots ok"></i>',
+            'javascript:void(0);',
             [
-                'class' => 'customer-comment-edit-button' . ($customer->address_customer->comment == '' ? ' disabled' : ''),
+                'class' => 'btn btn-outline-light customer-comment-edit-button' . ($customer->address_customer->comment == '' ? ' btn-disabled' : ''),
                 'title' => $commentText,
-                'originalTitle' => $commentText
-            ],
-            'javascript:void(0);'
+                'originalTitle' => $commentText,
+                'escape' => false
+            ]
         );
     echo '</td>';
 
@@ -255,7 +274,7 @@ echo '</table>';
 echo '<div class="sc"></div>';
 
 echo '<div class="bottom-button-container">';
-echo '<button data-clipboard-text="'.join(',', $emailAddresses).'" class="btn-clipboard btn btn-outline-light"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
+echo '<button data-clipboard-text="'.join(',', $emailAddresses).'" class="btn-clipboard btn btn-outline-light"><i class="far fa-envelope"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
 echo '</div>';
 echo '<div class="sc"></div>';
 

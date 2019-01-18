@@ -35,8 +35,8 @@ if ($this->request->getRequestTarget() != $this->Slug->getSliderAdd()) {
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a href="javascript:void(0);"
-            class="btn btn-outline-light cancel"><i class="fa fa-remove"></i> <?php echo __d('admin', 'Cancel'); ?></a>
+            class="fas fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a href="javascript:void(0);"
+            class="btn btn-outline-light cancel"><i class="fas fa-times"></i> <?php echo __d('admin', 'Cancel'); ?></a>
             <?php echo $this->element('printIcon'); ?>
     </div>
 </div>
@@ -61,11 +61,16 @@ if ($imageSrc) {
 }
 echo '</label>';
 echo '<div style="float:right;">';
-echo $this->Html->getJqueryUiIcon($imageSrc ? $this->Html->image($imageSrc) : $this->Html->image($this->Html->getFamFamFamPath('image_add.png')), [
-    'class' => 'add-image-button ' . ($imageSrc ? 'uploaded' : ''),
-    'title' => __d('admin', 'Upload_new_image_or_change_it'),
-    'data-object-id' => $idForImageUpload
-], 'javascript:void(0);');
+echo $this->Html->link(
+    $imageSrc ? $this->Html->image($imageSrc) : '<i class="fas fa-plus-square"></i>',
+    'javascript:void(0);',
+    [
+        'class' => 'btn btn-outline-light add-image-button ' . ($imageSrc ? 'uploaded' : ''),
+        'title' => __d('admin', 'Upload_new_image_or_change_it'),
+        'data-object-id' => $idForImageUpload,
+        'escape' => false
+    ]
+);
 echo '</div>';
 echo $this->Form->hidden('Sliders.tmp_image');
 echo '</div>';

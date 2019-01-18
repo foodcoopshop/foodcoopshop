@@ -32,10 +32,15 @@ echo '<td class="right">';
     
         if ($groupBy == '') {
             if ($orderDetail->product_amount > 1 && $editRecordAllowed) {
-                echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-                    'class' => 'order-detail-product-amount-edit-button',
-                    'title' => __d('admin', 'Click_to_change_amount')
-                ], 'javascript:void(0);');
+                echo $this->Html->link(
+                    '<i class="fas fa-pencil-alt ok"></i>',
+                    'javascript:void(0);',
+                    [
+                        'class' => 'btn btn-outline-light order-detail-product-amount-edit-button',
+                        'title' => __d('admin', 'Click_to_change_amount'),
+                        'escape' => false
+                    ]
+                );
             }
             $amount = $orderDetail->product_amount;
             $style = '';

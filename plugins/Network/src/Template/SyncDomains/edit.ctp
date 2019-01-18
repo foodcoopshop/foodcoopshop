@@ -28,8 +28,8 @@ $this->element('addScript', [
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa fa-check"></i> <?php echo __d('network', 'Save'); ?></a> <a href="javascript:void(0);"
-            class="btn btn-outline-light cancel"><i class="fa fa-close"></i> <?php echo __d('network', 'Cancel'); ?></a>
+            class="fas fa-check"></i> <?php echo __d('network', 'Save'); ?></a> <a href="javascript:void(0);"
+            class="btn btn-outline-light cancel"><i class="fas fa-close"></i> <?php echo __d('network', 'Cancel'); ?></a>
     </div>
 </div>
 

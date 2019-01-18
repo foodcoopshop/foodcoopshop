@@ -42,13 +42,13 @@ use Cake\Core\Configure;
         }
         echo '<div class="sync-button-wrapper">';
         if (!empty($localSyncProducts)) {
-            echo $this->Html->link('<i class="fa fa-check-circle"></i> ' . __d('network', 'Load_preview') . '', 'javascript:void(0);', [
+            echo $this->Html->link('<i class="fas fa-check-circle"></i> ' . __d('network', 'Load_preview') . '', 'javascript:void(0);', [
                 'class' => 'btn btn-success show-preview-button',
                 'escape' => false
             ]);
         }
         if (!empty($localSyncProducts)) {
-            echo $this->Html->link('<i class="fa fa-refresh"></i> ' . __d('network', 'Synchronize_products') . '', 'javascript:void(0);', [
+            echo $this->Html->link('<i class="fas fa-refresh"></i> ' . __d('network', 'Synchronize_products') . '', 'javascript:void(0);', [
             'class' => 'btn btn-danger sync-products-button',
             'escape' => false
             ]);

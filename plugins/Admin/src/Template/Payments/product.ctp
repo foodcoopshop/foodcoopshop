@@ -19,7 +19,7 @@ echo $this->element('paymentHeader', [
     'icons' => $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_credit_system'))]),
     'extraInfo' => Configure::read('appDb.FCS_BANK_ACCOUNT_DATA'),
     'buttonText' => __d('admin', 'Add_transfered_credit'),
-    'icon' => 'fa-'.strtolower(Configure::read('app.currencyName'))
+    'icon' => 'fa-'.strtolower(Configure::read('app.currencyName')).'-sign'
 ]);
 
 if (count($payments) == 0) {
@@ -76,35 +76,24 @@ if (count($payments) == 0) {
         if ($payment['type'] == 'product') {
             switch ($payment['approval']) {
                 case APP_DEL:
-                    echo $this->Html->image(
-                        $this->Html->getFamFamFamPath('delete.png'),
-                        [
-                            'class' => 'payment-approval'
-                        ]
-                    );
+                    echo '<i class="fas fa-minus-circle not-ok payment-approval"></i>';
                     break;
                 case APP_OFF:
                     break;
                 case APP_ON:
-                    echo $this->Html->image(
-                        $this->Html->getFamFamFamPath('accept.png'),
-                        [
-                            'class' => 'payment-approval'
-                        ]
-                    );
+                    echo '<i class="fas fa-check-circle ok payment-approval"></i>';
                     break;
             }
             if ($payment['approval_comment'] != '') {
-                echo '<span class="payment-approval-comment-wrapper">';
-                    echo $this->Html->getJqueryUiIcon(
-                        $this->Html->image($this->Html->getFamFamFamPath('user_comment.png')),
-                        [
-                            'class' => 'payment-approval-comment',
-                            'title' => $payment['approval_comment']
-                        ],
-                        'javascript:void(0);'
-                    );
-                echo '</span>';
+                echo $this->Html->link(
+                    '<i class="fas fa-comment-dots ok"></i>',
+                    'javascript:void(0);',
+                    [
+                        'class' => 'btn btn-outline-light payment-approval-comment',
+                        'title' => $payment['approval_comment'],
+                        'escape' => false
+                    ]
+                );
             }
         }
 
@@ -160,10 +149,15 @@ if (count($payments) == 0) {
             $deletablePaymentTypes[] = 'payback';
         }
         if (in_array($payment['type'], $deletablePaymentTypes) && $payment['approval'] != APP_ON) {
-            echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('delete.png')), [
-                'class' => 'delete-payment-button',
-                'title' => __d('admin', 'Delete_upload?')
-            ], 'javascript:void(0);');
+            echo $this->Html->link(
+                '<i class="fas fa-times-circle not-ok"></i>',
+                'javascript:void(0);',
+                [
+                    'class' => 'btn btn-outline-light delete-payment-button',
+                    'title' => __d('admin', 'Delete_upload?'),
+                    'escape' => false
+                ]
+            );
         }
         echo '</td>';
 
@@ -217,7 +211,7 @@ if (count($payments) == 0) {
 
 if ($this->request->getParam('action') == 'product') {
     echo '<div class="bottom-button-container">';
-    echo '<a class="btn btn-outline-light" href="'.$this->Slug->getCustomerListAdmin().'"><i class="fa fa-arrow-circle-left"></i> '.__d('admin', 'Back_to_member_overview').'</a>';
+    echo '<a class="btn btn-outline-light" href="'.$this->Slug->getCustomerListAdmin().'"><i class="fas fa-arrow-circle-left"></i> '.__d('admin', 'Back_to_member_overview').'</a>';
     echo '</div>';
 }
 

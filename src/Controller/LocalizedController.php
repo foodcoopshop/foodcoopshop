@@ -86,7 +86,8 @@ class LocalizedController extends Controller
                 'CurrencySymbol' => Configure::read('appDb.FCS_CURRENCY_SYMBOL'),
                 'CurrencyName' => Configure::read('app.currencyName'),
                 'ShowMore' => __('Show_more'),
-                'ShowLess' => __('Show_less')
+                'ShowLess' => __('Show_less'),
+                'Close' => __('Close')
             ],
             'cart' => [
                 'routeCart' => __('route_cart'),

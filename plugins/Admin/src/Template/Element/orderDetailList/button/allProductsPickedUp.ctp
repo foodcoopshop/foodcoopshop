@@ -19,14 +19,14 @@ if (count($pickupDay) == 1 && $groupBy == 'customer' && ($appAuth->isSuperadmin(
     $this->element('addScript', [ 'script' =>
         Configure::read('app.jsNamespace').".PickupDay.initChangeProductsPickedUpByCustomer('#order-details-list');"
     ]);
-    echo '<button class="change-products-picked-up-all-customers-button btn btn-outline-light"><i class="fa fa-check-square-o"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';
+    echo '<button class="change-products-picked-up-all-customers-button btn btn-outline-light"><i class="far fa-check-square"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';
 }
 
 if (count($pickupDay) == 1 && $groupBy == '' && $customerId > 0 && $manufacturerId == '' && $productId == '') {
     $this->element('addScript', [ 'script' =>
         Configure::read('app.jsNamespace').".PickupDay.initChangeProductsPickedUpDialogNotGroupedBy('#order-details-list');"
     ]);
-    echo '<button class="change-products-picked-up-button btn btn-outline-light"><i class="fa fa-check-square-o"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';
+    echo '<button class="change-products-picked-up-button btn btn-outline-light"><i class="far fa-check-square"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';
 }
 
 ?>

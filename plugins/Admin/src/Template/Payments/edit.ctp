@@ -38,8 +38,8 @@ $this->element('addScript', [
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
-            class="fa fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a href="javascript:void(0);"
-            class="btn btn-outline-light cancel"><i class="fa fa-remove"></i> <?php echo __d('admin', 'Cancel'); ?></a>
+            class="fas fa-check"></i> <?php echo __d('admin', 'Save'); ?></a> <a href="javascript:void(0);"
+            class="btn btn-outline-light cancel"><i class="fas fa-times"></i> <?php echo __d('admin', 'Cancel'); ?></a>
     </div>
 </div>
 
@@ -65,21 +65,23 @@ echo $this->Form->control('Payments.approval', [
 ]);
 
 $checkboxLabel = __d('admin', 'Send_email?').' <span class="after small multiple-lines">'.__d('admin', 'If_checked_the_member_will_be_notified_about_the_status_change_by_email_on_saving_including_the_comment.').'<br /><span style="float: left;">'.__d('admin', 'Email_preview').':</span>'.
-    $this->Html->getJqueryUiIcon(
-        $this->Html->image($this->Html->getFamFamFamPath('accept.png')),
+    $this->Html->link(
+        '<i class="fas fa-check-circle ok"></i>',
+        '/admin/payments/previewEmail/'.$payment->id.'/1',
         [
-            'class' => 'email-template-info',
-            'target' => '_blank'
-        ],
-        '/admin/payments/previewEmail/'.$payment->id.'/1'
+            'class' => 'btn btn-outline-light email-template-info',
+            'target' => '_blank',
+            'escape' => false
+        ]
     ).' '.
-    $this->Html->getJqueryUiIcon(
-        $this->Html->image($this->Html->getFamFamFamPath('delete.png')),
+    $this->Html->link(
+        '<i class="fas fa-minus-circle not-ok"></i>',
+        '/admin/payments/previewEmail/'.$payment->id.'/-1',
         [
-            'class' => 'email-template-info',
-            'target' => '_blank'
-        ],
-        '/admin/payments/previewEmail/'.$payment->id.'/-1'
+            'class' => 'btn btn-outline-light email-template-info',
+            'target' => '_blank',
+            'escape' => false
+        ]
     ).
     '</span>';
 

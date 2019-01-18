@@ -20,12 +20,17 @@ echo '<td>';
             'value' => $product->id_tax
         ]);
         $taxRate = $product->tax->rate;
+        echo $this->Html->link(
+            '<i class="fas fa-pencil-alt ok"></i>',
+            'javascript:void(0);',
+            [
+                'class' => 'btn btn-outline-light product-tax-edit-button',
+                'title' => __d('admin', 'change_tax_rate'),
+                'data-object-id' => $product->id_product,
+                'escape' => false
+            ]
+        );
         echo '<span class="tax-for-dialog">' . ($taxRate != intval($taxRate) ? $this->Number->formatAsDecimal($taxRate, 1) : $this->Number->formatAsDecimal($taxRate, 0)) . '%' . '</span>';
-        echo $this->Html->getJqueryUiIcon($this->Html->image($this->Html->getFamFamFamPath('page_edit.png')), [
-            'class' => 'product-tax-edit-button',
-            'title' => __d('admin', 'change_tax_rate'),
-            'data-object-id' => $product->id_product
-        ], 'javascript:void(0);');
     }
 echo '</td>';
 

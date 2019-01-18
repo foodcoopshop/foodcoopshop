@@ -14,5 +14,5 @@
  */
 ?>
 <div id="scroll-to-top">
-    <a href="javascript:void(0);"><span></span> </a>
+    <a href="javascript:void(0);"><i class="fas fa-arrow-alt-circle-up"></i></a>
 </div>

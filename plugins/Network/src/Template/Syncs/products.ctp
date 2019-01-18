@@ -32,7 +32,7 @@ use Cake\Core\Configure;
         <?php
            echo $this->element('syncLoginForm', ['syncDomains' => $syncDomains]);
            echo '<div class="sync-button-wrapper">';
-               echo $this->Html->link('<i class="fa fa-refresh"></i> ' . __d('network', 'Load_products'), 'javascript:void(0);', [
+               echo $this->Html->link('<i class="fas fa-refresh"></i> ' . __d('network', 'Load_products'), 'javascript:void(0);', [
                    'class' => 'btn btn-success',
                    'escape' => false
                 ]);

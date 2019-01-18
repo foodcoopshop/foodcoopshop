@@ -18,7 +18,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isManufacturer(
     $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace').".Admin.initEmailToAllButton();"
     ]);
-    echo '<button data-clipboard-text="'.join(',', $emailAddresses).'" class="btn-clipboard btn btn-outline-light"><i class="fa fa-envelope-o"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
+    echo '<button data-clipboard-text="'.join(',', $emailAddresses).'" class="btn-clipboard btn btn-outline-light"><i class="far fa-envelope"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
 }
 
 ?>

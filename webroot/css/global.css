@@ -185,16 +185,17 @@ h2.info2 {
 #flashMessage .closer {
     float: right;
 }
+#flashMessage .closer .fa-times-circle {
+    color: #fff;
+    font-size: 17px;
+}
+#flashMessage .closer .fa-times-circle:hover {
+	color: #ccc;
+}
 #flashMessage.error {
     color: #fff;
     background: #f3515c;
     border-color: #f3515c;
-}
-#flashMessage.error .closer {
-    border: 1px solid #fff;
-    border-radius: 6px;
-    width: 20px;
-    text-align: center;
 }
 #flashMessage.success {
     background: #009335;
@@ -236,11 +237,11 @@ h2.info2 {
     background-color: #719f41;
     color: #fff ! important;
 }
-.vertical.menu a i.fa {
-    font-size: 17px;
+.vertical.menu a i.fas {
+    font-size: 15px;
     position: absolute;
-    left: 3px;
-    top: 6px;
+    left: 5px;
+    top: 7px;
     color: #009335;
 }
 .vertical.menu li.has-icon a,
@@ -309,23 +310,6 @@ a.toggle-link.collapsed i:before {
   opacity: .65 ! important;
   z-index: 100001;
 }
-li.ui-state-default {
-    position: relative ! important;
-    float: left ! important;
-    list-style: none ! important;
-    line-height: normal ! important;
-}
-li.ui-state-default img {
-    margin: 1px;
-    margin-top: -1px;
-    width: 16px;
-    height: 16px;
-}
-ul.jquery-ui-icon {
-    margin: 0 ! important;
-    float: left ! important;
-    padding: 0 ! important;
-}
 #scroll-to-top {
   position: fixed;
   bottom: 10px;
@@ -336,36 +320,20 @@ ul.jquery-ui-icon {
 #scroll-to-top a {
   width: 45px;
   height: 45px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
   display: block;
-  text-align: center;
-  font: 24px FontAwesome;
-  line-height: 24px;
-  color: #719f41;
-  border: 3px solid #719f41;
-  border-radius: 100%;
   -webkit-transition: 0.6s;
   -moz-transition: 0.6s;
   -o-transition: 0.6s;
   transition: 0.6s;
   background: #fff;
+  border-radius: 100px;
+  font-size: 34px;
+  text-align: center;
+  background: #fff;
 }
-#scroll-to-top a:before {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-left: -12px;
-  margin-top: -12px;
-  content: '\f062';
+#scroll-to-top a i {
+  font-size: 41px;
 }
-#scroll-to-top a:hover {
-  border-width: 22px;
-  background: #719f41;
-  color: #fff;
-}
-
 .truncate {
   width: 250px;
   white-space: nowrap;
@@ -406,7 +374,7 @@ input[type="checkbox"] {
 }
 .featherlight-close-icon {
     background: transparent ! important;
-    right: 0px ! important;
+    right: 7px ! important;
     width: 60px ! important;
     top: 3px ! important;
 }
@@ -548,13 +516,16 @@ a.btn.btn-success:hover i.gold,
 i.gold {
   color: #FFD700 ! important;
 }
-i.fa.ok {
+i.fas.ok,
+i.far.ok {
 	color: #719f41;
 }
-i.fa.not-ok {
+i.fas.not-ok,
+i.far.not-ok {
 	color: red;
 }
-tr.selected i.fa {
+tr.selected td > i.fas,
+tr.selected td > i.far {
 	color: #fff;
 }
 .tooltipster-sidetip.tooltipster-light .tooltipster-box {
