@@ -475,7 +475,7 @@ class OrderDetailsTable extends AppTable
 
         $contain = [
             'Customers',
-            'Products.Manufacturers.AddressManufacturers',
+            'Products.Manufacturers',
             'TimebasedCurrencyOrderDetails',
             'OrderDetailUnits'
         ];
