@@ -289,11 +289,61 @@ class OrderDetailsController extends AdminAppController
             }
         }
         
+        $group = null;
+        
+        switch($groupBy) {
+            // be aware of sql-mode ONLY_FULL_GROUP_BY!
+            case 'customer':
+                $group[] = 'OrderDetails.id_customer';
+                $group[] = 'Customers.firstname';
+                $group[] = 'Customers.lastname';
+                $group[] = 'Customers.email';
+                if (count($pickupDay) == 1) {
+                    $group[] = 'PickupDayEntities.comment';
+                    $group[] = 'PickupDayEntities.products_picked_up';
+                }
+                break;
+            case 'manufacturer':
+                $group[] = 'Products.id_manufacturer';
+                $group[] = 'Manufacturers.name';
+                $group[] = 'Manufacturers.variable_member_fee';
+                break;
+            case 'product':
+                $group[] = 'OrderDetails.product_id';
+                $group[] = 'Products.name';
+                $group[] = 'Products.id_manufacturer';
+                $group[] = 'Manufacturers.name';
+                break;
+        }
+        
         $query = $this->OrderDetail->find('all', [
             'conditions' => $odParams['conditions'],
             'contain' => $contain,
+            'group' => $group
         ]);
-
+        
+        switch($groupBy) {
+            case 'customer':
+                $query = $this->addSelectGroupFields($query);
+                $query->select(['OrderDetails.id_customer']);
+                $query->select(['Customers.firstname', 'Customers.lastname', 'Customers.email']);
+                if (count($pickupDay) == 1) {
+                    $query->select(['PickupDayEntities.comment', 'PickupDayEntities.products_picked_up']);
+                }
+                break;
+            case 'manufacturer':
+                $query = $this->addSelectGroupFields($query);
+                $query->select(['Products.id_manufacturer']);
+                $query->select(['Manufacturers.name', 'Manufacturers.variable_member_fee']);
+                break;
+            case 'product':
+                $query = $this->addSelectGroupFields($query);
+                $query->select(['OrderDetails.product_id']);
+                $query->select(['Products.name', 'Products.id_manufacturer']);
+                $query->select(['Manufacturers.name']);
+                break;
+        }
+        
         if (in_array('excludeCreatedLastMonth', array_keys($this->getRequest()->getQueryParams()))) {
             $query->where(['DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0]) . '\'']);
         }
@@ -305,7 +355,6 @@ class OrderDetailsController extends AdminAppController
         ])->toArray();
         
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-        
         $orderDetails = $this->prepareGroupedOrderDetails($orderDetails, $groupBy, $pickupDay);
         $this->set('orderDetails', $orderDetails);
 
@@ -374,6 +423,17 @@ class OrderDetailsController extends AdminAppController
         }
 
         $this->set('title_for_layout', __d('admin', 'Orders'));
+    }
+    
+    private function addSelectGroupFields($query) {
+        $query->select([
+            'sum_price' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
+            'sum_amount' => $query->func()->sum('OrderDetails.product_amount'),
+            'sum_deposit' => $query->func()->sum('OrderDetails.deposit'),
+            'order_detail_count' => $query->func()->count('OrderDetails.id_order_detail'),
+            'timebased_currency_order_detail_seconds_sum' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds')
+        ]);
+        return $query;
     }
     
     private function prepareGroupedOrderDetails($orderDetails, $groupBy)

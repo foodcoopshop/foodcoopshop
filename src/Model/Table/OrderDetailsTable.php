@@ -381,13 +381,14 @@ class OrderDetailsTable extends AppTable
         $preparedOrderDetails = [];
         foreach ($orderDetails as $orderDetail) {
             $key = $orderDetail->product_id;
-            @$preparedOrderDetails[$key]['sum_price'] += $orderDetail->total_price_tax_incl;
-            @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_amount;
-            @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
+            $preparedOrderDetails[$key]['sum_price'] = $orderDetail->sum_price;
+            $preparedOrderDetails[$key]['sum_amount'] = $orderDetail->sum_amount;
+            $preparedOrderDetails[$key]['sum_deposit'] = $orderDetail->sum_deposit;
             $preparedOrderDetails[$key]['product_id'] = $key;
             $preparedOrderDetails[$key]['name'] = $orderDetail->product->name;
-            $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail->product->manufacturer->id_manufacturer;
+            $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail->product->id_manufacturer;
             $preparedOrderDetails[$key]['manufacturer_name'] = $orderDetail->product->manufacturer->name;
+            @$preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = $orderDetail->timebased_currency_order_detail_seconds_sum;
         }
         return $preparedOrderDetails;
     }
@@ -398,13 +399,14 @@ class OrderDetailsTable extends AppTable
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         foreach ($orderDetails as $orderDetail) {
             $key = $orderDetail->product->id_manufacturer;
-            @$preparedOrderDetails[$key]['sum_price'] += $orderDetail->total_price_tax_incl;
-            @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_amount;
+            $preparedOrderDetails[$key]['sum_price'] = $orderDetail->sum_price;
+            $preparedOrderDetails[$key]['sum_amount'] = $orderDetail->sum_amount;
+            $preparedOrderDetails[$key]['sum_deposit'] = $orderDetail->sum_deposit;
             $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($orderDetail->product->manufacturer->variable_member_fee);
             $preparedOrderDetails[$key]['variable_member_fee'] = $variableMemberFee;
-            @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
             $preparedOrderDetails[$key]['manufacturer_id'] = $key;
             $preparedOrderDetails[$key]['name'] = $orderDetail->product->manufacturer->name;
+            @$preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = $orderDetail->timebased_currency_order_detail_seconds_sum;
         }
         
         foreach($preparedOrderDetails as &$pod) {
@@ -414,14 +416,19 @@ class OrderDetailsTable extends AppTable
         return $preparedOrderDetails;
     }
     
+    /**
+     * $param $orderDetails is already grouped!
+     * @return array|boolean
+     */
     public function prepareOrderDetailsGroupedByCustomer($orderDetails)
     {
         $preparedOrderDetails = [];
         foreach ($orderDetails as $orderDetail) {
             $key = $orderDetail->id_customer;
-            @$preparedOrderDetails[$key]['sum_price'] += $orderDetail->total_price_tax_incl;
-            @$preparedOrderDetails[$key]['sum_amount'] += $orderDetail->product_amount;
-            @$preparedOrderDetails[$key]['sum_deposit'] += $orderDetail->deposit;
+            $preparedOrderDetails[$key]['sum_price'] = $orderDetail->sum_price;
+            $preparedOrderDetails[$key]['sum_amount'] = $orderDetail->sum_amount;
+            $preparedOrderDetails[$key]['sum_deposit'] = $orderDetail->sum_deposit;
+            $preparedOrderDetails[$key]['order_detail_count'] = $orderDetail->order_detail_count;
             $preparedOrderDetails[$key]['customer_id'] = $key;
             $preparedOrderDetails[$key]['name'] = Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($orderDetail->customer);
             $preparedOrderDetails[$key]['email'] = '';
@@ -433,9 +440,7 @@ class OrderDetailsTable extends AppTable
                 $preparedOrderDetails[$key]['comment'] = $orderDetail->pickup_day_entity->comment;
                 $preparedOrderDetails[$key]['products_picked_up_tmp'] = $orderDetail->pickup_day_entity->products_picked_up;
             }
-            if (!empty($orderDetail->timebased_currency_order_detail)) {
-                @$preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] += $orderDetail->timebased_currency_order_detail->seconds;
-            }
+            @$preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = $orderDetail->timebased_currency_order_detail_seconds_sum;
             if (isset($preparedOrderDetails[$key]['products_picked_up_tmp']) && $preparedOrderDetails[$key]['products_picked_up_tmp']) {
                 $productsPickedUp = true;
                 $preparedOrderDetails[$key]['row_class'] = ['selected'];

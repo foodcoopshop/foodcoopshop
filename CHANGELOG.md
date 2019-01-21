@@ -19,9 +19,10 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Im Admin-Bereich werden die E-Mail-Adressen von Herstellern und Mitgliedern nach Klick auf den Button automatisch in die Zwischenablage kopiert. / [PR#287](https://github.com/foodcoopshop/foodcoopshop/pull/287)  / [I#254](https://github.com/foodcoopshop/foodcoopshop/issues/254) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Update auf die Version 5 der Icon-Library Fontawesome und Vereinheitlichung der Icons. / [PR#305](https://github.com/foodcoopshop/foodcoopshop/pull/305)  / [I#204](https://github.com/foodcoopshop/foodcoopshop/issues/204) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-### Bugfixes
+### Bugfixes / Performance-Verbesserungen
 - Bei manchen MySQL-Versionen bzw. -Konfigurationen hat das Hinzufügen eines neuen Herstellers nicht funktioniert. [PR#301](https://github.com/foodcoopshop/foodcoopshop/pull/301) / [I#288](https://github.com/foodcoopshop/foodcoopshop/issues/288) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> <a href="https://github.com/SigiK"><img src="https://github.com/SigiK.png" width="20"></a>
 - Produkte, die vor dem "Bestellbar-bis"-Datum in den Warenkorb gelegt wurden, konnten nach Ablauf dieses Datums auch bestellt werden. / [PR#292](https://github.com/foodcoopshop/foodcoopshop/pull/292) / [I#290](https://github.com/foodcoopshop/foodcoopshop/issues/290) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> <a href="https://github.com/Speis-Vorchdorf"><img src="https://github.com/Speis-Vorchdorf.png" width="20"></a>
+- Der Punkt "Bestellungen" im Admin-Bereich benötigt jetzt weniger Arbeitsspeicher und lädt schneller. / [PR#309](https://github.com/foodcoopshop/foodcoopshop/pull/309) / [I#308](https://github.com/foodcoopshop/foodcoopshop/issues/308) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Für Entwickler
 - Wie bei jedem Release zahlreiche Dependency-Updates und viele kleinere Bugfixes: CakePHP 3.7 [PR#295](https://github.com/foodcoopshop/foodcoopshop/pull/295)
