@@ -388,9 +388,7 @@ class OrderDetailsTable extends AppTable
             $preparedOrderDetails[$key]['name'] = $orderDetail->product->name;
             $preparedOrderDetails[$key]['manufacturer_id'] = $orderDetail->product->id_manufacturer;
             $preparedOrderDetails[$key]['manufacturer_name'] = $orderDetail->product->manufacturer->name;
-            if (!empty($orderDetail->timebased_currency_order_detail)) {
-                @$preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = $orderDetail->timebased_currency_order_detail_seconds_sum;
-            }
+            @$preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = $orderDetail->timebased_currency_order_detail_seconds_sum;
         }
         return $preparedOrderDetails;
     }
@@ -408,9 +406,7 @@ class OrderDetailsTable extends AppTable
             $preparedOrderDetails[$key]['variable_member_fee'] = $variableMemberFee;
             $preparedOrderDetails[$key]['manufacturer_id'] = $key;
             $preparedOrderDetails[$key]['name'] = $orderDetail->product->manufacturer->name;
-            if (!empty($orderDetail->timebased_currency_order_detail)) {
-                @$preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = $orderDetail->timebased_currency_order_detail_seconds_sum;
-            }
+            @$preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = $orderDetail->timebased_currency_order_detail_seconds_sum;
         }
         
         foreach($preparedOrderDetails as &$pod) {
@@ -444,9 +440,7 @@ class OrderDetailsTable extends AppTable
                 $preparedOrderDetails[$key]['comment'] = $orderDetail->pickup_day_entity->comment;
                 $preparedOrderDetails[$key]['products_picked_up_tmp'] = $orderDetail->pickup_day_entity->products_picked_up;
             }
-            if (!empty($orderDetail->timebased_currency_order_detail)) {
-                @$preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = $orderDetail->timebased_currency_order_detail_seconds_sum;
-            }
+            @$preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = $orderDetail->timebased_currency_order_detail_seconds_sum;
             if (isset($preparedOrderDetails[$key]['products_picked_up_tmp']) && $preparedOrderDetails[$key]['products_picked_up_tmp']) {
                 $productsPickedUp = true;
                 $preparedOrderDetails[$key]['row_class'] = ['selected'];

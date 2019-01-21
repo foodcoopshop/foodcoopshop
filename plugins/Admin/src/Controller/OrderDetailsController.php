@@ -316,11 +316,6 @@ class OrderDetailsController extends AdminAppController
                 break;
         }
         
-        
-        if ($groupBy != '') {
-            $group[] = 'TimebasedCurrencyOrderDetails.id_order_detail';
-        }
-        
         $query = $this->OrderDetail->find('all', [
             'conditions' => $odParams['conditions'],
             'contain' => $contain,
@@ -436,7 +431,7 @@ class OrderDetailsController extends AdminAppController
             'sum_amount' => $query->func()->sum('OrderDetails.product_amount'),
             'sum_deposit' => $query->func()->sum('OrderDetails.deposit'),
             'order_detail_count' => $query->func()->count('OrderDetails.id_order_detail'),
-            'timebased_currency_order_detail_seconds_sum' => $query->func()->count('TimebasedCurrencyOrderDetails.seconds')
+            'timebased_currency_order_detail_seconds_sum' => $query->func()->sum('TimebasedCurrencyOrderDetails.seconds')
         ]);
         return $query;
     }
