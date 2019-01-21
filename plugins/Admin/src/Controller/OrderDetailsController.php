@@ -298,10 +298,12 @@ class OrderDetailsController extends AdminAppController
                     'Customers.firstname',
                     'Customers.lastname',
                     'Customers.email',
-                    'TimebasedCurrencyOrderDetails.id_order_detail',
-                    'PickupDayEntities.comment',
-                    'PickupDayEntities.products_picked_up'
+                    'TimebasedCurrencyOrderDetails.id_order_detail'
                 ];
+                if (count($pickupDay) == 1) {
+                    $group[] = 'PickupDayEntities.comment';
+                    $group[] = 'PickupDayEntities.products_picked_up';
+                }
                 break;
         }
         
