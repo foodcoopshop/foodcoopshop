@@ -439,7 +439,7 @@ class OrderDetailsTable extends AppTable
                 $preparedOrderDetails[$key]['products_picked_up_tmp'] = $orderDetail->pickup_day_entity->products_picked_up;
             }
             if (!empty($orderDetail->timebased_currency_order_detail)) {
-                @$preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] += $orderDetail->timebased_currency_order_detail->seconds;
+                @$preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = $orderDetail->timebased_currency_order_detail_seconds_sum;
             }
             if (isset($preparedOrderDetails[$key]['products_picked_up_tmp']) && $preparedOrderDetails[$key]['products_picked_up_tmp']) {
                 $productsPickedUp = true;

@@ -292,7 +292,16 @@ class OrderDetailsController extends AdminAppController
         $group = null;
         switch($groupBy) {
             case 'customer':
-                $group = 'OrderDetails.id_customer';
+                // be aware of sql-mode ONLY_FULL_GROUP_BY! 
+                $group = [
+                    'OrderDetails.id_customer',
+                    'Customers.firstname',
+                    'Customers.lastname',
+                    'Customers.email',
+                    'TimebasedCurrencyOrderDetails.id_order_detail',
+                    'PickupDayEntities.comment',
+                    'PickupDayEntities.products_picked_up'
+                ];
                 break;
         }
         
@@ -308,14 +317,14 @@ class OrderDetailsController extends AdminAppController
                     'sum_price' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
                     'sum_amount' => $query->func()->sum('OrderDetails.product_amount'),
                     'sum_deposit' => $query->func()->sum('OrderDetails.deposit'),
-                    'order_detail_count' => $query->func()->count('OrderDetails.id_order_detail')
+                    'order_detail_count' => $query->func()->count('OrderDetails.id_order_detail'),
+                    'timebased_currency_order_detail_seconds_sum' => $query->func()->count('TimebasedCurrencyOrderDetails.seconds')
                 ]);
-                $query->select('OrderDetails.id_customer');
-                $query->select($this->OrderDetail->Customers);
+                $query->select(['OrderDetails.id_customer']);
+                $query->select(['Customers.firstname', 'Customers.lastname', 'Customers.email']);
                 if (count($pickupDay) == 1) {
-                    $query->select($this->OrderDetail->PickupDayEntities);
+                    $query->select(['PickupDayEntities.comment', 'PickupDayEntities.products_picked_up']);
                 }
-                $query->select($this->OrderDetail->TimebasedCurrencyOrderDetails);
             	break;
         }
         
