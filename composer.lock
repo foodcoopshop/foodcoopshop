@@ -54,16 +54,16 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "3.7.2",
+            "version": "3.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "eae26792654fece99bb121420e179f0a0efcb2ae"
+                "reference": "b0b9a3713720b30cd8e90c8b1a317a8294b2513a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/eae26792654fece99bb121420e179f0a0efcb2ae",
-                "reference": "eae26792654fece99bb121420e179f0a0efcb2ae",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/b0b9a3713720b30cd8e90c8b1a317a8294b2513a",
+                "reference": "b0b9a3713720b30cd8e90c8b1a317a8294b2513a",
                 "shasum": ""
             },
             "require": {
@@ -96,6 +96,7 @@
             },
             "require-dev": {
                 "cakephp/cakephp-codesniffer": "^3.0",
+                "cakephp/chronos": "^1.2.1",
                 "phpunit/phpunit": "^5.7.14|^6.0"
             },
             "suggest": {
@@ -138,7 +139,7 @@
                 "rapid-development",
                 "validation"
             ],
-            "time": "2019-01-04T03:02:35+00:00"
+            "time": "2019-01-22T03:01:08+00:00"
         },
         {
             "name": "cakephp/chronos",
