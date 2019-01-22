@@ -118,7 +118,9 @@ class SendInvoicesShell extends AppShell
 
         $tableData = '';
         $sumPrice = 0;
+        
         foreach ($manufacturers as $manufacturer) {
+            
             $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
             $invoiceNumber = $this->Manufacturer->Invoices->getNextInvoiceNumber($manufacturer->invoices);
             $invoiceLink = '/admin/lists/getInvoice?file=' . str_replace(
@@ -126,7 +128,9 @@ class SendInvoicesShell extends AppShell
                     $manufacturer->name, $manufacturer->id_manufacturer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $invoiceNumber
                 )
             );
+            
             if (!empty($manufacturer->current_order_count)) {
+                
                 $price = $manufacturer->order_detail_price_sum;
                 $sumPrice += $price;
                 $variableMemberFeeAsString = '';
@@ -156,13 +160,14 @@ class SendInvoicesShell extends AppShell
                     );
                 $tableData .= '</td>';
                 $tableData .= '</tr>';
-                $i ++;
-            }
-            if (!empty($manufacturer->current_order_count) && $sendInvoice) {
+                
                 $url = $this->browser->adminPrefix . '/manufacturers/sendInvoice?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
                 $this->browser->get($url);
+                $i ++;
+                
             }
         }
+        
         if ($tableData != '') {
             $outString .= '<table class="list no-clone-last-row">';
             $outString .= '<tr>';
