@@ -436,15 +436,16 @@ class CustomersTable extends AppTable
         
         if (! $includeManufacturers) {
             $validOrderDetails = $this->getAssociation('ValidOrderDetails');
-            foreach($customers as &$customer) {
-                $customer->validOrderDetailCount = $validOrderDetails->find('all', [
+            $i = 0;
+            foreach($customers as $customer) {
+                $customers[$i]->validOrderDetailCount = $validOrderDetails->find('all', [
                     'conditions' => [
-                        'id_customer' => $customer->id_customer
+                        'id_customer' => $customers[$i]->id_customer
                     ]
                 ])->count();
+                $i++;
             }
         }
-
         $offlineCustomers = [];
         $onlineCustomers = [];
         $notYetOrderedCustomers = [];
