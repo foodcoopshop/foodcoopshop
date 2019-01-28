@@ -41,7 +41,8 @@ class AppHttpClient extends Client
     public function __construct($config = [])
     {
         $config = array_merge($config, [
-            'timeout' => 300 // 5 min should be enough
+            'redirect' => 1,  // number of redirects to follow
+            'timeout' => 300  // 5 min should be enough
         ]);
         parent::__construct($config);
 
