@@ -111,7 +111,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
-    public function testEditOptions()
+    public function testEditOptionsMain()
     {
         $this->loginAsSuperadmin();
 
@@ -127,28 +127,45 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $newSendOrderListCc = ['office@rothauer-it.com', 'test@test.com'];
         $emailErrorMsg = 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).';
 
-        $this->browser->get($this->Slug->getManufacturerEditOptions($manufacturerId));
-
-        $this->browser->setFieldById('manufacturers-send-order-list', $newSendOrderList); // do not use 0 here
-        $this->browser->setFieldById('manufacturers-send-invoice', $newSendInvoice);     // do not use 0 here
-
-        $this->browser->setFieldById('manufacturers-send-order-list-cc', 'office@rothauer-it.com;test@test.com');// wrong: comma expected as separator
-        $this->browser->submitFormById('manufacturersEditOptionsForm');
+        $this->browser->post(
+            $this->Slug->getManufacturerEditOptions($manufacturerId),
+            [
+                'Manufacturers' => [
+                    'send_order_list' => $newSendOrderList, // do not use 0 here
+                    'send_invoice' => $newSendInvoice, // do not use 0 here
+                    'send_order_list_cc' => 'office@rothauer-it.com;test@test.com', // wrong: comma expected as separator
+                ]
+            ]
+        );
         $this->assertRegExpWithUnquotedString($emailErrorMsg, $this->browser->getContent());
 
-        $this->browser->setFieldById('manufacturers-send-order-list-cc', 'office@rothauer-it.com,test@testcom'); // wrong: no dot in domain
-        $this->browser->submitFormById('manufacturersEditOptionsForm');
+        $this->browser->post(
+            $this->Slug->getManufacturerEditOptions($manufacturerId),
+            [
+                'Manufacturers' => [
+                    'send_order_list' => $newSendOrderList, // do not use 0 here
+                    'send_invoice' => $newSendInvoice, // do not use 0 here
+                    'send_order_list_cc' => 'office@rothauer-it.com,test@testcom' // wrong: no dot in domain
+                ]
+            ]
+        );
         $this->assertRegExpWithUnquotedString($emailErrorMsg, $this->browser->getContent());
 
-        $this->browser->setFieldById('manufacturers-send-order-list-cc', implode(',', $newSendOrderListCc)); // correct
-
-        $this->browser->setFieldById('manufacturers-send-ordered-product-price-changed-notification', $newSendOrderedProductPriceChangedNotification);// do not use 0 here
-        $this->browser->setFieldById('manufacturers-send-ordered-product-amount-changed-notification', $newSendOrderedProductAmountChangedNotification); // do not use 0 here
-        $this->browser->setFieldById('manufacturers-send-instant-order-notification', $newSendInstantOrderNotification); // do not use 0 here
-        $this->browser->setFieldById('manufacturers-bulk-orders-allowed', $newBulkOrdersAllowed); // do not use 0 here
-        $this->browser->setFieldById('manufacturers-default-tax-id', $newDefaultTaxId); // do not use 0 here
-
-        $this->browser->submitFormById('manufacturersEditOptionsForm');
+        $this->browser->post(
+            $this->Slug->getManufacturerEditOptions($manufacturerId),
+            [
+                'Manufacturers' => [
+                    'send_order_list' => $newSendOrderList, // do not use 0 here
+                    'send_invoice' => $newSendInvoice, // do not use 0 here
+                    'send_order_list_cc' => implode(',', $newSendOrderListCc), // correct
+                    'send_ordered_product_price_changed_notification' => $newSendOrderedProductPriceChangedNotification, // do not use 0 here
+                    'send_ordered_product_amount_changed_notification' => $newSendOrderedProductAmountChangedNotification, // do not use 0 here
+                    'send_instant_order_notification' => $newSendInstantOrderNotification, // do not use 0 here
+                    'bulk_orders_allowed' => $newBulkOrdersAllowed, // do not use 0 here
+                    'default_tax_id' => $newDefaultTaxId, // do not use 0 here
+                ]
+            ]
+        );
 
         $manufacturerNew = $this->Manufacturer->find('all', [
             'conditions' => [
@@ -198,15 +215,25 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $statement = $this->dbConnection->prepare($query);
         $statement->execute($params);
         
-        $this->browser->get($this->Slug->getManufacturerEditOptions($manufacturerId));
-        
-        $this->browser->setFieldById('manufacturers-no-delivery-days', [$noDeliveryDays]);
-        $this->browser->submitFormById('manufacturersEditOptionsForm');
+        $this->browser->post(
+            $this->Slug->getManufacturerEditOptions($manufacturerId),
+            [
+                'Manufacturers' => [
+                    'no_delivery_days' => [$noDeliveryDays]
+                ]
+            ]
+        );
         $this->assertRegExpWithUnquotedString('Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: ' . Configure::read('app.timeHelper')->formatToDateShort($noDeliveryDays) . ' (1x)', $this->browser->getContent());
         
         $noDeliveryDays = date('Y-m-d', strtotime($noDeliveryDays . ' + 2 week'));
-        $this->browser->setFieldById('manufacturers-no-delivery-days', [$noDeliveryDays]);
-        $this->browser->submitFormById('manufacturersEditOptionsForm');
+        $this->browser->post(
+            $this->Slug->getManufacturerEditOptions($manufacturerId),
+            [
+                'Manufacturers' => [
+                    'no_delivery_days' => [$noDeliveryDays]
+                ]
+            ]
+        );
         
         $this->assertRegExpWithUnquotedString('wurden erfolgreich gespeichert.', $this->browser->getContent());
         
@@ -221,54 +248,50 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->logout();
     }
 
-    public function testEdit()
+    public function testEditMain()
     {
         $this->loginAsSuperadmin();
 
         $manufacturerId = 4;
-        $this->getEdit($manufacturerId);
 
-        $this->browser->setFieldById('manufacturers-name', 'Huhuu');
-
+        $this->browser->post(
+            $this->Slug->getManufacturerEdit($manufacturerId),
+            [
+                'Manufacturers' => [
+                    'name' => 'Huhuu'
+                ],
+                'ManufacturersAddress' => [
+                    'Email' => 'fcs-demo-mitglied@mailinator.com'
+                ]
+            ]
+        );
         // test with valid customer email address must fail
-        $this->browser->setFieldById('manufacturers-address-manufacturer-email', 'fcs-demo-mitglied@mailinator.com');
-        $this->browser->submitFormById('manufacturerEditForm');
         $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $this->browser->getContent());
 
         // test with valid manufacturer email address must fail
-        $this->browser->setFieldById('manufacturers-address-manufacturer-email', 'fcs-demo-gemuese-hersteller@mailinator.com');
-        $this->browser->submitFormById('manufacturerEditForm');
+        $this->browser->post(
+            $this->Slug->getManufacturerEdit($manufacturerId),
+            [
+                'ManufacturersAddress' => [
+                    'Email' => 'fcs-demo-gemuese-hersteller@mailinator.com'
+                ]
+            ]
+        );
         $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $this->browser->getContent());
 
         // test with valid email address
-        $this->browser->setFieldById('manufacturers-address-manufacturer-email', 'new-email-address@mailinator.com');
-        $this->browser->submitFormById('manufacturerEditForm');
-        $this->assertRegExpWithUnquotedString('Der Hersteller <b>Huhuu</b> wurde geändert.', $this->browser->getContent());
-
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ],
-            'contain' => [
-                'AddressManufacturers'
+        $this->browser->post(
+            $this->Slug->getManufacturerEdit($manufacturerId),
+            [
+                'Manufacturers' => [
+                    'name' => 'Huhuu'
+                ],
+                'ManufacturersAddress' => [
+                    'Email' => 'new-email-address@mailinator.com'
+                ]
             ]
-        ])->first();
-        $this->doTestCustomerRecord($manufacturer);
-
-        $this->logout();
-    }
-
-    public function testAutomaticAddingOfCustomerRecord()
-    {
-        $this->loginAsSuperadmin();
-
-        // manufacturer 16 does not yet have a related customer record (foreign_key: email)
-        $manufacturerId = 16;
-        $this->getEdit($manufacturerId);
-
-        // saving customer must add a customer record
-        $this->browser->submitFormById('manufacturerEditForm');
-        $this->assertRegExpWithUnquotedString('Der Hersteller <b>Hersteller ohne Customer-Eintrag</b> wurde geändert.', $this->browser->getContent());
+        );
+        $this->assertRegExpWithUnquotedString('Der Hersteller <b>Huhuu</b> wurde geändert.', $this->browser->getContent());
 
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
@@ -290,17 +313,6 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertEquals($manufacturer->address_manufacturer->lastname, $customerRecord->lastname);
         $this->assertEquals($manufacturer->address_manufacturer->email, $customerRecord->email);
         $this->assertEquals(APP_ON, $customerRecord->active);
-    }
-
-    /**
-     *
-     * @param array $data
-     * @return string
-     */
-    private function getEdit($manufacturerId)
-    {
-        $this->browser->get($this->Slug->getManufacturerEdit($manufacturerId));
-        return $this->browser->getContent();
     }
 
     /**
