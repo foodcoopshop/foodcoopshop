@@ -1,11 +1,11 @@
 <?php
 namespace App\Test\TestCase;
 
-use App\Lib\SimpleBrowser\AppSimpleBrowser;
 use App\View\Helper\MyHtmlHelper;
 use App\View\Helper\MyTimeHelper;
 use App\View\Helper\PricePerUnitHelper;
 use App\View\Helper\SlugHelper;
+use App\Network\AppHttpClient;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Filesystem\File;
@@ -56,7 +56,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     {
         parent::setUp();
 
-        $this->initSimpleBrowser();
+        $this->initHttpClient();
 
         $View = new View();
         $this->Slug = new SlugHelper($View);
@@ -104,10 +104,13 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->importDump($this->testDumpDir . 'test-db-data.sql');
     }
 
-    public function initSimpleBrowser()
+    public function initHttpClient()
     {
-        $this->browser = new AppSimpleBrowser();
-        $this->browser->addHeader('x-unit-test-mode: true');
+        $this->browser = new AppHttpClient([
+            'headers' => [
+                'x-unit-test-mode' => true
+            ]
+        ]);
         $this->browser->loginEmail = Configure::read('test.loginEmailSuperadmin');
         $this->browser->loginPassword = Configure::read('test.loginPassword');
     }
@@ -125,17 +128,17 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
 
     protected function assert200OkHeader()
     {
-        $this->assertRegExp('/HTTP\/1.1 200 OK/', $this->browser->getHeaders(), 'header 200 ok not found');
+        $this->assertEquals(200, $this->browser->getStatusCode());
     }
 
     protected function assert401UnauthorizedHeader()
     {
-        $this->assertRegExp('/HTTP\/1.1 401 Unauthorized/', $this->browser->getHeaders(), 'header 401 unauthorized not found');
+        $this->assertEquals(401, $this->browser->getStatusCode());
     }
 
     protected function assert403ForbiddenHeader()
     {
-        $this->assertRegExp('/HTTP\/1.1 403 Forbidden/', $this->browser->getHeaders(), 'header 403 forbidden not found');
+        $this->assertEquals(403, $this->browser->getStatusCode());
     }
 
     protected function assertAccessDeniedWithRedirectToLoginForm()
@@ -145,7 +148,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
 
     protected function assert404NotFoundHeader()
     {
-        $this->assertRegExp('/HTTP\/1.1 404 Not Found/', $this->browser->getHeaders(), 'header 404 not found not found');
+        $this->assertEquals(404, $this->browser->getStatusCode());
     }
 
     /**

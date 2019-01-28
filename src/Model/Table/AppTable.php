@@ -34,7 +34,7 @@ class AppTable extends Table
     public function initialize(array $config)
     {
         $this->setTable($this->tablePrefix . $this->getTable());
-        // simple browser needs special header HTTP_X_UNIT_TEST_MODE => set in AppCakeTestCase::initSimpleBrowser()
+        // simple browser needs special header HTTP_X_UNIT_TEST_MODE => set in AppCakeTestCase::initHttpClient()
         if (isset($_SERVER['HTTP_X_UNIT_TEST_MODE'])
             || (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]))) {
             $this->setConnection(ConnectionManager::get('test'));

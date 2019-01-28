@@ -2,9 +2,9 @@
 
 namespace App\Shell;
 
-use App\Lib\SimpleBrowser\AppSimpleBrowser;
 use Cake\Console\Shell;
 use Cake\Core\Configure;
+use App\Network\AppHttpClient;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -52,9 +52,9 @@ class AppShell extends Shell
         return __('Runtime') . ': ' . Configure::read('app.numberHelper')->formatAsDecimal($time) . ' ' . __('seconds');
     }
 
-    public function initSimpleBrowser()
+    public function initHttpClient()
     {
-        $this->browser = new AppSimpleBrowser();
+        $this->browser = new AppHttpClient();
         $this->browser->loginEmail = Configure::read('app.adminEmail');
         $this->browser->loginPassword = Configure::read('app.adminPassword');
 
