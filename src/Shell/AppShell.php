@@ -54,14 +54,18 @@ class AppShell extends Shell
 
     public function initHttpClient()
     {
-        $this->browser = new AppHttpClient();
-        $this->browser->loginEmail = Configure::read('app.adminEmail');
-        $this->browser->loginPassword = Configure::read('app.adminPassword');
-
         if ($this->isCalledFromUnitTest()) {
-            $this->browser->addHeader('x-unit-test-mode: true');
+            $this->browser = new AppHttpClient([
+                'headers' => [
+                    'x-unit-test-mode' => true
+                ]
+            ]);
             $this->browser->loginEmail = Configure::read('test.loginEmailSuperadmin');
             $this->browser->loginPassword = Configure::read('test.loginPassword');
+        } else {
+            $this->browser = new AppHttpClient();
+            $this->browser->loginEmail = Configure::read('app.adminEmail');
+            $this->browser->loginPassword = Configure::read('app.adminPassword');
         }
     }
 
