@@ -113,7 +113,7 @@ class SendInvoicesShell extends AppShell
         $i = 0;
         $outString = $dateFrom . ' ' . __('to_(time_context)') . ' ' . $dateTo . '<br />';
 
-        $this->initSimpleBrowser();
+        $this->initHttpClient();
         $this->browser->doFoodCoopShopLogin();
 
         $tableData = '';

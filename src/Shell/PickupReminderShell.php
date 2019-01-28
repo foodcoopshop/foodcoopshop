@@ -29,7 +29,7 @@ class PickupReminderShell extends AppShell
 
         parent::main();
 
-        $this->initSimpleBrowser(); // for loggedUserId
+        $this->initHttpClient(); // for loggedUserId
         
         // $this->cronjobRunDay can is set in unit test
         if (!isset($this->args[0])) {

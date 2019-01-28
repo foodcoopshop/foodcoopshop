@@ -33,7 +33,7 @@ class EmailOrderReminderShell extends AppShell
 
         parent::main();
 
-        $this->initSimpleBrowser(); // for loggedUserId
+        $this->initHttpClient(); // for loggedUserId
 
         $this->startTimeLogging();
 

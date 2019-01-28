@@ -29,7 +29,7 @@ class CheckCreditBalanceShell extends AppShell
             return;
         }
 
-        $this->initSimpleBrowser(); // for loggedUserId
+        $this->initHttpClient(); // for loggedUserId
 
         $this->startTimeLogging();
 

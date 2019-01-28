@@ -73,7 +73,7 @@ class SendOrderListsShell extends AppShell
         $i = 0;
         $outString = __('Pickup_day') . ': ' . $formattedPickupDay . '<br />';
 
-        $this->initSimpleBrowser();
+        $this->initHttpClient();
         $this->browser->doFoodCoopShopLogin();
 
         foreach ($manufacturers as $manufacturer) {

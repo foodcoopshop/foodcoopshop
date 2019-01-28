@@ -35,7 +35,7 @@ class BackupDatabaseShell extends AppShell
 
         $this->startTimeLogging();
 
-        $this->initSimpleBrowser(); // for loggedUserId
+        $this->initHttpClient(); // for loggedUserId
 
         $dbConfig = ConnectionManager::getConfig('default');
 
