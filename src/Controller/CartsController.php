@@ -33,7 +33,7 @@ class CartsController extends FrontendController
 
         parent::beforeFilter($event);
 
-        if ($this->getRequest()->is('ajax')) {
+        if ($this->getRequest()->is('json')) {
             $message = '';
             if (empty($this->AppAuth->user())) {
                 $message = __('You_are_not_signed_in.');
