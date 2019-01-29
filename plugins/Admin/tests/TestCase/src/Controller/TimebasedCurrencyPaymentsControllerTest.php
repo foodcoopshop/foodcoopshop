@@ -31,17 +31,8 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
 
     public function testAddPaymentLoggedOut()
     {
-        $this->markTestSkipped();
         $this->addPayment(Configure::read('test.customerId'), 1800, 0);
-        $this->assertAccessDeniedWithRedirectToLoginForm();
-    }
-
-    public function testAddPaymentAsManufacturer()
-    {
-        $this->loginAsMeatManufacturer();
-        $this->browser->redirect = 1;
-        $this->addPayment(Configure::read('test.customerId'), 1800, 0);
-        $this->assertAccessDeniedWithRedirectToLoginForm();
+        $this->assertRedirectToLoginPage();
     }
 
     public function testAddPaymentAsCustomer()
@@ -139,7 +130,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
      */
     private function addPayment($customerId, $seconds, $manufacturerId, $text = '')
     {
-        $this->browser->post($this->Slug->getTimebasedCurrencyPaymentAdd($customerId), [
+        $this->browser->ajaxPost($this->Slug->getTimebasedCurrencyPaymentAdd($customerId), [
             'seconds' => $seconds,
             'id_manufacturer' => $manufacturerId,
             'text' => $text
