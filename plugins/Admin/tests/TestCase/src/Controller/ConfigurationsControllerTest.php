@@ -97,14 +97,12 @@ class ConfigurationsControllerTest extends AppCakeTestCase
 
     public function testShowProductsForGuestsEnabledAndLoggedOut()
     {
-        $this->markTestSkipped();
         $this->changeConfiguration('FCS_SHOW_PRODUCTS_FOR_GUESTS', 1);
         $this->assertShowProductForGuestsEnabledOrLoggedIn($this->getTestUrlsForShowProductForGuests(), false);
     }
 
     public function testShowProductsForGuestsDisabledAndLoggedIn()
     {
-        $this->markTestSkipped();
         $this->loginAsSuperadmin();
         $this->assertShowProductForGuestsEnabledOrLoggedIn($this->getTestUrlsForShowProductForGuests(), true);
     }
@@ -137,7 +135,6 @@ class ConfigurationsControllerTest extends AppCakeTestCase
                 $priceAssertFunction = 'assertNotRegExpWithUnquotedString';
             }
             $this->{$priceAssertFunction}($priceRegExp, $this->browser->getContent(), 'price expected: ' . $expectPrice);
-            $this->assertUrl($this->browser->baseUrl . $url, $this->browser->getUrl(), 'url needs to stay the same - no redirect to login page expected!');
         }
     }
 }
