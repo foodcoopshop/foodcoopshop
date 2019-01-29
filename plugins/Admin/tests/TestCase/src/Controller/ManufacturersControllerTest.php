@@ -64,7 +64,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
                     'postcode' => '',
                     'city' => 'Test City'
                 ]
-            ]
+            ],
+            'referer' => '/'
         ];
 
         $response = $this->add($manufacturerData);
@@ -215,23 +216,28 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $statement = $this->dbConnection->prepare($query);
         $statement->execute($params);
         
+        $this->browser->redirect = 1;
         $this->browser->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),
             [
                 'Manufacturers' => [
                     'no_delivery_days' => [$noDeliveryDays]
-                ]
+                ],
+                'referer' => '/'
             ]
         );
         $this->assertRegExpWithUnquotedString('Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: ' . Configure::read('app.timeHelper')->formatToDateShort($noDeliveryDays) . ' (1x)', $this->browser->getContent());
         
         $noDeliveryDays = date('Y-m-d', strtotime($noDeliveryDays . ' + 2 week'));
+        
+        $this->browser->redirect = 1;
         $this->browser->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),
             [
                 'Manufacturers' => [
                     'no_delivery_days' => [$noDeliveryDays]
-                ]
+                ],
+                'referer' => '/'
             ]
         );
         
@@ -258,11 +264,12 @@ class ManufacturersControllerTest extends AppCakeTestCase
             $this->Slug->getManufacturerEdit($manufacturerId),
             [
                 'Manufacturers' => [
-                    'name' => 'Huhuu'
+                    'name' => 'Huhuu',
+                    'address_manufacturer' => [
+                        'email' => 'fcs-demo-mitglied@mailinator.com'
+                    ]
                 ],
-                'ManufacturersAddress' => [
-                    'Email' => 'fcs-demo-mitglied@mailinator.com'
-                ]
+                'referer' => '/'
             ]
         );
         // test with valid customer email address must fail
@@ -272,23 +279,31 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->browser->post(
             $this->Slug->getManufacturerEdit($manufacturerId),
             [
-                'ManufacturersAddress' => [
-                    'Email' => 'fcs-demo-gemuese-hersteller@mailinator.com'
-                ]
+                'Manufacturers' => [
+                    'name' => 'Huhuu',
+                    'address_manufacturer' => [
+                        'email' => 'fcs-demo-gemuese-hersteller@mailinator.com'
+                    ],
+                ],
+                'referer' => '/'
             ]
         );
         $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $this->browser->getContent());
 
         // test with valid email address
+        $this->browser->redirect = 1;
         $this->browser->post(
             $this->Slug->getManufacturerEdit($manufacturerId),
             [
                 'Manufacturers' => [
-                    'name' => 'Huhuu'
+                    'name' => 'Huhuu',
+                    'address_manufacturer' => [
+                        'firstname' => 'firstname',
+                        'lastname' => 'lastname',
+                        'email' => 'new-email-address@mailinator.com'
+                    ],
                 ],
-                'ManufacturersAddress' => [
-                    'Email' => 'new-email-address@mailinator.com'
-                ]
+                'referer' => '/'
             ]
         );
         $this->assertRegExpWithUnquotedString('Der Hersteller <b>Huhuu</b> wurde geändert.', $this->browser->getContent());
@@ -322,6 +337,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
      */
     private function add($data)
     {
+        $this->browser->redirect = 1;
         $this->browser->post($this->Slug->getManufacturerAdd(), $data);
         return $this->browser->getContent();
     }
