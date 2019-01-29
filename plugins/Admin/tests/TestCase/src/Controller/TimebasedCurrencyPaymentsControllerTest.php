@@ -38,6 +38,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
     public function testAddPaymentAsManufacturer()
     {
         $this->loginAsMeatManufacturer();
+        $this->browser->redirect = 1;
         $this->addPayment(Configure::read('test.customerId'), 1800, 0);
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
@@ -47,6 +48,8 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $this->createPayment(0.5);
         $this->createPayment(3.2);
+        
+        $this->browser->redirect = 1;
         $this->browser->get($this->Slug->getMyTimebasedCurrencyBalanceForCustomers());
         $this->assertRegExpWithUnquotedString('0,50 h', $this->browser->getContent());
         $this->assertRegExpWithUnquotedString('3,20 h', $this->browser->getContent());
@@ -60,6 +63,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         $this->createPayment(0.5);
 
         $this->loginAsVegetableManufacturer();
+        $this->browser->redirect = 1;
         $this->browser->get($this->Slug->getTimebasedCurrencyPaymentEdit(1));
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
@@ -73,10 +77,13 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         $comment = 'this is the comment';
         $hours = 0.25;
         $this->loginAsMeatManufacturer();
+        
+        $this->browser->redirect = 1;
         $this->browser->post($this->Slug->getTimebasedCurrencyPaymentEdit(1), [
             'seconds' => $hours * 3600,
             'approval_comment' => $comment,
-            'approval' => APP_DEL
+            'approval' => APP_DEL,
+            'referer' => '/'
         ]);
         $this->assert200OkHeader();
 
