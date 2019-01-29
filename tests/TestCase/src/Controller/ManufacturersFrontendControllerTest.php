@@ -31,6 +31,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
 
        public function testManufacturerDetailOnlinePublicLoggedOut()
     {
+        $this->browser->redirect = 1;
         $this->browser->get($this->Slug->getManufacturerDetail(4, 'Demo Manufacturer'));
         $this->assert200OkHeader();
     }
@@ -47,6 +48,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
     {
         $manufacturerId = 4;
         $this->changeManufacturer($manufacturerId, 'is_private', 1);
+        $this->browser->redirect = 1;
         $this->browser->get($this->Slug->getManufacturerDetail($manufacturerId, 'Demo Manufacturer'));
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
@@ -56,6 +58,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $manufacturerId = 4;
         $this->changeManufacturer($manufacturerId, 'is_private', 1);
+        $this->browser->redirect = 1;
         $this->browser->get($this->Slug->getManufacturerDetail($manufacturerId, 'Demo Manufacturer'));
         $this->assert200OkHeader();
     }
