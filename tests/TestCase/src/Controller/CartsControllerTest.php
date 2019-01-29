@@ -581,25 +581,21 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testInstantOrder()
     {
-        $this->markTestSkipped();
         $this->loginAsSuperadmin();
         $testCustomer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => Configure::read('test.customerId')
             ]
         ])->first();
-        $responseHtml = $this->browser->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
-        $this->assertRegExpWithUnquotedString('Diese Bestellung wird für <b>' . $testCustomer->name . '</b> getätigt.', $responseHtml);
-        $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/', 'redirect did not work');
+        $this->browser->redirect = 1;
+        $this->browser->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
+        $this->assertRegExpWithUnquotedString('Diese Bestellung wird für <b>' . $testCustomer->name . '</b> getätigt.', $this->browser->getContent());
         
         $this->addProductToCart($this->productId2, 3); // attribute
         $this->addProductToCart(349, 1); // stock product - no notification!
         
         $this->finishCart(1, 1);
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
-        
-        $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung (6,86 €) für <b>Demo Mitglied</b> wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: <b>Demo Milch-Hersteller</b>', $this->browser->getContent());
-        
         $cart = $this->getCartById($cartId);
         
         foreach($cart->cart_products as $cartProduct) {
