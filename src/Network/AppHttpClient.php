@@ -42,8 +42,13 @@ class AppHttpClient extends Client
 
     public function __construct($config = [])
     {
+        $parsedUrl = parse_url(Configure::read('app.cakeServerName'));
+        
         $config = array_merge($config, [
-            'timeout' => 300  // 5 min should be enough
+            'host' => $parsedUrl['host'],
+            'scheme' => $parsedUrl['scheme'],
+            'ssl_verify_peer' => false,
+            'timeout' => 300
         ]);
         parent::__construct($config);
 
@@ -51,7 +56,6 @@ class AppHttpClient extends Client
         $this->Slug = new SlugHelper($View);
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
 
-        $this->baseUrl = Configure::read('app.cakeServerName');
         $this->adminPrefix = '/admin';
     }
     
@@ -81,7 +85,7 @@ class AppHttpClient extends Client
             'redirect' => $this->redirect
         ]);
         $this->redirect = 0;
-        $this->response = parent::get($this->baseUrl . $url, $data, $options);
+        $this->response = parent::get($url, $data, $options);
         return $this->getContent();
     }
 
@@ -99,7 +103,7 @@ class AppHttpClient extends Client
             'type' => 'json',
         ]);
         $this->response = parent::post(
-            $this->baseUrl . $url,
+            $url,
             $data,
             $options
         );
@@ -113,7 +117,7 @@ class AppHttpClient extends Client
         ]);
         $this->redirect = 0;
         $this->response = parent::post(
-            $this->baseUrl . $url,
+            $url,
             $data,
             $options
         );
