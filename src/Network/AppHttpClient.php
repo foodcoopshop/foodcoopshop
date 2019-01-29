@@ -126,7 +126,7 @@ class AppHttpClient extends Client
 
     public function getJsonDecodedContent()
     {
-        return (object) $this->response->getJson();
+        return json_decode(json_encode($this->response->getJson()), false); // convert array recursively into object
     }
 
     public function doFoodCoopShopLogin()
