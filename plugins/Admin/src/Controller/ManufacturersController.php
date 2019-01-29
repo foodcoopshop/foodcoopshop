@@ -671,30 +671,6 @@ class ManufacturersController extends AdminAppController
                 $this->setRequest($this->getRequest()->withData('Manufacturers.id_customer', null));
             }
 
-            $booleanFields = [
-                'active',
-                'is_private',
-                'send_invoice',
-                'send_order_list',
-                'bulk_orders_allowed',
-                'send_instant_order_notification',
-                'send_ordered_product_deleted_notification',
-                'send_ordered_product_price_changed_notification',
-                'send_ordered_product_amount_changed_notification',
-                'enabled_sync_domains',
-                'timebased_currency_enabled',
-                'stock_management_enabled',
-                'send_product_sold_out_limit_reached_for_manufacturer',
-                'send_product_sold_out_limit_reached_for_contact_person'
-            ];
-            // assure that booleans are converted into integer before saving
-            foreach($booleanFields as $booleanField) {
-                $value = $this->getRequest()->getData('Manufacturers.' . $booleanField);
-                if (!is_null($value)) {
-                    $this->setRequest($this->getRequest()->withData('Manufacturers.' . $booleanField, (int) $value));
-                }
-            }
-            
             // sic! patch again!
             $manufacturer = $this->Manufacturer->patchEntity(
                 $manufacturer,

@@ -114,16 +114,15 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
     public function testEditOptionsMain()
     {
-        $this->markTestSkipped();
         $this->loginAsSuperadmin();
 
         $manufacturerId = 4;
-        $newSendOrderList = false;
-        $newSendInvoice = false;
-        $newSendOrderedProductPriceChangedNotification = false;
-        $newSendOrderedProductAmountChangedNotification = false;
-        $newSendInstantOrderNotification = false;
-        $newBulkOrdersAllowed = false;
+        $newSendOrderList = 0;
+        $newSendInvoice = 0;
+        $newSendOrderedProductPriceChangedNotification = 0;
+        $newSendOrderedProductAmountChangedNotification = 0;
+        $newSendInstantOrderNotification = 0;
+        $newBulkOrdersAllowed = 0;
         $newDefaultTaxId = 3;
 
         $newSendOrderListCc = ['office@rothauer-it.com', 'test@test.com'];
@@ -145,8 +144,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
             $this->Slug->getManufacturerEditOptions($manufacturerId),
             [
                 'Manufacturers' => [
-                    'send_order_list' => $newSendOrderList, // do not use 0 here
-                    'send_invoice' => $newSendInvoice, // do not use 0 here
+                    'send_order_list' => $newSendOrderList,
+                    'send_invoice' => $newSendInvoice,
                     'send_order_list_cc' => 'office@rothauer-it.com,test@testcom' // wrong: no dot in domain
                 ]
             ]
@@ -157,14 +156,17 @@ class ManufacturersControllerTest extends AppCakeTestCase
             $this->Slug->getManufacturerEditOptions($manufacturerId),
             [
                 'Manufacturers' => [
-                    'send_order_list' => $newSendOrderList, // do not use 0 here
-                    'send_invoice' => $newSendInvoice, // do not use 0 here
+                    'send_order_list' => $newSendOrderList,
+                    'send_invoice' => $newSendInvoice,
                     'send_order_list_cc' => implode(',', $newSendOrderListCc), // correct
-                    'send_ordered_product_price_changed_notification' => $newSendOrderedProductPriceChangedNotification, // do not use 0 here
-                    'send_ordered_product_amount_changed_notification' => $newSendOrderedProductAmountChangedNotification, // do not use 0 here
-                    'send_instant_order_notification' => $newSendInstantOrderNotification, // do not use 0 here
-                    'bulk_orders_allowed' => $newBulkOrdersAllowed, // do not use 0 here
-                    'default_tax_id' => $newDefaultTaxId, // do not use 0 here
+                    'send_ordered_product_price_changed_notification' => $newSendOrderedProductPriceChangedNotification,
+                    'send_ordered_product_amount_changed_notification' => $newSendOrderedProductAmountChangedNotification,
+                    'send_instant_order_notification' => $newSendInstantOrderNotification,
+                    'bulk_orders_allowed' => $newBulkOrdersAllowed,
+                    'default_tax_id' => $newDefaultTaxId,
+                    // althouth the following property is not tested, it needs to be included in the request to avoid
+                    // [InvalidArgumentException] Cannot convert value of type `boolean` to integer
+                    'send_ordered_product_deleted_notification' => 1,
                 ]
             ]
         );
@@ -204,7 +206,6 @@ class ManufacturersControllerTest extends AppCakeTestCase
     
     public function testEditOptionsNoDeliveryDays()
     {
-        $this->markTestSkipped();
         $this->loginAsSuperadmin();
         
         $manufacturerId = 15;
@@ -237,7 +238,16 @@ class ManufacturersControllerTest extends AppCakeTestCase
             $this->Slug->getManufacturerEditOptions($manufacturerId),
             [
                 'Manufacturers' => [
-                    'no_delivery_days' => [$noDeliveryDays]
+                    'no_delivery_days' => [$noDeliveryDays],
+                    // althouth the following property is not tested, it needs to be included in the request to avoid
+                    // [InvalidArgumentException] Cannot convert value of type `boolean` to integer
+                    'send_invoice' => 1,
+                    'send_order_list' => 1,
+                    'bulk_orders_allowed' => 1,
+                    'send_instant_order_notification' => 1,
+                    'send_ordered_product_deleted_notification' => 1,
+                    'send_ordered_product_price_changed_notification' => 1,
+                    'send_ordered_product_amount_changed_notification' => 1,
                 ],
                 'referer' => '/'
             ]
