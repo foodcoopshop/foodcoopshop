@@ -37,11 +37,12 @@ class AppHttpClient extends Client
     public $loginPassword;
     
     private $response;
+    
+    public $redirect = 0;
 
     public function __construct($config = [])
     {
         $config = array_merge($config, [
-            'redirect' => 1,  // number of redirects to follow
             'timeout' => 300  // 5 min should be enough
         ]);
         parent::__construct($config);
@@ -71,11 +72,14 @@ class AppHttpClient extends Client
     
     public function getUrl()
     {
-        return $this->getHeaders()['Location'][0];
+        return $this->response->getHeaderline('Location');
     }
     
     public function get($url, $data = [], array $options = [])
     {
+        $options = array_merge($options, [
+            'redirect' => $this->redirect
+        ]);
         $this->response = parent::get($this->baseUrl . $url, $data, $options);
         return $this->getContent();
     }
@@ -91,7 +95,8 @@ class AppHttpClient extends Client
             'headers' => [
                 'X-Requested-With:XMLHttpRequest'
             ],
-            'type' => 'json'
+            'type' => 'json',
+            'redirect' => $this->redirect
         ]);
         $this->response = parent::post(
             $this->baseUrl . $url,
@@ -103,6 +108,9 @@ class AppHttpClient extends Client
 
     public function post($url, $data = [], array $options = [])
     {
+        $options = array_merge($options, [
+            'redirect' => $this->redirect
+        ]);
         $this->response = parent::post(
             $this->baseUrl . $url,
             $data,

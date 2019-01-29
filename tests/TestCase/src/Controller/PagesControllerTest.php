@@ -159,6 +159,7 @@ class PagesControllerTest extends AppCakeTestCase
 
     public function testPageDetailOnlinePublicLoggedOut()
     {
+        $this->browser->redirect = 1;
         $this->browser->get($this->Slug->getPageDetail(3, 'Demo Page'));
         $this->assert200OkHeader();
     }
@@ -175,6 +176,7 @@ class PagesControllerTest extends AppCakeTestCase
     {
         $pageId = 3;
         $this->changePage($pageId, 1);
+        $this->browser->redirect = 1;
         $this->browser->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
@@ -184,6 +186,7 @@ class PagesControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $pageId = 3;
         $this->changePage($pageId, 1);
+        $this->browser->redirect = 1;
         $this->browser->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
         $this->assert200OkHeader();
     }
