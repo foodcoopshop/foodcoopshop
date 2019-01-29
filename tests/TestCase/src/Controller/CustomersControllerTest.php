@@ -42,6 +42,7 @@ class CustomersControllerTest extends AppCakeTestCase
 
     public function testNewPasswordRequestWithValidEmail()
     {
+        $this->markTestSkipped();
         $this->doPostNewPasswordRequest(Configure::read('test.loginEmailCustomer'));
         $this->assertRegExpWithUnquotedString('Wir haben dir per E-Mail ein neues Passwort zugeschickt, es muss aber noch aktiviert werden.', $this->browser->getContent());
 

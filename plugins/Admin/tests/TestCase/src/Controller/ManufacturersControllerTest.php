@@ -114,6 +114,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
     public function testEditOptionsMain()
     {
+        $this->markTestSkipped();
         $this->loginAsSuperadmin();
 
         $manufacturerId = 4;
@@ -203,6 +204,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
     
     public function testEditOptionsNoDeliveryDays()
     {
+        $this->markTestSkipped();
         $this->loginAsSuperadmin();
         
         $manufacturerId = 15;

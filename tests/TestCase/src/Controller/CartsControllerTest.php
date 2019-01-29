@@ -581,6 +581,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testInstantOrder()
     {
+        $this->markTestSkipped();
         $this->loginAsSuperadmin();
         $testCustomer = $this->Customer->find('all', [
             'conditions' => [
@@ -630,6 +631,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $this->addProductToCart($this->productId1, 1);
         $this->removeProduct($this->productId1);
+        $this->browser->redirect = 1;
         $this->finishCart();
         $this->assertRegExp('/Dein Warenkorb war leer/', $this->browser->getContent());
     }
