@@ -41,7 +41,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         $this->createPayment(0.5);
         $this->createPayment(3.2);
         
-        $this->browser->redirect = 1;
+        $this->browser->considerRedirectForNextRequest();
         $this->browser->get($this->Slug->getMyTimebasedCurrencyBalanceForCustomers());
         $this->assertRegExpWithUnquotedString('0,50 h', $this->browser->getContent());
         $this->assertRegExpWithUnquotedString('3,20 h', $this->browser->getContent());
@@ -55,7 +55,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         $this->createPayment(0.5);
 
         $this->loginAsVegetableManufacturer();
-        $this->browser->redirect = 1;
+        $this->browser->considerRedirectForNextRequest();
         $this->browser->get($this->Slug->getTimebasedCurrencyPaymentEdit(1));
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
@@ -70,7 +70,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         $hours = 0.25;
         $this->loginAsMeatManufacturer();
         
-        $this->browser->redirect = 1;
+        $this->browser->considerRedirectForNextRequest();
         $this->browser->post($this->Slug->getTimebasedCurrencyPaymentEdit(1), [
             'seconds' => $hours * 3600,
             'approval_comment' => $comment,

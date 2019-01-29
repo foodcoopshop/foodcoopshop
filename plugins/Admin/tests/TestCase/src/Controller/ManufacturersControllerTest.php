@@ -1,8 +1,5 @@
 <?php
-
 /**
- * ManufacturersControllerTest
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -219,7 +216,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $statement = $this->dbConnection->prepare($query);
         $statement->execute($params);
         
-        $this->browser->redirect = 1;
+        $this->browser->considerRedirectForNextRequest();
         $this->browser->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),
             [
@@ -233,7 +230,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         
         $noDeliveryDays = date('Y-m-d', strtotime($noDeliveryDays . ' + 2 week'));
         
-        $this->browser->redirect = 1;
+        $this->browser->considerRedirectForNextRequest();
         $this->browser->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),
             [
@@ -303,7 +300,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $this->browser->getContent());
 
         // test with valid email address
-        $this->browser->redirect = 1;
+        $this->browser->considerRedirectForNextRequest();
         $this->browser->post(
             $this->Slug->getManufacturerEdit($manufacturerId),
             [
@@ -350,7 +347,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
      */
     private function add($data)
     {
-        $this->browser->redirect = 1;
+        $this->browser->considerRedirectForNextRequest();
         $this->browser->post($this->Slug->getManufacturerAdd(), $data);
         return $this->browser->getContent();
     }

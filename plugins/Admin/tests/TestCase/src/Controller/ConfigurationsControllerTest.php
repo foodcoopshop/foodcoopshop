@@ -1,8 +1,5 @@
 <?php
-
 /**
- * ConfigurationsControllerTest
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -36,7 +33,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
                 'Configurations.name' => $configKey
             ]
         ])->first();
-        $this->browser->redirect = 1;
+        $this->browser->considerRedirectForNextRequest();
         $this->browser->post('/admin/configurations/edit/'.$configuration->id_configuration, [
            'Configurations' => [
                'value' => $newValue
