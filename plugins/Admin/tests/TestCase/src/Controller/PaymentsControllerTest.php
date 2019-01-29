@@ -29,9 +29,8 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testAddPaymentLoggedOut()
     {
-        $this->markTestSkipped();
         $this->addPayment(Configure::read('test.customerId'), 0, 'product');
-        $this->assert403ForbiddenHeader();
+        $this->assertRedirectToLoginPage();
     }
 
     public function testAddPaymentParameterPriceOk()
@@ -168,9 +167,8 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testDeletePaymentLoggedOut()
     {
-        $this->markTestSkipped();
         $this->deletePayment(1);
-        $this->assert403ForbiddenHeader();
+        $this->assertRedirectToLoginPage();
     }
 
     public function testDeletePaymentWithApprovalOk()
@@ -275,7 +273,6 @@ class PaymentsControllerTest extends AppCakeTestCase
      */
     private function addPayment($customerId, $amount, $type, $manufacturerId = 0, $text = '')
     {
-        $this->browser->redirect = 1;
         $this->browser->ajaxPost('/admin/payments/add', [
             'customerId' => $customerId,
             'amount' => $amount,

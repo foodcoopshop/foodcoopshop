@@ -136,11 +136,6 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->assertEquals(401, $this->browser->getStatusCode());
     }
 
-    protected function assert403ForbiddenHeader()
-    {
-        $this->assertEquals(403, $this->browser->getStatusCode());
-    }
-
     protected function assertAccessDeniedWithRedirectToLoginForm()
     {
         $this->assertRegExpWithUnquotedString('Zugriff verweigert, bitte melde dich an.', $this->browser->getContent());
