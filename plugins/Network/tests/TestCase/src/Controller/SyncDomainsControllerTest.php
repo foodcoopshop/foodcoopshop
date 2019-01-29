@@ -68,6 +68,7 @@ class SyncDomainsControllerTest extends AppCakeTestCase
      */
     private function addSyncDomain($domain)
     {
+        $this->browser->redirect = 1;
         $this->browser->post($this->Network->getSyncDomainAdd(), [
             'SyncDomains' =>
             [
