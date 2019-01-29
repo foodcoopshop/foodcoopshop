@@ -689,7 +689,9 @@ class ManufacturersController extends AdminAppController
             ];
             // assure that booleans are converted into integer before saving
             foreach($booleanFields as $booleanField) {
-                $this->setRequest($this->getRequest()->withData('Manufacturers.' . $booleanField, (int) $this->getRequest()->getData('Manufacturers.' . $booleanField)));
+                if (!is_null($this->getRequest()->getData('Manufacturers.' . $booleanField))) {
+                    $this->setRequest($this->getRequest()->withData('Manufacturers.' . $booleanField, (int) $this->getRequest()->getData('Manufacturers.' . $booleanField)));
+                }
             }
             
             // sic! patch again!
