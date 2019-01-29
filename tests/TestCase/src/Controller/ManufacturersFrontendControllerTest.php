@@ -31,8 +31,8 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
 
        public function testManufacturerDetailOnlinePublicLoggedOut()
     {
-        $this->browser->considerRedirectForNextRequest();
-        $this->browser->get($this->Slug->getManufacturerDetail(4, 'Demo Manufacturer'));
+        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->get($this->Slug->getManufacturerDetail(4, 'Demo Manufacturer'));
         $this->assert200OkHeader();
     }
 
@@ -40,7 +40,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
     {
         $manufacturerId = 4;
         $this->changeManufacturer($manufacturerId, 'active', 0);
-        $this->browser->get($this->Slug->getManufacturerDetail($manufacturerId, 'Demo Manufacturer'));
+        $this->httpClient->get($this->Slug->getManufacturerDetail($manufacturerId, 'Demo Manufacturer'));
         $this->assert404NotFoundHeader();
     }
 
@@ -48,8 +48,8 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
     {
         $manufacturerId = 4;
         $this->changeManufacturer($manufacturerId, 'is_private', 1);
-        $this->browser->considerRedirectForNextRequest();
-        $this->browser->get($this->Slug->getManufacturerDetail($manufacturerId, 'Demo Manufacturer'));
+        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->get($this->Slug->getManufacturerDetail($manufacturerId, 'Demo Manufacturer'));
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
 
@@ -58,15 +58,15 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $manufacturerId = 4;
         $this->changeManufacturer($manufacturerId, 'is_private', 1);
-        $this->browser->considerRedirectForNextRequest();
-        $this->browser->get($this->Slug->getManufacturerDetail($manufacturerId, 'Demo Manufacturer'));
+        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->get($this->Slug->getManufacturerDetail($manufacturerId, 'Demo Manufacturer'));
         $this->assert200OkHeader();
     }
 
     public function testManufacturerDetailNonExistingLoggedOut()
     {
         $manufacturerId = 1;
-        $this->browser->get($this->Slug->getManufacturerDetail($manufacturerId, 'Demo Manufacturer'));
+        $this->httpClient->get($this->Slug->getManufacturerDetail($manufacturerId, 'Demo Manufacturer'));
         $this->assert404NotFoundHeader();
     }
 }

@@ -454,7 +454,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->addProductToCart($productIdA, 1); // addProductToCart needs to be called twice!
 
         $this->finishCart(1, 1);
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
         $cart = $this->getCartById($cartId);
         return $cart;
     }
@@ -467,7 +467,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->addProductToCart(344, 1); // addProductToCart needs to be called twice!
         $this->addProductToCart(346, 2);
         $this->finishCart(1, 1, '', '352');
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
         $cart = $this->getCartById($cartId);
         return $cart;
     }
@@ -526,7 +526,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productIdA, $productAAmount);
         $this->addProductToCart($this->productIdB, $productBAmount);
         $this->finishCart();
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
         $cart = $this->getCartById($cartId);
         return $cart;
     }
@@ -579,7 +579,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
     private function editPickupDayOfOrderDetails($orderDetailIds, $pickupDay, $reason)
     {
-        $this->browser->ajaxPost(
+        $this->httpClient->ajaxPost(
             '/admin/order-details/editPickupDay/',
             [
                 'orderDetailIds' => $orderDetailIds,
@@ -587,12 +587,12 @@ class OrderDetailsControllerTest extends AppCakeTestCase
                 'changePickupDayReason' => $reason
             ]
         );
-        return $this->browser->getJsonDecodedContent();
+        return $this->httpClient->getJsonDecodedContent();
     }
     
     private function deleteOrderDetail($orderDetailIds, $cancellationReason)
     {
-        $this->browser->post(
+        $this->httpClient->post(
             '/admin/order-details/delete/',
             [
                 'orderDetailIds' => $orderDetailIds,
@@ -603,7 +603,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
     private function editOrderDetailPrice($orderDetailId, $productPrice, $editPriceReason)
     {
-        $this->browser->post(
+        $this->httpClient->post(
             '/admin/order-details/editProductPrice/',
             [
                 'orderDetailId' => $orderDetailId,
@@ -615,7 +615,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
     private function editOrderDetailQuantity($orderDetailId, $productQuantity, $doNotChangePrice)
     {
-        $this->browser->post(
+        $this->httpClient->post(
             '/admin/order-details/editProductQuantity/',
             [
                 'orderDetailId' => $orderDetailId,
@@ -627,7 +627,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
     private function editOrderDetailAmount($orderDetailId, $productAmount, $editAmountReason)
     {
-        $this->browser->post(
+        $this->httpClient->post(
             '/admin/order-details/editProductAmount/',
             [
                 'orderDetailId' => $orderDetailId,

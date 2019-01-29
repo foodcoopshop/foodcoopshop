@@ -114,7 +114,7 @@ class SendInvoicesShell extends AppShell
         $outString = $dateFrom . ' ' . __('to_(time_context)') . ' ' . $dateTo . '<br />';
 
         $this->initHttpClient();
-        $this->browser->doFoodCoopShopLogin();
+        $this->httpClient->doFoodCoopShopLogin();
 
         $tableData = '';
         $sumPrice = 0;
@@ -161,8 +161,8 @@ class SendInvoicesShell extends AppShell
                 $tableData .= '</td>';
                 $tableData .= '</tr>';
                 
-                $url = $this->browser->adminPrefix . '/manufacturers/sendInvoice?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
-                $this->browser->get($url);
+                $url = $this->httpClient->adminPrefix . '/manufacturers/sendInvoice?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
+                $this->httpClient->get($url);
                 $i ++;
                 
             }
@@ -183,7 +183,7 @@ class SendInvoicesShell extends AppShell
             $outString .= '</table>';
         }
         
-        $this->browser->doFoodCoopShopLogout();
+        $this->httpClient->doFoodCoopShopLogout();
 
         // START send email to accounting employee
         $accountingEmail = Configure::read('appDb.FCS_ACCOUNTING_EMAIL');
@@ -205,7 +205,7 @@ class SendInvoicesShell extends AppShell
 
         $this->stopTimeLogging();
 
-        $this->ActionLog->customSave('cronjob_send_invoices', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime(), new Time($this->cronjobRunDay));
+        $this->ActionLog->customSave('cronjob_send_invoices', $this->httpClient->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime(), new Time($this->cronjobRunDay));
 
         $this->out($outString);
 

@@ -47,7 +47,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
 
     public $Manufacturer;
 
-    public $browser;
+    public $httpClient;
 
     /**
      * called before every test method
@@ -106,13 +106,13 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
 
     public function initHttpClient()
     {
-        $this->browser = new AppHttpClient([
+        $this->httpClient = new AppHttpClient([
             'headers' => [
                 'x-unit-test-mode' => true
             ]
         ]);
-        $this->browser->loginEmail = Configure::read('test.loginEmailSuperadmin');
-        $this->browser->loginPassword = Configure::read('test.loginPassword');
+        $this->httpClient->loginEmail = Configure::read('test.loginEmailSuperadmin');
+        $this->httpClient->loginPassword = Configure::read('test.loginPassword');
     }
 
     protected function importDump($file)
@@ -122,28 +122,28 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
 
     protected function assertJsonError()
     {
-        $response = $this->browser->getJsonDecodedContent();
+        $response = $this->httpClient->getJsonDecodedContent();
         $this->assertEquals(0, $response->status, 'json status should be "0"');
     }
 
     protected function assert200OkHeader()
     {
-        $this->assertEquals(200, $this->browser->getStatusCode());
+        $this->assertEquals(200, $this->httpClient->getStatusCode());
     }
 
     protected function assert401UnauthorizedHeader()
     {
-        $this->assertEquals(401, $this->browser->getStatusCode());
+        $this->assertEquals(401, $this->httpClient->getStatusCode());
     }
 
     protected function assertAccessDeniedWithRedirectToLoginForm()
     {
-        $this->assertRegExpWithUnquotedString('Zugriff verweigert, bitte melde dich an.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Zugriff verweigert, bitte melde dich an.', $this->httpClient->getContent());
     }
 
     protected function assert404NotFoundHeader()
     {
-        $this->assertEquals(404, $this->browser->getStatusCode());
+        $this->assertEquals(404, $this->httpClient->getStatusCode());
     }
 
     /**
@@ -151,18 +151,18 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
      */
     protected function assertRedirectToLoginPage()
     {
-        $this->assertRegExpWithUnquotedString($this->browser->baseUrl . $this->Slug->getLogin(), $this->browser->getUrl(), 'redirect to login page failed');
+        $this->assertRegExpWithUnquotedString($this->httpClient->baseUrl . $this->Slug->getLogin(), $this->httpClient->getUrl(), 'redirect to login page failed');
     }
 
     protected function assertJsonAccessRestricted()
     {
-        $response = $this->browser->getJsonDecodedContent();
+        $response = $this->httpClient->getJsonDecodedContent();
         $this->assertRegExpWithUnquotedString('Du bist nicht angemeldet.', $response->msg, 'login check does not work');
     }
 
     protected function assertJsonOk()
     {
-        $response = $this->browser->getJsonDecodedContent();
+        $response = $this->httpClient->getJsonDecodedContent();
         $this->assertEquals(1, $response->status, 'json status should be "1", msg: ' . $response->msg);
     }
 
@@ -200,8 +200,8 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     protected function assertPagesFor404($testPages)
     {
         foreach ($testPages as $url) {
-            $this->browser->get($url);
-            $this->assertEquals(404, $this->browser->getStatusCode());
+            $this->httpClient->get($url);
+            $this->assertEquals(404, $this->httpClient->getStatusCode());
         }
     }
 
@@ -213,8 +213,8 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     protected function assertPagesForErrors($testPages)
     {
         foreach ($testPages as $url) {
-            $this->browser->get($url);
-            $html = $this->browser->getContent();
+            $this->httpClient->get($url);
+            $html = $this->httpClient->getContent();
             $this->assertNotRegExp('/class="cake-stack-trace"|class="cake-error"|\bFatal error\b|undefined|exception \'[^\']+\' with message|\<strong\>(Error|Exception)\s*:\s*\<\/strong\>|Parse error|Not Found|\/app\/views\/errors\/|error in your SQL syntax|ERROR!|^\<\/body\>/', $html);
         }
     }
@@ -278,7 +278,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
 
     /**
      * needs to login as superadmin and logs user out automatically
-     * eventually create a new browser instance for this method
+     * eventually create a new httpClient instance for this method
      *
      * @param string $configKey
      * @param string $newValue
@@ -321,11 +321,11 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
      */
     protected function addProductToCart($productId, $amount)
     {
-        $this->browser->ajaxPost('/warenkorb/ajaxAdd', [
+        $this->httpClient->ajaxPost('/warenkorb/ajaxAdd', [
             'productId' => $productId,
             'amount' => $amount
         ]);
-        return $this->browser->getJsonDecodedContent();
+        return $this->httpClient->getJsonDecodedContent();
     }
 
 
@@ -340,7 +340,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
 
         if ($comment != '') {
             $data['Carts']['pickup_day_entities'][0] = [
-                'customer_id' => $this->browser->getLoggedUserId(),
+                'customer_id' => $this->httpClient->getLoggedUserId(),
                 'pickup_day' => Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb(),
                 'comment' => $comment
             ];
@@ -350,7 +350,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
             $data['Carts']['timebased_currency_seconds_sum_tmp'] = $timebaseCurrencyTimeSum;
         }
 
-        $this->browser->post(
+        $this->httpClient->post(
             $this->Slug->getCartFinish(), $data
         );
     }
@@ -384,7 +384,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
      */
     protected function changeProductPrice($productId, $price, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0)
     {
-        $this->browser->ajaxPost('/admin/products/editPrice', [
+        $this->httpClient->ajaxPost('/admin/products/editPrice', [
             'productId' => $productId,
             'price' => $price,
             'pricePerUnitEnabled' => $pricePerUnitEnabled,
@@ -393,18 +393,18 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
             'priceUnitAmount' => $priceUnitAmount,
             'priceQuantityInUnits' => $priceQuantityInUnits
         ]);
-        return $this->browser->getJsonDecodedContent();
+        return $this->httpClient->getJsonDecodedContent();
     }
     
     protected function changeProductDeliveryRhythm($productId, $deliveryRhythmType, $deliveryRhythmFirstDeliveryDay = '', $deliveryRhythmOrderPossibleUntil = '')
     {
-        $this->browser->ajaxPost('/admin/products/editDeliveryRhythm', [
+        $this->httpClient->ajaxPost('/admin/products/editDeliveryRhythm', [
             'productIds' => [$productId],
             'deliveryRhythmType' => $deliveryRhythmType,
             'deliveryRhythmFirstDeliveryDay' => $deliveryRhythmFirstDeliveryDay,
             'deliveryRhythmOrderPossibleUntil' => $deliveryRhythmOrderPossibleUntil
         ]);
-        return $this->browser->getJsonDecodedContent();
+        return $this->httpClient->getJsonDecodedContent();
     }
 
     protected function changeManufacturer($manufacturerId, $field, $value)
@@ -431,37 +431,37 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
 
     protected function logout()
     {
-        $this->browser->doFoodCoopShopLogout();
+        $this->httpClient->doFoodCoopShopLogout();
     }
 
     protected function loginAsSuperadmin()
     {
-        $this->browser->loginEmail = Configure::read('test.loginEmailSuperadmin');
-        $this->browser->doFoodCoopShopLogin();
+        $this->httpClient->loginEmail = Configure::read('test.loginEmailSuperadmin');
+        $this->httpClient->doFoodCoopShopLogin();
     }
 
     protected function loginAsAdmin()
     {
-        $this->browser->loginEmail = Configure::read('test.loginEmailAdmin');
-        $this->browser->doFoodCoopShopLogin();
+        $this->httpClient->loginEmail = Configure::read('test.loginEmailAdmin');
+        $this->httpClient->doFoodCoopShopLogin();
     }
 
     protected function loginAsCustomer()
     {
-        $this->browser->loginEmail = Configure::read('test.loginEmailCustomer');
-        $this->browser->doFoodCoopShopLogin();
+        $this->httpClient->loginEmail = Configure::read('test.loginEmailCustomer');
+        $this->httpClient->doFoodCoopShopLogin();
     }
 
     protected function loginAsMeatManufacturer()
     {
-        $this->browser->loginEmail = Configure::read('test.loginEmailMeatManufacturer');
-        $this->browser->doFoodCoopShopLogin();
+        $this->httpClient->loginEmail = Configure::read('test.loginEmailMeatManufacturer');
+        $this->httpClient->doFoodCoopShopLogin();
     }
 
     protected function loginAsVegetableManufacturer()
     {
-        $this->browser->loginEmail = Configure::read('test.loginEmailVegetableManufacturer');
-        $this->browser->doFoodCoopShopLogin();
+        $this->httpClient->loginEmail = Configure::read('test.loginEmailVegetableManufacturer');
+        $this->httpClient->doFoodCoopShopLogin();
     }
 
     protected function prepareTimebasedCurrencyConfiguration($reducedMaxPercentage)

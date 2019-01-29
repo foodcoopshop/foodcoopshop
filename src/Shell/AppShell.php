@@ -27,7 +27,7 @@ class AppShell extends Shell
 
     public $timeEnd;
 
-    public $browser;
+    public $httpClient;
 
     public function main()
     {
@@ -55,17 +55,17 @@ class AppShell extends Shell
     public function initHttpClient()
     {
         if ($this->isCalledFromUnitTest()) {
-            $this->browser = new AppHttpClient([
+            $this->httpClient = new AppHttpClient([
                 'headers' => [
                     'x-unit-test-mode' => true
                 ]
             ]);
-            $this->browser->loginEmail = Configure::read('test.loginEmailSuperadmin');
-            $this->browser->loginPassword = Configure::read('test.loginPassword');
+            $this->httpClient->loginEmail = Configure::read('test.loginEmailSuperadmin');
+            $this->httpClient->loginPassword = Configure::read('test.loginPassword');
         } else {
-            $this->browser = new AppHttpClient();
-            $this->browser->loginEmail = Configure::read('app.adminEmail');
-            $this->browser->loginPassword = Configure::read('app.adminPassword');
+            $this->httpClient = new AppHttpClient();
+            $this->httpClient->loginEmail = Configure::read('app.adminEmail');
+            $this->httpClient->loginPassword = Configure::read('app.adminPassword');
         }
     }
 

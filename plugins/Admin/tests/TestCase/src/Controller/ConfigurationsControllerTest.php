@@ -19,7 +19,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
 
     /**
      * needs to login as superadmin and logs user out automatically
-     * eventually create a new browser instance for this method
+     * eventually create a new httpClient instance for this method
      *
      * @param string $configKey
      * @param string $newValue
@@ -33,8 +33,8 @@ class ConfigurationsControllerTest extends AppCakeTestCase
                 'Configurations.name' => $configKey
             ]
         ])->first();
-        $this->browser->considerRedirectForNextRequest();
-        $this->browser->post('/admin/configurations/edit/'.$configuration->id_configuration, [
+        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->post('/admin/configurations/edit/'.$configuration->id_configuration, [
            'Configurations' => [
                'value' => $newValue
            ],
@@ -45,25 +45,25 @@ class ConfigurationsControllerTest extends AppCakeTestCase
     public function testConfigurationEditFormFcsCustomerGroupOk()
     {
         $this->changeConfigurationEditForm('FCS_CUSTOMER_GROUP', CUSTOMER_GROUP_ADMIN);
-        $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->httpClient->getContent());
     }
 
     public function testConfigurationEditFormFcsCustomerGroupInvalidId()
     {
         $this->changeConfigurationEditForm('FCS_CUSTOMER_GROUP', 44);
-        $this->assertRegExpWithUnquotedString('Bitte gib eine Zahl zwischen 3 und 4 an.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Bitte gib eine Zahl zwischen 3 und 4 an.', $this->httpClient->getContent());
     }
 
     public function testConfigurationEditFormFcsAppNameEmpty()
     {
         $this->changeConfigurationEditForm('FCS_APP_NAME', '');
-        $this->assertRegExpWithUnquotedString('Bitte gib den Namen der Foodcoop an.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Bitte gib den Namen der Foodcoop an.', $this->httpClient->getContent());
     }
 
     public function testConfigurationEditFormFcsAppNameNotEnoughChars()
     {
         $this->changeConfigurationEditForm('FCS_APP_NAME', 'Bla');
-        $this->assertRegExpWithUnquotedString('Die Anzahl der Zeichen muss zwischen 5 und 255 liegen.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Die Anzahl der Zeichen muss zwischen 5 und 255 liegen.', $this->httpClient->getContent());
     }
 
     public function testConfigurationEditFormFcsRegistrationEmailTextStripTags()
@@ -71,7 +71,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
         $configurationName = 'FCS_REGISTRATION_EMAIL_TEXT';
         $newValue = '<b>HalloHallo</b>';
         $this->changeConfigurationEditForm($configurationName, $newValue);
-        $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->httpClient->getContent());
         $configuration = $this->Configuration->find('all', [
             'conditions' => [
                 'Configurations.name' => $configurationName
@@ -83,7 +83,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
     public function testConfigurationEditFormFcsAppNameStripTags()
     {
         $this->changeConfigurationEditForm('FCS_APP_NAME', '<b>HalloHallo</b>');
-        $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->httpClient->getContent());
         $configuration = $this->Configuration->find('all', [
             'conditions' => [
                 'Configurations.name' => 'FCS_APP_NAME'
@@ -108,7 +108,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
     {
         $this->logout();
         foreach ($this->getTestUrlsForShowProductForGuests() as $url) {
-            $this->browser->get($url);
+            $this->httpClient->get($url);
             $this->assertRedirectToLoginPage();
         }
     }
@@ -125,13 +125,13 @@ class ConfigurationsControllerTest extends AppCakeTestCase
     {
         $this->assertPagesForErrors($testUrls);
         foreach ($testUrls as $url) {
-            $this->browser->get($url);
+            $this->httpClient->get($url);
             $priceRegExp = '<div class="price">';
             $priceAssertFunction = 'assertRegExpWithUnquotedString';
             if (!$expectPrice) {
                 $priceAssertFunction = 'assertNotRegExpWithUnquotedString';
             }
-            $this->{$priceAssertFunction}($priceRegExp, $this->browser->getContent(), 'price expected: ' . $expectPrice);
+            $this->{$priceAssertFunction}($priceRegExp, $this->httpClient->getContent(), 'price expected: ' . $expectPrice);
         }
     }
 }

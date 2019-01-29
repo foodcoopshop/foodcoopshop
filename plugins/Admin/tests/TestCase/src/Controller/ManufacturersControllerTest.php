@@ -97,7 +97,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
             ]
         ])->first();
 
-        $response = $this->browser->get($this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name));
+        $response = $this->httpClient->get($this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name));
         $this->assertRegExpWithUnquotedString('<h1>' . $manufacturer->name, $response);
 
         $this->doTestCustomerRecord($manufacturer);
@@ -125,7 +125,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $newSendOrderListCc = ['office@rothauer-it.com', 'test@test.com'];
         $emailErrorMsg = 'Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen).';
 
-        $this->browser->post(
+        $this->httpClient->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),
             [
                 'Manufacturers' => [
@@ -135,9 +135,9 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 ]
             ]
         );
-        $this->assertRegExpWithUnquotedString($emailErrorMsg, $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString($emailErrorMsg, $this->httpClient->getContent());
 
-        $this->browser->post(
+        $this->httpClient->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),
             [
                 'Manufacturers' => [
@@ -147,9 +147,9 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 ]
             ]
         );
-        $this->assertRegExpWithUnquotedString($emailErrorMsg, $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString($emailErrorMsg, $this->httpClient->getContent());
 
-        $this->browser->post(
+        $this->httpClient->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),
             [
                 'Manufacturers' => [
@@ -216,8 +216,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $statement = $this->dbConnection->prepare($query);
         $statement->execute($params);
         
-        $this->browser->considerRedirectForNextRequest();
-        $this->browser->post(
+        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),
             [
                 'Manufacturers' => [
@@ -226,12 +226,12 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'referer' => '/'
             ]
         );
-        $this->assertRegExpWithUnquotedString('Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: ' . Configure::read('app.timeHelper')->formatToDateShort($noDeliveryDays) . ' (1x)', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: ' . Configure::read('app.timeHelper')->formatToDateShort($noDeliveryDays) . ' (1x)', $this->httpClient->getContent());
         
         $noDeliveryDays = date('Y-m-d', strtotime($noDeliveryDays . ' + 2 week'));
         
-        $this->browser->considerRedirectForNextRequest();
-        $this->browser->post(
+        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),
             [
                 'Manufacturers' => [
@@ -250,7 +250,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
             ]
         );
         
-        $this->assertRegExpWithUnquotedString('wurden erfolgreich gespeichert.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('wurden erfolgreich gespeichert.', $this->httpClient->getContent());
         
         $manufacturerNew = $this->Manufacturer->find('all', [
             'conditions' => [
@@ -269,7 +269,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $manufacturerId = 4;
 
-        $this->browser->post(
+        $this->httpClient->post(
             $this->Slug->getManufacturerEdit($manufacturerId),
             [
                 'Manufacturers' => [
@@ -282,10 +282,10 @@ class ManufacturersControllerTest extends AppCakeTestCase
             ]
         );
         // test with valid customer email address must fail
-        $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $this->httpClient->getContent());
 
         // test with valid manufacturer email address must fail
-        $this->browser->post(
+        $this->httpClient->post(
             $this->Slug->getManufacturerEdit($manufacturerId),
             [
                 'Manufacturers' => [
@@ -297,11 +297,11 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'referer' => '/'
             ]
         );
-        $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $this->httpClient->getContent());
 
         // test with valid email address
-        $this->browser->considerRedirectForNextRequest();
-        $this->browser->post(
+        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->post(
             $this->Slug->getManufacturerEdit($manufacturerId),
             [
                 'Manufacturers' => [
@@ -316,7 +316,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'referer' => '/'
             ]
         );
-        $this->assertRegExpWithUnquotedString('Der Hersteller <b>Huhuu</b> wurde geändert.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Der Hersteller <b>Huhuu</b> wurde geändert.', $this->httpClient->getContent());
 
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
@@ -347,8 +347,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
      */
     private function add($data)
     {
-        $this->browser->considerRedirectForNextRequest();
-        $this->browser->post($this->Slug->getManufacturerAdd(), $data);
-        return $this->browser->getContent();
+        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->post($this->Slug->getManufacturerAdd(), $data);
+        return $this->httpClient->getContent();
     }
 }

@@ -41,11 +41,11 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         $this->createPayment(0.5);
         $this->createPayment(3.2);
         
-        $this->browser->considerRedirectForNextRequest();
-        $this->browser->get($this->Slug->getMyTimebasedCurrencyBalanceForCustomers());
-        $this->assertRegExpWithUnquotedString('0,50 h', $this->browser->getContent());
-        $this->assertRegExpWithUnquotedString('3,20 h', $this->browser->getContent());
-        $this->assertRegExpWithUnquotedString('<b>3,70 h</b>', $this->browser->getContent());
+        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->get($this->Slug->getMyTimebasedCurrencyBalanceForCustomers());
+        $this->assertRegExpWithUnquotedString('0,50 h', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('3,20 h', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('<b>3,70 h</b>', $this->httpClient->getContent());
     }
 
     public function testEditPaymentAsWrongManufacturer()
@@ -55,8 +55,8 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         $this->createPayment(0.5);
 
         $this->loginAsVegetableManufacturer();
-        $this->browser->considerRedirectForNextRequest();
-        $this->browser->get($this->Slug->getTimebasedCurrencyPaymentEdit(1));
+        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->get($this->Slug->getTimebasedCurrencyPaymentEdit(1));
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
 
@@ -70,8 +70,8 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         $hours = 0.25;
         $this->loginAsMeatManufacturer();
         
-        $this->browser->considerRedirectForNextRequest();
-        $this->browser->post($this->Slug->getTimebasedCurrencyPaymentEdit(1), [
+        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->post($this->Slug->getTimebasedCurrencyPaymentEdit(1), [
             'seconds' => $hours * 3600,
             'approval_comment' => $comment,
             'approval' => APP_DEL,
@@ -130,12 +130,12 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
      */
     private function addPayment($customerId, $seconds, $manufacturerId, $text = '')
     {
-        $this->browser->ajaxPost($this->Slug->getTimebasedCurrencyPaymentAdd($customerId), [
+        $this->httpClient->ajaxPost($this->Slug->getTimebasedCurrencyPaymentAdd($customerId), [
             'seconds' => $seconds,
             'id_manufacturer' => $manufacturerId,
             'text' => $text
         ]);
-        return $this->browser->getContent();
+        return $this->httpClient->getContent();
     }
 
 }

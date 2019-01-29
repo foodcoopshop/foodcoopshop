@@ -33,8 +33,8 @@ class SyncsControllerTest extends AppCakeTestCase
     public function testDenyAccessIfVariableMemberFeeEnabled()
     {
         $this->loginAsMeatManufacturer();
-        $this->browser->considerRedirectForNextRequest();
-        $this->browser->get($this->Network->getSyncProducts());
+        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->get($this->Network->getSyncProducts());
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
 
@@ -43,8 +43,8 @@ class SyncsControllerTest extends AppCakeTestCase
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'enabled_sync_domains', null);
         $this->loginAsVegetableManufacturer();
-        $this->browser->considerRedirectForNextRequest();
-        $this->browser->get($this->Network->getSyncProducts());
+        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->get($this->Network->getSyncProducts());
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
 
@@ -52,7 +52,7 @@ class SyncsControllerTest extends AppCakeTestCase
     {
         $this->disableVariableMemberFee();
         $this->loginAsVegetableManufacturer();
-        $this->browser->get($this->Network->getSyncProducts());
+        $this->httpClient->get($this->Network->getSyncProducts());
         $this->assert200OkHeader();
     }
 
@@ -60,7 +60,7 @@ class SyncsControllerTest extends AppCakeTestCase
     {
         $this->disableVariableMemberFee();
         $this->loginAsVegetableManufacturer();
-        $this->browser->get($this->Network->getSyncProductData());
+        $this->httpClient->get($this->Network->getSyncProductData());
         $this->assert200OkHeader();
     }
 
@@ -133,7 +133,7 @@ class SyncsControllerTest extends AppCakeTestCase
      */
     private function deleteProductRelation($localProductId, $remoteProductId, $productName)
     {
-        $this->browser->ajaxPost($this->Network->getDeleteProductRelation(), [
+        $this->httpClient->ajaxPost($this->Network->getDeleteProductRelation(), [
             'product' =>
                 [
                     'localProductId' => $localProductId,
@@ -142,7 +142,7 @@ class SyncsControllerTest extends AppCakeTestCase
                     'productName' => $productName
                 ]
             ]);
-        return $this->browser->getJsonDecodedContent();
+        return $this->httpClient->getJsonDecodedContent();
     }
 
     /**
@@ -151,7 +151,7 @@ class SyncsControllerTest extends AppCakeTestCase
      */
     private function saveProductRelation($localProductId, $remoteProductId, $productName, $domain)
     {
-        $this->browser->ajaxPost($this->Network->getSaveProductRelation(), [
+        $this->httpClient->ajaxPost($this->Network->getSaveProductRelation(), [
             'product' =>
                 [
                     'localProductId' => $localProductId,
@@ -160,7 +160,7 @@ class SyncsControllerTest extends AppCakeTestCase
                     'productName' => $productName
                 ]
             ]);
-        return $this->browser->getJsonDecodedContent();
+        return $this->httpClient->getJsonDecodedContent();
     }
 
     private function disableVariableMemberFee()
