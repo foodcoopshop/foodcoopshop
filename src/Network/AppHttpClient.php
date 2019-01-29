@@ -80,6 +80,7 @@ class AppHttpClient extends Client
         $options = array_merge($options, [
             'redirect' => $this->redirect
         ]);
+        $this->redirect = 0;
         $this->response = parent::get($this->baseUrl . $url, $data, $options);
         return $this->getContent();
     }
@@ -96,7 +97,6 @@ class AppHttpClient extends Client
                 'X-Requested-With:XMLHttpRequest'
             ],
             'type' => 'json',
-            'redirect' => $this->redirect
         ]);
         $this->response = parent::post(
             $this->baseUrl . $url,
@@ -111,6 +111,7 @@ class AppHttpClient extends Client
         $options = array_merge($options, [
             'redirect' => $this->redirect
         ]);
+        $this->redirect = 0;
         $this->response = parent::post(
             $this->baseUrl . $url,
             $data,
