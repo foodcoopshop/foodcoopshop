@@ -168,7 +168,6 @@ class CustomersControllerTest extends AppCakeTestCase
 
         $response = $this->addCustomer($data);
         $this->assertRegExpWithUnquotedString('Deine Registrierung war erfolgreich.', $response);
-        $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/registrierung/abgeschlossen');
 
         $customer = $this->Customer->find('all', [
             'conditions' => [
@@ -225,6 +224,7 @@ class CustomersControllerTest extends AppCakeTestCase
      */
     private function addCustomer($data)
     {
+        $this->browser->redirect = 1;
         $this->browser->post($this->Slug->getRegistration(), $data);
         return $this->browser->getContent();
     }
