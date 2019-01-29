@@ -299,6 +299,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
             [
                 'Manufacturers' => [
                     'name' => 'Huhuu',
+                    'homepage' => 'https://www.foodcoopshop.com',
                     'address_manufacturer' => [
                         'firstname' => 'firstname',
                         'lastname' => 'lastname',
