@@ -48,7 +48,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
 
     public function testProductDetailOnlineManufacturerPublicLoggedOut()
     {
-        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->followOneRedirectForNextRequest();
         $response = $this->httpClient->get($this->Slug->getProductDetail(60, 'Demo Product'));
         $this->assertNotRegExpWithUnquotedString('0,62 €', $response); // price must not be shown
         $this->assert200OkHeader();
@@ -57,7 +57,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
     public function testProductDetailOnlineManufacturerPublicLoggedOutShowProductPriceEnabled()
     {
         $this->changeConfiguration('FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS', 1);
-        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->followOneRedirectForNextRequest();
         $response = $this->httpClient->get($this->Slug->getProductDetail(60, 'Demo Product'));
         $this->assertRegExpWithUnquotedString('<div class="price">0,62 €</div><div class="deposit">+ <b>0,50 €</b> Pfand</div><div class="tax">0,07 €</div>', $response);
         $this->assert200OkHeader();
@@ -66,7 +66,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
     public function testProductDetailOnlineManufacturerPublicLoggedIn()
     {
         $this->loginAsCustomer();
-        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->get($this->Slug->getProductDetail(60, 'Demo Product'));
         $this->assert200OkHeader();
     }
@@ -76,7 +76,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $productId = 60;
         $manufacturerId = 15;
         $this->changeManufacturer($manufacturerId, 'is_private', 1);
-        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->get($this->Slug->getProductDetail($productId, 'Demo Product'));
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
@@ -102,7 +102,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 346;
         $this->changeProductDeliveryRhythm($productId, '0-individual', date('Y-m-d', strtotime('next friday')), date('Y-m-d'));
-        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->get($this->Slug->getProductDetail($productId, 'Demo Product'));
         $this->assert200OkHeader();
     }

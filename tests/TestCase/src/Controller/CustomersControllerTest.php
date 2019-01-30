@@ -49,11 +49,11 @@ class CustomersControllerTest extends AppCakeTestCase
             'email' => Configure::read('test.loginEmailCustomer')
         ])->first();
 
-        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->get($this->Slug->getActivateNewPassword('non-existing-code'));
         $this->assertRegExpWithUnquotedString('Dein neues Passwort wurde bereits aktiviert oder der Aktivierungscode war nicht gültig.', $this->httpClient->getContent());
         
-        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->get($this->Slug->getActivateNewPassword($customer->activate_new_password_code));
         $this->assertRegExpWithUnquotedString('Dein neues Passwort wurde erfolgreich aktiviert und du bist bereits eingeloggt.', $this->httpClient->getContent());
 
@@ -69,7 +69,7 @@ class CustomersControllerTest extends AppCakeTestCase
 
     private function doPostNewPasswordRequest($email)
     {
-        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->post($this->Slug->getNewPasswordRequest(), [
             'Customers' => [
                 'email' => $email
@@ -225,7 +225,7 @@ class CustomersControllerTest extends AppCakeTestCase
      */
     private function addCustomer($data)
     {
-        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->post($this->Slug->getRegistration(), $data);
         return $this->httpClient->getContent();
     }

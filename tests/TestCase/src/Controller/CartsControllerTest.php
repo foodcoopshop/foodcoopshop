@@ -587,7 +587,7 @@ class CartsControllerTest extends AppCakeTestCase
                 'Customers.id_customer' => Configure::read('test.customerId')
             ]
         ])->first();
-        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
         $this->assertRegExpWithUnquotedString('Diese Bestellung wird für <b>' . $testCustomer->name . '</b> getätigt.', $this->httpClient->getContent());
         
@@ -627,7 +627,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $this->addProductToCart($this->productId1, 1);
         $this->removeProduct($this->productId1);
-        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->followOneRedirectForNextRequest();
         $this->finishCart();
         $this->assertRegExp('/Dein Warenkorb war leer/', $this->httpClient->getContent());
     }

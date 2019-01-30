@@ -68,7 +68,7 @@ class SyncDomainsControllerTest extends AppCakeTestCase
      */
     private function addSyncDomain($domain)
     {
-        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->post($this->Network->getSyncDomainAdd(), [
             'SyncDomains' =>
             [

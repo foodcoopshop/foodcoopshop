@@ -59,7 +59,7 @@ class AppHttpClient extends Client
         $this->adminPrefix = '/admin';
     }
     
-    public function considerRedirectForNextRequest()
+    public function followOneRedirectForNextRequest()
     {
         $this->redirect = 1;
     }

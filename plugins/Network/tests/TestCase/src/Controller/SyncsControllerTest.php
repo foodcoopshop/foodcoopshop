@@ -33,7 +33,7 @@ class SyncsControllerTest extends AppCakeTestCase
     public function testDenyAccessIfVariableMemberFeeEnabled()
     {
         $this->loginAsMeatManufacturer();
-        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->get($this->Network->getSyncProducts());
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
@@ -43,7 +43,7 @@ class SyncsControllerTest extends AppCakeTestCase
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'enabled_sync_domains', null);
         $this->loginAsVegetableManufacturer();
-        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->get($this->Network->getSyncProducts());
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }

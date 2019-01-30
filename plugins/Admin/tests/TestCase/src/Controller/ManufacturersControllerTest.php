@@ -216,7 +216,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $statement = $this->dbConnection->prepare($query);
         $statement->execute($params);
         
-        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),
             [
@@ -230,7 +230,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         
         $noDeliveryDays = date('Y-m-d', strtotime($noDeliveryDays . ' + 2 week'));
         
-        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),
             [
@@ -300,7 +300,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $this->httpClient->getContent());
 
         // test with valid email address
-        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->post(
             $this->Slug->getManufacturerEdit($manufacturerId),
             [
@@ -347,7 +347,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
      */
     private function add($data)
     {
-        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->post($this->Slug->getManufacturerAdd(), $data);
         return $this->httpClient->getContent();
     }

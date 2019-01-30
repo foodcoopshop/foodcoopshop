@@ -33,7 +33,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
                 'Configurations.name' => $configKey
             ]
         ])->first();
-        $this->httpClient->considerRedirectForNextRequest();
+        $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->post('/admin/configurations/edit/'.$configuration->id_configuration, [
            'Configurations' => [
                'value' => $newValue
