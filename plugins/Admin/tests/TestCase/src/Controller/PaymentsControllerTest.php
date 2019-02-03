@@ -30,7 +30,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testAddPaymentLoggedOut()
     {
         $this->addPayment(Configure::read('test.customerId'), 0, 'product');
-        $this->assert403ForbiddenHeader();
+        $this->assertRedirectToLoginPage();
     }
 
     public function testAddPaymentParameterPriceOk()
@@ -168,14 +168,14 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testDeletePaymentLoggedOut()
     {
         $this->deletePayment(1);
-        $this->assert403ForbiddenHeader();
+        $this->assertRedirectToLoginPage();
     }
 
     public function testDeletePaymentWithApprovalOk()
     {
         $this->loginAsCustomer();
         $this->addPayment(Configure::read('test.customerId'), '10.5', 'product');
-        $addResponse = $this->browser->getJsonDecodedContent();
+        $addResponse = $this->httpClient->getJsonDecodedContent();
 
         $query = 'UPDATE ' . $this->Payment->getTable().' SET approval = :approval WHERE id = :paymentId';
         $params = [
@@ -186,7 +186,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $statement->execute($params);
 
         $this->deletePayment($addResponse->paymentId);
-        $deleteResponse = $this->browser->getJsonDecodedContent();
+        $deleteResponse = $this->httpClient->getJsonDecodedContent();
         $this->assertEquals(0, $deleteResponse->status);
         $this->assertRegExpWithUnquotedString('payment id ('.$addResponse->paymentId.') not correct or already approved (approval: 1)', $deleteResponse->msg);
     }
@@ -197,7 +197,7 @@ class PaymentsControllerTest extends AppCakeTestCase
 
         $this->loginAsCustomer();
         $this->addPayment(Configure::read('test.customerId'), '10,5', 'product');
-        $response = $this->browser->getJsonDecodedContent();
+        $response = $this->httpClient->getJsonDecodedContent();
         $this->deletePayment($response->paymentId);
 
         $creditBalanceAfterAddAndDelete = $this->Customer->getCreditBalance(Configure::read('test.customerId'));
@@ -257,10 +257,10 @@ class PaymentsControllerTest extends AppCakeTestCase
      */
     private function deletePayment($paymentId)
     {
-        $this->browser->ajaxPost('/admin/payments/changeState', [
+        $this->httpClient->ajaxPost('/admin/payments/changeState', [
             'paymentId' => $paymentId
         ]);
-        return $this->browser->getJsonDecodedContent();
+        return $this->httpClient->getJsonDecodedContent();
     }
 
     /**
@@ -273,13 +273,13 @@ class PaymentsControllerTest extends AppCakeTestCase
      */
     private function addPayment($customerId, $amount, $type, $manufacturerId = 0, $text = '')
     {
-        $this->browser->ajaxPost('/admin/payments/add', [
+        $this->httpClient->ajaxPost('/admin/payments/add', [
             'customerId' => $customerId,
             'amount' => $amount,
             'type' => $type,
             'manufacturerId' => $manufacturerId,
             'text' => $text
         ]);
-        return $this->browser->getJsonDecodedContent();
+        return $this->httpClient->getJsonDecodedContent();
     }
 }

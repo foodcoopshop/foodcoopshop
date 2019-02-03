@@ -32,7 +32,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 60;
         $status = APP_OFF;
-        $this->browser->get('/admin/products/changeStatus/' . $productId . '/' . $status);
+        $this->httpClient->get('/admin/products/changeStatus/' . $productId . '/' . $status);
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
@@ -46,7 +46,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $price = 'invalid-price';
         $this->changeProductPrice(346, $price);
-        $response = $this->browser->getJsonDecodedContent();
+        $response = $this->httpClient->getJsonDecodedContent();
         $this->assertRegExpWithUnquotedString('input format not correct: ' . $price, $response->msg);
         $this->assertJsonError();
     }

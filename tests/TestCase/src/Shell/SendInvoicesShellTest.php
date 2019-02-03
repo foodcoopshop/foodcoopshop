@@ -39,8 +39,8 @@ class SendInvoicesShellTest extends AppCakeTestCase
     public function testContentOfInvoice()
     {
         $this->prepareSendInvoices();
-        $this->browser->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
-        $content = $this->browser->getContent();
+        $this->httpClient->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
+        $content = $this->httpClient->getContent();
         $this->assertRegExpWithUnquotedString('<td>Gesamtsumme</td><td align="right">4,54</td>', $content);
     }
 
@@ -92,8 +92,8 @@ class SendInvoicesShellTest extends AppCakeTestCase
         );
         
         $this->loginAsSuperadmin(); //should still be logged in as superadmin but is not...
-        $this->browser->get($this->Slug->getActionLogsList() . '?dateFrom=11.03.2018&dateTo=11.03.2018');
-        $content = $this->browser->getContent();
+        $this->httpClient->get($this->Slug->getActionLogsList() . '?dateFrom=11.03.2018&dateTo=11.03.2018');
+        $content = $this->httpClient->getContent();
         $this->assertRegExpWithUnquotedString('4,09 €</b> (10%)', $content);
         $this->assertRegExpWithUnquotedString('0,62 €</b>', $content);
         

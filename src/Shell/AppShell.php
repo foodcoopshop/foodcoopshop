@@ -2,9 +2,9 @@
 
 namespace App\Shell;
 
-use App\Lib\SimpleBrowser\AppSimpleBrowser;
 use Cake\Console\Shell;
 use Cake\Core\Configure;
+use App\Network\AppHttpClient;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -27,7 +27,7 @@ class AppShell extends Shell
 
     public $timeEnd;
 
-    public $browser;
+    public $httpClient;
 
     public function main()
     {
@@ -52,16 +52,20 @@ class AppShell extends Shell
         return __('Runtime') . ': ' . Configure::read('app.numberHelper')->formatAsDecimal($time) . ' ' . __('seconds');
     }
 
-    public function initSimpleBrowser()
+    public function initHttpClient()
     {
-        $this->browser = new AppSimpleBrowser();
-        $this->browser->loginEmail = Configure::read('app.adminEmail');
-        $this->browser->loginPassword = Configure::read('app.adminPassword');
-
         if ($this->isCalledFromUnitTest()) {
-            $this->browser->addHeader('x-unit-test-mode: true');
-            $this->browser->loginEmail = Configure::read('test.loginEmailSuperadmin');
-            $this->browser->loginPassword = Configure::read('test.loginPassword');
+            $this->httpClient = new AppHttpClient([
+                'headers' => [
+                    'x-unit-test-mode' => true
+                ]
+            ]);
+            $this->httpClient->loginEmail = Configure::read('test.loginEmailSuperadmin');
+            $this->httpClient->loginPassword = Configure::read('test.loginPassword');
+        } else {
+            $this->httpClient = new AppHttpClient();
+            $this->httpClient->loginEmail = Configure::read('app.adminEmail');
+            $this->httpClient->loginPassword = Configure::read('app.adminPassword');
         }
     }
 

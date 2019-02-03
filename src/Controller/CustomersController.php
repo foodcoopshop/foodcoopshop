@@ -252,7 +252,7 @@ class CustomersController extends FrontendController
             // http://stackoverflow.com/questions/8472/practical-non-image-based-captcha-approaches?lq=1
             if (!empty($this->getRequest()->getData()) && ($this->getRequest()->getData('antiSpam') == 'lalala' || $this->getRequest()->getData('antiSpam') < 3)) {
                 $this->Flash->error('S-p-a-m-!');
-                $this->redirect(Configure::read('app.slugHelper')->getLogin());
+                $this->redirect('/');
                 return;
             }
 

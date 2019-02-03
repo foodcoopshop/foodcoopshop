@@ -29,7 +29,7 @@ class PickupReminderShell extends AppShell
 
         parent::main();
 
-        $this->initSimpleBrowser(); // for loggedUserId
+        $this->initHttpClient(); // for loggedUserId
         
         // $this->cronjobRunDay can is set in unit test
         if (!isset($this->args[0])) {
@@ -102,7 +102,7 @@ class PickupReminderShell extends AppShell
 
         $this->stopTimeLogging();
 
-        $this->ActionLog->customSave('cronjob_pickup_reminder', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
+        $this->ActionLog->customSave('cronjob_pickup_reminder', $this->httpClient->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
 
         $this->out($outString);
         $this->out($this->getRuntime());

@@ -108,7 +108,7 @@ class CartsControllerTest extends AppCakeTestCase
         $response = $this->addProductToCart($this->productId1, 2);
         $this->assertJsonOk();
         $response = $this->removeProduct($this->productId1);
-        $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
+        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId());
         $this->assertEquals([], $cart['CartProducts'], 'cart must be empty');
         $this->assertJsonOk();
         $response = $this->removeProduct($this->productId1);
@@ -125,7 +125,7 @@ class CartsControllerTest extends AppCakeTestCase
         $query = 'UPDATE ' . $this->Cart->CartProducts->getTable().' SET id_product_attribute = 5000 WHERE id_cart_product = 3';
         $this->dbConnection->execute($query);
         $this->removeProduct($this->productId2);
-        $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
+        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId());
         $this->assertEquals([], $cart['CartProducts'], 'cart must be empty');
         $this->assertJsonOk();
     }
@@ -139,7 +139,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonOk();
 
         // check if product was placed in cart
-        $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
+        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId());
         $this->assertEquals($this->productId1, $cart['CartProducts'][0]['productId'], 'product id not found in cart');
         $this->assertEquals($amount1, $cart['CartProducts'][0]['amount'], 'amount not found in cart or amount wrong');
     }
@@ -150,7 +150,7 @@ class CartsControllerTest extends AppCakeTestCase
         $amount2 = 3;
         $this->addProductToCart($this->productId2, $amount2);
         $this->assertJsonOk();
-        $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
+        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId());
         $this->assertEquals($this->productId2, $cart['CartProducts'][0]['productId'], 'product id not found in cart');
         $this->assertEquals($amount2, $cart['CartProducts'][0]['amount'], 'amount not found in cart or amount wrong');
     }
@@ -180,7 +180,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeProductStatus($this->productId1, APP_OFF);
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertRegExp('/Das Produkt (.*) ist leider nicht mehr aktiviert und somit nicht mehr bestellbar./', $this->browser->getContent());
+        $this->assertRegExp('/Das Produkt (.*) ist leider nicht mehr aktiviert und somit nicht mehr bestellbar./', $this->httpClient->getContent());
         $this->changeProductStatus($this->productId1, APP_ON);
     }
 
@@ -194,7 +194,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeManufacturerStatus($manufacturerId, APP_OFF);
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertRegExp('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->browser->getContent());
+        $this->assertRegExp('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->httpClient->getContent());
         $this->changeManufacturerStatus($manufacturerId, APP_ON);
     }
 
@@ -208,7 +208,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeManufacturerNoDeliveryDays($manufacturerId, Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertRegExp('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->browser->getContent());
+        $this->assertRegExp('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->httpClient->getContent());
         $this->changeManufacturerNoDeliveryDays($manufacturerId);
     }
 
@@ -221,8 +221,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeStockAvailable($this->productId1, 1);
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertRegExp('/Anzahl <b>2/', $this->browser->getContent());
-        $this->assertRegExpWithUnquotedString('Menge: 1', $this->browser->getContent()); // ü needs to be escaped properly
+        $this->assertRegExp('/Anzahl <b>2/', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('Menge: 1', $this->httpClient->getContent()); // ü needs to be escaped properly
         $this->changeStockAvailable($this->productId1, 98); // reset to old stock available
     }
 
@@ -235,8 +235,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeStockAvailable($this->productId2, 1);
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertRegExp('/Anzahl \<b\>3/', $this->browser->getContent());
-        $this->assertRegExpWithUnquotedString('Menge: 1', $this->browser->getContent()); // ü needs to be escaped properly
+        $this->assertRegExp('/Anzahl \<b\>3/', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('Menge: 1', $this->httpClient->getContent()); // ü needs to be escaped properly
         $this->changeStockAvailable($this->productId2, 20); // reset to old stock available
     }
 
@@ -247,8 +247,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatus();
 
         $this->finishCart(0, 0);
-        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die AGB.', $this->browser->getContent(), 'checkbox validation general_terms_and_conditions_accepted did not work');
-        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.', $this->browser->getContent(), 'checkbox validation cancellation_terms_accepted did not work');
+        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die AGB.', $this->httpClient->getContent(), 'checkbox validation general_terms_and_conditions_accepted did not work');
+        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.', $this->httpClient->getContent(), 'checkbox validation cancellation_terms_accepted did not work');
     }
 
     public function testFinishCartOrderCommentValidation()
@@ -258,7 +258,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatus();
 
         $this->finishCart(1, 1, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, adfasfd sa');
-        $this->assertRegExpWithUnquotedString('Bitte gib maximal 500 Zeichen ein.', $this->browser->getContent(), 'order comment validation did not work');
+        $this->assertRegExpWithUnquotedString('Bitte gib maximal 500 Zeichen ein.', $this->httpClient->getContent(), 'order comment validation did not work');
     }
 
     public function testFinishOrderWithComment()
@@ -270,7 +270,7 @@ class CartsControllerTest extends AppCakeTestCase
 
         $pickupDayComment = 'this is a valid pickup day comment';
         $this->finishCart(1, 1, $pickupDayComment);
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
         $this->checkCartStatusAfterFinish();
 
         $cart = $this->getCartById($cartId);
@@ -290,7 +290,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkStockAvailable($this->productId3, 77);
 
         // check new (empty) cart
-        $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
+        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId());
         $this->assertEquals($cart['Cart']['id_cart'], 3, 'cake cart id wrong');
         $this->assertEquals([], $cart['CartProducts'], 'cake cart products not empty');
 
@@ -311,7 +311,7 @@ class CartsControllerTest extends AppCakeTestCase
             ]
         );
 
-        $this->browser->doFoodCoopShopLogout();
+        $this->httpClient->doFoodCoopShopLogout();
     }
     
     public function testProductsWithAllowedNegativeStock() {
@@ -354,11 +354,11 @@ class CartsControllerTest extends AppCakeTestCase
     public function testFinishOrderStockNotificationsIsStockProductDisabled() {
         
         $this->loginAsSuperadmin();
-        $this->browser->ajaxPost('/admin/products/editIsStockProduct', [
+        $this->httpClient->ajaxPost('/admin/products/editIsStockProduct', [
             'productId' => 350,
             'isStockProduct' => 0
         ]);
-        $this->browser->ajaxPost('/admin/products/editIsStockProduct', [
+        $this->httpClient->ajaxPost('/admin/products/editIsStockProduct', [
             'productId' => 349,
             'isStockProduct' => 0
         ]);
@@ -447,7 +447,7 @@ class CartsControllerTest extends AppCakeTestCase
             ]
         );
         
-        $this->browser->doFoodCoopShopLogout();
+        $this->httpClient->doFoodCoopShopLogout();
     }
 
     public function testFinishOrderTimebasedCurrencyEnabledCustomerOverdraftReached()
@@ -464,7 +464,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart(103, 99);
         
         $this->finishCart(1, 1, '', '38000');
-        $this->assertRegExpWithUnquotedString('Dein Überziehungsrahmen von 10 h ist erreicht.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Dein Überziehungsrahmen von 10 h ist erreicht.', $this->httpClient->getContent());
     }
     
     public function testFinishOrderTimebasedCurrencyEnabled()
@@ -481,14 +481,14 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatus();
 
         $this->finishCart(1, 1, '', '1700');
-        $this->assertRegExp('/Bitte gib eine Zahl zwischen 0 und (.*) an./', $this->browser->getContent());
+        $this->assertRegExp('/Bitte gib eine Zahl zwischen 0 und (.*) an./', $this->httpClient->getContent());
 
         $this->finishCart(1, 1, '', '');
-        $this->assertRegExp('/Bitte gib eine Zahl zwischen 0 und (.*) an./', $this->browser->getContent());
+        $this->assertRegExp('/Bitte gib eine Zahl zwischen 0 und (.*) an./', $this->httpClient->getContent());
 
         $this->finishCart(1, 1, '', '1200');
 
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
         $this->checkCartStatusAfterFinish();
         
         $cart = $this->getCartById($cartId);
@@ -544,7 +544,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($productIdB, 3);
 
         $this->finishCart(1, 1);
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
 
         $this->checkCartStatusAfterFinish();
         $cart = $this->getCartById($cartId);
@@ -587,18 +587,15 @@ class CartsControllerTest extends AppCakeTestCase
                 'Customers.id_customer' => Configure::read('test.customerId')
             ]
         ])->first();
-        $responseHtml = $this->browser->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
-        $this->assertRegExpWithUnquotedString('Diese Bestellung wird für <b>' . $testCustomer->name . '</b> getätigt.', $responseHtml);
-        $this->assertUrl($this->browser->getUrl(), $this->browser->baseUrl . '/', 'redirect did not work');
+        $this->httpClient->followOneRedirectForNextRequest();
+        $this->httpClient->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
+        $this->assertRegExpWithUnquotedString('Diese Bestellung wird für <b>' . $testCustomer->name . '</b> getätigt.', $this->httpClient->getContent());
         
         $this->addProductToCart($this->productId2, 3); // attribute
         $this->addProductToCart(349, 1); // stock product - no notification!
         
         $this->finishCart(1, 1);
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
-        
-        $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung (6,86 €) für <b>Demo Mitglied</b> wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: <b>Demo Milch-Hersteller</b>', $this->browser->getContent());
-        
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
         $cart = $this->getCartById($cartId);
         
         foreach($cart->cart_products as $cartProduct) {
@@ -630,8 +627,9 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $this->addProductToCart($this->productId1, 1);
         $this->removeProduct($this->productId1);
+        $this->httpClient->followOneRedirectForNextRequest();
         $this->finishCart();
-        $this->assertRegExp('/Dein Warenkorb war leer/', $this->browser->getContent());
+        $this->assertRegExp('/Dein Warenkorb war leer/', $this->httpClient->getContent());
     }
 
     /**
@@ -646,7 +644,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId1, -1);
         $this->addProductToCart($this->productId2, 1);
         $this->finishCart();
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
         $this->assertTrue(is_int($cartId), 'cart not finished correctly');
 
         $this->checkCartStatusAfterFinish();
@@ -668,7 +666,7 @@ class CartsControllerTest extends AppCakeTestCase
      */
     private function checkCartStatus()
     {
-        $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
+        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId());
         $this->assertEquals($cart['Cart']['status'], 1, 'cake cart status wrong');
         $this->assertEquals($cart['Cart']['id_cart'], 2, 'cake cart id wrong');
     }
@@ -690,17 +688,17 @@ class CartsControllerTest extends AppCakeTestCase
     private function addTooManyProducts($productId, $amount, $expectedAmount, $expectedErrorMessage, $productIndex)
     {
         $this->addProductToCart($productId, $amount);
-        $response = $this->browser->getJsonDecodedContent();
+        $response = $this->httpClient->getJsonDecodedContent();
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
         $this->assertEquals($productId, $response->productId);
         $this->assertJsonError();
-        $cart = $this->Cart->getCart($this->browser->getLoggedUserId());
+        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId());
         $this->assertEquals($expectedAmount, $cart['CartProducts'][$productIndex]['amount'], 'amount not found in cart or wrong');
     }
 
     private function checkValidationError()
     {
-        $this->assertRegExp('/initCartErrors()/', $this->browser->getContent());
+        $this->assertRegExp('/initCartErrors()/', $this->httpClient->getContent());
     }
 
     private function changeStockAvailable($productId, $amount)
@@ -735,7 +733,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($orderDetail->total_price_tax_excl, $totalPriceTaxExcl, 'order_detail total_price_tax_excl not correct');
         $this->assertEquals($orderDetail->total_price_tax_incl, $totalPriceTaxIncl, 'order_detail total_price_tax_incl not correct');
         $this->assertEquals($orderDetail->id_tax, $taxId, 'order_detail id_tax not correct');
-        $this->assertEquals($orderDetail->id_customer, $this->browser->getLoggedUserId(), 'order_detail id_customer not correct');
+        $this->assertEquals($orderDetail->id_customer, $this->httpClient->getLoggedUserId(), 'order_detail id_customer not correct');
         $this->assertEquals($orderDetail->order_state, ORDER_STATE_ORDER_PLACED, 'order_detail order_state not correct');
         $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), $pickupDay, 'order_detail pickup_day not correct');
         
@@ -765,9 +763,9 @@ class CartsControllerTest extends AppCakeTestCase
      */
     private function removeProduct($productId)
     {
-        $this->browser->ajaxPost('/warenkorb/ajaxRemove', [
+        $this->httpClient->ajaxPost('/warenkorb/ajaxRemove', [
             'productId' => $productId
         ]);
-        return $this->browser->getJsonDecodedContent();
+        return $this->httpClient->getJsonDecodedContent();
     }
 }

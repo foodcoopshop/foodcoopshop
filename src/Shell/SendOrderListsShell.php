@@ -73,8 +73,8 @@ class SendOrderListsShell extends AppShell
         $i = 0;
         $outString = __('Pickup_day') . ': ' . $formattedPickupDay . '<br />';
 
-        $this->initSimpleBrowser();
-        $this->browser->doFoodCoopShopLogin();
+        $this->initHttpClient();
+        $this->httpClient->doFoodCoopShopLogin();
 
         foreach ($manufacturers as $manufacturer) {
             $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer->bulk_orders_allowed);
@@ -82,19 +82,19 @@ class SendOrderListsShell extends AppShell
             if (!empty($manufacturer->order_detail_amount_sum) && $sendOrderList && !$bulkOrdersAllowed) {
                 $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->order_detail_amount_sum]);
                 $outString .= ' - ' . $manufacturer->name . ': ' . $productString . ' / ' . Configure::read('app.numberHelper')->formatAsCurrency($manufacturer->order_detail_price_sum) . '<br />';
-                $url = $this->browser->adminPrefix . '/manufacturers/sendOrderList?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $formattedPickupDay . '&dateTo=' . $formattedPickupDay;
-                $this->browser->get($url);
+                $url = $this->httpClient->adminPrefix . '/manufacturers/sendOrderList?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $formattedPickupDay . '&dateTo=' . $formattedPickupDay;
+                $this->httpClient->get($url);
                 $i ++;
             }
         }
 
-        $this->browser->doFoodCoopShopLogout();
+        $this->httpClient->doFoodCoopShopLogout();
 
         $outString .= __('Sent_order_lists') . ': ' . $i;
 
         $this->stopTimeLogging();
 
-        $this->ActionLog->customSave('cronjob_send_order_lists', $this->browser->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
+        $this->ActionLog->customSave('cronjob_send_order_lists', $this->httpClient->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
 
         $this->out($outString);
 

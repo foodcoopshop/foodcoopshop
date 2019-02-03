@@ -52,7 +52,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->addProductToCart($productId, 1);
         $this->addProductToCart($productId, 1);
         $this->finishCart();
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->browser->getUrl());
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
         $cart = $this->getCartById($cartId);
         
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;

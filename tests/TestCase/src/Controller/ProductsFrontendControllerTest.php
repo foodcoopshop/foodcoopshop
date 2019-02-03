@@ -33,7 +33,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
     {
         $productId = 60;
         $this->changeProductStatus($productId, 0);
-        $this->browser->get($this->Slug->getProductDetail($productId, 'Demo Product'));
+        $this->httpClient->get($this->Slug->getProductDetail($productId, 'Demo Product'));
         $this->assert404NotFoundHeader();
     }
 
@@ -42,13 +42,14 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $productId = 60;
         $this->changeProductStatus($productId, 0);
-        $this->browser->get($this->Slug->getProductDetail($productId, 'Demo Product'));
+        $this->httpClient->get($this->Slug->getProductDetail($productId, 'Demo Product'));
         $this->assert404NotFoundHeader();
     }
 
     public function testProductDetailOnlineManufacturerPublicLoggedOut()
     {
-        $response = $this->browser->get($this->Slug->getProductDetail(60, 'Demo Product'));
+        $this->httpClient->followOneRedirectForNextRequest();
+        $response = $this->httpClient->get($this->Slug->getProductDetail(60, 'Demo Product'));
         $this->assertNotRegExpWithUnquotedString('0,62 €', $response); // price must not be shown
         $this->assert200OkHeader();
     }
@@ -56,7 +57,8 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
     public function testProductDetailOnlineManufacturerPublicLoggedOutShowProductPriceEnabled()
     {
         $this->changeConfiguration('FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS', 1);
-        $response = $this->browser->get($this->Slug->getProductDetail(60, 'Demo Product'));
+        $this->httpClient->followOneRedirectForNextRequest();
+        $response = $this->httpClient->get($this->Slug->getProductDetail(60, 'Demo Product'));
         $this->assertRegExpWithUnquotedString('<div class="price">0,62 €</div><div class="deposit">+ <b>0,50 €</b> Pfand</div><div class="tax">0,07 €</div>', $response);
         $this->assert200OkHeader();
     }
@@ -64,7 +66,8 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
     public function testProductDetailOnlineManufacturerPublicLoggedIn()
     {
         $this->loginAsCustomer();
-        $this->browser->get($this->Slug->getProductDetail(60, 'Demo Product'));
+        $this->httpClient->followOneRedirectForNextRequest();
+        $this->httpClient->get($this->Slug->getProductDetail(60, 'Demo Product'));
         $this->assert200OkHeader();
     }
 
@@ -73,14 +76,15 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $productId = 60;
         $manufacturerId = 15;
         $this->changeManufacturer($manufacturerId, 'is_private', 1);
-        $this->browser->get($this->Slug->getProductDetail($productId, 'Demo Product'));
+        $this->httpClient->followOneRedirectForNextRequest();
+        $this->httpClient->get($this->Slug->getProductDetail($productId, 'Demo Product'));
         $this->assertAccessDeniedWithRedirectToLoginForm();
     }
 
     public function testProductDetailNonExistingLoggedOut()
     {
         $productId = 3;
-        $this->browser->get($this->Slug->getProductDetail($productId, 'Demo Product'));
+        $this->httpClient->get($this->Slug->getProductDetail($productId, 'Demo Product'));
         $this->assert404NotFoundHeader();
     }
     
@@ -89,7 +93,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 346;
         $this->changeProductDeliveryRhythm($productId, '0-individual', '31.08.2018', '28.08.2018');
-        $this->browser->get($this->Slug->getProductDetail($productId, 'Demo Product'));
+        $this->httpClient->get($this->Slug->getProductDetail($productId, 'Demo Product'));
         $this->assert404NotFoundHeader();
     }
     
@@ -98,7 +102,8 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 346;
         $this->changeProductDeliveryRhythm($productId, '0-individual', date('Y-m-d', strtotime('next friday')), date('Y-m-d'));
-        $this->browser->get($this->Slug->getProductDetail($productId, 'Demo Product'));
+        $this->httpClient->followOneRedirectForNextRequest();
+        $this->httpClient->get($this->Slug->getProductDetail($productId, 'Demo Product'));
         $this->assert200OkHeader();
     }
     
@@ -108,7 +113,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $productId = 346;
         $manufacturerId = 5;
         $this->changeManufacturerNoDeliveryDays($manufacturerId, Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
-        $this->browser->get($this->Slug->getProductDetail($productId, 'Demo Product'));
+        $this->httpClient->get($this->Slug->getProductDetail($productId, 'Demo Product'));
         $this->assert404NotFoundHeader();
     }
 

@@ -25,6 +25,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Der Punkt "Bestellungen" im Admin-Bereich benötigt jetzt weniger Arbeitsspeicher und lädt schneller. / [PR#309](https://github.com/foodcoopshop/foodcoopshop/pull/309) / [I#308](https://github.com/foodcoopshop/foodcoopshop/issues/308) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Für Entwickler
+- Der in die Jahre gekommene SimpleBrowser wurde mit dem in CakePHP integrierten HttpClient ersetzt. Die Tests laufen nun fast doppelt so schnell. / [I#314](https://github.com/foodcoopshop/foodcoopshop/issues/314) [PR#315](https://github.com/foodcoopshop/foodcoopshop/pull/315) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Wie bei jedem Release zahlreiche Dependency-Updates und viele kleinere Bugfixes: CakePHP 3.7 [PR#295](https://github.com/foodcoopshop/foodcoopshop/pull/295)
 
 ## v2.3.0 / 2018-12-02 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.2.1...v2.3.0)

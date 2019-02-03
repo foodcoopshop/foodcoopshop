@@ -35,32 +35,32 @@ class SyncDomainsControllerTest extends AppCakeTestCase
     public function testAddSyncDomainWithHttp()
     {
         $this->addSyncDomain('http://www.example.com');
-        $this->assertRegExpWithUnquotedString('Die Domain muss mit https:// beginnen.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Die Domain muss mit https:// beginnen.', $this->httpClient->getContent());
     }
 
     public function testAddSyncDomainWithEmptyDomain()
     {
         $this->addSyncDomain('');
-        $this->assertRegExpWithUnquotedString('Bitte gib eine Domain ein, sie muss mit https:// beginnen.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Bitte gib eine Domain ein, sie muss mit https:// beginnen.', $this->httpClient->getContent());
     }
 
     public function testAddSyncDomainWithTrailingSlash()
     {
         $this->addSyncDomain('https://www.example.com/');
-        $this->assertRegExpWithUnquotedString('Die Domain darf nur aus https:// und dem Hostnamen bestehen (ohne / am Ende).', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Die Domain darf nur aus https:// und dem Hostnamen bestehen (ohne / am Ende).', $this->httpClient->getContent());
     }
 
     public function testAddSyncDomainAlreadyExisting()
     {
         $this->addSyncDomain('https://www.example.com');
         $this->addSyncDomain('https://www.example.com');
-        $this->assertRegExpWithUnquotedString('Die Domain ist bereits vorhanden.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Die Domain ist bereits vorhanden.', $this->httpClient->getContent());
     }
 
     public function testAddSyncDomainWithHttps()
     {
         $this->addSyncDomain('https://www.valid-domain.com');
-        $this->assertRegExpWithUnquotedString('Die Remote-Foodcoop <b>https://www.valid-domain.com</b> wurde erstellt.', $this->browser->getContent());
+        $this->assertRegExpWithUnquotedString('Die Remote-Foodcoop <b>https://www.valid-domain.com</b> wurde erstellt.', $this->httpClient->getContent());
     }
 
     /**
@@ -68,7 +68,8 @@ class SyncDomainsControllerTest extends AppCakeTestCase
      */
     private function addSyncDomain($domain)
     {
-        $this->browser->post($this->Network->getSyncDomainAdd(), [
+        $this->httpClient->followOneRedirectForNextRequest();
+        $this->httpClient->post($this->Network->getSyncDomainAdd(), [
             'SyncDomains' =>
             [
                 'domain' => $domain
