@@ -1248,8 +1248,8 @@ body.payments tr.last-row-of-year td {
 body.payments i.payment-approval,
 body.reports.payment i.payment-approval {
     float: left;
-    margin-top: 2px;
-    margin-right: 2px;
+    margin-top: 4px;
+    margin-right: 3px;
 }
 body.payments .payment-approval-comment,
 body.reports.payment .payment-approval-comment {
