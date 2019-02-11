@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-01-13 21:32+0100\n"
+"POT-Creation-Date: 2019-02-11 20:17+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1544,9 +1544,6 @@ msgstr ""
 msgid "by"
 msgstr ""
 
-msgid "Edit"
-msgstr ""
-
 msgid "Further_news"
 msgstr ""
 
@@ -1712,6 +1709,9 @@ msgstr ""
 msgid "Search_PC"
 msgstr ""
 
+msgid "Other_foodcoops_working_with_FoodCoopShop"
+msgstr ""
+
 msgid "Information"
 msgstr ""
 
@@ -1824,9 +1824,6 @@ msgid "More_infos_to_product_{0}"
 msgstr ""
 
 msgid "Instant_order"
-msgstr ""
-
-msgid "Edit_product"
 msgstr ""
 
 msgid "from_which_{0}_%"

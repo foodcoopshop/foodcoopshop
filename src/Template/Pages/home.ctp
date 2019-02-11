@@ -27,3 +27,7 @@ echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts,
     'useCarousel' => false
 ]);
+
+echo $this->element('foodCoopShopInstancesMap');
+
+?>

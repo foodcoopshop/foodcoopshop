@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-01-13 21:32+0100\n"
-"PO-Revision-Date: 2019-01-13 21:32+0100\n"
+"POT-Creation-Date: 2019-02-11 20:17+0100\n"
+"PO-Revision-Date: 2019-02-11 20:20+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1545,9 +1545,6 @@ msgstr "Show blog from"
 msgid "by"
 msgstr "by"
 
-msgid "Edit"
-msgstr "Edit"
-
 msgid "Further_news"
 msgstr "Further news"
 
@@ -1713,6 +1710,9 @@ msgstr "Upload new file"
 msgid "Search_PC"
 msgstr "Search computer"
 
+msgid "Other_foodcoops_working_with_FoodCoopShop"
+msgstr "Other foodcoops working with FoodCoopShop"
+
 msgid "Information"
 msgstr "Information"
 
@@ -1826,9 +1826,6 @@ msgstr "More infos to product {0}"
 
 msgid "Instant_order"
 msgstr "Instant order"
-
-msgid "Edit_product"
-msgstr "Edit product"
 
 msgid "from_which_{0}_%"
 msgstr "from which {0} %"
@@ -2186,6 +2183,12 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "Edit"
+#~ msgstr "Edit"
+
+#~ msgid "Edit_product"
+#~ msgstr "Edit product"
 
 #, fuzzy
 #~ msgid "You_selected_1_product_for_changing_the_delivery_rhythm"
