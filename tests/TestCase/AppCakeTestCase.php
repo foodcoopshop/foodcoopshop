@@ -215,7 +215,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         foreach ($testPages as $url) {
             $this->httpClient->get($url);
             $html = $this->httpClient->getContent();
-            $this->assertNotRegExp('/class="cake-stack-trace"|class="cake-error"|\bFatal error\b|undefined|exception \'[^\']+\' with message|\<strong\>(Error|Exception)\s*:\s*\<\/strong\>|Parse error|Not Found|\/app\/views\/errors\/|error in your SQL syntax|ERROR!|^\<\/body\>/', $html);
+            $this->assertNotRegExp('/class="cake-stack-trace"|class="cake-error"|\bFatal error\b|exception \'[^\']+\' with message|\<strong\>(Error|Exception)\s*:\s*\<\/strong\>|Parse error|Not Found|\/app\/views\/errors\/|error in your SQL syntax|ERROR!|^\<\/body\>/', $html);
         }
     }
 
