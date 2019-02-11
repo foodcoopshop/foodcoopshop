@@ -22,12 +22,16 @@ $this->element('addScript', ['script' =>
 
 echo $this->element('acceptUpdatedTermsOfUseForm');
 
-echo '<h1>'.__('News').'</h1>';
+if (!empty($blogPosts)) {
+    echo '<h1>'.__('News').'</h1>';
+}
 echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts,
     'useCarousel' => false
 ]);
 
-echo $this->element('foodCoopShopInstancesMap');
+echo $this->element('foodCoopShopInstancesMap', [
+    'isFirstElement' => empty($blogPosts)
+]);
 
 ?>
