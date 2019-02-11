@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-02-11 20:17+0100\n"
+"POT-Creation-Date: 2019-02-11 20:24+0100\n"
 "PO-Revision-Date: 2019-02-11 20:20+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1545,6 +1545,9 @@ msgstr "Show blog from"
 msgid "by"
 msgstr "by"
 
+msgid "Edit"
+msgstr "Edit"
+
 msgid "Further_news"
 msgstr "Further news"
 
@@ -2183,9 +2186,6 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
-
-#~ msgid "Edit"
-#~ msgstr "Edit"
 
 #~ msgid "Edit_product"
 #~ msgstr "Edit product"

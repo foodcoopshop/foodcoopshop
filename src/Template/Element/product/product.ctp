@@ -86,7 +86,7 @@ if ($product['description'] != '') {
             $this->Slug->getProductAdmin(($appAuth->isSuperadmin() ? $product['id_manufacturer'] : null), $product['id_product']),
             [
                 'class' => 'btn btn-outline-light edit-shortcut-button',
-                'title' => __d('admin', 'Edit'),
+                'title' => __('Edit'),
                 'escape' => false
             ]
         );

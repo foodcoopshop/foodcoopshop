@@ -61,7 +61,7 @@ foreach ($blogPosts as $blogPost) {
             $this->Slug->getBlogPostEdit($blogPost->id_blog_post),
             [
                 'class' => 'btn btn-outline-light edit-shortcut-button',
-                'title' => __d('admin', 'Edit'),
+                'title' => __('Edit'),
                 'escape' => false
             ]
         );

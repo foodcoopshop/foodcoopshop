@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-02-11 20:17+0100\n"
+"POT-Creation-Date: 2019-02-11 20:24+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1542,6 +1542,9 @@ msgid "Go_to_blog_from"
 msgstr ""
 
 msgid "by"
+msgstr ""
+
+msgid "Edit"
 msgstr ""
 
 msgid "Further_news"

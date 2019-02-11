@@ -63,7 +63,7 @@ if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
             $manufacturerEditSlug,
             [
                 'class' => 'btn btn-outline-light edit-shortcut-button',
-                'title' => __d('admin', 'Edit'),
+                'title' => __('Edit'),
                 'escape' => false
             ]
         );
