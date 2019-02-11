@@ -30,6 +30,7 @@ class ConfigurationHelper extends Helper
             case 'FCS_SHOW_FOODCOOPSHOP_BACKLINK':
             case 'FCS_ORDER_COMMENT_ENABLED':
             case 'FCS_TIMEBASED_CURRENCY_ENABLED':
+            case 'FCS_FOODCOOPS_MAP_ENABLED':
                 return Configure::read('app.htmlHelper')->getYesNoArray();
                 break;
             case 'FCS_LOCALE':

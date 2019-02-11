@@ -30,8 +30,9 @@ echo $this->element('blogPosts', [
     'useCarousel' => false
 ]);
 
-echo $this->element('foodCoopShopInstancesMap', [
-    'isFirstElement' => empty($blogPosts)
-]);
-
+if (Configure::read('appDb.FCS_FOODCOOPS_MAP_ENABLED')) {
+    echo $this->element('foodCoopShopInstancesMap', [
+        'isFirstElement' => empty($blogPosts)
+    ]);
+}
 ?>

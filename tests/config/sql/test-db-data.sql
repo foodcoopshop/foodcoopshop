@@ -149,7 +149,8 @@ INSERT INTO `fcs_configuration` VALUES
 (573,1,'FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_MANUFACTURER','Stundenabrechnung: Überziehungsrahmen für Hersteller<br /><div class=\"small\">Wie viele Stunden kann ein Hersteller maximal ins Plus gehen?</div>','100','number',250,'de_DE','2018-03-16 15:23:31','2018-03-16 15:23:31'),
 (574,1,'FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS','Produktpreis für nicht eingeloggte Mitglieder anzeigen?','0','boolean',21,'de_DE','2018-05-28 18:05:57','2018-05-28 18:05:57'),
 (575,1,'FCS_CURRENCY_SYMBOL','Währungssymbol','€','readonly',52,'de_DE','2018-06-13 19:53:14','2018-06-13 19:53:14'),
-(576,1,'FCS_DEFAULT_LOCALE','Sprache','de_DE','readonly',55,'de_DE','2018-06-26 10:18:55','2018-06-26 10:18:55');
+(576,1,'FCS_DEFAULT_LOCALE','Sprache','de_DE','readonly',55,'de_DE','2018-06-26 10:18:55','2018-06-26 10:18:55'),
+(577,1,'FCS_FOODCOOPS_MAP_ENABLED','Auf Home Karte mit anderen Foodcoops anzeigen?','1','boolean',128,'de_DE','2019-02-11 22:22:06','2019-02-11 22:22:06');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -355,7 +356,8 @@ INSERT INTO `phinxlog` VALUES
 (20181027192224,'BootstrapUpdate','2018-10-27 08:28:29','2018-10-27 08:28:29',0),
 (20181029212405,'CorrectNetPrice','2018-10-29 08:28:29','2018-10-29 08:28:29',0),
 (20181226215706,'NoDeliveryDaysDefaultNull','2018-12-26 08:28:29','2018-12-26 08:28:29',0),
-(20190114095502,'Fontawesome5','2019-01-14 00:00:00','2019-01-14 00:00:00',0);
+(20190114095502,'Fontawesome5','2019-01-14 00:00:00','2019-01-14 00:00:00',0),
+(20190211210824,'AddFoodCoopShopInstancesMap','2019-02-11 21:22:06','2019-02-11 21:22:06',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
