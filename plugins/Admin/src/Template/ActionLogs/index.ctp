@@ -98,7 +98,7 @@ foreach ($actionLogs as $actionLog) {
     if (isset($name)) {
         echo $this->Html->link(
             $name,
-            '/admin/action-logs/index/?types[]='.join(',', $types).'&productId='.$productId.'&customerId='.($actionLog->customer ? $actionLog->customer->id_customer : '').'&dateFrom='.$dateFrom.'&dateTo='.$dateTo.(!empty($this->request->getQuery('sort')) ? '&sort='.$this->request->getQuery('sort') : '').(!empty($this->request->getQuery('direction')) ? '&direction='.$this->request->getQuery('direction') : '')
+            '/admin/action-logs/index/?types[]='.join('&types[]=', $types).'&productId='.$productId.'&customerId='.($actionLog->customer ? $actionLog->customer->id_customer : '').'&dateFrom='.$dateFrom.'&dateTo='.$dateTo.(!empty($this->request->getQuery('sort')) ? '&sort='.$this->request->getQuery('sort') : '').(!empty($this->request->getQuery('direction')) ? '&direction='.$this->request->getQuery('direction') : '')
         );
     }
     echo '</td>';
