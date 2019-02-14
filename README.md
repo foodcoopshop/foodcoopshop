@@ -37,11 +37,8 @@ The software can be used with any modern web browser, tablet or smartphone. It's
 * Demo version in [German](https://demo-de.foodcoopshop.com) or [English](https://demo-en.foodcoopshop.com)
 * Software documentation: [https://foodcoopshop.github.io](https://foodcoopshop.github.io)
 
-## Roadmap
-Planned work for [Q1/2019 - v2.4](https://github.com/foodcoopshop/foodcoopshop/projects/8). In 2019 the handling of stock products will be improved.
-
 ## Who uses FoodCoopShop?
-[https://foodcoopshop.github.io/en/foodcoops](https://foodcoopshop.github.io/en/foodcoops)
+* [List](https://foodcoopshop.github.io/en/foodcoops) / [OpenStreetMap](http://umap.openstreetmap.fr/en/map/verbreitung-foodcoopshop_211165)
 
 ## Legal information
 * Before installing please read the legal information in [German](https://foodcoopshop.github.io/de/rechtliches) or [English](https://foodcoopshop.github.io/en/legal-information).
