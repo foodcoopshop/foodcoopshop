@@ -70,6 +70,7 @@ return [
     /**
      * DEBUG email config
      * emails are sent FROM this email configuration if emailErrorLoggingEnabled is set to true
+     * needs to be configured to run BackupDatabaseShell
      */
 //     'EmailTransport' => [
 //         'debug' => [
