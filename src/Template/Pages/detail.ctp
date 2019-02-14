@@ -43,7 +43,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         $this->Slug->getPageEdit($page->id_page),
         [
             'class' => 'btn btn-outline-light edit-shortcut-button',
-            'title' => __d('admin', 'Edit'),
+            'title' => __('Edit'),
             'escape' => false
         ]
     );
