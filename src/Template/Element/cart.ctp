@@ -71,7 +71,10 @@ if ($appAuth->Cart->getProducts() !== null) {
                     Configure::read('app.jsNamespace').".Helper.initLogoutInstantOrderCustomerButton();"
                 ]);
                 echo '<p class="instant-order-customer-info">';
-                    echo __('This_order_will_be_placed_for_{0}', ['<b>'.$this->request->getSession()->read('Auth.instantOrderCustomer')->name.'</b>']);
+                    echo __('This_order_will_be_placed_for_{0}.', ['<b>'.$this->request->getSession()->read('Auth.instantOrderCustomer')->name.'</b>']);
+                    if (!Configure::read('app.includeNonStockProductsInInstantOrders')) {
+                        echo ' ' . __('Only_stock_products_are_shown.');
+                    }
                 echo '<b><a class="btn btn-outline-light" href="javascript:void(0);">'.__('Cancel_instant_order?').'</a></b>';
                 echo '</p>';
 

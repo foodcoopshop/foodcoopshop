@@ -81,6 +81,9 @@ return [
          */
         'includeStockProductsInInvoices' => true,
         
+        'includeStockProductsInOrdersWithDeliveryRhythm' => true,
+        'includeNonStockProductsInInstantOrders' => true,
+        
         /**
          * weekday on which the weekly cronjob "SendOrderList" is called
          * the available options (in combination with deliveryDayDelta) can be found in tests/TestCase/src/View/Helper/MyTimeHelperTest.php

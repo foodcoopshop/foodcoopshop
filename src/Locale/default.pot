@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-02-12 16:56+0100\n"
+"POT-Creation-Date: 2019-02-16 20:07+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1682,7 +1682,10 @@ msgstr ""
 msgid "Load_past_orders"
 msgstr ""
 
-msgid "This_order_will_be_placed_for_{0}"
+msgid "This_order_will_be_placed_for_{0}."
+msgstr ""
+
+msgid "Only_stock_products_are_shown."
 msgstr ""
 
 msgid "Your_credit_balance"

@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use App\Network\AppSession;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
 
@@ -145,7 +146,21 @@ class CategoriesTable extends AppTable
             $params['productId'] = $productId;
             $sql .= " AND Products.id_product = :productId ";
         }
+        
+        if (!Configure::read('app.includeStockProductsInOrdersWithDeliveryRhythm')) {
+            $session = new AppSession();
+            if (!$session->check('Auth.instantOrderCustomer')) {
+                $sql .= " AND Products.is_stock_product = 0 ";
+            }
+        }
 
+        if (!Configure::read('app.includeNonStockProductsInInstantOrders')) {
+            $session = new AppSession();
+            if ($session->check('Auth.instantOrderCustomer')) {
+                $sql .= " AND Products.is_stock_product = 1 ";
+            }
+        }
+        
         $sql .= $this->getOrdersForProductListQuery();
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
