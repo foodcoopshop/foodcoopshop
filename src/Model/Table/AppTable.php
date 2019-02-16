@@ -180,6 +180,21 @@ class AppTable extends Table
         if (! $this->getLoggedUser()) {
             $conditions .= 'AND Manufacturers.is_private = :isPrivate ';
         }
+        
+        if (!Configure::read('app.includeStockProductsInOrdersWithDeliveryRhythm')) {
+            $session = new AppSession();
+            if (!$session->check('Auth.instantOrderCustomer')) {
+                $conditions .= " AND (Manufacturers.stock_management_enabled = 0 OR Products.is_stock_product = 0) ";
+            }
+        }
+        
+        if (!Configure::read('app.includeNonStockProductsInInstantOrders')) {
+            $session = new AppSession();
+            if ($session->check('Auth.instantOrderCustomer')) {
+                $conditions .= " AND (Manufacturers.stock_management_enabled = 1 AND Products.is_stock_product = 1) ";
+            }
+        }
+        
         return $conditions;
     }
 

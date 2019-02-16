@@ -125,7 +125,7 @@ class CategoriesTable extends AppTable
 
         $sql .= $this->getJoinsForProductListQuery();
         $sql .= $this->getConditionsForProductListQuery();
-
+        
         if (! $filterByNewProducts) {
             $params['categoryId'] = $categoryId;
             $sql .= " AND CategoryProducts.id_category = :categoryId ";
@@ -145,20 +145,6 @@ class CategoriesTable extends AppTable
         if ($productId > 0) {
             $params['productId'] = $productId;
             $sql .= " AND Products.id_product = :productId ";
-        }
-        
-        if (!Configure::read('app.includeStockProductsInOrdersWithDeliveryRhythm')) {
-            $session = new AppSession();
-            if (!$session->check('Auth.instantOrderCustomer')) {
-                $sql .= " AND (Manufacturers.stock_management_enabled = 0 OR Products.is_stock_product = 0) ";
-            }
-        }
-
-        if (!Configure::read('app.includeNonStockProductsInInstantOrders')) {
-            $session = new AppSession();
-            if ($session->check('Auth.instantOrderCustomer')) {
-                $sql .= " AND (Manufacturers.stock_management_enabled = 1 AND Products.is_stock_product = 1) ";
-            }
         }
         
         $sql .= $this->getOrdersForProductListQuery();
