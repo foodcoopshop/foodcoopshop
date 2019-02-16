@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-02-16 20:07+0100\n"
-"PO-Revision-Date: 2019-02-16 20:08+0100\n"
+"POT-Creation-Date: 2019-02-16 20:43+0100\n"
+"PO-Revision-Date: 2019-02-16 20:44+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1754,6 +1754,12 @@ msgstr "Print"
 
 msgid "Categories"
 msgstr "Categories"
+
+msgid "There_are_no_stock_products_shown_in_this_list."
+msgstr "There are no stock products shown in this list."
+
+msgid "There_are_only_stock_products_shown_in_this_list."
+msgstr "There are only stock products shown in this list."
 
 msgid "Admin_area"
 msgstr "Admin panel"
