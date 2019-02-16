@@ -76,12 +76,19 @@ return [
         'depositForManufacturersStartDate' => '2016-01-01',
         'dateOfFirstSendInvoiceCronjobWithPickupDayUpdate' => '2018-11-11', //pickupDayMigration was released in v2.2
         /**
+         * BETA: not ready for production! please keep value "true"
          * if set to false, invoices do not contain stock products
          * criteria for exclusion: Manufacturer.stock_management_enabled = false OR Product.is_stock_product = false
          */
         'includeStockProductsInInvoices' => true,
         
+        /**
+         * BETA: not ready for production! please keep value "true"
+         */
         'includeStockProductsInOrdersWithDeliveryRhythm' => true,
+        /**
+         * BETA: not ready for production! please keep value "true"
+         */
         'includeNonStockProductsInInstantOrders' => true,
         
         /**
