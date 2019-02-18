@@ -1307,6 +1307,7 @@ class ProductsTable extends AppTable
                     'id_manufacturer' => $manufacturer->id_manufacturer,
                     'id_tax' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id),
                     'name' => StringComponent::removeSpecialChars(__('New_product_of') . ' ' . $manufacturer->name),
+                    'delivery_rhythm_send_order_list_day_delta' => Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA'),
                     'description' => '',
                     'description_short' => '',
                     'unity' => ''
