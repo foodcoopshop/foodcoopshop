@@ -77,12 +77,6 @@ return [
         'discourseSsoSecret' => '',
 
         /**
-         * defines how many days after the sendOrderListsWeekday the products are delivered
-         * sendOrderListsWeekday is defined in config.php and preset to 3, i.e. "wednesday"
-         */
-        'deliveryDayDelta' => 2,
-
-        /**
          * optional: message that is displayed in the dialog where order-detail status can be changed (/admin/order-details)
          */
         'additionalOrderStatusChangeInfo' => '',

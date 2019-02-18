@@ -86,16 +86,16 @@ class MyTimeHelper extends TimeHelper
     {
         switch (date('N')) {
             case Configure::read('app.sendOrderListsWeekday'): // today is app.sendOrderListsWeekday
-                $newDeliveryDelta = Configure::read('app.deliveryDayDelta');
+                $newDeliveryDelta = Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA');
                 break;
             case Configure::read('app.sendOrderListsWeekday') + 1:
-                $newDeliveryDelta = Configure::read('app.deliveryDayDelta') - 1;
+                $newDeliveryDelta = Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') - 1;
                 break;
             case Configure::read('app.sendOrderListsWeekday') + 2:
-                $newDeliveryDelta = Configure::read('app.deliveryDayDelta') - 2;
+                $newDeliveryDelta = Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') - 2;
                 break;
             case Configure::read('app.sendOrderListsWeekday') + 3:
-                $newDeliveryDelta = Configure::read('app.deliveryDayDelta') - 3;
+                $newDeliveryDelta = Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') - 3;
                 break;
         }
         if (isset($newDeliveryDelta)) {
@@ -150,14 +150,14 @@ class MyTimeHelper extends TimeHelper
     public function getDeliveryDateForSendOrderListsShell()
     {
         $formattedToday = date(Configure::read('DateFormat.DatabaseAlt'), $this->getCurrentDay());
-        $deliveryDay = strtotime($formattedToday . '+' . Configure::read('app.deliveryDayDelta') . ' days');
+        $deliveryDay = strtotime($formattedToday . '+' . Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') . ' days');
         $deliveryDay = date($this->getI18Format('DatabaseAlt'), $deliveryDay);
         return $deliveryDay;
     }
 
     public function getDeliveryDay($orderDay)
     {
-        $daysToAddToOrderPeriodLastDay = Configure::read('app.deliveryDayDelta') + 1;
+        $daysToAddToOrderPeriodLastDay = Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') + 1;
         $deliveryDate = strtotime($this->getOrderPeriodLastDay($orderDay) . '+' . $daysToAddToOrderPeriodLastDay . ' days');
         
         $weekdayDeliveryDate = $this->formatAsWeekday($deliveryDate);
@@ -176,7 +176,7 @@ class MyTimeHelper extends TimeHelper
     public function getWeekdaysBetweenOrderSendAndDelivery($delta = 0)
     {
         $weekdays = [];
-        for ($i = Configure::read('app.sendOrderListsWeekday'); $i <= Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta') + $delta; $i++) {
+        for ($i = Configure::read('app.sendOrderListsWeekday'); $i <= Configure::read('app.sendOrderListsWeekday') + Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') + $delta; $i++) {
             $weekdays[] = $i;
         }
         return $weekdays;
@@ -199,7 +199,7 @@ class MyTimeHelper extends TimeHelper
 
     public function getDeliveryWeekday()
     {
-        return (Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta')) % 7;
+        return (Configure::read('app.sendOrderListsWeekday') + Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA')) % 7;
     }
     
     public function getPreselectedDeliveryDayForOrderDetails($day)
@@ -244,25 +244,25 @@ class MyTimeHelper extends TimeHelper
         }
 
         if ($currentWeekday == $this->getDeliveryWeekday()) {
-            $dateDiff = -1 - Configure::read('app.deliveryDayDelta');
+            $dateDiff = -1 - Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA');
         }
         if ($currentWeekday == ($this->getDeliveryWeekday() + 1) % 7) {
-            $dateDiff = (Configure::read('app.deliveryDayDelta') * -1) + 5;
+            $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1) + 5;
         }
         if ($currentWeekday == ($this->getDeliveryWeekday() + 2) % 7) {
-            $dateDiff = (Configure::read('app.deliveryDayDelta') * -1) + 4;
+            $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1) + 4;
         }
         if ($currentWeekday == ($this->getDeliveryWeekday() + 3) % 7) {
-            $dateDiff = (Configure::read('app.deliveryDayDelta') * -1) + 3;
+            $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1) + 3;
         }
         if ($currentWeekday == ($this->getDeliveryWeekday() + 4) % 7) {
-            $dateDiff = (Configure::read('app.deliveryDayDelta') * -1) + 2;
+            $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1) + 2;
         }
         if ($currentWeekday == ($this->getDeliveryWeekday() + 5) % 7) {
-            $dateDiff = (Configure::read('app.deliveryDayDelta') * -1) + 1;
+            $dateDiff = (Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1) + 1;
         }
         if ($currentWeekday == ($this->getDeliveryWeekday() + 6) % 7) {
-            $dateDiff = Configure::read('app.deliveryDayDelta') * -1;
+            $dateDiff = Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') * -1;
         }
 
         $date = date($this->getI18Format('DateShortAlt'), strtotime($dateDiff . ' day ', $day));
