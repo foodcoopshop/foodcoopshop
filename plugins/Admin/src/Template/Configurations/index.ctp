@@ -197,11 +197,7 @@ $this->element('addScript', [
                             echo $this->MyTime->getWeekdayName($configuration->value);
                             break;
                         case 'FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA':
-                            $sendOrderListsWeekday = Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY') - $configuration->value;
-                            if ($sendOrderListsWeekday < 0) {
-                                $sendOrderListsWeekday += 7;
-                            }
-                            echo $configuration->value . ' (' . $this->MyTime->getWeekdayName($sendOrderListsWeekday) . ')';
+                            echo $configuration->value . ' (' . $this->MyTime->getWeekdayName($this->MyTime->getSendOrderListsWeekday()) . ')';
                             break;
                         default:
                             echo $configuration->value;

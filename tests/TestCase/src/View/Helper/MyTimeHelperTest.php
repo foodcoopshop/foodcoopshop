@@ -39,26 +39,26 @@ class MyTimeHelperTest extends AppCakeTestCase
 
     private function prepareThursdayFridayConfig()
     {
-        Configure::write('app.deliveryDayDelta', 1);
-        Configure::write('app.sendOrderListsWeekday', 4);
+        $this->changeReadOnlyConfiguration('FCS_WEEKLY_PICKUP_DAY', 5);
+        $this->changeReadOnlyConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 1);
     }
     
     private function prepareWednesdayFridayConfig()
     {
-        Configure::write('app.deliveryDayDelta', 2);
-        Configure::write('app.sendOrderListsWeekday', 3);
+        $this->changeReadOnlyConfiguration('FCS_WEEKLY_PICKUP_DAY', 5);
+        $this->changeReadOnlyConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 2);
     }
 
     private function prepareTuesdayFridayConfig()
     {
-        Configure::write('app.deliveryDayDelta', 3);
-        Configure::write('app.sendOrderListsWeekday', 2);
+        $this->changeReadOnlyConfiguration('FCS_WEEKLY_PICKUP_DAY', 5);
+        $this->changeReadOnlyConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 3);
     }
 
     private function prepareMondayTuesdayConfig()
     {
-        Configure::write('app.deliveryDayDelta', 1);
-        Configure::write('app.sendOrderListsWeekday', 1);
+        $this->changeReadOnlyConfiguration('FCS_WEEKLY_PICKUP_DAY', 2);
+        $this->changeReadOnlyConfiguration('FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 1);
     }
     
     public function testGetPreselectedDeliveryDayForOrderDetailsThursdayFriday()

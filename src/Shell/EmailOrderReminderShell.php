@@ -6,7 +6,7 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * Cronjob works properly if it's called on Configure::read('app.sendOrderListsWeekDay') -1 or -2
+ * Cronjob works properly if it's called on Configure::read('app.timeHelper')->getSendOrderListsDay() -1 or -2
  * eg: Order lists are sent on Wednesday => EmailOrderReminder can be called on Tuesday or Monday
  *
  * @since         FoodCoopShop 1.0.0
@@ -75,7 +75,7 @@ class EmailOrderReminderShell extends AppShell
             $email->setSubject(__('Order_reminder') . ' ' . Configure::read('appDb.FCS_APP_NAME'))
             ->setViewVars([
                 'customer' => $customer,
-                'lastOrderDayAsString' => (Configure::read('app.sendOrderListsWeekday') - date('N')) == 1 ? __('today') : __('tomorrow')
+                'lastOrderDayAsString' => (Configure::read('app.timeHelper')->getSendOrderListsWeekday() - date('N')) == 1 ? __('today') : __('tomorrow')
             ])
             ->send();
 

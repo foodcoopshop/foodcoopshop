@@ -15,6 +15,9 @@ class IndividualSendOrderListDay extends AbstractMigration
         ");
         
         $weeklyPickupDay = Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta');
+        if ($weeklyPickupDay > 6) {
+            $weeklyPickupDay -= 7;
+        }
         switch(I18n::getLocale()) {
             case 'de_DE':
                 $sql = "INSERT INTO `fcs_configuration` (`id_configuration`, `active`, `name`, `text`, `value`, `type`, `position`, `locale`, `date_add`, `date_upd`) VALUES (NULL, '1', 'FCS_WEEKLY_PICKUP_DAY', 'Wöchentlicher Abholtag', " . $weeklyPickupDay . ", 'readonly', '60', 'de_DE', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
@@ -25,11 +28,9 @@ class IndividualSendOrderListDay extends AbstractMigration
                 $sql .= "INSERT INTO `fcs_configuration` (`id_configuration`, `active`, `name`, `text`, `value`, `type`, `position`, `locale`, `date_add`, `date_upd`) VALUES (NULL, '1', 'FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA', 'Sending of order lists: x days before pickup day', " . Configure::read('app.deliveryDayDelta') . ", 'readonly', '65', 'en_US', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
                 break;
         }
-        
         $this->execute($sql);
         
         $sendOrderListDayDelta = Configure::read('app.deliveryDayDelta');
-        
         $this->execute("
             UPDATE fcs_product SET delivery_rhythm_send_order_list_day_delta = " . $sendOrderListDayDelta . "
                 WHERE delivery_rhythm_type <> 'individual'

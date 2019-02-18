@@ -76,6 +76,15 @@ class MyTimeHelper extends TimeHelper
     {
         return date($this->getI18Format('DatabaseAlt'));
     }
+    
+    public function getSendOrderListsWeekday()
+    {
+        $sendOrderListsWeekday = Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY') - Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA');
+        if ($sendOrderListsWeekday < 0) {
+            $sendOrderListsWeekday += 7;
+        }
+        return $sendOrderListsWeekday;
+    }
 
     /**
      * should be called only once per request!
@@ -84,17 +93,18 @@ class MyTimeHelper extends TimeHelper
      */
     public function recalcDeliveryDayDelta()
     {
+        $sendOrderListsWeekday = $this->getSendOrderListsWeekday();
         switch (date('N')) {
-            case Configure::read('app.sendOrderListsWeekday'): // today is app.sendOrderListsWeekday
+            case $sendOrderListsWeekday: // today is $sendOrderListsWeekday
                 $newDeliveryDelta = Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA');
                 break;
-            case Configure::read('app.sendOrderListsWeekday') + 1:
+            case $sendOrderListsWeekday + 1:
                 $newDeliveryDelta = Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') - 1;
                 break;
-            case Configure::read('app.sendOrderListsWeekday') + 2:
+            case $sendOrderListsWeekday + 2:
                 $newDeliveryDelta = Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') - 2;
                 break;
-            case Configure::read('app.sendOrderListsWeekday') + 3:
+            case $sendOrderListsWeekday + 3:
                 $newDeliveryDelta = Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') - 3;
                 break;
         }
@@ -165,7 +175,7 @@ class MyTimeHelper extends TimeHelper
         
         $weekdayOrderDay = $this->formatAsWeekday($orderDay);
         
-        if ($weekdayOrderDay >= Configure::read('app.sendOrderListsWeekday') && $weekdayOrderDay <= $weekdayDeliveryDate) {
+        if ($weekdayOrderDay >= $this->getSendOrderListsWeekday() && $weekdayOrderDay <= $weekdayDeliveryDate) {
             $preparedOrderDay = date($this->getI18Format('DateShortAlt'), $orderDay);
             $deliveryDate = strtotime($preparedOrderDay . '+ 1 week ' . $weekdayStringDeliveryDate);
         }
@@ -175,8 +185,9 @@ class MyTimeHelper extends TimeHelper
 
     public function getWeekdaysBetweenOrderSendAndDelivery($delta = 0)
     {
+        $sendOrderListsWeekday = $this->getSendOrderListsWeekday();
         $weekdays = [];
-        for ($i = Configure::read('app.sendOrderListsWeekday'); $i <= Configure::read('app.sendOrderListsWeekday') + Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') + $delta; $i++) {
+        for ($i = $sendOrderListsWeekday; $i <= $sendOrderListsWeekday + Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') + $delta; $i++) {
             $weekdays[] = $i;
         }
         return $weekdays;
@@ -199,7 +210,7 @@ class MyTimeHelper extends TimeHelper
 
     public function getDeliveryWeekday()
     {
-        return (Configure::read('app.sendOrderListsWeekday') + Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA')) % 7;
+        return Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY');
     }
     
     public function getPreselectedDeliveryDayForOrderDetails($day)
@@ -217,7 +228,7 @@ class MyTimeHelper extends TimeHelper
     {
 
         $currentWeekday = $this->formatAsWeekday($day);
-        $dateDiff = 7 - Configure::read('app.sendOrderListsWeekday') + $currentWeekday;
+        $dateDiff = 7 - $this->getSendOrderListsWeekday() + $currentWeekday;
         $date = strtotime('-' . $dateDiff . ' day ', $day);
 
         if ($currentWeekday > $this->getDeliveryWeekday()) {
@@ -230,7 +241,7 @@ class MyTimeHelper extends TimeHelper
     }
 
     /**
-     * implemented for app.sendOrderListsWeekday == monday OR tuesday OR wednesday
+     * implemented for $this->sendOrderListsWeekday() == monday OR tuesday OR wednesday
      * @param $day
      * @return $day
      */
