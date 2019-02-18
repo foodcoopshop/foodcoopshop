@@ -273,7 +273,8 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
             'configKey' => $configKey
         ];
         $statement = $this->dbConnection->prepare($query);
-        return $statement->execute($params);
+        $statement->execute($params);
+        $this->Configuration->loadConfigurations();
     }
 
     /**
