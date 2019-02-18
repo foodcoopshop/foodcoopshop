@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-02-11 20:24+0100\n"
+"POT-Creation-Date: 2019-02-18 12:18+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -731,9 +731,6 @@ msgstr ""
 msgid "Last_executed_migration"
 msgstr ""
 
-msgid "Pickup_day"
-msgstr ""
-
 msgid "Software_update_version"
 msgstr ""
 
@@ -1005,6 +1002,9 @@ msgid "Please_chose_the_months_for_your_payment."
 msgstr ""
 
 msgid "Delivery_days"
+msgstr ""
+
+msgid "Pickup_day"
 msgstr ""
 
 msgid "Pickup_days"
@@ -1535,7 +1535,7 @@ msgstr ""
 msgid "The_manufacturer_wants"
 msgstr ""
 
-msgid "to_receive_the_orders_per_email_on_{0}."
+msgid "to_receive_the_orders_per_email."
 msgstr ""
 
 msgid "CC_recipient_for_order_lists"

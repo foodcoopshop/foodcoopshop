@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-02-11 20:24+0100\n"
-"PO-Revision-Date: 2019-01-13 23:19+0100\n"
+"POT-Creation-Date: 2019-02-18 12:18+0100\n"
+"PO-Revision-Date: 2019-02-18 12:19+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.2.1\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -732,9 +732,6 @@ msgstr "Version of FoodCoopShop"
 msgid "Last_executed_migration"
 msgstr "Last executed migration"
 
-msgid "Pickup_day"
-msgstr "Pickup day"
-
 msgid "Software_update_version"
 msgstr "Software update / Version"
 
@@ -1007,6 +1004,9 @@ msgstr "Please chose the months for your payment."
 
 msgid "Delivery_days"
 msgstr "Delivery days"
+
+msgid "Pickup_day"
+msgstr "Pickup day"
 
 msgid "Pickup_days"
 msgstr "Pickup days"
@@ -1536,8 +1536,8 @@ msgstr "I want"
 msgid "The_manufacturer_wants"
 msgstr "The manufacturer wants"
 
-msgid "to_receive_the_orders_per_email_on_{0}."
-msgstr "to receive the orders per email every {0}."
+msgid "to_receive_the_orders_per_email."
+msgstr "to receive the orders per email."
 
 msgid "CC_recipient_for_order_lists"
 msgstr "CC recipient for order lists"
