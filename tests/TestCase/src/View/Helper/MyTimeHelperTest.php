@@ -14,7 +14,6 @@
  */
 use App\Test\TestCase\AppCakeTestCase;
 use App\View\Helper\MyTimeHelper;
-use Cake\Core\Configure;
 use Cake\View\View;
 
 class MyTimeHelperTest extends AppCakeTestCase
@@ -22,6 +21,7 @@ class MyTimeHelperTest extends AppCakeTestCase
 
     public function setUp()
     {
+        parent::setUp();
         $this->MyTimeHelper = new MyTimeHelper(new View());
     }
 
@@ -204,7 +204,7 @@ class MyTimeHelperTest extends AppCakeTestCase
     
     public function testGetDeliveryDayTuesdayFriday()
     {
-        $this->prepareWednesdayFridayConfig();
+        $this->prepareTuesdayFridayConfig();
         $this->assertGetDeliveryDay('25.07.2018', '03.08.2018'); // wednesday
     }
     

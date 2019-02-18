@@ -111,7 +111,9 @@ INSERT INTO `fcs_configuration` VALUES
 (574,1,'FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS','Produktpreis für nicht eingeloggte Mitglieder anzeigen?','0','boolean',21,'de_DE','2018-05-28 18:05:54','2018-05-28 18:05:54'),
 (575,1,'FCS_CURRENCY_SYMBOL','Währungssymbol','€','readonly',52,'de_DE','2018-06-13 19:53:14','2018-06-13 19:53:14'),
 (576,1,'FCS_DEFAULT_LOCALE','Sprache','de_DE','readonly',55,'de_DE','2018-06-26 10:18:55','2018-06-26 10:18:55'),
-(577,1,'FCS_FOODCOOPS_MAP_ENABLED','Auf Home Karte mit anderen Foodcoops anzeigen?','1','boolean',128,'de_DE','2019-02-11 22:25:36','2019-02-11 22:25:36');
+(577,1,'FCS_FOODCOOPS_MAP_ENABLED','Auf Home Karte mit anderen Foodcoops anzeigen?','1','boolean',128,'de_DE','2019-02-11 22:25:36','2019-02-11 22:25:36'),
+(578,1,'FCS_WEEKLY_PICKUP_DAY','Wöchentlicher Abholtag','5','readonly',60,'de_DE','2019-02-18 12:38:00','2019-02-18 12:38:00'),
+(579,1,'FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA','Bestelllisten-Versand: x Tage vor dem Abholtag','2','readonly',65,'de_DE','2019-02-18 12:38:00','2019-02-18 12:38:00');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -231,7 +233,8 @@ INSERT INTO `phinxlog` VALUES
 (20181029212405,'CorrectNetPrice','2018-10-29 08:28:29','2018-10-29 08:28:29',0),
 (20181226215706,'NoDeliveryDaysDefaultNull','2018-12-26 08:28:29','2018-12-26 08:28:29',0),
 (20190114095502,'Fontawesome5','2019-01-14 00:00:00','2019-01-14 00:00:00',0),
-(20190211210824,'AddFoodCoopShopInstancesMap','2019-02-11 21:25:36','2019-02-11 21:25:36',0);
+(20190211210824,'AddFoodCoopShopInstancesMap','2019-02-11 21:25:36','2019-02-11 21:25:36',0),
+(20190218101915,'IndividualSendOrderListDay','2019-02-18 11:38:00','2019-02-18 11:38:00',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
