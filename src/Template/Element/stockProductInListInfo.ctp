@@ -19,7 +19,7 @@ if (!$this->request->getSession()->check('Auth.instantOrderCustomer')) {
     return;
 }
 
-if (!Configure::read('app.includeNonStockProductsInInstantOrders')) {
+if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
     echo '<h2 class="info">'.__('There_are_only_stock_products_shown_in_this_list.').'</h2>';
 }
 

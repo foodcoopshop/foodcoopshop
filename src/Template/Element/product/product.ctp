@@ -19,7 +19,7 @@ $showProductPrice = (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') && Co
 
 $isStockProductOrderPossibleInOrdersWithDeliveryRhythms = $this->Html->isStockProductOrderPossibleInOrdersWithDeliveryRhythms(
     $this->request->getSession()->check('Auth.instantOrderCustomer'),
-    Configure::read('app.includeStockProductsInOrdersWithDeliveryRhythm'),
+    Configure::read('appDb.FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM'),
     $product['stock_management_enabled'],
     $product['is_stock_product']
 );

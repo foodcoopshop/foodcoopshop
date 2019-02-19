@@ -181,7 +181,7 @@ class AppTable extends Table
             $conditions .= 'AND Manufacturers.is_private = :isPrivate ';
         }
         
-        if (!Configure::read('app.includeNonStockProductsInInstantOrders')) {
+        if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
             $session = new AppSession();
             if ($session->check('Auth.instantOrderCustomer')) {
                 $conditions .= " AND (Manufacturers.stock_management_enabled = 1 AND Products.is_stock_product = 1) ";
