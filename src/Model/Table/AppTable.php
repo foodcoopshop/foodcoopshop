@@ -143,7 +143,7 @@ class AppTable extends Table
                 Deposits.deposit,
                 Images.id_image,
                 Manufacturers.id_manufacturer, Manufacturers.name as ManufacturersName,
-                Manufacturers.timebased_currency_enabled, Manufacturers.no_delivery_days,
+                Manufacturers.timebased_currency_enabled, Manufacturers.no_delivery_days, Manufacturers.stock_management_enabled,
                 Units.price_per_unit_enabled, Units.price_incl_per_unit, Units.name as unit_name, Units.amount as unit_amount, Units.quantity_in_units,
                 StockAvailables.quantity, StockAvailables.quantity_limit";
 
@@ -179,13 +179,6 @@ class AppTable extends Table
 
         if (! $this->getLoggedUser()) {
             $conditions .= 'AND Manufacturers.is_private = :isPrivate ';
-        }
-        
-        if (!Configure::read('app.includeStockProductsInOrdersWithDeliveryRhythm')) {
-            $session = new AppSession();
-            if (!$session->check('Auth.instantOrderCustomer')) {
-                $conditions .= " AND (Manufacturers.stock_management_enabled = 0 OR Products.is_stock_product = 0) ";
-            }
         }
         
         if (!Configure::read('app.includeNonStockProductsInInstantOrders')) {

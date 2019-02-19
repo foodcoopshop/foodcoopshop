@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-02-16 20:43+0100\n"
+"POT-Creation-Date: 2019-02-19 11:24+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1754,9 +1754,6 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
-msgid "There_are_no_stock_products_shown_in_this_list."
-msgstr ""
-
 msgid "There_are_only_stock_products_shown_in_this_list."
 msgstr ""
 
@@ -1827,6 +1824,9 @@ msgid "available"
 msgstr ""
 
 msgid "Move_in_cart"
+msgstr ""
+
+msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
 msgstr ""
 
 msgid "Currently_not_on_stock"

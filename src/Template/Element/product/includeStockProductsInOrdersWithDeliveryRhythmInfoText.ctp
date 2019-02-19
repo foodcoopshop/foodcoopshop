@@ -15,12 +15,11 @@
 
 use Cake\Core\Configure;
 
-if (!$this->request->getSession()->check('Auth.instantOrderCustomer')) {
+if (!$appAuth->user() || !Configure::read('appDb.FCS_CART_ENABLED') || !$showInfoText) {
     return;
 }
-
-if (!Configure::read('app.includeNonStockProductsInInstantOrders')) {
-    echo '<h2 class="info">'.__('There_are_only_stock_products_shown_in_this_list.').'</h2>';
-}
-
 ?>
+
+<div class="line">
+	<p><?php echo __('Stock_product:_order_possible_only_with_instant_order_on_pick_up.')?></p>
+</div>

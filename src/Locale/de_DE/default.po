@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-02-16 20:43+0100\n"
-"PO-Revision-Date: 2019-02-16 20:44+0100\n"
+"POT-Creation-Date: 2019-02-19 11:24+0100\n"
+"PO-Revision-Date: 2019-02-19 11:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1755,9 +1755,6 @@ msgstr "Drucken"
 msgid "Categories"
 msgstr "Kategorien"
 
-msgid "There_are_no_stock_products_shown_in_this_list."
-msgstr "In dieser Liste werden keine Lagerprodukte angezeigt."
-
 msgid "There_are_only_stock_products_shown_in_this_list."
 msgstr "In dieser Liste werden nur Lagerprodukte angezeigt."
 
@@ -1829,6 +1826,9 @@ msgstr "verfügbar"
 
 msgid "Move_in_cart"
 msgstr "In den Warenkorb"
+
+msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
+msgstr "Lagerprodukt: nur über Sofort-Bestellung beim Abholen bestellbar."
 
 msgid "Currently_not_on_stock"
 msgstr "Derzeit leider nicht verfügbar"
@@ -2198,6 +2198,9 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "There_are_no_stock_products_shown_in_this_list."
+#~ msgstr "In dieser Liste werden keine Lagerprodukte angezeigt."
 
 #~ msgid "Edit_product"
 #~ msgstr "Produkt bearbeiten"
