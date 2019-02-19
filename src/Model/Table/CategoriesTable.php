@@ -2,7 +2,6 @@
 
 namespace App\Model\Table;
 
-use App\Network\AppSession;
 use Cake\Core\Configure;
 use Cake\Validation\Validator;
 
@@ -125,7 +124,7 @@ class CategoriesTable extends AppTable
 
         $sql .= $this->getJoinsForProductListQuery();
         $sql .= $this->getConditionsForProductListQuery();
-        
+
         if (! $filterByNewProducts) {
             $params['categoryId'] = $categoryId;
             $sql .= " AND CategoryProducts.id_category = :categoryId ";
@@ -146,7 +145,7 @@ class CategoriesTable extends AppTable
             $params['productId'] = $productId;
             $sql .= " AND Products.id_product = :productId ";
         }
-        
+
         $sql .= $this->getOrdersForProductListQuery();
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
