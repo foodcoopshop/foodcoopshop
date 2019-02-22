@@ -85,6 +85,8 @@ if ($manufacturerNoDeliveryDaysString != '') {
     echo '<h2 class="info">'.$manufacturerNoDeliveryDaysString.'</h2>';
 }
 
+echo $this->element('stockProductInListInfo');
+
 if (!empty($manufacturer['Products'])) {
     foreach ($manufacturer['Products'] as $product) {
         echo $this->element('product/product', ['product' => $product]);
