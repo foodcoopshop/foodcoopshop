@@ -477,6 +477,9 @@ body.superadmin .product-wrapper .heading h4 {
     float: left;
     width: 100%;
 }
+.product-wrapper .line p {
+	margin-bottom: 0px;
+}
 .product-wrapper label.attribute-button input {
 	margin-right: 3px;
 	margin-top: 3px;

@@ -54,6 +54,8 @@ if (!empty($category)) {
     }
 }
 
+echo $this->element('stockProductInListInfo');
+
 foreach ($products as $product) {
     echo $this->element('product/product', ['product' => $product]);
 }

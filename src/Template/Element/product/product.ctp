@@ -17,6 +17,13 @@ use Cake\Core\Configure;
 
 $showProductPrice = (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') && Configure::read('appDb.FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS')) || $appAuth->user();
 
+$isStockProductOrderPossibleInOrdersWithDeliveryRhythms = $this->Html->isStockProductOrderPossibleInOrdersWithDeliveryRhythms(
+    $this->request->getSession()->check('Auth.instantOrderCustomer'),
+    Configure::read('appDb.FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM'),
+    $product['stock_management_enabled'],
+    $product['is_stock_product']
+);
+
 echo '<div class="product-wrapper">';
 
     echo '<div class="first-column">';
@@ -165,9 +172,20 @@ if ($product['description'] != '') {
             }
             if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
                 echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute']]);
-                echo $this->element('product/amountWrapper', ['stockAvailable' => $attribute['StockAvailables']]);
-                echo $this->element('product/cartButton', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute'], 'stockAvailableQuantity' => $attribute['StockAvailables']['quantity'], 'stockAvailableQuantityLimit' => $attribute['StockAvailables']['quantity_limit']]);
+                echo $this->element('product/amountWrapper', [
+                    'stockAvailable' => $attribute['StockAvailables'],
+                    'hideAmountSelector' => $isStockProductOrderPossibleInOrdersWithDeliveryRhythms
+                ]);
+                echo $this->element('product/cartButton', [
+                    'productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute'],
+                    'stockAvailableQuantity' => $attribute['StockAvailables']['quantity'],
+                    'stockAvailableQuantityLimit' => $attribute['StockAvailables']['quantity_limit'],
+                    'hideButton' => $isStockProductOrderPossibleInOrdersWithDeliveryRhythms
+                ]);
                 echo $this->element('product/notAvailableInfo', ['stockAvailable' => $attribute['StockAvailables']]);
+                echo $this->element('product/includeStockProductsInOrdersWithDeliveryRhythmInfoText', [
+                    'showInfoText' => $isStockProductOrderPossibleInOrdersWithDeliveryRhythms
+                ]);
             }
             if ($showProductPrice) {
                 echo $pricePerUnitInfoText;
@@ -221,11 +239,23 @@ if ($product['description'] != '') {
                 }
                 echo '<div class="tax">'. $this->Number->formatAsCurrency($product['tax']) . '</div>';
         }
+        
         if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
             echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product']]);
-            echo $this->element('product/amountWrapper', ['stockAvailable' => $product]);
-            echo $this->element('product/cartButton', ['productId' => $product['id_product'], 'stockAvailableQuantity' => $product['quantity'], 'stockAvailableQuantityLimit' => $product['quantity_limit']]);
+            echo $this->element('product/amountWrapper', [
+                'stockAvailable' => $product,
+                'hideAmountSelector' => $isStockProductOrderPossibleInOrdersWithDeliveryRhythms
+            ]);
+            echo $this->element('product/cartButton', [
+                'productId' => $product['id_product'],
+                'stockAvailableQuantity' => $product['quantity'],
+                'stockAvailableQuantityLimit' => $product['quantity_limit'],
+                'hideButton' => $isStockProductOrderPossibleInOrdersWithDeliveryRhythms
+            ]);
             echo $this->element('product/notAvailableInfo', ['stockAvailable' => $product]);
+            echo $this->element('product/includeStockProductsInOrdersWithDeliveryRhythmInfoText', [
+                'showInfoText' => $isStockProductOrderPossibleInOrdersWithDeliveryRhythms
+            ]);
         }
         if ($showProductPrice) {
             echo $pricePerUnitInfoText;

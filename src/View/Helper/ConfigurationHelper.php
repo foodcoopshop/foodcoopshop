@@ -31,6 +31,8 @@ class ConfigurationHelper extends Helper
             case 'FCS_ORDER_COMMENT_ENABLED':
             case 'FCS_TIMEBASED_CURRENCY_ENABLED':
             case 'FCS_FOODCOOPS_MAP_ENABLED':
+            case 'FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM':
+            case 'FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS':
                 return Configure::read('app.htmlHelper')->getYesNoArray();
                 break;
             case 'FCS_LOCALE':
