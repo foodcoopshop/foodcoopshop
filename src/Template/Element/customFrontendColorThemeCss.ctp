@@ -38,7 +38,8 @@ use Cake\Core\Configure;
     .menu.vertical a.active span.additional-info,
     #categories-menu li.header,
     #manufacturers-menu li.header,
-    h2.info {
+    h2.info,
+    #flashMessage.success {
         background-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
     }
     
@@ -62,7 +63,8 @@ use Cake\Core\Configure;
     }
     
     .btn-success,
-    .btn-success:active:hover {
+    .btn-success:active:hover,
+    #flashMessage.success {
         border-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
     }
     
@@ -78,7 +80,7 @@ use Cake\Core\Configure;
     }
     .vertical.menu a {
     	color: #333333;
-    }
+    } 
     
     <?php if ($isMobile) { ?>
         @media only screen and (max-device-width: 768px) {
