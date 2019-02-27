@@ -75,6 +75,11 @@ header('Pragma: no-cache');
                 </a>
             </div>
             <?php if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) { ?>
+                <?php
+                	$this->element('addScript', ['script' =>
+                        Configure::read('app.jsNamespace').".Helper.initSearchForm();"
+                    ]);
+                ?>
                 <form id="product-search" action="/<?php echo __('route_search');?>">
                     <input placeholder="<?php echo __('Search'); ?>" name="keyword" type="text" required="required" <?php echo isset($keyword) ? 'value="'.$keyword.'"' : ''; ?> />
                     <button type="submit" class="btn btn-success"><i class="fas fa-search"></i></button>

@@ -125,6 +125,14 @@ foodcoopshop.Helper = {
         });
     },
 
+    initSearchForm: function () {
+        $('#product-search button[type="submit"]').on('click', function () {
+            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-search');
+            foodcoopshop.Helper.disableButton($(this));
+            $(this).closest('form').submit();
+        });
+    },
+
     initRegistrationForm: function (isPost) {
 
         $('#RegistrationForm .btn-success').on('click', function () {
