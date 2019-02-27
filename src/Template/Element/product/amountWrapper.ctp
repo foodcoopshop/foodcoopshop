@@ -17,12 +17,14 @@ use Cake\Core\Configure;
 ?>
 <div class="amount-wrapper">
 
-    <span class="left-of-input"><?php echo __('Amount'); ?></span>
-    <input name="amount" value="1" type="text">
-<?php
-    $availableQuantity = $stockAvailable['quantity'] - $stockAvailable['quantity_limit'];
-    if ($availableQuantity <= Configure::read('appDb.FCS_PRODUCT_AVAILABILITY_LOW')) { ?>
-    	<span class="right-of-input">(<?php echo $availableQuantity . ' ' . __('available'); ?>)</span>
-<?php } ?>
+	<?php if (!$hideAmountSelector) { ?>
+        <span class="left-of-input"><?php echo __('Amount'); ?></span>
+        <input name="amount" value="1" type="text">
+    <?php } ?>
+    <?php
+        $availableQuantity = $stockAvailable['quantity'] - $stockAvailable['quantity_limit'];
+        if ($availableQuantity <= Configure::read('appDb.FCS_PRODUCT_AVAILABILITY_LOW')) { ?>
+        	<span <?php echo !$hideAmountSelector ? 'class="right-of-input"' : ''; ?>>(<?php echo $availableQuantity . ' ' . __('available'); ?>)</span>
+    <?php } ?>
 
 </div>

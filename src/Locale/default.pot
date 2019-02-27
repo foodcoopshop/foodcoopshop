@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-02-12 16:56+0100\n"
+"POT-Creation-Date: 2019-02-19 11:24+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1682,7 +1682,10 @@ msgstr ""
 msgid "Load_past_orders"
 msgstr ""
 
-msgid "This_order_will_be_placed_for_{0}"
+msgid "This_order_will_be_placed_for_{0}."
+msgstr ""
+
+msgid "Only_stock_products_are_shown."
 msgstr ""
 
 msgid "Your_credit_balance"
@@ -1749,6 +1752,9 @@ msgid "Print"
 msgstr ""
 
 msgid "Categories"
+msgstr ""
+
+msgid "There_are_only_stock_products_shown_in_this_list."
 msgstr ""
 
 msgid "Admin_area"
@@ -1818,6 +1824,9 @@ msgid "available"
 msgstr ""
 
 msgid "Move_in_cart"
+msgstr ""
+
+msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
 msgstr ""
 
 msgid "Currently_not_on_stock"

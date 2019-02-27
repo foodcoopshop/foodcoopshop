@@ -84,7 +84,7 @@ class SendInvoicesShell extends AppShell
             ]
         ]);
         
-        if (!Configure::read('app.includeStockProductsInInvoices')) {
+        if (!Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES')) {
             $orderDetails->where(function ($exp, $query) {
                 return $exp->or_([
                     'Products.is_stock_product' => 0, // do not use "false" here!
