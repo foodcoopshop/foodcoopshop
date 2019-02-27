@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-02-27 11:32+0100\n"
-"PO-Revision-Date: 2019-02-27 11:32+0100\n"
+"POT-Creation-Date: 2019-02-27 16:22+0100\n"
+"PO-Revision-Date: 2019-02-27 16:23+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1424,6 +1424,12 @@ msgstr "Das Bestellbar-bis-Datum muss kleiner als der Liefertag sein."
 
 msgid "The_first_delivery_day"
 msgstr "Der erste Liefertag"
+
+msgid "The_send_order_list_day_field_is_not_valid."
+msgstr "Das Datum für den Bestelllisten-Versand ist nicht gültig."
+
+msgid "The_send_order_list_day_field_needs_to_be_between_order_possible_until_date_and_first_delivery_day."
+msgstr "Das Datum für den Bestellisten-Versand muss zwischen Bestellbar-bis-Datum und dem Liefertag liegen."
 
 msgid "The_first_delivery_day_needs_to_be_a_last_{0}_of_the_month."
 msgstr "Der erste Liefertag muss ein letzter {0} im Monat sein."

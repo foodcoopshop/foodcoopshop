@@ -11,7 +11,7 @@ class IndividualSendOrderListDay extends AbstractMigration
         
         $this->execute("
             ALTER TABLE `fcs_product`
-                ADD `delivery_rhythm_send_order_list_weekday` VARCHAR(10) NULL AFTER `delivery_rhythm_order_possible_until`,
+                ADD `delivery_rhythm_send_order_list_weekday` INT(10) UNSIGNED NULL AFTER `delivery_rhythm_order_possible_until`,
                 ADD `delivery_rhythm_send_order_list_day` DATE NULL AFTER `delivery_rhythm_send_order_list_weekday`;
         ");
         

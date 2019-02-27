@@ -397,13 +397,15 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         return $this->httpClient->getJsonDecodedContent();
     }
     
-    protected function changeProductDeliveryRhythm($productId, $deliveryRhythmType, $deliveryRhythmFirstDeliveryDay = '', $deliveryRhythmOrderPossibleUntil = '')
+    protected function changeProductDeliveryRhythm($productId, $deliveryRhythmType, $deliveryRhythmFirstDeliveryDay = '', $deliveryRhythmOrderPossibleUntil = '', $deliveryRhythmSendOrderListWeekday = '', $deliveryRhythmSendOrderListDay = '')
     {
         $this->httpClient->ajaxPost('/admin/products/editDeliveryRhythm', [
             'productIds' => [$productId],
             'deliveryRhythmType' => $deliveryRhythmType,
             'deliveryRhythmFirstDeliveryDay' => $deliveryRhythmFirstDeliveryDay,
-            'deliveryRhythmOrderPossibleUntil' => $deliveryRhythmOrderPossibleUntil
+            'deliveryRhythmOrderPossibleUntil' => $deliveryRhythmOrderPossibleUntil,
+            'deliveryRhythmSendOrderListWeekday' => $deliveryRhythmSendOrderListWeekday,
+            'deliveryRhythmSendOrderListDay' => $deliveryRhythmSendOrderListDay,
         ]);
         return $this->httpClient->getJsonDecodedContent();
     }

@@ -101,6 +101,19 @@ class ProductsTable extends AppTable
         $validator = $this->getLastOrFirstDayOfMonthValidator($validator, 'delivery_rhythm_first_delivery_day', 'first');
         $validator = $this->getLastOrFirstDayOfMonthValidator($validator, 'delivery_rhythm_first_delivery_day', 'last');
         $validator = $this->getAllowOnlyOneWeekdayValidator($validator, 'delivery_rhythm_first_delivery_day', __('The_first_delivery_day'));
+        $validator->range('delivery_rhythm_send_order_list_weekday', [0, 6], __('Please_enter_a_number_between_{0}_and_{1}.', [0, 6]));
+        $validator->allowEmpty('delivery_rhythm_send_order_list_day');
+        $validator->notEquals('delivery_rhythm_send_order_list_day', '1970-01-01', __('The_send_order_list_day_field_is_not_valid.'));
+        $validator->add('delivery_rhythm_send_order_list_day', 'allowed-only-between-two-dates', [
+            'rule' => function ($value, $context) {
+                if ($context['data']['delivery_rhythm_type'] == 'individual') {
+                    return $context['data']['delivery_rhythm_first_delivery_day'] > $value && $context['data']['delivery_rhythm_order_possible_until'] < $value;
+                }
+                return true;
+            },
+            'message' => __('The_send_order_list_day_field_needs_to_be_between_order_possible_until_date_and_first_delivery_day.')
+        ]);
+        
         return $validator;
     }
     
