@@ -51,11 +51,13 @@ echo '<td class="delivery-rhythm">';
                 
                 echo '<span class="send-order-list-weekday-wrapper ' . ($product->delivery_rhythm_type == 'individual' ? 'hide' : '') . '">';
                     $lastOrderWeekday = $this->Time->getNthWeekdayBeforeWeekday(1, $product->delivery_rhythm_send_order_list_weekday);
-                    echo ', ' . __d('admin', 'Last_order_weekday') . ': ';
                     echo '<span class="send-order-list-weekday hide">';
                         echo $lastOrderWeekday;
                     echo '</span>';
-                    echo $this->Time->getWeekdaysWithSuffix(' ' . __d('admin', 'midnight'))[$lastOrderWeekday];
+                    if ($product->delivery_rhythm_send_order_list_weekday != $this->Time->getSendOrderListsWeekday()) {
+                        echo ', ' . __d('admin', 'Last_order_weekday') . ': ';
+                        echo $this->Time->getWeekdaysWithSuffix(' ' . __d('admin', 'midnight'))[$lastOrderWeekday];
+                    }
                 echo '</span>';
                     
                 if ($product->delivery_rhythm_type == 'individual') {
