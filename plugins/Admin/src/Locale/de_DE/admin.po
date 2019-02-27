@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-02-18 12:18+0100\n"
-"PO-Revision-Date: 2019-02-18 12:19+0100\n"
+"POT-Creation-Date: 2019-02-27 11:32+0100\n"
+"PO-Revision-Date: 2019-02-27 11:30+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1844,6 +1844,9 @@ msgstr "Neu?"
 
 msgid "Delivery_rhythm"
 msgstr "Lieferrhythmus"
+
+msgid "midnight"
+msgstr "Mitternacht"
 
 msgid "docs_route_financial_reports"
 msgstr "finanzberichte"

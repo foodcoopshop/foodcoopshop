@@ -1,6 +1,7 @@
 <?php
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
+use Cake\ORM\TableRegistry;
 use Migrations\AbstractMigration;
 
 class IndividualSendOrderListDay extends AbstractMigration
@@ -10,8 +11,8 @@ class IndividualSendOrderListDay extends AbstractMigration
         
         $this->execute("
             ALTER TABLE `fcs_product`
-                ADD `delivery_rhythm_send_order_list_day_delta` VARCHAR(10) NULL AFTER `delivery_rhythm_order_possible_until`,
-                ADD `delivery_rhythm_send_order_list_day` DATE NULL AFTER `delivery_rhythm_send_order_list_day_delta`;
+                ADD `delivery_rhythm_send_order_list_weekday` VARCHAR(10) NULL AFTER `delivery_rhythm_order_possible_until`,
+                ADD `delivery_rhythm_send_order_list_day` DATE NULL AFTER `delivery_rhythm_send_order_list_weekday`;
         ");
         
         $weeklyPickupDay = Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta');
@@ -30,10 +31,10 @@ class IndividualSendOrderListDay extends AbstractMigration
         }
         $this->execute($sql);
         
-        $sendOrderListDayDelta = Configure::read('app.deliveryDayDelta');
+        TableRegistry::getTableLocator()->get('Configurations')->loadConfigurations();
         $this->execute("
-            UPDATE fcs_product SET delivery_rhythm_send_order_list_day_delta = " . $sendOrderListDayDelta . "
-                WHERE delivery_rhythm_type <> 'individual'
+            UPDATE fcs_product
+                SET delivery_rhythm_send_order_list_weekday = " . Configure::read('app.timeHelper')->getSendOrderListsWeekday() . "
         ");
         
     }

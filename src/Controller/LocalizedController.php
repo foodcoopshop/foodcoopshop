@@ -263,6 +263,8 @@ class LocalizedController extends Controller
                 'OrderPossibleUntil' => __('Order_possible_until'),
                 'InfoPageForDeliveryRhythm' => __('Info_page_for_delivery_rhythm'),
                 'DocsUrlOrderHandling' => Configure::read('app.htmlHelper')->getDocsUrl(__('docs_route_order_handling')),
+                'LastOrderWeekday' => __('Last_order_weekday'),
+                'SendOrderListDay' => __('Send_order_list_day'),
             ],
             'upload' => [
                 'delete' => __('delete'),

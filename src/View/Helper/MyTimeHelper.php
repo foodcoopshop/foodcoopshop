@@ -77,6 +77,15 @@ class MyTimeHelper extends TimeHelper
         return date($this->getI18Format('DatabaseAlt'));
     }
     
+    public function getNthWeekdayBeforeWeekday($n, $weekday)
+    {
+        $beforeWeekday = $weekday - $n;
+        if ($beforeWeekday < 0) {
+            $beforeWeekday += 7;
+        }
+        return $beforeWeekday;
+    }
+    
     public function getSendOrderListsWeekday()
     {
         $sendOrderListsWeekday = Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY') - Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA');
@@ -280,17 +289,28 @@ class MyTimeHelper extends TimeHelper
 
         return $date;
     }
+    
+    public function getWeekdaysWithSuffix($suffix)
+    {
+        $weekdays = $this->getWeekdays();
+        $i = 0;
+        foreach($weekdays as $weekday) {
+            $weekdays[$i] .= $suffix;
+            $i++;
+        }
+        return $weekdays;
+    }
 
     public function getWeekdays()
     {
         $weekdays = [
-          0 => __('Sunday'),
           1 => __('Monday'),
           2 => __('Tuesday'),
           3 => __('Wednesday'),
           4 => __('Thursday'),
           5 => __('Friday'),
-          6 => __('Saturday')
+          6 => __('Saturday'),
+          0 => __('Sunday')
         ];
         return $weekdays;
     }

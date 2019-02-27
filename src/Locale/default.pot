@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-02-19 11:24+0100\n"
+"POT-Creation-Date: 2019-02-27 11:32+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -828,6 +828,12 @@ msgid "Info_page_for_delivery_rhythm"
 msgstr ""
 
 msgid "docs_route_order_handling"
+msgstr ""
+
+msgid "Last_order_weekday"
+msgstr ""
+
+msgid "Send_order_list_day"
 msgstr ""
 
 msgid "delete"
