@@ -1065,16 +1065,16 @@
         },
         {
             "name": "studio-42/elfinder",
-            "version": "2.1.46",
+            "version": "2.1.48",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Studio-42/elFinder.git",
-                "reference": "67799d42e7ee0afd3ed13e95f935694a8b3820d1"
+                "reference": "0740028f6adc6505c5897cc740e51e4638d41d6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Studio-42/elFinder/zipball/67799d42e7ee0afd3ed13e95f935694a8b3820d1",
-                "reference": "67799d42e7ee0afd3ed13e95f935694a8b3820d1",
+                "url": "https://api.github.com/repos/Studio-42/elFinder/zipball/0740028f6adc6505c5897cc740e51e4638d41d6a",
+                "reference": "0740028f6adc6505c5897cc740e51e4638d41d6a",
                 "shasum": ""
             },
             "require": {
@@ -1119,7 +1119,7 @@
             ],
             "description": "File manager for web",
             "homepage": "http://elfinder.org",
-            "time": "2019-01-14T03:59:31+00:00"
+            "time": "2019-02-26T13:44:09+00:00"
         },
         {
             "name": "symfony/config",
