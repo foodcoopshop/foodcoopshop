@@ -32,8 +32,18 @@ class SendOrderListsShell extends AppShell
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
 
         $this->startTimeLogging();
-
+        
+        // $this->cronjobRunDay can is set in unit test
+        if (!isset($this->args[0])) {
+            $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+        } else {
+            $this->cronjobRunDay = $this->args[0];
+        }
+        $cronjobRunDay = $this->cronjobRunDay;
+        $cronjobRunDayWeekday = date('w', strtotime($this->cronjobRunDay));
+        
         $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateForSendOrderListsShell();
+
         $formattedPickupDay = Configure::read('app.timeHelper')->formatToDateShort($pickupDay);
 
         // 1) get all manufacturers (not only active ones)
@@ -46,13 +56,18 @@ class SendOrderListsShell extends AppShell
         // 2) get all order details with pickup day in the given date range
         $orderDetails = $this->OrderDetail->find('all', [
             'conditions' => [
-                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') = \'' . $pickupDay . '\'',
+                'OrderDetails.pickup_day = \'' . $pickupDay . '\'',
                 'OrderDetails.order_state' => ORDER_STATE_ORDER_PLACED
             ],
             'contain' => [
                 'Products'
             ]
-        ]);
+        ])->where(function ($exp, $query) use ($cronjobRunDayWeekday, $cronjobRunDay) {
+            return $exp->or_([
+                '(Products.delivery_rhythm_type <> \'individual\' AND Products.delivery_rhythm_send_order_list_weekday = ' . $cronjobRunDayWeekday . ')',
+                '(Products.delivery_rhythm_type = \'individual\' AND DATE_FORMAT(Products.delivery_rhythm_send_order_list_day, \'%Y-%m-%d\') = \'' . $cronjobRunDay . '\')'
+            ]);
+        });
         
         // 3) add up the order detail by manufacturer
         $manufacturerOrders = [];
@@ -75,7 +90,6 @@ class SendOrderListsShell extends AppShell
 
         $this->initHttpClient();
         $this->httpClient->doFoodCoopShopLogin();
-
         foreach ($manufacturers as $manufacturer) {
             $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer->bulk_orders_allowed);
             $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);

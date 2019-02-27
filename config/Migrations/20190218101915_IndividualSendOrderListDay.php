@@ -36,6 +36,9 @@ class IndividualSendOrderListDay extends AbstractMigration
             UPDATE fcs_product
                 SET delivery_rhythm_send_order_list_weekday = " . Configure::read('app.timeHelper')->getSendOrderListsWeekday() . "
         ");
+        $this->execute("
+            UPDATE `fcs_cronjobs` SET `time_interval` = 'day', `weekday` = NULL WHERE `fcs_cronjobs`.`name` = 'SendOrderLists';
+        ");
         
     }
 }
