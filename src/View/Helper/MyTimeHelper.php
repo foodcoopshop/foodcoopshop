@@ -86,6 +86,15 @@ class MyTimeHelper extends TimeHelper
         return $beforeWeekday;
     }
     
+    public function getNthWeekdayAfterWeekday($n, $weekday)
+    {
+        $beforeWeekday = $weekday + $n;
+        if ($beforeWeekday > 6) {
+            $beforeWeekday -= 7;
+        }
+        return $beforeWeekday;
+    }
+    
     public function getSendOrderListsWeekday()
     {
         $sendOrderListsWeekday = Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY') - Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA');

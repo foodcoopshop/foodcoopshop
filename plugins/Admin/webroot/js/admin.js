@@ -683,7 +683,9 @@ foodcoopshop.Admin = {
                     productIds: productIds,
                     deliveryRhythmType: $('#dialogDeliveryRhythmType').val(),
                     deliveryRhythmFirstDeliveryDay: $('#dialogDeliveryRhythmFirstDeliveryDay').val(),
-                    deliveryRhythmOrderPossibleUntil: $('#dialogDeliveryRhythmOrderPossibleUntil').val()
+                    deliveryRhythmOrderPossibleUntil: $('#dialogDeliveryRhythmOrderPossibleUntil').val(),
+                    deliveryRhythmSendOrderListWeekday: $('#dialogDeliveryRhythmSendOrderListWeekday').val(),
+                    deliveryRhythmSendOrderListDay: $('#dialogDeliveryRhythmSendOrderListDay').val()
                 };
                 
                 foodcoopshop.Helper.ajaxCall(
@@ -737,7 +739,6 @@ foodcoopshop.Admin = {
         var select = $('#' + dialogId + ' #dialogDeliveryRhythmSendOrderListWeekday');
         select.find('option').remove();
         select.append($('#weekdays').html());
-        console.log('selectedSendOrderListWeekday:  ' + selectedSendOrderListWeekday);
         select.val(selectedSendOrderListWeekday);
         select.trigger('change');
 
