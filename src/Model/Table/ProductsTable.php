@@ -156,7 +156,13 @@ class ProductsTable extends AppTable
         if (is_null($currentDay)) {
             $currentDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
         }
-        $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($currentDay);
+        
+        $sendOrderListsWeekday = null;
+        if (!is_null($product->delivery_rhythm_send_order_list_weekday)) {
+            $sendOrderListsWeekday = $product->delivery_rhythm_send_order_list_weekday;
+        }
+        
+        $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($currentDay, $sendOrderListsWeekday, $product->delivery_rhythm_type, $product->delivery_rhythm_count);
         
         if ($product->is_stock_product) {
             return $pickupDay;

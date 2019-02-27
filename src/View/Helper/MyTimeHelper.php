@@ -168,9 +168,12 @@ class MyTimeHelper extends TimeHelper
         return $nextDeliveryDays;
     }
     
-    public function getDbFormattedPickupDayByDbFormattedDate($date)
+    public function getDbFormattedPickupDayByDbFormattedDate($date, $sendOrderListsWeekday = null, $deliveryRhythmType = null, $deliveryRhythmCount = null)
     {
-        $pickupDay = $this->getDeliveryDay(strtotime($date));
+        if (is_null($sendOrderListsWeekday)) {
+            $sendOrderListsWeekday = $this->getSendOrderListsWeekday();
+        }
+        $pickupDay = $this->getDeliveryDay(strtotime($date), $sendOrderListsWeekday, $deliveryRhythmType, $deliveryRhythmCount);
         $pickupDay = date(Configure::read('DateFormat.DatabaseAlt'), $pickupDay);
         return $pickupDay;
     }
@@ -183,8 +186,14 @@ class MyTimeHelper extends TimeHelper
         return $deliveryDay;
     }
 
-    public function getDeliveryDay($orderDay)
+    public function getDeliveryDay($orderDay, $sendOrderListsWeekday = null, $deliveryRhythmType = null, $deliveryRhythmCount = null)
     {
+        if (is_null($deliveryRhythmType)) {
+            $deliveryRhythmType = 'week';
+        }
+        if (is_null($deliveryRhythmCount)) {
+            $deliveryRhythmCount = 1;
+        }
         $daysToAddToOrderPeriodLastDay = Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') + 1;
         $deliveryDate = strtotime($this->getOrderPeriodLastDay($orderDay) . '+' . $daysToAddToOrderPeriodLastDay . ' days');
         
@@ -193,9 +202,13 @@ class MyTimeHelper extends TimeHelper
         
         $weekdayOrderDay = $this->formatAsWeekday($orderDay);
         
-        if ($weekdayOrderDay >= $this->getSendOrderListsWeekday() && $weekdayOrderDay <= $weekdayDeliveryDate) {
+        if (is_null($sendOrderListsWeekday)) {
+            $sendOrderListsWeekday = $this->getSendOrderListsWeekday();
+        }
+        
+        if ($weekdayOrderDay >= $sendOrderListsWeekday && $weekdayOrderDay <= $weekdayDeliveryDate && $deliveryRhythmType != 'individual') {
             $preparedOrderDay = date($this->getI18Format('DateShortAlt'), $orderDay);
-            $deliveryDate = strtotime($preparedOrderDay . '+ 1 week ' . $weekdayStringDeliveryDate);
+            $deliveryDate = strtotime($preparedOrderDay . '+ ' . $deliveryRhythmCount .  ' ' . $deliveryRhythmType . $weekdayStringDeliveryDate);
         }
         
         return $deliveryDate;
