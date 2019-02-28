@@ -88,6 +88,34 @@ class SendOrderListsShellTest extends AppCakeTestCase
             ]
         );
     }
+    
+    public function testSendOrderListsIfMorerOrdersAvailable()
+    {
+        $this->markTestSkipped();
+        
+        $cronjobRunDay = '2018-01-31';
+        
+        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+        
+        $this->assertOrderDetailState(1, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState(2, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState(3, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(2, count($emailLogs), 'amount of sent emails wrong');
+        $this->assertEmailLogs(
+            $emailLogs[1],
+            'Bestellungen für den',
+            [
+                'im Anhang findest du zwei Bestelllisten',
+                'Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test.pdf',
+                'Content-Type: application/pdf'
+            ],
+            [
+                Configure::read('test.loginEmailVegetableManufacturer')
+            ]
+        );
+    }
 
     public function testSendOrderListsWithIndividualSendOrderListWeekday()
     {
