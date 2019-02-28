@@ -69,6 +69,33 @@ class OrderDetailsTable extends AppTable
         return $validator;
     }
     
+    public function getOrderDetailsForOrderListPreview($pickupDay)
+    {
+        $query = $this->find('all', [
+            'conditions' => [
+                'OrderDetails.pickup_day = \'' . $pickupDay . '\'',
+            ],
+            'contain' => [
+                'Products'
+            ]
+        ]);
+        return $query;
+    }
+    
+    public function getOrderDetailsForSendingOrderLists($pickupDay, $cronjobRunDay)
+    {
+        $cronjobRunDayWeekday = date('w', strtotime($cronjobRunDay));
+        $query = $this->getOrderDetailsForOrderListPreview($cronjobRunDay);
+        $query->where(['OrderDetails.order_state' => ORDER_STATE_ORDER_PLACED]);
+        $query->where(function ($exp, $query) use ($cronjobRunDayWeekday, $cronjobRunDay) {
+            return $exp->or_([
+                '(Products.delivery_rhythm_type <> \'individual\' AND Products.delivery_rhythm_send_order_list_weekday = ' . $cronjobRunDayWeekday . ')',
+//                 '(Products.delivery_rhythm_type = \'individual\' AND DATE_FORMAT(Products.delivery_rhythm_send_order_list_day, \'%Y-%m-%d\') = \'' . $cronjobRunDay . '\')'
+            ]);
+        });
+        return $query;
+    }
+    
     /**
      * @param int $customerId
      * @return array

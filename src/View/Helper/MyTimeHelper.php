@@ -104,33 +104,6 @@ class MyTimeHelper extends TimeHelper
         return $sendOrderListsWeekday;
     }
 
-    /**
-     * should be called only once per request!
-     * only implemented for requests on getWeekdaysBetweenOrderSendAndDelivery days
-     * the rest of the days the date is nonsense!
-     */
-    public function recalcDeliveryDayDelta()
-    {
-        $sendOrderListsWeekday = $this->getSendOrderListsWeekday();
-        switch (date('N')) {
-            case $sendOrderListsWeekday: // today is $sendOrderListsWeekday
-                $newDeliveryDelta = Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA');
-                break;
-            case $sendOrderListsWeekday + 1:
-                $newDeliveryDelta = Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') - 1;
-                break;
-            case $sendOrderListsWeekday + 2:
-                $newDeliveryDelta = Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') - 2;
-                break;
-            case $sendOrderListsWeekday + 3:
-                $newDeliveryDelta = Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') - 3;
-                break;
-        }
-        if (isset($newDeliveryDelta)) {
-            Configure::write('app.deliveryDayDelta', $newDeliveryDelta);
-        }
-    }
-
     public function getDeliveryDateByCurrentDayForDb()
     {
         $deliveryDate = self::getDeliveryDayByCurrentDay();

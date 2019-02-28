@@ -39,8 +39,6 @@ class SendOrderListsShell extends AppShell
         } else {
             $this->cronjobRunDay = $this->args[0];
         }
-        $cronjobRunDay = $this->cronjobRunDay;
-        $cronjobRunDayWeekday = date('w', strtotime($this->cronjobRunDay));
         
         $pickupDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($this->cronjobRunDay));
         $formattedPickupDay = Configure::read('app.timeHelper')->formatToDateShort($pickupDay);
@@ -53,20 +51,7 @@ class SendOrderListsShell extends AppShell
         ])->toArray();
 
         // 2) get all order details with pickup day in the given date range
-        $orderDetails = $this->OrderDetail->find('all', [
-            'conditions' => [
-                'OrderDetails.pickup_day = \'' . $pickupDay . '\'',
-                'OrderDetails.order_state' => ORDER_STATE_ORDER_PLACED
-            ],
-            'contain' => [
-                'Products'
-            ]
-        ])->where(function ($exp, $query) use ($cronjobRunDayWeekday, $cronjobRunDay) {
-            return $exp->or_([
-                '(Products.delivery_rhythm_type <> \'individual\' AND Products.delivery_rhythm_send_order_list_weekday = ' . $cronjobRunDayWeekday . ')',
-//                 '(Products.delivery_rhythm_type = \'individual\' AND DATE_FORMAT(Products.delivery_rhythm_send_order_list_day, \'%Y-%m-%d\') = \'' . $cronjobRunDay . '\')'
-            ]);
-        });
+        $orderDetails = $this->OrderDetail->getOrderDetailsForSendingOrderLists($pickupDay, $this->cronjobRunDay);
             
         // 3) add up the order detail by manufacturer
         $manufacturerOrders = [];
@@ -95,7 +80,7 @@ class SendOrderListsShell extends AppShell
             if (!empty($manufacturer->order_detail_amount_sum) && $sendOrderList && !$bulkOrdersAllowed) {
                 $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->order_detail_amount_sum]);
                 $outString .= ' - ' . $manufacturer->name . ': ' . $productString . ' / ' . Configure::read('app.numberHelper')->formatAsCurrency($manufacturer->order_detail_price_sum) . '<br />';
-                $url = $this->httpClient->adminPrefix . '/manufacturers/sendOrderList?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $formattedPickupDay . '&dateTo=' . $formattedPickupDay;
+                $url = $this->httpClient->adminPrefix . '/manufacturers/sendOrderList?manufacturerId=' . $manufacturer->id_manufacturer . '&pickupDay=' . $formattedPickupDay . '&cronjobRunDay=' . $this->cronjobRunDay;
                 $this->httpClient->get($url);
                 $i ++;
             }

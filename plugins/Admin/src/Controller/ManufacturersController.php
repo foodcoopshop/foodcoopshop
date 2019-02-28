@@ -438,11 +438,10 @@ class ManufacturersController extends AdminAppController
     {
 
         $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
-        $dateFrom = $this->getRequest()->getQuery('dateFrom');
-        $dateTo = $this->getRequest()->getQuery('dateTo');
-
-        Configure::read('app.timeHelper')->recalcDeliveryDayDelta();
-
+        $pickupDay = $this->getRequest()->getQuery('pickupDay');
+        $cronjobRunDay = $this->getRequest()->getQuery('cronjobRunDay');
+        $pickupDayDbFormat = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
+        
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
@@ -453,10 +452,20 @@ class ManufacturersController extends AdminAppController
             ]
         ])->first();
 
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $orderDetails = $this->OrderDetail->getOrderDetailsForSendingOrderLists($pickupDayDbFormat, $cronjobRunDay);
+        $orderDetails->where(['Products.id_manufacturer' => $manufacturerId]);
+        $orderDetailIds = $orderDetails->all()->extract('id_order_detail')->toArray();
+        
+        if (empty($orderDetailIds)) {
+            // do not throw exception because no debug mails wanted
+            die(__d('admin', 'No_orders_within_the_given_time_range.'));
+        }
+        
         $validOrderStates = [ORDER_STATE_ORDER_PLACED];
         
         // generate and save PDF - should be done here because count of results will be checked
-        $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $validOrderStates, 'F');
+        $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $pickupDay, null, [], 'F', $orderDetailIds);
 
         // no orders in current period => do not send pdf but send information email
         if (count($productResults) == 0) {
@@ -469,7 +478,7 @@ class ManufacturersController extends AdminAppController
             $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') . ' day')), __d('admin', 'product'));
 
             // generate order list by customer
-            $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, $validOrderStates, 'F');
+            $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $pickupDay, null, [], 'F', $orderDetailIds);
             $this->render('get_order_list_by_customer');
             $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') . ' day')), __d('admin', 'member'));
 
@@ -478,7 +487,7 @@ class ManufacturersController extends AdminAppController
 
             $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
             $orderDetailIds = Hash::extract($customerResults, '{n}.OrderDetailId');
-            $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturerId, $orderDetailIds);
+            $this->OrderDetail->updateOrderState($pickupDay, $pickupDay, $validOrderStates, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturerId, $orderDetailIds);
             
             $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}.', ['<b>'.$manufacturer->name.'</b>']);
 
@@ -701,9 +710,9 @@ class ManufacturersController extends AdminAppController
         $this->set('manufacturer', $manufacturer);
     }
 
-    private function prepareInvoiceOrOrderList($manufacturerId, $groupType, $dateFrom, $dateTo, $orderState, $saveParam = 'I')
+    private function prepareInvoiceOrOrderList($manufacturerId, $groupType, $dateFrom, $dateTo, $orderState, $saveParam = 'I', $orderDetailIds = [])
     {
-        $results = $this->Manufacturer->getDataForInvoiceOrOrderList($manufacturerId, $groupType, $dateFrom, $dateTo, $orderState, Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES'));
+        $results = $this->Manufacturer->getDataForInvoiceOrOrderList($manufacturerId, $groupType, $dateFrom, $dateTo, $orderState, Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES'), $orderDetailIds);
         if (empty($results)) {
             // do not throw exception because no debug mails wanted
             die(__d('admin', 'No_orders_within_the_given_time_range.'));
@@ -759,25 +768,37 @@ class ManufacturersController extends AdminAppController
             // do not throw exception because no debug mails wanted
             die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }
-        $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, []);
+        $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, [], 'I', []);
     }
 
     public function getOrderListByProduct()
     {
-        $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
-        $dateFrom = $this->getRequest()->getQuery('dateFrom');
-        $dateTo = null;
-        $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
-        $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $orderStates);
+        $this->getOrderList('product');
     }
 
     public function getOrderListByCustomer()
     {
+        $this->getOrderList('customer');
+    }
+    
+    private function getOrderList($type)
+    {
         $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
-        $dateFrom = $this->getRequest()->getQuery('dateFrom');
-        $dateTo = $this->getRequest()->getQuery('dateTo');
-        $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
-        $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, $orderStates);
+        $pickupDay = $this->getRequest()->getQuery('pickupDay');
+        $pickupDayDbFormat = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
+        
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $orderDetails = $this->OrderDetail->getOrderDetailsForOrderListPreview($pickupDayDbFormat);
+        $orderDetails->where(['Products.id_manufacturer' => $manufacturerId]);
+        $orderDetailIds = $orderDetails->all()->extract('id_order_detail')->toArray();
+        
+        if (empty($orderDetailIds)) {
+            // do not throw exception because no debug mails wanted
+            die(__d('admin', 'No_orders_within_the_given_time_range.'));
+        }
+        
+        $this->prepareInvoiceOrOrderList($manufacturerId, $type, $pickupDay, null, [], 'I', $orderDetailIds);
+        
     }
 
 }
