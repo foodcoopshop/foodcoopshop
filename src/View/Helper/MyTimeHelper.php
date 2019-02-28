@@ -178,9 +178,9 @@ class MyTimeHelper extends TimeHelper
         return $pickupDay;
     }
 
-    public function getDeliveryDateForSendOrderListsShell()
+    public function getDeliveryDateForSendOrderListsShell($date)
     {
-        $formattedToday = date(Configure::read('DateFormat.DatabaseAlt'), $this->getCurrentDay());
+        $formattedToday = date(Configure::read('DateFormat.DatabaseAlt'), $date);
         $deliveryDay = strtotime($formattedToday . '+' . Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') . ' days');
         $deliveryDay = date($this->getI18Format('DatabaseAlt'), $deliveryDay);
         return $deliveryDay;

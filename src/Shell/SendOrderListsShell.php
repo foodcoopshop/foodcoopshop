@@ -42,7 +42,7 @@ class SendOrderListsShell extends AppShell
         $cronjobRunDay = $this->cronjobRunDay;
         $cronjobRunDayWeekday = date('w', strtotime($this->cronjobRunDay));
         
-        $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateForSendOrderListsShell();
+        $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateForSendOrderListsShell(strtotime($this->cronjobRunDay));
 
         $formattedPickupDay = Configure::read('app.timeHelper')->formatToDateShort($pickupDay);
 

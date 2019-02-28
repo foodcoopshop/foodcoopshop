@@ -13,8 +13,6 @@ use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 
 /**
- * ManufacturersController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
