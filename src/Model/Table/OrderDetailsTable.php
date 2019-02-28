@@ -85,7 +85,7 @@ class OrderDetailsTable extends AppTable
     public function getOrderDetailsForSendingOrderLists($pickupDay, $cronjobRunDay)
     {
         $cronjobRunDayWeekday = date('w', strtotime($cronjobRunDay));
-        $query = $this->getOrderDetailsForOrderListPreview($cronjobRunDay);
+        $query = $this->getOrderDetailsForOrderListPreview($pickupDay);
         $query->where(['OrderDetails.order_state' => ORDER_STATE_ORDER_PLACED]);
         $query->where(function ($exp, $query) use ($cronjobRunDayWeekday, $cronjobRunDay) {
             return $exp->or_([
