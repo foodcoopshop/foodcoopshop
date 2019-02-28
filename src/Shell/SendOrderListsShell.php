@@ -42,8 +42,7 @@ class SendOrderListsShell extends AppShell
         $cronjobRunDay = $this->cronjobRunDay;
         $cronjobRunDayWeekday = date('w', strtotime($this->cronjobRunDay));
         
-        $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateForSendOrderListsShell(strtotime($this->cronjobRunDay));
-
+        $pickupDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($this->cronjobRunDay));
         $formattedPickupDay = Configure::read('app.timeHelper')->formatToDateShort($pickupDay);
 
         // 1) get all manufacturers (not only active ones)
@@ -65,10 +64,10 @@ class SendOrderListsShell extends AppShell
         ])->where(function ($exp, $query) use ($cronjobRunDayWeekday, $cronjobRunDay) {
             return $exp->or_([
                 '(Products.delivery_rhythm_type <> \'individual\' AND Products.delivery_rhythm_send_order_list_weekday = ' . $cronjobRunDayWeekday . ')',
-                '(Products.delivery_rhythm_type = \'individual\' AND DATE_FORMAT(Products.delivery_rhythm_send_order_list_day, \'%Y-%m-%d\') = \'' . $cronjobRunDay . '\')'
+//                 '(Products.delivery_rhythm_type = \'individual\' AND DATE_FORMAT(Products.delivery_rhythm_send_order_list_day, \'%Y-%m-%d\') = \'' . $cronjobRunDay . '\')'
             ]);
         });
-        
+            
         // 3) add up the order detail by manufacturer
         $manufacturerOrders = [];
         foreach ($orderDetails as $orderDetail) {

@@ -244,10 +244,15 @@ class MyTimeHelper extends TimeHelper
         return Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY');
     }
     
-    public function getPreselectedDeliveryDayForOrderDetails($day)
+    public function getNextDeliveryDay($day)
     {
         $orderPeriodFirstDay = $this->getOrderPeriodFirstDay($day);
-        return date($this->getI18Format('DateShortAlt'), $this->getDeliveryDay(strtotime($orderPeriodFirstDay)));
+        return date($this->getI18Format('DatabaseAlt'), $this->getDeliveryDay(strtotime($orderPeriodFirstDay)));
+    }
+    
+    public function getFormattedNextDeliveryDay($day)
+    {
+        return date($this->getI18Format('DateShortAlt'), strtotime($this->getNextDeliveryDay($day)));
     }
 
     /**

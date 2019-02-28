@@ -11,6 +11,7 @@ use Cake\Filesystem\Folder;
 use Cake\Http\Exception\NotFoundException;
 use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -255,13 +256,13 @@ class ManufacturersController extends AdminAppController
 
     public function index()
     {
-        $dateFrom = Configure::read('app.timeHelper')->getPreselectedDeliveryDayForOrderDetails(Configure::read('app.timeHelper')->getCurrentDay());
+        $dateFrom = Configure::read('app.timeHelper')->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
             $dateFrom = $this->getRequest()->getQuery('dateFrom');
         }
         $this->set('dateFrom', $dateFrom);
 
-        $dateTo = Configure::read('app.timeHelper')->getPreselectedDeliveryDayForOrderDetails(Configure::read('app.timeHelper')->getCurrentDay());
+        $dateTo = Configure::read('app.timeHelper')->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
         if (! empty($this->getRequest()->getQuery('dateTo'))) {
             $dateTo = $this->getRequest()->getQuery('dateTo');
         }
@@ -476,7 +477,8 @@ class ManufacturersController extends AdminAppController
             $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
 
             $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-            $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturerId);
+            $orderDetailIds = Hash::extract($customerResults, '{n}.OrderDetailId');
+            $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturerId, $orderDetailIds);
             
             $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}.', ['<b>'.$manufacturer->name.'</b>']);
 

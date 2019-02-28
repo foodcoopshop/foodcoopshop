@@ -127,7 +127,7 @@ class OrderDetailsTable extends AppTable
         return $query->toArray();
     }
     
-    public function updateOrderState($dateFrom, $dateTo, $oldOrderStates, $newOrderState, $manufacturerId)
+    public function updateOrderState($dateFrom, $dateTo, $oldOrderStates, $newOrderState, $manufacturerId, $orderDetailIds = [])
     {
         
         // update with condition on association does not work with ->update or ->updateAll
@@ -142,6 +142,10 @@ class OrderDetailsTable extends AppTable
                 'Products'
             ]
         ]);
+        
+        if (!empty($orderDetailIds)) {
+            $orderDetails->where(['OrderDetails.id_order_detail IN (' . join(', ', $orderDetailIds) . ')']);
+        }
         
         foreach($orderDetails as $orderDetail) {
             $this->save(
