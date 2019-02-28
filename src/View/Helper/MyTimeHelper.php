@@ -181,7 +181,7 @@ class MyTimeHelper extends TimeHelper
         
         if ($weekdayOrderDay >= $sendOrderListsWeekday && $weekdayOrderDay <= $weekdayDeliveryDate && $deliveryRhythmType != 'individual') {
             $preparedOrderDay = date($this->getI18Format('DateShortAlt'), $orderDay);
-            $deliveryDate = strtotime($preparedOrderDay . '+ ' . $deliveryRhythmCount .  ' ' . $deliveryRhythmType . $weekdayStringDeliveryDate);
+            $deliveryDate = strtotime($preparedOrderDay . '+ ' . $deliveryRhythmCount .  ' ' . $deliveryRhythmType . ' ' . $weekdayStringDeliveryDate);
         }
         
         return $deliveryDate;
