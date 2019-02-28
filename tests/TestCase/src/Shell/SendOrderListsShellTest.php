@@ -89,10 +89,8 @@ class SendOrderListsShellTest extends AppCakeTestCase
         );
     }
     
-    public function testSendOrderListsIfMorerOrdersAvailable()
+    public function testSendOrderListsIfMoreOrdersAvailable()
     {
-        $this->markTestSkipped();
-        
         $cronjobRunDay = '2018-01-31';
         
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
@@ -102,7 +100,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->assertOrderDetailState(3, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
         
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(2, count($emailLogs), 'amount of sent emails wrong');
+        $this->assertEquals(3, count($emailLogs), 'amount of sent emails wrong');
         $this->assertEmailLogs(
             $emailLogs[1],
             'Bestellungen für den',
