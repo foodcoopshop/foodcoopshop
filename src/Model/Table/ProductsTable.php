@@ -829,7 +829,10 @@ class ProductsTable extends AppTable
             $product->gross_price = $this->getGrossPrice($product->id_product, $product->price);
             
             $product->delivery_rhythm_string = Configure::read('app.htmlHelper')->getDeliveryRhythmString($product->is_stock_product, $product->delivery_rhythm_type, $product->delivery_rhythm_count);
-
+            $product->last_order_weekday = Configure::read('app.timeHelper')->getWeekdayName(
+                Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, $product->delivery_rhythm_send_order_list_weekday)
+            );
+            
             $rowClass = [];
             if (! $product->active) {
                 $rowClass[] = 'deactivated';
@@ -991,7 +994,6 @@ class ProductsTable extends AppTable
                 }
             }
         }
-
         $preparedProducts = json_decode(json_encode($preparedProducts), false); // convert array recursively into object
 
         return $preparedProducts;

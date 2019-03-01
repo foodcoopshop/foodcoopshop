@@ -87,7 +87,9 @@ foodcoopshop.SyncProductData = {
                 delivery_rhythm_type: 'delivery_rhythm_type',
                 delivery_rhythm_count: 'delivery_rhythm_count',
                 delivery_rhythm_first_delivery_day: 'delivery_rhythm_first_delivery_day',
-                delivery_rhythm_order_possible_until: 'delivery_rhythm_order_possible_until'
+                delivery_rhythm_order_possible_until: 'delivery_rhythm_order_possible_until',
+                delivery_rhythm_order_send_order_list_weekday: 'delivery_rhythm_order_send_order_list_weekday',
+                delivery_rhythm_order_send_order_list_day: 'delivery_rhythm_order_send_order_list_day'
             },
             column: 8
         },
@@ -226,7 +228,9 @@ foodcoopshop.SyncProductData = {
                             product.delivery_rhythm_type,
                             product.delivery_rhythm_count,
                             product.delivery_rhythm_first_delivery_day,
-                            product.delivery_rhythm_order_possible_until
+                            product.delivery_rhythm_order_possible_until,
+                            product.last_order_weekday,
+                            product.delivery_rhythm_send_order_list_day
                         );
                 }
             tableData += '</td>';
