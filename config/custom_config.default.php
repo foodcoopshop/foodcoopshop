@@ -69,6 +69,13 @@ return [
          */
         'cookieKey' => '',
 
+        /**
+         * @deprecated since v2.4
+         * deliveryDayDelta is replaced by the new database setting FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA
+         * migration: 20190218101915_IndividualSendOrderListDay.php
+         */
+        //'deliveryDayDelta' => 2,
+        
         'discourseSsoEnabled' => false,
 
         /**
