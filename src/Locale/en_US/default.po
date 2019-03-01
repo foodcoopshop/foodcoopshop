@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-03-01 09:41+0100\n"
-"PO-Revision-Date: 2019-03-01 09:41+0100\n"
+"POT-Creation-Date: 2019-03-01 09:57+0100\n"
+"PO-Revision-Date: 2019-03-01 09:57+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1856,6 +1856,9 @@ msgstr "New"
 
 msgid "More_infos_to_product_{0}"
 msgstr "More infos to product {0}"
+
+msgid "Last_order_day"
+msgstr "Last order day"
 
 msgid "Instant_order"
 msgstr "Instant order"
