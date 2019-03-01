@@ -492,7 +492,7 @@ class ManufacturersController extends AdminAppController
             $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}.', ['<b>'.$manufacturer->name.'</b>']);
 
             if ($sendEmail) {
-                $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{1}.', ['<b>'.$manufacturer->name.'</b>'. $manufacturer->address_manufacturer->email]);
+                $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{1}.', ['<b>'.$manufacturer->name.'</b>', $manufacturer->address_manufacturer->email]);
                 $email = new AppEmail();
                 $email->viewBuilder()->setTemplate('Admin.send_order_list');
                 $email->setTo($manufacturer->address_manufacturer->email)
