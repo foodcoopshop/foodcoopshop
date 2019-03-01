@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-02-27 16:22+0100\n"
-"PO-Revision-Date: 2019-02-27 11:30+0100\n"
+"POT-Creation-Date: 2019-03-01 09:41+0100\n"
+"PO-Revision-Date: 2019-03-01 09:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -207,6 +207,9 @@ msgstr "Invoice for manufacturer {0} successfully sent to {1}."
 msgid "Invoice_number_abbreviataion_{0}_{1}"
 msgstr "Invoice nº {0}, {1}"
 
+msgid "No_orders_within_the_given_time_range."
+msgstr "No orders within the given time range"
+
 msgid "Order_lists_successfully_generated_for_manufacturer_{0}."
 msgstr "Order lists successfully generated for manufacturer {0}."
 
@@ -224,9 +227,6 @@ msgstr "The settings of manufacturer {0} have been changed."
 
 msgid "Your_settings_have_been_changed."
 msgstr "Your settings have been changed."
-
-msgid "No_orders_within_the_given_time_range."
-msgstr "No orders within the given time range"
 
 msgid "No_member_found_with_id_{0}."
 msgstr "No member found with id {0}."
@@ -1158,16 +1158,14 @@ msgstr "change delivery rhythm"
 msgid "delivery_rhythm_from"
 msgstr "beginning"
 
-#, fuzzy
 msgid "Last_order_weekday"
-msgstr "Last order date"
+msgstr "Last order weekday"
 
 msgid "midnight"
 msgstr "midnight"
 
-#, fuzzy
 msgid "Send_order_list_day"
-msgstr "Test order list"
+msgstr "Send order list day"
 
 msgid "change_deposit"
 msgstr "change deposit"

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-02-27 16:22+0100\n"
-"PO-Revision-Date: 2019-02-27 11:30+0100\n"
+"POT-Creation-Date: 2019-03-01 09:41+0100\n"
+"PO-Revision-Date: 2019-03-01 09:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -207,6 +207,9 @@ msgstr "Rechnung für Hersteller {0} erfolgreich versendet an {1}."
 msgid "Invoice_number_abbreviataion_{0}_{1}"
 msgstr "Rechnung Nr. {0}, {1}"
 
+msgid "No_orders_within_the_given_time_range."
+msgstr "Keine offenen Bestellungen im angegebenen Zeitraum."
+
 msgid "Order_lists_successfully_generated_for_manufacturer_{0}."
 msgstr "Bestelllisten für Hersteller {0} erfolgreich generiert."
 
@@ -224,9 +227,6 @@ msgstr "Die Einstellungen des Herstellers {0} wurden erfolgreich gespeichert."
 
 msgid "Your_settings_have_been_changed."
 msgstr "Deine Einstellungen wurden erfolgreich gespeichert."
-
-msgid "No_orders_within_the_given_time_range."
-msgstr "Keine offenen Bestellungen im angegebenen Zeitraum."
 
 msgid "No_member_found_with_id_{0}."
 msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
@@ -1158,16 +1158,14 @@ msgstr "Lieferrhythmus ändern"
 msgid "delivery_rhythm_from"
 msgstr "ab"
 
-#, fuzzy
 msgid "Last_order_weekday"
-msgstr "Letztes Bestell-Datum"
+msgstr "Bestellschluss"
 
 msgid "midnight"
 msgstr "Mitternacht"
 
-#, fuzzy
 msgid "Send_order_list_day"
-msgstr "Bestellliste prüfen"
+msgstr "Bestellliste versenden am"
 
 msgid "change_deposit"
 msgstr "Pfand ändern"

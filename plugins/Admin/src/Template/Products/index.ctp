@@ -291,7 +291,7 @@ use Cake\Core\Configure;
         echo $this->Form->control('Weekdays', [
             'type' => 'select',
             'label' => '',
-            'options' => $this->Time->getWeekdaysWithSuffix(' ' . __d('admin', 'midnight'))
+            'options' => $this->Time->getSendOrderListsWeekdayOptions()
         ]);
     echo '</div>';
     

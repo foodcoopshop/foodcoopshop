@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-03-01 09:22+0100\n"
-"PO-Revision-Date: 2019-03-01 09:28+0100\n"
+"POT-Creation-Date: 2019-03-01 09:41+0100\n"
+"PO-Revision-Date: 2019-03-01 09:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2117,6 +2117,12 @@ msgstr "inactive"
 
 msgid "active_state_all"
 msgstr "all"
+
+msgid "midnight"
+msgstr "midnight"
+
+msgid "default_value"
+msgstr "default value"
 
 msgid "price_will_be_eventually_adapted."
 msgstr "price will be eventually adapted."

@@ -290,27 +290,27 @@ class MyTimeHelper extends TimeHelper
         return $date;
     }
     
-    public function getWeekdaysWithSuffix($suffix)
+    public function getSendOrderListsWeekdayOptions()
     {
-        $weekdays = $this->getWeekdays();
-        $i = 0;
-        foreach($weekdays as $weekday) {
-            $weekdays[$i] .= $suffix;
-            $i++;
-        }
-        return $weekdays;
+        $defaultSendOrderListsWeekday = $this->getSendOrderListsWeekday();
+        $weekday2 = $this->getNthWeekdayBeforeWeekday(2, $defaultSendOrderListsWeekday);
+        $weekday1 = $this->getNthWeekdayBeforeWeekday(1, $defaultSendOrderListsWeekday);
+        return [
+            $weekday2 => $this->getWeekdayName($weekday2) . ' ' . __('midnight'),
+            $weekday1 => $this->getWeekdayName($weekday1) . ' ' . __('midnight') . ' (' . __('default_value') . ')'
+        ];
     }
 
     public function getWeekdays()
     {
         $weekdays = [
+          0 => __('Sunday'),
           1 => __('Monday'),
           2 => __('Tuesday'),
           3 => __('Wednesday'),
           4 => __('Thursday'),
           5 => __('Friday'),
-          6 => __('Saturday'),
-          0 => __('Sunday')
+          6 => __('Saturday')
         ];
         return $weekdays;
     }

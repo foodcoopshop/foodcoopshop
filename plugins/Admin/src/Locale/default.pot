@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-02-27 16:22+0100\n"
+"POT-Creation-Date: 2019-03-01 09:41+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -206,6 +206,9 @@ msgstr ""
 msgid "Invoice_number_abbreviataion_{0}_{1}"
 msgstr ""
 
+msgid "No_orders_within_the_given_time_range."
+msgstr ""
+
 msgid "Order_lists_successfully_generated_for_manufacturer_{0}."
 msgstr ""
 
@@ -222,9 +225,6 @@ msgid "The_settings_of_manufacturer_{0}_have_been_changed."
 msgstr ""
 
 msgid "Your_settings_have_been_changed."
-msgstr ""
-
-msgid "No_orders_within_the_given_time_range."
 msgstr ""
 
 msgid "No_member_found_with_id_{0}."
