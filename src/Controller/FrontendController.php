@@ -55,6 +55,8 @@ class FrontendController extends AppController
                         'delivery_rhythm_first_delivery_day' => $product['delivery_rhythm_first_delivery_day'] == '' ? null : new FrozenDate($product['delivery_rhythm_first_delivery_day']),
                         'delivery_rhythm_type' => $product['delivery_rhythm_type'],
                         'delivery_rhythm_count' => $product['delivery_rhythm_count'],
+                        'delivery_rhythm_send_order_list_weekday' => $product['delivery_rhythm_send_order_list_weekday'],
+                        'delivery_rhythm_send_order_list_day' => $product['delivery_rhythm_send_order_list_day'],
                         'is_stock_product' => $product['is_stock_product']
                     ]
                 ));
