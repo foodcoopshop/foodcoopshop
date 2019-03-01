@@ -75,7 +75,7 @@ if ($product['description'] != '') {
         echo '<span class="last-order-day">';
             echo __('Last_order_day') . ': <b>' . $this->Time->getWeekdayName(
                 $this->Time->getNthWeekdayBeforeWeekday(1, $product['delivery_rhythm_send_order_list_weekday'])
-            ) . '</b>';
+            ) . '</b> ' . __('midnight');
         echo '</span>';
     }
     
