@@ -487,7 +487,7 @@ class ManufacturersController extends AdminAppController
 
             $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
             $orderDetailIds = Hash::extract($customerResults, '{n}.OrderDetailId');
-            $this->OrderDetail->updateOrderState($pickupDay, $pickupDay, $validOrderStates, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturerId, $orderDetailIds);
+            $this->OrderDetail->updateOrderState(null, null, $validOrderStates, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturerId, $orderDetailIds);
             
             $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}.', ['<b>'.$manufacturer->name.'</b>']);
 

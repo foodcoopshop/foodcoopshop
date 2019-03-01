@@ -85,12 +85,17 @@ class OrderDetailsTable extends AppTable
     public function getOrderDetailsForSendingOrderLists($pickupDay, $cronjobRunDay)
     {
         $cronjobRunDayWeekday = date('w', strtotime($cronjobRunDay));
-        $query = $this->getOrderDetailsForOrderListPreview($pickupDay);
+        $query = $this->find('all', [
+            'contain' => [
+                'Products'
+            ]
+        ]);
         $query->where(['OrderDetails.order_state' => ORDER_STATE_ORDER_PLACED]);
-        $query->where(function ($exp, $query) use ($cronjobRunDayWeekday, $cronjobRunDay) {
+        $query->where(function ($exp, $query) use ($cronjobRunDayWeekday, $cronjobRunDay, $pickupDay) {
             return $exp->or_([
-                '(Products.delivery_rhythm_type <> \'individual\' AND Products.delivery_rhythm_send_order_list_weekday = ' . $cronjobRunDayWeekday . ')',
-//                 '(Products.delivery_rhythm_type = \'individual\' AND DATE_FORMAT(Products.delivery_rhythm_send_order_list_day, \'%Y-%m-%d\') = \'' . $cronjobRunDay . '\')'
+                '(Products.delivery_rhythm_type <> "individual" AND Products.delivery_rhythm_send_order_list_weekday = ' . $cronjobRunDayWeekday . ')
+                 AND OrderDetails.pickup_day = "' . $pickupDay . '"',
+                '(Products.delivery_rhythm_type = "individual" AND Products.delivery_rhythm_send_order_list_day = "' . $cronjobRunDay . '")'
             ]);
         });
         return $query;
@@ -161,8 +166,6 @@ class OrderDetailsTable extends AppTable
         $orderDetails = $this->find('all', [
             'conditions' => [
                 'Products.id_manufacturer' => $manufacturerId,
-                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
-                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
                 'OrderDetails.order_state IN (' . join(', ', $oldOrderStates) . ')'
             ],
             'contain' => [
@@ -172,6 +175,11 @@ class OrderDetailsTable extends AppTable
         
         if (!empty($orderDetailIds)) {
             $orderDetails->where(['OrderDetails.id_order_detail IN (' . join(', ', $orderDetailIds) . ')']);
+        } else {
+            $orderDetails->where([
+                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
+                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\''
+            ]);
         }
         
         foreach($orderDetails as $orderDetail) {

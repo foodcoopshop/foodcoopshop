@@ -52,7 +52,7 @@ class SendOrderListsShell extends AppShell
 
         // 2) get all order details with pickup day in the given date range
         $orderDetails = $this->OrderDetail->getOrderDetailsForSendingOrderLists($pickupDay, $this->cronjobRunDay);
-            
+        
         // 3) add up the order detail by manufacturer
         $manufacturerOrders = [];
         foreach ($orderDetails as $orderDetail) {

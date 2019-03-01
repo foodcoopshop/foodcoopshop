@@ -146,6 +146,40 @@ class SendOrderListsShellTest extends AppCakeTestCase
         
     }
     
+    public function testSendOrderListsWithIndividualSendOrderListDay()
+    {
+        $this->loginAsSuperadmin();
+        $productId = 346;
+        $this->changeProductDeliveryRhythm($productId, '0-individual', '2018-01-12', '2018-01-01', '', '2018-01-06');
+        
+        $cronjobRunDay = '2018-01-06';
+        $orderDetailId = 1;
+        
+        // 1) run cronjob and assert no changings
+        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+        $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(1, count($emailLogs), 'amount of sent emails wrong');
+        
+    }
+    
+    public function testSendOrderListsWithEmptyIndividualSendOrderListDay()
+    {
+        $this->loginAsSuperadmin();
+        $productId = 346;
+        $this->changeProductDeliveryRhythm($productId, '0-individual', '2018-01-12', '2018-01-01', '', '');
+        
+        $cronjobRunDay = '2018-01-30';
+        $orderDetailId = 1;
+        
+        // 1) run cronjob and assert no changings
+        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+        $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_PLACED);
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
+        
+    }
+    
     private function assertOrderDetailState($orderDetailId, $expectedOrderState)
     {
         $newOrderDetail = $this->OrderDetail->find('all', [
