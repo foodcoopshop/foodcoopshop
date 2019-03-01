@@ -56,7 +56,7 @@ echo '<td class="delivery-rhythm">';
                     echo '</span>';
                     if ($product->delivery_rhythm_send_order_list_weekday != $this->Time->getSendOrderListsWeekday()) {
                         echo ', ' . __d('admin', 'Last_order_weekday') . ': ';
-                        echo $this->Time->getWeekdaysWithSuffix(' ' . __d('admin', 'midnight'))[$lastOrderWeekday];
+                        echo $this->Time->getWeekdayName($lastOrderWeekday) . ' ' . __d('admin', 'midnight');
                     }
                 echo '</span>';
                     
@@ -68,7 +68,7 @@ echo '<td class="delivery-rhythm">';
                         }
                     echo '</span>';
                     if (!is_null($product->delivery_rhythm_send_order_list_day)) {
-                        echo ', ' . __d('admin', 'Send_order_list_day') . ' ';
+                        echo ', ' . __d('admin', 'Send_order_lists_day') . ' ';
                         echo '<span class="send-order-list-day">';
                             echo $this->Time->formatToDateShort($product->delivery_rhythm_send_order_list_day);
                         echo '</span>';

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-03-01 09:57+0100\n"
+"POT-Creation-Date: 2019-03-01 10:56+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -384,6 +384,12 @@ msgid "First_delivery_day"
 msgstr ""
 
 msgid "Order_possible_until"
+msgstr ""
+
+msgid "Send_order_lists_day"
+msgstr ""
+
+msgid "Last_order_weekday"
 msgstr ""
 
 msgid "The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}."
@@ -1157,13 +1163,7 @@ msgstr ""
 msgid "delivery_rhythm_from"
 msgstr ""
 
-msgid "Last_order_weekday"
-msgstr ""
-
 msgid "midnight"
-msgstr ""
-
-msgid "Send_order_list_day"
 msgstr ""
 
 msgid "change_deposit"

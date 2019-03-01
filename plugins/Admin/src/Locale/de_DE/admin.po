@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-03-01 09:57+0100\n"
-"PO-Revision-Date: 2019-03-01 09:39+0100\n"
+"POT-Creation-Date: 2019-03-01 10:56+0100\n"
+"PO-Revision-Date: 2019-03-01 10:57+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -386,6 +386,12 @@ msgstr "Erster Liefertag"
 
 msgid "Order_possible_until"
 msgstr "Bestellbar bis"
+
+msgid "Send_order_lists_day"
+msgstr "Bestelllisten versenden am"
+
+msgid "Last_order_weekday"
+msgstr "Bestellschluss"
 
 msgid "The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}."
 msgstr "Der Lieferrhythmus des Produktes {0} vom Hersteller {1} wurde erfolgreich auf {2} geändert."
@@ -1158,14 +1164,8 @@ msgstr "Lieferrhythmus ändern"
 msgid "delivery_rhythm_from"
 msgstr "ab"
 
-msgid "Last_order_weekday"
-msgstr "Bestellschluss"
-
 msgid "midnight"
 msgstr "Mitternacht"
-
-msgid "Send_order_list_day"
-msgstr "Bestellliste versenden am"
 
 msgid "change_deposit"
 msgstr "Pfand ändern"

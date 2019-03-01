@@ -129,7 +129,7 @@ foodcoopshop.DialogProduct = {
 
             dialogHtml += '<label class="dynamic-element default">' + foodcoopshop.LocalizedJs.dialogProduct.LastOrderWeekday + '</label>';
             dialogHtml += '<select class="dynamic-element default" name="dialogDeliveryRhythmSendOrderListWeekday" id="dialogDeliveryRhythmSendOrderListWeekday" /></select><br />';
-            dialogHtml += '<label class="dynamic-element individual">' + foodcoopshop.LocalizedJs.dialogProduct.SendOrderListDay + '</label>';
+            dialogHtml += '<label class="dynamic-element individual">' + foodcoopshop.LocalizedJs.dialogProduct.SendOrderListsDay + '</label>';
             dialogHtml += '<input class="datepicker dynamic-element individual" type="text" name="dialogDeliveryRhythmSendOrderListDay" id="dialogDeliveryRhythmSendOrderListDay" /><br />';
             dialogHtml += '<div style="float:left;margin-bottom:15px;line-height:14px;">';
             dialogHtml += '<span class="small dynamic-element default">';
