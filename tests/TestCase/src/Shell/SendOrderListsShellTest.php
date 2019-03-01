@@ -74,6 +74,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
         
         $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->debug($emailLogs);
         $this->assertEquals(2, count($emailLogs), 'amount of sent emails wrong');
         $this->assertEmailLogs(
             $emailLogs[1],
