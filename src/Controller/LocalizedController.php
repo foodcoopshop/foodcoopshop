@@ -265,6 +265,8 @@ class LocalizedController extends Controller
                 'DocsUrlOrderHandling' => Configure::read('app.htmlHelper')->getDocsUrl(__('docs_route_order_handling')),
                 'LastOrderWeekday' => __('Last_order_weekday'),
                 'SendOrderListDay' => __('Send_order_list_day'),
+                'OrderListsAreSentAutomaticallyNextDayInTheMorning' => __('Order_lists_are_sent_automatically_next_day_in_the_morning.'),
+                'OrderListsAreSentAutomaticallyOnThisDay' => __('Order_lists_are_sent_automatically_on_this_day.'),
             ],
             'upload' => [
                 'delete' => __('delete'),

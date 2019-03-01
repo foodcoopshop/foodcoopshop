@@ -920,7 +920,8 @@ body.payments .bottom-button-container {
 #product-price-edit-form input[type="text"],
 #product-deposit-edit-form input[type="text"],
 #product-quantity-edit-form input[type="number"],
-#product-delivery-rhythm-edit-form input[type="text"] {
+#product-delivery-rhythm-edit-form input[type="text"],
+#product-delivery-rhythm-edit-form select {
     margin-bottom: 5px;
     margin-right: 5px;
     text-align: right;
