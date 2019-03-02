@@ -38,6 +38,10 @@ use Cake\Core\Configure;
     </div>
     
     <?php
+    echo '<h2 class="info2">';
+        echo __d('admin', 'Here_you_find_the_unchanged_order_lists_that_were_sent_to_the_manufacturers.');
+    echo '</h2>';
+
     echo '<table class="list">';
 
     echo '<tr class="sort">';

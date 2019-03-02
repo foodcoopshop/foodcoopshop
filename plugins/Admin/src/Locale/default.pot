@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-03-01 10:56+0100\n"
+"POT-Creation-Date: 2019-03-02 20:39+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -377,12 +377,6 @@ msgstr ""
 msgid "A_new_product_was_created_for_{0}."
 msgstr ""
 
-msgid "Delivery_day"
-msgstr ""
-
-msgid "First_delivery_day"
-msgstr ""
-
 msgid "Order_possible_until"
 msgstr ""
 
@@ -390,6 +384,15 @@ msgid "Send_order_lists_day"
 msgstr ""
 
 msgid "Last_order_weekday"
+msgstr ""
+
+msgid "midnight"
+msgstr ""
+
+msgid "Delivery_day"
+msgstr ""
+
+msgid "First_delivery_day"
 msgstr ""
 
 msgid "The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}."
@@ -1163,9 +1166,6 @@ msgstr ""
 msgid "delivery_rhythm_from"
 msgstr ""
 
-msgid "midnight"
-msgstr ""
-
 msgid "change_deposit"
 msgstr ""
 
@@ -1389,6 +1389,9 @@ msgid "For_signing_in_please_use_the_email_address_of_this_message._If_you_want_
 msgstr ""
 
 msgid "Your_contact_person"
+msgstr ""
+
+msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_the_manufacturers."
 msgstr ""
 
 msgid "Order_list_by_product"
