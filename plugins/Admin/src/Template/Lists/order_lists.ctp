@@ -31,7 +31,7 @@ use Cake\Core\Configure;
             <?php echo __d('admin', 'Pickup_day'); ?> <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'showDateTo' => false, 'nameFrom' => 'dateFrom']); ?>
             <div class="right">
             <?php
-                echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_products'))]);
+                echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products'))]);
             ?>
             </div>
         <?php echo $this->Form->end(); ?>
