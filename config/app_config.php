@@ -57,8 +57,8 @@ return [
         'uploadedFilesDir' => DS . 'files' . DS . 'files',
         'folder_invoices' => ROOT . DS . 'files_private'. DS . 'invoices',
         'folder_order_lists' => ROOT . DS. 'files_private' . DS .'order_lists',
-        'folder_invoices_with_current_year_and_month' => ROOT . DS . 'files_private'. DS . 'invoices'.DS.date('Y').DS.date('m'),
-        'folder_order_lists_with_current_year_and_month' => ROOT . DS . 'files_private' . DS .'order_lists'.DS.date('Y').DS.date('m'),
+        'folder_invoices' => ROOT . DS . 'files_private'. DS . 'invoices',
+        'folder_order_lists' => ROOT . DS . 'files_private' . DS .'order_lists',
 
         /**
          * all the default values in this block can be overwritten in the manufacturer settings

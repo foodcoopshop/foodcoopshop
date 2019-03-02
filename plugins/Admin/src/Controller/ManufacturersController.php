@@ -462,10 +462,14 @@ class ManufacturersController extends AdminAppController
             die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }
         
+        // override pickupDay necessary for order details with products that have an individual date as delivery rhythm
+        $pickupDayDbFormat = $orderDetails->first()->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+        $pickupDay = $orderDetails->first()->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
+        
         $validOrderStates = [ORDER_STATE_ORDER_PLACED];
         
         // generate and save PDF - should be done here because count of results will be checked
-        $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $pickupDay, null, [], 'F', $orderDetailIds);
+        $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $pickupDayDbFormat, null, [], 'F', $orderDetailIds);
 
         // no orders in current period => do not send pdf but send information email
         if (count($productResults) == 0) {
@@ -475,12 +479,12 @@ class ManufacturersController extends AdminAppController
 
             // generate order list by procuct
             $this->render('get_order_list_by_product');
-            $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') . ' day')), __d('admin', 'product'));
+            $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, $pickupDayDbFormat, __d('admin', 'product'));
 
             // generate order list by customer
-            $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $pickupDay, null, [], 'F', $orderDetailIds);
+            $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $pickupDayDbFormat, null, [], 'F', $orderDetailIds);
             $this->render('get_order_list_by_customer');
-            $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, date('Y-m-d', strtotime('+' . Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') . ' day')), __d('admin', 'member'));
+            $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, $pickupDayDbFormat, __d('admin', 'member'));
 
             $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
             $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
@@ -500,7 +504,7 @@ class ManufacturersController extends AdminAppController
                     $productPdfFile,
                     $customerPdfFile
                 ])
-                ->setSubject(__d('admin', 'Order_lists_for_the_day') . ' ' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime('+' . Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') . ' day')))
+                ->setSubject(__d('admin', 'Order_lists_for_the_day') . ' ' . $pickupDay)
                 ->setViewVars([
                 'manufacturer' => $manufacturer,
                 'appAuth' => $this->AppAuth,
