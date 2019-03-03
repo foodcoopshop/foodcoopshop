@@ -30,6 +30,19 @@ foodcoopshop.Helper = {
         }
     },
     
+    getUniqueHtmlValueOfDomElements: function(domElements, defaultValue) {
+        var values = this.unique(
+            $.map($(domElements),
+                function(element) {
+                    return $(element).html();
+            })
+        );
+        if (values.length > 1) {
+            values = defaultValue;
+        }
+        return values;
+    },
+    
     /**
      * $.unique does not work with strings
      */
