@@ -125,12 +125,12 @@ foodcoopshop.DialogProduct = {
             dialogHtml += '<select name="dialogDeliveryRhythmType" id="dialogDeliveryRhythmType" /></select>';
             
             dialogHtml += '<label style="margin-top:10px;" class="dynamic-element individual">' + foodcoopshop.LocalizedJs.dialogProduct.OrderPossibleUntil + '</label>';
-            dialogHtml += '<input style="margin-top:10px;" class="dynamic-element individual datepicker" type="text" name="dialogDeliveryRhythmOrderPossibleUntil" id="dialogDeliveryRhythmOrderPossibleUntil" /><br />';
+            dialogHtml += '<input style="margin-top:10px;" autocomplete="off" class="dynamic-element individual datepicker" type="text" name="dialogDeliveryRhythmOrderPossibleUntil" id="dialogDeliveryRhythmOrderPossibleUntil" /><br />';
 
             dialogHtml += '<label class="dynamic-element default">' + foodcoopshop.LocalizedJs.dialogProduct.LastOrderWeekday + '</label>';
             dialogHtml += '<select class="dynamic-element default" name="dialogDeliveryRhythmSendOrderListWeekday" id="dialogDeliveryRhythmSendOrderListWeekday" /></select><br />';
             dialogHtml += '<label class="dynamic-element individual">' + foodcoopshop.LocalizedJs.dialogProduct.SendOrderListsDay + '</label>';
-            dialogHtml += '<input class="datepicker dynamic-element individual" type="text" name="dialogDeliveryRhythmSendOrderListDay" id="dialogDeliveryRhythmSendOrderListDay" /><br />';
+            dialogHtml += '<input autocomplete="off" class="datepicker dynamic-element individual" type="text" name="dialogDeliveryRhythmSendOrderListDay" id="dialogDeliveryRhythmSendOrderListDay" /><br />';
             dialogHtml += '<div style="float:left;margin-bottom:15px;line-height:14px;">';
             dialogHtml += '<span class="small dynamic-element default">';
                 dialogHtml += foodcoopshop.LocalizedJs.dialogProduct.OrderListsAreSentAutomaticallyNextDayInTheMorning;
@@ -143,7 +143,7 @@ foodcoopshop.DialogProduct = {
             dialogHtml += '<label class="dynamic-element default">' + foodcoopshop.LocalizedJs.dialogProduct.FirstDeliveryDay + '</label>';
             dialogHtml += '<label class="dynamic-element individual">' + foodcoopshop.LocalizedJs.dialogProduct.DeliveryDay + '</label>';
             
-            dialogHtml += '<input class="datepicker" type="text" name="dialogDeliveryRhythmFirstDeliveryDay" id="dialogDeliveryRhythmFirstDeliveryDay" /><br />';
+            dialogHtml += '<input autocomplete="off" class="datepicker" type="text" name="dialogDeliveryRhythmFirstDeliveryDay" id="dialogDeliveryRhythmFirstDeliveryDay" /><br />';
             dialogHtml += '<div style="float:left;line-height:14px;"><span class="small">';
             if (productIds.length == 1) {
                 dialogHtml += foodcoopshop.LocalizedJs.dialogProduct.FirstDeliveryDayInfoOneProduct;
