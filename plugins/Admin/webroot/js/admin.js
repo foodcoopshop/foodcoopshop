@@ -764,7 +764,7 @@ foodcoopshop.Admin = {
             var productId = row.find('td.cell-id').html();
             var infoText = foodcoopshop.Admin.getProductNameForDialog(row);
             var selectedDeliveryRhythmType = row.find('td span.delivery-rhythm-for-dialog span.dropdown').html();
-            var selectedFirstDeliveryDay = row.find('td span.delivery-rhythm-for-dialog span.first-delivery-day').html()
+            var selectedFirstDeliveryDay = row.find('td span.delivery-rhythm-for-dialog span.first-delivery-day').html();
             var selectedOrderPossibleUntil = '';
             var selectedOrderPossibleUntilDataElement = row.find('td span.delivery-rhythm-for-dialog span.order-possible-until');
             if (selectedOrderPossibleUntilDataElement && selectedOrderPossibleUntilDataElement.length > 0) {

@@ -150,7 +150,7 @@ foodcoopshop.DialogProduct = {
             } else {
                 dialogHtml += foodcoopshop.LocalizedJs.dialogProduct.FirstDeliveryDayInfoMultipleProducts;
             }
-            dialogHtml += '</span><br /></div>';;
+            dialogHtml += '</span><br /></div>';
             
             dialogHtml += '</div>';
         dialogHtml += '<p style="margin-top:10px;float:right;"><a target="_blank" href="' + foodcoopshop.LocalizedJs.dialogProduct.DocsUrlOrderHandling + '">' + foodcoopshop.LocalizedJs.dialogProduct.InfoPageForDeliveryRhythm + '</a></p>';
