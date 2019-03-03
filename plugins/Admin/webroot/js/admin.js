@@ -736,11 +736,11 @@ foodcoopshop.Admin = {
         select.val(selectedDeliveryRhythmType);
         select.trigger('change');
 
-        var select = $('#' + dialogId + ' #dialogDeliveryRhythmSendOrderListWeekday');
-        select.find('option').remove();
-        select.append($('#weekdays').html());
-        select.val(selectedSendOrderListWeekday);
-        select.trigger('change');
+        var select2 = $('#' + dialogId + ' #dialogDeliveryRhythmSendOrderListWeekday');
+        select2.find('option').remove();
+        select2.append($('#weekdays').html());
+        select2.val(selectedSendOrderListWeekday);
+        select2.trigger('change');
 
         foodcoopshop.Helper.initDatepicker();
         
@@ -1072,7 +1072,7 @@ foodcoopshop.Admin = {
                 $('.ui-dialog').removeClass('has-datepicker');
                 // if datepicker is closed without selecting a date, it's focused and another click does not trigger to open calendar again
                 $(this).off('click').on('click', function() {
-                    datepickerInput.datepicker('show');
+                    inputField.datepicker('show');
                 });
             }
         });
