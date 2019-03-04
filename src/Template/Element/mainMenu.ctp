@@ -30,10 +30,11 @@ if (!empty($manufacturersForMenu)) {
     ];
 }
 
-$menu[] = [
-    'name' => __('News'), 'slug' => $this->Slug->getBlogList()
-];
-
+if (Configure::read('app.isBlogFeatureEnabled')) {
+    $menu[] = [
+        'name' => __('News'), 'slug' => $this->Slug->getBlogList()
+    ];
+}
 $menu = array_merge($menu, $this->Menu->buildPageMenu($pagesForHeader));
 
 echo $this->Menu->render($menu, ['id' => 'main-menu', 'class' => 'horizontal menu']);
