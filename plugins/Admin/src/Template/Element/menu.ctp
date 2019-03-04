@@ -174,8 +174,10 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     }
     $customerProfileMenuElement['children'][] = $changePasswordMenuElement;
     $menu[] = $customerProfileMenuElement;
-    $menu[] = $blogPostsMenuElement;
-
+    if (Configure::read('app.isBlogFeatureEnabled')) {
+        $menu[] = $blogPostsMenuElement;
+    }
+    
     $homepageAdministrationElement['children'][] = [
         'slug' => $this->Slug->getPagesListAdmin(),
         'name' => __d('admin', 'Pages'),
@@ -289,7 +291,9 @@ if ($appAuth->isManufacturer()) {
     $profileMenu['children'][] = $changePasswordMenuElement;
     $menu[] = $profileMenu;
     $menu[] = $optionsMenu;
-    $menu[] = $blogPostsMenuElement;
+    if (!empty($blogPosts) && Configure::read('app.isBlogFeatureEnabled')) {
+        $menu[] = $blogPostsMenuElement;
+    }
     $menu[] = $actionLogsMenuElement;
 }
 
