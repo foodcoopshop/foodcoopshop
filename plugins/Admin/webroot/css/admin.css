@@ -268,9 +268,9 @@ td.delivery-rhythm .fa-check {
 td.is-stock-product i.fas.no-button {
 	margin-left: 5px;
 }
-span.is-declaration-ok-wrapper .fa-close,
-td.is-stock-product .fa-close,
-td.amount .fa-close  {
+span.is-declaration-ok-wrapper .fa-times,
+td.is-stock-product .fa-times,
+td.amount .fa-times {
 	color: #f3515c;
 }
 

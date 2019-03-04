@@ -234,7 +234,7 @@ foodcoopshop.SyncProductData = {
                         );
                 }
             tableData += '</td>';
-                tableData += '<td class="active">' + (!isAttribute ? (product.active ? '<i class="fas fa-check ok"></i>' : '<i class="fas fa-close not-ok"></i>') : '') + '</td>';
+                tableData += '<td class="active">' + (!isAttribute ? (product.active ? '<i class="fas fa-check ok"></i>' : '<i class="fas fa-times not-ok"></i>') : '') + '</td>';
                 tableData += '</tr>';
 
                 if (product.prepared_sync_products) {
@@ -510,7 +510,7 @@ foodcoopshop.SyncProductData = {
                     }
                     
                     // active
-                    var remoteActive = (!isAttribute ? (product.active ? '<i class="fas fa-check ok"></i>' : '<i class="fas fa-close not-ok"></i>') : '');
+                    var remoteActive = (!isAttribute ? (product.active ? '<i class="fas fa-check ok"></i>' : '<i class="fas fa-times not-ok"></i>') : '');
                     $(this).find('td.active').html(remoteActive);
                     foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.active', product.active, localProduct.active, $(this), localProductRow);
 
