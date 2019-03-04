@@ -239,10 +239,10 @@ class AppTcpdf extends TCPDF
             // very last row
             if ($i + 1 == count($results)) {
                 if ($groupType == 'customer') {
-                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $customerName, $taxRate, $unitSum);
+                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $customerName, $taxRate, $unitSum, $showPricePerUnitMessage);
                 }
                 if ($groupType == 'product') {
-                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $productName, $taxRate, $unitSum);
+                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $productName, $taxRate, $unitSum, $showPricePerUnitMessage);
                 }
             }
 
