@@ -134,6 +134,7 @@ class AppTcpdf extends TCPDF
         $priceExclSum = 0;
         $taxSum = 0;
         $unitSum = [];
+        $showPricePerUnitMessage = false;
         $i = 0;
 
         foreach ($results as $result) {
@@ -144,11 +145,13 @@ class AppTcpdf extends TCPDF
             $productName = $result['ProductName'];
             $customerName = $result['CustomerName'];
             $taxRate = $result['TaxRate'];
+            $showPricePerUnitSign = false;
             
             if ($groupType == 'customer' && isset($lastCustomerName) && $lastCustomerName != $customerName) {
                 $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastCustomerName, $lastTaxRate, $lastUnitSum, $showPricePerUnitMessage);
                 // reset everything
                 $amountSum = $priceExclSum = $taxSum = $priceInclSum = 0;
+                $showPricePerUnitMessage = false;
                 $unitSum = [];
             }
 
@@ -156,6 +159,7 @@ class AppTcpdf extends TCPDF
                 $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastProductName, $lastTaxRate, $lastUnitSum, $showPricePerUnitMessage);
                 // reset everything
                 $amountSum = $priceExclSum = $taxSum = $priceInclSum = 0;
+                $showPricePerUnitMessage = false;
                 $unitSum = [];
             }
 
@@ -168,7 +172,6 @@ class AppTcpdf extends TCPDF
                 @$unitSum[$result['OrderDetailUnitUnitName']] += $result['OrderDetailUnitProductQuantityInUnits'];
             }
 
-            $showPricePerUnitMessage = false;
             if (! $onlyShowSums) {
                 $this->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
 
@@ -190,7 +193,7 @@ class AppTcpdf extends TCPDF
                             $result['OrderDetailUnitUnitName'],
                             $amount
                         );
-                        $showPricePerUnitMessage = true;
+                        $showPricePerUnitSign = true;
                     }
                 }
                 if (!$isOrderList) {
@@ -215,7 +218,7 @@ class AppTcpdf extends TCPDF
                 }
 
                 $indexForWidth ++;
-                $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceIncl) . '</td>';
+                $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($priceIncl) . ($showPricePerUnitSign ? '*' : '') . '</td>';
                 
                 if (in_array(__('Order_day'), $headers)) {
                     $indexForWidth ++;
@@ -247,6 +250,7 @@ class AppTcpdf extends TCPDF
             $lastCustomerName = $customerName;
             $lastTaxRate = $taxRate;
             $lastUnitSum = $unitSum;
+            $showPricePerUnitMessage |= $showPricePerUnitSign;
 
             $i ++;
         }
@@ -304,7 +308,7 @@ class AppTcpdf extends TCPDF
         $indexForWidth ++;
 
         if ($colspan > 0) {
-            $this->table .= '<td colspan="' . $colspan . '">' . ($showPricePerUnitMessage ? ' ' . __('Price_per_weight') : '') . '</td>';
+            $this->table .= '<td colspan="' . $colspan . '">' . ($showPricePerUnitMessage ? ' * ' . __('Price_per_weight') : '') . '</td>';
         }
 
         $this->table .= '</tr>';
