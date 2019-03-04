@@ -29,7 +29,7 @@ $this->element('addScript', [
     <div class="right">
         <a href="javascript:void(0);" class="btn btn-success submit"><i
             class="fas fa-check"></i> <?php echo __d('network', 'Save'); ?></a> <a href="javascript:void(0);"
-            class="btn btn-outline-light cancel"><i class="fas fa-close"></i> <?php echo __d('network', 'Cancel'); ?></a>
+            class="btn btn-outline-light cancel"><i class="fas fa-times"></i> <?php echo __d('network', 'Cancel'); ?></a>
     </div>
 </div>
 

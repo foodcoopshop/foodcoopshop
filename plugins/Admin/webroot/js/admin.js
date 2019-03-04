@@ -932,7 +932,7 @@ foodcoopshop.Admin = {
                     $('#' + dialogId + ' #dialogQuantityQuantityLimit').val(0);
                 }
                 if (row.find('i.sold-out-limit-for-dialog').length > 0) {
-                    if (row.find('i.sold-out-limit-for-dialog').html().match('fa-close')) {
+                    if (row.find('i.sold-out-limit-for-dialog').html().match('fa-times')) {
                         $('#' + dialogId + ' #dialogQuantitySoldOutLimit').val('');
                     } else {
                         $('#' + dialogId + ' #dialogQuantitySoldOutLimit').val(row.find('i.sold-out-limit-for-dialog').html().replace(/\./, ''));
