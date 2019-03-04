@@ -146,14 +146,14 @@ class AppTcpdf extends TCPDF
             $taxRate = $result['TaxRate'];
             
             if ($groupType == 'customer' && isset($lastCustomerName) && $lastCustomerName != $customerName) {
-                $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastCustomerName, $lastTaxRate, $lastUnitSum);
+                $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastCustomerName, $lastTaxRate, $lastUnitSum, $showPricePerUnitMessage);
                 // reset everything
                 $amountSum = $priceExclSum = $taxSum = $priceInclSum = 0;
                 $unitSum = [];
             }
 
             if ($groupType == 'product' && isset($lastProductName) && ($lastProductName != $productName || $lastTaxRate != $taxRate)) {
-                $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastProductName, $lastTaxRate, $lastUnitSum);
+                $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastProductName, $lastTaxRate, $lastUnitSum, $showPricePerUnitMessage);
                 // reset everything
                 $amountSum = $priceExclSum = $taxSum = $priceInclSum = 0;
                 $unitSum = [];
@@ -168,6 +168,7 @@ class AppTcpdf extends TCPDF
                 @$unitSum[$result['OrderDetailUnitUnitName']] += $result['OrderDetailUnitProductQuantityInUnits'];
             }
 
+            $showPricePerUnitMessage = false;
             if (! $onlyShowSums) {
                 $this->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
 
@@ -189,6 +190,7 @@ class AppTcpdf extends TCPDF
                             $result['OrderDetailUnitUnitName'],
                             $amount
                         );
+                        $showPricePerUnitMessage = true;
                     }
                 }
                 if (!$isOrderList) {
@@ -250,7 +252,7 @@ class AppTcpdf extends TCPDF
         }
     }
 
-    private function getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastObjectName, $taxRate = '', $unitSum)
+    private function getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastObjectName, $taxRate = '', $unitSum, $showPricePerUnitMessage=false)
     {
         $colspan = $this->getCorrectColspan($headers);
 
@@ -302,7 +304,7 @@ class AppTcpdf extends TCPDF
         $indexForWidth ++;
 
         if ($colspan > 0) {
-            $this->table .= '<td colspan="' . $colspan . '"></td>';
+            $this->table .= '<td colspan="' . $colspan . '">' . ($showPricePerUnitMessage ? ' ' . __('Price_per_weight') : '') . '</td>';
         }
 
         $this->table .= '</tr>';

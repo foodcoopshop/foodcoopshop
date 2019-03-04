@@ -14,7 +14,7 @@
  */
 use Cake\Core\Configure;
 
-if ($deposit == '' && $groupBy == '' && count($orderDetails) > 0) {
+if ($deposit == '' && $groupBy == '' && count($orderDetails) > 0 && (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'))) {
     $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace').".Admin.initCancelSelectionButton();"
     ]);

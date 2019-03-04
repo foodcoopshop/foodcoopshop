@@ -76,7 +76,7 @@ use Cake\Core\Configure;
             <?php echo $this->Form->control('groupBy', ['type'=>'select', 'label' =>'', 'empty' => __d('admin', 'Group_by...'), 'options' => $groupByForDropdown, 'default' => $groupBy]);?>
             <div class="right">
         	<?php
-        	if (Configure::read('app.isDepositPaymentCashless') && $groupBy == '' && $customerId > 0 && count($orderDetails) > 0) {
+        	if (Configure::read('app.isDepositPaymentCashless') && $groupBy == '' && $customerId > 0 && count($orderDetails) > 0 && (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'))) {
                 echo '<div class="add-payment-deposit-button-wrapper">';
                     echo $this->element('addDepositPaymentOverlay', [
                         'buttonText' => (!$isMobile ? __d('admin', 'Deposit_return') : ''),
@@ -87,7 +87,7 @@ use Cake\Core\Configure;
                     ]);
                 echo '</div>';
             }
-            if (!$appAuth->isManufacturer()) {
+            if ($appAuth->isAdmin() || $appAuth->isSuperadmin() || (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'))) {
                 echo $this->element('addInstantOrderButton', [
                     'customers' => $customersForInstantOrderDropdown
                 ]);
@@ -128,7 +128,7 @@ foreach ($orderDetails as $orderDetail) {
     
     $editRecordAllowed = $groupBy == '' && (
         in_array($orderDetail->order_state, [ORDER_STATE_ORDER_PLACED, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER]) ||
-        $orderDetail->bulkOrdersAllowed);
+        $orderDetail->bulkOrdersAllowed) && (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'));
 
     $rowClasses = [];
     if (isset($orderDetail->row_class)) {
@@ -265,7 +265,10 @@ if ($groupBy != 'customer') {
     }
     echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
 } else {
-    echo '<td></td><td></td>';
+    echo '<td></td>';
+    if (count($pickupDay) == 1) {
+        echo '<td></td>';
+    }
 }
 if ($groupBy == '') {
     $sumUnitsString = $this->PricePerUnit->getStringFromUnitSums($sums['units'], '<br />');
