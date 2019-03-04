@@ -17,13 +17,19 @@ use Cake\Core\Configure;
 
 if ($groupBy == 'customer' && Configure::read('app.isDepositPaymentCashless')) {
     echo '<td'.(!$isMobile ? ' style="width: 144px;"' : '').'>';
-    echo $this->element('addDepositPaymentOverlay', [
-        'buttonText' => (!$isMobile ? __d('admin', 'Deposit_return') : ''),
-        'rowId' => $orderDetail['customer_id'],
-        'userName' => $orderDetail['name'],
-        'customerId' => $orderDetail['customer_id'],
-        'manufacturerId' => null
-    ]);
+    if (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders')) {
+        echo $this->element('addDepositPaymentOverlay', [
+            'buttonText' => (!$isMobile ? __d('admin', 'Deposit_return') : ''),
+            'rowId' => $orderDetail['customer_id'],
+            'userName' => $orderDetail['name'],
+            'customerId' => $orderDetail['customer_id'],
+            'manufacturerId' => null
+        ]);
+    } else {
+        if ($orderDetail['sum_deposit'] > 0) {
+            echo $this->Number->formatAsCurrency($orderDetail['sum_deposit']);
+        }
+    }
     echo '</td>';
 }
 
