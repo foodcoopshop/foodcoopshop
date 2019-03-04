@@ -39,10 +39,9 @@ foodcoopshop.SyncProduct = {
     
     getDeliveryRhythmString : function(deliveryRhythmString, isStockProduct, type, count, firstDeliveryDay, orderPossibleUntil, lastOrderWeekday, sendOrderListDay) {
         
-        var result = deliveryRhythmString;
+        var elements = [deliveryRhythmString];
         
         if (!isStockProduct) {
-            var elements = [];
             if (type == 'individual') {
                 if (orderPossibleUntil !== null) {
                     elements.push(new Date(orderPossibleUntil).toLocaleDateString(foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47));
@@ -56,13 +55,10 @@ foodcoopshop.SyncProduct = {
             if (firstDeliveryDay !== null) {
                 elements.push(new Date(firstDeliveryDay).toLocaleDateString(foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47));
             }
-            
-            if (elements.length > 0) {
-                result += ' / '  + elements.join(' / ');
-            }
         }
         
-        return result;
+        return elements.join(' / ');
+        
     },
     
     getPricePerUnitBaseInfo : function(priceInclPerUnit, unitName, unitAmount, unitQuantityInUnits) {
