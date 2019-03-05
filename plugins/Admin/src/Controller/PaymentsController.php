@@ -243,12 +243,6 @@ class PaymentsController extends AdminAppController
             $this->sendAjaxError($e);
         }
 
-        if ($type == 'product' && $amount > Configure::read('appDb.FCS_PAYMENT_PRODUCT_MAXIMUM')) {
-            $message = 'FCS_PAYMENT_PRODUCT_MAXIMUM: ' . Configure::read('appDb.FCS_PAYMENT_PRODUCT_MAXIMUM');
-            $this->log($message);
-            die(json_encode(['status'=>0,'msg'=>$message]));
-        }
-
         $text = '';
         if (!empty($this->getRequest()->getData('text'))) {
             $text = strip_tags(html_entity_decode($this->getRequest()->getData('text')));

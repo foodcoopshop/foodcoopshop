@@ -64,11 +64,6 @@ return [
         'cakeServerName' => 'http://www.foodcoopshop.test',
 
         /**
-         * array of email adresses that receive notifications after new member registrations
-         */
-        'registrationNotificationEmails' => [],
-
-        /**
          * whether to apply a member fee to the members account balance
          */
         'memberFeeEnabled' => true,
