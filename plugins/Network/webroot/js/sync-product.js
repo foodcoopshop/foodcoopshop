@@ -30,7 +30,7 @@ foodcoopshop.SyncProduct = {
     },
     
     getIsDeclarationOkString : function(isDeclarationOk) {
-        var result = '<i class="fas fa-close not-ok"></i>';
+        var result = '<i class="fas fa-times not-ok"></i>';
         if (isDeclarationOk) {
             result = '<i class="fas fa-check ok"></i>';
         }
@@ -58,7 +58,7 @@ foodcoopshop.SyncProduct = {
     },
     
     getIsStockProductString(isStockProduct) {
-        var result = '<i class="fas fa-close not-ok"></i>';
+        var result = '<i class="fas fa-times not-ok"></i>';
         if (isStockProduct) {
             result = '<i class="fas fa-check ok"></i>';
         }

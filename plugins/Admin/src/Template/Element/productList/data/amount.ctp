@@ -37,7 +37,7 @@ echo '<td class="amount ' . (empty($product->product_attributes) && $product->st
             if (is_null($product->stock_available->sold_out_limit) || $product->stock_available->sold_out_limit != 0) {
                 echo ' / <i class="small sold-out-limit-for-dialog">';
                     if (is_null($product->stock_available->sold_out_limit)) {
-                        echo '<i class="fas fa-close" title="'.__d('admin', 'No_email_notifications_are_sent_for_this_product.').'"></i>';
+                        echo '<i class="fas fa-times" title="'.__d('admin', 'No_email_notifications_are_sent_for_this_product.').'"></i>';
                     } else {
                         echo $this->Number->formatAsDecimal($product->stock_available->sold_out_limit, 0);
                     }

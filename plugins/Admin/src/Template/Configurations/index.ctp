@@ -276,6 +276,12 @@ $this->element('addScript', [
             <td>app.customerMainNamePart</td>
             <td><?php echo Configure::read('app.customerMainNamePart'); ?></td>
         </tr>
+        
+        <tr>
+            <td>app.isCustomerAllowedToModifyOwnOrders</td>
+            <td><?php echo Configure::read('app.isCustomerAllowedToModifyOwnOrders') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+        
 
         <?php
         if ($this->elementExists('latestGitCommit')) {

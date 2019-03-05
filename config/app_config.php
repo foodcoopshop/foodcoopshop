@@ -145,6 +145,10 @@ return [
         // allows to use another color theme for the frontend, can be any valid css color code
         'customFrontendColorTheme' => '#719f41',
         
+        'isBlogFeatureEnabled' => true,
+        
+        'isCustomerAllowedToModifyOwnOrders' => true,
+        
         'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),
         'timeHelper' => new App\View\Helper\MyTimeHelper(new Cake\View\View()),
         'numberHelper' => new App\View\Helper\MyNumberHelper(new Cake\View\View()),

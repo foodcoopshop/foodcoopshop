@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\Core\Configure;
 use Cake\ORM\Query;
 use Cake\Validation\Validator;
 
@@ -66,6 +67,11 @@ class BlogPostsTable extends AppTable
 
     public function findBlogPosts($appAuth, $limit = null, $manufacturerId = null, $isFeatured = null)
     {
+        
+        if (!Configure::read('app.isBlogFeatureEnabled')) {
+            return [];
+        }
+        
         $conditions = [
             'BlogPosts.active' => APP_ON
         ];

@@ -27,6 +27,9 @@ class BlogPostsController extends AdminAppController
 
     public function isAuthorized($user)
     {
+        if (!Configure::read('app.isBlogFeatureEnabled')) {
+            return false;
+        }
         switch ($this->getRequest()->getParam('action')) {
             case 'edit':
                 if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {

@@ -33,7 +33,7 @@ echo '<td class="is-stock-product">';
         if ($product->is_stock_product) {
             echo '<i class="fas fa-check no-button"></i>';
         } else {
-            echo '<i class="fas fa-close no-button"></i>';
+            echo '<i class="fas fa-times no-button"></i>';
         }
     }
 echo '</td>';

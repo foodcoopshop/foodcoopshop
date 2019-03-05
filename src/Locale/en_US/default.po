@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-02-19 11:24+0100\n"
-"PO-Revision-Date: 2019-02-19 11:25+0100\n"
+"POT-Creation-Date: 2019-03-04 21:58+0100\n"
+"PO-Revision-Date: 2019-03-04 21:58+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -935,6 +935,9 @@ msgstr "VAT"
 
 msgid "Order_day"
 msgstr "Order day"
+
+msgid "Price_per_weight"
+msgstr "Price per weight"
 
 msgid "Total_sum"
 msgstr "Total sum"
