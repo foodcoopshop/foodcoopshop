@@ -87,7 +87,7 @@ use Cake\Core\Configure;
                     ]);
                 echo '</div>';
             }
-            if ($appAuth->isAdmin() || $appAuth->isSuperadmin() || (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'))) {
+            if (!$appAuth->isManufacturer() && ($appAuth->isAdmin() || $appAuth->isSuperadmin() || (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders')))) {
                 echo $this->element('addInstantOrderButton', [
                     'customers' => $customersForInstantOrderDropdown
                 ]);
