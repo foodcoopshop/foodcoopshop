@@ -44,13 +44,14 @@ The software can be used with any modern web browser, tablet or smartphone. It's
 * Before installing please read the legal information in [German](https://foodcoopshop.github.io/de/rechtliches) or [English](https://foodcoopshop.github.io/en/legal-information).
 
 ## Requirements
-* Server with root access / sudo and cronjobs
+* Server with shell access and cronjobs
 * Apache with `mod_rewrite`
 * PHP >= 7.1
 * MySQL >= 5.6
 * Node.js and npm ([installation](https://www.npmjs.com/get-npm)) developer packages
 * Composer ([installation](https://getcomposer.org/download/)) developer packages
 * Basic understanding of Apache Webserver, MySQL Database and Linux Server administration
+* PHP needs to be able to call mysqldump with exec() for database backups
 
 ## Installation
 * This is the developers area. If you want to use the software "as is", please follow the [installation details](https://foodcoopshop.github.io/en/installation-details) in the software documentation. If you have questions or if you **want be informed if a new version is released**, please drop me an email: office@foodcoopshop.com (Mario).
