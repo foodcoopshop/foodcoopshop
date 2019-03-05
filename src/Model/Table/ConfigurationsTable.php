@@ -138,12 +138,6 @@ class ConfigurationsTable extends AppTable
         return $this->getNumberRangeValidator($validator, 'value', 0, 14);
     }
 
-    public function validationFcsPaymentProductMaximum(Validator $validator)
-    {
-        $validator->numeric('value', __('Decimals_are_not_allowed.'));
-        return $this->getNumberRangeValidator($validator, 'value', 50, 1000);
-    }
-
     public function validationFcsCustomerGroup(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', CUSTOMER_GROUP_MEMBER, CUSTOMER_GROUP_ADMIN);
