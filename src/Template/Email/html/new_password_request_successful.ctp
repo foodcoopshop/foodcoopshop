@@ -24,7 +24,7 @@ use Cake\Core\Configure;
             <td>
                 
                 <p>
-                    <?php echo __('your_new_password_is:'); ?>:<br />
+                    <?php echo __('your_new_password_is:'); ?><br />
                     <b><?php echo $tmpNewPassword; ?></b>
                 </p>
                 

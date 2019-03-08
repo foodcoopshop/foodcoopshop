@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2019-03-04 21:58+0100\n"
-"PO-Revision-Date: 2019-03-04 21:58+0100\n"
+"PO-Revision-Date: 2019-03-04 22:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -831,6 +831,18 @@ msgstr "Info page for delivery rhythms"
 msgid "docs_route_order_handling"
 msgstr "order-handling"
 
+msgid "Last_order_weekday"
+msgstr "Last order weekday"
+
+msgid "Send_order_lists_day"
+msgstr "Send order list day"
+
+msgid "Order_lists_are_sent_automatically_next_day_in_the_morning."
+msgstr "The order lists are sent automatically on the next day in the morning."
+
+msgid "Order_lists_are_sent_automatically_on_this_day."
+msgstr "The order lists are sent automatically on the given day. If left empty, the order lists are not sent."
+
 msgid "delete"
 msgstr "delete"
 
@@ -1422,6 +1434,12 @@ msgstr "The field \"order possible until\" needs to be smaller than the delivery
 msgid "The_first_delivery_day"
 msgstr "The first delivery day"
 
+msgid "The_send_order_list_day_field_is_not_valid."
+msgstr "The field \"send order list date\" is not valid."
+
+msgid "The_send_order_list_day_field_needs_to_be_between_order_possible_until_date_and_first_delivery_day."
+msgstr "The field \"send order list date\" needs to be between \"order possible until\" and the delivery day."
+
 msgid "The_first_delivery_day_needs_to_be_a_last_{0}_of_the_month."
 msgstr "The first delivery day needs to be a last {0} of the month."
 
@@ -1842,6 +1860,9 @@ msgstr "New"
 msgid "More_infos_to_product_{0}"
 msgstr "More infos to product {0}"
 
+msgid "Last_order_day"
+msgstr "Last order day"
+
 msgid "Instant_order"
 msgstr "Instant order"
 
@@ -2102,6 +2123,12 @@ msgstr "inactive"
 
 msgid "active_state_all"
 msgstr "all"
+
+msgid "midnight"
+msgstr "midnight"
+
+msgid "default_value"
+msgstr "default value"
 
 msgid "price_will_be_eventually_adapted."
 msgstr "price will be eventually adapted."

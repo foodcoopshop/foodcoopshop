@@ -89,7 +89,7 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
     echo '<h2>'.__d('admin', 'Notifications').'</h2>';
 
     echo $this->Form->control('Manufacturers.send_order_list', [
-        'label' => __d('admin', 'Order_lists_by_email').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' . __d('admin', 'to_receive_the_orders_per_email_on_{0}.', [$this->Time->getWeekdayName(Configure::read('app.sendOrderListsWeekday'))]) . '</span>',
+        'label' => __d('admin', 'Order_lists_by_email').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' . __d('admin', 'to_receive_the_orders_per_email.') . '</span>',
         'type' => 'checkbox',
         'escape' => false
     ]);

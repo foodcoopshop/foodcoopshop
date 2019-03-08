@@ -830,6 +830,18 @@ msgstr ""
 msgid "docs_route_order_handling"
 msgstr ""
 
+msgid "Last_order_weekday"
+msgstr ""
+
+msgid "Send_order_lists_day"
+msgstr ""
+
+msgid "Order_lists_are_sent_automatically_next_day_in_the_morning."
+msgstr ""
+
+msgid "Order_lists_are_sent_automatically_on_this_day."
+msgstr ""
+
 msgid "delete"
 msgstr ""
 
@@ -933,9 +945,6 @@ msgid "VAT"
 msgstr ""
 
 msgid "Order_day"
-msgstr ""
-
-msgid "Price_per_weight"
 msgstr ""
 
 msgid "Total_sum"
@@ -1421,6 +1430,12 @@ msgstr ""
 msgid "The_first_delivery_day"
 msgstr ""
 
+msgid "The_send_order_list_day_field_is_not_valid."
+msgstr ""
+
+msgid "The_send_order_list_day_field_needs_to_be_between_order_possible_until_date_and_first_delivery_day."
+msgstr ""
+
 msgid "The_first_delivery_day_needs_to_be_a_last_{0}_of_the_month."
 msgstr ""
 
@@ -1841,6 +1856,9 @@ msgstr ""
 msgid "More_infos_to_product_{0}"
 msgstr ""
 
+msgid "Last_order_day"
+msgstr ""
+
 msgid "Instant_order"
 msgstr ""
 
@@ -2100,6 +2118,12 @@ msgid "active_state_inactive"
 msgstr ""
 
 msgid "active_state_all"
+msgstr ""
+
+msgid "midnight"
+msgstr ""
+
+msgid "default_value"
 msgstr ""
 
 msgid "price_will_be_eventually_adapted."

@@ -31,13 +31,17 @@ use Cake\Core\Configure;
             <?php echo __d('admin', 'Pickup_day'); ?> <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'showDateTo' => false, 'nameFrom' => 'dateFrom']); ?>
             <div class="right">
             <?php
-                echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_products'))]);
+                echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products'))]);
             ?>
             </div>
         <?php echo $this->Form->end(); ?>
     </div>
     
     <?php
+    echo '<h2 class="info2">';
+        echo __d('admin', 'Here_you_find_the_unchanged_order_lists_that_were_sent_to_the_manufacturers.');
+    echo '</h2>';
+
     echo '<table class="list">';
 
     echo '<tr class="sort">';

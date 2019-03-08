@@ -37,20 +37,28 @@ foodcoopshop.SyncProduct = {
         return result;
     },
     
-    getDeliveryRhythmString : function(deliveryRhythmString, isStockProduct, type, count, firstDeliveryDay, orderPossibleUntil) {
+    getDeliveryRhythmString : function(deliveryRhythmString, isStockProduct, type, count, firstDeliveryDay, orderPossibleUntil, lastOrderWeekday, sendOrderListDay) {
         
-        var result = deliveryRhythmString;
+        var elements = [deliveryRhythmString];
         
         if (!isStockProduct) {
-            if (firstDeliveryDay !== null) {
-                result += ' / ' + new Date(firstDeliveryDay).toLocaleDateString(foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47);
+            if (type == 'individual') {
+                if (orderPossibleUntil !== null) {
+                    elements.push(new Date(orderPossibleUntil).toLocaleDateString(foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47));
+                }
+                if (sendOrderListDay !== null) {
+                    elements.push(new Date(sendOrderListDay).toLocaleDateString(foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47));
+                }
+            } else {
+                elements.push(lastOrderWeekday);
             }
-            if (type == 'individual' && orderPossibleUntil !== null) {
-                result += ' / ' + new Date(orderPossibleUntil).toLocaleDateString(foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47);
+            if (firstDeliveryDay !== null) {
+                elements.push(new Date(firstDeliveryDay).toLocaleDateString(foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47));
             }
         }
         
-        return result;
+        return elements.join(' / ');
+        
     },
     
     getPricePerUnitBaseInfo : function(priceInclPerUnit, unitName, unitAmount, unitQuantityInUnits) {

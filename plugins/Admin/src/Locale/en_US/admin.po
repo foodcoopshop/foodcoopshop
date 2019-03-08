@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-02-11 20:24+0100\n"
-"PO-Revision-Date: 2019-01-13 23:19+0100\n"
+"POT-Creation-Date: 2019-03-02 20:39+0100\n"
+"PO-Revision-Date: 2019-03-02 20:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.2.1\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -207,6 +207,9 @@ msgstr "Invoice for manufacturer {0} successfully sent to {1}."
 msgid "Invoice_number_abbreviataion_{0}_{1}"
 msgstr "Invoice nº {0}, {1}"
 
+msgid "No_orders_within_the_given_time_range."
+msgstr "No orders within the given time range"
+
 msgid "Order_lists_successfully_generated_for_manufacturer_{0}."
 msgstr "Order lists successfully generated for manufacturer {0}."
 
@@ -224,9 +227,6 @@ msgstr "The settings of manufacturer {0} have been changed."
 
 msgid "Your_settings_have_been_changed."
 msgstr "Your settings have been changed."
-
-msgid "No_orders_within_the_given_time_range."
-msgstr "No orders within the given time range"
 
 msgid "No_member_found_with_id_{0}."
 msgstr "No member found with id {0}."
@@ -378,14 +378,23 @@ msgstr "The attribute {0} of the product {1} from manufacturer {2} was successfu
 msgid "A_new_product_was_created_for_{0}."
 msgstr "A new product was created for {0}."
 
+msgid "Order_possible_until"
+msgstr "Order possible until"
+
+msgid "Send_order_lists_day"
+msgstr "Send order lists day"
+
+msgid "Last_order_weekday"
+msgstr "Last order weekday"
+
+msgid "midnight"
+msgstr "midnight"
+
 msgid "Delivery_day"
 msgstr "Delivery day"
 
 msgid "First_delivery_day"
 msgstr "First delivery day"
-
-msgid "Order_possible_until"
-msgstr "Order possible until"
 
 msgid "The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}."
 msgstr "The delivery rhythm of the product {0} from manufacturer {1} was changed successfully to {2}."
@@ -732,9 +741,6 @@ msgstr "Version of FoodCoopShop"
 msgid "Last_executed_migration"
 msgstr "Last executed migration"
 
-msgid "Pickup_day"
-msgstr "Pickup day"
-
 msgid "Software_update_version"
 msgstr "Software update / Version"
 
@@ -1007,6 +1013,9 @@ msgstr "Please chose the months for your payment."
 
 msgid "Delivery_days"
 msgstr "Delivery days"
+
+msgid "Pickup_day"
+msgstr "Pickup day"
 
 msgid "Pickup_days"
 msgstr "Pickup days"
@@ -1383,6 +1392,9 @@ msgstr "For signing in please use the email address of this message. If you want
 msgid "Your_contact_person"
 msgstr "Your contact person"
 
+msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_the_manufacturers."
+msgstr "Here you find the unchanged order lists that were sent to the manufacturers."
+
 msgid "Order_list_by_product"
 msgstr "Order list by product"
 
@@ -1536,8 +1548,8 @@ msgstr "I want"
 msgid "The_manufacturer_wants"
 msgstr "The manufacturer wants"
 
-msgid "to_receive_the_orders_per_email_on_{0}."
-msgstr "to receive the orders per email every {0}."
+msgid "to_receive_the_orders_per_email."
+msgstr "to receive the orders per email."
 
 msgid "CC_recipient_for_order_lists"
 msgstr "CC recipient for order lists"
@@ -1960,9 +1972,6 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 #~ msgid "and"
 #~ msgstr "and"
-
-#~ msgid "Last_order_date"
-#~ msgstr "Last order date"
 
 #~ msgid "Manually_send_order_list"
 #~ msgstr "Manually send order list"

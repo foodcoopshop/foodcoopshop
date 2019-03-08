@@ -420,6 +420,8 @@ CREATE TABLE `fcs_product` (
   `delivery_rhythm_count` tinyint(10) NOT NULL DEFAULT '1',
   `delivery_rhythm_first_delivery_day` date DEFAULT NULL,
   `delivery_rhythm_order_possible_until` date DEFAULT NULL,
+  `delivery_rhythm_send_order_list_weekday` int(10) unsigned DEFAULT NULL,
+  `delivery_rhythm_send_order_list_day` date DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id_product`),

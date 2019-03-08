@@ -69,6 +69,38 @@ class OrderDetailsTable extends AppTable
         return $validator;
     }
     
+    public function getOrderDetailsForOrderListPreview($pickupDay)
+    {
+        $query = $this->find('all', [
+            'conditions' => [
+                'OrderDetails.pickup_day = \'' . $pickupDay . '\'',
+            ],
+            'contain' => [
+                'Products'
+            ]
+        ]);
+        return $query;
+    }
+    
+    public function getOrderDetailsForSendingOrderLists($pickupDay, $cronjobRunDay)
+    {
+        $cronjobRunDayWeekday = date('w', strtotime($cronjobRunDay));
+        $query = $this->find('all', [
+            'contain' => [
+                'Products'
+            ]
+        ]);
+        $query->where(['OrderDetails.order_state' => ORDER_STATE_ORDER_PLACED]);
+        $query->where(function ($exp, $query) use ($cronjobRunDayWeekday, $cronjobRunDay, $pickupDay) {
+            return $exp->or_([
+                '(Products.delivery_rhythm_type <> "individual" AND Products.delivery_rhythm_send_order_list_weekday = ' . $cronjobRunDayWeekday . ')
+                 AND OrderDetails.pickup_day = "' . $pickupDay . '"',
+                '(Products.delivery_rhythm_type = "individual" AND Products.delivery_rhythm_send_order_list_day = "' . $cronjobRunDay . '")'
+            ]);
+        });
+        return $query;
+    }
+    
     /**
      * @param int $customerId
      * @return array
@@ -127,21 +159,28 @@ class OrderDetailsTable extends AppTable
         return $query->toArray();
     }
     
-    public function updateOrderState($dateFrom, $dateTo, $oldOrderStates, $newOrderState, $manufacturerId)
+    public function updateOrderState($dateFrom, $dateTo, $oldOrderStates, $newOrderState, $manufacturerId, $orderDetailIds = [])
     {
         
         // update with condition on association does not work with ->update or ->updateAll
         $orderDetails = $this->find('all', [
             'conditions' => [
                 'Products.id_manufacturer' => $manufacturerId,
-                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
-                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
                 'OrderDetails.order_state IN (' . join(', ', $oldOrderStates) . ')'
             ],
             'contain' => [
                 'Products'
             ]
         ]);
+        
+        if (!empty($orderDetailIds)) {
+            $orderDetails->where(['OrderDetails.id_order_detail IN (' . join(', ', $orderDetailIds) . ')']);
+        } else {
+            $orderDetails->where([
+                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
+                'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\''
+            ]);
+        }
         
         foreach($orderDetails as $orderDetail) {
             $this->save(

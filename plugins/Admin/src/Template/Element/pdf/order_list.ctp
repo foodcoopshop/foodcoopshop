@@ -68,7 +68,7 @@ $pdf->writeHTML($html, true, false, true, false, '');
 
 $pdf->lastPage();
 
-$filename = $this->MyHtml->getOrderListLink($results[0]['ManufacturerName'], $results[0]['ManufacturerId'], $deliveryDay, $groupTypeLabel);
+$filename = $this->MyHtml->getOrderListLink($results[0]['ManufacturerName'], $results[0]['ManufacturerId'], $results[0]['OrderDetailPickupDay'], $groupTypeLabel);
 
 if ($saveParam == 'F') {
     // pdf saved on server

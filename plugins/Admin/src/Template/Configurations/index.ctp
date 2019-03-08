@@ -191,7 +191,19 @@ $this->element('addScript', [
                 echo '</td>';
 
                 echo '<td>';
-                    echo $configuration->value;
+                
+                    switch($configuration->name) {
+                        case 'FCS_WEEKLY_PICKUP_DAY':
+                            echo $this->MyTime->getWeekdayName($configuration->value);
+                            break;
+                        case 'FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA':
+                            echo $configuration->value . ' (' . $this->MyTime->getWeekdayName($this->MyTime->getSendOrderListsWeekday()) . ')';
+                            break;
+                        default:
+                            echo $configuration->value;
+                            break;
+                    }
+                
                 echo '</td>';
 
             echo '</tr>';
@@ -228,16 +240,6 @@ $this->element('addScript', [
         <tr>
             <td>app.adminEmail / app.adminPassword</td>
             <td><?php echo Configure::read('app.adminEmail'); ?> / <?php echo preg_replace("|.|", "*", Configure::read('app.adminPassword')); ?></td>
-        </tr>
-
-        <tr>
-            <td>app.sendOrderListsWeekday</td>
-            <td><?php echo $this->MyTime->getWeekdayName(Configure::read('app.sendOrderListsWeekday')); ?></td>
-        </tr>
-
-        <tr>
-            <td><?php echo __d('admin', 'Pickup_day'); ?></td>
-            <td><?php echo $this->MyTime->getWeekdayName(Configure::read('app.sendOrderListsWeekday') + Configure::read('app.deliveryDayDelta')); ?> (app.sendOrderListsWeekday + app.deliveryDayDelta)</td>
         </tr>
 
         <tr>

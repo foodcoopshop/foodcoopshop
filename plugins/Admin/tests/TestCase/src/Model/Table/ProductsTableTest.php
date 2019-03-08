@@ -137,154 +137,261 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertSame(true, $exceptionThrown);
     }
     
-    public function testCalculatePickupDayRespectingDeliveryRhythm()
+    public function testCalculatePickupDayRespectingDeliveryRhythmWeekWithFirstDeliveryDay()
     {
-        $tests = [
-            [
-                'product' => $this->Product->newEntity(
-                    [
-                        'delivery_rhythm_type' => 'week',
-                        'delivery_rhythm_count' => '1',
-                        'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-11-02'),
-                        'is_stock_product' => '0'
-                    ]
-                    ),
-                'currentDay' => '2018-10-07',
-                'result' => '2018-11-02'
-            ],
-            [
-                'product' => $this->Product->newEntity(
-                    [
-                        'delivery_rhythm_type' => 'week',
-                        'delivery_rhythm_count' => '1',
-                        'is_stock_product' => '0'
-                    ]
-                    ),
-                'currentDay' => '2018-10-07',
-                'result' => '2018-10-12'
-            ],
-            [
-                'product' => $this->Product->newEntity(
-                    [
-                        'delivery_rhythm_type' => 'week',
-                        'delivery_rhythm_count' => '1',
-                        'is_stock_product' => '0'
-                    ]
-                ),
-                'currentDay' => '2018-08-14',
-                'result' => '2018-08-17'
-            ],
-            [
-                'product' => $this->Product->newEntity(
-                    [
-                        'delivery_rhythm_type' => 'week',
-                        'delivery_rhythm_count' => '2',
-                        'is_stock_product' => '0',
-                        'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-10')
-                    ]
-                ),
-                'currentDay' => '2018-08-14',
-                'result' => '2018-08-24'
-            ],
-            [
-                'product' => $this->Product->newEntity(
-                    [
-                        'delivery_rhythm_type' => 'week',
-                        'delivery_rhythm_count' => '2',
-                        'is_stock_product' => '0',
-                        'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03')
-                    ]
-                ),
-                'currentDay' => '2018-08-14',
-                'result' => '2018-08-17'
-            ],
-            [
-                'product' => $this->Product->newEntity(
-                    [
-                        'delivery_rhythm_type' => 'week',
-                        'delivery_rhythm_count' => '2',
-                        'is_stock_product' => '0',
-                        'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-07-06')
-                    ]
-                ),
-                'currentDay' => '2018-09-15',
-                'result' => '2018-09-28'
-            ],
-            [
-                'product' => $this->Product->newEntity(
-                    [
-                        'delivery_rhythm_type' => 'week',
-                        'delivery_rhythm_count' => '4',
-                        'is_stock_product' => '0',
-                        'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03')
-                    ]
-                ),
-                'currentDay' => '2018-08-07',
-                'result' => '2018-08-31'
-            ],
-            [
-                'product' => $this->Product->newEntity(
-                    [
-                        'delivery_rhythm_type' => 'month',
-                        'delivery_rhythm_count' => '1',
-                        'is_stock_product' => '0',
-                    ]
-                ),
-                'currentDay' => '2017-08-07',
-                'result' => '2017-09-01'
-            ],
-            [
-                'product' => $this->Product->newEntity(
-                    [
-                        'delivery_rhythm_type' => 'month',
-                        'delivery_rhythm_count' => '0',
-                        'is_stock_product' => '0',
-                    ]
-                ),
-                'currentDay' => '2018-09-13',
-                'result' => '2018-09-28'
-            ],
-            [
-                'product' => $this->Product->newEntity(
-                    [
-                        'delivery_rhythm_type' => 'month',
-                        'delivery_rhythm_count' => '0',
-                        'is_stock_product' => '0',
-                    ]
-                ),
-                'currentDay' => '2018-08-07',
-                'result' => '2018-08-31'
-            ],
-            [
-                'product' => $this->Product->newEntity(
-                    [
-                        'delivery_rhythm_type' => 'month',
-                        'delivery_rhythm_count' => '1',
-                        'is_stock_product' => '1',
-                    ]
-                ),
-                'currentDay' => '2017-08-07',
-                'result' => '2017-08-11'
-            ],
-            [
-                'product' => $this->Product->newEntity(
-                    [
-                        'delivery_rhythm_type' => 'individual',
-                        'delivery_rhythm_count' => '0',
-                        'is_stock_product' => '0',
-                        'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03')
-                    ]
-                ),
-                'currentDay' => '2017-08-07',
-                'result' => '2018-08-03'
-            ],
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '1',
+                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-11-02'),
+                    'is_stock_product' => '0'
+                ]
+            ),
+            'currentDay' => '2018-10-07',
+            'result' => '2018-11-02'
         ];
-        
-        foreach ($tests as $test) {
-            $result = $this->Product->calculatePickupDayRespectingDeliveryRhythm($test['product'], $test['currentDay']);
-            $this->assertEquals($test['result'], $result);
-        }
-        
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+    
+    public function testCalculatePickupDayRespectingDeliveryRhythmWeekNoFirstDeliveryDay()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '1',
+                    'is_stock_product' => '0'
+                ]
+            ),
+            'currentDay' => '2018-10-07',
+            'result' => '2018-10-12'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+    
+    public function testCalculatePickupDayRespectingDeliveryRhythmWeekNormal()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '1',
+                    'is_stock_product' => '0'
+                ]
+            ),
+            'currentDay' => '2018-08-14',
+            'result' => '2018-08-17'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+    
+    public function testCalculatePickupDayRespectingDeliveryRhythmWeekWithSendOrderListDay()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '1',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_send_order_list_weekday' => 2
+                ]
+            ),
+            'currentDay' => '2017-08-08',
+            'result' => '2017-08-18'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+    
+    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekWithSendOrderListDayMonday()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '2',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_send_order_list_weekday' => 1,
+                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2019-03-01')
+                ]
+            ),
+            'currentDay' => '2019-02-25',
+            'result' => '2019-03-15'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+    
+    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekWithSendOrderListDayThursday()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '2',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_send_order_list_weekday' => 4,
+                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2019-03-01')
+                ]
+            ),
+            'currentDay' => '2019-03-08',
+            'result' => '2019-03-29'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+    
+    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekA()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '2',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-10')
+                ]
+            ),
+            'currentDay' => '2018-08-14',
+            'result' => '2018-08-24'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+    
+    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekB()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '2',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03')
+                ]
+            ),
+            'currentDay' => '2018-08-14',
+            'result' => '2018-08-17'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+    
+    public function testCalculatePickupDayRespectingDeliveryRhythm2WeekC()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '2',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-07-06')
+                ]
+            ),
+            'currentDay' => '2018-09-15',
+            'result' => '2018-09-28'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+    
+    public function testCalculatePickupDayRespectingDeliveryRhythm4Week()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '4',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03')
+                ]
+            ),
+            'currentDay' => '2018-08-07',
+            'result' => '2018-08-31'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+    
+    public function testCalculatePickupDayRespectingDeliveryRhythm1MonthA()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'month',
+                    'delivery_rhythm_count' => '1',
+                    'is_stock_product' => '0',
+                ]
+            ),
+            'currentDay' => '2017-08-07',
+            'result' => '2017-09-01'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+    
+    public function testCalculatePickupDayRespectingDeliveryRhythm1MonthB()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'month',
+                    'delivery_rhythm_count' => '1',
+                    'is_stock_product' => '1',
+                ]
+            ),
+            'currentDay' => '2017-08-07',
+            'result' => '2017-08-11'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+    
+    public function testCalculatePickupDayRespectingDeliveryRhythm0MonthA()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'month',
+                    'delivery_rhythm_count' => '0',
+                    'is_stock_product' => '0',
+                ]
+            ),
+            'currentDay' => '2018-09-13',
+            'result' => '2018-09-28'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+    
+    public function testCalculatePickupDayRespectingDeliveryRhythm0MonthB()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'month',
+                    'delivery_rhythm_count' => '0',
+                    'is_stock_product' => '0',
+                ]
+            ),
+            'currentDay' => '2018-08-07',
+            'result' => '2018-08-31'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+    
+    public function testCalculatePickupDayRespectingDeliveryRhythmIndividual()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'individual',
+                    'delivery_rhythm_count' => '0',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03')
+                ]
+            ),
+            'currentDay' => '2017-08-07',
+            'result' => '2018-08-03'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+    
+    private function assertPickupDay($product, $currentDay, $expectedResult)
+    {
+        $result = $this->Product->calculatePickupDayRespectingDeliveryRhythm($product, $currentDay);
+        $this->assertEquals($expectedResult, $result);
     }
 
     public function testGetCompositeProductIdAndAttributeId()

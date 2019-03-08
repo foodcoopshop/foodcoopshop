@@ -137,9 +137,9 @@ class AppTable extends Table
     protected function getFieldsForProductListQuery()
     {
         $fields = "Products.id_product,
-                Products.name, Products.description_short, Products.description, Products.unity, Products.price, Products.created,
+                Products.name, Products.description_short, Products.description, Products.unity, Products.price, Products.created, Products.is_stock_product,
                 Products.delivery_rhythm_type, Products.delivery_rhythm_count, Products.delivery_rhythm_first_delivery_day, Products.delivery_rhythm_order_possible_until,
-                Products.is_stock_product,
+                Products.delivery_rhythm_send_order_list_weekday, Products.delivery_rhythm_send_order_list_day,
                 Deposits.deposit,
                 Images.id_image,
                 Manufacturers.id_manufacturer, Manufacturers.name as ManufacturersName,
@@ -214,10 +214,12 @@ class AppTable extends Table
                         'delivery_rhythm_first_delivery_day' => $product['delivery_rhythm_first_delivery_day'] == '' ? null : new FrozenDate($product['delivery_rhythm_first_delivery_day']),
                         'delivery_rhythm_type' => $product['delivery_rhythm_type'],
                         'delivery_rhythm_count' => $product['delivery_rhythm_count'],
+                        'delivery_rhythm_send_order_list_weekday' => $product['delivery_rhythm_send_order_list_weekday'],
+                        'delivery_rhythm_send_order_list_day' => $product['delivery_rhythm_send_order_list_day'],
                         'is_stock_product' => $product['is_stock_product']
                     ]
-                    )
-                );
+                )
+            );
             
             // hides the product if manufacturer has enabled delivery break
             if ($this->Product->deliveryBreakEnabled($product['no_delivery_days'], $deliveryDate)) {

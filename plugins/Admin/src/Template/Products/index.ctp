@@ -288,6 +288,11 @@ use Cake\Core\Configure;
             'label' => '',
             'options' => $this->Html->getDeliveryRhythmTypesForDropdown()
         ]);
+        echo $this->Form->control('Weekdays', [
+            'type' => 'select',
+            'label' => '',
+            'options' => $this->Time->getSendOrderListsWeekdayOptions()
+        ]);
     echo '</div>';
     
 ?>

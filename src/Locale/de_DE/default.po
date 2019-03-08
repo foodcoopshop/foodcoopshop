@@ -3,9 +3,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2019-03-04 21:58+0100\n"
-"PO-Revision-Date: 2019-03-04 21:58+0100\n"
+"PO-Revision-Date: 2019-03-04 22:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -14,6 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.2.1\n"
+"Project-Id-Version: \n"
 
 msgid "You_have_been_signed_out."
 msgstr "Du hast dich erfolgreich abgemeldet."
@@ -831,6 +831,18 @@ msgstr "Infos zu den Lieferrhythmen"
 msgid "docs_route_order_handling"
 msgstr "bestellabwicklung"
 
+msgid "Last_order_weekday"
+msgstr "Bestellschluss"
+
+msgid "Send_order_lists_day"
+msgstr "Bestelllisten versenden am"
+
+msgid "Order_lists_are_sent_automatically_next_day_in_the_morning."
+msgstr "Die Bestelllisten werden automatisch am nächsten Tag in der Früh versendet."
+
+msgid "Order_lists_are_sent_automatically_on_this_day."
+msgstr "Die Bestelllisten werden automatisch am angegebenen Tag in der Früh versendet. Leeres Feld bedeutet: Bestelllisten werden nicht automatisch versendet."
+
 msgid "delete"
 msgstr "löschen"
 
@@ -1422,6 +1434,12 @@ msgstr "Das Bestellbar-bis-Datum muss kleiner als der Liefertag sein."
 msgid "The_first_delivery_day"
 msgstr "Der erste Liefertag"
 
+msgid "The_send_order_list_day_field_is_not_valid."
+msgstr "Das Datum für den Bestelllisten-Versand ist nicht gültig."
+
+msgid "The_send_order_list_day_field_needs_to_be_between_order_possible_until_date_and_first_delivery_day."
+msgstr "Das Datum für den Bestellisten-Versand muss zwischen Bestellbar-bis-Datum und dem Liefertag liegen."
+
 msgid "The_first_delivery_day_needs_to_be_a_last_{0}_of_the_month."
 msgstr "Der erste Liefertag muss ein letzter {0} im Monat sein."
 
@@ -1842,6 +1860,9 @@ msgstr "Neu"
 msgid "More_infos_to_product_{0}"
 msgstr "Mehr Infos zu {0}"
 
+msgid "Last_order_day"
+msgstr "Bestellschluss"
+
 msgid "Instant_order"
 msgstr "Sofort-Bestellung"
 
@@ -2102,6 +2123,12 @@ msgstr "deaktiviert"
 
 msgid "active_state_all"
 msgstr "alle"
+
+msgid "midnight"
+msgstr "Mitternacht"
+
+msgid "default_value"
+msgstr "Standardwert"
 
 msgid "price_will_be_eventually_adapted."
 msgstr "Preis wird evtl. noch angepasst."

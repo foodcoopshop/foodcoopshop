@@ -69,18 +69,19 @@ return [
          */
         'cookieKey' => '',
 
+        /**
+         * @deprecated since v2.4
+         * deliveryDayDelta is replaced by the new database setting FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA
+         * and can be removed after successful migration of 20190218101915_IndividualSendOrderListDay.php
+         */
+        //'deliveryDayDelta' => 2,
+        
         'discourseSsoEnabled' => false,
 
         /**
          * A random string used for Discourse SSO
          */
         'discourseSsoSecret' => '',
-
-        /**
-         * defines how many days after the sendOrderListsWeekday the products are delivered
-         * sendOrderListsWeekday is defined in config.php and preset to 3, i.e. "wednesday"
-         */
-        'deliveryDayDelta' => 2,
 
         /**
          * optional: message that is displayed in the dialog where order-detail status can be changed (/admin/order-details)

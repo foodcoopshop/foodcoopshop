@@ -151,9 +151,11 @@ INSERT INTO `fcs_configuration` VALUES
 (575,1,'FCS_CURRENCY_SYMBOL','Währungssymbol','€','readonly',52,'de_DE','2018-06-13 19:53:14','2018-06-13 19:53:14'),
 (576,1,'FCS_DEFAULT_LOCALE','Sprache','de_DE','readonly',55,'de_DE','2018-06-26 10:18:55','2018-06-26 10:18:55'),
 (577,1,'FCS_FOODCOOPS_MAP_ENABLED','Auf Home Karte mit anderen Foodcoops anzeigen?','1','boolean',128,'de_DE','2019-02-11 22:22:06','2019-02-11 22:22:06'),
-(578,1,'FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM','Sollen Lagerprodukte mit der wöchentlichen Bestellung bestellt werden können?','1','boolean',75,'de_DE','2019-02-18 12:38:00','2019-02-18 12:38:00'),
-(579,1,'FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS','In der Sofort-Bestellung ausschließlich Lagerprodukte anzeigen?','0','boolean',76,'de_DE','2019-02-18 12:38:00','2019-02-18 12:38:00'),
-(580,1,'FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES','Lagerprodukte in Rechnungen miteinbeziehen?','1','readonly',60,'de_DE','2019-02-18 12:38:00','2019-02-18 12:38:00');
+(578,1,'FCS_WEEKLY_PICKUP_DAY','Wöchentlicher Abholtag','5','readonly',60,'de_DE','2019-02-18 12:38:10','2019-02-18 12:38:10'),
+(579,1,'FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA','Bestelllisten-Versand: x Tage vor dem Abholtag','2','readonly',65,'de_DE','2019-02-18 12:38:10','2019-02-18 12:38:10'),
+(580,1,'FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM','Sollen Lagerprodukte mit der wöchentlichen Bestellung bestellt werden können?','1','boolean',75,'de_DE','2019-02-18 12:38:00','2019-02-18 12:38:00'),
+(581,1,'FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS','In der Sofort-Bestellung ausschließlich Lagerprodukte anzeigen?','0','boolean',76,'de_DE','2019-02-18 12:38:00','2019-02-18 12:38:00'),
+(582,1,'FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES','Lagerprodukte in Rechnungen miteinbeziehen?','1','readonly',60,'de_DE','2019-02-18 12:38:00','2019-02-18 12:38:00');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -198,7 +200,7 @@ INSERT INTO `fcs_images` VALUES
 
 /*!40000 ALTER TABLE `fcs_manufacturer` DISABLE KEYS */;
 INSERT INTO `fcs_manufacturer` VALUES
-(4,'Demo Fleisch-Hersteller','<p>tests</p>\r\n','','2014-05-14 13:23:02','2015-05-15 13:31:41',1,0,'','','','','','','','','','',NULL,0,1,1,2,'testfcs1@mailinator.com;testfcs2@mailinator.com',0,NULL,NULL,NULL,1,NULL,0,30,100,0,0,0,''),
+(4,'Demo Fleisch-Hersteller','<p>tests</p>\r\n','','2014-05-14 13:23:02','2015-05-15 13:31:41',1,0,'','','','','','','','','','',NULL,0,1,1,2,'testfcs1@mailinator.com,testfcs2@mailinator.com',0,NULL,NULL,NULL,1,NULL,0,30,100,0,0,0,''),
 (5,'Demo Gemüse-Hersteller','<p>Gem&uuml;se-Hersteller Beschreibung&nbsp;lang</p>','<div class=\"entry-content\">\r\n<p>Gem&uuml;se-Hersteller Beschreibung kurz</p>\r\n</div>','2014-05-14 13:36:44','2016-09-27 09:34:51',1,0,'','','','','','','','','','',88,0,1,1,1,'',0,NULL,NULL,NULL,NULL,'1',0,30,100,1,1,1,''),
 (15,'Demo Milch-Hersteller','<p>Ja, ich bin der Milchhersteller!</p>','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,0,'','','','','','','','','','',NULL,0,1,1,4,'test@test.at',0,NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0,''),
 (16,'Hersteller ohne Customer-Eintrag','','','2014-06-04 21:45:12','2016-03-07 09:02:25',1,0,'','','','','','','','','','',NULL,10,1,1,1,'',0,NULL,NULL,NULL,NULL,NULL,0,30,100,0,0,0,'');
@@ -236,18 +238,18 @@ INSERT INTO `fcs_payments` VALUES
 
 /*!40000 ALTER TABLE `fcs_product` DISABLE KEYS */;
 INSERT INTO `fcs_product` VALUES
-(60,15,3,0.909091,'Milch','','1 Liter','',0,0,1,'week',1,NULL,NULL,'2014-06-11 21:20:24','2014-12-14 19:47:33'),
-(102,4,2,0.000000,'Frankfurter','','<p>2 Paar</p>','',0,0,1,'week',1,NULL,NULL,'2016-04-27 21:13:37','2014-09-19 14:32:51'),
-(103,4,2,3.181819,'Bratwürstel','','2 Paar','',0,0,1,'week',1,NULL,NULL,'2016-05-05 08:28:49','2014-08-16 14:05:58'),
-(163,5,0,1.363637,'Mangold','','0,25kg','',0,0,1,'week',1,NULL,NULL,'2014-07-12 20:41:43','2017-07-26 13:24:10'),
-(339,5,0,0.000000,'Kartoffel','','','',0,0,1,'week',1,NULL,NULL,'2015-09-07 12:05:38','2015-02-26 13:54:07'),
-(340,4,0,4.545455,'Beuschl','','','',0,0,1,'week',1,NULL,NULL,'2016-05-05 08:28:45','2015-06-23 14:52:53'),
-(344,5,0,0.636364,'Knoblauch','','','100 g',0,0,1,'week',1,NULL,NULL,'2015-10-05 17:22:40','2015-07-06 10:24:44'),
-(346,5,2,1.652893,'Artischocke','','','Stück',0,0,1,'week',1,NULL,NULL,'2015-08-19 09:35:46','2015-08-19 09:35:45'),
-(347,4,2,0.000000,'Forelle','','','Stück',0,0,1,'week',1,NULL,NULL,'2018-05-17 16:13:39','2018-05-17 16:15:21'),
-(348,4,2,0.000000,'Rindfleisch','','','',0,0,1,'week',1,NULL,NULL,'2018-05-17 16:15:33','2018-05-17 16:16:38'),
-(349,5,2,4.545455,'Lagerprodukt','','','',0,1,1,'week',1,NULL,NULL,'2018-08-16 12:15:48','2018-08-16 12:16:51'),
-(350,5,2,0.000000,'Lagerprodukt mit Varianten','','','',0,1,1,'week',1,NULL,NULL,'2018-08-16 12:19:06','2018-08-16 12:19:23');
+(60,15,3,0.909091,'Milch','','1 Liter','',0,0,1,'week',1,NULL,NULL,'3',NULL,'2014-06-11 21:20:24','2014-12-14 19:47:33'),
+(102,4,2,0.000000,'Frankfurter','','<p>2 Paar</p>','',0,0,1,'week',1,NULL,NULL,'3',NULL,'2016-04-27 21:13:37','2014-09-19 14:32:51'),
+(103,4,2,3.181819,'Bratwürstel','','2 Paar','',0,0,1,'week',1,NULL,NULL,'3',NULL,'2016-05-05 08:28:49','2014-08-16 14:05:58'),
+(163,5,0,1.363637,'Mangold','','0,25kg','',0,0,1,'week',1,NULL,NULL,'3',NULL,'2014-07-12 20:41:43','2017-07-26 13:24:10'),
+(339,5,0,0.000000,'Kartoffel','','','',0,0,1,'week',1,NULL,NULL,'3',NULL,'2015-09-07 12:05:38','2015-02-26 13:54:07'),
+(340,4,0,4.545455,'Beuschl','','','',0,0,1,'week',1,NULL,NULL,'3',NULL,'2016-05-05 08:28:45','2015-06-23 14:52:53'),
+(344,5,0,0.636364,'Knoblauch','','','100 g',0,0,1,'week',1,NULL,NULL,'3',NULL,'2015-10-05 17:22:40','2015-07-06 10:24:44'),
+(346,5,2,1.652893,'Artischocke','','','Stück',0,0,1,'week',1,NULL,NULL,'3',NULL,'2015-08-19 09:35:46','2015-08-19 09:35:45'),
+(347,4,2,0.000000,'Forelle','','','Stück',0,0,1,'week',1,NULL,NULL,'3',NULL,'2018-05-17 16:13:39','2018-05-17 16:15:21'),
+(348,4,2,0.000000,'Rindfleisch','','','',0,0,1,'week',1,NULL,NULL,'3',NULL,'2018-05-17 16:15:33','2018-05-17 16:16:38'),
+(349,5,2,4.545455,'Lagerprodukt','','','',0,1,1,'week',1,NULL,NULL,'3',NULL,'2018-08-16 12:15:48','2018-08-16 12:16:51'),
+(350,5,2,0.000000,'Lagerprodukt mit Varianten','','','',0,1,1,'week',1,NULL,NULL,'3',NULL,'2018-08-16 12:19:06','2018-08-16 12:19:23');
 /*!40000 ALTER TABLE `fcs_product` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product_attribute` DISABLE KEYS */;
@@ -360,7 +362,8 @@ INSERT INTO `phinxlog` VALUES
 (20181029212405,'CorrectNetPrice','2018-10-29 08:28:29','2018-10-29 08:28:29',0),
 (20181226215706,'NoDeliveryDaysDefaultNull','2018-12-26 08:28:29','2018-12-26 08:28:29',0),
 (20190114095502,'Fontawesome5','2019-01-14 00:00:00','2019-01-14 00:00:00',0),
-(20190211210824,'AddFoodCoopShopInstancesMap','2019-02-11 21:25:36','2019-02-11 21:25:36',0),
+(20190211210824,'AddFoodCoopShopInstancesMap','2019-02-11 21:22:06','2019-02-11 21:22:06',0),
+(20190218101915,'IndividualSendOrderListDay','2019-02-18 11:38:10','2019-02-18 11:38:10',0),
 (20190219104144,'StockProductOrderManagement','2019-02-19 21:25:36','2019-02-11 21:25:36',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

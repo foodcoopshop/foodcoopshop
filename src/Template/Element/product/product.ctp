@@ -70,6 +70,15 @@ if ($product['description'] != '') {
     if ($product['delivery_rhythm_type'] == 'individual' && !$this->Time->isDatabaseDateNotSet($product['delivery_rhythm_order_possible_until'])) {
         echo '<br />' . __('Order_possible_until') . ': ' . $this->Time->getDateFormattedWithWeekday(strtotime($product['delivery_rhythm_order_possible_until']));
     }
+    
+    if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $product['delivery_rhythm_type'] != 'individual' && $this->Time->getSendOrderListsWeekday() != $product['delivery_rhythm_send_order_list_weekday']) {
+        echo '<span class="last-order-day">';
+            echo __('Last_order_day') . ': <b>' . $this->Time->getWeekdayName(
+                $this->Time->getNthWeekdayBeforeWeekday(1, $product['delivery_rhythm_send_order_list_weekday'])
+            ) . '</b> ' . __('midnight');
+        echo '</span>';
+    }
+    
     echo '<br />'.__('Pickup_day').': ';
     echo '<span class="pickup-day">';
         if ($this->request->getSession()->check('Auth.instantOrderCustomer')) {

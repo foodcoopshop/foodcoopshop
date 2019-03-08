@@ -57,8 +57,8 @@ return [
         'uploadedFilesDir' => DS . 'files' . DS . 'files',
         'folder_invoices' => ROOT . DS . 'files_private'. DS . 'invoices',
         'folder_order_lists' => ROOT . DS. 'files_private' . DS .'order_lists',
-        'folder_invoices_with_current_year_and_month' => ROOT . DS . 'files_private'. DS . 'invoices'.DS.date('Y').DS.date('m'),
-        'folder_order_lists_with_current_year_and_month' => ROOT . DS . 'files_private' . DS .'order_lists'.DS.date('Y').DS.date('m'),
+        'folder_invoices' => ROOT . DS . 'files_private'. DS . 'invoices',
+        'folder_order_lists' => ROOT . DS . 'files_private' . DS .'order_lists',
 
         /**
          * all the default values in this block can be overwritten in the manufacturer settings
@@ -77,8 +77,9 @@ return [
         'dateOfFirstSendInvoiceCronjobWithPickupDayUpdate' => '2018-11-11', //pickupDayMigration was released in v2.2
         
         /**
-         * weekday on which the weekly cronjob "SendOrderList" is called
-         * the available options (in combination with deliveryDayDelta) can be found in tests/TestCase/src/View/Helper/MyTimeHelperTest.php
+         * @deprecated since v2.4
+         * sendOrderListsWeekday is replaced by the new database setting FCS_WEEKLY_PICKUP_DAY
+         * and can be removed after successful migration of 20190218101915_IndividualSendOrderListDay.php
          */
         'sendOrderListsWeekday' => 3,
 
