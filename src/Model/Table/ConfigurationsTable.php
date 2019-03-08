@@ -71,6 +71,17 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
 
+    public function validationFcsRegistrationNotificationEmails(Validator $validator)
+    {
+        $validator->allowEmpty('value');
+        $validator->add('value', 'multipleEmails', [
+            'rule' => 'ruleMultipleEmails',
+            'provider' => 'table',
+            'message' => __('At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space.')
+        ]);
+        return $validator;
+    }
+    
     public function validationFcsBackupEmailAddressBcc(Validator $validator)
     {
         $validator->allowEmpty('value');
@@ -125,12 +136,6 @@ class ConfigurationsTable extends AppTable
     {
         $validator->numeric('value', __('Decimals_are_not_allowed.'));
         return $this->getNumberRangeValidator($validator, 'value', 0, 14);
-    }
-
-    public function validationFcsPaymentProductMaximum(Validator $validator)
-    {
-        $validator->numeric('value', __('Decimals_are_not_allowed.'));
-        return $this->getNumberRangeValidator($validator, 'value', 50, 1000);
     }
 
     public function validationFcsCustomerGroup(Validator $validator)

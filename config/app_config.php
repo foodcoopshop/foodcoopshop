@@ -77,7 +77,7 @@ return [
         'dateOfFirstSendInvoiceCronjobWithPickupDayUpdate' => '2018-11-11', //pickupDayMigration was released in v2.2
         
         /**
-         * @deprecated since v2.4
+         * not used since v2.4
          * sendOrderListsWeekday is replaced by the new database setting FCS_WEEKLY_PICKUP_DAY
          * and can be removed after successful migration of 20190218101915_IndividualSendOrderListDay.php
          */

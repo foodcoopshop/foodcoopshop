@@ -233,11 +233,6 @@ $this->element('addScript', [
         </tr>
 
         <tr>
-            <td>app.registrationNotificationEmails</td>
-            <td><?php echo join(', ', Configure::read('app.registrationNotificationEmails')); ?></td>
-        </tr>
-
-        <tr>
             <td>app.adminEmail / app.adminPassword</td>
             <td><?php echo Configure::read('app.adminEmail'); ?> / <?php echo preg_replace("|.|", "*", Configure::read('app.adminPassword')); ?></td>
         </tr>

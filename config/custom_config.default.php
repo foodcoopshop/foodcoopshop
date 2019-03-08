@@ -70,9 +70,9 @@ return [
         'cookieKey' => '',
 
         /**
-         * @deprecated since v2.4
+         * not used since v2.4
          * deliveryDayDelta is replaced by the new database setting FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA
-         * and can be removed after successful migration of 20190218101915_IndividualSendOrderListDay.php
+         * and can be removed in your custom_config.php after successful migration of 20190218101915_IndividualSendOrderListDay.php
          */
         //'deliveryDayDelta' => 2,
         
@@ -94,9 +94,11 @@ return [
         'cakeServerName' => '',
 
         /**
-         * array of email adresses that receive notifications after new member registrations
+         * not used since v2.4
+         * registrationNotificationEmails is replaced by the new database setting FCS_REGISTRATION_NOTIFICATION_EMAILS
+         * and can be removed in your custom_config.php after successful migration of 20190305183508_ConfigurationOptimizations.php
          */
-        'registrationNotificationEmails' => [],
+        //'registrationNotificationEmails' => [],
 
         /**
          * whether to apply a member fee to the members account balance

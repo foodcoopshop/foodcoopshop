@@ -132,7 +132,8 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->saveAndCheckValidCustomer($data, $email);
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEmailLogs($emailLogs[0], 'Willkommen', ['war erfolgreich!', 'Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert.'], [$email]);
-
+        $this->assertEmailLogs($emailLogs[1], 'Neue Registrierung: John Doe', ['Es gab gerade eine neue Registrierung: <b>John Doe</b>'], ['fcs-demo-superadmin@mailinator.com']);
+        
         // 5) register again with changed configuration
         $this->changeConfiguration('FCS_DEFAULT_NEW_MEMBER_ACTIVE', 1);
         $this->changeConfiguration('FCS_CUSTOMER_GROUP', 4);
@@ -140,7 +141,8 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->saveAndCheckValidCustomer($data, $email);
 
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs($emailLogs[1], 'Willkommen', ['war erfolgreich!', 'Zum Bestellen kannst du dich hier einloggen:'], [$email]);
+        $this->assertEmailLogs($emailLogs[2], 'Willkommen', ['war erfolgreich!', 'Zum Bestellen kannst du dich hier einloggen:'], [$email]);
+        $this->assertEmailLogs($emailLogs[3], 'Neue Registrierung: John Doe', ['Es gab gerade eine neue Registrierung: <b>John Doe</b>'], ['fcs-demo-superadmin@mailinator.com']);
     }
 
     private function saveAndCheckValidCustomer($data, $email)
