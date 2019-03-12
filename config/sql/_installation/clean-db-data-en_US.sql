@@ -129,7 +129,7 @@ INSERT INTO `fcs_cronjobs` VALUES
 (3,'EmailOrderReminder','week',NULL,'Monday','18:00:00',1),
 (4,'PickupReminder','week',NULL,'Monday','09:00:00',1),
 (5,'SendInvoices','month',11,NULL,'07:30:00',1),
-(6,'SendOrderLists','week',NULL,'Wednesday','04:30:00',1);
+(6,'SendOrderLists','day',NULL,NULL,'04:30:00',1);
 /*!40000 ALTER TABLE `fcs_cronjobs` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
