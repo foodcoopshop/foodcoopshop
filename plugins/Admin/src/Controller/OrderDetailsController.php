@@ -524,7 +524,7 @@ class OrderDetailsController extends AdminAppController
         $objectOrderDetailUnit = clone $oldOrderDetail->order_detail_unit;
 
         if (!$doNotChangePrice) {
-            $newProductPrice = $oldOrderDetail->order_detail_unit->price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity;
+            $newProductPrice = round($oldOrderDetail->order_detail_unit->price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
             $newOrderDetail = $this->changeOrderDetailPrice($object, $newProductPrice, $object->product_amount);
             $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $newProductPrice, $object->product_amount);
         }

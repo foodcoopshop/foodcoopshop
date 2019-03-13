@@ -224,8 +224,8 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId]);
         
-        $this->assertEquals(12.00876, $changedOrderDetails[0]->total_price_tax_incl);
-        $this->assertEquals(10.90876, $changedOrderDetails[0]->total_price_tax_excl);
+        $this->assertEquals(12.01, $changedOrderDetails[0]->total_price_tax_incl);
+        $this->assertEquals(10.91, $changedOrderDetails[0]->total_price_tax_excl);
         $this->assertEquals($newQuantity, $changedOrderDetails[0]->order_detail_unit->product_quantity_in_units);
 
         $this->assertEquals(0.55, $changedOrderDetails[0]->order_detail_tax->unit_amount);
