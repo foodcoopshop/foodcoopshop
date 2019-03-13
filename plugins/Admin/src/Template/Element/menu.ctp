@@ -291,7 +291,7 @@ if ($appAuth->isManufacturer()) {
     $profileMenu['children'][] = $changePasswordMenuElement;
     $menu[] = $profileMenu;
     $menu[] = $optionsMenu;
-    if (!empty($blogPosts) && Configure::read('app.isBlogFeatureEnabled')) {
+    if (Configure::read('app.isBlogFeatureEnabled')) {
         $menu[] = $blogPostsMenuElement;
     }
     $menu[] = $actionLogsMenuElement;
