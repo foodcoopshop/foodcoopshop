@@ -7,6 +7,7 @@ use Cake\Core\Exception\Exception;
 use Cake\Log\Log;
 use Cake\Mailer\Email;
 use Cake\ORM\TableRegistry;
+use Cake\Mailer\TransportFactory;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -78,8 +79,9 @@ class AppEmail extends Email
             return $email;
         } catch (Exception $e) {
             if (Configure::check('app.EmailTransport.fallback')) {
-                $this->getTransport()->setConfig(Configure::consume('app.EmailTransport.fallback'));
-                Log::write('error', 'Email config was wrong, tried to send e-mail with fallback config.');
+                Log::error('The email could not be sent but was resent with the fallback configuration.<br /><br />' . $e->__toString());
+                TransportFactory::setConfig('fallback', Configure::read('app.EmailTransport.fallback'));
+                $this->setTransport('fallback');
                 return $this->send($content);
             } else {
                 throw $e;
