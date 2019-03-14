@@ -609,7 +609,8 @@ class OrderDetailsController extends AdminAppController
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
                 'TimebasedCurrencyOrderDetails',
-                'OrderDetailUnits'
+                'OrderDetailUnits',
+                'OrderDetailTaxes'
             ]
         ])->first();
 
