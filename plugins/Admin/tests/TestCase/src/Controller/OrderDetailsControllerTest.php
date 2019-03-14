@@ -224,8 +224,8 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId]);
         
-        $this->assertEquals(12.00876, $changedOrderDetails[0]->total_price_tax_incl);
-        $this->assertEquals(10.90876, $changedOrderDetails[0]->total_price_tax_excl);
+        $this->assertEquals(12.01, $changedOrderDetails[0]->total_price_tax_incl);
+        $this->assertEquals(10.91, $changedOrderDetails[0]->total_price_tax_excl);
         $this->assertEquals($newQuantity, $changedOrderDetails[0]->order_detail_unit->product_quantity_in_units);
 
         $this->assertEquals(0.55, $changedOrderDetails[0]->order_detail_tax->unit_amount);
@@ -347,7 +347,9 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
         $changedOrder = $this->getChangedMockCartFromDatabase();
         $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount, 'order detail amount was not changed properly');
-
+        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->order_detail_tax->unit_amount);
+        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->order_detail_tax->total_amount);
+        
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
         $this->assertOrderDetailProductAmountChangedEmails(1, $expectedToEmails, $expectedCcEmails);
@@ -379,7 +381,9 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
         $changedOrder = $this->getChangedMockCartFromDatabase();
         $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount, 'order detail amount was not changed properly');
-
+        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->order_detail_tax->unit_amount);
+        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->order_detail_tax->total_amount);
+        
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
         $this->assertOrderDetailProductAmountChangedEmails(1, $expectedToEmails, $expectedCcEmails);
@@ -398,6 +402,8 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         
         $changedOrder = $this->getChangedMockCartFromDatabase();
         $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount, 'order detail amount was not changed properly');
+        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->order_detail_tax->unit_amount);
+        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->order_detail_tax->total_amount);
         
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [
@@ -419,7 +425,9 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
         $changedOrder = $this->getChangedMockCartFromDatabase();
         $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount, 'order detail amount was not changed properly');
-
+        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->order_detail_tax->unit_amount);
+        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->order_detail_tax->total_amount);
+        
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
         $this->assertOrderDetailProductAmountChangedEmails(1, $expectedToEmails, $expectedCcEmails);
@@ -438,7 +446,9 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
         $changedOrder = $this->getChangedMockCartFromDatabase();
         $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount, 'order detail amount was not changed properly');
-
+        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->order_detail_tax->unit_amount);
+        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->order_detail_tax->total_amount);
+        
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [];
         $this->assertOrderDetailProductAmountChangedEmails(1, $expectedToEmails, $expectedCcEmails);
@@ -490,6 +500,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
             ],
             'contain' => [
                 'CartProducts.OrderDetails.OrderDetailUnits',
+                'CartProducts.OrderDetails.OrderDetailTaxes',
             ]
         ])->first();
         return $cart;
