@@ -162,7 +162,7 @@ class ProductsTable extends AppTable
             $sendOrderListsWeekday = $product->delivery_rhythm_send_order_list_weekday;
         }
         
-        $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($currentDay, $sendOrderListsWeekday, $product->delivery_rhythm_type, $product->delivery_rhythm_count);
+        $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($currentDay, $sendOrderListsWeekday);
         
         if ($product->is_stock_product) {
             return $pickupDay;
@@ -170,8 +170,7 @@ class ProductsTable extends AppTable
             
         if ($product->delivery_rhythm_type == 'week') {
             if (!is_null($product->delivery_rhythm_first_delivery_day)) {
-                $firstDeliveryDayFormatted = $product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
-                $calculatedPickupDay = $firstDeliveryDayFormatted;
+                $calculatedPickupDay = $product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
                 while($calculatedPickupDay < $pickupDay) {
                     $calculatedPickupDay = strtotime($calculatedPickupDay . '+' . $product->delivery_rhythm_count . ' week');
                     $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $calculatedPickupDay);
