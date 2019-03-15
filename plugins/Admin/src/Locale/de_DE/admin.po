@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-03-02 20:39+0100\n"
-"PO-Revision-Date: 2019-03-02 20:41+0100\n"
+"POT-Creation-Date: 2019-03-15 10:04+0100\n"
+"PO-Revision-Date: 2019-03-15 10:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1392,6 +1392,9 @@ msgstr "Bitte verwende zum Einloggen die E-Mail-Adresse dieser Nachricht. Falls 
 msgid "Your_contact_person"
 msgstr "Deine Ansprechperson"
 
+msgid "docs_route_pick_up_products"
+msgstr "abholung-der-produkte"
+
 msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_the_manufacturers."
 msgstr "Hier findest du die unveränderten Bestelllisten, die an die Hersteller verschickt wurden."
 
@@ -1695,9 +1698,6 @@ msgstr "alle Mitglieder"
 msgid "Group_by..."
 msgstr "Gruppieren nach..."
 
-msgid "docs_route_pick_up_products"
-msgstr "abholung-der-produkte"
-
 msgid "No_orders_found_for_pickup_day_{0}."
 msgstr "Es wurden keine Bestellungen für den Abholtag {0} gefunden."
 
@@ -1838,6 +1838,9 @@ msgstr "Neues Produkt"
 
 msgid "Synchronize_products"
 msgstr "Produkte synchronisieren"
+
+msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
+msgstr "Du kannst den Lieferrhythmus von mehreren Produkten gleichzeitig ändern, indem du sie links auswählst und auf den Button ganz unten klickst."
 
 msgid "Name_and_categories"
 msgstr "Name und Kategorien"

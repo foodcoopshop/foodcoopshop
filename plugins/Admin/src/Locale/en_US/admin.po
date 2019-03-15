@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-03-02 20:39+0100\n"
-"PO-Revision-Date: 2019-03-02 20:42+0100\n"
+"POT-Creation-Date: 2019-03-15 10:04+0100\n"
+"PO-Revision-Date: 2019-03-15 10:06+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1392,6 +1392,9 @@ msgstr "For signing in please use the email address of this message. If you want
 msgid "Your_contact_person"
 msgstr "Your contact person"
 
+msgid "docs_route_pick_up_products"
+msgstr "pick-up-products"
+
 msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_the_manufacturers."
 msgstr "Here you find the unchanged order lists that were sent to the manufacturers."
 
@@ -1695,9 +1698,6 @@ msgstr "all members"
 msgid "Group_by..."
 msgstr "Group by..."
 
-msgid "docs_route_pick_up_products"
-msgstr "pick-up-products"
-
 msgid "No_orders_found_for_pickup_day_{0}."
 msgstr "No orders found for the pickup day {0}."
 
@@ -1838,6 +1838,9 @@ msgstr "Add product"
 
 msgid "Synchronize_products"
 msgstr "Synchronize products"
+
+msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
+msgstr "Tip: You can change the delivery rhythm for multiple products by selecting them. Then click the bottom button."
 
 msgid "Name_and_categories"
 msgstr "Name and categories"

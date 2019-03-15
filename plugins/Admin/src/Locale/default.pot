@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-03-02 20:39+0100\n"
+"POT-Creation-Date: 2019-03-15 10:04+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1391,6 +1391,9 @@ msgstr ""
 msgid "Your_contact_person"
 msgstr ""
 
+msgid "docs_route_pick_up_products"
+msgstr ""
+
 msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_the_manufacturers."
 msgstr ""
 
@@ -1694,9 +1697,6 @@ msgstr ""
 msgid "Group_by..."
 msgstr ""
 
-msgid "docs_route_pick_up_products"
-msgstr ""
-
 msgid "No_orders_found_for_pickup_day_{0}."
 msgstr ""
 
@@ -1836,6 +1836,9 @@ msgid "Add_product"
 msgstr ""
 
 msgid "Synchronize_products"
+msgstr ""
+
+msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
 msgstr ""
 
 msgid "Name_and_categories"
