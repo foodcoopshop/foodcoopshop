@@ -15,7 +15,7 @@
 
 use Cake\Core\Configure;
 
-if (empty($blogPosts)) {
+if (empty($blogPosts) || $blogPosts->count() == 0) {
     return;
 }
 

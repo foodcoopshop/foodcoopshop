@@ -22,7 +22,7 @@ $this->element('addScript', ['script' =>
 
 echo $this->element('acceptUpdatedTermsOfUseForm');
 
-if (!empty($blogPosts)) {
+if (!empty($blogPosts) && $blogPosts->count() > 0) {
     echo '<h1>'.__('News').'</h1>';
 }
 echo $this->element('blogPosts', [
@@ -32,7 +32,7 @@ echo $this->element('blogPosts', [
 
 if (Configure::read('appDb.FCS_FOODCOOPS_MAP_ENABLED')) {
     echo $this->element('foodCoopShopInstancesMap', [
-        'isFirstElement' => empty($blogPosts)
+        'isFirstElement' => empty($blogPosts) || $blogPosts->count() == 0
     ]);
 }
 ?>
