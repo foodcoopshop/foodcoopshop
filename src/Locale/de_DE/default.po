@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "POT-Creation-Date: 2019-03-04 21:58+0100\n"
-"PO-Revision-Date: 2019-03-04 22:10+0100\n"
+"PO-Revision-Date: 2019-03-17 20:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -841,7 +841,7 @@ msgid "Order_lists_are_sent_automatically_next_day_in_the_morning."
 msgstr "Die Bestelllisten werden automatisch am nächsten Tag in der Früh versendet."
 
 msgid "Order_lists_are_sent_automatically_on_this_day."
-msgstr "Die Bestelllisten werden automatisch am angegebenen Tag in der Früh versendet. Leeres Feld bedeutet: Bestelllisten werden nicht automatisch versendet."
+msgstr "Die Bestelllisten werden automatisch am angegebenen Tag in der Früh versendet. <b>Leeres Feld</b> bedeutet: Bestelllisten werden <b>nicht automatisch versendet</b>."
 
 msgid "delete"
 msgstr "löschen"
