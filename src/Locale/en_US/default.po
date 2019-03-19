@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-03-04 21:58+0100\n"
-"PO-Revision-Date: 2019-03-17 20:34+0100\n"
+"POT-Creation-Date: 2019-03-19 10:59+0100\n"
+"PO-Revision-Date: 2019-03-19 11:01+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1311,6 +1311,9 @@ msgstr "offline"
 msgid "Please_enter_a_valid_internet_address."
 msgstr "Please enter a valid email address."
 
+msgid "At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space."
+msgstr "At least one email address is not valid. Please separate multiple addresses with , (without spaces)."
+
 msgid "Decimals_are_not_allowed."
 msgstr "Decimals are not allowed."
 
@@ -1391,9 +1394,6 @@ msgstr "Please enter a valid IBAN."
 
 msgid "Please_enter_a_valid_BIC."
 msgstr "Please enter a valid BIC."
-
-msgid "At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space."
-msgstr "At least one email address is not valid. Please separate multiple addresses with , (without spaces)."
 
 msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._Please_manually_cancel_them_to_save_the_delivery_break."
 msgstr "The following delivery day(s) already contain orders: {0}. You need to manually cancel them to proceed saving the delivery break."
@@ -1863,6 +1863,9 @@ msgstr "More infos to product {0}"
 msgid "Last_order_day"
 msgstr "Last order day"
 
+msgid "midnight"
+msgstr "midnight"
+
 msgid "Instant_order"
 msgstr "Instant order"
 
@@ -2123,9 +2126,6 @@ msgstr "inactive"
 
 msgid "active_state_all"
 msgstr "all"
-
-msgid "midnight"
-msgstr "midnight"
 
 msgid "default_value"
 msgstr "default value"

@@ -120,7 +120,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $message .= ' <b>(' . Configure::read('app.timebasedCurrencyHelper')->formatSecondsToTimebasedCurrency($payment->seconds). ')</b>';
 
         if ($this->AppAuth->getUserId() != $payment->id_customer) {
-            $message .= ' ' . __('Member') . ': '. $payment->customer->name;
+            $message .= ' ' . __d('admin', 'Member') . ': '. $payment->customer->name;
         }
 
         if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $payment->id_customer) {

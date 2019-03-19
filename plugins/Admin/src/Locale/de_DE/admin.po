@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-03-15 10:04+0100\n"
-"PO-Revision-Date: 2019-03-15 10:05+0100\n"
+"POT-Creation-Date: 2019-03-19 10:58+0100\n"
+"PO-Revision-Date: 2019-03-19 11:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -504,6 +504,9 @@ msgstr "Die Zeit-Eintragung wurde gelöscht."
 msgid "The_time_entry_for_the_{0}_has_been_deleted"
 msgstr "Die Zeit-Eintragung für den {0} wurde gelöscht"
 
+msgid "Member"
+msgstr "Mitglied"
+
 msgid "Your_time_entry_from_{0}_has_been_deleted."
 msgstr "Deine Zeit-Eintragung vom {0} wurde gelöscht."
 
@@ -551,6 +554,21 @@ msgstr "Text"
 
 msgid "User"
 msgstr "Benutzer"
+
+msgid "Show_product"
+msgstr "Produkt anzeigen"
+
+msgid "Show_manufacturer"
+msgstr "Hersteller anzeigen"
+
+msgid "Show_blog_post"
+msgstr "Blog-Artikel anzeigen"
+
+msgid "Show_page"
+msgstr "Seite anzeigen"
+
+msgid "Show_category"
+msgstr "Kategorie anzeigen"
 
 msgid "Show_ordered_product"
 msgstr "Bestelltes Produkt anzeigen"
@@ -680,9 +698,6 @@ msgstr "Homepage"
 
 msgid "Modified_by"
 msgstr "Geändert von"
-
-msgid "Show_blog_post"
-msgstr "Blog-Artikel anzeigen"
 
 msgid "Parent_category"
 msgstr "Übergeordnete Kategorie"
@@ -960,9 +975,6 @@ msgstr "Sofort-Bestellung für heute"
 msgid "chose_member..."
 msgstr "Mitglied auswählen..."
 
-msgid "Show_category"
-msgstr "Kategorie anzeigen"
-
 msgid "1_day_ahead"
 msgstr "1 Tag zurück"
 
@@ -992,9 +1004,6 @@ msgstr "Mein Profil"
 
 msgid "Contact_person"
 msgstr "Ansprechperson"
-
-msgid "Show_page"
-msgstr "Seite anzeigen"
 
 msgid "Bank_account_data"
 msgstr "Bankdaten"
@@ -1080,9 +1089,6 @@ msgstr "Preis"
 msgid "Deposit"
 msgstr "Pfand"
 
-msgid "Member"
-msgstr "Mitglied"
-
 msgid "Picked_up"
 msgstr "Abgeholt"
 
@@ -1103,6 +1109,9 @@ msgstr "Bestellungen vom"
 
 msgid "Invoice_date"
 msgstr "Rechnungsdatum"
+
+msgid "VAT_number"
+msgstr "UID-Nummer"
 
 msgid "Price_excl."
 msgstr "Preis exkl."
@@ -1476,9 +1485,6 @@ msgstr "Firmendaten"
 msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
 msgstr "für dein Impressum und deine Rechnungen. Das Impressum befindet sich auf deinem Hersteller-Profil ganz unten rechts."
 
-msgid "VAT_number"
-msgstr "UID-Nummer"
-
 msgid "if_it_is_available"
 msgstr "sofern vorhanden"
 
@@ -1710,6 +1716,9 @@ msgstr "Alle Produkte"
 msgid "Show_all_ordered_products"
 msgstr "Alle bestellten Produkte anzeigen"
 
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
 msgid "Page_title"
 msgstr "Seitentitel"
 
@@ -1898,15 +1907,6 @@ msgstr "Steuersätze sind später nicht änderbar."
 
 msgid "Delete"
 msgstr "Löschen"
-
-msgid "Show_product"
-msgstr "Produkt anzeigen"
-
-msgid "Show_manufacturer"
-msgstr "Hersteller anzeigen"
-
-msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
-msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
 
 #, fuzzy
 #~ msgid "aactivate"

@@ -637,7 +637,7 @@ class ProductsController extends AdminAppController
 
         die(json_encode([
             'status' => 1,
-            'msg' => __('Saving_successful.')
+            'msg' => __d('admin', 'Saving_successful.')
         ]));
     }
     

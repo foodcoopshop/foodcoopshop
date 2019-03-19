@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-03-15 10:04+0100\n"
-"PO-Revision-Date: 2019-03-15 10:06+0100\n"
+"POT-Creation-Date: 2019-03-19 10:59+0100\n"
+"PO-Revision-Date: 2019-03-19 11:01+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -504,6 +504,9 @@ msgstr "The time entry has been deleted"
 msgid "The_time_entry_for_the_{0}_has_been_deleted"
 msgstr "The time entry for the {0} has been deleted"
 
+msgid "Member"
+msgstr "Member"
+
 msgid "Your_time_entry_from_{0}_has_been_deleted."
 msgstr "Your time entry from {0} has been deleted."
 
@@ -551,6 +554,21 @@ msgstr "Text"
 
 msgid "User"
 msgstr "User"
+
+msgid "Show_product"
+msgstr "Show product"
+
+msgid "Show_manufacturer"
+msgstr "Show manufacturer"
+
+msgid "Show_blog_post"
+msgstr "Show blog post"
+
+msgid "Show_page"
+msgstr "Show page"
+
+msgid "Show_category"
+msgstr "Show category"
 
 msgid "Show_ordered_product"
 msgstr "Show ordered products"
@@ -680,9 +698,6 @@ msgstr "Homepage"
 
 msgid "Modified_by"
 msgstr "Modified by"
-
-msgid "Show_blog_post"
-msgstr "Show blog post"
 
 msgid "Parent_category"
 msgstr "Parent category"
@@ -960,9 +975,6 @@ msgstr "Instant order for today"
 msgid "chose_member..."
 msgstr "chose member..."
 
-msgid "Show_category"
-msgstr "Show category"
-
 msgid "1_day_ahead"
 msgstr "1 day ahead"
 
@@ -992,9 +1004,6 @@ msgstr "My profile"
 
 msgid "Contact_person"
 msgstr "Contact person"
-
-msgid "Show_page"
-msgstr "Show page"
 
 msgid "Bank_account_data"
 msgstr "Bank account data"
@@ -1080,9 +1089,6 @@ msgstr "Price"
 msgid "Deposit"
 msgstr "Deposit"
 
-msgid "Member"
-msgstr "Member"
-
 msgid "Picked_up"
 msgstr "Picked up"
 
@@ -1103,6 +1109,9 @@ msgstr "Orders from"
 
 msgid "Invoice_date"
 msgstr "Invoice date"
+
+msgid "VAT_number"
+msgstr "VAT number"
 
 msgid "Price_excl."
 msgstr "Price excl."
@@ -1476,9 +1485,6 @@ msgstr "Company data"
 msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
 msgstr "for your imprint and your invoices. The imprint can be found on your profile in the bottom right corner."
 
-msgid "VAT_number"
-msgstr "VAT number"
-
 msgid "if_it_is_available"
 msgstr "if available"
 
@@ -1710,6 +1716,12 @@ msgstr "All products"
 msgid "Show_all_ordered_products"
 msgstr "Show all ordered products"
 
+msgid "Total"
+msgstr ""
+
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
 msgid "Page_title"
 msgstr "Page title"
 
@@ -1898,15 +1910,6 @@ msgstr "Tax rates can not be changed later."
 
 msgid "Delete"
 msgstr "Delete"
-
-msgid "Show_product"
-msgstr "Show product"
-
-msgid "Show_manufacturer"
-msgstr "Show manufacturer"
-
-msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
-msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
 
 #, fuzzy
 #~ msgid "aactivate"

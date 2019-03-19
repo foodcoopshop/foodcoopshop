@@ -3,8 +3,9 @@
 #
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2019-03-04 21:58+0100\n"
-"PO-Revision-Date: 2019-03-17 20:33+0100\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2019-03-19 10:59+0100\n"
+"PO-Revision-Date: 2019-03-19 11:01+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -13,7 +14,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.2.1\n"
-"Project-Id-Version: \n"
 
 msgid "You_have_been_signed_out."
 msgstr "Du hast dich erfolgreich abgemeldet."
@@ -1311,6 +1311,9 @@ msgstr "offline"
 msgid "Please_enter_a_valid_internet_address."
 msgstr "Bitte gibt eine gültige Internet-Adresse an."
 
+msgid "At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space."
+msgstr "Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen)."
+
 msgid "Decimals_are_not_allowed."
 msgstr "Kommastellen sind nicht zulässig."
 
@@ -1391,9 +1394,6 @@ msgstr "Bitte gib einen gültigen IBAN ein."
 
 msgid "Please_enter_a_valid_BIC."
 msgstr "Bitte gib einen gültigen BIC ein."
-
-msgid "At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space."
-msgstr "Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , trennen (ohne Leerzeichen)."
 
 msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._Please_manually_cancel_them_to_save_the_delivery_break."
 msgstr "Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: {0}. Erst nach erfolgter Stornierung kann die Lieferpause gespeichert werden."
@@ -1863,6 +1863,9 @@ msgstr "Mehr Infos zu {0}"
 msgid "Last_order_day"
 msgstr "Bestellschluss"
 
+msgid "midnight"
+msgstr "Mitternacht"
+
 msgid "Instant_order"
 msgstr "Sofort-Bestellung"
 
@@ -2123,9 +2126,6 @@ msgstr "deaktiviert"
 
 msgid "active_state_all"
 msgstr "alle"
-
-msgid "midnight"
-msgstr "Mitternacht"
 
 msgid "default_value"
 msgstr "Standardwert"

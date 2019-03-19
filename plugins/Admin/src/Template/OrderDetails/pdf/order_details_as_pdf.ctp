@@ -120,7 +120,6 @@ foreach ($orderDetails as $od) {
         $pdf->table .= '<td style="text-align: right"; width="' . $widths[4] . '">' . $deposit . '</td>';
 
         $sumPrice += $orderDetail['total_price_tax_incl'];
-        $sumQuantity += $orderDetail['product_amount'];
 
         $pdf->table .= '</tr>';
 
@@ -138,7 +137,7 @@ foreach ($orderDetails as $od) {
                 $pdf->table .= '<td style="text-align:right;font-weight:bold;" width="' . $widths[4] . '">' . $sumDepositAsString . '</td>';
             $pdf->table .= '</tr>';
             $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
-                $pdf->table .= '<td colspan="3" style="font-size:10px;font-weight:bold;text-align:right;" width="' . ($widths[0] + $widths[1] + $widths[2]) . '">Gesamt</td>';
+                $pdf->table .= '<td colspan="3" style="font-size:10px;font-weight:bold;text-align:right;" width="' . ($widths[0] + $widths[1] + $widths[2]) . '">'.__d('admin', 'Total').'</td>';
                 $pdf->table .= '<td colspan="2" style="font-size:10px;font-weight:bold;text-align:center;" width="' . ($widths[3] + $widths[4]) . '">' . $this->Number->formatAsCurrency($sumPrice + $sumDeposit) . '</td>';
             $pdf->table .= '</tr>';
         }
@@ -152,7 +151,7 @@ foreach ($orderDetails as $od) {
     $pdf->writeHTML($this->TimebasedCurrency->getOrderInformationTextForPdf($timebasedCurrencyOrderDetailInList, true, false, true, false, ''));
     
     if ($usesQuantityInUnits > 0) {
-        $html = '<p>* '.__('The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly.').'</p>';
+        $html = '<p>* '.__d('admin', 'The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly.').'</p>';
         $pdf->writeHTML($html, true, false, true, false, '');
     }
 

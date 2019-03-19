@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-03-15 10:04+0100\n"
+"POT-Creation-Date: 2019-03-19 10:59+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -503,6 +503,9 @@ msgstr ""
 msgid "The_time_entry_for_the_{0}_has_been_deleted"
 msgstr ""
 
+msgid "Member"
+msgstr ""
+
 msgid "Your_time_entry_from_{0}_has_been_deleted."
 msgstr ""
 
@@ -549,6 +552,21 @@ msgid "Text"
 msgstr ""
 
 msgid "User"
+msgstr ""
+
+msgid "Show_product"
+msgstr ""
+
+msgid "Show_manufacturer"
+msgstr ""
+
+msgid "Show_blog_post"
+msgstr ""
+
+msgid "Show_page"
+msgstr ""
+
+msgid "Show_category"
 msgstr ""
 
 msgid "Show_ordered_product"
@@ -678,9 +696,6 @@ msgid "Homepage"
 msgstr ""
 
 msgid "Modified_by"
-msgstr ""
-
-msgid "Show_blog_post"
 msgstr ""
 
 msgid "Parent_category"
@@ -959,9 +974,6 @@ msgstr ""
 msgid "chose_member..."
 msgstr ""
 
-msgid "Show_category"
-msgstr ""
-
 msgid "1_day_ahead"
 msgstr ""
 
@@ -990,9 +1002,6 @@ msgid "My_profile"
 msgstr ""
 
 msgid "Contact_person"
-msgstr ""
-
-msgid "Show_page"
 msgstr ""
 
 msgid "Bank_account_data"
@@ -1079,9 +1088,6 @@ msgstr ""
 msgid "Deposit"
 msgstr ""
 
-msgid "Member"
-msgstr ""
-
 msgid "Picked_up"
 msgstr ""
 
@@ -1101,6 +1107,9 @@ msgid "Orders_from"
 msgstr ""
 
 msgid "Invoice_date"
+msgstr ""
+
+msgid "VAT_number"
 msgstr ""
 
 msgid "Price_excl."
@@ -1475,9 +1484,6 @@ msgstr ""
 msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
 msgstr ""
 
-msgid "VAT_number"
-msgstr ""
-
 msgid "if_it_is_available"
 msgstr ""
 
@@ -1709,6 +1715,12 @@ msgstr ""
 msgid "Show_all_ordered_products"
 msgstr ""
 
+msgid "Total"
+msgstr ""
+
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr ""
+
 msgid "Page_title"
 msgstr ""
 
@@ -1896,14 +1908,5 @@ msgid "Tax_rates_can_not_be_changed_later."
 msgstr ""
 
 msgid "Delete"
-msgstr ""
-
-msgid "Show_product"
-msgstr ""
-
-msgid "Show_manufacturer"
-msgstr ""
-
-msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr ""
 

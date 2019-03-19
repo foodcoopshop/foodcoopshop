@@ -111,14 +111,14 @@ foreach ($actionLogs as $actionLog) {
     // products
     if ($actionLog->object_id > 0 && $actionLog->object_type == 'products' && ! ($actionLog->type == 'product_set_inactive')) {
         $showLink = true;
-        $title = __('Show_product');
+        $title = __d('admin', 'Show_product');
         $url = $this->Slug->getProductDetail($actionLog->object_id, '');
     }
 
     // manufacturers
     if ($actionLog->object_id > 0 && $actionLog->object_type == 'manufacturers') {
         $showLink = true;
-        $title = __('Show_manufacturer');
+        $title = __d('admin', 'Show_manufacturer');
         $url = $this->Slug->getManufacturerDetail($actionLog->object_id, '');
     }
 
@@ -127,7 +127,7 @@ foreach ($actionLogs as $actionLog) {
         'blog_post_deleted'
     ]))) {
         $showLink = true;
-        $title = __('Show_blog_post');
+        $title = __d('admin', 'Show_blog_post');
         $url = $this->Slug->getBlogPostDetail($actionLog->object_id, '');
     }
 
@@ -136,7 +136,7 @@ foreach ($actionLogs as $actionLog) {
         'page_deleted'
     ]))) {
         $showLink = true;
-        $title = __('Show_page');
+        $title = __d('admin', 'Show_page');
         $url = $this->Slug->getPageDetail($actionLog->object_id, '');
     }
 
@@ -145,7 +145,7 @@ foreach ($actionLogs as $actionLog) {
         'category_deleted'
     ]))) {
         $showLink = true;
-        $title = __('Show_category');
+        $title = __d('admin', 'Show_category');
         $url = $this->Slug->getCategoryDetail($actionLog->object_id, '');
     }
 
