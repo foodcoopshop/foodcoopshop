@@ -521,8 +521,11 @@ foodcoopshop.Helper = {
         });
     },
 
-    initTooltip: function (container, trigger) {
-        trigger = trigger || 'hover';
+    initTooltip: function (container) {
+        var trigger = 'hover';
+        if (this.isMobile()) {
+            trigger = 'click';
+        }
         $(container).each(function() {
             $(this).not('.tooltipstered').tooltipster({
                 contentAsHTML: true,

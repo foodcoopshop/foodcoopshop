@@ -48,7 +48,7 @@ use Cake\Core\Configure;
     if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
         $this->element('addScript', [
             'script' =>
-            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.pickup-day-comment-edit-button', false);".
+            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.pickup-day-comment-edit-button');".
             Configure::read('app.jsNamespace') . ".PickupDay.initPickupDayCommentEditDialog('#order-details-list');"
         ]);
     }

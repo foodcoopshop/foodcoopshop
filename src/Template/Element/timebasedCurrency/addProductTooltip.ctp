@@ -16,7 +16,7 @@ use Cake\Core\Configure;
 
 if ($appAuth->isTimebasedCurrencyEnabledForCustomer()) {
     $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('." . $selectorClass . " span', 'click');"
+        'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('." . $selectorClass . " span');"
     ]);
 }
 ?>
