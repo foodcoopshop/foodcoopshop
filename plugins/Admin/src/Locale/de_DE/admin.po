@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-03-19 10:58+0100\n"
-"PO-Revision-Date: 2019-03-19 11:00+0100\n"
+"POT-Creation-Date: 2019-03-25 20:32+0100\n"
+"PO-Revision-Date: 2019-03-25 20:32+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -245,6 +245,9 @@ msgstr "Gruppieren nach Hersteller"
 
 msgid "Orders"
 msgstr "Bestellungen"
+
+msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
+msgstr "Das bestellte Produkt {0} wurde erfolgreich von {1} auf {2} zugewiesen."
 
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
 msgstr "Das Gewicht des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich von {2} auf {3} angepasst."
@@ -1053,6 +1056,9 @@ msgstr "Zum Ändern der Anzahl anklicken"
 msgid "Click_to_cancel_product"
 msgstr "Zum Stornieren des Produktes anklicken"
 
+msgid "Click_to_change_member"
+msgstr "Zum Ändern des Mitgliedes anklicken"
+
 msgid "Deposit_return"
 msgstr "Pfand-Rückgabe"
 
@@ -1715,6 +1721,9 @@ msgstr "Alle Produkte"
 
 msgid "Show_all_ordered_products"
 msgstr "Alle bestellten Produkte anzeigen"
+
+msgid "Total"
+msgstr "Gesamt"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."

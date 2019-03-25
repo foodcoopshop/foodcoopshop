@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-03-19 10:59+0100\n"
-"PO-Revision-Date: 2019-03-19 11:01+0100\n"
+"POT-Creation-Date: 2019-03-25 20:32+0100\n"
+"PO-Revision-Date: 2019-03-25 20:32+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -245,6 +245,9 @@ msgstr "Group by manufacturer"
 
 msgid "Orders"
 msgstr "Orders"
+
+msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
+msgstr "The ordered product {0} was successfully assigned from {1} to {2}."
 
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
 msgstr "The weight of the ordered product {0} (amount {1}) was successfully adapted from {2} to {3}."
@@ -1053,6 +1056,9 @@ msgstr "Click to change amount"
 msgid "Click_to_cancel_product"
 msgstr "Click to cancel product"
 
+msgid "Click_to_change_member"
+msgstr "Click to change member"
+
 msgid "Deposit_return"
 msgstr "Deposit return"
 
@@ -1717,7 +1723,7 @@ msgid "Show_all_ordered_products"
 msgstr "Show all ordered products"
 
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."

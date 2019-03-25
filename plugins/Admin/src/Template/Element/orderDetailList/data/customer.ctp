@@ -15,7 +15,19 @@
 
 if ($groupBy == '') {
     echo '<td>';
-        echo $this->Html->getNameRespectingIsDeleted($orderDetail->customer);
+        if ($editRecordAllowed && !$appAuth->isManufacturer()) {
+            echo $this->Html->link(
+                '<i class="fas fa-pencil-alt ok"></i>',
+                'javascript:void(0);',
+                [
+                    'class' => 'btn btn-outline-light order-detail-customer-edit-button',
+                    'title' => __d('admin', 'Click_to_change_member'),
+                    'escape' => false
+                ]
+            );
+        }
+        echo '<span class="customer-name-for-dialog">' . $this->Html->getNameRespectingIsDeleted($orderDetail->customer) . '</span>';
+        echo '<span class="customer-id-for-dialog hide">' . $orderDetail->id_customer . '</span>';
     echo '</td>';
 }
 

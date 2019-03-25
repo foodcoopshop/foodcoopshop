@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-03-19 10:59+0100\n"
+"POT-Creation-Date: 2019-03-25 20:32+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -243,6 +243,9 @@ msgid "Group_by_manufacturer"
 msgstr ""
 
 msgid "Orders"
+msgstr ""
+
+msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
 msgstr ""
 
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
@@ -1050,6 +1053,9 @@ msgid "Click_to_change_amount"
 msgstr ""
 
 msgid "Click_to_cancel_product"
+msgstr ""
+
+msgid "Click_to_change_member"
 msgstr ""
 
 msgid "Deposit_return"

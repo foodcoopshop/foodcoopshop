@@ -34,8 +34,12 @@ class OrderDetailsController extends AdminAppController
             case 'editProductPrice':
             case 'editProductAmount':
             case 'editProductQuantity':
+            case 'editCustomer':
                 if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
                     return true;
+                }
+                if ($this->getRequest()->getParam('action') == 'editCustomer' && $this->AppAuth->isManufacturer()) {
+                    return false;
                 }
                 /*
                  * START customer/manufacturer OWNER check
@@ -487,6 +491,101 @@ class OrderDetailsController extends AdminAppController
         
     }
 
+    public function editCustomer()
+    {
+        $this->RequestHandler->renderAs($this, 'ajax');
+        
+        $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
+        $customerId = trim($this->getRequest()->getData('customerId'));
+        $editCustomerReason = strip_tags(html_entity_decode($this->getRequest()->getData('editCustomerReason')));
+        
+        if (! is_numeric($orderDetailId) || ! is_numeric($customerId)) {
+            $message = 'input format wrong';
+            $this->log($message);
+            die(json_encode([
+                'status' => 0,
+                'msg' => $message
+            ]));
+        }
+        
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $oldOrderDetail = $this->OrderDetail->find('all', [
+            'conditions' => [
+                'OrderDetails.id_order_detail' => $orderDetailId
+            ],
+            'contain' => [
+                'Customers',
+                'Products.Manufacturers'
+            ]
+        ])->first();
+        
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $newCustomer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $customerId
+            ]
+        ])->first();
+        
+        $this->OrderDetail->save(
+            $this->OrderDetail->patchEntity(
+                $oldOrderDetail,
+                [
+                    'id_customer' => $customerId
+                ]
+            )
+        );
+        
+        $message = __d('admin', 'The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}.', [
+            '<b>' . $oldOrderDetail->product_name . '</b>',
+            Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($oldOrderDetail->customer),
+            $newCustomer->name
+        ]);
+        
+        // send email to customer if price was changed
+//         if (!$doNotChangePrice) {
+//             $email = new AppEmail();
+//             $email->viewBuilder()->setTemplate('Admin.order_detail_quantity_changed');
+//             $email->setTo($oldOrderDetail->customer->email)
+//             ->setSubject(__d('admin', 'Weight_adapted') . ': ' . $oldOrderDetail->product_name)
+//             ->setViewVars([
+//                 'oldOrderDetail' => $oldOrderDetail,
+//                 'newProductQuantityInUnits' => $productQuantity,
+//                 'newOrderDetail' => $newOrderDetail,
+//                 'appAuth' => $this->AppAuth
+//             ]);
+            
+//             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
+            
+//             // never send email to manufacturer if bulk orders are allowed
+//             $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+//             $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail->product->manufacturer->bulk_orders_allowed);
+//             $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
+            
+//             if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
+//                 $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
+//                     '<b>' . $oldOrderDetail->customer->name . '</b>',
+//                     '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
+//                 ]);
+//                 $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
+//             }
+            
+//             $email->send();
+            
+//             $message .= $emailMessage;
+            
+//         }
+        
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog->customSave('order_detail_customer_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
+        $this->Flash->success($message);
+        
+        die(json_encode([
+            'status' => 1,
+            'msg' => 'ok'
+        ]));
+        
+    }
+    
     public function editProductQuantity()
     {
         $this->RequestHandler->renderAs($this, 'ajax');

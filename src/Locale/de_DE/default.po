@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-03-19 10:59+0100\n"
-"PO-Revision-Date: 2019-03-19 11:01+0100\n"
+"POT-Creation-Date: 2019-03-25 20:32+0100\n"
+"PO-Revision-Date: 2019-03-25 20:19+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -696,6 +696,18 @@ msgstr "{0} E-Mail-Adressen wurden erfolgreich in deine Zwischenablage kopiert."
 msgid "1_email_address_has_been_copied_successfully_to_your_clipboard."
 msgstr "Eine E-Mail-Adresse wurde erfolgreich in deine Zwischenablage kopiert."
 
+msgid "The_reason_for_changing_the_member_is_mandatory."
+msgstr "Der Grund für die Änderung des Mitglieds ist ein Pflichtfeld."
+
+msgid "Why_is_the_member_edited?"
+msgstr "Warum wird die Bestellung einem anderen Mitglied zugewiesen?"
+
+msgid "Change_member"
+msgstr "Bestellung anderem Mitglied zuweisen"
+
+msgid "To_which_member_should_the_ordered_product_{0}_of_{1}_be_assigned_to?"
+msgstr "Welchem Mitglied soll die Bestellung ({0}) von {1} zugewiesen werden?"
+
 msgid "Were_the_products_picked_up?"
 msgstr "Wurden die Produkte abgeholt?"
 
@@ -1043,6 +1055,9 @@ msgstr "Bestelltes Produkt: Gewicht geändert"
 
 msgid "Action_Log_Order_detail_product_amount_changed"
 msgstr "Bestelltes Produkt: Anzahl geändert"
+
+msgid "Action_Log_Order_detail_customer_changed"
+msgstr "Bestelltes Produkt: Anderem Mitglied zugewiesen"
 
 msgid "Action_Log_Ordered_product_cancelled"
 msgstr "Bestelltes Produkt: storniert"
@@ -2322,9 +2337,6 @@ msgstr "produkt"
 
 #~ msgid "Change_stock"
 #~ msgstr "Lagerstand ändern"
-
-#~ msgid "Action_Log_Order_detail_status_changed"
-#~ msgstr "Bestelltes Produkt: Status geändert"
 
 #~ msgid "Action_Log_Order_details_closed"
 #~ msgstr "Bestelltes Produkt: abgeschlossen"

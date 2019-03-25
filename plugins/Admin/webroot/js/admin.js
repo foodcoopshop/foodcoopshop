@@ -1091,7 +1091,7 @@ foodcoopshop.Admin = {
         infoText += '<ul>';
         for (var i in orderDetailIds) {
             var dataRow = $('#delete-order-detail-' + orderDetailIds[i]).closest('tr');
-            infoText += '<li>' + dataRow.find('td:nth-child(4) a').html() + ' / ' + dataRow.find('td:nth-child(9)').html() + '</li>';
+            infoText += '<li>' + dataRow.find('td:nth-child(4) a').html() + ' / ' + dataRow.find('td:nth-child(9) span.customer-name-for-dialog').html() + '</li>';
         }
         infoText += '</ul>';
 
@@ -1706,7 +1706,7 @@ foodcoopshop.Admin = {
                 newHtml = quantityString.html().replace(regExpDeliveredTotalWeight, foodcoopshop.LocalizedJs.admin.DeliveredWeight);
             }
             quantityString.html(newHtml);
-            label += foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td:nth-child(9)').html() + ')';
+            label += foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td:nth-child(9) span.customer-name-for-dialog').html() + ')';
             $('#' + dialogId + ' label[for="dialogOrderDetailProductQuantityQuantity"]').html(label);
 
             var stepValue = '0.001';
@@ -1805,7 +1805,7 @@ foodcoopshop.Admin = {
             var productPriceField = $('#' + dialogId + ' #dialogOrderDetailProductPricePrice');
 
             $('#' + dialogId + ' #dialogOrderDetailProductPriceOrderDetailId').val(orderDetailId);
-            $('#' + dialogId + ' label[for="dialogOrderDetailProductPricePrice"]').html(row.find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td:nth-child(9)').html() + ')');
+            $('#' + dialogId + ' label[for="dialogOrderDetailProductPricePrice"]').html(row.find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td:nth-child(9) span.customer-name-for-dialog').html() + ')');
 
             var productTimebasedCurrencyPriceField;
 
@@ -1844,6 +1844,92 @@ foodcoopshop.Admin = {
         });
 
     },
+    
+    initOrderDetailCustomerEditDialog: function (container) {
+
+        $('#cke_dialogEditCustomerReason').val('');
+
+        var dialogId = 'order-detail-customer-edit-form';
+        var dialogHtml = foodcoopshop.DialogOrderDetail.getHtmlForOrderDetailCustomerEdit(dialogId);
+        $(container).append(dialogHtml);
+        
+        $('#dialogOrderDetailEditCustomerId').selectpicker({
+            liveSearch: true
+        });
+        
+        var buttons = {};
+        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
+        buttons['save'] = {
+            text: foodcoopshop.LocalizedJs.helper.save,
+            click: function() {
+                if ($('#dialogOrderDetailEditCustomerId').val() == '' || $('#dialogOrderDetailEditCustomerOrderDetailId').val() == '') {
+                    return false;
+                }
+
+                var ckeditorData = CKEDITOR.instances['dialogEditCustomerReason'].getData().trim();
+                if (ckeditorData == '') {
+                    alert(foodcoopshop.LocalizedJs.admin.ChangeMemberReasonIsMandatory);
+                    return;
+                }
+
+                var customerId = $('#dialogOrderDetailEditCustomerId').val();
+                $('#order-detail-customer-edit-form .ajax-loader').show();
+                $('.ui-dialog button').attr('disabled', 'disabled');
+
+                foodcoopshop.Helper.ajaxCall(
+                    '/admin/order-details/editCustomer/',
+                    {
+                        orderDetailId: $('#dialogOrderDetailEditCustomerOrderDetailId').val(),
+                        customerId: customerId,
+                        editCustomerReason: ckeditorData
+                    },
+                    {
+                        onOk: function (data) {
+                            document.location.reload();
+                        },
+                        onError: function (data) {
+                            dialog.dialog('close');
+                            $('#order-detail-customer-edit-form .ajax-loader').hide();
+                            alert(data.msg);
+                        }
+                    }
+                );
+
+            }
+        };
+
+        var dialog = $('#' + dialogId).dialog({
+
+            autoOpen: false,
+            width: 450,
+            modal: true,
+            close: function () {
+                $('#dialogOrderDetailCustomerId').val('');
+                $('#dialogOrderDetailEditCustomerOrderDetailId').val('');
+                foodcoopshop.Helper.destroyCkeditor('dialogEditCustomerReason');
+            },
+            open: function () {
+                foodcoopshop.Helper.initCkeditor('dialogEditCustomerReason');
+            },
+            buttons: buttons
+        });
+
+        $('.order-detail-customer-edit-button').on('click', function () {
+
+            var row = $(this).closest('tr');
+            var orderDetailId = row.find('td:nth-child(2)').html();
+            var customerId = row.find('td:nth-child(9) span.customer-id-for-dialog').html();
+            $('#' + dialogId + ' #dialogOrderDetailEditCustomerOrderDetailId').val(orderDetailId);
+            $('#' + dialogId + ' #dialogOrderDetailEditCustomerId').selectpicker('val', customerId);
+            
+            var infoText = foodcoopshop.LocalizedJs.admin.ToWhichMemberShouldTheOrderedProduct0Of1BeAssignedTo.replace(/\{0\}/, '<b>' + row.find('td:nth-child(4) a.name-for-dialog').html() + '</b>');
+            infoText = infoText.replace(/\{1\}/, '<b>' + row.find('td:nth-child(9) span.customer-name-for-dialog').html() + '</b>');
+            $('#' + dialogId + ' label[for="dialogOrderDetailEditCustomerId"]').html('<span style="font-weight:normal;">' + infoText + '</span>');
+
+            dialog.dialog('open');
+        });
+
+    },    
 
     initOrderDetailProductAmountEditDialog: function (container) {
 
@@ -1924,7 +2010,7 @@ foodcoopshop.Admin = {
             var infoTextForEditProductAmount = '<span style="font-weight:normal"><br />' + foodcoopshop.LocalizedJs.admin.DecreaseAmountExplainationText + '<br /><br /></span>';
             infoTextForEditProductAmount += $(this).closest('tr').find('td:nth-child(4) a.name-for-dialog').html();
             infoTextForEditProductAmount += ' <span style="font-weight:normal;">(' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ';
-            infoTextForEditProductAmount += $(this).closest('tr').find('td:nth-child(9)').html() + ')<br />' + foodcoopshop.LocalizedJs.admin.NewAmount + ':';
+            infoTextForEditProductAmount += $(this).closest('tr').find('td:nth-child(9) span.customer-name-for-dialog').html() + ')<br />' + foodcoopshop.LocalizedJs.admin.NewAmount + ':';
             $('#' + dialogId + ' label[for="dialogOrderDetailProductAmount"]').html(infoTextForEditProductAmount);
             dialog.dialog('open');
         });

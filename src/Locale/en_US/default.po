@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-03-19 10:59+0100\n"
-"PO-Revision-Date: 2019-03-19 11:01+0100\n"
+"POT-Creation-Date: 2019-03-25 20:32+0100\n"
+"PO-Revision-Date: 2019-03-25 20:19+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -696,6 +696,18 @@ msgstr "{0} email addresses have been copied successfully to your clipboard."
 msgid "1_email_address_has_been_copied_successfully_to_your_clipboard."
 msgstr "One email address has been copied successfully to your clipboard."
 
+msgid "The_reason_for_changing_the_member_is_mandatory."
+msgstr "The reason for changing the member is mandatory."
+
+msgid "Why_is_the_member_edited?"
+msgstr "Why is the ordered product assigned to another member?"
+
+msgid "Change_member"
+msgstr "Assign another member to ordered product"
+
+msgid "To_which_member_should_the_ordered_product_{0}_of_{1}_be_assigned_to?"
+msgstr "To which member should the ordered product {0} of {1} be assigned to?"
+
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
 
@@ -1043,6 +1055,9 @@ msgstr "Ordered product: Weight changed"
 
 msgid "Action_Log_Order_detail_product_amount_changed"
 msgstr "Ordered product: Amount changed"
+
+msgid "Action_Log_Order_detail_customer_changed"
+msgstr "Ordered product: Assigned to another member"
 
 msgid "Action_Log_Ordered_product_cancelled"
 msgstr "Ordered product: Cancelled"
@@ -2324,9 +2339,6 @@ msgstr "product"
 
 #~ msgid "Change_stock"
 #~ msgstr "Change stock"
-
-#~ msgid "Action_Log_Order_detail_status_changed"
-#~ msgstr "Ordered product: Status changed"
 
 #~ msgid "Action_Log_Order_details_closed"
 #~ msgstr "Ordered product: closed"

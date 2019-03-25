@@ -35,6 +35,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace').".Admin.initDeleteOrderDetail();" .
             Configure::read('app.jsNamespace').".Admin.initOrderDetailProductPriceEditDialog('#order-details-list');" .
             Configure::read('app.jsNamespace').".Admin.initOrderDetailProductQuantityEditDialog('#order-details-list');" .
+            Configure::read('app.jsNamespace').".Admin.initOrderDetailCustomerEditDialog('#order-details-list');" .
             Configure::read('app.jsNamespace').".Admin.initOrderDetailProductAmountEditDialog('#order-details-list');"
         ]);
     }
@@ -190,6 +191,7 @@ foreach ($orderDetails as $orderDetail) {
     ]);
     
     echo $this->element('orderDetailList/data/customer', [
+        'editRecordAllowed' => $editRecordAllowed,
         'orderDetail' => $orderDetail
     ]);
     
