@@ -549,7 +549,7 @@ class OrderDetailsController extends AdminAppController
         $message = __d('admin', 'The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}.', [
             '<b>' . $oldOrderDetail->product_name . '</b>',
             Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($oldOrderDetail->customer),
-            $newCustomer->name
+            '<b>' . $newCustomer->name . '</b>'
         ]);
         
         // send email to customer if price was changed
