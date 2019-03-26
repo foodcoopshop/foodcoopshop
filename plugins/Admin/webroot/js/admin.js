@@ -1854,7 +1854,8 @@ foodcoopshop.Admin = {
         $(container).append(dialogHtml);
         
         $('#dialogOrderDetailEditCustomerId').selectpicker({
-            liveSearch: true
+            liveSearch: true,
+            size: 7
         });
         
         var buttons = {};
