@@ -496,7 +496,7 @@ class OrderDetailsController extends AdminAppController
         $this->RequestHandler->renderAs($this, 'ajax');
         
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
-        $customerId = trim($this->getRequest()->getData('customerId'));
+        $customerId = (int) $this->getRequest()->getData('customerId');
         $editCustomerReason = strip_tags(html_entity_decode($this->getRequest()->getData('editCustomerReason')));
         
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');

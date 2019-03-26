@@ -39,7 +39,9 @@ class OrderDetailsControllerTest extends AppCakeTestCase
     public $newAmount = 1;
     public $editAmountReason = 'One product was not delivered.';
 
-
+    public $newCustomerId = 88;
+    public $editCustomerReason = 'The member forgot his product and I took it.';
+    
     public function setUp()
     {
         parent::setUp();
@@ -199,6 +201,29 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->assertEquals(0, $timebasedCurrencyOrderDetail->count());
     }
 
+    public function testEditOrderDetailCustomerAsManufacturer() {
+        $this->loginAsVegetableManufacturer();
+        $this->editOrderDetailCustomer($this->orderDetailIdA, $this->newCustomerId, $this->editCustomerReason);
+        $this->assertNotPerfectlyImplementedAccessRestricted();
+    }
+    
+    public function testEditOrderDetailCustomerAsSuperadmin() {
+        $this->loginAsSuperadmin();
+        $this->editOrderDetailCustomer($this->orderDetailIdA, $this->newCustomerId, $this->editCustomerReason);
+        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$this->orderDetailIdA]);
+        $this->assertEquals($this->newCustomerId, $changedOrderDetails[0]->id_customer);
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $recipients = [
+            Configure::read('test.loginEmailAdmin'),
+            Configure::read('test.loginEmailSuperadmin')
+        ];
+        $i = 0;
+        foreach($recipients as $recipient) {
+            $this->assertEmailLogs($emailLogs[$i], 'Einem anderen Mitglied zugewiesen: Artischocke : Stück', ['Das bestellte Produkt <b>Artischocke : Stück</b> wurde erfolgreich dem Mitglied <b>Demo Admin</b> zugewiesen (vorher: Demo Superadmin).'], [$recipient]);
+            $i++;
+        }
+    }
+    
     public function testEditOrderDetailPriceAsManufacturer()
     {
         $this->loginAsVegetableManufacturer();
@@ -612,6 +637,18 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         );
     }
 
+    private function editOrderDetailCustomer($orderDetailId, $customerId, $editCustomerReason)
+    {
+        $this->httpClient->post(
+            '/admin/order-details/editCustomer/',
+            [
+                'orderDetailId' => $orderDetailId,
+                'customerId' => $customerId,
+                'editCustomerReason' => $editCustomerReason
+            ]
+        );
+    }
+    
     private function editOrderDetailPrice($orderDetailId, $productPrice, $editPriceReason)
     {
         $this->httpClient->post(

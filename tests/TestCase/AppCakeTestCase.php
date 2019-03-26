@@ -165,6 +165,14 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $response = $this->httpClient->getJsonDecodedContent();
         $this->assertEquals(1, $response->status, 'json status should be "1", msg: ' . $response->msg);
     }
+    
+    /**
+     * called with json request, Controlller::isAuthorized false redirects to home
+     */
+    protected function assertNotPerfectlyImplementedAccessRestricted()
+    {
+        $this->assertEquals(Configure::read('app.cakeServerName') . '/', $this->httpClient->getUrl());
+    }
 
     /**
      * back tick ` allows using forward slash in $unquotedString
