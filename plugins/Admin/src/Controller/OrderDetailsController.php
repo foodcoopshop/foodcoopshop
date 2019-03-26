@@ -82,7 +82,7 @@ class OrderDetailsController extends AdminAppController
                 if ($this->AppAuth->isManufacturer() && $orderDetail->product->id_manufacturer == $this->AppAuth->getManufacturerId()) {
                     return true;
                 }
-                if ($this->AppAuth->isCustomer() && $orderDetail->id_customer == $this->AppAuth->getUserId()) {
+                if ($this->AppAuth->isCustomer() && Configure::read('isCustomerAllowedToModifyOwnOrders') && $orderDetail->id_customer == $this->AppAuth->getUserId()) {
                     return true;
                 }
             }
