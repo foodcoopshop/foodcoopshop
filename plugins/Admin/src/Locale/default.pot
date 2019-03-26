@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-03-26 14:49+0100\n"
+"POT-Creation-Date: 2019-03-26 15:09+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -243,6 +243,15 @@ msgid "Group_by_manufacturer"
 msgstr ""
 
 msgid "Orders"
+msgstr ""
+
+msgid "Please_select_a_member."
+msgstr ""
+
+msgid "The_same_member_must_not_be_selected."
+msgstr ""
+
+msgid "The_reason_for_changing_the_member_is_mandatory."
 msgstr ""
 
 msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."

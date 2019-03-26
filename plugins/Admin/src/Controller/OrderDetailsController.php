@@ -499,15 +499,6 @@ class OrderDetailsController extends AdminAppController
         $customerId = trim($this->getRequest()->getData('customerId'));
         $editCustomerReason = strip_tags(html_entity_decode($this->getRequest()->getData('editCustomerReason')));
         
-        if (! is_numeric($orderDetailId) || ! is_numeric($customerId)) {
-            $message = 'input format wrong';
-            $this->log($message);
-            die(json_encode([
-                'status' => 0,
-                'msg' => $message
-            ]));
-        }
-        
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $oldOrderDetail = $this->OrderDetail->find('all', [
             'conditions' => [
@@ -525,6 +516,26 @@ class OrderDetailsController extends AdminAppController
                 'Customers.id_customer' => $customerId
             ]
         ])->first();
+        
+        $errors = [];
+        if (empty($newCustomer)) {
+            $errors[] = __d('admin', 'Please_select_a_member.');
+        } else {
+            if ($newCustomer->id_customer == $oldOrderDetail->id_customer) {
+                $errors[] = __d('admin', 'The_same_member_must_not_be_selected.');
+            }
+        }
+        
+        if ($editCustomerReason == '') {
+            $errors[] = __d('admin', 'The_reason_for_changing_the_member_is_mandatory.');
+        }
+        
+        if (!empty($errors)) {
+            die(json_encode([
+                'status' => 0,
+                'msg' => join('<br />', $errors)
+            ]));
+        }
         
         $this->OrderDetail->save(
             $this->OrderDetail->patchEntity(

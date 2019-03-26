@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-03-25 20:32+0100\n"
-"PO-Revision-Date: 2019-03-25 20:32+0100\n"
+"POT-Creation-Date: 2019-03-26 15:09+0100\n"
+"PO-Revision-Date: 2019-03-26 15:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -245,6 +245,15 @@ msgstr "Group by manufacturer"
 
 msgid "Orders"
 msgstr "Orders"
+
+msgid "Please_select_a_member."
+msgstr "Please select a member."
+
+msgid "The_same_member_must_not_be_selected."
+msgstr "The same member must not be selected."
+
+msgid "The_reason_for_changing_the_member_is_mandatory."
+msgstr "The reason for changing the member is mandatory."
 
 msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
 msgstr "The ordered product {0} was successfully assigned from {1} to {2}."

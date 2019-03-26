@@ -1864,17 +1864,10 @@ foodcoopshop.Admin = {
         buttons['save'] = {
             text: foodcoopshop.LocalizedJs.helper.save,
             click: function() {
-                if ($('#dialogOrderDetailEditCustomerId').val() == '' || $('#dialogOrderDetailEditCustomerOrderDetailId').val() == '') {
-                    return false;
-                }
 
                 var ckeditorData = CKEDITOR.instances['dialogEditCustomerReason'].getData().trim();
-                if (ckeditorData == '') {
-                    alert(foodcoopshop.LocalizedJs.admin.ChangeMemberReasonIsMandatory);
-                    return;
-                }
-
                 var customerId = $('#dialogOrderDetailEditCustomerId').val();
+                
                 $('#order-detail-customer-edit-form .ajax-loader').show();
                 $('.ui-dialog button').attr('disabled', 'disabled');
 
@@ -1890,9 +1883,9 @@ foodcoopshop.Admin = {
                             document.location.reload();
                         },
                         onError: function (data) {
-                            dialog.dialog('close');
-                            $('#order-detail-customer-edit-form .ajax-loader').hide();
-                            alert(data.msg);
+                            var form = $('#order-detail-customer-edit-form');
+                            form.find('.ajax-loader').hide();
+                            foodcoopshop.Admin.appendFlashMessageToDialog(form, data.msg);
                         }
                     }
                 );
