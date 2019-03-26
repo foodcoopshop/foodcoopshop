@@ -552,6 +552,8 @@ class OrderDetailsController extends AdminAppController
             '<b>' . $newCustomer->name . '</b>'
         ]);
         
+        $message .= ' '.__d('admin', 'Reason').': <b>"' . $editCustomerReason . '"</b>';
+        
         // send email to customer if price was changed
 //         if (!$doNotChangePrice) {
 //             $email = new AppEmail();
