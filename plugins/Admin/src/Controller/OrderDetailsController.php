@@ -554,39 +554,36 @@ class OrderDetailsController extends AdminAppController
         
         $message .= ' '.__d('admin', 'Reason').': <b>"' . $editCustomerReason . '"</b>';
         
-        // send email to customer if price was changed
-//         if (!$doNotChangePrice) {
-//             $email = new AppEmail();
-//             $email->viewBuilder()->setTemplate('Admin.order_detail_quantity_changed');
-//             $email->setTo($oldOrderDetail->customer->email)
-//             ->setSubject(__d('admin', 'Weight_adapted') . ': ' . $oldOrderDetail->product_name)
-//             ->setViewVars([
-//                 'oldOrderDetail' => $oldOrderDetail,
-//                 'newProductQuantityInUnits' => $productQuantity,
-//                 'newOrderDetail' => $newOrderDetail,
-//                 'appAuth' => $this->AppAuth
-//             ]);
-            
-//             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
-            
-//             // never send email to manufacturer if bulk orders are allowed
-//             $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-//             $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail->product->manufacturer->bulk_orders_allowed);
-//             $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
-            
-//             if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
-//                 $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
-//                     '<b>' . $oldOrderDetail->customer->name . '</b>',
-//                     '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
-//                 ]);
-//                 $email->addCC($oldOrderDetail->product->manufacturer->address_manufacturer->email);
-//             }
-            
-//             $email->send();
-            
-//             $message .= $emailMessage;
-            
-//         }
+        $recipients = [
+            [
+                'email' => $newCustomer->email,
+                'customer' => $newCustomer
+            ],
+            [
+                'email' => $oldOrderDetail->customer->email,
+                'customer' => $oldOrderDetail->customer
+            ]
+        ];
+        // send email to customers
+        foreach($recipients as $recipient) {
+            $email = new AppEmail();
+            $email->viewBuilder()->setTemplate('Admin.order_detail_customer_changed');
+            $email->setTo($recipient['email'])
+            ->setSubject(__d('admin', 'Assigned_to_another_member') . ': ' . $oldOrderDetail->product_name)
+            ->setViewVars([
+                'oldOrderDetail' => $oldOrderDetail,
+                'customer' => $recipient['customer'],
+                'newCustomer' => $newCustomer,
+                'editCustomerReason' => $editCustomerReason,
+                'appAuth' => $this->AppAuth
+            ]);
+            $email->send();
+        }
+        
+        $message .= ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_{1}.', [
+            '<b>' . $oldOrderDetail->customer->name . '</b>',
+            '<b>' . $newCustomer->name . '</b>'
+        ]);
         
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_detail_customer_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);

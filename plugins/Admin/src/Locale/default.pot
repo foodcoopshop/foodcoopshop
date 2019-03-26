@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-03-26 15:09+0100\n"
+"POT-Creation-Date: 2019-03-26 15:38+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -257,6 +257,15 @@ msgstr ""
 msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
 msgstr ""
 
+msgid "Reason"
+msgstr ""
+
+msgid "Assigned_to_another_member"
+msgstr ""
+
+msgid "An_email_was_sent_to_{0}_and_{1}."
+msgstr ""
+
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
 msgstr ""
 
@@ -273,9 +282,6 @@ msgid "The_amount_of_the_ordered_product_{0}_was_successfully_changed_from_{1}_t
 msgstr ""
 
 msgid "Ordered_amount_adapted"
-msgstr ""
-
-msgid "Reason"
 msgstr ""
 
 msgid "The_stock_was_increased_to_{0}."
@@ -1302,6 +1308,9 @@ msgid "Why_has_the_amount_been_adpated?"
 msgstr ""
 
 msgid "PS:_Your_credit_has_been_adapted_automatically."
+msgstr ""
+
+msgid "Why_has_another_member_been_assigned?"
 msgstr ""
 
 msgid "sorry,_{0}_can_not_be_delivered."

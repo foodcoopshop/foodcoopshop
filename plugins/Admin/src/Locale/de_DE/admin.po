@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-03-26 15:09+0100\n"
-"PO-Revision-Date: 2019-03-26 15:16+0100\n"
+"POT-Creation-Date: 2019-03-26 15:38+0100\n"
+"PO-Revision-Date: 2019-03-26 15:38+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -256,7 +256,16 @@ msgid "The_reason_for_changing_the_member_is_mandatory."
 msgstr "Der Grund für die Änderung des Mitglieds ist ein Pflichtfeld."
 
 msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
-msgstr "Das bestellte Produkt {0} wurde erfolgreich {2} zugewiesen (vorher: {1})."
+msgstr "Das bestellte Produkt {0} wurde erfolgreich dem Mitglied {2} zugewiesen (vorher: {1})."
+
+msgid "Reason"
+msgstr "Grund"
+
+msgid "Assigned_to_another_member"
+msgstr "Einem anderen Mitglied zugewiesen"
+
+msgid "An_email_was_sent_to_{0}_and_{1}."
+msgstr "Eine E-Mail wurde an {0} und {1} verschickt."
 
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
 msgstr "Das Gewicht des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich von {2} auf {3} angepasst."
@@ -275,9 +284,6 @@ msgstr "Die Anzahl des bestellten Produktes {0} wurde erfolgreich von {1} auf {2
 
 msgid "Ordered_amount_adapted"
 msgstr "Bestellte Anzahl angepasst"
-
-msgid "Reason"
-msgstr "Grund"
 
 msgid "The_stock_was_increased_to_{0}."
 msgstr "Der Lagerstand wurde auf {0} erhöht."
@@ -1305,6 +1311,9 @@ msgstr "Warum wurde die Anzahl angepasst?"
 msgid "PS:_Your_credit_has_been_adapted_automatically."
 msgstr "PS: Dein Guthaben wurde automatisch angepasst."
 
+msgid "Why_has_another_member_been_assigned?"
+msgstr "Warum wurde das Produkt einem anderen Mitglied zugewiesen?"
+
 msgid "sorry,_{0}_can_not_be_delivered."
 msgstr "Das Produkt \"{0}\" kann leider nicht geliefert werden."
 
@@ -1925,6 +1934,9 @@ msgstr "Steuersätze sind später nicht änderbar."
 
 msgid "Delete"
 msgstr "Löschen"
+
+#~ msgid "Member_changed"
+#~ msgstr "Einem anderen Mitglied zugewiesen"
 
 #, fuzzy
 #~ msgid "aactivate"
