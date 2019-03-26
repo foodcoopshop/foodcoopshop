@@ -405,10 +405,13 @@ input.datepicker {
 	margin-top: 5px;
 	list-style: disc;
 }
-.bootstrap-select .dropdown-menu li {
+.ui-dialog-content .bootstrap-select .dropdown-menu li {
 	margin-left: 0;
 	margin-top: 0;
 	list-style: none;
+}
+.ui-dialog-content .bootstrap-select .dropdown-toggle {
+	width: 307px;
 }
 .ui-dialog-content #flashMessage,
 .featherlight-content #flashMessage {

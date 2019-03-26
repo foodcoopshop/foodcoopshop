@@ -1855,7 +1855,8 @@ foodcoopshop.Admin = {
         
         $('#dialogOrderDetailEditCustomerId').selectpicker({
             liveSearch: true,
-            size: 7
+            size: 7,
+            title: foodcoopshop.LocalizedJs.admin.PleaseSelectNewMember
         });
         
         var buttons = {};
@@ -1902,7 +1903,7 @@ foodcoopshop.Admin = {
         var dialog = $('#' + dialogId).dialog({
 
             autoOpen: false,
-            width: 450,
+            width: 550,
             modal: true,
             close: function () {
                 $('#dialogOrderDetailCustomerId').val('');
@@ -1921,7 +1922,7 @@ foodcoopshop.Admin = {
             var orderDetailId = row.find('td:nth-child(2)').html();
             var customerId = row.find('td:nth-child(9) span.customer-id-for-dialog').html();
             $('#' + dialogId + ' #dialogOrderDetailEditCustomerOrderDetailId').val(orderDetailId);
-            $('#' + dialogId + ' #dialogOrderDetailEditCustomerId').selectpicker('val', customerId);
+            $('#' + dialogId + ' #dialogOrderDetailEditCustomerId').selectpicker('val', '');
             
             var infoText = foodcoopshop.LocalizedJs.admin.ToWhichMemberShouldTheOrderedProduct0Of1BeAssignedTo.replace(/\{0\}/, '<b>' + row.find('td:nth-child(4) a.name-for-dialog').html() + '</b>');
             infoText = infoText.replace(/\{1\}/, '<b>' + row.find('td:nth-child(9) span.customer-name-for-dialog').html() + '</b>');

@@ -215,7 +215,8 @@ class LocalizedController extends Controller
                 'ChangeMemberReasonIsMandatory' => __('The_reason_for_changing_the_member_is_mandatory.'),
                 'WhyIsMemberEdited' => __('Why_is_the_member_edited?'),
                 'ChangeMember' => __('Change_member'),
-                'ToWhichMemberShouldTheOrderedProduct0Of1BeAssignedTo' => __('To_which_member_should_the_ordered_product_{0}_of_{1}_be_assigned_to?')
+                'ToWhichMemberShouldTheOrderedProduct0Of1BeAssignedTo' => __('To_which_member_should_the_ordered_product_{0}_of_{1}_be_assigned_to?'),
+                'PleaseSelectNewMember' => __('Please_select_new_member.')
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),
