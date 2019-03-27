@@ -79,13 +79,13 @@ class AppEmail extends Email
             return $email;
         } catch (Exception $e) {
             if (Configure::check('app.EmailTransport.fallback')) {
-                // only try to send once with fallback config
+                // only try to reconfigure callback config once
                 if (is_null(TransportFactory::getConfig('fallback'))) {
-                    Log::error('The email could not be sent but was resent with the fallback configuration.<br /><br />' . $e->__toString());
                     TransportFactory::setConfig('fallback', Configure::read('app.EmailTransport.fallback'));
-                    $this->setTransport('fallback');
-                    return $this->send($content);
                 }
+                Log::error('The email could not be sent but was resent with the fallback configuration.<br /><br />' . $e->__toString());
+                $this->setTransport('fallback');
+                return parent::send($content);
             } else {
                 throw $e;
             }
