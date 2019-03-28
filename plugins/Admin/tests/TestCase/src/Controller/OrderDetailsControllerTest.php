@@ -239,6 +239,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = '346'; // artischocke
         $amount = 5;
+        $this->editCustomerAmount = 2;
         $this->addProductToCart($productId, $amount);
         $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
