@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2019-03-26 15:38+0100\n"
-"PO-Revision-Date: 2019-03-26 15:38+0100\n"
+"PO-Revision-Date: 2019-03-28 14:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -256,13 +256,13 @@ msgid "The_reason_for_changing_the_member_is_mandatory."
 msgstr "Der Grund für die Änderung des Mitglieds ist ein Pflichtfeld."
 
 msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
-msgstr "Das bestellte Produkt {0} wurde erfolgreich dem Mitglied {2} zugewiesen (vorher: {1})."
+msgstr "Das bestellte Produkt {0} wurde erfolgreich von {1} auf das Mitglied {2} umgebucht."
 
 msgid "Reason"
 msgstr "Grund"
 
 msgid "Assigned_to_another_member"
-msgstr "Einem anderen Mitglied zugewiesen"
+msgstr "Auf ein anderes Mitglied umgebucht"
 
 msgid "An_email_was_sent_to_{0}_and_{1}."
 msgstr "Eine E-Mail wurde an {0} und {1} verschickt."
@@ -1312,7 +1312,7 @@ msgid "PS:_Your_credit_has_been_adapted_automatically."
 msgstr "PS: Dein Guthaben wurde automatisch angepasst."
 
 msgid "Why_has_another_member_been_assigned?"
-msgstr "Warum wurde das Produkt einem anderen Mitglied zugewiesen?"
+msgstr "Warum wurde das Produkt auf ein anderes Mitglied umgebucht?"
 
 msgid "sorry,_{0}_can_not_be_delivered."
 msgstr "Das Produkt \"{0}\" kann leider nicht geliefert werden."
