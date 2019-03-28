@@ -1583,7 +1583,7 @@ foodcoopshop.Admin = {
     triggerFilter : function () {
         $('#filter-loader').remove();
         $('#content').css('opacity', '.3');
-        $('#container').append('<div id="filter-loader"><i class="fas fa-circle-notch"></i></div>');
+        $('#container').prepend('<div id="filter-loader"><i class="fas fa-circle-notch"></i></div>');
         var marginTop = $('.filter-container').outerHeight();
         $('#filter-loader').css('top', marginTop + 20);
         foodcoopshop.Admin.submitFilterForm();
