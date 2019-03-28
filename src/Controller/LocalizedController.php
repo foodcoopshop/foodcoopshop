@@ -218,7 +218,8 @@ class LocalizedController extends Controller
                 'ToWhichMemberShouldTheOrderedProduct0Of1BeAssignedTo' => __('To_which_member_should_the_ordered_product_{0}_of_{1}_be_assigned_to?'),
                 'PleaseSelectNewMember' => __('Please_select_new_member.'),
                 'HowManyUnitsShouldBeChangedToMember' => __('How_many_units_should_be_changed_to_member?'),
-                'PleaseSelect' => __('Please_select...')
+                'PleaseSelect' => __('Please_select...'),
+                'all' => __('all')
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),

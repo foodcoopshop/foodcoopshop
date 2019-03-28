@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-03-28 15:05+0100\n"
-"PO-Revision-Date: 2019-03-28 14:55+0100\n"
+"POT-Creation-Date: 2019-03-28 15:15+0100\n"
+"PO-Revision-Date: 2019-03-28 15:15+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -716,6 +716,9 @@ msgstr "How many units should be assigned to the member?"
 
 msgid "Please_select..."
 msgstr "Please select..."
+
+msgid "all"
+msgstr "all"
 
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"

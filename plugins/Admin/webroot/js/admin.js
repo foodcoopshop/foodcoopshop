@@ -1930,9 +1930,13 @@ foodcoopshop.Admin = {
             selectLabel.hide();
             select.find('option').remove();
             for (var i = 1; i <= amount; i++) {
+                var text = i;
+                if (i == amount) {
+                    text += ' (' + foodcoopshop.LocalizedJs.admin.all + ')';
+                }
                 select.append($('<option>', {
                     value: i,
-                    text: i
+                    text: text
                 }));
             }
             
