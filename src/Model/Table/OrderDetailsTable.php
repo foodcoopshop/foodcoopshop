@@ -95,7 +95,7 @@ class OrderDetailsTable extends AppTable
             return $exp->or_([
                 '(Products.delivery_rhythm_type <> "individual" AND Products.delivery_rhythm_send_order_list_weekday = ' . $cronjobRunDayWeekday . ')
                  AND OrderDetails.pickup_day = "' . $pickupDay . '"',
-                '(Products.delivery_rhythm_type = "individual" AND Products.delivery_rhythm_send_order_list_day = "' . $cronjobRunDay . '")'
+                '(Products.delivery_rhythm_type = "individual" AND Products.delivery_rhythm_send_order_list_day = "' . $cronjobRunDay . '" AND OrderDetails.pickup_day = Products.delivery_rhythm_first_delivery_day)'
             ]);
         });
         return $query;

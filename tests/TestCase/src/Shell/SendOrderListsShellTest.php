@@ -5,6 +5,8 @@ use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use App\Application;
 use Cake\Console\CommandRunner;
+use Cake\Filesystem\File;
+use Cake\Filesystem\Folder;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -29,6 +31,13 @@ class SendOrderListsShellTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
+        
+        $folder = new Folder();
+        $folder->delete(Configure::read('app.folder_order_lists'));
+        $file = new File(Configure::read('app.folder_order_lists') . DS . '.gitignore', true);
+        $file->append('/*
+!.gitignore');
+        
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
@@ -150,16 +159,16 @@ class SendOrderListsShellTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
         $productId = 346;
-        $this->changeProductDeliveryRhythm($productId, '0-individual', '2018-01-12', '2018-01-01', '', '2018-01-06');
+        $this->changeProductDeliveryRhythm($productId, '0-individual', '2018-02-02', '2018-01-30', '', '2018-01-31');
         
-        $cronjobRunDay = '2018-01-06';
+        $cronjobRunDay = '2018-01-31';
         $orderDetailId = 1;
         
         // 1) run cronjob and assert no changings
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(1, count($emailLogs), 'amount of sent emails wrong');
+        $this->assertEquals(3, count($emailLogs), 'amount of sent emails wrong');
         
     }
     
