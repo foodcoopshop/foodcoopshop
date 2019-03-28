@@ -542,14 +542,54 @@ class OrderDetailsController extends AdminAppController
             ]));
         }
         
-        $this->OrderDetail->save(
-            $this->OrderDetail->patchEntity(
-                $oldOrderDetail,
-                [
-                    'id_customer' => $customerId
-                ]
-            )
-        );
+        $newAmountForOldOrderDetail = $oldOrderDetail->product_amount - $amount;
+        
+        if ($newAmountForOldOrderDetail > 0) {
+            // order detail needs to be split up
+            $this->OrderDetail->save(
+                $this->OrderDetail->patchEntity(
+                    $oldOrderDetail,
+                    [
+                        'product_amount' => $newAmountForOldOrderDetail
+                        // TODO berechnen
+//                         total_price_tax_incl, total_price_tax_excl, deposit
+                    ]
+                )
+            );
+            //TODO order_detail_tax, order_detail_units
+            
+            $this->OrderDetail->save(
+                $this->OrderDetail->newEntity(
+                    [
+                        'id_customer' => $customerId,
+                        'product_amount' => $amount,
+                        'product_name' => $oldOrderDetail->product_name,
+                        'product_id' => $oldOrderDetail->product_id,
+                        'product_attribute_id' => $oldOrderDetail->product_attribute_id,
+                        'order_state' => $oldOrderDetail->order_state,
+                        'pickup_day' => $oldOrderDetail->pickup_day,
+                        'total_price_tax_incl' => $oldOrderDetail->total_price_tax_incl, // TODO berechnen
+                        'total_price_tax_excl' => $oldOrderDetail->total_price_tax_excl, // TODO berechnen
+                        'deposit' => $oldOrderDetail->deposit, // TODO berechnen
+                        'id_tax' => $oldOrderDetail->id_tax,
+                    ]
+                )
+            );
+            
+            //TODO order_detail_tax, order_detail_units
+            
+        } else {
+          // order detail does not need to be split up
+            $this->OrderDetail->save(
+                $this->OrderDetail->patchEntity(
+                    $oldOrderDetail,
+                    [
+                        'id_customer' => $customerId
+                    ]
+                )
+            );
+            
+        }
         
         $message = __d('admin', 'The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}.', [
             '<b>' . $oldOrderDetail->product_name . '</b>',

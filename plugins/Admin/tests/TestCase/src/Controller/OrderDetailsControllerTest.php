@@ -208,11 +208,12 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         $this->assertNotPerfectlyImplementedAccessRestricted();
     }
     
-    public function testEditOrderDetailCustomerAsSuperadmin() {
+    public function testEditOrderDetailCustomerAsSuperadminNotParted() {
         $this->loginAsSuperadmin();
         $this->editOrderDetailCustomer($this->orderDetailIdA, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount);
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$this->orderDetailIdA]);
         $this->assertEquals($this->newCustomerId, $changedOrderDetails[0]->id_customer);
+        $this->assertEquals($this->editCustomerAmount, $changedOrderDetails[0]->product_amount);
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $recipients = [
             Configure::read('test.loginEmailAdmin'),
@@ -231,6 +232,24 @@ class OrderDetailsControllerTest extends AppCakeTestCase
             );
             $i++;
         }
+    }
+    
+    public function testEditOrderDetailCustomerAsSuperadminPartedIn2And3Products()
+    {
+        $this->loginAsSuperadmin();
+        $productId = '346'; // artischocke
+        $amount = 5;
+        $this->addProductToCart($productId, $amount);
+        $this->finishCart();
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
+        $cart = $this->getCartById($cartId);
+        $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
+        $this->editOrderDetailCustomer($orderDetailId, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount);
+        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId, 5]);
+        $this->assertEquals(Configure::read('test.superadminId'), $changedOrderDetails[0]->id_customer);
+        $this->assertEquals($this->newCustomerId, $changedOrderDetails[1]->id_customer);
+        $this->assertEquals($amount - $this->editCustomerAmount, $changedOrderDetails[0]->product_amount);
+        $this->assertEquals($this->editCustomerAmount, $changedOrderDetails[1]->product_amount);
     }
     
     public function testEditOrderDetailPriceAsManufacturer()
