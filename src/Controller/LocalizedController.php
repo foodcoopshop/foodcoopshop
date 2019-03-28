@@ -216,7 +216,9 @@ class LocalizedController extends Controller
                 'WhyIsMemberEdited' => __('Why_is_the_member_edited?'),
                 'ChangeMember' => __('Change_member'),
                 'ToWhichMemberShouldTheOrderedProduct0Of1BeAssignedTo' => __('To_which_member_should_the_ordered_product_{0}_of_{1}_be_assigned_to?'),
-                'PleaseSelectNewMember' => __('Please_select_new_member.')
+                'PleaseSelectNewMember' => __('Please_select_new_member.'),
+                'HowManyUnitsShouldBeChangedToMember' => __('How_many_units_should_be_changed_to_member?'),
+                'PleaseSelect' => __('Please_select...')
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),
@@ -271,7 +273,7 @@ class LocalizedController extends Controller
                 'LastOrderWeekday' => __('Last_order_weekday'),
                 'SendOrderListsDay' => __('Send_order_lists_day'),
                 'OrderListsAreSentAutomaticallyNextDayInTheMorning' => __('Order_lists_are_sent_automatically_next_day_in_the_morning.'),
-                'OrderListsAreSentAutomaticallyOnThisDay' => __('Order_lists_are_sent_automatically_on_this_day.'),
+                'OrderListsAreSentAutomaticallyOnThisDay' => __('Order_lists_are_sent_automatically_on_this_day.')
             ],
             'upload' => [
                 'delete' => __('delete'),

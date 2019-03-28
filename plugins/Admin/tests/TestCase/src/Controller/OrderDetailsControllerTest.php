@@ -41,6 +41,7 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
     public $newCustomerId = 88;
     public $editCustomerReason = 'The member forgot his product and I took it.';
+    public $editCustomerAmount = 1;
     
     public function setUp()
     {
@@ -203,13 +204,13 @@ class OrderDetailsControllerTest extends AppCakeTestCase
 
     public function testEditOrderDetailCustomerAsManufacturer() {
         $this->loginAsVegetableManufacturer();
-        $this->editOrderDetailCustomer($this->orderDetailIdA, $this->newCustomerId, $this->editCustomerReason);
+        $this->editOrderDetailCustomer($this->orderDetailIdA, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount);
         $this->assertNotPerfectlyImplementedAccessRestricted();
     }
     
     public function testEditOrderDetailCustomerAsSuperadmin() {
         $this->loginAsSuperadmin();
-        $this->editOrderDetailCustomer($this->orderDetailIdA, $this->newCustomerId, $this->editCustomerReason);
+        $this->editOrderDetailCustomer($this->orderDetailIdA, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount);
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$this->orderDetailIdA]);
         $this->assertEquals($this->newCustomerId, $changedOrderDetails[0]->id_customer);
         $emailLogs = $this->EmailLog->find('all')->toArray();
@@ -219,7 +220,15 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         ];
         $i = 0;
         foreach($recipients as $recipient) {
-            $this->assertEmailLogs($emailLogs[$i], 'Einem anderen Mitglied zugewiesen: Artischocke : Stück', ['Das bestellte Produkt <b>Artischocke : Stück</b> wurde erfolgreich dem Mitglied <b>Demo Admin</b> zugewiesen (vorher: Demo Superadmin).'], [$recipient]);
+            $this->assertEmailLogs(
+                $emailLogs[$i],
+                'Auf ein anderes Mitglied umgebucht: Artischocke : Stück',
+                [
+                    'Das bestellte Produkt <b>Artischocke : Stück</b> wurde erfolgreich von Demo Superadmin auf das Mitglied <b>Demo Admin</b> umgebucht.',
+                    $this->editCustomerReason
+                ],
+                [$recipient]
+            );
             $i++;
         }
     }
@@ -637,14 +646,15 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         );
     }
 
-    private function editOrderDetailCustomer($orderDetailId, $customerId, $editCustomerReason)
+    private function editOrderDetailCustomer($orderDetailId, $customerId, $editCustomerReason, $amount)
     {
         $this->httpClient->post(
             '/admin/order-details/editCustomer/',
             [
                 'orderDetailId' => $orderDetailId,
                 'customerId' => $customerId,
-                'editCustomerReason' => $editCustomerReason
+                'editCustomerReason' => $editCustomerReason,
+                'amount' => $amount
             ]
         );
     }

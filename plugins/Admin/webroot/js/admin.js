@@ -1876,7 +1876,8 @@ foodcoopshop.Admin = {
                     {
                         orderDetailId: $('#dialogOrderDetailEditCustomerOrderDetailId').val(),
                         customerId: customerId,
-                        editCustomerReason: ckeditorData
+                        editCustomerReason: ckeditorData,
+                        amount: $('#dialogOrderDetailEditCustomerAmount').val()
                     },
                     {
                         onOk: function (data) {
@@ -1921,6 +1922,30 @@ foodcoopshop.Admin = {
             infoText = infoText.replace(/\{1\}/, '<b>' + row.find('td:nth-child(9) span.customer-name-for-dialog').html() + '</b>');
             $('#' + dialogId + ' label[for="dialogOrderDetailEditCustomerId"]').html('<span style="font-weight:normal;">' + infoText + '</span>');
 
+            var amount = row.find('.product-amount-for-dialog').html();
+            var select = $('#' + dialogId + ' #dialogOrderDetailEditCustomerAmount');
+            var selectLabel = $('#' + dialogId + ' label[for="dialogOrderDetailEditCustomerAmount"]')
+            
+            select.hide();
+            selectLabel.hide();
+            select.find('option').remove();
+            for (var i = 1; i <= amount; i++) {
+                select.append($('<option>', {
+                    value: i,
+                    text: i
+                }));
+            }
+            
+            if (amount > 1) {
+                select.prepend($('<option>', {
+                    value: '',
+                    text: foodcoopshop.LocalizedJs.admin.PleaseSelect
+                }));
+                select.show();
+                selectLabel.show();
+                select.val('');
+            }
+            
             dialog.dialog('open');
         });
 

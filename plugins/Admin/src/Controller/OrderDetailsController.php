@@ -498,6 +498,7 @@ class OrderDetailsController extends AdminAppController
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $customerId = (int) $this->getRequest()->getData('customerId');
         $editCustomerReason = strip_tags(html_entity_decode($this->getRequest()->getData('editCustomerReason')));
+        $amount = (int) $this->getRequest()->getData('amount');
         
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $oldOrderDetail = $this->OrderDetail->find('all', [
@@ -524,6 +525,10 @@ class OrderDetailsController extends AdminAppController
             if ($newCustomer->id_customer == $oldOrderDetail->id_customer) {
                 $errors[] = __d('admin', 'The_same_member_must_not_be_selected.');
             }
+        }
+        
+        if ($amount > $oldOrderDetail->product_amount || $amount < 1) {
+            $errors[] = __d('admin', 'The_amount_of_units_is_not_valid.');
         }
         
         if ($editCustomerReason == '') {

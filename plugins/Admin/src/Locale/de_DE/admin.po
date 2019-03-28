@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-03-26 15:38+0100\n"
-"PO-Revision-Date: 2019-03-28 14:09+0100\n"
+"POT-Creation-Date: 2019-03-28 15:05+0100\n"
+"PO-Revision-Date: 2019-03-28 15:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -251,6 +251,9 @@ msgstr "Bitte wähle ein neues Mitglied aus."
 
 msgid "The_same_member_must_not_be_selected."
 msgstr "Bitte wähle ein anderes Mitglied aus."
+
+msgid "The_amount_of_units_is_not_valid."
+msgstr "Die Anzahl der Einheiten ist nicht gültig."
 
 msgid "The_reason_for_changing_the_member_is_mandatory."
 msgstr "Der Grund für die Änderung des Mitglieds ist ein Pflichtfeld."
