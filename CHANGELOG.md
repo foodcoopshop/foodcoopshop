@@ -2,6 +2,11 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+## v2.4.1 / 2018-03-27 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.4.0...v2.4.1)
+
+### Bugfix
+- Der individuelle Lieferrhythmus hat unter speziellen Umständen nicht richtig funktioniert. [PR#343](https://github.com/foodcoopshop/foodcoopshop/pull/343) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
 ## v2.4.0 / 2018-03-19 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.3.0...v2.4.0)
 
 ### Herzlichen Dank an alle beteiligten Personen 
