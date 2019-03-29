@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-03-19 10:59+0100\n"
+"POT-Creation-Date: 2019-03-29 11:54+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -695,6 +695,30 @@ msgstr ""
 msgid "1_email_address_has_been_copied_successfully_to_your_clipboard."
 msgstr ""
 
+msgid "The_reason_for_changing_the_member_is_mandatory."
+msgstr ""
+
+msgid "Why_is_the_member_edited?"
+msgstr ""
+
+msgid "Change_member"
+msgstr ""
+
+msgid "To_which_member_should_the_ordered_product_{0}_of_{1}_be_assigned_to?"
+msgstr ""
+
+msgid "Please_select_new_member."
+msgstr ""
+
+msgid "Amount_that_should_be_changed_to_member?"
+msgstr ""
+
+msgid "Please_select..."
+msgstr ""
+
+msgid "all"
+msgstr ""
+
 msgid "Were_the_products_picked_up?"
 msgstr ""
 
@@ -1041,6 +1065,9 @@ msgid "Action_Log_Order_detail_product_quantity_changed"
 msgstr ""
 
 msgid "Action_Log_Order_detail_product_amount_changed"
+msgstr ""
+
+msgid "Action_Log_Order_detail_customer_changed"
 msgstr ""
 
 msgid "Action_Log_Ordered_product_cancelled"

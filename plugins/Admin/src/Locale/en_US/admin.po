@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-03-19 10:59+0100\n"
-"PO-Revision-Date: 2019-03-19 11:01+0100\n"
+"POT-Creation-Date: 2019-03-29 11:54+0100\n"
+"PO-Revision-Date: 2019-03-28 15:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -246,6 +246,33 @@ msgstr "Group by manufacturer"
 msgid "Orders"
 msgstr "Orders"
 
+msgid "Please_select_a_member."
+msgstr "Please select a member."
+
+msgid "The_same_member_must_not_be_selected."
+msgstr "The same member must not be selected."
+
+msgid "The_amount_of_units_is_not_valid."
+msgstr "The amount of units is not valid."
+
+msgid "The_reason_for_changing_the_member_is_mandatory."
+msgstr "The reason for changing the member is mandatory."
+
+msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
+msgstr "The ordered product {0} was successfully assigned from {1} to {2}."
+
+msgid "Amount"
+msgstr "Amount"
+
+msgid "Reason"
+msgstr "Reason"
+
+msgid "Assigned_to_another_member"
+msgstr "Assigned to another member"
+
+msgid "An_email_was_sent_to_{0}_and_{1}."
+msgstr "An email was sent to {0} and {1}."
+
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
 msgstr "The weight of the ordered product {0} (amount {1}) was successfully adapted from {2} to {3}."
 
@@ -263,9 +290,6 @@ msgstr "The amount of the ordered product {0} was successfully adapted from {1} 
 
 msgid "Ordered_amount_adapted"
 msgstr "Ordered amount adapted"
-
-msgid "Reason"
-msgstr "Reason"
 
 msgid "The_stock_was_increased_to_{0}."
 msgstr "The stock was increased to {0}."
@@ -1053,6 +1077,9 @@ msgstr "Click to change amount"
 msgid "Click_to_cancel_product"
 msgstr "Click to cancel product"
 
+msgid "Click_to_change_member"
+msgstr "Click to change member"
+
 msgid "Deposit_return"
 msgstr "Deposit return"
 
@@ -1076,9 +1103,6 @@ msgstr "No"
 
 msgid "Click_to_change_weight"
 msgstr "Click to change weight"
-
-msgid "Amount"
-msgstr "Amount"
 
 msgid "Product"
 msgstr "Product"
@@ -1289,6 +1313,9 @@ msgstr "Why has the amount been adapted?"
 
 msgid "PS:_Your_credit_has_been_adapted_automatically."
 msgstr "PS: Your credit has been adapted automatically."
+
+msgid "Why_has_another_member_been_assigned?"
+msgstr "Why has the product been assigned to another member?"
 
 msgid "sorry,_{0}_can_not_be_delivered."
 msgstr "sorry, the product \"{0}\" can not be delivered."
@@ -1717,7 +1744,7 @@ msgid "Show_all_ordered_products"
 msgstr "Show all ordered products"
 
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
@@ -1910,6 +1937,10 @@ msgstr "Tax rates can not be changed later."
 
 msgid "Delete"
 msgstr "Delete"
+
+#, fuzzy
+#~ msgid "Member_changed"
+#~ msgstr "changed"
 
 #, fuzzy
 #~ msgid "aactivate"

@@ -233,6 +233,9 @@ class ActionLogsTable extends AppTable
                     'manufacturer'
                 ]
             ],
+            'order_detail_customer_changed' => [
+                'name' => __('Action_Log_Order_detail_customer_changed')
+            ],
             'order_detail_cancelled' => [
                 'name' => __('Action_Log_Ordered_product_cancelled'),
                 'access' => [

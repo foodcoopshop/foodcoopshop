@@ -243,7 +243,8 @@ span.tax-for-dialog,
 span.product-price-for-dialog,
 span.product-quantity-for-dialog,
 span.delivery-rhythm-for-dialog,
-span.quantity-in-units {
+span.quantity-in-units,
+span.customer-name-for-dialog {
     line-height: 21px;
     margin-left: 5px;
 }
@@ -404,6 +405,14 @@ input.datepicker {
 	margin-top: 5px;
 	list-style: disc;
 }
+.ui-dialog-content .bootstrap-select .dropdown-menu li {
+	margin-left: 0;
+	margin-top: 0;
+	list-style: none;
+}
+.ui-dialog-content .bootstrap-select .dropdown-toggle {
+	width: 307px;
+}
 .ui-dialog-content #flashMessage,
 .featherlight-content #flashMessage {
 	position: absolute;
@@ -452,7 +461,8 @@ div.cke {
 #cke_dialogEditPriceReason,
 #cke_dialogEditQuantityReason,
 #cke_dialogEditAmountReason,
-#cke_dialogChangePickupDayReason {
+#cke_dialogChangePickupDayReason,
+#cke_dialogEditCustomerReason {
     float: left;
 }
 #product-name-edit-form div.textarea-wrapper {

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-03-19 10:58+0100\n"
-"PO-Revision-Date: 2019-03-19 11:00+0100\n"
+"POT-Creation-Date: 2019-03-29 11:54+0100\n"
+"PO-Revision-Date: 2019-03-28 15:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -246,6 +246,33 @@ msgstr "Gruppieren nach Hersteller"
 msgid "Orders"
 msgstr "Bestellungen"
 
+msgid "Please_select_a_member."
+msgstr "Bitte wähle ein neues Mitglied aus."
+
+msgid "The_same_member_must_not_be_selected."
+msgstr "Bitte wähle ein anderes Mitglied aus."
+
+msgid "The_amount_of_units_is_not_valid."
+msgstr "Die Anzahl der Einheiten ist nicht gültig."
+
+msgid "The_reason_for_changing_the_member_is_mandatory."
+msgstr "Der Grund für die Änderung des Mitglieds ist ein Pflichtfeld."
+
+msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
+msgstr "Das bestellte Produkt {0} wurde erfolgreich von {1} auf das Mitglied {2} umgebucht."
+
+msgid "Amount"
+msgstr "Anzahl"
+
+msgid "Reason"
+msgstr "Grund"
+
+msgid "Assigned_to_another_member"
+msgstr "Auf ein anderes Mitglied umgebucht"
+
+msgid "An_email_was_sent_to_{0}_and_{1}."
+msgstr "Eine E-Mail wurde an {0} und {1} verschickt."
+
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
 msgstr "Das Gewicht des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich von {2} auf {3} angepasst."
 
@@ -263,9 +290,6 @@ msgstr "Die Anzahl des bestellten Produktes {0} wurde erfolgreich von {1} auf {2
 
 msgid "Ordered_amount_adapted"
 msgstr "Bestellte Anzahl angepasst"
-
-msgid "Reason"
-msgstr "Grund"
 
 msgid "The_stock_was_increased_to_{0}."
 msgstr "Der Lagerstand wurde auf {0} erhöht."
@@ -1053,6 +1077,9 @@ msgstr "Zum Ändern der Anzahl anklicken"
 msgid "Click_to_cancel_product"
 msgstr "Zum Stornieren des Produktes anklicken"
 
+msgid "Click_to_change_member"
+msgstr "Zum Ändern des Mitgliedes anklicken"
+
 msgid "Deposit_return"
 msgstr "Pfand-Rückgabe"
 
@@ -1076,9 +1103,6 @@ msgstr "Nein"
 
 msgid "Click_to_change_weight"
 msgstr "Zum Ändern des Gewichtes anklicken"
-
-msgid "Amount"
-msgstr "Anzahl"
 
 msgid "Product"
 msgstr "Produkt"
@@ -1289,6 +1313,9 @@ msgstr "Warum wurde die Anzahl angepasst?"
 
 msgid "PS:_Your_credit_has_been_adapted_automatically."
 msgstr "PS: Dein Guthaben wurde automatisch angepasst."
+
+msgid "Why_has_another_member_been_assigned?"
+msgstr "Warum wurde das Produkt auf ein anderes Mitglied umgebucht?"
 
 msgid "sorry,_{0}_can_not_be_delivered."
 msgstr "Das Produkt \"{0}\" kann leider nicht geliefert werden."
@@ -1716,6 +1743,9 @@ msgstr "Alle Produkte"
 msgid "Show_all_ordered_products"
 msgstr "Alle bestellten Produkte anzeigen"
 
+msgid "Total"
+msgstr "Gesamt"
+
 msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
 msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
 
@@ -1907,6 +1937,9 @@ msgstr "Steuersätze sind später nicht änderbar."
 
 msgid "Delete"
 msgstr "Löschen"
+
+#~ msgid "Member_changed"
+#~ msgstr "Einem anderen Mitglied zugewiesen"
 
 #, fuzzy
 #~ msgid "aactivate"

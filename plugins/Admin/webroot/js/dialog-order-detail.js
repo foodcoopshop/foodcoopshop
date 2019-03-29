@@ -54,6 +54,20 @@ foodcoopshop.DialogOrderDetail = {
         return dialogHtml;
     },
 
+    getHtmlForOrderDetailCustomerEdit : function(dialogId) {
+        var dialogHtml = '<label for="dialogOrderDetailEditCustomerId" style="margin-bottom:10px;"></label><br />';
+        dialogHtml += '<select id="dialogOrderDetailEditCustomerId">' + $('#customerid').html() + '</select>';
+        dialogHtml += '<label for="dialogOrderDetailEditCustomerAmount" style="margin-top:10px;width:100%;">' + foodcoopshop.LocalizedJs.admin.AmountThatShouldBeChangedToMember + '</label><br />';
+        dialogHtml += '<select style="width:200px;" id="dialogOrderDetailEditCustomerAmount"></select>';
+        dialogHtml += '<div class="textarea-wrapper" style="margin-top:10px;">';
+        dialogHtml += '<label for="dialogEditCustomerReason">' + foodcoopshop.LocalizedJs.admin.WhyIsMemberEdited + '</label>';
+        dialogHtml += '<textarea class="ckeditor" name="dialogEditCustomerReason" id="dialogEditCustomerReason" />';
+        dialogHtml += '</div>';
+        dialogHtml += '<input type="hidden" name="dialogOrderDetailEditCustomerOrderDetailId" id="dialogOrderDetailEditCustomerOrderDetailId" value="" />';
+        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.admin.ChangeMember, dialogId, dialogHtml);
+        return dialogHtml;
+    },
+    
     getHtmlForOrderDetailProductQuantityEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogOrderDetailProductQuantityQuantity"></label><br />';
         dialogHtml += '<br /><span class="quantity-string">' + foodcoopshop.LocalizedJs.admin.DeliveredWeight + '</span>: <input type="number" min="0.01" step="0.01" name="dialogOrderDetailProductQuantityQuantity" id="dialogOrderDetailProductQuantityQuantity" value="" />';

@@ -212,6 +212,14 @@ class LocalizedController extends Controller
                 'product' => __('product'),
                 'EmailAddressesSuccessfullyCopiedToClipboard' => __('{0}_email_addresses_have_been_copied_successfully_to_your_clipboard.'),
                 'OneEmailAddressSuccessfullyCopiedToClipboard' => __('1_email_address_has_been_copied_successfully_to_your_clipboard.'),
+                'ChangeMemberReasonIsMandatory' => __('The_reason_for_changing_the_member_is_mandatory.'),
+                'WhyIsMemberEdited' => __('Why_is_the_member_edited?'),
+                'ChangeMember' => __('Change_member'),
+                'ToWhichMemberShouldTheOrderedProduct0Of1BeAssignedTo' => __('To_which_member_should_the_ordered_product_{0}_of_{1}_be_assigned_to?'),
+                'PleaseSelectNewMember' => __('Please_select_new_member.'),
+                'AmountThatShouldBeChangedToMember' => __('Amount_that_should_be_changed_to_member?'),
+                'PleaseSelect' => __('Please_select...'),
+                'all' => __('all')
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),
@@ -266,7 +274,7 @@ class LocalizedController extends Controller
                 'LastOrderWeekday' => __('Last_order_weekday'),
                 'SendOrderListsDay' => __('Send_order_lists_day'),
                 'OrderListsAreSentAutomaticallyNextDayInTheMorning' => __('Order_lists_are_sent_automatically_next_day_in_the_morning.'),
-                'OrderListsAreSentAutomaticallyOnThisDay' => __('Order_lists_are_sent_automatically_on_this_day.'),
+                'OrderListsAreSentAutomaticallyOnThisDay' => __('Order_lists_are_sent_automatically_on_this_day.')
             ],
             'upload' => [
                 'delete' => __('delete'),

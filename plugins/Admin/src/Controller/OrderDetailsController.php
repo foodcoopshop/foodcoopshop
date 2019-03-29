@@ -34,8 +34,12 @@ class OrderDetailsController extends AdminAppController
             case 'editProductPrice':
             case 'editProductAmount':
             case 'editProductQuantity':
+            case 'editCustomer':
                 if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
                     return true;
+                }
+                if ($this->getRequest()->getParam('action') == 'editCustomer' && $this->AppAuth->isManufacturer()) {
+                    return false;
                 }
                 /*
                  * START customer/manufacturer OWNER check
@@ -78,7 +82,7 @@ class OrderDetailsController extends AdminAppController
                 if ($this->AppAuth->isManufacturer() && $orderDetail->product->id_manufacturer == $this->AppAuth->getManufacturerId()) {
                     return true;
                 }
-                if ($this->AppAuth->isCustomer() && $orderDetail->id_customer == $this->AppAuth->getUserId()) {
+                if ($this->AppAuth->isCustomer() && Configure::read('isCustomerAllowedToModifyOwnOrders') && $orderDetail->id_customer == $this->AppAuth->getUserId()) {
                     return true;
                 }
             }
@@ -487,6 +491,175 @@ class OrderDetailsController extends AdminAppController
         
     }
 
+    public function editCustomer()
+    {
+        $this->RequestHandler->renderAs($this, 'ajax');
+        
+        $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
+        $customerId = (int) $this->getRequest()->getData('customerId');
+        $editCustomerReason = strip_tags(html_entity_decode($this->getRequest()->getData('editCustomerReason')));
+        $amount = (int) $this->getRequest()->getData('amount');
+        
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $oldOrderDetail = $this->OrderDetail->find('all', [
+            'conditions' => [
+                'OrderDetails.id_order_detail' => $orderDetailId
+            ],
+            'contain' => [
+                'Customers',
+                'Products.Manufacturers',
+                'OrderDetailTaxes',
+                'OrderDetailUnits'
+            ]
+        ])->first();
+        
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $newCustomer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $customerId
+            ]
+        ])->first();
+        
+        $errors = [];
+        if (empty($newCustomer)) {
+            $errors[] = __d('admin', 'Please_select_a_member.');
+        } else {
+            if ($newCustomer->id_customer == $oldOrderDetail->id_customer) {
+                $errors[] = __d('admin', 'The_same_member_must_not_be_selected.');
+            }
+        }
+        
+        if ($amount > $oldOrderDetail->product_amount || $amount < 1) {
+            $errors[] = __d('admin', 'The_amount_of_units_is_not_valid.');
+        }
+        
+        if ($editCustomerReason == '') {
+            $errors[] = __d('admin', 'The_reason_for_changing_the_member_is_mandatory.');
+        }
+        
+        if (!empty($errors)) {
+            die(json_encode([
+                'status' => 0,
+                'msg' => join('<br />', $errors)
+            ]));
+        }
+        
+        $originalProductAmount = $oldOrderDetail->product_amount;
+        $newAmountForOldOrderDetail = $oldOrderDetail->product_amount - $amount;
+        
+        if ($newAmountForOldOrderDetail > 0) {
+            
+            // order detail needs to be split up
+            
+            // 1) modify old order detail
+            $pricePerUnit = $oldOrderDetail->total_price_tax_incl / $oldOrderDetail->product_amount;
+            $productPrice = $pricePerUnit * $newAmountForOldOrderDetail;
+            
+            $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
+            $this->changeOrderDetailPriceDepositTax($object, $productPrice, $newAmountForOldOrderDetail);
+            
+            if (!empty($object->order_detail_unit)) {
+                $productQuantity = $oldOrderDetail->order_detail_unit->product_quantity_in_units / $originalProductAmount * $newAmountForOldOrderDetail;
+                $this->changeOrderDetailQuantity($object->order_detail_unit, $productQuantity);
+            }
+            
+            // 2) copy old order detail and modify it
+            $newEntity = $oldOrderDetail;
+            $newEntity->isNew(true);
+            $newEntity->id_order_detail = null;
+            $newEntity->id_customer = $customerId;
+            $savedEntity = $this->OrderDetail->save($newEntity, [
+                'associated' => false
+            ]);
+            $newEntity->order_detail_tax->id_order_detail = $savedEntity->id_order_detail;
+            $newEntity->order_detail_tax->isNew(true);
+            $newOrderDetailTaxEntity = $this->OrderDetail->OrderDetailTaxes->save($newEntity->order_detail_tax);
+            $savedEntity->order_detail_tax = $newOrderDetailTaxEntity;
+            
+            $productPrice = $pricePerUnit * $amount;
+            $this->changeOrderDetailPriceDepositTax($savedEntity, $productPrice, $amount);
+            
+            if (!empty($newEntity->order_detail_unit)) {
+                $newEntity->order_detail_unit->id_order_detail = $savedEntity->id_order_detail;
+                $newEntity->order_detail_unit->isNew(true);
+                $newOrderDetailUnitEntity = $this->OrderDetail->OrderDetailUnits->save($newEntity->order_detail_unit);
+                $savedEntity->order_detail_unit = $newOrderDetailUnitEntity;
+                $productQuantity = $savedEntity->order_detail_unit->product_quantity_in_units / $originalProductAmount * $amount;
+                $this->changeOrderDetailQuantity($savedEntity->order_detail_unit, $productQuantity);
+            }
+            
+        } else {
+            
+            // order detail does not need to be split up
+            
+            $this->OrderDetail->save(
+                $this->OrderDetail->patchEntity(
+                    $oldOrderDetail,
+                    [
+                        'id_customer' => $customerId
+                    ]
+                )
+            );
+            
+        }
+        
+        $message = __d('admin', 'The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}.', [
+            '<b>' . $oldOrderDetail->product_name . '</b>',
+            Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($oldOrderDetail->customer),
+            '<b>' . $newCustomer->name . '</b>'
+        ]);
+        
+        $amountString = '';
+        if ($originalProductAmount != $amount) {
+            $amountString = ' ' . __d('admin', 'Amount') . ': <b>' . $amount . '</b>';
+            $message .= $amountString;
+        }
+        
+        $message .= ' '.__d('admin', 'Reason').': <b>"' . $editCustomerReason . '"</b>';
+        
+        $recipients = [
+            [
+                'email' => $newCustomer->email,
+                'customer' => $newCustomer
+            ],
+            [
+                'email' => $oldOrderDetail->customer->email,
+                'customer' => $oldOrderDetail->customer
+            ]
+        ];
+        // send email to customers
+        foreach($recipients as $recipient) {
+            $email = new AppEmail();
+            $email->viewBuilder()->setTemplate('Admin.order_detail_customer_changed');
+            $email->setTo($recipient['email'])
+            ->setSubject(__d('admin', 'Assigned_to_another_member') . ': ' . $oldOrderDetail->product_name)
+            ->setViewVars([
+                'oldOrderDetail' => $oldOrderDetail,
+                'customer' => $recipient['customer'],
+                'newCustomer' => $newCustomer,
+                'editCustomerReason' => $editCustomerReason,
+                'amountString' => $amountString,
+                'appAuth' => $this->AppAuth
+            ]);
+            $email->send();
+        }
+        
+        $message .= ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_{1}.', [
+            '<b>' . $oldOrderDetail->customer->name . '</b>',
+            '<b>' . $newCustomer->name . '</b>'
+        ]);
+        
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog->customSave('order_detail_customer_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
+        $this->Flash->success($message);
+        
+        die(json_encode([
+            'status' => 1,
+            'msg' => 'ok'
+        ]));
+        
+    }
+    
     public function editProductQuantity()
     {
         $this->RequestHandler->renderAs($this, 'ajax');
@@ -525,7 +698,7 @@ class OrderDetailsController extends AdminAppController
 
         if (!$doNotChangePrice) {
             $newProductPrice = round($oldOrderDetail->order_detail_unit->price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
-            $newOrderDetail = $this->changeOrderDetailPrice($object, $newProductPrice, $object->product_amount);
+            $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $newProductPrice, $object->product_amount);
             $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $newProductPrice, $object->product_amount);
         }
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
@@ -617,7 +790,7 @@ class OrderDetailsController extends AdminAppController
         $productPrice = $oldOrderDetail->total_price_tax_incl / $oldOrderDetail->product_amount * $productAmount;
 
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
-        $newOrderDetail = $this->changeOrderDetailPrice($object, $productPrice, $productAmount);
+        $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $productPrice, $productAmount);
         $newAmount = $this->increaseQuantityForProduct($newOrderDetail, $oldOrderDetail->product_amount);
 
         if (!empty($object->order_detail_unit)) {
@@ -717,7 +890,7 @@ class OrderDetailsController extends AdminAppController
         ])->first();
 
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
-        $newOrderDetail = $this->changeOrderDetailPrice($object, $productPrice, $object->product_amount);
+        $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $productPrice, $object->product_amount);
 
         $message = __d('admin', 'The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}.', [
             '<b>' . $oldOrderDetail->product_name . '</b>',
@@ -1074,7 +1247,7 @@ class OrderDetailsController extends AdminAppController
         $this->OrderDetail->OrderDetailUnits->save($patchedEntity);
     }
 
-    private function changeOrderDetailPrice($oldOrderDetail, $productPrice, $productAmount)
+    private function changeOrderDetailPriceDepositTax($oldOrderDetail, $productPrice, $productAmount)
     {
 
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
@@ -1108,7 +1281,6 @@ class OrderDetailsController extends AdminAppController
             );
         }
 
-        // update sum in orders
         $newOrderDetail = $this->OrderDetail->find('all', [
             'conditions' => [
                 'OrderDetails.id_order_detail' => $oldOrderDetail->id_order_detail
