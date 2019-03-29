@@ -9,7 +9,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 * [mrothauer](https://github.com/mrothauer)
 
 ### Neue Funktionen
-- Bestellte Produkte können jetzt auf ein anderes Mitglied übertragen werden. [PR#341](https://github.com/foodcoopshop/foodcoopshop/pull/341) / [I#298](https://github.com/foodcoopshop/foodcoopshop/issues/298) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
+- Bestellte Produkte können jetzt auf ein anderes Mitglied umgebucht werden. [PR#341](https://github.com/foodcoopshop/foodcoopshop/pull/341) / [I#298](https://github.com/foodcoopshop/foodcoopshop/issues/298) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
 
 ## v2.4.1 / 2018-03-27 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.4.0...v2.4.1)
 
