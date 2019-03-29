@@ -15,7 +15,11 @@
 
 if ($groupBy == '') {
     echo '<td>';
-    if ($editRecordAllowed && !$appAuth->isManufacturer() && $this->Html->getNameRespectingIsDeleted($orderDetail->customer) != $this->Html->getDeletedCustomerName()) {
+    if (
+        $editRecordAllowed
+        && !$appAuth->isManufacturer()
+        && $this->Html->getNameRespectingIsDeleted($orderDetail->customer) != $this->Html->getDeletedCustomerName()
+        && empty($orderDetail->timebased_currency_order_detail)) {
             echo $this->Html->link(
                 '<i class="fas fa-pencil-alt ok"></i>',
                 'javascript:void(0);',
