@@ -30,6 +30,7 @@ use Cake\Core\Configure;
                 	    Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($oldOrderDetail->customer),
                 	    '<b>' . $newCustomer->name . '</b>'
                 	]);
+            	    echo $amountString;
             	?>
             </p>
 

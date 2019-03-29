@@ -544,6 +544,7 @@ class OrderDetailsController extends AdminAppController
             ]));
         }
         
+        $originalProductAmount = $oldOrderDetail->product_amount;
         $newAmountForOldOrderDetail = $oldOrderDetail->product_amount - $amount;
         
         if ($newAmountForOldOrderDetail > 0) {
@@ -551,7 +552,6 @@ class OrderDetailsController extends AdminAppController
             // order detail needs to be split up
             
             // 1) modify old order detail
-            $originalProductAmount = $oldOrderDetail->product_amount;
             $pricePerUnit = $oldOrderDetail->total_price_tax_incl / $oldOrderDetail->product_amount;
             $productPrice = $pricePerUnit * $newAmountForOldOrderDetail;
             
@@ -609,6 +609,12 @@ class OrderDetailsController extends AdminAppController
             '<b>' . $newCustomer->name . '</b>'
         ]);
         
+        $amountString = '';
+        if ($originalProductAmount != $amount) {
+            $amountString = ' ' . __d('admin', 'Amount') . ': <b>' . $amount . '</b>';
+            $message .= $amountString;
+        }
+        
         $message .= ' '.__d('admin', 'Reason').': <b>"' . $editCustomerReason . '"</b>';
         
         $recipients = [
@@ -632,6 +638,7 @@ class OrderDetailsController extends AdminAppController
                 'customer' => $recipient['customer'],
                 'newCustomer' => $newCustomer,
                 'editCustomerReason' => $editCustomerReason,
+                'amountString' => $amountString,
                 'appAuth' => $this->AppAuth
             ]);
             $email->send();
