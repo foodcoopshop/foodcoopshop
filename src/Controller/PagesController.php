@@ -126,7 +126,7 @@ class PagesController extends FrontendController
 
         $conditionsForChildren = ['Pages.active' => APP_ON];
         if (!$this->AppAuth->user()) {
-            $conditionsForChildren = ['Pages.is_private' => APP_OFF];
+            $conditionsForChildren['Pages.is_private'] = APP_OFF;
         }
         $page['children'] = $this->Page->find('children', [
             'for' => $pageId,
