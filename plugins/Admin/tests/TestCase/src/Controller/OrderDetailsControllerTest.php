@@ -234,23 +234,38 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         }
     }
     
-    public function testEditOrderDetailCustomerAsSuperadminPartedIn2And3Products()
+    public function testEditOrderDetailCustomerAsSuperadminPartedIn2And5Products()
     {
         $this->loginAsSuperadmin();
         $productId = '346'; // artischocke
-        $amount = 5;
+        $amount = 7;
         $this->editCustomerAmount = 2;
         $this->addProductToCart($productId, $amount);
         $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
         $cart = $this->getCartById($cartId);
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
+        
         $this->editOrderDetailCustomer($orderDetailId, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount);
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId, 5]);
+        
         $this->assertEquals(Configure::read('test.superadminId'), $changedOrderDetails[0]->id_customer);
         $this->assertEquals($this->newCustomerId, $changedOrderDetails[1]->id_customer);
-        $this->assertEquals($amount - $this->editCustomerAmount, $changedOrderDetails[0]->product_amount);
-        $this->assertEquals($this->editCustomerAmount, $changedOrderDetails[1]->product_amount);
+
+        $this->assertEquals($changedOrderDetails[0]->id_tax, $changedOrderDetails[1]->id_tax);
+        
+        $this->assertEquals(5, $changedOrderDetails[0]->product_amount);
+        $this->assertEquals(2, $changedOrderDetails[1]->product_amount);
+        
+        $this->assertEquals(9.1, $changedOrderDetails[0]->total_price_tax_incl);
+        $this->assertEquals(3.64, $changedOrderDetails[1]->total_price_tax_incl);
+        
+        $this->assertEquals(8.25, $changedOrderDetails[0]->total_price_tax_excl);
+        $this->assertEquals(3.30, $changedOrderDetails[1]->total_price_tax_excl);
+        
+        $this->assertEquals(0.85, $changedOrderDetails[0]->order_detail_tax->total_amount);
+        $this->assertEquals(0.34, $changedOrderDetails[1]->order_detail_tax->total_amount);
+    
     }
     
     public function testEditOrderDetailPriceAsManufacturer()

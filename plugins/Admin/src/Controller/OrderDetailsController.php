@@ -507,7 +507,9 @@ class OrderDetailsController extends AdminAppController
             ],
             'contain' => [
                 'Customers',
-                'Products.Manufacturers'
+                'Products.Manufacturers',
+                'OrderDetailTaxes',
+                'OrderDetailUnits'
             ]
         ])->first();
         
@@ -545,41 +547,41 @@ class OrderDetailsController extends AdminAppController
         $newAmountForOldOrderDetail = $oldOrderDetail->product_amount - $amount;
         
         if ($newAmountForOldOrderDetail > 0) {
+            
             // order detail needs to be split up
-            $this->OrderDetail->save(
-                $this->OrderDetail->patchEntity(
-                    $oldOrderDetail,
-                    [
-                        'product_amount' => $newAmountForOldOrderDetail
-                        // TODO berechnen
-//                         total_price_tax_incl, total_price_tax_excl, deposit
-                    ]
-                )
-            );
-            //TODO order_detail_tax, order_detail_units
             
-            $this->OrderDetail->save(
-                $this->OrderDetail->newEntity(
-                    [
-                        'id_customer' => $customerId,
-                        'product_amount' => $amount,
-                        'product_name' => $oldOrderDetail->product_name,
-                        'product_id' => $oldOrderDetail->product_id,
-                        'product_attribute_id' => $oldOrderDetail->product_attribute_id,
-                        'order_state' => $oldOrderDetail->order_state,
-                        'pickup_day' => $oldOrderDetail->pickup_day,
-                        'total_price_tax_incl' => $oldOrderDetail->total_price_tax_incl, // TODO berechnen
-                        'total_price_tax_excl' => $oldOrderDetail->total_price_tax_excl, // TODO berechnen
-                        'deposit' => $oldOrderDetail->deposit, // TODO berechnen
-                        'id_tax' => $oldOrderDetail->id_tax,
-                    ]
-                )
-            );
+            $pricePerUnit = $oldOrderDetail->total_price_tax_incl / $oldOrderDetail->product_amount;
+            $productPrice = $pricePerUnit * $newAmountForOldOrderDetail;
             
-            //TODO order_detail_tax, order_detail_units
+            $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
+            $this->changeOrderDetailPriceDepositTax($object, $productPrice, $newAmountForOldOrderDetail);
+            
+//             if (!empty($object->order_detail_unit)) {
+//                 $productQuantity = $oldOrderDetail->order_detail_unit->product_quantity_in_units / $oldOrderDetail->product_amount * $newAmountForOldOrderDetail;
+//                 $this->changeOrderDetailQuantity($object->order_detail_unit, $productQuantity);
+//             }
+            
+            $newEntity = $oldOrderDetail;
+            $newEntity->isNew(true);
+            $newEntity->id_order_detail = null;
+            $newEntity->id_customer = $customerId;
+            $savedEntity = $this->OrderDetail->save($newEntity, [
+                'associated' => false
+            ]);
+            $newEntity->order_detail_tax->id_order_detail = $savedEntity->id_order_detail;
+            $newEntity->order_detail_tax->isNew(true);
+            $newOrderDetailTaxEntity = $this->OrderDetail->OrderDetailTaxes->save($newEntity->order_detail_tax);
+            $savedEntity->order_detail_tax = $newOrderDetailTaxEntity;
+            
+            $productPrice = $pricePerUnit * $amount;
+            $this->changeOrderDetailPriceDepositTax($savedEntity, $productPrice, $amount);
+            
+            //TODO order_detail_units
             
         } else {
-          // order detail does not need to be split up
+            
+            // order detail does not need to be split up
+            
             $this->OrderDetail->save(
                 $this->OrderDetail->patchEntity(
                     $oldOrderDetail,
@@ -679,7 +681,7 @@ class OrderDetailsController extends AdminAppController
 
         if (!$doNotChangePrice) {
             $newProductPrice = round($oldOrderDetail->order_detail_unit->price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
-            $newOrderDetail = $this->changeOrderDetailPrice($object, $newProductPrice, $object->product_amount);
+            $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $newProductPrice, $object->product_amount);
             $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $newProductPrice, $object->product_amount);
         }
         $this->changeOrderDetailQuantity($objectOrderDetailUnit, $productQuantity);
@@ -771,7 +773,7 @@ class OrderDetailsController extends AdminAppController
         $productPrice = $oldOrderDetail->total_price_tax_incl / $oldOrderDetail->product_amount * $productAmount;
 
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
-        $newOrderDetail = $this->changeOrderDetailPrice($object, $productPrice, $productAmount);
+        $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $productPrice, $productAmount);
         $newAmount = $this->increaseQuantityForProduct($newOrderDetail, $oldOrderDetail->product_amount);
 
         if (!empty($object->order_detail_unit)) {
@@ -871,7 +873,7 @@ class OrderDetailsController extends AdminAppController
         ])->first();
 
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
-        $newOrderDetail = $this->changeOrderDetailPrice($object, $productPrice, $object->product_amount);
+        $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $productPrice, $object->product_amount);
 
         $message = __d('admin', 'The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}.', [
             '<b>' . $oldOrderDetail->product_name . '</b>',
@@ -1228,7 +1230,7 @@ class OrderDetailsController extends AdminAppController
         $this->OrderDetail->OrderDetailUnits->save($patchedEntity);
     }
 
-    private function changeOrderDetailPrice($oldOrderDetail, $productPrice, $productAmount)
+    private function changeOrderDetailPriceDepositTax($oldOrderDetail, $productPrice, $productAmount)
     {
 
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
@@ -1262,7 +1264,6 @@ class OrderDetailsController extends AdminAppController
             );
         }
 
-        // update sum in orders
         $newOrderDetail = $this->OrderDetail->find('all', [
             'conditions' => [
                 'OrderDetails.id_order_detail' => $oldOrderDetail->id_order_detail
