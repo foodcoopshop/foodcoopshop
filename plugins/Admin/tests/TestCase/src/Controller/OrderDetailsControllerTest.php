@@ -234,7 +234,41 @@ class OrderDetailsControllerTest extends AppCakeTestCase
         }
     }
     
-    public function testEditOrderDetailCustomerAsSuperadminPartedIn2And5Products()
+    public function testEditOrderDetailCustomerAsSuperadminPartedIn2And5WithUnits()
+    {
+        $this->loginAsSuperadmin();
+        $productId = '347'; // forelle
+        $amount = 7;
+        $this->editCustomerAmount = 2;
+        $this->addProductToCart($productId, $amount);
+        $this->finishCart();
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
+        $cart = $this->getCartById($cartId);
+        $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
+        
+        $this->editOrderDetailCustomer($orderDetailId, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount);
+        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId, 5]);
+        
+        $this->assertEquals(Configure::read('test.superadminId'), $changedOrderDetails[0]->id_customer);
+        $this->assertEquals($this->newCustomerId, $changedOrderDetails[1]->id_customer);
+        
+        $this->assertEquals($changedOrderDetails[0]->id_tax, $changedOrderDetails[1]->id_tax);
+        
+        $this->assertEquals(5, $changedOrderDetails[0]->product_amount);
+        $this->assertEquals(2, $changedOrderDetails[1]->product_amount);
+        
+        $this->assertEquals(26.25, $changedOrderDetails[0]->total_price_tax_incl);
+        $this->assertEquals(10.5, $changedOrderDetails[1]->total_price_tax_incl);
+        
+        $this->assertEquals(23.85, $changedOrderDetails[0]->total_price_tax_excl);
+        $this->assertEquals(9.54, $changedOrderDetails[1]->total_price_tax_excl);
+
+        $this->assertEquals(1750, $changedOrderDetails[0]->order_detail_unit->product_quantity_in_units);
+        $this->assertEquals(500, $changedOrderDetails[1]->order_detail_unit->product_quantity_in_units);
+        
+    }
+    
+    public function testEditOrderDetailCustomerAsSuperadminPartedIn2And5()
     {
         $this->loginAsSuperadmin();
         $productId = '346'; // artischocke

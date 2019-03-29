@@ -550,17 +550,20 @@ class OrderDetailsController extends AdminAppController
             
             // order detail needs to be split up
             
+            // 1) modify old order detail
+            $originalProductAmount = $oldOrderDetail->product_amount;
             $pricePerUnit = $oldOrderDetail->total_price_tax_incl / $oldOrderDetail->product_amount;
             $productPrice = $pricePerUnit * $newAmountForOldOrderDetail;
             
             $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
             $this->changeOrderDetailPriceDepositTax($object, $productPrice, $newAmountForOldOrderDetail);
             
-//             if (!empty($object->order_detail_unit)) {
-//                 $productQuantity = $oldOrderDetail->order_detail_unit->product_quantity_in_units / $oldOrderDetail->product_amount * $newAmountForOldOrderDetail;
-//                 $this->changeOrderDetailQuantity($object->order_detail_unit, $productQuantity);
-//             }
+            if (!empty($object->order_detail_unit)) {
+                $productQuantity = $oldOrderDetail->order_detail_unit->product_quantity_in_units / $originalProductAmount * $newAmountForOldOrderDetail;
+                $this->changeOrderDetailQuantity($object->order_detail_unit, $productQuantity);
+            }
             
+            // 2) copy old order detail and modify it
             $newEntity = $oldOrderDetail;
             $newEntity->isNew(true);
             $newEntity->id_order_detail = null;
@@ -576,7 +579,14 @@ class OrderDetailsController extends AdminAppController
             $productPrice = $pricePerUnit * $amount;
             $this->changeOrderDetailPriceDepositTax($savedEntity, $productPrice, $amount);
             
-            //TODO order_detail_units
+            if (!empty($newEntity->order_detail_unit)) {
+                $newEntity->order_detail_unit->id_order_detail = $savedEntity->id_order_detail;
+                $newEntity->order_detail_unit->isNew(true);
+                $newOrderDetailUnitEntity = $this->OrderDetail->OrderDetailUnits->save($newEntity->order_detail_unit);
+                $savedEntity->order_detail_unit = $newOrderDetailUnitEntity;
+                $productQuantity = $savedEntity->order_detail_unit->product_quantity_in_units / $originalProductAmount * $amount;
+                $this->changeOrderDetailQuantity($savedEntity->order_detail_unit, $productQuantity);
+            }
             
         } else {
             
