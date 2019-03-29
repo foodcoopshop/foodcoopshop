@@ -17,7 +17,8 @@ body {
     color: #333333;
     font-size: 10pt;
     background: #efefef;
-    background: url(/admin/img/bg.jpg);
+    background-image: url(/admin/img/bg.jpg);
+    background-attachment: fixed;
 }
 
 #container {
