@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-03-28 15:05+0100\n"
+"POT-Creation-Date: 2019-03-29 11:54+0100\n"
 "PO-Revision-Date: 2019-03-28 15:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -260,6 +260,9 @@ msgstr "Der Grund für die Änderung des Mitglieds ist ein Pflichtfeld."
 
 msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
 msgstr "Das bestellte Produkt {0} wurde erfolgreich von {1} auf das Mitglied {2} umgebucht."
+
+msgid "Amount"
+msgstr "Anzahl"
 
 msgid "Reason"
 msgstr "Grund"
@@ -1100,9 +1103,6 @@ msgstr "Nein"
 
 msgid "Click_to_change_weight"
 msgstr "Zum Ändern des Gewichtes anklicken"
-
-msgid "Amount"
-msgstr "Anzahl"
 
 msgid "Product"
 msgstr "Produkt"

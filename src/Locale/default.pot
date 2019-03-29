@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-03-28 15:15+0100\n"
+"POT-Creation-Date: 2019-03-29 11:54+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -710,7 +710,7 @@ msgstr ""
 msgid "Please_select_new_member."
 msgstr ""
 
-msgid "How_many_units_should_be_changed_to_member?"
+msgid "Amount_that_should_be_changed_to_member?"
 msgstr ""
 
 msgid "Please_select..."
