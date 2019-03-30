@@ -530,7 +530,7 @@ class OrderDetailsController extends AdminAppController
         }
         
         if ($amount > $oldOrderDetail->product_amount || $amount < 1) {
-            $errors[] = __d('admin', 'The_amount_of_units_is_not_valid.');
+            $errors[] = __d('admin', 'The_amount_is_not_valid.');
         }
         
         if ($editCustomerReason == '') {
