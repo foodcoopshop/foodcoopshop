@@ -2520,35 +2520,33 @@ foodcoopshop.Admin = {
         manufacturerId = manufacturerId || 0;
         var productDropdown = $('select#productid').closest('.bootstrap-select').find('.dropdown-toggle');
 
-        // one removes itself after one execution
-        productDropdown.one('click', function () {
-
-            $(this).parent().find('div.filter-option-inner-inner').append('<i class="fas fa-circle-notch fa-spin"></i>');
-
-            foodcoopshop.Helper
-                .ajaxCall('/admin/products/ajaxGetProductsForDropdown/' +
-                    selectedProductId + '/' + manufacturerId, {}, {
-                    onOk: function (data) {
-                        var select = $('select#productid');
-                        select.append(data.products);
-                        select.attr('disabled', false);
-                        select.selectpicker('refresh');
-                        select.find('i.fa-circle-notch').remove();
-                    },
-                    onError: function (data) {
-                        console.log(data.msg);
-                    }
-                });
-
-        });
-
         if (selectedProductId > 0) {
-            // one click for opening and loading the products
-            productDropdown.trigger('click');
-            // and another click for closing the dropdown
-            productDropdown.trigger('click');
+            this.populateDropdownWithProducts(productDropdown, selectedProductId, manufacturerId);
         }
 
+        productDropdown.on('click', function () {
+            if ($('select#productid optgroup').length == 0) {
+                foodcoopshop.Admin.populateDropdownWithProducts($(this), selectedProductId, manufacturerId);
+            }
+        });
+
+    },
+    
+    populateDropdownWithProducts : function(productDropdown, selectedProductId, manufacturerId) {
+        productDropdown.parent().find('div.filter-option-inner-inner').append('<i class="fas fa-circle-notch fa-spin"></i>');
+        foodcoopshop.Helper.ajaxCall('/admin/products/ajaxGetProductsForDropdown/' +
+            selectedProductId + '/' + manufacturerId, {}, {
+            onOk: function (data) {
+                var select = $('select#productid');
+                select.append(data.products);
+                select.attr('disabled', false);
+                select.selectpicker('refresh');
+                select.find('i.fa-circle-notch').remove();
+            },
+            onError: function (data) {
+                console.log(data.msg);
+            }
+        });
     }
 
 };
