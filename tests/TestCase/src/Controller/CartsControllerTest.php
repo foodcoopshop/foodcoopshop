@@ -581,6 +581,12 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testInstantOrder()
     {
+        
+        // add a product to the "normal" cart (CART_TYPE_WEEKLY_RHYTHM)
+        $this->loginAsCustomer();
+        $this->addProductToCart($this->productId1, 5);
+        $this->logout();
+        
         $this->loginAsSuperadmin();
         $testCustomer = $this->Customer->find('all', [
             'conditions' => [
@@ -597,6 +603,9 @@ class CartsControllerTest extends AppCakeTestCase
         $this->finishCart(1, 1);
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
         $cart = $this->getCartById($cartId);
+        
+        // product that was added as CART_TYPE_WEEKLY_RHYTHM must not be included in CART_TYPE_INSTANT_ORDER cart
+        $this->assertEquals(2, count($cart->cart_products));
         
         foreach($cart->cart_products as $cartProduct) {
             $orderDetail = $cartProduct->order_detail;

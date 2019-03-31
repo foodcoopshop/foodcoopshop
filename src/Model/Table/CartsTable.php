@@ -22,6 +22,9 @@ use Cake\Validation\Validator;
  */
 class CartsTable extends AppTable
 {
+    
+    public const CART_TYPE_WEEKLY_RHYTHM = 1;
+    public const CART_TYPE_INSTANT_ORDER = 2;
 
     public function initialize(array $config)
     {
@@ -96,16 +99,22 @@ class CartsTable extends AppTable
     public function getCart($customerId, $instantOrderMode=false)
     {
 		
+        $cartType = self::CART_TYPE_WEEKLY_RHYTHM;
+        if ($instantOrderMode) {
+            $cartType = self::CART_TYPE_INSTANT_ORDER;
+        }
         $cart = $this->find('all', [
             'conditions' => [
                 'Carts.status' => APP_ON,
-                'Carts.id_customer' => $customerId
+                'Carts.id_customer' => $customerId,
+                'Carts.cart_type' => $cartType
             ]
         ])->first();
 
         if (empty($cart)) {
             $cart2save = [
-                'id_customer' => $customerId
+                'id_customer' => $customerId,
+                'cart_type' => $cartType
             ];
             $cart = $this->save($this->newEntity($cart2save));
         }
