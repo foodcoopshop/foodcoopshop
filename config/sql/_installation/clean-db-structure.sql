@@ -98,6 +98,7 @@ DROP TABLE IF EXISTS `fcs_carts`;
 CREATE TABLE `fcs_carts` (
   `id_cart` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_customer` int(10) unsigned NOT NULL DEFAULT '0',
+  `cart_type` int(10) unsigned NOT NULL DEFAULT '1',
   `status` tinyint(4) NOT NULL DEFAULT '1',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
