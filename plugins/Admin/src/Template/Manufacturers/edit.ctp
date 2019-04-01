@@ -103,7 +103,7 @@ if ($appAuth->isManufacturer()) {
 
     echo '<div class="sc"></div>';
 
-    echo '<h2>Profil';
+    echo '<h2>' . __d('admin', 'Profile');
     if ($this->request->getRequestTarget() != $this->Slug->getManufacturerAdd()) {
         echo ' <span>' . $this->Html->link(__d('admin', 'To_manufacturer_profile'), $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name), [
         'target' => '_blank'

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-01 10:22+0200\n"
-"PO-Revision-Date: 2019-04-01 10:22+0200\n"
+"POT-Creation-Date: 2019-04-01 10:42+0200\n"
+"PO-Revision-Date: 2019-04-01 10:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -407,6 +407,9 @@ msgstr "Order possible until"
 
 msgid "Send_order_lists_day"
 msgstr "Send order lists day"
+
+msgid "Order_list_is_not_sent"
+msgstr "Order lists is not sent"
 
 msgid "Last_order_weekday"
 msgstr "Last order weekday"
@@ -1197,9 +1200,6 @@ msgstr "Notifications are never sent for this product if the stock is low."
 msgid "change_delivery_rhythm"
 msgstr "change delivery rhythm"
 
-msgid "Order_list_is_not_sent"
-msgstr "Order lists is not sent"
-
 msgid "delivery_rhythm_from"
 msgstr "beginning"
 
@@ -1472,6 +1472,9 @@ msgstr "Go to your settings"
 
 msgid "To_the_settings_of_manufacturer"
 msgstr "Go to manufacturer's settings page"
+
+msgid "Profile"
+msgstr "Profile"
 
 msgid "To_manufacturer_profile"
 msgstr "Go to the manufacturer profile page"
