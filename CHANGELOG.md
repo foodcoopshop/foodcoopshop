@@ -10,6 +10,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 * [Speis-Vorchdorf](https://github.com/Speis-Vorchdorf)
 
 ### Neue Funktionen
+- Mitglieder können ab sofort ein Profilbild hochladen, welches in der Mitglieder-Liste mittels Mouseover angezeigt wird. [PR#345](https://github.com/foodcoopshop/foodcoopshop/pull/345) / [I#337](https://github.com/foodcoopshop/foodcoopshop/issues/337) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
 - Bestellte Produkte können jetzt auf ein anderes Mitglied umgebucht werden. [PR#341](https://github.com/foodcoopshop/foodcoopshop/pull/341) / [I#298](https://github.com/foodcoopshop/foodcoopshop/issues/298) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
 - Für Sofort-Bestellungen wird jetzt ein eigener Warenkorb verwendet. Ab und zu waren bereits Produkte im Warenkorb und man musste diese vor der Sofort-Bestellung zuerst löschen. [PR#344](https://github.com/foodcoopshop/foodcoopshop/pull/344) / [I#160](https://github.com/foodcoopshop/foodcoopshop/issues/160) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> <a href="https://github.com/Speis-Vorchdorf"><img src="https://github.com/Speis-Vorchdorf.png" width="20"></a>
 
