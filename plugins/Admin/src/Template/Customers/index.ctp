@@ -24,8 +24,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" .
             Configure::read('app.jsNamespace') . ".Admin.initCustomerChangeActiveState();" .
             Configure::read('app.jsNamespace') . ".Admin.initCustomerGroupEditDialog('#customers-list');" .
-            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-details-read-button');" .
-            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-comment-edit-button');" .
+            Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-details-read-button, .customer-comment-edit-button');" .
             Configure::read('app.jsNamespace') . ".Admin.initCustomerCommentEditDialog('#customers-list');"
     ]);
     ?>
@@ -102,7 +101,20 @@ foreach ($customers as $customer) {
         ]) . '</span>';
 
         echo '<div class="customer-details-wrapper">';
-            echo '<i class="fas fa-phone-square ok fa-lg customer-details-read-button" title="'.h($this->Html->getCustomerAddress($customer)).'"></i>';
+            $imageSrc = $this->Html->getCustomerImageSrc($customer->id_customer, 'small');
+            $imageExists = ! preg_match('/de-default-small_default/', $imageSrc);
+            $fontawesomeClass = 'far';
+            if ($imageExists) {
+                $fontawesomeClass = 'fas';
+                $imageSrc = $this->Html->privateImage($imageSrc);
+                $customerDetails = '<div style="height:270px;">';
+                $customerDetails .= $this->Html->getCustomerAddress($customer);
+                $customerDetails .= '<img style="margin-top:10px;" class="no-max-width" height="200" src="'.$imageSrc.'" />';
+                $customerDetails .= '</div>';
+            } else {
+                $customerDetails = $this->Html->getCustomerAddress($customer);
+            }
+            echo '<i class="'.$fontawesomeClass.' fa-address-card ok fa-lg customer-details-read-button" title="'.h($customerDetails).'"></i>';
         echo '</div>';
     
     echo '</td>';
