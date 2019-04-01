@@ -83,7 +83,6 @@ class CustomersControllerTest extends AppCakeTestCase
         
         $this->httpClient->get($imageSrc);
         $this->assert404NotFoundHeader();
-        $this->tearDownProfileImageTests($profileImageTargetFilename);
     }
     
     public function testNewPasswordRequestWithWrongEmail()
