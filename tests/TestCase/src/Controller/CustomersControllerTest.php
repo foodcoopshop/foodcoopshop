@@ -27,6 +27,23 @@ class CustomersControllerTest extends AppCakeTestCase
         parent::setUp();
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
     }
+    
+    public function testProfileImagePrivacy()
+    {
+        $profileImageSrcFileAndPath = Configure::read('app.cakeServerName') . '/img/tests/test-image.jpg';
+        $profileImageTargetFilename = Configure::read('test.customerId') . '-small.jpg';
+        copy($profileImageSrcFileAndPath, Configure::read('app.customerImagesDir') . '/' . $profileImageTargetFilename);
+        $imageSrc = '/photos/profile-images/customers/' . $profileImageTargetFilename;
+        $this->httpClient->get($imageSrc);
+        $this->assert404NotFoundHeader();
+        $this->loginAsMeatManufacturer();
+        $this->httpClient->get($imageSrc);
+        $this->assert404NotFoundHeader();
+        $this->loginAsSuperadmin();
+        $this->httpClient->get($imageSrc);
+        $this->assert200OkHeader();
+        unlink(Configure::read('app.customerImagesDir') . '/' . $profileImageTargetFilename);
+    }
 
     public function testNewPasswordRequestWithWrongEmail()
     {
