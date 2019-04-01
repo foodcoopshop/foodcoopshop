@@ -2534,12 +2534,13 @@ foodcoopshop.Admin = {
     
     populateDropdownWithProducts : function(productDropdown, selectedProductId, manufacturerId) {
         productDropdown.parent().find('div.filter-option-inner-inner').append('<i class="fas fa-circle-notch fa-spin"></i>');
-        foodcoopshop.Helper.ajaxCall('/admin/products/ajaxGetProductsForDropdown/' +
-            selectedProductId + '/' + manufacturerId, {}, {
+        foodcoopshop.Helper.ajaxCall(
+            '/admin/products/ajaxGetProductsForDropdown/' + '/' + manufacturerId, {}, {
             onOk: function (data) {
                 var select = $('select#productid');
                 select.append(data.products);
                 select.attr('disabled', false);
+                select.selectpicker('val', selectedProductId);
                 select.selectpicker('refresh');
                 select.find('i.fa-circle-notch').remove();
             },
