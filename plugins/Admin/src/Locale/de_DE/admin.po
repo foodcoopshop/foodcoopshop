@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-01 12:42+0200\n"
-"PO-Revision-Date: 2019-04-01 12:43+0200\n"
+"POT-Creation-Date: 2019-04-01 13:40+0200\n"
+"PO-Revision-Date: 2019-04-01 13:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -851,6 +851,9 @@ msgstr "Profilbild"
 
 msgid "Click_on_profile_image_to_change_it."
 msgstr "Zum Ändern auf das Profilbild klicken."
+
+msgid "Only_visible_for_other_membes_in_the_member_list."
+msgstr "Ist nur für andere Mitglieder in der Mitglieder-Liste sichtbar."
 
 msgid "Upload_new_profile_image_or_change_it"
 msgstr "Neues Profilbild hochladen bzw. austauschen"
@@ -1955,6 +1958,9 @@ msgstr "Steuersätze sind später nicht änderbar."
 
 msgid "Delete"
 msgstr "Löschen"
+
+#~ msgid "Will_be_shown_in_member_list_only."
+#~ msgstr "Wird nur in der Mitglieder-Liste angezeigt."
 
 #~ msgid "Member_changed"
 #~ msgstr "Einem anderen Mitglied zugewiesen"

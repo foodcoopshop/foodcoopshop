@@ -64,9 +64,11 @@ $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
 $imageSrc = $this->Html->privateImage($imageSrc);
 echo '<div class="input">';
 echo '<label>'.__d('admin', 'Profile_image');
+echo '<br /><span class="small">';
 if ($imageExists) {
-    echo '<br /><span class="small">'.__d('admin', 'Click_on_profile_image_to_change_it.').'</span>';
+    echo __d('admin', 'Click_on_profile_image_to_change_it.').'<br /><br />';
 }
+echo __d('admin', 'Only_visible_for_other_membes_in_the_member_list.') . '</span>';
 echo '</label>';
 echo '<div style="float:right;">';
 echo $this->Html->link(

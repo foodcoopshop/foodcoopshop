@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-01 12:42+0200\n"
-"PO-Revision-Date: 2019-04-01 12:43+0200\n"
+"POT-Creation-Date: 2019-04-01 13:40+0200\n"
+"PO-Revision-Date: 2019-04-01 13:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -851,6 +851,9 @@ msgstr "Profile image"
 
 msgid "Click_on_profile_image_to_change_it."
 msgstr "Click on profile image to change it."
+
+msgid "Only_visible_for_other_membes_in_the_member_list."
+msgstr "Only visible for other members in the member list."
 
 msgid "Upload_new_profile_image_or_change_it"
 msgstr "Upload new profile image or change it"
@@ -1955,6 +1958,9 @@ msgstr "Tax rates can not be changed later."
 
 msgid "Delete"
 msgstr "Delete"
+
+#~ msgid "Will_be_shown_in_member_list_only."
+#~ msgstr "Will be shown in the member list only."
 
 #, fuzzy
 #~ msgid "Member_changed"

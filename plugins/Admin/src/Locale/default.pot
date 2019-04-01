@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-01 12:42+0200\n"
+"POT-Creation-Date: 2019-04-01 13:40+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -849,6 +849,9 @@ msgid "Profile_image"
 msgstr ""
 
 msgid "Click_on_profile_image_to_change_it."
+msgstr ""
+
+msgid "Only_visible_for_other_membes_in_the_member_list."
 msgstr ""
 
 msgid "Upload_new_profile_image_or_change_it"
