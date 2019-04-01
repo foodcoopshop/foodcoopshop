@@ -438,6 +438,8 @@ class ProductsController extends AdminAppController
             if ($deliveryRhythmType == 'individual') {
                 if ($product2update['delivery_rhythm_send_order_list_day'] != '') {
                     $additionalMessages[] = __d('admin', 'Send_order_lists_day') . ': <b>'. Configure::read('app.timeHelper')->formatToDateShort($deliveryRhythmSendOrderListDay) . '</b>';
+                } else {
+                    $additionalMessages[] = __d('admin', 'Order_list_is_not_sent');
                 }
             } else {
                 if ($product2update['delivery_rhythm_send_order_list_weekday'] != Configure::read('app.timeHelper')->getSendOrderListsWeekday()) {

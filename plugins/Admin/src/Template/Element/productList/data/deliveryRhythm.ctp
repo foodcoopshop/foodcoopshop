@@ -80,6 +80,8 @@ echo '<td class="delivery-rhythm">';
                             '<span class="send-order-list-day">' . 
                                 $this->Time->formatToDateShort($product->delivery_rhythm_send_order_list_day) .
                         '</span>';
+                    } else {
+                        $elementsToRender[] = __d('admin', 'Order_list_is_not_sent');
                     }
                     
                 }
