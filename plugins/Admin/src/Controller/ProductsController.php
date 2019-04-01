@@ -107,7 +107,7 @@ class ProductsController extends AdminAppController
         $this->Product = TableRegistry::getTableLocator()->get('Products');
     }
 
-    public function ajaxGetProductsForDropdown($selectedProductId, $manufacturerId = 0)
+    public function ajaxGetProductsForDropdown($manufacturerId = 0)
     {
         $this->RequestHandler->renderAs($this, 'ajax');
 
@@ -116,11 +116,7 @@ class ProductsController extends AdminAppController
         foreach ($products as $key => $ps) {
             $productsForDropdown[] = '<optgroup label="' . $key . '">';
             foreach ($ps as $pId => $p) {
-                $selected = '';
-                if ($selectedProductId == $pId) {
-                    $selected = ' selected';
-                }
-                $productsForDropdown[] = '<option' . $selected . ' value="' . $pId . '">' . $p . '</option>';
+                $productsForDropdown[] = '<option value="' . $pId . '">' . $p . '</option>';
             }
             $productsForDropdown[] = '</optgroup>';
         }
