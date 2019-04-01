@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-01 10:42+0200\n"
-"PO-Revision-Date: 2019-04-01 10:42+0200\n"
+"POT-Creation-Date: 2019-04-01 12:42+0200\n"
+"PO-Revision-Date: 2019-04-01 12:43+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -845,6 +845,18 @@ msgstr "Vorname"
 
 msgid "Lastname"
 msgstr "Nachname"
+
+msgid "Profile_image"
+msgstr "Profilbild"
+
+msgid "Click_on_profile_image_to_change_it."
+msgstr "Zum Ändern auf das Profilbild klicken."
+
+msgid "Upload_new_profile_image_or_change_it"
+msgstr "Neues Profilbild hochladen bzw. austauschen"
+
+msgid "Delete_profile_image?"
+msgstr "Profilbild löschen?"
 
 msgid "Email"
 msgstr "E-Mail"

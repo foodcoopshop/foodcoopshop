@@ -347,7 +347,15 @@ class CustomersController extends AdminAppController
                     ]
                 ]
             );
-
+            
+            if (!empty($this->getRequest()->getData('Customers.tmp_image'))) {
+                $this->saveUploadedImage($customer->id_customer, $this->getRequest()->getData('Customers.tmp_image'), Configure::read('app.htmlHelper')->getCustomerThumbsPath(), Configure::read('app.customerImageSizes'));
+            }
+            
+            if (!empty($this->getRequest()->getData('Customers.delete_image'))) {
+                $this->deleteUploadedImage($customer->id_customer, Configure::read('app.htmlHelper')->getCustomerThumbsPath(), Configure::read('app.customerImageSizes'));
+            }
+            
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             if ($isOwnProfile) {
                 $message = __d('admin', 'Your_profile_was_changed.');

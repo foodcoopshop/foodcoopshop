@@ -32,6 +32,11 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
     
+    public function privateImage($imageSrc)
+    {
+        return '/photos/' . $imageSrc;
+    }
+    
     public function isStockProductOrderPossibleInOrdersWithDeliveryRhythms($instantOrderMode, $includeStockProductsInOrdersWithDeliveryRhythm, $stockManagementEnabled, $isStockProduct)
     {
         return !$instantOrderMode && !$includeStockProductsInOrdersWithDeliveryRhythm && $stockManagementEnabled && $isStockProduct;
@@ -499,6 +504,11 @@ class MyHtmlHelper extends HtmlHelper
         return $this->getUploadImageDir() . DS . 'manufacturers';
     }
 
+    public function getCustomerThumbsPath()
+    {
+        return Configure::read('app.customerImagesDir');
+    }
+    
     public function getCategoryThumbsPath()
     {
         return $this->getUploadImageDir() . DS . 'categories';
@@ -583,6 +593,26 @@ class MyHtmlHelper extends HtmlHelper
         return $this->prepareAsUrl($imageFilenameAndPath);
     }
 
+    public function getCustomerImageSrc($customerId, $size)
+    {
+        $thumbsPath = $this->getCustomerThumbsPath();
+        $urlPrefix = 'profile-images/customers/';
+        
+        $imageFilename = $customerId . '-' . $size . '.jpg';
+        if (! file_exists($thumbsPath . DS . $imageFilename)) {
+            $imageFilenameAndPath = $urlPrefix . 'de-default-' . $size . '_default.jpg';
+        } else {
+            $imageFilenameAndPath = $urlPrefix . $imageFilename;
+        }
+       
+        $physicalFile = Configure::read('app.customerImagesDir') . DS . $imageFilename;
+        if (file_exists($physicalFile)) {
+            $imageFilenameAndPath .= '?' . filemtime($physicalFile);
+        }
+
+        return $imageFilenameAndPath;
+    }
+    
     public function getCategoryImageSrc($categoryId)
     {
         $thumbsPath = $this->getCategoryThumbsPath();

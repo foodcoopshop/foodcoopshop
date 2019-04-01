@@ -52,9 +52,10 @@ return [
     'app' => [
         'jsNamespace' => 'foodcoopshop',
         'filesDir' => DS . 'files',
-        'tmpWwwDir' => DS.'tmp',
+        'tmpWwwDir' => DS . 'tmp',
         'uploadedImagesDir' => DS . 'files' . DS . 'images',
         'uploadedFilesDir' => DS . 'files' . DS . 'files',
+        'customerImagesDir' => ROOT . DS . 'files_private'. DS . 'customers',
         'folder_invoices' => ROOT . DS . 'files_private'. DS . 'invoices',
         'folder_order_lists' => ROOT . DS. 'files_private' . DS .'order_lists',
         'folder_invoices' => ROOT . DS . 'files_private'. DS . 'invoices',
@@ -114,6 +115,11 @@ return [
         'blogPostImageSizes' => [
             '170' => ['suffix' => '-home-default'],     // detail / list page
             '800' => ['suffix' => '-single-default']    // lightbox
+        ],
+        'customerImageSizes' => [
+            '200' => ['suffix' => '-small'],  // list page
+            '800' => ['suffix' => '-large'],  // lightbox
+            '1200' => ['suffix' => '-xxl']    // lightbox
         ],
         'manufacturerImageSizes' => [
             '200' => ['suffix' => '-medium_default'],  // detail / list page

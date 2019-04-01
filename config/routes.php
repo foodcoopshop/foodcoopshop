@@ -87,6 +87,9 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/js/localized-javascript', ['controller' => 'Localized', 'action' => 'renderAsJsFile'])->setExtensions(['js']);
 
+    // first folder must not exist physically!
+    $routes->connect('/photos/profile-images/customers/:imageSrc', ['controller' => 'Customers', 'action' => 'profileImage'])->setExtensions(['jpg']);
+    
     $routes->redirect('/admin/orders', '/admin/order-details?groupBy=customer');
     $routes->connect('/admin', array('plugin' => 'Admin', 'controller' => 'Pages', 'action' => 'home'));
 
