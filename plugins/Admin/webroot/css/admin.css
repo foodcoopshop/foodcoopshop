@@ -852,7 +852,7 @@ body.customers a.uploaded {
 }
 body.manufacturers a.uploaded img,
 body.customers a.uploaded img {
-    width: 247px;
+    width: 237px;
     height: auto;
 }
 body.blog_posts a.uploaded img {
