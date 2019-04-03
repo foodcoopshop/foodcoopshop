@@ -17,7 +17,7 @@ if ($groupBy == '') {
     echo '<td>';
     if (
         $editRecordAllowed
-        && !$appAuth->isManufacturer()
+        && ($appAuth->isAdmin || $appAuth->isSuperadmin())
         && $this->Html->getNameRespectingIsDeleted($orderDetail->customer) != $this->Html->getDeletedCustomerName()
         && empty($orderDetail->timebased_currency_order_detail)) {
             echo $this->Html->link(
