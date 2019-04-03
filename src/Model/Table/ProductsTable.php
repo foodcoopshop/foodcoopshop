@@ -449,7 +449,8 @@ class ProductsTable extends AppTable
                 ], [
                     'id_product_attribute' => $ids['attributeId']
                 ]);
-                $success |= $result > 0;
+                // if results are not the returned row count would be 0, so always set to true; 
+                $success |= true;
             } else {
                 $product2update = [
                     'price' => $netPrice
