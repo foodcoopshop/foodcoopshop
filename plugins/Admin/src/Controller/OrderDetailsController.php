@@ -38,7 +38,7 @@ class OrderDetailsController extends AdminAppController
                 if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
                     return true;
                 }
-                if ($this->getRequest()->getParam('action') == 'editCustomer' || !($this->AppAuth->isAdmin() || $this->AppAuth->isSupersdmin())) {
+                if ($this->getRequest()->getParam('action') == 'editCustomer' && ($this->AppAuth->isManufacturer() || $this->AppAuth->isCustomer())) {
                     return false;
                 }
                 /*
