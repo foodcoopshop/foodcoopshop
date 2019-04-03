@@ -483,10 +483,12 @@ foodcoopshop.SyncProductData = {
                     }
 
                     // deposit
-                    var remoteDeposit = (localProduct.deposit > 0 ? foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.deposit)) : '');
-                    $(this).find('td.deposit').html(remoteDeposit);
-                    foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.deposit', product.deposit, localProduct.deposit, $(this), localProductRow);
-
+                    if (!hasAttributes) {
+                        var remoteDeposit = (localProduct.deposit > 0 ? foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.deposit)) : '');
+                        $(this).find('td.deposit').html(remoteDeposit);
+                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.deposit', product.deposit, localProduct.deposit, $(this), localProductRow);
+                    }
+                    
                     // delivery_rhythm
                     if (!isAttribute) {
                         var remoteProductDeliveryRhythmString = foodcoopshop.SyncProduct.getDeliveryRhythmString(
