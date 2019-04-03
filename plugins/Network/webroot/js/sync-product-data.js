@@ -483,28 +483,34 @@ foodcoopshop.SyncProductData = {
                     }
 
                     // deposit
-                    var remoteDeposit = (localProduct.deposit > 0 ? foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.deposit)) : '');
-                    $(this).find('td.deposit').html(remoteDeposit);
-                    foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.deposit', product.deposit, localProduct.deposit, $(this), localProductRow);
-
+                    if (!hasAttributes) {
+                        var remoteDeposit = (localProduct.deposit > 0 ? foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(product.deposit)) : '');
+                        $(this).find('td.deposit').html(remoteDeposit);
+                        foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.deposit', product.deposit, localProduct.deposit, $(this), localProductRow);
+                    }
+                    
                     // delivery_rhythm
                     if (!isAttribute) {
                         var remoteProductDeliveryRhythmString = foodcoopshop.SyncProduct.getDeliveryRhythmString(
-                                product.delivery_rhythm_string,
-                                product.is_stock_product,
-                                product.delivery_rhythm_type,
-                                product.delivery_rhythm_count,
-                                product.delivery_rhythm_first_delivery_day,
-                                product.delivery_rhythm_order_possible_until
-                            );
+                            product.delivery_rhythm_string,
+                            product.is_stock_product,
+                            product.delivery_rhythm_type,
+                            product.delivery_rhythm_count,
+                            product.delivery_rhythm_first_delivery_day,
+                            product.delivery_rhythm_order_possible_until,
+                            product.last_order_weekday,
+                            product.delivery_rhythm_send_order_list_day
+                        );
                         var localProductDeliveryRhythmString = foodcoopshop.SyncProduct.getDeliveryRhythmString(
-                                localProduct.delivery_rhythm_string,
-                                localProduct.is_stock_product,
-                                localProduct.delivery_rhythm_type,
-                                localProduct.delivery_rhythm_count,
-                                localProduct.delivery_rhythm_first_delivery_day,
-                                localProduct.delivery_rhythm_order_possible_until
-                            );
+                            localProduct.delivery_rhythm_string,
+                            localProduct.is_stock_product,
+                            localProduct.delivery_rhythm_type,
+                            localProduct.delivery_rhythm_count,
+                            localProduct.delivery_rhythm_first_delivery_day,
+                            localProduct.delivery_rhythm_order_possible_until,
+                            localProduct.last_order_weekday,
+                            localProduct.delivery_rhythm_send_order_list_day
+                        );
                         $(this).find('td.delivery_rhythm').html(remoteProductDeliveryRhythmString);
                         foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.delivery_rhythm', remoteProductDeliveryRhythmString, localProductDeliveryRhythmString, $(this), localProductRow);
                     }

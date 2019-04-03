@@ -622,7 +622,8 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             [102 => ['gross_price' => '5,22']]
         ];
-        $this->Product->changePrice($products);
+        $success = $this->Product->changePrice($products);
+        $this->assertTrue($success);
         $this->assertProductPrice($products);
     }
 
@@ -631,7 +632,8 @@ class ProductsTableTest extends AppCakeTestCase
         $products = [
             ['60-10' => ['gross_price' => '3,22']]
         ];
-        $this->Product->changePrice($products);
+        $success = $this->Product->changePrice($products);
+        $this->assertTrue($success);
         $this->assertProductPrice($products);
     }
 
@@ -642,7 +644,8 @@ class ProductsTableTest extends AppCakeTestCase
             [346 => ['gross_price' => '1,00']],
             ['60-10' => ['gross_price' => '2,98']]
         ];
-        $this->Product->changePrice($products);
+        $success = $this->Product->changePrice($products);
+        $this->assertTrue($success);
         $this->assertProductPrice($products);
     }
 
@@ -656,9 +659,10 @@ class ProductsTableTest extends AppCakeTestCase
             [102 => ['gross_price' => $samePrice]],
             [103 => ['gross_price' => $samePrice]]
         ];
-        $this->Product->changePrice($products);
+        $success = $this->Product->changePrice($products);
+        $this->assertTrue($success);
         $this->assertProductPrice($products);
-
+        
         // try to change prices, but include one invalid price
         $products = [
             [346 => ['gross_price' => '-1']], // invalid price

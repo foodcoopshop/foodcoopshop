@@ -444,11 +444,13 @@ class ProductsTable extends AppTable
 
             if ($ids['attributeId'] > 0) {
                 // update attribute - updateAll needed for multi conditions of update
-                $success = $this->ProductAttributes->updateAll([
+                $result = $this->ProductAttributes->updateAll([
                     'price' => $netPrice
                 ], [
                     'id_product_attribute' => $ids['attributeId']
                 ]);
+                // if results are not the returned row count would be 0, so always set to true; 
+                $success |= true;
             } else {
                 $product2update = [
                     'price' => $netPrice
@@ -476,6 +478,7 @@ class ProductsTable extends AppTable
             }
         }
 
+        $success = (boolean) $success;
         return $success;
     }
 
