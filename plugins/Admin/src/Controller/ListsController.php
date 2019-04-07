@@ -26,7 +26,7 @@ class ListsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
+        return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer();
     }
 
     public function orderLists()
@@ -68,6 +68,10 @@ class ListsController extends AdminAppController
                 $manufacturerString = substr($manufacturerString, 0, $positionOrderListsString);
                 $splittedManufacturerString = explode('_', $manufacturerString);
                 $manufacturerId = (int) end($splittedManufacturerString);
+                
+                if ($this->AppAuth->isManufacturer() && $manufacturerId != $this->AppAuth->getManufacturerId()) {
+                    continue;
+                }
 
                 if (!$manufacturerId) {
                     $message = 'error: ManufacturerId not found in ' . $object->getFileName();
