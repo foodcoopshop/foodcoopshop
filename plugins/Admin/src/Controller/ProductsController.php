@@ -301,13 +301,12 @@ class ProductsController extends AdminAppController
         foreach ($newProduct->product_attributes as $attribute) {
             if ($attribute->product_attribute_combination->id_attribute == $productAttributeId) {
                 $productAttributeIdForHighlighting = $attribute->product_attribute_combination->id_product_attribute;
-                $attribute = $attribute->product_attribute_combination->attribute->name;
             }
         }
         $this->getRequest()->getSession()->write('highlightedRowId', $productId . '-' . $productAttributeIdForHighlighting);
 
         $actionLogMessage = __d('admin', 'The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created.', [
-            '<b>' . $attribute . '</b>',
+            '<b>' . $attribute->product_attribute_combination->attribute->name . '</b>',
             '<b>' . $oldProduct->name . '</b>',
             '<b>' . $oldProduct->manufacturer->name . '</b>'
         ]);
