@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-01 13:40+0200\n"
-"PO-Revision-Date: 2019-04-01 13:40+0200\n"
+"POT-Creation-Date: 2019-04-07 23:32+0200\n"
+"PO-Revision-Date: 2019-04-07 23:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -596,9 +596,6 @@ msgstr "Show page"
 
 msgid "Show_category"
 msgstr "Show category"
-
-msgid "Show_ordered_product"
-msgstr "Show ordered products"
 
 msgid "records"
 msgstr "records"
@@ -1449,6 +1446,9 @@ msgstr "Your contact person"
 msgid "docs_route_pick_up_products"
 msgstr "pick-up-products"
 
+msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_you."
+msgstr "Here you find the unchanged order lists that were sent to you."
+
 msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_the_manufacturers."
 msgstr "Here you find the unchanged order lists that were sent to the manufacturers."
 
@@ -1958,6 +1958,9 @@ msgstr "Tax rates can not be changed later."
 
 msgid "Delete"
 msgstr "Delete"
+
+#~ msgid "Show_ordered_product"
+#~ msgstr "Show ordered products"
 
 #~ msgid "Will_be_shown_in_member_list_only."
 #~ msgstr "Will be shown in the member list only."
