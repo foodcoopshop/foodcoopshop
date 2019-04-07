@@ -560,7 +560,7 @@ class ProductsController extends AdminAppController
             }
 
             if (! empty($oldProduct->tax)) {
-                $oldTaxRate = Configure::read('app.numberHelper')->formatTaxRate($oldProduct->rate);
+                $oldTaxRate = Configure::read('app.numberHelper')->formatTaxRate($oldProduct->tax->rate);
             } else {
                 $oldTaxRate = 0; // 0 % does not have record in tax
             }
