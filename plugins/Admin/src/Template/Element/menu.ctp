@@ -32,7 +32,7 @@ $actionLogsMenuElement = [
         'fa-icon' => 'fa-fw fa-eye'
     ]
 ];
-$cancelledProductsMenuElement = [
+$changedOrderedProductsMenuElement = [
     'slug' => $this->Slug->getActionLogsList().'/index/?types[]=order_detail_cancelled&types[]=order_detail_product_price_changed&&types[]=order_detail_product_quantity_changed&&types[]=order_detail_product_amount_changed',
     'name' => __d('admin', 'Order_adaptions'),
     'options' => [
@@ -44,6 +44,13 @@ $paymentDepositCustomerAddedMenuElement = [
     'name' => __d('admin', 'Deposit_returns'),
     'options' => [
         'fa-icon' => 'fa-fw fa-'.strtolower(Configure::read('app.currencyName').'-sign')
+    ]
+];
+$orderListsMenuElement = [
+    'slug' => '/admin/lists/orderLists',
+    'name' => __d('admin', 'Order_lists'),
+    'options' => [
+        'fa-icon' => 'fa-fw fa-book'
     ]
 ];
 $orderDetailsGroupedByCustomerMenuElement = [
@@ -99,7 +106,7 @@ $menu[] = [
 if ($appAuth->isCustomer()) {
     $orderDetailsGroupedByCustomerMenuElement['children'] = [
         $paymentDepositCustomerAddedMenuElement,
-        $cancelledProductsMenuElement
+        $changedOrderedProductsMenuElement
     ];
     $menu[] = $orderDetailsGroupedByCustomerMenuElement;
     $menu[] = $customerProfileMenuElement;
@@ -119,14 +126,8 @@ if ($appAuth->isCustomer()) {
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     $orderDetailsGroupedByCustomerMenuElement['children'] = [
         $paymentDepositCustomerAddedMenuElement,
-        $cancelledProductsMenuElement,
-        [
-            'slug' => '/admin/lists/orderLists',
-            'name' => __d('admin', 'Order_lists'),
-            'options' => [
-                'fa-icon' => 'fa-fw fa-book'
-            ]
-        ]
+        $changedOrderedProductsMenuElement,
+        $orderListsMenuElement
     ];
     $menu[] = $orderDetailsGroupedByCustomerMenuElement;
     $manufacturerMenu = [
@@ -248,6 +249,8 @@ if ($appAuth->isManufacturer()) {
             'fa-icon' => 'fa-fw fa-shopping-cart'
         ]
     ];
+    $orderDetailsMenuElement['children'][] = $changedOrderedProductsMenuElement;
+    $orderDetailsMenuElement['children'][] = $orderListsMenuElement;
     $menu[] = $orderDetailsMenuElement;
     $menu[] = [
         'slug' => $this->Slug->getProductAdmin(),
@@ -256,7 +259,6 @@ if ($appAuth->isManufacturer()) {
             'fa-icon' => 'fa-fw fa-tags'
         ]
     ];
-    $menu[] = $cancelledProductsMenuElement;
     $profileMenu = [
         'slug' => $this->Slug->getManufacturerProfile(),
         'name' => __d('admin', 'My_profile'),
