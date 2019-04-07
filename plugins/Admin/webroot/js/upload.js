@@ -35,6 +35,17 @@ foodcoopshop.Upload = {
         foodcoopshop.AppFeatherlight.closeLightbox();
     },
 
+    saveCustomerTmpImageInForm : function () {
+        var filename = $('.featherlight-content form .drop img').attr('src');
+        $('body.customers input[name="Customers[tmp_image]"').val(filename);
+        var button = $('body.customers a.add-image-button');
+        button.removeClass('uploaded').addClass('uploaded');
+        button.html('');
+        var newImage = $('<img />').attr('src', filename);
+        button.append(newImage);
+        foodcoopshop.AppFeatherlight.closeLightbox();
+    },
+
     saveManufacturerTmpGeneralTermsAndConditionsInForm : function() {
         var filename = $('.featherlight-content form .drop a').attr('href');
         $('body.manufacturers input[name="Manufacturers[tmp_general_terms_and_conditions]"').val(filename);

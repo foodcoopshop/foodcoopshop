@@ -12,6 +12,7 @@ use Cake\Http\Cookie\Cookie;
 use Cake\I18n\Date;
 use Cake\ORM\TableRegistry;
 use DateTime;
+use Cake\Http\Exception\NotFoundException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -33,6 +34,33 @@ class CustomersController extends FrontendController
     {
         parent::beforeFilter($event);
         $this->AppAuth->allow('login', 'logout', 'new_password_request', 'registration_successful');
+    }
+    
+    public function profileImage()
+    {
+        if (!$this->AppAuth->user() || $this->AppAuth->isManufacturer() || empty($this->request->getParam('imageSrc'))) {
+            throw new NotFoundException('image not found');
+        }
+        
+        // customer exists check (if customer was deleted and somehow files were not deleted)
+        $customerId = explode('-', $this->request->getParam('imageSrc'));
+        $customerId = $customerId[0];
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $customerId
+            ],
+        ])->first();
+        if (empty($customer)) {
+            throw new NotFoundException('image not found');
+        }
+        
+        $this->RequestHandler->renderAs($this, 'jpg');
+        $imagePath = Configure::read('app.customerImagesDir') . DS . $this->request->getParam('imageSrc') . '.jpg';
+        if (!file_exists($imagePath)) {
+            throw new NotFoundException('image not found');
+        }
+        $this->set('imagePath', $imagePath);
     }
 
     /**

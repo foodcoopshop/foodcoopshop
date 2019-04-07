@@ -27,7 +27,64 @@ class CustomersControllerTest extends AppCakeTestCase
         parent::setUp();
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
     }
+    
+    private function setUpProfileImageTests()
+    {
+        $profileImageSrcFileAndPath = Configure::read('app.cakeServerName') . '/img/tests/test-image.jpg';
+        $profileImageTargetFilename = Configure::read('test.customerId') . '-small.jpg';
+        copy($profileImageSrcFileAndPath, Configure::read('app.customerImagesDir') . '/' . $profileImageTargetFilename);
+        return $profileImageTargetFilename;
+    }
+    
+    private function tearDownProfileImageTests($profileImageTargetFilename)
+    {
+        unlink(Configure::read('app.customerImagesDir') . '/' . $profileImageTargetFilename);
+        
+    }
+    
+    public function testProfileImagePrivacyForGuests()
+    {
+        $profileImageTargetFilename = $this->setUpProfileImageTests();
+        $imageSrc = '/photos/profile-images/customers/' . $profileImageTargetFilename;
+        $this->httpClient->get($imageSrc);
+        $this->assert404NotFoundHeader();
+        $this->tearDownProfileImageTests($profileImageTargetFilename);
+    }
+    
+    public function testProfileImagePrivacyForManufacturers()
+    {
+        $profileImageTargetFilename = $this->setUpProfileImageTests();
+        $imageSrc = '/photos/profile-images/customers/' . $profileImageTargetFilename;
+        $this->loginAsMeatManufacturer();
+        $this->httpClient->get($imageSrc);
+        $this->assert404NotFoundHeader();
+        $this->tearDownProfileImageTests($profileImageTargetFilename);
+    }
+    
+    public function testProfileImagePrivacyForSuperadmins()
+    {
+        $profileImageTargetFilename = $this->setUpProfileImageTests();
+        $imageSrc = '/photos/profile-images/customers/' . $profileImageTargetFilename;
+        $this->loginAsSuperadmin();
+        $this->httpClient->get($imageSrc);
+        $this->assert200OkHeader();
+        $this->tearDownProfileImageTests($profileImageTargetFilename);
+    }
+    
+    public function testProfileImagePrivacyForDeletedMember()
+    {
+        $profileImageTargetFilename = $this->setUpProfileImageTests();
+        $imageSrc = '/photos/profile-images/customers/' . $profileImageTargetFilename;
 
+        $this->loginAsSuperadmin();
+        $this->httpClient->ajaxPost('/admin/customers/delete/' . Configure::read('test.customerId'), [
+            'referer' => '/'
+        ]);
+        
+        $this->httpClient->get($imageSrc);
+        $this->assert404NotFoundHeader();
+    }
+    
     public function testNewPasswordRequestWithWrongEmail()
     {
         $this->doPostNewPasswordRequest('this-is-no-email-address');

@@ -57,7 +57,7 @@ class ProductsTableTest extends AppCakeTestCase
         // add image
         $productId = 346;
         $products = [
-            [$productId => Configure::read('app.cakeServerName') . '/img/tests/test-product-image.jpg']
+            [$productId => Configure::read('app.cakeServerName') . '/img/tests/test-image.jpg']
         ];
         $this->Product->changeImage($products);
         

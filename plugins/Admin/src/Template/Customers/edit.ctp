@@ -19,7 +19,8 @@ $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();" .
-        Configure::read('app.jsNamespace') . ".Admin.bindDeleteCustomerButton(".$customer->id_customer.");
+        Configure::read('app.jsNamespace') . ".Admin.bindDeleteCustomerButton(".$customer->id_customer.");".
+        Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.customers .add-image-button', foodcoopshop.Upload.saveCustomerTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);
     "
 ]);
 ?>
@@ -54,6 +55,42 @@ echo $this->Form->control('Customers.lastname', [
     'label' => __d('admin', 'Lastname'),
     'required' => true
 ]);
+
+$imageSrc = $this->Html->getCustomerImageSrc($customer->id_customer, 'large');
+if (!empty($customer->tmp_image) && $customer->tmp_image != '') {
+    $imageSrc = str_replace('\\', '/', $customer->tmp_image);
+}
+$imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
+$imageSrc = $this->Html->privateImage($imageSrc);
+echo '<div class="input">';
+echo '<label>'.__d('admin', 'Profile_image');
+echo '<br /><span class="small">';
+if ($imageExists) {
+    echo __d('admin', 'Click_on_profile_image_to_change_it.').'<br /><br />';
+}
+echo __d('admin', 'Only_visible_for_other_membes_in_the_member_list.') . '</span>';
+echo '</label>';
+echo '<div style="float:right;">';
+echo $this->Html->link(
+    $imageExists ? '<img src="' . $imageSrc . '" />' : '<i class="fas fa-plus-square"></i>',
+    'javascript:void(0);',
+    [
+        'class' => 'btn btn-outline-light add-image-button ' . ($imageExists ? 'uploaded' : ''),
+        'title' => __d('admin', 'Upload_new_profile_image_or_change_it'),
+        'data-object-id' => $customer->id_customer,
+        'escape' => false
+    ]
+    );
+echo '</div>';
+echo $this->Form->hidden('Customers.tmp_image');
+echo '</div>';
+
+echo $this->Form->control('Customers.delete_image', [
+    'label' => __d('admin', 'Delete_profile_image?'). '<span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+    'type' => 'checkbox',
+    'escape' => false
+]);
+
 echo $this->Form->control('Customers.address_customer.email', [
     'label' => __d('admin', 'Email')
 ]);
@@ -106,3 +143,11 @@ if ($appAuth->isSuperadmin()) {
 echo $this->Form->end(); ?>
 
 <div class="sc"></div>
+
+<?php
+echo $this->element('imageUploadForm', [
+    'id' => $customer->id_customer,
+    'action' => '/admin/tools/doTmpImageUpload/',
+    'imageExists' => $imageExists,
+    'existingImageSrc' => $imageSrc
+]);
