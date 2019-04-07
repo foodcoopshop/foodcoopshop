@@ -254,7 +254,7 @@ class ApiController extends Controller
         } else {
             
             if (!empty($products2saveForImage)) {
-                $syncFieldsOk[] = 'Bild';
+                $syncFieldsOk[] = __d('network', 'Image');
                 $updateStatus = $this->Product->changeImage($products2saveForImage);
                 $productIds = [];
                 foreach ($products2saveForImage as $p) {
@@ -263,7 +263,7 @@ class ApiController extends Controller
             }
             
             if (!empty($products2saveForName)) {
-                $syncFieldsOk[] = 'Name';
+                $syncFieldsOk[] = __d('network', 'Name');
                 $updateStatus = $this->Product->changeName($products2saveForName);
                 $productIds = [];
                 foreach ($products2saveForName as $p) {
@@ -272,7 +272,7 @@ class ApiController extends Controller
             }
 
             if (!empty($products2saveForIsStockProduct)) {
-                $fieldName = 'Lagerprodukt';
+                $syncFieldsOk[] = __d('network', 'Stock_product');
                 try {
                     $updateIsStockProduct = $this->Product->changeIsStockProduct($products2saveForIsStockProduct);
                     if ($updateIsStockProduct) {
@@ -290,7 +290,7 @@ class ApiController extends Controller
             }
             
             if (!empty($products2saveForQuantity)) {
-                $syncFieldsOk[] = 'Anzahl';
+                $syncFieldsOk[] = __d('network', 'Amount');
                 $updateStatus = $this->Product->changeQuantity($products2saveForQuantity);
                 $productIds = [];
                 foreach ($products2saveForQuantity as $p) {
@@ -299,7 +299,7 @@ class ApiController extends Controller
             }
 
             if (!empty($products2saveForPrice)) {
-                $fieldName = 'Preis';
+                $syncFieldsOk[] = __d('network', 'Price');
                 try {
                     $updateStatus = $this->Product->changePrice($products2saveForPrice);
                     if ($updateStatus) {
@@ -317,7 +317,7 @@ class ApiController extends Controller
             }
 
             if (!empty($products2saveForDeposit)) {
-                $syncFieldsOk[] = 'Pfand';
+                $syncFieldsOk[] = __d('network', 'Deposit');
                 $updateStatus = $this->Product->changeDeposit($products2saveForDeposit);
                 $productIds = [];
                 foreach ($products2saveForDeposit as $p) {
@@ -326,7 +326,7 @@ class ApiController extends Controller
             }
 
             if (!empty($products2saveForDeliveryRhythm)) {
-                $syncFieldsOk[] = 'Lieferrhythmus';
+                $syncFieldsOk[] = __d('network', 'Delivery_rhythm');
                 $updateStatus = $this->Product->changeDeliveryRhythm($products2saveForDeliveryRhythm);
                 $productIds = [];
                 foreach ($products2saveForDeliveryRhythm as $p) {
@@ -335,7 +335,7 @@ class ApiController extends Controller
             }
             
             if (!empty($products2saveForStatus)) {
-                $fieldName = 'Status';
+                $syncFieldsOk[] = __d('network', 'Status');
                 try {
                     $updateStatus = $this->Product->changeStatus($products2saveForStatus);
                     if ($updateStatus) {

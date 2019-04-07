@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-10-18 09:00+0200\n"
-"PO-Revision-Date: 2018-10-17 12:17+0200\n"
+"POT-Creation-Date: 2019-04-07 22:21+0200\n"
+"PO-Revision-Date: 2019-04-07 22:22+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,10 +13,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.2.1\n"
 
 msgid "No_fields_were_selected_for_synchronizing."
 msgstr "No fields were selected for synchronizing."
+
+msgid "Image"
+msgstr "Image"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Stock_product"
+msgstr "Stock product"
+
+msgid "Amount"
+msgstr "Amount"
+
+msgid "Price"
+msgstr "Price"
+
+msgid "Deposit"
+msgstr "Deposit"
+
+msgid "Delivery_rhythm"
+msgstr "Delivery rhythm"
+
+msgid "Status"
+msgstr "Status"
 
 msgid "product"
 msgstr "product"

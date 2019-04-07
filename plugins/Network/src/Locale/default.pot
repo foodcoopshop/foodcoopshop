@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-10-18 09:00+0200\n"
+"POT-Creation-Date: 2019-04-07 22:21+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -15,6 +15,30 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 msgid "No_fields_were_selected_for_synchronizing."
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Stock_product"
+msgstr ""
+
+msgid "Amount"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "Deposit"
+msgstr ""
+
+msgid "Delivery_rhythm"
+msgstr ""
+
+msgid "Status"
 msgstr ""
 
 msgid "product"
