@@ -149,14 +149,6 @@ foreach ($actionLogs as $actionLog) {
         $url = $this->Slug->getCategoryDetail($actionLog->object_id, '');
     }
 
-    // order details
-    if ($actionLog->object_id > 0 && $actionLog->object_type == 'order_details') {
-        $showLink = true;
-        $title = __d('admin', 'Show_ordered_product');
-        $url = '/admin/order-details/index/?orderDetailId=' . $actionLog->object_id;
-        $targetBlank = false;
-    }
-
     if ($showLink) {
         echo $this->Html->link(
             '<i class="fas fa-arrow-right ok"></i>',
