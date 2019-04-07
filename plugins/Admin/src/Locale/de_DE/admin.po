@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2019-04-01 13:40+0200\n"
-"PO-Revision-Date: 2019-04-07 22:10+0200\n"
+"PO-Revision-Date: 2019-04-07 22:12+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -742,7 +742,7 @@ msgid "docs_route_settings"
 msgstr "einstellungen"
 
 msgid "The_following_settings_can_be_changed_in_the_admin_area."
-msgstr "Die folgendenden Einstellungen können im Admin-Bereich geändert werden."
+msgstr "Die folgenden Einstellungen können im Admin-Bereich geändert werden."
 
 msgid "Setting"
 msgstr "Einstellung"
@@ -775,7 +775,7 @@ msgid "As_long_as_the_variable_member_fee_is_active_no_remote_foodcoops_can_be_a
 msgstr "Solange der variable Mitgliedsbeitrag aktiviert ist, können für diese Foodcoop keine Remote-Foodcoops erstellt werden."
 
 msgid "The_following_settings_can_not_be_changed_in_the_admin_area."
-msgstr "Die folgendenden Einstellungen können im Admin-Bereich <b>nicht</b> geändert werden."
+msgstr "Die folgenden Einstellungen können im Admin-Bereich <b>nicht</b> geändert werden."
 
 msgid "Version_FoodCoopShop"
 msgstr "Version FoodCoopShop"
