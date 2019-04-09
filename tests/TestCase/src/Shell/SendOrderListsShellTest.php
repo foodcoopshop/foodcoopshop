@@ -1,12 +1,10 @@
 <?php
 
-use App\Test\TestCase\AppCakeTestCase;
-use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 use App\Application;
 use Cake\Console\CommandRunner;
-use Cake\Filesystem\File;
-use Cake\Filesystem\Folder;
+use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
+use App\Test\TestCase\AppCakeTestCase;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,13 +29,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
     public function setUp()
     {
         parent::setUp();
-        
-        $folder = new Folder();
-        $folder->delete(Configure::read('app.folder_order_lists'));
-        $file = new File(Configure::read('app.folder_order_lists') . DS . '.gitignore', true);
-        $file->append('/*
-!.gitignore');
-        
+        $this->prepareSendingOrderLists();
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');

@@ -8,6 +8,7 @@ use App\View\Helper\SlugHelper;
 use App\Network\AppHttpClient;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
+use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
 use Cake\ORM\TableRegistry;
 use Cake\View\View;
@@ -484,6 +485,15 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->changeManufacturer(5, 'timebased_currency_enabled', 1);
         $this->changeManufacturer(4, 'timebased_currency_enabled', 1);
         $this->changeManufacturer(4, 'timebased_currency_max_percentage', $reducedMaxPercentage);
+    }
+    
+    protected function prepareSendingOrderLists()
+    {
+        $folder = new Folder();
+        $folder->delete(Configure::read('app.folder_order_lists'));
+        $file = new File(Configure::read('app.folder_order_lists') . DS . '.gitignore', true);
+        $file->append('/*
+!.gitignore');
     }
 
 }

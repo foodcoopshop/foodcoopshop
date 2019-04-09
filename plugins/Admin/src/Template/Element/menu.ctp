@@ -47,7 +47,7 @@ $paymentDepositCustomerAddedMenuElement = [
     ]
 ];
 $orderListsMenuElement = [
-    'slug' => '/admin/lists/orderLists',
+    'slug' => $this->Slug->getOrderLists(),
     'name' => __d('admin', 'Order_lists'),
     'options' => [
         'fa-icon' => 'fa-fw fa-book'
