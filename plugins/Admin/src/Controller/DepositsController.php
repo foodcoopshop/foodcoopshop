@@ -1,15 +1,10 @@
 <?php
 namespace Admin\Controller;
-
-namespace Admin\Controller;
-
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
 /**
- * DepositsController
-*
 * FoodCoopShop - The open source software for your foodcoop
 *
 * Licensed under The MIT License
