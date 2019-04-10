@@ -62,6 +62,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getOrderDetailsList().'?groupBy=customer&pickupDay[]=02.02.2018',
             $this->Slug->getOrderDetailsList().'?groupBy=manufacturer&pickupDay[]=02.02.2018',
             $this->Slug->getOrderDetailsList().'?groupBy=product&pickupDay[]=02.02.2018',
+            $this->Slug->getOrderLists(),
             $this->Slug->getActionLogsList(),
             $this->Slug->getPagesListAdmin(),
             $this->Slug->getPageAdd(),

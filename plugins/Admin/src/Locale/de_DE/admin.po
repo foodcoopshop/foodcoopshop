@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-01 13:40+0200\n"
-"PO-Revision-Date: 2019-04-07 22:12+0200\n"
+"POT-Creation-Date: 2019-04-07 23:32+0200\n"
+"PO-Revision-Date: 2019-04-07 23:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -596,9 +596,6 @@ msgstr "Seite anzeigen"
 
 msgid "Show_category"
 msgstr "Kategorie anzeigen"
-
-msgid "Show_ordered_product"
-msgstr "Bestelltes Produkt anzeigen"
 
 msgid "records"
 msgstr "Datensätze"
@@ -1449,6 +1446,9 @@ msgstr "Deine Ansprechperson"
 msgid "docs_route_pick_up_products"
 msgstr "abholung-der-produkte"
 
+msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_you."
+msgstr "Hier findest du die unveränderten Bestelllisten, die an dich verschickt wurden."
+
 msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_the_manufacturers."
 msgstr "Hier findest du die unveränderten Bestelllisten, die an die Hersteller verschickt wurden."
 
@@ -1958,6 +1958,9 @@ msgstr "Steuersätze sind später nicht änderbar."
 
 msgid "Delete"
 msgstr "Löschen"
+
+#~ msgid "Show_ordered_product"
+#~ msgstr "Bestelltes Produkt anzeigen"
 
 #~ msgid "Will_be_shown_in_member_list_only."
 #~ msgstr "Wird nur in der Mitglieder-Liste angezeigt."

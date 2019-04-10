@@ -5,6 +5,7 @@ namespace Admin\Controller;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use Cake\ORM\TableRegistry;
+use Cake\Http\Exception\UnauthorizedException;
 
 /**
  * ListsController
@@ -26,7 +27,7 @@ class ListsController extends AdminAppController
 
     public function isAuthorized($user)
     {
-        return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
+        return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer();
     }
 
     public function orderLists()
@@ -48,26 +49,23 @@ class ListsController extends AdminAppController
             if (preg_match('/\.pdf$/', $name)) {
 
                 // before 09/2017 ProductLists were generated and stored with "Artikel" in filename
-                // the following preg_match does not make a batch renaming necessary
+                // the following preg_match avoids a batch renaming
                 if (!preg_match('/'.__d('admin', '_Order_list_filename_').'('.__d('admin', 'product').'|Artikel)/', $name, $matches)) {
                     continue;
                 }
-
-                $deliveryDate = substr($object->getFileName(), 0, 10);
-
+                
+                $splittedFileName = $this->splitOrderDetailStringIntoParts($object->getFileName(), $matches[1]);
+                $deliveryDate = $splittedFileName['deliveryDate'];
+                $manufacturerId = $splittedFileName['manufacturerId'];
+                
                 // date check
                 if (! (strtotime($dateFrom) == strtotime($deliveryDate))) {
                     continue;
                 }
-
-                // remove date
-                $manufacturerString = substr($object->getFileName(), 11);
-
-                // remove part after $positionOrderListsString (foodcoop name and file ending)
-                $positionOrderListsString = strpos($manufacturerString, __d('admin', '_Order_list_filename_') . $matches[1]);
-                $manufacturerString = substr($manufacturerString, 0, $positionOrderListsString);
-                $splittedManufacturerString = explode('_', $manufacturerString);
-                $manufacturerId = (int) end($splittedManufacturerString);
+                
+                if ($this->AppAuth->isManufacturer() && $manufacturerId != $this->AppAuth->getManufacturerId()) {
+                    continue;
+                }
 
                 if (!$manufacturerId) {
                     $message = 'error: ManufacturerId not found in ' . $object->getFileName();
@@ -83,7 +81,8 @@ class ListsController extends AdminAppController
                     ]
                 ])->first();
 
-                $productListLink = '/admin/lists/getOrderList?file=' . str_replace(Configure::read('app.folder_order_lists'), '', $name);
+                $productListLink = '/admin/lists/getOrderList?file=' . str_replace(Configure::read('app.folder_order_lists').'/', '', $name);
+                $productListLink = str_replace(DS, '/', $productListLink);
                 $customerListLink = str_replace($matches[1], __d('admin', 'member'), $productListLink);
 
                 $files[] = [
@@ -101,9 +100,39 @@ class ListsController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Order_lists'));
     }
     
+    private function splitOrderDetailStringIntoParts($fileName, $ending)
+    {
+        $result = [];
+        $result['deliveryDate'] = substr($fileName, 0, 10);
+        
+        // remove date
+        $manufacturerString = substr($fileName, 11);
+        
+        // remove part after $positionOrderListsString (foodcoop name and file ending)
+        $positionOrderListsString = strpos($manufacturerString, __d('admin', '_Order_list_filename_') . $ending);
+        $manufacturerString = substr($manufacturerString, 0, $positionOrderListsString);
+        $splittedManufacturerString = explode('_', $manufacturerString);
+        
+        $result['manufacturerId'] = (int) end($splittedManufacturerString);
+        
+        return $result;
+    }
+    
     public function getOrderList()
     {
         $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder_order_lists')) . DS . $this->getRequest()->getQuery('file');
+        
+        if ($this->AppAuth->isManufacturer()) {
+            preg_match('/'.__d('admin', '_Order_list_filename_').'('.__d('admin', 'product').'|'.__d('admin', 'member').'|Artikel)/', $this->getRequest()->getQuery('file'), $matches);
+            if (!empty($matches[1])) {
+                $splittedFileName = $this->splitOrderDetailStringIntoParts($this->getRequest()->getQuery('file'), $matches[1]);
+                $manufacturerId = $splittedFileName['manufacturerId'];
+                if ($manufacturerId != $this->AppAuth->getManufacturerId()) {
+                    throw new UnauthorizedException();
+                }
+            }
+        }
+        
         $this->getFile($filenameWithPath);
     }
     

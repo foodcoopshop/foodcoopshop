@@ -33,6 +33,11 @@ class SlugHelper extends Helper
         return $this->getAdminHome().'/order-details';
     }
 
+    public function getOrderLists()
+    {
+        return $this->getAdminHome().'/lists/order-lists';
+    }
+    
     public function getAcceptTermsOfUse()
     {
         return '/'.__('route_accept_terms_of_use');

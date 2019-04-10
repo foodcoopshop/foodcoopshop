@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-01 13:40+0200\n"
+"POT-Creation-Date: 2019-04-07 23:32+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -594,9 +594,6 @@ msgid "Show_page"
 msgstr ""
 
 msgid "Show_category"
-msgstr ""
-
-msgid "Show_ordered_product"
 msgstr ""
 
 msgid "records"
@@ -1446,6 +1443,9 @@ msgid "Your_contact_person"
 msgstr ""
 
 msgid "docs_route_pick_up_products"
+msgstr ""
+
+msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_you."
 msgstr ""
 
 msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_the_manufacturers."
