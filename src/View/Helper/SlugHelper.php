@@ -78,6 +78,21 @@ class SlugHelper extends Helper
         return '/'.__('route_manufacturer_list');
     }
 
+    public function getMyStatistics()
+    {
+        return $this->getAdminHome().'/statistics/myIndex';
+    }
+    
+    public function getStatistics($manufacturerId = '')
+    {
+        $url = '/admin/statistics';
+        if ($manufacturerId != '') {
+            $url .= '?manufacturerId='.$manufacturerId;
+        }
+        return $url;
+    }
+    
+    
     public function getMyDepositList()
     {
         return '/admin/deposits/myIndex';

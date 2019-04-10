@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-07 23:32+0200\n"
+"POT-Creation-Date: 2019-04-10 15:19+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -510,6 +510,9 @@ msgid "The_slider_{0}_has_been_{1}."
 msgstr ""
 
 msgid "Slideshow"
+msgstr ""
+
+msgid "Statistics"
 msgstr ""
 
 msgid "Add_tax_rate"

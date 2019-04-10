@@ -155,6 +155,14 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         ];
     }
 
+    $manufacturerMenu['children'][] = [
+        'slug' => $this->Slug->getStatistics(),
+        'name' => __d('admin', 'Statistics'),
+        'options' => [
+            'fa-icon' => 'fa-fw fa-chart-bar'
+        ]
+    ];
+    
     $menu[] = $manufacturerMenu;
 
     $menu[] = [
@@ -297,6 +305,14 @@ if ($appAuth->isManufacturer()) {
         $menu[] = $blogPostsMenuElement;
     }
     $menu[] = $actionLogsMenuElement;
+    
+    $menu[] = [
+        'slug' => $this->Slug->getMyStatistics(),
+        'name' => __d('admin', 'Statistics'),
+        'options' => [
+            'fa-icon' => 'fa-fw fa-chart-bar'
+        ]
+    ];
 }
 
 // for all users
