@@ -81,7 +81,8 @@ class ListsController extends AdminAppController
                     ]
                 ])->first();
 
-                $productListLink = '/admin/lists/getOrderList?file=' . str_replace(Configure::read('app.folder_order_lists'), '', $name);
+                $productListLink = '/admin/lists/getOrderList?file=' . str_replace(Configure::read('app.folder_order_lists').'/', '', $name);
+                $productListLink = str_replace(DS, '/', $productListLink);
                 $customerListLink = str_replace($matches[1], __d('admin', 'member'), $productListLink);
 
                 $files[] = [

@@ -37,7 +37,7 @@ class ListsControllerTest extends AppCakeTestCase
     {
         $this->commandRunner->run(['cake', 'send_order_lists', '2018-01-31']);
         $listPageUrl = $this->Slug->getOrderLists().'?dateFrom=02.02.2018';
-        $orderListDownloadUrl = '/admin/lists/getOrderList?file=\2018\02\2018-02-02_Demo-Fleisch-Hersteller_4_Bestellliste_Produkt_FoodCoop-Test.pdf';
+        $orderListDownloadUrl = '/admin/lists/getOrderList?file=2018/02/2018-02-02_Demo-Fleisch-Hersteller_4_Bestellliste_Produkt_FoodCoop-Test.pdf';
         
         // check list page as manufacturer
         $this->loginAsMeatManufacturer();

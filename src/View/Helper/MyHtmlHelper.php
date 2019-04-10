@@ -656,7 +656,7 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getOrderListLink($manufacturerName, $manufacturerId, $deliveryDay, $groupTypeLabel)
     {
-        $url = Configure::read('app.folder_order_lists') . DS . date('Y', strtotime($deliveryDay)) . DS . date('m', strtotime($deliveryDay)) . DS;
+        $url = Configure::read('app.folder_order_lists') . '/' . date('Y', strtotime($deliveryDay)) . '/' . date('m', strtotime($deliveryDay)) . '/';
         $url .= $deliveryDay . '_' . StringComponent::slugifyAndKeepCase($manufacturerName) . '_' . $manufacturerId . __('_Order_list_filename_') . $groupTypeLabel . '_' . StringComponent::slugifyAndKeepCase(Configure::read('appDb.FCS_APP_NAME')) . '.pdf';
         return $url;
     }
