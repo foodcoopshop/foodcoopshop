@@ -69,7 +69,7 @@ class StatisticsController extends AdminAppController
         $this->set('manufacturerId', $manufacturerId);
 
         if ($manufacturerId == '') {
-            $this->set('title_for_layout', __d('admin', 'Statistics'));
+            $this->set('title_for_layout', __d('admin', 'Turnover_statistics'));
             return;
         }
 
@@ -80,20 +80,56 @@ class StatisticsController extends AdminAppController
         ])->first();
         $this->set('manufacturer', $manufacturer);
         
-        $this->set('title_for_layout', __d('admin', 'Statistics') . ' ' . $manufacturer->name);
+        $this->set('title_for_layout', __d('admin', 'Turnover_statistics') . ' ' . $manufacturer->name);
         
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $monthlySumProducts = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturerId);
-        
-        $xAxisData = [];
-        $yAxisData = [];
-        foreach($monthlySumProducts as $data) {
-            $xAxisData[] = $data['MonthAndYear'];
-            $yAxisData[] = $data['SumTotalPaid'];
+        if (empty($monthlySumProducts->toArray())) {
+            $this->set('xAxisData', []);
+            return;
         }
+        
+        $monthsAndYear = Configure::read('app.timeHelper')->getAllMonthsUntilThisYear(date('Y'), 2014);
+        
+        $monthsWithTurnoverMonthAndYear = $monthlySumProducts->extract('MonthAndYear')->toArray();
+        $monthsWithTurnoverSumTotalPaid = $monthlySumProducts->extract('SumTotalPaid')->toArray();
+        
+        $xAxisData = array_values($monthsAndYear);
+        $yAxisData = [];
+        
+        foreach($monthsAndYear as $monthKey => $monthString) {
+            $foundIndex = array_search($monthKey, $monthsWithTurnoverMonthAndYear);
+            if ($foundIndex !== false) {
+                $yAxisData[] = $monthsWithTurnoverSumTotalPaid[$foundIndex];
+            } else {
+                $yAxisData[] = 0;
+            }
+        }
+        
+        $firstIndexWithValue = 0;
+        foreach($yAxisData as $index => $y) {
+            if ($y > 0) {
+                $firstIndexWithValue = $index;
+                break;
+            }
+        }
+        
+        $lastIndexWithValue = 0;
+        $reversedYAxisDate = array_reverse($yAxisData);
+        foreach($reversedYAxisDate as $index => $y) {
+            if ($y > 0) {
+                $lastIndexWithValue = $index;
+                break;
+            }
+        }
+        
+        $xAxisData = array_splice($xAxisData, $firstIndexWithValue, $lastIndexWithValue * -1);
+        $yAxisData = array_splice($yAxisData, $firstIndexWithValue, $lastIndexWithValue * -1);
         
         $this->set('xAxisData', $xAxisData);
         $this->set('yAxisData', $yAxisData);
+        $this->set('totalTurnover', array_sum($monthsWithTurnoverSumTotalPaid));
+        $this->set('averageTurnover', array_sum($monthsWithTurnoverSumTotalPaid) / count($monthsWithTurnoverMonthAndYear));
         
     }
 }

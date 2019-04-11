@@ -386,7 +386,7 @@ class OrderDetailsTable extends AppTable
             'SumTotalPaid' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
             'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')'
         ]);
-        return $query->toArray();
+        return $query;
     }
     
     public function getSumProduct($customerId)
