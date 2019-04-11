@@ -44,7 +44,7 @@ $this->element('addScript', [
 
 <?php
 if (empty($manufacturer)) {
-    echo '<br /><h2 class="info">'.__d('admin', 'Please_chose_a_manufacturer.').'</h2>';
+    echo '<h2 class="info">'.__d('admin', 'Please_chose_a_manufacturer.').'</h2>';
     return;
 }
 
