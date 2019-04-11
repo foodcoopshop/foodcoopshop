@@ -42,7 +42,12 @@ $this->element('addScript', [
 
 <?php
 if (empty($manufacturer)) {
-    echo '<br /><h2 class="info">'.__d('admin', 'Please_chose_a_manufacturer.').'</h2>';
+    echo '<h2 class="info">'.__d('admin', 'Please_chose_a_manufacturer.').'</h2>';
+    return;
+}
+
+if (empty($xAxisData)) {
+    echo '<h2 class="info">' . __d('admin', 'No_turnover_available_yet.') . '</h2>';
     return;
 }
 
@@ -52,6 +57,14 @@ $this->element('addScript', [
 ]);
 ?>
 
-<canvas id="myChart" width="1000" height="500"></canvas>
+<p><?php
+    echo __d('admin', 'Total_turnover:_{0}', ['<b>'.$this->Number->formatAsCurrency($totalTurnover).'</b>']);
+    echo '<br />' . __d('admin', 'Average_turnover_for_months_where_products_were_delivered:_{0}', ['<b>'.$this->Number->formatAsCurrency($averageTurnover).'</b>']);
+    if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
+        echo '<br />' . __d('admin', 'Variable_member_fee_is_included_in_turnover.');
+    }
+?></p>
+
+<canvas id="myChart" width="1000" height="500" style="margin-top:10px;"></canvas>
 
 <div class="sc"></div>

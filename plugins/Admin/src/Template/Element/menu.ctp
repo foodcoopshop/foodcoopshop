@@ -157,7 +157,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
 
     $manufacturerMenu['children'][] = [
         'slug' => $this->Slug->getStatistics(),
-        'name' => __d('admin', 'Statistics'),
+        'name' => __d('admin', 'Turnover_statistics'),
         'options' => [
             'fa-icon' => 'fa-fw fa-chart-bar'
         ]
@@ -308,7 +308,7 @@ if ($appAuth->isManufacturer()) {
     
     $menu[] = [
         'slug' => $this->Slug->getMyStatistics(),
-        'name' => __d('admin', 'Statistics'),
+        'name' => __d('admin', 'Turnover_statistics'),
         'options' => [
             'fa-icon' => 'fa-fw fa-chart-bar'
         ]
