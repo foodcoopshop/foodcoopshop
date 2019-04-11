@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-07 23:32+0200\n"
+"POT-Creation-Date: 2019-04-11 11:00+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -510,6 +510,9 @@ msgid "The_slider_{0}_has_been_{1}."
 msgstr ""
 
 msgid "Slideshow"
+msgstr ""
+
+msgid "Turnover_statistics"
 msgstr ""
 
 msgid "Add_tax_rate"
@@ -1944,6 +1947,18 @@ msgid "Rank"
 msgstr ""
 
 msgid "Delete_slider_image?"
+msgstr ""
+
+msgid "No_turnover_available_yet."
+msgstr ""
+
+msgid "Total_turnover:_{0}"
+msgstr ""
+
+msgid "Average_turnover_for_months_where_products_were_delivered:_{0}"
+msgstr ""
+
+msgid "Variable_member_fee_is_included_in_turnover."
 msgstr ""
 
 msgid "Tax_rates_can_not_be_changed."

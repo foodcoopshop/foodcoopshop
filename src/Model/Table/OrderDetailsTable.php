@@ -357,7 +357,7 @@ class OrderDetailsTable extends AppTable
         return $query->count();
     }
     
-    public function getMonthlySumProduct($customerId)
+    public function getMonthlySumProductByCustomer($customerId)
     {
         $query = $this->prepareSumProduct($customerId);
         $query->contain('TimebasedCurrencyOrderDetails');
@@ -369,6 +369,24 @@ class OrderDetailsTable extends AppTable
             'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')'
         ]);
         return $query->toArray();
+    }
+    
+    public function getMonthlySumProductByManufacturer($manufacturerId)
+    {
+        $query = $this->find('all', [
+            'conditions' => [
+                'Products.id_manufacturer' => $manufacturerId
+            ],
+            'contain' => [
+                'Products'
+            ]
+        ]);
+        $query->group('MonthAndYear');
+        $query->select([
+            'SumTotalPaid' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
+            'MonthAndYear' => 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%c\')'
+        ]);
+        return $query;
     }
     
     public function getSumProduct($customerId)

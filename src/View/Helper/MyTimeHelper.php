@@ -22,6 +22,15 @@ use Cake\View\Helper\TimeHelper;
 class MyTimeHelper extends TimeHelper
 {
 
+    public function getAllMonthsUntilThisYear($thisYear, $firstYear)
+    {
+        $monthsAndYear = $this->getAllMonthsForYear($thisYear);
+        while($thisYear >= $firstYear) {
+            $monthsAndYear = array_merge($this->getAllMonthsForYear($thisYear), $monthsAndYear);
+            $thisYear--;
+        }
+        return $monthsAndYear;
+    }
     /**
      * @param $array
      * @return array

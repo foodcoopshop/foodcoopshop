@@ -100,6 +100,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getSlidersList(),
             $this->Slug->getSliderAdd(),
             $this->Slug->getSliderEdit(6),
+            $this->Slug->getStatistics(4),
             $this->Network->getSyncDomainAdd(),
             $this->Network->getSyncDomainEdit(1),
             $this->Slug->getConfigurationsList(),
@@ -121,6 +122,7 @@ class PagesControllerTest extends AppCakeTestCase
         $testUrls = [
             $this->Slug->getManufacturerMyOptions(),
             $this->Slug->getMyDepositList(),
+            $this->Slug->getMyStatistics(),
             $this->Slug->getManufacturerProfile(),
             $this->Slug->getProductAdmin(),
             $this->Network->getSyncProductData(),

@@ -584,7 +584,7 @@ class PaymentsController extends AdminAppController
 
         if ($this->paymentType == 'product') {
             $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-            $orderDetailsGroupedByMonth = $this->OrderDetail->getMonthlySumProduct($this->getCustomerId());
+            $orderDetailsGroupedByMonth = $this->OrderDetail->getMonthlySumProductByCustomer($this->getCustomerId());
             
             if (! empty($orderDetailsGroupedByMonth)) {
                 foreach ($orderDetailsGroupedByMonth as $orderDetail) {

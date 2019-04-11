@@ -1,15 +1,10 @@
 <?php
 namespace Admin\Controller;
-
-namespace Admin\Controller;
-
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
 /**
- * DepositsController
-*
 * FoodCoopShop - The open source software for your foodcoop
 *
 * Licensed under The MIT License
@@ -103,13 +98,9 @@ class DepositsController extends AdminAppController
         $depositsDelivered = $this->OrderDetail->getDepositSum($manufacturerId, true);
         $depositsReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, true);
 
-        // TODO add year 2020 on 31.12.2019
-        $monthsAndYear = Configure::read('app.timeHelper')->getAllMonthsForYear(2019);
-        $monthsAndYear = array_merge(Configure::read('app.timeHelper')->getAllMonthsForYear(2018), $monthsAndYear);
-        $monthsAndYear = array_merge(Configure::read('app.timeHelper')->getAllMonthsForYear(2017), $monthsAndYear);
-        $monthsAndYear = array_merge(Configure::read('app.timeHelper')->getAllMonthsForYear(2016), $monthsAndYear);
+        $monthsAndYear = Configure::read('app.timeHelper')->getAllMonthsUntilThisYear(date('Y'), 2016);
         $monthsAndYear = array_reverse($monthsAndYear);
-
+        
         $deposits = [];
         $sumDepositsDelivered = 0;
         $sumDepositsReturned = 0;
