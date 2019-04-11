@@ -27,7 +27,13 @@ foodcoopshop.AppChart = {
             xAxes: [{
                 gridLines: {
                     display: false
-                }   
+                },
+                maxBarThickness: 40,
+                ticks: {
+                    autoSkip: false,
+                    maxRotation: 90,
+                    minRotation: 90
+                }
             }],
             yAxes: []
         }        
@@ -39,11 +45,6 @@ foodcoopshop.AppChart = {
         xAxisData = $.parseJSON(xAxisData);
         yAxisData = $.parseJSON(yAxisData);
         
-//        for(y in yAxis) {
-//            yAxis[y] = foodcoopshop.Helper.getStringAsFloat(yAxis[y]);
-//        }
-//        console.log(yAxis);
-        
         var barChartData = {
             labels: xAxisData,
             datasets: [{
@@ -54,6 +55,7 @@ foodcoopshop.AppChart = {
 
         var ctx = $("#myChart").get(0).getContext("2d");
           var myNewChart = new Chart(ctx, {
+          responsive : true,
           type: 'bar',
           data: barChartData,
           options: this.chartOptions
