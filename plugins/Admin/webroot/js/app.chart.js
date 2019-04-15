@@ -20,6 +20,14 @@ foodcoopshop.AppChart = {
         scaleStartValue: 0,
         scaleGridLineColor: 'rgba(0,0,0,.15)',
         animation: false,
+        tooltips: {
+            callbacks: {
+                label: function(item, data) {
+                    var value = data.datasets[item.datasetIndex].data[item.index];
+                    return foodcoopshop.Helper.formatFloatAsCurrency(value);
+                }
+            }
+        },                
         legend: {
             display: false
         },
@@ -35,7 +43,13 @@ foodcoopshop.AppChart = {
                     minRotation: 90
                 }
             }],
-            yAxes: []
+            yAxes: [{
+                ticks: {
+                    callback: function(value, index, values) {
+                        return foodcoopshop.Helper.formatFloatAsCurrency(value);
+                    }
+                }
+            }]
         }        
     },    
         
