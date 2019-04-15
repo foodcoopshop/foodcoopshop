@@ -272,7 +272,7 @@ class ApiController extends Controller
             }
 
             if (!empty($products2saveForIsStockProduct)) {
-                $syncFieldsOk[] = __d('network', 'Stock_product');
+                $fieldName = __d('network', 'Stock_product');
                 try {
                     $updateIsStockProduct = $this->Product->changeIsStockProduct($products2saveForIsStockProduct);
                     if ($updateIsStockProduct) {
@@ -299,7 +299,7 @@ class ApiController extends Controller
             }
 
             if (!empty($products2saveForPrice)) {
-                $syncFieldsOk[] = __d('network', 'Price');
+                $fieldName = __d('network', 'Price');
                 try {
                     $updateStatus = $this->Product->changePrice($products2saveForPrice);
                     if ($updateStatus) {
@@ -335,7 +335,7 @@ class ApiController extends Controller
             }
             
             if (!empty($products2saveForStatus)) {
-                $syncFieldsOk[] = __d('network', 'Status');
+                $fieldName = __d('network', 'Status');
                 try {
                     $updateStatus = $this->Product->changeStatus($products2saveForStatus);
                     if ($updateStatus) {
