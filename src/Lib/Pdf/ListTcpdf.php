@@ -351,7 +351,7 @@ class ListTcpdf extends AppTcpdf
     {
         $this->SetY(4);
         
-        $this->MultiCell(50, 0, '<img src="' . ROOT . DS . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg' . '">', 0, 'L', 0, 0, '', '', true, null, true);
+        $this->MultiCell(50, 0, '<img src="' . $pdf->logoPath . '">', 0, 'L', 0, 0, '', '', true, null, true);
         $this->setFontSize(10);
         
         $convertedHeaderRight = '<br />'.Configure::read('appDb.FCS_APP_NAME').'<br />'.Configure::read('appDb.FCS_APP_ADDRESS').'<br />'.Configure::read('appDb.FCS_APP_EMAIL');

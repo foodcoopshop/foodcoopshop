@@ -21,6 +21,8 @@ abstract class AppTcpdf extends TCPDF
 {
 
     public $table = '';
+    
+    public $logoPath = ROOT . DS . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg';
 
     public $textHelper;
     
