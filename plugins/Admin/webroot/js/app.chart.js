@@ -45,6 +45,7 @@ foodcoopshop.AppChart = {
             }],
             yAxes: [{
                 ticks: {
+                    beginAtZero: true,
                     callback: function(value, index, values) {
                         return foodcoopshop.Helper.formatFloatAsCurrency(value);
                     }
