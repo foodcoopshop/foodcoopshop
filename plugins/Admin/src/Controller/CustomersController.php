@@ -37,6 +37,7 @@ class CustomersController extends AdminAppController
                 return $this->AppAuth->isSuperadmin();
                 break;
             case 'profile':
+            case 'getMemberCard':
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer();
                 break;
             case 'delete':
@@ -49,6 +50,26 @@ class CustomersController extends AdminAppController
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
                 break;
         }
+    }
+    
+    public function getMemberCards()
+    {
+        
+
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer->dropManufacturersInNextFind();
+        $customers = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.active' => APP_ON
+            ],
+            'order' => [
+                'Customers.' . Configure::read('app.customerMainNamePart') => 'ASC'
+            ],
+            'contain' => [
+                'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
+            ]
+        ]);
+        $this->set('customers', $customers);
     }
 
     public function ajaxEditGroup()

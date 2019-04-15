@@ -14,10 +14,10 @@
  */
 
 use App\Controller\Component\StringComponent;
-use App\Lib\Pdf\AppTcpdf;
+use App\Lib\Pdf\ListTcpdf;
 use Cake\Core\Configure;
 
-$pdf = new AppTcpdf();
+$pdf = new ListTcpdf();
 $pdf->SetLeftMargin(16);
 
 if (!empty($manufacturers)) {

@@ -14,10 +14,10 @@
  */
 
 use App\Controller\Component\StringComponent;
-use App\Lib\Pdf\AppTcpdf;
+use App\Lib\Pdf\ListTcpdf;
 use Cake\I18n\I18n;
 
-$pdf = new AppTcpdf();
+$pdf = new ListTcpdf();
 $pdf->SetLeftMargin(12);
 $pdf->SetRightMargin(12);
 

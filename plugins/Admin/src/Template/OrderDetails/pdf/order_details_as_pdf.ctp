@@ -13,10 +13,10 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Lib\Pdf\AppTcpdf;
+use App\Lib\Pdf\ListTcpdf;
 use Cake\Core\Configure;
 
-$pdf = new AppTcpdf();
+$pdf = new ListTcpdf();
 $pdf->SetLeftMargin(16);
 $pdf->AddPage();
 $pdf->infoTextForFooter = __d('admin', 'Orders');

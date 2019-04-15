@@ -13,11 +13,11 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Lib\Pdf\AppTcpdf;
+use App\Lib\Pdf\ListTcpdf;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 
-$pdf = new AppTcpdf();
+$pdf = new ListTcpdf();
 $pdf->setTextHelper($this->Text);
 $pdf->SetLeftMargin(16);
 $pdf->AddPage();
