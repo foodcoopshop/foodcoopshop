@@ -64,6 +64,7 @@ foodcoopshop.AppChart = {
             datasets: [{
                 data: yAxisData,
                 backgroundColor: 'rgba(113,159,65,.7)',
+                hoverBackgroundColor: 'rgba(113,159,65,.5)'
             }]
         };
 
