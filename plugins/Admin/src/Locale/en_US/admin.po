@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-11 11:00+0200\n"
-"PO-Revision-Date: 2019-04-11 11:01+0200\n"
+"POT-Creation-Date: 2019-04-15 17:29+0200\n"
+"PO-Revision-Date: 2019-04-15 17:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -516,6 +516,9 @@ msgstr "Slideshow"
 msgid "Turnover_statistics"
 msgstr "Turnover statistics"
 
+msgid "December"
+msgstr "December"
+
 msgid "Add_tax_rate"
 msgstr "Add tax rate"
 
@@ -950,6 +953,9 @@ msgstr "Add comment"
 
 msgid "Copy_all_email_addresses"
 msgstr "Copy all e-mail adresses"
+
+msgid "Customer_ID"
+msgstr "Customer-ID"
 
 msgid "Delete_deposit_take_back?"
 msgstr "Delete deposit take back?"

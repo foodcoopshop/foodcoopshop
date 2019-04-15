@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-11 11:00+0200\n"
-"PO-Revision-Date: 2019-04-11 11:01+0200\n"
+"POT-Creation-Date: 2019-04-15 17:29+0200\n"
+"PO-Revision-Date: 2019-04-15 17:30+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -516,6 +516,9 @@ msgstr "Slideshow"
 msgid "Turnover_statistics"
 msgstr "Umsatzstatistik"
 
+msgid "December"
+msgstr "Dezember"
+
 msgid "Add_tax_rate"
 msgstr "Neuen Steuersatz erstellen"
 
@@ -950,6 +953,9 @@ msgstr "Kommentar hinzufügen"
 
 msgid "Copy_all_email_addresses"
 msgstr "Alle E-Mail-Adressen kopieren"
+
+msgid "Customer_ID"
+msgstr "Mitglieds-Nr."
 
 msgid "Delete_deposit_take_back?"
 msgstr "Pfand-Rücknahme löschen?"
@@ -2008,9 +2014,6 @@ msgstr "Löschen"
 #, fuzzy
 #~ msgid "Delete_terms_of_use?"
 #~ msgstr "Variante löschen?"
-
-#~ msgid "Customer"
-#~ msgstr "Mitglied"
 
 #~ msgid "Zero_means_no_limit."
 #~ msgstr "0 bedeutet \"kein Limit\"."
