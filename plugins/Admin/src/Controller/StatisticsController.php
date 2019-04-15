@@ -106,8 +106,19 @@ class StatisticsController extends AdminAppController
             }
         }
         
+        $xAxisDataWithYearSeparators = [];
+        $yAxisDataWithYearSeparators = [];
+        foreach($xAxisData as $i => $x) {
+            $xAxisDataWithYearSeparators[] = $x;
+            $yAxisDataWithYearSeparators[] = $yAxisData[$i];
+            if (preg_match('/'.__d('admin', 'December').'/', $x)) {
+                $xAxisDataWithYearSeparators[] = '';
+                $yAxisDataWithYearSeparators[] = 0;
+            }
+        }
+        
         $firstIndexWithValue = 0;
-        foreach($yAxisData as $index => $y) {
+        foreach($yAxisDataWithYearSeparators as $index => $y) {
             if ($y > 0) {
                 $firstIndexWithValue = $index;
                 break;
@@ -115,7 +126,7 @@ class StatisticsController extends AdminAppController
         }
         
         $lastIndexWithValue = 0;
-        $reversedYAxisDate = array_reverse($yAxisData);
+        $reversedYAxisDate = array_reverse($yAxisDataWithYearSeparators);
         foreach($reversedYAxisDate as $index => $y) {
             if ($y > 0) {
                 $lastIndexWithValue = $index;
@@ -123,11 +134,11 @@ class StatisticsController extends AdminAppController
             }
         }
         
-        $xAxisData = array_splice($xAxisData, $firstIndexWithValue, $lastIndexWithValue * -1);
-        $yAxisData = array_splice($yAxisData, $firstIndexWithValue, $lastIndexWithValue * -1);
+        $xAxisDataWithYearSeparators = array_splice($xAxisDataWithYearSeparators, $firstIndexWithValue, $lastIndexWithValue * -1);
+        $yAxisDataWithYearSeparators = array_splice($yAxisDataWithYearSeparators, $firstIndexWithValue, $lastIndexWithValue * -1);
         
-        $this->set('xAxisData', $xAxisData);
-        $this->set('yAxisData', $yAxisData);
+        $this->set('xAxisData', $xAxisDataWithYearSeparators);
+        $this->set('yAxisData', $yAxisDataWithYearSeparators);
         $this->set('totalTurnover', array_sum($monthsWithTurnoverSumTotalPaid));
         $this->set('averageTurnover', array_sum($monthsWithTurnoverSumTotalPaid) / count($monthsWithTurnoverMonthAndYear));
         
