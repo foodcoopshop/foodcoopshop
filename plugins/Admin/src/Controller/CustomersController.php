@@ -59,7 +59,7 @@ class CustomersController extends AdminAppController
         $customers = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.active' => APP_ON,
-                //'Customers.id_customer IN' => [3,7]
+//                 'Customers.id_customer IN' => [3,7,8,11]
             ],
             'order' => [
                 'Customers.' . Configure::read('app.customerMainNamePart') => 'ASC'

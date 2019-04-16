@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-15 17:29+0200\n"
-"PO-Revision-Date: 2019-04-15 17:30+0200\n"
+"POT-Creation-Date: 2019-04-16 14:20+0200\n"
+"PO-Revision-Date: 2019-04-16 14:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -956,6 +956,9 @@ msgstr "Alle E-Mail-Adressen kopieren"
 
 msgid "Customer_ID"
 msgstr "Mitglieds-Nr."
+
+msgid "Member_card"
+msgstr "Mitgliedskarte"
 
 msgid "Delete_deposit_take_back?"
 msgstr "Pfand-Rücknahme löschen?"
@@ -1991,9 +1994,6 @@ msgstr "Löschen"
 
 #~ msgid "Will_be_shown_in_member_list_only."
 #~ msgstr "Wird nur in der Mitglieder-Liste angezeigt."
-
-#~ msgid "Member_changed"
-#~ msgstr "Einem anderen Mitglied zugewiesen"
 
 #, fuzzy
 #~ msgid "aactivate"

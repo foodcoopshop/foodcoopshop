@@ -27,42 +27,57 @@ foreach($customers as $customer) {
     if ($pairRecord) {
         $pdf->table .= '<tr>';
     }
-    $pdf->table .= '<td style="width:239px;height:154px;">'; // roughly 85,60mm x 53,98mm
+    $pdf->table .= '<td style="width:240px;height:154px;">'; // roughly 85,60mm x 53,98mm
     $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0">';
-        $pdf->table .= '<tr>';
-        $pdf->table .= '<td style="width:80px;">';
-            $pdf->table .= '<img src="' . $pdf->logoPath .'">';
-            $pdf->table .= '<br /><span style="font-size:8px;">'.Configure::read('appDb.FCS_APP_NAME') . '</span>';
-        $pdf->table .= '</td>';
-        $pdf->table .= '<td style="width:5px;"></td>'; //spacer
-        $pdf->table .= '<td style="width:144px;">';
-        $pdf->table .= __d('admin', 'Customer_ID') . ': ' . $customer->id_customer . '<br />';
-        $pdf->table .= '<b>' . $customer->name . '</b><br />';
-        $pdf->table .= __d('admin', 'Register_date') . ': ' . $customer->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' ';
-        $pdf->table .= '</td>';
-        $pdf->table .= '</tr>';
-        $pdf->table .= '<tr>';
-        $pdf->table .= '<td colspan="2">';
-        $barcodeObject = new TCPDFBarcode($customer->id_customer, 'EAN8');
-        //https://stackoverflow.com/a/54520065/2100184
-        $imgBase64Encoded = base64_encode($barcodeObject->getBarcodePngData(1.5, 50));
-        // move barcode to bottom
-        $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="height:40px;"></td></tr></table>';
-        $pdf->table .= '<img src="@' . preg_replace('#^data:image/[^;]+;base64,#', '', $imgBase64Encoded) . '">';
-        $pdf->table .= '</td>';
-        $pdf->table .= '<td style="width:5px;"></td>'; //spacer
-        $pdf->table .= '<td style="width:133px;" align="right">';
-        $customerImage = Configure::read('app.customerImagesDir') . DS . $customer->id_customer . '-xxl.jpg';
-        if (file_exists($customerImage)) {
-            $customerImageBase64Encoded = base64_encode(file_get_contents($customerImage));
-            $pdf->table .= '<img style="width:85px;" src="@' . preg_replace('#^data:image/[^;]+;base64,#', '', $customerImageBase64Encoded) . '">';
-        }
-        $pdf->table .= '</td>';
         
+        // START ROW logo and name block
+        $pdf->table .= '<tr>';
+            $pdf->table .= '<td style="width:80px;">';
+                $pdf->table .= '<img src="' . $pdf->logoPath .'">';
+            $pdf->table .= '</td>';
+            $pdf->table .= '<td style="width:10px;"></td>'; //spacer between logo and top right name block
+            $pdf->table .= '<td style="width:138px;">';
+                $pdf->table .= __d('admin', 'Customer_ID') . ': ' . $customer->id_customer . '<br />';
+                $pdf->table .= __d('admin', 'Register_date') . ': ' . $customer->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '<br />';
+                $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="height:25px;"><b>' . $customer->name . '</b></td></tr></table>';
+            $pdf->table .= '</td>';
         $pdf->table .= '</tr>';
+        $pdf->table .= '<tr>';
+            $pdf->table .= '<td colspan="3" style="line-height:22px;height:22px;border-bottom:1px solid dotted;border-top:1px solid dotted;">';
+                $pdf->table .= __d('admin', 'Member_card') . ': <b>' . Configure::read('appDb.FCS_APP_NAME') . '</b>';
+            $pdf->table .= '</td>';
+        $pdf->table .= '</tr>';
+        // END ROW with logo and name block
+        
+        // START ROW barcode and customer image
+        $pdf->table .= '<tr>';
+            $pdf->table .= '<td>';
+            $barcodeObject = new TCPDFBarcode($customer->id_customer, 'EAN8');
+            //https://stackoverflow.com/a/54520065/2100184
+            $imgBase64Encoded = base64_encode($barcodeObject->getBarcodePngData(1.5, 50));
+            // move barcode to bottom
+            $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="height:30px;"></td></tr></table>';
+                $pdf->table .= '<img src="@' . preg_replace('#^data:image/[^;]+;base64,#', '', $imgBase64Encoded) . '">';
+            $pdf->table .= '</td>';
+            $pdf->table .= '<td style="width:10px;"></td>'; //spacer between barcode and customer image
+            $pdf->table .= '<td style="width:138px;" align="right">';
+                $customerImage = Configure::read('app.customerImagesDir') . DS . $customer->id_customer . '-xxl.jpg';
+                if (file_exists($customerImage)) {
+                    $fileinfos = getimagesize($customerImage);
+                    $ratio = $fileinfos[1] / $fileinfos[0];
+                    $customerImageBase64Encoded = base64_encode(file_get_contents($customerImage));
+                    $height = 70;
+                    $width = $height / $ratio;
+                    // move image to bottom
+                    $pdf->table .= '<img style="width:'.$width.'px;height:'.$height.'px;" src="@' . preg_replace('#^data:image/[^;]+;base64,#', '', $customerImageBase64Encoded) . '">';
+                }
+            $pdf->table .= '</td>';
+        $pdf->table .= '</tr>';
+        // END ROW barcode and customer image
+        
     $pdf->table .= '</table>';
     $pdf->table .= '</td>';
-    if (!$pairRecord) {
+    if (!$pairRecord || $i==$customers->count()-1) {
         $pdf->table .= '</tr>';
     }
     $i++;

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-15 17:29+0200\n"
+"POT-Creation-Date: 2019-04-16 14:20+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -954,6 +954,9 @@ msgid "Copy_all_email_addresses"
 msgstr ""
 
 msgid "Customer_ID"
+msgstr ""
+
+msgid "Member_card"
 msgstr ""
 
 msgid "Delete_deposit_take_back?"
