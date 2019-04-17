@@ -33,12 +33,14 @@ class CustomersController extends AdminAppController
     public function isAuthorized($user)
     {
         switch ($this->getRequest()->getParam('action')) {
+            case 'generateMemberCards':
+                return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
+                break;
             case 'edit':
             case 'creditBalanceSum':
                 return $this->AppAuth->isSuperadmin();
                 break;
             case 'profile':
-            case 'getMemberCard':
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer();
                 break;
             case 'delete':
