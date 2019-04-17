@@ -36,6 +36,9 @@ class CustomersController extends AdminAppController
             case 'generateMemberCards':
                 return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
                 break;
+            case 'generateMyMemberCard':
+                return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer());
+                break;
             case 'edit':
             case 'creditBalanceSum':
                 return $this->AppAuth->isSuperadmin();
@@ -55,12 +58,21 @@ class CustomersController extends AdminAppController
         }
     }
     
+    public function generateMyMemberCard()
+    {
+        $customerId = $this->AppAuth->getUserId();
+        $this->prepareGenerateMemberCards($customerId);
+    }
+    
     public function generateMemberCards()
     {
-        
         $customerIds = $this->getRequest()->getQuery('customerIds');
         $customerIds = explode(',', $customerIds);
-        
+        $this->prepareGenerateMemberCards($customerIds);
+    }
+    
+    private function prepareGenerateMemberCards($customerIds)
+    {
         if (empty($customerIds)) {
             throw new InvalidParameterException('no customer id passed');
         }

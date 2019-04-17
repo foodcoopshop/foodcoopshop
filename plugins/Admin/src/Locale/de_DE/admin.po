@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-17 09:21+0200\n"
-"PO-Revision-Date: 2019-04-17 09:21+0200\n"
+"POT-Creation-Date: 2019-04-17 10:06+0200\n"
+"PO-Revision-Date: 2019-04-17 10:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -858,6 +858,9 @@ msgstr "Zum Ändern auf das Profilbild klicken."
 msgid "Only_visible_for_other_membes_in_the_member_list."
 msgstr "Ist nur für andere Mitglieder in der Mitglieder-Liste sichtbar."
 
+msgid "Is_shown_on_member_card."
+msgstr "Wird auf der Mitgliedkarte angezeigt."
+
 msgid "Upload_new_profile_image_or_change_it"
 msgstr "Neues Profilbild hochladen bzw. austauschen"
 
@@ -902,6 +905,9 @@ msgstr "stundenabrechnungs-modul"
 
 msgid "How_do_I_use_the_paying_with_time_module?"
 msgstr "Wie verwende ich das Stundenabrechnungs-Modul?"
+
+msgid "Generate_my_member_card"
+msgstr "Meine Mitgliedskarte generieren"
 
 msgid "Delete_member_irrevocably?"
 msgstr "Mitgliedskonto unwiderruflich löschen?"
@@ -950,12 +956,6 @@ msgstr "{0} anzeigen"
 
 msgid "Add_comment"
 msgstr "Kommentar hinzufügen"
-
-msgid "Customer_ID"
-msgstr "Mitglieds-Nr."
-
-msgid "Member_card"
-msgstr "Mitgliedskarte"
 
 msgid "Delete_deposit_take_back?"
 msgstr "Pfand-Rücknahme löschen?"
@@ -1211,6 +1211,12 @@ msgstr "Bestelltag"
 
 msgid "Order_list_grouped_by"
 msgstr "Bestellliste gruppiert nach"
+
+msgid "Customer_ID"
+msgstr "Mitglieds-Nr."
+
+msgid "Member_card"
+msgstr "Mitgliedskarte"
 
 msgid "Edit_delivery_rhythm_for_selected_products"
 msgstr "Lieferrhythmus für ausgewählte Produkte bearbeiten"
