@@ -1,6 +1,7 @@
 <?php
 namespace Admin\Controller;
 
+use App\Lib\Error\Exception\InvalidParameterException;
 use App\Mailer\AppEmail;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Core\Configure;
@@ -52,14 +53,21 @@ class CustomersController extends AdminAppController
         }
     }
     
-    public function getMemberCards()
+    public function generateMemberCards()
     {
+        
+        $customerIds = $this->getRequest()->getQuery('customerIds');
+        $customerIds = explode(',', $customerIds);
+        
+        if (empty($customerIds)) {
+            throw new InvalidParameterException('no customer id passed');
+        }
+        
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $this->Customer->dropManufacturersInNextFind();
         $customers = $this->Customer->find('all', [
             'conditions' => [
-                'Customers.active' => APP_ON,
-//                 'Customers.id_customer IN' => [3,7,8,11]
+                'Customers.id_customer IN' => $customerIds
             ],
             'order' => [
                 'Customers.' . Configure::read('app.customerMainNamePart') => 'ASC'

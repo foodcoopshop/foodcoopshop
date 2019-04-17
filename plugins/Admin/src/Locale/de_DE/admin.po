@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-16 14:20+0200\n"
-"PO-Revision-Date: 2019-04-16 14:20+0200\n"
+"POT-Creation-Date: 2019-04-17 09:21+0200\n"
+"PO-Revision-Date: 2019-04-17 09:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -951,9 +951,6 @@ msgstr "{0} anzeigen"
 msgid "Add_comment"
 msgstr "Kommentar hinzufügen"
 
-msgid "Copy_all_email_addresses"
-msgstr "Alle E-Mail-Adressen kopieren"
-
 msgid "Customer_ID"
 msgstr "Mitglieds-Nr."
 
@@ -1070,6 +1067,12 @@ msgstr "Wenn es sich um eine Rückzahlung handelt, trage bitte ein, wie viel du 
 
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Bitte wähle die Monate aus, für die deine Zahlung gedacht ist."
+
+msgid "Copy_all_email_addresses"
+msgstr "Alle E-Mail-Adressen kopieren"
+
+msgid "Generate_member_cards"
+msgstr "Mitgliedskarten generieren"
 
 msgid "Delivery_days"
 msgstr "Liefertage"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-16 14:20+0200\n"
+"POT-Creation-Date: 2019-04-17 09:21+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -950,9 +950,6 @@ msgstr ""
 msgid "Add_comment"
 msgstr ""
 
-msgid "Copy_all_email_addresses"
-msgstr ""
-
 msgid "Customer_ID"
 msgstr ""
 
@@ -1068,6 +1065,12 @@ msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account
 msgstr ""
 
 msgid "Please_chose_the_months_for_your_payment."
+msgstr ""
+
+msgid "Copy_all_email_addresses"
+msgstr ""
+
+msgid "Generate_member_cards"
 msgstr ""
 
 msgid "Delivery_days"
