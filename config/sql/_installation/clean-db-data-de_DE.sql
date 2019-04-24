@@ -116,7 +116,8 @@ INSERT INTO `fcs_configuration` VALUES
 (580,1,'FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM','Sollen Lagerprodukte mit der wöchentlichen Bestellung bestellt werden können?','1','boolean',75,'de_DE','2019-02-18 12:38:00','2019-02-18 12:38:00'),
 (581,1,'FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS','In der Sofort-Bestellung ausschließlich Lagerprodukte anzeigen?','0','boolean',76,'de_DE','2019-02-18 12:38:00','2019-02-18 12:38:00'),
 (582,1,'FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES','Lagerprodukte in Rechnungen miteinbeziehen?','1','readonly',60,'de_DE','2019-02-18 12:38:00','2019-02-18 12:38:00'),
-(583,1,'FCS_REGISTRATION_NOTIFICATION_EMAILS','Wer soll bei neuen Registrierungen informiert werden?<br /><div class=\"small\">Mehrere E-Mail-Adressen mit , (ohne Leerzeichen) trennen.</div>','','text',55,'de_DE','2019-03-05 20:01:59','2019-03-05 20:01:59');
+(583,1,'FCS_REGISTRATION_NOTIFICATION_EMAILS','Wer soll bei neuen Registrierungen informiert werden?<br /><div class=\"small\">Mehrere E-Mail-Adressen mit , (ohne Leerzeichen) trennen.</div>','','text',55,'de_DE','2019-03-05 20:01:59','2019-03-05 20:01:59'),
+(584,1,'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED','Selbstbedienungs-Modus für Lagerprodukte verwenden?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/selbstbedienungs-modus\" target=\"_blank\">Zur Online-Doku</a></div>','0','readonly',57,'de_DE','2019-04-017 20:01:59','2019-04-17 20:01:59');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -241,7 +242,8 @@ INSERT INTO `phinxlog` VALUES
 (20190219104144,'StockProductOrderManagement','2019-02-19 21:25:36','2019-02-11 21:25:36',0),
 (20190305183508,'ConfigurationOptimizations','2019-03-05 19:01:59','2019-03-05 19:01:59',0),
 (20190314081354,'CorrectNetPriceAndTax','2019-03-14 09:53:00','2019-03-14 09:53:00',0),
-(20190331192259,'DifferentCartForInstantOrder','2019-03-31 09:53:00','2019-03-31 09:53:00',0);
+(20190331192259,'DifferentCartForInstantOrder','2019-03-31 09:53:00','2019-03-31 09:53:00',0),
+(20190417072617,'SelfServiceModeConfiguration','2019-04-17 09:53:00','2019-04-17 09:53:00',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

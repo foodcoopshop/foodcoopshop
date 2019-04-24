@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-11 11:00+0200\n"
-"PO-Revision-Date: 2019-04-11 11:01+0200\n"
+"POT-Creation-Date: 2019-04-17 10:06+0200\n"
+"PO-Revision-Date: 2019-04-17 10:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -516,6 +516,9 @@ msgstr "Slideshow"
 msgid "Turnover_statistics"
 msgstr "Umsatzstatistik"
 
+msgid "December"
+msgstr "Dezember"
+
 msgid "Add_tax_rate"
 msgstr "Neuen Steuersatz erstellen"
 
@@ -855,6 +858,9 @@ msgstr "Zum Ändern auf das Profilbild klicken."
 msgid "Only_visible_for_other_membes_in_the_member_list."
 msgstr "Ist nur für andere Mitglieder in der Mitglieder-Liste sichtbar."
 
+msgid "Is_shown_on_member_card."
+msgstr "Wird auf der Mitgliedkarte angezeigt."
+
 msgid "Upload_new_profile_image_or_change_it"
 msgstr "Neues Profilbild hochladen bzw. austauschen"
 
@@ -899,6 +905,9 @@ msgstr "stundenabrechnungs-modul"
 
 msgid "How_do_I_use_the_paying_with_time_module?"
 msgstr "Wie verwende ich das Stundenabrechnungs-Modul?"
+
+msgid "Generate_my_member_card"
+msgstr "Meine Mitgliedskarte generieren"
 
 msgid "Delete_member_irrevocably?"
 msgstr "Mitgliedskonto unwiderruflich löschen?"
@@ -947,9 +956,6 @@ msgstr "{0} anzeigen"
 
 msgid "Add_comment"
 msgstr "Kommentar hinzufügen"
-
-msgid "Copy_all_email_addresses"
-msgstr "Alle E-Mail-Adressen kopieren"
 
 msgid "Delete_deposit_take_back?"
 msgstr "Pfand-Rücknahme löschen?"
@@ -1061,6 +1067,12 @@ msgstr "Wenn es sich um eine Rückzahlung handelt, trage bitte ein, wie viel du 
 
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Bitte wähle die Monate aus, für die deine Zahlung gedacht ist."
+
+msgid "Copy_all_email_addresses"
+msgstr "Alle E-Mail-Adressen kopieren"
+
+msgid "Generate_member_cards"
+msgstr "Mitgliedskarten generieren"
 
 msgid "Delivery_days"
 msgstr "Liefertage"
@@ -1199,6 +1211,12 @@ msgstr "Bestelltag"
 
 msgid "Order_list_grouped_by"
 msgstr "Bestellliste gruppiert nach"
+
+msgid "Customer_ID"
+msgstr "Mitglieds-Nr."
+
+msgid "Member_card"
+msgstr "Mitgliedskarte"
 
 msgid "Edit_delivery_rhythm_for_selected_products"
 msgstr "Lieferrhythmus für ausgewählte Produkte bearbeiten"
@@ -1986,9 +2004,6 @@ msgstr "Löschen"
 #~ msgid "Will_be_shown_in_member_list_only."
 #~ msgstr "Wird nur in der Mitglieder-Liste angezeigt."
 
-#~ msgid "Member_changed"
-#~ msgstr "Einem anderen Mitglied zugewiesen"
-
 #, fuzzy
 #~ msgid "aactivate"
 #~ msgstr "aktivieren"
@@ -2008,9 +2023,6 @@ msgstr "Löschen"
 #, fuzzy
 #~ msgid "Delete_terms_of_use?"
 #~ msgstr "Variante löschen?"
-
-#~ msgid "Customer"
-#~ msgstr "Mitglied"
 
 #~ msgid "Zero_means_no_limit."
 #~ msgstr "0 bedeutet \"kein Limit\"."

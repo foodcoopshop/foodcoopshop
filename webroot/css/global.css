@@ -527,7 +527,11 @@ i.far.not-ok {
 	color: red;
 }
 tr.selected td > i.fas,
-tr.selected td > i.far {
+tr.selected td > i.far,
+tr.selected td > span > i.fas,
+tr.selected td > span > i.far,
+tr.selected td > div > i.fas,
+tr.selected td > div > i.far {
 	color: #fff;
 }
 .tooltipster-sidetip.tooltipster-light .tooltipster-box {

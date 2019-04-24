@@ -1088,8 +1088,14 @@ form.fcs-form input[type="checkbox"] {
     left: 200px;
 }
 body.customers .delete-customer-button {
-    float:right;
-    clear:both;
+    float: right;
+    clear: both;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+body.customers .generate-my-member-card-button {
+    float: left;
+    clear: both;
     margin-bottom: 15px;
     margin-top: 15px;
 }

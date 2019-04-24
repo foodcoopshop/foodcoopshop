@@ -43,6 +43,9 @@ use Cake\Core\Configure;
 
 echo '<table class="list">';
 echo '<tr class="sort">';
+echo $this->element('rowMarker/rowMarkerAll', [
+    'enabled' => true
+]);
 echo '<th class="hide">ID</th>';
 echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Name')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.id_default_group', __d('admin', 'Group')) . '</th>';
@@ -72,6 +75,10 @@ foreach ($customers as $customer) {
 
     echo '<tr class="data">';
 
+    echo $this->element('rowMarker/rowMarker', [
+        'show' => true
+    ]);
+    
     echo '<td class="hide">';
     echo $customer->id_customer;
     echo '</td>';
@@ -286,7 +293,8 @@ echo '</table>';
 echo '<div class="sc"></div>';
 
 echo '<div class="bottom-button-container">';
-echo '<button data-clipboard-text="'.join(',', $emailAddresses).'" class="btn-clipboard btn btn-outline-light"><i class="far fa-envelope"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
+    echo $this->element('customerList/email', ['emailAddresses' => $emailAddresses]);
+    echo $this->element('customerList/generateMemberCardsOfSelectedCustomers');
 echo '</div>';
 echo '<div class="sc"></div>';
 

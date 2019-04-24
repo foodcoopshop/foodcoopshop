@@ -68,7 +68,11 @@ echo '<br /><span class="small">';
 if ($imageExists) {
     echo __d('admin', 'Click_on_profile_image_to_change_it.').'<br /><br />';
 }
-echo __d('admin', 'Only_visible_for_other_membes_in_the_member_list.') . '</span>';
+echo __d('admin', 'Only_visible_for_other_membes_in_the_member_list.');
+if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+    echo '<br />' . __d('admin', 'Is_shown_on_member_card.');
+}
+echo '</span>';
 echo '</label>';
 echo '<div style="float:right;">';
 echo $this->Html->link(
@@ -134,6 +138,10 @@ if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
         'disabled' => (!$timebasedCurrencyDisableOptionAllowed ? 'disabled' : ''),
         'escape' => false
     ]);
+}
+
+if ($isOwnProfile) {
+    echo '<a target="_blank" class="generate-my-member-card-button btn btn-outline-light" href="/admin/customers/generateMyMemberCard.pdf"><i class="far fa-address-card"></i> ' . __d('admin', 'Generate_my_member_card') . '</a>';
 }
 
 if ($appAuth->isSuperadmin()) {
