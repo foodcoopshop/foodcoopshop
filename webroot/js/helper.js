@@ -140,9 +140,12 @@ foodcoopshop.Helper = {
 
     initSearchForm: function () {
         $('#product-search button[type="submit"]').on('click', function () {
-            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-search');
-            foodcoopshop.Helper.disableButton($(this));
-            $(this).closest('form').submit();
+            var form = $(this).closest('form');
+            if (form.find('input').val() != '') {
+                foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-search');
+                foodcoopshop.Helper.disableButton($(this));
+                form.submit();
+            }
         });
     },
 
