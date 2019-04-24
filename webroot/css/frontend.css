@@ -689,6 +689,10 @@ body.manufacturers.detail .imprint {
 #cart {
     min-height: 150px;
 }
+#cart a.self-service {
+	color: #fff;
+	margin-left: 10px;
+}
 #cart a.question {
 	color: #fff;
 	float: right;

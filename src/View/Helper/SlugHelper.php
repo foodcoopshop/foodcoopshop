@@ -23,6 +23,11 @@ class SlugHelper extends Helper
 {
 
 
+    public function getSelfService()
+    {
+        return '/self-service';
+    }
+    
     public function getActionLogsList()
     {
         return $this->getAdminHome().'/action-logs';
