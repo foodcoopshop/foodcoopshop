@@ -1,6 +1,7 @@
 <?php
 namespace Admin\Controller;
 
+use App\Lib\Error\Exception\InvalidParameterException;
 use App\Mailer\AppEmail;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Core\Configure;
@@ -32,6 +33,12 @@ class CustomersController extends AdminAppController
     public function isAuthorized($user)
     {
         switch ($this->getRequest()->getParam('action')) {
+            case 'generateMemberCards':
+                return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
+                break;
+            case 'generateMyMemberCard':
+                return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isCustomer());
+                break;
             case 'edit':
             case 'creditBalanceSum':
                 return $this->AppAuth->isSuperadmin();
@@ -49,6 +56,41 @@ class CustomersController extends AdminAppController
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
                 break;
         }
+    }
+    
+    public function generateMyMemberCard()
+    {
+        $customerId = $this->AppAuth->getUserId();
+        $this->prepareGenerateMemberCards($customerId);
+    }
+    
+    public function generateMemberCards()
+    {
+        $customerIds = $this->getRequest()->getQuery('customerIds');
+        $customerIds = explode(',', $customerIds);
+        $this->prepareGenerateMemberCards($customerIds);
+    }
+    
+    private function prepareGenerateMemberCards($customerIds)
+    {
+        if (empty($customerIds)) {
+            throw new InvalidParameterException('no customer id passed');
+        }
+        
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer->dropManufacturersInNextFind();
+        $customers = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer IN' => $customerIds
+            ],
+            'order' => [
+                'Customers.' . Configure::read('app.customerMainNamePart') => 'ASC'
+            ],
+            'contain' => [
+                'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
+            ]
+        ]);
+        $this->set('customers', $customers);
     }
 
     public function ajaxEditGroup()

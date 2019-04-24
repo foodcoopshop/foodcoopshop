@@ -6,28 +6,19 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 1.1.0
+ * @since         FoodCoopShop 2.5.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
 
-use App\Controller\Component\StringComponent;
-use App\Lib\Pdf\ListTcpdf;
-use Cake\I18n\I18n;
+if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+    $this->element('addScript', [
+        'script' => Configure::read('app.jsNamespace').".Admin.initGenerateMemberCardsOfSelectedCustomersButton();"
+    ]);
+    echo '<a id="generateMemberCardsOfSelectedCustomersButton" class="btn btn-outline-light" href="javascript:void(0);"><i class="far fa-address-card"></i> ' . __d('admin', 'Generate_member_cards') . '</a>';
+}
 
-$pdf = new ListTcpdf();
-$pdf->SetLeftMargin(12);
-$pdf->SetRightMargin(12);
-
-$title = __('Terms_of_use');
-$pdf->SetTitle($title);
-$pdf->infoTextForFooter = $title;
-
-$pdf->AddPage();
-
-$html = $this->element('legal/'.I18n::getLocale().'/termsOfUse');
-$pdf->writeHTML($html, true, false, true, false, '');
-
-echo $pdf->Output(StringComponent::createRandomString().'.pdf', $saveParam);
+?>

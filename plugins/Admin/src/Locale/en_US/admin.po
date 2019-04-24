@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-11 11:00+0200\n"
-"PO-Revision-Date: 2019-04-11 11:01+0200\n"
+"POT-Creation-Date: 2019-04-17 10:06+0200\n"
+"PO-Revision-Date: 2019-04-17 10:03+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -516,6 +516,9 @@ msgstr "Slideshow"
 msgid "Turnover_statistics"
 msgstr "Turnover statistics"
 
+msgid "December"
+msgstr "December"
+
 msgid "Add_tax_rate"
 msgstr "Add tax rate"
 
@@ -855,6 +858,9 @@ msgstr "Click on profile image to change it."
 msgid "Only_visible_for_other_membes_in_the_member_list."
 msgstr "Only visible for other members in the member list."
 
+msgid "Is_shown_on_member_card."
+msgstr "Is shown on member card."
+
 msgid "Upload_new_profile_image_or_change_it"
 msgstr "Upload new profile image or change it"
 
@@ -899,6 +905,9 @@ msgstr "paying-with-time-module"
 
 msgid "How_do_I_use_the_paying_with_time_module?"
 msgstr "How do I use the paying-with-time-module?"
+
+msgid "Generate_my_member_card"
+msgstr "Generate my member card"
 
 msgid "Delete_member_irrevocably?"
 msgstr "Delete account irrevocably?"
@@ -947,9 +956,6 @@ msgstr "Show {0}"
 
 msgid "Add_comment"
 msgstr "Add comment"
-
-msgid "Copy_all_email_addresses"
-msgstr "Copy all e-mail adresses"
 
 msgid "Delete_deposit_take_back?"
 msgstr "Delete deposit take back?"
@@ -1061,6 +1067,12 @@ msgstr "If you chose \"payback\", please enter the amount that you just transfer
 
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Please chose the months for your payment."
+
+msgid "Copy_all_email_addresses"
+msgstr "Copy all e-mail adresses"
+
+msgid "Generate_member_cards"
+msgstr "Generate member cards"
 
 msgid "Delivery_days"
 msgstr "Delivery days"
@@ -1199,6 +1211,12 @@ msgstr "Order day"
 
 msgid "Order_list_grouped_by"
 msgstr "Order list grouped by"
+
+msgid "Customer_ID"
+msgstr "Customer-ID"
+
+msgid "Member_card"
+msgstr "Member card"
 
 msgid "Edit_delivery_rhythm_for_selected_products"
 msgstr "Edit delivery rhythm for selected products"
@@ -1982,10 +2000,6 @@ msgstr "Delete"
 
 #~ msgid "Will_be_shown_in_member_list_only."
 #~ msgstr "Will be shown in the member list only."
-
-#, fuzzy
-#~ msgid "Member_changed"
-#~ msgstr "changed"
 
 #, fuzzy
 #~ msgid "aactivate"

@@ -139,6 +139,15 @@ foodcoopshop.Admin = {
         return productIds;
     },
     
+    getSelectedCustomerIds : function() {
+        var customerIds = [];
+        $('table.list').find('input.row-marker[type="checkbox"]:checked').each(function () {
+            var customerId = $(this).closest('tr').find('td:nth-child(2)').html();
+            customerIds.push(customerId);
+        });
+        return customerIds;
+    },
+    
     initChangePickupDayOfSelectedProductsButton : function () {
         var button = $('#changePickupDayOfSelectedProductsButton');
         foodcoopshop.Helper.disableButton(button);
@@ -320,7 +329,7 @@ foodcoopshop.Admin = {
                 text = '';
             }
             CKEDITOR.instances['dialogCustomerComment'].setData(text); // attr title is deleted after toolbar init
-            $('#customer-comment-edit-form #dialogCustomerId').val($(this).closest('tr').find('td:nth-child(1)').html());
+            $('#customer-comment-edit-form #dialogCustomerId').val($(this).closest('tr').find('td:nth-child(2)').html());
             dialog.dialog('open');
         });
 
@@ -2091,15 +2100,15 @@ foodcoopshop.Admin = {
         });
 
         $('.customer-group-edit-button').on('click', function () {
-            var selectedGroupId = $(this).closest('tr').find('td:nth-child(3) span.group-for-dialog').html();
+            var selectedGroupId = $(this).closest('tr').find('td:nth-child(4) span.group-for-dialog').html();
             var select = $('#' + dialogId + ' #dialogCustomerGroupEditGroup');
             select.find('option').remove();
             select.append($('#selectgroupid').html());
             select.val(selectedGroupId);
-            var html = foodcoopshop.LocalizedJs.admin.ChangeGroupFor + ': ' + $(this).closest('tr').find('td:nth-child(2) a').text();
+            var html = foodcoopshop.LocalizedJs.admin.ChangeGroupFor + ': ' + $(this).closest('tr').find('td:nth-child(3) a').text();
             html += '<p style="font-weight: normal;"><br />' + foodcoopshop.LocalizedJs.admin.TheMemberNeedsToSignInAgain + '</p>';
             $('#' + dialogId + ' #dialogCustomerGroupEditText').html(html);
-            $('#' + dialogId + ' #dialogCustomerGroupEditCustomerId').val($(this).closest('tr').find('td:nth-child(1)').html());
+            $('#' + dialogId + ' #dialogCustomerGroupEditCustomerId').val($(this).closest('tr').find('td:nth-child(2)').html());
             dialog.dialog('open');
         });
 
@@ -2244,7 +2253,7 @@ foodcoopshop.Admin = {
                 };
             }
 
-            var html = '<p>' + newStateText.replaceI18n(0, '<b>' + dataRow.find('td:nth-child(2) span.name a').html() + '</b>') + '</p>';
+            var html = '<p>' + newStateText.replaceI18n(0, '<b>' + dataRow.find('td:nth-child(3) span.name a').html() + '</b>') + '</p>';
             html += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
             $('<div></div>')
                 .appendTo('body')
@@ -2513,6 +2522,20 @@ foodcoopshop.Admin = {
                 });
         });
 
+    },
+    
+    initGenerateMemberCardsOfSelectedCustomersButton : function() {
+        var button = $('#generateMemberCardsOfSelectedCustomersButton');
+        foodcoopshop.Helper.disableButton(button);
+
+        $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
+            foodcoopshop.Admin.updateObjectSelectionActionButton(button);
+        });
+
+        button.on('click', function () {
+            var customerIds = foodcoopshop.Admin.getSelectedCustomerIds();
+            window.open('/admin/customers/generateMemberCards.pdf?customerIds=' + customerIds.join(','));
+        });
     },
 
     initProductDropdown: function (selectedProductId, manufacturerId) {

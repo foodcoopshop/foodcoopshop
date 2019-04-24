@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-11 11:00+0200\n"
+"POT-Creation-Date: 2019-04-17 10:06+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -515,6 +515,9 @@ msgstr ""
 msgid "Turnover_statistics"
 msgstr ""
 
+msgid "December"
+msgstr ""
+
 msgid "Add_tax_rate"
 msgstr ""
 
@@ -854,6 +857,9 @@ msgstr ""
 msgid "Only_visible_for_other_membes_in_the_member_list."
 msgstr ""
 
+msgid "Is_shown_on_member_card."
+msgstr ""
+
 msgid "Upload_new_profile_image_or_change_it"
 msgstr ""
 
@@ -897,6 +903,9 @@ msgid "docs_route_paying_with_time_module"
 msgstr ""
 
 msgid "How_do_I_use_the_paying_with_time_module?"
+msgstr ""
+
+msgid "Generate_my_member_card"
 msgstr ""
 
 msgid "Delete_member_irrevocably?"
@@ -945,9 +954,6 @@ msgid "Show_{0}"
 msgstr ""
 
 msgid "Add_comment"
-msgstr ""
-
-msgid "Copy_all_email_addresses"
 msgstr ""
 
 msgid "Delete_deposit_take_back?"
@@ -1059,6 +1065,12 @@ msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account
 msgstr ""
 
 msgid "Please_chose_the_months_for_your_payment."
+msgstr ""
+
+msgid "Copy_all_email_addresses"
+msgstr ""
+
+msgid "Generate_member_cards"
 msgstr ""
 
 msgid "Delivery_days"
@@ -1197,6 +1209,12 @@ msgid "Order_day"
 msgstr ""
 
 msgid "Order_list_grouped_by"
+msgstr ""
+
+msgid "Customer_ID"
+msgstr ""
+
+msgid "Member_card"
 msgstr ""
 
 msgid "Edit_delivery_rhythm_for_selected_products"
