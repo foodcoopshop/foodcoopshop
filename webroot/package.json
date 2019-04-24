@@ -15,15 +15,15 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.8.1",
-    "blueimp-file-upload": "^9.28.0",
+    "blueimp-file-upload": "^9.30.0",
     "bootstrap": "^4.3.1",
-    "bootstrap-select": "1.13.8",
+    "bootstrap-select": "^1.13.8",
     "chart.js": "^2.8.0",
     "ckeditor": "^4.11.3",
     "clipboard": "^2.0.4",
     "components-jqueryui": "~1.12",
     "featherlight": "^1.7.13",
-    "jquery": "^3.3.1",
+    "jquery": "^3.4.0",
     "jquery-backstretch": "^2.1.17",
     "jquery-knob": "~1.2.11",
     "jquery-migrate": "^1.4.1",
@@ -31,11 +31,11 @@
     "jquery.cycle2.swipe": "1.0.0",
     "jquery.scrollto": "^2.1.2",
     "owl.carousel": "^2.3.4",
-    "popper.js": "^1.14.7",
+    "popper.js": "^1.15.0",
     "slidebars": "^2.0.2",
     "tooltipster": "^4.2.6"
   },
   "devDependencies": {
-    "eslint": "^5.15.3"
+    "eslint": "^5.16.0"
   }
 }
