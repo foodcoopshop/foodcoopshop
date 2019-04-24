@@ -27,7 +27,7 @@ $this->element('addScript', ['script' =>
     $btnClass = 'btn-success';
     ?>
   
-  <h1><?php echo __('Sign_in'); ?></h1>
+  <h1><?php echo $title_for_layout; ?></h1>
   
   <form id="LoginForm" method="post" accept-charset="utf-8">
         
@@ -46,7 +46,7 @@ $this->element('addScript', ['script' =>
         
         <div class="sc"></div>
         <?php
-            echo '<a style="float: left;" href="' . $this->Slug->getNewPasswordRequest() . '">'.__('Forgot_password?').'</a>';
+            echo '<a style="float:left;" target="_blank" href="' . $this->Slug->getNewPasswordRequest() . '">'.__('Forgot_password?').'</a>';
         ?>
          
         <div class="sc"></div>
@@ -61,62 +61,66 @@ $this->element('addScript', ['script' =>
         ]);
     ?>
       <div class="sc"></div>
-      <h1 style="border-radius: 0;margin-top: 20px;padding-top: 20px;border-top: 1px solid #d6d4d4;"><?php echo __('Create_account'); ?></h1>
-      
-            <?php
-            echo $this->Form->create(
-                $customer,
-                [
-                    'url' => $this->Slug->getRegistration(),
-                    'id' => 'RegistrationForm',
-                    'novalidate' => 'novalidate'
-                ]
-            );
-              echo $this->Form->control('Customers.address_customer.email', ['label' => __('Email'), 'id' => 'RegistraionFormEmail', 'required' => true]); // id: avoid duplicate id (login form has field "email" too)
-
-              echo '<div class="detail-form">';
-
-            if (Configure::read('appDb.FCS_AUTHENTICATION_INFO_TEXT') != '') {
-                echo '<p>'.Configure::read('appDb.FCS_AUTHENTICATION_INFO_TEXT').'</p>';
-            }
-
-                  echo $this->Form->hidden('antiSpam', ['value' => 'lalala', 'id' => 'antiSpam']);
-
-                  echo $this->Form->control('Customers.firstname', ['label' => __('Firstname'), 'required' => true]); // required should not be necessary here
-                  echo $this->Form->control('Customers.lastname', ['label' => __('Lastname'), 'required' => true]); // required should not be necessary here
-
-                  echo $this->Form->control('Customers.address_customer.address1', ['label' => __('Street')]);
-                  echo $this->Form->control('Customers.address_customer.address2', ['label' => __('Additional_address_information')]);
-
-                  echo $this->Form->control('Customers.address_customer.postcode', ['label' => __('Zip')]);
-                  echo $this->Form->control('Customers.address_customer.city', ['label' => __('City')]);
-
-                  echo $this->Form->control('Customers.address_customer.phone_mobile', ['label' => __('Mobile')]);
-                  echo $this->Form->control('Customers.address_customer.phone', ['label' => __('Phone')]);
-
-                  if (Configure::read('app.emailOrderReminderEnabled')) {
-                      echo $this->Form->control('Customers.email_order_reminder', ['label' => __('Want_to_receive_reminder_emails?'), 'type' => 'checkbox']);
-                  }
-
-                  if (Configure::read('app.termsOfUseEnabled')) {
-                      echo '<div id="terms-of-use" class="featherlight-overlay">';
-                        echo $this->element('legal/'.I18n::getLocale().'/termsOfUse');
-                      echo '</div>';
-                      $termsOfUseLink = '<a href="#terms-of-use">'.__('terms_of_use').'</a>';
-                      echo $this->Form->control('Customers.terms_of_use_accepted_date_checkbox', [
-                          'label' => __('I_accept_the_{0}', [$termsOfUseLink]),
-                          'type' => 'checkbox',
-                          'escape' => false
-                      ]);
-                  }
-                ?>
+      <?php if ($renderRegistrationForm) { ?>
+          <div class="registration-form-wrapper">
+              <h1 class="h1-registration"><?php echo __('Create_account'); ?></h1>
               
-              <div class="sc"></div>
-              <br />
-              <button type="submit" class="btn btn-success"><i class="fas fa-user"></i> <?php echo __('Create_account'); ?></button>
-          
-          </div>
-        <?php echo $this->Form->end(); ?>
+                    <?php
+                    echo $this->Form->create(
+                        $customer,
+                        [
+                            'url' => $this->Slug->getRegistration(),
+                            'id' => 'RegistrationForm',
+                            'novalidate' => 'novalidate'
+                        ]
+                    );
+                      echo $this->Form->control('Customers.address_customer.email', ['label' => __('Email'), 'id' => 'RegistraionFormEmail', 'required' => true]); // id: avoid duplicate id (login form has field "email" too)
+        
+                      echo '<div class="detail-form">';
+        
+                    if (Configure::read('appDb.FCS_AUTHENTICATION_INFO_TEXT') != '') {
+                        echo '<p>'.Configure::read('appDb.FCS_AUTHENTICATION_INFO_TEXT').'</p>';
+                    }
+        
+                          echo $this->Form->hidden('antiSpam', ['value' => 'lalala', 'id' => 'antiSpam']);
+        
+                          echo $this->Form->control('Customers.firstname', ['label' => __('Firstname'), 'required' => true]); // required should not be necessary here
+                          echo $this->Form->control('Customers.lastname', ['label' => __('Lastname'), 'required' => true]); // required should not be necessary here
+        
+                          echo $this->Form->control('Customers.address_customer.address1', ['label' => __('Street')]);
+                          echo $this->Form->control('Customers.address_customer.address2', ['label' => __('Additional_address_information')]);
+        
+                          echo $this->Form->control('Customers.address_customer.postcode', ['label' => __('Zip')]);
+                          echo $this->Form->control('Customers.address_customer.city', ['label' => __('City')]);
+        
+                          echo $this->Form->control('Customers.address_customer.phone_mobile', ['label' => __('Mobile')]);
+                          echo $this->Form->control('Customers.address_customer.phone', ['label' => __('Phone')]);
+        
+                          if (Configure::read('app.emailOrderReminderEnabled')) {
+                              echo $this->Form->control('Customers.email_order_reminder', ['label' => __('Want_to_receive_reminder_emails?'), 'type' => 'checkbox']);
+                          }
+        
+                          if (Configure::read('app.termsOfUseEnabled')) {
+                              echo '<div id="terms-of-use" class="featherlight-overlay">';
+                                echo $this->element('legal/'.I18n::getLocale().'/termsOfUse');
+                              echo '</div>';
+                              $termsOfUseLink = '<a href="#terms-of-use">'.__('terms_of_use').'</a>';
+                              echo $this->Form->control('Customers.terms_of_use_accepted_date_checkbox', [
+                                  'label' => __('I_accept_the_{0}', [$termsOfUseLink]),
+                                  'type' => 'checkbox',
+                                  'escape' => false
+                              ]);
+                          }
+                        ?>
+                      
+                      <div class="sc"></div>
+                      <br />
+                      <button type="submit" class="btn btn-success"><i class="fas fa-user"></i> <?php echo __('Create_account'); ?></button>
+                  
+                  </div>
+                <?php echo $this->Form->end(); ?>
+            </div> <?php // .registration-form-wrapper ?>
+        <?php } ?>
     <?php } ?>
   
 </div>

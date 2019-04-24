@@ -21,11 +21,7 @@ echo $this->element('layout/header');
 <div id="container">
 
     <div id="header">
-        <div class="logo-wrapper">
-            <a href="<?php echo $this->Slug->getHome(); ?>" title="<?php echo __('Home'); ?>">
-                <img class="logo" src="/files/images/logo.jpg" />
-            </a>
-        </div>
+        <?php echo $this->element('logo'); ?>
         <?php if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) { ?>
             <?php
             	$this->element('addScript', ['script' =>

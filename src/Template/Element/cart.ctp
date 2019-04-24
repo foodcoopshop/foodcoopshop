@@ -43,7 +43,7 @@ if ($appAuth->Cart->getProducts() !== null) {
     <h3>
     	<i class="fas fa-shopping-cart"></i>
     	<?php echo __('Cart'); ?>
-    	<?php if ($showLinkToSelfService) { ?>
+    	<?php if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && $showLinkToSelfService) { ?>
     		<a class="self-service" href="<?php echo $this->Slug->getSelfService(); ?>"><i class="fas fa-shopping-bag"></i></a>
    		<?php } ?>
     	<a class="question" href="<?php echo $this->Html->getDocsUrl(__('docs_route_order_handling')); ?>"><i class="far fa-question-circle"></i></a>

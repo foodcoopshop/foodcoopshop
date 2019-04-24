@@ -865,6 +865,12 @@ body.carts.detail .cart:not(#cart) a.btn {
     padding-left: 80px;
     width: 350px;
 }
+.h1-registration {
+    border-radius: 0;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #d6d4d4;	
+}
 #CartsDetailForm  .input.checkbox .error-message,
 #CartsDetailForm  .input.select .error-message {
     margin-left: -10px ! important;

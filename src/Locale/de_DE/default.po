@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-01 12:42+0200\n"
-"PO-Revision-Date: 2019-04-01 12:05+0200\n"
+"POT-Creation-Date: 2019-04-24 15:20+0200\n"
+"PO-Revision-Date: 2019-04-24 15:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -167,6 +167,9 @@ msgstr "Dein neues Passwort wurde erfolgreich aktiviert und du bist bereits eing
 
 msgid "Sign_in"
 msgstr "Anmelden"
+
+msgid "Sign_in_for_self_service"
+msgstr "Anmelden zur Selbstbedienung"
 
 msgid "You_are_already_signed_in."
 msgstr "Du bist bereits angemeldet."
@@ -947,6 +950,9 @@ msgstr "Datenschutzerklärung"
 
 msgid "List_of_allergens"
 msgstr "Allergenliste"
+
+msgid "Self_service_for_stock_products"
+msgstr "Selbstbedienungs-Modus für Lagerprodukte"
 
 msgid "Tax_rates_overview_table"
 msgstr "Übersichtstabelle nach Steuersatz"
@@ -1977,6 +1983,9 @@ msgstr "Seite, auf der du gerade warst"
 msgid "Click_here_to_open_the"
 msgstr "Hier geht's zur"
 
+msgid "Sign_out"
+msgstr "Abmelden"
+
 msgid "This_email_was_created_automatcially."
 msgstr "Diese E-Mail wurde automatisch erstellt."
 
@@ -2045,9 +2054,6 @@ msgstr "Mitglieder"
 
 msgid "Activities"
 msgstr "Aktivitäten"
-
-msgid "Sign_out"
-msgstr "Abmelden"
 
 msgid "Credit"
 msgstr "Guthaben"
@@ -2255,6 +2261,9 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "Logout"
+#~ msgstr "Abmelden"
 
 #~ msgid "route_private_profile_images"
 #~ msgstr "profilbilder"

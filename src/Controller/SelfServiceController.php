@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use Cake\Core\Configure;
+use Cake\Event\Event;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -18,6 +21,14 @@ namespace App\Controller;
 class SelfServiceController extends FrontendController
 {
 
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        if (!(Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && $this->AppAuth->user())) {
+            $this->AppAuth->deny($this->getRequest()->getParam('action'));
+        }
+    }
+    
     public function index()
     {
         $this->viewBuilder()->setLayout('self_service');

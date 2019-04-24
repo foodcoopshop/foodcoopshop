@@ -12,24 +12,9 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-
-echo $this->element('layout/header');
 ?>
-
-<div id="self-service">
-    <?php echo $this->element('cart', ['showLinkToSelfService' => false]); ?>
-    
-    <?php echo $this->fetch('content'); ?>
-    
-    <?php
-        if ($appAuth->user()) { ?>
-        	<a class="logout" href="<?php echo $this->Slug->getLogout(); ?>"><?php echo __('Sign_out'); ?></a>        
-    <?php } ?>
-    
-    <?php echo $this->element('logo'); ?>
-    
+<div class="logo-wrapper">
+	<a href="<?php echo $this->Slug->getHome(); ?>" title="<?php echo __('Home'); ?>">
+		<img class="logo" src="/files/images/logo.jpg?<?php echo filemtime(WWW_ROOT.'files'.DS.'images'.DS.'logo.jpg')?>" />
+	</a>
 </div>
-
-<?php
-    echo $this->element('layout/footer');
-?>

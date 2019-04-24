@@ -13,5 +13,31 @@
  */
 
 #self-service {
-    margin: 30px;
+    background-color: #fff;
+    width: 917px;
+    min-height: 500px;
+    padding-right: 10px;
+    position: relative;
+}
+#self-service #login-form {
+	padding-top: 60px;
+}
+#self-service #login-form h1 {
+	padding-left: 115px;
+}
+#self-service .logout {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+}
+#self-service .logo-wrapper img {
+	width: 100px;
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+}
+#self-service #cart {
+	border: 1px solid #ccc;
+	border-top: none;
+	border-left: none;
 }
