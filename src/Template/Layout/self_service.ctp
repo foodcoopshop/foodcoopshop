@@ -17,7 +17,10 @@ echo $this->element('layout/header');
 ?>
 
 <div id="self-service">
-    <?php echo $this->element('cart', ['showLinkToSelfService' => false]); ?>
+    <?php echo $this->element('cart', [
+        'showLinkToSelfService' => false,
+        'showLoadLastOrderDetailsDropdown' => false
+    ]); ?>
     
     <?php echo $this->fetch('content'); ?>
     

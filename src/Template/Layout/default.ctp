@@ -52,7 +52,10 @@ echo $this->element('layout/header');
     
     <div id="right">
         <div class="inner-right">
-            <?php echo $this->element('cart', ['showLinkToSelfService' => true]); ?>
+            <?php echo $this->element('cart', [
+                'showLinkToSelfService' => true,
+                'showLoadLastOrderDetailsDropdown' => true
+            ]); ?>
             <?php echo $this->element('infoBox'); ?>
         </div>
     </div>

@@ -52,7 +52,7 @@ if ($appAuth->Cart->getProducts() !== null) {
     <div class="inner">
     
     	<?php
-    	if (!$this->request->getSession()->check('Auth.instantOrderCustomer')) {
+    	if ($showLoadLastOrderDetailsDropdown && !$this->request->getSession()->check('Auth.instantOrderCustomer')) {
     	    $lastOrderDetails = $appAuth->getLastOrderDetailsForDropdown();
     	    if (!empty($lastOrderDetails)) {
     	        $lastOrderDetails['remove-all-products-from-cart'] = __('Empty_cart').'...';
