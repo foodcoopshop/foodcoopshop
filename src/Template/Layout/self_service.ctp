@@ -21,10 +21,13 @@ echo $this->element('layout/header');
     
     <?php echo $this->fetch('content'); ?>
     
-    <?php
-        if ($appAuth->user()) { ?>
-        	<a class="logout" href="<?php echo $this->Slug->getLogout(); ?>"><?php echo __('Sign_out'); ?></a>        
-    <?php } ?>
+    <div class="logout-wrapper">
+        <?php
+            $logoutButton = $this->Menu->getAuthMenuElement($appAuth);
+            if ($appAuth->user()) { ?>
+            	<a class="<?php echo join(' ', $logoutButton['options']['class']); ?>" href="<?php echo $logoutButton['slug']?>"><?php echo $logoutButton['name']; ?></a> - <?php echo str_replace('X', '<span class="auto-logout-timer"></span>', __('Auto_logout_in_X_seconds')); ?>
+        <?php } ?>
+	</div>
     
     <?php echo $this->element('logo'); ?>
     

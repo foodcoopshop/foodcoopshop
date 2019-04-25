@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-24 15:20+0200\n"
+"POT-Creation-Date: 2019-04-25 14:47+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1982,7 +1982,7 @@ msgstr ""
 msgid "Click_here_to_open_the"
 msgstr ""
 
-msgid "Sign_out"
+msgid "Auto_logout_in_X_seconds"
 msgstr ""
 
 msgid "This_email_was_created_automatcially."
@@ -2052,6 +2052,9 @@ msgid "Members"
 msgstr ""
 
 msgid "Activities"
+msgstr ""
+
+msgid "Sign_out"
 msgstr ""
 
 msgid "Credit"

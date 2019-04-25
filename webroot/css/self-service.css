@@ -25,7 +25,7 @@
 #self-service #login-form h1 {
 	padding-left: 115px;
 }
-#self-service .logout {
+#self-service .logout-wrapper {
 	position: absolute;
 	bottom: 10px;
 	left: 10px;

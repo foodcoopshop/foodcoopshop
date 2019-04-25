@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-24 15:20+0200\n"
-"PO-Revision-Date: 2019-04-24 15:20+0200\n"
+"POT-Creation-Date: 2019-04-25 14:47+0200\n"
+"PO-Revision-Date: 2019-04-25 14:47+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1983,8 +1983,8 @@ msgstr "Seite, auf der du gerade warst"
 msgid "Click_here_to_open_the"
 msgstr "Hier geht's zur"
 
-msgid "Sign_out"
-msgstr "Abmelden"
+msgid "Auto_logout_in_X_seconds"
+msgstr "Auto-Logout in X Sekunden"
 
 msgid "This_email_was_created_automatcially."
 msgstr "Diese E-Mail wurde automatisch erstellt."
@@ -2054,6 +2054,9 @@ msgstr "Mitglieder"
 
 msgid "Activities"
 msgstr "Aktivitäten"
+
+msgid "Sign_out"
+msgstr "Abmelden"
 
 msgid "Credit"
 msgstr "Guthaben"

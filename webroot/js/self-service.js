@@ -12,4 +12,45 @@
  * @link          https://www.foodcoopshop.com
  */
 foodcoopshop.SelfService = {
+
+    autoLogoutTimer : 600,
+    currentLogoutTimer : 0,
+        
+    init : function() {
+        foodcoopshop.Helper.initLogoutButton();
+        this.initAutoLogout();
+    },
+    
+    initAutoLogout : function() {
+        
+        this.resetTimer();
+        this.renderTimer();
+        
+        $(document).idle({
+            startAtIdle : true,
+            onActive: function(){
+                foodcoopshop.SelfService.resetTimer();
+                foodcoopshop.SelfService.renderTimer();
+            },
+            onIdle: function() {
+                foodcoopshop.SelfService.currentLogoutTimer--;
+                foodcoopshop.SelfService.renderTimer();
+                if (foodcoopshop.SelfService.currentLogoutTimer == 0) {
+                    document.location.href = '/' + foodcoopshop.LocalizedJs.helper.routeLogout;
+                }
+            },
+            recurIdleCall : true,
+            idle: 1000
+        });
+        
+    },
+    
+    resetTimer : function() {
+        this.currentLogoutTimer = this.autoLogoutTimer;
+    },
+    
+    renderTimer : function() {
+        $('.auto-logout-timer').html(this.currentLogoutTimer);
+    }
+
 };
