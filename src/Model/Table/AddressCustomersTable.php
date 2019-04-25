@@ -29,6 +29,12 @@ class AddressCustomersTable extends AddressesTable
             'provider' => 'table',
             'message' => __('The_email_address_is_already_used_by_another_member_or_manufacturer.')
         ]);
+        $validator->allowEmpty('email_forwarding');
+        $validator->add('email_forwarding', 'multipleEmails', [
+            'rule' => 'ruleMultipleEmails',
+            'provider' => 'table',
+            'message' => __('At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space.')
+        ]);
         $validator->notEmpty('address1', __('Please_enter_your_street.'));
         $validator->notEmpty('city', __('Please_enter_your_city.'));
         $validator->notEmpty('postcode', __('Please_enter_your_zip.'));

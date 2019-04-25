@@ -98,6 +98,10 @@ echo $this->Form->control('Customers.delete_image', [
 echo $this->Form->control('Customers.address_customer.email', [
     'label' => __d('admin', 'Email')
 ]);
+echo $this->Form->control('Customers.address_customer.email_forwarding', [
+    'label' => __d('admin', 'Email_forwarding'),
+    'required' => false
+]);
 echo $this->Form->control('Customers.address_customer.address1', [
     'label' => __d('admin', 'Street')
 ]);

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-17 10:06+0200\n"
+"POT-Creation-Date: 2019-04-25 15:43+0200\n"
 "PO-Revision-Date: 2019-04-17 10:03+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -869,6 +869,9 @@ msgstr "Delete profile image?"
 
 msgid "Email"
 msgstr "E-mail"
+
+msgid "Email_forwarding"
+msgstr "E-Mail forwarding"
 
 msgid "Street"
 msgstr "Street"
