@@ -37,6 +37,34 @@ class AppController extends Controller
         $this->loadComponent('String');
         $this->loadComponent('Cart');
 
+        $authenticate = [
+            'Form' => [
+                'userModel' => 'Customers',
+                'fields' => [
+                    'username' => 'email',
+                    'password' => 'passwd'
+                ],
+                'passwordHasher' => [
+                    'className' => 'Fallback',
+                    'hashers' => [
+                        'Default',
+                        'Legacy'
+                    ]
+                ],
+                'finder' => 'auth' // CustomersTable::findAuth
+            ]
+        ];
+        
+        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+            $authenticate['BarCode'] = [
+                'userModel' => 'Customers',
+                'fields' => [
+                    'identifier' => 'barCode'
+                ],
+                'finder' => 'auth' // CustomersTable::findAuth
+            ];
+        }
+        
         $this->loadComponent('AppAuth', [
             'logoutRedirect' => '/',
             'loginAction' => Configure::read('app.slugHelper')->getLogin(),
@@ -44,30 +72,7 @@ class AppController extends Controller
             'authorize' => [
                 'Controller'
             ],
-            'authenticate' => [
-                'BarCode' => [
-                    'userModel' => 'Customers',
-                    'fields' => [
-                        'identifier' => 'barCode'
-                    ],
-                    'finder' => 'auth' // CustomersTable::findAuth
-                ],
-                'Form' => [
-                    'userModel' => 'Customers',
-                    'fields' => [
-                        'username' => 'email',
-                        'password' => 'passwd'
-                    ],
-                    'passwordHasher' => [
-                        'className' => 'Fallback',
-                        'hashers' => [
-                            'Default',
-                            'Legacy'
-                        ]
-                    ],
-                    'finder' => 'auth' // CustomersTable::findAuth
-                ]
-            ],
+            'authenticate' => $authenticate,
             'storage' => 'Session'
         ]);
 
