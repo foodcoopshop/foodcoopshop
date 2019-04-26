@@ -32,16 +32,19 @@ $this->element('addScript', ['script' =>
   <form id="LoginForm" method="post" accept-charset="utf-8">
         
         <?php
-          echo $this->Form->control('email', ['label' => __('Email')]);
-          echo $this->Form->control('passwd', ['label' => __('Password')]);
-
-          echo '<div class="remember-me-wrapper">';
+          if (!$enableBarCodeLogin) {
+              echo $this->Form->control('email', ['label' => __('Email')]);
+              echo $this->Form->control('passwd', ['label' => __('Password')]);
+              echo '<div class="remember-me-wrapper">';
               echo $this->Form->control('remember_me', [
                   'type' => 'checkbox',
                   'label' => __('Stay_signed_in').'<br /><small>'.__('and_accept_cookie').'</small>',
                   'escape' => false
               ]);
               echo '</div>';
+          } else {
+              echo $this->Form->control('barCode', ['label' => __('BarCode')]);
+          }
         ?>
         
         <div class="sc"></div>

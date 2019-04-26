@@ -9,6 +9,7 @@ use Cake\Core\Exception\Exception;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Security;
 use Cake\Http\Exception\ForbiddenException;
 
 /**
@@ -80,6 +81,9 @@ class CustomersController extends AdminAppController
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $this->Customer->dropManufacturersInNextFind();
         $customers = $this->Customer->find('all', [
+            'fields' => [
+                'bar_code' => 'SUBSTRING(SHA1(CONCAT(Customers.id_customer' .', "' .  Security::getSalt() . '")), 1, 13)'
+            ],
             'conditions' => [
                 'Customers.id_customer IN' => $customerIds
             ],
@@ -90,6 +94,8 @@ class CustomersController extends AdminAppController
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
             ]
         ]);
+        $customers->select($this->Customer);
+        $customers->select($this->Customer->AddressCustomers);
         $this->set('customers', $customers);
     }
 

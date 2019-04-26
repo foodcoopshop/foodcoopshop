@@ -19,8 +19,14 @@
     padding-right: 10px;
     position: relative;
 }
+#self-service #flashMessage {
+	left: 315px;
+}
 #self-service #login-form {
-	padding-top: 60px;
+	padding-top: 95px;
+}
+#self-service #login-form #LoginForm button {
+	margin-top: 0;
 }
 #self-service #login-form h1 {
 	padding-left: 115px;

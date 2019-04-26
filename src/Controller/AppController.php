@@ -45,6 +45,13 @@ class AppController extends Controller
                 'Controller'
             ],
             'authenticate' => [
+                'BarCode' => [
+                    'userModel' => 'Customers',
+                    'fields' => [
+                        'identifier' => 'barCode'
+                    ],
+                    'finder' => 'auth' // CustomersTable::findAuth
+                ],
                 'Form' => [
                     'userModel' => 'Customers',
                     'fields' => [
