@@ -119,7 +119,6 @@ class CustomersController extends AdminAppController
                 'Customers.id_customer' => $customerId
             ]
         ])->first();
-        $oldGroup = $oldCustomer->id_default_group;
 
         // eg. member is not allowed to change groupId of admin, not even to set a groupid he would be allowed to (member)
         if ($this->AppAuth->getGroupId() < $oldCustomer->id_default_group) {
