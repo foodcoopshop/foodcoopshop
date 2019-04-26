@@ -51,13 +51,13 @@ TRUNCATE TABLE `phinxlog`;
 
 /*!40000 ALTER TABLE `fcs_address` DISABLE KEYS */;
 INSERT INTO `fcs_address` VALUES
-(153,87,0,'Mitglied','Demo','Demostrasse 4','','4644','Scharnstein','','','0664/000000000','fcs-demo-mitglied@mailinator.com','2014-12-02 12:19:31','2014-12-02 12:19:31'),
-(154,88,0,'Admin','Demo','Demostrasse 4','','4644','Scharnstein','test','','0600/000000','fcs-demo-admin@mailinator.com','2014-12-02 12:28:44','2014-12-02 12:28:44'),
-(173,0,4,'Fleisch-Hersteller','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-demo-fleisch-hersteller@mailinator.com','2014-05-27 22:20:18','2015-04-07 16:18:28'),
-(177,0,15,'Milch-Hersteller','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-demo-milch-hersteller@mailinator.com','2014-06-04 21:46:38','2015-10-16 10:06:52'),
-(180,0,5,'Gemüse-Hersteller','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-demo-gemuese-hersteller@mailinator.com','2014-05-14 21:20:05','2015-12-30 00:54:35'),
-(181,0,16,'Hersteller ohne Customer-Eintrag','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-hersteller-ohne-customer-eintrag@mailinator.com','2014-05-14 21:20:05','2015-12-30 00:54:35'),
-(182,92,0,'Superadmin','Demo','Demostrasse 4','','4644','Demostadt',NULL,'','0600/000000','fcs-demo-superadmin@mailinator.com','2017-07-26 13:19:19','2017-07-26 13:19:19');
+(153,87,0,'Mitglied','Demo','Demostrasse 4','','4644','Scharnstein','','','0664/000000000','fcs-demo-mitglied@mailinator.com','2014-12-02 12:19:31','2014-12-02 12:19:31',NULL),
+(154,88,0,'Admin','Demo','Demostrasse 4','','4644','Scharnstein','test','','0600/000000','fcs-demo-admin@mailinator.com','2014-12-02 12:28:44','2014-12-02 12:28:44',NULL),
+(173,0,4,'Fleisch-Hersteller','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-demo-fleisch-hersteller@mailinator.com','2014-05-27 22:20:18','2015-04-07 16:18:28',NULL),
+(177,0,15,'Milch-Hersteller','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-demo-milch-hersteller@mailinator.com','2014-06-04 21:46:38','2015-10-16 10:06:52',NULL),
+(180,0,5,'Gemüse-Hersteller','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-demo-gemuese-hersteller@mailinator.com','2014-05-14 21:20:05','2015-12-30 00:54:35',NULL),
+(181,0,16,'Hersteller ohne Customer-Eintrag','Demo','Demostrasse 4','','4644','Scharnstein','','','','fcs-hersteller-ohne-customer-eintrag@mailinator.com','2014-05-14 21:20:05','2015-12-30 00:54:35',NULL),
+(182,92,0,'Superadmin','Demo','Demostrasse 4','','4644','Demostadt',NULL,'','0600/000000','fcs-demo-superadmin@mailinator.com','2017-07-26 13:19:19','2017-07-26 13:19:19',NULL);
 /*!40000 ALTER TABLE `fcs_address` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_attribute` DISABLE KEYS */;
@@ -156,7 +156,7 @@ INSERT INTO `fcs_configuration` VALUES
 (581,1,'FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS','In der Sofort-Bestellung ausschließlich Lagerprodukte anzeigen?','0','boolean',76,'de_DE','2019-02-18 12:38:00','2019-02-18 12:38:00'),
 (582,1,'FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES','Lagerprodukte in Rechnungen miteinbeziehen?','1','readonly',60,'de_DE','2019-02-18 12:38:00','2019-02-18 12:38:00'),
 (583,1,'FCS_REGISTRATION_NOTIFICATION_EMAILS','Wer soll bei neuen Registrierungen informiert werden?<br /><div class=\"small\">Mehrere E-Mail-Adressen mit , (ohne Leerzeichen) trennen.</div>','fcs-demo-superadmin@mailinator.com','text',55,'de_DE','2019-03-05 20:08:00','2019-03-05 20:08:00'),
-(584,1,'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED','Selbstbedienungs-Modus für Lagerprodukte verwenden?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/selbstbedienungs-modus\" target=\"_blank\">Zur Online-Doku</a></div>','1','readonly',57,'de_DE','2019-04-017 20:01:59','2019-04-17 20:01:59');
+(584,1,'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED','Selbstbedienungs-Modus für Lagerprodukte verwenden?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/selbstbedienungs-modus\" target=\"_blank\">Zur Online-Doku</a></div>','1','readonly',57,'de_DE','2019-04-17 20:01:59','2019-04-17 20:01:59');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -369,7 +369,8 @@ INSERT INTO `phinxlog` VALUES
 (20190305183508,'ConfigurationOptimizations','2019-03-05 19:08:00','2019-03-05 19:08:00',0),
 (20190314081354,'CorrectNetPriceAndTax','2019-03-14 09:53:00','2019-03-14 09:53:00',0),
 (20190331192259,'DifferentCartForInstantOrder','2019-03-31 09:53:00','2019-03-31 09:53:00',0),
-(20190417072617,'SelfServiceModeConfiguration','2019-04-17 09:53:00','2019-04-17 09:53:00',0);
+(20190417072617,'SelfServiceModeConfiguration','2019-04-17 09:53:00','2019-04-17 09:53:00',0),
+(20190425160651,'AddEmailForwardingForMembers','2019-04-26 09:02:40','2019-04-26 09:02:40',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

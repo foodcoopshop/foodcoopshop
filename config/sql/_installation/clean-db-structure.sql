@@ -42,6 +42,7 @@ CREATE TABLE `fcs_address` (
   `email` varchar(255) DEFAULT NULL,
   `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_upd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `email_forwarding` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_address`),
   KEY `address_customer` (`id_customer`),
   KEY `id_manufacturer` (`id_manufacturer`)
