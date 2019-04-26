@@ -240,19 +240,13 @@ class CartsController extends FrontendController
             $email = new AppEmail();
             $email->viewBuilder()->setTemplate('order_successful');
             $email->setTo($this->AppAuth->getEmail())
+            ->addBcc($this->AppAuth->getCCEmails())
             ->setSubject(__('Order_confirmation'))
             ->setViewVars([
                 'cart' => $this->Cart->getCartGroupedByPickupDay($cart),
                 'appAuth' => $this->AppAuth,
                 'originalLoggedCustomer' => $this->getRequest()->getSession()->check('Auth.originalLoggedCustomer') ? $this->getRequest()->getSession()->read('Auth.originalLoggedCustomer') : null
             ]);
-            
-            $cc_mails = $this->getForwardingMails();
-          
-            if(!empty($cc_mails))
-            {
-                $email->setCc($cc_mails);
-            }
             
             if (Configure::read('app.rightOfWithdrawalEnabled')) {
                 $email->addAttachments([__('Filename_Right-of-withdrawal-information-and-form').'.pdf' => ['data' => $this->generateRightOfWithdrawalInformationAndForm($cart, $products), 'mimetype' => 'application/pdf']]);
@@ -282,37 +276,6 @@ class CartsController extends FrontendController
             
             $email->send();
         }
-    }
-    
-    private function getForwardingMails() 
-    {
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.email' => $this->AppAuth->getEmail()
-            ],
-            'contain' => [
-                'AddressCustomers'
-            ]
-        ])->first();
-        
-        if(empty($customer))
-        {
-            return array();
-        }
-
-        $email_forwarding = $customer->address_customer->email_forwarding;
-
-        if(!empty($email_forwarding))
-        {
-            $arrayForwardingEmails = explode (",", $email_forwarding);
-            if(!empty($arrayForwardingEmails))
-            {
-                return $arrayForwardingEmails;
-            }
-        }
-
-        return array();
     }
   
     private function saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions)

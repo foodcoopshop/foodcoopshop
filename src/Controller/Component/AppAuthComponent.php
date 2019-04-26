@@ -33,6 +33,7 @@ class AppAuthComponent extends AuthComponent
     ];
 
     public $manufacturer;
+    public $customer;
 
     public function flash($message)
     {
@@ -67,6 +68,32 @@ class AppAuthComponent extends AuthComponent
     {
         return $this->user('email');
     }
+    
+    public function getCCEmails()
+    {
+        if(empty($this->customer))
+        {
+            $this->setCustomer();
+        }
+        
+        if(empty($this->customer))
+        {
+            return array();
+        }
+
+        $email_forwarding = $this->customer->address_customer->email_forwarding;
+
+        if(!empty($email_forwarding))
+        {
+            $arrayForwardingEmails = explode (",", $email_forwarding);
+            if(!empty($arrayForwardingEmails))
+            {
+                return $arrayForwardingEmails;
+            }
+        }
+        
+        return array();
+    }
 
     public function getAbbreviatedUserName()
     {
@@ -99,6 +126,23 @@ class AppAuthComponent extends AuthComponent
             ],
             'contain' => [
                 'AddressManufacturers'
+            ]
+        ])->first();
+    }
+    
+    private function setCustomer()
+    {
+        if (!empty($this->customer)) {
+            return;
+        }
+        
+        $customers = TableRegistry::getTableLocator()->get('Customers');
+        $this->customer = $customers->find('all', [
+            'conditions' => [
+                'Customers.email' => $this->getEmail()
+            ],
+            'contain' => [
+                'AddressCustomers'
             ]
         ])->first();
     }
