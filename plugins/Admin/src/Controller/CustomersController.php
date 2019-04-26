@@ -1,6 +1,7 @@
 <?php
 namespace Admin\Controller;
 
+use App\Auth\BarCodeAuthenticate;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Mailer\AppEmail;
 use Cake\Auth\DefaultPasswordHasher;
@@ -9,7 +10,6 @@ use Cake\Core\Exception\Exception;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
-use Cake\Utility\Security;
 use Cake\Http\Exception\ForbiddenException;
 
 /**
@@ -82,7 +82,7 @@ class CustomersController extends AdminAppController
         $this->Customer->dropManufacturersInNextFind();
         $customers = $this->Customer->find('all', [
             'fields' => [
-                'bar_code' => 'SUBSTRING(SHA1(CONCAT(Customers.id_customer' .', "' .  Security::getSalt() . '")), 1, 13)'
+                'bar_code' => BarCodeAuthenticate::getIdentifierField($this->Customer)
             ],
             'conditions' => [
                 'Customers.id_customer IN' => $customerIds

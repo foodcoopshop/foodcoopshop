@@ -18,6 +18,11 @@ class BarCodeAuthenticate extends BaseAuthenticate {
         return $user;
   }
   
+  public function getIdentifierField($table)
+  {
+      return 'SUBSTRING(SHA1(CONCAT(' . $table->aliasField('id_customer') .', "' .  Security::getSalt() . '")), 1, 13)';
+  }
+  
   /**
    * Checks the fields to ensure they are supplied.
    *
@@ -41,7 +46,7 @@ class BarCodeAuthenticate extends BaseAuthenticate {
       
       $options = [
           'conditions' => [
-              'SUBSTRING(SHA1(CONCAT(' . $table->aliasField('id_customer') .', "' .  Security::getSalt() . '")), 1, 13) = "' . $username . '"'
+              $this->getIdentifierField($table) . ' = "' . $username . '"'
           ]
       ];
       
