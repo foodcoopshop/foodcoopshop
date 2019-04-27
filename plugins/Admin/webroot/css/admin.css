@@ -1295,3 +1295,6 @@ body.manufacturers .holiday-wrapper div.date-field-wrapper {
 label[for="groupbycustomer"] {
     padding-left: 0;
 }
+i.fa-fw.far.fa-money-bill-alt {
+    margin-right: 3px;
+}
