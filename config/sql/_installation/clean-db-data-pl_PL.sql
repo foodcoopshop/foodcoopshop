@@ -114,7 +114,7 @@ INSERT INTO `fcs_configuration` VALUES
 (578,1,'FCS_WEEKLY_PICKUP_DAY','Dzień odbioru','5','readonly',60,'pl_PL','2019-02-18 12:38:00','2019-02-18 12:38:00'),
 (579,1,'FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA','Wysyłanie list zamówień: x dni przed dniem odbioru','2','readonly',65,'pl_PL','2019-02-18 12:38:00','2019-02-18 12:38:00'),
 (580,1,'FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM','Pozwolić na cotygodniowe zamówienia na produkty magazynowe?','1','boolean',75,'pl_PL','2019-02-18 12:38:00','2019-02-18 12:38:00'),
-(581,1,'FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS','Pokazywać tylko produkty magazynowane przy zamówieniach błyskawicznych?','0','boolean',76,'pl_PL','2019-02-18 12:38:00','2019-02-18 12:38:00');
+(581,1,'FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS','Pokazywać tylko produkty magazynowane przy zamówieniach błyskawicznych?','0','boolean',76,'pl_PL','2019-02-18 12:38:00','2019-02-18 12:38:00'),
 (582,1,'FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES','Zawrzyj w fakturach produkty magazynowane?','1','readonly',60,'pl_PL','2019-02-18 12:38:00','2019-02-18 12:38:00'),
 (583,1,'FCS_REGISTRATION_NOTIFICATION_EMAILS','Kto powinien być powiadamiany o nowych rejestracjach? <br /> <div class = "small"> Oddziel wiele adresów e-mail przecinkami (bez spacji). </div>','','text',55,'pl_PL','2019-03-05 20:01:59','2019-03-05 20:01:59');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
