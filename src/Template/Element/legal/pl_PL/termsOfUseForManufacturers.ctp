@@ -6,7 +6,7 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 2.5.0
+ * @since         FoodCoopShop 2.1.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -15,9 +15,9 @@
 use Cake\Core\Configure;
 
 ?>
-<h1>Terms of use for manufacturers</h1> 
+<h1>Warunki użytkowania dla producentów</h1> 
 
-<h2>Platform owner</h2>
+<h2>Właściciel platformy</h2>
 
 <p>
     <?php
