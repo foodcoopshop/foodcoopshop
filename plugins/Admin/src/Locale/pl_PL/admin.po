@@ -1,0 +1,2061 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2019-03-15 10:04+0100\n"
+"PO-Revision-Date: 2019-04-26 01:48+0200\n"
+"Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"Language: pl_PL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Poedit 2.2.1\n"
+"X-Poedit-Bookmarks: 586,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
+
+msgid "Activities"
+msgstr "Czynności"
+
+msgid "Add_attribute"
+msgstr "Dodaj atrybut"
+
+msgid "Edit_attribute"
+msgstr "Edytuj atrybut"
+
+msgid "Errors_while_saving!"
+msgstr "Wystąpiły błędy podczas zapisu!"
+
+msgid "created"
+msgstr "utworzony"
+
+msgid "changed"
+msgstr "zmieniony"
+
+msgid "deleted"
+msgstr "usunięty"
+
+msgid "The_attribute_{0}_has_been_{1}."
+msgstr "Atrybut {0} został {1}."
+
+msgid "Attributes"
+msgstr "Atrybuty"
+
+msgid "Add_blog_post"
+msgstr "Dodaj post"
+
+msgid "Edit_blog_post"
+msgstr "Edytuj post"
+
+msgid "The_blog_post_{0}_has_been_{1}."
+msgstr "Post {0} został {1}."
+
+msgid "Blog_posts"
+msgstr "Posty"
+
+msgid "Add_category"
+msgstr "Dodaj kategorię"
+
+msgid "Edit_category"
+msgstr "Edytuj kategorię"
+
+msgid "The_category_{0}_has_been_{1}."
+msgstr "Kategoria {0} została {1}."
+
+msgid "Categories"
+msgstr "Kategorie"
+
+msgid "Edit_setting"
+msgstr "Edytuj ustawienia"
+
+msgid "The_setting_has_been_changed_successfully."
+msgstr "Ustawienia zostały zmienione pomyślnie."
+
+msgid "The_setting_{0}_has_been_changed_to_{1}."
+msgstr "Ustawienie {0} zostalo zmienione na {1}."
+
+msgid "Settings"
+msgstr "Ustawienie"
+
+msgid "Send_test_email"
+msgstr "Wyślij mail testowy"
+
+msgid "Test_email"
+msgstr "Mail testowy"
+
+msgid "The_group_of_the_member_{0}_was_changed_to_{1}."
+msgstr "Grupa czlonków {0} została zmieniona na {1}."
+
+msgid "Change_password"
+msgstr "Zmień hasło"
+
+msgid "The_manufacturer_{0}_has_changed_his_password."
+msgstr "Producent {0} zmienił swoje hasło."
+
+msgid "The_member_{0}_has_changed_his_password."
+msgstr "Członek {0} zmienił swoje hasło."
+
+msgid "Your_new_password_has_been_saved_successfully."
+msgstr "Twoje nowe hasło zostało zapisane."
+
+msgid "Amount_of_orders_that_have_not_been_placed_before_two_months:"
+msgstr "Ilość zamówień, które nie zostały złożone od dwóch miesięcy:"
+
+msgid "The_credit_is"
+msgstr "Kredyt wynosi"
+
+msgid "It_needs_to_be_zero."
+msgstr "Musi wynosić 0."
+
+msgid "The_credit_of_the_paying_with_time_account_is:"
+msgstr "Kredyt płacenia czasem wynosi:"
+
+msgid "The_member_is_still_associated_to_the_following_manufacturers:"
+msgstr "Członek jest wciąż powiązany z następującym producentem:"
+
+msgid "Your_account_has_been_deleted_successfully."
+msgstr "Twoje konto zostało usunięte pomyślnie."
+
+msgid "{0}_has_deleted_an_account."
+msgstr "{0} usunął swoje konto."
+
+msgid "Edit_my_profile"
+msgstr "Edytuj mój profil"
+
+msgid "Edit_profile"
+msgstr "Edytuj profil"
+
+msgid "Your_profile_was_changed."
+msgstr "Twój profil został zmodyfikowany."
+
+msgid "The_profile_of_{0}_was_changed."
+msgstr "Profil użytkownika {0} został zmieniony."
+
+msgid "The_member_{0}_has_been_deactivated_succesfully."
+msgstr "Członek {0} Został zdezaktywowany pomyślnie."
+
+msgid "The_member_{0}_has_been_activated_succesfully."
+msgstr "Konto {0} zostało aktywowane pomyślnie."
+
+msgid "The_account_was_activated"
+msgstr "Konto zostało aktywowane."
+
+msgid "Filename_Terms-of-use"
+msgstr "Regulamin"
+
+msgid "The_member_{0}_has_been_activated_succesfully_and_the_member_was_notified_by_email."
+msgstr "Konto {0} zostało pomyślnie aktywowane. Użytkownik został powiadomiony mailowo."
+
+msgid "The_comment_was_changed_successfully."
+msgstr "Komentarz został zmodyfikowany pomyślnie."
+
+msgid "The_comment_of_the_member_{0}_was_changed:"
+msgstr "Komentarz członka {0} został zmodyfikowany:"
+
+#, fuzzy
+msgid "Sum_of_credits_of_activated_members"
+msgstr "Suma kredytów <b>aktywnych</b> członków"
+
+#, fuzzy
+msgid "Sum_of_credits_of_deactivated_members"
+msgstr "Suma kredytów <b>nieaktywnych</b> członków"
+
+#, fuzzy
+msgid "Sum_of_credits_of_deleted_members"
+msgstr "Suma kredytów <b>usuniętych</b> członków"
+
+msgid "Sum_of_deposit_compensation_payments_for_manufactures"
+msgstr "Suma rekompensat kaucji dla producentów"
+
+msgid "Credit_and_deposit"
+msgstr "Kredyt i kaucja"
+
+msgid "Members"
+msgstr "Członkowie"
+
+msgid "Deposit_account"
+msgstr "Konto kaucji"
+
+msgid "Deposit_take_back_detail_for"
+msgstr "Sczegóły odbioru kaucji dla"
+
+msgid "_Order_list_filename_"
+msgstr "_Lista_zamowien_"
+
+msgid "product"
+msgstr "produkt"
+
+msgid "member"
+msgstr "Członek"
+
+msgid "Order_lists"
+msgstr "Lista zamówień"
+
+msgid "Add_manufacturer"
+msgstr "Dodaj producenta"
+
+msgid "Edit_manufacturer"
+msgstr "Edytuj producenta"
+
+msgid "The_manufacturer_{0}_has_been_{1}."
+msgstr "Producent {0} został {1}."
+
+msgid "Manufacturers"
+msgstr "Producenci"
+
+msgid "Invoice_for_manufacturer_{0}_successfully_sent_to_{1}."
+msgstr "Faktura dla dostawy {0} została wysłana do {1}."
+
+msgid "Invoice_number_abbreviataion_{0}_{1}"
+msgstr "Faktura nr {0}, {1}"
+
+msgid "No_orders_within_the_given_time_range."
+msgstr "Brak zamówień w wybranym okresie"
+
+msgid "Order_lists_successfully_generated_for_manufacturer_{0}."
+msgstr "Listy zamówień dla producenta {0} zostały utworzone poprawnie."
+
+msgid "Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{1}."
+msgstr "Listy zamówień dla producenta {0} zostały utworzone poprawnie i wysłane do {1}."
+
+msgid "Order_lists_for_the_day"
+msgstr "Listy zamówień dla"
+
+msgid "Edit_settings"
+msgstr "Edytuj ustawienia"
+
+msgid "The_settings_of_manufacturer_{0}_have_been_changed."
+msgstr "Ustawienia producenta {0} zostały zmienione."
+
+msgid "Your_settings_have_been_changed."
+msgstr "Twoje ustawienia zostały zmienione."
+
+msgid "No_member_found_with_id_{0}."
+msgstr "Nie znaleziono członka o id {0}."
+
+msgid "Instant_order"
+msgstr "Zamówienie błyskawiczne"
+
+msgid "Group_by_product"
+msgstr "Grupuj wg produktu"
+
+msgid "Group_by_member"
+msgstr "Grupuj wg czlonka"
+
+msgid "Group_by_manufacturer"
+msgstr "Grupuj wg producenta"
+
+msgid "Orders"
+msgstr "Zamówienia"
+
+msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
+msgstr "Waga zamówionego produktu {0} (ilość {1}) została zmodyfikowana z {2} na {3}."
+
+#, fuzzy
+msgid "Weight_adapted"
+msgstr "Waga zmodyfikowana"
+
+msgid "An_email_was_sent_to_{0}."
+msgstr "Mail został wysłany do {0}."
+
+msgid "An_email_was_sent_to_{0}_and_the_manufacturer_{1}."
+msgstr "Mail został wysłany do {0} oraz do producenta {1}."
+
+msgid "The_amount_of_the_ordered_product_{0}_was_successfully_changed_from_{1}_to_{2}."
+msgstr "Ilość zamówionego produktu {0} została zmodyfikowana z {1} na {2}."
+
+#, fuzzy
+msgid "Ordered_amount_adapted"
+msgstr "Ilość zamówiona zmodyfikowana"
+
+msgid "Reason"
+msgstr "Powód"
+
+msgid "The_stock_was_increased_to_{0}."
+msgstr "Stan magazynowy został zwiększony do {0}."
+
+msgid "The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
+msgstr "Cena zamówionego produktu {0} (ilość {1}) została zmodyfikowana z {2} na {3}."
+
+msgid "Ordered_price_adapted"
+msgstr "Cena zmodyfikowana"
+
+msgid "Please_enter_why_pickup_day_is_changed."
+msgstr "Proszę podać powód zmiany dnia odbioru."
+
+msgid "The_pickup_day_of_your_order_was_changed_to"
+msgstr "Dzień odbioru twojego zamówienia został zmieniony na"
+
+msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified."
+msgstr "The pickup day of {0,plural,=1{one product} other{# products}} was successfully changed to {1} and {2,plural,=1{one member was} other{# members were}} got an email."
+
+msgid "The_pickup_day_comment_of_{0}_was_changed:"
+msgstr "Komentarz {0} do dnia odbioru został zmieniony:"
+
+msgid "Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled."
+msgstr "Product {0} (manufacturer: {1}, price {2}) from {2} was successfully cancelled."
+
+msgid "Product_was_cancelled"
+msgstr "Product cancelled"
+
+msgid "{0,plural,=1{product_was_cancelled_succesfully.} other{products_were_cancelled_succesfully.}}"
+msgstr "{0,plural,=1{product was cancelled succesfully.} other{products were cancelled succesfully.}}"
+
+msgid "Home"
+msgstr "Główna"
+
+msgid "Add_page"
+msgstr "Dodaj stronę"
+
+msgid "Edit_page"
+msgstr "Edytuj stronę"
+
+msgid "The_page_{0}_has_been_{1}."
+msgstr "Strona {0} została {1}."
+
+msgid "Pages"
+msgstr "Strony"
+
+msgid "Your_comment_will_be_shown_here."
+msgstr "Twoje komentarze pojawią się w tym miejscu."
+
+#, fuzzy
+msgid "Check_credit_upload"
+msgstr "Sprawdź wpłaty kredytowe"
+
+#, fuzzy
+msgid "The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}."
+msgstr "Status twojej wpłaty kredytowej za {0} został pomyślnie zmieniony na {1}."
+
+#, fuzzy
+msgid "The_status_of_your_credit_upload_was_successfully_changed_to_{0}."
+msgstr "Status twojej wpłaty kredytowej został pomyślnie zmieniony na {0}."
+
+#, fuzzy
+msgid "The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}_and_an_email_was_sent_to_the_member."
+msgstr "Status twojej wpłaty kredytowej za {0} został pomyślnie zmieniony na {1}. Mail został wysłany do członka."
+
+msgid "for"
+msgstr "za"
+
+msgid "Deposit_take_back"
+msgstr "Odbiór kaucji"
+
+msgid "was_added_successfully:_{0}"
+msgstr "został dodany pomyślnie: {0}"
+
+#, fuzzy
+msgid "The_amount_was_added_to_the_credit_system_of_{0}_and_can_be_deleted_there."
+msgstr "Kwota została dodana do systemu kredytowego {0} i tam może zostać usunięta."
+
+msgid "The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there."
+msgstr "Kwota została dodana do konta kaucji {0} i tam może zostać usunięta."
+
+msgid "The_amount_was_added_to_the_member_fee_system_of_{0}_and_can_be_deleted_there."
+msgstr "Kwota została dodana do opłaty członkowskiej {0} i tam może zostać usunięta."
+
+msgid "The_payment_({0}_{1})_was_removed_successfully."
+msgstr "Płatność ({0}, {1}) została usunięta pomyślnie."
+
+msgid "The_payment_({0}_{1})_of_{2}_was_removed_successfully."
+msgstr "Płatność ({0}, {1}) z {2} została usunięta pomyślnie."
+
+msgid "Member_fee"
+msgstr "Opłata członkowska"
+
+#, fuzzy
+msgid "Credit"
+msgstr "Kredyt"
+
+msgid "Show_order"
+msgstr "Pokaż zamówienie"
+
+msgid "of_{0}"
+msgstr "z {0}"
+
+msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
+msgstr "Obraz (ID {0}) u producenta {1} został pomyślnie usunięty. Produkt: {1}, producent: {2}."
+
+msgid "A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}."
+msgstr "Nowy obraz produktu {0} został przesłany przez producenta {1}."
+
+msgid "The_attribute_{0}_of_the_product_{1}_from_manufacturer_{2}_was_successfully_deleted."
+msgstr "Atrybut {0} produktu {1} od producenta {2} został pomyślnie usunięty."
+
+msgid "The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created."
+msgstr "Atrybut {0} produktu {1} od producenta {2} został pomyślnie utworzony."
+
+msgid "A_new_product_was_created_for_{0}."
+msgstr "A new product was created for {0}."
+
+msgid "Order_possible_until"
+msgstr "Zamówienia możliwe do"
+
+msgid "Send_order_lists_day"
+msgstr "Dzień wysyłki list zamówień"
+
+msgid "Last_order_weekday"
+msgstr "Ostatni dzień zamówień"
+
+msgid "midnight"
+msgstr "północ"
+
+msgid "Delivery_day"
+msgstr "Dzień dostawy"
+
+msgid "First_delivery_day"
+msgstr "Pierwszy dzień dostawy"
+
+msgid "The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}."
+msgstr "Harmonogram dostaw produktu {0} od producenta {1} został pomyślnie zmieniony na {2}."
+
+msgid "Delivery_rhythm_of_{0}_products_has_been_changed_successfully_to_{1}."
+msgstr "Harmonogram dostaw produktu {0} został pomyślnie zmieniony na {1}."
+
+msgid "Saving_successful."
+msgstr "Zapisano pmyślnie."
+
+msgid "The_tax_rate_of_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr "Stawka podatku produktu {0} od producenta {1} została zmieniona z {2} na {3}."
+
+msgid "Nothing_changed."
+msgstr "Nic nie zmieniono."
+
+msgid "The_categories_of_the_product_{0}_from_manufacturer_{1}_have_been_changed:_{2}"
+msgstr "Kategorie produktu {0} od producenta {1} zostały zmienione: {2}"
+
+msgid "The_product_{0}_was_changed_successfully_to_a_stock_product."
+msgstr "produkt {0} został ustawiony jako magazynowany."
+
+msgid "The_amount_of_the_product_{0}_was_changed_successfully."
+msgstr "Ilość produktu {0} została pomyślnie zmieniona."
+
+msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr "Ilość produktu {0} od producenta {1} została zmieniona z {2} na {3}."
+
+msgid "The_price_of_the_product_{0}_was_changed_successfully."
+msgstr "Cena produktu {0} została pomyślnie zmieniona."
+
+msgid "The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgstr "Cena produktu {0} od producenta {1} została zmieniona z {2} na {3}."
+
+msgid "Attribute"
+msgstr "Atrybut"
+
+msgid "The_deposit_of_the_product_{0}_was_changed_from_{1}_to_{2}."
+msgstr "Kaucja produktu {0} została zmieniony z {1} na {2}."
+
+msgid "The_product_was_changed_successfully."
+msgstr "Produkt został zmodyfikowany poprawnie."
+
+msgid "The_product_{0}_from_manufacturer_{1}_was_renamed_to_{2}."
+msgstr "Zmieniono nazwę produktu {0} od producenta {1} na {2}."
+
+msgid "The_unity_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
+msgstr "Jednostka produktu {0} od producenta {1} została zmieniona na {2}."
+
+msgid "The_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
+msgstr "Opis produktu {0} od producenta {1} został zmieniony na: {2}"
+
+msgid "The_short_description_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}"
+msgstr "Krótki opis produktu {0} od producenta {1} został zmieniony: {2}"
+
+msgid "All_manufacturers"
+msgstr "Wszyscy producenci"
+
+msgid "Products"
+msgstr "Produkty"
+
+msgid "The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
+msgstr "Domyślny atrybut produktu {0} od producenta {1} został zmieniony na {2}."
+
+msgid "The_product_{0}_from_manufacturer_{1}_is_not_shown_as_new_any_more."
+msgstr "Produkt {0} od producenta {1} nie jest już oznaczony jako nowy."
+
+msgid "The_product_{0}_from_manufacturer_{1}_is_shown_as_new_from_now_on_for_the_next_{2}_days."
+msgstr "Produkt {0} od producenta {1} będzie od teraz oznaczony jako nowy przez {2} dni."
+
+msgid "The_product_{0}_from_manufacturer_{1}_was_deactivated."
+msgstr "Produkt {0} od producenta {1} został dezaktywowany."
+
+msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
+msgstr "Produkt {0} od producenta {1} został aktywowany."
+
+msgid "Report"
+msgstr "Raport"
+
+msgid "Add_slider"
+msgstr "Dodaj suwak"
+
+msgid "Edit_slider"
+msgstr "Edytuj suwak"
+
+msgid "The_slider_{0}_has_been_{1}."
+msgstr "Suwak {0} został {1}."
+
+msgid "Slideshow"
+msgstr "Pokaz slajdów"
+
+msgid "Add_tax_rate"
+msgstr "Dodaj stawkę podatku"
+
+msgid "Edit_tax_rate"
+msgstr "Edytuj stawkę podatku"
+
+msgid "The_tax_rate_{0}_has_been_{1}."
+msgstr "Stawka podatku {0} została {1}."
+
+msgid "Tax_rates"
+msgstr "Stawki podatku"
+
+msgid "The_time_entry_has_been_deleted"
+msgstr "Wpis czasu został usunięty"
+
+msgid "The_time_entry_for_the_{0}_has_been_deleted"
+msgstr "Wpis czasu dla {0} został usunięty"
+
+msgid "Your_time_entry_from_{0}_has_been_deleted."
+msgstr "Twój wpis czasu od {0} został usunięty."
+
+msgid "and_an_email_was_sent_to_{0}"
+msgstr "i został wysłany mail do {0}"
+
+msgid "Add_time_entry"
+msgstr "Dodaj wpis czasu"
+
+msgid "Edit_time_entry"
+msgstr "Edytuj wpis czasu"
+
+#, fuzzy
+msgid "Credit_balance_of_{0}"
+msgstr "Saldo kredytowe {0}"
+
+msgid "of"
+msgstr "z"
+
+msgid "My_{0}_(time_account)"
+msgstr "Mój {0}"
+
+#, fuzzy
+msgid "My_credit_balance"
+msgstr "Moje saldo kredytowe"
+
+msgid "Filename_General-terms-and-conditions"
+msgstr "Regulamin"
+
+msgid "all_activities"
+msgstr "wszystkie czynności"
+
+msgid "all_users"
+msgstr "wszyscy użytkownicy"
+
+msgid "all_products"
+msgstr "wszystkie produkty"
+
+msgid "Action_log_type"
+msgstr "Rodzaj aktywności"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Text"
+msgstr "Tekst"
+
+msgid "User"
+msgstr "Użytkownik"
+
+msgid "Show_ordered_product"
+msgstr "Pokaż zamówione produkty"
+
+msgid "records"
+msgstr "wpisy"
+
+msgid "Save"
+msgstr "Zapisz"
+
+msgid "Cancel"
+msgstr "Anuluj"
+
+msgid "Name"
+msgstr "Nazwa"
+
+msgid "Weight_unit"
+msgstr "Jednostka wagi"
+
+msgid "Please_check_if_this_attribute_is_a_weight_attribute_(e_g_kg)."
+msgstr "Proszę zaznaczyć jeśli atrybut opisuje jednostkę wagi (np kg)."
+
+msgid "docs_route_products"
+msgstr "products"
+
+msgid "Information_needed_for_function_price_per_unit."
+msgstr "Informacja potrzebna do funkcji \"cena jednostkowa\"."
+
+msgid "Delete_attribute?"
+msgstr "Czy usunąć atrybut?"
+
+msgid "Attribute_can_not_be_deleted_because_products_are_associated_with_it."
+msgstr "Atrybut nie może zostać usunięty, ponieważ istnieją powiązane z nim produkty."
+
+msgid "Check_and_do_not_forget_to_click_save_button."
+msgstr "Nie zapomnij wcisnąć przycisku <b>Zapisz</b>."
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Weight"
+msgstr "Waga"
+
+msgid "Associated_to_active_products?"
+msgstr "Powiązane z aktywnymi produktami?"
+
+msgid "Associated_to_inactive_products?"
+msgstr "Powiązane z nieaktywnymi produktami?"
+
+msgid "Modified_on"
+msgstr "Zmodyfikowano dnia"
+
+msgid "Edit"
+msgstr "Edytuj"
+
+msgid "Associated_products"
+msgstr "Powiązane produkty"
+
+msgid "Show_associated_products"
+msgstr "Pokaż powiązane produkty"
+
+msgid "{0,plural,=1{record} other{records}}"
+msgstr "{0,plural,=1{wpis} other{wpisy}}"
+
+msgid "Title"
+msgstr "Tytuł"
+
+msgid "Short_description"
+msgstr "Krótki opis"
+
+msgid "Image"
+msgstr "Obraz"
+
+msgid "Click_on_image_to_change_it."
+msgstr "Kliknij na obraz aby go zmienić."
+
+msgid "Upload_new_image_or_change_it"
+msgstr "Prześlij nowy obraz lub zmień go"
+
+msgid "If_the_blog_post_is_associated_to_a_manufacturer_and_no_image_selected_the_default_image_of_the_manufacturer_profile_is_shown."
+msgstr "Jeśli post jest powiązany z producentem, a żaden obraz nie został wybrany, to zostanie pokazany domyślny obraz z profilu producenta."
+
+msgid "If_no_image_selected_the_default_image_of_your_manufacturer_profile_is_shown."
+msgstr "Jeżli żaden obraz nie został wybrany, to zostanie pokazany domyślny obraz z profilu producenta."
+
+msgid "Delete_image?"
+msgstr "Usunąć obraz?"
+
+msgid "Manufacturer"
+msgstr "Producent"
+
+msgid "Chose_manufacturer"
+msgstr "Wybierz producenta"
+
+msgid "Blog_post_manufacturer_description"
+msgstr "Jeśli producent jest widoczny tylko dla zalogowanych członków, ma to również zastosowanie do postów (ignorując ustawienia postów)."
+
+msgid "Show_on_homepage"
+msgstr "Pokazuj na stronie głównej"
+
+msgid "Only_for_members"
+msgstr "Tylko dla członków"
+
+msgid "Active"
+msgstr "Aktywne"
+
+msgid "Move_on_first_place?"
+msgstr "Przesunąć na pierwsze miejsce?"
+
+msgid "If_checked_the_blog_post_will_be_set_to_first_place_of_list."
+msgstr "Jeśli zaznaczone, to wpis zostanie przesunięty na pierwsze miejsce listy."
+
+msgid "Delete_blog_post?"
+msgstr "Usunąć wpis?"
+
+msgid "docs_route_wysiwyg_editor"
+msgstr "wysiwyg-editor"
+
+msgid "How_do_I_use_the_WYSIWYG_editor?"
+msgstr "Jak używać edytora?"
+
+msgid "all_manufacturers"
+msgstr "wszyscy producenci"
+
+msgid "Homepage"
+msgstr "Strona główna"
+
+msgid "Modified_by"
+msgstr "Zmodyfikowany przez"
+
+msgid "Show_blog_post"
+msgstr "Pokaż post"
+
+msgid "Parent_category"
+msgstr "Kategoria nadrzędna"
+
+msgid "No_parent_category_(highest_level)"
+msgstr "Brak kategorii nadrzędnej (najwyższy poziom)"
+
+msgid "Delete_category?"
+msgstr "Usunąć kategorię?"
+
+msgid "Description"
+msgstr "Opis"
+
+msgid "docs_route_settings"
+msgstr "settings"
+
+msgid "The_following_settings_can_be_changed_in_the_admin_area."
+msgstr "Następujące ustawienia mogą zostać zmienione w panelu administracyjnym."
+
+msgid "Setting"
+msgstr "Ustawienia"
+
+msgid "Value"
+msgstr "Wartość"
+
+msgid "yes"
+msgstr "tak"
+
+msgid "no"
+msgstr "nie"
+
+msgid "Remote_foodcoops"
+msgstr "Zdalene kooperatywy"
+
+msgid "Foodcoops_with_which_manufacturers_can_synchronize_their_product_data."
+msgstr "Kooperatywy, z którymi producenci mogą synchronizować dane o swoich produktach."
+
+msgid "Info_page_for_network_module"
+msgstr "Strona informacyjna o module sieci"
+
+msgid "Add_remote_foodcoop"
+msgstr "Dodaj zdalną kooperatywę"
+
+msgid "Domain"
+msgstr "Domena"
+
+msgid "As_long_as_the_variable_member_fee_is_active_no_remote_foodcoops_can_be_added_for_this_foodcoop."
+msgstr "Tak długo jak zmienna opłata członkowska jest aktywna, żadne zdalne kooperatywy nie mogą zostać dodane."
+
+msgid "The_following_settings_can_not_be_changed_in_the_admin_area."
+msgstr "Następujące ustawienia <b> nie </b> mogą zostać zmienione w panelu administracyjnym."
+
+msgid "Version_FoodCoopShop"
+msgstr "Wersja FCS"
+
+msgid "Last_executed_migration"
+msgstr "Ostatnio wykonana migracja"
+
+msgid "Software_update_version"
+msgstr "Aktualizacja / wersja"
+
+msgid "Please_find_more_information_in_the_changelog_{0}."
+msgstr "Więcej informacji można znaleźć w {0}."
+
+msgid "activated"
+msgstr "aktywowany"
+
+msgid "deactivated"
+msgstr "dezaktywowany"
+
+msgid "Logo_for_website,_width:"
+msgstr "Logo na stronę, szerokość:"
+
+msgid "Logo_for_order_lists_and_invoices,_width:"
+msgstr "Logo na listy zamówień, faktury i inne dokumenty PDF, szerokość:"
+
+msgid "Default_image_for_product,_width:"
+msgstr "Domyślny obraz produktu, szerokość:"
+
+msgid "Default_image_for_manufacturer,_width:"
+msgstr "Domyślny obraz producenta, szerokość:"
+
+msgid "Default_image_for_blog_post,_width:"
+msgstr "Domyślny obraz postu, szerokość:"
+
+msgid "Old_password"
+msgstr "Stare hasło"
+
+msgid "New_password"
+msgstr "Nowe hasło"
+
+msgid "min_8_characters"
+msgstr "minimum 8 znaków"
+
+msgid "New_password_again"
+msgstr "Nowe hasło (ponownie)"
+
+msgid "Website_administration"
+msgstr "Administracja stroną"
+
+msgid "Financial_reports"
+msgstr "Raporty finansowe"
+
+#, fuzzy
+msgid "Sum_of_credits"
+msgstr "Suma kredytów"
+
+msgid "Included_deposit"
+msgstr "Zawiera kaucję"
+
+msgid "Of_the_{0}_on_the_credit_account_{1}_are_reserved_for_deposit_compensation_payments._As_long_as_this_amount_is_negative_money_for_deposit_compensation_payments_is_available."
+msgstr "{1} (z {0} na koncie kredytowym) zarezerwowano na poczet rekompensat kaucji. Dopóki kwota jest ujemna, są środki na rekompensaty."
+
+msgid "docs_route_members"
+msgstr "members"
+
+msgid "Firstname"
+msgstr "Imię"
+
+msgid "Lastname"
+msgstr "Nazwisko"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Street"
+msgstr "Ulica"
+
+msgid "Additional_address_information"
+msgstr "Informacje dodatkowe"
+
+msgid "Zip"
+msgstr "Kod pocztowy"
+
+msgid "City"
+msgstr "Miasto"
+
+msgid "Mobile"
+msgstr "Numer telefonu (kom)"
+
+msgid "Phone"
+msgstr "Numer telefonu"
+
+msgid "Order_reminder"
+msgstr "Przypomnienie o zamówieniach"
+
+msgid "Want_to_receive_reminder_emails?"
+msgstr "Czy chcesz co tydzień otrzymywać przypomnienia mailowe o zamówieniach?"
+
+msgid "Paying_with_time_module_active?"
+msgstr "Czy moduł płacenia czasem aktywny?"
+
+msgid "I_want_to_be_able_to_pay_my_products_also_in_{0}."
+msgstr "Chcę móc płacić za zamówienia również w {0}."
+
+msgid "docs_route_paying_with_time_module"
+msgstr "paying-with-time-module"
+
+msgid "How_do_I_use_the_paying_with_time_module?"
+msgstr "Jak używać modułu płacenia czasem?"
+
+msgid "Delete_member_irrevocably?"
+msgstr "Usunąć nieodwracalnie konto?"
+
+msgid "Last_pickup_day"
+msgstr "Ostatni dzień odbioru"
+
+msgid "Group"
+msgstr "Grupa"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Ordered_products"
+msgstr "Zamówione produkty"
+
+msgid "Reminder"
+msgstr "Przypomnienie"
+
+msgid "Register_date"
+msgstr "Data rejestracji"
+
+msgid "Comment_abbreviation"
+msgstr "Comment"
+
+msgid "Newbie_only_{0}_products_ordered."
+msgstr "Zielony: ma zamówionych jedynie {0} produktów"
+
+msgid "Show_all_orders_from_{0}"
+msgstr "Pokaż wszystkie zamówienia od {0}"
+
+msgid "Change_group"
+msgstr "Zmień grupę"
+
+msgid "deactivate"
+msgstr "dezaktywuj"
+
+msgid "activate"
+msgstr "aktywuj"
+
+#, fuzzy
+msgid "Show_credit"
+msgstr "Pokaż kredyt"
+
+msgid "Show_{0}"
+msgstr "Pokaż {0}"
+
+msgid "Add_comment"
+msgstr "Dodaj komentarz"
+
+msgid "Copy_all_email_addresses"
+msgstr "Kopiuj wszystkie adresy e-mail"
+
+msgid "Delete_deposit_take_back?"
+msgstr "Usunąć zwrot wkładu?"
+
+msgid "docs_route_deposit"
+msgstr "deposit"
+
+msgid "Please_chose_a_manufacturer."
+msgstr "Proszę wybrać producenta."
+
+msgid "Add_return_of_empty_glasses"
+msgstr "Dodaj zwrot pustych opakowań"
+
+msgid "Add_deposit_return"
+msgstr "Dodaj zwrot kaucji"
+
+msgid "Since_{0}_there_was_no_deposit_delivered_or_returned."
+msgstr "Od {0} wkład nie został ani odebrany ani zwrócony."
+
+msgid "Month"
+msgstr "Miesiąc"
+
+msgid "Product_with_deposit_delivered"
+msgstr "Produkt z kaucją dostarczony"
+
+msgid "Empty_glasses_returned"
+msgstr "Zwrócono puste opakowanie"
+
+msgid "Details"
+msgstr "Szczegóły"
+
+msgid "Show_details"
+msgstr "Pokaż szczegóły"
+
+msgid "Delivered_deposit"
+msgstr "Przyjęty wkład"
+
+msgid "Returned_deposit"
+msgstr "Zwrócony wkład"
+
+msgid "Your_deposit_balance"
+msgstr "Twoje saldo wkładów"
+
+msgid "Add_deposit_amount"
+msgstr "Dodaj kwotę wkładu"
+
+msgid "Add_deposit"
+msgstr "Dodaj wkład"
+
+msgid "Add_deposit_amount_for_{0}"
+msgstr "Dodaj kwotę wkładu dla {0}"
+
+msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
+msgstr "Proszę dodać wartość pustych opakowań, które są odbierane przez producenta."
+
+msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
+msgstr "Czy producent zabrał puste opakowania, czy jego konto wkładu zostało zasilone?"
+
+msgid "Amount_in_{0}"
+msgstr "Kwota w {0}"
+
+msgid "Instant_order_for_today"
+msgstr "Zamówienie błyskawiczne na dziś"
+
+msgid "chose_member..."
+msgstr "wybierz członka..."
+
+msgid "Show_category"
+msgstr "Pokaż kategorię"
+
+msgid "1_day_ahead"
+msgstr "1 dzień wprzód"
+
+msgid "1_day_back"
+msgstr "1 dzień wstecz"
+
+msgid "to"
+msgstr "do"
+
+#, fuzzy
+msgid "Order_adaptions"
+msgstr "Modyfikacje zamówień"
+
+msgid "Deposit_returns"
+msgstr "Zwroty wkładów"
+
+msgid "My_data"
+msgstr "Moje dane"
+
+msgid "Configurations"
+msgstr "Ustawienia"
+
+msgid "My_products"
+msgstr "Moje produkty"
+
+msgid "My_profile"
+msgstr "Mój profil"
+
+msgid "Contact_person"
+msgstr "Osoba kontaktowa"
+
+msgid "Show_page"
+msgstr "Pokaż stronę"
+
+msgid "Bank_account_data"
+msgstr "Dane konta bankowego"
+
+msgid "Add_new_payment"
+msgstr "Dodaj nową wpłatę"
+
+msgid "Please_enter_the_amount_that_you_just_transfered_to_our_bank_account."
+msgstr "Podaj kwotę, która została wpłacona na nasze konto bankowe."
+
+msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
+msgstr "Jeśli wybierzesz \"zwrot\", wpisz kwotę, która została przelana na konto bankowe użytkownika."
+
+msgid "Please_chose_the_months_for_your_payment."
+msgstr "Please chose the months for your payment."
+
+msgid "Delivery_days"
+msgstr "Dni dostawy"
+
+msgid "Pickup_day"
+msgstr "Dzień odbioru"
+
+msgid "Pickup_days"
+msgstr "Dni odbioru"
+
+msgid "All_products_picked_up?"
+msgstr "Czy wszystkie produkty zostały odebrane?"
+
+msgid "Back_to_deposit_account"
+msgstr "Wróć do konta wkładów"
+
+msgid "Cancel_selected_products"
+msgstr "Anuluj wybór produktów"
+
+msgid "Change_pickup_day"
+msgstr "Zmień dzień odbioru"
+
+msgid "Generate_orders_as_pdf"
+msgstr "Generuj zamówienia w formie PDF"
+
+msgid "Multiple_pickup_days"
+msgstr "Wiele dni odbioru"
+
+msgid "Click_to_change_amount"
+msgstr "Kliknij aby zmienić ilość"
+
+msgid "Click_to_cancel_product"
+msgstr "Kliknij aby anulować produkt"
+
+msgid "Deposit_return"
+msgstr "Zwrot wkładu"
+
+msgid "Show_all_ordered_products_from_{0}"
+msgstr "Pokaż wszystkie produkty zamówione od {0}"
+
+msgid "products_picked_up"
+msgstr "Produkty odebrane"
+
+msgid "Click_to_change_price"
+msgstr "Kliknij aby zmienić cenę"
+
+msgid "Additional_in_{0}"
+msgstr "Dodatkowo w {0}"
+
+msgid "Yes"
+msgstr "Tak"
+
+msgid "No"
+msgstr "Nie"
+
+msgid "Click_to_change_weight"
+msgstr "Kliknij aby zmienić wagę"
+
+msgid "Amount"
+msgstr "Kwota"
+
+msgid "Product"
+msgstr "Produkt"
+
+msgid "Price"
+msgstr "Cena"
+
+msgid "Deposit"
+msgstr "Kaucja"
+
+msgid "Member"
+msgstr "Członek"
+
+msgid "Picked_up"
+msgstr "Odebrane"
+
+msgid "Amount_minus_eventual_variable_member_fee"
+msgstr "Kwota minus ewentualna zmienna opłata członkowska"
+
+msgid "Invoice_for_the_order_period_{0}_to_{1}"
+msgstr "Faktura za zamówienia za okres od {0} do {1}"
+
+msgid "conveyed_for"
+msgstr "przekazane"
+
+msgid "Invoice_number_abbreviation"
+msgstr "Faktura nr"
+
+msgid "Orders_from"
+msgstr "Zamówienia od"
+
+msgid "Invoice_date"
+msgstr "Data faktury"
+
+msgid "Price_excl."
+msgstr "Cena z wyłączeniem"
+
+msgid "VAT"
+msgstr "VAT"
+
+msgid "Price_incl."
+msgstr "Cena z"
+
+msgid "variable_member_fee"
+msgstr "zmienna opłata członkowska"
+
+msgid "New_total_sum"
+msgstr "Nowa suma łącznie"
+
+msgid "The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr "Suma łącznie poniżej (minus {0}% zmiennej opłaty członkowskiej) zostanie przelana na twoje konto bankowe tak szybko jak to możliwe."
+
+msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr "Suma łącznie po prawej (cena z) zostanie przelana na twoje konto bankowe tak szybko jak to możliwe."
+
+msgid "Paid_by_members_in_{0}"
+msgstr "Zapłacone przez wszystkich członków w {0}"
+
+msgid "Paid_by_members_in"
+msgstr "Zapłacone przez wszystkich członków w"
+
+msgid "Kept_variable_member_fee"
+msgstr "Kept variable member fee"
+
+msgid "Amount_that_will_be_transferred_to_your_bank_account"
+msgstr "Kwóta, która zostanie przelana na twoje konto bankowe"
+
+msgid "Thank_you_very_much_for_delivering_your_products_to_us!"
+msgstr "Bardzo dziękujemy za dostarczenie do nas produktów!"
+
+msgid "Detail_view"
+msgstr "Widok szczegółowy"
+
+msgid "Order_day"
+msgstr "Dzień zamówienia"
+
+msgid "Order_list_grouped_by"
+msgstr "Listy zamówień zgrupowane wg"
+
+msgid "Edit_delivery_rhythm_for_selected_products"
+msgstr "Edytuj harmonogram dostaw dla wybranych produktów"
+
+msgid "Add_new_attribute_for_product_{0}"
+msgstr "Dodaj nowy atrybut do produktu {0}"
+
+msgid "change_amount"
+msgstr "zmień ilość"
+
+msgid "No_email_notifications_are_sent_for_this_product."
+msgstr "Powiadomienia nigdy nie będą wysyłane dla tego produktu jeśli ilość magazynowa jest zbyt niska."
+
+msgid "change_delivery_rhythm"
+msgstr "zmieńharmonogram dostaw"
+
+msgid "delivery_rhythm_from"
+msgstr "początek"
+
+#, fuzzy
+msgid "change_deposit"
+msgstr "zmień wkład"
+
+msgid "add_image"
+msgstr "dodaj obraz"
+
+msgid "New"
+msgstr "Nowy"
+
+msgid "Mark_product_as_new_for_the_next_{0}_days?"
+msgstr "Oznaczyć produkt jako nowy przez kolejnych {0} dni?"
+
+msgid "Do_not_mark_product_as_new_any_more?"
+msgstr "Nie oznaczać już produktu jako nowy?"
+
+msgid "Is_stock_product"
+msgstr "Czy jest produktem magazynowanym"
+
+msgid "Long_description"
+msgstr "Długi opis"
+
+msgid "Delete_attribute_for_product_{0}"
+msgstr "Usuń atrybut dla produktu {0}"
+
+msgid "This_attribute_is_the_default_attribute."
+msgstr "Ten atrybut jest domyślny"
+
+msgid "Define_as_new_default_attribute"
+msgstr "Ustaw jako nowy atrybut domyślny"
+
+msgid "change_category"
+msgstr "zmień kategorię"
+
+msgid "chose_category..."
+msgstr "wybierz kategorię..."
+
+msgid "Category_\"all_products\"_is_missing!"
+msgstr "Brakuje kategorii \"Wszystkie produkty\""
+
+msgid "product_preview"
+msgstr "podgląd produktu"
+
+msgid "change_price"
+msgstr "zmień cenę"
+
+msgid "change_tax_rate"
+msgstr "zmień stawkę podatku"
+
+msgid "Dear_financial_responsible"
+msgstr "Osobo odpowiedzialna za finanse"
+
+msgid "the_invoices_from_{0}_have_just_been_sent."
+msgstr "faktura od {0} została wysłana."
+
+msgid "Here_you_find_the_overview_for_making_the_transfers:"
+msgstr "Znajdziesz tu przegląd do wykonywania przelewów pieniężnych"
+
+#, fuzzy
+msgid "This_is_a_great_opportunity_to_check_the_credit_uploads_link_below."
+msgstr "Jest to świetna okazja dosprawdzenia spłat kredytów."
+
+msgid "(Link_only_works_for_superadmins)."
+msgstr "(Linki działają wyłącznie u superadminów)."
+
+msgid "Thank_you_very_much_for_your_work!"
+msgstr "Bardzo dziękujemy za wykonaną pracę!"
+
+#, fuzzy
+msgid "your_credit_is_used_up_and_equals_{0}."
+msgstr "twój kredyt został wykorzystany i wynosi {0}."
+
+#, fuzzy
+msgid "Please_soon_transfer_new_credit_(eg_100_{0})_to_our_bank_account."
+msgstr "Proszę wkrótce odnowić swój kredyt przelewając środki na nasze konto bankowe (np 100 {0})."
+
+#, fuzzy
+msgid "Do_not_forget_to_add_it_to_our_credit_system_after_the_bank_transfer."
+msgstr "Nie zapomnij dodać go do systemu kredytowego po wpłacie."
+
+#, fuzzy
+msgid "Here_you_find_the_link_to_add_the_credit:"
+msgstr "Oto link do odnowienia kredytu:"
+
+msgid "{0}_is_the_last_day_to_order._You_can_do_that_until_{0}_midnight."
+msgstr "{0} jest ostatnim dniem zamówień. Można zamawiać do {0}, do północy."
+
+msgid "Do_you_want_to_load_your_last_order_into_your_shopping_cart?_The_current_cart_will_be_emptied_for_that."
+msgstr ""
+"Do you want to load your last order into your shopping cart? The current cart will be emptied for that.\n"
+"Czy chcesz wczytać do koszyka swoje poprzednie zamówienie? Bieżąca zawartość koszyka zostanie usunięta."
+
+msgid "route_cart"
+msgstr "cart"
+
+msgid "Click_here_to_open_the"
+msgstr "Kliknij tu aby przejść do"
+
+msgid "Website"
+msgstr "Strona"
+
+msgid "And_here_you_can_unsubscribe_this_email_reminder"
+msgstr "Tu możesz wyłączyć przypomnienia mailowe"
+
+msgid "The_amount_of_the_product_{0}_has_been_adapted."
+msgstr "Ilość produktu {0} została zmodyfikowana."
+
+msgid "You_have_ordered_it_on_{0}_at_manufacturer_{1}."
+msgstr "Zamówiono dnia {0} od producenta {1}."
+
+msgid "Old_amount"
+msgstr "Stara ilość"
+
+msgid "New_amount"
+msgstr "Nowa ilość"
+
+msgid "Why_has_the_amount_been_adpated?"
+msgstr "Dlaczego ilość została dostosowana?"
+
+#, fuzzy
+msgid "PS:_Your_credit_has_been_adapted_automatically."
+msgstr "PS: Twój kredyt został automatycznie dostosowany."
+
+msgid "sorry,_{0}_can_not_be_delivered."
+msgstr "przepraszamy, produkt \"{0}\" nie może zostać dostarczony."
+
+msgid "Order_date"
+msgstr "Data zamówienia"
+
+msgid "Why_has_the_product_been_cancelled?"
+msgstr "Dlaczego produkt został anulowany?"
+
+msgid "Sorry,_but_sometimes_our_manufacturers_cannot_deliver_the_ordered_products._You_receive_this_email_so_you_can_buy_the_products_elsewhere."
+msgstr "Przepraszamy, lecz czasem nasi producenci nie są w stanie dostarczyć zamówionych produktów. Otrzymujesz ten mail aby móc kupić produkry w innym miejscu."
+
+#, fuzzy
+msgid "Thanks_for_respecting_that!"
+msgstr "Dziękujemy za przestrzeganie tego!"
+
+msgid "New_pickup_day"
+msgstr "Nowy dzień odbioru"
+
+msgid "Old_pickup_day"
+msgstr "Stary dzień odbioru"
+
+msgid "Why_was_the_pickup_day_changed?"
+msgstr "Dlaczego dzień odbioru uległ zmianie?"
+
+msgid "The_following_product_is_affected"
+msgstr "Będzie to miało wpływ na następujący produkt"
+
+msgid "The_following_{0}_products_are_affected"
+msgstr "Będzie to miało wpływ na następujące produkty"
+
+#, fuzzy
+msgid "The_price_of_the_product_{0}_has_been_adapted."
+msgstr "Cena produktu {0} została dostosowana."
+
+#, fuzzy
+msgid "You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}."
+msgstr "Zamówiono {0} jednostek produktu dnia {1} od producenta {2}."
+
+msgid "Old_price"
+msgstr "Stara cena"
+
+msgid "New_price"
+msgstr "Nowa cena"
+
+#, fuzzy
+msgid "Why_has_the_price_been_adpated?"
+msgstr "Dlaczego cena została dostosowana?"
+
+#, fuzzy
+msgid "The_weight_of_the_product_{0}_has_been_adapted."
+msgstr "Waga produktu {0} została dostosowana."
+
+msgid "Old_price_for"
+msgstr "Stara cena dla"
+
+msgid "New_price_for"
+msgstr "Nowa cena dla"
+
+msgid "The_base_price_is_{0}."
+msgstr "Cena bazowa wynosi {0}."
+
+#, fuzzy
+msgid "The_status_of_your_credit_upload_of_{0}_({1}_amount)_was_changed_to_{2}."
+msgstr "Status twojeje wpłaty kredytowej {0} ({1}) został zmieniony na {2}."
+
+msgid "Please_compare_the_credit_upload_that_you_added_to_our_system_with_the_actual_bank_account_transfer."
+msgstr "Proszę porównać wpłatę kredytową dodaną do systemu z rzeczywistym przelewem bankowym."
+
+msgid "Comment"
+msgstr "Komentarz"
+
+msgid "Please_do_not_forget_that_you_have_products_to_pick_up_on_{0}."
+msgstr "Nie zapomnij, że masz produkty do odbioru w {0}."
+
+msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
+msgstr "Otrzymujesz to przypomnienie ponieważ twoje zamówienie zostało złożone wcześniej niż {0} dni temu."
+
+msgid "Hello"
+msgstr "Cześć"
+
+msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
+msgstr "ta faktura zawiera wszystkie produkty, które zostały dostarczone dnia {0}."
+
+msgid "If_the_invoice_amount_should_differ_from_your_own_recordings_please_tell_us."
+msgstr "W razie niezgodności rzeczywistych ilości z tymi na fakturze, prosimy o kontakt."
+
+msgid "The_invoice_amount_will_be_transfered_to_your_bank_accound_withing_the_next_days."
+msgstr "Kwota na fakturze zostanie przelana na konto bankowe w przeciągu najbliższych dni."
+
+msgid "please_find_two_order_lists_attached_for_the_next_delivery_(grouped_by_product_and_member)."
+msgstr "w załączeniu dwie listy zamówień do najbliższej dostawy (pogrupowane wg produktów oraz zamawiających)."
+
+msgid "Your_personal_manufacturer_panel"
+msgstr "Twój własny panel producenta"
+
+msgid "Help_pages"
+msgstr "Pomoc online"
+
+msgid "docs_route_manufacturers"
+msgstr "manufacturers"
+
+msgid "docs_route_order_handling"
+msgstr "order-handling"
+
+#, fuzzy
+msgid "You_can_change_your_imprint_by_yourself."
+msgstr "Możesz zmienić swój podpis samemu."
+
+msgid "Your_products_are_only_visible_for_members._To_view_your_products_as_the_member_sees_them_you_need_to_be_logged_in."
+msgstr "Twoje produkty są widoczne wyłącznie dla członków. Musisz być zalogowany żeby wyświetlić produkty tak, jak widzą je członkowie."
+
+msgid "For_signing_in_please_use_the_email_address_of_this_message._If_you_want_to_order_products_from_other_manufacturers_please_sign_on_with_a_different_email_address."
+msgstr "W celu zalogowania się proszę użyć adresu email z tej wiadomości. Aby zamówić produkty od innych producentów, proszę się zalogować za pomocą innego adresu email."
+
+msgid "Your_contact_person"
+msgstr "Twoja osoba kontaktowa"
+
+msgid "docs_route_pick_up_products"
+msgstr "pick-up-products"
+
+msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_the_manufacturers."
+msgstr "Tu znajdują się niezmienione listy zamówień wysłane do producentów."
+
+msgid "Order_list_by_product"
+msgstr "Lista zamówień wg produktu"
+
+msgid "Order_list_by_member"
+msgstr "Lista zamówień wg członków"
+
+msgid "Show_list_(grouped_by_product)"
+msgstr "Pokaż listę (pogrupowaną wg produktu)"
+
+msgid "Show_list_(grouped_by_member)"
+msgstr "Pokaż listę (pogrupowaną wg członków)"
+
+msgid "General"
+msgstr "Ogólne"
+
+#, fuzzy
+msgid "in_your_imprint"
+msgstr "w twoim podpisie"
+
+#, fuzzy
+msgid "in_the_imprint_of_the_manufacturer"
+msgstr "podpis producenta"
+
+#, fuzzy
+msgid "Will_be_shown_in_imprint_{0}_and_spamprotected."
+msgstr "Will be shown spam-protected {0}."
+
+#, fuzzy
+msgid "Will_be_shown_in_imprint_{0}."
+msgstr "Będzie widoczne w podpisie {0}."
+
+msgid "Example_given_abbreviation"
+msgstr "Np."
+
+msgid "To_your_settings"
+msgstr "Idź do swoich ustawień"
+
+msgid "To_the_settings_of_manufacturer"
+msgstr "Idź do ustawień producenta"
+
+msgid "To_manufacturer_profile"
+msgstr "Idź do profilu producenta"
+
+msgid "Logo"
+msgstr "Logo"
+
+msgid "Click_on_logo_to_change_it."
+msgstr "Kliknij na logo aby je zmienić"
+
+msgid "Upload_new_logo_or_change_it"
+msgstr "Prześlij nowe logo lub zmień je"
+
+msgid "Delete_logo?"
+msgstr "Usunąć logo?"
+
+msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
+msgstr "Będzie widoczne na stronie podsumowania producenta. Nie może zostać zmienione przez samego producenta."
+
+#, fuzzy
+msgid "To_save_long_description_press_save_and_then_edit_manufacturer."
+msgstr "Aby zapisać długi opis proszę kliknąć \"Zapisz\", a następnie przejdź do edycji producenta."
+
+msgid "Will_be_shown_on_the_manufacturer_profile."
+msgstr "Będzie widoczne na stronie profilowej producenta."
+
+msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
+msgstr "nie jest widoczne publicznie. Będzie używane wyłącznie do przelewów na twoje konto bankowe."
+
+msgid "Bank"
+msgstr "Ban"
+
+msgid "IBAN"
+msgstr "IBAN"
+
+msgid "BIC"
+msgstr "BIC"
+
+msgid "Company_data"
+msgstr "Dane firmy"
+
+msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
+msgstr "do twojego podpisu oraz twoich faktur. Podpis można znaleźć na stronie profilowej, w prawym dolnym rogu."
+
+msgid "VAT_number"
+msgstr "numer VAT"
+
+msgid "if_it_is_available"
+msgstr "jeśli dostępne"
+
+msgid "General_terms_and_conditions"
+msgstr "Regulamin"
+
+msgid "Change_general_terms_and_conditions"
+msgstr "Zmień regulamin"
+
+msgid "Upload_general_terms_and_conditions"
+msgstr "Prześlij regulamin"
+
+msgid "Upload_general_terms_and_conditions_or_change_them"
+msgstr "Prześlij regulamin lub zmień go"
+
+msgid "If_you_do_not_upload_your_own_general_terms_and_conditions_(as_pdf)_the_default_general_terms_and_conditions_are_applied."
+msgstr "Jeśli nie prześlesz własnego regulaminu (jako pdf), podczas zamawiania produktów widoczny będzie domyślny regulamin."
+
+msgid "Delete_general_terms_and_conditions?"
+msgstr "Usunąć regulamin?"
+
+#, fuzzy
+msgid "Commercial_register_number"
+msgstr "KRS"
+
+#, fuzzy
+msgid "Company_court"
+msgstr "Sąd gospodarczy"
+
+msgid "Supervisory_authority"
+msgstr "Jednostka nadzorcza"
+
+msgid "e. g. chamber_of_agriculture"
+msgstr "np. izba rolnicza"
+
+msgid "Chamber"
+msgstr "Izba"
+
+msgid "Additional_text_for_invoice"
+msgstr "Dodatkowy tekst do faktury"
+
+msgid "Will_be_printed_on_the_end_of_the_overview_page_of_your_invoice."
+msgstr "Będzie widoczne na końcu strony podsumowania twojej faktury."
+
+msgid "Example_for_additional_invoice_text"
+msgstr "PRZYKŁAD DODATKOWEGO TEKSTU NA FAKTURZE "
+
+msgid "Visibility_of_the_products"
+msgstr "Widoczność produktów"
+
+msgid "Manufacturer_profile_and_products_are_visible_(cannot_be_changed_by_manufacturer)."
+msgstr "Profil producenta i jego produkty są widoczne (nie może zostać zmienione przez producenta)."
+
+msgid "Delivery_break"
+msgstr "Przerwa w dostawach"
+
+msgid "How_do_I_use_the_function_delivery_break?"
+msgstr "Jak używać funkcji \"Przerwa w dostawach\"?"
+
+msgid "Manufacturer_profile_and_products_are_only_visible_for_signed_in_members."
+msgstr "Profil producenta i jego produkty widoczne są tylko dla zalogowanych członków."
+
+msgid "Notifications"
+msgstr "Powiadomienia"
+
+msgid "Order_lists_by_email"
+msgstr "Listy zamówień wg email"
+
+msgid "I_want"
+msgstr "Chciałbym"
+
+msgid "The_manufacturer_wants"
+msgstr "Producent chciałby"
+
+msgid "to_receive_the_orders_per_email."
+msgstr "otrzymywać zamówienia drogą mailową."
+
+msgid "CC_recipient_for_order_lists"
+msgstr "Odbiorcy DW dla list zamówień"
+
+msgid "Separate_multiple_emails_with_comma"
+msgstr "Wiele adresów email oddzielamy przecinkiem"
+
+#, fuzzy
+msgid "Invoices_by_email"
+msgstr "Faktury mailowo"
+
+msgid "to_receive_his_invoice_every_month_by_email."
+msgstr "otrzymywać co miesiąc faktury drogą mailową."
+
+#, fuzzy
+msgid "Cancellations"
+msgstr "Anulowania"
+
+#, fuzzy
+msgid "to_receive_an_email_on_every_cancellation."
+msgstr "otrzymywać informację o każdym anulowaniu drogą mailową."
+
+#, fuzzy
+msgid "Adaptions_of_price_and_weight_of_ordered_products"
+msgstr "Modyfikacje cen i wag zamówionych produktów"
+
+msgid "to_receive_an_email_on_every_adaption_of_price_or_weight_of_a_ordered_product."
+msgstr "otrzymywać mail o każdej modyfikacji ceny lub wagi"
+
+msgid "Adaptions_of_the_ordered_amount"
+msgstr "Modyfikacje zamówionych ilości"
+
+msgid "to_receive_an_email_on_every_adaption_of_the_amount_of_a_ordered_product."
+msgstr "otrzymywać mail o każdej modyfikacji ilości zamówionego produktu."
+
+msgid "Instant_orders"
+msgstr "Zamówienia błyskawiczne"
+
+msgid "to_receive_an_email_on_every_instant_order."
+msgstr "otrzymywać mail o każdym zamówieniu błyskawicznym (oprócz produktów magazynowanych)."
+
+msgid "Other_settings"
+msgstr "Inne ustawienia"
+
+#, fuzzy
+msgid "Variable_member_fee_in"
+msgstr "Zmienna opłata członkowska w"
+
+msgid "The_invoice_for_the_manufacturer_will_be_reduced_by_the_given_percentage_no_decimals_allowed."
+msgstr "The invoice for the manufacturer will be reduced by the given percentage. No decimals allowed."
+
+msgid "Preselected_tax_rate_for_new_products"
+msgstr "Preselected tax rate for new products"
+
+msgid "Advanced_stock_management_active?"
+msgstr "Advanced stock management active?"
+
+msgid "Infos_to_the_advanced_stock_management"
+msgstr "Information to the advanced stock management"
+
+msgid "Sold_out_limit_reached_notification_for_manufacturer?"
+msgstr "Sold out limit reached notification for manufacturer?"
+
+msgid "to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
+msgstr "to receive an email when the stock limit for a product is reached."
+
+msgid "Sold_out_limit_reached_notification_for_contact_person?"
+msgstr "Sold out limit reached notification for contact person?"
+
+msgid "The_contact_person_wants_to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
+msgstr "The contact person wants to receive an email when the stock limit for a product is reached."
+
+msgid "Manufacturer_optimized_for_bulk_orders?"
+msgstr "Manufacturer optimized for bulk orders?"
+
+msgid "Disables_all_notifications_except_sent_invoices."
+msgstr "Disables all notifications except the one for sent invoices."
+
+msgid "docs_route_bulk_orders"
+msgstr "bulk-orders"
+
+msgid "Info_page_for_bulk_orders"
+msgstr "Info page for bulk orders"
+
+msgid "Chose_member"
+msgstr "Wybierz członka..."
+
+msgid "Paying_with_time"
+msgstr "Płatność czasem"
+
+msgid "Max_part_of_{0}_in_percent"
+msgstr "Maksymalna część {0} w procentach"
+
+msgid "valid_for_all_products_0_means_paying_with_time_module_is_deactivated_in_the_shop."
+msgstr "ważne dla wszystkich produktów. 0 oznacza, że moduł płacenia czasem jest wyłączony."
+
+msgid "Maximum_credit_balance_in_{0}"
+msgstr "Maksymalne saldo kredytowe w {0}"
+
+msgid "up_to_which_it_can_be_paid_in_{0}."
+msgstr "do którego członek może zapłacić w {0}."
+
+msgid "Zero_means_no_limit_and_global_limit_of_{0}_is_used."
+msgstr "0 oznacza, że limit globalny {0} został zużyty."
+
+msgid "Stock_products"
+msgstr "Produkty magazynowane"
+
+msgid "Sum_of_open_orders_in_given_time_range"
+msgstr "Suma otwartych zamówień w danym przedziale czasu"
+
+msgid "Open_orders_abbreviation"
+msgstr "Otw. zam."
+
+msgid "Settings_abbreviation"
+msgstr "Ust."
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr "{0,plural,=1{1 produkt} other{# produkty}}"
+
+msgid "Show_all_products_from_{0}"
+msgstr "Pokaż wszystkie produkty od {0}"
+
+#, fuzzy
+msgid "Show_deposit_account"
+msgstr "Pokaż konto wkładów"
+
+msgid "Edit_manufacturer_settings"
+msgstr "Edytuj ustawienia producenta"
+
+msgid "Test_order_list"
+msgstr "Testowa lista zamówień"
+
+msgid "Test_invoice"
+msgstr "Testowa faktura"
+
+msgid "Manufacturer_profile"
+msgstr "Profil producenta"
+
+msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
+msgstr "Wybierz z listy poniżej czlonka, za którego chcesz złożyć zamówienie błyskawiczne."
+
+msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
+msgstr "Dzień odbioru zamówienia błyskawicznego zostanie automatycznie zmieniony na <b> dziś, {0} </b>"
+
+msgid "all_members"
+msgstr "wszyscy członkowie"
+
+msgid "Group_by..."
+msgstr "Grupuj wg..."
+
+msgid "No_orders_found_for_pickup_day_{0}."
+msgstr "Nie znaleziono zamówień dla dnia odbioru {0}."
+
+msgid "No_orders_found_for_delivery_period_{0}_-_{1}."
+msgstr "Nie znaleziono zamówień dla okresu dostaw od {0} do {1}."
+
+msgid "All_products"
+msgstr "Wszystkie produkty"
+
+msgid "Show_all_ordered_products"
+msgstr "Pokaż wszystkie zamówione produkty"
+
+msgid "Page_title"
+msgstr "Tytuł strony"
+
+msgid "Pages_menu_type_main_description"
+msgstr "W którym menu"
+
+msgid "Pages_menu_type_sub_description"
+msgstr "strona powinna być widoczna?"
+
+msgid "Pages_parent_main_description"
+msgstr "Nadrzędny element menu"
+
+msgid "Pages_parent_sub_description"
+msgstr "Menu główne: zostaw puste"
+
+msgid "Chose_parent_menu_item"
+msgstr "Wybierz nadrzędny element menu"
+
+msgid "Pages_position_main_description"
+msgstr "Pozycja w menu"
+
+msgid "Pages_position_sub_description"
+msgstr "Liczba pomiędzy 0, a 100"
+
+msgid "Pages_position_sub2_description"
+msgstr "\"0\" ukrywa stronę z menu, lecz strona może zostać otwarta jeśli jej adres jest znany."
+
+msgid "Pages_full_width_main_description"
+msgstr "Pełna szerokość?"
+
+msgid "Pages_full_width_sub_description"
+msgstr "Lewe menu zostanie ukryte aby uczyniś obszar treści szerszym."
+
+msgid "Pages_extern_url_main_description"
+msgstr "Podlinkować do zewnętrznej strony?"
+
+msgid "Pages_extern_url_sub_description"
+msgstr "Element menu prowadzi do wskazanego adresu. Zawartość strony nie będzie wyświetlana."
+
+msgid "Pages_delete_page_main_description"
+msgstr "Usunąć stronę?"
+
+msgid "to_the_admin_area"
+msgstr "do panelu administratora"
+
+msgid "to_the_manufacturer_area"
+msgstr "do panelu producenta"
+
+msgid "Welcome"
+msgstr "Witamy"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "Rank_in_menu"
+msgstr "Pozycja w menu"
+
+msgid "Full_width"
+msgstr "Pełna szerokość"
+
+msgid "Link"
+msgstr "Link"
+
+msgid "Date_of_upload"
+msgstr "Data przesłania"
+
+msgid "Date_last_modified"
+msgstr "Data ostatniej modyfikacji"
+
+msgid "Last_editor"
+msgstr "Ostatni redaktor"
+
+msgid "This_payment_has_not_been_changed_yet."
+msgstr "Ta płatność nie została jeszcze zmieniona."
+
+msgid "Send_email?"
+msgstr "Wysłać mail?"
+
+msgid "If_checked_the_member_will_be_notified_about_the_status_change_by_email_on_saving_including_the_comment."
+msgstr "Jeśli zaznaczone, to po zapisaniu, członek zostanie powiadomiony mailowo o zmianie statusu (łącznie z komentarzem)."
+
+msgid "Email_preview"
+msgstr "Podgląd maila"
+
+msgid "Add_transfered_member_fee"
+msgstr "Dodaj przekazaną opłatę członkowską"
+
+msgid "There_is_no_{0}_available."
+msgstr "Żaden {0} nie jest dostępny."
+
+msgid "Delete_payment?"
+msgstr "Usunąć płatność?"
+
+msgid "Sum"
+msgstr "Suma"
+
+msgid "Back_to_member_overview"
+msgstr "Wróć do przeglądu członków"
+
+msgid "docs_route_credit_system"
+msgstr "credit-system"
+
+msgid "Add_transfered_credit"
+msgstr "Dodaj wpłatę kredytową"
+
+msgid "Order_value"
+msgstr "Wartość zamówienia"
+
+#, fuzzy
+msgid "Delete_upload?"
+msgstr "Usunąć przekaz?"
+
+msgid "Your_credit_balance"
+msgstr "Twoje saldo kredytowe"
+
+msgid "chose_manufacturer..."
+msgstr "wybierz producenta..."
+
+msgid "amount"
+msgstr "kwota"
+
+msgid "price"
+msgstr "cena"
+
+msgid "Add_product"
+msgstr "Dodaj produkt"
+
+msgid "Synchronize_products"
+msgstr "Synchronizuj produkty"
+
+#, fuzzy
+msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
+msgstr "Wskazówka: możesz zmienić harmonogram dostaw dla wielu produktów zaznaczjąc je. Następnie kliknij przycisk na dole."
+
+msgid "Name_and_categories"
+msgstr "Nazwy i kategorie"
+
+#, fuzzy
+msgid "Product_declaration"
+msgstr "Zakładanie produktu"
+
+msgid "Stock_product"
+msgstr "Produkt magazynowany"
+
+msgid "Tax_rate"
+msgstr "Stawka podatkowa"
+
+msgid "New?"
+msgstr "Nowy?"
+
+#, fuzzy
+msgid "Delivery_rhythm"
+msgstr "Harmonogram dostaw"
+
+msgid "docs_route_financial_reports"
+msgstr "financial-reports"
+
+msgid "Added_on"
+msgstr "Dodane w dniu"
+
+msgid "Added_by"
+msgstr "Dodane przez"
+
+msgid "deleted_on"
+msgstr "usunięte w dniu"
+
+msgid "does_not_appear_in_sum."
+msgstr "nie zawarte w sumie."
+
+msgid "Slider_image"
+msgstr "Obraz suwaka"
+
+msgid "Width"
+msgstr "Szerokość"
+
+msgid "Rank"
+msgstr "Pozycja"
+
+msgid "Delete_slider_image?"
+msgstr "Usunąć obraz suwaka?"
+
+msgid "Tax_rates_can_not_be_changed."
+msgstr "Stawki podatkowe nie mogą być zmieniane."
+
+msgid "e.g._10_for_10%"
+msgstr "np. 10 za 10%"
+
+msgid "Tax_rates_can_not_be_changed_later."
+msgstr "Stawki podatkowe nie będą mogły zostać zmienione później."
+
+msgid "Delete"
+msgstr "Usuń"
+
+msgid "Show_product"
+msgstr "Pokaż produkt"
+
+msgid "Show_manufacturer"
+msgstr "Pokaż producenta"
+
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr "Wagi dostarczonych produktów mogą ulec zmianie, więc cena również może nieco się zmienić."
+
+#, fuzzy
+#~ msgid "aactivate"
+#~ msgstr "activate"
+
+#, fuzzy
+#~ msgid "Terms_of_use"
+#~ msgstr "Terms-of-use"
+
+#, fuzzy
+#~ msgid "Change_terms_of_use"
+#~ msgstr "Change group"
+
+#, fuzzy
+#~ msgid "Upload_terms_of_use"
+#~ msgstr "Terms-of-use"
+
+#, fuzzy
+#~ msgid "Delete_terms_of_use?"
+#~ msgstr "Delete attribute?"
+
+#~ msgid "Zero_means_no_limit."
+#~ msgstr "0 means \"no limit\"."
+
+#~ msgid "Global_limit: {0}"
+#~ msgstr "Global limit: {0}"
+
+#~ msgid "The_pickup_day_was_not_changed."
+#~ msgstr "The pickup day was not changed."
+
+#~ msgid "docs_route_paying-with-time-module"
+#~ msgstr "paying-with-time-module"
+
+#~ msgid "Order_period"
+#~ msgstr "Order period"
+
+#~ msgid "per"
+#~ msgstr "per"
+
+#~ msgid "Stock"
+#~ msgstr "Stock"
+
+#~ msgid "The_order_status_of_the_ordered_product_{0}_of_{1}_was_successfully_changed_to_{2}."
+#~ msgstr "The order state of the ordered product of {0} of {1} was successfully changed to {2}."
+
+#~ msgid "The_order_status_of_the_ordered_products_{0}_were_successfully_changed_to_{1}."
+#~ msgstr "The order state of the ordered products of {0} was successfully changed to {1}."
+
+#~ msgid "1_ordered_product_was_successfully_closed."
+#~ msgstr "1 ordered product was changed successfully to closed."
+
+#~ msgid "{0}_ordered_product_were_successfully_closed."
+#~ msgstr "{0} ordered product were changed successfully to closed."
+
+#~ msgid "Delivery_date"
+#~ msgstr "Delivery date"
+
+#~ msgid "Be_careful:_it_is_the_order_date_that_counts_not_the_delivery_date."
+#~ msgstr "Be careful: It is the order date that counts, not the delivery date!"
+
+#~ msgid "Last_pickup_day_between"
+#~ msgstr "Last pickup day between"
+
+#~ msgid "Amount_orders_between"
+#~ msgstr "Amount orders between"
+
+#~ msgid "and"
+#~ msgstr "and"
+
+#~ msgid "Manually_send_order_list"
+#~ msgstr "Manually send order list"
+
+#~ msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
+#~ msgstr "The comment of the order number {0} by {1} was changed:"
+
+#~ msgid "The_date_of_the_order_{0}_of_{1}_was_changed_to_{2}."
+#~ msgstr "The date of the order {0} of {1} was changed to {2}."
+
+#~ msgid "Change_order_status"
+#~ msgstr "Change order status"
+
+#~ msgid "Set_date_of_order_back"
+#~ msgstr "Set date of order back"
+
+#~ msgid "Close_all_orders"
+#~ msgstr "Close all orders"
+
+#~ msgid "Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
+#~ msgstr "Instant order nrº {0} successfully placed for {1} and date changed to {2}. The manufacturer was notified unless the notification was disabled."
+
+#~ msgid "Order_number_abbr"
+#~ msgstr "Order nº"
+
+#, fuzzy
+#~ msgid "Picked_up?"
+#~ msgstr "Pick-up day"
+
+#~ msgid "The_order_status_of_the_orders_{0}_was_successfully_changed_to_{1}."
+#~ msgstr "The order state of the orders {0} was successfully changed to {1}."
+
+#~ msgid "Pick_up_date"
+#~ msgstr "Pick-up date"
