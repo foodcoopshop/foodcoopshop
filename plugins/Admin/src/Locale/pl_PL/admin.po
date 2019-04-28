@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2019-03-15 10:04+0100\n"
-"PO-Revision-Date: 2019-04-26 01:48+0200\n"
+"PO-Revision-Date: 2019-04-28 03:51+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: pl_PL\n"
@@ -988,12 +988,11 @@ msgstr "1 dzień wstecz"
 msgid "to"
 msgstr "do"
 
-#, fuzzy
 msgid "Order_adaptions"
-msgstr "Modyfikacje zamówień"
+msgstr "Mod. zamówień"
 
 msgid "Deposit_returns"
-msgstr "Zwroty wkładów"
+msgstr "Zwroty kaucji"
 
 msgid "My_data"
 msgstr "Moje dane"
@@ -1799,13 +1798,13 @@ msgid "Pages_delete_page_main_description"
 msgstr "Usunąć stronę?"
 
 msgid "to_the_admin_area"
-msgstr "do panelu administratora"
+msgstr "w panelu administratora"
 
 msgid "to_the_manufacturer_area"
-msgstr "do panelu producenta"
+msgstr "w panelu producenta"
 
 msgid "Welcome"
-msgstr "Witamy"
+msgstr "Witaj"
 
 msgid "Menu"
 msgstr "Menu"
