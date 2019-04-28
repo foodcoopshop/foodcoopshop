@@ -117,7 +117,7 @@ INSERT INTO `fcs_configuration` VALUES
 (581,1,'FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS','Pokazywać tylko produkty magazynowane przy zamówieniach błyskawicznych?','0','boolean',76,'pl_PL','2019-02-18 12:38:00','2019-02-18 12:38:00'),
 (582,1,'FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES','Zawrzyj w fakturach produkty magazynowane?','1','readonly',60,'pl_PL','2019-02-18 12:38:00','2019-02-18 12:38:00'),
 (583,1,'FCS_REGISTRATION_NOTIFICATION_EMAILS','Kto powinien być powiadamiany o nowych rejestracjach? <br /> <div class = "small"> Oddziel wiele adresów e-mail przecinkami (bez spacji). </div>','','text',55,'pl_PL','2019-03-05 20:01:59','2019-03-05 20:01:59'),
-(584,1,'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED','Use self-service mode for stock products?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/en/self-service-mode\" target=\"_blank\">Online documentation</a></div>','0','readonly',57,'pl_PL','2019-04-17 20:01:59','2019-04-17 20:01:59');
+(584,1,'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED','Użyć trybu samoobsługowego dla produktów magazynowych?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/pl/self-service-mode\" target=\"_blank\">Dokumentacja</a></div>','0','readonly',57,'pl_PL','2019-04-17 20:01:59','2019-04-17 20:01:59');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
