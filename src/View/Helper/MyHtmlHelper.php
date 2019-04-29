@@ -149,6 +149,15 @@ class MyHtmlHelper extends HtmlHelper
                 break;
         }
     }
+    
+    public function getFontAwesomeIconForCurrencyName($currencySymbol)
+    {
+        $currencyIcon = 'fas fa-fw fa-'.strtolower(Configure::read('app.currencyName')).'-sign';
+        if (Configure::read('app.currencyName') == '') {
+            $currencyIcon = 'fa-fw far fa-money-bill-alt';
+        }
+        return $currencyIcon;
+    }
 
     public function getDocsUrl($page)
     {
