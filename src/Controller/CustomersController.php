@@ -400,6 +400,11 @@ class CustomersController extends FrontendController
         $this->response = $this->response->withCookie((new Cookie('remember_me')));
         $this->destroyInstantOrderCustomer();
         $this->AppAuth->logout();
-        $this->redirect('/');
+        $redirectUrl = '/';
+        if ($this->request->getQuery('redirect')) {
+            $redirectUrl = $this->request->getQuery('redirect');
+        }
+        $this->redirect($redirectUrl);
+        
     }
 }

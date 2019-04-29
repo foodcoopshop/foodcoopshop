@@ -66,7 +66,6 @@ class AppController extends Controller
         }
         
         $this->loadComponent('AppAuth', [
-            'logoutRedirect' => '/',
             'loginAction' => Configure::read('app.slugHelper')->getLogin(),
             'authError' => ACCESS_DENIED_MESSAGE,
             'authorize' => [

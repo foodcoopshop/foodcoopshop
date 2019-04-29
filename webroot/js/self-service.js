@@ -17,7 +17,7 @@ foodcoopshop.SelfService = {
     currentLogoutTimer : 0,
         
     init : function() {
-        foodcoopshop.Helper.initLogoutButton();
+        foodcoopshop.Helper.initLogoutButton(foodcoopshop.LocalizedJs.helper.routeSelfService);
         this.initAutoLogout();
     },
     
@@ -36,7 +36,7 @@ foodcoopshop.SelfService = {
                 foodcoopshop.SelfService.currentLogoutTimer--;
                 foodcoopshop.SelfService.renderTimer();
                 if (foodcoopshop.SelfService.currentLogoutTimer == 0) {
-                    document.location.href = '/' + foodcoopshop.LocalizedJs.helper.routeLogout;
+                    document.location.href = '/' + foodcoopshop.LocalizedJs.helper.routeLogout + '?redirect=' + foodcoopshop.LocalizedJs.helper.routeSelfService;
                 }
             },
             recurIdleCall : true,
