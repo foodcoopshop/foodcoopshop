@@ -63,8 +63,18 @@ class CheckCreditBalanceShell extends AppShell
                     ->setViewVars([
                     'customer' => $customer,
                     'delta' => $delta
-                    ])
-                    ->send();
+                    ]);
+                
+                if(!empty($customer->address_customer) && !empty($customer->address_customer->email_forwarding))
+                {
+                    $arrayForwardingEmails = explode (",", $customer->address_customer->email_forwarding);
+                    if(!empty($arrayForwardingEmails))
+                    {
+                        $email->addCc($arrayForwardingEmails);
+                    }
+                }
+                
+                $email->send();
             }
         }
 

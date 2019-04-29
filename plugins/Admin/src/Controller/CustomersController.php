@@ -479,7 +479,16 @@ class CustomersController extends AdminAppController
                 'data' => $customer,
                 'newPassword' => $newPassword
                 ]);
-
+            
+            if(!empty($customer) && !empty($customer->address_customer->email_forwarding))
+            {
+                $arrayForwardingEmails = explode (",", $customer->address_customer->email_forwarding);
+                if(!empty($arrayForwardingEmails))
+                {
+                    $email->addCc($arrayForwardingEmails);
+                }
+            }
+            
             if (Configure::read('app.termsOfUseEnabled')) {
                 $email->addAttachments([__d('admin', 'Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf($customer), 'mimetype' => 'application/pdf']]);
             }

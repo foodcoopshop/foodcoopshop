@@ -190,6 +190,28 @@ class PaymentsController extends AdminAppController
                         'newStatusAsString' => $newStatusAsString,
                         'payment' => $payment
                     ]);
+                
+                $tableCustomer = TableRegistry::getTableLocator()->get('Customers');
+                $customer = $tableCustomer->find('all', [
+                    'conditions' => [
+                        'Customers.id_customer' => $payment->id_customer
+                    ],
+                    'contain' => [
+                        'AddressCustomers'
+                    ]
+                ])->first();
+                
+                if(!empty($customer) 
+                        && !empty($customer->address_customer) 
+                        && !empty($customer->address_customer->email_forwarding))
+                {
+                    $arrayForwardingEmails = explode (",", $customer->address_customer->email_forwarding);
+                    if(!empty($arrayForwardingEmails))
+                    {
+                        $email->addCc($arrayForwardingEmails);
+                    }
+                }
+                
                 $email->send();
                 $message = __d('admin', 'The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}_and_an_email_was_sent_to_the_member.', ['<b>'.$payment->customer->name.'</b>', '<b>' .$newStatusAsString.'</b>']);
             }

@@ -240,7 +240,7 @@ class CartsController extends FrontendController
             $email = new AppEmail();
             $email->viewBuilder()->setTemplate('order_successful');
             $email->setTo($this->AppAuth->getEmail())
-            ->addBcc($this->AppAuth->getCCEmails())
+            ->addCc($this->AppAuth->getCCEmails())
             ->setSubject(__('Order_confirmation'))
             ->setViewVars([
                 'cart' => $this->Cart->getCartGroupedByPickupDay($cart),

@@ -76,8 +76,18 @@ class EmailOrderReminderShell extends AppShell
             ->setViewVars([
                 'customer' => $customer,
                 'lastOrderDayAsString' => (Configure::read('app.timeHelper')->getSendOrderListsWeekday() - date('N')) == 1 ? __('today') : __('tomorrow')
-            ])
-            ->send();
+            ]);
+            
+            if(!empty($customer->address_customer) && !empty($customer->address_customer->email_forwarding))
+            {
+                $arrayForwardingEmails = explode (",", $customer->address_customer->email_forwarding);
+                if(!empty($arrayForwardingEmails))
+                {
+                    $email->addCc($arrayForwardingEmails);
+                }
+            }
+             
+            $email->send();
 
             $outString .= $customer->name . '<br />';
 
