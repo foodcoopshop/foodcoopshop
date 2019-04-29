@@ -20,7 +20,7 @@ $this->element('addScript', [
 ]);
 
 echo $this->Html->link(
-    '<i class="fas fa-fw fa-'.strtolower(Configure::read('app.currencyName')).'-sign"></i>' . $buttonText,
+    '<i class="' . $this->Html->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName')) . '"></i>' . $buttonText,
     'javascript:void(0);',
     [
         'data-object-id' => $rowId,
