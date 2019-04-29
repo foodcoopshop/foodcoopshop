@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-25 14:47+0200\n"
-"PO-Revision-Date: 2019-04-25 14:47+0200\n"
+"POT-Creation-Date: 2019-04-29 10:23+0200\n"
+"PO-Revision-Date: 2019-04-29 10:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1668,6 +1668,9 @@ msgstr "Angemeldet bleiben"
 msgid "and_accept_cookie"
 msgstr "und Cookie akzeptieren"
 
+msgid "BarCode"
+msgstr "Barcode"
+
 msgid "Forgot_password?"
 msgstr "Passwort vergessen?"
 
@@ -2168,6 +2171,9 @@ msgstr "Standardwert"
 
 msgid "price_will_be_eventually_adapted."
 msgstr "Preis wird evtl. noch angepasst."
+
+msgid "route_self_service"
+msgstr "selbstbedienung"
 
 msgid "route_accept_terms_of_use"
 msgstr "nutzungsbedingungen-akzeptieren"

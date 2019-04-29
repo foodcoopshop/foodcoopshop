@@ -85,6 +85,10 @@ Router::scope('/', function (RouteBuilder $routes) {
         $routes->connect('/discourse/sso', ['controller' => 'Pages', 'action' => 'discourseSso']);
     }
 
+    if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+        $routes->connect('/'.__('route_self_service'), ['controller' => 'SelfService']);
+    }
+    
     $routes->connect('/js/localized-javascript', ['controller' => 'Localized', 'action' => 'renderAsJsFile'])->setExtensions(['js']);
 
     // first folder must not exist physically!

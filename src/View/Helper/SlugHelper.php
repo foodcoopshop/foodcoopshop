@@ -25,7 +25,7 @@ class SlugHelper extends Helper
 
     public function getSelfService()
     {
-        return '/self-service';
+        return '/'.__('route_self_service');
     }
     
     public function getActionLogsList()

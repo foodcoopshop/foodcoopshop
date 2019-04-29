@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-25 14:47+0200\n"
+"POT-Creation-Date: 2019-04-29 10:23+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1667,6 +1667,9 @@ msgstr ""
 msgid "and_accept_cookie"
 msgstr ""
 
+msgid "BarCode"
+msgstr ""
+
 msgid "Forgot_password?"
 msgstr ""
 
@@ -2166,6 +2169,9 @@ msgid "default_value"
 msgstr ""
 
 msgid "price_will_be_eventually_adapted."
+msgstr ""
+
+msgid "route_self_service"
 msgstr ""
 
 msgid "route_accept_terms_of_use"
