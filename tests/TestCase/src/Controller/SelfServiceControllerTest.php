@@ -18,6 +18,16 @@ use Cake\Core\Configure;
 class SelfServiceControllerTest extends AppCakeTestCase
 {
     
+    public function testPageSelfService()
+    {
+        $this->loginAsSuperadmin();
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $testUrls = [
+            $this->Slug->getSelfService()
+        ];
+        $this->assertPagesForErrors($testUrls);
+    }
+    
     public function testBarCodeLoginAsSuperadminIfNotEnabled()
     {
         $this->doBarCodeLogin();

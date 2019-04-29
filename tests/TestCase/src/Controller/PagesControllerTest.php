@@ -105,7 +105,6 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Network->getSyncDomainEdit(1),
             $this->Slug->getConfigurationsList(),
             $this->Slug->getConfigurationEdit(544),
-            $this->Slug->getSelfService(),
         ];
 
         $this->assertPagesForErrors($testUrls);
