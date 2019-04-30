@@ -54,4 +54,22 @@ class AddressCustomersTable extends AddressesTable
         ]);
         return $validator;
     }
+    
+    public function getCCEmails($customerId)
+    {
+        $arrayForwardingEmails = array();
+        
+        $addressCustomer = $this->find('all', [
+            'conditions' => [
+                'AddressCustomers.id_customer' => $customerId
+            ],
+        ])->first();
+        
+        if(!empty($addressCustomer) && !empty($addressCustomer->email_forwarding))
+        {
+            $arrayForwardingEmails = explode (",", $addressCustomer->email_forwarding);
+        }
+             
+        return $arrayForwardingEmails;
+    }
 }

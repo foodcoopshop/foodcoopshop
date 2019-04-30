@@ -26,7 +26,6 @@ use App\Model\Table\OrderDetailsTable;
 */
 class OrderDetailsController extends AdminAppController
 {
-
     public function isAuthorized($user)
     {
         switch ($this->getRequest()->getParam('action')) {
@@ -628,10 +627,13 @@ class OrderDetailsController extends AdminAppController
             ]
         ];
         // send email to customers
+        $this->AddressCustomers = TableRegistry::getTableLocator()->get('AddressCustomers');
+        
         foreach($recipients as $recipient) {
             $email = new AppEmail();
             $email->viewBuilder()->setTemplate('Admin.order_detail_customer_changed');
-            $email->setTo($recipient['email'])
+            $email->setTo($recipient['email'])    
+            ->addCc($this->AddressCustomers->getCCEmails($recipient['customer']->id_customer))
             ->setSubject(__d('admin', 'Assigned_to_another_member') . ': ' . $oldOrderDetail->product_name)
             ->setViewVars([
                 'oldOrderDetail' => $oldOrderDetail,
@@ -712,9 +714,12 @@ class OrderDetailsController extends AdminAppController
 
         // send email to customer if price was changed
         if (!$doNotChangePrice) {
+            $this->AddressCustomers = TableRegistry::getTableLocator()->get('AddressCustomers');
+            
             $email = new AppEmail();
             $email->viewBuilder()->setTemplate('Admin.order_detail_quantity_changed');
             $email->setTo($oldOrderDetail->customer->email)
+            ->addCc($this->AddressCustomers->getCCEmails($oldOrderDetail->customer->id_customer))
             ->setSubject(__d('admin', 'Weight_adapted') . ': ' . $oldOrderDetail->product_name)
             ->setViewVars([
                 'oldOrderDetail' => $oldOrderDetail,
@@ -807,9 +812,11 @@ class OrderDetailsController extends AdminAppController
         ]);
 
         // send email to customer
+        $this->AddressCustomers = TableRegistry::getTableLocator()->get('AddressCustomers');
         $email = new AppEmail();
         $email->viewBuilder()->setTemplate('Admin.order_detail_amount_changed');
         $email->setTo($oldOrderDetail->customer->email)
+        ->addCc($this->AddressCustomers->getCCEmails($oldOrderDetail->customer->id_customer))
         ->setSubject(__d('admin', 'Ordered_amount_adapted') . ': ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
@@ -902,9 +909,11 @@ class OrderDetailsController extends AdminAppController
         $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $productPrice, $object->product_amount);
 
         // send email to customer
+        $this->AddressCustomers = TableRegistry::getTableLocator()->get('AddressCustomers');
         $email = new AppEmail();
         $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
         $email->setTo($oldOrderDetail->customer->email)
+        ->addCc($this->AddressCustomers->getCCEmails($oldOrderDetail->customer->id_customer))        
         ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
@@ -1008,11 +1017,13 @@ class OrderDetailsController extends AdminAppController
                 $this->OrderDetail->save($entity);
                 @$customers[$orderDetail->id_customer][] = $orderDetail;
             }
+            $this->AddressCustomers = TableRegistry::getTableLocator()->get('AddressCustomers');
             
             foreach($customers as $orderDetails) {
                 $email = new AppEmail();
                 $email->viewBuilder()->setTemplate('Admin.order_detail_pickup_day_changed');
                 $email->setTo($orderDetails[0]->customer->email)
+                ->addCc($orderDetails[0]->customer->id_customer)
                 ->setSubject(__d('admin', 'The_pickup_day_of_your_order_was_changed_to').': ' . $newPickupDay)
                 ->setViewVars([
                     'orderDetails' => $orderDetails,
@@ -1180,9 +1191,11 @@ class OrderDetailsController extends AdminAppController
             $newQuantity = $this->increaseQuantityForProduct($orderDetail, $orderDetail->product_amount * 2);
 
             // send email to customer
+            $this->AddressCustomers = TableRegistry::getTableLocator()->get('AddressCustomers');
             $email = new AppEmail();
             $email->viewBuilder()->setTemplate('Admin.order_detail_deleted');
             $email->setTo($orderDetail->customer->email)
+            ->addCc($this->AddressCustomers->getCCEmails($orderDetail->customer->id_customer))      
             ->setSubject(__d('admin', 'Product_was_cancelled').': ' . $orderDetail->product_name)
             ->setViewVars([
                 'orderDetail' => $orderDetail,
