@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-29 10:23+0200\n"
+"POT-Creation-Date: 2019-04-30 15:33+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -219,6 +219,9 @@ msgid "Sign_out?"
 msgstr ""
 
 msgid "route_sign_out"
+msgstr ""
+
+msgid "route_self_service"
 msgstr ""
 
 msgid "An_error_occurred"
@@ -1655,6 +1658,12 @@ msgstr ""
 msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
 msgstr ""
 
+msgid "Scan_member_card"
+msgstr ""
+
+msgid "or"
+msgstr ""
+
 msgid "Email"
 msgstr ""
 
@@ -1665,9 +1674,6 @@ msgid "Stay_signed_in"
 msgstr ""
 
 msgid "and_accept_cookie"
-msgstr ""
-
-msgid "BarCode"
 msgstr ""
 
 msgid "Forgot_password?"
@@ -2169,9 +2175,6 @@ msgid "default_value"
 msgstr ""
 
 msgid "price_will_be_eventually_adapted."
-msgstr ""
-
-msgid "route_self_service"
 msgstr ""
 
 msgid "route_accept_terms_of_use"

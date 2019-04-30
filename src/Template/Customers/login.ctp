@@ -32,9 +32,13 @@ $this->element('addScript', ['script' =>
   <form id="LoginForm" method="post" accept-charset="utf-8">
         
         <?php
-          if (!$enableBarCodeLogin) {
-              echo $this->Form->control('email', ['label' => __('Email')]);
-              echo $this->Form->control('passwd', ['label' => __('Password')]);
+        if ($enableBarCodeLogin) {
+            echo $this->Form->control('barCode', ['type' => 'password', 'label' => __('Scan_member_card')]);
+            echo '<h2><span>'.__('or').'</span></h2>';
+        }
+        echo $this->Form->control('email', ['label' => __('Email')]);
+        echo $this->Form->control('passwd', ['label' => __('Password')]);
+          if ($enableAutoLogin) {
               echo '<div class="remember-me-wrapper">';
               echo $this->Form->control('remember_me', [
                   'type' => 'checkbox',
@@ -42,9 +46,7 @@ $this->element('addScript', ['script' =>
                   'escape' => false
               ]);
               echo '</div>';
-          } else {
-              echo $this->Form->control('barCode', ['label' => __('BarCode')]);
-          }
+        }
         ?>
         
         <div class="sc"></div>
@@ -64,7 +66,7 @@ $this->element('addScript', ['script' =>
         ]);
     ?>
       <div class="sc"></div>
-      <?php if ($renderRegistrationForm) { ?>
+      <?php if ($enableRegistrationForm) { ?>
           <div class="registration-form-wrapper">
               <h1 class="h1-registration"><?php echo __('Create_account'); ?></h1>
               

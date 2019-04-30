@@ -23,13 +23,37 @@
 	left: 315px;
 }
 #self-service #login-form {
-	padding-top: 95px;
+	padding-top: 70px;
+}
+#self-service #login-form form {
+	padding-top: 20px;
+	position: relative;
+}
+#self-service #login-form hr {
+    clear: both;
+    width: 100%;
+    float: left;
+    margin-top: 15px;
+    margin-bottom: 25px;
 }
 #self-service #login-form #LoginForm button {
 	margin-top: 0;
 }
 #self-service #login-form h1 {
-	padding-left: 115px;
+	padding-left: 0;
+}
+#self-service h2 {
+   width: 100%; 
+   text-align: center; 
+   border-bottom: 1px solid #ccc; 
+   line-height: 0.1em;
+   margin: 15px 0 25px;
+   float: left;
+   font-size: 18px;
+} 
+#self-service h2 span { 
+    background: #fff; 
+    padding:0 10px; 
 }
 #self-service .logout-wrapper {
 	position: absolute;

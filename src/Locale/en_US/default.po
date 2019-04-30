@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-29 10:23+0200\n"
-"PO-Revision-Date: 2019-04-29 10:24+0200\n"
+"POT-Creation-Date: 2019-04-30 15:33+0200\n"
+"PO-Revision-Date: 2019-04-30 15:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -221,6 +221,9 @@ msgstr "Sign out?"
 
 msgid "route_sign_out"
 msgstr "sign-out"
+
+msgid "route_self_service"
+msgstr "self-service"
 
 msgid "An_error_occurred"
 msgstr "An error occurred"
@@ -1656,6 +1659,12 @@ msgstr "Increase your credit"
 msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
 msgstr "Please do not forget to bring the exact amount of cash."
 
+msgid "Scan_member_card"
+msgstr "Scan member card"
+
+msgid "or"
+msgstr "or"
+
 msgid "Email"
 msgstr "E-mail"
 
@@ -1667,9 +1676,6 @@ msgstr "Stay signed in"
 
 msgid "and_accept_cookie"
 msgstr "and accept cookie"
-
-msgid "BarCode"
-msgstr "Bar code"
 
 msgid "Forgot_password?"
 msgstr "Forgot password?"
@@ -2172,9 +2178,6 @@ msgstr "default value"
 msgid "price_will_be_eventually_adapted."
 msgstr "price will be eventually adapted."
 
-msgid "route_self_service"
-msgstr "self-service"
-
 msgid "route_accept_terms_of_use"
 msgstr "accept-terms-of-use"
 
@@ -2270,6 +2273,9 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "BarCode"
+#~ msgstr "Bar code"
 
 #~ msgid "route_private_profile_images"
 #~ msgstr "profile-images"

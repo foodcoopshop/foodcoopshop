@@ -218,18 +218,21 @@ class CustomersController extends FrontendController
     public function login()
     {
         $title = __('Sign_in');
-        $renderRegistrationForm = true;
+        $enableRegistrationForm = true;
         $enableBarCodeLogin = false;
+        $enableAutoLogin = true;
         
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && 
             $this->getRequest()->getQuery('redirect') == Configure::read('app.slugHelper')->getSelfService()) {
             $this->viewBuilder()->setLayout('self_service');
             $title = __('Sign_in_for_self_service');
-            $renderRegistrationForm = false;
+            $enableRegistrationForm = false;
             $enableBarCodeLogin = true;
+            $enableAutoLogin = false;
         }
-        $this->set('renderRegistrationForm', $renderRegistrationForm);
+        $this->set('enableRegistrationForm', $enableRegistrationForm);
         $this->set('enableBarCodeLogin', $enableBarCodeLogin);
+        $this->set('enableAutoLogin', $enableAutoLogin);
         
         $this->set('title_for_layout', $title);
         

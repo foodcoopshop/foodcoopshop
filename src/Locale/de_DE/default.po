@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-29 10:23+0200\n"
-"PO-Revision-Date: 2019-04-29 10:24+0200\n"
+"POT-Creation-Date: 2019-04-30 15:33+0200\n"
+"PO-Revision-Date: 2019-04-30 15:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -221,6 +221,9 @@ msgstr "Abmelden?"
 
 msgid "route_sign_out"
 msgstr "abmelden"
+
+msgid "route_self_service"
+msgstr "selbstbedienung"
 
 msgid "An_error_occurred"
 msgstr "Es ist ein Fehler aufgetreten"
@@ -1656,6 +1659,12 @@ msgstr "Guthaben aufladen"
 msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
 msgstr "Bitte vergiss nicht, den Betrag beim Abholen so genau wie möglich in bar mitzunehmen."
 
+msgid "Scan_member_card"
+msgstr "Mitgliedskarte scannen"
+
+msgid "or"
+msgstr "oder"
+
 msgid "Email"
 msgstr "E-Mail"
 
@@ -1667,9 +1676,6 @@ msgstr "Angemeldet bleiben"
 
 msgid "and_accept_cookie"
 msgstr "und Cookie akzeptieren"
-
-msgid "BarCode"
-msgstr "Barcode"
 
 msgid "Forgot_password?"
 msgstr "Passwort vergessen?"
@@ -2172,9 +2178,6 @@ msgstr "Standardwert"
 msgid "price_will_be_eventually_adapted."
 msgstr "Preis wird evtl. noch angepasst."
 
-msgid "route_self_service"
-msgstr "selbstbedienung"
-
 msgid "route_accept_terms_of_use"
 msgstr "nutzungsbedingungen-akzeptieren"
 
@@ -2270,6 +2273,9 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "BarCode"
+#~ msgstr "Barcode"
 
 #~ msgid "Logout"
 #~ msgstr "Abmelden"
