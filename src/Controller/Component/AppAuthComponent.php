@@ -69,30 +69,20 @@ class AppAuthComponent extends AuthComponent
         return $this->user('email');
     }
     
-    public function getCCEmails()
+    public function getForwardingEmails()
     {
-        if(empty($this->customer))
-        {
+        if(empty($this->customer)) {
             $this->setCustomer();
         }
         
-        if(empty($this->customer))
-        {
-            return array();
+        if(empty($this->customer)) {
+            return [];
         }
 
-        $email_forwarding = $this->customer->address_customer->email_forwarding;
-
-        if(!empty($email_forwarding))
-        {
-            $arrayForwardingEmails = explode (",", $email_forwarding);
-            if(!empty($arrayForwardingEmails))
-            {
-                return $arrayForwardingEmails;
-            }
-        }
+        $this->AddressCustomers = TableRegistry::getTableLocator()->get('AddressCustomers');
+        $emailForwarding = $this->AddressCustomers->getForwardingEmailsAsArray($this->customer->address_customer->email_forwarding);
         
-        return array();
+        return $emailForwarding;
     }
 
     public function getAbbreviatedUserName()

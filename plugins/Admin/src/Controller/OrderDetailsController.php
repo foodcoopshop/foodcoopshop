@@ -505,6 +505,7 @@ class OrderDetailsController extends AdminAppController
                 'OrderDetails.id_order_detail' => $orderDetailId
             ],
             'contain' => [
+                'Customers.AddressCustomers',
                 'Customers',
                 'Products.Manufacturers',
                 'OrderDetailTaxes',
@@ -516,6 +517,9 @@ class OrderDetailsController extends AdminAppController
         $newCustomer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
+            ],
+            'contain' => [
+                'AddressCustomers'
             ]
         ])->first();
         
@@ -626,14 +630,15 @@ class OrderDetailsController extends AdminAppController
                 'customer' => $oldOrderDetail->customer
             ]
         ];
-        // send email to customers
+        
         $this->AddressCustomers = TableRegistry::getTableLocator()->get('AddressCustomers');
         
+        // send email to customers
         foreach($recipients as $recipient) {
             $email = new AppEmail();
             $email->viewBuilder()->setTemplate('Admin.order_detail_customer_changed');
             $email->setTo($recipient['email'])    
-            ->addCc($this->AddressCustomers->getCCEmails($recipient['customer']->id_customer))
+            ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($recipient['customer']->address_customer->email_forwarding))
             ->setSubject(__d('admin', 'Assigned_to_another_member') . ': ' . $oldOrderDetail->product_name)
             ->setViewVars([
                 'oldOrderDetail' => $oldOrderDetail,
@@ -687,6 +692,7 @@ class OrderDetailsController extends AdminAppController
             ],
             'contain' => [
                 'Customers',
+                'Customers.AddressCustomers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
                 'OrderDetailTaxes',
@@ -719,7 +725,7 @@ class OrderDetailsController extends AdminAppController
             $email = new AppEmail();
             $email->viewBuilder()->setTemplate('Admin.order_detail_quantity_changed');
             $email->setTo($oldOrderDetail->customer->email)
-            ->addCc($this->AddressCustomers->getCCEmails($oldOrderDetail->customer->id_customer))
+            ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($oldOrderDetail->customer->address_customer->forwarding_email))
             ->setSubject(__d('admin', 'Weight_adapted') . ': ' . $oldOrderDetail->product_name)
             ->setViewVars([
                 'oldOrderDetail' => $oldOrderDetail,
@@ -816,7 +822,7 @@ class OrderDetailsController extends AdminAppController
         $email = new AppEmail();
         $email->viewBuilder()->setTemplate('Admin.order_detail_amount_changed');
         $email->setTo($oldOrderDetail->customer->email)
-        ->addCc($this->AddressCustomers->getCCEmails($oldOrderDetail->customer->id_customer))
+        ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($oldOrderDetail->customer->address_customer->email_forwarding))
         ->setSubject(__d('admin', 'Ordered_amount_adapted') . ': ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
@@ -889,6 +895,7 @@ class OrderDetailsController extends AdminAppController
             ],
             'contain' => [
                 'Customers',
+                'Customers.AddressCustomers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
                 'OrderDetailTaxes',
@@ -913,7 +920,7 @@ class OrderDetailsController extends AdminAppController
         $email = new AppEmail();
         $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
         $email->setTo($oldOrderDetail->customer->email)
-        ->addCc($this->AddressCustomers->getCCEmails($oldOrderDetail->customer->id_customer))        
+        ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($oldOrderDetail->customer->address_customer->email_forwarding))
         ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
@@ -1169,6 +1176,7 @@ class OrderDetailsController extends AdminAppController
                 ],
                 'contain' => [
                     'Customers',
+                    'Customers.AddressCustomers',
                     'Products.StockAvailables',
                     'Products.Manufacturers',
                     'Products.Manufacturers.AddressManufacturers',
@@ -1195,7 +1203,7 @@ class OrderDetailsController extends AdminAppController
             $email = new AppEmail();
             $email->viewBuilder()->setTemplate('Admin.order_detail_deleted');
             $email->setTo($orderDetail->customer->email)
-            ->addCc($this->AddressCustomers->getCCEmails($orderDetail->customer->id_customer))      
+            ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($oldOrderDetail->customer->address_customer->email_forwarding))
             ->setSubject(__d('admin', 'Product_was_cancelled').': ' . $orderDetail->product_name)
             ->setViewVars([
                 'orderDetail' => $orderDetail,

@@ -236,11 +236,12 @@ class CartsController extends FrontendController
      */
     private function sendConfirmationEmailToCustomer($cart, $products)
     {
+        $this->AddressCustomers = TableRegistry::getTableLocator()->get('AddressCustomers');
         if ($this->AppAuth->user('active')) {
             $email = new AppEmail();
             $email->viewBuilder()->setTemplate('order_successful');
             $email->setTo($this->AppAuth->getEmail())
-            ->addCc($this->AppAuth->getCCEmails())
+            ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($this->AppAuth->getForwardingEmail()))
             ->setSubject(__('Order_confirmation'))
             ->setViewVars([
                 'cart' => $this->Cart->getCartGroupedByPickupDay($cart),
