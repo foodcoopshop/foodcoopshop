@@ -23,6 +23,10 @@ echo $this->element('layout/header');
     ]); ?>
     
     <?php
+        // avoid "access denied" message on login page if protected /self-service is requested
+        if ($this->request->is('get') && $this->request->getParam('action') == 'login') {
+            $this->request->getSession()->delete('Flash');
+        }
         echo $this->Flash->render();
         echo $this->Flash->render('auth');
     ?>
