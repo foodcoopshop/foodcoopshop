@@ -20,7 +20,8 @@ echo $this->element('layout/header');
     <?php echo $this->element('cart', [
         'showLinkToSelfService' => false,
         'showLoadLastOrderDetailsDropdown' => false,
-        'showCartDetailButton' => false
+        'showCartDetailButton' => false,
+        'showFutureOrderDetails' => false
     ]); ?>
     
     <?php

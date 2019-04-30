@@ -122,7 +122,7 @@ if ($appAuth->Cart->getProducts() !== null) {
         <?php } ?>
         
         <?php
-            if (!empty($futureOrderDetails)) {
+            if ($showFutureOrderDetails && !empty($futureOrderDetails)) {
                 echo '<p class="future-orders">';
                     echo '<b>'.__('Already_ordered_products').'</b><br />';
                     $links = [];

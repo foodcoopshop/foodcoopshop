@@ -55,7 +55,8 @@ echo $this->element('layout/header');
             <?php echo $this->element('cart', [
                 'showLinkToSelfService' => true,
                 'showLoadLastOrderDetailsDropdown' => true,
-                'showCartDetailButton' => true
+                'showCartDetailButton' => true,
+                'showFutureOrderDetails' => true
             ]); ?>
             <?php echo $this->element('infoBox'); ?>
         </div>
