@@ -46,7 +46,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->httpClient->loginEmail = Configure::read('test.loginEmailSuperadmin');
         $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->post($this->Slug->getLogin(), [
-            'barCode' => '7b6d522e04e51'
+            'barCode' => Configure::read('test.superadminBarCode')
         ]);
     }
     
