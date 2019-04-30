@@ -469,25 +469,18 @@ class CustomersController extends AdminAppController
 
         if ($sendEmail) {
             $newPassword = $this->Customer->setNewPassword($customer->id_customer);
+            $this->AddressCustomers = TableRegistry::getTableLocator()->get('AddressCustomers');
 
             $email = new AppEmail();
             $email->viewBuilder()->setTemplate('customer_activated');
             $email->setTo($customer->email)
+                ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($customer->address_customer->email_forwarding))    
                 ->setSubject(__d('admin', 'The_account_was_activated'))
                 ->setViewVars([
                 'appAuth' => $this->AppAuth,
                 'data' => $customer,
                 'newPassword' => $newPassword
                 ]);
-            
-            if(!empty($customer) && !empty($customer->address_customer->email_forwarding))
-            {
-                $arrayForwardingEmails = explode (",", $customer->address_customer->email_forwarding);
-                if(!empty($arrayForwardingEmails))
-                {
-                    $email->addCc($arrayForwardingEmails);
-                }
-            }
             
             if (Configure::read('app.termsOfUseEnabled')) {
                 $email->addAttachments([__d('admin', 'Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf($customer), 'mimetype' => 'application/pdf']]);
