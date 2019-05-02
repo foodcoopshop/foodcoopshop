@@ -1,0 +1,73 @@
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 2.5.0
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+
+#self-service {
+    background-color: #fff;
+    width: 917px;
+    min-height: 500px;
+    padding-right: 10px;
+    position: relative;
+}
+#self-service #flashMessage {
+	left: 315px;
+}
+#self-service #login-form {
+	padding-top: 70px;
+}
+#self-service #login-form form {
+	padding-top: 20px;
+	position: relative;
+}
+#self-service #login-form hr {
+    clear: both;
+    width: 100%;
+    float: left;
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+#self-service #login-form #LoginForm button {
+	margin-top: 0;
+}
+#self-service #login-form h1 {
+	padding-left: 0;
+}
+#self-service h2 {
+   width: 100%; 
+   text-align: center; 
+   border-bottom: 1px solid #ccc; 
+   line-height: 0.1em;
+   margin: 15px 0 25px;
+   float: left;
+   font-size: 18px;
+} 
+#self-service h2 span { 
+    background: #fff; 
+    padding:0 10px; 
+}
+#self-service .logout-wrapper {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+}
+#self-service .logo-wrapper img {
+	width: 100px;
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+}
+#self-service #cart {
+	border: 1px solid #ccc;
+	border-top: none;
+	border-left: none;
+}

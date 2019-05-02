@@ -38,6 +38,7 @@ class LocalizedController extends Controller
                 'logoutInfoText' => __('Really_sign_out?'),
                 'logout' => __('Sign_out?'),
                 'routeLogout' => __('route_sign_out'),
+                'routeSelfService' => __('route_self_service'),
                 'anErrorOccurred' => __('An_error_occurred'),
                 'no' => __('No'),
                 'yes' => __('Yes'),

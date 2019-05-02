@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-01 12:42+0200\n"
-"PO-Revision-Date: 2019-04-01 12:05+0200\n"
+"POT-Creation-Date: 2019-04-30 15:33+0200\n"
+"PO-Revision-Date: 2019-04-30 15:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -168,6 +168,9 @@ msgstr "Your new password was successfully activated and you are already signed 
 msgid "Sign_in"
 msgstr "Sign in"
 
+msgid "Sign_in_for_self_service"
+msgstr "Sign in for self-service"
+
 msgid "You_are_already_signed_in."
 msgstr "You are already signed in."
 
@@ -218,6 +221,9 @@ msgstr "Sign out?"
 
 msgid "route_sign_out"
 msgstr "sign-out"
+
+msgid "route_self_service"
+msgstr "self-service"
 
 msgid "An_error_occurred"
 msgstr "An error occurred"
@@ -948,6 +954,9 @@ msgstr "Privacy policy"
 msgid "List_of_allergens"
 msgstr "List of allergens"
 
+msgid "Self_service_for_stock_products"
+msgstr "Self-service for stock products"
+
 msgid "Tax_rates_overview_table"
 msgstr "Tax rates overview table"
 
@@ -1650,6 +1659,12 @@ msgstr "Increase your credit"
 msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
 msgstr "Please do not forget to bring the exact amount of cash."
 
+msgid "Scan_member_card"
+msgstr "Scan member card"
+
+msgid "or"
+msgstr "or"
+
 msgid "Email"
 msgstr "E-mail"
 
@@ -1977,6 +1992,9 @@ msgstr "page you have just been to"
 msgid "Click_here_to_open_the"
 msgstr "Click here to go the the"
 
+msgid "Auto_logout_in_X_seconds"
+msgstr "Auto-logout in X seconds"
+
 msgid "This_email_was_created_automatcially."
 msgstr "This e-mail was automatically created."
 
@@ -2255,6 +2273,9 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "BarCode"
+#~ msgstr "Bar code"
 
 #~ msgid "route_private_profile_images"
 #~ msgstr "profile-images"

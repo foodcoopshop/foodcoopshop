@@ -217,8 +217,25 @@ class CustomersController extends FrontendController
 
     public function login()
     {
-        $this->set('title_for_layout', __('Sign_in'));
-
+        $title = __('Sign_in');
+        $enableRegistrationForm = true;
+        $enableBarCodeLogin = false;
+        $enableAutoLogin = true;
+        
+        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && 
+            $this->getRequest()->getQuery('redirect') == Configure::read('app.slugHelper')->getSelfService()) {
+            $this->viewBuilder()->setLayout('self_service');
+            $title = __('Sign_in_for_self_service');
+            $enableRegistrationForm = false;
+            $enableBarCodeLogin = true;
+            $enableAutoLogin = false;
+        }
+        $this->set('enableRegistrationForm', $enableRegistrationForm);
+        $this->set('enableBarCodeLogin', $enableBarCodeLogin);
+        $this->set('enableAutoLogin', $enableAutoLogin);
+        
+        $this->set('title_for_layout', $title);
+        
         /**
          * login start
          */
@@ -386,6 +403,11 @@ class CustomersController extends FrontendController
         $this->response = $this->response->withCookie((new Cookie('remember_me')));
         $this->destroyInstantOrderCustomer();
         $this->AppAuth->logout();
-        $this->redirect('/');
+        $redirectUrl = '/';
+        if ($this->request->getQuery('redirect')) {
+            $redirectUrl = $this->request->getQuery('redirect');
+        }
+        $this->redirect($redirectUrl);
+        
     }
 }

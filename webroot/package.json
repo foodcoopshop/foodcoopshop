@@ -28,6 +28,7 @@
     "jquery-knob": "~1.2.11",
     "jquery.cycle2": "^2.1.6",
     "jquery.cycle2.swipe": "1.0.0",
+    "jquery.idle": "^1.3.0",
     "jquery.scrollto": "^2.1.2",
     "owl.carousel": "^2.3.4",
     "popper.js": "^1.15.0",

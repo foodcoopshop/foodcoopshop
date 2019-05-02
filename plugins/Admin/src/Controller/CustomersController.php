@@ -1,6 +1,7 @@
 <?php
 namespace Admin\Controller;
 
+use App\Auth\BarCodeAuthenticate;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Mailer\AppEmail;
 use Cake\Auth\DefaultPasswordHasher;
@@ -80,6 +81,9 @@ class CustomersController extends AdminAppController
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $this->Customer->dropManufacturersInNextFind();
         $customers = $this->Customer->find('all', [
+            'fields' => [
+                'bar_code' => $this->AppAuth->getAuthenticate('BarCode')->getIdentifierField($this->Customer)
+            ],
             'conditions' => [
                 'Customers.id_customer IN' => $customerIds
             ],
@@ -90,6 +94,8 @@ class CustomersController extends AdminAppController
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
             ]
         ]);
+        $customers->select($this->Customer);
+        $customers->select($this->Customer->AddressCustomers);
         $this->set('customers', $customers);
     }
 
@@ -113,7 +119,6 @@ class CustomersController extends AdminAppController
                 'Customers.id_customer' => $customerId
             ]
         ])->first();
-        $oldGroup = $oldCustomer->id_default_group;
 
         // eg. member is not allowed to change groupId of admin, not even to set a groupid he would be allowed to (member)
         if ($this->AppAuth->getGroupId() < $oldCustomer->id_default_group) {

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-01 12:42+0200\n"
+"POT-Creation-Date: 2019-04-30 15:33+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -167,6 +167,9 @@ msgstr ""
 msgid "Sign_in"
 msgstr ""
 
+msgid "Sign_in_for_self_service"
+msgstr ""
+
 msgid "You_are_already_signed_in."
 msgstr ""
 
@@ -216,6 +219,9 @@ msgid "Sign_out?"
 msgstr ""
 
 msgid "route_sign_out"
+msgstr ""
+
+msgid "route_self_service"
 msgstr ""
 
 msgid "An_error_occurred"
@@ -947,6 +953,9 @@ msgstr ""
 msgid "List_of_allergens"
 msgstr ""
 
+msgid "Self_service_for_stock_products"
+msgstr ""
+
 msgid "Tax_rates_overview_table"
 msgstr ""
 
@@ -1649,6 +1658,12 @@ msgstr ""
 msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
 msgstr ""
 
+msgid "Scan_member_card"
+msgstr ""
+
+msgid "or"
+msgstr ""
+
 msgid "Email"
 msgstr ""
 
@@ -1974,6 +1989,9 @@ msgid "page_you_have_just_been_to"
 msgstr ""
 
 msgid "Click_here_to_open_the"
+msgstr ""
+
+msgid "Auto_logout_in_X_seconds"
 msgstr ""
 
 msgid "This_email_was_created_automatcially."
