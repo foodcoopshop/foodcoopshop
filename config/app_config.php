@@ -49,6 +49,9 @@ return [
             'headerCharset' => 'utf-8',
         ],
     ],
+    'Security' => [
+        'salt_for_unit_tests' => 'afe52441c09f053e0c0c0f23f3a73cfe6202f7e4a8a64891477a2d290fccf75d'
+    ],
     'app' => [
         'jsNamespace' => 'foodcoopshop',
         'filesDir' => DS . 'files',

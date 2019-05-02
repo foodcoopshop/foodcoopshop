@@ -80,7 +80,10 @@ use Cake\Core\Configure;
     }
     .vertical.menu a {
     	color: #333333;
-    } 
+    }
+    body.customers.login #self-service {
+        box-shadow: inset 0 0 3em <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
+    }
     
     <?php if ($isMobile) { ?>
         @media only screen and (max-device-width: 768px) {

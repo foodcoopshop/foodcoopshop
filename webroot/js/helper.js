@@ -455,7 +455,7 @@ foodcoopshop.Helper = {
         );
     },
 
-    initLogoutButton: function () {
+    initLogoutButton: function (redirect) {
         $('a.logout-button').on('click', function () {
 
             var buttons = {};
@@ -465,7 +465,11 @@ foodcoopshop.Helper = {
                 click: function() {
                     $('.ui-dialog .ajax-loader').show();
                     $('.ui-dialog button').attr('disabled', 'disabled');
-                    document.location.href = '/' + foodcoopshop.LocalizedJs.helper.routeLogout;
+                    var redirectUrl = '/' + foodcoopshop.LocalizedJs.helper.routeLogout;
+                    if (redirect !== undefined) {
+                        redirectUrl += '?redirect=' + redirect;
+                    }
+                    document.location.href = redirectUrl;
                 }
             };
 
