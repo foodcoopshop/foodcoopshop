@@ -17,6 +17,7 @@ namespace App\Shell;
 
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 class CheckCreditBalanceShell extends AppShell
 {
@@ -32,21 +33,22 @@ class CheckCreditBalanceShell extends AppShell
         $this->initHttpClient(); // for loggedUserId
 
         $this->startTimeLogging();
-
+        
         $this->Customer->dropManufacturersInNextFind();
         $customers = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.active' => 1
+            'conditions' => [ 
+               'Customers.active' => 1
             ],
             'contain' => [
                 'AddressCustomers' // to make exclude happen using dropManufacturersInNextFind
             ]
         ]);
         $customers = $this->Customer->sortByVirtualField($customers, 'name');
-
+        $this->AddressCustomers = TableRegistry::getTableLocator()->get('AddressCustomers');
+        
         $i = 0;
-        $deltaSum = 0;
-        $outString = '';
+        $deltaSum = 0; 
+       $outString = '';
 
         foreach ($customers as $customer) {
             $delta = $this->Customer->getCreditBalance($customer->id_customer);
@@ -59,21 +61,12 @@ class CheckCreditBalanceShell extends AppShell
                 $email = new AppEmail();
                 $email->viewBuilder()->setTemplate('Admin.check_credit_balance');
                 $email->setTo($customer->email)
+                    ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($customer->address_customer->email_forwarding))
                     ->setSubject(__('Your_credit_is_used_up'))
                     ->setViewVars([
                     'customer' => $customer,
                     'delta' => $delta
                     ]);
-                
-                if(!empty($customer->address_customer) && !empty($customer->address_customer->email_forwarding))
-                {
-                    $arrayForwardingEmails = explode (",", $customer->address_customer->email_forwarding);
-                    if(!empty($arrayForwardingEmails))
-                    {
-                        $email->addCc($arrayForwardingEmails);
-                    }
-                }
-                
                 $email->send();
             }
         }

@@ -20,6 +20,7 @@ namespace App\Shell;
 
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 class EmailOrderReminderShell extends AppShell
 {
@@ -60,7 +61,8 @@ class EmailOrderReminderShell extends AppShell
             ]
         ]);
         $customers = $this->Customer->sortByVirtualField($customers, 'name');
-
+        $this->AddressCustomers = TableRegistry::getTableLocator()->get('AddressCustomers');
+        
         $i = 0;
         $outString = '';
         foreach ($customers as $customer) {
@@ -77,16 +79,7 @@ class EmailOrderReminderShell extends AppShell
                 'customer' => $customer,
                 'lastOrderDayAsString' => (Configure::read('app.timeHelper')->getSendOrderListsWeekday() - date('N')) == 1 ? __('today') : __('tomorrow')
             ]);
-            
-            if(!empty($customer->address_customer) && !empty($customer->address_customer->email_forwarding))
-            {
-                $arrayForwardingEmails = explode (",", $customer->address_customer->email_forwarding);
-                if(!empty($arrayForwardingEmails))
-                {
-                    $email->addCc($arrayForwardingEmails);
-                }
-            }
-             
+            $email->addCc($this->AddressCustomers->getForwardingEmailsAsArray($customer->address_customer->email_forwarding));
             $email->send();
 
             $outString .= $customer->name . '<br />';

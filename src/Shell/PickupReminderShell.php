@@ -54,6 +54,7 @@ class PickupReminderShell extends AppShell
         ]);
         $customers = $this->Customer->sortByVirtualField($customers, 'name');
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->AddressCustomers = TableRegistry::getTableLocator()->get('AddressCustomers');
         
         $nextPickupDay = Configure::read('app.timeHelper')->getDeliveryDay(strtotime($this->cronjobRunDay));
         $formattedPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday($nextPickupDay);
@@ -83,6 +84,7 @@ class PickupReminderShell extends AppShell
 
             $email = new AppEmail();
             $email->setTo($customer->email)
+            ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($customer->address_customer->email_forwarding))
             ->viewBuilder()->setTemplate('Admin.pickup_reminder');
             $email->setSubject(__('Pickup_reminder_for') . ' ' . $formattedPickupDay)
             ->setViewVars([
