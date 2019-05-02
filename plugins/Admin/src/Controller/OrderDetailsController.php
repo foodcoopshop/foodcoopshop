@@ -790,6 +790,7 @@ class OrderDetailsController extends AdminAppController
             ],
             'contain' => [
                 'Customers',
+                'Customers.AddressCustomers',
                 'Products.Manufacturers',
                 'Products.Manufacturers.AddressManufacturers',
                 'TimebasedCurrencyOrderDetails',
@@ -986,6 +987,7 @@ class OrderDetailsController extends AdminAppController
                 ],
                 'contain' => [
                     'Customers',
+                    'Customers.AddressCustomers',
                     'Products.Manufacturers'
                 ]
             ]);
@@ -1030,7 +1032,7 @@ class OrderDetailsController extends AdminAppController
                 $email = new AppEmail();
                 $email->viewBuilder()->setTemplate('Admin.order_detail_pickup_day_changed');
                 $email->setTo($orderDetails[0]->customer->email)
-                ->addCc($orderDetails[0]->customer->id_customer)
+                ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($orderDetails[0]->customer->address_customer->email_forwarding))
                 ->setSubject(__d('admin', 'The_pickup_day_of_your_order_was_changed_to').': ' . $newPickupDay)
                 ->setViewVars([
                     'orderDetails' => $orderDetails,
@@ -1203,7 +1205,7 @@ class OrderDetailsController extends AdminAppController
             $email = new AppEmail();
             $email->viewBuilder()->setTemplate('Admin.order_detail_deleted');
             $email->setTo($orderDetail->customer->email)
-            ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($oldOrderDetail->customer->address_customer->email_forwarding))
+            ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($orderDetail->customer->address_customer->email_forwarding))
             ->setSubject(__d('admin', 'Product_was_cancelled').': ' . $orderDetail->product_name)
             ->setViewVars([
                 'orderDetail' => $orderDetail,

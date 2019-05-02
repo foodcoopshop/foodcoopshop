@@ -69,7 +69,7 @@ class AppAuthComponent extends AuthComponent
         return $this->user('email');
     }
     
-    public function getForwardingEmails()
+    public function getForwardingEmailsAsArray()
     {
         if(empty($this->customer)) {
             $this->setCustomer();
