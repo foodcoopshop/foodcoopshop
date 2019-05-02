@@ -233,7 +233,7 @@ body.categories.detail div.description-wrapper {
     padding-left: 5px;
 }
 #login-form {
-    width: 380px;
+    width: 440px;
     margin: 0 auto;
 }
 #login-form h1 {
@@ -242,6 +242,7 @@ body.categories.detail div.description-wrapper {
     line-height: 30px;
     margin-bottom: 0px;
     padding: 10px;
+    padding-left: 170px;
     -moz-border-radius: 0px;
     -webkit-border-radius: 10px 10px 0px 0px;
     border-radius: 10px 10px 0px 0px;
@@ -259,9 +260,11 @@ body.customers.new_password_request #inner-content form {
     padding: 0;
 }
 #login-form .input label {
-    width: 95px;
+    width: 145px;
     float: left;
+    text-align: right;
     line-height: 25px;
+    margin-right: 10px;
 }
 body.customers.new_password_request .input label {
     width: 70px;
@@ -283,16 +286,16 @@ body.customers.new_password_request .input {
     clear: both;
 }
 #LoginForm  .remember-me-wrapper {
-    width: 180px;
+    width: 190px;
     float: left;
     margin-top: 10px;
 }
 #LoginForm .remember-me-wrapper label {
     float: right;
-    padding-left: 95px;
+    padding-left: 130px;
     line-height: 14px ! important;
     margin-top: -5px;
-    width: 350px;
+    width: 275px;
 }
 #LoginForm .remember-me-wrapper input[type="checkbox"] {
     float: left;
@@ -320,7 +323,7 @@ body.customers.new_password_request .input input {
     margin-top: -2px;
 }
 #login-form div.error-message {
-    margin-left: 95px;
+    margin-left: 155px;
     width: 255px;
 }
 #login-form #LoginForm div.error-message {
@@ -687,7 +690,11 @@ body.manufacturers.detail .imprint {
     padding-bottom: 0px;
 }
 #cart {
-    min-height: 150px;
+    min-height: 140px;
+}
+#cart a.self-service {
+	color: #fff;
+	margin-left: 10px;
 }
 #cart a.question {
 	color: #fff;
@@ -860,6 +867,12 @@ body.carts.detail .cart:not(#cart) a.btn {
 #RegistrationForm .input.checkbox label {
     padding-left: 80px;
     width: 350px;
+}
+.h1-registration {
+    border-radius: 0;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #d6d4d4;	
 }
 #CartsDetailForm  .input.checkbox .error-message,
 #CartsDetailForm  .input.select .error-message {

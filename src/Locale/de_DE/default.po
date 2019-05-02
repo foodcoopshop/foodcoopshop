@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-01 12:42+0200\n"
-"PO-Revision-Date: 2019-04-01 12:05+0200\n"
+"POT-Creation-Date: 2019-04-30 15:33+0200\n"
+"PO-Revision-Date: 2019-04-30 15:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -168,6 +168,9 @@ msgstr "Dein neues Passwort wurde erfolgreich aktiviert und du bist bereits eing
 msgid "Sign_in"
 msgstr "Anmelden"
 
+msgid "Sign_in_for_self_service"
+msgstr "Anmelden zur Selbstbedienung"
+
 msgid "You_are_already_signed_in."
 msgstr "Du bist bereits angemeldet."
 
@@ -218,6 +221,9 @@ msgstr "Abmelden?"
 
 msgid "route_sign_out"
 msgstr "abmelden"
+
+msgid "route_self_service"
+msgstr "selbstbedienung"
 
 msgid "An_error_occurred"
 msgstr "Es ist ein Fehler aufgetreten"
@@ -948,6 +954,9 @@ msgstr "Datenschutzerklärung"
 msgid "List_of_allergens"
 msgstr "Allergenliste"
 
+msgid "Self_service_for_stock_products"
+msgstr "Selbstbedienungs-Modus für Lagerprodukte"
+
 msgid "Tax_rates_overview_table"
 msgstr "Übersichtstabelle nach Steuersatz"
 
@@ -1650,6 +1659,12 @@ msgstr "Guthaben aufladen"
 msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
 msgstr "Bitte vergiss nicht, den Betrag beim Abholen so genau wie möglich in bar mitzunehmen."
 
+msgid "Scan_member_card"
+msgstr "Mitgliedskarte scannen"
+
+msgid "or"
+msgstr "oder"
+
 msgid "Email"
 msgstr "E-Mail"
 
@@ -1977,6 +1992,9 @@ msgstr "Seite, auf der du gerade warst"
 msgid "Click_here_to_open_the"
 msgstr "Hier geht's zur"
 
+msgid "Auto_logout_in_X_seconds"
+msgstr "Auto-Logout in X Sekunden"
+
 msgid "This_email_was_created_automatcially."
 msgstr "Diese E-Mail wurde automatisch erstellt."
 
@@ -2255,6 +2273,12 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "BarCode"
+#~ msgstr "Barcode"
+
+#~ msgid "Logout"
+#~ msgstr "Abmelden"
 
 #~ msgid "route_private_profile_images"
 #~ msgstr "profilbilder"

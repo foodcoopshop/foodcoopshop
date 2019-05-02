@@ -43,13 +43,16 @@ if ($appAuth->Cart->getProducts() !== null) {
     <h3>
     	<i class="fas fa-shopping-cart"></i>
     	<?php echo __('Cart'); ?>
-    	<a class="question" href="<?php echo $this->Html->getDocsUrl(__('docs_route_order_handling')); ?>"><i class="far fa-question-circle"></i></a>
+    	<?php if (0 && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && $showLinkToSelfService) { ?>
+    		<a class="self-service" href="<?php echo $this->Slug->getSelfService(); ?>"><i class="fas fa-shopping-bag"></i></a>
+   		<?php } ?>
+    	<a class="question" target="_blank" href="<?php echo $this->Html->getDocsUrl(__('docs_route_order_handling')); ?>"><i class="far fa-question-circle"></i></a>
 	</h3>
     
     <div class="inner">
     
     	<?php
-    	if (!$this->request->getSession()->check('Auth.instantOrderCustomer')) {
+    	if ($showLoadLastOrderDetailsDropdown && !$this->request->getSession()->check('Auth.instantOrderCustomer')) {
     	    $lastOrderDetails = $appAuth->getLastOrderDetailsForDropdown();
     	    if (!empty($lastOrderDetails)) {
     	        $lastOrderDetails['remove-all-products-from-cart'] = __('Empty_cart').'...';
@@ -110,14 +113,16 @@ if ($appAuth->Cart->getProducts() !== null) {
             
             <div class="sc"></div>
             
+            <?php if ($showCartDetailButton) { ?>
             <p><a class="btn btn-success" href="<?php echo $this->Slug->getCartDetail(); ?>">
                 <i class="fas fa-shopping-cart fa-lg"></i> <?php echo __('Show_cart_button'); ?>
             </a></p>
+            <?php } ?>
             
         <?php } ?>
         
         <?php
-            if (!empty($futureOrderDetails)) {
+            if ($showFutureOrderDetails && !empty($futureOrderDetails)) {
                 echo '<p class="future-orders">';
                     echo '<b>'.__('Already_ordered_products').'</b><br />';
                     $links = [];

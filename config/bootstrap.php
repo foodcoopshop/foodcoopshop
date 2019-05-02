@@ -128,6 +128,11 @@ Email::setConfig(Configure::consume('Email'));
 Log::setConfig(Configure::consume('Log'));
 Security::setSalt(Configure::consume('Security.salt'));
 
+if (isset($_SERVER['HTTP_X_UNIT_TEST_MODE'])
+    || (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]))) {
+        Security::setSalt(Configure::read('Security.salt_for_unit_tests'));
+    }
+
 /*
  * The default crypto extension in 3.0 is OpenSSL.
  * If you are migrating from 2.x uncomment this code to

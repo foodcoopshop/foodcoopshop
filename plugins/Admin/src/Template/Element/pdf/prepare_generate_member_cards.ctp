@@ -60,7 +60,7 @@ foreach($customers as $customer) {
             //https://stackoverflow.com/a/54520065/2100184
             $imgBase64Encoded = base64_encode($barcodeObject->getBarcodePngData(1.5, 60));
             // move barcode to bottom
-            $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="font-size:16px;"></td></tr></table>';
+            $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="font-size:16px;"><span style="font-size:10px;">'.$customer->bar_code.'</span></td></tr></table>';
                 $pdf->table .= '<img src="@' . preg_replace('#^data:image/[^;]+;base64,#', '', $imgBase64Encoded) . '">';
             $pdf->table .= '</td>';
             $pdf->table .= '<td style="width:10px;"></td>'; //spacer between barcode and customer image
