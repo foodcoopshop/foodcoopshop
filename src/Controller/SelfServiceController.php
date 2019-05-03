@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,6 +32,18 @@ class SelfServiceController extends FrontendController
     
     public function index()
     {
+        
+        $keyword = '';
+        if (!empty($this->getRequest()->getQuery('keyword'))) {
+            $keyword = trim($this->getRequest()->getQuery('keyword'));
+        }
+        $this->set('keyword', $keyword);
+        
+        $this->Category = TableRegistry::getTableLocator()->get('Categories');
+        $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, $keyword);
+        $products = $this->prepareProductsForFrontend($products);
+        $this->set('products', $products);
+        
         $this->viewBuilder()->setLayout('self_service');
         $this->set('title_for_layout', __('Self_service_for_stock_products'));
     }

@@ -18,6 +18,27 @@
     min-height: 500px;
     padding-right: 10px;
     position: relative;
+    float: left;
+}
+#self-service #cart {
+	left: 3px;
+    position: fixed;
+}
+#self-service #products {
+	float: left;
+	width: 590px;
+	margin-left: 315px;
+	margin-top: -1px;
+	margin-bottom: 50px;
+}
+#self-service .product-wrapper div.first-column {
+	width: 100px;
+}
+#self-service .product-wrapper div.first-column img {
+	width: 80px;
+}
+#self-service .product-wrapper div.second-column {
+	width: 280px;
 }
 #self-service #flashMessage {
 	left: 315px;
