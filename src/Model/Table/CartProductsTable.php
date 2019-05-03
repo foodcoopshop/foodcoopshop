@@ -35,6 +35,9 @@ class CartProductsTable extends AppTable
         $this->belongsTo('ProductAttributes', [
             'foreignKey' => 'id_product_attribute'
         ]);
+        $this->belongsTo('Carts', [
+            'foreignKey' => 'id_cart'
+        ]);
         $this->addBehavior('Timestamp');
     }
 
