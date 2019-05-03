@@ -104,7 +104,7 @@ class CategoriesTable extends AppTable
      * custom sql for best performance
      * product attributes ARE NOT fetched in this query!
      */
-    public function getProductsByCategoryId($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false)
+    public function getProductsByCategoryId($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false)
     {
         $params = [
             'active' => APP_ON
@@ -144,6 +144,10 @@ class CategoriesTable extends AppTable
         if ($productId > 0) {
             $params['productId'] = $productId;
             $sql .= " AND Products.id_product = :productId ";
+        }
+        
+        if ($getOnlyStockProducts) {
+            $sql .= " AND (Products.is_stock_product = 1 AND Manufacturers.stock_management_enabled = 1) ";
         }
 
         $sql .= $this->getOrdersForProductListQuery();

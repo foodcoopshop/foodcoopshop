@@ -40,7 +40,7 @@ class SelfServiceController extends FrontendController
         $this->set('keyword', $keyword);
         
         $this->Category = TableRegistry::getTableLocator()->get('Categories');
-        $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, $keyword);
+        $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, $keyword, 0, false, true);
         $products = $this->prepareProductsForFrontend($products);
         $this->set('products', $products);
         
