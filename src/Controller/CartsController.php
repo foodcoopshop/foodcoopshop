@@ -204,6 +204,7 @@ class CartsController extends FrontendController
             
             // send email to contact person
             if ($stockAvailableLimitReached && $cartProduct->product->manufacturer->stock_management_enabled && $cartProduct->product->is_stock_product && !empty($cartProduct->product->manufacturer->customer) && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_contact_person) {
+                $this->AddressCustomers = TableRegistry::getTableLocator()->get('AddressCustomers');
                 $email = new AppEmail();
                 $email->viewBuilder()->setTemplate('stock_available_limit_reached_notification');
                 $email->setTo($cartProduct->product->manufacturer->customer->address_customer->email)
@@ -211,6 +212,7 @@ class CartsController extends FrontendController
                     $cartProduct->order_detail->product_name,
                     $stockAvailable->quantity
                 ]))
+                ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($cartProduct->product->manufacturer->customer->address_customer->email_forwarding))
                 ->setViewVars([
                     'appAuth' => $this->AppAuth,
                     'greeting' => __('Hello') . ' ' . $cartProduct->product->manufacturer->customer->firstname,
