@@ -6,6 +6,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Herzlichen Dank an alle beteiligten Personen
 * [AndreasEgger](https://github.com/AndreasEgger)
+* [firerain-tgz](https://github.com/firerain-tgz)
 * [mrothauer](https://github.com/mrothauer)
 * [Speis-Vorchdorf](https://github.com/Speis-Vorchdorf)
 
@@ -15,6 +16,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Mitglieder können ab sofort ein Profilbild hochladen, welches in der Mitglieder-Liste mittels Mouseover angezeigt wird. [PR#345](https://github.com/foodcoopshop/foodcoopshop/pull/345) / [I#337](https://github.com/foodcoopshop/foodcoopshop/issues/337) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
 - Bestellte Produkte können jetzt auf ein anderes Mitglied umgebucht werden. [PR#341](https://github.com/foodcoopshop/foodcoopshop/pull/341) / [I#298](https://github.com/foodcoopshop/foodcoopshop/issues/298) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
 - Für Sofort-Bestellungen wird jetzt ein eigener Warenkorb verwendet. Ab und zu waren bereits Produkte im Warenkorb und man musste diese vor der Sofort-Bestellung zuerst löschen. [PR#344](https://github.com/foodcoopshop/foodcoopshop/pull/344) / [I#160](https://github.com/foodcoopshop/foodcoopshop/issues/160) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> <a href="https://github.com/Speis-Vorchdorf"><img src="https://github.com/Speis-Vorchdorf.png" width="20"></a>
+- Übersetzung auf Polnisch / Translation into Polish. [PR#354](https://github.com/foodcoopshop/foodcoopshop/pull/354) <a href="https://github.com/firerain-tgz"><img src="https://github.com/firerain-tgz.png" width="20"></a> 
 
 ## v2.4.1 / 2018-03-27 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.4.0...v2.4.1)
 
