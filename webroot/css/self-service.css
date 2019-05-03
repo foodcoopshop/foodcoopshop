@@ -24,11 +24,18 @@
 	left: 3px;
     position: fixed;
 }
+#self-service #product-search {
+    top: 48px;
+    left: 315px;
+}
+#self-service #product-search input {
+	width: 359px;
+}
 #self-service #products {
 	float: left;
 	width: 590px;
 	margin-left: 315px;
-	margin-top: -1px;
+	margin-top: 10px;
 	margin-bottom: 50px;
 }
 #self-service .product-wrapper div.first-column {
@@ -63,7 +70,7 @@
 #self-service #login-form h1 {
 	padding-left: 0;
 }
-#self-service h2 {
+#self-service #login-form h2 {
    width: 100%; 
    text-align: center; 
    border-bottom: 1px solid #ccc; 
@@ -72,7 +79,7 @@
    float: left;
    font-size: 18px;
 } 
-#self-service h2 span { 
+#self-service #login-form h2 span { 
     background: #fff; 
     padding:0 10px; 
 }
