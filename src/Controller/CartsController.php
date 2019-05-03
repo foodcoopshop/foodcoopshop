@@ -469,7 +469,7 @@ class CartsController extends FrontendController
                 'cartProductId' => $cartProduct['cartProductId'],
             ];
             
-            if ($this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
+            if ($this->AppAuth->isInstantOrderMode()) {
                 $orderDetail2save['pickup_day'] = $cartProduct['pickupDay'];
             }
             
@@ -600,7 +600,7 @@ class CartsController extends FrontendController
             $cart['Cart'] = $this->AppAuth->Cart->markAsSaved(); // modified timestamp is needed later on!
             
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-            if ($this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
+            if ($this->AppAuth->isInstantOrderMode()) {
                 if (empty($manufacturersThatReceivedInstantOrderNotification)) {
                     $message = __('Instant_order_({0})_successfully_placed_for_{1}.', [
                         Configure::read('app.numberHelper')->formatAsCurrency($this->AppAuth->Cart->getProductSum()),
@@ -640,7 +640,7 @@ class CartsController extends FrontendController
     public function sendInstantOrderNotificationToManufacturers($cartProducts)
     {
 
-        if (!$this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
+        if (!$this->AppAuth->isInstantOrderMode()) {
             return [];
         }
 

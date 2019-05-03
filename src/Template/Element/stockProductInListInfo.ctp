@@ -15,7 +15,7 @@
 
 use Cake\Core\Configure;
 
-if (!$this->request->getSession()->check('Auth.instantOrderCustomer')) {
+if (!$appAuth->isInstantOrderMode()) {
     return;
 }
 

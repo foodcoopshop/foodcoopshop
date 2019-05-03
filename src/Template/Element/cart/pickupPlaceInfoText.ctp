@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
-if ($this->request->getSession()->check('Auth.instantOrderCustomer')) {
+if ($appAuth->isInstantOrderMode()) {
     return false;
 }
 

@@ -108,7 +108,7 @@ class CartsControllerTest extends AppCakeTestCase
         $response = $this->addProductToCart($this->productId1, 2);
         $this->assertJsonOk();
         $response = $this->removeProduct($this->productId1);
-        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId());
+        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId(), $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
         $this->assertEquals([], $cart['CartProducts'], 'cart must be empty');
         $this->assertJsonOk();
         $response = $this->removeProduct($this->productId1);
@@ -125,7 +125,7 @@ class CartsControllerTest extends AppCakeTestCase
         $query = 'UPDATE ' . $this->Cart->CartProducts->getTable().' SET id_product_attribute = 5000 WHERE id_cart_product = 3';
         $this->dbConnection->execute($query);
         $this->removeProduct($this->productId2);
-        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId());
+        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId(), $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
         $this->assertEquals([], $cart['CartProducts'], 'cart must be empty');
         $this->assertJsonOk();
     }
@@ -139,7 +139,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonOk();
 
         // check if product was placed in cart
-        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId());
+        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId(), $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
         $this->assertEquals($this->productId1, $cart['CartProducts'][0]['productId'], 'product id not found in cart');
         $this->assertEquals($amount1, $cart['CartProducts'][0]['amount'], 'amount not found in cart or amount wrong');
     }
@@ -150,7 +150,7 @@ class CartsControllerTest extends AppCakeTestCase
         $amount2 = 3;
         $this->addProductToCart($this->productId2, $amount2);
         $this->assertJsonOk();
-        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId());
+        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId(), $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
         $this->assertEquals($this->productId2, $cart['CartProducts'][0]['productId'], 'product id not found in cart');
         $this->assertEquals($amount2, $cart['CartProducts'][0]['amount'], 'amount not found in cart or amount wrong');
     }
@@ -290,7 +290,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkStockAvailable($this->productId3, 77);
 
         // check new (empty) cart
-        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId());
+        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId(), $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
         $this->assertEquals($cart['Cart']['id_cart'], 3, 'cake cart id wrong');
         $this->assertEquals([], $cart['CartProducts'], 'cake cart products not empty');
 
@@ -675,7 +675,7 @@ class CartsControllerTest extends AppCakeTestCase
      */
     private function checkCartStatus()
     {
-        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId());
+        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId(), $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
         $this->assertEquals($cart['Cart']['status'], 1, 'cake cart status wrong');
         $this->assertEquals($cart['Cart']['id_cart'], 2, 'cake cart id wrong');
     }
@@ -701,7 +701,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
         $this->assertEquals($productId, $response->productId);
         $this->assertJsonError();
-        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId());
+        $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId(), $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
         $this->assertEquals($expectedAmount, $cart['CartProducts'][$productIndex]['amount'], 'amount not found in cart or wrong');
     }
 

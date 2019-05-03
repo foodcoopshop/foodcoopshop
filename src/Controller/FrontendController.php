@@ -46,7 +46,7 @@ class FrontendController extends AppController
             $product['tax'] = $grossPrice - $product['price'];
             $product['is_new'] = $this->Product->isNew($product['created']);
             
-            if ($this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
+            if ($this->AppAuth->isInstantOrderMode() || $this->AppAuth->isSelfServiceMode()) {
                 $product['next_delivery_day'] = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
             } else {
                 $product['next_delivery_day'] = $this->Product->calculatePickupDayRespectingDeliveryRhythm(
@@ -225,7 +225,7 @@ class FrontendController extends AppController
          * but only in controller beforeFilter(), beforeRender() sets the customer back to the original one
          * this means, in views $appAuth ALWAYS returns the original customer, in controllers ALWAYS the desired instantOrderCustomer
          */
-        if ($this->getRequest()->getSession()->check('Auth.instantOrderCustomer')) {
+        if ($this->AppAuth->isInstantOrderMode()) {
             $this->getRequest()->getSession()->write('Auth.originalLoggedCustomer', $this->AppAuth->user());
             $this->AppAuth->setUser($this->getRequest()->getSession()->read('Auth.instantOrderCustomer'));
         }
@@ -233,7 +233,7 @@ class FrontendController extends AppController
             $creditBalance = $this->AppAuth->getCreditBalance();
             $this->set('creditBalance', $creditBalance);
 
-            $shoppingLimitReached = !$this->getRequest()->getSession()->check('Auth.instantOrderCustomer') && Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') != - 1 && $creditBalance < Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') * - 1;
+            $shoppingLimitReached = !$this->AppAuth->isInstantOrderMode() && Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') != - 1 && $creditBalance < Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') * - 1;
             $this->set('shoppingLimitReached', $shoppingLimitReached);
             
             $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
