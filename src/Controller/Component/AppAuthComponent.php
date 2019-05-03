@@ -202,7 +202,7 @@ class AppAuthComponent extends AuthComponent
         $result = $this->_registry->getController()->request->getPath() == '/' . __('route_self_service');
         $serverParams = $this->_registry->getController()->request->getServerParams();
         if (isset($serverParams['HTTP_REFERER'])) {
-            $result |= preg_match('`' . preg_quote(Configure::read('app.cakeServerName')) . '/' . __('route_self_service') . '`', $serverParams['HTTP_REFERER']);
+            $result &= preg_match('`' . preg_quote(Configure::read('app.cakeServerName')) . '/' . __('route_self_service') . '`', $serverParams['HTTP_REFERER']);
         }
         return $result;
             
