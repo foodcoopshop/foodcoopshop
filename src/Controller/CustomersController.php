@@ -223,7 +223,7 @@ class CustomersController extends FrontendController
         $enableAutoLogin = true;
         
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && 
-            $this->getRequest()->getQuery('redirect') == Configure::read('app.slugHelper')->getSelfService()) {
+            $this->AppAuth->isSelfServiceMode()) {
             $this->viewBuilder()->setLayout('self_service');
             $title = __('Sign_in_for_self_service');
             $enableRegistrationForm = false;
