@@ -163,7 +163,6 @@ class CustomersController extends FrontendController
                 $email->viewBuilder()->setTemplate('new_password_request_successful');
                 $email->setSubject(__('New_password_for_{0}', [Configure::read('appDb.FCS_APP_NAME')]))
                     ->setTo($this->getRequest()->getData('Customers.email'))
-                    ->addCc($this->AppAuth->getForwardingEmailsAsArray())
                     ->setViewVars([
                         'activateNewPasswordCode' => $activateNewPasswordCode,
                         'tmpNewPassword' => $tmpNewPassword,
