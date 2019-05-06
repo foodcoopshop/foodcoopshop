@@ -55,13 +55,12 @@ class AddressCustomersTable extends AddressesTable
         return $validator;
     }
     
-    public function getForwardingEmailsAsArray($forwardingEmails)
+    public function getEmailForwardingAsArray($emailForwarding)
     {
-        $forwardingEmailsAsArray = [];
-        if(!empty($forwardingEmails)) {
-            $forwardingEmailsAsArray = explode(',', $forwardingEmails);
+        $emailForwardingArray = [];
+        if(!empty($emailForwarding)) {
+            $emailForwardingArray = explode(',', $emailForwarding);
         }
-        return $forwardingEmailsAsArray;
+        return $emailForwardingArray;
     }
-    
 }

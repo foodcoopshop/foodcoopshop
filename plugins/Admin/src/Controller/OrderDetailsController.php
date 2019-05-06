@@ -638,7 +638,7 @@ class OrderDetailsController extends AdminAppController
             $email = new AppEmail();
             $email->viewBuilder()->setTemplate('Admin.order_detail_customer_changed');
             $email->setTo($recipient['email'])    
-            ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($recipient['customer']->address_customer->email_forwarding))
+            ->addCc($this->AddressCustomers->getEmailForwardingAsArray($recipient['customer']->address_customer->email_forwarding))
             ->setSubject(__d('admin', 'Assigned_to_another_member') . ': ' . $oldOrderDetail->product_name)
             ->setViewVars([
                 'oldOrderDetail' => $oldOrderDetail,
@@ -725,7 +725,7 @@ class OrderDetailsController extends AdminAppController
             $email = new AppEmail();
             $email->viewBuilder()->setTemplate('Admin.order_detail_quantity_changed');
             $email->setTo($oldOrderDetail->customer->email)
-            ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($oldOrderDetail->customer->address_customer->forwarding_email))
+            ->addCc($this->AddressCustomers->getEmailForwardingAsArray($oldOrderDetail->customer->address_customer->forwarding_email))
             ->setSubject(__d('admin', 'Weight_adapted') . ': ' . $oldOrderDetail->product_name)
             ->setViewVars([
                 'oldOrderDetail' => $oldOrderDetail,
@@ -823,7 +823,7 @@ class OrderDetailsController extends AdminAppController
         $email = new AppEmail();
         $email->viewBuilder()->setTemplate('Admin.order_detail_amount_changed');
         $email->setTo($oldOrderDetail->customer->email)
-        ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($oldOrderDetail->customer->address_customer->email_forwarding))
+        ->addCc($this->AddressCustomers->getEmailForwardingAsArray($oldOrderDetail->customer->address_customer->email_forwarding))
         ->setSubject(__d('admin', 'Ordered_amount_adapted') . ': ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
@@ -921,7 +921,7 @@ class OrderDetailsController extends AdminAppController
         $email = new AppEmail();
         $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
         $email->setTo($oldOrderDetail->customer->email)
-        ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($oldOrderDetail->customer->address_customer->email_forwarding))
+        ->addCc($this->AddressCustomers->getEmailForwardingAsArray($oldOrderDetail->customer->address_customer->email_forwarding))
         ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
         ->setViewVars([
             'oldOrderDetail' => $oldOrderDetail,
@@ -1032,7 +1032,7 @@ class OrderDetailsController extends AdminAppController
                 $email = new AppEmail();
                 $email->viewBuilder()->setTemplate('Admin.order_detail_pickup_day_changed');
                 $email->setTo($orderDetails[0]->customer->email)
-                ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($orderDetails[0]->customer->address_customer->email_forwarding))
+                ->addCc($this->AddressCustomers->getEmailForwardingAsArray($orderDetails[0]->customer->address_customer->email_forwarding))
                 ->setSubject(__d('admin', 'The_pickup_day_of_your_order_was_changed_to').': ' . $newPickupDay)
                 ->setViewVars([
                     'orderDetails' => $orderDetails,
@@ -1205,7 +1205,7 @@ class OrderDetailsController extends AdminAppController
             $email = new AppEmail();
             $email->viewBuilder()->setTemplate('Admin.order_detail_deleted');
             $email->setTo($orderDetail->customer->email)
-            ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($orderDetail->customer->address_customer->email_forwarding))
+            ->addCc($this->AddressCustomers->getEmailForwardingAsArray($orderDetail->customer->address_customer->email_forwarding))
             ->setSubject(__d('admin', 'Product_was_cancelled').': ' . $orderDetail->product_name)
             ->setViewVars([
                 'orderDetail' => $orderDetail,

@@ -61,7 +61,7 @@ class CheckCreditBalanceShell extends AppShell
                 $email = new AppEmail();
                 $email->viewBuilder()->setTemplate('Admin.check_credit_balance');
                 $email->setTo($customer->email)
-                    ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($customer->address_customer->email_forwarding))
+                    ->addCc($this->AddressCustomers->getEmailForwardingAsArray($customer->address_customer->email_forwarding))
                     ->setSubject(__('Your_credit_is_used_up'))
                     ->setViewVars([
                     'customer' => $customer,

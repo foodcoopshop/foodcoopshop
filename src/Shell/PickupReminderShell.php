@@ -84,7 +84,7 @@ class PickupReminderShell extends AppShell
 
             $email = new AppEmail();
             $email->setTo($customer->email)
-            ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($customer->address_customer->email_forwarding))
+            ->addCc($this->AddressCustomers->getEmailForwardingAsArray($customer->address_customer->email_forwarding))
             ->viewBuilder()->setTemplate('Admin.pickup_reminder');
             $email->setSubject(__('Pickup_reminder_for') . ' ' . $formattedPickupDay)
             ->setViewVars([

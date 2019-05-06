@@ -479,7 +479,7 @@ class CustomersController extends AdminAppController
             $email = new AppEmail();
             $email->viewBuilder()->setTemplate('customer_activated');
             $email->setTo($customer->email)
-                ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($customer->address_customer->email_forwarding))    
+                ->addCc($this->AddressCustomers->getEmailForwardingAsArray($customer->address_customer->email_forwarding))    
                 ->setSubject(__d('admin', 'The_account_was_activated'))
                 ->setViewVars([
                 'appAuth' => $this->AppAuth,

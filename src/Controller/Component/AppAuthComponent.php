@@ -69,7 +69,7 @@ class AppAuthComponent extends AuthComponent
         return $this->user('email');
     }
     
-    public function getForwardingEmailsAsArray()
+    public function getEmailForwardingAsArray()
     {
         if(empty($this->customer)) {
             $this->setCustomer();
@@ -80,7 +80,7 @@ class AppAuthComponent extends AuthComponent
         }
 
         $this->AddressCustomers = TableRegistry::getTableLocator()->get('AddressCustomers');
-        $emailForwarding = $this->AddressCustomers->getForwardingEmailsAsArray($this->customer->address_customer->email_forwarding);
+        $emailForwarding = $this->AddressCustomers->getEmailForwardingAsArray($this->customer->address_customer->email_forwarding);
         
         return $emailForwarding;
     }

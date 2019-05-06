@@ -212,7 +212,7 @@ class CartsController extends FrontendController
                     $cartProduct->order_detail->product_name,
                     $stockAvailable->quantity
                 ]))
-                ->addCc($this->AddressCustomers->getForwardingEmailsAsArray($cartProduct->product->manufacturer->customer->address_customer->email_forwarding))
+                ->addCc($this->AddressCustomers->getEmailForwardingAsArray($cartProduct->product->manufacturer->customer->address_customer->email_forwarding))
                 ->setViewVars([
                     'appAuth' => $this->AppAuth,
                     'greeting' => __('Hello') . ' ' . $cartProduct->product->manufacturer->customer->firstname,
@@ -243,7 +243,7 @@ class CartsController extends FrontendController
             $email = new AppEmail();
             $email->viewBuilder()->setTemplate('order_successful');
             $email->setTo($this->AppAuth->getEmail())
-            ->addCc($this->AppAuth->getForwardingEmailsAsArray())
+            ->addCc($this->AppAuth->getEmailForwardingAsArray())
             ->setSubject(__('Order_confirmation'))
             ->setViewVars([
                 'cart' => $this->Cart->getCartGroupedByPickupDay($cart),
