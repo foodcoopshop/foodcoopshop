@@ -20,6 +20,7 @@ Configure::write('test.customerId', 87);
 Configure::write('test.loginEmailAdmin', 'fcs-demo-admin@mailinator.com');
 Configure::write('test.adminId', 88);
 Configure::write('test.loginEmailSuperadmin', 'fcs-demo-superadmin@mailinator.com');
+Configure::write('test.emailForwardingSuperadmin', 'fcs-email-forwarding@mailinator.com');
 Configure::write('test.superadminId', 92);
 Configure::write('test.superadminBarCode', '7b6d522e04e51');
 

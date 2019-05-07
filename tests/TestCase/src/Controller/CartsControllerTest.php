@@ -308,6 +308,9 @@ class CartsControllerTest extends AppCakeTestCase
             ],
             [
                 Configure::read('test.loginEmailSuperadmin')
+            ],
+            [
+                Configure::read('test.emailForwardingSuperadmin')
             ]
         );
 
