@@ -24,7 +24,7 @@ foodcoopshop.Helper = {
         this.initLogoutButton();
         this.changeOutgoingLinksTargetToBlank();
         if (!this.isMobile()) {
-            this.initRight();
+            this.initWindowScroll();
             this.initScrolltopButton();
             this.showContent();
         }
@@ -270,14 +270,11 @@ foodcoopshop.Helper = {
 
     },
 
-    initRight: function () {
-
+    initWindowScroll: function () {
         $(window).scroll(function () {
             foodcoopshop.Helper.onWindowScroll();
         });
-
         foodcoopshop.Helper.onWindowScroll();
-
     },
 
     onWindowScroll: function () {

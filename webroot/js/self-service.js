@@ -18,7 +18,19 @@ foodcoopshop.SelfService = {
         
     init : function() {
         foodcoopshop.Helper.initLogoutButton(document.location.href);
+        this.initWindowScroll();
         this.initAutoLogout();
+    },
+    
+    initWindowScroll: function () {
+        $(window).scroll(function () {
+            foodcoopshop.SelfService.onWindowScroll();
+        });
+        foodcoopshop.SelfService.onWindowScroll();
+    },
+    
+    onWindowScroll : function() {
+        $('#cart p.products').css('max-height', parseInt($(window).height()) - 220);        
     },
     
     initAutoLogout : function() {
