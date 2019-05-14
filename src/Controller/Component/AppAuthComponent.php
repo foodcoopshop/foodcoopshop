@@ -210,8 +210,15 @@ class AppAuthComponent extends AuthComponent
     {
         $result = false;
         $serverParams = $this->_registry->getController()->request->getServerParams();
+        $requestUriWhitelist = [
+            '/' . __('route_cart') . '/ajaxAdd/',
+            '/' . __('route_cart') . '/ajaxRemove/'
+        ];
         if (isset($serverParams['HTTP_REFERER'])) {
             $result = preg_match('`' . preg_quote(Configure::read('app.cakeServerName')) . '/' . __('route_self_service') . '`', $serverParams['HTTP_REFERER']);
+        }
+        if (!in_array($serverParams['REQUEST_URI'], $requestUriWhitelist)) {
+            $result = false;
         }
         return $result;
     }
