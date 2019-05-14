@@ -17,6 +17,13 @@ foodcoopshop.SelfService = {
     currentLogoutTimer : 0,
         
     init : function() {
+        foodcoopshop.Helper.init();
+        foodcoopshop.AppFeatherlight.addLightboxToCkeditorImages('.product-wrapper .toggle-content.description img');
+        foodcoopshop.AppFeatherlight.initLightboxForImages('.product-wrapper a.lightbox');
+        foodcoopshop.Helper.bindToggleLinks(true);
+        foodcoopshop.Helper.initProductAttributesButtons();
+        foodcoopshop.Cart.initAddToCartButton();
+        foodcoopshop.Cart.initRemoveFromCartLinks();
         foodcoopshop.Helper.initLogoutButton(document.location.href);
         this.initWindowScroll();
         this.initAutoLogout();
