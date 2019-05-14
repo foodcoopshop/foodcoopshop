@@ -200,10 +200,6 @@ class AppAuthComponent extends AuthComponent
     public function isSelfServiceMode()
     {
         $result = $this->_registry->getController()->request->getPath() == '/' . __('route_self_service');
-        $serverParams = $this->_registry->getController()->request->getServerParams();
-        if (isset($serverParams['HTTP_REFERER'])) {
-            $result &= preg_match('`' . preg_quote(Configure::read('app.cakeServerName')) . '/' . __('route_self_service') . '`', $serverParams['HTTP_REFERER']);
-        }
         if (!empty($this->_registry->getController()->request->getQuery('redirect'))) {
             $result |= preg_match('`' . '/' . __('route_self_service') . '`', $this->_registry->getController()->request->getQuery('redirect'));
         }
