@@ -838,7 +838,7 @@ body.carts.detail .cart:not(#cart) span.product-name-wrapper span.product-name {
 body.carts.detail .cart:not(#cart) a.btn {
     font-size: 17px;
 }
-#CartsDetailForm {
+body.carts.detail #CartsDetailForm {
     float: left;
     margin-top: 10px;
 }

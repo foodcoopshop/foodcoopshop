@@ -46,6 +46,29 @@ class SelfServiceController extends FrontendController
         
         $this->viewBuilder()->setLayout('self_service');
         $this->set('title_for_layout', __('Self_service_for_stock_products'));
+        
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $cart = $this->AppAuth->getCart();
+            $this->set('cart', $cart['Cart']);
+        }
+        
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            
+            if ($this->AppAuth->Cart->isCartEmpty()) {
+                $this->Flash->error(__('Your_cart_was_empty.'));
+                $this->redirect(Configure::read('app.slugHelper')->getSelfService());
+                return;
+            }
+            
+            $this->AppAuth->Cart->finish();
+            
+            if (empty($this->viewVars['cartErrors']) && empty($this->viewVars['formErrors'])) {
+                $this->redirect(Configure::read('app.slugHelper')->getSelfService());
+                return;
+            }
+            
+        }
+        
     }
     
 }

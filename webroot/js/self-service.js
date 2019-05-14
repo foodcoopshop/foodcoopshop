@@ -22,6 +22,16 @@ foodcoopshop.SelfService = {
         this.initAutoLogout();
     },
     
+    initCartErrors: function (cartErrors) {
+        cartErrors = $.parseJSON(cartErrors);
+        console.log(cartErrors);
+        for (var key in cartErrors) {
+            var productContainer = $('#cart .product.' + key);
+            productContainer.addClass('error');
+            productContainer.after('<ul class="error-message ' + key + '"><li>' + cartErrors[key].join('</li><li>') + '</li></ul>');
+        }
+    },
+    
     initWindowScroll: function () {
         $(window).scroll(function () {
             foodcoopshop.SelfService.onWindowScroll();

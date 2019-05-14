@@ -25,8 +25,12 @@ if ($appAuth->Cart->getProducts() !== null) {
     ]);
 
     if (!empty($cartErrors)) {
+        $javascriptClass = 'Cart';
+        if ($selfServiceModeEnabled) {
+            $javascriptClass = 'SelfService';
+        }
         $this->element('addScript', ['script' =>
-            Configure::read('app.jsNamespace').".Cart.initCartErrors('".addslashes(json_encode($cartErrors))."');"
+            Configure::read('app.jsNamespace').".".$javascriptClass.".initCartErrors('".addslashes(json_encode($cartErrors))."');"
         ]);
     }
     if ($this->name == 'Carts' && $this->request->getParam('action') == 'detail') {

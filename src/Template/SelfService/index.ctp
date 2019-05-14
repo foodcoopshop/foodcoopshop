@@ -29,14 +29,23 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
 
 <div class="left">
     <?php echo $this->element('cart', [
+        'selfServiceModeEnabled' => true,
         'showLinkToSelfService' => false,
         'showLoadLastOrderDetailsDropdown' => false,
         'showCartDetailButton' => false,
         'showFutureOrderDetails' => false
     ]); ?>
-    <button type="button" class="btn btn-success btn-order">
+    <?php
+        echo $this->Form->create($cart, [
+            'class' => 'fcs-form',
+            'id' => 'SelfServiceForm',
+            'url' => $this->Slug->getSelfService()
+        ]);
+    ?>
+    <button type="submit" class="btn btn-success btn-order">
 		<i class="fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
 	</button>
+	<?php echo $this->Form->end(); ?>
 </div>
 
 <div id="products">

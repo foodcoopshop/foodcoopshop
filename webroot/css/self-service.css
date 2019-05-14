@@ -72,7 +72,10 @@ body.self_services {
 	width: 280px;
 }
 #self-service #flashMessage {
+	top: 46px;
+	z-index: 1200;
 	left: 315px;
+	width: 396px;
 }
 #self-service #login-form {
 	padding-top: 70px;
@@ -158,4 +161,22 @@ body.customers.login #self-service .footer {
 }
 #self-service .product-wrapper .pickup-day {
 	display: none;
+}
+#self-service #SelfServiceForm {
+    margin-top: 10px;
+}
+#self-service .product.error,
+#self-service .error-message {
+    background: #f3515c;
+    color: #fff;
+}
+#self-service .product.error span,
+#self-service .product.error a {
+    color: #fff;
+}
+#self-service ul.error-message {
+    padding: 5px;
+    float: left;
+    font-size: 12px;
+    line-height: 14px;
 }
