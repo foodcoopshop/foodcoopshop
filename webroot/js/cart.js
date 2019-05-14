@@ -68,7 +68,7 @@ foodcoopshop.Cart = {
     },
 
     initCartFinish: function () {
-        $('#inner-content button.btn-success').on('click', function () {
+        $('button.btn-order').on('click', function () {
             foodcoopshop.Helper.disableButton($(this));
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-check');
             $(this).closest('form').submit();

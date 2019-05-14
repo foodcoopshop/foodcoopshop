@@ -26,9 +26,17 @@ body.self_services {
 #self-service .footer {
 	width: 917px;
 }
+#self-service .left {
+	position: fixed;
+	left: 0;
+	top: 0;
+}
 #self-service #cart {
-	left: 1px;
-    position: fixed;
+    position: static;
+}
+#self-service .btn-order {
+	margin-left: 5%;
+	width: 90%;
 }
 #self-service .header h1 span {
 	margin-left: 1px;

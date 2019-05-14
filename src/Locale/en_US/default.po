@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-30 15:33+0200\n"
-"PO-Revision-Date: 2019-04-30 15:33+0200\n"
+"POT-Creation-Date: 2019-05-14 11:41+0200\n"
+"PO-Revision-Date: 2019-05-14 11:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1991,6 +1991,9 @@ msgstr "page you have just been to"
 
 msgid "Click_here_to_open_the"
 msgstr "Click here to go the the"
+
+msgid "Finish_pickup"
+msgstr "Finish pickup"
 
 msgid "Auto_logout_in_X_seconds"
 msgstr "Auto-logout in X seconds"

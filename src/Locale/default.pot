@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-30 15:33+0200\n"
+"POT-Creation-Date: 2019-05-14 11:41+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1989,6 +1989,9 @@ msgid "page_you_have_just_been_to"
 msgstr ""
 
 msgid "Click_here_to_open_the"
+msgstr ""
+
+msgid "Finish_pickup"
 msgstr ""
 
 msgid "Auto_logout_in_X_seconds"

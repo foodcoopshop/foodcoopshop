@@ -21,11 +21,23 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.bindToggleLinks();".
     Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
-    Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
+    Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
+    Configure::read('app.jsNamespace').".Cart.initCartFinish();"
 ]);
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 ?>
 
+<div class="left">
+    <?php echo $this->element('cart', [
+        'showLinkToSelfService' => false,
+        'showLoadLastOrderDetailsDropdown' => false,
+        'showCartDetailButton' => false,
+        'showFutureOrderDetails' => false
+    ]); ?>
+    <button type="button" class="btn btn-success btn-order">
+		<i class="fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
+	</button>
+</div>
 
 <div id="products">
 	<div class="header">

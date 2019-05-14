@@ -12,7 +12,18 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
 
+$this->element('addScript', ['script' =>
+    Configure::read('app.jsNamespace').".Helper.init();".
+    Configure::read('app.jsNamespace').".AppFeatherlight.addLightboxToCkeditorImages('.product-wrapper .toggle-content.description img');".
+    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForImages('.product-wrapper a.lightbox');".
+    Configure::read('app.jsNamespace').".Helper.bindToggleLinks(true);".
+    Configure::read('app.jsNamespace').".Helper.selectMainMenuFrontend('".__('Products')."');".
+    Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
+    Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
+    Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
+]);
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 ?>
 

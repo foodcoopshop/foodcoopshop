@@ -17,13 +17,6 @@ echo $this->element('layout/header');
 ?>
 
 <div id="self-service">
-    <?php echo $this->element('cart', [
-        'showLinkToSelfService' => false,
-        'showLoadLastOrderDetailsDropdown' => false,
-        'showCartDetailButton' => false,
-        'showFutureOrderDetails' => false
-    ]); ?>
-    
     <?php
         // avoid "access denied" message on login page if protected /self-service is requested
         if ($this->request->is('get') && $this->request->getParam('action') == 'login') {
