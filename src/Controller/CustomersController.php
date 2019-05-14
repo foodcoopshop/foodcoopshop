@@ -222,12 +222,9 @@ class CustomersController extends FrontendController
         $enableBarCodeLogin = false;
         $enableAutoLogin = true;
         
-        $serverParams = $this->request->getServerParams();
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
-            && ($this->AppAuth->isSelfServiceMode()
-            || (isset($serverParams['HTTP_REFERER'])
-                && preg_match('`' . preg_quote(Configure::read('app.cakeServerName')) . '/' . __('route_self_service') . '`', $serverParams['HTTP_REFERER']))
-            )) {
+            && ($this->AppAuth->isSelfServiceModeByUrl() || $this->AppAuth->isSelfServiceModeByReferer())
+            ) {
                 $this->viewBuilder()->setLayout('self_service');
                 $title = __('Sign_in_for_self_service');
                 $enableRegistrationForm = false;
