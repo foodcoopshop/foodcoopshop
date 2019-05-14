@@ -36,7 +36,11 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
     </div>
     <?php
     foreach ($products as $product) {
-        echo $this->element('product/product', ['product' => $product]);
+        echo $this->element('product/product', [
+            'product' => $product,
+            'showProductDetailLink' => false,
+            'showManufacturerDetailLink' => false
+        ]);
     }
 ?>
 </div>

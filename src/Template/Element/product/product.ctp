@@ -46,7 +46,12 @@ if ($product['is_new']) {
     echo '<div class="second-column">';
     
     echo '<div class="heading">';
-        echo '<h4><a class="product-name" href="'.$this->Slug->getProductDetail($product['id_product'], $product['name']).'">'.$product['name'].'</a></h4>';
+        echo '<h4>';
+        if ($showProductDetailLink) {
+            echo '<a class="product-name" href="'.$this->Slug->getProductDetail($product['id_product'], $product['name']).'">'.$product['name'].'</a></h4>';
+        } else {
+            echo $product['name'];
+        }
     echo '</div>';
     echo '<div class="sc"></div>';
 
@@ -79,7 +84,9 @@ if ($product['description'] != '') {
         echo '</span>';
     }
     
-    echo '<br />'.__('Pickup_day').': ';
+    if (!$appAuth->isSelfServiceModeByUrl()) {
+        echo '<br />'.__('Pickup_day').': ';
+    }
     echo '<span class="pickup-day">';
         if ($appAuth->isInstantOrderMode()) {
             $pickupDayDetailText = __('Instant_order');
@@ -88,14 +95,19 @@ if ($product['description'] != '') {
         }
         echo $this->Time->getDateFormattedWithWeekday(strtotime($product['next_delivery_day']));
     echo '</span>';
-    echo ' (' . $pickupDayDetailText . ')';
+    if (!$appAuth->isSelfServiceModeByUrl()) {
+        echo ' (' . $pickupDayDetailText . ')';
+    }
     
     echo '<br />'.__('Manufacturer').': ';
-    echo $this->Html->link(
-        $product['ManufacturersName'],
-        $this->Slug->getManufacturerDetail($product['id_manufacturer'], $product['ManufacturersName'])
-    );
-
+    if ($showManufacturerDetailLink) {
+        echo $this->Html->link(
+            $product['ManufacturersName'],
+            $this->Slug->getManufacturerDetail($product['id_manufacturer'], $product['ManufacturersName'])
+        );
+    } else {
+        echo $product['ManufacturersName'];
+    }
     if ($appAuth->isSuperadmin() || ($appAuth->isManufacturer() && $product['id_manufacturer'] == $appAuth->getManufacturerId())) {
         echo $this->Html->link(
             '<i class="fas fa-pencil-alt"></i>',

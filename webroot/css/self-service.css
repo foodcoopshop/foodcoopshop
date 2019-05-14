@@ -148,3 +148,6 @@ body.customers.login #self-service .footer {
 	border-top: none;
 	border-left: none;
 }
+#self-service .product-wrapper .pickup-day {
+	display: none;
+}

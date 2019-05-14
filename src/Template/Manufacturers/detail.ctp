@@ -89,7 +89,11 @@ echo $this->element('stockProductInListInfo');
 
 if (!empty($manufacturer['Products'])) {
     foreach ($manufacturer['Products'] as $product) {
-        echo $this->element('product/product', ['product' => $product]);
+        echo $this->element('product/product', [
+            'product' => $product,
+            'showProductDetailLink' => true,
+            'showManufacturerDetailLink' => true
+        ]);
     }
 }
 
