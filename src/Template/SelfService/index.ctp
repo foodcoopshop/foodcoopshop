@@ -32,6 +32,7 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
     	<h2><a href="/<?php echo __('route_self_service'); ?>"><?php echo __('Self_service_for_stock_products'); ?></a></h2>
     	<h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
     	<?php echo $this->element('productSearch', ['action' => __('route_self_service')]); ?>
+    	<hr />
     </div>
     <?php
     foreach ($products as $product) {

@@ -31,7 +31,7 @@ body.self_services {
     position: fixed;
 }
 #self-service .header h1 span {
-	margin-right: 11px;
+	margin-left: 1px;
 }
 #self-service .header h2 {
 	padding-top: 5px;
@@ -110,9 +110,21 @@ body.self_services {
     background: #fff;
     position: fixed;
     top: 0;
-    height: 90px;
-    width: 602px;
+    height: 110px;
+    width: 592px;
     z-index: 1000;
+}
+#self-service .header hr {
+	float: left;
+	height: 1px;
+	width: 100%;
+	margin-top: 15px;
+	margin-bottom: 10px;
+	border-color: #d6d4d4;
+}
+.product-wrapper:nth-child(2) {
+	border-top: none;
+	padding-top: 10px;
 }
 #self-service .footer .logout-wrapper {
 	position: absolute;
