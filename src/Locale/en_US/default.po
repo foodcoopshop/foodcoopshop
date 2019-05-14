@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-14 11:41+0200\n"
-"PO-Revision-Date: 2019-05-14 11:42+0200\n"
+"POT-Creation-Date: 2019-05-14 15:32+0200\n"
+"PO-Revision-Date: 2019-05-14 15:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -30,86 +30,11 @@ msgstr "Sorry, but manufacturers do not have access."
 msgid "Your_cart"
 msgstr "Your cart"
 
-msgid "Product_{0}:_Only_{1}_units_on_stock"
-msgstr "Low stock for product \"{0}\": {1}"
-
-msgid "Hello"
-msgstr "Hello"
-
-msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
-msgstr "You can unsubscribe this e-mail <a href=\"{0}\">in the manufacturer's settings</a>."
-
-msgid "Order_confirmation"
-msgstr "Order confirmation"
-
-msgid "Filename_Right-of-withdrawal-information-and-form"
-msgstr "Right-of-withdrawal-information-and-form"
-
-msgid "Filename_Order-confirmation"
-msgstr "Order-confirmation"
-
-msgid "Filename_General-terms-and-conditions"
-msgstr "General-terms-and-conditions"
-
 msgid "Finish_cart"
 msgstr "Finish cart"
 
 msgid "Your_cart_was_empty."
 msgstr "Your cart was empty."
-
-msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
-msgstr "The desired amount {0} of the product {1} is not available any more. Available amount: {2}"
-
-msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
-msgstr "Please change the amout or remove product from cart to place order."
-
-msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
-msgstr "The desired amount {0} of the attribute {1} of the product {2} is not available any more. Available amount: {3}"
-
-msgid "The_attribute_does_not_exist."
-msgstr "The attribute does not exist."
-
-msgid "Please_delete_product_from_cart_to_place_order."
-msgstr "Please remove product from cart to place order."
-
-msgid "The_product_{0}_is_not_activated_any_more."
-msgstr "The product {0} is not activated any more."
-
-msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
-msgstr "The manufacturer of the product {0} either has a delivery break or the product is not activated any more."
-
-msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
-msgstr "It's not possible to order the product {0} any more."
-
-msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
-msgstr "Please enter how much you want to pay in {0}."
-
-msgid "Please_enter_a_number."
-msgstr "Please enter a number."
-
-msgid "Your_overdraft_frame_of_{0}_is_reached."
-msgstr "Your overdraft frame of {0} is reached."
-
-msgid "Errors_occurred."
-msgstr "Errors occurred."
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}."
-msgstr "Instant order ({0}) successfully placed for {1}."
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
-msgstr "Instant order ({0}) successfully placed for {1}. The following manufacturers were notified: {2}"
-
-msgid "Pickup_day"
-msgstr "Pickup day"
-
-msgid "Your_order_has_been_placed_succesfully."
-msgstr "Your order was placed successfully."
-
-msgid "{0}_has_placed_a_new_order_({1})."
-msgstr "{0} has placed a new order ({1})."
-
-msgid "Notification_about_instant_order_order"
-msgstr "Notification about instant order"
 
 msgid "Your_order_has_been_placed"
 msgstr "Your order has been placed"
@@ -396,6 +321,9 @@ msgstr "each"
 msgid "approx."
 msgstr "approx."
 
+msgid "Pickup_day"
+msgstr "Pickup day"
+
 msgid "Home"
 msgstr "Home"
 
@@ -536,6 +464,9 @@ msgstr "Please tell us, why you want to adapt the price."
 
 msgid "Cancellation_reason_is_mandatory."
 msgstr "Please tell us, why you want to cancel the product."
+
+msgid "Please_enter_a_number."
+msgstr "Please enter a number."
 
 msgid "Add_new_attribute_for_product"
 msgstr "Add new attribute for product"
@@ -956,6 +887,75 @@ msgstr "List of allergens"
 
 msgid "Self_service_for_stock_products"
 msgstr "Self-service for stock products"
+
+msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
+msgstr "The desired amount {0} of the product {1} is not available any more. Available amount: {2}"
+
+msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
+msgstr "Please change the amout or remove product from cart to place order."
+
+msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
+msgstr "The desired amount {0} of the attribute {1} of the product {2} is not available any more. Available amount: {3}"
+
+msgid "The_attribute_does_not_exist."
+msgstr "The attribute does not exist."
+
+msgid "Please_delete_product_from_cart_to_place_order."
+msgstr "Please remove product from cart to place order."
+
+msgid "The_product_{0}_is_not_activated_any_more."
+msgstr "The product {0} is not activated any more."
+
+msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
+msgstr "The manufacturer of the product {0} either has a delivery break or the product is not activated any more."
+
+msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
+msgstr "It's not possible to order the product {0} any more."
+
+msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
+msgstr "Please enter how much you want to pay in {0}."
+
+msgid "Your_overdraft_frame_of_{0}_is_reached."
+msgstr "Your overdraft frame of {0} is reached."
+
+msgid "Errors_occurred."
+msgstr "Errors occurred."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}."
+msgstr "Instant order ({0}) successfully placed for {1}."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
+msgstr "Instant order ({0}) successfully placed for {1}. The following manufacturers were notified: {2}"
+
+msgid "Your_order_has_been_placed_succesfully."
+msgstr "Your order was placed successfully."
+
+msgid "{0}_has_placed_a_new_order_({1})."
+msgstr "{0} has placed a new order ({1})."
+
+msgid "Notification_about_instant_order_order"
+msgstr "Notification about instant order"
+
+msgid "Product_{0}:_Only_{1}_units_on_stock"
+msgstr "Low stock for product \"{0}\": {1}"
+
+msgid "Hello"
+msgstr "Hello"
+
+msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
+msgstr "You can unsubscribe this e-mail <a href=\"{0}\">in the manufacturer's settings</a>."
+
+msgid "Order_confirmation"
+msgstr "Order confirmation"
+
+msgid "Filename_Right-of-withdrawal-information-and-form"
+msgstr "Right-of-withdrawal-information-and-form"
+
+msgid "Filename_Order-confirmation"
+msgstr "Order-confirmation"
+
+msgid "Filename_General-terms-and-conditions"
+msgstr "General-terms-and-conditions"
 
 msgid "Tax_rates_overview_table"
 msgstr "Tax rates overview table"
@@ -1827,6 +1827,9 @@ msgstr "Admin panel"
 msgid "Manufacturer_area"
 msgstr "Manufacturer panel"
 
+msgid "Self_service"
+msgstr "Self-service"
+
 msgid "To_change_your_profile_please_stop_the_instant_order_mode."
 msgstr "To change your profile please stop the instant order mode."
 
@@ -1992,9 +1995,6 @@ msgstr "page you have just been to"
 msgid "Click_here_to_open_the"
 msgstr "Click here to go the the"
 
-msgid "Finish_pickup"
-msgstr "Finish pickup"
-
 msgid "Auto_logout_in_X_seconds"
 msgstr "Auto-logout in X seconds"
 
@@ -2009,6 +2009,9 @@ msgstr "News from"
 
 msgid "Imprint"
 msgstr "Imprint"
+
+msgid "Finish_pickup"
+msgstr "Finish pickup"
 
 msgid "Terms_and_conditions"
 msgstr "Terms and conditions"

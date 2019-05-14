@@ -48,7 +48,6 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
 <div class="right-box">
     <?php echo $this->element('cart', [
         'selfServiceModeEnabled' => true,
-        'showLinkToSelfService' => false,
         'showLoadLastOrderDetailsDropdown' => false,
         'showCartDetailButton' => false,
         'showFutureOrderDetails' => false

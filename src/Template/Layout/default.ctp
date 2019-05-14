@@ -46,7 +46,6 @@ echo $this->element('layout/header');
         <div class="inner-right">
             <?php echo $this->element('cart', [
                 'selfServiceModeEnabled' => false,
-                'showLinkToSelfService' => true,
                 'showLoadLastOrderDetailsDropdown' => true,
                 'showCartDetailButton' => true,
                 'showFutureOrderDetails' => true
