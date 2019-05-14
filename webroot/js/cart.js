@@ -357,7 +357,7 @@ foodcoopshop.Cart = {
                 imgHtml +
                 '<span class="amount"><span class="value">' + amount + '</span>x</span>' +
                 '<span class="product-name-wrapper">' +
-                    productName +
+                    '<span class="product-name">' + productName + '</span>'+
                     '<span class="unity">' + unity + '</span>' +
                     '<span class="pickup-day hide">' + pickupDay + '</span>' +
             '</span>' +
