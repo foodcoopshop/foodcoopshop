@@ -27,7 +27,25 @@ $this->element('addScript', ['script' =>
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 ?>
 
-<div class="left">
+<div id="products">
+	<div class="header">
+    	<h2><a href="/<?php echo __('route_self_service'); ?>"><?php echo __('Self_service_for_stock_products'); ?></a></h2>
+    	<h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
+    	<?php echo $this->element('productSearch', ['action' => __('route_self_service')]); ?>
+    	<hr />
+    </div>
+    <?php
+    foreach ($products as $product) {
+        echo $this->element('product/product', [
+            'product' => $product,
+            'showProductDetailLink' => false,
+            'showManufacturerDetailLink' => false
+        ]);
+    }
+?>
+</div>
+
+<div class="right-box">
     <?php echo $this->element('cart', [
         'selfServiceModeEnabled' => true,
         'showLinkToSelfService' => false,
@@ -46,22 +64,4 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
 		<i class="fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
 	</button>
 	<?php echo $this->Form->end(); ?>
-</div>
-
-<div id="products">
-	<div class="header">
-    	<h2><a href="/<?php echo __('route_self_service'); ?>"><?php echo __('Self_service_for_stock_products'); ?></a></h2>
-    	<h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
-    	<?php echo $this->element('productSearch', ['action' => __('route_self_service')]); ?>
-    	<hr />
-    </div>
-    <?php
-    foreach ($products as $product) {
-        echo $this->element('product/product', [
-            'product' => $product,
-            'showProductDetailLink' => false,
-            'showManufacturerDetailLink' => false
-        ]);
-    }
-?>
 </div>

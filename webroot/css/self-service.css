@@ -26,13 +26,10 @@ body.self_services {
 #self-service .footer {
 	width: 917px;
 }
-#self-service .left {
+#self-service .right-box {
 	position: fixed;
-	left: 0;
+	left: 612px;
 	top: 0;
-}
-#self-service #cart {
-    position: static;
 }
 #self-service .btn-order {
 	margin-left: 5%;
@@ -54,7 +51,7 @@ body.self_services {
 #self-service #products {
 	float: left;
 	width: 590px;
-	margin-left: 315px;
+	margin-left: 10px;
 	margin-top: 10px;
 	margin-bottom: 50px;
 	padding-top: 90px;
@@ -155,9 +152,10 @@ body.customers.login #self-service .footer {
 	border: none;
 }
 #self-service #cart {
-	border: 1px solid #ccc;
+	position: static;
+    border: 1px solid #ccc;
 	border-top: none;
-	border-left: none;
+	border-right: none;
 }
 #self-service .product-wrapper .pickup-day {
 	display: none;
