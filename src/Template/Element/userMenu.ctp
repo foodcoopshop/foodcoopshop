@@ -27,20 +27,10 @@ if ($appAuth->isManufacturer()) {
     $userName = $appAuth->getManufacturerName();
 }
 
+if ($appAuth->user() && !$appAuth->isInstantOrderMode()) {
+    $menu[] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['class' => $class]];
+}
 if ($appAuth->user()) {
-    if (!$appAuth->isInstantOrderMode()) {
-        $menu[] = ['slug' => $this->Slug->getAdminHome(), 'name' => $adminName, 'options' => ['class' => $class]];
-    }
-    if (Configure::read('app.serviceModeTestingEnabled') && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-        $menu[] = [
-            'slug' => $this->Slug->getSelfService(),
-            'name' => ' ' . __('Self_service'),
-            'options' => [
-                'fa-icon' => 'fa-fw fa-shopping-bag',
-                'class' => ['btn btn-success']
-            ]
-        ];
-    }
     if (!$appAuth->isInstantOrderMode()) {
         $menu[] = ['slug' => $profileSlug, 'name' =>  $userName];
     }
@@ -48,7 +38,16 @@ if ($appAuth->user()) {
         $menu[] = ['slug' => 'javascript:alert(\''.__('To_change_your_profile_please_stop_the_instant_order_mode.').'\');', 'name' =>  __('Signed_in') . ': ' . $userName];
     }
 }
-
+if (!$appAuth->isInstantOrderMode() && Configure::read('app.serviceModeTestingEnabled') && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+    $menu[] = [
+        'slug' => $this->Slug->getSelfService(),
+        'name' => ' ' . __('Self_service'),
+        'options' => [
+            'fa-icon' => 'fa-fw fa-shopping-bag',
+            'class' => ['btn btn-success']
+        ]
+    ];
+}
 if (!$appAuth->isInstantOrderMode()) {
     $menu[] = $this->Menu->getAuthMenuElement($appAuth);
 }
