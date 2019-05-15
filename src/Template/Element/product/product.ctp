@@ -18,7 +18,7 @@ use Cake\Core\Configure;
 $showProductPrice = (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') && Configure::read('appDb.FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS')) || $appAuth->user();
 
 $isStockProductOrderPossibleInOrdersWithDeliveryRhythms = $this->Html->isStockProductOrderPossibleInOrdersWithDeliveryRhythms(
-    $this->request->getSession()->check('Auth.instantOrderCustomer'),
+    $appAuth->isInstantOrderMode(),
     Configure::read('appDb.FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM'),
     $product['stock_management_enabled'],
     $product['is_stock_product']
@@ -46,7 +46,12 @@ if ($product['is_new']) {
     echo '<div class="second-column">';
     
     echo '<div class="heading">';
-        echo '<h4><a class="product-name" href="'.$this->Slug->getProductDetail($product['id_product'], $product['name']).'">'.$product['name'].'</a></h4>';
+        echo '<h4>';
+        if ($showProductDetailLink) {
+            echo '<a class="product-name" href="'.$this->Slug->getProductDetail($product['id_product'], $product['name']).'">'.$product['name'].'</a></h4>';
+        } else {
+            echo $product['name'];
+        }
     echo '</div>';
     echo '<div class="sc"></div>';
 
@@ -71,7 +76,7 @@ if ($product['description'] != '') {
         echo '<br />' . __('Order_possible_until') . ': ' . $this->Time->getDateFormattedWithWeekday(strtotime($product['delivery_rhythm_order_possible_until']));
     }
     
-    if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $product['delivery_rhythm_type'] != 'individual' && $this->Time->getSendOrderListsWeekday() != $product['delivery_rhythm_send_order_list_weekday']) {
+    if (!$appAuth->isInstantOrderMode() && $product['delivery_rhythm_type'] != 'individual' && $this->Time->getSendOrderListsWeekday() != $product['delivery_rhythm_send_order_list_weekday']) {
         echo '<span class="last-order-day">';
             echo __('Last_order_day') . ': <b>' . $this->Time->getWeekdayName(
                 $this->Time->getNthWeekdayBeforeWeekday(1, $product['delivery_rhythm_send_order_list_weekday'])
@@ -79,23 +84,30 @@ if ($product['description'] != '') {
         echo '</span>';
     }
     
-    echo '<br />'.__('Pickup_day').': ';
+    if (!$appAuth->isSelfServiceModeByUrl()) {
+        echo '<br />'.__('Pickup_day').': ';
+    }
     echo '<span class="pickup-day">';
-        if ($this->request->getSession()->check('Auth.instantOrderCustomer')) {
+        if ($appAuth->isInstantOrderMode()) {
             $pickupDayDetailText = __('Instant_order');
         } else {
             $pickupDayDetailText = $this->Html->getDeliveryRhythmString($product['is_stock_product'], $product['delivery_rhythm_type'], $product['delivery_rhythm_count']);
         }
         echo $this->Time->getDateFormattedWithWeekday(strtotime($product['next_delivery_day']));
     echo '</span>';
-    echo ' (' . $pickupDayDetailText . ')';
+    if (!$appAuth->isSelfServiceModeByUrl()) {
+        echo ' (' . $pickupDayDetailText . ')';
+    }
     
     echo '<br />'.__('Manufacturer').': ';
-    echo $this->Html->link(
-        $product['ManufacturersName'],
-        $this->Slug->getManufacturerDetail($product['id_manufacturer'], $product['ManufacturersName'])
-    );
-
+    if ($showManufacturerDetailLink) {
+        echo $this->Html->link(
+            $product['ManufacturersName'],
+            $this->Slug->getManufacturerDetail($product['id_manufacturer'], $product['ManufacturersName'])
+        );
+    } else {
+        echo $product['ManufacturersName'];
+    }
     if ($appAuth->isSuperadmin() || ($appAuth->isManufacturer() && $product['id_manufacturer'] == $appAuth->getManufacturerId())) {
         echo $this->Html->link(
             '<i class="fas fa-pencil-alt"></i>',
@@ -167,7 +179,7 @@ if ($product['description'] != '') {
                 if (!empty($attribute['DepositProductAttributes']['deposit'])) {
                     echo '<div class="deposit">+ <b>'. $this->Number->formatAsCurrency($attribute['DepositProductAttributes']['deposit']) . '</b> '.__('deposit').'</div>';
                 }
-                if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && !empty($attribute['timebased_currency_money_incl'])) {
+                if (!$appAuth->isInstantOrderMode() && !empty($attribute['timebased_currency_money_incl'])) {
                     echo $this->element('timebasedCurrency/addProductInfo', [
                         'manufacturerLimitReached' => $attribute['timebased_currency_manufacturer_limit_reached'],
                         'class' => 'timebased-currency-product-info',

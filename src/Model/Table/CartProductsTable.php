@@ -35,6 +35,9 @@ class CartProductsTable extends AppTable
         $this->belongsTo('ProductAttributes', [
             'foreignKey' => 'id_product_attribute'
         ]);
+        $this->belongsTo('Carts', [
+            'foreignKey' => 'id_cart'
+        ]);
         $this->addBehavior('Timestamp');
     }
 
@@ -184,15 +187,15 @@ class CartProductsTable extends AppTable
 
     }
     
-    public function setPickupDays($cartProducts, $customerId, $instantOrderMode)
+    public function setPickupDays($cartProducts, $customerId, $cartType)
     {
         $pickupDayTable = TableRegistry::getTableLocator()->get('PickupDays');
+        $cartTable = TableRegistry::getTableLocator()->get('Carts');
         
         foreach($cartProducts as &$cartProduct) {
-            if (!$instantOrderMode) {
+            $cartProduct->pickup_day = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+            if ($cartType == $cartTable::CART_TYPE_WEEKLY_RHYTHM) {
                 $cartProduct->pickup_day = $cartProduct->product->next_delivery_day;
-            } else {
-                $cartProduct->pickup_day = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
             }
         }
         

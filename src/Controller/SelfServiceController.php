@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,8 +32,43 @@ class SelfServiceController extends FrontendController
     
     public function index()
     {
+        
+        $keyword = '';
+        if (!empty($this->getRequest()->getQuery('keyword'))) {
+            $keyword = trim($this->getRequest()->getQuery('keyword'));
+        }
+        $this->set('keyword', $keyword);
+        
+        $this->Category = TableRegistry::getTableLocator()->get('Categories');
+        $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, $keyword, 0, false, true);
+        $products = $this->prepareProductsForFrontend($products);
+        $this->set('products', $products);
+        
         $this->viewBuilder()->setLayout('self_service');
         $this->set('title_for_layout', __('Self_service_for_stock_products'));
+        
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $cart = $this->AppAuth->getCart();
+            $this->set('cart', $cart['Cart']);
+        }
+        
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            
+            if ($this->AppAuth->Cart->isCartEmpty()) {
+                $this->Flash->error(__('Your_cart_was_empty.'));
+                $this->redirect(Configure::read('app.slugHelper')->getSelfService());
+                return;
+            }
+            
+            $this->AppAuth->Cart->finish();
+            
+            if (empty($this->viewVars['cartErrors']) && empty($this->viewVars['formErrors'])) {
+                $this->redirect(Configure::read('app.slugHelper')->getSelfService());
+                return;
+            }
+            
+        }
+        
     }
     
 }
