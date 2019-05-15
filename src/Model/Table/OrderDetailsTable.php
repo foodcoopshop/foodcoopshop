@@ -59,6 +59,9 @@ class OrderDetailsTable extends AppTable
         $this->hasOne('OrderDetailUnits', [
             'foreignKey' => 'id_order_detail'
         ]);
+        $this->belongsTo('CartProducts', [
+            'foreignKey' => 'id_cart_product'
+        ]);
         $this->addBehavior('Timestamp');
     }
 
@@ -214,9 +217,14 @@ class OrderDetailsTable extends AppTable
 
     public function getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId)
     {
+        $cartsAssociation = $this->getAssociation('CartProducts')->getAssociation('Carts');
+        $cartsAssociation->setJoinType('INNER');
+        $cartsAssociation->setConditions([
+            'Carts.cart_type' => CartsTable::CART_TYPE_WEEKLY_RHYTHM,
+            'Carts.status' => APP_OFF
+        ]);
         $conditions = [
             'OrderDetails.id_customer' => $customerId,
-            'RIGHT(OrderDetails.created, 8) <> \'00:00:00\'' // exlude instant orders
         ];
 
         $conditions[] = 'DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate(
@@ -233,6 +241,7 @@ class OrderDetailsTable extends AppTable
                 'OrderDetails.created' => 'DESC'
             ],
             'contain' => [
+                'CartProducts.Carts',
                 'Products.Manufacturers'
             ]
         ])->toArray();

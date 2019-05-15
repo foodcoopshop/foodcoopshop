@@ -19,14 +19,14 @@ foodcoopshop.Cart = {
         return '.cart p.pickup-day-header:contains("' + pickupDay + '")';
     },
     
-    addOrAppendProductToPickupDay : function(productId, amount, price, productLink, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, pickupDay) {
+    addOrAppendProductToPickupDay : function(productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, pickupDay) {
         var pickupDayHeader = $(this.getPickupDayHeaderSelector(pickupDay));
         if (pickupDayHeader.length == 0) {
             $('.cart p.products').append('<p class="pickup-day-header">' + foodcoopshop.LocalizedJs.cart.PickupDay + ': <b>' + pickupDay + '</b></p>');
             pickupDayHeader = $(this.getPickupDayHeaderSelector(pickupDay)); // re-init after append
         }
         pickupDayHeader.append(
-            foodcoopshop.Cart.getCartProductHtml(productId, amount, price, productLink, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, pickupDay)
+            foodcoopshop.Cart.getCartProductHtml(productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, pickupDay)
         );
     },
 
@@ -49,7 +49,7 @@ foodcoopshop.Cart = {
         for (var i = 0; i < cartProducts.length; i++) {
             var cp = cartProducts[i];
             var timebasedCurrencyHours = parseFloat(cp.timebasedCurrencySeconds / 3600);
-            this.addOrAppendProductToPickupDay(cp.productId, cp.amount, cp.price, cp.productLink, cp.unity_with_unit, cp.manufacturerLink, cp.image, cp.deposit, cp.tax, timebasedCurrencyHours, cp.nextDeliveryDay);
+            this.addOrAppendProductToPickupDay(cp.productId, cp.amount, cp.price, cp.productName, cp.unity_with_unit, cp.manufacturerLink, cp.image, cp.deposit, cp.tax, timebasedCurrencyHours, cp.nextDeliveryDay);
             sum += cp.price;
             depositSum += cp.deposit;
             taxSum += cp.tax;
@@ -68,7 +68,7 @@ foodcoopshop.Cart = {
     },
 
     initCartFinish: function () {
-        $('#inner-content button.btn-success').on('click', function () {
+        $('button.btn-order').on('click', function () {
             foodcoopshop.Helper.disableButton($(this));
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-check');
             $(this).closest('form').submit();
@@ -162,7 +162,7 @@ foodcoopshop.Cart = {
             $('#cart p.products').show();
 
             var productWrapper = $(this).closest('.product-wrapper');
-            var productLink = productWrapper.find('.heading h4').html();
+            var productName = productWrapper.find('.heading h4 a').html();
             var amount = parseInt(productWrapper.find('.entity-wrapper.active input[name="amount"]').val());
             var price = foodcoopshop.Helper.getCurrencyAsFloat(productWrapper.find('.entity-wrapper.active .price').html());
             var tax = foodcoopshop.Helper.getCurrencyAsFloat(productWrapper.find('.entity-wrapper.active .tax').html());
@@ -201,7 +201,7 @@ foodcoopshop.Cart = {
                 foodcoopshop.Cart.updateExistingProduct(productContainer, amount, price, deposit, tax, timebasedCurrencyHours);
             } else {
                 // product not yet in cart
-                foodcoopshop.Cart.addOrAppendProductToPickupDay(productId, amount, amount * price, productLink, unity, '', image, deposit, tax, timebasedCurrencyHours, pickupDay);
+                foodcoopshop.Cart.addOrAppendProductToPickupDay(productId, amount, amount * price, productName, unity, '', image, deposit, tax, timebasedCurrencyHours, pickupDay);
                 foodcoopshop.Helper.applyBlinkEffect($('#cart .product.' + productId), function () {
                     foodcoopshop.Cart.initRemoveFromCartLinks(); // bind click event
                 });
@@ -348,7 +348,7 @@ foodcoopshop.Cart = {
         });
     },
 
-    getCartProductHtml: function (productId, amount, price, productLink, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, pickupDay) {
+    getCartProductHtml: function (productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, pickupDay) {
         var imgHtml = '<span class="image">' + image + '</span>';
         if (!$(image).attr('src').match(/de-default-home/)) {
             imgHtml = '<a href="'  + $(image).attr('src').replace(/-home_/, '-thickbox_') +  '" class="image">' + image + '</a>';
@@ -357,7 +357,7 @@ foodcoopshop.Cart = {
                 imgHtml +
                 '<span class="amount"><span class="value">' + amount + '</span>x</span>' +
                 '<span class="product-name-wrapper">' +
-                    productLink +
+                    '<span class="product-name">' + productName + '</span>'+
                     '<span class="unity">' + unity + '</span>' +
                     '<span class="pickup-day hide">' + pickupDay + '</span>' +
             '</span>' +

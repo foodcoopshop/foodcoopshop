@@ -16,7 +16,7 @@
 
 use Cake\Core\Configure;
 
-if (!$this->request->getSession()->check('Auth.instantOrderCustomer')
+if (!$appAuth->isInstantOrderMode()
     && $appAuth->isTimebasedCurrencyEnabledForCustomer() 
     && $appAuth->Cart->getTimebasedCurrencySecondsSum() > 0) {
     echo $this->Form->control('Carts.timebased_currency_seconds_sum_tmp', [

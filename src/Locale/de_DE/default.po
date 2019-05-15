@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-04-30 15:33+0200\n"
-"PO-Revision-Date: 2019-04-30 15:33+0200\n"
+"POT-Creation-Date: 2019-05-14 15:32+0200\n"
+"PO-Revision-Date: 2019-05-14 15:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -30,86 +30,11 @@ msgstr "Herstellern steht diese Funktion leider nicht zur Verfügung."
 msgid "Your_cart"
 msgstr "Dein Warenkorb"
 
-msgid "Product_{0}:_Only_{1}_units_on_stock"
-msgstr "Lagerstand für Produkt \"{0}\": {1}"
-
-msgid "Hello"
-msgstr "Hallo"
-
-msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
-msgstr "Du kannst diese E-Mail <a href=\"{0}\">in den Hersteller-Einstellungen abbestellen</a>."
-
-msgid "Order_confirmation"
-msgstr "Bestellbestätigung"
-
-msgid "Filename_Right-of-withdrawal-information-and-form"
-msgstr "Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular"
-
-msgid "Filename_Order-confirmation"
-msgstr "Bestelluebersicht"
-
-msgid "Filename_General-terms-and-conditions"
-msgstr "Allgemeine-Geschaeftsbedingungen"
-
 msgid "Finish_cart"
 msgstr "Warenkorb abschließen"
 
 msgid "Your_cart_was_empty."
 msgstr "Dein Warenkorb war leer."
-
-msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
-msgstr "Die gewünschte Anzahl {0} des Produktes {1} ist leider nicht mehr verfügbar. Verfügbare Menge: {2}"
-
-msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
-msgstr "Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen."
-
-msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
-msgstr "Die gewünschte Anzahl {0} der Variante {1} des Produktes {2} ist leider nicht mehr verfügbar. Verfügbare Menge: {3}"
-
-msgid "The_attribute_does_not_exist."
-msgstr "Die Variante existiert nicht."
-
-msgid "Please_delete_product_from_cart_to_place_order."
-msgstr "Bitte lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen."
-
-msgid "The_product_{0}_is_not_activated_any_more."
-msgstr "Das Produkt {0} ist leider nicht mehr aktiviert und somit nicht mehr bestellbar."
-
-msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
-msgstr "Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar."
-
-msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
-msgstr "Das Produkt {0} kann nicht mehr bestellt werden."
-
-msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
-msgstr "Bitte gib an, wie viel du in {0} zahlen möchtest."
-
-msgid "Please_enter_a_number."
-msgstr "Bitte gib eine Zahl ein."
-
-msgid "Your_overdraft_frame_of_{0}_is_reached."
-msgstr "Dein Überziehungsrahmen von {0} ist erreicht."
-
-msgid "Errors_occurred."
-msgstr "Es sind Fehler aufgetreten."
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}."
-msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt."
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
-msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: {2}"
-
-msgid "Pickup_day"
-msgstr "Abholtag"
-
-msgid "Your_order_has_been_placed_succesfully."
-msgstr "Deine Bestellung wurde erfolgreich abgeschlossen."
-
-msgid "{0}_has_placed_a_new_order_({1})."
-msgstr "{0} hat eine neue Bestellung getätigt ({1})."
-
-msgid "Notification_about_instant_order_order"
-msgstr "Benachrichtigung über Sofort-Bestellung"
 
 msgid "Your_order_has_been_placed"
 msgstr "Deine Bestellung ist abgeschlossen"
@@ -396,6 +321,9 @@ msgstr "je"
 msgid "approx."
 msgstr "ca."
 
+msgid "Pickup_day"
+msgstr "Abholtag"
+
 msgid "Home"
 msgstr "Home"
 
@@ -536,6 +464,9 @@ msgstr "Bitte gib an, warum der Preis angepasst wird."
 
 msgid "Cancellation_reason_is_mandatory."
 msgstr "Bitte gib an, warum storniert wird."
+
+msgid "Please_enter_a_number."
+msgstr "Bitte gib eine Zahl ein."
 
 msgid "Add_new_attribute_for_product"
 msgstr "Neue Variante für Produkt erstellen"
@@ -956,6 +887,75 @@ msgstr "Allergenliste"
 
 msgid "Self_service_for_stock_products"
 msgstr "Selbstbedienungs-Modus für Lagerprodukte"
+
+msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
+msgstr "Die gewünschte Anzahl {0} des Produktes {1} ist leider nicht mehr verfügbar. Verfügbare Menge: {2}"
+
+msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
+msgstr "Bitte ändere die Anzahl oder lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen."
+
+msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
+msgstr "Die gewünschte Anzahl {0} der Variante {1} des Produktes {2} ist leider nicht mehr verfügbar. Verfügbare Menge: {3}"
+
+msgid "The_attribute_does_not_exist."
+msgstr "Die Variante existiert nicht."
+
+msgid "Please_delete_product_from_cart_to_place_order."
+msgstr "Bitte lösche das Produkt aus deinem Warenkorb um die Bestellung abzuschließen."
+
+msgid "The_product_{0}_is_not_activated_any_more."
+msgstr "Das Produkt {0} ist leider nicht mehr aktiviert und somit nicht mehr bestellbar."
+
+msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
+msgstr "Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar."
+
+msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
+msgstr "Das Produkt {0} kann nicht mehr bestellt werden."
+
+msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
+msgstr "Bitte gib an, wie viel du in {0} zahlen möchtest."
+
+msgid "Your_overdraft_frame_of_{0}_is_reached."
+msgstr "Dein Überziehungsrahmen von {0} ist erreicht."
+
+msgid "Errors_occurred."
+msgstr "Es sind Fehler aufgetreten."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}."
+msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
+msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: {2}"
+
+msgid "Your_order_has_been_placed_succesfully."
+msgstr "Deine Bestellung wurde erfolgreich abgeschlossen."
+
+msgid "{0}_has_placed_a_new_order_({1})."
+msgstr "{0} hat eine neue Bestellung getätigt ({1})."
+
+msgid "Notification_about_instant_order_order"
+msgstr "Benachrichtigung über Sofort-Bestellung"
+
+msgid "Product_{0}:_Only_{1}_units_on_stock"
+msgstr "Lagerstand für Produkt \"{0}\": {1}"
+
+msgid "Hello"
+msgstr "Hallo"
+
+msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
+msgstr "Du kannst diese E-Mail <a href=\"{0}\">in den Hersteller-Einstellungen abbestellen</a>."
+
+msgid "Order_confirmation"
+msgstr "Bestellbestätigung"
+
+msgid "Filename_Right-of-withdrawal-information-and-form"
+msgstr "Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular"
+
+msgid "Filename_Order-confirmation"
+msgstr "Bestelluebersicht"
+
+msgid "Filename_General-terms-and-conditions"
+msgstr "Allgemeine-Geschaeftsbedingungen"
 
 msgid "Tax_rates_overview_table"
 msgstr "Übersichtstabelle nach Steuersatz"
@@ -1827,6 +1827,9 @@ msgstr "Admin-Bereich"
 msgid "Manufacturer_area"
 msgstr "Hersteller-Bereich"
 
+msgid "Self_service"
+msgstr "Selbstbedienung"
+
 msgid "To_change_your_profile_please_stop_the_instant_order_mode."
 msgstr "Um dein Profil zu ändern, beende bitte den Sofort-Bestellungsmodus."
 
@@ -2006,6 +2009,9 @@ msgstr "Aktuelles von"
 
 msgid "Imprint"
 msgstr "Impressum"
+
+msgid "Finish_pickup"
+msgstr "Abholung abschließen"
 
 msgid "Terms_and_conditions"
 msgstr "Nutzungsbedingungen"

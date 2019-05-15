@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-30 15:33+0200\n"
+"POT-Creation-Date: 2019-05-14 15:32+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -29,85 +29,10 @@ msgstr ""
 msgid "Your_cart"
 msgstr ""
 
-msgid "Product_{0}:_Only_{1}_units_on_stock"
-msgstr ""
-
-msgid "Hello"
-msgstr ""
-
-msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
-msgstr ""
-
-msgid "Order_confirmation"
-msgstr ""
-
-msgid "Filename_Right-of-withdrawal-information-and-form"
-msgstr ""
-
-msgid "Filename_Order-confirmation"
-msgstr ""
-
-msgid "Filename_General-terms-and-conditions"
-msgstr ""
-
 msgid "Finish_cart"
 msgstr ""
 
 msgid "Your_cart_was_empty."
-msgstr ""
-
-msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
-msgstr ""
-
-msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
-msgstr ""
-
-msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
-msgstr ""
-
-msgid "The_attribute_does_not_exist."
-msgstr ""
-
-msgid "Please_delete_product_from_cart_to_place_order."
-msgstr ""
-
-msgid "The_product_{0}_is_not_activated_any_more."
-msgstr ""
-
-msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
-msgstr ""
-
-msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
-msgstr ""
-
-msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
-msgstr ""
-
-msgid "Please_enter_a_number."
-msgstr ""
-
-msgid "Your_overdraft_frame_of_{0}_is_reached."
-msgstr ""
-
-msgid "Errors_occurred."
-msgstr ""
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}."
-msgstr ""
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
-msgstr ""
-
-msgid "Pickup_day"
-msgstr ""
-
-msgid "Your_order_has_been_placed_succesfully."
-msgstr ""
-
-msgid "{0}_has_placed_a_new_order_({1})."
-msgstr ""
-
-msgid "Notification_about_instant_order_order"
 msgstr ""
 
 msgid "Your_order_has_been_placed"
@@ -395,6 +320,9 @@ msgstr ""
 msgid "approx."
 msgstr ""
 
+msgid "Pickup_day"
+msgstr ""
+
 msgid "Home"
 msgstr ""
 
@@ -534,6 +462,9 @@ msgid "Adapt_price_reason_is_mandatory."
 msgstr ""
 
 msgid "Cancellation_reason_is_mandatory."
+msgstr ""
+
+msgid "Please_enter_a_number."
 msgstr ""
 
 msgid "Add_new_attribute_for_product"
@@ -954,6 +885,75 @@ msgid "List_of_allergens"
 msgstr ""
 
 msgid "Self_service_for_stock_products"
+msgstr ""
+
+msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
+msgstr ""
+
+msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
+msgstr ""
+
+msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
+msgstr ""
+
+msgid "The_attribute_does_not_exist."
+msgstr ""
+
+msgid "Please_delete_product_from_cart_to_place_order."
+msgstr ""
+
+msgid "The_product_{0}_is_not_activated_any_more."
+msgstr ""
+
+msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
+msgstr ""
+
+msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
+msgstr ""
+
+msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
+msgstr ""
+
+msgid "Your_overdraft_frame_of_{0}_is_reached."
+msgstr ""
+
+msgid "Errors_occurred."
+msgstr ""
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}."
+msgstr ""
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
+msgstr ""
+
+msgid "Your_order_has_been_placed_succesfully."
+msgstr ""
+
+msgid "{0}_has_placed_a_new_order_({1})."
+msgstr ""
+
+msgid "Notification_about_instant_order_order"
+msgstr ""
+
+msgid "Product_{0}:_Only_{1}_units_on_stock"
+msgstr ""
+
+msgid "Hello"
+msgstr ""
+
+msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
+msgstr ""
+
+msgid "Order_confirmation"
+msgstr ""
+
+msgid "Filename_Right-of-withdrawal-information-and-form"
+msgstr ""
+
+msgid "Filename_Order-confirmation"
+msgstr ""
+
+msgid "Filename_General-terms-and-conditions"
 msgstr ""
 
 msgid "Tax_rates_overview_table"
@@ -1826,6 +1826,9 @@ msgstr ""
 msgid "Manufacturer_area"
 msgstr ""
 
+msgid "Self_service"
+msgstr ""
+
 msgid "To_change_your_profile_please_stop_the_instant_order_mode."
 msgstr ""
 
@@ -2004,6 +2007,9 @@ msgid "News_from"
 msgstr ""
 
 msgid "Imprint"
+msgstr ""
+
+msgid "Finish_pickup"
 msgstr ""
 
 msgid "Terms_and_conditions"

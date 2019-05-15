@@ -21,7 +21,7 @@ $columns = [
     __('Price'),
     __('Deposit')
 ];
-if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) {
+if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) {
     $columns[] = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME');
 }
 
@@ -89,7 +89,7 @@ if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAut
                 ?>
             </td>
             
-            <?php if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
+            <?php if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
                 <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
                     <?php
                         if (isset($product['timebasedCurrencySeconds'])) {
@@ -115,7 +115,7 @@ if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAut
             ?>
         </td>
         
-        <?php if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
+        <?php if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
             <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;">
                 <?php
                     echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($appAuth->Cart->getTimebasedCurrencySecondsSum());
@@ -133,7 +133,7 @@ if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAut
                 echo $this->MyNumber->formatAsCurrency($productAndDepositSum);
             ?>
         </td>
-        <?php if (!$this->request->getSession()->check('Auth.instantOrderCustomer') && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
+        <?php if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
             <td style="background-color:#fbfbfb;border:1px solid #d6d4d4;"></td>
         <?php } ?>
     </tr>

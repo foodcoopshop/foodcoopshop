@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-03-04 21:58+0100\n"
+"POT-Creation-Date: 2019-05-14 15:32+0200\n"
 "PO-Revision-Date: 2019-04-26 23:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -36,34 +36,6 @@ msgstr "Przepraszamy, ale producenci nie mają dostępu."
 msgid "Your_cart"
 msgstr "Twój koszyk"
 
-# Low stock for product \"{0}\": {1}
-msgid "Product_{0}:_Only_{1}_units_on_stock"
-msgstr "Niski stan produktu \"{0}\": {1}"
-
-# Cześć
-msgid "Hello"
-msgstr "Cześć"
-
-# You can unsubscribe this e-mail <a href=\"{0}\">in the manufacturer's settings</a>.
-msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
-msgstr "Możesz anulować supskrypcię mailową <a href=\"{0}\">w ustawieniach producenta</a>."
-
-# Order confirmation
-msgid "Order_confirmation"
-msgstr "Potwierdzenie zamówienia"
-
-# Right-of-withdrawal-information-and-form
-msgid "Filename_Right-of-withdrawal-information-and-form"
-msgstr "Informacja-i-formularz-o-prawie-do-wycofania"
-
-# Order-confirmation
-msgid "Filename_Order-confirmation"
-msgstr "Potwierdzenie-zamowienia"
-
-# General-terms-and-conditions
-msgid "Filename_General-terms-and-conditions"
-msgstr "Regulamin"
-
 # Koszyk
 #, fuzzy
 msgid "Finish_cart"
@@ -72,78 +44,6 @@ msgstr "Dokończ zakupy"
 # Your cart was empty.
 msgid "Your_cart_was_empty."
 msgstr "Twój koszyk był pusty."
-
-# The desired amount {0} of the product {1} is not available any more. Available amount: {2}
-msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
-msgstr "Wymagana ilość {0} produktu {1} nie jest już dostępna. Dostępna ilość: {2}"
-
-# Please change the amout or remove product from cart to place order.
-msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
-msgstr "Zmień ilość lub usuń produkt z koszyka aby złożyć zamówienie."
-
-# The desired amount {0} of the attribute {1} of the product {2} is not available any more. Available amount: {3}
-msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
-msgstr "Wymagana ilość {0} atrybutu {1} produktu {2} nie jest już dostępna. Dostępna ilość: {3}"
-
-# The attribute does not exist.
-msgid "The_attribute_does_not_exist."
-msgstr "Atrybut nie istnieje."
-
-# Please remove product from cart to place order.
-msgid "Please_delete_product_from_cart_to_place_order."
-msgstr "Usuń produkt z koszyka aby złożyć zamówienie."
-
-# The product {0} is not activated any more.
-msgid "The_product_{0}_is_not_activated_any_more."
-msgstr "Produkt {0} nie jest już aktywny."
-
-# The manufacturer of the product {0} either has a delivery break or the product is not activated any more.
-msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
-msgstr "Producent produktu {0} ma przerwę w dostawach lub też produkt nie jest już aktywny."
-
-# It's not possible to order the product {0} any more.
-msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
-msgstr "Nie ma już możliwości zamówienia produktu {0}."
-
-# Please enter how much you want to pay in {0}.
-msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
-msgstr "Wprowadź, ile chcesz zapłacić w {0}."
-
-# Please enter a number.
-msgid "Please_enter_a_number."
-msgstr "Wprowadź liczbę."
-
-# Your overdraft frame of {0} is reached.
-msgid "Your_overdraft_frame_of_{0}_is_reached."
-msgstr "Osiągnięto limit debetu w wysokości {0}."
-
-# Errors occurred.
-msgid "Errors_occurred."
-msgstr "Wystąpiły błędy."
-
-# Instant order ({0}) successfully placed for {1}.
-msgid "Instant_order_({0})_successfully_placed_for_{1}."
-msgstr "Pomyślnie złożono zamówienie błyskawiczne ({0}) dla {1}."
-
-# Instant order ({0}) successfully placed for {1}. The following manufacturers were notified: {2}
-msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
-msgstr "Pomyślnie złożono zamówienie błyskawiczne ({0}) dla {1}. Informacja została wysłana do następujących producentów: {2}"
-
-# Dzień odbioru
-msgid "Pickup_day"
-msgstr "Dzień odbioru"
-
-# Your order was placed successfully.
-msgid "Your_order_has_been_placed_succesfully."
-msgstr "Zamówienie zostało złożone pomyślnie."
-
-# {0} has placed a new order ({1}).
-msgid "{0}_has_placed_a_new_order_({1})."
-msgstr "{0} złożył nowe zamówienie ({1})."
-
-# Notification about instant order
-msgid "Notification_about_instant_order_order"
-msgstr "Powiadomienie o zamówieniu błyskawicznym"
 
 # Your order has been placed
 msgid "Your_order_has_been_placed"
@@ -221,6 +121,9 @@ msgstr "Twoje nowe hasło zostało pomyślnie aktywowane. Jesteś już zalogowan
 msgid "Sign_in"
 msgstr "Zaloguj"
 
+msgid "Sign_in_for_self_service"
+msgstr ""
+
 # You are already signed in.
 msgid "You_are_already_signed_in."
 msgstr "Jesteś już zalogowany."
@@ -288,6 +191,11 @@ msgstr "Wylogować?"
 # sign-out
 msgid "route_sign_out"
 msgstr "sign-out"
+
+# search
+#, fuzzy
+msgid "route_self_service"
+msgstr "search"
 
 # An error occurred
 msgid "An_error_occurred"
@@ -517,6 +425,10 @@ msgstr "każdy"
 msgid "approx."
 msgstr "około"
 
+# Dzień odbioru
+msgid "Pickup_day"
+msgstr "Dzień odbioru"
+
 # Home
 msgid "Home"
 msgstr "Główna"
@@ -705,6 +617,10 @@ msgstr "Dlaczego chcesz zmodyfikować cenę?"
 # Please tell us, why you want to cancel the product.
 msgid "Cancellation_reason_is_mandatory."
 msgstr "Dlaczego chcesz anulować produkt?"
+
+# Please enter a number.
+msgid "Please_enter_a_number."
+msgstr "Wprowadź liczbę."
 
 # Add new attribute for product
 msgid "Add_new_attribute_for_product"
@@ -924,6 +840,36 @@ msgstr "adresy mailowe ({0}) zostały pomyślnie skopiowane do schowka."
 # One email address has been copied successfully to your clipboard.
 msgid "1_email_address_has_been_copied_successfully_to_your_clipboard."
 msgstr "Adres mailowy został pomyślnie skopiowany do schowka."
+
+msgid "The_reason_for_changing_the_member_is_mandatory."
+msgstr ""
+
+msgid "Why_is_the_member_edited?"
+msgstr ""
+
+# Change member comment
+#, fuzzy
+msgid "Change_member"
+msgstr "Zmień komentarz do członka"
+
+msgid "To_which_member_should_the_ordered_product_{0}_of_{1}_be_assigned_to?"
+msgstr ""
+
+# Please enter a number.
+#, fuzzy
+msgid "Please_select_new_member."
+msgstr "Wprowadź liczbę."
+
+msgid "Amount_that_should_be_changed_to_member?"
+msgstr ""
+
+# Please enter your city.
+#, fuzzy
+msgid "Please_select..."
+msgstr "Podaj miasto."
+
+msgid "all"
+msgstr ""
 
 # Were the products picked up?
 msgid "Were_the_products_picked_up?"
@@ -1233,6 +1179,103 @@ msgstr "Polityka prywatności"
 msgid "List_of_allergens"
 msgstr "Lista alergenów"
 
+# Is the product a stock product?
+#, fuzzy
+msgid "Self_service_for_stock_products"
+msgstr "Czy ten produkt jest magazynowany?"
+
+# The desired amount {0} of the product {1} is not available any more. Available amount: {2}
+msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
+msgstr "Wymagana ilość {0} produktu {1} nie jest już dostępna. Dostępna ilość: {2}"
+
+# Please change the amout or remove product from cart to place order.
+msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
+msgstr "Zmień ilość lub usuń produkt z koszyka aby złożyć zamówienie."
+
+# The desired amount {0} of the attribute {1} of the product {2} is not available any more. Available amount: {3}
+msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
+msgstr "Wymagana ilość {0} atrybutu {1} produktu {2} nie jest już dostępna. Dostępna ilość: {3}"
+
+# The attribute does not exist.
+msgid "The_attribute_does_not_exist."
+msgstr "Atrybut nie istnieje."
+
+# Please remove product from cart to place order.
+msgid "Please_delete_product_from_cart_to_place_order."
+msgstr "Usuń produkt z koszyka aby złożyć zamówienie."
+
+# The product {0} is not activated any more.
+msgid "The_product_{0}_is_not_activated_any_more."
+msgstr "Produkt {0} nie jest już aktywny."
+
+# The manufacturer of the product {0} either has a delivery break or the product is not activated any more.
+msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
+msgstr "Producent produktu {0} ma przerwę w dostawach lub też produkt nie jest już aktywny."
+
+# It's not possible to order the product {0} any more.
+msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
+msgstr "Nie ma już możliwości zamówienia produktu {0}."
+
+# Please enter how much you want to pay in {0}.
+msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
+msgstr "Wprowadź, ile chcesz zapłacić w {0}."
+
+# Your overdraft frame of {0} is reached.
+msgid "Your_overdraft_frame_of_{0}_is_reached."
+msgstr "Osiągnięto limit debetu w wysokości {0}."
+
+# Errors occurred.
+msgid "Errors_occurred."
+msgstr "Wystąpiły błędy."
+
+# Instant order ({0}) successfully placed for {1}.
+msgid "Instant_order_({0})_successfully_placed_for_{1}."
+msgstr "Pomyślnie złożono zamówienie błyskawiczne ({0}) dla {1}."
+
+# Instant order ({0}) successfully placed for {1}. The following manufacturers were notified: {2}
+msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
+msgstr "Pomyślnie złożono zamówienie błyskawiczne ({0}) dla {1}. Informacja została wysłana do następujących producentów: {2}"
+
+# Your order was placed successfully.
+msgid "Your_order_has_been_placed_succesfully."
+msgstr "Zamówienie zostało złożone pomyślnie."
+
+# {0} has placed a new order ({1}).
+msgid "{0}_has_placed_a_new_order_({1})."
+msgstr "{0} złożył nowe zamówienie ({1})."
+
+# Notification about instant order
+msgid "Notification_about_instant_order_order"
+msgstr "Powiadomienie o zamówieniu błyskawicznym"
+
+# Low stock for product \"{0}\": {1}
+msgid "Product_{0}:_Only_{1}_units_on_stock"
+msgstr "Niski stan produktu \"{0}\": {1}"
+
+# Cześć
+msgid "Hello"
+msgstr "Cześć"
+
+# You can unsubscribe this e-mail <a href=\"{0}\">in the manufacturer's settings</a>.
+msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
+msgstr "Możesz anulować supskrypcię mailową <a href=\"{0}\">w ustawieniach producenta</a>."
+
+# Order confirmation
+msgid "Order_confirmation"
+msgstr "Potwierdzenie zamówienia"
+
+# Right-of-withdrawal-information-and-form
+msgid "Filename_Right-of-withdrawal-information-and-form"
+msgstr "Informacja-i-formularz-o-prawie-do-wycofania"
+
+# Order-confirmation
+msgid "Filename_Order-confirmation"
+msgstr "Potwierdzenie-zamowienia"
+
+# General-terms-and-conditions
+msgid "Filename_General-terms-and-conditions"
+msgstr "Regulamin"
+
 # Tax rates overview table
 msgid "Tax_rates_overview_table"
 msgstr "Tabela stawek podatkowych"
@@ -1393,6 +1436,10 @@ msgstr "Zamówiony produkt: Zmieniono wagę"
 # Ordered product: Amount changed
 msgid "Action_Log_Order_detail_product_amount_changed"
 msgstr "Zamówiony produkt: Zmieniono ilość"
+
+#, fuzzy
+msgid "Action_Log_Order_detail_customer_changed"
+msgstr "Ordered product: Status changed"
 
 # Ordered product: Cancelled
 msgid "Action_Log_Ordered_product_cancelled"
@@ -1750,6 +1797,10 @@ msgstr "offline"
 msgid "Please_enter_a_valid_internet_address."
 msgstr "Podaj poprawny adres mailowy."
 
+# At least one email address is not valid. Please separate multiple addresses with , (without spaces).
+msgid "At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space."
+msgstr "Przynajmniej jeden adres mailowy jest nieprawidłowy. Oddziel wiele adresów przecinkami (bez spacji)."
+
 # Decimals are not allowed.
 msgid "Decimals_are_not_allowed."
 msgstr "Liczby niecałkowite nie są dozwolone."
@@ -1857,10 +1908,6 @@ msgstr "Podaj poprawny IBAN."
 # Please enter a valid BIC.
 msgid "Please_enter_a_valid_BIC."
 msgstr "Podaj poprawny BIC."
-
-# At least one email address is not valid. Please separate multiple addresses with , (without spaces).
-msgid "At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space."
-msgstr "Przynajmniej jeden adres mailowy jest nieprawidłowy. Oddziel wiele adresów przecinkami (bez spacji)."
 
 # The following delivery day(s) already contain orders: {0}. You need to manually cancel them to proceed saving the delivery break.
 msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._Please_manually_cancel_them_to_save_the_delivery_break."
@@ -2167,6 +2214,14 @@ msgstr "Zwiększ swój kredyt"
 msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
 msgstr "Nie zapomnij przynieść odliczonej kwoty pieniędzy."
 
+msgid "Scan_member_card"
+msgstr ""
+
+# for
+#, fuzzy
+msgid "or"
+msgstr "za"
+
 # E-mail
 msgid "Email"
 msgstr "E-mail"
@@ -2383,6 +2438,11 @@ msgstr "Panel administracyjny"
 msgid "Manufacturer_area"
 msgstr "Panel producenta"
 
+# search
+#, fuzzy
+msgid "Self_service"
+msgstr "search"
+
 # To change your profile please stop the instant order mode.
 msgid "To_change_your_profile_please_stop_the_instant_order_mode."
 msgstr "W celu zmiany profilu musisz wyjść z trybu zamówień błyskawicznych."
@@ -2487,6 +2547,10 @@ msgstr "Więcej informacji o produkcie {0}"
 # Last order day
 msgid "Last_order_day"
 msgstr "Ostatni dzień zamówień"
+
+# midnight
+msgid "midnight"
+msgstr "północ"
 
 # Instant order
 msgid "Instant_order"
@@ -2603,6 +2667,9 @@ msgstr "strona, którą właśnie odwiedziłeś"
 msgid "Click_here_to_open_the"
 msgstr "Kliknij tu aby przejść do"
 
+msgid "Auto_logout_in_X_seconds"
+msgstr ""
+
 # This e-mail was automatically created.
 msgid "This_email_was_created_automatcially."
 msgstr "Ta wiadomość została utworzona automatycznie."
@@ -2618,6 +2685,11 @@ msgstr "Nowości od"
 # Imprint
 msgid "Imprint"
 msgstr "Sygnatura"
+
+# Koszyk
+#, fuzzy
+msgid "Finish_pickup"
+msgstr "Dokończ zakupy"
 
 # Terms and conditions
 msgid "Terms_and_conditions"
@@ -2838,10 +2910,6 @@ msgstr "nieaktywne"
 # all
 msgid "active_state_all"
 msgstr "wszystkie"
-
-# midnight
-msgid "midnight"
-msgstr "północ"
 
 # default value
 msgid "default_value"
@@ -3074,9 +3142,6 @@ msgstr "product"
 
 #~ msgid "Change_stock"
 #~ msgstr "Change stock"
-
-#~ msgid "Action_Log_Order_detail_status_changed"
-#~ msgstr "Ordered product: Status changed"
 
 #~ msgid "Action_Log_Order_details_closed"
 #~ msgstr "Ordered product: closed"

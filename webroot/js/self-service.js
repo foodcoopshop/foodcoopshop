@@ -17,8 +17,30 @@ foodcoopshop.SelfService = {
     currentLogoutTimer : 0,
         
     init : function() {
-        foodcoopshop.Helper.initLogoutButton(foodcoopshop.LocalizedJs.helper.routeSelfService);
+        foodcoopshop.Helper.initLogoutButton(document.location.href);
+        this.initWindowScroll();
         this.initAutoLogout();
+    },
+    
+    initCartErrors: function (cartErrors) {
+        cartErrors = $.parseJSON(cartErrors);
+        console.log(cartErrors);
+        for (var key in cartErrors) {
+            var productContainer = $('#cart .product.' + key);
+            productContainer.addClass('error');
+            productContainer.after('<ul class="error-message ' + key + '"><li>' + cartErrors[key].join('</li><li>') + '</li></ul>');
+        }
+    },
+    
+    initWindowScroll: function () {
+        $(window).scroll(function () {
+            foodcoopshop.SelfService.onWindowScroll();
+        });
+        foodcoopshop.SelfService.onWindowScroll();
+    },
+    
+    onWindowScroll : function() {
+        $('#cart p.products').css('max-height', parseInt($(window).height()) - 220);        
     },
     
     initAutoLogout : function() {
@@ -36,7 +58,7 @@ foodcoopshop.SelfService = {
                 foodcoopshop.SelfService.currentLogoutTimer--;
                 foodcoopshop.SelfService.renderTimer();
                 if (foodcoopshop.SelfService.currentLogoutTimer == 0) {
-                    document.location.href = '/' + foodcoopshop.LocalizedJs.helper.routeLogout + '?redirect=' + foodcoopshop.LocalizedJs.helper.routeSelfService;
+                    document.location.href = '/' + foodcoopshop.LocalizedJs.helper.routeLogout + '?redirect=' + document.location.href;
                 }
             },
             recurIdleCall : true,

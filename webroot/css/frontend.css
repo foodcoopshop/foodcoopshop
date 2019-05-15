@@ -760,7 +760,7 @@ body.carts.detail #load-last-order-details,
 .cart p.products span.product span.price {
     float: right;
 }
-.cart a.product-name {
+.cart span.product-name {
     margin-right: 3px;
 }
 .cart span.product-name-wrapper span.unity {
@@ -832,13 +832,13 @@ body.carts.detail .cart:not(#cart) span.amount {
     margin-right: 15px;
     margin-top: -5px;
 }
-body.carts.detail .cart:not(#cart) span.product-name-wrapper a {
+body.carts.detail .cart:not(#cart) span.product-name-wrapper span.product-name {
     float: left;
 }
 body.carts.detail .cart:not(#cart) a.btn {
     font-size: 17px;
 }
-#CartsDetailForm {
+body.carts.detail #CartsDetailForm {
     float: left;
     margin-top: 10px;
 }
@@ -1211,4 +1211,7 @@ body.blog_posts.detail p.neighbors {
 }
 body.blog_posts.detail p.neighbors a {
     width: 265px;
+}
+#cart .fa-shopping-bag {
+	color: #f3515c;
 }

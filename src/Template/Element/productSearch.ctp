@@ -6,21 +6,19 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 2.2.0
+ * @since         FoodCoopShop 2.5.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
 
-if ($appAuth->isInstantOrderMode()) {
-    return false;
-}
-
-echo '<p style="float:left;">';
-    echo __('Pickup_place:_{0}', [
-        str_replace('<br />', ', ', $this->Html->getAddressFromAddressConfiguration())
-    ]);
-echo '</p>';
-
+$this->element('addScript', ['script' =>
+    Configure::read('app.jsNamespace').".Helper.initSearchForm();"
+]);
 ?>
+<form id="product-search" action="/<?php echo $action;?>">
+    <input placeholder="<?php echo __('Search'); ?>" name="keyword" type="text" required="required" <?php echo isset($keyword) ? 'value="'.$keyword.'"' : ''; ?> />
+    <button type="submit" class="btn btn-success"><i class="fas fa-search"></i></button>
+</form>

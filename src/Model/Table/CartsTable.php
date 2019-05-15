@@ -25,6 +25,7 @@ class CartsTable extends AppTable
     
     public const CART_TYPE_WEEKLY_RHYTHM = 1;
     public const CART_TYPE_INSTANT_ORDER = 2;
+    public const CART_TYPE_SELF_SERVICE  = 3;
 
     public function initialize(array $config)
     {
@@ -96,13 +97,9 @@ class CartsTable extends AppTable
      * @param int $customerId
      * @return array
      */
-    public function getCart($customerId, $instantOrderMode=false)
+    public function getCart($customerId, $cartType)
     {
 		
-        $cartType = self::CART_TYPE_WEEKLY_RHYTHM;
-        if ($instantOrderMode) {
-            $cartType = self::CART_TYPE_INSTANT_ORDER;
-        }
         $cart = $this->find('all', [
             'conditions' => [
                 'Carts.status' => APP_ON,
@@ -140,7 +137,7 @@ class CartsTable extends AppTable
         ])->toArray();
         
         if (!empty($cartProducts)) {
-            $cart->pickup_day_entities = $this->CartProducts->setPickupDays($cartProducts, $customerId, $instantOrderMode);
+            $cart->pickup_day_entities = $this->CartProducts->setPickupDays($cartProducts, $customerId, $cartType);
         }
         
         $preparedCart = [
@@ -162,23 +159,21 @@ class CartsTable extends AppTable
             }
 
             $productImage = Configure::read('app.htmlHelper')->image(Configure::read('app.htmlHelper')->getProductImageSrc($imageId, 'home'));
-            $productLink = Configure::read('app.htmlHelper')->link(
-                $cartProduct->product->name,
-                Configure::read('app.slugHelper')->getProductDetail(
-                    $cartProduct->id_product,
-                    $cartProduct->product->name
-                ),
-                ['class' => 'product-name']
-            );
             $manufacturerLink = Configure::read('app.htmlHelper')->link($cartProduct->product->manufacturer->name, Configure::read('app.slugHelper')->getManufacturerDetail($cartProduct->product->id_manufacturer, $cartProduct->product->manufacturer->name));
             $productData['image'] = $productImage;
-            $productData['productLink'] = $productLink;
+            $productData['productName'] = $cartProduct->product->name;
             $productData['manufacturerLink'] = $manufacturerLink;
-            if (!$instantOrderMode) {
-                $nextDeliveryDay = strtotime($cartProduct->product->next_delivery_day);
-            } else {
-                $nextDeliveryDay = Configure::read('app.timeHelper')->getCurrentDay();
+
+            switch($cartType) {
+                case self::CART_TYPE_WEEKLY_RHYTHM:
+                    $nextDeliveryDay = strtotime($cartProduct->product->next_delivery_day);
+                    break;
+                case self::CART_TYPE_INSTANT_ORDER:
+                case self::CART_TYPE_SELF_SERVICE:
+                    $nextDeliveryDay = Configure::read('app.timeHelper')->getCurrentDay();
+                    break;
             }
+
             $productData['nextDeliveryDayAsTimestamp'] = $nextDeliveryDay;
             $productData['nextDeliveryDay'] = Configure::read('app.timeHelper')->getDateFormattedWithWeekday($nextDeliveryDay);
             

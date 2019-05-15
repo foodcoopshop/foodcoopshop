@@ -190,7 +190,39 @@ class AppAuthComponent extends AuthComponent
         $c = TableRegistry::getTableLocator()->get('Customers');
         return $c->getCreditBalance($this->getUserId());
     }
+    
+    public function isInstantOrderMode()
+    {
+        $session = new AppSession();
+        return $session->check('Auth.instantOrderCustomer');
+    }
 
+    public function isSelfServiceModeByUrl()
+    {
+        $result = $this->_registry->getController()->request->getPath() == '/' . __('route_self_service');
+        if (!empty($this->_registry->getController()->request->getQuery('redirect'))) {
+            $result |= preg_match('`' . '/' . __('route_self_service') . '`', $this->_registry->getController()->request->getQuery('redirect'));
+        }
+        return $result;
+    }
+    
+    public function isSelfServiceModeByReferer()
+    {
+        $result = false;
+        $serverParams = $this->_registry->getController()->request->getServerParams();
+        $requestUriWhitelist = [
+            '/' . __('route_cart') . '/ajaxAdd/',
+            '/' . __('route_cart') . '/ajaxRemove/'
+        ];
+        if (isset($serverParams['HTTP_REFERER'])) {
+            $result = preg_match('`' . preg_quote(Configure::read('app.cakeServerName')) . '/' . __('route_self_service') . '`', $serverParams['HTTP_REFERER']);
+        }
+        if (!in_array($serverParams['REQUEST_URI'], $requestUriWhitelist)) {
+            $result = false;
+        }
+        return $result;
+    }
+    
     public function setCart($cart)
     {
         $this->Cart->cart = $cart;
@@ -201,9 +233,17 @@ class AppAuthComponent extends AuthComponent
         if (! $this->user()) {
             return null;
         }
+        
         $cart = TableRegistry::getTableLocator()->get('Carts');
-        $session = new AppSession();
-        return $cart->getCart($this->getUserId(), $session->check('Auth.instantOrderCustomer'));
+        $cartType = $cart::CART_TYPE_WEEKLY_RHYTHM;
+        if ($this->isInstantOrderMode()) {
+            $cartType = $cart::CART_TYPE_INSTANT_ORDER;
+        }
+        if ($this->isSelfServiceModeByUrl() || $this->isSelfServiceModeByReferer()) {
+            $cartType = $cart::CART_TYPE_SELF_SERVICE;
+        }
+        
+        return $cart->getCart($this->getUserId(), $cartType);
     }
 
     public function isTimebasedCurrencyEnabledForManufacturer()
