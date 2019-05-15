@@ -162,7 +162,7 @@ foodcoopshop.Cart = {
             $('#cart p.products').show();
 
             var productWrapper = $(this).closest('.product-wrapper');
-            var productName = productWrapper.find('.heading h4').html();
+            var productName = productWrapper.find('.heading h4 a').html();
             var amount = parseInt(productWrapper.find('.entity-wrapper.active input[name="amount"]').val());
             var price = foodcoopshop.Helper.getCurrencyAsFloat(productWrapper.find('.entity-wrapper.active .price').html());
             var tax = foodcoopshop.Helper.getCurrencyAsFloat(productWrapper.find('.entity-wrapper.active .tax').html());
