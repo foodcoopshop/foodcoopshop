@@ -30,7 +30,7 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
 
 <div id="products">
 	<div class="header">
-    	<h2><a href="/<?php echo __('route_self_service'); ?>"><i class="fa fa-shopping-bag"></i> <?php echo __('Self_service_for_stock_products'); ?></a></h2>
+    	<h2><i class="fa fa-shopping-bag"></i> <?php echo __('Self_service_for_stock_products'); ?></h2>
     	<h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
     	<?php echo $this->element('productSearch', [
     	    'action' => __('route_self_service'),
