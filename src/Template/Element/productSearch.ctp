@@ -20,5 +20,8 @@ $this->element('addScript', ['script' =>
 ?>
 <form id="product-search" action="/<?php echo $action;?>">
     <input placeholder="<?php echo $placeholder; ?>" name="keyword" type="text" required="required" <?php echo isset($keyword) ? 'value="'.$keyword.'"' : ''; ?> />
+    <?php if (isset($keyword)) { ?>
+    	<a href="<?php echo $resetSearchUrl; ?>" class="btn btn-success do-not-change-to-target-blank" title="<?php echo __('Reset_search'); ?>"><i class="fas fa-backspace"></i></a>
+    <?php } ?>
     <button type="submit" class="btn btn-success"><i class="fas fa-search"></i></button>
 </form>

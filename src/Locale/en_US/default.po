@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-20 20:20+0200\n"
-"PO-Revision-Date: 2019-05-20 20:21+0200\n"
+"POT-Creation-Date: 2019-05-20 20:42+0200\n"
+"PO-Revision-Date: 2019-05-20 20:43+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1817,6 +1817,9 @@ msgstr "DELIVERY_DAY"
 
 msgid "Print"
 msgstr "Print"
+
+msgid "Reset_search"
+msgstr "Reset search"
 
 msgid "Categories"
 msgstr "Categories"

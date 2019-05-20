@@ -39,10 +39,10 @@ body.self_services {
 	margin-right: 10px;
 }
 #self-service .header h2 {
-	padding-top: 5px;
+	padding-top: 10px;
 }
 #self-service #product-search {
-    top: 48px;
+    top: 53px;
     left: 0;
 }
 #self-service #product-search input {

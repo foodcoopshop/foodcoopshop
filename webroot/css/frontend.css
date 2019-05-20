@@ -1062,7 +1062,9 @@ body.carts.detail .cart:not(#cart) .btn-success.btn-order {
     border-radius: 0;
     float: right;
 }
-
+#product-search a.btn {
+	margin-left: 1px;
+}
 .blog-wrapper {
     margin-bottom: 20px;
     height: 270px;

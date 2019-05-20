@@ -174,6 +174,10 @@ foodcoopshop.Helper = {
                 form.submit();
             }
         });
+        $('#product-search a.btn').on('click', function () {
+            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-backspace');
+            foodcoopshop.Helper.disableButton($(this));
+        });
     },
 
     initRegistrationForm: function (isPost) {
@@ -220,7 +224,8 @@ foodcoopshop.Helper = {
     },
 
     changeOutgoingLinksTargetToBlank: function () {
-        $('a[href^="http://"], a[href^="https://"]:not([href^="' + window.location.host + '"])').attr('target', '_blank');
+         $('a[href^="http://"]:not(".do-not-change-to-target-blank"):not([href^="' + window.location.host + '"])').attr('target', '_blank');
+        $('a[href^="https://"]:not(".do-not-change-to-target-blank"):not([href^="' + window.location.host + '"])').attr('target', '_blank');
     },
 
     inIframe: function () {

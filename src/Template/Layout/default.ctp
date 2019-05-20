@@ -25,7 +25,8 @@ echo $this->element('layout/header');
         <?php if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) { ?>
             <?php echo $this->element('productSearch', [
                 'action' => __('route_search'),
-                'placeholder' =>  __('Search')
+                'placeholder' =>  __('Search'),
+                'resetSearchUrl' => !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $this->Slug->getAllProducts()
             ]); ?>
         <?php } ?>
         <?php echo $this->element('userMenu'); ?>
