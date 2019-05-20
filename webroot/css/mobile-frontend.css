@@ -147,6 +147,9 @@
     div.third-column .entity-wrapper {
         margin-bottom: 0 ! important;
     }
+    .product-wrapper .amount-wrapper .left-of-input {
+        width: 100%;
+    }
     .manufacturer-wrapper div.third-column a.btn {
         margin-top: 35px ! important;
         float: right ! important;

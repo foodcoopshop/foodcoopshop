@@ -534,6 +534,21 @@ body.superadmin .product-wrapper .heading h4 {
     float: left;
     margin-right: 4px;
 }
+.product-wrapper .amount-switcher-minus .fas {
+	margin-right: 4px;
+}
+.product-wrapper .amount-switcher-plus .fas {
+    margin-left: 4px;
+}
+.product-wrapper .amount-wrapper .fas {
+   color: #719f41;
+   float: left;
+   margin-top: 6px;
+   font-size: 17px;
+}
+.product-wrapper .amount-wrapper .fas:hover {
+    color: #d6d4d4 ! important;
+}
 .product-wrapper .amount-wrapper input {
     float:left;
     text-align: center;
@@ -543,7 +558,7 @@ body.superadmin .product-wrapper .heading h4 {
 }
 .product-wrapper .amount-wrapper .right-of-input {
     float: left;
-    margin-left: 6px;
+    clear: both;
 }
 .product-wrapper span.not-available-info {
     display: block;

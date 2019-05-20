@@ -22,6 +22,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.selectMainMenuFrontend('".__('Products')."');".
     Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
+    Configure::read('app.jsNamespace').".Helper.initAmountSwitcher();".
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
 ]);
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);

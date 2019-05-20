@@ -18,13 +18,19 @@ use Cake\Core\Configure;
 <div class="amount-wrapper">
 
 	<?php if (!$hideAmountSelector) { ?>
-        <span class="left-of-input"><?php echo __('Amount'); ?></span>
-        <input name="amount" value="1" type="text">
+		<span class="left-of-input"><?php echo __('Amount'); ?></span>
+		<a class="amount-switcher amount-switcher-minus" href="javascript:void(0);">
+    		<i class="fas fa-minus-circle"></i>
+    	</a>
+      	<input name="amount" value="1" type="text">
+        <a class="amount-switcher amount-switcher-plus" href="javascript:void(0);">
+	        <i class="fas fa-plus-circle"></i>
+    	</a>
     <?php } ?>
     <?php
         $availableQuantity = $stockAvailable['quantity'] - $stockAvailable['quantity_limit'];
         if ($availableQuantity <= Configure::read('appDb.FCS_PRODUCT_AVAILABILITY_LOW')) { ?>
-        	<span <?php echo !$hideAmountSelector ? 'class="right-of-input"' : ''; ?>>(<?php echo $availableQuantity . ' ' . __('available'); ?>)</span>
+        	<span <?php echo !$hideAmountSelector ? 'class="right-of-input availibility"' : ''; ?>>(<?php echo $availableQuantity . ' ' . __('available'); ?>)</span>
     <?php } ?>
 
 </div>
