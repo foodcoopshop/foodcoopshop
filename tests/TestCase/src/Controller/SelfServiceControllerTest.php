@@ -41,6 +41,49 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertNotRegExpWithUnquotedString(__('Signing_in_failed_account_inactive_or_password_wrong?'), $this->httpClient->getContent());
     }
     
+    public function testSelfServiceOrder()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->doBarCodeLogin();
+        $this->addProductToSelfServiceCart(349, 1);
+        $this->finishSelfServiceCart();
+    }
+    
+    private function addProductToSelfServiceCart($productId, $amount)
+    {
+        // referer needed for later carts/ajaxAdd
+        $this->httpClient->ajaxPost(
+            '/warenkorb/ajaxAdd',
+            [
+                'productId' => $productId,
+                'amount' => $amount
+            ],
+            [
+                'headers' => [
+                    'X-Requested-With:XMLHttpRequest',
+                    'REFERER' => '/' . __('route_self_service')
+                ],
+                'type' => 'json'
+            ]
+        );
+        return $this->httpClient->getJsonDecodedContent();
+        
+    }
+    
+    private function finishSelfServiceCart()
+    {
+        $this->httpClient->followOneRedirectForNextRequest();
+        $this->httpClient->post(
+            $this->Slug->getSelfService(),
+            [],
+            [
+                'headers' => [
+                    'REFERER' => '/' . __('route_self_service')
+                ]
+            ]
+        );
+    }
+    
     private function doBarCodeLogin()
     {
         $this->httpClient->loginEmail = Configure::read('test.loginEmailSuperadmin');
