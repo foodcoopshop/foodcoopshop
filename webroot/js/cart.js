@@ -162,7 +162,14 @@ foodcoopshop.Cart = {
             $('#cart p.products').show();
 
             var productWrapper = $(this).closest('.product-wrapper');
-            var productName = productWrapper.find('.heading h4 a').html();
+            var productName = '';
+            // self service mode does not include product name as link
+            var productAsLink = productWrapper.find('.heading h4 a');
+            if (productAsLink.length > 0) {
+                productName = productAsLink.html();
+            } else {
+                productName = productWrapper.find('.heading h4').html();
+            }
             var amount = parseInt(productWrapper.find('.entity-wrapper.active input[name="amount"]').val());
             var price = foodcoopshop.Helper.getCurrencyAsFloat(productWrapper.find('.entity-wrapper.active .price').html());
             var tax = foodcoopshop.Helper.getCurrencyAsFloat(productWrapper.find('.entity-wrapper.active .tax').html());
