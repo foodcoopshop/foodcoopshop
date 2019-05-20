@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-14 15:32+0200\n"
+"POT-Creation-Date: 2019-05-20 10:27+0200\n"
 "PO-Revision-Date: 2019-04-26 23:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2438,11 +2438,6 @@ msgstr "Panel administracyjny"
 msgid "Manufacturer_area"
 msgstr "Panel producenta"
 
-# search
-#, fuzzy
-msgid "Self_service"
-msgstr "search"
-
 # To change your profile please stop the instant order mode.
 msgid "To_change_your_profile_please_stop_the_instant_order_mode."
 msgstr "W celu zmiany profilu musisz wyjść z trybu zamówień błyskawicznych."
@@ -2450,6 +2445,11 @@ msgstr "W celu zmiany profilu musisz wyjść z trybu zamówień błyskawicznych.
 # Signed in
 msgid "Signed_in"
 msgstr "Zalogowany"
+
+# search
+#, fuzzy
+msgid "Self_service"
+msgstr "search"
 
 # right of withdrawal
 msgid "right_of_withdrawal"
@@ -2527,6 +2527,11 @@ msgstr "dostępne"
 # Add to cart
 msgid "Move_in_cart"
 msgstr "Dodaj do koszyka"
+
+# Stock product: order possible only with instant order when picking it up.
+#, fuzzy
+msgid "Stock_product:_order_possible_only_by_{0}."
+msgstr "Produkt magazynowany: zamówienie możliwe wyłącznie jako zamówienie błyskawiczne podczas odbioru."
 
 # Stock product: order possible only with instant order when picking it up.
 msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."

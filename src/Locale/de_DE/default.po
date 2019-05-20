@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-05-14 15:32+0200\n"
-"PO-Revision-Date: 2019-05-14 15:33+0200\n"
+"POT-Creation-Date: 2019-05-20 10:27+0200\n"
+"PO-Revision-Date: 2019-05-20 10:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.2\n"
 
 msgid "You_have_been_signed_out."
 msgstr "Du hast dich erfolgreich abgemeldet."
@@ -1827,14 +1827,14 @@ msgstr "Admin-Bereich"
 msgid "Manufacturer_area"
 msgstr "Hersteller-Bereich"
 
-msgid "Self_service"
-msgstr "Selbstbedienung"
-
 msgid "To_change_your_profile_please_stop_the_instant_order_mode."
 msgstr "Um dein Profil zu ändern, beende bitte den Sofort-Bestellungsmodus."
 
 msgid "Signed_in"
 msgstr "Eingeloggt"
+
+msgid "Self_service"
+msgstr "Selbstbedienung"
 
 msgid "right_of_withdrawal"
 msgstr "Rücktrittsrecht"
@@ -1892,6 +1892,9 @@ msgstr "verfügbar"
 
 msgid "Move_in_cart"
 msgstr "In den Warenkorb"
+
+msgid "Stock_product:_order_possible_only_by_{0}."
+msgstr "Lagerprodukt: nur über {0} bestellbar."
 
 msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
 msgstr "Lagerprodukt: nur über Sofort-Bestellung beim Abholen bestellbar."

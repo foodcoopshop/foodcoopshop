@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-14 15:32+0200\n"
-"PO-Revision-Date: 2019-05-14 15:33+0200\n"
+"POT-Creation-Date: 2019-05-20 10:27+0200\n"
+"PO-Revision-Date: 2019-05-20 10:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.2\n"
 
 msgid "You_have_been_signed_out."
 msgstr "You have been signed out."
@@ -1827,14 +1827,14 @@ msgstr "Admin panel"
 msgid "Manufacturer_area"
 msgstr "Manufacturer panel"
 
-msgid "Self_service"
-msgstr "Self-service"
-
 msgid "To_change_your_profile_please_stop_the_instant_order_mode."
 msgstr "To change your profile please stop the instant order mode."
 
 msgid "Signed_in"
 msgstr "Signed in"
+
+msgid "Self_service"
+msgstr "Self-service"
 
 msgid "right_of_withdrawal"
 msgstr "right of withdrawal"
@@ -1892,6 +1892,9 @@ msgstr "available"
 
 msgid "Move_in_cart"
 msgstr "Add to cart"
+
+msgid "Stock_product:_order_possible_only_by_{0}."
+msgstr "Stock product: order possible only by {0}."
 
 msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
 msgstr "Stock product: order possible only with instant order when picking it up."

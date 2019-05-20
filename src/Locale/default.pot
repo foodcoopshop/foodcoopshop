@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-14 15:32+0200\n"
+"POT-Creation-Date: 2019-05-20 10:27+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1826,13 +1826,13 @@ msgstr ""
 msgid "Manufacturer_area"
 msgstr ""
 
-msgid "Self_service"
-msgstr ""
-
 msgid "To_change_your_profile_please_stop_the_instant_order_mode."
 msgstr ""
 
 msgid "Signed_in"
+msgstr ""
+
+msgid "Self_service"
 msgstr ""
 
 msgid "right_of_withdrawal"
@@ -1890,6 +1890,9 @@ msgid "available"
 msgstr ""
 
 msgid "Move_in_cart"
+msgstr ""
+
+msgid "Stock_product:_order_possible_only_by_{0}."
 msgstr ""
 
 msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
