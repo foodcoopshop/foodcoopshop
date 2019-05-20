@@ -21,7 +21,7 @@ Configure::write('test.loginEmailAdmin', 'fcs-demo-admin@mailinator.com');
 Configure::write('test.adminId', 88);
 Configure::write('test.loginEmailSuperadmin', 'fcs-demo-superadmin@mailinator.com');
 Configure::write('test.superadminId', 92);
-Configure::write('test.superadminBarCode', '7b6d522e04e51');
+Configure::write('test.superadminBarCode', '4a134261c5b4d');
 
 // id is id from table customer, use Customer::getManufacturerIdByCustomerId to obtain real manufacturerId
 Configure::write('test.loginEmailVegetableManufacturer', 'fcs-demo-gemuese-hersteller@mailinator.com');

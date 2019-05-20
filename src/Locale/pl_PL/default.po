@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-20 11:12+0200\n"
+"POT-Creation-Date: 2019-05-20 20:20+0200\n"
 "PO-Revision-Date: 2019-05-20 11:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1228,14 +1228,6 @@ msgstr "Osiągnięto limit debetu w wysokości {0}."
 msgid "Errors_occurred."
 msgstr "Wystąpiły błędy."
 
-# Instant order ({0}) successfully placed for {1}.
-msgid "Instant_order_({0})_successfully_placed_for_{1}."
-msgstr "Pomyślnie złożono zamówienie błyskawiczne ({0}) dla {1}."
-
-# Instant order ({0}) successfully placed for {1}. The following manufacturers were notified: {2}
-msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
-msgstr "Pomyślnie złożono zamówienie błyskawiczne ({0}) dla {1}. Informacja została wysłana do następujących producentów: {2}"
-
 # Your order was placed successfully.
 msgid "Your_order_has_been_placed_succesfully."
 msgstr "Zamówienie zostało złożone pomyślnie."
@@ -1243,6 +1235,14 @@ msgstr "Zamówienie zostało złożone pomyślnie."
 # {0} has placed a new order ({1}).
 msgid "{0}_has_placed_a_new_order_({1})."
 msgstr "{0} złożył nowe zamówienie ({1})."
+
+# Instant order ({0}) successfully placed for {1}.
+msgid "Instant_order_({0})_successfully_placed_for_{1}."
+msgstr "Pomyślnie złożono zamówienie błyskawiczne ({0}) dla {1}."
+
+# Instant order ({0}) successfully placed for {1}. The following manufacturers were notified: {2}
+msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
+msgstr "Pomyślnie złożono zamówienie błyskawiczne ({0}) dla {1}. Informacja została wysłana do następujących producentów: {2}"
 
 # Notification about instant order
 msgid "Notification_about_instant_order_order"
@@ -2695,6 +2695,9 @@ msgstr "Nowości od"
 # Imprint
 msgid "Imprint"
 msgstr "Sygnatura"
+
+msgid "Search_by_name_id_or_barcode"
+msgstr ""
 
 # Koszyk
 #, fuzzy

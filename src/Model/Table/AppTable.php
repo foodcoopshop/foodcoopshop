@@ -9,6 +9,7 @@ use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
+use Cake\Utility\Security;
 use Cake\Validation\Validation;
 use Cake\Validation\Validator;
 use Cake\I18n\FrozenDate;
@@ -130,6 +131,11 @@ class AppTable extends Table
         }
         return false;
     }
+    
+    protected function getProductIdentifierField()
+    {
+        return 'SUBSTRING(SHA1(CONCAT(Products.id_product, "' .  Security::getSalt() . '", "product")), 1, 13)';
+    }
 
     /**
      * @return string
@@ -150,6 +156,11 @@ class AppTable extends Table
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
             $fields .= ", Manufacturers.timebased_currency_max_percentage, Manufacturers.timebased_currency_max_credit_balance";
         }
+        
+        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+            $fields .= ", " . $this->getProductIdentifierField() . " as ProductIdentifier";
+        }
+        
         $fields .= " ";
         return $fields;
     }

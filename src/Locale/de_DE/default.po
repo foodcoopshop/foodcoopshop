@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-05-20 11:12+0200\n"
-"PO-Revision-Date: 2019-05-20 11:41+0200\n"
+"POT-Creation-Date: 2019-05-20 20:20+0200\n"
+"PO-Revision-Date: 2019-05-20 20:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -921,17 +921,17 @@ msgstr "Dein Überziehungsrahmen von {0} ist erreicht."
 msgid "Errors_occurred."
 msgstr "Es sind Fehler aufgetreten."
 
-msgid "Instant_order_({0})_successfully_placed_for_{1}."
-msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt."
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
-msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: {2}"
-
 msgid "Your_order_has_been_placed_succesfully."
 msgstr "Deine Bestellung wurde erfolgreich abgeschlossen."
 
 msgid "{0}_has_placed_a_new_order_({1})."
 msgstr "{0} hat eine neue Bestellung getätigt ({1})."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}."
+msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
+msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: {2}"
 
 msgid "Notification_about_instant_order_order"
 msgstr "Benachrichtigung über Sofort-Bestellung"
@@ -2015,6 +2015,9 @@ msgstr "Aktuelles von"
 
 msgid "Imprint"
 msgstr "Impressum"
+
+msgid "Search_by_name_id_or_barcode"
+msgstr "Suche nach Name, Produkt-ID oder Barcode"
 
 msgid "Finish_pickup"
 msgstr "Abholung abschließen"

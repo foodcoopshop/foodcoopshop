@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-20 11:12+0200\n"
-"PO-Revision-Date: 2019-05-20 11:41+0200\n"
+"POT-Creation-Date: 2019-05-20 20:20+0200\n"
+"PO-Revision-Date: 2019-05-20 20:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -921,17 +921,17 @@ msgstr "Your overdraft frame of {0} is reached."
 msgid "Errors_occurred."
 msgstr "Errors occurred."
 
-msgid "Instant_order_({0})_successfully_placed_for_{1}."
-msgstr "Instant order ({0}) successfully placed for {1}."
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
-msgstr "Instant order ({0}) successfully placed for {1}. The following manufacturers were notified: {2}"
-
 msgid "Your_order_has_been_placed_succesfully."
 msgstr "Your order was placed successfully."
 
 msgid "{0}_has_placed_a_new_order_({1})."
 msgstr "{0} has placed a new order ({1})."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}."
+msgstr "Instant order ({0}) successfully placed for {1}."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
+msgstr "Instant order ({0}) successfully placed for {1}. The following manufacturers were notified: {2}"
 
 msgid "Notification_about_instant_order_order"
 msgstr "Notification about instant order"
@@ -2015,6 +2015,9 @@ msgstr "News from"
 
 msgid "Imprint"
 msgstr "Imprint"
+
+msgid "Search_by_name_id_or_barcode"
+msgstr "Search by name, product ID or barcode"
 
 msgid "Finish_pickup"
 msgstr "Finish pickup"

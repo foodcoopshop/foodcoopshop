@@ -19,6 +19,6 @@ $this->element('addScript', ['script' =>
 ]);
 ?>
 <form id="product-search" action="/<?php echo $action;?>">
-    <input placeholder="<?php echo __('Search'); ?>" name="keyword" type="text" required="required" <?php echo isset($keyword) ? 'value="'.$keyword.'"' : ''; ?> />
+    <input placeholder="<?php echo $placeholder; ?>" name="keyword" type="text" required="required" <?php echo isset($keyword) ? 'value="'.$keyword.'"' : ''; ?> />
     <button type="submit" class="btn btn-success"><i class="fas fa-search"></i></button>
 </form>

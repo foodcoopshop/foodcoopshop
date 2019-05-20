@@ -137,8 +137,18 @@ class CategoriesTable extends AppTable
         }
 
         if ($keyword != '') {
-            $params['keyword'] = '%' . $keyword . '%';
-            $sql .= " AND (Products.name LIKE :keyword OR Products.description_short LIKE :keyword) ";
+            
+            $params['keywordLike'] = '%' . $keyword . '%';
+            $params['keyword'] = $keyword;
+            $sql .= " AND (Products.name LIKE :keywordLike OR Products.description_short LIKE :keywordLike OR Products.id_product = :keyword ";
+            
+            if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+                $params['barcodeIdentifier'] = $keyword;
+                $sql .= " OR " . $this->getProductIdentifierField() . " = :barcodeIdentifier";
+            }
+                
+            $sql .= ")";
+            
         }
 
         if ($productId > 0) {
@@ -155,14 +165,13 @@ class CategoriesTable extends AppTable
         $statement->execute($params);
         $products = $statement->fetchAll('assoc');
         $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
-
+        
         if (! $countMode) {
             return $products;
         } else {
             return count($products);
         }
-
-        return $products;
+        
     }
 
     /**

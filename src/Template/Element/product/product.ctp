@@ -49,9 +49,13 @@ if ($product['is_new']) {
     echo '<div class="heading">';
         echo '<h4>';
         if ($showProductDetailLink) {
-            echo '<a class="product-name" href="'.$this->Slug->getProductDetail($product['id_product'], $product['name']).'">'.$product['name'].'</a></h4>';
+            echo '<a class="product-name" href="'.$this->Slug->getProductDetail($product['id_product'], $product['name']).'">'.$product['name'].'</a>';
         } else {
             echo $product['name'];
+        }
+        echo '</h4>';
+        if ($appAuth->isSelfServiceModeByUrl()) {
+            echo '<br /><span style="float:left;width:100%;">' . $product['ProductIdentifier'] . '</span>';
         }
     echo '</div>';
     echo '<div class="sc"></div>';

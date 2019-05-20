@@ -23,7 +23,10 @@ echo $this->element('layout/header');
     <div id="header">
         <?php echo $this->element('logo'); ?>
         <?php if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) { ?>
-            <?php echo $this->element('productSearch', ['action' => __('route_search')]); ?>
+            <?php echo $this->element('productSearch', [
+                'action' => __('route_search'),
+                'placeholder' =>  __('Search')
+            ]); ?>
         <?php } ?>
         <?php echo $this->element('userMenu'); ?>
         <?php echo $this->element('mainMenu'); ?>
