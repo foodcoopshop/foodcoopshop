@@ -101,12 +101,14 @@ class AppHttpClient extends Client
      */
     public function ajaxPost($url, $data = [], array $options = [])
     {
-        $options = array_merge($options, [
-            'headers' => [
-                'X-Requested-With:XMLHttpRequest'
-            ],
-            'type' => 'json',
-        ]);
+        if (empty($options)) {
+            $options = [
+                'headers' => [
+                    'X-Requested-With:XMLHttpRequest'
+                ],
+                'type' => 'json',
+            ];
+        }
         $this->response = parent::post(
             $url,
             $data,

@@ -14,6 +14,7 @@
  */
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 class SelfServiceControllerTest extends AppCakeTestCase
 {
@@ -47,13 +48,43 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->doBarCodeLogin();
         $this->addProductToSelfServiceCart(349, 1);
         $this->finishSelfServiceCart();
+        
+        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
+        $cart = $this->Cart->find('all', [
+            'order' => [
+                'Carts.id_cart' => 'DESC'
+            ],
+        ])->first();
+        
+        $cart = $this->getCartById($cart->id_cart);
+
+        $this->assertEquals(1, count($cart->cart_products));
+        
+        foreach($cart->cart_products as $cartProduct) {
+            $orderDetail = $cartProduct->order_detail;
+            $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getCurrentDateForDatabase());
+        }
+        
+        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(1, count($emailLogs));
+        
+        $this->assertEmailLogs(
+            $emailLogs[0],
+            'Bestellbestätigung',
+            [
+                'Lagerprodukt'
+            ],
+            [
+                Configure::read('test.loginEmailSuperadmin')
+            ]
+        );
     }
     
     private function addProductToSelfServiceCart($productId, $amount)
     {
-        // referer needed for later carts/ajaxAdd
         $this->httpClient->ajaxPost(
-            '/warenkorb/ajaxAdd',
+            '/warenkorb/ajaxAdd/',
             [
                 'productId' => $productId,
                 'amount' => $amount
@@ -61,7 +92,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
             [
                 'headers' => [
                     'X-Requested-With:XMLHttpRequest',
-                    'REFERER' => '/' . __('route_self_service')
+                    // referer needed to get correct cart (self-service)
+                    'REFERER' => Configure::read('app.cakeServerName') . '/' . __('route_self_service')
                 ],
                 'type' => 'json'
             ]
@@ -72,13 +104,12 @@ class SelfServiceControllerTest extends AppCakeTestCase
     
     private function finishSelfServiceCart()
     {
-        $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->post(
             $this->Slug->getSelfService(),
             [],
             [
                 'headers' => [
-                    'REFERER' => '/' . __('route_self_service')
+                    'REFERER' => Configure::read('app.cakeServerName') . '/' . __('route_self_service')
                 ]
             ]
         );
