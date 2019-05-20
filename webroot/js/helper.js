@@ -34,6 +34,9 @@ foodcoopshop.Helper = {
         $('.entity-wrapper a.amount-switcher').on('click', function() {
             var inputField = $(this).closest('.amount-wrapper').find('input[name="amount"]');
             var currentValue = parseInt(inputField.val());
+            if (isNaN(currentValue)) {
+                currentValue = 0;
+            }
             var result = 0;
             if ($(this).hasClass('amount-switcher-plus')) {
                 result = currentValue + 1;
