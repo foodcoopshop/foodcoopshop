@@ -50,7 +50,7 @@ body.self_services {
 }
 #self-service #products {
 	float: left;
-	width: 590px;
+	width: 603px;
 	margin-left: 10px;
 	margin-top: 10px;
 	margin-bottom: 50px;
@@ -58,6 +58,7 @@ body.self_services {
 }
 #self-service .product-wrapper {
 	background: #fff;
+	border-right: 1px solid #d6d4d4;
 }
 #self-service .product-wrapper div.first-column {
 	width: 100px;
