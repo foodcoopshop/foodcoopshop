@@ -36,7 +36,7 @@ body.self_services {
 	width: 90%;
 }
 #self-service .header h1 span {
-	margin-left: 1px;
+	margin-right: 10px;
 }
 #self-service .header h2 {
 	padding-top: 5px;
@@ -120,7 +120,7 @@ body.self_services {
     position: fixed;
     top: 0;
     height: 110px;
-    width: 592px;
+    width: 602px;
     z-index: 1000;
 }
 #self-service .header hr {
