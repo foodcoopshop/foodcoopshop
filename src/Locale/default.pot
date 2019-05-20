@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-20 10:27+0200\n"
+"POT-Creation-Date: 2019-05-20 11:12+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1064,7 +1064,10 @@ msgstr ""
 msgid "Action_Log_Order_date_changed"
 msgstr ""
 
-msgid "Action_Log_Order_instant_order_placed"
+msgid "Action_Log_Instant_order_placed"
+msgstr ""
+
+msgid "Action_Log_Self_service_order_placed"
 msgstr ""
 
 msgid "Action_Log_Order_detail_product_price_changed"

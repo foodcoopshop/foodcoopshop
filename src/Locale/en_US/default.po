@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-20 10:27+0200\n"
-"PO-Revision-Date: 2019-05-20 10:28+0200\n"
+"POT-Creation-Date: 2019-05-20 11:12+0200\n"
+"PO-Revision-Date: 2019-05-20 11:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1065,8 +1065,11 @@ msgstr "Order: Comment changed"
 msgid "Action_Log_Order_date_changed"
 msgstr "Order: Date set back"
 
-msgid "Action_Log_Order_instant_order_placed"
+msgid "Action_Log_Instant_order_placed"
 msgstr "Order: Instant order placed"
+
+msgid "Action_Log_Self_service_order_placed"
+msgstr "Order: self-service order placed"
 
 msgid "Action_Log_Order_detail_product_price_changed"
 msgstr "Ordered product: Price changed"

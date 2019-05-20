@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-20 10:27+0200\n"
-"PO-Revision-Date: 2019-04-26 23:37+0200\n"
+"POT-Creation-Date: 2019-05-20 11:12+0200\n"
+"PO-Revision-Date: 2019-05-20 11:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: pl_PL\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.2\n"
 "X-Poedit-Bookmarks: 725,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 # You have been signed out.
@@ -1422,8 +1422,13 @@ msgid "Action_Log_Order_date_changed"
 msgstr "Zamówienie: Cofnięto datę"
 
 # Order: Instant order placed
-msgid "Action_Log_Order_instant_order_placed"
+msgid "Action_Log_Instant_order_placed"
 msgstr "Zamówienie: Złożono zamówienie błyskawiczne"
+
+# Member: Instant order placed
+#, fuzzy
+msgid "Action_Log_Self_service_order_placed"
+msgstr "Członek: Złożono zamówienie błyskawiczne"
 
 # Ordered product: Price changed
 msgid "Action_Log_Order_detail_product_price_changed"

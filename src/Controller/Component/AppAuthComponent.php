@@ -9,8 +9,6 @@ use Cake\Core\Exception\Exception;
 use Cake\ORM\TableRegistry;
 
 /**
- * AppAuthComponent
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -223,6 +221,19 @@ class AppAuthComponent extends AuthComponent
         return $result;
     }
     
+    public function getCartType()
+    {
+        $cart = TableRegistry::getTableLocator()->get('Carts');
+        $cartType = $cart::CART_TYPE_WEEKLY_RHYTHM;
+        if ($this->isInstantOrderMode()) {
+            $cartType = $cart::CART_TYPE_INSTANT_ORDER;
+        }
+        if ($this->isSelfServiceModeByUrl() || $this->isSelfServiceModeByReferer()) {
+            $cartType = $cart::CART_TYPE_SELF_SERVICE;
+        }
+        return $cartType;
+    }
+    
     public function setCart($cart)
     {
         $this->Cart->cart = $cart;
@@ -234,15 +245,9 @@ class AppAuthComponent extends AuthComponent
             return null;
         }
         
-        $cart = TableRegistry::getTableLocator()->get('Carts');
-        $cartType = $cart::CART_TYPE_WEEKLY_RHYTHM;
-        if ($this->isInstantOrderMode()) {
-            $cartType = $cart::CART_TYPE_INSTANT_ORDER;
-        }
-        if ($this->isSelfServiceModeByUrl() || $this->isSelfServiceModeByReferer()) {
-            $cartType = $cart::CART_TYPE_SELF_SERVICE;
-        }
+        $cartType = $this->getCartType();
         
+        $cart = TableRegistry::getTableLocator()->get('Carts');
         return $cart->getCart($this->getUserId(), $cartType);
     }
 

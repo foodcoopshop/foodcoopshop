@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-05-20 10:27+0200\n"
-"PO-Revision-Date: 2019-05-20 10:27+0200\n"
+"POT-Creation-Date: 2019-05-20 11:12+0200\n"
+"PO-Revision-Date: 2019-05-20 11:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1065,8 +1065,11 @@ msgstr "Bestellung: Kommentar geändert"
 msgid "Action_Log_Order_date_changed"
 msgstr "Bestellung: rückdatiert"
 
-msgid "Action_Log_Order_instant_order_placed"
+msgid "Action_Log_Instant_order_placed"
 msgstr "Bestellung: Sofort-Bestellung getätigt"
+
+msgid "Action_Log_Self_service_order_placed"
+msgstr "Bestellung: Selbstbedienung getätigt"
 
 msgid "Action_Log_Order_detail_product_price_changed"
 msgstr "Bestelltes Produkt: Preis geändert"
