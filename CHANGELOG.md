@@ -9,6 +9,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 * [firerain-tgz](https://github.com/firerain-tgz)
 * [mrothauer](https://github.com/mrothauer)
 * [Speis-Vorchdorf](https://github.com/Speis-Vorchdorf)
+* [TheFox](https://github.com/TheFox)
 
 ### Neue Funktionen
 - Umsatzstatistik für Hersteller (Balkendiagramm). [PR#350](https://github.com/foodcoopshop/foodcoopshop/pull/350) / [I#349](https://github.com/foodcoopshop/foodcoopshop/issues/349) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
