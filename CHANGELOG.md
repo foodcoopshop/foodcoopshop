@@ -9,6 +9,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 * [firerain-tgz](https://github.com/firerain-tgz)
 * [mrothauer](https://github.com/mrothauer)
 * [Speis-Vorchdorf](https://github.com/Speis-Vorchdorf)
+* [TheFox](https://github.com/TheFox)
 
 ### Neue Funktionen
 - Selbstbedienungs-Modus für Lagerprodukte - [Details in Online-Dokumentation](https://foodcoopshop.github.io/de/selbstbedienungs-modus). [PR#355](https://github.com/foodcoopshop/foodcoopshop/pull/355) / [PR#359](https://github.com/foodcoopshop/foodcoopshop/pull/359) / [I#338](https://github.com/foodcoopshop/foodcoopshop/issues/338) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/AndreasEgger"><img src="https://github.com/AndreasEgger.png" width="20"></a>

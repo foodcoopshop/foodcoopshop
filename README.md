@@ -73,11 +73,11 @@ $ npm --prefix ./webroot install ./webroot
 ## Setting permissions
 ```
 $ cd /path/to/project
-$ chmod a+w -R ./files_private
-$ chmod a+w -R ./tmp
-$ chmod a+w -R ./webroot/cache
-$ chmod a+w -R ./webroot/files
-$ chmod a+w -R ./webroot/tmp
+$ chmod -R a+w ./files_private
+$ chmod -R a+w ./tmp
+$ chmod -R a+w ./webroot/cache
+$ chmod -R a+w ./webroot/files
+$ chmod -R a+w ./webroot/tmp
 ```
 
 ## Unit Testing
