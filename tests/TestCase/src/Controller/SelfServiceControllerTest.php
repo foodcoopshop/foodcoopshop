@@ -42,12 +42,21 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertNotRegExpWithUnquotedString(__('Signing_in_failed_account_inactive_or_password_wrong?'), $this->httpClient->getContent());
     }
     
+    public function testSelfServiceOrderWithoutCheckboxes() {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->doBarCodeLogin();
+        $this->addProductToSelfServiceCart(349, 1);
+        $this->finishSelfServiceCart(0, 0);
+        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die AGB.', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.', $this->httpClient->getContent());
+    }
+    
     public function testSelfServiceOrder()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->doBarCodeLogin();
         $this->addProductToSelfServiceCart(349, 1);
-        $this->finishSelfServiceCart();
+        $this->finishSelfServiceCart(1, 1);
         
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
         $cart = $this->Cart->find('all', [
@@ -102,11 +111,17 @@ class SelfServiceControllerTest extends AppCakeTestCase
         
     }
     
-    private function finishSelfServiceCart()
+    private function finishSelfServiceCart($general_terms_and_conditions_accepted, $cancellation_terms_accepted)
     {
+        $data = [
+            'Carts' => [
+                'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
+                'cancellation_terms_accepted' => $cancellation_terms_accepted
+            ],
+        ];
         $this->httpClient->post(
             $this->Slug->getSelfService(),
-            [],
+            $data,
             [
                 'headers' => [
                     'REFERER' => Configure::read('app.cakeServerName') . '/' . __('route_self_service')

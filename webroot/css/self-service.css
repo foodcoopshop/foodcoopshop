@@ -179,3 +179,23 @@ body.customers.login #self-service .footer {
     font-size: 12px;
     line-height: 14px;
 }
+#self-service #cancellation-terms,
+#self-service #general-terms-and-conditions {
+	display: none;
+}
+#self-service .right-box .input.checkbox {
+	width: 295px;
+	margin-left: 5px;
+}
+#self-service .right-box input[type="checkbox"] {
+	float: left;
+	margin-right: 5px;
+}
+#self-service .right-box .input.checkbox label {
+	line-height: 16px;
+}
+#self-service .right-box form div.error-message {
+	margin-left: 0;
+	width: auto;
+	line-height: 16px;
+}
