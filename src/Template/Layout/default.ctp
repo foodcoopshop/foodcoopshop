@@ -60,7 +60,9 @@ echo $this->element('layout/header');
     
     <div id="footer">
         <div class="inner-footer">
-            <?php echo $this->element('footer'); ?>
+            <?php
+                echo $this->element('footer');
+            ?>
         </div>
     </div>
     
@@ -71,5 +73,7 @@ echo $this->element('layout/header');
 <div class="sc"></div>
 
 <?php
-echo $this->element('layout/footer');
+    echo $this->element('layout/footer', [
+        'mobileInitFunction' => Configure::read('app.jsNamespace').".Mobile.initMenusFrontend();"
+    ]);
 ?>

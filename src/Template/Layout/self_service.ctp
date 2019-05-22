@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 echo $this->element('layout/header');
 ?>
 
@@ -41,5 +43,7 @@ echo $this->element('layout/header');
 </div>
 
 <?php
-    echo $this->element('layout/footer');
+    echo $this->element('layout/footer', [
+        'mobileInitFunction' => Configure::read('app.jsNamespace').".Mobile.initMenusSelfService();"
+    ]);
 ?>
