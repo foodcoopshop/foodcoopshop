@@ -25,7 +25,7 @@ if (!$appAuth->user() || !Configure::read('appDb.FCS_CART_ENABLED') || !$showInf
 	<?php
 	if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && Configure::read('app.serviceModeTestingEnabled')) {
             echo __('Stock_product:_order_possible_only_by_{0}.', [
-                $this->Html->link(__('Self_service'), $this->Slug->getSelfService())
+                $this->Html->link(__('Self_service'), $this->Slug->getSelfService($keyword))
             ]);
         } else {
             echo __('Stock_product:_order_possible_only_with_instant_order_on_pick_up.');
