@@ -54,8 +54,7 @@ use Cake\Core\Configure;
     .vertical.menu span.additional-info,
     a:not(.btn), a:not(.btn):visited, a:not(.btn):active,
     #footer i.fab, #footer i.far, #footer i.fas,
-    a.btn.edit-shortcut-button,
-    .product-wrapper .amount-wrapper .fas {
+    a.btn.edit-shortcut-button {
         color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
     }
     
