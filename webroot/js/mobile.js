@@ -131,6 +131,7 @@ foodcoopshop.Mobile = {
         $('#' + headerId).append(this.getResponsiveMenuButton());
 
         /*
+         * 
         var cartButton = $('#cart .inner .btn-success');
         cartButton.addClass('responsive-cart');
         cartButton.removeClass('btn btn-success');
