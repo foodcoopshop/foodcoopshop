@@ -1,0 +1,8 @@
+parameters:
+    level: 0
+    paths:
+#        - plugins
+        - src
+#        - tests
+    autoload_files:
+        - tests/bootstrap.php
