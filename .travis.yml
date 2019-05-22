@@ -55,8 +55,8 @@ before_script:
   - sudo cat /var/log/apache2/www.foodcoopshop.test_error.log
 
 script:
-  - vendor/bin/phpunit --stderr
   - vendor/bin/phpstan analyze -c phpstan.neon --no-interaction --no-progress
+  - vendor/bin/phpunit --stderr
   # - sudo cat ./logs/error.log
   
 notifications:
