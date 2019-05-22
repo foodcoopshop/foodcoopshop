@@ -134,7 +134,7 @@ class AppTable extends Table
     
     protected function getProductIdentifierField()
     {
-        return 'SUBSTRING(SHA1(CONCAT(Products.id_product, "' .  Security::getSalt() . '", "product")), 1, 13)';
+        return 'SUBSTRING(SHA1(CONCAT(Products.id_product, "' .  Security::getSalt() . '", "product")), 1, 6)';
     }
 
     /**
