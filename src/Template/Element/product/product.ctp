@@ -211,7 +211,7 @@ if ($product['description'] != '') {
                 echo $this->element('product/notAvailableInfo', ['stockAvailable' => $attribute['StockAvailables']]);
                 echo $this->element('product/includeStockProductsInOrdersWithDeliveryRhythmInfoText', [
                     'showInfoText' => $isStockProductOrderPossible,
-                    'keyword' => $product['ProductIdentifier']
+                    'keyword' => $appAuth->isSelfServiceModeByUrl() ? $product['ProductIdentifier'] : null
                 ]);
             }
             if ($showProductPrice) {
@@ -282,7 +282,7 @@ if ($product['description'] != '') {
             echo $this->element('product/notAvailableInfo', ['stockAvailable' => $product]);
             echo $this->element('product/includeStockProductsInOrdersWithDeliveryRhythmInfoText', [
                 'showInfoText' => $isStockProductOrderPossible,
-                'keyword' => $product['ProductIdentifier']
+                'keyword' => $appAuth->isSelfServiceModeByUrl() ? $product['ProductIdentifier'] : null
             ]);
         }
         if ($showProductPrice) {
