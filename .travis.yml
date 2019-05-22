@@ -56,7 +56,7 @@ before_script:
 
 script:
   - vendor/bin/phpunit --stderr
-  - vendor/bin/phpstan analyze -c phpstan.neon
+  - vendor/bin/phpstan analyze -c phpstan.neon --no-interaction --no-progress
   # - sudo cat ./logs/error.log
   
 notifications:
