@@ -20,6 +20,10 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Für Sofort-Bestellungen wird jetzt ein eigener Warenkorb verwendet. Ab und zu waren bereits Produkte im Warenkorb und man musste diese vor der Sofort-Bestellung zuerst löschen. [PR#344](https://github.com/foodcoopshop/foodcoopshop/pull/344) / [I#160](https://github.com/foodcoopshop/foodcoopshop/issues/160) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> <a href="https://github.com/Speis-Vorchdorf"><img src="https://github.com/Speis-Vorchdorf.png" width="20"></a>
 - Übersetzung auf Polnisch / Translation into Polish. [PR#354](https://github.com/foodcoopshop/foodcoopshop/pull/354) <a href="https://github.com/firerain-tgz"><img src="https://github.com/firerain-tgz.png" width="20"></a> 
 
+### Für Entwickler
+- Integration des statischen Quellcode-Analyse-Tools [PHPStan](https://github.com/phpstan/phpstan) in Travis-CI. / [PR#363](https://github.com/foodcoopshop/foodcoopshop/pull/363) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+
 ## v2.4.1 / 2018-03-27 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.4.0...v2.4.1)
 
 ### Bugfix
