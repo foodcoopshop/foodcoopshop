@@ -14,13 +14,14 @@
 @media only screen and (max-device-width: 768px) {
 	#self-service,
 	#self-service .header,
-	#self-service #products,
-	#self-service #cart,
-	#self-service .right-box .input.checkbox {
+	#self-service #products {
 	   width: 100%;
 	}
 	#self-service .header h2 {
 	   margin-bottom: 0;
+	}
+	#self-service .header hr {
+	   margin-top: 0;
 	}
 	form div.error-message {
 	   width: 100% ! important;
@@ -35,11 +36,18 @@
 	#self-service .right-box {
 	   float: left;
 	}
+	#self-service .right-box .input.checkbox,
 	#self-service #cart {
+	   width: 94%;
+       margin-left: 3%;
+       margin-right: 3%;
+	}
+	#self-service #cart {
+	   border: 1px solid #ccc;
 	   display: block ! important;
-	   
 	}
 	#self-service #products {
+       margin-left: 0;
 	   margin-top: 0;
 	   margin-bottom: 0;
 	   padding-top: 50px;
@@ -48,7 +56,7 @@
 	   position: static;
 	}
 	body.self_services #responsive-header .logout-wrapper {
-	   margin-top: 15px;
+	   margin-top: 17px;
 	   margin-left: 5px;
 	}
 	#self-service .right-box {
