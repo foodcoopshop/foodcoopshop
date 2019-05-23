@@ -45,7 +45,7 @@ header('Pragma: no-cache');
     <?php
         echo $this->element('renderCss', ['configs' => ['frontend']]);
         if ($isMobile) {
-            echo $this->Html->css(['/node_modules/slidebars/dist/slidebars', 'mobile-global', 'mobile-frontend', 'mobile-frontend-custom']);
+            echo $this->Html->css(['/node_modules/slidebars/dist/slidebars', 'mobile-global', 'mobile-frontend', 'mobile-self-service', 'mobile-frontend-custom']);
         }
         echo $this->element('customFrontendColorThemeCss');
     ?>

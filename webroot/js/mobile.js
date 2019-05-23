@@ -112,13 +112,10 @@ foodcoopshop.Mobile = {
         menuItems.push('<li><a href="/"><i class="fas"></i>' + foodcoopshop.LocalizedJs.mobile.home + '</a></li>');
 
         var pageItems = [];
-        $('#footer > a').each(function () {
+        $('.footer a').each(function () {
             pageItems.push($(this));
         });
-
-        if (pageItems.length > 1) {
-            menuItems = $.merge(menuItems, pageItems);
-        }
+        menuItems = $.merge(menuItems, pageItems);
 
         $('.sb-left').html(menuItems);
 
@@ -130,39 +127,14 @@ foodcoopshop.Mobile = {
 
         $('#' + headerId).append(this.getResponsiveMenuButton());
 
-        /*
-         * 
-        var cartButton = $('#cart .inner .btn-success');
-        cartButton.addClass('responsive-cart');
-        cartButton.removeClass('btn btn-success');
-        cartButton.html('<span class="sum">' + foodcoopshop.Helper.formatFloatAsCurrency(0) + '</span><i class="fas fa-shopping-cart fa-2x"></i>');
-        $('#' + headerId).append(cartButton);
+        $('#' + headerId).append($('.footer .logo-wrapper'));
+        $('#' + headerId).append($('.footer .logout-wrapper'));
 
-        var shoppingLimitReachedInfo = $('#cart .inner .credit-balance-wrapper .negative:not(.payment)').length;
-        if (shoppingLimitReachedInfo > 0) {
-            $('#' + headerId).append('<span class="negative shopping-limit-reached-info"><b>' + foodcoopshop.LocalizedJs.mobile.shoppingLimitReached + '</b></span>');
-        }
-
-        $('#' + headerId).append($('#header .logo-wrapper'));
-
-        // button renamings
-        var regexp = new RegExp(foodcoopshop.LocalizedJs.mobile.showAllProducts);
-        $('.manufacturer-wrapper div.third-column a.btn').each(function (btn) {
-            $(this).html($(this).html().replace(regexp, foodcoopshop.LocalizedJs.mobile.show));
-        });
-        $('.blog-post-wrapper div.third-column a.btn').html(foodcoopshop.LocalizedJs.mobile.show);
+        // button renaming
         $('.entity-wrapper .btn').html('<i class="fas fa-cart-plus"></i>');
-        $('#cart .btn-success').html('<i class="fas fa-shopping-cart"></i>');
-
-        // add special infos to cart page
-        var cartPage = $('body.carts.detail #inner-content h1:first');
-        cartPage.after($('#cart p.instant-order-customer-info'));
-        cartPage.after($('#cart div.credit-balance-wrapper'));
-        cartPage.after($('#cart p.future-orders'));
-
+        
         // move flash message into header
         $('#' + headerId).append($('#flashMessage'));
-        */
         
         var controller = new slidebars();
         controller.init();

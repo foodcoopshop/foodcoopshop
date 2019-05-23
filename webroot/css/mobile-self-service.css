@@ -1,0 +1,57 @@
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 2.5.0
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+@media only screen and (max-device-width: 768px) {
+	#self-service,
+	#self-service .header,
+	#self-service #products,
+	#self-service #cart,
+	#self-service .right-box .input.checkbox {
+	   width: 100%;
+	}
+	#self-service .header h2 {
+	   margin-bottom: 0;
+	}
+	form div.error-message {
+	   width: 100% ! important;
+	}
+	#self-service {
+	   padding-right: 0;
+	   padding-bottom: 10px;
+	}
+	#self-service .footer {
+	   display: none;
+	}
+	#self-service .right-box {
+	   float: left;
+	}
+	#self-service #cart {
+	   display: block ! important;
+	   
+	}
+	#self-service #products {
+	   margin-top: 0;
+	   margin-bottom: 0;
+	   padding-top: 50px;
+	}
+	#self-service .header {
+	   position: static;
+	}
+	body.self_services #responsive-header .logout-wrapper {
+	   margin-top: 15px;
+	   margin-left: 5px;
+	}
+	#self-service .right-box {
+	   position: static;
+	}
+}
