@@ -14,6 +14,7 @@ TRUNCATE TABLE `fcs_action_logs`;
 TRUNCATE TABLE `fcs_address`;
 TRUNCATE TABLE `fcs_attribute`;
 TRUNCATE TABLE `fcs_blog_posts`;
+TRUNCATE TABLE `fcs_cart_product_units`;
 TRUNCATE TABLE `fcs_cart_products`;
 TRUNCATE TABLE `fcs_carts`;
 TRUNCATE TABLE `fcs_category`;
@@ -71,6 +72,9 @@ INSERT INTO `fcs_attribute` VALUES
 INSERT INTO `fcs_blog_posts` VALUES
 (2,'Demo Blog Artikel','Lorem ipsum dolor sit amet, consetetur sadipscing','<p>Lorem ipsum dolor sit amet.</p>',88,0,0,1,'2014-12-18 10:37:26','2015-03-16 12:41:46',1);
 /*!40000 ALTER TABLE `fcs_blog_posts` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_cart_product_units` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_cart_product_units` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cart_products` DISABLE KEYS */;
 INSERT INTO `fcs_cart_products` VALUES
@@ -369,7 +373,8 @@ INSERT INTO `phinxlog` VALUES
 (20190305183508,'ConfigurationOptimizations','2019-03-05 19:08:00','2019-03-05 19:08:00',0),
 (20190314081354,'CorrectNetPriceAndTax','2019-03-14 09:53:00','2019-03-14 09:53:00',0),
 (20190331192259,'DifferentCartForInstantOrder','2019-03-31 09:53:00','2019-03-31 09:53:00',0),
-(20190417072617,'SelfServiceModeConfiguration','2019-04-17 09:53:00','2019-04-17 09:53:00',0);
+(20190417072617,'SelfServiceModeConfiguration','2019-04-17 09:53:00','2019-04-17 09:53:00',0),
+(20190527070456,'CartProductUnits','2019-05-27 09:17:25','2019-05-27 09:17:25',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

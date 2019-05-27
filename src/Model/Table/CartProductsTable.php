@@ -29,6 +29,9 @@ class CartProductsTable extends AppTable
         $this->hasOne('OrderDetails', [
             'foreignKey' => 'id_cart_product'
         ]);
+        $this->hasOne('CartProductUnits', [
+            'foreignKey' => 'id_cart_product'
+        ]);
         $this->belongsTo('Products', [
             'foreignKey' => 'id_product'
         ]);
