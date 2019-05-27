@@ -52,53 +52,12 @@ echo 'done' . PHP_EOL;
 echo 'Reading dump command...';
 
 $dump_cmd = '';
-
 $lines = @file($dir . 'config' . DS . 'app_config.php');
-if (!is_array($lines)
-    || empty($lines)
-) {
-    exit(PHP_EOL . 'Cannot load config' . DS . 'app_config.php.' . PHP_EOL);
-}
-
-foreach ($lines as $line) {
-    if (($pos = strpos($line, '\'mysqlDumpCommand\'')) !== false) {
-        $line = substr($line, $pos + strlen('\'mysqlDumpCommand\','));
-        $line = explode('\'', $line, 3);
-        $dump_cmd = $line[1];
-    }
-}
-
-if (empty($dump_cmd)) {
-    exit(PHP_EOL . 'Cannot read mysqlDumpCommand from Config' . DS . 'app_config.php.' . PHP_EOL);
-}
-
-if (strpos($dump_cmd, 'mysqldump') === false) {
-    exit(PHP_EOL . 'Cannot use mysqlDumpCommand from Config' . DS . 'app_config.php. Must use mysqldump' . PHP_EOL);
-}
+require('get_mysqldump_cmd.php');
 
 if (file_exists($dir . 'config' . DS . 'custom_config.php')) {
     $lines = @file($dir . 'config' . DS . 'custom_config.php');
-    if (!is_array($lines)
-        || empty($lines)
-    ) {
-        exit(PHP_EOL . 'Cannot load Config' . DS . 'custom.config.php.' . PHP_EOL);
-    }
-
-    foreach ($lines as $line) {
-        if (($pos = strpos($line, '\'mysqlDumpCommand\'')) !== false) {
-            $line = substr($line, $pos + strlen('\'mysqlDumpCommand\','));
-            $line = explode('\'', $line, 3);
-            $dump_cmd = $line[1];
-        }
-    }
-
-    if (empty($dump_cmd)) {
-        exit(PHP_EOL . 'Cannot read app.mysqlDumpCommand from config' . DS . 'custom_config.php.' . PHP_EOL);
-    }
-
-    if (strpos($dump_cmd, 'mysqldump') === false) {
-        exit(PHP_EOL . 'Cannot use app.mysqlDumpCommand from config' . DS . 'custom_config.php. Must use mysqldump' . PHP_EOL);
-    }
+    require('get_mysqldump_cmd.php');
 }
 
 echo 'done' . PHP_EOL;
