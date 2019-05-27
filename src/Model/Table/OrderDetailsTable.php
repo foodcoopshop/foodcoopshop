@@ -22,12 +22,6 @@ use Cake\Validation\Validator;
 class OrderDetailsTable extends AppTable
 {
 
-    public $states = [
-        'actual' => 3,
-        'paid' => 2,
-        'closed' => 5
-    ];
-    
     public function initialize(array $config)
     {
         $this->setTable('order_detail');
