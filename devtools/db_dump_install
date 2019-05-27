@@ -3,4 +3,8 @@
 DIR=`php -r "echo dirname(realpath('$0'));"`
 
 # run the real script
-php -f "$DIR/db_dump_install.php"
+source $(dirname $0)/locales.sh
+for locale in "${LOCALES[@]}"
+do
+    php -f $DIR/db_dump_install.php $locale
+done

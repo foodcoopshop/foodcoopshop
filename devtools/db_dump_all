@@ -2,6 +2,10 @@
 # get the script dir
 DIR=`php -r "echo dirname(realpath('$0'));"`
 
-# run the real scripts
-php -f "$DIR/db_dump_install.php"
-php -f "$DIR/db_dump_test.php"
+source $(dirname $0)/locales.sh
+for locale in "${LOCALES[@]}"
+do
+    php -f $DIR/db_dump_install.php $locale
+done
+
+php -f $DIR/db_dump_test.php de_DE
