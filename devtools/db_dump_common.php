@@ -23,8 +23,8 @@ $datasource = array(
 
 echo 'Loading config...';
 
-// get the project dir from being in [project]/Vendor/foodcoopshop/
-$dir = dirname(dirname(realpath(__DIR__))) . DS;
+// get the project dir from being in [project]/devtools/
+$dir = dirname(realpath(__DIR__)) . DS;
 
 // include DB config
 $config = @include $dir . 'config' . DS . 'custom_config.php';
