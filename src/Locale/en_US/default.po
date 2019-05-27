@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-20 20:42+0200\n"
-"PO-Revision-Date: 2019-05-20 20:43+0200\n"
+"POT-Creation-Date: 2019-05-27 15:47+0200\n"
+"PO-Revision-Date: 2019-05-27 15:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1848,11 +1848,11 @@ msgstr "right of withdrawal"
 msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
 msgstr "I accept the {0} and accept that this is not valid for perishable goods."
 
-msgid "General_terms_and_conditions_of_{0}"
-msgstr "general terms and conditions of {0}"
-
 msgid "general_terms_and_conditions"
 msgstr "general terms and conditions"
+
+msgid "General_terms_and_conditions_of_{0}"
+msgstr "general terms and conditions of {0}"
 
 msgid "Order_button"
 msgstr "Buy now"
@@ -1925,6 +1925,9 @@ msgstr "Instant order"
 
 msgid "from_which_{0}_%"
 msgstr "from which {0} %"
+
+msgid "Weight_in"
+msgstr "Weight in"
 
 msgid "The_manufacturer_has_reached_the_limit_to_pay_in_{0}."
 msgstr "The manufacturer has reached the limit to pay in {0}."
