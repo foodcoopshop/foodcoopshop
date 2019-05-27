@@ -50,7 +50,7 @@ class CartProductsTable extends AppTable
      * @param int $amount
      * @return array || boolean
      */
-    public function add($appAuth, $productId, $attributeId, $amount)
+    public function add($appAuth, $productId, $attributeId, $amount, $quantityInUnits)
     {
 
         $initialProductId = $this->Products->getCompositeProductIdAndAttributeId($productId, $attributeId);
@@ -178,11 +178,27 @@ class CartProductsTable extends AppTable
             'id_product_attribute' => $attributeId,
             'id_cart' => $cart['Cart']['id_cart']
         ];
+        
+        $options = [];
+        if ($quantityInUnits > 0) {
+            if (!is_null($existingCartProduct['orderedQuantityInUnits'])) {
+                $quantityInUnits += $existingCartProduct['orderedQuantityInUnits'];
+            }
+            $cartProduct2save['cart_product_unit'] = [
+                'ordered_quantity_in_units' => $quantityInUnits
+            ];
+            $options = [
+                'associated' => [
+                    'CartProductUnits'
+                ]
+            ];
+        }
+        
         if ($existingCartProduct) {
             $oldEntity = $this->get($existingCartProduct['cartProductId']);
-            $entity = $this->patchEntity($oldEntity, $cartProduct2save);
+            $entity = $this->patchEntity($oldEntity, $cartProduct2save, $options);
         } else {
-            $entity = $this->newEntity($cartProduct2save);
+            $entity = $this->newEntity($cartProduct2save, $options);
         }
         $this->save($entity);
 
