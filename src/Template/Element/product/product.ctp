@@ -178,7 +178,12 @@ if ($product['description'] != '') {
                 $pricePerUnitInfoText = '';
                 if ($attribute['Units']['price_per_unit_enabled']) {
                     $priceHtml = $this->PricePerUnit->getPricePerUnit($attribute['Units']['price_incl_per_unit'], $attribute['Units']['quantity_in_units'], $attribute['Units']['unit_amount']);
-                    $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText($attribute['Units']['price_incl_per_unit'], $attribute['Units']['unit_name'], $attribute['Units']['unit_amount']);
+                    $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText(
+                        $attribute['Units']['price_incl_per_unit'],
+                        $attribute['Units']['unit_name'],
+                        $attribute['Units']['unit_amount'],
+                        !$appAuth->isSelfServiceModeByUrl()
+                    );
                 }
                 echo $priceHtml;
                 if (!empty($attribute['DepositProductAttributes']['deposit'])) {
@@ -237,7 +242,12 @@ if ($product['description'] != '') {
                                $radioButtonLabel.'
                       </label>
                   </div>';
-
+           
+           echo $this->element('product/weightInputFieldForSelfService', [
+               'pricePerUnitEnabled' => $attribute['Units']['price_per_unit_enabled'],
+               'unitName' => $attribute['Units']['unit_name']
+           ]);
+                               
         }
     } else {
         // PRODUCT WITHOUT ATTRIBUTES
@@ -248,23 +258,28 @@ if ($product['description'] != '') {
             $pricePerUnitInfoText = '';
             if ($product['price_per_unit_enabled']) {
                 $priceHtml = $this->PricePerUnit->getPricePerUnit($product['price_incl_per_unit'], $product['quantity_in_units'], $product['unit_amount']);
-                $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText($product['price_incl_per_unit'], $product['unit_name'], $product['unit_amount']);
+                $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText(
+                    $product['price_incl_per_unit'],
+                    $product['unit_name'],
+                    $product['unit_amount'],
+                    !$appAuth->isSelfServiceModeByUrl()
+                );
             }
             echo $priceHtml;
-                if ($product['deposit']) {
-                    echo '<div class="deposit">+ <b>' . $this->Number->formatAsCurrency($product['deposit']).'</b> '.__('deposit').'</div>';
-                }
-                echo '</div>';
-                if (!$this->request->getSession()->read('Auth.instantOrderCustomer') && !empty($product['timebased_currency_money_incl'])) {
-                    echo $this->element('timebasedCurrency/addProductInfo', [
-                        'manufacturerLimitReached' => $product['timebased_currency_manufacturer_limit_reached'],
-                        'class' => 'timebased-currency-product-info',
-                        'money' => $product['timebased_currency_money_incl'],
-                        'seconds' => $product['timebased_currency_seconds'],
-                        'labelPrefix' => __('from_which_{0}_%', [$product['timebased_currency_max_percentage']]) . ' '
-                    ]);
-                }
-                echo '<div class="tax">'. $this->Number->formatAsCurrency($product['tax']) . '</div>';
+            if ($product['deposit']) {
+                echo '<div class="deposit">+ <b>' . $this->Number->formatAsCurrency($product['deposit']).'</b> '.__('deposit').'</div>';
+            }
+            echo '</div>';
+            if (!$this->request->getSession()->read('Auth.instantOrderCustomer') && !empty($product['timebased_currency_money_incl'])) {
+                echo $this->element('timebasedCurrency/addProductInfo', [
+                    'manufacturerLimitReached' => $product['timebased_currency_manufacturer_limit_reached'],
+                    'class' => 'timebased-currency-product-info',
+                    'money' => $product['timebased_currency_money_incl'],
+                    'seconds' => $product['timebased_currency_seconds'],
+                    'labelPrefix' => __('from_which_{0}_%', [$product['timebased_currency_max_percentage']]) . ' '
+                ]);
+            }
+            echo '<div class="tax">'. $this->Number->formatAsCurrency($product['tax']) . '</div>';
         }
         
         if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
@@ -301,6 +316,10 @@ if ($product['description'] != '') {
         if (!empty($unityStrings)) {
             echo '<div class="unity">'.__('Unit').': <span class="value">' . join(', ', $unityStrings).'</span></div>';
         }
+        echo $this->element('product/weightInputFieldForSelfService', [
+            'pricePerUnitEnabled' => $product['price_per_unit_enabled'],
+            'unitName' => $product['unit_name']
+        ]);
     }
 
     echo '</div>';

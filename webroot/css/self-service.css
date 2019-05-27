@@ -67,7 +67,13 @@ body.self_services {
 	width: 80px;
 }
 #self-service .product-wrapper div.second-column {
-	width: 280px;
+	width: 260px;
+}
+#self-service .product-wrapper div.second-column {
+    width: 260px;
+}
+#self-service .product-wrapper div.third-column {
+    width: 215px;
 }
 #self-service #flashMessage {
 	top: 46px;
@@ -198,4 +204,11 @@ body.customers.login #self-service .footer {
 	margin-left: 0;
 	width: auto;
 	line-height: 16px;
+}
+#self-service .product-wrapper .weight-input-field-wrapper {
+	margin-top: 5px;
+}
+#self-service .product-wrapper .weight-input-field-wrapper input {
+	width: 50px;
+	text-align: right;
 }

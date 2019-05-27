@@ -77,12 +77,14 @@ class PricePerUnitHelper extends Helper
         return '<div class="price">' . $this->MyNumber->formatAsCurrency($priceInclPerUnit * $quantityInUnits / $amount) . '</div> <div class="price-asterisk">*</div>';
     }
 
-    public function getPricePerUnitInfoText($priceInclPerUnit, $unitName, $unitAmount)
+    public function getPricePerUnitInfoText($priceInclPerUnit, $unitName, $unitAmount, $showAdaptionMessage=true)
     {
         $infoText = '<div class="line">';
         $infoText .= '<span class="additional-price-info">';
         $infoText .= ' * ' . __('Base_price') . ': ' . $this->getPricePerUnitBaseInfo($priceInclPerUnit, $unitName, $unitAmount);
-        $infoText .= ', ' . __('price_will_be_eventually_adapted.');
+        if ($showAdaptionMessage) {
+            $infoText .= ', ' . __('price_will_be_eventually_adapted.');
+        }
         $infoText .= '</span>';
         $infoText .= '</div>';
         return $infoText;
