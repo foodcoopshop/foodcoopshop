@@ -83,7 +83,7 @@ DROP TABLE IF EXISTS `fcs_cart_product_units`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fcs_cart_product_units` (
   `id_cart_product` int(11) unsigned NOT NULL,
-  `quantity_in_units` decimal(10,3) unsigned DEFAULT NULL
+  `ordered_quantity_in_units` decimal(10,3) unsigned DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_cart_products`;

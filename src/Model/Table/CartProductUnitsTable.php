@@ -14,7 +14,7 @@
  */
 namespace App\Model\Table;
 
-class CartProductsTable extends AppTable
+class CartProductUnitsTable extends AppTable
 {
 
     public function initialize(array $config)

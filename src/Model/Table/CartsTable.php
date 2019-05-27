@@ -126,6 +126,7 @@ class CartsTable extends AppTable
             ],
             'contain' => [
                 'OrderDetails',
+                'CartProductUnits',
                 'Products.Manufacturers',
                 'Products.DepositProducts',
                 'Products.UnitProducts',
@@ -304,7 +305,8 @@ class CartsTable extends AppTable
             'priceExcl' => $grossPrice - $tax,
             'tax' => $tax,
             'pickupDay' => $cartProduct->pickup_day,
-            'isStockProduct' => $cartProduct->product->is_stock_product
+            'isStockProduct' => $cartProduct->product->is_stock_product,
+            'orderedQuantityInUnits' => isset($cartProduct->cart_product_unit) ? $cartProduct->cart_product_unit->ordered_quantity_in_units : null
         ];
         
         $deposit = 0;
@@ -375,7 +377,8 @@ class CartsTable extends AppTable
             'priceExcl' => $grossPrice - $tax,
             'tax' => $tax,
             'pickupDay' => $cartProduct->pickup_day,
-            'isStockProduct' => $cartProduct->product->is_stock_product
+            'isStockProduct' => $cartProduct->product->is_stock_product,
+            'orderedQuantityInUnits' => isset($cartProduct->cart_product_unit) ? $cartProduct->cart_product_unit->ordered_quantity_in_units : null
         ];
 
         $deposit = 0;

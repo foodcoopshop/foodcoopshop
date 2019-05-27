@@ -205,10 +205,11 @@ body.customers.login #self-service .footer {
 	width: auto;
 	line-height: 16px;
 }
-#self-service .product-wrapper .weight-input-field-wrapper {
+#self-service .product-wrapper .quantity-in-units-input-field-wrapper {
+    float: left;
 	margin-top: 5px;
 }
-#self-service .product-wrapper .weight-input-field-wrapper input {
+#self-service .product-wrapper .quantity-in-units-input-field-wrapper input {
 	width: 50px;
 	text-align: right;
 }

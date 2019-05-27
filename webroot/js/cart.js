@@ -19,14 +19,14 @@ foodcoopshop.Cart = {
         return '.cart p.pickup-day-header:contains("' + pickupDay + '")';
     },
     
-    addOrAppendProductToPickupDay : function(productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, pickupDay) {
+    addOrAppendProductToPickupDay : function(productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, quantityInUnits, pickupDay) {
         var pickupDayHeader = $(this.getPickupDayHeaderSelector(pickupDay));
         if (pickupDayHeader.length == 0) {
             $('.cart p.products').append('<p class="pickup-day-header">' + foodcoopshop.LocalizedJs.cart.PickupDay + ': <b>' + pickupDay + '</b></p>');
             pickupDayHeader = $(this.getPickupDayHeaderSelector(pickupDay)); // re-init after append
         }
         pickupDayHeader.append(
-            foodcoopshop.Cart.getCartProductHtml(productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, pickupDay)
+            foodcoopshop.Cart.getCartProductHtml(productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, quantityInUnits, pickupDay)
         );
     },
 
@@ -49,7 +49,7 @@ foodcoopshop.Cart = {
         for (var i = 0; i < cartProducts.length; i++) {
             var cp = cartProducts[i];
             var timebasedCurrencyHours = parseFloat(cp.timebasedCurrencySeconds / 3600);
-            this.addOrAppendProductToPickupDay(cp.productId, cp.amount, cp.price, cp.productName, cp.unity_with_unit, cp.manufacturerLink, cp.image, cp.deposit, cp.tax, timebasedCurrencyHours, cp.nextDeliveryDay);
+            this.addOrAppendProductToPickupDay(cp.productId, cp.amount, cp.price, cp.productName, cp.unity_with_unit, cp.manufacturerLink, cp.image, cp.deposit, cp.tax, timebasedCurrencyHours, cp.orderedQuantityInUnits, cp.nextDeliveryDay);
             sum += cp.price;
             depositSum += cp.deposit;
             taxSum += cp.tax;
@@ -84,7 +84,7 @@ foodcoopshop.Cart = {
         }
     },
 
-    updateExistingProduct: function (productContainer, amount, price, deposit, tax, timebasedCurrencyHours) {
+    updateExistingProduct: function (productContainer, amount, price, deposit, tax, timebasedCurrencyHours, quantityInUnits) {
 
         // update amount
         var oldAmount = productContainer.find('span.amount span.value');
@@ -185,6 +185,11 @@ foodcoopshop.Cart = {
                 unity = productWrapper.find('input[type="radio"]:checked').parent().text().trim();
             }
 
+            var quantityInUnits;
+            if (productWrapper.find('.entity-wrapper.active .quantity-in-units-input-field-wrapper').length > 0) {
+                quantityInUnits = productWrapper.find('.entity-wrapper.active .quantity-in-units-input-field-wrapper input').val();
+            }
+
             var timebasedCurrencyElement = productWrapper.find('.entity-wrapper.active .timebasedCurrencySeconds');
             var timebasedCurrencyHours = 0;
             if (timebasedCurrencyElement.length > 0) {
@@ -205,10 +210,10 @@ foodcoopshop.Cart = {
 
             if (productContainer.length > 0) {
                 // product already in cart
-                foodcoopshop.Cart.updateExistingProduct(productContainer, amount, price, deposit, tax, timebasedCurrencyHours);
+                foodcoopshop.Cart.updateExistingProduct(productContainer, amount, price, deposit, tax, timebasedCurrencyHours, quantityInUnits);
             } else {
                 // product not yet in cart
-                foodcoopshop.Cart.addOrAppendProductToPickupDay(productId, amount, amount * price, productName, unity, '', image, deposit, tax, timebasedCurrencyHours, pickupDay);
+                foodcoopshop.Cart.addOrAppendProductToPickupDay(productId, amount, amount * price, productName, unity, '', image, deposit, tax, timebasedCurrencyHours, quantityInUnits, pickupDay);
                 foodcoopshop.Helper.applyBlinkEffect($('#cart .product.' + productId), function () {
                     foodcoopshop.Cart.initRemoveFromCartLinks(); // bind click event
                 });
@@ -355,17 +360,24 @@ foodcoopshop.Cart = {
         });
     },
 
-    getCartProductHtml: function (productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, pickupDay) {
+    getCartProductHtml: function (productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, quantityInUnits, pickupDay) {
         var imgHtml = '<span class="image">' + image + '</span>';
         if (!$(image).attr('src').match(/de-default-home/)) {
             imgHtml = '<a href="'  + $(image).attr('src').replace(/-home_/, '-thickbox_') +  '" class="image">' + image + '</a>';
         }
+        var unityHtml = '<span class="unity">'
+            if (quantityInUnits) {
+                unityHtml += quantityInUnits;
+            } else {
+                unityHtml += unity;
+            }
+        unityHtml += '</span>';
         return '<span data-product-id="' + productId + '" class="product' + ' ' + productId + '">' +
                 imgHtml +
                 '<span class="amount"><span class="value">' + amount + '</span>x</span>' +
                 '<span class="product-name-wrapper">' +
                     '<span class="product-name">' + productName + '</span>'+
-                    '<span class="unity">' + unity + '</span>' +
+                    unityHtml +
                     '<span class="pickup-day hide">' + pickupDay + '</span>' +
             '</span>' +
             '<span class="manufacturer-link">' + manufacturerLink + '</span>' +
