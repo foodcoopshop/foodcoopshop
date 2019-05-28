@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-17 10:06+0200\n"
+"POT-Creation-Date: 2019-05-28 22:22+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1967,7 +1967,10 @@ msgstr ""
 msgid "Delete_slider_image?"
 msgstr ""
 
-msgid "No_turnover_available_yet."
+msgid "Show_all_years"
+msgstr ""
+
+msgid "No_turnover_available."
 msgstr ""
 
 msgid "Total_turnover:_{0}"

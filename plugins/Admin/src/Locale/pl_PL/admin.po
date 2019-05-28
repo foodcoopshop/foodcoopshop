@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-03-15 10:04+0100\n"
+"POT-Creation-Date: 2019-05-28 22:22+0200\n"
 "PO-Revision-Date: 2019-04-28 03:51+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -250,6 +250,38 @@ msgstr "Grupuj wg producenta"
 msgid "Orders"
 msgstr "Zamówienia"
 
+#, fuzzy
+msgid "Please_select_a_member."
+msgstr "Proszę wybrać producenta."
+
+#, fuzzy
+msgid "The_same_member_must_not_be_selected."
+msgstr "Wpis czasu został usunięty"
+
+#, fuzzy
+msgid "The_amount_is_not_valid."
+msgstr "Konto zostało aktywowane."
+
+msgid "The_reason_for_changing_the_member_is_mandatory."
+msgstr ""
+
+#, fuzzy
+msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
+msgstr "Ilość zamówionego produktu {0} została zmodyfikowana z {1} na {2}."
+
+msgid "Amount"
+msgstr "Kwota"
+
+msgid "Reason"
+msgstr "Powód"
+
+msgid "Assigned_to_another_member"
+msgstr ""
+
+#, fuzzy
+msgid "An_email_was_sent_to_{0}_and_{1}."
+msgstr "Mail został wysłany do {0}."
+
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
 msgstr "Waga zamówionego produktu {0} (ilość {1}) została zmodyfikowana z {2} na {3}."
 
@@ -269,9 +301,6 @@ msgstr "Ilość zamówionego produktu {0} została zmodyfikowana z {1} na {2}."
 #, fuzzy
 msgid "Ordered_amount_adapted"
 msgstr "Ilość zamówiona zmodyfikowana"
-
-msgid "Reason"
-msgstr "Powód"
 
 msgid "The_stock_was_increased_to_{0}."
 msgstr "Stan magazynowy został zwiększony do {0}."
@@ -396,6 +425,10 @@ msgstr "Zamówienia możliwe do"
 msgid "Send_order_lists_day"
 msgstr "Dzień wysyłki list zamówień"
 
+#, fuzzy
+msgid "Order_list_is_not_sent"
+msgstr "Lista zamówień"
+
 msgid "Last_order_weekday"
 msgstr "Ostatni dzień zamówień"
 
@@ -498,6 +531,13 @@ msgstr "Suwak {0} został {1}."
 msgid "Slideshow"
 msgstr "Pokaz slajdów"
 
+msgid "Turnover_statistics"
+msgstr ""
+
+#, fuzzy
+msgid "December"
+msgstr "Członek"
+
 msgid "Add_tax_rate"
 msgstr "Dodaj stawkę podatku"
 
@@ -515,6 +555,9 @@ msgstr "Wpis czasu został usunięty"
 
 msgid "The_time_entry_for_the_{0}_has_been_deleted"
 msgstr "Wpis czasu dla {0} został usunięty"
+
+msgid "Member"
+msgstr "Członek"
 
 msgid "Your_time_entry_from_{0}_has_been_deleted."
 msgstr "Twój wpis czasu od {0} został usunięty."
@@ -566,8 +609,20 @@ msgstr "Tekst"
 msgid "User"
 msgstr "Użytkownik"
 
-msgid "Show_ordered_product"
-msgstr "Pokaż zamówione produkty"
+msgid "Show_product"
+msgstr "Pokaż produkt"
+
+msgid "Show_manufacturer"
+msgstr "Pokaż producenta"
+
+msgid "Show_blog_post"
+msgstr "Pokaż post"
+
+msgid "Show_page"
+msgstr "Pokaż stronę"
+
+msgid "Show_category"
+msgstr "Pokaż kategorię"
 
 msgid "records"
 msgstr "wpisy"
@@ -695,9 +750,6 @@ msgstr "Strona główna"
 msgid "Modified_by"
 msgstr "Zmodyfikowany przez"
 
-msgid "Show_blog_post"
-msgstr "Pokaż post"
-
 msgid "Parent_category"
 msgstr "Kategoria nadrzędna"
 
@@ -819,6 +871,28 @@ msgstr "Imię"
 msgid "Lastname"
 msgstr "Nazwisko"
 
+#, fuzzy
+msgid "Profile_image"
+msgstr "Obraz suwaka"
+
+#, fuzzy
+msgid "Click_on_profile_image_to_change_it."
+msgstr "Kliknij na obraz aby go zmienić."
+
+msgid "Only_visible_for_other_membes_in_the_member_list."
+msgstr ""
+
+msgid "Is_shown_on_member_card."
+msgstr ""
+
+#, fuzzy
+msgid "Upload_new_profile_image_or_change_it"
+msgstr "Prześlij nowy obraz lub zmień go"
+
+#, fuzzy
+msgid "Delete_profile_image?"
+msgstr "Usunąć obraz suwaka?"
+
 msgid "Email"
 msgstr "E-mail"
 
@@ -857,6 +931,10 @@ msgstr "paying-with-time-module"
 
 msgid "How_do_I_use_the_paying_with_time_module?"
 msgstr "Jak używać modułu płacenia czasem?"
+
+#, fuzzy
+msgid "Generate_my_member_card"
+msgstr "Generuj zamówienia w formie PDF"
 
 msgid "Delete_member_irrevocably?"
 msgstr "Usunąć nieodwracalnie konto?"
@@ -906,9 +984,6 @@ msgstr "Pokaż {0}"
 
 msgid "Add_comment"
 msgstr "Dodaj komentarz"
-
-msgid "Copy_all_email_addresses"
-msgstr "Kopiuj wszystkie adresy e-mail"
 
 msgid "Delete_deposit_take_back?"
 msgstr "Usunąć zwrot wkładu?"
@@ -976,9 +1051,6 @@ msgstr "Zamówienie błyskawiczne na dziś"
 msgid "chose_member..."
 msgstr "wybierz członka..."
 
-msgid "Show_category"
-msgstr "Pokaż kategorię"
-
 msgid "1_day_ahead"
 msgstr "1 dzień wprzód"
 
@@ -1009,9 +1081,6 @@ msgstr "Mój profil"
 msgid "Contact_person"
 msgstr "Osoba kontaktowa"
 
-msgid "Show_page"
-msgstr "Pokaż stronę"
-
 msgid "Bank_account_data"
 msgstr "Dane konta bankowego"
 
@@ -1026,6 +1095,13 @@ msgstr "Jeśli wybierzesz \"zwrot\", wpisz kwotę, która została przelana na k
 
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Please chose the months for your payment."
+
+msgid "Copy_all_email_addresses"
+msgstr "Kopiuj wszystkie adresy e-mail"
+
+#, fuzzy
+msgid "Generate_member_cards"
+msgstr "Generuj zamówienia w formie PDF"
 
 msgid "Delivery_days"
 msgstr "Dni dostawy"
@@ -1060,6 +1136,10 @@ msgstr "Kliknij aby zmienić ilość"
 msgid "Click_to_cancel_product"
 msgstr "Kliknij aby anulować produkt"
 
+#, fuzzy
+msgid "Click_to_change_member"
+msgstr "Kliknij aby zmienić cenę"
+
 msgid "Deposit_return"
 msgstr "Zwrot wkładu"
 
@@ -1084,9 +1164,6 @@ msgstr "Nie"
 msgid "Click_to_change_weight"
 msgstr "Kliknij aby zmienić wagę"
 
-msgid "Amount"
-msgstr "Kwota"
-
 msgid "Product"
 msgstr "Produkt"
 
@@ -1095,9 +1172,6 @@ msgstr "Cena"
 
 msgid "Deposit"
 msgstr "Kaucja"
-
-msgid "Member"
-msgstr "Członek"
 
 msgid "Picked_up"
 msgstr "Odebrane"
@@ -1119,6 +1193,9 @@ msgstr "Zamówienia od"
 
 msgid "Invoice_date"
 msgstr "Data faktury"
+
+msgid "VAT_number"
+msgstr "numer VAT"
 
 msgid "Price_excl."
 msgstr "Cena z wyłączeniem"
@@ -1164,6 +1241,13 @@ msgstr "Dzień zamówienia"
 
 msgid "Order_list_grouped_by"
 msgstr "Listy zamówień zgrupowane wg"
+
+msgid "Customer_ID"
+msgstr ""
+
+#, fuzzy
+msgid "Member_card"
+msgstr "Członek"
 
 msgid "Edit_delivery_rhythm_for_selected_products"
 msgstr "Edytuj harmonogram dostaw dla wybranych produktów"
@@ -1306,6 +1390,10 @@ msgstr "Dlaczego ilość została dostosowana?"
 msgid "PS:_Your_credit_has_been_adapted_automatically."
 msgstr "PS: Twój kredyt został automatycznie dostosowany."
 
+#, fuzzy
+msgid "Why_has_another_member_been_assigned?"
+msgstr "Dlaczego cena została dostosowana?"
+
 msgid "sorry,_{0}_can_not_be_delivered."
 msgstr "przepraszamy, produkt \"{0}\" nie może zostać dostarczony."
 
@@ -1427,6 +1515,10 @@ msgstr "Twoja osoba kontaktowa"
 msgid "docs_route_pick_up_products"
 msgstr "pick-up-products"
 
+#, fuzzy
+msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_you."
+msgstr "Tu znajdują się niezmienione listy zamówień wysłane do producentów."
+
 msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_the_manufacturers."
 msgstr "Tu znajdują się niezmienione listy zamówień wysłane do producentów."
 
@@ -1470,6 +1562,10 @@ msgstr "Idź do swoich ustawień"
 msgid "To_the_settings_of_manufacturer"
 msgstr "Idź do ustawień producenta"
 
+#, fuzzy
+msgid "Profile"
+msgstr "Mój profil"
+
 msgid "To_manufacturer_profile"
 msgstr "Idź do profilu producenta"
 
@@ -1512,9 +1608,6 @@ msgstr "Dane firmy"
 
 msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
 msgstr "do twojego podpisu oraz twoich faktur. Podpis można znaleźć na stronie profilowej, w prawym dolnym rogu."
-
-msgid "VAT_number"
-msgstr "numer VAT"
 
 msgid "if_it_is_available"
 msgstr "jeśli dostępne"
@@ -1755,6 +1848,12 @@ msgstr "Wszystkie produkty"
 msgid "Show_all_ordered_products"
 msgstr "Pokaż wszystkie zamówione produkty"
 
+msgid "Total"
+msgstr ""
+
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr "Wagi dostarczonych produktów mogą ulec zmianie, więc cena również może nieco się zmienić."
+
 msgid "Page_title"
 msgstr "Tytuł strony"
 
@@ -1936,6 +2035,24 @@ msgstr "Pozycja"
 msgid "Delete_slider_image?"
 msgstr "Usunąć obraz suwaka?"
 
+#, fuzzy
+msgid "Show_all_years"
+msgstr "Pokaż wszystkie zamówienia od {0}"
+
+#, fuzzy
+msgid "No_turnover_available."
+msgstr "jeśli dostępne"
+
+msgid "Total_turnover:_{0}"
+msgstr ""
+
+msgid "Average_turnover_for_months_where_products_were_delivered:_{0}"
+msgstr ""
+
+#, fuzzy
+msgid "Variable_member_fee_is_included_in_turnover."
+msgstr "Zmienna opłata członkowska w"
+
 msgid "Tax_rates_can_not_be_changed."
 msgstr "Stawki podatkowe nie mogą być zmieniane."
 
@@ -1948,14 +2065,8 @@ msgstr "Stawki podatkowe nie będą mogły zostać zmienione później."
 msgid "Delete"
 msgstr "Usuń"
 
-msgid "Show_product"
-msgstr "Pokaż produkt"
-
-msgid "Show_manufacturer"
-msgstr "Pokaż producenta"
-
-msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
-msgstr "Wagi dostarczonych produktów mogą ulec zmianie, więc cena również może nieco się zmienić."
+#~ msgid "Show_ordered_product"
+#~ msgstr "Pokaż zamówione produkty"
 
 #, fuzzy
 #~ msgid "aactivate"
