@@ -376,10 +376,16 @@ class OrderDetailsTable extends AppTable
     
     public function getMonthlySumProductByManufacturer($manufacturerId)
     {
+        $conditions = [];
+        if ($manufacturerId != 'all') {
+            $conditions['Products.id_manufacturer'] = $manufacturerId;
+        } else {
+            // do not show any non-associated products that might be found in database
+            $conditions[] = 'Products.id_manufacturer > 0';
+        }
+        
         $query = $this->find('all', [
-            'conditions' => [
-                'Products.id_manufacturer' => $manufacturerId
-            ],
+            'conditions' => $conditions,
             'contain' => [
                 'Products'
             ]

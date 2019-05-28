@@ -29,7 +29,7 @@ $this->element('addScript', [
             'type' => 'select',
             'label' => '',
             'options' => $manufacturersForDropdown,
-            'empty' => __d('admin', 'All_manufacturers'),
+            'empty' => __d('admin', 'chose_manufacturer...'),
             'default' => $manufacturerId != '' ? $manufacturerId : ''
             ]);
         }
@@ -41,7 +41,7 @@ $this->element('addScript', [
 </div>
 
 <?php
-if (empty($manufacturer)) {
+if (empty($manufacturers)) {
     echo '<h2 class="info">'.__d('admin', 'Please_chose_a_manufacturer.').'</h2>';
     return;
 }
