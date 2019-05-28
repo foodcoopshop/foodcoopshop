@@ -32,6 +32,15 @@ $this->element('addScript', [
             'default' => $manufacturerId != '' ? $manufacturerId : ''
             ]);
         }
+        
+        echo $this->Form->control('year', [
+            'type' => 'select',
+            'label' => '',
+            'empty' => __d('admin', 'Show_all_years'),
+            'options' => $years,
+            'default' => $year != '' ? $year : ''
+        ]);
+        
         ?>
         <div class="right">
         	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers'))]); ?>
@@ -46,7 +55,7 @@ if (empty($manufacturers)) {
 }
 
 if (empty($xAxisData)) {
-    echo '<h2 class="info">' . __d('admin', 'No_turnover_available_yet.') . '</h2>';
+    echo '<h2 class="info">' . __d('admin', 'No_turnover_available.') . '</h2>';
     return;
 }
 

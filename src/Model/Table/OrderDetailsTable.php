@@ -374,7 +374,7 @@ class OrderDetailsTable extends AppTable
         return $query->toArray();
     }
     
-    public function getMonthlySumProductByManufacturer($manufacturerId)
+    public function getMonthlySumProductByManufacturer($manufacturerId, $year)
     {
         $conditions = [];
         if ($manufacturerId != 'all') {
@@ -382,6 +382,9 @@ class OrderDetailsTable extends AppTable
         } else {
             // do not show any non-associated products that might be found in database
             $conditions[] = 'Products.id_manufacturer > 0';
+        }
+        if ($year != '') {
+            $conditions[] = 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y\') = ' . $year;
         }
         
         $query = $this->find('all', [

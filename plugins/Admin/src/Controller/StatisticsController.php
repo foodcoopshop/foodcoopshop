@@ -47,7 +47,8 @@ class StatisticsController extends AdminAppController
         $manufacturerId = 'all';
         if (!empty($this->getRequest()->getQuery('manufacturerId'))) {
             $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
-        } if ($this->manufacturerId > 0) {
+        }
+        if ($this->manufacturerId > 0) {
             $manufacturerId = $this->manufacturerId;
         }
         return $manufacturerId;
@@ -64,6 +65,12 @@ class StatisticsController extends AdminAppController
     {
         $manufacturerId = $this->getManufacturerId();
 
+        $year = '';
+        if (!empty($this->getRequest()->getQuery('year'))) {
+            $year = $this->getRequest()->getQuery('year');
+        }
+        $this->set('year', $year);
+        
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturersForDropdown = [];
         if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
@@ -97,8 +104,10 @@ class StatisticsController extends AdminAppController
         }
         $this->set('title_for_layout', $titleForLayout);
         
+        $this->set('years', Configure::read('app.timeHelper')->getAllYearsUntilThisYear(date('Y'), 2014));
+        
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $monthlySumProducts = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturerId);
+        $monthlySumProducts = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturerId, $year);
         if (empty($monthlySumProducts->toArray())) {
             $this->set('xAxisData', []);
             return;
