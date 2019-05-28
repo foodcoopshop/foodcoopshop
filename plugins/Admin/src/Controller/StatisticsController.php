@@ -44,7 +44,7 @@ class StatisticsController extends AdminAppController
      */
     private function getManufacturerId()
     {
-        $manufacturerId = '';
+        $manufacturerId = 'all';
         if (!empty($this->getRequest()->getQuery('manufacturerId'))) {
             $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
         } if ($this->manufacturerId > 0) {

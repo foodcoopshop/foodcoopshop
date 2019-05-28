@@ -29,7 +29,6 @@ $this->element('addScript', [
             'type' => 'select',
             'label' => '',
             'options' => $manufacturersForDropdown,
-            'empty' => __d('admin', 'chose_manufacturer...'),
             'default' => $manufacturerId != '' ? $manufacturerId : ''
             ]);
         }
