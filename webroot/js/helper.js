@@ -428,7 +428,10 @@ foodcoopshop.Helper = {
     getStringAsFloat: function (string) {
         // german uses , as decimal separator and not as thousand separator
         if (foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47 == 'de-DE') {
-            string = string.replace(/,/, '.');
+            string = string.replace(/,/, '_comma_');
+            string = string.replace(/\./, '_dot_');
+            string = string.replace(/_comma_/, '.');
+            string = string.replace(/_dot_/, '');
         }
         return parseFloat(string);
     },

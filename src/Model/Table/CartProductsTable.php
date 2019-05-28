@@ -50,7 +50,7 @@ class CartProductsTable extends AppTable
      * @param int $amount
      * @return array || boolean
      */
-    public function add($appAuth, $productId, $attributeId, $amount, $quantityInUnits)
+    public function add($appAuth, $productId, $attributeId, $amount, $orderedQuantityInUnits)
     {
 
         $initialProductId = $this->Products->getCompositeProductIdAndAttributeId($productId, $attributeId);
@@ -180,12 +180,12 @@ class CartProductsTable extends AppTable
         ];
         
         $options = [];
-        if ($quantityInUnits > 0) {
+        if ($orderedQuantityInUnits > 0) {
             if (!is_null($existingCartProduct['orderedQuantityInUnits'])) {
-                $quantityInUnits += $existingCartProduct['orderedQuantityInUnits'];
+                $orderedQuantityInUnits += $existingCartProduct['orderedQuantityInUnits'];
             }
             $cartProduct2save['cart_product_unit'] = [
-                'ordered_quantity_in_units' => $quantityInUnits
+                'ordered_quantity_in_units' => $orderedQuantityInUnits
             ];
             $options = [
                 'associated' => [

@@ -19,14 +19,14 @@ foodcoopshop.Cart = {
         return '.cart p.pickup-day-header:contains("' + pickupDay + '")';
     },
     
-    addOrAppendProductToPickupDay : function(productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, quantityInUnits, unitName, pickupDay) {
+    addOrAppendProductToPickupDay : function(productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, orderedQuantityInUnits, unitName, unitAmount, priceInclPerUnit, pickupDay) {
         var pickupDayHeader = $(this.getPickupDayHeaderSelector(pickupDay));
         if (pickupDayHeader.length == 0) {
             $('.cart p.products').append('<p class="pickup-day-header">' + foodcoopshop.LocalizedJs.cart.PickupDay + ': <b>' + pickupDay + '</b></p>');
             pickupDayHeader = $(this.getPickupDayHeaderSelector(pickupDay)); // re-init after append
         }
         pickupDayHeader.append(
-            foodcoopshop.Cart.getCartProductHtml(productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, quantityInUnits, unitName, pickupDay)
+            foodcoopshop.Cart.getCartProductHtml(productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, orderedQuantityInUnits, unitName, unitAmount, priceInclPerUnit, pickupDay)
         );
     },
 
@@ -49,7 +49,7 @@ foodcoopshop.Cart = {
         for (var i = 0; i < cartProducts.length; i++) {
             var cp = cartProducts[i];
             var timebasedCurrencyHours = parseFloat(cp.timebasedCurrencySeconds / 3600);
-            this.addOrAppendProductToPickupDay(cp.productId, cp.amount, cp.price, cp.productName, cp.unity_with_unit, cp.manufacturerLink, cp.image, cp.deposit, cp.tax, timebasedCurrencyHours, cp.orderedQuantityInUnits, cp.unitName, cp.nextDeliveryDay);
+            this.addOrAppendProductToPickupDay(cp.productId, cp.amount, cp.price, cp.productName, cp.unity_with_unit, cp.manufacturerLink, cp.image, cp.deposit, cp.tax, timebasedCurrencyHours, cp.orderedQuantityInUnits, cp.unitName, cp.unitAmount, cp.priceInclPerUnit, cp.nextDeliveryDay);
             sum += cp.price;
             depositSum += cp.deposit;
             taxSum += cp.tax;
@@ -84,7 +84,7 @@ foodcoopshop.Cart = {
         }
     },
 
-    updateExistingProduct: function (productContainer, amount, price, deposit, tax, timebasedCurrencyHours, quantityInUnits) {
+    updateExistingProduct: function (productContainer, amount, price, deposit, tax, timebasedCurrencyHours, orderedQuantityInUnits, unitName, unitAmount, priceInclPerUnit) {
 
         // update amount
         var oldAmount = productContainer.find('span.amount span.value');
@@ -105,6 +105,11 @@ foodcoopshop.Cart = {
             var forEachApproxRegExp = new RegExp(foodcoopshop.LocalizedJs.cart.forEach + ' ' + foodcoopshop.LocalizedJs.cart.approx);
             newUnityHtml = newUnityHtml.replace(forEachApproxRegExp, foodcoopshop.LocalizedJs.cart.approx);
         }
+        
+        if (orderedQuantityInUnits > 0) {
+            newUnityHtml = foodcoopshop.Helper.getStringAsFloat(oldUnity.html()) + orderedQuantityInUnits + ' ' + unitName;
+        }
+        
         if (newUnityHtml != oldUnity.html()) {
             oldUnity.html(newUnityHtml);
             foodcoopshop.Helper.applyBlinkEffect(oldUnity);
@@ -112,10 +117,16 @@ foodcoopshop.Cart = {
 
         // update price
         var oldPrice = productContainer.find('span.price');
-        var newPrice = (
-            foodcoopshop.Helper.getCurrencyAsFloat(oldPrice.html()) +
-            (price * amount)
-        );
+        var tmpNewPrice = price * amount;
+        
+        if (orderedQuantityInUnits > 0) {
+            tmpNewPrice =
+                foodcoopshop.Helper.getCurrencyAsFloat(productContainer.find('span.price-incl-per-unit').html()) *
+                orderedQuantityInUnits /
+                foodcoopshop.Helper.getStringAsFloat(productContainer.find('span.unit-amount').html());
+        }
+        
+        var newPrice = foodcoopshop.Helper.getCurrencyAsFloat(oldPrice.html()) + tmpNewPrice;
         oldPrice.html(foodcoopshop.Helper.formatFloatAsCurrency(newPrice));
         foodcoopshop.Helper.applyBlinkEffect(oldPrice);
 
@@ -171,7 +182,7 @@ foodcoopshop.Cart = {
                 productName = productWrapper.find('.heading h4').html();
             }
             var amount = parseInt(productWrapper.find('.entity-wrapper.active input[name="amount"]').val());
-            var quantityInUnits = productWrapper.find('.entity-wrapper.active .quantity-in-units-input-field-wrapper input').val();
+            var orderedQuantityInUnits = productWrapper.find('.entity-wrapper.active .quantity-in-units-input-field-wrapper input').val();
             var price = foodcoopshop.Helper.getCurrencyAsFloat(productWrapper.find('.entity-wrapper.active .price').html());
             var tax = foodcoopshop.Helper.getCurrencyAsFloat(productWrapper.find('.entity-wrapper.active .tax').html());
             var image = productWrapper.find('.first-column img');
@@ -186,14 +197,30 @@ foodcoopshop.Cart = {
                 unity = productWrapper.find('input[type="radio"]:checked').parent().text().trim();
             }
 
-            var quantityInUnits;
+            var orderedQuantityInUnits;
             if (productWrapper.find('.entity-wrapper.active .quantity-in-units-input-field-wrapper').length > 0) {
-                quantityInUnits = productWrapper.find('.entity-wrapper.active .quantity-in-units-input-field-wrapper input').val();
+                orderedQuantityInUnits = foodcoopshop.Helper.getStringAsFloat(productWrapper.find('.entity-wrapper.active .quantity-in-units-input-field-wrapper input').val());
             }
 
             var unitName = '';
-            if (productWrapper.find('.entity-wrapper.active .unit-name').length > 0) {
-                unitName = productWrapper.find('.entity-wrapper.active .unit-name').html();
+            var unitNameElement = productWrapper.find('.entity-wrapper.active .unit-name'); 
+            if (unitNameElement.length > 0) {
+                unitName = unitNameElement.html();
+            }
+
+            var unitAmount = '';
+            var unitAmountElement = productWrapper.find('.entity-wrapper.active .unit-amount'); 
+            if (unitAmountElement.length > 0) {
+                unitAmount = foodcoopshop.Helper.getStringAsFloat(unitAmountElement.html());
+            }
+            var priceInclPerUnit = '';
+            var priceInclPerUnitElement = productWrapper.find('.entity-wrapper.active .price-incl-per-unit'); 
+            if (priceInclPerUnitElement.length > 0) {
+                priceInclPerUnit = foodcoopshop.Helper.getCurrencyAsFloat(priceInclPerUnitElement.html());
+            }
+
+            if (orderedQuantityInUnits > 0) {
+                price = priceInclPerUnit * orderedQuantityInUnits / unitAmount;
             }
 
             var timebasedCurrencyElement = productWrapper.find('.entity-wrapper.active .timebasedCurrencySeconds');
@@ -216,10 +243,10 @@ foodcoopshop.Cart = {
 
             if (productContainer.length > 0) {
                 // product already in cart
-                foodcoopshop.Cart.updateExistingProduct(productContainer, amount, price, deposit, tax, timebasedCurrencyHours, quantityInUnits);
+                foodcoopshop.Cart.updateExistingProduct(productContainer, amount, price, deposit, tax, timebasedCurrencyHours, orderedQuantityInUnits, unitName, unitAmount, priceInclPerUnit);
             } else {
                 // product not yet in cart
-                foodcoopshop.Cart.addOrAppendProductToPickupDay(productId, amount, amount * price, productName, unity, '', image, deposit, tax, timebasedCurrencyHours, quantityInUnits, unitName, pickupDay);
+                foodcoopshop.Cart.addOrAppendProductToPickupDay(productId, amount, amount * price, productName, unity, '', image, deposit, tax, timebasedCurrencyHours, orderedQuantityInUnits, unitName, unitAmount, priceInclPerUnit, pickupDay);
                 foodcoopshop.Helper.applyBlinkEffect($('#cart .product.' + productId), function () {
                     foodcoopshop.Cart.initRemoveFromCartLinks(); // bind click event
                 });
@@ -237,7 +264,7 @@ foodcoopshop.Cart = {
                 {
                     productId: productId,
                     amount: amount,
-                    quantityInUnits: quantityInUnits
+                    orderedQuantityInUnits: orderedQuantityInUnits
                 },
                 {
                     onOk: function (data) {
@@ -367,21 +394,27 @@ foodcoopshop.Cart = {
         });
     },
 
-    getCartProductHtml: function (productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, quantityInUnits, unitName, pickupDay) {
+    getCartProductHtml: function (productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, orderedQuantityInUnits, unitName, unitAmount, priceInclPerUnit, pickupDay) {
         var imgHtml = '<span class="image">' + image + '</span>';
         if (!$(image).attr('src').match(/de-default-home/)) {
             imgHtml = '<a href="'  + $(image).attr('src').replace(/-home_/, '-thickbox_') +  '" class="image">' + image + '</a>';
         }
         var unityHtml = '<span class="unity">'
-            if (quantityInUnits) {
-                unityHtml += quantityInUnits + ' ' + unitName;
+            if (orderedQuantityInUnits) {
+                unityHtml += orderedQuantityInUnits + ' ' + unitName;
             } else {
                 unityHtml += unity;
             }
         unityHtml += '</span>';
+        var pricePerUnitHtml = '<span class="price-per-unit">'
+                pricePerUnitHtml += '<span class="price-incl-per-unit">' + foodcoopshop.Helper.formatFloatAsCurrency(priceInclPerUnit) + '</span>';
+                pricePerUnitHtml += '<span class="unit-amount">' + unitAmount + '</span>';
+                pricePerUnitHtml += '<span class="unit-name">' + unitName + '</span>';
+            pricePerUnitHtml += '</span>';
         return '<span data-product-id="' + productId + '" class="product' + ' ' + productId + '">' +
                 imgHtml +
                 '<span class="amount"><span class="value">' + amount + '</span>x</span>' +
+                pricePerUnitHtml +
                 '<span class="product-name-wrapper">' +
                     '<span class="product-name">' + productName + '</span>'+
                     unityHtml +

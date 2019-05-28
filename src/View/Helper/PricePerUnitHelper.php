@@ -92,7 +92,7 @@ class PricePerUnitHelper extends Helper
 
     public function getPricePerUnitBaseInfo($priceInclPerUnit, $unitName, $unitAmount)
     {
-        return $this->MyNumber->formatAsCurrency($priceInclPerUnit) . ' / ' . ($unitAmount > 1 ? $this->MyNumber->formatAsDecimal($unitAmount, 0) . ' ' : '') . $unitName;
+        return '<span class="price-incl-per-unit">'.$this->MyNumber->formatAsCurrency($priceInclPerUnit) . '</span> / <span class="unit-amount">' . ($unitAmount > 1 ? $this->MyNumber->formatAsDecimal($unitAmount, 0) . '</span> ' : '') . '<span class="unit-name">' . $unitName . '</span>';
     }
 
 }

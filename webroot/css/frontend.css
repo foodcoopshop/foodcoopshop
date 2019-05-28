@@ -840,6 +840,9 @@ body.carts.detail #load-last-order-details,
 .cart span.amount .btn:hover {
     color: #d6d4d4 ! important;
 }
+.cart .price-per-unit {
+	display: none;
+}
 body.carts.detail .cart:not(#cart) span.product-name-wrapper {
     width: 210px;
 }
