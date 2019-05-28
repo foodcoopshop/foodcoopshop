@@ -44,10 +44,11 @@ class StatisticsController extends AdminAppController
      */
     private function getManufacturerId()
     {
-        $manufacturerId = '';
+        $manufacturerId = 'all';
         if (!empty($this->getRequest()->getQuery('manufacturerId'))) {
             $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
-        } if ($this->manufacturerId > 0) {
+        }
+        if ($this->manufacturerId > 0) {
             $manufacturerId = $this->manufacturerId;
         }
         return $manufacturerId;
@@ -64,8 +65,19 @@ class StatisticsController extends AdminAppController
     {
         $manufacturerId = $this->getManufacturerId();
 
+        $year = '';
+        if (!empty($this->getRequest()->getQuery('year'))) {
+            $year = $this->getRequest()->getQuery('year');
+        }
+        $this->set('year', $year);
+        
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-        $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
+        $manufacturersForDropdown = [];
+        if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
+            $manufacturersForDropdown = ['all' => __d('admin', 'All_manufacturers')];
+        }
+        $manufacturersForDropdown = array_merge($manufacturersForDropdown, $this->Manufacturer->getForDropdown());
+        $this->set('manufacturersForDropdown', $manufacturersForDropdown);
         $this->set('manufacturerId', $manufacturerId);
 
         if ($manufacturerId == '') {
@@ -73,17 +85,29 @@ class StatisticsController extends AdminAppController
             return;
         }
 
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ]
-        ])->first();
-        $this->set('manufacturer', $manufacturer);
+        $conditions = [];
+        if ($manufacturerId != 'all') {
+            $conditions['Manufacturers.id_manufacturer'] = $manufacturerId;
+        } else {
+            // do not show any non-associated products that might be found in database
+            $conditions[] = 'Manufacturers.id_manufacturer > 0';
+        }
         
-        $this->set('title_for_layout', __d('admin', 'Turnover_statistics') . ' ' . $manufacturer->name);
+        $manufacturers = $this->Manufacturer->find('all', [
+            'conditions' => $conditions 
+        ])->toArray();
+        $this->set('manufacturers', $manufacturers);
+        
+        $titleForLayout = __d('admin', 'Turnover_statistics');
+        if ($manufacturerId != 'all') {
+            $titleForLayout .=  ' ' . $manufacturers[0]->name;
+        }
+        $this->set('title_for_layout', $titleForLayout);
+        
+        $this->set('years', Configure::read('app.timeHelper')->getAllYearsUntilThisYear(date('Y'), 2014));
         
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $monthlySumProducts = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturerId);
+        $monthlySumProducts = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturerId, $year);
         if (empty($monthlySumProducts->toArray())) {
             $this->set('xAxisData', []);
             return;
