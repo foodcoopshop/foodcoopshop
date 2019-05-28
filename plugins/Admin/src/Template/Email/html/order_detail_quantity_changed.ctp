@@ -37,7 +37,7 @@ use Cake\Core\Configure;
             </ul>
             
             <p>
-            	<?php echo __d('admin', 'The_base_price_is_{0}.', [$this->PricePerUnit->getPricePerUnitBaseInfo($oldOrderDetail->order_detail_unit->price_incl_per_unit, $oldOrderDetail->order_detail_unit->unit_name, $oldOrderDetail->order_detail_unit->unit_amount)]); ?>
+            	<?php echo __d('admin', 'The_base_price_is_{0}.', [strip_tags($this->PricePerUnit->getPricePerUnitBaseInfo($oldOrderDetail->order_detail_unit->price_incl_per_unit, $oldOrderDetail->order_detail_unit->unit_name, $oldOrderDetail->order_detail_unit->unit_amount))]); ?>
             </p>
 
             <?php if ($this->MyHtml->paymentIsCashless()) { ?>

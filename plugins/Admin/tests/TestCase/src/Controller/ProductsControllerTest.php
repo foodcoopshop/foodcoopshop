@@ -94,7 +94,7 @@ class ProductsControllerTest extends AppCakeTestCase
                 'UnitProducts'
             ]
         ])->first();
-        $this->assertRegExpWithUnquotedString($this->PricePerUnit->getPricePerUnitBaseInfo($product->unit_product->price_incl_per_unit, $product->unit_product->name, $product->unit_product->amount), '`15,00 € / 100 g');
+        $this->assertRegExpWithUnquotedString(strip_tags($this->PricePerUnit->getPricePerUnitBaseInfo($product->unit_product->price_incl_per_unit, $product->unit_product->name, $product->unit_product->amount)), '`15,00 € / 100 g');
         
     }
 
