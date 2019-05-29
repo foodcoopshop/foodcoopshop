@@ -469,7 +469,10 @@ class CartComponent extends Component
                     break;
                 case $this->Cart::CART_TYPE_SELF_SERVICE;
                     $actionLogType = 'self_service_order_added';
-                    $message = __('Your_order_has_been_placed_succesfully.');
+                    $message = __('Thank_you_for_your_purchase!');
+                    $message .= '<br />';
+                    $message .= '<a style="float:left;margin-top:6px;width:48%;" class="btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getLogout().'">'.__('Sign_out').'?</a>';
+                    $message .= '<a style="float:right;margin-top:5px;width:48%;" class="btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getSelfService().'">'.__('Continue_shopping?').'</a>';
                     $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
                     break;
             }

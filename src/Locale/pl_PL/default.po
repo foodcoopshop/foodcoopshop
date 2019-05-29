@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-29 15:49+0200\n"
+"POT-Creation-Date: 2019-05-29 16:09+0200\n"
 "PO-Revision-Date: 2019-05-29 10:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1253,6 +1253,18 @@ msgstr "Pomyślnie złożono zamówienie błyskawiczne ({0}) dla {1}."
 # Instant order ({0}) successfully placed for {1}. The following manufacturers were notified: {2}
 msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
 msgstr "Pomyślnie złożono zamówienie błyskawiczne ({0}) dla {1}. Informacja została wysłana do następujących producentów: {2}"
+
+# thank you for order from {0}.
+#, fuzzy
+msgid "Thank_you_for_your_purchase!"
+msgstr "dziękujemy za zamówienie od {0}."
+
+# Sign out
+msgid "Sign_out"
+msgstr "Wyloguj się"
+
+msgid "Continue_shopping?"
+msgstr ""
 
 # Notification about instant order
 msgid "Notification_about_instant_order_order"
@@ -2820,10 +2832,6 @@ msgstr "Członkowie"
 # Activities
 msgid "Activities"
 msgstr "Czynności"
-
-# Sign out
-msgid "Sign_out"
-msgstr "Wyloguj się"
 
 # Credit
 msgid "Credit"

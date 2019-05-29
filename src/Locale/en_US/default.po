@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-29 15:49+0200\n"
-"PO-Revision-Date: 2019-05-29 15:50+0200\n"
+"POT-Creation-Date: 2019-05-29 16:09+0200\n"
+"PO-Revision-Date: 2019-05-29 16:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -938,6 +938,15 @@ msgstr "Instant order ({0}) successfully placed for {1}."
 
 msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
 msgstr "Instant order ({0}) successfully placed for {1}. The following manufacturers were notified: {2}"
+
+msgid "Thank_you_for_your_purchase!"
+msgstr "Thank you for your purchase!"
+
+msgid "Sign_out"
+msgstr "Sign out"
+
+msgid "Continue_shopping?"
+msgstr "Continue shopping?"
 
 msgid "Notification_about_instant_order_order"
 msgstr "Notification about instant order"
@@ -2105,9 +2114,6 @@ msgstr "Members"
 
 msgid "Activities"
 msgstr "Activities"
-
-msgid "Sign_out"
-msgstr "Sign out"
 
 msgid "Credit"
 msgstr "Credit"
