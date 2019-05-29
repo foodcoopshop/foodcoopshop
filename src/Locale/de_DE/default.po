@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-05-29 12:18+0200\n"
-"PO-Revision-Date: 2019-05-29 12:18+0200\n"
+"POT-Creation-Date: 2019-05-29 15:49+0200\n"
+"PO-Revision-Date: 2019-05-29 15:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -890,6 +890,9 @@ msgstr "Allergenliste"
 
 msgid "Self_service_for_stock_products"
 msgstr "Selbstbedienungs-Modus für Lagerprodukte"
+
+msgid "Your_shopping_bag_was_empty."
+msgstr "Deine Einkaufstasche war leer."
 
 msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
 msgstr "Die gewünschte Anzahl {0} des Produktes {1} ist leider nicht mehr verfügbar. Verfügbare Menge: {2}"
@@ -2004,6 +2007,9 @@ msgstr "suche"
 msgid "Cart"
 msgstr "Warenkorb"
 
+msgid "Your_cart_is_empty."
+msgstr "Dein Warenkorb ist leer."
+
 msgid "homepage"
 msgstr "Startseite"
 
@@ -2036,6 +2042,9 @@ msgstr "Einkaufstasche"
 
 msgid "docs_route_self_service"
 msgstr "selbstbedienungs-modus"
+
+msgid "Your_shopping_bag_is_empty."
+msgstr "Deine Einkaufstasche ist leer."
 
 msgid "Finish_pickup"
 msgstr "Abholung abschließen"

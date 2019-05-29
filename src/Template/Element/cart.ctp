@@ -104,7 +104,7 @@ if ($appAuth->Cart->getProducts() !== null) {
         ?>
         
         <?php if (!isset($shoppingLimitReached) || !$shoppingLimitReached) {  // set in AppController ?>
-            <p class="no-products"><?php echo __('Your_cart_is_empty'); ?></p>
+            <p class="no-products"><?php echo $cartEmptyMessage; ?></p>
             <p class="products"></p>
             <p class="sum-wrapper"><b><?php echo __('Sum'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>
             <p class="deposit-sum-wrapper"><b><?php echo __('Deposit'); ?></b><span class="sum"><?php echo $this->Number->formatAsCurrency(0); ?></span></p>

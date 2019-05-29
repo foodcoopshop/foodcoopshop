@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-29 12:18+0200\n"
-"PO-Revision-Date: 2019-05-29 12:19+0200\n"
+"POT-Creation-Date: 2019-05-29 15:49+0200\n"
+"PO-Revision-Date: 2019-05-29 15:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -890,6 +890,9 @@ msgstr "List of allergens"
 
 msgid "Self_service_for_stock_products"
 msgstr "Self-service for stock products"
+
+msgid "Your_shopping_bag_was_empty."
+msgstr "Your shopping bag was empty."
 
 msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
 msgstr "The desired amount {0} of the product {1} is not available any more. Available amount: {2}"
@@ -2004,6 +2007,9 @@ msgstr "search"
 msgid "Cart"
 msgstr "Cart"
 
+msgid "Your_cart_is_empty."
+msgstr "Your cart is empty."
+
 msgid "homepage"
 msgstr "homepage"
 
@@ -2036,6 +2042,9 @@ msgstr "Shopping bag"
 
 msgid "docs_route_self_service"
 msgstr "self-service-mode"
+
+msgid "Your_shopping_bag_is_empty."
+msgstr "Your shopping bag is empty."
 
 msgid "Finish_pickup"
 msgstr "Finish pickup"

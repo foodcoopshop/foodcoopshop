@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-29 11:55+0200\n"
+"POT-Creation-Date: 2019-05-29 15:49+0200\n"
 "PO-Revision-Date: 2019-05-29 10:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1188,6 +1188,11 @@ msgstr "Lista alergenów"
 #, fuzzy
 msgid "Self_service_for_stock_products"
 msgstr "Czy ten produkt jest magazynowany?"
+
+# Your cart was empty.
+#, fuzzy
+msgid "Your_shopping_bag_was_empty."
+msgstr "Twój koszyk był pusty."
 
 # The desired amount {0} of the product {1} is not available any more. Available amount: {2}
 msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
@@ -2683,6 +2688,11 @@ msgstr "search"
 msgid "Cart"
 msgstr "Koszyk"
 
+# Your cart is empty
+#, fuzzy
+msgid "Your_cart_is_empty."
+msgstr "Twój koszyk jest pusty"
+
 # homepage
 msgid "homepage"
 msgstr "strona główna"
@@ -2719,6 +2729,16 @@ msgstr ""
 
 msgid "Shopping_bag"
 msgstr ""
+
+# search
+#, fuzzy
+msgid "docs_route_self_service"
+msgstr "search"
+
+# Your cart is empty
+#, fuzzy
+msgid "Your_shopping_bag_is_empty."
+msgstr "Twój koszyk jest pusty"
 
 # Koszyk
 #, fuzzy

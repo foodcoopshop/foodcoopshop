@@ -56,7 +56,8 @@ echo $this->element('layout/header');
                 'icon' => 'fa-shopping-cart',
                 'name' => __('Cart'),
                 'docsLink' => $this->Html->getDocsUrl(__('docs_route_order_handling')),
-                'cartButtonIcon' => $appAuth->isSelfServiceModeByUrl() ? 'fa-plus-circle' : 'fa-cart-plus'
+                'cartButtonIcon' => 'fa-cart-plus',
+                'cartEmptyMessage' => __('Your_cart_is_empty.'),
             ]); ?>
             <?php echo $this->element('infoBox'); ?>
         </div>
