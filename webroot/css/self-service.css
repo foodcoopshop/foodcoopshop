@@ -15,6 +15,9 @@
 body.self_services {
 	margin: 0;
 }
+body.self_services #content {
+	width: auto;
+}
 #self-service {
     background-color: #fff;
     min-height: 500px;
