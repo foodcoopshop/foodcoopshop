@@ -107,7 +107,9 @@ foodcoopshop.Cart = {
         }
         
         if (orderedQuantityInUnits > 0) {
-            newUnityHtml = foodcoopshop.Helper.getStringAsFloat(oldUnity.html()) + orderedQuantityInUnits + ' ' + unitName;
+            newUnityHtml = foodcoopshop.Helper.getStringAsFloat(oldUnity.html()) + orderedQuantityInUnits;
+            newUnityHtml = newUnityHtml.toLocaleString();
+            newUnityHtml += ' ' + unitName;
         }
         
         if (newUnityHtml != oldUnity.html()) {
@@ -407,7 +409,7 @@ foodcoopshop.Cart = {
         }
         var unityHtml = '<span class="unity">'
             if (orderedQuantityInUnits) {
-                unityHtml += orderedQuantityInUnits + ' ' + unitName;
+                unityHtml += orderedQuantityInUnits.toLocaleString() + ' ' + unitName;
             } else {
                 unityHtml += unity;
             }

@@ -205,6 +205,9 @@ body.customers.login #self-service .footer {
 	width: auto;
 	line-height: 16px;
 }
+#self-service .product-wrapper .unit-amount {
+	display: none;
+}
 #self-service .product-wrapper .quantity-in-units-input-field-wrapper {
     float: left;
 	margin-top: 5px;
