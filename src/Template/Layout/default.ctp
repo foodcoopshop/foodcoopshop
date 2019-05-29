@@ -52,7 +52,9 @@ echo $this->element('layout/header');
                 'selfServiceModeEnabled' => false,
                 'showLoadLastOrderDetailsDropdown' => true,
                 'showCartDetailButton' => true,
-                'showFutureOrderDetails' => true
+                'showFutureOrderDetails' => true,
+                'icon' => 'fa-shopping-cart',
+                'name' => __('Cart')
             ]); ?>
             <?php echo $this->element('infoBox'); ?>
         </div>

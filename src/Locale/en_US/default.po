@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-29 10:43+0200\n"
-"PO-Revision-Date: 2019-05-29 10:44+0200\n"
+"POT-Creation-Date: 2019-05-29 11:55+0200\n"
+"PO-Revision-Date: 2019-05-29 11:55+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1746,9 +1746,6 @@ msgstr "if you want to continue to use this platform, please read the changed {0
 msgid "I_accept_the_{0}."
 msgstr "I accept the {0}."
 
-msgid "Cart"
-msgstr "Cart"
-
 msgid "Load_past_orders"
 msgstr "Load past orders"
 
@@ -1899,9 +1896,6 @@ msgstr "You can change your profile here"
 msgid "available"
 msgstr "available"
 
-msgid "Move_in_cart"
-msgstr "Add to cart"
-
 msgid "Stock_product:_order_possible_only_by_{0}."
 msgstr "Stock product: order possible only by {0}."
 
@@ -1928,6 +1922,12 @@ msgstr "Instant order"
 
 msgid "from_which_{0}_%"
 msgstr "from which {0} %"
+
+msgid "Move_in_shopping_bag"
+msgstr "Move in shopping bag"
+
+msgid "Move_in_cart"
+msgstr "Add to cart"
 
 msgid "Weight_in"
 msgstr "Weight in"
@@ -2001,6 +2001,9 @@ msgstr "Click here to edit the product."
 msgid "route_search"
 msgstr "search"
 
+msgid "Cart"
+msgstr "Cart"
+
 msgid "homepage"
 msgstr "homepage"
 
@@ -2027,6 +2030,9 @@ msgstr "Imprint"
 
 msgid "Search_by_name_id_or_barcode"
 msgstr "Search by name, product ID or barcode"
+
+msgid "Shopping_bag"
+msgstr "Shopping bag"
 
 msgid "Finish_pickup"
 msgstr "Finish pickup"

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-29 10:43+0200\n"
+"POT-Creation-Date: 2019-05-29 11:55+0200\n"
 "PO-Revision-Date: 2019-05-29 10:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2332,10 +2332,6 @@ msgstr "jeśli chcesz dalej korzystać z systemu, musisz przeczytać i zaakcepto
 msgid "I_accept_the_{0}."
 msgstr "Akceptuję {0}."
 
-# Cart
-msgid "Cart"
-msgstr "Koszyk"
-
 # Load past orders
 msgid "Load_past_orders"
 msgstr "Załaduj wcześniejsze zamówienia"
@@ -2539,10 +2535,6 @@ msgstr "Możesz tu zmienić swój profil"
 msgid "available"
 msgstr "dostępne"
 
-# Add to cart
-msgid "Move_in_cart"
-msgstr "Dodaj do koszyka"
-
 # Stock product: order possible only with instant order when picking it up.
 #, fuzzy
 msgid "Stock_product:_order_possible_only_by_{0}."
@@ -2579,6 +2571,13 @@ msgstr "Zamówienie błyskawiczne"
 # from which {0} %
 msgid "from_which_{0}_%"
 msgstr "z czego {0} %"
+
+msgid "Move_in_shopping_bag"
+msgstr ""
+
+# Add to cart
+msgid "Move_in_cart"
+msgstr "Dodaj do koszyka"
 
 # Weight
 #, fuzzy
@@ -2680,6 +2679,10 @@ msgstr "Kliknij tutaj, aby edytować produkt."
 msgid "route_search"
 msgstr "search"
 
+# Cart
+msgid "Cart"
+msgstr "Koszyk"
+
 # homepage
 msgid "homepage"
 msgstr "strona główna"
@@ -2712,6 +2715,9 @@ msgid "Imprint"
 msgstr "Sygnatura"
 
 msgid "Search_by_name_id_or_barcode"
+msgstr ""
+
+msgid "Shopping_bag"
 msgstr ""
 
 # Koszyk

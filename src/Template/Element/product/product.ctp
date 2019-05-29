@@ -211,7 +211,8 @@ if ($product['description'] != '') {
                     'productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute'],
                     'stockAvailableQuantity' => $attribute['StockAvailables']['quantity'],
                     'stockAvailableQuantityLimit' => $attribute['StockAvailables']['quantity_limit'],
-                    'hideButton' => $isStockProductOrderPossible
+                    'hideButton' => $isStockProductOrderPossible,
+                    'label' => $appAuth->isSelfServiceModeByUrl() ? __('Move_in_shopping_bag'): __('Move_in_cart')
                 ]);
                 echo $this->element('product/notAvailableInfo', ['stockAvailable' => $attribute['StockAvailables']]);
                 echo $this->element('product/includeStockProductsInOrdersWithDeliveryRhythmInfoText', [
@@ -293,7 +294,8 @@ if ($product['description'] != '') {
                     'productId' => $product['id_product'],
                     'stockAvailableQuantity' => $product['quantity'],
                     'stockAvailableQuantityLimit' => $product['quantity_limit'],
-                    'hideButton' => $isStockProductOrderPossible
+                    'hideButton' => $isStockProductOrderPossible,
+                    'label' => $appAuth->isSelfServiceModeByUrl() ? __('Move_in_shopping_bag'): __('Move_in_cart')
                 ]);
                 echo $this->element('product/notAvailableInfo', ['stockAvailable' => $product]);
                 echo $this->element('product/includeStockProductsInOrdersWithDeliveryRhythmInfoText', [

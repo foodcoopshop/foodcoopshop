@@ -30,7 +30,7 @@ if (!$appAuth->user() || !Configure::read('appDb.FCS_CART_ENABLED') || $hideButt
     ?>
     
     <a id="btn-cart-<?php echo $productId; ?>" class="btn btn-success btn-cart" href="javascript:void(0);">
-        <i class="fas fa-cart-plus"></i> <?php echo __('Move_in_cart'); ?>
+        <i class="fas fa-cart-plus"></i> <?php echo $label; ?>
     </a>
 
 </div>

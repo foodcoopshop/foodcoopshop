@@ -32,7 +32,7 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
 <div id="content"> <?php // #content is needed for showing flashMessage as #content is hardcoded in foodcoopshop.Helper.showFlashMessage() ?>
     <div id="products">
     	<div class="header">
-        	<h2><i class="fa fa-shopping-bag"></i> <?php echo __('Self_service_for_stock_products'); ?></h2>
+        	<h2><?php echo __('Self_service_for_stock_products'); ?></h2>
         	<h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
         	<?php echo $this->element('productSearch', [
         	    'action' => __('route_self_service'),
@@ -57,7 +57,9 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
             'selfServiceModeEnabled' => true,
             'showLoadLastOrderDetailsDropdown' => false,
             'showCartDetailButton' => false,
-            'showFutureOrderDetails' => false
+            'showFutureOrderDetails' => false,
+            'icon' => 'fa-shopping-bag',
+            'name' => __('Shopping_bag')
         ]); ?>
         <?php
             echo $this->Form->create($cart, [

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-29 10:43+0200\n"
+"POT-Creation-Date: 2019-05-29 11:55+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1745,9 +1745,6 @@ msgstr ""
 msgid "I_accept_the_{0}."
 msgstr ""
 
-msgid "Cart"
-msgstr ""
-
 msgid "Load_past_orders"
 msgstr ""
 
@@ -1898,9 +1895,6 @@ msgstr ""
 msgid "available"
 msgstr ""
 
-msgid "Move_in_cart"
-msgstr ""
-
 msgid "Stock_product:_order_possible_only_by_{0}."
 msgstr ""
 
@@ -1926,6 +1920,12 @@ msgid "Instant_order"
 msgstr ""
 
 msgid "from_which_{0}_%"
+msgstr ""
+
+msgid "Move_in_shopping_bag"
+msgstr ""
+
+msgid "Move_in_cart"
 msgstr ""
 
 msgid "Weight_in"
@@ -2000,6 +2000,9 @@ msgstr ""
 msgid "route_search"
 msgstr ""
 
+msgid "Cart"
+msgstr ""
+
 msgid "homepage"
 msgstr ""
 
@@ -2025,6 +2028,9 @@ msgid "Imprint"
 msgstr ""
 
 msgid "Search_by_name_id_or_barcode"
+msgstr ""
+
+msgid "Shopping_bag"
 msgstr ""
 
 msgid "Finish_pickup"

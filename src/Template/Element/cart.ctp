@@ -45,8 +45,8 @@ if ($appAuth->Cart->getProducts() !== null) {
 <div id="cart" class="box cart">
     
     <h3>
-    	<i class="fas fa-shopping-cart"></i>
-    	<?php echo __('Cart'); ?>
+    	<i class="fa <?php echo $icon; ?>"></i>
+    	<?php echo $name; ?>
     	<a class="question" target="_blank" href="<?php echo $this->Html->getDocsUrl(__('docs_route_order_handling')); ?>"><i class="far fa-question-circle"></i></a>
 	</h3>
     
