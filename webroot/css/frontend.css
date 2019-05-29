@@ -469,7 +469,7 @@ body.superadmin .product-wrapper .heading h4 {
 
 .product-wrapper .entity-wrapper {
     float: left;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     width: 100%;
 }
 .product-wrapper .entity-wrapper:not(.active),
@@ -566,6 +566,7 @@ body.superadmin .product-wrapper .heading h4 {
 .product-wrapper span.not-available-info {
     display: block;
     margin-top: 10px;
+    margin-bottom: 5px;
     line-height: 17px;
 }
 body.manufacturers.detail .manufacturer-infos {
