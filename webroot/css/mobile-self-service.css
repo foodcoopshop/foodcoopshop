@@ -14,7 +14,8 @@
 @media only screen and (max-device-width: 768px) {
 	#self-service,
 	#self-service .header,
-	#self-service #products {
+	#self-service #products,
+	#self-service .product-wrapper .quantity-in-units-input-field-wrapper input {
 	   width: 100%;
 	}
 	#self-service .header h2 {
@@ -51,7 +52,7 @@
        margin-left: 0;
 	   margin-top: 0;
 	   margin-bottom: 0;
-	   padding-top: 50px;
+	   padding-top: 0px;
 	}
 	#self-service .header {
 	   position: static;
@@ -63,4 +64,15 @@
 	#self-service .right-box {
 	   position: static;
 	}
+	#self-service .product-wrapper div.second-column {
+	   width: 33% ! important;
+	}
+    #self-service .product-wrapper div.third-column {
+       width: 40% ! important;
+    }
+    #self-service .product-wrapper .quantity-in-units-input-field-wrapper {
+        padding: 0;
+        margin-left: 0;
+        margin-bottom: 5px;
+    }
 }

@@ -131,7 +131,7 @@ foodcoopshop.Mobile = {
         $('#' + headerId).append($('.footer .left-wrapper'));
 
         // button renaming
-        $('.entity-wrapper .btn').html('<i class="fas fa-cart-plus"></i>');
+        $('.entity-wrapper .btn').html('<i class="fa fa-lg fa-plus-circle"></i>');
         
         // move flash message into header
         $('#' + headerId).append($('#flashMessage'));

@@ -19,6 +19,10 @@ if (!$appAuth->user() || $appAuth->isManufacturer() || !Configure::read('appDb.F
     return;
 }
 
+$this->element('addScript', ['script' =>
+    Configure::read('app.jsNamespace').".Cart.setCartButtonIcon('".$cartButtonIcon."');"
+]);
+
 if ($appAuth->Cart->getProducts() !== null) {
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".Cart.initCartProducts('".addslashes(json_encode($appAuth->Cart->getProducts()))."');"

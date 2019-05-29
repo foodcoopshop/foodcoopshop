@@ -15,6 +15,8 @@ foodcoopshop.Cart = {
 
     orderButtons: '.cart .btn-success.btn-order, .responsive-cart',
     
+    cartButtonIcon : '',
+    
     getPickupDayHeaderSelector : function(pickupDay) {
         return '.cart p.pickup-day-header:contains("' + pickupDay + '")';
     },
@@ -28,6 +30,10 @@ foodcoopshop.Cart = {
         pickupDayHeader.append(
             foodcoopshop.Cart.getCartProductHtml(productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, orderedQuantityInUnits, unitName, unitAmount, priceInclPerUnit, pickupDay)
         );
+    },
+    
+    setCartButtonIcon : function(cartButtonIcon) {
+        this.cartButtonIcon = cartButtonIcon;
     },
 
     /**
@@ -173,7 +179,7 @@ foodcoopshop.Cart = {
 
             foodcoopshop.Helper.removeFlashMessage();
             foodcoopshop.Helper.disableButton($(this));
-            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-cart-plus');
+            foodcoopshop.Helper.addSpinnerToButton($(this), foodcoopshop.Cart.cartButtonIcon);
             foodcoopshop.Helper.disableButton($(foodcoopshop.Cart.orderButtons));
 
             $('#cart p.no-products').hide();
@@ -232,7 +238,7 @@ foodcoopshop.Cart = {
             if (unitName != '' && priceInclPerUnit != '' && isNaN(orderedQuantityInUnits)) {
                 foodcoopshop.Helper.enableButton($(this));
                 foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
-                foodcoopshop.Helper.removeSpinnerFromButton($(this), 'fa-cart-plus');
+                foodcoopshop.Helper.removeSpinnerFromButton($(this), foodcoopshop.Cart.cartButtonIcon);
                 productWrapper.find('.entity-wrapper.active .quantity-in-units-input-field-wrapper').addClass('error');
                 foodcoopshop.Helper.showOrAppendErrorMessage(foodcoopshop.LocalizedJs.cart.PleaseProvideAValidOrderedQuantityInUnits);
                 return;
@@ -289,12 +295,12 @@ foodcoopshop.Cart = {
                     onOk: function (data) {
                         foodcoopshop.Helper.enableButton(button);
                         foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
-                        foodcoopshop.Helper.removeSpinnerFromButton(button, 'fa-cart-plus');
+                        foodcoopshop.Helper.removeSpinnerFromButton(button, foodcoopshop.Cart.cartButtonIcon);
                     },
                     onError: function (data) {
                         foodcoopshop.Helper.enableButton(button);
                         foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
-                        foodcoopshop.Helper.removeSpinnerFromButton(button, 'fa-cart-plus');
+                        foodcoopshop.Helper.removeSpinnerFromButton(button, foodcoopshop.Cart.cartButtonIcon);
                         foodcoopshop.Cart.initRemoveFromCartLinks();
                         foodcoopshop.Cart.restoreOldStateOfProductAndSum(data.productId, data.msg);
                     }

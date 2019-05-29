@@ -55,7 +55,8 @@ echo $this->element('layout/header');
                 'showFutureOrderDetails' => true,
                 'icon' => 'fa-shopping-cart',
                 'name' => __('Cart'),
-                'docsLink' => $this->Html->getDocsUrl(__('docs_route_order_handling'))
+                'docsLink' => $this->Html->getDocsUrl(__('docs_route_order_handling')),
+                'cartButtonIcon' => $appAuth->isSelfServiceModeByUrl() ? 'fa-plus-circle' : 'fa-cart-plus'
             ]); ?>
             <?php echo $this->element('infoBox'); ?>
         </div>
