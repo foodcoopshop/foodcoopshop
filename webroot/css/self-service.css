@@ -216,3 +216,7 @@ body.customers.login #self-service .footer {
 	width: 50px;
 	text-align: right;
 }
+#self-service .product-wrapper .amount-wrapper .fas {
+	font-size: 30px;
+	margin-top: -1px;
+}
