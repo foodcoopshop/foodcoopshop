@@ -89,11 +89,14 @@ class CategoriesTable extends AppTable
         return $categories;
     }
 
-    public function getForSelect($excludeCategoryId = null)
+    public function getForSelect($excludeCategoryId = null, $showOfflineCategories=true)
     {
         $conditions = [];
         if ($excludeCategoryId) {
             $conditions[] = 'Categories.id_category != ' . $excludeCategoryId;
+        }
+        if (!$showOfflineCategories) {
+            $conditions['Categories.active'] = true;
         }
         $categories = $this->getThreaded($conditions);
         $flattenedCategories = $this->flattenNestedArrayWithChildren($categories);

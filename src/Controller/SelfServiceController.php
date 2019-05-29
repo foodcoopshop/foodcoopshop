@@ -46,7 +46,7 @@ class SelfServiceController extends FrontendController
         }
         
         $this->Category = TableRegistry::getTableLocator()->get('Categories');
-        $this->set('categoriesForSelect', $this->Category->getForSelect());
+        $this->set('categoriesForSelect', $this->Category->getForSelect(null, false));
         
         $products = $this->Category->getProductsByCategoryId($categoryId, false, $keyword, 0, false, true);
         $products = $this->prepareProductsForFrontend($products);
