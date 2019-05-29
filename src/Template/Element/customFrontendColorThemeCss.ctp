@@ -75,7 +75,9 @@ use Cake\Core\Configure;
         background-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
         border-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
     }
-    .btn-success:focus:active {
+    .btn-success:focus:active,
+    .bootstrap-select .dropdown-item.active,
+    .bootstrap-select .dropdown-item:active {
         background-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
     }
     .vertical.menu a {

@@ -48,8 +48,17 @@ body.self_services #content {
     top: 53px;
     left: 0;
 }
-#self-service #product-search input {
-	width: 359px;
+#self-service #product-search .btn[type="submit"] {
+	margin-left: 5px;
+}
+#self-service #product-search input[name="keyword"] {
+	width: 215px;
+	margin-right: 5px;
+	float: left;
+}
+#self-service #product-search > .input {
+	float: left;
+	margin-top: 1px;
 }
 #self-service #products {
 	float: left;

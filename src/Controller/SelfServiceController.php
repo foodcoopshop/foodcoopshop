@@ -33,6 +33,12 @@ class SelfServiceController extends FrontendController
     public function index()
     {
         
+        $categoryId = Configure::read('app.categoryAllProducts');
+        if (!empty($this->getRequest()->getQuery('categoryId'))) {
+            $categoryId = $this->getRequest()->getQuery('categoryId');
+        }
+        $this->set('categoryId', $categoryId);
+        
         $keyword = '';
         if (!empty($this->getRequest()->getQuery('keyword'))) {
             $keyword = trim($this->getRequest()->getQuery('keyword'));
@@ -40,7 +46,9 @@ class SelfServiceController extends FrontendController
         }
         
         $this->Category = TableRegistry::getTableLocator()->get('Categories');
-        $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, $keyword, 0, false, true);
+        $this->set('categoriesForSelect', $this->Category->getForSelect());
+        
+        $products = $this->Category->getProductsByCategoryId($categoryId, false, $keyword, 0, false, true);
         $products = $this->prepareProductsForFrontend($products);
         $this->set('products', $products);
         

@@ -30,6 +30,25 @@ foodcoopshop.Helper = {
         }
     },
     
+    initBootstrapSelect : function(container) {
+        container.find('select').each(function () {
+            var options = {
+                liveSearch: true,
+                showIcon: true,
+                iconBase: 'fontawesome',
+                tickIcon: 'fas fa-check'
+            };
+            if ($(this).attr('multiple') == 'multiple') {
+                var emptyElement = $(this).find('option').first();
+                if (emptyElement.val() == '') {
+                    options.noneSelectedText = emptyElement.html();
+                    emptyElement.remove();
+                }
+            }
+            $(this).selectpicker(options);
+        });
+    },
+    
     initAmountSwitcher : function() {
         $('.entity-wrapper a.amount-switcher').on('click', function() {
             var inputField = $(this).closest('.amount-wrapper').find('input[name="amount"]');

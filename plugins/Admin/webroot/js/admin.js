@@ -195,23 +195,8 @@ foodcoopshop.Admin = {
                 foodcoopshop.Admin.submitFilterForm();
             }
         });
-
-        filterContainer.find('select').each(function () {
-            var options = {
-                liveSearch: true,
-                showIcon: true,
-                iconBase: 'fontawesome',
-                tickIcon: 'fas fa-check'
-            };
-            if ($(this).attr('multiple') == 'multiple') {
-                var emptyElement = $(this).find('option').first();
-                if (emptyElement.val() == '') {
-                    options.noneSelectedText = emptyElement.html();
-                    emptyElement.remove();
-                }
-            }
-            $(this).selectpicker(options);
-        });
+        
+        foodcoopshop.Helper.initBootstrapSelect(filterContainer);
 
         this.setSelectPickerMultipleDropdowns('.filter-container select[multiple="multiple"]');
         

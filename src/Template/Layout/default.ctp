@@ -26,7 +26,8 @@ echo $this->element('layout/header');
             <?php echo $this->element('productSearch', [
                 'action' => __('route_search'),
                 'placeholder' =>  __('Search'),
-                'resetSearchUrl' => !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $this->Slug->getAllProducts()
+                'resetSearchUrl' => !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $this->Slug->getAllProducts(),
+                'includeCategoriesDropdown' => false
             ]); ?>
         <?php } ?>
         <?php echo $this->element('userMenu'); ?>

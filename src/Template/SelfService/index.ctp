@@ -36,8 +36,9 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
         	<h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
         	<?php echo $this->element('productSearch', [
         	    'action' => __('route_self_service'),
-        	    'placeholder' => __('Search_by_name_id_or_barcode'),
-        	    'resetSearchUrl' => $this->Slug->getSelfService()
+        	    'placeholder' => __('Search:_name_id_or_barcode'),
+        	    'resetSearchUrl' => $this->Slug->getSelfService(),
+        	    'includeCategoriesDropdown' => true
         	]); ?>
         	<hr />
         </div>
