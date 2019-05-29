@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
+use Cake\Utility\Security;
 use Cake\Validation\Validator;
 use Cake\I18n\I18n;
 

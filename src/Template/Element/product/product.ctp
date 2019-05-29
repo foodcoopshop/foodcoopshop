@@ -17,8 +17,9 @@ use Cake\Core\Configure;
 
 $showProductPrice = (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') && Configure::read('appDb.FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS')) || $appAuth->user();
 
-$isStockProductOrderPossibleInOrdersWithDeliveryRhythms = $this->Html->isStockProductOrderPossibleInOrdersWithDeliveryRhythms(
+$isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
     $appAuth->isInstantOrderMode(),
+    $appAuth->isSelfServiceModeByUrl(),
     Configure::read('appDb.FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM'),
     $product['stock_management_enabled'],
     $product['is_stock_product']
@@ -48,9 +49,13 @@ if ($product['is_new']) {
     echo '<div class="heading">';
         echo '<h4>';
         if ($showProductDetailLink) {
-            echo '<a class="product-name" href="'.$this->Slug->getProductDetail($product['id_product'], $product['name']).'">'.$product['name'].'</a></h4>';
+            echo '<a class="product-name" href="'.$this->Slug->getProductDetail($product['id_product'], $product['name']).'">'.$product['name'].'</a>';
         } else {
             echo $product['name'];
+        }
+        echo '</h4>';
+        if ($appAuth->isSelfServiceModeByUrl()) {
+            echo '<br /><span style="float:left;width:100%;">' . $product['ProductIdentifier'] . '</span>';
         }
     echo '</div>';
     echo '<div class="sc"></div>';
@@ -173,7 +178,12 @@ if ($product['description'] != '') {
                 $pricePerUnitInfoText = '';
                 if ($attribute['Units']['price_per_unit_enabled']) {
                     $priceHtml = $this->PricePerUnit->getPricePerUnit($attribute['Units']['price_incl_per_unit'], $attribute['Units']['quantity_in_units'], $attribute['Units']['unit_amount']);
-                    $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText($attribute['Units']['price_incl_per_unit'], $attribute['Units']['unit_name'], $attribute['Units']['unit_amount']);
+                    $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText(
+                        $attribute['Units']['price_incl_per_unit'],
+                        $attribute['Units']['unit_name'],
+                        $attribute['Units']['unit_amount'],
+                        !$appAuth->isSelfServiceModeByUrl()
+                    );
                 }
                 echo $priceHtml;
                 if (!empty($attribute['DepositProductAttributes']['deposit'])) {
@@ -195,22 +205,31 @@ if ($product['description'] != '') {
                 echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute']]);
                 echo $this->element('product/amountWrapper', [
                     'stockAvailable' => $attribute['StockAvailables'],
-                    'hideAmountSelector' => $isStockProductOrderPossibleInOrdersWithDeliveryRhythms
+                    'hideAmountSelector' => $isStockProductOrderPossible
                 ]);
                 echo $this->element('product/cartButton', [
                     'productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute'],
                     'stockAvailableQuantity' => $attribute['StockAvailables']['quantity'],
                     'stockAvailableQuantityLimit' => $attribute['StockAvailables']['quantity_limit'],
-                    'hideButton' => $isStockProductOrderPossibleInOrdersWithDeliveryRhythms
+                    'hideButton' => $isStockProductOrderPossible,
+                    'cartButtonLabel' => $appAuth->isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
+                    'cartButtonIcon' => $appAuth->isSelfServiceModeByUrl() ? 'fa-plus-circle' : 'fa-cart-plus'
                 ]);
                 echo $this->element('product/notAvailableInfo', ['stockAvailable' => $attribute['StockAvailables']]);
                 echo $this->element('product/includeStockProductsInOrdersWithDeliveryRhythmInfoText', [
-                    'showInfoText' => $isStockProductOrderPossibleInOrdersWithDeliveryRhythms
+                    'showInfoText' => $isStockProductOrderPossible,
+                    'keyword' => $appAuth->isSelfServiceModeByUrl() ? $product['ProductIdentifier'] : null
                 ]);
             }
             if ($showProductPrice) {
                 echo $pricePerUnitInfoText;
             }
+            
+            echo $this->element('product/quantityInUnitsInputFieldForSelfService', [
+                'pricePerUnitEnabled' => $attribute['Units']['price_per_unit_enabled'],
+                'unitName' => $attribute['Units']['unit_name']
+            ]);
+            
             echo '</div>';
         }
 
@@ -231,20 +250,25 @@ if ($product['description'] != '') {
                                $radioButtonLabel.'
                       </label>
                   </div>';
-
+                               
         }
     } else {
         // PRODUCT WITHOUT ATTRIBUTES
         echo '<div class="entity-wrapper active">';
-        if ($showProductPrice) {
-            echo '<div class="line">';
-            $priceHtml =  '<div class="price">' . $this->Number->formatAsCurrency($product['gross_price']) . '</div>';
-            $pricePerUnitInfoText = '';
-            if ($product['price_per_unit_enabled']) {
-                $priceHtml = $this->PricePerUnit->getPricePerUnit($product['price_incl_per_unit'], $product['quantity_in_units'], $product['unit_amount']);
-                $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText($product['price_incl_per_unit'], $product['unit_name'], $product['unit_amount']);
-            }
-            echo $priceHtml;
+            if ($showProductPrice) {
+                echo '<div class="line">';
+                $priceHtml =  '<div class="price">' . $this->Number->formatAsCurrency($product['gross_price']) . '</div>';
+                $pricePerUnitInfoText = '';
+                if ($product['price_per_unit_enabled']) {
+                    $priceHtml = $this->PricePerUnit->getPricePerUnit($product['price_incl_per_unit'], $product['quantity_in_units'], $product['unit_amount']);
+                    $pricePerUnitInfoText = $this->PricePerUnit->getPricePerUnitInfoText(
+                        $product['price_incl_per_unit'],
+                        $product['unit_name'],
+                        $product['unit_amount'],
+                        !$appAuth->isSelfServiceModeByUrl()
+                    );
+                }
+                echo $priceHtml;
                 if ($product['deposit']) {
                     echo '<div class="deposit">+ <b>' . $this->Number->formatAsCurrency($product['deposit']).'</b> '.__('deposit').'</div>';
                 }
@@ -259,28 +283,36 @@ if ($product['description'] != '') {
                     ]);
                 }
                 echo '<div class="tax">'. $this->Number->formatAsCurrency($product['tax']) . '</div>';
-        }
+            }
+            
+            if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
+                echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product']]);
+                echo $this->element('product/amountWrapper', [
+                    'stockAvailable' => $product,
+                    'hideAmountSelector' => $isStockProductOrderPossible
+                ]);
+                echo $this->element('product/cartButton', [
+                    'productId' => $product['id_product'],
+                    'stockAvailableQuantity' => $product['quantity'],
+                    'stockAvailableQuantityLimit' => $product['quantity_limit'],
+                    'hideButton' => $isStockProductOrderPossible,
+                    'cartButtonLabel' => $appAuth->isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
+                    'cartButtonIcon' => $appAuth->isSelfServiceModeByUrl() ? 'fa-plus-circle' : 'fa-cart-plus'
+                ]);
+                echo $this->element('product/notAvailableInfo', ['stockAvailable' => $product]);
+                echo $this->element('product/includeStockProductsInOrdersWithDeliveryRhythmInfoText', [
+                    'showInfoText' => $isStockProductOrderPossible,
+                    'keyword' => $appAuth->isSelfServiceModeByUrl() ? $product['ProductIdentifier'] : null
+                ]);
+            }
+            if ($showProductPrice) {
+                echo $pricePerUnitInfoText;
+            }
+            echo $this->element('product/quantityInUnitsInputFieldForSelfService', [
+                'pricePerUnitEnabled' => $product['price_per_unit_enabled'],
+                'unitName' => $product['unit_name']
+            ]);
         
-        if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
-            echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product']]);
-            echo $this->element('product/amountWrapper', [
-                'stockAvailable' => $product,
-                'hideAmountSelector' => $isStockProductOrderPossibleInOrdersWithDeliveryRhythms
-            ]);
-            echo $this->element('product/cartButton', [
-                'productId' => $product['id_product'],
-                'stockAvailableQuantity' => $product['quantity'],
-                'stockAvailableQuantityLimit' => $product['quantity_limit'],
-                'hideButton' => $isStockProductOrderPossibleInOrdersWithDeliveryRhythms
-            ]);
-            echo $this->element('product/notAvailableInfo', ['stockAvailable' => $product]);
-            echo $this->element('product/includeStockProductsInOrdersWithDeliveryRhythmInfoText', [
-                'showInfoText' => $isStockProductOrderPossibleInOrdersWithDeliveryRhythms
-            ]);
-        }
-        if ($showProductPrice) {
-            echo $pricePerUnitInfoText;
-        }
         echo '</div>';
 
         $unityStrings = [];

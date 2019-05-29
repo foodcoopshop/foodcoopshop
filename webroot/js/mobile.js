@@ -101,6 +101,52 @@ foodcoopshop.Mobile = {
         foodcoopshop.Helper.showContent();
 
     },
+    
+    initMenusSelfService: function() {
+        
+        $('#self-service').after(this.getSlidebarMenu('left')).attr('canvas', '');
+
+        var menuItems = [];
+        var ps = $('#product-search');
+        menuItems.push(ps.wrap('<li>').parent());
+        menuItems.push('<li><a href="/"><i class="fas"></i>' + foodcoopshop.LocalizedJs.mobile.home + '</a></li>');
+
+        var pageItems = [];
+        $('.footer a').each(function () {
+            pageItems.push($(this));
+        });
+        menuItems = $.merge(menuItems, pageItems);
+
+        $('.sb-left').html(menuItems);
+
+        var headerId = 'responsive-header';
+        var responsiveHeader = $('<div/>');
+        responsiveHeader.attr('id', headerId);
+        responsiveHeader.attr('canvas', '');
+        $('body').prepend(responsiveHeader);
+
+        $('#' + headerId).append(this.getResponsiveMenuButton());
+
+        $('#' + headerId).append($('.footer .right-wrapper'));
+        $('#' + headerId).append($('.footer .left-wrapper'));
+
+        // button renaming
+        $('.entity-wrapper .btn').html('<i class="fa fa-lg fa-plus-circle"></i>');
+        
+        // move flash message into header
+        $('#' + headerId).append($('#flashMessage'));
+        
+        var controller = new slidebars();
+        controller.init();
+
+        this.bindToggleLeft(controller);
+        this.bindToggleRight(controller);
+        this.bindCloseSlidebarsOnCanvasClick(controller);
+        this.fixContentScrolling();
+
+        foodcoopshop.Helper.showContent();
+        
+    },
 
     initMenusFrontend: function () {
 
@@ -190,7 +236,7 @@ foodcoopshop.Mobile = {
             $(this).html($(this).html().replace(regexp, foodcoopshop.LocalizedJs.mobile.show));
         });
         $('.blog-post-wrapper div.third-column a.btn').html(foodcoopshop.LocalizedJs.mobile.show);
-        $('.entity-wrapper .btn').html('<i class="fas fa-cart-plus"></i>');
+        $('.entity-wrapper .btn').html('<i class="fas fa-lg fa-cart-plus"></i>');
         $('#cart .btn-success').html('<i class="fas fa-shopping-cart"></i>');
 
         // add info box to right side bar

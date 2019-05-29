@@ -30,6 +30,33 @@ foodcoopshop.Helper = {
         }
     },
     
+    initAmountSwitcher : function() {
+        $('.entity-wrapper a.amount-switcher').on('click', function() {
+            var inputField = $(this).closest('.amount-wrapper').find('input[name="amount"]');
+            var currentValue = parseInt(inputField.val());
+            if (isNaN(currentValue)) {
+                currentValue = 0;
+            }
+            var result = 0;
+            if ($(this).hasClass('amount-switcher-plus')) {
+                result = currentValue + 1;
+            } else {
+                result = currentValue - 1;
+            }
+            if (result < 2) {
+                result = 1;
+            }
+            var maximum = $(this).closest('.amount-wrapper').find('.availibility');
+            if (maximum.length > 0) {
+                max = parseInt(maximum.html().replace(/\D+/g, ''));
+                if (result > max) {
+                    result = max;
+                }
+            }
+            inputField.val(result);
+        });
+    },
+    
     getUniqueHtmlValueOfDomElements: function(domElements, defaultValue) {
         var values = this.unique(
             $.map($(domElements),
@@ -147,6 +174,10 @@ foodcoopshop.Helper = {
                 form.submit();
             }
         });
+        $('#product-search a.btn').on('click', function () {
+            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-backspace');
+            foodcoopshop.Helper.disableButton($(this));
+        });
     },
 
     initRegistrationForm: function (isPost) {
@@ -193,7 +224,8 @@ foodcoopshop.Helper = {
     },
 
     changeOutgoingLinksTargetToBlank: function () {
-        $('a[href^="http://"], a[href^="https://"]:not([href^="' + window.location.host + '"])').attr('target', '_blank');
+         $('a[href^="http://"]:not(".do-not-change-to-target-blank"):not([href^="' + window.location.host + '"])').attr('target', '_blank');
+        $('a[href^="https://"]:not(".do-not-change-to-target-blank"):not([href^="' + window.location.host + '"])').attr('target', '_blank');
     },
 
     inIframe: function () {
@@ -394,9 +426,12 @@ foodcoopshop.Helper = {
     },
 
     getStringAsFloat: function (string) {
-        // german uses , as decimal separator and not as thousand separator
-        if (foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47 == 'de-DE') {
-            string = string.replace(/,/, '.');
+        // en-US uses . as decimal separator and not as thousand separator
+        if (foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47 != 'en-US') {
+            string = string.replace(/,/, '_comma_');
+            string = string.replace(/\./, '_dot_');
+            string = string.replace(/_comma_/, '.');
+            string = string.replace(/_dot_/, '');
         }
         return parseFloat(string);
     },

@@ -15,6 +15,9 @@
 body.self_services {
 	margin: 0;
 }
+body.self_services #content {
+	width: auto;
+}
 #self-service {
     background-color: #fff;
     min-height: 500px;
@@ -36,13 +39,13 @@ body.self_services {
 	width: 90%;
 }
 #self-service .header h1 span {
-	margin-left: 1px;
+	margin-right: 10px;
 }
 #self-service .header h2 {
-	padding-top: 5px;
+	padding-top: 10px;
 }
 #self-service #product-search {
-    top: 48px;
+    top: 53px;
     left: 0;
 }
 #self-service #product-search input {
@@ -50,7 +53,7 @@ body.self_services {
 }
 #self-service #products {
 	float: left;
-	width: 590px;
+	width: 603px;
 	margin-left: 10px;
 	margin-top: 10px;
 	margin-bottom: 50px;
@@ -58,6 +61,7 @@ body.self_services {
 }
 #self-service .product-wrapper {
 	background: #fff;
+	border-right: 1px solid #d6d4d4;
 }
 #self-service .product-wrapper div.first-column {
 	width: 100px;
@@ -66,7 +70,10 @@ body.self_services {
 	width: 80px;
 }
 #self-service .product-wrapper div.second-column {
-	width: 280px;
+	width: 260px;
+}
+#self-service .product-wrapper div.third-column {
+    width: 215px;
 }
 #self-service #flashMessage {
 	top: 46px;
@@ -119,7 +126,7 @@ body.self_services {
     position: fixed;
     top: 0;
     height: 110px;
-    width: 592px;
+    width: 602px;
     z-index: 1000;
 }
 #self-service .header hr {
@@ -134,16 +141,26 @@ body.self_services {
 	border-top: none;
 	padding-top: 10px;
 }
-#self-service .footer .logout-wrapper {
+#self-service .footer .left-wrapper {
 	position: absolute;
 	bottom: 17px;
 	left: 10px;
 }
-#self-service .footer .logo-wrapper img {
-	width: 100px;
+#self-service .footer .right-wrapper {
 	position: absolute;
 	bottom: 6px;
 	right: 10px;
+}
+#self-service .footer .right-wrapper .btn,
+#self-service .footer .right-wrapper .logo-wrapper {
+    float: left;
+}
+#self-service .footer .right-wrapper .btn {
+	margin-top: 12px;
+	margin-right: 5px;
+}
+#self-service .footer .right-wrapper img {
+	height: 53px;
 }
 body.customers.login #self-service .footer {
 	position: static;
@@ -177,4 +194,46 @@ body.customers.login #self-service .footer {
     float: left;
     font-size: 12px;
     line-height: 14px;
+}
+#self-service #cancellation-terms,
+#self-service #general-terms-and-conditions {
+	display: none;
+}
+#self-service .right-box .input.checkbox {
+	width: 295px;
+	margin-left: 5px;
+}
+#self-service .right-box input[type="checkbox"] {
+	float: left;
+	margin-right: 5px;
+}
+#self-service .right-box .input.checkbox label {
+	line-height: 16px;
+}
+#self-service .right-box form div.error-message {
+	margin-left: 0;
+	width: auto;
+	line-height: 16px;
+}
+#self-service .product-wrapper .unit-amount {
+	display: none;
+}
+#self-service .product-wrapper .quantity-in-units-input-field-wrapper {
+    float: left;
+	margin-top: 5px;
+	margin-left: -5px;
+	padding: 0 5px;
+	width: 100%;
+}
+#self-service .product-wrapper .quantity-in-units-input-field-wrapper.error {
+    background: #f3515c;
+    color: #fff;
+}
+#self-service .product-wrapper .quantity-in-units-input-field-wrapper input {
+	width: 50px;
+	text-align: right;
+}
+#self-service .product-wrapper .amount-wrapper .fas {
+	font-size: 30px;
+	margin-top: -1px;
 }

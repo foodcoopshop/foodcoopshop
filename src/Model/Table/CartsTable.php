@@ -126,6 +126,7 @@ class CartsTable extends AppTable
             ],
             'contain' => [
                 'OrderDetails',
+                'CartProductUnits',
                 'Products.Manufacturers',
                 'Products.DepositProducts',
                 'Products.UnitProducts',
@@ -293,6 +294,8 @@ class CartsTable extends AppTable
         $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $netPricePerPiece);
         $grossPrice = $grossPricePerPiece * $cartProduct->amount;
         $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $cartProduct->amount) * $cartProduct->amount;
+        $orderedQuantityInUnits = isset($cartProduct->cart_product_unit) ? $cartProduct->cart_product_unit->ordered_quantity_in_units : null;
+        
         $productData = [
             'cartProductId' => $cartProduct->id_cart_product,
             'productId' => $cartProduct->id_product,
@@ -304,7 +307,8 @@ class CartsTable extends AppTable
             'priceExcl' => $grossPrice - $tax,
             'tax' => $tax,
             'pickupDay' => $cartProduct->pickup_day,
-            'isStockProduct' => $cartProduct->product->is_stock_product
+            'isStockProduct' => $cartProduct->product->is_stock_product,
+            'orderedQuantityInUnits' => $orderedQuantityInUnits
         ];
         
         $deposit = 0;
@@ -323,10 +327,13 @@ class CartsTable extends AppTable
             $unitName = $cartProduct->product->unit_product->name;
             $unitAmount = $cartProduct->product->unit_product->amount;
             $priceInclPerUnit = $cartProduct->product->unit_product->price_incl_per_unit;
-            $quantityInUnits = $cartProduct->product->unit_product->quantity_in_units;
+            $quantityInUnits = is_null($orderedQuantityInUnits) ? $cartProduct->product->unit_product->quantity_in_units : $orderedQuantityInUnits;
             $newPriceIncl = round($priceInclPerUnit * $quantityInUnits / $unitAmount, 2);
             $netPricePerPiece = round($productsTable->getNetPrice($cartProduct->id_product, $newPriceIncl), 2);
             $price = $newPriceIncl * $cartProduct->amount;
+            if (!is_null($orderedQuantityInUnits)) {
+                $price = $newPriceIncl;
+            }
             $tax = ($newPriceIncl - $netPricePerPiece) * $cartProduct->amount;
             $productData['price'] = $price;
             $productData['tax'] = $tax;
@@ -342,7 +349,7 @@ class CartsTable extends AppTable
         $productData['unitAmount'] = $unitAmount;
         $productData['priceInclPerUnit'] = $priceInclPerUnit;
         $productData['productQuantityInUnits'] = $quantityInUnits * $cartProduct->amount;
-        $productData['quantityInUnits'] = $quantityInUnits;
+        $productData['quantityInUnits'] = isset($cartProduct->product->unit_product->quantity_in_units) ? $cartProduct->product->unit_product->quantity_in_units : 0;
 
         $productData = $this->addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece);
         
@@ -363,6 +370,7 @@ class CartsTable extends AppTable
         $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $netPricePerPiece);
         $grossPrice = $grossPricePerPiece * $cartProduct->amount;
         $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $cartProduct->amount) * $cartProduct->amount;
+        $orderedQuantityInUnits = isset($cartProduct->cart_product_unit) ? $cartProduct->cart_product_unit->ordered_quantity_in_units : null;
 
         $productData = [
             'cartProductId' => $cartProduct->id_cart_product,
@@ -375,7 +383,8 @@ class CartsTable extends AppTable
             'priceExcl' => $grossPrice - $tax,
             'tax' => $tax,
             'pickupDay' => $cartProduct->pickup_day,
-            'isStockProduct' => $cartProduct->product->is_stock_product
+            'isStockProduct' => $cartProduct->product->is_stock_product,
+            'orderedQuantityInUnits' => $orderedQuantityInUnits
         ];
 
         $deposit = 0;
@@ -397,10 +406,14 @@ class CartsTable extends AppTable
             }
             $unitAmount = $cartProduct->product_attribute->unit_product_attribute->amount;
             $priceInclPerUnit = $cartProduct->product_attribute->unit_product_attribute->price_incl_per_unit;
-            $quantityInUnits = $cartProduct->product_attribute->unit_product_attribute->quantity_in_units;
+            $quantityInUnits = is_null($orderedQuantityInUnits) ? $cartProduct->product_attribute->unit_product_attribute->quantity_in_units : $orderedQuantityInUnits;
             $newPriceIncl = round($priceInclPerUnit * $quantityInUnits / $unitAmount, 2);
             $netPricePerPiece = round($productsTable->getNetPrice($cartProduct->id_product, $newPriceIncl), 2);
-            $productData['price'] =  $newPriceIncl * $cartProduct->amount;
+            $price = $newPriceIncl * $cartProduct->amount;
+            if (!is_null($orderedQuantityInUnits)) {
+                $price = $newPriceIncl;
+            }
+            $productData['price'] =  $price;
             $productData['priceExcl'] =  $netPricePerPiece * $cartProduct->amount;
             $productData['tax'] = ($newPriceIncl - $netPricePerPiece) * $cartProduct->amount;
             $unity = Configure::read('app.pricePerUnitHelper')->getQuantityInUnitsStringForAttributes(
@@ -422,7 +435,7 @@ class CartsTable extends AppTable
         $productData['unitAmount'] = $unitAmount;
         $productData['priceInclPerUnit'] = $priceInclPerUnit;
         $productData['productQuantityInUnits'] = $quantityInUnits * $cartProduct->amount;
-        $productData['quantityInUnits'] = $quantityInUnits;
+        $productData['quantityInUnits'] = isset($cartProduct->product_attribute->unit_product_attribute->quantity_in_units) ? $cartProduct->product_attribute->unit_product_attribute->quantity_in_units : 0;
 
         $productData = $this->addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece);
 

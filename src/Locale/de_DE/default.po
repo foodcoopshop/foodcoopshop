@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-05-14 15:32+0200\n"
-"PO-Revision-Date: 2019-05-14 15:33+0200\n"
+"POT-Creation-Date: 2019-05-29 12:18+0200\n"
+"PO-Revision-Date: 2019-05-29 12:18+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.2\n"
 
 msgid "You_have_been_signed_out."
 msgstr "Du hast dich erfolgreich abgemeldet."
@@ -323,6 +323,9 @@ msgstr "ca."
 
 msgid "Pickup_day"
 msgstr "Abholtag"
+
+msgid "Please_provide_a_valid_ordered_quantity_in_units."
+msgstr "Bitte trage das entnommene Gewicht ein."
 
 msgid "Home"
 msgstr "Home"
@@ -921,17 +924,17 @@ msgstr "Dein Überziehungsrahmen von {0} ist erreicht."
 msgid "Errors_occurred."
 msgstr "Es sind Fehler aufgetreten."
 
-msgid "Instant_order_({0})_successfully_placed_for_{1}."
-msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt."
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
-msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: {2}"
-
 msgid "Your_order_has_been_placed_succesfully."
 msgstr "Deine Bestellung wurde erfolgreich abgeschlossen."
 
 msgid "{0}_has_placed_a_new_order_({1})."
 msgstr "{0} hat eine neue Bestellung getätigt ({1})."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}."
+msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
+msgstr "Die Sofort-Bestellung ({0}) für {1} wurde erfolgreich getätigt. Folgende Hersteller wurden darüber informiert: {2}"
 
 msgid "Notification_about_instant_order_order"
 msgstr "Benachrichtigung über Sofort-Bestellung"
@@ -1065,8 +1068,11 @@ msgstr "Bestellung: Kommentar geändert"
 msgid "Action_Log_Order_date_changed"
 msgstr "Bestellung: rückdatiert"
 
-msgid "Action_Log_Order_instant_order_placed"
+msgid "Action_Log_Instant_order_placed"
 msgstr "Bestellung: Sofort-Bestellung getätigt"
+
+msgid "Action_Log_Self_service_order_placed"
+msgstr "Bestellung: Selbstbedienung getätigt"
 
 msgid "Action_Log_Order_detail_product_price_changed"
 msgstr "Bestelltes Produkt: Preis geändert"
@@ -1740,9 +1746,6 @@ msgstr "um diese Plattform weiterhin verwenden zu können, lese bitte die geänd
 msgid "I_accept_the_{0}."
 msgstr "Ich akzeptiere die {0}."
 
-msgid "Cart"
-msgstr "Warenkorb"
-
 msgid "Load_past_orders"
 msgstr "Vergangene Bestellungen laden"
 
@@ -1815,6 +1818,9 @@ msgstr "ABHOLTAG"
 msgid "Print"
 msgstr "Drucken"
 
+msgid "Reset_search"
+msgstr "Suche zurücksetzen"
+
 msgid "Categories"
 msgstr "Kategorien"
 
@@ -1827,14 +1833,14 @@ msgstr "Admin-Bereich"
 msgid "Manufacturer_area"
 msgstr "Hersteller-Bereich"
 
-msgid "Self_service"
-msgstr "Selbstbedienung"
-
 msgid "To_change_your_profile_please_stop_the_instant_order_mode."
 msgstr "Um dein Profil zu ändern, beende bitte den Sofort-Bestellungsmodus."
 
 msgid "Signed_in"
 msgstr "Eingeloggt"
+
+msgid "Self_service"
+msgstr "Selbstbedienung"
 
 msgid "right_of_withdrawal"
 msgstr "Rücktrittsrecht"
@@ -1842,11 +1848,11 @@ msgstr "Rücktrittsrecht"
 msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
 msgstr "Ich nehme das {0} zur Kenntnis und akzeptiere dessen Ausschluss für leicht verderbliche Waren."
 
-msgid "General_terms_and_conditions_of_{0}"
-msgstr "AGB von {0}"
-
 msgid "general_terms_and_conditions"
 msgstr "AGB"
+
+msgid "General_terms_and_conditions_of_{0}"
+msgstr "AGB von {0}"
 
 msgid "Order_button"
 msgstr "Zahlungspflichtig bestellen"
@@ -1890,8 +1896,8 @@ msgstr "Hier kannst du dein Profil ändern"
 msgid "available"
 msgstr "verfügbar"
 
-msgid "Move_in_cart"
-msgstr "In den Warenkorb"
+msgid "Stock_product:_order_possible_only_by_{0}."
+msgstr "Lagerprodukt: nur über {0} bestellbar."
 
 msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
 msgstr "Lagerprodukt: nur über Sofort-Bestellung beim Abholen bestellbar."
@@ -1916,6 +1922,15 @@ msgstr "Sofort-Bestellung"
 
 msgid "from_which_{0}_%"
 msgstr "davon {0} %"
+
+msgid "Move_in_shopping_bag"
+msgstr "In die Einkaufstasche"
+
+msgid "Move_in_cart"
+msgstr "In den Warenkorb"
+
+msgid "Weight_in"
+msgstr "Gewicht in"
 
 msgid "The_manufacturer_has_reached_the_limit_to_pay_in_{0}."
 msgstr "Der Hersteller hat das Limit für die Bezahlung in Stunden erreicht."
@@ -1986,6 +2001,9 @@ msgstr "Hier kannst du das Produkt bearbeiten."
 msgid "route_search"
 msgstr "suche"
 
+msgid "Cart"
+msgstr "Warenkorb"
+
 msgid "homepage"
 msgstr "Startseite"
 
@@ -2009,6 +2027,15 @@ msgstr "Aktuelles von"
 
 msgid "Imprint"
 msgstr "Impressum"
+
+msgid "Search_by_name_id_or_barcode"
+msgstr "Suche nach Name, Produkt-ID oder Barcode"
+
+msgid "Shopping_bag"
+msgstr "Einkaufstasche"
+
+msgid "docs_route_self_service"
+msgstr "selbstbedienungs-modus"
 
 msgid "Finish_pickup"
 msgstr "Abholung abschließen"

@@ -100,7 +100,8 @@ class LocalizedController extends Controller
                 'removeFromCart' => __('Remove_from_cart?'),
                 'forEach' => __('for_each'),
                 'approx' => __('approx.'),
-                'PickupDay' => __('Pickup_day')
+                'PickupDay' => __('Pickup_day'),
+                'PleaseProvideAValidOrderedQuantityInUnits' => __('Please_provide_a_valid_ordered_quantity_in_units.')
             ],
             'mobile' => [
                 'home' => __('Home'),

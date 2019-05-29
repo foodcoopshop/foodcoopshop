@@ -12,6 +12,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 * [TheFox](https://github.com/TheFox)
 
 ### Neue Funktionen
+- Neuer Selbstbedienungs-Modus für Lagerprodukte - Details in der [Online-Dokumentation](https://foodcoopshop.github.io/de/selbstbedienungs-modus). [PR#355](https://github.com/foodcoopshop/foodcoopshop/pull/355) / [PR#359](https://github.com/foodcoopshop/foodcoopshop/pull/359) / [PR#361](https://github.com/foodcoopshop/foodcoopshop/pull/361) / [I#338](https://github.com/foodcoopshop/foodcoopshop/issues/338) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/AndreasEgger"><img src="https://github.com/AndreasEgger.png" width="20"></a>
 - Umsatzstatistik für Hersteller als Balkendiagramm. Für Admins sind auch die Gesamtumsätze aller Hersteller als Grafik sichtbar. [PR#350](https://github.com/foodcoopshop/foodcoopshop/pull/350) / [PR#365](https://github.com/foodcoopshop/foodcoopshop/pull/365) / [I#349](https://github.com/foodcoopshop/foodcoopshop/issues/349) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
 - Hersteller können unter "Bestellungen / Bestelllisten" die Bestelllisten nun auch selbst Herunterladen, sollte der E-Mail-Versand einmal fehlschlagen (z.B. Mailbox voll). [PR#348](https://github.com/foodcoopshop/foodcoopshop/pull/348) / [I#316](https://github.com/foodcoopshop/foodcoopshop/issues/316) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
 - Mitglieder können ab sofort ein Profilbild hochladen, welches in der Mitglieder-Liste mittels Mouseover angezeigt wird. [PR#345](https://github.com/foodcoopshop/foodcoopshop/pull/345) / [I#337](https://github.com/foodcoopshop/foodcoopshop/issues/337) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
@@ -20,7 +21,8 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Übersetzung auf Polnisch / Translation into Polish. [PR#354](https://github.com/foodcoopshop/foodcoopshop/pull/354) <a href="https://github.com/firerain-tgz"><img src="https://github.com/firerain-tgz.png" width="20"></a> 
 
 ### Für Entwickler
-- Integration des statischen Quellcode-Analyse-Tools [PHPStan](https://github.com/phpstan/phpstan) in Travis-CI. / [PR#363](https://github.com/foodcoopshop/foodcoopshop/pull/363) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Integration des statischen Quellcode-Analyse-Tools [PHPStan](https://github.com/phpstan/phpstan) in Travis-CI. [PR#363](https://github.com/foodcoopshop/foodcoopshop/pull/363) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Migrations können nun viel einfacher in die bestehenden Datenbank-Dumps übertragen werden. [PR#361](https://github.com/foodcoopshop/foodcoopshop/pull/361) / [I#246](https://github.com/foodcoopshop/foodcoopshop/issues/246) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
 ## v2.4.1 / 2018-03-27 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.4.0...v2.4.1)

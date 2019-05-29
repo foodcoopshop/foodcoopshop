@@ -147,6 +147,16 @@
     div.third-column .entity-wrapper {
         margin-bottom: 0 ! important;
     }
+    .product-wrapper .amount-wrapper .left-of-input {
+        display: none;
+    }
+    .product-wrapper .amount-wrapper {
+        width: 100%;
+    }
+    .product-wrapper .amount-wrapper .fas {
+        font-size: 30px;
+        margin-top: -1px;
+    }
     .manufacturer-wrapper div.third-column a.btn {
         margin-top: 35px ! important;
         float: right ! important;
@@ -220,7 +230,7 @@
         border-color: transparent ! important;
     }
     .sb-left #product-search input {
-        width: 80% ! important;
+        width: 70% ! important;
         padding-left: 8px ! important;
         color: #333;
     }

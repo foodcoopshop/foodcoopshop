@@ -77,12 +77,14 @@ class PricePerUnitHelper extends Helper
         return '<div class="price">' . $this->MyNumber->formatAsCurrency($priceInclPerUnit * $quantityInUnits / $amount) . '</div> <div class="price-asterisk">*</div>';
     }
 
-    public function getPricePerUnitInfoText($priceInclPerUnit, $unitName, $unitAmount)
+    public function getPricePerUnitInfoText($priceInclPerUnit, $unitName, $unitAmount, $showAdaptionMessage=true)
     {
         $infoText = '<div class="line">';
         $infoText .= '<span class="additional-price-info">';
-        $infoText .= ' * ' . __('Base_price') . ': ' . $this->getPricePerUnitBaseInfo($priceInclPerUnit, $unitName, $unitAmount);
-        $infoText .= ', ' . __('price_will_be_eventually_adapted.');
+        $infoText .= ' * ' . __('Base_price') . ': ' . $this->getPricePerUnitBaseInfoForCart($priceInclPerUnit, $unitName, $unitAmount);
+        if ($showAdaptionMessage) {
+            $infoText .= ', ' . __('price_will_be_eventually_adapted.');
+        }
         $infoText .= '</span>';
         $infoText .= '</div>';
         return $infoText;
@@ -90,7 +92,13 @@ class PricePerUnitHelper extends Helper
 
     public function getPricePerUnitBaseInfo($priceInclPerUnit, $unitName, $unitAmount)
     {
-        return $this->MyNumber->formatAsCurrency($priceInclPerUnit) . ' / ' . ($unitAmount > 1 ? $this->MyNumber->formatAsDecimal($unitAmount, 0) . ' ' : '') . $unitName;
+        return $this->MyNumber->formatAsCurrency($priceInclPerUnit) . ' / ' . ($unitAmount > 1 ? $this->MyNumber->formatAsDecimal($unitAmount, 0) . ' ' : '') . $unitName;
+    }
+
+    public function getPricePerUnitBaseInfoForCart($priceInclPerUnit, $unitName, $unitAmount)
+    {
+        // unit-amount must be included non-formatted for locale-based usage in cart.js
+        return '<span class="price-incl-per-unit">'.$this->MyNumber->formatAsCurrency($priceInclPerUnit) . '</span> / <span class="unit-amount">'.($unitAmount > 1 ? $unitAmount : '').'</span>' . ($unitAmount > 1 ? $this->MyNumber->formatAsDecimal($unitAmount, 0) . ' ' : '') . '<span class="unit-name">' . $unitName . '</span>';
     }
 
 }

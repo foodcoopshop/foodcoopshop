@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-14 15:32+0200\n"
+"POT-Creation-Date: 2019-05-29 12:18+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -321,6 +321,9 @@ msgid "approx."
 msgstr ""
 
 msgid "Pickup_day"
+msgstr ""
+
+msgid "Please_provide_a_valid_ordered_quantity_in_units."
 msgstr ""
 
 msgid "Home"
@@ -920,16 +923,16 @@ msgstr ""
 msgid "Errors_occurred."
 msgstr ""
 
-msgid "Instant_order_({0})_successfully_placed_for_{1}."
-msgstr ""
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
-msgstr ""
-
 msgid "Your_order_has_been_placed_succesfully."
 msgstr ""
 
 msgid "{0}_has_placed_a_new_order_({1})."
+msgstr ""
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}."
+msgstr ""
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
 msgstr ""
 
 msgid "Notification_about_instant_order_order"
@@ -1064,7 +1067,10 @@ msgstr ""
 msgid "Action_Log_Order_date_changed"
 msgstr ""
 
-msgid "Action_Log_Order_instant_order_placed"
+msgid "Action_Log_Instant_order_placed"
+msgstr ""
+
+msgid "Action_Log_Self_service_order_placed"
 msgstr ""
 
 msgid "Action_Log_Order_detail_product_price_changed"
@@ -1739,9 +1745,6 @@ msgstr ""
 msgid "I_accept_the_{0}."
 msgstr ""
 
-msgid "Cart"
-msgstr ""
-
 msgid "Load_past_orders"
 msgstr ""
 
@@ -1814,6 +1817,9 @@ msgstr ""
 msgid "Print"
 msgstr ""
 
+msgid "Reset_search"
+msgstr ""
+
 msgid "Categories"
 msgstr ""
 
@@ -1826,13 +1832,13 @@ msgstr ""
 msgid "Manufacturer_area"
 msgstr ""
 
-msgid "Self_service"
-msgstr ""
-
 msgid "To_change_your_profile_please_stop_the_instant_order_mode."
 msgstr ""
 
 msgid "Signed_in"
+msgstr ""
+
+msgid "Self_service"
 msgstr ""
 
 msgid "right_of_withdrawal"
@@ -1841,10 +1847,10 @@ msgstr ""
 msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
 msgstr ""
 
-msgid "General_terms_and_conditions_of_{0}"
+msgid "general_terms_and_conditions"
 msgstr ""
 
-msgid "general_terms_and_conditions"
+msgid "General_terms_and_conditions_of_{0}"
 msgstr ""
 
 msgid "Order_button"
@@ -1889,7 +1895,7 @@ msgstr ""
 msgid "available"
 msgstr ""
 
-msgid "Move_in_cart"
+msgid "Stock_product:_order_possible_only_by_{0}."
 msgstr ""
 
 msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
@@ -1914,6 +1920,15 @@ msgid "Instant_order"
 msgstr ""
 
 msgid "from_which_{0}_%"
+msgstr ""
+
+msgid "Move_in_shopping_bag"
+msgstr ""
+
+msgid "Move_in_cart"
+msgstr ""
+
+msgid "Weight_in"
 msgstr ""
 
 msgid "The_manufacturer_has_reached_the_limit_to_pay_in_{0}."
@@ -1985,6 +2000,9 @@ msgstr ""
 msgid "route_search"
 msgstr ""
 
+msgid "Cart"
+msgstr ""
+
 msgid "homepage"
 msgstr ""
 
@@ -2007,6 +2025,15 @@ msgid "News_from"
 msgstr ""
 
 msgid "Imprint"
+msgstr ""
+
+msgid "Search_by_name_id_or_barcode"
+msgstr ""
+
+msgid "Shopping_bag"
+msgstr ""
+
+msgid "docs_route_self_service"
 msgstr ""
 
 msgid "Finish_pickup"

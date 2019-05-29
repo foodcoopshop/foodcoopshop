@@ -29,6 +29,9 @@ class CartProductsTable extends AppTable
         $this->hasOne('OrderDetails', [
             'foreignKey' => 'id_cart_product'
         ]);
+        $this->hasOne('CartProductUnits', [
+            'foreignKey' => 'id_cart_product'
+        ]);
         $this->belongsTo('Products', [
             'foreignKey' => 'id_product'
         ]);
@@ -47,7 +50,7 @@ class CartProductsTable extends AppTable
      * @param int $amount
      * @return array || boolean
      */
-    public function add($appAuth, $productId, $attributeId, $amount)
+    public function add($appAuth, $productId, $attributeId, $amount, $orderedQuantityInUnits)
     {
 
         $initialProductId = $this->Products->getCompositeProductIdAndAttributeId($productId, $attributeId);
@@ -175,11 +178,27 @@ class CartProductsTable extends AppTable
             'id_product_attribute' => $attributeId,
             'id_cart' => $cart['Cart']['id_cart']
         ];
+        
+        $options = [];
+        if ($orderedQuantityInUnits > 0) {
+            if (!is_null($existingCartProduct['orderedQuantityInUnits'])) {
+                $orderedQuantityInUnits += $existingCartProduct['orderedQuantityInUnits'];
+            }
+            $cartProduct2save['cart_product_unit'] = [
+                'ordered_quantity_in_units' => $orderedQuantityInUnits
+            ];
+            $options = [
+                'associated' => [
+                    'CartProductUnits'
+                ]
+            ];
+        }
+        
         if ($existingCartProduct) {
             $oldEntity = $this->get($existingCartProduct['cartProductId']);
-            $entity = $this->patchEntity($oldEntity, $cartProduct2save);
+            $entity = $this->patchEntity($oldEntity, $cartProduct2save, $options);
         } else {
-            $entity = $this->newEntity($cartProduct2save);
+            $entity = $this->newEntity($cartProduct2save, $options);
         }
         $this->save($entity);
 
@@ -273,6 +292,9 @@ class CartProductsTable extends AppTable
             unset($cartProduct2remove['CartProducts.id_product_attribute']);
         }
         
-        return $this->deleteAll($cartProduct2remove);
+        $result = $this->deleteAll($cartProduct2remove);
+        $result |= $this->CartProductUnits->deleteAll(['id_cart_product' => $cartProducts->id_cart_product]);
+        
+        return $result;
     }
 }

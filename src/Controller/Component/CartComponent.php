@@ -313,7 +313,7 @@ class CartComponent extends Component
                 'cartProductId' => $cartProduct['cartProductId'],
             ];
             
-            if ($this->AppAuth->isInstantOrderMode()) {
+            if ($this->AppAuth->isInstantOrderMode() || $this->AppAuth->isSelfServiceModeByUrl()) {
                 $orderDetail2save['pickup_day'] = $cartProduct['pickupDay'];
             }
             
@@ -442,27 +442,40 @@ class CartComponent extends Component
             $this->AppAuth->setCart($cart);
             $cart['Cart'] = $this->markAsSaved(); // modified timestamp is needed later on!
             
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-            if ($this->AppAuth->isInstantOrderMode()) {
-                if (empty($manufacturersThatReceivedInstantOrderNotification)) {
-                    $message = __('Instant_order_({0})_successfully_placed_for_{1}.', [
-                        Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
-                        '<b>' . $this->_registry->getController()->request->getSession()->read('Auth.instantOrderCustomer')->name . '</b>'
-                    ]);
-                } else {
-                    $message = __('Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}', [
-                        Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
-                        '<b>' . $this->_registry->getController()->request->getSession()->read('Auth.instantOrderCustomer')->name . '</b>',
-                        '<b>' . join(', ', $manufacturersThatReceivedInstantOrderNotification) . '</b>'
-                    ]);
-                }
-                $message .= '<br />' . __('Pickup_day') . ': <b>' . Configure::read('app.timeHelper')->getDateFormattedWithWeekday(Configure::read('app.timeHelper')->getCurrentDay()).'</b>';
-                $this->ActionLog->customSave('instant_order_added', $this->AppAuth->getUserId(), 0, '', $message);
-            } else {
-                $message = __('Your_order_has_been_placed_succesfully.');
-                $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
-                $this->ActionLog->customSave('customer_order_finished', $this->AppAuth->getUserId(), 0, '', $messageForActionLog);
+            $cartType = $this->AppAuth->getCartType();
+            
+            switch($cartType) {
+                case $this->Cart::CART_TYPE_WEEKLY_RHYTHM;
+                    $actionLogType = 'customer_order_finished';
+                    $message = __('Your_order_has_been_placed_succesfully.');
+                    $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
+                    break;
+                case $this->Cart::CART_TYPE_INSTANT_ORDER;
+                    $actionLogType = 'instant_order_added';
+                    if (empty($manufacturersThatReceivedInstantOrderNotification)) {
+                        $message = __('Instant_order_({0})_successfully_placed_for_{1}.', [
+                            Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
+                            '<b>' . $this->_registry->getController()->request->getSession()->read('Auth.instantOrderCustomer')->name . '</b>'
+                        ]);
+                    } else {
+                        $message = __('Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}', [
+                            Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
+                            '<b>' . $this->_registry->getController()->request->getSession()->read('Auth.instantOrderCustomer')->name . '</b>',
+                            '<b>' . join(', ', $manufacturersThatReceivedInstantOrderNotification) . '</b>'
+                        ]);
+                    }
+                    $message .= '<br />' . __('Pickup_day') . ': <b>' . Configure::read('app.timeHelper')->getDateFormattedWithWeekday(Configure::read('app.timeHelper')->getCurrentDay()).'</b>';
+                    $messageForActionLog = $message;
+                    break;
+                case $this->Cart::CART_TYPE_SELF_SERVICE;
+                    $actionLogType = 'self_service_order_added';
+                    $message = __('Your_order_has_been_placed_succesfully.');
+                    $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
+                    break;
             }
+            
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), 0, '', $messageForActionLog);
             $this->_registry->getController()->Flash->success($message);
             
             $this->sendConfirmationEmailToCustomer($cart, $products);

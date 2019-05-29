@@ -498,15 +498,17 @@ body.superadmin .product-wrapper .heading h4 {
     color: #719f41;
     font-size: 20px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     float: left;
+}
+.product-wrapper .price-asterisk {
+	margin-bottom: 0;
 }
 .product-wrapper .price-asterisk {
 	margin-left: 5px;
 }
 .product-wrapper .additional-price-info {
 	float: left;
-	margin-top: 5px;
 	line-height: 17px;
 	color: #969696;
 }
@@ -527,12 +529,28 @@ body.superadmin .product-wrapper .heading h4 {
 }
 .product-wrapper .amount-wrapper {
     line-height: 28px;
+    margin-top: 5px;
     margin-bottom: 10px;
     float: left;
 }
 .product-wrapper .amount-wrapper .left-of-input {
     float: left;
     margin-right: 4px;
+}
+.product-wrapper .amount-switcher-minus .fas {
+	margin-right: 4px;
+}
+.product-wrapper .amount-switcher-plus .fas {
+    margin-left: 4px;
+}
+.product-wrapper .amount-wrapper .fas {
+   color: #ccc;
+   float: left;
+   margin-top: 6px;
+   font-size: 17px;
+}
+.product-wrapper .amount-wrapper .fas:hover {
+    color: #d6d4d4 ! important;
 }
 .product-wrapper .amount-wrapper input {
     float:left;
@@ -543,7 +561,7 @@ body.superadmin .product-wrapper .heading h4 {
 }
 .product-wrapper .amount-wrapper .right-of-input {
     float: left;
-    margin-left: 6px;
+    clear: both;
 }
 .product-wrapper span.not-available-info {
     display: block;
@@ -825,6 +843,9 @@ body.carts.detail #load-last-order-details,
 .cart span.amount .btn:hover {
     color: #d6d4d4 ! important;
 }
+.cart .price-per-unit {
+	display: none;
+}
 body.carts.detail .cart:not(#cart) span.product-name-wrapper {
     width: 210px;
 }
@@ -1047,7 +1068,9 @@ body.carts.detail .cart:not(#cart) .btn-success.btn-order {
     border-radius: 0;
     float: right;
 }
-
+#product-search a.btn {
+	margin-left: 1px;
+}
 .blog-wrapper {
     margin-bottom: 20px;
     height: 270px;
@@ -1211,7 +1234,4 @@ body.blog_posts.detail p.neighbors {
 }
 body.blog_posts.detail p.neighbors a {
     width: 265px;
-}
-#cart .fa-shopping-bag {
-	color: #f3515c;
 }

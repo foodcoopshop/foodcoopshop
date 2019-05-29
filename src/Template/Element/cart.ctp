@@ -19,6 +19,10 @@ if (!$appAuth->user() || $appAuth->isManufacturer() || !Configure::read('appDb.F
     return;
 }
 
+$this->element('addScript', ['script' =>
+    Configure::read('app.jsNamespace').".Cart.setCartButtonIcon('".$cartButtonIcon."');"
+]);
+
 if ($appAuth->Cart->getProducts() !== null) {
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".Cart.initCartProducts('".addslashes(json_encode($appAuth->Cart->getProducts()))."');"
@@ -45,9 +49,9 @@ if ($appAuth->Cart->getProducts() !== null) {
 <div id="cart" class="box cart">
     
     <h3>
-    	<i class="fas fa-shopping-cart"></i>
-    	<?php echo __('Cart'); ?>
-    	<a class="question" target="_blank" href="<?php echo $this->Html->getDocsUrl(__('docs_route_order_handling')); ?>"><i class="far fa-question-circle"></i></a>
+    	<i class="fa <?php echo $icon; ?>"></i>
+    	<?php echo $name; ?>
+    	<a class="question" target="_blank" href="<?php echo $docsLink; ?>"><i class="far fa-question-circle"></i></a>
 	</h3>
     
     <div class="inner">

@@ -23,9 +23,13 @@ class SlugHelper extends Helper
 {
 
 
-    public function getSelfService()
+    public function getSelfService($keyword = '')
     {
-        return '/'.__('route_self_service');
+        $url = '/'.__('route_self_service');
+        if ($keyword != '') {
+            $url .= '?keyword=' . $keyword;
+        }
+        return $url;
     }
     
     public function getActionLogsList()

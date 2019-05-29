@@ -331,7 +331,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
      */
     protected function addProductToCart($productId, $amount)
     {
-        $this->httpClient->ajaxPost('/warenkorb/ajaxAdd', [
+        $this->httpClient->ajaxPost('/warenkorb/ajaxAdd/', [
             'productId' => $productId,
             'amount' => $amount
         ]);

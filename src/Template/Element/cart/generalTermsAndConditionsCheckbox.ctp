@@ -24,17 +24,21 @@ echo '<div id="general-terms-and-conditions" class="featherlight-overlay">';
     echo $this->element('legal/'.I18n::getLocale().'/generalTermsAndConditions');
 echo '</div>';
 
-$generalTermsAndConditionsLinks = [];
+$initialGeneralTermsAndConditionLink = '<a href="#general-terms-and-conditions" class="open-with-featherlight">'.__('general_terms_and_conditions').'</a>';
+$generalTermsAndConditionsLinks = [$initialGeneralTermsAndConditionLink];
+$customGeneralTermsAndConditionsLinks = [];
+
 $uniqueManufacturers = $appAuth->Cart->getUniqueManufacturers();
 foreach($uniqueManufacturers as $manufacturerId => $manufacturer) {
     $src = $this->MyHtml->getManufacturerTermsOfUseSrc($manufacturerId);
     if ($src !== false) {
-        $generalTermsAndConditionsLinks[] = '<a target="_blank" href="'.$src.'">' . __('General_terms_and_conditions_of_{0}', [$manufacturer['name']]).'</a>';
+        $customGeneralTermsAndConditionsLinks[] = '<a target="_blank" href="'.$src.'">' . __('General_terms_and_conditions_of_{0}', [$manufacturer['name']]).'</a>';
     }
 }
-if (count($uniqueManufacturers) > count($generalTermsAndConditionsLinks)) {
-    array_unshift($generalTermsAndConditionsLinks, '<a href="#general-terms-and-conditions" class="open-with-featherlight">'.__('general_terms_and_conditions').'</a>');
+if (count($customGeneralTermsAndConditionsLinks) == count($uniqueManufacturers) && count($customGeneralTermsAndConditionsLinks) > 0) {
+    array_shift($generalTermsAndConditionsLinks);
 }
+$generalTermsAndConditionsLinks = array_merge($generalTermsAndConditionsLinks, $customGeneralTermsAndConditionsLinks);
 $label = __('I_accept_the_{0}', [join(', ', $generalTermsAndConditionsLinks)]);
 
 echo $this->Form->control('Carts.general_terms_and_conditions_accepted', [

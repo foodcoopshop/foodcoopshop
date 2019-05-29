@@ -3,12 +3,12 @@
  * Dump DB structure and data for installation
  */
 if (!defined('DATASOURCE')) {
-    define('DATASOURCE', 'TEST');
+    define('DATASOURCE', 'PROD');
 }
 
 if (!defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
 }
 
-// do the magic
+$locale= $argv[1];
 include realpath(__DIR__) . DS . 'db_dump_common.php';

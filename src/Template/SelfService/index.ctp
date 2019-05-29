@@ -20,47 +20,61 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForImages('.product-wrapper a.lightbox');".
     Configure::read('app.jsNamespace').".Helper.bindToggleLinks();".
     Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".
+    Configure::read('app.jsNamespace').".Helper.initAmountSwitcher();".
     Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
     Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();".
+    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('.input.checkbox label a.open-with-featherlight');".
     Configure::read('app.jsNamespace').".Cart.initCartFinish();"
 ]);
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 ?>
 
-<div id="products">
-	<div class="header">
-    	<h2><a href="/<?php echo __('route_self_service'); ?>"><?php echo __('Self_service_for_stock_products'); ?></a></h2>
-    	<h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
-    	<?php echo $this->element('productSearch', ['action' => __('route_self_service')]); ?>
-    	<hr />
-    </div>
-    <?php
-    foreach ($products as $product) {
-        echo $this->element('product/product', [
-            'product' => $product,
-            'showProductDetailLink' => false,
-            'showManufacturerDetailLink' => false
-        ]);
-    }
-?>
-</div>
-
-<div class="right-box">
-    <?php echo $this->element('cart', [
-        'selfServiceModeEnabled' => true,
-        'showLoadLastOrderDetailsDropdown' => false,
-        'showCartDetailButton' => false,
-        'showFutureOrderDetails' => false
-    ]); ?>
-    <?php
-        echo $this->Form->create($cart, [
-            'class' => 'fcs-form',
-            'id' => 'SelfServiceForm',
-            'url' => $this->Slug->getSelfService()
-        ]);
+<div id="content"> <?php // #content is needed for showing flashMessage as #content is hardcoded in foodcoopshop.Helper.showFlashMessage() ?>
+    <div id="products">
+    	<div class="header">
+        	<h2><?php echo __('Self_service_for_stock_products'); ?></h2>
+        	<h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
+        	<?php echo $this->element('productSearch', [
+        	    'action' => __('route_self_service'),
+        	    'placeholder' => __('Search_by_name_id_or_barcode'),
+        	    'resetSearchUrl' => $this->Slug->getSelfService()
+        	]); ?>
+        	<hr />
+        </div>
+        <?php
+        foreach ($products as $product) {
+            echo $this->element('product/product', [
+                'product' => $product,
+                'showProductDetailLink' => false,
+                'showManufacturerDetailLink' => false
+            ]);
+        }
     ?>
-    <button type="submit" class="btn btn-success btn-order">
-		<i class="fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
-	</button>
-	<?php echo $this->Form->end(); ?>
+    </div>
+    
+    <div class="right-box">
+        <?php echo $this->element('cart', [
+            'selfServiceModeEnabled' => true,
+            'showLoadLastOrderDetailsDropdown' => false,
+            'showCartDetailButton' => false,
+            'showFutureOrderDetails' => false,
+            'icon' => 'fa-shopping-bag',
+            'name' => __('Shopping_bag'),
+            'docsLink' => $this->Html->getDocsUrl(__('docs_route_self_service')),
+            'cartButtonIcon' => $appAuth->isSelfServiceModeByUrl() ? 'fa-plus-circle' : 'fa-cart-plus'
+        ]); ?>
+        <?php
+            echo $this->Form->create($cart, [
+                'class' => 'fcs-form',
+                'id' => 'SelfServiceForm',
+                'url' => $this->Slug->getSelfService()
+            ]);
+            echo $this->element('cart/generalTermsAndConditionsCheckbox');
+            echo $this->element('cart/cancellationTermsCheckbox');
+        ?>
+        <button type="submit" class="btn btn-success btn-order">
+    		<i class="fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
+    	</button>
+    	<?php echo $this->Form->end(); ?>
+    </div>
 </div>

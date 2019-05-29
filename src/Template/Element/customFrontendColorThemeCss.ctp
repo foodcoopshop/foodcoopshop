@@ -88,11 +88,12 @@ use Cake\Core\Configure;
     <?php if ($isMobile) { ?>
         @media only screen and (max-device-width: 768px) {
             #responsive-header a,
-            :not(button)> i.fas:not(.fa-star):not(.fa-circle-notch):not(.fa-tags) {
+            :not(button)> i.fas:not(.fa-star):not(.fa-circle-notch):not(.fa-tags):not(.fa-shopping-bag):not(.fa-minus-circle):not(.fa-plus-circle) {
                 color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
             }
             .sb-slidebar i.fas:not(.gold),
             .sb-slidebar i.fas.fa-tags,
+            .sb-slidebar i.fas.fa-shopping-bag,
             a.btn i.fas:not(.fa-plus-circle):not(.fa-minus-circle):not(.fa-times-circle):not(.gold):not(.fa-pencil-alt):not(.fa-circle-notch) {
                 color: #fff ! important;
             }

@@ -23,7 +23,11 @@ echo $this->element('layout/header');
     <div id="header">
         <?php echo $this->element('logo'); ?>
         <?php if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) { ?>
-            <?php echo $this->element('productSearch', ['action' => __('route_search')]); ?>
+            <?php echo $this->element('productSearch', [
+                'action' => __('route_search'),
+                'placeholder' =>  __('Search'),
+                'resetSearchUrl' => !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $this->Slug->getAllProducts()
+            ]); ?>
         <?php } ?>
         <?php echo $this->element('userMenu'); ?>
         <?php echo $this->element('mainMenu'); ?>
@@ -48,7 +52,11 @@ echo $this->element('layout/header');
                 'selfServiceModeEnabled' => false,
                 'showLoadLastOrderDetailsDropdown' => true,
                 'showCartDetailButton' => true,
-                'showFutureOrderDetails' => true
+                'showFutureOrderDetails' => true,
+                'icon' => 'fa-shopping-cart',
+                'name' => __('Cart'),
+                'docsLink' => $this->Html->getDocsUrl(__('docs_route_order_handling')),
+                'cartButtonIcon' => $appAuth->isSelfServiceModeByUrl() ? 'fa-plus-circle' : 'fa-cart-plus'
             ]); ?>
             <?php echo $this->element('infoBox'); ?>
         </div>
@@ -56,7 +64,9 @@ echo $this->element('layout/header');
     
     <div id="footer">
         <div class="inner-footer">
-            <?php echo $this->element('footer'); ?>
+            <?php
+                echo $this->element('footer');
+            ?>
         </div>
     </div>
     
@@ -67,5 +77,7 @@ echo $this->element('layout/header');
 <div class="sc"></div>
 
 <?php
-echo $this->element('layout/footer');
+    echo $this->element('layout/footer', [
+        'mobileInitFunction' => Configure::read('app.jsNamespace').".Mobile.initMenusFrontend();"
+    ]);
 ?>
