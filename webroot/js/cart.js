@@ -107,7 +107,7 @@ foodcoopshop.Cart = {
         }
         
         if (orderedQuantityInUnits > 0) {
-            newUnityHtml = foodcoopshop.Helper.getStringAsFloat(oldUnity.html()) + orderedQuantityInUnits;
+            newUnityHtml = foodcoopshop.Helper.getStringAsFloat(oldUnity.html()) + (orderedQuantityInUnits * amount);
             newUnityHtml = newUnityHtml.toLocaleString();
             newUnityHtml += ' ' + unitName;
         }
@@ -208,7 +208,7 @@ foodcoopshop.Cart = {
             var orderedQuantityInUnitsWrapper = productWrapper.find('.entity-wrapper.active .quantity-in-units-input-field-wrapper');
             if (orderedQuantityInUnitsWrapper.length > 0) {
                 orderedQuantityInUnitsWrapper.removeClass('error');
-                orderedQuantityInUnits = foodcoopshop.Helper.getStringAsFloat(orderedQuantityInUnitsWrapper.find('input').val());
+                orderedQuantityInUnits = foodcoopshop.Helper.getStringAsFloat(orderedQuantityInUnitsWrapper.find('input').val()) * amount;
             }
 
             var unitName = '';
