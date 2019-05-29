@@ -236,7 +236,7 @@ foodcoopshop.Mobile = {
             $(this).html($(this).html().replace(regexp, foodcoopshop.LocalizedJs.mobile.show));
         });
         $('.blog-post-wrapper div.third-column a.btn').html(foodcoopshop.LocalizedJs.mobile.show);
-        $('.entity-wrapper .btn').html('<i class="fas fa-cart-plus"></i>');
+        $('.entity-wrapper .btn').html('<i class="fas fa-lg fa-cart-plus"></i>');
         $('#cart .btn-success').html('<i class="fas fa-shopping-cart"></i>');
 
         // add info box to right side bar

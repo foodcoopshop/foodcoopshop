@@ -153,6 +153,10 @@
     .product-wrapper .amount-wrapper {
         width: 100%;
     }
+    .product-wrapper .amount-wrapper .fas {
+        font-size: 30px;
+        margin-top: -1px;
+    }
     .manufacturer-wrapper div.third-column a.btn {
         margin-top: 35px ! important;
         float: right ! important;

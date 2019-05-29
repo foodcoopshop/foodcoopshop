@@ -498,8 +498,11 @@ body.superadmin .product-wrapper .heading h4 {
     color: #719f41;
     font-size: 20px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     float: left;
+}
+.product-wrapper .price-asterisk {
+	margin-bottom: 0;
 }
 .product-wrapper .price-asterisk {
 	margin-left: 5px;
@@ -526,6 +529,7 @@ body.superadmin .product-wrapper .heading h4 {
 }
 .product-wrapper .amount-wrapper {
     line-height: 28px;
+    margin-top: 5px;
     margin-bottom: 10px;
     float: left;
 }
