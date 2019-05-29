@@ -292,6 +292,9 @@ class CartProductsTable extends AppTable
             unset($cartProduct2remove['CartProducts.id_product_attribute']);
         }
         
-        return $this->deleteAll($cartProduct2remove);
+        $result = $this->deleteAll($cartProduct2remove);
+        $result |= $this->CartProductUnits->deleteAll(['id_cart_product' => $cartProducts->id_cart_product]);
+        
+        return $result;
     }
 }
