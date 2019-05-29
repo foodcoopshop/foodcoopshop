@@ -120,10 +120,11 @@ foodcoopshop.Cart = {
         var tmpNewPrice = price * amount;
         
         if (orderedQuantityInUnits > 0) {
-            tmpNewPrice =
-                foodcoopshop.Helper.getCurrencyAsFloat(productContainer.find('span.price-incl-per-unit').html()) *
-                orderedQuantityInUnits /
-                foodcoopshop.Helper.getStringAsFloat(productContainer.find('span.unit-amount').html());
+            tmpNewPrice = foodcoopshop.Cart.getPriceBasedOnPricePerUnit(
+                    foodcoopshop.Helper.getCurrencyAsFloat(productContainer.find('span.price-incl-per-unit').html()),
+                    orderedQuantityInUnits,
+                    foodcoopshop.Helper.getStringAsFloat(productContainer.find('span.unit-amount').html())
+            );
         }
         
         var newPrice = foodcoopshop.Helper.getCurrencyAsFloat(oldPrice.html()) + tmpNewPrice;
@@ -158,6 +159,10 @@ foodcoopshop.Cart = {
             );
             oldTimebasedCurrencyHours.html(foodcoopshop.TimebasedCurrency.formatFloatAsTimebasedCurrency(newTimebasedCurrencyHours));
         }
+    },
+    
+    getPriceBasedOnPricePerUnit : function(priceInclPerUnit, orderedQuantityInUnits, unitAmount) {
+        return priceInclPerUnit * orderedQuantityInUnits / unitAmount;
     },
 
     initAddToCartButton: function () {
@@ -208,11 +213,12 @@ foodcoopshop.Cart = {
                 unitName = unitNameElement.html();
             }
 
-            var unitAmount = '';
+            var unitAmount = 1;
             var unitAmountElement = productWrapper.find('.entity-wrapper.active .unit-amount'); 
-            if (unitAmountElement.length > 0) {
+            if (unitAmountElement.length > 0 && unitAmountElement.html() != '') {
                 unitAmount = foodcoopshop.Helper.getStringAsFloat(unitAmountElement.html());
             }
+            
             var priceInclPerUnit = '';
             var priceInclPerUnitElement = productWrapper.find('.entity-wrapper.active .price-incl-per-unit'); 
             if (priceInclPerUnitElement.length > 0) {
@@ -220,9 +226,9 @@ foodcoopshop.Cart = {
             }
 
             if (orderedQuantityInUnits > 0) {
-                price = priceInclPerUnit * orderedQuantityInUnits / unitAmount;
+                price = foodcoopshop.Cart.getPriceBasedOnPricePerUnit(priceInclPerUnit, orderedQuantityInUnits, unitAmount);
             }
-
+            
             var timebasedCurrencyElement = productWrapper.find('.entity-wrapper.active .timebasedCurrencySeconds');
             var timebasedCurrencyHours = 0;
             if (timebasedCurrencyElement.length > 0) {
