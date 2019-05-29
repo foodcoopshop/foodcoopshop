@@ -205,8 +205,10 @@ foodcoopshop.Cart = {
             }
 
             var orderedQuantityInUnits;
-            if (productWrapper.find('.entity-wrapper.active .quantity-in-units-input-field-wrapper').length > 0) {
-                orderedQuantityInUnits = foodcoopshop.Helper.getStringAsFloat(productWrapper.find('.entity-wrapper.active .quantity-in-units-input-field-wrapper input').val());
+            var orderedQuantityInUnitsWrapper = productWrapper.find('.entity-wrapper.active .quantity-in-units-input-field-wrapper');
+            if (orderedQuantityInUnitsWrapper.length > 0) {
+                orderedQuantityInUnitsWrapper.removeClass('error');
+                orderedQuantityInUnits = foodcoopshop.Helper.getStringAsFloat(orderedQuantityInUnitsWrapper.find('input').val());
             }
 
             var unitName = '';
@@ -227,6 +229,15 @@ foodcoopshop.Cart = {
                 priceInclPerUnit = foodcoopshop.Helper.getCurrencyAsFloat(priceInclPerUnitElement.html());
             }
 
+            if (unitName != '' && priceInclPerUnit != '' && isNaN(orderedQuantityInUnits)) {
+                foodcoopshop.Helper.enableButton($(this));
+                foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
+                foodcoopshop.Helper.removeSpinnerFromButton($(this), 'fa-cart-plus');
+                productWrapper.find('.entity-wrapper.active .quantity-in-units-input-field-wrapper').addClass('error');
+                foodcoopshop.Helper.showOrAppendErrorMessage(foodcoopshop.LocalizedJs.cart.PleaseProvideAValidOrderedQuantityInUnits);
+                return;
+            }
+            
             if (orderedQuantityInUnits > 0) {
                 price = foodcoopshop.Cart.getPriceBasedOnPricePerUnit(priceInclPerUnit, orderedQuantityInUnits, unitAmount);
             }

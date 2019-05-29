@@ -211,6 +211,12 @@ body.customers.login #self-service .footer {
 #self-service .product-wrapper .quantity-in-units-input-field-wrapper {
     float: left;
 	margin-top: 5px;
+	padding: 0 5px;
+	width: 100%;
+}
+#self-service .product-wrapper .quantity-in-units-input-field-wrapper.error {
+    background: #f3515c;
+    color: #fff;
 }
 #self-service .product-wrapper .quantity-in-units-input-field-wrapper input {
 	width: 50px;

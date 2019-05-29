@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-27 15:47+0200\n"
-"PO-Revision-Date: 2019-05-27 15:48+0200\n"
+"POT-Creation-Date: 2019-05-29 10:43+0200\n"
+"PO-Revision-Date: 2019-05-29 10:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -323,6 +323,9 @@ msgstr "approx."
 
 msgid "Pickup_day"
 msgstr "Pickup day"
+
+msgid "Please_provide_a_valid_ordered_quantity_in_units."
+msgstr "Please provide the taken weight."
 
 msgid "Home"
 msgstr "Home"
