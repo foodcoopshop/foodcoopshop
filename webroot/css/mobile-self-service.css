@@ -56,7 +56,7 @@
 	#self-service .header {
 	   position: static;
 	}
-	body.self_services #responsive-header .logout-wrapper {
+	body.self_services #responsive-header .left-wrapper {
 	   margin-top: 17px;
 	   margin-left: 5px;
 	}

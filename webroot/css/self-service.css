@@ -141,16 +141,26 @@ body.self_services {
 	border-top: none;
 	padding-top: 10px;
 }
-#self-service .footer .logout-wrapper {
+#self-service .footer .left-wrapper {
 	position: absolute;
 	bottom: 17px;
 	left: 10px;
 }
-#self-service .footer .logo-wrapper img {
-	height: 53px;
+#self-service .footer .right-wrapper {
 	position: absolute;
 	bottom: 6px;
 	right: 10px;
+}
+#self-service .footer .right-wrapper .btn,
+#self-service .footer .right-wrapper .logo-wrapper {
+    float: left;
+}
+#self-service .footer .right-wrapper .btn {
+	margin-top: 12px;
+	margin-right: 5px;
+}
+#self-service .footer .right-wrapper img {
+	height: 53px;
 }
 body.customers.login #self-service .footer {
 	position: static;
@@ -211,6 +221,7 @@ body.customers.login #self-service .footer {
 #self-service .product-wrapper .quantity-in-units-input-field-wrapper {
     float: left;
 	margin-top: 5px;
+	margin-left: -5px;
 	padding: 0 5px;
 	width: 100%;
 }

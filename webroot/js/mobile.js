@@ -127,8 +127,8 @@ foodcoopshop.Mobile = {
 
         $('#' + headerId).append(this.getResponsiveMenuButton());
 
-        $('#' + headerId).append($('.footer .logo-wrapper'));
-        $('#' + headerId).append($('.footer .logout-wrapper'));
+        $('#' + headerId).append($('.footer .right-wrapper'));
+        $('#' + headerId).append($('.footer .left-wrapper'));
 
         // button renaming
         $('.entity-wrapper .btn').html('<i class="fas fa-cart-plus"></i>');
