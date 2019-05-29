@@ -48,7 +48,7 @@ foodcoopshop.PickupDay = {
                 onError: function (data) {
                     var form = $('#' + dialogId);
                     form.find('.ajax-loader').hide();
-                    foodcoopshop.Admin.appendFlashMessageToDialog(form, data.msg);
+                    foodcoopshop.Helper.appendFlashMessageToDialog(form, data.msg);
                 }
             }
         );

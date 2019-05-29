@@ -358,16 +358,6 @@ input.datepicker {
 .ui-dialog-content .bootstrap-select .dropdown-toggle {
 	width: 307px;
 }
-.ui-dialog-content #flashMessage,
-.featherlight-content #flashMessage {
-	position: absolute;
-	top: 10px;
-	width: 98%;
-	left: 1% ! important;
-}
-.featherlight-content #flashMessage {
-	z-index: 10000;
-}
 .warning {
     color: red;
 }
@@ -506,30 +496,13 @@ body.configurations.index td.sync-domain-list a.btn {
 form div.error-message {
     margin-left: 200px;
 }
-.featherlight-content {
-    min-height: 135px;
-}
-.featherlight-content button.cancel {
-    float: right;
-    margin-left: 14px;
-}
-.featherlight-content button[disabled="disabled"] {
-    opacity: 0.65;
-    cursor: not-allowed;
-}
-.featherlight-content button {
-    padding: 5px;
-}
-.featherlight-inner {
-    min-width: 350px ! important;
-    overflow-y: auto ! important;
+.featherlight-content h3 {
+    color: #009335;
 }
 .categories-checkboxes.featherlight-inner,
-.tax-dropdown-wrapper.featherlight-inner,
-.add-payment-form.featherlight-inner {
+.tax-dropdown-wrapper.featherlight-inner {
     padding: 10px;
 }
-.add-payment-form.featherlight-inner,
 .categories-checkboxes.featherlight-inner {
   max-width: 400px;
 }
@@ -540,14 +513,10 @@ form div.error-message {
 .tax-dropdown-wrapper.featherlight-inner .input.select {
     margin-bottom: 10px;
 }
-.featherlight-inner div.form-buttons {
-    margin-top: 10px;
-}
-.featherlight-inner label,
 .ui-dialog-content label {
 	font-weight: bold;
 	margin-bottom: 0;
-} 
+}
 .featherlight-inner .checkbox label {
     font-weight: normal;
 } 
@@ -631,29 +600,6 @@ body.order_details.index td a.pickup-day-comment-edit-button {
 	float: left;
 	width: 400px;
 	margin-left: 10px;
-}
-.featherlight-content .add-payment-form label {
-    width: 100%;
-}
-.featherlight-content .add-payment-form .radio-wrapper {
-    width: 100%;
-    float: left;
-    margin-bottom: 10px;
-}
-.featherlight-content .add-payment-form .radio-wrapper label {
-    float: left;
-    width: auto;
-    margin-right: 5px;
-}
-.featherlight-content h3 {
-    margin: 0;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    font-size: 19px;
-    font-weight: bold;
-    color: #009335;
-    width: 90%;
-    line-height: 22px;
 }
 
 .featherlight-content .message-container {

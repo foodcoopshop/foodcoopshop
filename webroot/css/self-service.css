@@ -246,3 +246,6 @@ body.customers.login #self-service .footer {
 	font-size: 30px;
 	margin-top: -1px;
 }
+#self-service #add-payment-deposit-form {
+	display: none;
+}

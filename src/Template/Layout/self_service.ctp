@@ -41,6 +41,7 @@ echo $this->element('layout/header');
     	    <a class="btn btn-success" href="<?php echo $this->Slug->getHome(); ?>">
         		<i class="fas fa-home"></i> <?php echo __('Home'); ?>
     		</a>
+    		<?php echo $this->element('selfService/addDeposit'); ?>
             <?php echo $this->element('logo'); ?>
         </div>
     </div>

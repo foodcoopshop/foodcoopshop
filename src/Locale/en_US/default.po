@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-29 16:58+0200\n"
-"PO-Revision-Date: 2019-05-29 16:55+0200\n"
+"POT-Creation-Date: 2019-05-29 21:54+0200\n"
+"PO-Revision-Date: 2019-05-29 21:57+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1943,6 +1943,18 @@ msgstr "Add to cart"
 
 msgid "Weight_in"
 msgstr "Weight in"
+
+msgid "Deposit_return"
+msgstr "Deposit return"
+
+msgid "Add_deposit"
+msgstr "Add deposit"
+
+msgid "Add_deposit_amount_for_{0}"
+msgstr "Add deposit amount for {0}"
+
+msgid "Amount_in_{0}"
+msgstr "Amount in {0}"
 
 msgid "The_manufacturer_has_reached_the_limit_to_pay_in_{0}."
 msgstr "The manufacturer has reached the limit to pay in {0}."

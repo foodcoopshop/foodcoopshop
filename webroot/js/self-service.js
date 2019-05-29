@@ -21,6 +21,22 @@ foodcoopshop.SelfService = {
         this.initWindowScroll();
         this.initAutoLogout();
         this.initSearchForm();
+        this.initDepositPayment();
+    },
+    
+    initDepositPayment : function() {
+        
+        foodcoopshop.Helper.changeInputNumberToTextForEdge();
+
+        $('.btn-add-deposit').featherlight(
+            foodcoopshop.AppFeatherlight.initLightboxForForms(
+                foodcoopshop.Helper.addPaymentFormSave,
+                null,
+                foodcoopshop.AppFeatherlight.closeLightbox,
+                $('#add-payment-deposit-form')
+            )
+        );
+
     },
     
     initSearchForm : function() {
