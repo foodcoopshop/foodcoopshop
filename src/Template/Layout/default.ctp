@@ -54,7 +54,8 @@ echo $this->element('layout/header');
                 'showCartDetailButton' => true,
                 'showFutureOrderDetails' => true,
                 'icon' => 'fa-shopping-cart',
-                'name' => __('Cart')
+                'name' => __('Cart'),
+                'docsLink' => $this->Html->getDocsUrl(__('docs_route_order_handling'))
             ]); ?>
             <?php echo $this->element('infoBox'); ?>
         </div>

@@ -59,7 +59,8 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
             'showCartDetailButton' => false,
             'showFutureOrderDetails' => false,
             'icon' => 'fa-shopping-bag',
-            'name' => __('Shopping_bag')
+            'name' => __('Shopping_bag'),
+            'docsLink' => $this->Html->getDocsUrl(__('docs_route_self_service'))
         ]); ?>
         <?php
             echo $this->Form->create($cart, [

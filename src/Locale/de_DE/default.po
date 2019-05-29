@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-05-29 11:55+0200\n"
-"PO-Revision-Date: 2019-05-29 11:55+0200\n"
+"POT-Creation-Date: 2019-05-29 12:18+0200\n"
+"PO-Revision-Date: 2019-05-29 12:18+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -2033,6 +2033,9 @@ msgstr "Suche nach Name, Produkt-ID oder Barcode"
 
 msgid "Shopping_bag"
 msgstr "Einkaufstasche"
+
+msgid "docs_route_self_service"
+msgstr "selbstbedienungs-modus"
 
 msgid "Finish_pickup"
 msgstr "Abholung abschließen"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-29 11:55+0200\n"
+"POT-Creation-Date: 2019-05-29 12:18+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2031,6 +2031,9 @@ msgid "Search_by_name_id_or_barcode"
 msgstr ""
 
 msgid "Shopping_bag"
+msgstr ""
+
+msgid "docs_route_self_service"
 msgstr ""
 
 msgid "Finish_pickup"
