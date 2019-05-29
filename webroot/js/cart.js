@@ -113,7 +113,7 @@ foodcoopshop.Cart = {
         }
         
         if (orderedQuantityInUnits > 0) {
-            newUnityHtml = foodcoopshop.Helper.getStringAsFloat(oldUnity.html()) + (orderedQuantityInUnits * amount);
+            newUnityHtml = foodcoopshop.Helper.getStringAsFloat(oldUnity.html()) + orderedQuantityInUnits;
             newUnityHtml = newUnityHtml.toLocaleString();
             newUnityHtml += ' ' + unitName;
         }
