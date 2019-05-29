@@ -24,10 +24,9 @@ foodcoopshop.SelfService = {
     },
     
     initSearchForm : function() {
-        var container = $('#self-service');
-        foodcoopshop.Helper.initBootstrapSelect(container);
-        container.find('select, input[type="text"]').on('change', function() {
-            var searchForm = $('#product-search');
+        var searchForm = $('#product-search');
+        foodcoopshop.Helper.initBootstrapSelect(searchForm);
+        searchForm.find('select, input[type="text"]').on('change', function() {
             var submitButton = searchForm.find('.btn[type="submit"]');
             foodcoopshop.Helper.addSpinnerToButton(submitButton, 'fa-search');
             foodcoopshop.Helper.disableButton(submitButton);
