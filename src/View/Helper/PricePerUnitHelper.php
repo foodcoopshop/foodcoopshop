@@ -81,7 +81,7 @@ class PricePerUnitHelper extends Helper
     {
         $infoText = '<div class="line">';
         $infoText .= '<span class="additional-price-info">';
-        $infoText .= ' * ' . __('Base_price') . ': ' . $this->getPricePerUnitBaseInfo($priceInclPerUnit, $unitName, $unitAmount);
+        $infoText .= ' * ' . __('Base_price') . ': ' . $this->getPricePerUnitBaseInfoForCart($priceInclPerUnit, $unitName, $unitAmount);
         if ($showAdaptionMessage) {
             $infoText .= ', ' . __('price_will_be_eventually_adapted.');
         }
@@ -91,6 +91,11 @@ class PricePerUnitHelper extends Helper
     }
 
     public function getPricePerUnitBaseInfo($priceInclPerUnit, $unitName, $unitAmount)
+    {
+        return $this->MyNumber->formatAsCurrency($priceInclPerUnit) . ' / ' . ($unitAmount > 1 ? $this->MyNumber->formatAsDecimal($unitAmount, 0) . ' ' : '') . $unitName;
+    }
+
+    public function getPricePerUnitBaseInfoForCart($priceInclPerUnit, $unitName, $unitAmount)
     {
         // unit-amount must be included non-formatted for locale-based usage in cart.js
         return '<span class="price-incl-per-unit">'.$this->MyNumber->formatAsCurrency($priceInclPerUnit) . '</span> / <span class="unit-amount">'.($unitAmount > 1 ? $unitAmount : '').'</span>' . ($unitAmount > 1 ? $this->MyNumber->formatAsDecimal($unitAmount, 0) . ' ' : '') . '<span class="unit-name">' . $unitName . '</span>';
