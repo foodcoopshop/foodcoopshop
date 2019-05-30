@@ -50,7 +50,7 @@ class CartProductsTable extends AppTable
      * @param int $amount
      * @return array || boolean
      */
-    public function add($appAuth, $productId, $attributeId, $amount, $orderedQuantityInUnits)
+    public function add($appAuth, $productId, $attributeId, $amount, $orderedQuantityInUnits = 0)
     {
 
         $initialProductId = $this->Products->getCompositeProductIdAndAttributeId($productId, $attributeId);
