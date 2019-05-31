@@ -29,54 +29,52 @@ $this->element('addScript', ['script' =>
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 ?>
 
-<div id="content"> <?php // #content is needed for showing flashMessage as #content is hardcoded in foodcoopshop.Helper.showFlashMessage() ?>
-    <div id="products">
-    	<div class="header">
-        	<h2><?php echo __('Self_service_for_stock_products'); ?></h2>
-        	<h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
-        	<?php echo $this->element('productSearch', [
-        	    'action' => __('route_self_service'),
-        	    'placeholder' => __('Search:_name_id_or_barcode'),
-        	    'resetSearchUrl' => $this->Slug->getSelfService(),
-        	    'includeCategoriesDropdown' => true
-        	]); ?>
-        	<hr />
-        </div>
-        <?php
-        foreach ($products as $product) {
-            echo $this->element('product/product', [
-                'product' => $product,
-                'showProductDetailLink' => false,
-                'showManufacturerDetailLink' => false
-            ]);
-        }
+<div id="products">
+	<div class="header">
+    	<h2><?php echo __('Self_service_for_stock_products'); ?></h2>
+    	<h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
+    	<?php echo $this->element('productSearch', [
+    	    'action' => __('route_self_service'),
+    	    'placeholder' => __('Search:_name_id_or_barcode'),
+    	    'resetSearchUrl' => $this->Slug->getSelfService(),
+    	    'includeCategoriesDropdown' => true
+    	]); ?>
+    	<hr />
+    </div>
+    <?php
+    foreach ($products as $product) {
+        echo $this->element('product/product', [
+            'product' => $product,
+            'showProductDetailLink' => false,
+            'showManufacturerDetailLink' => false
+        ]);
+    }
+?>
+</div>
+
+<div class="right-box">
+    <?php echo $this->element('cart', [
+        'selfServiceModeEnabled' => true,
+        'showLoadLastOrderDetailsDropdown' => false,
+        'showCartDetailButton' => false,
+        'showFutureOrderDetails' => false,
+        'icon' => 'fa-shopping-bag',
+        'name' => __('Shopping_bag'),
+        'docsLink' => $this->Html->getDocsUrl(__('docs_route_self_service')),
+        'cartButtonIcon' => 'fa-plus-circle',
+        'cartEmptyMessage' => __('Your_shopping_bag_is_empty.')
+    ]); ?>
+    <?php
+        echo $this->Form->create($cart, [
+            'class' => 'fcs-form',
+            'id' => 'SelfServiceForm',
+            'url' => $this->Slug->getSelfService()
+        ]);
+        echo $this->element('cart/generalTermsAndConditionsCheckbox');
+        echo $this->element('cart/cancellationTermsCheckbox');
     ?>
-    </div>
-    
-    <div class="right-box">
-        <?php echo $this->element('cart', [
-            'selfServiceModeEnabled' => true,
-            'showLoadLastOrderDetailsDropdown' => false,
-            'showCartDetailButton' => false,
-            'showFutureOrderDetails' => false,
-            'icon' => 'fa-shopping-bag',
-            'name' => __('Shopping_bag'),
-            'docsLink' => $this->Html->getDocsUrl(__('docs_route_self_service')),
-            'cartButtonIcon' => 'fa-plus-circle',
-            'cartEmptyMessage' => __('Your_shopping_bag_is_empty.')
-        ]); ?>
-        <?php
-            echo $this->Form->create($cart, [
-                'class' => 'fcs-form',
-                'id' => 'SelfServiceForm',
-                'url' => $this->Slug->getSelfService()
-            ]);
-            echo $this->element('cart/generalTermsAndConditionsCheckbox');
-            echo $this->element('cart/cancellationTermsCheckbox');
-        ?>
-        <button type="submit" class="btn btn-success btn-order">
-    		<i class="fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
-    	</button>
-    	<?php echo $this->Form->end(); ?>
-    </div>
+    <button type="submit" class="btn btn-success btn-order">
+		<i class="fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
+	</button>
+	<?php echo $this->Form->end(); ?>
 </div>

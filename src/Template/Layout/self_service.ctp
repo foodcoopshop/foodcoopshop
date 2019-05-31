@@ -18,7 +18,7 @@ use Cake\Core\Configure;
 echo $this->element('layout/header');
 ?>
 
-<div id="self-service">
+<div id="content" class="self-service">
     <?php
         // avoid "access denied" message on login page if protected /self-service is requested
         if ($this->request->is('get') && $this->request->getParam('action') == 'login') {

@@ -104,7 +104,7 @@ foodcoopshop.Mobile = {
     
     initMenusSelfService: function() {
         
-        $('#self-service').after(this.getSlidebarMenu('left')).attr('canvas', '');
+        $('.self-service').after(this.getSlidebarMenu('left')).attr('canvas', '');
 
         var menuItems = [];
         var ps = $('#product-search');

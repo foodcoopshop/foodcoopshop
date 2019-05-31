@@ -12,65 +12,65 @@
  * @link          https://www.foodcoopshop.com
  */
 @media only screen and (max-device-width: 768px) {
-	#self-service,
-	#self-service .header,
-	#self-service #products,
-	#self-service .product-wrapper .quantity-in-units-input-field-wrapper input {
+	.self-service,
+	.self-service .header,
+	.self-service #products,
+	.self-service .product-wrapper .quantity-in-units-input-field-wrapper input {
 	   width: 100%;
 	}
-	#self-service .header h2 {
+	.self-service .header h2 {
 	   margin-bottom: 0;
 	   margin-left: 10px;
 	}
-	#self-service .header hr {
+	.self-service .header hr {
 	   margin-top: 0;
 	}
 	form div.error-message {
 	   width: 100% ! important;
 	}
-	#self-service {
+	.self-service {
 	   padding-right: 0;
 	   padding-bottom: 10px;
 	}
-	#self-service .footer {
+	.self-service .footer {
 	   display: none;
 	}
-	#self-service .right-box {
+	.self-service .right-box {
 	   float: left;
 	}
-	#self-service .right-box .input.checkbox,
-	#self-service #cart {
+	.self-service .right-box .input.checkbox,
+	.self-service #cart {
 	   width: 94%;
        margin-left: 3%;
        margin-right: 3%;
 	}
-	#self-service #cart {
+	.self-service #cart {
 	   border: 1px solid #ccc;
 	   display: block ! important;
 	}
-	#self-service #products {
+	.self-service #products {
        margin-left: 0;
 	   margin-top: 0;
 	   margin-bottom: 0;
 	   padding-top: 0px;
 	}
-	#self-service .header {
+	.self-service .header {
 	   position: static;
 	}
 	body.self_services #responsive-header .left-wrapper {
 	   margin-top: 17px;
 	   margin-left: 5px;
 	}
-	#self-service .right-box {
+	.self-service .right-box {
 	   position: static;
 	}
-	#self-service .product-wrapper div.second-column {
+	.self-service .product-wrapper div.second-column {
 	   width: 33% ! important;
 	}
-    #self-service .product-wrapper div.third-column {
+    .self-service .product-wrapper div.third-column {
        width: 40% ! important;
     }
-    #self-service .product-wrapper .quantity-in-units-input-field-wrapper {
+    .self-service .product-wrapper .quantity-in-units-input-field-wrapper {
         padding: 0;
         margin-left: 0;
         margin-bottom: 5px;
