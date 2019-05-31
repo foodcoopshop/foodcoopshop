@@ -125,7 +125,7 @@ foodcoopshop.Cart = {
 
         // update price
         var oldPrice = productContainer.find('span.price');
-        var tmpNewPrice = price * amount;
+        var tmpNewPrice = price;
         
         if (orderedQuantityInUnits > 0) {
             tmpNewPrice = foodcoopshop.Cart.getPriceBasedOnPricePerUnit(
@@ -197,6 +197,8 @@ foodcoopshop.Cart = {
             var amount = parseInt(productWrapper.find('.entity-wrapper.active input[name="amount"]').val());
             var orderedQuantityInUnits = productWrapper.find('.entity-wrapper.active .quantity-in-units-input-field-wrapper input').val();
             var price = foodcoopshop.Helper.getCurrencyAsFloat(productWrapper.find('.entity-wrapper.active .price').html());
+            price = price * amount;
+            
             var tax = foodcoopshop.Helper.getCurrencyAsFloat(productWrapper.find('.entity-wrapper.active .tax').html());
             var image = productWrapper.find('.first-column img');
             var deposit = 0;
@@ -271,7 +273,7 @@ foodcoopshop.Cart = {
                 foodcoopshop.Cart.updateExistingProduct(productContainer, amount, price, deposit, tax, timebasedCurrencyHours, orderedQuantityInUnits, unitName, unitAmount, priceInclPerUnit);
             } else {
                 // product not yet in cart
-                foodcoopshop.Cart.addOrAppendProductToPickupDay(productId, amount, amount * price, productName, unity, '', image, deposit, tax, timebasedCurrencyHours, orderedQuantityInUnits, unitName, unitAmount, priceInclPerUnit, pickupDay);
+                foodcoopshop.Cart.addOrAppendProductToPickupDay(productId, amount, price, productName, unity, '', image, deposit, tax, timebasedCurrencyHours, orderedQuantityInUnits, unitName, unitAmount, priceInclPerUnit, pickupDay);
                 foodcoopshop.Helper.applyBlinkEffect($('#cart .product.' + productId), function () {
                     foodcoopshop.Cart.initRemoveFromCartLinks(); // bind click event
                 });
