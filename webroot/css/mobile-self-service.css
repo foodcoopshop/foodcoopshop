@@ -18,6 +18,19 @@
 	.self-service .product-wrapper .quantity-in-units-input-field-wrapper input {
 	   width: 100%;
 	}
+	body.customers.login #content.self-service{
+	   min-height: 100vh;
+	}
+	.self-service #login-form form {
+	   padding: 0 2%;
+	}
+	.self-service #login-form {
+	   padding-top: 0;
+	   text-align: center;
+	}
+	.self-service #login-form .input label {
+	   width: 95px;
+	}
 	.self-service .header h2 {
 	   margin-bottom: 0;
 	   margin-left: 10px;

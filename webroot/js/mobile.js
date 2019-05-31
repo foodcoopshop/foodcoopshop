@@ -119,6 +119,7 @@ foodcoopshop.Mobile = {
             var newItem = $('<li/>').append($(this));
             pageItems.push(newItem);
         });
+        pageItems = pageItems.reverse();
         menuItems = $.merge(menuItems, pageItems);
 
         $('.sb-left').html(menuItems);

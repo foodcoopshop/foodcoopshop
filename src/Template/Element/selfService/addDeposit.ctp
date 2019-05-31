@@ -2,7 +2,7 @@
 
 use Cake\Core\Configure;
 
-if (!Configure::read('app.isDepositPaymentCashless')) {
+if (!Configure::read('app.isDepositPaymentCashless') || !$appAuth->user()) {
     return;
 }
 ?>

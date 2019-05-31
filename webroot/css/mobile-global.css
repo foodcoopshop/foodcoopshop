@@ -49,6 +49,7 @@
     .sb-left #product-search select {
         width: 70% ! important;
         color: #333;
+        background-color: #fff;
     }
     
     #flashMessage {
