@@ -20,7 +20,6 @@ if (Configure::read('debug') > 0) {
     $raw = true;
 }
 
-echo $this->AssetCompress->script('base', ['raw' => $raw]);
 foreach ($configs as $config) {
     echo $this->AssetCompress->script($config, ['raw' => $raw]);
 }
