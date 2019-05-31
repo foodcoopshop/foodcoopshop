@@ -7,7 +7,7 @@ if (!Configure::read('app.isDepositPaymentCashless') || !$appAuth->user()) {
 }
 ?>
 <a class="not-in-moblie-menu btn btn-success btn-add-deposit" href="javascript:void(0);">
-	<i class="<?php echo $this->Html->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName')); ?>"></i> <?php echo __('Deposit_return'); ?>
+	<i class="<?php echo $this->Html->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName')); ?>"></i> <?php echo __('Deposit'); ?>
 </a>
 
 <?php

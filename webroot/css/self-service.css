@@ -249,3 +249,14 @@ body.customers.login .self-service .footer {
 .self-service #add-payment-deposit-form {
 	display: none;
 }
+body.self_services .btn-flash-message {
+	float: left;
+	margin-top: 6px;
+	width: 48%;
+}
+body.self_services .btn-flash-message-logout {
+	margin-top: 6px;
+}
+body.self_services .btn-flash-message-continue {
+	margin-top: 5px;
+}

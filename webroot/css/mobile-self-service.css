@@ -34,6 +34,7 @@
 	.self-service .header h2 {
 	   margin-bottom: 0;
 	   margin-left: 10px;
+	   width: 95%;
 	}
 	.self-service .header hr {
 	   margin-top: 0;
@@ -50,6 +51,9 @@
 	}
 	.self-service .right-box {
 	   float: left;
+       position: static;
+       display: none;
+       margin-top: 10px;
 	}
 	.self-service .right-box .input.checkbox,
 	.self-service #cart {
@@ -62,19 +66,27 @@
 	   display: block ! important;
 	}
 	.self-service #products {
+	   display: none;
        margin-left: 0;
 	   margin-top: 0;
 	   margin-bottom: 0;
 	   padding-top: 0px;
 	}
+	body.self_services #responsive-header .shopping-limit-reached-info {
+	   width: 95%;
+	   margin-top: -7px;
+	}
 	.self-service .header {
 	   position: static;
 	}
 	body.self_services #responsive-header .left-wrapper {
-	   margin-top: 17px;
-	   margin-left: 10px;
+	   margin-top: 21px;
+	   margin-left: 2px;
 	   float: left;
 	}
+    body.self_services #responsive-header .responsive-cart span.sum {
+        margin-right: 5px;
+    }
 	body.self_services #responsive-header .left-wrapper .user-name-wrapper {
 	   display: none;
 	}
@@ -85,9 +97,6 @@
         float: right;
         margin-top: 11px;
     }
-	.self-service .right-box {
-	   position: static;
-	}
 	.self-service .product-wrapper div.second-column {
 	   width: 33% ! important;
 	}

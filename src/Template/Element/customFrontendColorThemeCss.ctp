@@ -94,7 +94,7 @@ use Cake\Core\Configure;
             :not(button)> i.fas:not(.fa-star):not(.fa-circle-notch):not(.fa-tags):not(.fa-shopping-bag):not(.fa-minus-circle):not(.fa-plus-circle) {
                 color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
             }
-            body.self_services #responsive-header a,
+            body.self_services #responsive-header a:not(.responsive-cart):not(.btn-flash-message),
             .sb-slidebar i.fas:not(.gold),
             .sb-slidebar i.fas.fa-tags,
             .sb-slidebar i.fas.fa-shopping-bag,
