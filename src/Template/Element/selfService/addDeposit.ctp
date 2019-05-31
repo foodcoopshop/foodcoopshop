@@ -6,8 +6,8 @@ if (!Configure::read('app.isDepositPaymentCashless')) {
     return;
 }
 ?>
-<a class="btn btn-success btn-add-deposit" href="javascript:void(0);">
-	<i class="<?php echo $this->Html->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName')); ?>"></i> <?php echo (!$isMobile ? __('Deposit_return') : ''); ?>
+<a class="not-in-moblie-menu btn btn-success btn-add-deposit" href="javascript:void(0);">
+	<i class="<?php echo $this->Html->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName')); ?>"></i> <?php echo __('Deposit_return'); ?>
 </a>
 
 <?php

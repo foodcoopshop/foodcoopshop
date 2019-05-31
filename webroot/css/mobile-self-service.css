@@ -59,8 +59,19 @@
 	}
 	body.self_services #responsive-header .left-wrapper {
 	   margin-top: 17px;
-	   margin-left: 5px;
+	   margin-left: 10px;
+	   float: left;
 	}
+	body.self_services #responsive-header .left-wrapper .user-name-wrapper {
+	   display: none;
+	}
+    body.self_services #responsive-header .logo-wrapper {
+       float: left;
+    }
+    body.self_services .btn-add-deposit {
+        float: right;
+        margin-top: 11px;
+    }
 	.self-service .right-box {
 	   position: static;
 	}

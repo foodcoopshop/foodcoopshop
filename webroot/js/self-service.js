@@ -13,7 +13,7 @@
  */
 foodcoopshop.SelfService = {
 
-    autoLogoutTimer : 12000,
+    autoLogoutTimer : 120,
     currentLogoutTimer : 0,
         
     init : function() {
@@ -41,7 +41,9 @@ foodcoopshop.SelfService = {
     
     initSearchForm : function() {
         var searchForm = $('#product-search');
-        foodcoopshop.Helper.initBootstrapSelect(searchForm);
+        if (!foodcoopshop.Helper.isMobile()) {
+            foodcoopshop.Helper.initBootstrapSelect(searchForm);
+        }
         searchForm.find('select, input[type="text"]').on('change', function() {
             var submitButton = searchForm.find('.btn[type="submit"]');
             foodcoopshop.Helper.addSpinnerToButton(submitButton, 'fa-search');

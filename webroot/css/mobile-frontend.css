@@ -223,26 +223,6 @@
     /**
      * sidebar-left: menu starts here
      */
-    .sb-left #product-search {
-        position: static ! important;
-    }
-    .sb-left #product-search .btn-success {
-        border-color: transparent ! important;
-    }
-    .sb-left #product-search input {
-        width: 70% ! important;
-        padding-left: 8px ! important;
-        color: #333;
-    }
-    #flashMessage {
-        right: auto ! important;
-        left: 50% ! important;
-        margin-left: -150px ! important;
-        top: 11px ! important;
-        width: 300px ! important;
-        z-index: 100000 ! important;
-        transform: inherit ! important;
-    }
     #login-form .input input,
     body.customers.new_password_request .input input {
         width: 60% ! important;

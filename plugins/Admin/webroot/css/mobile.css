@@ -107,11 +107,9 @@ body.pages.home #content {
     background: transparent;
 }
 .ui-dialog,
-.featherlight-content .add-payment-form,
 .featherlight-content .mini-upload-form,
 .categories-checkboxes.featherlight-inner,
 .tax-dropdown-wrapper.featherlight-inner,
-.add-payment-form.featherlight-inner,
 .featherlight iframe {
     min-width: 200px ! important;
     width: 98% ! important;

@@ -109,11 +109,15 @@ foodcoopshop.Mobile = {
         var menuItems = [];
         var ps = $('#product-search');
         menuItems.push(ps.wrap('<li>').parent());
-        menuItems.push('<li><a href="/"><i class="fas"></i>' + foodcoopshop.LocalizedJs.mobile.home + '</a></li>');
-
+ 
         var pageItems = [];
-        $('.footer a').each(function () {
-            pageItems.push($(this));
+        $('.footer a:not(.not-in-moblie-menu)').each(function () {
+            $(this).removeClass('btn');
+            $(this).find('i').remove();
+            $(this).html($(this).html().trim());
+            $(this).prepend($('<i/>').addClass('fa'));
+            var newItem = $('<li/>').append($(this));
+            pageItems.push(newItem);
         });
         menuItems = $.merge(menuItems, pageItems);
 
@@ -126,8 +130,8 @@ foodcoopshop.Mobile = {
         $('body').prepend(responsiveHeader);
 
         $('#' + headerId).append(this.getResponsiveMenuButton());
-
-        $('#' + headerId).append($('.footer .right-wrapper'));
+        
+        $('#' + headerId).append($('.footer .right-wrapper .btn-add-deposit'));
         $('#' + headerId).append($('.footer .left-wrapper'));
 
         // button renaming
