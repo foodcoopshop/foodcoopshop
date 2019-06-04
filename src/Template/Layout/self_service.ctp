@@ -23,8 +23,8 @@ if ($isMobile) {
     } else {
         $js = Configure::read('app.jsNamespace').".Mobile.hideSelfServiceCart();";
     }
+    $this->element('addScript', ['script' => $js]);
 }
-$this->element('addScript', ['script' => $js]);
 
 ?>
 
