@@ -327,7 +327,7 @@ class CartComponent extends Component
                     'unit_name' => $cartProduct['unitName'],
                     'unit_amount' => $cartProduct['unitAmount'],
                     'price_incl_per_unit' => $cartProduct['priceInclPerUnit'],
-                    'quantity_in_units' => $cartProduct['quantityInUnits'],
+                    'quantity_in_units' => $cartProduct['orderedQuantityInUnits'],
                     'product_quantity_in_units' => $cartProduct['productQuantityInUnits']
                 ];
             }

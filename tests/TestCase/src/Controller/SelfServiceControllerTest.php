@@ -42,15 +42,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertNotRegExpWithUnquotedString(__('Signing_in_failed_account_inactive_or_password_wrong?'), $this->httpClient->getContent());
     }
     
-    public function testSelfServiceOrderWithoutCheckboxes() {
-        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-        $this->doBarCodeLogin();
-        $this->addProductToSelfServiceCart(349, 1, 0);
-        $this->finishSelfServiceCart(0, 0);
-        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die AGB.', $this->httpClient->getContent());
-        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.', $this->httpClient->getContent());
-    }
-    
     public function testSelfServiceAddProductPricePerUnitWrong()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
@@ -66,11 +57,20 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->doBarCodeLogin();
-        $this->addProductToSelfServiceCart('348-11', 1, 'bla bla');
+        $this->addProductToSelfServiceCart('350-15', 1, 'bla bla');
         $response = $this->httpClient->getJsonDecodedContent();
         $expectedErrorMessage = 'Bitte trage das entnommene Gewicht ein.';
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
         $this->assertJsonError();
+    }
+    
+    public function testSelfServiceOrderWithoutCheckboxes() {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->doBarCodeLogin();
+        $this->addProductToSelfServiceCart(349, 1, 0);
+        $this->finishSelfServiceCart(0, 0);
+        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die AGB.', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.', $this->httpClient->getContent());
     }
     
     public function testSelfServiceOrderWithoutPricePerUnit()
@@ -105,6 +105,49 @@ class SelfServiceControllerTest extends AppCakeTestCase
             'Dein Einkauf',
             [
                 'Artischocke'
+            ],
+            [
+                Configure::read('test.loginEmailSuperadmin')
+            ]
+        );
+    }
+    
+    public function testSelfServiceOrderWithPricePerUnit()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->doBarCodeLogin();
+        $this->addProductToSelfServiceCart('350-15', 1, 1.5);
+        $this->addProductToSelfServiceCart(351, 1, 1);
+        $this->finishSelfServiceCart(1, 1);
+        
+        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
+        $cart = $this->Cart->find('all', [
+            'order' => [
+                'Carts.id_cart' => 'DESC'
+            ],
+        ])->first();
+        
+        $cart = $this->getCartById($cart->id_cart);
+        
+        $this->assertEquals(2, count($cart->cart_products));
+        
+        foreach($cart->cart_products as $cartProduct) {
+            $orderDetail = $cartProduct->order_detail;
+            $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getCurrentDateForDatabase());
+        }
+        
+        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(1, count($emailLogs));
+        
+        $this->assertEmailLogs(
+            $emailLogs[0],
+            'Dein Einkauf',
+            [
+                'Lagerprodukt mit Varianten : 0,5 kg',
+                'Lagerprodukt 2 : 1 kg',
+                '15,00 €',
+                '5,00 €'
             ],
             [
                 Configure::read('test.loginEmailSuperadmin')
