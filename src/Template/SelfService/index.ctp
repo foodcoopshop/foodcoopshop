@@ -13,6 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use Cake\Routing\Router;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".SelfService.init();".
@@ -77,4 +78,7 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
 		<i class="fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
 	</button>
 	<?php echo $this->Form->end(); ?>
+	<?php if ($isMobile) { ?>
+		<a class="btn btn-outline-light continue-shopping" href="<?php echo Router::reverse($this->request, true); ?>";><?php echo __('Continue_shopping?')?></a>
+	<?php } ?>
 </div>

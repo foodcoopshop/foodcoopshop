@@ -65,6 +65,11 @@
 	   border: 1px solid #ccc;
 	   display: block ! important;
 	}
+	.self-service .continue-shopping {
+	    float: right;
+	    margin-top: 10px;
+	    margin-right: 5%;
+	}
 	.self-service #products {
 	   display: none;
        margin-left: 0;
