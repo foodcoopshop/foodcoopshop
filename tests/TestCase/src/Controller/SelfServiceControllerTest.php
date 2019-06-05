@@ -80,7 +80,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         
         $this->assertEmailLogs(
             $emailLogs[0],
-            'Bestellbestätigung',
+            'Dein Einkauf',
             [
                 'Lagerprodukt'
             ],
