@@ -242,8 +242,6 @@ foodcoopshop.Cart = {
                 foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
                 foodcoopshop.Helper.removeSpinnerFromButton($(this), foodcoopshop.Cart.cartButtonIcon);
                 productWrapper.find('.entity-wrapper.active .quantity-in-units-input-field-wrapper').addClass('error');
-                foodcoopshop.Helper.showOrAppendErrorMessage(foodcoopshop.LocalizedJs.cart.PleaseProvideAValidOrderedQuantityInUnits);
-                return;
             }
             
             if (orderedQuantityInUnits > 0) {

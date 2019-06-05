@@ -19,6 +19,12 @@ use Cake\ORM\TableRegistry;
 class SelfServiceControllerTest extends AppCakeTestCase
 {
     
+    public function testBarCodeLoginAsSuperadminIfNotEnabled()
+    {
+        $this->doBarCodeLogin();
+        $this->assertRegExpWithUnquotedString(__('Signing_in_failed_account_inactive_or_password_wrong?'), $this->httpClient->getContent());
+    }
+    
     public function testPageSelfService()
     {
         $this->loginAsSuperadmin();
@@ -27,12 +33,6 @@ class SelfServiceControllerTest extends AppCakeTestCase
             $this->Slug->getSelfService()
         ];
         $this->assertPagesForErrors($testUrls);
-    }
-    
-    public function testBarCodeLoginAsSuperadminIfNotEnabled()
-    {
-        $this->doBarCodeLogin();
-        $this->assertRegExpWithUnquotedString(__('Signing_in_failed_account_inactive_or_password_wrong?'), $this->httpClient->getContent());
     }
     
     public function testBarCodeLoginAsSuperadminValid()
@@ -45,17 +45,39 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSelfServiceOrderWithoutCheckboxes() {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->doBarCodeLogin();
-        $this->addProductToSelfServiceCart(349, 1);
+        $this->addProductToSelfServiceCart(349, 1, 0);
         $this->finishSelfServiceCart(0, 0);
         $this->assertRegExpWithUnquotedString('Bitte akzeptiere die AGB.', $this->httpClient->getContent());
         $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.', $this->httpClient->getContent());
     }
     
-    public function testSelfServiceOrder()
+    public function testSelfServiceAddProductPricePerUnitWrong()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->doBarCodeLogin();
-        $this->addProductToSelfServiceCart(349, 1);
+        $this->addProductToSelfServiceCart(351, 1, 0);
+        $response = $this->httpClient->getJsonDecodedContent();
+        $expectedErrorMessage = 'Bitte trage das entnommene Gewicht ein.';
+        $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
+        $this->assertJsonError();
+    }
+    
+    public function testSelfServiceAddAttributePricePerUnitWrong()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->doBarCodeLogin();
+        $this->addProductToSelfServiceCart('348-11', 1, 'bla bla');
+        $response = $this->httpClient->getJsonDecodedContent();
+        $expectedErrorMessage = 'Bitte trage das entnommene Gewicht ein.';
+        $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
+        $this->assertJsonError();
+    }
+    
+    public function testSelfServiceOrderWithoutPricePerUnit()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->doBarCodeLogin();
+        $this->addProductToSelfServiceCart(346, 1, 0);
         $this->finishSelfServiceCart(1, 1);
         
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
@@ -66,7 +88,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         ])->first();
         
         $cart = $this->getCartById($cart->id_cart);
-
+        
         $this->assertEquals(1, count($cart->cart_products));
         
         foreach($cart->cart_products as $cartProduct) {
@@ -82,7 +104,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
             $emailLogs[0],
             'Dein Einkauf',
             [
-                'Lagerprodukt'
+                'Artischocke'
             ],
             [
                 Configure::read('test.loginEmailSuperadmin')
@@ -90,13 +112,14 @@ class SelfServiceControllerTest extends AppCakeTestCase
         );
     }
     
-    private function addProductToSelfServiceCart($productId, $amount)
+    private function addProductToSelfServiceCart($productId, $amount, $orderedQuantityInUnits)
     {
         $this->httpClient->ajaxPost(
             '/warenkorb/ajaxAdd/',
             [
                 'productId' => $productId,
-                'amount' => $amount
+                'amount' => $amount,
+                'orderedQuantityInUnits' => $orderedQuantityInUnits
             ],
             [
                 'headers' => [

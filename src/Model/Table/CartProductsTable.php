@@ -74,14 +74,12 @@ class CartProductsTable extends AppTable
                 'Manufacturers',
                 'StockAvailables',
                 'ProductAttributes',
+                'UnitProducts',
                 'ProductAttributes.StockAvailables',
-                'ProductAttributes.ProductAttributeCombinations.Attributes'
+                'ProductAttributes.ProductAttributeCombinations.Attributes',
+                'ProductAttributes.UnitProductAttributes'
             ]
         ])
-        ->select($this->Products)
-        ->select($this->Products->StockAvailables)
-        ->select($this->Products->Manufacturers)
-        ->select($this->Products->ProductAttributes->StockAvailables)
         ->first();
 
         $existingCartProduct = $appAuth->Cart->getProduct($initialProductId);
@@ -97,6 +95,18 @@ class CartProductsTable extends AppTable
                 'msg' => $message,
                 'productId' => $initialProductId
             ];
+        }
+        
+        // check if quantity in units was passed
+        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+            if ($product->unit_product && $product->unit_product->price_per_unit_enabled && $orderedQuantityInUnits == 0) {
+                $message = __('Please_provide_a_valid_ordered_quantity_in_units.');
+                return [
+                    'status' => 0,
+                    'msg' => $message,
+                    'productId' => $initialProductId
+                ];
+            }
         }
 
         // stock available check for product
@@ -115,7 +125,9 @@ class CartProductsTable extends AppTable
             $attributeIdFound = false;
             foreach ($product->product_attributes as $attribute) {
                 if ($attribute->id_product_attribute == $attributeId) {
+                    
                     $attributeIdFound = true;
+                    
                     // stock available check for attribute
                     $availableQuantity = $attribute->stock_available->quantity - $attribute->stock_available->quantity_limit;
                     if ($availableQuantity < $combinedAmount && $amount > 0) {
@@ -126,6 +138,19 @@ class CartProductsTable extends AppTable
                             'productId' => $initialProductId
                         ];
                     }
+                    
+                    // quantity in units check for attribute
+                    if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+                        if ($attribute->unit_product_attribute && $attribute->unit_product_attribute->price_per_unit_enabled && $orderedQuantityInUnits == 0) {
+                            $message = __('Please_provide_a_valid_ordered_quantity_in_units.');
+                            return [
+                                'status' => 0,
+                                'msg' => $message,
+                                'productId' => $initialProductId
+                            ];
+                        }
+                    }
+                    
                     break;
                 }
             }

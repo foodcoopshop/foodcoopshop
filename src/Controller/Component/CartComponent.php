@@ -228,13 +228,7 @@ class CartComponent extends Component
                     'ProductAttributes.StockAvailables',
                     'ProductAttributes.ProductAttributeCombinations',
                 ]
-            ])
-            ->select($this->Product)
-            ->select($this->Product->StockAvailables)
-            ->select($this->Product->Manufacturers)
-            ->select($this->Product->Manufacturers->AddressManufacturers)
-            ->select($this->Product->ProductAttributes->StockAvailables)
-            ->first();
+            ])->first();
             $products[] = $product;
             $stockAvailableQuantity = $product->stock_available->quantity;
             $stockAvailableAvailableQuantity = $product->stock_available->quantity - $product->stock_available->quantity_limit;
