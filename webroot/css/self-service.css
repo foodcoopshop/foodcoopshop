@@ -254,9 +254,6 @@ body.self_services .btn-flash-message {
 	margin-top: 6px;
 	width: 48%;
 }
-body.self_services .btn-flash-message-logout {
-	margin-top: 6px;
-}
 body.self_services .btn-flash-message-continue {
-	margin-top: 5px;
+    float: right;
 }

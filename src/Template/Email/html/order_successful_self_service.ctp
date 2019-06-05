@@ -6,7 +6,7 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 1.0.0
+ * @since         FoodCoopShop 2.5.0
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
@@ -25,10 +25,7 @@ use Cake\Core\Configure;
         <tr>
             <td>
             	<?php
-            	   echo __('thank_you_for_your_order_from_{0}.', [
-            	       $cart['Cart']->modified->i18nFormat(
-            	           Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'))
-            	   ]);
+            	   echo __('thank_you_for_your_purchase.');
             	?>
             </td>
         </tr>
@@ -45,7 +42,7 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
             'depositSum' => $cartProducts['CartDepositSum'],
             'productSum' => $cartProducts['CartProductSum'],
             'productAndDepositSum' => $cartProducts['CartDepositSum'] + $cartProducts['CartProductSum'],
-            'selfServiceModeEnabled' => false
+            'selfServiceModeEnabled' => true
         ]);
 	echo $this->element('email/tableFoot');
 }
@@ -54,12 +51,6 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
 <?php echo $this->element('email/tableHead'); ?>
     <tbody>
     
-        <?php if ($appAuth->Cart->getProductsWithUnitCount() > 0) { ?>
-            <tr><td style="padding-top:20px;">
-            	* <?php echo __('The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly.'); ?>
-            </td></tr>
-        <?php } ?>
-        
         <tr><td style="padding-top:20px;">
             <?php echo __('Including_vat'); ?> <?php echo $this->MyNumber->formatAsCurrency($appAuth->Cart->getTaxSum()); ?>
         </td></tr>
@@ -78,22 +69,6 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
             <tr><td style="padding-top:20px;"><b>
                 <?php echo Configure::read('app.manufacturerComponensationInfoText'); ?>
             </b></td></tr>
-        <?php } ?>
-
-        <tr><td><p>
-            <?php
-                echo __(
-                    'Pickup_place:_{0}', [
-                        str_replace('<br />', ', ', $this->MyHtml->getAddressFromAddressConfiguration())
-                    ]
-                );
-            ?>
-        </p></td></tr>
-        
-        <?php if (Configure::read('app.generalTermsAndConditionsEnabled') && Configure::read('app.rightOfWithdrawalEnabled')) { ?>
-            <tr><td style="font-size:12px;">
-            	<?php echo __('You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation.'); ?>
-            </td></tr>
         <?php } ?>
         
     </tbody>

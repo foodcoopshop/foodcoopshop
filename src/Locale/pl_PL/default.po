@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-31 11:39+0200\n"
+"POT-Creation-Date: 2019-06-05 13:24+0200\n"
 "PO-Revision-Date: 2019-05-29 10:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1281,6 +1281,11 @@ msgstr "Cześć"
 # You can unsubscribe this e-mail <a href=\"{0}\">in the manufacturer's settings</a>.
 msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
 msgstr "Możesz anulować supskrypcię mailową <a href=\"{0}\">w ustawieniach producenta</a>."
+
+# Your cart
+#, fuzzy
+msgid "Your_purchase"
+msgstr "Twój koszyk"
 
 # Order confirmation
 msgid "Order_confirmation"
@@ -2601,11 +2606,6 @@ msgstr "Dodaj do koszyka"
 msgid "Weight_in"
 msgstr "Waga"
 
-# Deposit sum
-#, fuzzy
-msgid "Deposit_return"
-msgstr "Suma kaucji"
-
 # deposit
 #, fuzzy
 msgid "Add_deposit"
@@ -2685,6 +2685,11 @@ msgstr "Kwota została odjęta od twojego salda kredytowego."
 # You can find a detailed list of your ordered products in the attached order confirmation.
 msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
 msgstr "Szczegółową listę zamówionych produktów można znaleźć w załączonym potwierdzeniu zamówienia."
+
+# thank you for order from {0}.
+#, fuzzy
+msgid "thank_you_for_your_purchase."
+msgstr "dziękujemy za zamówienie od {0}."
 
 # This is the text of the email (with attached logo).
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."
@@ -3126,6 +3131,16 @@ msgstr "information-about-right-of-withdrawal"
 # product
 msgid "route_product"
 msgstr "product"
+
+# thank you for order from {0}.
+#, fuzzy
+#~ msgid "thank_you_for_your_purchase_from_{0}."
+#~ msgstr "dziękujemy za zamówienie od {0}."
+
+# Deposit sum
+#, fuzzy
+#~ msgid "Deposit_return"
+#~ msgstr "Suma kaucji"
 
 #~ msgid "There_are_no_stock_products_shown_in_this_list."
 #~ msgstr "There are no stock products shown in this list."

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-31 11:39+0200\n"
-"PO-Revision-Date: 2019-05-31 11:39+0200\n"
+"POT-Creation-Date: 2019-06-05 13:24+0200\n"
+"PO-Revision-Date: 2019-06-05 13:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -959,6 +959,9 @@ msgstr "Hello"
 
 msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
 msgstr "You can unsubscribe this e-mail <a href=\"{0}\">in the manufacturer's settings</a>."
+
+msgid "Your_purchase"
+msgstr "Your purchase"
 
 msgid "Order_confirmation"
 msgstr "Order confirmation"
@@ -1944,9 +1947,6 @@ msgstr "Add to cart"
 msgid "Weight_in"
 msgstr "Weight in"
 
-msgid "Deposit_return"
-msgstr "Deposit return"
-
 msgid "Add_deposit"
 msgstr "Add deposit"
 
@@ -2003,6 +2003,9 @@ msgstr "The amount was reduced from your credit balance."
 
 msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
 msgstr "You can find a detailed list of your ordered products in the attached order confirmation."
+
+msgid "thank_you_for_your_purchase."
+msgstr "thank you for your purchase."
 
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."
 msgstr "This is the text of the email (with attached logo)."
@@ -2333,6 +2336,13 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#, fuzzy
+#~ msgid "thank_you_for_your_purchase_from_{0}."
+#~ msgstr "thank you for order from {0}."
+
+#~ msgid "Deposit_return"
+#~ msgstr "Deposit return"
 
 #~ msgid "BarCode"
 #~ msgstr "Bar code"

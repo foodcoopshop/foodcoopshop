@@ -449,6 +449,7 @@ class CartComponent extends Component
                     $actionLogType = 'customer_order_finished';
                     $message = __('Your_order_has_been_placed_succesfully.');
                     $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
+                    $this->sendConfirmationEmailToCustomer($cart, $products);
                     break;
                 case $this->Cart::CART_TYPE_INSTANT_ORDER;
                     $actionLogType = 'instant_order_added';
@@ -466,6 +467,7 @@ class CartComponent extends Component
                     }
                     $message .= '<br />' . __('Pickup_day') . ': <b>' . Configure::read('app.timeHelper')->getDateFormattedWithWeekday(Configure::read('app.timeHelper')->getCurrentDay()).'</b>';
                     $messageForActionLog = $message;
+                    $this->sendConfirmationEmailToCustomer($cart, $products);
                     break;
                 case $this->Cart::CART_TYPE_SELF_SERVICE;
                     $actionLogType = 'self_service_order_added';
@@ -474,14 +476,13 @@ class CartComponent extends Component
                     $message .= '<a class="btn-flash-message btn-flash-message-logout btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getLogout().'">'.__('Sign_out').'?</a>';
                     $message .= '<a class="btn-flash-message btn-flash-message-continue btn btn-outline-light" href="'.Configure::read('app.slugHelper')->getSelfService().'">'.__('Continue_shopping?').'</a>';
                     $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
+                    $this->sendConfirmationEmailToCustomerSelfService($cart, $products);
                     break;
             }
             
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), 0, '', $messageForActionLog);
             $this->_registry->getController()->Flash->success($message);
-            
-            $this->sendConfirmationEmailToCustomer($cart, $products);
 
         }
         
@@ -676,53 +677,68 @@ class CartComponent extends Component
         
     }
     
+    private function sendConfirmationEmailToCustomerSelfService($cart, $products)
+    {
+        $email = new AppEmail();
+        $email->viewBuilder()->setTemplate('order_successful_self_service');
+        $email->setTo($this->AppAuth->getEmail())
+        ->setSubject(__('Your_purchase'))
+        ->setViewVars([
+            'cart' => $this->Cart->getCartGroupedByPickupDay($cart),
+            'appAuth' => $this->AppAuth
+        ]);
+        $email->send();
+    }
+    
     /**
      * does not send email to inactive users (superadmins can place shop orders for inactive users!)
      * @param array $cart
-     * @param array $orders
      * @param array $products
      */
     private function sendConfirmationEmailToCustomer($cart, $products)
     {
-        if ($this->AppAuth->user('active')) {
-            $email = new AppEmail();
-            $email->viewBuilder()->setTemplate('order_successful');
-            $email->setTo($this->AppAuth->getEmail())
-            ->setSubject(__('Order_confirmation'))
-            ->setViewVars([
-                'cart' => $this->Cart->getCartGroupedByPickupDay($cart),
-                'appAuth' => $this->AppAuth,
-                'originalLoggedCustomer' => $this->_registry->getController()->getRequest()->getSession()->check('Auth.originalLoggedCustomer') ? $this->_registry->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer') : null
-            ]);
-            
-            if (Configure::read('app.rightOfWithdrawalEnabled')) {
-                $email->addAttachments([__('Filename_Right-of-withdrawal-information-and-form').'.pdf' => ['data' => $this->generateRightOfWithdrawalInformationAndForm($cart, $products), 'mimetype' => 'application/pdf']]);
-            }
-            $email->addAttachments([__('Filename_Order-confirmation').'.pdf' => ['data' => $this->generateOrderConfirmation($cart), 'mimetype' => 'application/pdf']]);
-            if (Configure::read('app.generalTermsAndConditionsEnabled')) {
-                $generalTermsAndConditionsFiles = [];
-                $uniqueManufacturers = $this->getUniqueManufacturers();
-                foreach($uniqueManufacturers as $manufacturerId => $manufacturer) {
-                    $src = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrc($manufacturerId);
-                    if ($src !== false) {
-                        $generalTermsAndConditionsFiles[__('Filename_General-terms-and-conditions') . '-' . StringComponent::slugifyAndKeepCase($manufacturer['name']) . '.pdf'] = [
-                            'file' => WWW_ROOT . Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrcTemplate($manufacturerId), // avoid timestamp
-                            'mimetype' => 'application/pdf'
-                        ];
-                    }
-                }
-                if (count($uniqueManufacturers) > count($generalTermsAndConditionsFiles)) {
-                    $generalTermsAndConditionsFiles[__('Filename_General-terms-and-conditions').'.pdf'] = [
-                        'data' => $this->generateGeneralTermsAndConditions(),
+        
+        if (!$this->AppAuth->user('active')) {
+            return false;
+        }
+        
+        $email = new AppEmail();
+        $email->viewBuilder()->setTemplate('order_successful');
+        $email->setTo($this->AppAuth->getEmail())
+        ->setSubject(__('Order_confirmation'))
+        ->setViewVars([
+            'cart' => $this->Cart->getCartGroupedByPickupDay($cart),
+            'appAuth' => $this->AppAuth,
+            'originalLoggedCustomer' => $this->_registry->getController()->getRequest()->getSession()->check('Auth.originalLoggedCustomer') ? $this->_registry->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer') : null
+        ]);
+        
+        if (Configure::read('app.rightOfWithdrawalEnabled')) {
+            $email->addAttachments([__('Filename_Right-of-withdrawal-information-and-form').'.pdf' => ['data' => $this->generateRightOfWithdrawalInformationAndForm($cart, $products), 'mimetype' => 'application/pdf']]);
+        }
+        $email->addAttachments([__('Filename_Order-confirmation').'.pdf' => ['data' => $this->generateOrderConfirmation($cart), 'mimetype' => 'application/pdf']]);
+        if (Configure::read('app.generalTermsAndConditionsEnabled')) {
+            $generalTermsAndConditionsFiles = [];
+            $uniqueManufacturers = $this->getUniqueManufacturers();
+            foreach($uniqueManufacturers as $manufacturerId => $manufacturer) {
+                $src = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrc($manufacturerId);
+                if ($src !== false) {
+                    $generalTermsAndConditionsFiles[__('Filename_General-terms-and-conditions') . '-' . StringComponent::slugifyAndKeepCase($manufacturer['name']) . '.pdf'] = [
+                        'file' => WWW_ROOT . Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrcTemplate($manufacturerId), // avoid timestamp
                         'mimetype' => 'application/pdf'
                     ];
                 }
-                
-                $email->addAttachments($generalTermsAndConditionsFiles);
+            }
+            if (count($uniqueManufacturers) > count($generalTermsAndConditionsFiles)) {
+                $generalTermsAndConditionsFiles[__('Filename_General-terms-and-conditions').'.pdf'] = [
+                    'data' => $this->generateGeneralTermsAndConditions(),
+                    'mimetype' => 'application/pdf'
+                ];
             }
             
-            $email->send();
+            $email->addAttachments($generalTermsAndConditionsFiles);
         }
+        
+        $email->send();
     }
     
     /**
