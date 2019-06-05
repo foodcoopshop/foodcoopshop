@@ -62,4 +62,6 @@ sudo chmod o+rx /home/travis
 sudo service apache2 restart
 
 # Print Error Log
-sudo cat /var/log/apache2/www.foodcoopshop.test_error.log
+if [[ -f /var/log/apache2/www.foodcoopshop.test_error.log ]]; then
+	sudo cat /var/log/apache2/www.foodcoopshop.test_error.log
+fi
