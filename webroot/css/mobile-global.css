@@ -44,10 +44,13 @@
     }
     .sb-left #product-search input {
         padding-left: 8px ! important;
+        width: 70% ! important;
+    }
+    .sb-left #product-search select {
+        width: 100% ! important;
     }
     .sb-left #product-search input,
     .sb-left #product-search select {
-        width: 70% ! important;
         color: #333;
         background-color: #fff;
     }

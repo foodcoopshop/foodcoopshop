@@ -18,6 +18,9 @@
 	.self-service .product-wrapper .quantity-in-units-input-field-wrapper input {
 	   width: 100%;
 	}
+    .sb-left #product-search input {
+        width: 100% ! important;
+    }
 	body.customers.login #content.self-service{
 	   min-height: 100vh;
 	}
