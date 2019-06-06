@@ -129,9 +129,9 @@ foodcoopshop.Cart = {
         
         if (orderedQuantityInUnits > 0) {
             tmpNewPrice = foodcoopshop.Cart.getPriceBasedOnPricePerUnit(
-                    foodcoopshop.Helper.getCurrencyAsFloat(productContainer.find('span.price-incl-per-unit').html()),
-                    orderedQuantityInUnits,
-                    foodcoopshop.Helper.getStringAsFloat(productContainer.find('span.unit-amount').html())
+                foodcoopshop.Helper.getCurrencyAsFloat(productContainer.find('span.price-incl-per-unit').html()),
+                orderedQuantityInUnits,
+                foodcoopshop.Helper.getStringAsFloat(productContainer.find('span.unit-amount').html())
             );
         }
         
@@ -424,18 +424,18 @@ foodcoopshop.Cart = {
         if (!$(image).attr('src').match(/de-default-home/)) {
             imgHtml = '<a href="'  + $(image).attr('src').replace(/-home_/, '-thickbox_') +  '" class="image">' + image + '</a>';
         }
-        var unityHtml = '<span class="unity">'
-            if (orderedQuantityInUnits) {
-                unityHtml += orderedQuantityInUnits.toLocaleString() + ' ' + unitName;
-            } else {
-                unityHtml += unity;
-            }
+        var unityHtml = '<span class="unity">';
+        if (orderedQuantityInUnits) {
+            unityHtml += orderedQuantityInUnits.toLocaleString() + ' ' + unitName;
+        } else {
+            unityHtml += unity;
+        }
         unityHtml += '</span>';
-        var pricePerUnitHtml = '<span class="price-per-unit">'
-                pricePerUnitHtml += '<span class="price-incl-per-unit">' + foodcoopshop.Helper.formatFloatAsCurrency(priceInclPerUnit) + '</span>';
-                pricePerUnitHtml += '<span class="unit-amount">' + unitAmount + '</span>';
-                pricePerUnitHtml += '<span class="unit-name">' + unitName + '</span>';
-            pricePerUnitHtml += '</span>';
+        var pricePerUnitHtml = '<span class="price-per-unit">';
+        pricePerUnitHtml += '<span class="price-incl-per-unit">' + foodcoopshop.Helper.formatFloatAsCurrency(priceInclPerUnit) + '</span>';
+        pricePerUnitHtml += '<span class="unit-amount">' + unitAmount + '</span>';
+        pricePerUnitHtml += '<span class="unit-name">' + unitName + '</span>';
+        pricePerUnitHtml += '</span>';
         return '<span data-product-id="' + productId + '" class="product' + ' ' + productId + '">' +
                 imgHtml +
                 '<span class="amount"><span class="value">' + amount + '</span>x</span>' +

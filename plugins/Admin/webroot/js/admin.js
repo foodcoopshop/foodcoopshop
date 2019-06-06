@@ -1913,7 +1913,7 @@ foodcoopshop.Admin = {
 
             var amount = row.find('.product-amount-for-dialog').html();
             var select = $('#' + dialogId + ' #dialogOrderDetailEditCustomerAmount');
-            var selectLabel = $('#' + dialogId + ' label[for="dialogOrderDetailEditCustomerAmount"]')
+            var selectLabel = $('#' + dialogId + ' label[for="dialogOrderDetailEditCustomerAmount"]');
             
             select.hide();
             selectLabel.hide();
@@ -2464,18 +2464,18 @@ foodcoopshop.Admin = {
         productDropdown.parent().find('div.filter-option-inner-inner').append('<i class="fas fa-circle-notch fa-spin"></i>');
         foodcoopshop.Helper.ajaxCall(
             '/admin/products/ajaxGetProductsForDropdown/' + '/' + manufacturerId, {}, {
-            onOk: function (data) {
-                var select = $('select#productid');
-                select.append(data.products);
-                select.attr('disabled', false);
-                select.selectpicker('val', selectedProductId);
-                select.selectpicker('refresh');
-                select.find('i.fa-circle-notch').remove();
-            },
-            onError: function (data) {
-                console.log(data.msg);
-            }
-        });
+                onOk: function (data) {
+                    var select = $('select#productid');
+                    select.append(data.products);
+                    select.attr('disabled', false);
+                    select.selectpicker('val', selectedProductId);
+                    select.selectpicker('refresh');
+                    select.find('i.fa-circle-notch').remove();
+                },
+                onError: function (data) {
+                    console.log(data.msg);
+                }
+            });
     }
 
 };
