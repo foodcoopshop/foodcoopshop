@@ -348,11 +348,10 @@ class CartsTable extends AppTable
         $productData['unitName'] = $unitName;
         $productData['unitAmount'] = $unitAmount;
         $productData['priceInclPerUnit'] = $priceInclPerUnit;
-        $productData['productQuantityInUnits'] = $quantityInUnits * $cartProduct->amount;
-        $productData['orderedQuantityInUnits'] = isset($cartProduct->product->unit_product->quantity_in_units) ? $cartProduct->product->unit_product->quantity_in_units : 0;
+        $productData['orderedQuantityInUnits'] = $quantityInUnits;
+        $productData['productQuantityInUnits'] = isset($cartProduct->product->unit_product->quantity_in_units) ? $cartProduct->product->unit_product->quantity_in_units : 0;
 
         $productData = $this->addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece);
-        
         return $productData;
 
     }
@@ -434,8 +433,8 @@ class CartsTable extends AppTable
         $productData['unitName'] = $unitName;
         $productData['unitAmount'] = $unitAmount;
         $productData['priceInclPerUnit'] = $priceInclPerUnit;
-        $productData['productQuantityInUnits'] = $quantityInUnits * $cartProduct->amount;
-        $productData['orderedQuantityInUnits'] = isset($cartProduct->product_attribute->unit_product_attribute->quantity_in_units) ? $cartProduct->product_attribute->unit_product_attribute->quantity_in_units : 0;
+        $productData['orderedQuantityInUnits'] = $quantityInUnits;
+        $productData['productQuantityInUnits'] = isset($cartProduct->product_attribute->unit_product_attribute->quantity_in_units) ? $cartProduct->product_attribute->unit_product_attribute->quantity_in_units : 0;
 
         $productData = $this->addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece);
 
