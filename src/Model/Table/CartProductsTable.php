@@ -98,7 +98,7 @@ class CartProductsTable extends AppTable
         }
         
         // check if quantity in units was passed
-        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && $appAuth->isSelfServiceModeByReferer()) {
             if ($product->unit_product && $product->unit_product->price_per_unit_enabled && $orderedQuantityInUnits == 0) {
                 $message = __('Please_provide_a_valid_ordered_quantity_in_units.');
                 return [
@@ -140,7 +140,7 @@ class CartProductsTable extends AppTable
                     }
                     
                     // quantity in units check for attribute
-                    if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+                    if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && $appAuth->isSelfServiceModeByReferer()) {
                         if ($attribute->unit_product_attribute && $attribute->unit_product_attribute->price_per_unit_enabled && $orderedQuantityInUnits == 0) {
                             $message = __('Please_provide_a_valid_ordered_quantity_in_units.');
                             return [
