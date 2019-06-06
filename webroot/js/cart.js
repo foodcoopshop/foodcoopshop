@@ -195,7 +195,6 @@ foodcoopshop.Cart = {
                 productName = productWrapper.find('.heading h4').html();
             }
             var amount = parseInt(productWrapper.find('.entity-wrapper.active input[name="amount"]').val());
-            var orderedQuantityInUnits = productWrapper.find('.entity-wrapper.active .quantity-in-units-input-field-wrapper input').val();
             var price = foodcoopshop.Helper.getCurrencyAsFloat(productWrapper.find('.entity-wrapper.active .price').html());
             price = price * amount;
             
