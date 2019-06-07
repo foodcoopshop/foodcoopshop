@@ -2499,7 +2499,9 @@ foodcoopshop.Admin = {
                     var select = $('select#productid');
                     select.append(data.products);
                     select.attr('disabled', false);
-                    select.selectpicker('val', selectedProductId);
+                    if (selectedProductId) {
+                        select.selectpicker('val', selectedProductId);
+                    }
                     select.selectpicker('refresh');
                     select.find('i.fa-circle-notch').remove();
                 },
