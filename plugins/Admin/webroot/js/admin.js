@@ -780,11 +780,17 @@ foodcoopshop.Admin = {
 
         button.on('click', function () {
             var productIds = foodcoopshop.Admin.getSelectedProductIds();
-            foodcoopshop.Admin.openBulkEditDeliveryRhythmDialog(productIds);
+            var nonStockProductIds = [];
+            for(var i=0; i < productIds.length; i++) {
+                var isStockProductElement = $('tr#product-' + productIds[i] + ' td.is-stock-product');
+                if (!(isStockProductElement.length == 1 && isStockProductElement.find('i.fa-check').length == 1)) {
+                    nonStockProductIds.push(productIds[i]);
+                }
+            }
+            foodcoopshop.Admin.openBulkEditDeliveryRhythmDialog(nonStockProductIds);
         });
         
     },
-    
     
     openBulkEditDeliveryRhythmDialog : function(productIds) {
         var infoText = '';
