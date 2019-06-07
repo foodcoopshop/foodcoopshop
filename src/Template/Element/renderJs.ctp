@@ -15,7 +15,7 @@
 
 use Cake\Core\Configure;
 
-$raw = true;
+$raw = false;
 if (Configure::read('debug') > 0) {
     $raw = true;
 }
