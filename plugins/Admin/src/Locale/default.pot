@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-28 22:45+0200\n"
+"POT-Creation-Date: 2019-06-07 15:02+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1220,6 +1220,9 @@ msgstr ""
 msgid "Edit_delivery_rhythm_for_selected_products"
 msgstr ""
 
+msgid "Generate_product_cards"
+msgstr ""
+
 msgid "Add_new_attribute_for_product_{0}"
 msgstr ""
 
@@ -1938,6 +1941,9 @@ msgid "New?"
 msgstr ""
 
 msgid "Delivery_rhythm"
+msgstr ""
+
+msgid "Product_ID"
 msgstr ""
 
 msgid "docs_route_financial_reports"

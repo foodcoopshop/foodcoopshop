@@ -2449,6 +2449,31 @@ foodcoopshop.Admin = {
         });
     },
 
+    initGenerateProductCardsOfSelectedProductsButton : function() {
+        var button = $('#generateProductCardsOfSelectedProductsButton');
+        foodcoopshop.Helper.disableButton(button);
+
+        $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
+            foodcoopshop.Admin.updateObjectSelectionActionButton(button);
+        });
+
+        button.on('click', function () {
+            var productIds = foodcoopshop.Admin.getSelectedProductIds();
+            var stockProductIds = [];
+            for(var i=0; i < productIds.length; i++) {
+                var isStockProductElement = $('tr#product-' + productIds[i] + ' td.is-stock-product');
+                if (isStockProductElement.length == 1 && isStockProductElement.find('i.fa-check').length == 1) {
+                    stockProductIds.push(productIds[i]);
+                }
+            }
+            if (stockProductIds.length == 0) {
+                alert(foodcoopshop.LocalizedJs.admin.NoStockProductsSelected);
+            } else {
+                window.open('/admin/products/generateProductCards.pdf?productIds=' + stockProductIds.join(','));
+            }
+        });
+    },
+
     initProductDropdown: function (selectedProductId, manufacturerId) {
 
         manufacturerId = manufacturerId || 0;

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-06-05 13:24+0200\n"
+"POT-Creation-Date: 2019-06-07 15:02+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -321,9 +321,6 @@ msgid "approx."
 msgstr ""
 
 msgid "Pickup_day"
-msgstr ""
-
-msgid "Please_provide_a_valid_ordered_quantity_in_units."
 msgstr ""
 
 msgid "Home"
@@ -657,6 +654,9 @@ msgid "Please_select..."
 msgstr ""
 
 msgid "all"
+msgstr ""
+
+msgid "No_stock_products_selected."
 msgstr ""
 
 msgid "Were_the_products_picked_up?"
@@ -1347,6 +1347,9 @@ msgid "The_desired_amount_{0}_is_not_valid."
 msgstr ""
 
 msgid "Product_with_id_{0}_does_not_exist."
+msgstr ""
+
+msgid "Please_provide_a_valid_ordered_quantity_in_units."
 msgstr ""
 
 msgid "The_attribute_does_not_exist:_{0}"

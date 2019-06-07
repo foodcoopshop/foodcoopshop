@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-06-05 13:24+0200\n"
-"PO-Revision-Date: 2019-06-05 13:31+0200\n"
+"POT-Creation-Date: 2019-06-07 15:02+0200\n"
+"PO-Revision-Date: 2019-06-07 15:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -323,9 +323,6 @@ msgstr "approx."
 
 msgid "Pickup_day"
 msgstr "Pickup day"
-
-msgid "Please_provide_a_valid_ordered_quantity_in_units."
-msgstr "Please provide the taken weight."
 
 msgid "Home"
 msgstr "Home"
@@ -659,6 +656,9 @@ msgstr "Please select..."
 
 msgid "all"
 msgstr "all"
+
+msgid "No_stock_products_selected."
+msgstr "No stock products were selected."
 
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
@@ -1349,6 +1349,9 @@ msgstr "The desired amount {0} is not valid."
 
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "The product with id {0} does not exist."
+
+msgid "Please_provide_a_valid_ordered_quantity_in_units."
+msgstr "Please provide the taken weight."
 
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "The attribute does not exist: {0}"

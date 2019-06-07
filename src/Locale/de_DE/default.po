@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-06-05 13:24+0200\n"
-"PO-Revision-Date: 2019-06-05 13:24+0200\n"
+"POT-Creation-Date: 2019-06-07 15:02+0200\n"
+"PO-Revision-Date: 2019-06-07 15:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -323,9 +323,6 @@ msgstr "ca."
 
 msgid "Pickup_day"
 msgstr "Abholtag"
-
-msgid "Please_provide_a_valid_ordered_quantity_in_units."
-msgstr "Bitte trage das entnommene Gewicht ein."
 
 msgid "Home"
 msgstr "Home"
@@ -659,6 +656,9 @@ msgstr "Bitte auswählen..."
 
 msgid "all"
 msgstr "alle"
+
+msgid "No_stock_products_selected."
+msgstr "Es wurden keine Lagerprodukte ausgewählt."
 
 msgid "Were_the_products_picked_up?"
 msgstr "Wurden die Produkte abgeholt?"
@@ -1349,6 +1349,9 @@ msgstr "Die gewünschte Anzahl {0} ist nicht gültig."
 
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "Das Produkt mit der ID {0} ist nicht vorhanden."
+
+msgid "Please_provide_a_valid_ordered_quantity_in_units."
+msgstr "Bitte trage das entnommene Gewicht ein."
 
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "Die Variante existiert nicht: {0}"

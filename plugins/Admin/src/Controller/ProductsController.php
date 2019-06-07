@@ -30,6 +30,9 @@ class ProductsController extends AdminAppController
     public function isAuthorized($user)
     {
         switch ($this->getRequest()->getParam('action')) {
+            case 'generateProductCards':
+                return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
+                break;
             case 'index':
             case 'add':
             case 'ajaxGetProductsForDropdown':
@@ -106,6 +109,34 @@ class ProductsController extends AdminAppController
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->Product = TableRegistry::getTableLocator()->get('Products');
     }
+    
+    public function generateProductCards()
+    {
+        $productIds = $this->getRequest()->getQuery('productIds');
+        $productIds = explode(',', $productIds);
+        
+        if (empty($productIds)) {
+            throw new InvalidParameterException('no product id passed');
+        }
+        
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $products = $this->Product->getProductsForBackend($this->AppAuth, $productIds, 'all', 'all');
+        $productsWithoutAttributes = [];
+        foreach($products as &$product) {
+            if (preg_match('/main-product/', $product->row_class)) {
+                if (!empty($product->product_attributes)) {
+                    foreach($product->product_attributes as $attribute) {
+                        $product->prepared_data[] =  $attribute->product_attribute_combination->attribute->name . ': ' . Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($product->id_product, $attribute->price));
+                    }
+                } else {
+                    $product->prepared_data[] = ($product->unity != ''? $product->unity . ': ' : '') . Configure::read('app.numberHelper')->formatAsCurrency($product->gross_price);
+                }
+                $productsWithoutAttributes[] = $product;
+            }
+        }
+        $this->set('products', $productsWithoutAttributes);
+    }
+    
 
     public function ajaxGetProductsForDropdown($manufacturerId = 0)
     {

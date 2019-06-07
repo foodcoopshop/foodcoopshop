@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-05-28 22:45+0200\n"
-"PO-Revision-Date: 2019-05-28 22:45+0200\n"
+"POT-Creation-Date: 2019-06-07 15:02+0200\n"
+"PO-Revision-Date: 2019-06-07 14:38+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.2\n"
+"X-Generator: Poedit 2.2.3\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -1221,6 +1221,9 @@ msgstr "Member card"
 msgid "Edit_delivery_rhythm_for_selected_products"
 msgstr "Edit delivery rhythm for selected products"
 
+msgid "Generate_product_cards"
+msgstr "Generate product cards"
+
 msgid "Add_new_attribute_for_product_{0}"
 msgstr "Add new attribute for product {0}"
 
@@ -1940,6 +1943,9 @@ msgstr "New?"
 
 msgid "Delivery_rhythm"
 msgstr "Delivery rhythm"
+
+msgid "Product_ID"
+msgstr "ProductID"
 
 msgid "docs_route_financial_reports"
 msgstr "financial-reports"

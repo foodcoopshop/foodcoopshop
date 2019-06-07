@@ -18,6 +18,8 @@ use Cake\Core\Configure;
 
 $pdf = new BarCodeTcpdf();
 $pdf->SetLeftMargin(16);
+$pdf->SetTopMargin(58);
+
 $pdf->AddPage();
 
 $i = 0;

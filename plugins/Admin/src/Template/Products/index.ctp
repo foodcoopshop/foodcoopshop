@@ -258,6 +258,7 @@ use Cake\Core\Configure;
         echo $this->element('productList/button/editDeliveryRhythmForSelectedProducts', [
             'products' => $products
         ]);
+        echo $this->element('productList/button/generateProductCardsOfSelectedProducts');
     echo '</div>';
     
     ?>

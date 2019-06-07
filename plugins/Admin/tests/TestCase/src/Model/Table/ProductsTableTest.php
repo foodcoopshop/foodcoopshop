@@ -30,27 +30,6 @@ class ProductsTableTest extends AppCakeTestCase
         $this->Product = TableRegistry::getTableLocator()->get('Products');
     }
     
-    public function testRemoveTimestampFromFileValidTimestamp()
-    {
-        $filename = 'asdf.jpg?1539847477';
-        $result = 'asdf.jpg';
-        $this->assertEquals($result, $this->Product->removeTimestampFromFile($filename));
-    }
-    
-    public function testRemoveTimestampFromFileNoTimestamp()
-    {
-        $filename = 'asdf.jpg';
-        $result = 'asdf.jpg';
-        $this->assertEquals($result, $this->Product->removeTimestampFromFile($filename));
-    }
-    
-    public function testRemoveTimestampFromFileInvalidTimestamp()
-    {
-        $filename = 'asdf.jpg?adfs';
-        $result = 'asdf.jpg';
-        $this->assertEquals($result, $this->Product->removeTimestampFromFile($filename));
-    }
-    
     public function testChangeImageValidImageAndDeleteImage()
     {
         

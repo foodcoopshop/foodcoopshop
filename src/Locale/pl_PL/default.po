@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-06-05 13:24+0200\n"
+"POT-Creation-Date: 2019-06-07 15:02+0200\n"
 "PO-Revision-Date: 2019-05-29 10:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -428,11 +428,6 @@ msgstr "około"
 # Dzień odbioru
 msgid "Pickup_day"
 msgstr "Dzień odbioru"
-
-# Please provide a value.
-#, fuzzy
-msgid "Please_provide_a_valid_ordered_quantity_in_units."
-msgstr "Podaj wartość."
 
 # Home
 msgid "Home"
@@ -875,6 +870,11 @@ msgstr "Podaj miasto."
 
 msgid "all"
 msgstr ""
+
+# No product data selected.
+#, fuzzy
+msgid "No_stock_products_selected."
+msgstr "Nie wybrano danych produktu."
 
 # Were the products picked up?
 msgid "Were_the_products_picked_up?"
@@ -1804,6 +1804,11 @@ msgstr "Wymagana ilość {0} jest nieprawidłowa."
 # The product with id {0} does not exist.
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "Produkt o id {0} nie istnieje."
+
+# Please provide a value.
+#, fuzzy
+msgid "Please_provide_a_valid_ordered_quantity_in_units."
+msgstr "Podaj wartość."
 
 # The attribute does not exist: {0}
 msgid "The_attribute_does_not_exist:_{0}"
