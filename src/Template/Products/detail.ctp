@@ -34,7 +34,8 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
     echo $this->element('product/product', [
         'product' => $product,
         'showProductDetailLink' => true,
-        'showManufacturerDetailLink' => true
+        'showManufacturerDetailLink' => true,
+        'showIsNewBadgeAsLink' => true
     ]);
 ?>
 

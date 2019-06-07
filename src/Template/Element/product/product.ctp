@@ -38,9 +38,13 @@ if (!$largeImageExists) {
     echo '</a>';
 }
 if ($product['is_new']) {
-    echo '<a href="'.$this->Slug->getNewProducts().'" class="image-badge btn btn-success" title="'.__('New').'">
-                    <i class="fas fa-star gold"></i> '.__('New').'
-                </a>';
+    $isNewSrc = 'javascript:void(0);';
+    if ($showIsNewBadgeAsLink) {
+        $isNewSrc = $this->Slug->getNewProducts();
+    }
+    echo '<a href="'.$isNewSrc.'" class="image-badge btn btn-success" title="'.__('New').'">';
+        echo '<i class="fas fa-star gold"></i> '.__('New');
+    echo '</a>';
 }
     echo '</div>';
 

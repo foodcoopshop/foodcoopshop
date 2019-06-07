@@ -61,7 +61,8 @@ foreach ($products as $product) {
     echo $this->element('product/product', [
         'product' => $product,
         'showProductDetailLink' => true,
-        'showManufacturerDetailLink' => true
+        'showManufacturerDetailLink' => true,
+        'showIsNewBadgeAsLink' => true
     ]);
 }
 
