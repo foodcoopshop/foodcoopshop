@@ -195,11 +195,11 @@ class ApiController extends Controller
                 
                 if ($variableMemberFee > 0) {
                     
-                    $price = $this->Product->getStringAsFloat($product['price']['gross_price']);
+                    $price = Configure::read('app.numberHelper')->getStringAsFloat($product['price']['gross_price']);
                     $product['price']['gross_price'] = $this->Manufacturer->increasePriceWithVariableMemberFee($price, $variableMemberFee);
                     
                     if (isset($product['price']['unit_product_price_incl_per_unit'])) {
-                        $pricePerUnit = $this->Product->getStringAsFloat($product['price']['unit_product_price_incl_per_unit']);
+                        $pricePerUnit = Configure::read('app.numberHelper')->getStringAsFloat($product['price']['unit_product_price_incl_per_unit']);
                         $product['price']['unit_product_price_incl_per_unit'] = $this->Manufacturer->increasePriceWithVariableMemberFee($pricePerUnit, $variableMemberFee);
                     }
                     
@@ -220,7 +220,7 @@ class ApiController extends Controller
             
             if (isset($product['deposit'])) {
                 $products2saveForDeposit[] = [
-                    $product['remoteProductId'] => $this->Product->getStringAsFloat($product['deposit'])
+                    $product['remoteProductId'] => Configure::read('app.numberHelper')->getStringAsFloat($product['deposit'])
                 ];
             }
             

@@ -846,7 +846,7 @@ class ProductsController extends AdminAppController
             $this->sendAjaxError($e);
         }
 
-        $price = $this->Product->getStringAsFloat($this->getRequest()->getData('price'));
+        $price = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('price'));
         
         $this->Flash->success(__d('admin', 'The_price_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']));
         if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
@@ -856,7 +856,7 @@ class ProductsController extends AdminAppController
         }
 
         if ($this->getRequest()->getData('pricePerUnitEnabled')) {
-            $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($this->Product->getStringAsFloat($this->getRequest()->getData('priceInclPerUnit')), $this->getRequest()->getData('priceUnitName'), $this->getRequest()->getData('priceUnitAmount'));
+            $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo(Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('priceInclPerUnit')), $this->getRequest()->getData('priceUnitName'), $this->getRequest()->getData('priceUnitAmount'));
         } else {
             $newPrice = Configure::read('app.numberHelper')->formatAsCurrency($price);
         }
@@ -928,7 +928,7 @@ class ProductsController extends AdminAppController
         if (!empty($depositEntity->deposit)) {
             $oldDeposit = $depositEntity->deposit;
         }
-        $deposit = $this->Product->getStringAsFloat($this->getRequest()->getData('deposit'));
+        $deposit = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('deposit'));
 
         $actionLogMessage = __d('admin', 'The_deposit_of_the_product_{0}_was_changed_from_{1}_to_{2}.', [
             '<b>' . $productName . '</b>',
