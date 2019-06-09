@@ -780,11 +780,17 @@ foodcoopshop.Admin = {
 
         button.on('click', function () {
             var productIds = foodcoopshop.Admin.getSelectedProductIds();
-            foodcoopshop.Admin.openBulkEditDeliveryRhythmDialog(productIds);
+            var nonStockProductIds = [];
+            for(var i=0; i < productIds.length; i++) {
+                var isStockProductElement = $('tr#product-' + productIds[i] + ' td.is-stock-product');
+                if (!(isStockProductElement.length == 1 && isStockProductElement.find('i.fa-check').length == 1)) {
+                    nonStockProductIds.push(productIds[i]);
+                }
+            }
+            foodcoopshop.Admin.openBulkEditDeliveryRhythmDialog(nonStockProductIds);
         });
         
     },
-    
     
     openBulkEditDeliveryRhythmDialog : function(productIds) {
         var infoText = '';
@@ -1913,7 +1919,7 @@ foodcoopshop.Admin = {
 
             var amount = row.find('.product-amount-for-dialog').html();
             var select = $('#' + dialogId + ' #dialogOrderDetailEditCustomerAmount');
-            var selectLabel = $('#' + dialogId + ' label[for="dialogOrderDetailEditCustomerAmount"]')
+            var selectLabel = $('#' + dialogId + ' label[for="dialogOrderDetailEditCustomerAmount"]');
             
             select.hide();
             selectLabel.hide();
@@ -2443,6 +2449,31 @@ foodcoopshop.Admin = {
         });
     },
 
+    initGenerateProductCardsOfSelectedProductsButton : function() {
+        var button = $('#generateProductCardsOfSelectedProductsButton');
+        foodcoopshop.Helper.disableButton(button);
+
+        $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
+            foodcoopshop.Admin.updateObjectSelectionActionButton(button);
+        });
+
+        button.on('click', function () {
+            var productIds = foodcoopshop.Admin.getSelectedProductIds();
+            var stockProductIds = [];
+            for(var i=0; i < productIds.length; i++) {
+                var isStockProductElement = $('tr#product-' + productIds[i] + ' td.is-stock-product');
+                if (isStockProductElement.length == 1 && isStockProductElement.find('i.fa-check').length == 1) {
+                    stockProductIds.push(productIds[i]);
+                }
+            }
+            if (stockProductIds.length == 0) {
+                alert(foodcoopshop.LocalizedJs.admin.NoStockProductsSelected);
+            } else {
+                window.open('/admin/products/generateProductCards.pdf?productIds=' + stockProductIds.join(','));
+            }
+        });
+    },
+
     initProductDropdown: function (selectedProductId, manufacturerId) {
 
         manufacturerId = manufacturerId || 0;
@@ -2464,18 +2495,20 @@ foodcoopshop.Admin = {
         productDropdown.parent().find('div.filter-option-inner-inner').append('<i class="fas fa-circle-notch fa-spin"></i>');
         foodcoopshop.Helper.ajaxCall(
             '/admin/products/ajaxGetProductsForDropdown/' + '/' + manufacturerId, {}, {
-            onOk: function (data) {
-                var select = $('select#productid');
-                select.append(data.products);
-                select.attr('disabled', false);
-                select.selectpicker('val', selectedProductId);
-                select.selectpicker('refresh');
-                select.find('i.fa-circle-notch').remove();
-            },
-            onError: function (data) {
-                console.log(data.msg);
-            }
-        });
+                onOk: function (data) {
+                    var select = $('select#productid');
+                    select.append(data.products);
+                    select.attr('disabled', false);
+                    if (selectedProductId) {
+                        select.selectpicker('val', selectedProductId);
+                    }
+                    select.selectpicker('refresh');
+                    select.find('i.fa-circle-notch').remove();
+                },
+                onError: function (data) {
+                    console.log(data.msg);
+                }
+            });
     }
 
 };

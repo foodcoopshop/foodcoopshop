@@ -293,8 +293,8 @@ echo '</table>';
 echo '<div class="sc"></div>';
 
 echo '<div class="bottom-button-container">';
-    echo $this->element('customerList/email', ['emailAddresses' => $emailAddresses]);
-    echo $this->element('customerList/generateMemberCardsOfSelectedCustomers');
+    echo $this->element('customerList/button/email', ['emailAddresses' => $emailAddresses]);
+    echo $this->element('customerList/button/generateMemberCardsOfSelectedCustomers');
 echo '</div>';
 echo '<div class="sc"></div>';
 

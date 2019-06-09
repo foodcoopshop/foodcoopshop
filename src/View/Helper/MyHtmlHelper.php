@@ -32,6 +32,11 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
     
+    public function removeTimestampFromFile($file) {
+        $file = explode('?', $file);
+        return $file[0];
+    }
+    
     public function privateImage($imageSrc)
     {
         return '/photos/' . $imageSrc;

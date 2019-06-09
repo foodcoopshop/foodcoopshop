@@ -56,7 +56,7 @@ foodcoopshop.AppChart = {
         
     init : function(xAxisData, yAxisData) {
         
-        var ctx = $("#myChart").get(0).getContext("2d");
+        var ctx = $('#myChart').get(0).getContext('2d');
         xAxisData = $.parseJSON(xAxisData);
         yAxisData = $.parseJSON(yAxisData);
         
@@ -69,13 +69,13 @@ foodcoopshop.AppChart = {
             }]
         };
 
-        var ctx = $("#myChart").get(0).getContext("2d");
-          var myNewChart = new Chart(ctx, {
-          responsive : true,
-          type: 'bar',
-          data: barChartData,
-          options: this.chartOptions
-       });        
+        var ctx = $('#myChart').get(0).getContext('2d');
+        var myNewChart = new Chart(ctx, {
+            responsive : true,
+            type: 'bar',
+            data: barChartData,
+            options: this.chartOptions
+        });        
     }
     
 };

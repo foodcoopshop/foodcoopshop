@@ -38,9 +38,13 @@ if (!$largeImageExists) {
     echo '</a>';
 }
 if ($product['is_new']) {
-    echo '<a href="'.$this->Slug->getNewProducts().'" class="image-badge btn btn-success" title="'.__('New').'">
-                    <i class="fas fa-star gold"></i> '.__('New').'
-                </a>';
+    $isNewSrc = 'javascript:void(0);';
+    if ($showIsNewBadgeAsLink) {
+        $isNewSrc = $this->Slug->getNewProducts();
+    }
+    echo '<a href="'.$isNewSrc.'" class="image-badge btn btn-success" title="'.__('New').'">';
+        echo '<i class="fas fa-star gold"></i> '.__('New');
+    echo '</a>';
 }
     echo '</div>';
 
@@ -213,7 +217,7 @@ if ($product['description'] != '') {
                     'stockAvailableQuantityLimit' => $attribute['StockAvailables']['quantity_limit'],
                     'hideButton' => $isStockProductOrderPossible,
                     'cartButtonLabel' => $appAuth->isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
-                    'cartButtonIcon' => $appAuth->isSelfServiceModeByUrl() ? 'fa-plus-circle' : 'fa-cart-plus'
+                    'cartButtonIcon' => $appAuth->isSelfServiceModeByUrl() ? 'fa-shopping-bag' : 'fa-cart-plus'
                 ]);
                 echo $this->element('product/notAvailableInfo', ['stockAvailable' => $attribute['StockAvailables']]);
                 echo $this->element('product/includeStockProductsInOrdersWithDeliveryRhythmInfoText', [
@@ -297,7 +301,7 @@ if ($product['description'] != '') {
                     'stockAvailableQuantityLimit' => $product['quantity_limit'],
                     'hideButton' => $isStockProductOrderPossible,
                     'cartButtonLabel' => $appAuth->isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
-                    'cartButtonIcon' => $appAuth->isSelfServiceModeByUrl() ? 'fa-plus-circle' : 'fa-cart-plus'
+                    'cartButtonIcon' => $appAuth->isSelfServiceModeByUrl() ? 'fa-shopping-bag' : 'fa-cart-plus'
                 ]);
                 echo $this->element('product/notAvailableInfo', ['stockAvailable' => $product]);
                 echo $this->element('product/includeStockProductsInOrdersWithDeliveryRhythmInfoText', [

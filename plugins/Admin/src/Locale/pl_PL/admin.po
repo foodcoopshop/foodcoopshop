@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-05-28 22:45+0200\n"
+"POT-Creation-Date: 2019-06-07 15:02+0200\n"
 "PO-Revision-Date: 2019-04-28 03:51+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1252,6 +1252,10 @@ msgstr "Członek"
 msgid "Edit_delivery_rhythm_for_selected_products"
 msgstr "Edytuj harmonogram dostaw dla wybranych produktów"
 
+#, fuzzy
+msgid "Generate_product_cards"
+msgstr "Generuj zamówienia w formie PDF"
+
 msgid "Add_new_attribute_for_product_{0}"
 msgstr "Dodaj nowy atrybut do produktu {0}"
 
@@ -2007,6 +2011,10 @@ msgstr "Nowy?"
 #, fuzzy
 msgid "Delivery_rhythm"
 msgstr "Harmonogram dostaw"
+
+#, fuzzy
+msgid "Product_ID"
+msgstr "Produkt"
 
 msgid "docs_route_financial_reports"
 msgstr "financial-reports"

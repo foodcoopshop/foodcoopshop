@@ -30,6 +30,9 @@ class ProductsController extends AdminAppController
     public function isAuthorized($user)
     {
         switch ($this->getRequest()->getParam('action')) {
+            case 'generateProductCards':
+                return Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin());
+                break;
             case 'index':
             case 'add':
             case 'ajaxGetProductsForDropdown':
@@ -106,6 +109,42 @@ class ProductsController extends AdminAppController
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->Product = TableRegistry::getTableLocator()->get('Products');
     }
+    
+    public function generateProductCards()
+    {
+        $productIds = $this->getRequest()->getQuery('productIds');
+        $productIds = explode(',', $productIds);
+        
+        if (empty($productIds)) {
+            throw new InvalidParameterException('no product id passed');
+        }
+        
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $products = $this->Product->getProductsForBackend($this->AppAuth, $productIds, 'all', 'all');
+        $productsWithoutAttributes = [];
+        foreach($products as &$product) {
+            if (preg_match('/main-product/', $product->row_class)) {
+                if (!empty($product->product_attributes)) {
+                    foreach($product->product_attributes as $attribute) {
+                        $price = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($product->id_product, $attribute->price));
+                        if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                            $price = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($attribute->unit_product_attribute->price_incl_per_unit, $attribute->unit_product_attribute->name, $attribute->unit_product_attribute->amount);
+                        }
+                        $product->prepared_data[] =  $attribute->product_attribute_combination->attribute->name . ': ' . $price;
+                    }
+                } else {
+                    $price = Configure::read('app.numberHelper')->formatAsCurrency($product->gross_price);
+                    if (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled) {
+                        $price = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($product->unit_product->price_incl_per_unit, $product->unit_product->name, $product->unit_product->amount);
+                    }
+                    $product->prepared_data[] = ($product->unity != ''? $product->unity . ': ' : '') . $price;
+                }
+                $productsWithoutAttributes[] = $product;
+            }
+        }
+        $this->set('products', $productsWithoutAttributes);
+    }
+    
 
     public function ajaxGetProductsForDropdown($manufacturerId = 0)
     {
@@ -807,7 +846,7 @@ class ProductsController extends AdminAppController
             $this->sendAjaxError($e);
         }
 
-        $price = $this->Product->getStringAsFloat($this->getRequest()->getData('price'));
+        $price = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('price'));
         
         $this->Flash->success(__d('admin', 'The_price_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']));
         if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
@@ -817,7 +856,7 @@ class ProductsController extends AdminAppController
         }
 
         if ($this->getRequest()->getData('pricePerUnitEnabled')) {
-            $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($this->Product->getStringAsFloat($this->getRequest()->getData('priceInclPerUnit')), $this->getRequest()->getData('priceUnitName'), $this->getRequest()->getData('priceUnitAmount'));
+            $newPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo(Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('priceInclPerUnit')), $this->getRequest()->getData('priceUnitName'), $this->getRequest()->getData('priceUnitAmount'));
         } else {
             $newPrice = Configure::read('app.numberHelper')->formatAsCurrency($price);
         }
@@ -889,7 +928,7 @@ class ProductsController extends AdminAppController
         if (!empty($depositEntity->deposit)) {
             $oldDeposit = $depositEntity->deposit;
         }
-        $deposit = $this->Product->getStringAsFloat($this->getRequest()->getData('deposit'));
+        $deposit = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('deposit'));
 
         $actionLogMessage = __d('admin', 'The_deposit_of_the_product_{0}_was_changed_from_{1}_to_{2}.', [
             '<b>' . $productName . '</b>',

@@ -297,7 +297,9 @@ class CartsController extends FrontendController
         $this->Product = TableRegistry::getTableLocator()->get('Products');
         $ids = $this->Product->getProductIdAndAttributeId($initialProductId);
         $amount = (int) $this->getRequest()->getData('amount');
-        $orderedQuantityInUnits = $this->getRequest()->getData('orderedQuantityInUnits');
+        $orderedQuantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat(
+            $this->getRequest()->getData('orderedQuantityInUnits')
+        );
         
         $this->CartProduct = TableRegistry::getTableLocator()->get('CartProducts');
         $result = $this->CartProduct->add($this->AppAuth, $ids['productId'], $ids['attributeId'], $amount, $orderedQuantityInUnits);

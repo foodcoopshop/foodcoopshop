@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-05-31 11:39+0200\n"
+"POT-Creation-Date: 2019-06-07 15:02+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -321,9 +321,6 @@ msgid "approx."
 msgstr ""
 
 msgid "Pickup_day"
-msgstr ""
-
-msgid "Please_provide_a_valid_ordered_quantity_in_units."
 msgstr ""
 
 msgid "Home"
@@ -659,6 +656,9 @@ msgstr ""
 msgid "all"
 msgstr ""
 
+msgid "No_stock_products_selected."
+msgstr ""
+
 msgid "Were_the_products_picked_up?"
 msgstr ""
 
@@ -957,6 +957,9 @@ msgid "Hello"
 msgstr ""
 
 msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
+msgstr ""
+
+msgid "Your_purchase"
 msgstr ""
 
 msgid "Order_confirmation"
@@ -1344,6 +1347,9 @@ msgid "The_desired_amount_{0}_is_not_valid."
 msgstr ""
 
 msgid "Product_with_id_{0}_does_not_exist."
+msgstr ""
+
+msgid "Please_provide_a_valid_ordered_quantity_in_units."
 msgstr ""
 
 msgid "The_attribute_does_not_exist:_{0}"
@@ -1943,9 +1949,6 @@ msgstr ""
 msgid "Weight_in"
 msgstr ""
 
-msgid "Deposit_return"
-msgstr ""
-
 msgid "Add_deposit"
 msgstr ""
 
@@ -2001,6 +2004,9 @@ msgid "The_amount_was_reduced_from_your_credit_balance."
 msgstr ""
 
 msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
+msgstr ""
+
+msgid "thank_you_for_your_purchase."
 msgstr ""
 
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."

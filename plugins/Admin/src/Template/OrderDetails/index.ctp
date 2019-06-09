@@ -88,12 +88,14 @@ use Cake\Core\Configure;
                     ]);
                 echo '</div>';
             }
-            if (!$appAuth->isManufacturer() && ($appAuth->isAdmin() || $appAuth->isSuperadmin() || (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders')))) {
-                echo $this->element('addInstantOrderButton', [
-                    'customers' => $customersForInstantOrderDropdown
-                ]);
-                echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products'))]);
+            if (!(Configure::read('app.serviceModeTestingEnabled') && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED'))) {
+                if (!$appAuth->isManufacturer() && ($appAuth->isAdmin() || $appAuth->isSuperadmin() || (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders')))) {
+                    echo $this->element('addInstantOrderButton', [
+                        'customers' => $customersForInstantOrderDropdown
+                    ]);
+                }
             }
+            echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_pick_up_products'))]);
             ?>
             </div>
         <?php echo $this->Form->end(); ?>
@@ -289,6 +291,13 @@ echo '<div class="bottom-button-container">';
     if (!empty($emailAddresses)) {
         echo $this->element('orderDetailList/button/email', [
             'emailAddresses' => $emailAddresses
+        ]);
+    }
+    
+    if ($appAuth->isSuperadmin() && Configure::read('app.serviceModeTestingEnabled') && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+        echo $this->element('addInstantOrderButton', [
+            'customers' => $customersForInstantOrderDropdown,
+            'additionalClass' => 'bottom'
         ]);
     }
     

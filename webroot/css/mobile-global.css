@@ -39,19 +39,49 @@
         width: 100%;
         margin-bottom: 5px;
     }
+    .sb-left #product-search input {
+        padding-left: 8px ! important;
+	    width: 100% ! important;
+        padding-right: 14%;
+    }
     .sb-left #product-search .btn-success {
         border-color: transparent ! important;
     }
-    .sb-left #product-search input {
-        padding-left: 8px ! important;
+    .sb-left #product-search .btn-success.submit {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    .sb-left #product-search .btn-success.reset {
+        position: absolute;
+        top: 0;
+        right: 35px;
+    }
+    .sb-left #product-search select {
+        width: 100% ! important;
     }
     .sb-left #product-search input,
     .sb-left #product-search select {
-        width: 70% ! important;
         color: #333;
         background-color: #fff;
     }
-    
+    #responsive-header .responsive-cart {
+        float: right ! important;
+        margin-right: 5px ! important;
+        margin-top: 12px ! important;
+    }
+    #responsive-header .shopping-limit-reached-info {
+        width: 75px;
+        text-align: center;
+        margin-right: 1px;
+        font-size: 11px;
+        float: right;
+        line-height: 12px;
+        margin-top: 8px;
+    }
+    #responsive-header .responsive-cart span {
+        font-size: 16px ! important;
+    }
     #flashMessage {
         right: auto ! important;
         left: 50% ! important;

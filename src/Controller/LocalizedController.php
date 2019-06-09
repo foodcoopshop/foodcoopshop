@@ -100,8 +100,7 @@ class LocalizedController extends Controller
                 'removeFromCart' => __('Remove_from_cart?'),
                 'forEach' => __('for_each'),
                 'approx' => __('approx.'),
-                'PickupDay' => __('Pickup_day'),
-                'PleaseProvideAValidOrderedQuantityInUnits' => __('Please_provide_a_valid_ordered_quantity_in_units.')
+                'PickupDay' => __('Pickup_day')
             ],
             'mobile' => [
                 'home' => __('Home'),
@@ -221,7 +220,8 @@ class LocalizedController extends Controller
                 'PleaseSelectNewMember' => __('Please_select_new_member.'),
                 'AmountThatShouldBeChangedToMember' => __('Amount_that_should_be_changed_to_member?'),
                 'PleaseSelect' => __('Please_select...'),
-                'all' => __('all')
+                'all' => __('all'),
+                'NoStockProductsSelected' => __('No_stock_products_selected.')
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),

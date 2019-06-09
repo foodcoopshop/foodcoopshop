@@ -8,7 +8,6 @@ use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
-use Cake\Utility\Security;
 use Cake\Validation\Validator;
 use Cake\I18n\I18n;
 
@@ -314,22 +313,6 @@ class ProductsTable extends AppTable
     }
 
     /**
-     * @param string $string
-     * @return boolean / float
-     */
-    public function getStringAsFloat($string)
-    {
-        $float = trim($string);
-        $float = Configure::read('app.numberHelper')->parseFloatRespectingLocale($float);
-
-        if ($float === false) {
-            return -1; // do not return false, because 0 is a valid return value!
-        }
-
-        return $float;
-    }
-
-    /**
      * @param array $products
      *  Array
      *  (
@@ -345,7 +328,7 @@ class ProductsTable extends AppTable
 
         foreach ($products as $product) {
             $productId = key($product);
-            $deposit = $this->getStringAsFloat($product[$productId]);
+            $deposit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]);
             if ($deposit < 0) {
                 throw new InvalidParameterException('input format not correct: '.$product[$productId]);
             }
@@ -354,7 +337,7 @@ class ProductsTable extends AppTable
         $success = false;
         foreach ($products as $product) {
             $productId = key($product);
-            $deposit = $this->getStringAsFloat($product[$productId]);
+            $deposit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]);
 
             $ids = $this->getProductIdAndAttributeId($productId);
 
@@ -427,7 +410,7 @@ class ProductsTable extends AppTable
 
         foreach ($products as $product) {
             $productId = key($product);
-            $price = $this->getStringAsFloat($product[$productId]['gross_price']);
+            $price = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['gross_price']);
             if ($price < 0) {
                 throw new InvalidParameterException('input format not correct: '.$product[$productId]['gross_price']);
             }
@@ -437,7 +420,7 @@ class ProductsTable extends AppTable
         foreach ($products as $product) {
             
             $productId = key($product);
-            $price = $this->getStringAsFloat($product[$productId]['gross_price']);
+            $price = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['gross_price']);
 
             $ids = $this->getProductIdAndAttributeId($productId);
 
@@ -466,7 +449,7 @@ class ProductsTable extends AppTable
             if (isset($product[$productId]['unit_product_price_per_unit_enabled'])) {
                 $this->Unit = TableRegistry::getTableLocator()->get('Units');
                 $pricePerUnitEnabled = $product[$productId]['unit_product_price_per_unit_enabled'];
-                $priceInclPerUnit = $this->getStringAsFloat($product[$productId]['unit_product_price_incl_per_unit']);
+                $priceInclPerUnit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['unit_product_price_incl_per_unit']);
                 $this->Unit->saveUnits(
                     $ids['productId'],
                     $ids['attributeId'],
@@ -474,7 +457,7 @@ class ProductsTable extends AppTable
                     $priceInclPerUnit,
                     $product[$productId]['unit_product_name'],
                     $product[$productId]['unit_product_amount'],
-                    $this->getStringAsFloat($product[$productId]['unit_product_quantity_in_units'])
+                    Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['unit_product_quantity_in_units'])
                 );
             }
         }
@@ -685,17 +668,12 @@ class ProductsTable extends AppTable
         }
         return false;
     }
-    
-    public function removeTimestampFromFile($file) {
-        $file = explode('?', $file);
-        return $file[0];
-    }
 
     /**
      * @param array $products
      * @return array $preparedProducts
      */
-    public function getProductsForBackend($appAuth, $productId, $manufacturerId, $active, $categoryId = '', $isQuantityMinFilterSet = 0, $isPriceZero = 0, $addProductNameToAttributes = false, $controller = null)
+    public function getProductsForBackend($appAuth, $productIds, $manufacturerId, $active, $categoryId = '', $isQuantityMinFilterSet = 0, $isPriceZero = 0, $addProductNameToAttributes = false, $controller = null)
     {
 
         $conditions = [];
@@ -707,8 +685,8 @@ class ProductsTable extends AppTable
             $conditions[] = 'Products.id_manufacturer > 0';
         }
 
-        if ($productId != '') {
-            $conditions['Products.id_product'] = $productId;
+        if ($productIds != '') {
+            $conditions['Products.id_product IN'] = $productIds;
         }
 
         if ($active != 'all') {
@@ -726,7 +704,7 @@ class ProductsTable extends AppTable
         $quantityIsZeroFilterOn = false;
         $priceIsZeroFilterOn = false;
         foreach ($conditions as $condition) {
-            if (preg_match('/'.$this->getIsQuantityMinFilterSetCondition().'/', $condition)) {
+            if (!is_array($condition) && preg_match('/'.$this->getIsQuantityMinFilterSetCondition().'/', $condition)) {
                 $this->getAssociation('ProductAttributes')->setConditions(
                     [
                         'StockAvailables.quantity < 3'
@@ -734,7 +712,7 @@ class ProductsTable extends AppTable
                 );
                 $quantityIsZeroFilterOn = true;
             }
-            if (preg_match('/'.$this->getIsPriceZeroCondition().'/', $condition)) {
+            if (!is_array($condition) && preg_match('/'.$this->getIsPriceZeroCondition().'/', $condition)) {
                 $this->ProductAttributes->setConditions(
                     [
                         'ProductAttributes.price' => 0
@@ -794,6 +772,10 @@ class ProductsTable extends AppTable
         ->select($this->Manufacturers)
         ->select($this->UnitProducts)
         ->select($this->StockAvailables);
+        
+        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+            $query->select(['bar_code' => $this->getProductIdentifierField()]);
+        }
 
         if ($controller) {
             $query = $controller->paginate($query, [
@@ -850,7 +832,7 @@ class ProductsTable extends AppTable
             if (!empty($product->image)) {
                 $imageSrc = Configure::read('app.htmlHelper')->getProductImageSrc($product->image->id_image, 'home');
                 $imageFile = str_replace('//', '/', $_SERVER['DOCUMENT_ROOT'] . $imageSrc);
-                $imageFile = $this->removeTimestampFromFile($imageFile);
+                $imageFile = Configure::read('app.htmlHelper')->removeTimestampFromFile($imageFile);
                 if ($imageFile != '' && !preg_match('/de-default-home/', $imageFile) && file_exists($imageFile)) {
                     $product->image->hash = sha1_file($imageFile);
                     $product->image->src = Configure::read('app.cakeServerName') . $imageSrc;
@@ -1235,7 +1217,7 @@ class ProductsTable extends AppTable
         foreach ($products as $product) {
             $productId = key($product);
             $imageFromRemoteServer = $product[$productId];
-            $imageFromRemoteServer = $this->removeTimestampFromFile($imageFromRemoteServer);
+            $imageFromRemoteServer = Configure::read('app.htmlHelper')->removeTimestampFromFile($imageFromRemoteServer);
             if ($imageFromRemoteServer == 'no-image') {
                 continue;
             }
@@ -1260,7 +1242,7 @@ class ProductsTable extends AppTable
             }
                 
             $imageFromRemoteServer = $product[$productId];
-            $imageFromRemoteServer = $this->removeTimestampFromFile($imageFromRemoteServer);
+            $imageFromRemoteServer = Configure::read('app.htmlHelper')->removeTimestampFromFile($imageFromRemoteServer);
             
             $product = $this->find('all', [
                 'conditions' => [

@@ -18,6 +18,8 @@ use Cake\Core\Configure;
 
 $pdf = new BarCodeTcpdf();
 $pdf->SetLeftMargin(16);
+$pdf->SetTopMargin(58);
+
 $pdf->AddPage();
 
 $i = 0;
@@ -55,22 +57,23 @@ foreach($customers as $customer) {
         
         // START ROW barcode and customer image
         $pdf->table .= '<tr>';
-            $pdf->table .= '<td>';
-            $barcodeObject = new TCPDFBarcode($customer->id_customer, 'EAN8');
+            $pdf->table .= '<td style="width:120px;">';
+            $barcodeObject = new TCPDFBarcode($customer->bar_code, 'C39');
             //https://stackoverflow.com/a/54520065/2100184
-            $imgBase64Encoded = base64_encode($barcodeObject->getBarcodePngData(1.5, 60));
+            $imgBase64Encoded = base64_encode($barcodeObject->getBarcodePngData(1.5, 102));
             // move barcode to bottom
-            $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="font-size:16px;"><span style="font-size:10px;">'.$customer->bar_code.'</span></td></tr></table>';
-                $pdf->table .= '<img src="@' . preg_replace('#^data:image/[^;]+;base64,#', '', $imgBase64Encoded) . '">';
+            $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="font-size:6px;"></td></tr></table>';
+            $pdf->table .= '<img src="@' . preg_replace('#^data:image/[^;]+;base64,#', '', $imgBase64Encoded) . '">';
             $pdf->table .= '</td>';
             $pdf->table .= '<td style="width:10px;"></td>'; //spacer between barcode and customer image
-            $pdf->table .= '<td style="width:138px;" align="right">';
+            // move user image to bottom
+            $pdf->table .= '<td style="width:100px;" align="right">';
                 $customerImage = Configure::read('app.customerImagesDir') . DS . $customer->id_customer . '-xxl.jpg';
                 if (file_exists($customerImage)) {
                     $fileinfos = getimagesize($customerImage);
                     $ratio = $fileinfos[1] / $fileinfos[0];
                     $customerImageBase64Encoded = base64_encode(file_get_contents($customerImage));
-                    $height = 64;
+                    $height = 68;
                     $width = $height / $ratio;
                     // move image to bottom
                     $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="font-size:3px;"></td></tr></table>';

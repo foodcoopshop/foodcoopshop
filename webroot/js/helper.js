@@ -142,7 +142,7 @@ foodcoopshop.Helper = {
             }
             var maximum = $(this).closest('.amount-wrapper').find('.availibility');
             if (maximum.length > 0) {
-                max = parseInt(maximum.html().replace(/\D+/g, ''));
+                var max = parseInt(maximum.html().replace(/\D+/g, ''));
                 if (result > max) {
                     result = max;
                 }

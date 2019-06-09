@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-05-31 11:39+0200\n"
-"PO-Revision-Date: 2019-05-31 11:39+0200\n"
+"POT-Creation-Date: 2019-06-07 15:02+0200\n"
+"PO-Revision-Date: 2019-06-07 15:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -323,9 +323,6 @@ msgstr "ca."
 
 msgid "Pickup_day"
 msgstr "Abholtag"
-
-msgid "Please_provide_a_valid_ordered_quantity_in_units."
-msgstr "Bitte trage das entnommene Gewicht ein."
 
 msgid "Home"
 msgstr "Home"
@@ -660,6 +657,9 @@ msgstr "Bitte auswählen..."
 msgid "all"
 msgstr "alle"
 
+msgid "No_stock_products_selected."
+msgstr "Es wurden keine Lagerprodukte ausgewählt."
+
 msgid "Were_the_products_picked_up?"
 msgstr "Wurden die Produkte abgeholt?"
 
@@ -959,6 +959,9 @@ msgstr "Hallo"
 
 msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
 msgstr "Du kannst diese E-Mail <a href=\"{0}\">in den Hersteller-Einstellungen abbestellen</a>."
+
+msgid "Your_purchase"
+msgstr "Dein Einkauf"
 
 msgid "Order_confirmation"
 msgstr "Bestellbestätigung"
@@ -1346,6 +1349,9 @@ msgstr "Die gewünschte Anzahl {0} ist nicht gültig."
 
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "Das Produkt mit der ID {0} ist nicht vorhanden."
+
+msgid "Please_provide_a_valid_ordered_quantity_in_units."
+msgstr "Bitte trage das entnommene Gewicht ein."
 
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "Die Variante existiert nicht: {0}"
@@ -1944,9 +1950,6 @@ msgstr "In den Warenkorb"
 msgid "Weight_in"
 msgstr "Gewicht in"
 
-msgid "Deposit_return"
-msgstr "Pfand-Rückgabe"
-
 msgid "Add_deposit"
 msgstr "Pfand eintragen"
 
@@ -2003,6 +2006,9 @@ msgstr "Der Betrag wurde von deinem Guthaben abgebucht."
 
 msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
 msgstr "Eine detaillierte Auflistung deiner Bestellung findest du in der angehängten Bestellübersicht (PDF). Die Informationen zum Rücktrittsrecht sind gesetzlich vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen."
+
+msgid "thank_you_for_your_purchase."
+msgstr "Danke für deinen Einkauf."
 
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."
 msgstr "Das ist der Text der E-Mail (mit FoodCoopShop-Logo als Anhang)."
@@ -2333,6 +2339,13 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#, fuzzy
+#~ msgid "thank_you_for_your_purchase_from_{0}."
+#~ msgstr "vielen Dank für deine Bestellung vom {0}."
+
+#~ msgid "Deposit_return"
+#~ msgstr "Pfand-Rückgabe"
 
 #~ msgid "BarCode"
 #~ msgstr "Barcode"

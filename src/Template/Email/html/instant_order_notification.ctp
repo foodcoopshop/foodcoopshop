@@ -39,6 +39,7 @@
         'cartProducts' => $cart['CartProducts'],
         'depositSum' => $depositSum,
         'productSum' => $productSum,
-        'productAndDepositSum' => $productAndDepositSum
+        'productAndDepositSum' => $productAndDepositSum,
+        'selfServiceModeEnabled' => false
     ]); ?>
 <?php echo $this->element('email/tableFoot'); ?>

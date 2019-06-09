@@ -13,6 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Core\Configure;
+use Cake\Routing\Router;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".SelfService.init();".
@@ -46,7 +47,8 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
         echo $this->element('product/product', [
             'product' => $product,
             'showProductDetailLink' => false,
-            'showManufacturerDetailLink' => false
+            'showManufacturerDetailLink' => false,
+            'showIsNewBadgeAsLink' => false
         ]);
     }
 ?>
@@ -61,7 +63,7 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
         'icon' => 'fa-shopping-bag',
         'name' => __('Shopping_bag'),
         'docsLink' => $this->Html->getDocsUrl(__('docs_route_self_service')),
-        'cartButtonIcon' => 'fa-plus-circle',
+        'cartButtonIcon' => 'fa-shopping-bag',
         'cartEmptyMessage' => __('Your_shopping_bag_is_empty.')
     ]); ?>
     <?php
@@ -77,4 +79,7 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
 		<i class="fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
 	</button>
 	<?php echo $this->Form->end(); ?>
+	<?php if ($isMobile) { ?>
+		<a class="btn btn-outline-light continue-shopping" href="<?php echo Router::reverse($this->request, true); ?>";><?php echo __('Continue_shopping?')?></a>
+	<?php } ?>
 </div>

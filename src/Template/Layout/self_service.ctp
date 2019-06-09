@@ -16,6 +16,16 @@
 use Cake\Core\Configure;
 
 echo $this->element('layout/header');
+
+if ($isMobile) {
+    if (!empty($_POST)) {
+        $js = Configure::read('app.jsNamespace').".Mobile.showSelfServiceCart();";
+    } else {
+        $js = Configure::read('app.jsNamespace').".Mobile.hideSelfServiceCart();";
+    }
+    $this->element('addScript', ['script' => $js]);
+}
+
 ?>
 
 <div id="content" class="self-service">

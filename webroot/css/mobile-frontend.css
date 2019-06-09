@@ -184,23 +184,6 @@
         height: 50px ! important;
         float: left ! important;
     }
-    #responsive-header .responsive-cart {
-        float: right ! important;
-        margin-right: 5px ! important;
-        margin-top: 12px ! important;
-    }
-    #responsive-header .shopping-limit-reached-info {
-        width: 75px;
-        text-align: center;
-        margin-right: 1px;
-        font-size: 11px;
-        float: right;
-        line-height: 12px;
-        margin-top: 8px;
-    }
-    #responsive-header .responsive-cart span {
-        font-size: 16px ! important;
-    }
     #responsive-header .sb-toggle-left {
         float: left ! important;
         margin: 13px 5px 5px 3px ! important;

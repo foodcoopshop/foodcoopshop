@@ -175,7 +175,7 @@ use Cake\Core\Configure;
         echo '<tr id="product-' . $product->id_product . '" class="data ' . $product->row_class . '" data-manufacturer-id="'.(isset($product->id_manufacturer) ? $product->id_manufacturer : '').'">';
 
         echo $this->element('rowMarker/rowMarker', [
-            'show' => (!empty($product->product_attributes) || isset($product->product_attributes)) && !($advancedStockManagementEnabled && $product->is_stock_product)
+            'show' => (!empty($product->product_attributes) || isset($product->product_attributes))
         ]);
         
         echo $this->element('productList/data/id', [
@@ -258,6 +258,7 @@ use Cake\Core\Configure;
         echo $this->element('productList/button/editDeliveryRhythmForSelectedProducts', [
             'products' => $products
         ]);
+        echo $this->element('productList/button/generateProductCardsOfSelectedProducts');
     echo '</div>';
     
     ?>

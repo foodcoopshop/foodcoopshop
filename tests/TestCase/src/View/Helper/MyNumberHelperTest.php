@@ -94,6 +94,12 @@ class MyNumberHelperTest extends AppCakeTestCase
         $this->assertEquals($result, 3);
     }
 
+    public function testParseFloatRespectingLocaleDecimalBetween0And1()
+    {
+        $result = $this->MyNumberHelper->parseFloatRespectingLocale('0,5');
+        $this->assertEquals($result, 0.5);
+    }
+    
     public function testParseFloatRespectingLocaleZero()
     {
         $result = $this->MyNumberHelper->parseFloatRespectingLocale('0,00');

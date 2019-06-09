@@ -28,13 +28,15 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
 ?>
   <tbody>
         
-		<tr>
-            <td colspan="<?php echo count($columns); ?>" style="padding-top:20px;padding-bottom:10px;">
-            	<?php
-            	   echo __('Pickup_day') . ': <b> ' . $this->MyTime->getDateFormattedWithWeekday(strtotime($pickupDay)).'</b>';
-            	?>
-            </td>
-        </tr>
+        <?php if (!$selfServiceModeEnabled) { ?>
+    		<tr>
+                <td colspan="<?php echo count($columns); ?>" style="padding-top:20px;padding-bottom:10px;">
+                	<?php
+                	   echo __('Pickup_day') . ': <b> ' . $this->MyTime->getDateFormattedWithWeekday(strtotime($pickupDay)).'</b>';
+                	?>
+                </td>
+            </tr>
+        <?php } ?>
         
         <tr>
             <?php
@@ -64,8 +66,14 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
             <td valign="middle" style="border:1px solid #d6d4d4;">
                 <?php
                 echo $product['productName'];
-                if ($product['unity_with_unit'] != '') {
-                    echo ' : ' . $product['unity_with_unit'];
+                $unity = '';
+                if (isset($product['productQuantityInUnits']) &&  $product['productQuantityInUnits'] > 0) {
+                    $unity = $this->MyNumber->formatUnitAsDecimal($product['productQuantityInUnits']) . ' ' . $product['unitName'];
+                } else {
+                    $unity = $product['unity_with_unit'];
+                }
+                if ($unity != '') {
+                    echo ' : ' . $unity;
                 }
                 ?>
             </td>
@@ -75,7 +83,7 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
             <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
                 <?php echo $this->MyNumber->formatAsCurrency($product['price']); ?>
                 <?php
-                    if ($product['unitName'] != '') {
+                    if (!$selfServiceModeEnabled && $product['unitName'] != '') {
                         echo ' *';
                     }
                 ?>

@@ -20,7 +20,7 @@ if ($appAuth->isAdmin() || $appAuth->isSuperadmin() || $appAuth->isCustomer()) {
         'script' =>
             Configure::read('app.jsNamespace') . ".Admin.initAddInstantOrder('#add-instant-order-button-wrapper .btn');"
     ]);
-    echo '<div id="add-instant-order-button-wrapper" class="add-button-wrapper">';
+    echo '<div id="add-instant-order-button-wrapper" class="add-button-wrapper '.(isset($additionalClass) ? $additionalClass : '') . '">';
     $options = [
         'escape' => false
     ];
