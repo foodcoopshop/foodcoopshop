@@ -313,22 +313,6 @@ class ProductsTable extends AppTable
     }
 
     /**
-     * @param string $string
-     * @return boolean / float
-     */
-    public function getStringAsFloat($string)
-    {
-        $float = trim($string);
-        $float = Configure::read('app.numberHelper')->parseFloatRespectingLocale($float);
-
-        if ($float === false) {
-            return -1; // do not return false, because 0 is a valid return value!
-        }
-
-        return $float;
-    }
-
-    /**
      * @param array $products
      *  Array
      *  (
@@ -344,7 +328,7 @@ class ProductsTable extends AppTable
 
         foreach ($products as $product) {
             $productId = key($product);
-            $deposit = $this->getStringAsFloat($product[$productId]);
+            $deposit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]);
             if ($deposit < 0) {
                 throw new InvalidParameterException('input format not correct: '.$product[$productId]);
             }
@@ -353,7 +337,7 @@ class ProductsTable extends AppTable
         $success = false;
         foreach ($products as $product) {
             $productId = key($product);
-            $deposit = $this->getStringAsFloat($product[$productId]);
+            $deposit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]);
 
             $ids = $this->getProductIdAndAttributeId($productId);
 
@@ -426,7 +410,7 @@ class ProductsTable extends AppTable
 
         foreach ($products as $product) {
             $productId = key($product);
-            $price = $this->getStringAsFloat($product[$productId]['gross_price']);
+            $price = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['gross_price']);
             if ($price < 0) {
                 throw new InvalidParameterException('input format not correct: '.$product[$productId]['gross_price']);
             }
@@ -436,7 +420,7 @@ class ProductsTable extends AppTable
         foreach ($products as $product) {
             
             $productId = key($product);
-            $price = $this->getStringAsFloat($product[$productId]['gross_price']);
+            $price = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['gross_price']);
 
             $ids = $this->getProductIdAndAttributeId($productId);
 
@@ -465,7 +449,7 @@ class ProductsTable extends AppTable
             if (isset($product[$productId]['unit_product_price_per_unit_enabled'])) {
                 $this->Unit = TableRegistry::getTableLocator()->get('Units');
                 $pricePerUnitEnabled = $product[$productId]['unit_product_price_per_unit_enabled'];
-                $priceInclPerUnit = $this->getStringAsFloat($product[$productId]['unit_product_price_incl_per_unit']);
+                $priceInclPerUnit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['unit_product_price_incl_per_unit']);
                 $this->Unit->saveUnits(
                     $ids['productId'],
                     $ids['attributeId'],
@@ -473,7 +457,7 @@ class ProductsTable extends AppTable
                     $priceInclPerUnit,
                     $product[$productId]['unit_product_name'],
                     $product[$productId]['unit_product_amount'],
-                    $this->getStringAsFloat($product[$productId]['unit_product_quantity_in_units'])
+                    Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['unit_product_quantity_in_units'])
                 );
             }
         }
