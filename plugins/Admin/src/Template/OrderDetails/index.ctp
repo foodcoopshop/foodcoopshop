@@ -169,13 +169,6 @@ foreach ($orderDetails as $orderDetail) {
         'groupBy' => $groupBy
     ]);
 
-    if ($groupBy == 'manufacturer') {
-        echo $this->element('orderDetailList/data/variableMemberFee', [
-            'orderDetail' => $orderDetail,
-            'groupBy' => $groupBy
-        ]);
-    }
-    
     echo $this->element('orderDetailList/data/deposit', [
         'orderDetail' => $orderDetail,
         'groupBy' => $groupBy
@@ -258,10 +251,6 @@ if ($groupBy == 'product') {
     }
 }
 echo '<td class="right"><b>' . $this->Number->formatAsCurrency($sums['price']) . '</b></td>';
-if ($groupBy == 'manufacturer' && Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
-    echo '<td></td>';
-    echo '<td class="right"><b>' . $this->Number->formatAsCurrency($sums['reduced_price']) . '</b></td>';
-}
 if ($groupBy != 'customer') {
     $sumDepositString = '';
     if ($sums['deposit']> 0) {

@@ -310,7 +310,6 @@ class OrderDetailsController extends AdminAppController
             case 'manufacturer':
                 $group[] = 'Products.id_manufacturer';
                 $group[] = 'Manufacturers.name';
-                $group[] = 'Manufacturers.variable_member_fee';
                 break;
             case 'product':
                 $group[] = 'OrderDetails.product_id';
@@ -338,7 +337,7 @@ class OrderDetailsController extends AdminAppController
             case 'manufacturer':
                 $query = $this->addSelectGroupFields($query);
                 $query->select(['Products.id_manufacturer']);
-                $query->select(['Manufacturers.name', 'Manufacturers.variable_member_fee']);
+                $query->select(['Manufacturers.name']);
                 break;
             case 'product':
                 $query = $this->addSelectGroupFields($query);

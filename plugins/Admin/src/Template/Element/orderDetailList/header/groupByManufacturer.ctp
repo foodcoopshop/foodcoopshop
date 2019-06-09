@@ -13,8 +13,6 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use Cake\Core\Configure;
-
 echo '<th class="right">';
     echo $this->Paginator->sort('OrderDetails.product_amount', __d('admin', 'Amount'));
 echo '</th>';
@@ -26,11 +24,6 @@ echo '</th>';
 echo '<th class="right">';
     echo $this->Paginator->sort('OrderDetails.total_price_tax_incl', __d('admin', 'Price'));
 echo '</th>';
-
-if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
-    echo '<th>%</th>';
-    echo '<th class="right">'.__d('admin', 'Amount_minus_eventual_variable_member_fee').'</th>';
-}
 
 echo '<th>';
     echo $this->Paginator->sort('OrderDetails.deposit', __d('admin', 'Deposit'));
