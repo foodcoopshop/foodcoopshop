@@ -211,6 +211,11 @@ foodcoopshop.Cart = {
                 unity = productWrapper.find('input[type="radio"]:checked').parent().text().trim();
             }
 
+            if (amount > 1) {
+                var forEachApproxRegExp = new RegExp(foodcoopshop.LocalizedJs.cart.forEach + ' ' + foodcoopshop.LocalizedJs.cart.approx);
+                unity = unity.replace(forEachApproxRegExp, foodcoopshop.LocalizedJs.cart.approx);
+            }
+
             var orderedQuantityInUnits;
             var orderedQuantityInUnitsWrapper = productWrapper.find('.entity-wrapper.active .quantity-in-units-input-field-wrapper');
             if (orderedQuantityInUnitsWrapper.length > 0) {
