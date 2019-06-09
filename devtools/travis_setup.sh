@@ -9,20 +9,20 @@ echo 'sendmail_path = "/usr/sbin/sendmail -t -i "' > $(php --ini|grep -m 1 "ini 
 # MySQL Setup 
 mysql --version
 mysql -e 'CREATE DATABASE foodcoopshop_test;'
-mysql foodcoopshop_test < ./config/sql/_installation/clean-db-structure.sql
-mysql foodcoopshop_test < ./tests/config/sql/test-db-data.sql
+mysql foodcoopshop_test < ../config/sql/_installation/clean-db-structure.sql
+mysql foodcoopshop_test < ../tests/config/sql/test-db-data.sql
 
 # Composer
 composer install --optimize-autoloader
 
 # Use Travis config.
-cp ./config/travis/* ./config/
+cp ../config/travis/* ../config/
 
 # NPM
-npm --prefix ./webroot install ./webroot
+npm --prefix ../webroot install ../webroot
 
 # Assets
-bash ./bin/cake asset_compress build
+bash ../bin/cake asset_compress build
 
 # Apache Install, runs as www-data:www-data.
 sudo apt-get install apache2 libapache2-mod-fastcgi
@@ -31,7 +31,7 @@ sudo apt-get install apache2 libapache2-mod-fastcgi
 sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
 
 # For PHP7 inclusion of additional config files works.
-sudo cp ./config/travis/php7.conf ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/
+sudo cp ../config/travis/php7.conf ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/
 echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
 
@@ -42,7 +42,7 @@ phpenv config-rm xdebug.ini
 php --version
 
 # Configure Apache virtual hosts.
-sudo cp -f ./config/travis/apache /etc/apache2/sites-available/www.foodcoopshop.test.conf
+sudo cp -f ../config/travis/apache /etc/apache2/sites-available/www.foodcoopshop.test.conf
 sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/www.foodcoopshop.test.conf
 
 # Disable default Apache site.
