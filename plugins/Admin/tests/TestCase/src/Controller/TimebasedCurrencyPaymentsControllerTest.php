@@ -21,7 +21,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
 
     public $EmailLog;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $reducedMaxPercentage = 15;

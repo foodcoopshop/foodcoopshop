@@ -27,7 +27,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
     public $Order;
     public $commandRunner;
     
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');

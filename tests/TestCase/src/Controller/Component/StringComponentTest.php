@@ -21,7 +21,7 @@ use App\Test\TestCase\AppCakeTestCase;
 class StringComponentTest extends AppCakeTestCase
 {
 
-    public function setUp()
+    public function setUp(): void
     {
         // do not import database - no database needed for this test
     }

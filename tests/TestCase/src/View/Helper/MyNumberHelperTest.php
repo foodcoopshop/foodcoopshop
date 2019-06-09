@@ -20,7 +20,7 @@ use Cake\View\View;
 class MyNumberHelperTest extends AppCakeTestCase
 {
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->MyNumberHelper = new MyNumberHelper(new View());
     }

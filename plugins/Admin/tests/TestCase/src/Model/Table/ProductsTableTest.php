@@ -24,7 +24,7 @@ class ProductsTableTest extends AppCakeTestCase
 
     public $Product;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Product = TableRegistry::getTableLocator()->get('Products');
@@ -719,39 +719,33 @@ class ProductsTableTest extends AppCakeTestCase
      * START tests change status
      */
 
-     /**
-     * @expectedException App\Lib\Error\Exception\InvalidParameterException
-     * @expectedExceptionMessage Products.active for product 102 needs to be 0 or 1
-     */
     public function testChangeStatusWithStringStatus()
     {
         $products = [
             [102 => 'invalid parameter']
         ];
+        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectExceptionMessage('Products.active for product 102 needs to be 0 or 1');
         $this->Product->changeStatus($products);
     }
 
-    /**
-     * @expectedException App\Lib\Error\Exception\InvalidParameterException
-     * @expectedExceptionMessage Products.active for product 102 needs to be 0 or 1
-     */
     public function testChangeStatusWithInvalidIntegerStatus()
     {
         $products = [
             [102 => 5] // invalid status
         ];
+        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectExceptionMessage('Products.active for product 102 needs to be 0 or 1');
         $this->Product->changeStatus($products);
     }
 
-    /**
-     * @expectedException App\Lib\Error\Exception\InvalidParameterException
-     * @expectedExceptionMessage change status is not allowed for product attributes
-     */
     public function testChangeStatusForProductAttribute()
     {
         $products = [
             ['60-10' => 0]
         ];
+        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectExceptionMessage('change status is not allowed for product attributes');
         $this->Product->changeStatus($products);
     }
 
@@ -849,15 +843,13 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertSame(true, $exceptionThrown);
     }
     
-    /**
-     * @expectedException App\Lib\Error\Exception\InvalidParameterException
-     * @expectedExceptionMessage change name is not allowed for product attributes
-     */
     public function testChangeNameForProductAttribute()
     {
         $products = [
             ['60-10' => 0]
         ];
+        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectExceptionMessage('change name is not allowed for product attributes');
         $this->Product->changeName($products);
     }
     

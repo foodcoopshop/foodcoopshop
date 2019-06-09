@@ -24,7 +24,7 @@ use Network\View\Helper\NetworkHelper;
 class SyncsControllerTest extends AppCakeTestCase
 {
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Network = new NetworkHelper(new View());

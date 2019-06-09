@@ -23,30 +23,26 @@ class CartProductsTableTest extends AppCakeTestCase
     public $CartProduct;
     public $Cart;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->CartProduct = TableRegistry::getTableLocator()->get('CartProducts');
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
     }
 
-    /**
-     * @expectedException App\Lib\Error\Exception\InvalidParameterException
-     * @expectedExceptionMessage wrong cartId: 0
-     */
     public function testRemoveAllWithWrongCartId()
     {
+        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectExceptionMessage('wrong cartId: 0');
         $this->CartProduct->removeAll('bla', Configure::read('test.superadminId'));
     }
 
-    /**
-     * @expectedException App\Lib\Error\Exception\InvalidParameterException
-     * @expectedExceptionMessage no cart found for cartId: 1 and customerId: 88
-     */
     public function testRemoveAllWithCorrectCartIdAndWrongCustomerId()
     {
         $cartId = 1;
         $customerId = Configure::read('test.adminId');
+        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectExceptionMessage('no cart found for cartId: 1 and customerId: 88');
         $this->CartProduct->removeAll($cartId, $customerId);
     }
 

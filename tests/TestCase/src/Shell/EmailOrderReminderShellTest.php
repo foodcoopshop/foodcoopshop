@@ -24,7 +24,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
     public $EmailLog;
     public $commandRunner;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
@@ -68,7 +68,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
         $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->EmailOrderReminder);

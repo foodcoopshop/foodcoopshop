@@ -53,7 +53,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     /**
      * called before every test method
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -85,7 +85,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->getLogFile('error')->write('');
     }
     
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->assertLogFilesForErrors();
@@ -259,19 +259,19 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         foreach ($toAddress as $email) {
             $preparedToAddresses[] = $email;
         }
-        $this->assertEquals($preparedToAddresses, $expectedToEmails, 'email to_addresses wrong', 0, 0, true);
-
+        $this->assertEqualsCanonicalizing($preparedToAddresses, $expectedToEmails, 'email to_addresses wrong');
+        
         $preparedCcAddresses = [];
         foreach ($ccAddress as $email) {
             $preparedCcAddresses[] = $email;
         }
-        $this->assertEquals($preparedCcAddresses, $expectedCcEmails, 'email cc_addresses wrong', 0, 0, true);
+        $this->assertEqualsCanonicalizing($preparedCcAddresses, $expectedCcEmails, 'email cc_addresses wrong');
 
         $preparedBccAddresses = [];
         foreach ($bccAddress as $email) {
             $preparedBccAddresses[] = $email;
         }
-        $this->assertEquals($preparedBccAddresses, $expectedBccEmails, 'email bcc_addresses wrong', 0, 0, true);
+        $this->assertEqualsCanonicalizing($preparedBccAddresses, $expectedBccEmails, 'email bcc_addresses wrong');
     }
 
     protected function changeReadOnlyConfiguration($configKey, $value)

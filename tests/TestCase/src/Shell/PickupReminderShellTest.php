@@ -27,7 +27,7 @@ class PickupReminderShellTest extends AppCakeTestCase
     public $EmailLog;
     public $commandRunner;
     
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');

@@ -33,7 +33,7 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
     public $orderDetailIdB = 2;
     public $orderDetailIdC = 3;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
