@@ -46,7 +46,7 @@ The software can be used with any modern web browser, tablet or smartphone. It's
 ## Requirements
 * Server with shell access and cronjobs
 * Apache with `mod_rewrite`
-* PHP >= 7.1
+* PHP >= 7.2
 * MySQL >= 5.6
 * Node.js and npm ([installation](https://www.npmjs.com/get-npm)) developer packages
 * Composer ([installation](https://getcomposer.org/download/)) developer packages

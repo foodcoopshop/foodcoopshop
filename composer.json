@@ -11,11 +11,11 @@
     ],
     "config": {
         "platform": {
-            "php": "7.1"
+            "php": "7.2"
         }
     },
     "require": {
-        "php": ">=7.1",
+        "php": ">=7.2",
         "cakephp/cakephp": "3.7.*",
         "mobiledetect/mobiledetectlib": "2.*",
         "cakephp/migrations": "@stable",
