@@ -39,12 +39,23 @@
         width: 100%;
         margin-bottom: 5px;
     }
+    .sb-left #product-search input {
+        padding-left: 8px ! important;
+	    width: 100% ! important;
+        padding-right: 14%;
+    }
     .sb-left #product-search .btn-success {
         border-color: transparent ! important;
     }
-    .sb-left #product-search input {
-        padding-left: 8px ! important;
-        width: 70% ! important;
+    .sb-left #product-search .btn-success.submit {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    .sb-left #product-search .btn-success.reset {
+        position: absolute;
+        top: 0;
+        right: 35px;
     }
     .sb-left #product-search select {
         width: 100% ! important;
