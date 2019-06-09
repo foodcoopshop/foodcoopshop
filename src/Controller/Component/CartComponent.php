@@ -322,12 +322,12 @@ class CartComponent extends Component
             ];
             
             // prepare data for table order_detail_units
-            if ($cartProduct['unitName'] != '') {
+            if (isset($cartProduct['quantityInUnits'])) {
                 $orderDetail2save['order_detail_unit'] = [
                     'unit_name' => $cartProduct['unitName'],
                     'unit_amount' => $cartProduct['unitAmount'],
                     'price_incl_per_unit' => $cartProduct['priceInclPerUnit'],
-                    'quantity_in_units' => $cartProduct['orderedQuantityInUnits'],
+                    'quantity_in_units' => $cartProduct['quantityInUnits'],
                     'product_quantity_in_units' => $cartProduct['productQuantityInUnits']
                 ];
             }

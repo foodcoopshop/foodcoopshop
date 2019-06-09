@@ -67,8 +67,8 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
                 <?php
                 echo $product['productName'];
                 $unity = '';
-                if ($product['orderedQuantityInUnits'] > 0) {
-                    $unity = $this->MyNumber->formatUnitAsDecimal($product['orderedQuantityInUnits']) . ' ' . $product['unitName'];
+                if (isset($product['productQuantityInUnits']) &&  $product['productQuantityInUnits'] > 0) {
+                    $unity = $this->MyNumber->formatUnitAsDecimal($product['productQuantityInUnits']) . ' ' . $product['unitName'];
                 } else {
                     $unity = $product['unity_with_unit'];
                 }
