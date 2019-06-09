@@ -25,7 +25,7 @@
         <?php if ($imageExists) { ?>
             <?php echo '<img class="existingImage loading" src="/img/ajax-loader.gif" data-src="' . $existingImageSrc . '" />'; ?>
         <?php } ?>
-        <p style="font-size:13px;"><?php echo __('Please_only_use_self_made_images_(not_from_the_internet).'); ?></p>
+        <p style="font-size:13px;"><?php echo __('Image_upload_legal_hint.'); ?></p>
         <a class="upload-button"><?php echo __('Search_PC'); ?></a>
         <input type="file" name="upload"  accept="image/jpeg" />
     </div>
