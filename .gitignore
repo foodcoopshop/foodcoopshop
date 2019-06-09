@@ -43,3 +43,4 @@ nbproject/*
 /config/custom_config.php
 /webroot/node_modules
 /.buildpath
+/.phpunit.result.cache

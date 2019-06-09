@@ -19,7 +19,7 @@ use Cake\View\View;
 class MyTimeHelperTest extends AppCakeTestCase
 {
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->MyTimeHelper = new MyTimeHelper(new View());

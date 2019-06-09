@@ -23,7 +23,7 @@ class PagesControllerTest extends AppCakeTestCase
 
     public $Page;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Page = TableRegistry::getTableLocator()->get('Pages');

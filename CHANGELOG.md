@@ -25,6 +25,8 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Für Entwickler
 - Integration des statischen Quellcode-Analyse-Tools [PHPStan](https://github.com/phpstan/phpstan) in Travis-CI. [PR#363](https://github.com/foodcoopshop/foodcoopshop/pull/363) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Migrations können nun viel einfacher in die bestehenden Datenbank-Dumps übertragen werden. [PR#361](https://github.com/foodcoopshop/foodcoopshop/pull/361) / [I#246](https://github.com/foodcoopshop/foodcoopshop/issues/246) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+Wie bei jedem Release zahlreiche Dependency-Updates und viele kleinere Bugfixes. PHPUnit 8
+
 
 
 ## v2.4.1 / 2018-03-27 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.4.0...v2.4.1)

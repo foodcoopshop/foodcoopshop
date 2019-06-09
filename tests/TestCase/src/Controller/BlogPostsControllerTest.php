@@ -21,7 +21,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
 
     public $BlogPost;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');

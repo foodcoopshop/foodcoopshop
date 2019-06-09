@@ -21,7 +21,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
     public $Manufacturer;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');

@@ -23,7 +23,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
     private $today;
     private $mustNotBeShownString = 'Lieferpause.</h2>';
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->today = date('Y-m-d');

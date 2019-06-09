@@ -30,89 +30,73 @@ class UnitsTableTest extends AppCakeTestCase
     public $quantityInUnits = 9.323;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Unit = TableRegistry::getTableLocator()->get('Units');
     }
 
-    /**
-     * @expectedException App\Lib\Error\Exception\InvalidParameterException
-     * @expectedExceptionMessage Der Preis nach Gewicht muss eine Zahl sein. Der Preis nach Gewicht muss größer als 0 sein.
-     */
     public function testSaveProductWithInvalidPriceString()
     {
         $this->priceInclPerUnit = 'random-string';
+        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectExceptionMessage('Der Preis nach Gewicht muss eine Zahl sein. Der Preis nach Gewicht muss größer als 0 sein.');
         $this->doSave();
     }
 
-    /**
-     * @expectedException App\Lib\Error\Exception\InvalidParameterException
-     * @expectedExceptionMessage Der Preis nach Gewicht muss größer als 0 sein.
-     */
     public function testSaveProductWithInvalidPriceZero()
     {
         $this->priceInclPerUnit = 0;
+        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectExceptionMessage('Der Preis nach Gewicht muss größer als 0 sein.');
         $this->doSave();
     }
 
-    /**
-     * @expectedException App\Lib\Error\Exception\InvalidParameterException
-     * @expectedExceptionMessage Der Name ist nicht erlaubt.
-     */
     public function testSaveProductWithInvalidNameWrongString()
     {
         $this->name = 'l';
+        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectExceptionMessage('Der Name ist nicht erlaubt.');
         $this->doSave();
     }
 
-    /**
-     * @expectedException App\Lib\Error\Exception\InvalidParameterException
-     * @expectedExceptionMessage Bitte gib einen Namen ein.
-     */
     public function testSaveProductWithInvalidNameEmpty()
     {
         $this->name = '';
+        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectExceptionMessage('Bitte gib einen Namen ein.');
         $this->doSave();
     }
 
-    /**
-     * @expectedException App\Lib\Error\Exception\InvalidParameterException
-     * @expectedExceptionMessage Die Anzahl muss eine Zahl sein. Die Anzahl muss größer als 0 sein.
-     */
     public function testSaveProductWithInvalidAmountString()
     {
         $this->amount = 'random-string';
+        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectExceptionMessage('Die Anzahl muss eine Zahl sein. Die Anzahl muss größer als 0 sein.');
         $this->doSave();
     }
 
-    /**
-     * @expectedException App\Lib\Error\Exception\InvalidParameterException
-     * @expectedExceptionMessage Die Anzahl muss größer als 0 sein.
-     */
     public function testSaveProductWithInvalidAmountZero()
     {
         $this->amount = 0;
+        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectExceptionMessage('Die Anzahl muss größer als 0 sein.');
         $this->doSave();
     }
 
-    /**
-     * @expectedException App\Lib\Error\Exception\InvalidParameterException
-     * @expectedExceptionMessage Das ungefähre Liefergewicht muss eine Zahl sein.
-     */
     public function testSaveProductWithInvalidQuantityInUnitsString()
     {
         $this->quantityInUnits = 'random-string';
+        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectExceptionMessage('Das ungefähre Liefergewicht muss eine Zahl sein.');
         $this->doSave();
     }
 
-    /**
-     * @expectedException App\Lib\Error\Exception\InvalidParameterException
-     * @expectedExceptionMessage Das ungefähre Liefergewicht muss eine positive Zahl sein.
-     */
     public function testSaveProductWithInvalidQuantityInUnitsNegative()
     {
         $this->quantityInUnits = -1;
+        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectExceptionMessage('Das ungefähre Liefergewicht muss eine positive Zahl sein.');
         $this->doSave();
     }
 

@@ -26,7 +26,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
     public $Order;
     public $commandRunner;
     
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->prepareSendingOrderLists();
@@ -191,7 +191,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->assertEquals($expectedOrderState, $newOrderDetail->order_state);
     }
     
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         unset($this->SendOrderLists);

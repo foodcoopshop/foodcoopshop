@@ -36,7 +36,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public $EmailLog;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');

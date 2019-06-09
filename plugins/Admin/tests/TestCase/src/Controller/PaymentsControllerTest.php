@@ -20,7 +20,7 @@ use Cake\ORM\TableRegistry;
 class PaymentsControllerTest extends AppCakeTestCase
 {
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');

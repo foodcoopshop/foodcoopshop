@@ -22,7 +22,7 @@ class CustomersControllerTest extends AppCakeTestCase
 
     public $EmailLog;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');

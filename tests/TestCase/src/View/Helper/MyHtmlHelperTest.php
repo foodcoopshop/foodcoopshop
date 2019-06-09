@@ -19,7 +19,7 @@ use Cake\View\View;
 class MyHtmlHelperTest extends AppCakeTestCase
 {
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->MyHtmlHelper = new MyHtmlHelper(new View());

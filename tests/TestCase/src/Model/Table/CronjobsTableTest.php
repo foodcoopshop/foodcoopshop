@@ -20,7 +20,7 @@ class CronjobsTableTest extends AppCakeTestCase
 {
     public $Cronjob;
     
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Cronjob = TableRegistry::getTableLocator()->get('Cronjobs');
@@ -161,10 +161,6 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals(1, count($executedCronjobs));
     }
     
-    /**
-     * @expectedException App\Lib\Error\Exception\InvalidParameterException
-     * @expectedExceptionMessage weekday not available
-     */
     public function testInvalidWeekday()
     {
         $this->Cronjob->save(
@@ -175,15 +171,13 @@ class CronjobsTableTest extends AppCakeTestCase
                 ]
             )
         );
+        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectExceptionMessage('weekday not available');
         $this->Cronjob->run();
         $this->assertEquals(0, count($executedCronjobs));
         $this->assertEmpty(0, $this->CronjobLogs->find('all')->all());
     }
     
-    /**
-     * @expectedException App\Lib\Error\Exception\InvalidParameterException
-     * @expectedExceptionMessage day of month not available or not valid
-     */
     public function testInvalidDayOfMonth()
     {
         $this->Cronjob->save(
@@ -194,6 +188,8 @@ class CronjobsTableTest extends AppCakeTestCase
                 ]
             )
         );
+        $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
+        $this->expectExceptionMessage('day of month not available or not valid');
         $this->Cronjob->run();
         $this->assertEmpty(0, $this->CronjobLogs->find('all')->all());
     }

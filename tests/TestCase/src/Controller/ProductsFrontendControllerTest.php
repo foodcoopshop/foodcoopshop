@@ -22,7 +22,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
 
     public $Product;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Product = TableRegistry::getTableLocator()->get('Products');

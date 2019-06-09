@@ -32,7 +32,7 @@
         "psy/psysh": "@stable",
         "cakephp/debug_kit": "3.*",
         "cakephp/cakephp-codesniffer": "3.*",
-        "phpunit/phpunit": "7.*",
+        "phpunit/phpunit": "8.*",
         "phpstan/phpstan": "0.*"
     },
     "autoload": {
