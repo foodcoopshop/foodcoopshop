@@ -63,7 +63,7 @@ echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => '
         'icon' => 'fa-shopping-bag',
         'name' => __('Shopping_bag'),
         'docsLink' => $this->Html->getDocsUrl(__('docs_route_self_service')),
-        'cartButtonIcon' => 'fa-plus-circle',
+        'cartButtonIcon' => 'fa-shopping-bag',
         'cartEmptyMessage' => __('Your_shopping_bag_is_empty.')
     ]); ?>
     <?php
