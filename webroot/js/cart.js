@@ -293,7 +293,7 @@ foodcoopshop.Cart = {
                 {
                     productId: productId,
                     amount: amount,
-                    orderedQuantityInUnits: orderedQuantityInUnits
+                    orderedQuantityInUnits: orderedQuantityInUnits > 0 ? orderedQuantityInUnits : -1
                 },
                 {
                     onOk: function (data) {

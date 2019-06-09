@@ -46,7 +46,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->doBarCodeLogin();
-        $this->addProductToSelfServiceCart(351, 1, 0);
+        $this->addProductToSelfServiceCart(351, 1);
         $response = $this->httpClient->getJsonDecodedContent();
         $expectedErrorMessage = 'Bitte trage das entnommene Gewicht ein.';
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
@@ -67,7 +67,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSelfServiceOrderWithoutCheckboxes() {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->doBarCodeLogin();
-        $this->addProductToSelfServiceCart(349, 1, 0);
+        $this->addProductToSelfServiceCart(349, 1);
         $this->finishSelfServiceCart(0, 0);
         $this->assertRegExpWithUnquotedString('Bitte akzeptiere die AGB.', $this->httpClient->getContent());
         $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.', $this->httpClient->getContent());
@@ -155,7 +155,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         );
     }
     
-    private function addProductToSelfServiceCart($productId, $amount, $orderedQuantityInUnits)
+    private function addProductToSelfServiceCart($productId, $amount, $orderedQuantityInUnits = -1)
     {
         $this->httpClient->ajaxPost(
             '/warenkorb/ajaxAdd/',
