@@ -116,8 +116,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->doBarCodeLogin();
-        $this->addProductToSelfServiceCart('350-15', 1, 1.5);
-        $this->addProductToSelfServiceCart(351, 1, 1);
+        $this->addProductToSelfServiceCart('350-15', 1, '1,5');
+        $this->addProductToSelfServiceCart(351, 1, '0,5');
         $this->finishSelfServiceCart(1, 1);
         
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
@@ -144,8 +144,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
             $emailLogs[0],
             'Dein Einkauf',
             [
-                'Lagerprodukt mit Varianten : 0,5 kg',
-                'Lagerprodukt 2 : 1 kg',
+                'Lagerprodukt mit Varianten : 1,5 kg',
+                'Lagerprodukt 2 : 0,5 kg',
                 '15,00 €',
                 '5,00 €'
             ],
