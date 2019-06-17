@@ -50,8 +50,8 @@ if (empty($db_conf)) {
 echo 'done' . PHP_EOL;
 echo 'Reading dump command...';
 
-$unmodifiedStructureFile = $dir . DS . 'devtools' . DS . 'unmodified-structure.sql';
-if (DATASOURCE == 'prod' && $locale == 'de_DE') {
+$unmodifiedStructureFile = $dir . 'devtools' . DS . 'unmodified-structure.sql';
+if (DATASOURCE == 'PROD' && $locale == 'de_DE') {
     copy($dir . $datasource[DATASOURCE]['structure'], $unmodifiedStructureFile);
 }
 $mysqldump_cmd = '';
