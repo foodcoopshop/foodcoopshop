@@ -250,14 +250,6 @@ class CustomersController extends FrontendController
                 $customer = $this->AppAuth->identify();
                 if ($customer) {
                     $this->AppAuth->setUser($customer);
-                    // change weak hash to strong hash
-                    if ($this->AppAuth->authenticationProvider()->needsPasswordRehash()) {
-                        $ph = new DefaultPasswordHasher();
-                        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
-                        $customer = $this->Customer->get($this->AppAuth->getUserId());
-                        $entity = $this->Customer->patchEntity($customer, ['passwd' => $ph->hash($this->request->getData('passwd'))]);
-                        $this->Customer->save($entity);
-                    }
                     $this->redirect($this->AppAuth->redirectUrl());
                 } else {
                     $this->Flash->error(__('Signing_in_failed_account_inactive_or_password_wrong?'));
