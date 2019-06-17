@@ -54,11 +54,6 @@ return [
 
     'app' => [
         /**
-         * please create a unique cookie key and put it here
-         */
-        'cookieKey' => '77LIqHJAoVS89iRp3QKcdXaAvZTTqRdiweyZo87CoY9c4fieao5KKPWcdS',
-
-        /**
          * your host's name, eg. http://www.yourfoodcoop.com
          */
         'cakeServerName' => 'http://www.foodcoopshop.test',
