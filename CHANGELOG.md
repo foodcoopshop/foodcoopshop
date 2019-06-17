@@ -10,8 +10,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Für Entwickler
 - Legacy-Passwort-Hasher wurde entfernt. [PR#380](https://github.com/foodcoopshop/foodcoopshop/pull/380) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-
-## v2.5.0 / 2018-06-17 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.4.1...v2.5.0)
+## v2.5.0 / 2019-06-17 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.4.1...v2.5.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
 * [AndreasEgger](https://github.com/AndreasEgger)
@@ -38,12 +37,12 @@ Wie bei jedem Release zahlreiche Dependency-Updates und viele kleinere Bugfixes.
 
 
 
-## v2.4.1 / 2018-03-27 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.4.0...v2.4.1)
+## v2.4.1 / 2019-03-27 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.4.0...v2.4.1)
 
 ### Bugfix
 - Der individuelle Lieferrhythmus hat unter speziellen Umständen nicht richtig funktioniert. [PR#343](https://github.com/foodcoopshop/foodcoopshop/pull/343) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-## v2.4.0 / 2018-03-19 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.3.0...v2.4.0)
+## v2.4.0 / 2019-03-19 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.3.0...v2.4.0)
 
 ### Herzlichen Dank an alle beteiligten Personen 
 * [AndreasEgger](https://github.com/AndreasEgger)
