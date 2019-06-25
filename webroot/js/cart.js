@@ -282,7 +282,7 @@ foodcoopshop.Cart = {
             }
 
             // update cart sum
-            foodcoopshop.Cart.updateCartSum(price * amount);
+            foodcoopshop.Cart.updateCartSum(price);
             foodcoopshop.Cart.updateCartDepositSum(deposit * amount);
             foodcoopshop.Cart.updateCartTaxSum(tax * amount);
             foodcoopshop.Cart.updateCartTimebasedCurrencySum(timebasedCurrencyHours * amount);
