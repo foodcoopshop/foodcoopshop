@@ -64,12 +64,6 @@ return [
 
     'app' => [
         /**
-         * please create a unique cookie key and put it here
-         * can be removed in v3
-         */
-        'cookieKey' => '',
-
-        /**
          * not used since v2.4
          * deliveryDayDelta is replaced by the new database setting FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA
          * and can be removed in your custom_config.php after successful migration of 20190218101915_IndividualSendOrderListDay.php

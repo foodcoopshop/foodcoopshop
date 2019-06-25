@@ -38,13 +38,6 @@ class ApiController extends Controller
                         'username' => 'email',
                         'password' => 'passwd'
                     ],
-                    'passwordHasher' => [
-                        'className' => 'Fallback',
-                        'hashers' => [
-                            'Default',
-                            'Legacy'
-                        ]
-                    ],
                     'finder' => 'auth' // CustomersTable::findAuth
                 ]
             ],

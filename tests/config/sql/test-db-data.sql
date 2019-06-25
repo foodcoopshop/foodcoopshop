@@ -256,8 +256,7 @@ INSERT INTO `fcs_product` VALUES
 (348,4,2,0.000000,'Rindfleisch','','','',0,0,1,'week',1,NULL,NULL,3,NULL,'2018-05-17 16:15:33','2018-05-17 16:16:38'),
 (349,5,2,4.545455,'Lagerprodukt','','','',0,1,1,'week',1,NULL,NULL,3,NULL,'2018-08-16 12:15:48','2018-08-16 12:16:51'),
 (350,5,2,0.000000,'Lagerprodukt mit Varianten','','','',0,1,1,'week',1,NULL,NULL,3,NULL,'2018-08-16 12:19:06','2018-08-16 12:19:23'),
-(351,5,1,'0.000000','Lagerprodukt 2','','','',0,1,1,'week',1,NULL,NULL,3,NULL,'2019-06-05 15:09:53','2019-06-05 15:10:08');
-
+(351,5,1,0.000000,'Lagerprodukt 2','','','',0,1,1,'week',1,NULL,NULL,3,NULL,'2019-06-05 15:09:53','2019-06-05 15:10:08');
 /*!40000 ALTER TABLE `fcs_product` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product_attribute` DISABLE KEYS */;
@@ -267,8 +266,7 @@ INSERT INTO `fcs_product_attribute` VALUES
 (12,348,0.000000,0,0),
 (13,350,1.818182,0,1),
 (14,350,3.636364,0,0),
-(15,350,'0.000000',0,0);
-
+(15,350,0.000000,0,0);
 /*!40000 ALTER TABLE `fcs_product_attribute` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product_attribute_combination` DISABLE KEYS */;
@@ -279,7 +277,6 @@ INSERT INTO `fcs_product_attribute_combination` VALUES
 (36,11),
 (36,13),
 (36,15);
-
 /*!40000 ALTER TABLE `fcs_product_attribute_combination` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sliders` DISABLE KEYS */;
@@ -309,7 +306,6 @@ INSERT INTO `fcs_stock_available` VALUES
 (711,350,14,999,0,NULL),
 (712,350,15,999,0,NULL),
 (713,351,0,999,0,NULL);
-
 /*!40000 ALTER TABLE `fcs_stock_available` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_sync_domains` DISABLE KEYS */;
@@ -346,9 +342,8 @@ INSERT INTO `fcs_units` VALUES
 (4,349,0,0.00,'kg',1,0,0.000),
 (5,0,13,0.00,'kg',1,0,0.000),
 (6,0,14,0.00,'kg',1,0,0.000),
-(7,0,15,'10.00','kg',1,1,'0.500'),
-(8,351,0,'15.00','kg',1,1,'1.000');
-
+(7,0,15,10.00,'kg',1,1,0.500),
+(8,351,0,15.00,'kg',1,1,1.000);
 /*!40000 ALTER TABLE `fcs_units` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `phinxlog` DISABLE KEYS */;
@@ -387,7 +382,8 @@ INSERT INTO `phinxlog` VALUES
 (20190314081354,'CorrectNetPriceAndTax','2019-03-14 09:53:00','2019-03-14 09:53:00',0),
 (20190331192259,'DifferentCartForInstantOrder','2019-03-31 09:53:00','2019-03-31 09:53:00',0),
 (20190417072617,'SelfServiceModeConfiguration','2019-04-17 09:53:00','2019-04-17 09:53:00',0),
-(20190527070456,'CartProductUnits','2019-05-27 09:17:25','2019-05-27 09:17:25',0);
+(20190527070456,'CartProductUnits','2019-05-27 09:17:25','2019-05-27 09:17:25',0),
+(20190617201728,'RemoveLegacyPasswordHasher','2019-06-17 20:28:38','2019-06-17 20:28:38',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
