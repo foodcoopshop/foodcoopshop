@@ -128,9 +128,10 @@ class OrderDetailsController extends AdminAppController
     /**
      * Helper method if invoices was already generated but tax was wrong
      * 
-     * 1) re-open the order detail using config/sql/_helper/change-order-state-of-order-details.sql
-     * 2) run this script by calling it via url (as Superadmin)
-     * 3) re-send invoice using SendInvoicesShell
+     * 1) re-open all order details of the wrong invoice using config/sql/_helper/change-order-state-of-order-details.sql
+     * 2) run this script by calling it via url (as superadmin)
+     * 3) remove appropriate record of manufacturer in fcs_invoices
+     * 4) re-send invoice using SendInvoicesShell yyyy-mm
      * 
      * @param int $orderDetailId
      * @param int $newTaxId
