@@ -30,6 +30,9 @@ class OrderDetailsController extends AdminAppController
     public function isAuthorized($user)
     {
         switch ($this->getRequest()->getParam('action')) {
+            case 'changeTaxOfInvoicedOrderDetail';
+                return $this->AppAuth->isSuperadmin();
+                break;
             case 'delete':
             case 'editProductPrice':
             case 'editProductAmount':
@@ -120,6 +123,50 @@ class OrderDetailsController extends AdminAppController
             $sortDirection = $this->getRequest()->getQuery('direction');
         }
         return $sortDirection;
+    }
+    
+    /**
+     * Helper method if invoices was already generated but tax was wrong
+     * 
+     * 1) re-open the order detail using config/sql/_helper/change-order-state-of-order-details.sql
+     * 2) run this script by calling it via url (as Superadmin)
+     * 3) re-send invoice using SendInvoicesShell
+     * 
+     * @param int $orderDetailId
+     * @param int $newTaxId
+     */
+    public function changeTaxOfInvoicedOrderDetail($orderDetailId, $newTaxId)
+    {
+        
+        $this->RequestHandler->renderAs($this, 'json');
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $oldOrderDetail = $this->OrderDetail->find('all', [
+            'conditions' => [
+                'OrderDetails.id_order_detail' => $orderDetailId
+            ],
+            'contain' => [
+                'Customers',
+                'Products.Manufacturers',
+                'OrderDetailTaxes',
+                'OrderDetailUnits'
+            ]
+        ])->first();
+        
+        $patchedEntity = $this->OrderDetail->patchEntity(
+            $oldOrderDetail,
+            ['id_tax' => $newTaxId]
+        );
+        $orderDetailWithNewTax = $this->OrderDetail->save($patchedEntity);
+        
+        $orderDetailWithChangedPrice = $this->changeOrderDetailPriceDepositTax($orderDetailWithNewTax, $orderDetailWithNewTax->total_price_tax_incl, $orderDetailWithNewTax->product_amount);
+        
+        $this->set('data', [
+            'status' => 0,
+            'orderDetailWithChangedPrice' => $orderDetailWithChangedPrice
+        ]);
+        
+        $this->set('_serialize', 'data');
+        
     }
     
     /**
