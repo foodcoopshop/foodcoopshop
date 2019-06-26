@@ -14,12 +14,12 @@
     "install": "bash ../bin/cake npm_post_install"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.8.1",
-    "blueimp-file-upload": "^9.30.0",
+    "@fortawesome/fontawesome-free": "^5.9.0",
+    "blueimp-file-upload": "^9.32.0",
     "bootstrap": "^4.3.1",
     "bootstrap-select": "^1.13.10",
     "chart.js": "^2.8.0",
-    "ckeditor": "^4.11.3",
+    "ckeditor": "^4.11.4",
     "clipboard": "^2.0.4",
     "components-jqueryui": "~1.12",
     "featherlight": "^1.7.13",
@@ -36,6 +36,6 @@
     "tooltipster": "^4.2.6"
   },
   "devDependencies": {
-    "eslint": "^5.16.0"
+    "eslint": "^6.0.1"
   }
 }
