@@ -51,6 +51,7 @@ use Cake\Core\Configure;
                         <?php } ?><br /><br />
                     --<br />
                     <?php
+                        echo Configure::read('appDb.FCS_APP_NAME').'<br />';
                         echo Configure::read('appDb.FCS_APP_ADDRESS').'<br />';
                         echo '<a href="mailto:'.Configure::read('appDb.FCS_APP_EMAIL').'">'.Configure::read('appDb.FCS_APP_EMAIL').'</a><br />';
                         echo '<a href="'.Configure::read('app.cakeServerName').'">'.preg_replace('/http(s)?\:\/\//', '', Configure::read('app.cakeServerName')).'</a>';
