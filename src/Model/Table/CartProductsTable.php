@@ -43,6 +43,17 @@ class CartProductsTable extends AppTable
         ]);
         $this->addBehavior('Timestamp');
     }
+    
+    public function validateQuantityInUnitsForSelfServiceMode($appAuth, $object, $unitObject, $orderedQuantityInUnits, $initialProductId)
+    {
+        $result = true;
+        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && $appAuth->isSelfServiceModeByReferer()) {
+            if ($object->{$unitObject} && $object->{$unitObject}->price_per_unit_enabled && $orderedQuantityInUnits < 0 /* !sic < 0 see getStringAsFloat */) {
+                $result = __('Please_provide_a_valid_ordered_quantity_in_units.');
+            }
+        }
+        return $result;
+    }
 
     /**
      * @param int $productId
@@ -97,16 +108,13 @@ class CartProductsTable extends AppTable
             ];
         }
         
-        // check if quantity in units was passed
-        if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && $appAuth->isSelfServiceModeByReferer()) {
-            if ($product->unit_product && $product->unit_product->price_per_unit_enabled && $orderedQuantityInUnits < 0 /* !sic < 0 see getStringAsFloat */) {
-                $message = __('Please_provide_a_valid_ordered_quantity_in_units.');
-                return [
-                    'status' => 0,
-                    'msg' => $message,
-                    'productId' => $initialProductId
-                ];
-            }
+        $result = $this->validateQuantityInUnitsForSelfServiceMode($appAuth, $product, 'unit_product', $orderedQuantityInUnits, $initialProductId);
+        if ($result !== true) {
+            return [
+                'status' => 0,
+                'msg' => $result,
+                'productId' => $initialProductId
+            ];
         }
 
         // stock available check for product
@@ -138,17 +146,14 @@ class CartProductsTable extends AppTable
                             'productId' => $initialProductId
                         ];
                     }
-                    
-                    // quantity in units check for attribute
-                    if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && $appAuth->isSelfServiceModeByReferer()) {
-                        if ($attribute->unit_product_attribute && $attribute->unit_product_attribute->price_per_unit_enabled && $orderedQuantityInUnits < 0 /* !sic < 0 see getStringAsFloat */) {
-                            $message = __('Please_provide_a_valid_ordered_quantity_in_units.');
-                            return [
-                                'status' => 0,
-                                'msg' => $message,
-                                'productId' => $initialProductId
-                            ];
-                        }
+
+                    $result = $this->validateQuantityInUnitsForSelfServiceMode($appAuth, $attribute, 'unit_product_attribute', $orderedQuantityInUnits, $initialProductId);
+                    if ($result !== true) {
+                        return [
+                            'status' => 0,
+                            'msg' => $result,
+                            'productId' => $initialProductId
+                        ];
                     }
                     
                     break;
