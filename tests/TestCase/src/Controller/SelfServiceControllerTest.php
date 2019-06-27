@@ -73,6 +73,18 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.', $this->httpClient->getContent());
     }
     
+    public function testSelfServiceRemoveProductWithPricePerUnit()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->doBarCodeLogin();
+        $this->addProductToSelfServiceCart(351, 1, '0,5');
+        $this->removeProductFromSelfServiceCart(351);
+        $this->assertJsonOk();
+        $this->CartProductUnit = TableRegistry::getTableLocator()->get('CartProductUnits');
+        $cartProductUnits = $this->CartProductUnit->find('all')->toArray();
+        $this->assertEmpty($cartProductUnits);
+    }
+    
     public function testSelfServiceOrderWithoutPricePerUnit()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
@@ -164,17 +176,32 @@ class SelfServiceControllerTest extends AppCakeTestCase
                 'amount' => $amount,
                 'orderedQuantityInUnits' => $orderedQuantityInUnits
             ],
-            [
-                'headers' => [
-                    'X-Requested-With:XMLHttpRequest',
-                    // referer needed to get correct cart (self-service)
-                    'REFERER' => Configure::read('app.cakeServerName') . '/' . __('route_self_service')
-                ],
-                'type' => 'json'
-            ]
+            $this->getSelfServicePostOptions()
         );
         return $this->httpClient->getJsonDecodedContent();
-        
+    }
+    
+    private function removeProductFromSelfServiceCart($productId)
+    {
+        $this->httpClient->ajaxPost(
+            '/warenkorb/ajaxRemove/',
+            [
+                'productId' => $productId
+            ],
+            $this->getSelfServicePostOptions()
+            );
+        return $this->httpClient->getJsonDecodedContent();
+    }
+    
+    private function getSelfServicePostOptions()
+    {
+        return [
+            'headers' => [
+                'X-Requested-With:XMLHttpRequest',
+                'REFERER' => Configure::read('app.cakeServerName') . '/' . __('route_self_service')
+            ],
+            'type' => 'json'
+        ];
     }
     
     private function finishSelfServiceCart($general_terms_and_conditions_accepted, $cancellation_terms_accepted)
