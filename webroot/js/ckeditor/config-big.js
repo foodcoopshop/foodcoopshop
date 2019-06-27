@@ -1,8 +1,3 @@
-/**
- * @license Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see https://ckeditor.com/legal/ckeditor-oss-license
- */
-
 CKEDITOR.editorConfig = function ( config ) {
 
     config.height = 500;
@@ -14,7 +9,6 @@ CKEDITOR.editorConfig = function ( config ) {
     config.extraPlugins = 'showblocks,justify,format,colorbutton';
 
     config.startupOutlineBlocks = false;
-    config.forcePasteAsPlainText = true;
     config.allowedContent = true;
 
     config.filebrowserBrowseUrl = '/js/elfinder/elfinder.html';
