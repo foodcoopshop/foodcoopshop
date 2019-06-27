@@ -22,21 +22,21 @@ class AddressCustomersTable extends AddressesTable
 
     public function validationDefault(Validator $validator)
     {
-        $validator->notEmpty('email', __('Please_enter_your_email_address.'));
+        $validator->notEmptyString('email', __('Please_enter_your_email_address.'));
         $validator->email('email', false, __('The_email_address_is_not_valid.'));
         $validator->add('email', 'unique', [
             'rule' => 'validateUnique',
             'provider' => 'table',
             'message' => __('The_email_address_is_already_used_by_another_member_or_manufacturer.')
         ]);
-        $validator->notEmpty('address1', __('Please_enter_your_street.'));
-        $validator->notEmpty('city', __('Please_enter_your_city.'));
-        $validator->notEmpty('postcode', __('Please_enter_your_zip.'));
+        $validator->notEmptyString('address1', __('Please_enter_your_street.'));
+        $validator->notEmptyString('city', __('Please_enter_your_city.'));
+        $validator->notEmptyString('postcode', __('Please_enter_your_zip.'));
         $validator->add('postcode', 'validFormat', [
             'rule' => array('custom', ZIP_REGEX),
             'message' => __('The_zip_is_not_valid.')
         ]);
-        $validator->notEmpty('phone_mobile', __('Please_enter_your_mobile_number.'));
+        $validator->notEmptyString('phone_mobile', __('Please_enter_your_mobile_number.'));
         $validator->add('phone_mobile', 'validFormat', [
             'rule' => array('custom', PHONE_REGEX),
             'message' => __('The_mobile_number_is_not_valid.')

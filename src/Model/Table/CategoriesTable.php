@@ -36,7 +36,7 @@ class CategoriesTable extends AppTable
 
     public function validationDefault(Validator $validator)
     {
-        $validator->notEmpty('name', __('Please_enter_a_name.'));
+        $validator->notEmptyString('name', __('Please_enter_a_name.'));
         return $validator;
     }
 

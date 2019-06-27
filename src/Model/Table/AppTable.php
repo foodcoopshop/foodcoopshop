@@ -74,7 +74,7 @@ class AppTable extends Table
         }
         $validator->lessThanOrEqual($field, $max, $message);
         $validator->greaterThanOrEqual($field, $min, $message);
-        $validator->notEmpty($field, $message);
+        $validator->notEmptyString($field, $message);
         return $validator;
     }
 
