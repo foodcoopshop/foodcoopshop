@@ -123,6 +123,7 @@ foodcoopshop.Mobile = {
         var pageItems = [];
         $('.footer a:not(.not-in-moblie-menu)').each(function () {
             $(this).removeClass('btn');
+            $(this).removeClass('btn-success');
             $(this).find('i').remove();
             $(this).html($(this).html().trim());
             $(this).prepend($('<i/>').addClass('fa'));
