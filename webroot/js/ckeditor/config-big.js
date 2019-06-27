@@ -24,15 +24,16 @@ CKEDITOR.editorConfig = function ( config ) {
         { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
         { name: 'colors' },
         { name: 'links' },
+        { name: 'align' },
         { name: 'insert' },
         { name: 'paragraph',   groups: [ 'list', 'blocks'] },
         { name: 'styles' },
         { name: 'document',    groups: [ 'mode' ] } // source button
     ];
 
-    config.removeButtons = 'Font,FontSize,CreateDiv,Underline,Italic,Subscript,Superscript,Smiley,Iframe,Flash,Strike,Paste,Anchor,Table,SpecialChar,Maximize,ShowBlocks,Blockquote,Styles,PageBreak';
+    config.removeButtons = 'Font,FontSize,CreateDiv,Underline,Subscript,Superscript,Smiley,Iframe,Flash,Strike,Paste,Anchor,Table,SpecialChar,Maximize,ShowBlocks,Blockquote,Styles,PageBreak,JustifyBlock';
 
 };
 
-CKEDITOR.timestamp = 'v4.11.4'; // change this string if version is updated in package.json
+CKEDITOR.timestamp = 'v4.11.4-1'; // change this string if version is updated in package.json
 

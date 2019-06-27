@@ -859,8 +859,8 @@ class ProductsTableTest extends AppCakeTestCase
         $parameters = [
             'name' => 'test <b>name</b>', // no tags allowed
             'unity' => ' test unity ',    // trim and no tags allowed
-            'description' => '    <p>test <br /><b>description</b></p>', // b, p and br allowed
-            'description_short' => '<p>test description<br /> short</p>    ' // b, p and br allowed
+            'description' => '    <p>test <br /><strong><em>description</em></strong></p>',
+            'description_short' => '<p>test description<br /> <em>short</em></p>    '
         ];
         
         $products = [
@@ -872,8 +872,8 @@ class ProductsTableTest extends AppCakeTestCase
         $expectedResults = [
             'name' => 'test name',
             'unity' => 'test unity',
-            'description' => '<p>test <br /><b>description</b></p>',
-            'description_short' => '<p>test description<br /> short</p>'
+            'description' => '<p>test <br /><strong><em>description</em></strong></p>',
+            'description_short' => '<p>test description<br /> <em>short</em></p>'
         ];
         $this->assertProductName($products, $expectedResults);
     }

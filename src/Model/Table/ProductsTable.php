@@ -638,8 +638,8 @@ class ProductsTable extends AppTable
                 $tmpProduct2Save = [
                     'id_product' => $ids['productId'],
                     'name' => StringComponent::removeSpecialChars(strip_tags(trim($name['name']))),
-                    'description' => strip_tags(htmlspecialchars_decode(trim($name['description'])), '<p><b><br><img>'),
-                    'description_short' => strip_tags(htmlspecialchars_decode(trim($name['description_short'])), '<p><b><br>'),
+                    'description' => strip_tags(htmlspecialchars_decode(trim($name['description'])), '<p><b><strong><i><em><br><img>'),
+                    'description_short' => strip_tags(htmlspecialchars_decode(trim($name['description_short'])), '<p><b><strong><i><em><br>'),
                     'unity' => StringComponent::removeSpecialChars(strip_tags(trim($name['unity'])))
                 ];
                 if (isset($name['is_declaration_ok'])) {

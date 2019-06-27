@@ -16,16 +16,11 @@ CKEDITOR.editorConfig = function ( config ) {
     config.startupOutlineBlocks = false;
     config.forcePasteAsPlainText = true;
 
-    // The toolbar groups arrangement, optimized for two toolbar rows.
-    config.toolbarGroups = [
-        { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+    config.toolbar = [
+        { name: 'toolbar', items: ['RemoveFormat', 'Italic', 'Bold'] },
     ];
-
-    // Remove some buttons, provided by the standard plugins, which we don't
-    // need to have in the Standard(s) toolbar.
-    config.removeButtons = 'CreateDiv,Underline,Italic,Subscript,Superscript,Strike,Paste,PasteText,Anchor,Table,HorizontalRule,SpecialChar,Maximize,ShowBlocks,Blockquote,Styles';
 
 };
 
-CKEDITOR.timestamp = 'v4.11.4'; // change this string if version is updated in package.json
+CKEDITOR.timestamp = 'v4.11.4-1'; // change this string if version is updated in package.json
 
