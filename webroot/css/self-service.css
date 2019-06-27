@@ -105,7 +105,7 @@ body.self_services #content {
     margin-bottom: 25px;
 }
 .self-service #login-form #LoginForm button {
-	margin-top: 0;
+	margin-top: -20px;
 }
 .self-service #login-form h1 {
 	padding-left: 0;
@@ -176,6 +176,10 @@ body.customers.login .self-service .footer {
 	background: transparent;
 	height: auto;
 	border: none;
+}
+body.customers.login .footer .left-wrapper,
+body.customers.login .footer .right-wrapper .btn-add-deposit {
+	display: none;
 }
 .self-service #cart {
 	position: static;

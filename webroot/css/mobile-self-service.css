@@ -21,6 +21,9 @@
 	body.customers.login #content.self-service {
 	   min-height: 100vh;
 	}
+	body.customers.login #responsive-header .responsive-cart {
+	    display: none;
+	}
 	.self-service #login-form form {
 	   padding: 0 2%;
 	}
