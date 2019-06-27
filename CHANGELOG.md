@@ -7,6 +7,9 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Herzlichen Dank an alle beteiligten Personen
 * [mrothauer](https://github.com/mrothauer)
 
+### Neue Funktionen
+- Verbesserungen WYSIWYG-Editor: Nach Copy/Paste bleiben die Formatierungen vorhanden. Kursiv, zentriert und rechtsbündig ist jetzt möglich. <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
+
 ### Für Entwickler
 - Legacy-Passwort-Hasher wurde entfernt. [PR#380](https://github.com/foodcoopshop/foodcoopshop/pull/380) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
