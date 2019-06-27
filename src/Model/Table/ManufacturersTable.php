@@ -45,7 +45,7 @@ class ManufacturersTable extends AppTable
 
     public function validationDefault(Validator $validator)
     {
-        $validator->notEmpty('name', __('Please_enter_a_name.'));
+        $validator->notEmptyString('name', __('Please_enter_a_name.'));
         $range = [3, 64];
         $validator->lengthBetween('name', $range, __('Please_enter_between_{0}_and_{1}_characters.', $range));
         $validator->allowEmpty('iban');

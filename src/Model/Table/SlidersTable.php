@@ -28,8 +28,8 @@ class SlidersTable extends AppTable
 
     public function validationDefault(Validator $validator)
     {
-        $validator->notEmpty('image', __('Please_upload_an_image.'));
-        $validator->notEmpty('position', __('Please_enter_a_number_between_{0}_and_{1}.', [0,100]));
+        $validator->notEmptyString('image', __('Please_upload_an_image.'));
+        $validator->notEmptyString('position', __('Please_enter_a_number_between_{0}_and_{1}.', [0,100]));
         $validator->range('position', [-1, 101], __('Please_enter_a_number_between_{0}_and_{1}.', [0,100]));
         return $validator;
     }

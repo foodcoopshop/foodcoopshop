@@ -35,7 +35,7 @@ class PagesTable extends AppTable
 
     public function validationDefault(Validator $validator)
     {
-        $validator->notEmpty('title', __('Please_enter_a_title.'));
+        $validator->notEmptyString('title', __('Please_enter_a_title.'));
         $validator->minLength('title', 2, __('Please_enter_at_least_{0}_characters.', [2]));
         $validator->range('position', [-1, 1001], __('Please_enter_a_number_between_{0}_and_{1}.', [0, 1000]));
         $validator->urlWithProtocol('extern_url', __('Please_enter_a_valid_internet_address.'));

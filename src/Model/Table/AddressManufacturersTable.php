@@ -23,9 +23,9 @@ class AddressManufacturersTable extends AddressesTable
 
     public function validationDefault(Validator $validator)
     {
-        $validator->notEmpty('firstname', __('Please_enter_the_first_name_of_the_invoice_holder.'));
-        $validator->notEmpty('lastname', __('Please_enter_the_last_name_of_the_invoice_holder.'));
-        $validator->notEmpty('email', __('Please_enter_an_email_address.'));
+        $validator->notEmptyString('firstname', __('Please_enter_the_first_name_of_the_invoice_holder.'));
+        $validator->notEmptyString('lastname', __('Please_enter_the_last_name_of_the_invoice_holder.'));
+        $validator->notEmptyString('email', __('Please_enter_an_email_address.'));
         $validator->email('email', false, __('The_email_address_is_not_valid.'));
         $validator->add('email', 'unique', [
             'rule' => 'validateUnique',

@@ -46,7 +46,7 @@ class PaymentsTable extends AppTable
 
     public function validationAdd(Validator $validator)
     {
-        $validator->notEmpty('amount', __('Please_enter_a_number.'));
+        $validator->notEmptyString('amount', __('Please_enter_a_number.'));
         $validator->numeric('amount', __('Please_enter_a_correct_number.'));
         $validator->greaterThanOrEqual('amount', 0.01, __('The_amount_(money)_needs_to_be_greater_than_0.'));
         return $validator;
