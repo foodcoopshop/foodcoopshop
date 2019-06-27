@@ -68,15 +68,15 @@ class CustomersTable extends AppTable
 
     public function validationEdit(Validator $validator)
     {
-        $validator->notEmpty('firstname', __('Please_enter_your_first_name.'));
-        $validator->notEmpty('lastname', __('Please_enter_your_last_name.'));
+        $validator->notEmptyString('firstname', __('Please_enter_your_first_name.'));
+        $validator->notEmptyString('lastname', __('Please_enter_your_last_name.'));
         return $validator;
     }
 
     public function validationRegistration(Validator $validator)
     {
-        $validator->notEmpty('firstname', __('Please_enter_your_first_name.'));
-        $validator->notEmpty('lastname', __('Please_enter_your_last_name.'));
+        $validator->notEmptyString('firstname', __('Please_enter_your_first_name.'));
+        $validator->notEmptyString('lastname', __('Please_enter_your_last_name.'));
         $validator = $this->getValidationTermsOfUse($validator);
         return $validator;
     }
@@ -84,7 +84,7 @@ class CustomersTable extends AppTable
     public function validationChangePassword($validator)
     {
         $validator
-        ->notEmpty('passwd_old', __('Please_enter_your_old_password.'))
+        ->notEmptyString('passwd_old', __('Please_enter_your_old_password.'))
         ->add('passwd_old', 'custom', [
             'rule'=>  function ($value, $context) {
                 $user = $this->get($context['data']['id_customer']);
@@ -97,10 +97,10 @@ class CustomersTable extends AppTable
             },
             'message' => __('Your_old_password_is_wrong.')
         ])
-        ->notEmpty('passwd_old');
+        ->notEmptyString('passwd_old');
 
         $validator
-        ->notEmpty('passwd_1', __('Please_enter_a_new_password.'))
+        ->notEmptyString('passwd_1', __('Please_enter_a_new_password.'))
         ->add('passwd_1', [
             'length' => [
                 'rule' => ['minLength', 8],
@@ -113,10 +113,10 @@ class CustomersTable extends AppTable
                 'message' => __('The_passwords_do_not_match.')
             ]
         ])
-        ->notEmpty('passwd_1');
+        ->notEmptyString('passwd_1');
 
         $validator
-        ->notEmpty('passwd_2', __('Please_enter_a_new_password.'))
+        ->notEmptyString('passwd_2', __('Please_enter_a_new_password.'))
         ->add('passwd_2', [
             'length' => [
                 'rule' => ['minLength', 8],
@@ -129,7 +129,7 @@ class CustomersTable extends AppTable
                 'message' => __('The_passwords_do_not_match.')
             ]
         ])
-        ->notEmpty('passwd_2');
+        ->notEmptyString('passwd_2');
 
         return $validator;
     }
@@ -137,7 +137,7 @@ class CustomersTable extends AppTable
 
     public function validationNewPasswordRequest(Validator $validator)
     {
-        $validator->notEmpty('email', __('Please_enter_your_email_address.'));
+        $validator->notEmptyString('email', __('Please_enter_your_email_address.'));
         $validator->email('email', false, __('The_email_address_is_not_valid.'));
         $validator->add('email', 'exists', [
             'rule' => function ($value, $context) {

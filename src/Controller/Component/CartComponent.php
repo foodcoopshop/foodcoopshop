@@ -348,7 +348,7 @@ class CartComponent extends Component
         
         if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
             $validator = $this->Cart->getValidator('default');
-            $validator->notEmpty(
+            $validator->notEmptyString(
                 'timebased_currency_seconds_sum_tmp',
                 __('Please_enter_how_much_you_want_to_pay_in_{0}.', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')])
                 );

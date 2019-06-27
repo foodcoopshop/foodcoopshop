@@ -59,14 +59,14 @@ class ConfigurationsTable extends AppTable
 
     public function validationFcsAppEmail(Validator $validator)
     {
-        $validator->notEmpty('value', __('Please_enter_an_email_address.'));
+        $validator->notEmptyString('value', __('Please_enter_an_email_address.'));
         $validator->email('value', false, __('The_email_address_is_not_valid.'));
         return $validator;
     }
 
     public function validationFcsAccountingEmail(Validator $validator)
     {
-        $validator->notEmpty('value', __('Please_enter_an_email_address.'));
+        $validator->notEmptyString('value', __('Please_enter_an_email_address.'));
         $validator->email('value', false, __('The_email_address_is_not_valid.'));
         return $validator;
     }
@@ -145,7 +145,7 @@ class ConfigurationsTable extends AppTable
 
     public function validationFcsAppName(Validator $validator)
     {
-        $validator->notEmpty('value', __('Please_enter_the_name_of_the_foodcoop.'));
+        $validator->notEmptyString('value', __('Please_enter_the_name_of_the_foodcoop.'));
         $validator = $this->getLengthBetweenValidator($validator, 'value', 5, 255);
         return $validator;
     }
@@ -157,28 +157,28 @@ class ConfigurationsTable extends AppTable
 
     public function validationFcsTimebasedCurrencyName(Validator $validator)
     {
-        $validator->notEmpty('value', __('Please_enter_the_paying_with_time_module_name.'));
+        $validator->notEmptyString('value', __('Please_enter_the_paying_with_time_module_name.'));
         $validator = $this->getLengthBetweenValidator($validator, 'value', 2, 10);
         return $validator;
     }
 
     public function validationFcsTimebasedCurrencyShortcode(Validator $validator)
     {
-        $validator->notEmpty('value', __('Please_enter_the_abbreviation_of_the_paying_with_time_module.'));
+        $validator->notEmptyString('value', __('Please_enter_the_abbreviation_of_the_paying_with_time_module.'));
         $validator = $this->getLengthBetweenValidator($validator, 'value', 1, 3);
         return $validator;
     }
 
     public function validationFcsTimebasedCurrencyExchangeRate(Validator $validator)
     {
-        $validator->notEmpty('value', __('Please_enter_the_exchange_rate_for_the_paying_with_time_module_in_{0}.',[Configure::read('appDb.FCS_CURRENCY_SYMBOL')]));
+        $validator->notEmptyString('value', __('Please_enter_the_exchange_rate_for_the_paying_with_time_module_in_{0}.',[Configure::read('appDb.FCS_CURRENCY_SYMBOL')]));
         $validator->decimal('value', 2, __('Please_enter_exactly_2_decimals.'));
         return $validator;
     }
 
     public function validationFcsTimebasedCurrencyMaxCreditBalanceCustomer(Validator $validator)
     {
-        $validator->notEmpty('value', __('Please_provide_a_value.'));
+        $validator->notEmptyString('value', __('Please_provide_a_value.'));
         $validator->numeric('value', __('Decimals_are_not_allowed.'));
         $validator = $this->getNumberRangeValidator($validator, 'value', 0, 50);
         return $validator;
@@ -186,7 +186,7 @@ class ConfigurationsTable extends AppTable
 
     public function validationFcsTimebasedCurrencyMaxCreditBalanceManufacturer(Validator $validator)
     {
-        $validator->notEmpty('value', __('Please_provide_a_value.'));
+        $validator->notEmptyString('value', __('Please_provide_a_value.'));
         $validator->numeric('value', __('Decimals_are_not_allowed.'));
         $validator = $this->getNumberRangeValidator($validator, 'value', 0, 200);
         return $validator;

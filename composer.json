@@ -16,7 +16,7 @@
     },
     "require": {
         "php": ">=7.2",
-        "cakephp/cakephp": "3.7.*",
+        "cakephp/cakephp": "3.8.*",
         "mobiledetect/mobiledetectlib": "2.*",
         "cakephp/migrations": "@stable",
         "cakephp/plugin-installer": "~1.0",

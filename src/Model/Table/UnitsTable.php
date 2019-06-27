@@ -30,7 +30,7 @@ class UnitsTable extends AppTable
                 'message' => __('The_name_is_not_valid.'),
                 'provider' => 'table',
             ]);
-        $validator->notEmpty('name', __('Please_enter_a_name.'));
+        $validator->notEmptyString('name', __('Please_enter_a_name.'));
         $validator->numeric('amount', __('The_amount_(quantity)_needs_to_be_a_number.'));
         $validator->greaterThan('amount', 0, __('The_amount_(quantity)_needs_to_be_greater_than_0.'));
         $validator->numeric('quantity_in_units', __('The_approximate_weight_needs_to_be_a_number.'));

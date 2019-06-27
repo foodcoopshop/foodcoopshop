@@ -30,7 +30,7 @@ class AttributesTable extends AppTable
 
     public function validationDefault(Validator $validator)
     {
-        $validator->notEmpty('name', __('Please_enter_a_name.'));
+        $validator->notEmptyString('name', __('Please_enter_a_name.'));
         $validator->add('name', 'unique', [
             'rule' => 'validateUnique',
             'provider' => 'table',
