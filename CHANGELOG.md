@@ -2,7 +2,7 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.5.0...develop)
+## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.5.1...develop)
 
 ### Herzlichen Dank an alle beteiligten Personen
 * [mrothauer](https://github.com/mrothauer)
@@ -13,6 +13,11 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Für Entwickler
 - Legacy-Passwort-Hasher wurde entfernt. [PR#380](https://github.com/foodcoopshop/foodcoopshop/pull/380) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Wie bei jedem Release zahlreiche Dependency-Updates und viele kleinere Bugfixes (CakePHP 3.8.x).
+
+## v2.5.1 / 2019-06-28 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.5.0...v2.5.1)
+
+### Bugfix
+- Die Summe wurde nicht richtig berechnet, wenn man mehrere Produkte auf einmal in den Warenkorb hinzufügt. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/e968d77fa8e381172ce0da3febf2352a0c5ad68d) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ## v2.5.0 / 2019-06-17 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.4.1...v2.5.0)
 
