@@ -242,7 +242,7 @@ body.categories.detail div.description-wrapper {
     line-height: 30px;
     margin-bottom: 0px;
     padding: 10px;
-    padding-left: 170px;
+    padding-left: 108px;
     -moz-border-radius: 0px;
     -webkit-border-radius: 10px 10px 0px 0px;
     border-radius: 10px 10px 0px 0px;
@@ -296,6 +296,7 @@ body.customers.new_password_request .input {
     line-height: 14px ! important;
     margin-top: -5px;
     width: 275px;
+    text-align: left;
 }
 #LoginForm .remember-me-wrapper input[type="checkbox"] {
     float: left;
@@ -928,7 +929,8 @@ body.carts.detail #CartsDetailForm {
   width: 100%;
 }
 body.carts.detail .cart:not(#cart) .featherlight-overlay,
-#RegistrationForm .featherlight-overlay {
+#RegistrationForm .featherlight-overlay,
+#LoginForm .featherlight-overlay {
     display: none;
 }
 

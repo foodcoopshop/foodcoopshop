@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-06-09 23:12+0200\n"
+"POT-Creation-Date: 2019-06-28 10:58+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1343,13 +1343,13 @@ msgstr ""
 msgid "Please_enter_max_{0}_characters."
 msgstr ""
 
+msgid "Please_provide_a_valid_ordered_quantity_in_units."
+msgstr ""
+
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr ""
 
 msgid "Product_with_id_{0}_does_not_exist."
-msgstr ""
-
-msgid "Please_provide_a_valid_ordered_quantity_in_units."
 msgstr ""
 
 msgid "The_attribute_does_not_exist:_{0}"
@@ -1697,7 +1697,10 @@ msgstr ""
 msgid "Stay_signed_in"
 msgstr ""
 
-msgid "and_accept_cookie"
+msgid "and"
+msgstr ""
+
+msgid "accept_cookie"
 msgstr ""
 
 msgid "Forgot_password?"

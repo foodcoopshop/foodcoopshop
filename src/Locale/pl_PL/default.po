@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-06-07 15:02+0200\n"
+"POT-Creation-Date: 2019-06-28 10:58+0200\n"
 "PO-Revision-Date: 2019-05-29 10:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1797,6 +1797,11 @@ msgstr "Wprowadź przynajmniej {0} znaków."
 msgid "Please_enter_max_{0}_characters."
 msgstr "Wprowadź najwyżej {0} znaków."
 
+# Please provide a value.
+#, fuzzy
+msgid "Please_provide_a_valid_ordered_quantity_in_units."
+msgstr "Podaj wartość."
+
 # The desired amount {0} is not valid.
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr "Wymagana ilość {0} jest nieprawidłowa."
@@ -1804,11 +1809,6 @@ msgstr "Wymagana ilość {0} jest nieprawidłowa."
 # The product with id {0} does not exist.
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "Produkt o id {0} nie istnieje."
-
-# Please provide a value.
-#, fuzzy
-msgid "Please_provide_a_valid_ordered_quantity_in_units."
-msgstr "Podaj wartość."
 
 # The attribute does not exist: {0}
 msgid "The_attribute_does_not_exist:_{0}"
@@ -2271,8 +2271,12 @@ msgstr "Hasło"
 msgid "Stay_signed_in"
 msgstr "Pozostań zalogowany"
 
+msgid "and"
+msgstr ""
+
 # and accept cookie
-msgid "and_accept_cookie"
+#, fuzzy
+msgid "accept_cookie"
 msgstr "i zaakceptuj ciasteczka"
 
 # Forgot password?
@@ -2443,9 +2447,8 @@ msgstr "Zastąp istniejący obraz"
 msgid "Upload_new_image"
 msgstr "Prześlij nowy obraz"
 
-# Please only use self-made images (no images from the internet).
-msgid "Please_only_use_self_made_images_(not_from_the_internet)."
-msgstr "Używaj wyłącznie własnych obrazów (bez obrazów z internetu)."
+msgid "Image_upload_legal_hint."
+msgstr ""
 
 # DELIVERY_DAY
 msgid "DELIVERY_DAY"
@@ -3136,6 +3139,10 @@ msgstr "information-about-right-of-withdrawal"
 # product
 msgid "route_product"
 msgstr "product"
+
+# Please only use self-made images (no images from the internet).
+#~ msgid "Please_only_use_self_made_images_(not_from_the_internet)."
+#~ msgstr "Używaj wyłącznie własnych obrazów (bez obrazów z internetu)."
 
 # thank you for order from {0}.
 #, fuzzy

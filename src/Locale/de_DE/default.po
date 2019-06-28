@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-06-09 23:12+0200\n"
-"PO-Revision-Date: 2019-06-26 11:11+0200\n"
+"POT-Creation-Date: 2019-06-28 10:58+0200\n"
+"PO-Revision-Date: 2019-06-28 10:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1344,14 +1344,14 @@ msgstr "Bitte gib mindestens {0} Zeichen ein."
 msgid "Please_enter_max_{0}_characters."
 msgstr "Bitte gib maximal {0} Zeichen ein."
 
+msgid "Please_provide_a_valid_ordered_quantity_in_units."
+msgstr "Bitte trage das entnommene Gewicht ein."
+
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr "Die gewünschte Anzahl {0} ist nicht gültig."
 
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "Das Produkt mit der ID {0} ist nicht vorhanden."
-
-msgid "Please_provide_a_valid_ordered_quantity_in_units."
-msgstr "Bitte trage das entnommene Gewicht ein."
 
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "Die Variante existiert nicht: {0}"
@@ -1698,8 +1698,11 @@ msgstr "Passwort"
 msgid "Stay_signed_in"
 msgstr "Angemeldet bleiben"
 
-msgid "and_accept_cookie"
-msgstr "und Cookie akzeptieren"
+msgid "and"
+msgstr "und"
+
+msgid "accept_cookie"
+msgstr "Cookie akzeptieren"
 
 msgid "Forgot_password?"
 msgstr "Passwort vergessen?"

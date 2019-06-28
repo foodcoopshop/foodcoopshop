@@ -39,10 +39,18 @@ $this->element('addScript', ['script' =>
         echo $this->Form->control('email', ['label' => __('Email')]);
         echo $this->Form->control('passwd', ['label' => __('Password')]);
           if ($enableAutoLogin) {
+              
+              $this->element('addScript', ['script' =>
+                  Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('.remember-me-wrapper a');"
+              ]);
+              echo '<div id="privacy-policy" class="featherlight-overlay">';
+                echo $this->element('legal/'.I18n::getLocale().'/privacyPolicy');
+              echo '</div>';
+              
               echo '<div class="remember-me-wrapper">';
               echo $this->Form->control('remember_me', [
                   'type' => 'checkbox',
-                  'label' => __('Stay_signed_in').'<br /><small>'.__('and_accept_cookie').'</small>',
+                  'label' => __('Stay_signed_in').'<br /><small>'.__('and').' <a href="#privacy-policy" class="open-with-featherlight">'.__('accept_cookie').'</a></small>',
                   'escape' => false
               ]);
               echo '</div>';
