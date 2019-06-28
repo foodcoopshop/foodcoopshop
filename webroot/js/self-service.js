@@ -18,7 +18,7 @@ foodcoopshop.SelfService = {
         
     init : function() {
         foodcoopshop.Helper.initLogoutButton(document.location.href);
-        this.initWindowScroll();
+  	    this.initWindowResize();
         this.initAutoLogout();
         this.initSearchForm();
         this.initDepositPayment();
@@ -62,15 +62,15 @@ foodcoopshop.SelfService = {
         }
     },
     
-    initWindowScroll: function () {
-        $(window).scroll(function () {
-            foodcoopshop.SelfService.onWindowScroll();
+    initWindowResize: function () {
+        $(window).on('resize', function () {
+            foodcoopshop.SelfService.onWindowResize();
         });
-        foodcoopshop.SelfService.onWindowScroll();
+        foodcoopshop.SelfService.onWindowResize();
     },
     
-    onWindowScroll : function() {
-        $('#cart p.products').css('max-height', parseInt($(window).height()) - 220);        
+    onWindowResize : function() {
+        $('.right-box').css('max-height', parseInt($(window).height()));        
     },
     
     initAutoLogout : function() {

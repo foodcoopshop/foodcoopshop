@@ -15,7 +15,9 @@
 body.self_services {
 	margin: 0;
 }
-body.self_services #content {
+body.self_services #content,
+.self-service,
+.self-service .footer {
 	width: 917px;
 }
 .self-service {
@@ -25,14 +27,12 @@ body.self_services #content {
     position: relative;
     float: left;
 }
-.self-service,
-.self-service .footer {
-	width: 917px;
-}
 .self-service .right-box {
 	position: fixed;
 	left: 612px;
 	top: 0;
+	overflow-y: auto;
+	padding-bottom: 80px;
 }
 .self-service .btn-order {
 	margin-left: 5%;
