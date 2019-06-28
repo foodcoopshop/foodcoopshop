@@ -890,6 +890,7 @@ body.carts.detail #CartsDetailForm {
 #RegistrationForm .input.checkbox label {
     padding-left: 80px;
     width: 350px;
+    text-align: left;
 }
 .h1-registration {
     border-radius: 0;
