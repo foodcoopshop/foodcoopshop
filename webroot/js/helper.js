@@ -24,7 +24,7 @@ foodcoopshop.Helper = {
         this.initLogoutButton();
         this.changeOutgoingLinksTargetToBlank();
         if (!this.isMobile()) {
-            this.initWindowScroll();
+            this.initWindowResize();
             this.initScrolltopButton();
             this.showContent();
         }
@@ -396,14 +396,14 @@ foodcoopshop.Helper = {
 
     },
 
-    initWindowScroll: function () {
-        $(window).scroll(function () {
-            foodcoopshop.Helper.onWindowScroll();
+    initWindowResize: function () {
+        $(window).on('resize', function () {
+            foodcoopshop.Helper.onWindowResize();
         });
-        foodcoopshop.Helper.onWindowScroll();
+        foodcoopshop.Helper.onWindowResize();
     },
 
-    onWindowScroll: function () {
+    onWindowResize: function () {
 
         // keep right column on its place
         var newLeft = $(window).scrollLeft() * -1 + parseInt($('#content').width()) + parseInt($('#content').css('padding-left')) + 6;
