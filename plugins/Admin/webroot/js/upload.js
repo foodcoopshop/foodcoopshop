@@ -165,7 +165,7 @@ foodcoopshop.Upload = {
             button.off('click');
             button.on('click', function () {
                 // Simulate a click on the file input button to show the file browser dialog
-                $(this).parent().find('input').click();
+                $(this).parent().find('input').trigger('click');
             });
 
             // Initialize the jQuery File Upload plugin
@@ -237,7 +237,7 @@ foodcoopshop.Upload = {
         tpl.find('input').knob();
 
         // Listen for clicks on the cancel icon
-        tpl.find('span').click(function () {
+        tpl.find('span').on('click', function () {
 
             if (tpl.hasClass('working')) {
                 jqXHR.abort();
@@ -314,7 +314,7 @@ foodcoopshop.Upload = {
             button.off('click');
             button.on('click', function () {
                 // Simulate a click on the file input button to show the file browser dialog
-                $(this).parent().find('input').click();
+                $(this).parent().find('input').trigger('click');
             });
 
             // Initialize the jQuery File Upload plugin
