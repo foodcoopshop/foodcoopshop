@@ -14,6 +14,11 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Legacy-Passwort-Hasher wurde entfernt. [PR#380](https://github.com/foodcoopshop/foodcoopshop/pull/380) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Wie bei jedem Release zahlreiche Dependency-Updates und viele kleinere Bugfixes (CakePHP 3.8.x).
 
+## v2.5.2 / 2019-07-02 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.5.1...v2.5.2)
+
+### Bugfix
+- Das Netzwerk-Modul hat nicht mehr funktioniert. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/https://github.com/foodcoopshop/foodcoopshop/commit/60ac851f49d74bf5751d810c810db74ee79be3c6) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
 ## v2.5.1 / 2019-06-28 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.5.0...v2.5.1)
 
 ### Bugfix
