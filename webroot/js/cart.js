@@ -358,9 +358,8 @@ foodcoopshop.Cart = {
             var price = foodcoopshop.Helper.getCurrencyAsFloat(productContainer.find('.price').html());
             var tax = foodcoopshop.Helper.getCurrencyAsFloat(productContainer.find('.tax').html());
             var oldAmount = parseInt(productContainer.find('.amount span.value').html());
-            var newPrice = price / oldAmount;
             var newTax = tax / oldAmount;
-
+            
             var timebasedCurrencyHoursContainer = productContainer.find('.timebasedCurrencySeconds');
             var newTimebasedCurrencyHours = 0;
             if (timebasedCurrencyHoursContainer.length > 0) {
@@ -381,6 +380,8 @@ foodcoopshop.Cart = {
                 amount = -1;
             }
 
+            var newPrice = price / oldAmount * amount;
+
             var button = $(this);
             foodcoopshop.Helper.disableButton(button);
             foodcoopshop.Helper.addSpinnerToButton(button, elementClass.replace(/fas /, ''));
@@ -398,7 +399,7 @@ foodcoopshop.Cart = {
                         foodcoopshop.Helper.enableButton(button);
                         foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
                         foodcoopshop.Cart.updateExistingProduct(productContainer, amount, newPrice, newDeposit, newTax, newTimebasedCurrencyHours);
-                        foodcoopshop.Cart.updateCartSum(newPrice * amount);
+                        foodcoopshop.Cart.updateCartSum(newPrice);
                         foodcoopshop.Cart.updateCartTaxSum(newTax * amount);
                         foodcoopshop.Cart.updateCartTimebasedCurrencySum(newTimebasedCurrencyHours * amount);
                         if (depositContainer.length > 0) {
