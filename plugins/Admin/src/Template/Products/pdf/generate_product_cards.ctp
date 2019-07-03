@@ -17,7 +17,7 @@ use App\Lib\Pdf\BarCodeTcpdf;
 
 $pdf = new BarCodeTcpdf();
 $pdf->SetLeftMargin(16);
-$pdf->SetTopMargin(20);
+$pdf->SetTopMargin(13);
 
 $pdf->AddPage();
 
