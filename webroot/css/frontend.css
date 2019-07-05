@@ -513,6 +513,9 @@ body.superadmin .product-wrapper .heading h4 {
 	line-height: 17px;
 	color: #969696;
 }
+.product-wrapper .additional-price-info .unit-amount {
+    display: none;
+}
 .product-wrapper .deposit {
     float: right;
     margin-left: 10px;
