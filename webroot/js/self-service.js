@@ -58,6 +58,7 @@ foodcoopshop.SelfService = {
             foodcoopshop.Helper.disableButton(submitButton);
             searchForm.submit();
         });
+        searchForm.find('input[type="text"]').focus();
     },
     
     initCartErrors: function (cartErrors) {
