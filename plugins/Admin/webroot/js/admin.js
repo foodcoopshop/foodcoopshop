@@ -646,7 +646,7 @@ foodcoopshop.Admin = {
                 top: -100
             }
         });
-        $(rowId).css('background', 'orange');
+        $(rowId).css('background-color', 'orange');
         $(rowId).css('color', 'white');
         $(rowId).one('mouseover', function () {
             $(this).removeAttr('style');
