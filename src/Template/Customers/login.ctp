@@ -33,7 +33,10 @@ $this->element('addScript', ['script' =>
         
         <?php
         if ($enableBarCodeLogin) {
-            echo $this->Form->control('barCode', ['type' => 'password', 'label' => __('Scan_member_card')]);
+            $this->element('addScript', ['script' =>
+                Configure::read('app.jsNamespace').".SelfService.initLoginForm();"
+            ]);
+            echo $this->Form->control('barCode', ['type' => 'text', 'label' => __('Scan_member_card')]);
             echo '<h2><span>'.__('or').'</span></h2>';
         }
         echo $this->Form->control('email', ['label' => __('Email')]);

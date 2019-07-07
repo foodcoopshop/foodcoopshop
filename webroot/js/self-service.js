@@ -24,6 +24,14 @@ foodcoopshop.SelfService = {
         this.initDepositPayment();
     },
     
+    initLoginForm : function() {
+        var barcodeInputField = $('#barcode'); 
+        barcodeInputField.on('keyup', function (e) {
+            $(this).prop('type', 'password'); // to avoid autocomplete
+        });
+        barcodeInputField.focus();
+    },
+    
     initDepositPayment : function() {
         
         foodcoopshop.Helper.changeInputNumberToTextForEdge();
