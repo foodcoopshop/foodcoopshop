@@ -62,10 +62,16 @@ foodcoopshop.SelfService = {
     },
     
     initHighlightedProductId: function(productId) {
-        $.scrollTo('#product-wrapper-' + productId, 1000, {
+        var rowId = '#product-wrapper-' + productId;
+        $.scrollTo(rowId, 1000, {
             offset: {
                 top: -100
             }
+        });
+        $(rowId).css('background-color', '#f3515c');
+        $(rowId).css('color', 'white');
+        $(rowId).one('mouseover', function () {
+            $(this).removeAttr('style');
         });
     },
     

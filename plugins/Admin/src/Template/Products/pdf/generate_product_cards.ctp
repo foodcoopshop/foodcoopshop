@@ -17,7 +17,7 @@ use App\Lib\Pdf\BarCodeTcpdf;
 
 $pdf = new BarCodeTcpdf();
 $pdf->SetLeftMargin(16);
-$pdf->SetTopMargin(13);
+$pdf->SetTopMargin(15);
 
 $pdf->AddPage();
 
@@ -35,7 +35,7 @@ foreach($products as $product) {
     $pdf->table .= '<tr>';
     $pdf->table .= '<td>';
     $pdf->table .= '<b style="font-size:12px;">' . $product->name . '</b> <br />';
-    $pdf->table .= join(' / ', $product->prepared_data) . '<br />';
+    $pdf->table .= __d('admin', 'Price') . ': ' . $product->prepared_price . '<br />';
     $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="height:5px;">'.__d('admin', 'Manufacturer') . ': <b>' . $product->manufacturer->name . '</b> / ' . __d('admin', 'Product_ID') . ': <b>' . $product->id_product . '</b></td></tr></table>';
     $pdf->table .= '</td>';
     $pdf->table .= '</tr>';
@@ -46,7 +46,7 @@ foreach($products as $product) {
     $pdf->table .= '<td style="width:120px;">';
     $barcodeObject = new TCPDFBarcode($product->bar_code, 'C39');
     //https://stackoverflow.com/a/54520065/2100184
-    $imgBase64Encoded = base64_encode($barcodeObject->getBarcodePngData(1.5, 102));
+    $imgBase64Encoded = base64_encode($barcodeObject->getBarcodePngData(1.3, 102));
     // move barcode to bottom
     $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="font-size:6px;"></td></tr></table>';
     $pdf->table .= '<img src="@' . preg_replace('#^data:image/[^;]+;base64,#', '', $imgBase64Encoded) . '">';
@@ -56,7 +56,7 @@ foreach($products as $product) {
     $pdf->table .= '<td style="width:100px;" align="right">';
     
     if ($product->image) {
-        $srcProductImage = $this->Html->getProductImageSrc($product->image->id_image, 'thickbox');
+        $srcProductImage = $this->Html->getProductImageSrc($product->image->id_image, 'home');
         $srcProductImage = $this->Html->removeTimestampFromFile($srcProductImage);
         $largeImageExists = preg_match('/de-default/', $srcProductImage);
         if (!$largeImageExists) {

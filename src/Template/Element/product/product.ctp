@@ -58,9 +58,6 @@ if ($product['is_new']) {
             echo $product['name'];
         }
         echo '</h4>';
-        if ($appAuth->isSelfServiceModeByUrl()) {
-            echo '<br /><span style="float:left;width:100%;">' . $product['ProductIdentifier'] . '</span>';
-        }
     echo '</div>';
     echo '<div class="sc"></div>';
 

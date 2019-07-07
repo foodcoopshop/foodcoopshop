@@ -29,7 +29,7 @@ $this->element('addScript', ['script' =>
 ]);
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 
-if ($this->request->getSession()->read('highlightedRowId')) {
+if ($this->request->getSession()->read('highlightedProductId')) {
     $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace') . ".SelfService.initHighlightedProductId('" . $this->request->getSession()->read('highlightedProductId') . "');
         "

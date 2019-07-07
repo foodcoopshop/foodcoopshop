@@ -120,29 +120,29 @@ class ProductsController extends AdminAppController
         }
         
         $this->Product = TableRegistry::getTableLocator()->get('Products');
-        $products = $this->Product->getProductsForBackend($this->AppAuth, $productIds, 'all', 'all');
-        $productsWithoutAttributes = [];
+        $products = $this->Product->getProductsForBackend($this->AppAuth, $productIds, 'all', 'all', '', 0, 0, true);
+        
+        $preparedProducts = [];
         foreach($products as &$product) {
-            if (preg_match('/main-product/', $product->row_class)) {
-                if (!empty($product->product_attributes)) {
-                    foreach($product->product_attributes as $attribute) {
-                        $price = Configure::read('app.numberHelper')->formatAsCurrency($this->Product->getGrossPrice($product->id_product, $attribute->price));
-                        if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
-                            $price = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($attribute->unit_product_attribute->price_incl_per_unit, $attribute->unit_product_attribute->name, $attribute->unit_product_attribute->amount);
-                        }
-                        $product->prepared_data[] =  $attribute->product_attribute_combination->attribute->name . ': ' . $price;
-                    }
-                } else {
-                    $price = Configure::read('app.numberHelper')->formatAsCurrency($product->gross_price);
-                    if (!empty($product->unit_product) && $product->unit_product->price_per_unit_enabled) {
-                        $price = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($product->unit_product->price_incl_per_unit, $product->unit_product->name, $product->unit_product->amount);
-                    }
-                    $product->prepared_data[] = ($product->unity != ''? $product->unity . ': ' : '') . $price;
-                }
-                $productsWithoutAttributes[] = $product;
+            if (!empty($product->product_attributes)) {
+                // avoid rendering main product if product has attributes
+                continue;
             }
+            $price = Configure::read('app.numberHelper')->formatAsCurrency($product->gross_price);
+            if (!empty($product->unit) && $product->unit->price_per_unit_enabled) {
+                $price = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($product->unit->price_incl_per_unit, $product->unit->name, $product->unit->amount);
+                if (!preg_match('/main-product/', $product->row_class)) {
+                    $product->name = $product->nameForBarcodePdf;
+               }
+            }
+            if (preg_match('/main-product/', $product->row_class)) {
+                $product->bar_code .= '0000'; 
+            }
+            $product->prepared_price = $price;
+            $preparedProducts[] = $product;
         }
-        $this->set('products', $productsWithoutAttributes);
+        
+        $this->set('products', $preparedProducts);
     }
     
 
