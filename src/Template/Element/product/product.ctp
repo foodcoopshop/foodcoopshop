@@ -25,7 +25,7 @@ $isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
     $product['is_stock_product']
 );
 
-echo '<div class="product-wrapper">';
+echo '<div class="product-wrapper" id="product-wrapper-' . $product['id_product'] . '">';
 
     echo '<div class="first-column">';
         $srcLargeImage = $this->Html->getProductImageSrc($product['id_image'], 'thickbox');

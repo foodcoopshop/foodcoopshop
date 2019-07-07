@@ -61,6 +61,14 @@ foodcoopshop.SelfService = {
         searchForm.find('input[type="text"]').focus();
     },
     
+    initHighlightedProductId: function(productId) {
+        $.scrollTo('#product-wrapper-' + productId, 1000, {
+            offset: {
+                top: -100
+            }
+        });
+    },
+    
     initCartErrors: function (cartErrors) {
         cartErrors = $.parseJSON(cartErrors);
         console.log(cartErrors);

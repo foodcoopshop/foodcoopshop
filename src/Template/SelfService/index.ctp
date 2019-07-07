@@ -28,6 +28,15 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Cart.initCartFinish();"
 ]);
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
+
+if ($this->request->getSession()->read('highlightedRowId')) {
+    $this->element('addScript', [
+        'script' => Configure::read('app.jsNamespace') . ".SelfService.initHighlightedProductId('" . $this->request->getSession()->read('highlightedProductId') . "');
+        "
+    ]);
+    $this->request->getSession()->delete('highlightedProductId');
+}
+
 ?>
 
 <div id="products">
