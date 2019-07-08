@@ -19,7 +19,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ## v2.5.3 / 2019-07-08 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.5.2...v2.5.3)
 
 ### Bugfix
-- Ändern der Anzahl bei Bestellabschluss hat falschen Preis ergeben. https://github.com/foodcoopshop/foodcoopshop/commit/d4678a11b1856f88e201796df8adb5eb2dd84350) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Ändern der Anzahl bei Bestellabschluss hat falschen Preis ergeben. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/d4678a11b1856f88e201796df8adb5eb2dd84350) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ## v2.5.2 / 2019-07-02 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.5.1...v2.5.2)
 
