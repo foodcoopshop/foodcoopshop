@@ -79,7 +79,7 @@ before_script:
 - sudo service apache2 restart
 
 # Print Error Log
-- if [[ -f /var/log/apache2/www.foodcoopshop.test_error.log ]]; then sudo cat /var/log/apache2/www.foodcoopshop.test_error.log fi
+# - sudo cat /var/log/apache2/www.foodcoopshop.test_error.log
 
 script:
   # phpstan
