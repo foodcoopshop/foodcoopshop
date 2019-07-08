@@ -17,6 +17,7 @@ env:
   - DB=mysql
 
 before_script:
+
 # Email mock
 sudo apt-get install -y -qq postfix  
 sudo service postfix stop
@@ -49,8 +50,7 @@ sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.ph
 
 # For PHP7 inclusion of additional config files works.
 sudo cp ./config/travis/php7.conf ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/
-echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
 
 # Disable XDebug to speed up Composer and test suites.
 phpenv config-rm xdebug.ini
