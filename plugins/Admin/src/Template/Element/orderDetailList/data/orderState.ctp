@@ -16,7 +16,7 @@
 if ($groupBy == '') {
     $widthStyle = '';
     if (!empty($orderDetail->pickup_day_entity) && $orderDetail->pickup_day_entity->products_picked_up) {
-        $widthStyle = 'width:45px;';
+        $widthStyle = 'width:52px;';
     }
     echo '<td style="text-align:center;font-size:17px;'.$widthStyle.'">';
         if (isset($this->MyHtml->getOrderStates()[$orderDetail->order_state])) {
