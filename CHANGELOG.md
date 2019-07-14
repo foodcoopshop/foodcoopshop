@@ -5,9 +5,11 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.5.3...develop)
 
 ### Herzlichen Dank an alle beteiligten Personen
+* [AndreasEgger](https://github.com/AndreasEgger)
 * [mrothauer](https://github.com/mrothauer)
 
 ### Neue Funktionen
+- Selbstbedienungs-Modus für Lagerprodukte - Details in der [Online-Dokumentation](https://foodcoopshop.github.io/de/selbstbedienungs-modus). [PR#384](https://github.com/foodcoopshop/foodcoopshop/pull/384) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/AndreasEgger"><img src="https://github.com/AndreasEgger.png" width="20"></a>
 - Verbesserungen WYSIWYG-Editor: Nach Copy/Paste bleiben die Formatierungen vorhanden. Kursiv, zentriert und rechtsbündig ist jetzt möglich. <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
 
 ### Für Entwickler

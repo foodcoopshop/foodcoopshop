@@ -55,6 +55,21 @@ class SelfServiceController extends FrontendController
         $this->viewBuilder()->setLayout('self_service');
         $this->set('title_for_layout', __('Self_service_for_stock_products'));
         
+        if (!empty($this->getRequest()->getQuery('keyword')) && count($products) == 1) {
+            $hashedProductId = substr($keyword, 0, 4);
+            $attributeId = (int) substr($keyword, 4, 4);
+            if ($hashedProductId == $products[0]['ProductIdentifier']) {
+                $this->CartProduct = TableRegistry::getTableLocator()->get('CartProducts');
+                $result = $this->CartProduct->add($this->AppAuth, $products[0]['id_product'], $attributeId, 1);
+                if (!empty($result['msg'])) {
+                    $this->Flash->error($result['msg']);
+                    $this->request->getSession()->write('highlightedProductId', $products[0]['id_product']); // sic! no attributeId needed!
+                }
+                $this->redirect(Configure::read('app.slugHelper')->getSelfService());
+                return;
+            }
+        }
+        
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $cart = $this->AppAuth->getCart();
             $this->set('cart', $cart['Cart']);

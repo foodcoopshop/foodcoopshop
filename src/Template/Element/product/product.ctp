@@ -25,7 +25,7 @@ $isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
     $product['is_stock_product']
 );
 
-echo '<div class="product-wrapper">';
+echo '<div class="product-wrapper" id="product-wrapper-' . $product['id_product'] . '">';
 
     echo '<div class="first-column">';
         $srcLargeImage = $this->Html->getProductImageSrc($product['id_image'], 'thickbox');
@@ -58,9 +58,6 @@ if ($product['is_new']) {
             echo $product['name'];
         }
         echo '</h4>';
-        if ($appAuth->isSelfServiceModeByUrl()) {
-            echo '<br /><span style="float:left;width:100%;">' . $product['ProductIdentifier'] . '</span>';
-        }
     echo '</div>';
     echo '<div class="sc"></div>';
 

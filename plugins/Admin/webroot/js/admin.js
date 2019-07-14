@@ -185,7 +185,7 @@ foodcoopshop.Admin = {
 
         var filterContainer = $('.filter-container');
 
-        filterContainer.find('input:text').keyup(function (e) {
+        filterContainer.find('input:text').on('keyup', function (e) {
             if (e.keyCode == 13) {
                 foodcoopshop.Admin.submitFilterForm();
             }
@@ -646,7 +646,7 @@ foodcoopshop.Admin = {
                 top: -100
             }
         });
-        $(rowId).css('background', 'orange');
+        $(rowId).css('background-color', 'orange');
         $(rowId).css('color', 'white');
         $(rowId).one('mouseover', function () {
             $(this).removeAttr('style');
