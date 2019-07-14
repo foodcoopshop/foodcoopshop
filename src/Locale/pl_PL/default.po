@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-06-28 10:58+0200\n"
+"POT-Creation-Date: 2019-07-14 22:11+0200\n"
 "PO-Revision-Date: 2019-05-29 10:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1343,6 +1343,11 @@ msgstr "Cena za wagę"
 # Total sum
 msgid "Total_sum"
 msgstr "Suma łącznie"
+
+# Generated invoices
+#, fuzzy
+msgid "Generated_on_{0}"
+msgstr "Wygenerowane faktury"
 
 # Page {0} of {1}
 msgid "Page_{0}_of_{1}"

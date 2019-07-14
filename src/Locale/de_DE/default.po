@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-06-28 10:58+0200\n"
-"PO-Revision-Date: 2019-06-28 10:58+0200\n"
+"POT-Creation-Date: 2019-07-14 22:11+0200\n"
+"PO-Revision-Date: 2019-07-14 22:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1004,6 +1004,9 @@ msgstr "Preis nach Gewicht"
 
 msgid "Total_sum"
 msgstr "Gesamtsumme"
+
+msgid "Generated_on_{0}"
+msgstr "Generiert am {0}"
 
 msgid "Page_{0}_of_{1}"
 msgstr "Seite {0} von {1}"
@@ -2095,7 +2098,7 @@ msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
 msgid "Information_about_right_of_withdrawal"
-msgstr "Informationen-ueber-Ruecktrittsrecht"
+msgstr "Informationen über Rücktrittsrecht"
 
 msgid "and_withdrawal_form"
 msgstr "und Rücktrittsformular"
