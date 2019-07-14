@@ -11,7 +11,8 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Neue Funktionen
 - Selbstbedienungs-Modus für Lagerprodukte - Details in der [Online-Dokumentation](https://foodcoopshop.github.io/de/selbstbedienungs-modus). [PR#384](https://github.com/foodcoopshop/foodcoopshop/pull/384) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/AndreasEgger"><img src="https://github.com/AndreasEgger.png" width="20"></a>
 - Verbesserungen WYSIWYG-Editor: Nach Copy/Paste bleiben die Formatierungen vorhanden. Kursiv, zentriert und rechtsbündig ist jetzt möglich. <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
-
+- Bei Bestelllisten und Rechnungen wird nun im Footer angezeigt, wann das PDF generiert wurde. / [PR#388](https://github.com/foodcoopshop/foodcoopshop/pull/388) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+ 
 ### Für Entwickler
 - Legacy-Passwort-Hasher wurde entfernt. [PR#380](https://github.com/foodcoopshop/foodcoopshop/pull/380) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Wie bei jedem Release zahlreiche Dependency-Updates und viele kleinere Bugfixes (CakePHP 3.8.x).
