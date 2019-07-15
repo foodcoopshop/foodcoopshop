@@ -17,7 +17,7 @@ namespace App\Shell;
 
 use App\Lib\Error\Exception\InvalidParameterException;
 
-class TestCronjobWithExceptionShell extends AppShell
+class TestCronjobWithInvalidParameterExceptionShell extends AppShell
 {
 
     public function main()
