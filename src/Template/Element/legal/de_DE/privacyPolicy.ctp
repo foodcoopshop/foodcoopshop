@@ -46,7 +46,12 @@ use Cake\Core\Configure;
 
 <p>Konkret werden folgende Cookies gespeichert über die jeweilige Session hinaus gespeichert:</p>
 
-<p>remember_me: 6 Tage gültig, wird ausschließlich für die Login-Funktion "angemeldet bleiben" vewendet.</p> 
+<ul>
+	<li>remember_me: 6 Tage gültig, wird ausschließlich für die Login-Funktion "angemeldet bleiben" vewendet.</li>
+    <?php if (Configure::read('appDb.FCS_FOODCOOPS_MAP_ENABLED')) { ?>
+    	<li>umap.openstreetmap.fr: anonymous_owner|211165, csrftoken. Zum Anzeigen der Open-Street-Map auf der Startseite.</li>
+    <?php } ?>
+</ul>
 
 <p>2.2. Die Website speichert und verwendet darüber hinaus automatisiert keine Daten.</p>
 
