@@ -197,7 +197,14 @@ foodcoopshop.SyncBase = {
                         var syncDomain = foodcoopshop.SyncBase.getHostnameFromUrl($(this)[0].url);
                         var loginForm = $('form.sync-login-form[data-sync-domain=\'' + syncDomain +'\']');
                         loginForm.addClass('error');
-                        foodcoopshop.Helper.showOrAppendErrorMessage(syncDomain + ': ' + (response.responseJSON && response.responseJSON.message ? response.responseJSON.message : 'E-Mail-Adresse oder Passwort falsch.'));
+                        var errorMessage = '';
+                        if (response.responseJSON && response.responseJSON.message) {
+                            errorMessage = response.responseJSON.message;
+                            if (errorMessage == 'Unauthorized') {
+                                errorMessage = foodcoopshop.LocalizedJs.syncBase.UsernameOrPasswordWrongPleaseCheckThatThereAreNoSpecialCharactersInYourPassword;
+                            }
+                        }
+                        foodcoopshop.Helper.showOrAppendErrorMessage(syncDomain + ': ' + errorMessage);
                         $('.ui-dialog-content').dialog('close');
                         $('.ui-dialog .ajax-loader').hide();
                         $('.ui-dialog button').attr('disabled', false);

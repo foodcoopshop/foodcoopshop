@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-07-14 22:11+0200\n"
-"PO-Revision-Date: 2019-05-29 10:51+0200\n"
+"POT-Creation-Date: 2019-07-22 16:03+0200\n"
+"PO-Revision-Date: 2019-07-22 16:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: pl_PL\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 2.2.2\n"
+"X-Generator: Poedit 2.2.3\n"
 "X-Poedit-Bookmarks: 725,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 # You have been signed out.
@@ -1099,6 +1099,9 @@ msgstr "obrócić zgodnie z ruchem wskazówek zegara?"
 # Change general terms and conditions
 msgid "Change_general_terms_and_conditions"
 msgstr "Zmień regulamin"
+
+msgid "Username_or_password_is_wrong._Please_check_that_there_are_no_special_characters_in_your_password."
+msgstr ""
 
 # Id
 msgid "Id"

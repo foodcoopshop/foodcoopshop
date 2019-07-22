@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-07-14 22:11+0200\n"
+"POT-Creation-Date: 2019-07-22 16:03+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -822,6 +822,9 @@ msgid "rotate_clockwise?"
 msgstr ""
 
 msgid "Change_general_terms_and_conditions"
+msgstr ""
+
+msgid "Username_or_password_is_wrong._Please_check_that_there_are_no_special_characters_in_your_password."
 msgstr ""
 
 msgid "Id"

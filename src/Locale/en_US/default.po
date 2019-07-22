@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-07-14 22:11+0200\n"
-"PO-Revision-Date: 2019-07-14 22:11+0200\n"
+"POT-Creation-Date: 2019-07-22 16:03+0200\n"
+"PO-Revision-Date: 2019-07-22 16:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -824,6 +824,9 @@ msgstr "rotate clockwise?"
 
 msgid "Change_general_terms_and_conditions"
 msgstr "Change general terms and conditions"
+
+msgid "Username_or_password_is_wrong._Please_check_that_there_are_no_special_characters_in_your_password."
+msgstr "Email or password wrong. Please check that there are no special characters in your password and change it eventually at your remote food-coop."
 
 msgid "Id"
 msgstr "Id"
