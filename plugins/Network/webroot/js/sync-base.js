@@ -15,10 +15,6 @@ foodcoopshop.SyncBase = {
 
     activeAjaxRequests : [],
 
-    // versions are dynamically set in view
-    versionFoodCoopShop: '',
-    versionNetworkPlugin: '',
-
     init : function () {
         foodcoopshop.Helper.showContent();
         foodcoopshop.Helper.initMenu();
