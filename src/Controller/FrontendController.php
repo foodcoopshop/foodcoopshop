@@ -57,7 +57,10 @@ class FrontendController extends AppController
                         'delivery_rhythm_count' => $product['delivery_rhythm_count'],
                         'delivery_rhythm_send_order_list_weekday' => $product['delivery_rhythm_send_order_list_weekday'],
                         'delivery_rhythm_send_order_list_day' => $product['delivery_rhythm_send_order_list_day'],
-                        'is_stock_product' => $product['is_stock_product']
+                        // convert database strings to boolean to && them and then re-convert to string
+                        'is_stock_product' => (string) (
+                            (boolean) $product['is_stock_product'] && (boolean) $product['stock_management_enabled']
+                        )
                     ]
                 ));
             }

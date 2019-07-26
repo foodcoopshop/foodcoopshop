@@ -498,7 +498,11 @@ class ProductsController extends AdminAppController
                 $messageString = __d('admin', 'The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}.', [
                     '<b>' . $oldProduct->name . '</b>',
                     '<b>' . $oldProduct->manufacturer->name . '</b>',
-                    '<b>' . Configure::read('app.htmlHelper')->getDeliveryRhythmString($oldProduct->is_stock_product, $deliveryRhythmType, $deliveryRhythmCount) . '</b>'
+                    '<b>' . Configure::read('app.htmlHelper')->getDeliveryRhythmString(
+                        $oldProduct->is_stock_product && $oldProduct->manufacturer->stock_management_enabled,
+                        $deliveryRhythmType,
+                        $deliveryRhythmCount
+                    ) . '</b>'
                 ]);
                 if (!empty($additionalMessages)) {
                     $messageString .= ' ' . join(', ', $additionalMessages);

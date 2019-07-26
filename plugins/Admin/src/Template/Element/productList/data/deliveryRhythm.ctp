@@ -17,7 +17,7 @@ echo '<td class="delivery-rhythm">';
 
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
         
-        if (!$product->is_stock_product) {
+        if (!($product->manufacturer->stock_management_enabled && $product->is_stock_product)) {
             echo $this->Html->link(
                 '<i class="fas fa-pencil-alt ok"></i>',
                 'javascript:void(0);',
@@ -31,7 +31,7 @@ echo '<td class="delivery-rhythm">';
         
         $elementsToRender = [];
         
-        if ($product->is_stock_product) {
+        if ($product->manufacturer->stock_management_enabled && $product->is_stock_product) {
             $elementsToRender[] = $product->delivery_rhythm_string;
             echo join(', ', $elementsToRender);
         } else {

@@ -21,8 +21,8 @@ $isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
     $appAuth->isInstantOrderMode(),
     $appAuth->isSelfServiceModeByUrl(),
     Configure::read('appDb.FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM'),
-    $product['stock_management_enabled'],
-    $product['is_stock_product']
+    (boolean) $product['stock_management_enabled'],
+    (boolean) $product['is_stock_product']
 );
 
 echo '<div class="product-wrapper" id="product-wrapper-' . $product['id_product'] . '">';
@@ -78,11 +78,11 @@ if ($product['description'] != '') {
     echo '<div class="toggle-content description">'.$product['description'].'</div>';
 }
 
-    if ($product['delivery_rhythm_type'] == 'individual' && !$this->Time->isDatabaseDateNotSet($product['delivery_rhythm_order_possible_until'])) {
+    if (!($product['stock_management_enabled'] && $product['is_stock_product']) && $product['delivery_rhythm_type'] == 'individual' && !$this->Time->isDatabaseDateNotSet($product['delivery_rhythm_order_possible_until'])) {
         echo '<br />' . __('Order_possible_until') . ': ' . $this->Time->getDateFormattedWithWeekday(strtotime($product['delivery_rhythm_order_possible_until']));
     }
     
-    if (!$appAuth->isInstantOrderMode() && $product['delivery_rhythm_type'] != 'individual' && $this->Time->getSendOrderListsWeekday() != $product['delivery_rhythm_send_order_list_weekday']) {
+    if (!$appAuth->isInstantOrderMode() && !($product['stock_management_enabled'] && $product['is_stock_product']) && $product['delivery_rhythm_type'] != 'individual' && $this->Time->getSendOrderListsWeekday() != $product['delivery_rhythm_send_order_list_weekday']) {
         echo '<span class="last-order-day">';
             echo __('Last_order_day') . ': <b>' . $this->Time->getWeekdayName(
                 $this->Time->getNthWeekdayBeforeWeekday(1, $product['delivery_rhythm_send_order_list_weekday'])
@@ -97,7 +97,11 @@ if ($product['description'] != '') {
         if ($appAuth->isInstantOrderMode()) {
             $pickupDayDetailText = __('Instant_order');
         } else {
-            $pickupDayDetailText = $this->Html->getDeliveryRhythmString($product['is_stock_product'], $product['delivery_rhythm_type'], $product['delivery_rhythm_count']);
+            $pickupDayDetailText = $this->Html->getDeliveryRhythmString(
+                $product['is_stock_product'] && $product['stock_management_enabled'],
+                $product['delivery_rhythm_type'],
+                $product['delivery_rhythm_count']
+            );
         }
         echo $this->Time->getDateFormattedWithWeekday(strtotime($product['next_delivery_day']));
     echo '</span>';
