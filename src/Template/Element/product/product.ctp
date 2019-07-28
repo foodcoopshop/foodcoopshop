@@ -106,9 +106,9 @@ if ($product['description'] != '') {
     }
     if (!$appAuth->isSelfServiceModeByUrl() && !$appAuth->isInstantOrderMode()) {
         if (strtotime($product['next_delivery_day']) != $this->Time->getDeliveryDayByCurrentDay()) {
-            $weeks = (strtotime($product['next_delivery_day']) - $this->MyTime->getCurrentDay()) / 24/60/60;
-            $fullWeeks = (int) ($weeks / 7);
-            $days = $weeks % 7;
+            $weeksAsFloat = (strtotime($product['next_delivery_day']) - strtotime(date($this->MyTime->getI18Format('DateShortAlt')))) / 24/60/60;
+            $fullWeeks = (int) ($weeksAsFloat / 7);
+            $days = $weeksAsFloat % 7;
             if ($days == 0) {
                 echo ' - <b>'. __('in_{0}_weeks', [$fullWeeks]) . '</b>';
             } else {
