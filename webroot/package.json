@@ -19,7 +19,7 @@
     "bootstrap": "^4.3.1",
     "bootstrap-select": "^1.13.10",
     "chart.js": "^2.8.0",
-    "ckeditor": "^4.11.4",
+    "ckeditor": "^4.12.1",
     "clipboard": "^2.0.4",
     "components-jqueryui": "~1.12",
     "featherlight": "^1.7.13",
