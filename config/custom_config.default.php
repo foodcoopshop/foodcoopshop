@@ -53,22 +53,7 @@ return [
         'salt' => ''
     ],
 
-    /**
-     * locale can be overriden here, attention: "App" namespace (not "app")
-     * since v2.1 FoodCoopShop is multilingual
-     * @see app_config.php:implementedLocales for valid locales
-     */
-//     'App' => [
-//         'defaultLocale' => 'en_US'
-//     ],
-
     'app' => [
-        /**
-         * not used since v2.4
-         * deliveryDayDelta is replaced by the new database setting FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA
-         * and can be removed in your custom_config.php after successful migration of 20190218101915_IndividualSendOrderListDay.php
-         */
-        //'deliveryDayDelta' => 2,
         
         'discourseSsoEnabled' => false,
 
@@ -86,13 +71,6 @@ return [
          * your host's name, eg. http://www.yourfoodcoop.com
          */
         'cakeServerName' => '',
-
-        /**
-         * not used since v2.4
-         * registrationNotificationEmails is replaced by the new database setting FCS_REGISTRATION_NOTIFICATION_EMAILS
-         * and can be removed in your custom_config.php after successful migration of 20190305183508_ConfigurationOptimizations.php
-         */
-        //'registrationNotificationEmails' => [],
 
         /**
          * whether to apply a member fee to the members account balance
