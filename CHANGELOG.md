@@ -2,10 +2,11 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.5.3...develop)
+## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.5.4...develop)
 
 ### Herzlichen Dank an alle beteiligten Personen
 * [AndreasEgger](https://github.com/AndreasEgger)
+* [markuskoban](https://github.com/markuskoban)
 * [mrothauer](https://github.com/mrothauer)
 
 ### Neue Funktionen
@@ -19,6 +20,11 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Für Entwickler
 - Legacy-Passwort-Hasher wurde entfernt. [PR#380](https://github.com/foodcoopshop/foodcoopshop/pull/380) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Wie bei jedem Release zahlreiche Dependency-Updates und viele kleinere Bugfixes (CakePHP 3.8.x).
+
+## v2.5.4 / 2019-07-30 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.5.3...v2.5.4)
+
+### Bugfix
+- Wenn der Lieferrhythmus auf "Individuelles Datum" gestellt war und das Produkt dann zum Lagerprodukt deklariert wurde, kam es manchmal zu Problemen beim Bestellen. [PR#396](https://github.com/foodcoopshop/foodcoopshop/pull/396) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/markuskoban"><img src="https://github.com/markuskoban.png" width="20"></a>
 
 ## v2.5.3 / 2019-07-08 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.5.2...v2.5.3)
 
