@@ -12,6 +12,8 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Neue Funktionen
 - Selbstbedienungs-Modus für Lagerprodukte - Details in der [Online-Dokumentation](https://foodcoopshop.github.io/de/selbstbedienungs-modus). [PR#384](https://github.com/foodcoopshop/foodcoopshop/pull/384) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/AndreasEgger"><img src="https://github.com/AndreasEgger.png" width="20"></a>
 - Verbesserungen WYSIWYG-Editor: Nach Copy/Paste bleiben die Formatierungen vorhanden. Kursiv, zentriert und rechtsbündig ist jetzt möglich. <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
+- Der Lieferrhythmus "Individuelles Datum" heißt jetzt "Sammelbestellung" (das klingt nicht so sperrig).
+- Beim Produkt wird z. B. "in 3 Wochen und 2 Tagen" angezeigt, falls später als am kommenden (regulären) Liefertag geliefert wird. <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/1aa540999c4028cdee058d1876318f80ad85df59) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Bei Bestelllisten und Rechnungen wird nun im Footer angezeigt, wann das PDF generiert wurde. / [PR#388](https://github.com/foodcoopshop/foodcoopshop/pull/388) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
  
 ### Bugfix
