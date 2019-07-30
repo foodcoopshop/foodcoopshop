@@ -108,6 +108,22 @@ if ($product['description'] != '') {
     if (!$appAuth->isSelfServiceModeByUrl()) {
         echo ' (' . $pickupDayDetailText . ')';
     }
+    if (!$appAuth->isSelfServiceModeByUrl() && !$appAuth->isInstantOrderMode()) {
+        if (strtotime($product['next_delivery_day']) != $this->Time->getDeliveryDayByCurrentDay()) {
+            $weeksAsFloat = (strtotime($product['next_delivery_day']) - strtotime(date($this->MyTime->getI18Format('DateShortAlt')))) / 24/60/60;
+            $fullWeeks = (int) ($weeksAsFloat / 7);
+            $days = $weeksAsFloat % 7;
+            if ($days == 0) {
+                echo ' - <b>'. __('in_{0}_weeks', [$fullWeeks]) . '</b>';
+            } else {
+                if ($days == 1) {
+                    echo ' - <b>'. __('in_{0}_weeks_and_{1}_day', [$fullWeeks, $day]) . '</b>';
+                } else {
+                    echo ' - <b>'. __('in_{0}_weeks_and_{1}_days', [$fullWeeks, $days]) . '</b>';
+                }
+            }
+        }
+    }
     
     echo '<br />'.__('Manufacturer').': ';
     if ($showManufacturerDetailLink) {
