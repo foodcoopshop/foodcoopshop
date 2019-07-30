@@ -79,7 +79,7 @@ class MyHtmlHelper extends HtmlHelper
         }
         
         if ($deliveryRhythmType == 'individual') {
-            $deliveryRhythmString = __('individual_date');
+            $deliveryRhythmString = __('bulk_order');
         }
         
         return $deliveryRhythmString;

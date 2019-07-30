@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-07-22 16:03+0200\n"
+"POT-Creation-Date: 2019-07-30 22:13+0200\n"
 "PO-Revision-Date: 2019-07-22 16:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2606,6 +2606,17 @@ msgstr "północ"
 msgid "Instant_order"
 msgstr "Zamówienie błyskawiczne"
 
+# every {0} week
+#, fuzzy
+msgid "in_{0}_weeks"
+msgstr "co {0} tydzień"
+
+msgid "in_{0}_weeks_and_{1}_day"
+msgstr ""
+
+msgid "in_{0}_weeks_and_{1}_days"
+msgstr ""
+
 # from which {0} %
 msgid "from_which_{0}_%"
 msgstr "z czego {0} %"
@@ -2896,9 +2907,8 @@ msgstr "każdego {0} {1} miesiąca"
 msgid "every_last_{0}_of_a_month"
 msgstr "w każdy(ą) ostatni(ą) {0} miesiąca"
 
-# individual date
-msgid "individual_date"
-msgstr "indywidualna data"
+msgid "bulk_order"
+msgstr ""
 
 # Deleted member
 msgid "Deleted_Member"
@@ -3147,6 +3157,10 @@ msgstr "information-about-right-of-withdrawal"
 # product
 msgid "route_product"
 msgstr "product"
+
+# individual date
+#~ msgid "individual_date"
+#~ msgstr "indywidualna data"
 
 # Please only use self-made images (no images from the internet).
 #~ msgid "Please_only_use_self_made_images_(not_from_the_internet)."

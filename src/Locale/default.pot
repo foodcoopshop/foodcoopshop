@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-07-28 21:33+0200\n"
+"POT-Creation-Date: 2019-07-30 22:13+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2168,7 +2168,7 @@ msgstr ""
 msgid "every_last_{0}_of_a_month"
 msgstr ""
 
-msgid "individual_date"
+msgid "bulk_order"
 msgstr ""
 
 msgid "Deleted_Member"

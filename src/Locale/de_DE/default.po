@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-07-28 21:33+0200\n"
-"PO-Revision-Date: 2019-07-28 21:34+0200\n"
+"POT-Creation-Date: 2019-07-30 22:13+0200\n"
+"PO-Revision-Date: 2019-07-30 22:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -2169,8 +2169,8 @@ msgstr "jeden {0} {1} im Monat"
 msgid "every_last_{0}_of_a_month"
 msgstr "jeden letzten {0} im Monat"
 
-msgid "individual_date"
-msgstr "individuelles Datum"
+msgid "bulk_order"
+msgstr "Sammelbestellung"
 
 msgid "Deleted_Member"
 msgstr "Gelöschtes Mitglied"
@@ -2357,6 +2357,9 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "individual_date"
+#~ msgstr "individuelles Datum"
 
 #~ msgid "Please_only_use_self_made_images_(not_from_the_internet)."
 #~ msgstr "Bitte nur selbstgemachte Bilder verwenden<br />(keine aus dem Internet)."
