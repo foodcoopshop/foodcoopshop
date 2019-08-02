@@ -54,7 +54,7 @@ class UnitsTableTest extends AppCakeTestCase
 
     public function testSaveProductWithInvalidNameWrongString()
     {
-        $this->name = 'l';
+        $this->name = 'p';
         $this->expectException('App\Lib\Error\Exception\InvalidParameterException');
         $this->expectExceptionMessage('Der Name ist nicht erlaubt.');
         $this->doSave();
