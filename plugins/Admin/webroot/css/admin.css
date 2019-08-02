@@ -918,6 +918,7 @@ body.payments .bottom-button-container {
 #product-price-edit-form select {
 	background-color: #fff;
 	width: 80px;
+	margin-left: 5px;
 }
 #order-detail-product-price-edit-form span.small {
     line-height: 16px;

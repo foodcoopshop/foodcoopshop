@@ -62,6 +62,7 @@ foodcoopshop.DialogProduct = {
         dialogHtml += '<select name="dialogPriceUnitName" id="dialogPriceUnitName">';
         dialogHtml += '<option value="kg" selected>kg</option>';
         dialogHtml += '<option value="g">g</option>';
+        dialogHtml += '<option value="l">l</option>';
         dialogHtml += '</select><br />';
         dialogHtml += '<input type="number" name="dialogPriceQuantityInUnits" id="dialogPriceQuantityInUnits" value="" /> ' + foodcoopshop.LocalizedJs.dialogProduct.approximateDeliveryWeightIn0PerUnit.replaceI18n(0, '<span class="unit-name-placeholder">kg</span>');
         dialogHtml += '</div>';
