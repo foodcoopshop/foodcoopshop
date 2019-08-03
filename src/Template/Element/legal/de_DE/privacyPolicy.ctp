@@ -125,14 +125,18 @@ Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
     Dauer: 6 Tage<br />
     Zweck: Speichert, ob der Benutzer die Log-In-Wiedererkennungsfunktion "Angemeldet bleiben" verwendet.
     </li>
-    <?php if (Configure::read('appDb.FCS_FOODCOOPS_MAP_ENABLED')) { ?>
-    	<li>
-        anonymous_owner|211165, csrftoken (umap.openstreetmap.fr)<br />
-        Dauer: 1 Jahr<br />
-        Zweck: Zum Anzeigen der Open-Street-Map auf der Startseite.
-      </li>
-    <?php } ?>
 </ul>
+
+<?php if (Configure::read('appDb.FCS_FOODCOOPS_MAP_ENABLED')) { ?>
+<p>Fremde Cookies:</p>
+<ul>
+	<li>
+    umap.openstreetmap.fr: anonymous_owner|211165, csrftoken<br />
+    Dauer: 1 Jahr<br />
+    Zweck: Zum Anzeigen der Open-Street-Map auf der Startseite
+  </li>
+</ul>
+<?php } ?>
 
 <h3>3.4 Verwaltung der Benutzer (Mitglieder) und der Bestellungen</h3>
 <p><b>3.4.1 Beschreibung und Umfang der Datenverarbeitung</b></p>
