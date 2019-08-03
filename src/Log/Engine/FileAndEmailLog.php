@@ -54,6 +54,7 @@ class FileAndEmailLog extends FileLog
             '{"email":{"unique"',
             '{"email":{"exists"',
             '{"delivery_rhythm_',
+            __('You_are_not_signed_in.')
         ];
         $ignoredExceptionsRegex = '/('.join('|', $ignoredPatterns).')/';
         if (preg_match($ignoredExceptionsRegex, $message)) {
