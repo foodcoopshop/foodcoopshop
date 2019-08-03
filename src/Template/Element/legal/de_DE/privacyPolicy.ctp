@@ -15,11 +15,12 @@
 use Cake\Core\Configure;
 
 ?>
+
 <h1>Datenschutzerklärung</h1>
 
-<h2>1. Allgemeines</h2>
+<h2>1. Verantwortlicher</h2>
 
-<p>1.1. Die Webseiten von <b>"<?php echo Configure::read('appDb.FCS_APP_NAME'); ?>"</b>, erreichbar unter der Domain <?php echo Configure::read('app.cakeServerName'); ?>,  werden von "
+<p>
     <?php
     if (Configure::read('appDb.FCS_PLATFORM_OWNER') != '') {
         echo str_replace('<br />', ', ', Configure::read('appDb.FCS_PLATFORM_OWNER'));
@@ -28,40 +29,123 @@ use Cake\Core\Configure;
         echo ', '.str_replace('<br />', ', ', $this->MyHtml->getAddressFromAddressConfiguration());
     }
     ?>
-" als Diensteanbieter (im Folgenden "Website") betrieben. Medieninhaber und Herausgeber der Website ist der Betreiber.</p>
+</p>
 
-<p>1.2. Der Schutz und die Sicherheit Ihrer persönlichen Daten ist uns ein wichtiges Anliegen. Ihre Daten werden im Rahmen der gesetzlichen Vorschriften geschützt. Sie als Nutzer stimmen der Datenverarbeitung im Sinne dieser Erklärung zu.</p>
+<h3>Kontaktdaten des Datenschutzbeauftragten</h3>
 
-<p>1.3. Auf der Website werden automatisiert keine direkt personenbezogenen Daten ermittelt. Das heißt: Nur durch Ihre aktive Eingabe von (beispielsweise) Namen, Adresse etc. geben Sie der Website diese Daten bekannt.</p> 
+<p>Es wurde aufgrund der fehlenden Notwendigkeit kein Datenschutzbeauftragter bestellt.<br />
+Betroffene können sich jederzeit direkt an den Verantwortlichen wenden.</p>
 
-<p>1.4. Die Website erstellt keine personenbezogenen Nutzerprofile.</p>
+<h3>Zuständige Aufsichtsbehörde</h3>
 
-<h2>2. Gespeicherte Daten:</h2>
+<p>Österreichische Datenschutzbehörde<br />
+Barichgasse 40-42<br />
+A-1030 Wien<br />
+Telefon: +43 1 52 152-0<br />
+E-Mail: <a href="mailto:dsb@dsb.gv.at">dsb@dsb.gv.at</a><br />
+Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
+</p>
 
-<p>2.1. Die Website speichert und verarbeitet folgende personenbezogene Daten, wenn Sie unsere Website besuchen:</p>
+<h2>2. Allgemeines zur Datenverarbeitung</h2>
 
-<p>2.1.1. Serverlogs: Die IP-Adresse (die letzten zwei Bytes sind anonymisiert) des anfragenden Computers, gemeinsam mit dem Datum, der Uhrzeit, der Anfrage, welche Datei angefragt wird (Name und URL), welche Datenmenge an Sie übertragen wird, eine Meldung, ob die Anfrage erfolgreich war, Erkennungsdaten des verwendeten Browsers und des verwendeten Betriebssystems, sowie die Website, von der der Zugriff erfolgte (sollte der Zugriff über einen Link erfolgen). Die Serverlogs werden gespeichert, um die Systemsicherheit prüfen zu können, die Website technisch administrieren, sowie das Angebot optimieren zu können. Diese Daten werden – sollte es einen Hackangriff gegeben haben – an die Strafverfolgungsbehörden weitergeben. Eine darüberhinausgehende Weitergabe an Dritte erfolgt nicht. Die Serverlogs werden für maximal sechs Monate gespeichert.</p> 
+<p>Wir legen großen Wert auf den Schutz Ihrer personenbezogenen Daten und haben entsprechend den gesetzlichen Vorgaben für die elektronische Kommunikation und den Datenschutz die vorgeschriebenen organisatorischen, vertraglichen und technischen Maßnahmen getroffen, um sicherzustellen, dass zufällige oder vorsätzliche Manipulationen, Verluste, Zerstörungen oder der Zugriff unberechtigter Personen verhindert werden.</p>
 
-<p>2.1.2. Cookies: Cookies sind kleine Textdateien, die die Website auf Ihrem Computer speichert, um diesen wiederzuerkennen. Die in den Cookies enthaltenen Informationen werden verwendet, um festzustellen, ob Sie eingeloggt sind. Bei den meisten Web-Browsern werden Cookies automatisch akzeptiert. Durch Änderung der Einstellungen Ihres Browsers können Sie dies vermeiden. Sie können auf Ihrem PC gespeicherte Cookies jederzeit durch Löschen der temporären Internetdateien entfernen.</p> 
+<p>Als Verantwortlicher im Sinne der EU-Datenschutz-Grundverordnung (kurz DSGVO) stellen wir sicher, dass Verarbeitungstätigkeiten Ihrer personenbezogen Daten nur für legitime Zwecke, auf Basis einer Rechtsgrundlage, im nötigen Umfang und für die erforderliche Dauer durchgeführt werden.</p>
 
-<p>Konkret werden folgende Cookies gespeichert über die jeweilige Session hinaus gespeichert:</p>
+<p>Wenn Sie der Meinung sind, dass die Verarbeitung Ihrer Daten gegen Datenschutzrecht verstößt oder Ihre Ansprüche sonst in einer Weise verletzt worden sind, können Sie Kontakt mit uns aufnehmen oder Beschwerde bei der Datenschutzbehörde einlegen.</p>
 
-<p>remember_me: 6 Tage gültig, wird ausschließlich für die Login-Funktion "angemeldet bleiben" vewendet.</p> 
+<h2>3. Datenverarbeitungen</h2>
 
-<p>2.2. Die Website speichert und verwendet darüber hinaus automatisiert keine Daten.</p>
+<h3>3.1 Bereitstellung der Webseite und Erstellung von Logfiles</h3>
+<p><b>3.1.1 Beschreibung und Umfang der Datenverarbeitung</b></p>
+<p>Bei jedem Aufruf unserer Internetseite erfasst unser System automatisiert Daten und Informationen des aufrufenden Gerätes.</p>
+<p>Folgende Daten werden hierbei erhoben:</p>
+<ul>
+  <li>Informationen über den Browsertyp und die verwendete Version</li>
+  <li>Das Betriebssystem des aufrufenden Gerätes</li>
+  <li>Die IP-Adresse des aufrufenden Gerätes</li>
+  <li>Datum und Uhrzeit des Zugriffs</li>
+  <li>Webseiten, von denen das System des Nutzers auf unsere Internetseite gelangt </li>
+  <li>Adresse der abgerufenen Seite/Datei </li>
+  <li>übertragene Datenmenge</li>
+  <li>Webseiten, die vom System des Nutzers über unsere Webseite aufgerufen werden</li>
+</ul>
+<p>Die Daten werden ebenfalls in den Logfiles unseres Systems gespeichert. Eine Speicherung dieser Daten zusammen mit anderen personenbezogenen Daten des Nutzers findet nicht statt.</p>
+<p><b>3.1.2 Rechtsgrundlage für die Datenverarbeitung</b></p>
+<p>Rechtsgrundlage für die vorübergehende Speicherung der Daten und der Logfiles ist Art. 6 Abs. 1 lit. f DSGVO.</p>
+<p><b>3.1.3 Zweck der Datenverarbeitung</b></p>
+<p>Die vorübergehende Speicherung der IP-Adresse durch das System ist notwendig, um eine Auslieferung der Webseite an den Rechner des Nutzers zu ermöglichen. Hierfür muss die IP-Adresse des Nutzers für die Dauer der Sitzung gespeichert bleiben.</p>
+<p>Die Speicherung in Logfiles erfolgt, um die Funktionsfähigkeit der Webseite sicherzustellen. Zudem dienen uns die Daten zur Optimierung der Webseite und zur Sicherstellung der Sicherheit unserer informationstechnischen Systeme. Eine personenbezogene Auswertung der Daten zu Marketingzwecken findet in diesem Zusammenhang nicht statt.</p>
+<p>In diesen Zwecken liegt auch unser berechtigtes Interesse an der Datenverarbeitung nach Art. 6 Abs. 1 lit. f DSGVO.</p>
+<p><b>3.1.4 Dauer der Speicherung</b></p>
+<p>Die Daten werden gelöscht, sobald sie für die Erreichung des Zweckes ihrer Erhebung nicht mehr erforderlich sind. Die gespeicherten Logfiles werden nach spätestens 6 Monaten gelöscht. In begründeten Einzelfällen können Auszüge aus Logfiles länger gespeichert werden, soweit und solange dies zur Abwehr von Angriffen oder zur Durchsetzung von Rechtsansprüchen erforderlich ist.</p>
+<p><b>3.1.5 Widerspruchs- und Beseitigungsmöglichkeit</b></p>
+<p>Die Verarbeitung der Daten zur Bereitstellung der Webseite und die Speicherung der Daten in Logfiles ist für den Betrieb der Internetseite zwingend erforderlich. Es besteht folglich seitens des Nutzers keine Widerspruchsmöglichkeit.</p>
 
-<h2>3. Über die Website eingegebenen Daten</h2>
+<h3>3.2 E-Mail-Kontakt</h3>
+<p><b>3.2.1 Beschreibung und Umfang der Datenverarbeitung</b></p>
+<p>Es ist eine Kontaktaufnahme über die auf der Webseite bereitgestellten E-Mail-Adressen möglich. In diesem Fall werden die mit der E-Mail übermittelten personenbezogenen Daten des Nutzers gespeichert.</p>
+<p>Es erfolgt in diesem Zusammenhang keine Weitergabe der Daten an Dritte. Die Daten werden ausschließlich für die Verarbeitung der Konversation verwendet.</p>
+<p><b>3.2.2 Rechtsgrundlage für die Datenverarbeitung</b></p>
+<p>Rechtsgrundlage für die Verarbeitung der Daten, die im Zuge einer Übersendung einer E-Mail übermittelt werden, ist Art. 6 Abs. 1 lit. f DSGVO. Zielt der E-Mail-Kontakt auf den Abschluss eines Vertrages bzw. einer Mitgliedschaft ab, so ist eine zusätzliche Rechtsgrundlage für die Verarbeitung Art. 6 Abs. 1 lit. b DSGVO.</p>
+<p><b>3.2.3 Zweck der Datenverarbeitung</b></p>
+<p>Die Verarbeitung der personenbezogenen Daten aus der übermittelten E-Mail dient uns allein zur Bearbeitung der Kontaktaufnahme.</p>
+<p>In diesem Zweck liegt auch unser berechtigtes Interesse an der Datenverarbeitung nach Art. 6 Abs. 1 lit. f DSGVO.</p>
+<p><b>3.2.4 Dauer der Speicherung</b></p>
+<p>Die Daten werden gelöscht, sobald sie für die Erreichung des Zweckes ihrer Erhebung nicht mehr erforderlich sind. Für die personenbezogenen Daten, die per E-Mail übersandt wurden, ist dies dann der Fall, wenn die jeweilige Konversation mit dem Nutzer beendet ist. Beendet ist die Konversation dann, wenn sich aus den Umständen entnehmen lässt, dass der betroffene Sachverhalt abschließend geklärt ist.</p>
+<p><b>3.2.5 Widerspruchs- und Beseitigungsmöglichkeit</b></p>
+<p>Nimmt der Nutzer per E-Mail Kontakt mit uns auf, so kann er der Speicherung seiner personenbezogenen Daten jederzeit widersprechen. In einem solchen Fall kann die Konversation nicht fortgeführt werden.</p>
+<p>Alle personenbezogenen Daten, die im Zuge der Kontaktaufnahme gespeichert wurden, werden in diesem Fall gelöscht.</p>
 
-<p>Sollten Sie im Rahmen der Website Daten eingeben, verarbeiten wir Ihre Daten wie folgt:</p>
+<h3>3.3 Verwendung von Cookies</h3>
+<p><b>3.3.1 Beschreibung und Umfang der Datenverarbeitung</b></p>
+<p>Bei Cookies handelt es sich um Textdateien, die im Internetbrowser bzw. vom Internetbrowser auf dem Computersystem des Nutzers gespeichert werden. Ruft ein Nutzer eine Webseite auf, so kann ein Cookie auf dem Betriebssystem des Nutzers gespeichert werden. Dieses Cookie enthält eine charakteristische Zeichenfolge, die eine eindeutige Identifizierung des Browsers beim erneuten Aufrufen der Webseite ermöglicht.</p>
+<p>Wir setzen eigene Cookies ein, um festzustellen, ob Sie eingeloggt sind (nur bei Mitgliedern).</p>
+<p>Die auf diese Weise erhobenen Daten der Nutzer werden durch technische Vorkehrungen pseudonymisiert. Daher ist eine Zuordnung der Daten zum aufrufenden Nutzer nicht mehr möglich. Die Daten werden nicht gemeinsam mit sonstigen personenbezogenen Daten der Nutzer gespeichert.</p>
+<p>Beim Login in den internen Bereich unserer Webseite wird vom Nutzer durch das Aktivieren der Checkbox „Angemeldet bleiben und Cookie akzeptieren“ eine Einwilligung zur Verwendung von Cookies zum Zweck der Log-In-Wiedererkennung eingeholt. In diesem Zusammenhang erfolgt auch ein Hinweis auf diese Datenschutzerklärung.</p>
+<p><b>3.3.2 Rechtsgrundlage für die Datenverarbeitung</b></p>
+<p>Die Rechtsgrundlage für die Verarbeitung personenbezogener Daten unter Verwendung von Cookies ist Art. 6 Abs. 1 lit. a DSGVO.</p>
+<p><b>3.3.3 Zweck der Datenverarbeitung</b></p>
+<p>Der Zweck der Verwendung von Cookies ist, die Nutzung von Webseiten für die Nutzer zu vereinfachen und sicherer zu gestalten. Einige Funktionen unserer Internetseite können ohne den Einsatz von Cookies nicht angeboten werden. Für diese ist es erforderlich, dass der Browser auch nach einem Seitenwechsel wiedererkannt wird.</p>
+<p>Für folgende Anwendungen benötigen wir Cookies:</p>
+<p>(1) Log-In-Wiedererkennung für den internen Bereich der Webseite</p>
+<p>Die durch Cookies erhobenen Nutzerdaten werden nicht zur Erstellung von Nutzerprofilen verwendet.</p>
+<p><b>3.3.4 Dauer der Speicherung, Widerspruchs- und Beseitigungsmöglichkeit</b></p>
+<p>Cookies werden auf dem Rechner des Nutzers gespeichert und von diesem an unsere Seite übermittelt. Daher haben Sie als Nutzer auch die volle Kontrolle über die Verwendung von Cookies. Durch eine Änderung der Einstellungen in Ihrem Internetbrowser können Sie die Übertragung von Cookies deaktivieren oder einschränken. Bereits gespeicherte Cookies können jederzeit gelöscht werden. Dies kann auch automatisiert erfolgen. Werden Cookies für unsere Webseite deaktiviert, können möglicherweise nicht mehr alle Funktionen der Webseite vollumfänglich genutzt werden.</p>
+<p><b>3.3.5 Liste der Cookies</b></p>
+<p>Eigene Cookies:</p>
+<ul>
+  <li>
+remember_me<br />
+Dauer: 6 Tage<br />
+Zweck: Speichert, ob der Benutzer die Log-In-Wiedererkennungsfunktion "Angemeldet bleiben" verwendet.
+  </li>
+</ul>
 
-<p>3.1. Daten über die Bestellungen: Jene Daten, welche Sie im Rahmen Ihrer Anmeldung sowie im Rahmen der Bestellungen bekanntgegeben haben, werden ausschließlich für die Abwicklung der Bestellung verwendet. Diese Daten werden für die Dauer von sieben Jahren gespeichert.</p>
-
-<h2>4. Widerspruchsrecht</h2>
-
-<p>4.1. Jeder Nutzer der Website hat das Recht, die Speicherung seiner personenbezogenen Daten zu verweigern, der Nutzer und seine Daten werden in diesem Fall gelöscht, sofern keine gesetzliche Verpflichtung zur Speicherung der Daten besteht.</p>
-
-<p>4.2. Mitglieder können ihr Profil eigenständig löschen. Der Link dazu befindet sich unter "Meine Daten".</p>
-
-<h2>5. Datenverwendung</h2>
-
-<p>5.1. Die Website verpflichtet sich zur Absicherung der Daten gegen unberechtigten Zugriff. Die Website speichert und nutzt die vom Nutzer eingegeben und übermittelten Daten ausschließlich im hier genannten Umfang. Mit Löschung des Nutzers werden sämtliche personenbezogenen Daten des Nutzers gelöscht.</p>
+<h3>3.4 Verwaltung der Benutzer (Mitglieder) und der Bestellungen</h3>
+<p><b>3.4.1 Beschreibung und Umfang der Datenverarbeitung</b></p>
+<p>Zur Erfüllung des Vereinszwecks (Abwicklung von Sammelbestellungen) ist es notwendig, die Vereinsmitglieder als Benutzer in der Software anzulegen, damit diese dann ihre jeweiligen Bestellungen zusammenstellen und absenden können.</p>
+<p>Folgende Daten werden hierbei verarbeitet:</p>
+<ul>
+  <li>Persönliche Daten (Vorname, Nachname)</li>
+  <li>Adressdaten (PLZ, Ort, Straße, Hausnummer)</li>
+  <li>Kontaktdaten (Telefonnummer, E-Mail-Adresse)</li>
+  <li>Mitgliedsdaten (Mitgliedsnummer)</li>
+  <li>Bestelldaten (Zeitpunkt der Bestellung, bestellte Artikel inkl. Menge, gewählte Hersteller, etc.)</li>
+  <li>Finanzdaten (Rechnungsdaten, Guthaben und Überweisungen zu den Bestellungen, etc.)</li>
+  <li>Bildaufzeichnungsdaten (optionales Profilfoto)</li>
+  <li>Anwender-/Benutzerdaten (Benutzername, Hashwert des Passworts [nicht für andere auslesbar!], Benutzerrollen, Benutzerrechte, etc.)</li>
+</ul>
+<p><b>3.4.2 Rechtsgrundlage für die Datenverarbeitung</b></p>
+<p>Rechtsgrundlage für die Verarbeitung der Daten im Zuge der Verwaltung der Bestellungen ist Art. 6 Abs. 1 lit. b DSGVO.</p>
+<p><b>3.4.3 Zweck der Datenverarbeitung</b></p>
+<p>Die Verarbeitung der personenbezogenen Daten dient uns zur Administration der Benutzer (Vereinsmitglieder) und der Hersteller, zur Erfüllung des Vereinszwecks (insbesondere die Abwicklung von Sammelbestellungen) und zur dafür notwendigen Kommunikation.</p>
+<p><b>3.4.4 Dauer der Speicherung</b></p>
+<p>Die personenbezogene Verarbeitung erfolgt für die Dauer der Mitgliedschaft plus 40 Monate nach Vertragsbeendigung (Beendigung der Mitgliedschaft).</p>
+<p>Nach Ablauf dieser Frist wird jedenfalls der Personenbezug gelöscht.</p>
+<p>Danach erfolgt eine personenbezogene Datenverarbeitung von Finanzdaten noch bis zum Ende der gesetzlichen Aufbewahrungspflicht (derzeit grundsätzlich 7 Jahre).</p>
+<p><b>3.4.5 Widerspruchs- und Beseitigungsmöglichkeit</b></p>
+<p>Die Verarbeitung der Daten zur Verwaltung der Mitglieder und der Bestellungen ist für die Vertragserfüllung (Vereinsmitgliedschaft) zwingend erforderlich. Es besteht folglich seitens des Nutzers keine Widerspruchsmöglichkeit außer der Beendigung der Vereinsmitgliedschaft.</p>
+<p>Mitglieder können ihr Benutzerprofil der eingesetzten Software eigenständig löschen. Der Link dazu befindet sich nach dem Login unter dem Menüpunkt "Meine Daten".</p>
+<p>Daten, die für eine etwaige weiteregehende Vertragserfüllung notwendig sind, werden dabei jedoch nicht gelöscht.</p>
+<p>Daten, für welche eine gesetzliche Aufbewahrungsfrist gilt, werden dabei für die Dauer dieser Frist jedoch nicht gelöscht.</p>
