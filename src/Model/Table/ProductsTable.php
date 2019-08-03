@@ -164,6 +164,7 @@ class ProductsTable extends AppTable
         
         $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($currentDay, $sendOrderListsWeekday);
         
+        // assure that $product->is_stock_product also contains check for $product->manufacturer->stock_management_enabled
         if ($product->is_stock_product) {
             return $pickupDay;
         }
@@ -813,7 +814,11 @@ class ProductsTable extends AppTable
 
             $product->gross_price = $this->getGrossPrice($product->id_product, $product->price);
             
-            $product->delivery_rhythm_string = Configure::read('app.htmlHelper')->getDeliveryRhythmString($product->is_stock_product, $product->delivery_rhythm_type, $product->delivery_rhythm_count);
+            $product->delivery_rhythm_string = Configure::read('app.htmlHelper')->getDeliveryRhythmString(
+                $product->is_stock_product && $product->manufacturer->stock_management_enabled,
+                $product->delivery_rhythm_type,
+                $product->delivery_rhythm_count
+            );
             $product->last_order_weekday = Configure::read('app.timeHelper')->getWeekdayName(
                 Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, $product->delivery_rhythm_send_order_list_weekday)
             );
@@ -963,6 +968,14 @@ class ProductsTable extends AppTable
                         ],
                         'image' => null
                     ];
+                    
+                    if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+                        $preparedProduct['bar_code'] = $product->bar_code . Configure::read('app.numberHelper')->addLeadingZerosToNumber($attribute->id_product_attribute, 4);
+                        $preparedProduct['image'] = $product->image;
+                        if (!empty($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                            $preparedProduct['nameForBarcodePdf'] = $product->name . ': ' . $productName;
+                        }
+                    }
 
                     $preparedProducts[] = $preparedProduct;
                 }

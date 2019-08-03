@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-06-28 10:58+0200\n"
-"PO-Revision-Date: 2019-06-28 10:58+0200\n"
+"POT-Creation-Date: 2019-07-30 22:13+0200\n"
+"PO-Revision-Date: 2019-07-30 22:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -825,6 +825,9 @@ msgstr "im Uhrzeigersinn drehen?"
 msgid "Change_general_terms_and_conditions"
 msgstr "AGB ändern"
 
+msgid "Username_or_password_is_wrong._Please_check_that_there_are_no_special_characters_in_your_password."
+msgstr "E-Mail oder Passwort falsch. Bitte überprüfe, dass im Passwort keine Sonderzeichen (z.B. äöüß) vorkommen und ändere es gegebenfalls bei deiner Remote-Foodcoop."
+
 msgid "Id"
 msgstr "Id"
 
@@ -1004,6 +1007,9 @@ msgstr "Preis nach Gewicht"
 
 msgid "Total_sum"
 msgstr "Gesamtsumme"
+
+msgid "Generated_on_{0}"
+msgstr "Generiert am {0}"
 
 msgid "Page_{0}_of_{1}"
 msgstr "Seite {0} von {1}"
@@ -1941,6 +1947,15 @@ msgstr "Mitternacht"
 msgid "Instant_order"
 msgstr "Sofort-Bestellung"
 
+msgid "in_{0}_weeks"
+msgstr "in {0} Wochen"
+
+msgid "in_{0}_weeks_and_{1}_day"
+msgstr "in {0} Wochen und {1} Tag"
+
+msgid "in_{0}_weeks_and_{1}_days"
+msgstr "in {0} Wochen und {1} Tagen"
+
 msgid "from_which_{0}_%"
 msgstr "davon {0} %"
 
@@ -2095,7 +2110,7 @@ msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
 msgid "Information_about_right_of_withdrawal"
-msgstr "Informationen-ueber-Ruecktrittsrecht"
+msgstr "Informationen über Rücktrittsrecht"
 
 msgid "and_withdrawal_form"
 msgstr "und Rücktrittsformular"
@@ -2154,8 +2169,8 @@ msgstr "jeden {0} {1} im Monat"
 msgid "every_last_{0}_of_a_month"
 msgstr "jeden letzten {0} im Monat"
 
-msgid "individual_date"
-msgstr "individuelles Datum"
+msgid "bulk_order"
+msgstr "Sammelbestellung"
 
 msgid "Deleted_Member"
 msgstr "Gelöschtes Mitglied"
@@ -2342,6 +2357,9 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "individual_date"
+#~ msgstr "individuelles Datum"
 
 #~ msgid "Please_only_use_self_made_images_(not_from_the_internet)."
 #~ msgstr "Bitte nur selbstgemachte Bilder verwenden<br />(keine aus dem Internet)."

@@ -21,6 +21,14 @@ use Cake\View\Helper\NumberHelper;
  */
 class MyNumberHelper extends NumberHelper
 {
+    /**
+     * turns eg 245 into 00245
+     * @return string
+     */
+    public function addLeadingZerosToNumber($number, $digits)
+    {
+        return str_pad($number, $digits, '0', STR_PAD_LEFT);
+    }
 
     /**
      * @param string $string

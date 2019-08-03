@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-06-28 10:58+0200\n"
-"PO-Revision-Date: 2019-06-28 10:58+0200\n"
+"POT-Creation-Date: 2019-07-30 22:13+0200\n"
+"PO-Revision-Date: 2019-07-30 22:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -825,6 +825,9 @@ msgstr "rotate clockwise?"
 msgid "Change_general_terms_and_conditions"
 msgstr "Change general terms and conditions"
 
+msgid "Username_or_password_is_wrong._Please_check_that_there_are_no_special_characters_in_your_password."
+msgstr "Email or password wrong. Please check that there are no special characters in your password and change it eventually at your remote food-coop."
+
 msgid "Id"
 msgstr "Id"
 
@@ -1004,6 +1007,9 @@ msgstr "Price per weight"
 
 msgid "Total_sum"
 msgstr "Total sum"
+
+msgid "Generated_on_{0}"
+msgstr "Generated on {0}"
 
 msgid "Page_{0}_of_{1}"
 msgstr "Page {0} of {1}"
@@ -1941,6 +1947,15 @@ msgstr "midnight"
 msgid "Instant_order"
 msgstr "Instant order"
 
+msgid "in_{0}_weeks"
+msgstr "in {0} weeks"
+
+msgid "in_{0}_weeks_and_{1}_day"
+msgstr "in {0} weeks and {1} days"
+
+msgid "in_{0}_weeks_and_{1}_days"
+msgstr "in {0} weeks and {1} day"
+
 msgid "from_which_{0}_%"
 msgstr "from which {0} %"
 
@@ -2154,8 +2169,8 @@ msgstr "every {0} {1} of a month"
 msgid "every_last_{0}_of_a_month"
 msgstr "every last {0} of a month"
 
-msgid "individual_date"
-msgstr "individual date"
+msgid "bulk_order"
+msgstr "bulk order"
 
 msgid "Deleted_Member"
 msgstr "Deleted member"
@@ -2342,6 +2357,9 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "individual_date"
+#~ msgstr "individual date"
 
 #~ msgid "Please_only_use_self_made_images_(not_from_the_internet)."
 #~ msgstr "Please only use self-made images (no images from the internet)."

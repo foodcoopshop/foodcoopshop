@@ -30,11 +30,11 @@
 * adapting orders in many ways
 * stock management... and much more!
 
-The software can be used with any modern web browser, tablet or smartphone. It's available in **German** and **English**.
+The software can be used with any modern web browser, tablet or smartphone. It's available in **German**, **English** and **Polish**.
 
 ## Links
 * Official homepage: [https://www.foodcoopshop.com](https://www.foodcoopshop.com/)
-* Demo version in [German](https://demo-de.foodcoopshop.com) or [English](https://demo-en.foodcoopshop.com)
+* Demo version in [German](https://demo-de.foodcoopshop.com), [English](https://demo-en.foodcoopshop.com) and [Polish](https://demo-pl.foodcoopshop.com)
 * Software documentation: [https://foodcoopshop.github.io](https://foodcoopshop.github.io)
 
 ## Who uses FoodCoopShop?
@@ -53,11 +53,11 @@ The software can be used with any modern web browser, tablet or smartphone. It's
 * Basic understanding of Apache Webserver, MySQL Database and Linux Server administration
 * PHP needs to be able to call mysqldump with exec() for database backups
 
-## Installation
-* This is the developers area. If you want to use the software "as is", please follow the [installation details](https://foodcoopshop.github.io/en/installation-details) in the software documentation. If you have questions please [create a new issue](https://github.com/foodcoopshop/foodcoopshop/issues/new) on Github.
-* Basically follow the [installation details](https://foodcoopshop.github.io/en/installation-details) for setup. But do **clone the repository**!
-* Before doing any of the configuration changes, follow the steps below
-* If You work on a local machine, do not change the owner of the files to www-data. Instead set permissions as shown below
+## Setting up dev environment / Installation
+* Follow the [installation guide](https://foodcoopshop.github.io/en/installation-guide) for setup.
+* If you have questions please [create a new issue](https://github.com/foodcoopshop/foodcoopshop/issues/new) on Github.
+* Before doing any of the configuration changes, follow the steps below.
+* If you work on a local machine, do not change the owner of the files to www-data. Instead set permissions as shown below
 
 ## Install required packages
 Install the composer vendors

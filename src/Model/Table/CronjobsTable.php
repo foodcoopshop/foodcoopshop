@@ -112,7 +112,10 @@ class CronjobsTable extends AppTable
             $success = $shell->main();
             $success = $success !== true ? 0 : 1;
         } catch (Exception $e) {
-            $success = 0;
+            $success = 1;
+            if (get_class($e) != 'Cake\Network\Exception\SocketException') {
+                $success = 0;
+            }
         }
         
         $entity = $this->CronjobLogs->newEntity(

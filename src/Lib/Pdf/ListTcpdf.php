@@ -15,6 +15,7 @@
 namespace App\Lib\Pdf;
 
 use Cake\Core\Configure;
+use Cake\I18n\FrozenTime;
 
 class ListTcpdf extends AppTcpdf
 {
@@ -377,11 +378,20 @@ class ListTcpdf extends AppTcpdf
      */
     public function footer()
     {
-        $this->SetY(- 15);
+        $this->SetY(-19);
         $this->drawLine();
         $this->SetFontSize(10);
-        $this->Cell(0, 10, $this->infoTextForFooter, 0, false, 'L', 0, '', 0, false, 'T', 'M');
-        $textForFooterRight = __('Page_{0}_of_{1}', [$this->getAliasNumPage(), $this->getAliasNbPages()]);
+        $this->Cell(0, 10, $this->infoTextForFooter , 0, false, 'L', 0, '', 0, false, 'T', 'M');
+        $this->Ln(4);
+        $now = new FrozenTime();
+        $textForFooterRight = 
+        __('Generated_on_{0}', [
+            $now->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'))
+        ])
+        . ', ' .
+        __('Page_{0}_of_{1}', [
+            $this->getAliasNumPage(), $this->getAliasNbPages()
+        ]);
         $this->Cell(0, 10, $textForFooterRight, 0, false, 'R', 0, '', 0, false, 'T', 'M');
         $this->SetFontSize(12);
     }

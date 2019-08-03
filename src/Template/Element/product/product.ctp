@@ -21,11 +21,11 @@ $isStockProductOrderPossible = $this->Html->isStockProductOrderPossible(
     $appAuth->isInstantOrderMode(),
     $appAuth->isSelfServiceModeByUrl(),
     Configure::read('appDb.FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM'),
-    $product['stock_management_enabled'],
-    $product['is_stock_product']
+    (boolean) $product['stock_management_enabled'],
+    (boolean) $product['is_stock_product']
 );
 
-echo '<div class="product-wrapper">';
+echo '<div class="product-wrapper" id="product-wrapper-' . $product['id_product'] . '">';
 
     echo '<div class="first-column">';
         $srcLargeImage = $this->Html->getProductImageSrc($product['id_image'], 'thickbox');
@@ -58,9 +58,6 @@ if ($product['is_new']) {
             echo $product['name'];
         }
         echo '</h4>';
-        if ($appAuth->isSelfServiceModeByUrl()) {
-            echo '<br /><span style="float:left;width:100%;">' . $product['ProductIdentifier'] . '</span>';
-        }
     echo '</div>';
     echo '<div class="sc"></div>';
 
@@ -81,11 +78,11 @@ if ($product['description'] != '') {
     echo '<div class="toggle-content description">'.$product['description'].'</div>';
 }
 
-    if ($product['delivery_rhythm_type'] == 'individual' && !$this->Time->isDatabaseDateNotSet($product['delivery_rhythm_order_possible_until'])) {
+    if (!($product['stock_management_enabled'] && $product['is_stock_product']) && $product['delivery_rhythm_type'] == 'individual' && !$this->Time->isDatabaseDateNotSet($product['delivery_rhythm_order_possible_until'])) {
         echo '<br />' . __('Order_possible_until') . ': ' . $this->Time->getDateFormattedWithWeekday(strtotime($product['delivery_rhythm_order_possible_until']));
     }
     
-    if (!$appAuth->isInstantOrderMode() && $product['delivery_rhythm_type'] != 'individual' && $this->Time->getSendOrderListsWeekday() != $product['delivery_rhythm_send_order_list_weekday']) {
+    if (!$appAuth->isInstantOrderMode() && !($product['stock_management_enabled'] && $product['is_stock_product']) && $product['delivery_rhythm_type'] != 'individual' && $this->Time->getSendOrderListsWeekday() != $product['delivery_rhythm_send_order_list_weekday']) {
         echo '<span class="last-order-day">';
             echo __('Last_order_day') . ': <b>' . $this->Time->getWeekdayName(
                 $this->Time->getNthWeekdayBeforeWeekday(1, $product['delivery_rhythm_send_order_list_weekday'])
@@ -100,12 +97,32 @@ if ($product['description'] != '') {
         if ($appAuth->isInstantOrderMode()) {
             $pickupDayDetailText = __('Instant_order');
         } else {
-            $pickupDayDetailText = $this->Html->getDeliveryRhythmString($product['is_stock_product'], $product['delivery_rhythm_type'], $product['delivery_rhythm_count']);
+            $pickupDayDetailText = $this->Html->getDeliveryRhythmString(
+                $product['is_stock_product'] && $product['stock_management_enabled'],
+                $product['delivery_rhythm_type'],
+                $product['delivery_rhythm_count']
+            );
         }
         echo $this->Time->getDateFormattedWithWeekday(strtotime($product['next_delivery_day']));
     echo '</span>';
     if (!$appAuth->isSelfServiceModeByUrl()) {
         echo ' (' . $pickupDayDetailText . ')';
+    }
+    if (!$appAuth->isSelfServiceModeByUrl() && !$appAuth->isInstantOrderMode()) {
+        if (strtotime($product['next_delivery_day']) != $this->Time->getDeliveryDayByCurrentDay()) {
+            $weeksAsFloat = (strtotime($product['next_delivery_day']) - strtotime(date($this->MyTime->getI18Format('DateShortAlt')))) / 24/60/60;
+            $fullWeeks = (int) ($weeksAsFloat / 7);
+            $days = $weeksAsFloat % 7;
+            if ($days == 0) {
+                echo ' - <b>'. __('in_{0}_weeks', [$fullWeeks]) . '</b>';
+            } else {
+                if ($days == 1) {
+                    echo ' - <b>'. __('in_{0}_weeks_and_{1}_day', [$fullWeeks, $days]) . '</b>';
+                } else {
+                    echo ' - <b>'. __('in_{0}_weeks_and_{1}_days', [$fullWeeks, $days]) . '</b>';
+                }
+            }
+        }
     }
     
     echo '<br />'.__('Manufacturer').': ';

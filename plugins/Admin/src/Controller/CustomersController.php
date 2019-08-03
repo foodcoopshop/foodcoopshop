@@ -1,7 +1,6 @@
 <?php
 namespace Admin\Controller;
 
-use App\Auth\BarCodeAuthenticate;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Mailer\AppEmail;
 use Cake\Auth\DefaultPasswordHasher;

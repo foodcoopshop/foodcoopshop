@@ -40,7 +40,7 @@ class UnitsTable extends AppTable
 
     public function isValidName($value, array $context)
     {
-        return in_array($value, ['kg', 'g'], true);
+        return in_array($value, ['kg', 'g', 'l'], true);
     }
 
     /**

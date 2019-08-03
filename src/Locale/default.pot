@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-06-28 10:58+0200\n"
+"POT-Creation-Date: 2019-07-30 22:13+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -824,6 +824,9 @@ msgstr ""
 msgid "Change_general_terms_and_conditions"
 msgstr ""
 
+msgid "Username_or_password_is_wrong._Please_check_that_there_are_no_special_characters_in_your_password."
+msgstr ""
+
 msgid "Id"
 msgstr ""
 
@@ -1002,6 +1005,9 @@ msgid "Price_per_weight"
 msgstr ""
 
 msgid "Total_sum"
+msgstr ""
+
+msgid "Generated_on_{0}"
 msgstr ""
 
 msgid "Page_{0}_of_{1}"
@@ -1940,6 +1946,15 @@ msgstr ""
 msgid "Instant_order"
 msgstr ""
 
+msgid "in_{0}_weeks"
+msgstr ""
+
+msgid "in_{0}_weeks_and_{1}_day"
+msgstr ""
+
+msgid "in_{0}_weeks_and_{1}_days"
+msgstr ""
+
 msgid "from_which_{0}_%"
 msgstr ""
 
@@ -2153,7 +2168,7 @@ msgstr ""
 msgid "every_last_{0}_of_a_month"
 msgstr ""
 
-msgid "individual_date"
+msgid "bulk_order"
 msgstr ""
 
 msgid "Deleted_Member"

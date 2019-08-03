@@ -32,7 +32,6 @@ body.self_services #content,
 	left: 612px;
 	top: 0;
 	overflow-y: auto;
-	padding-bottom: 80px;
 }
 .self-service .btn-order {
 	margin-left: 5%;
@@ -192,6 +191,7 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
 }
 .self-service #SelfServiceForm {
     margin-top: 10px;
+    padding-bottom: 80px;
 }
 .self-service .product.error,
 .self-service .error-message {

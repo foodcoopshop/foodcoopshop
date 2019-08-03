@@ -287,6 +287,9 @@ class LocalizedController extends Controller
                 'ChangeGeneralTermsAndConditions' => __('Change_general_terms_and_conditions')
             ],
             
+            'syncBase' => [
+                'UsernameOrPasswordWrongPleaseCheckThatThereAreNoSpecialCharactersInYourPassword' => __('Username_or_password_is_wrong._Please_check_that_there_are_no_special_characters_in_your_password.')
+            ],
             'syncProducts' => [
                 'Id' => __('Id'),
                 'Product' => __('Product'),

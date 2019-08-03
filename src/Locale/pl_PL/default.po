@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-06-28 10:58+0200\n"
-"PO-Revision-Date: 2019-05-29 10:51+0200\n"
+"POT-Creation-Date: 2019-07-30 22:13+0200\n"
+"PO-Revision-Date: 2019-07-22 16:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: pl_PL\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 2.2.2\n"
+"X-Generator: Poedit 2.2.3\n"
 "X-Poedit-Bookmarks: 725,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 # You have been signed out.
@@ -1100,6 +1100,9 @@ msgstr "obrócić zgodnie z ruchem wskazówek zegara?"
 msgid "Change_general_terms_and_conditions"
 msgstr "Zmień regulamin"
 
+msgid "Username_or_password_is_wrong._Please_check_that_there_are_no_special_characters_in_your_password."
+msgstr ""
+
 # Id
 msgid "Id"
 msgstr "Id"
@@ -1343,6 +1346,11 @@ msgstr "Cena za wagę"
 # Total sum
 msgid "Total_sum"
 msgstr "Suma łącznie"
+
+# Generated invoices
+#, fuzzy
+msgid "Generated_on_{0}"
+msgstr "Wygenerowane faktury"
 
 # Page {0} of {1}
 msgid "Page_{0}_of_{1}"
@@ -2598,6 +2606,17 @@ msgstr "północ"
 msgid "Instant_order"
 msgstr "Zamówienie błyskawiczne"
 
+# every {0} week
+#, fuzzy
+msgid "in_{0}_weeks"
+msgstr "co {0} tydzień"
+
+msgid "in_{0}_weeks_and_{1}_day"
+msgstr ""
+
+msgid "in_{0}_weeks_and_{1}_days"
+msgstr ""
+
 # from which {0} %
 msgid "from_which_{0}_%"
 msgstr "z czego {0} %"
@@ -2888,9 +2907,8 @@ msgstr "każdego {0} {1} miesiąca"
 msgid "every_last_{0}_of_a_month"
 msgstr "w każdy(ą) ostatni(ą) {0} miesiąca"
 
-# individual date
-msgid "individual_date"
-msgstr "indywidualna data"
+msgid "bulk_order"
+msgstr ""
 
 # Deleted member
 msgid "Deleted_Member"
@@ -3139,6 +3157,10 @@ msgstr "information-about-right-of-withdrawal"
 # product
 msgid "route_product"
 msgstr "product"
+
+# individual date
+#~ msgid "individual_date"
+#~ msgstr "indywidualna data"
 
 # Please only use self-made images (no images from the internet).
 #~ msgid "Please_only_use_self_made_images_(not_from_the_internet)."
