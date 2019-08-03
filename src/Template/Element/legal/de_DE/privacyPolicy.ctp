@@ -12,6 +12,7 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 
 ?>
@@ -27,6 +28,10 @@ use Cake\Core\Configure;
     } else {
         echo Configure::read('appDb.FCS_APP_NAME');
         echo '<br />' . $this->MyHtml->getAddressFromAddressConfiguration();
+        echo '<br />' . __('Email').': ' . StringComponent::hideEmail($this->Html->getEmailFromAddressConfiguration());
+        if (Configure::read('appDb.FCS_APP_ADDITIONAL_DATA') != '') {
+            echo '<br />' . Configure::read('appDb.FCS_APP_ADDITIONAL_DATA');
+        }
     }
     ?>
 </p>

@@ -99,7 +99,7 @@ INSERT INTO `fcs_configuration` VALUES
 (556,1,'FCS_APP_NAME','Name of the food-coop','','text',5,'en_US','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (557,1,'FCS_APP_ADDRESS','Adress of the food-coop<br /><div class=\"small\">Used in footer of homepage and e-mails, privacy policy and terms of use.</div>','','textarea',6,'en_US','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (558,1,'FCS_APP_EMAIL','E-mail adress of the food-coop<br /><div class=\"small\"></div>','','text',7,'en_US','2017-01-12 00:00:00','2017-01-12 00:00:00'),
-(559,1,'FCS_PLATFORM_OWNER','Operator of the platform<br /><div class=\"small\">For privacy policy and terms of use, please also add adrress. Can be left empty if the food-coop itself is operator.</div>','','textarea',8,'en_US','2017-01-12 00:00:00','2017-01-12 00:00:00'),
+(559,1,'FCS_PLATFORM_OWNER','Operator of the platform<br /><div class=\"small\">For privacy policy and terms of use, please also add adrress. Can be left empty if the food-coop itself is operator.</div>','','textarea',9,'en_US','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (563,1,'FCS_EMAIL_LOG_ENABLED','Should all sent e-mails be stored in the database?<br /><div class=\"small\">For debugging and unit tests.</div>','0','readonly',30,'en_US','2017-07-05 00:00:00','2017-07-05 00:00:00'),
 (564,1,'FCS_ORDER_COMMENT_ENABLED','Show comment field when placing an order?<br /><div class=\"small\">Shown in admin area under \"Orders\".</div>','0','boolean',13,'en_US','2017-07-09 00:00:00','2017-07-09 00:00:00'),
 (565,1,'FCS_USE_VARIABLE_MEMBER_FEE','Use variable member fee?<br /><div class=\"small\">Reduce the variable member fee in the manufacturer\'s invoices? Therefore the prices need to be increased.</div>','0','readonly',40,'en_US','2017-08-02 00:00:00','2017-08-02 00:00:00'),
@@ -121,7 +121,8 @@ INSERT INTO `fcs_configuration` VALUES
 (581,1,'FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS','Only show stock products in instant orders?','0','boolean',76,'en_US','2019-02-18 12:38:00','2019-02-18 12:38:00'),
 (582,1,'FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES','Include stock products in invoices?','1','readonly',60,'en_US','2019-02-18 12:38:00','2019-02-18 12:38:00'),
 (583,1,'FCS_REGISTRATION_NOTIFICATION_EMAILS','Who should be notified on new registrations?<br /><div class=\"small\">Please separate multiple e-mail addresses with , (no space).</div>','','text',55,'en_US','2019-03-05 20:01:59','2019-03-05 20:01:59'),
-(584,1,'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED','Use self-service mode for stock products?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/en/self-service-mode\" target=\"_blank\">Online documentation</a></div>','0','readonly',57,'en_US','2019-04-17 20:01:59','2019-04-17 20:01:59');
+(584,1,'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED','Use self-service mode for stock products?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/en/self-service-mode\" target=\"_blank\">Online documentation</a></div>','0','readonly',57,'en_US','2019-04-17 20:01:59','2019-04-17 20:01:59'),
+(585,1,'FCS_APP_ADDITIONAL_DATA','Additional food-coop infos','','textarea',8,'en_US','2019-08-03 20:07:08','2019-08-03 20:07:08');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -249,7 +250,8 @@ INSERT INTO `phinxlog` VALUES
 (20190331192259,'DifferentCartForInstantOrder','2019-03-31 09:53:00','2019-03-31 09:53:00',0),
 (20190417072617,'SelfServiceModeConfiguration','2019-04-17 09:53:00','2019-04-17 09:53:00',0),
 (20190527070456,'CartProductUnits','2019-05-27 09:17:17','2019-05-27 09:17:17',0),
-(20190617201728,'RemoveLegacyPasswordHasher','2019-06-17 20:28:29','2019-06-17 20:28:29',0);
+(20190617201728,'RemoveLegacyPasswordHasher','2019-06-17 20:28:29','2019-06-17 20:28:29',0),
+(20190803174327,'AdditionalFieldForPrivacyPolicy','2019-08-03 18:07:08','2019-08-03 18:07:08',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

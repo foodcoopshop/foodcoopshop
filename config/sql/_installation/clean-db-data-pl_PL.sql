@@ -99,7 +99,7 @@ INSERT INTO `fcs_configuration` VALUES
 (556,1,'FCS_APP_NAME','Nazwa kooperatywy','','text',5,'pl_PL','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (557,1,'FCS_APP_ADDRESS','Adres kooperatywy <br /> <div class = \"small\"> Używany w stopce strony głównej, mailach, polityce prywatności i warunkach użytkowania.</div>','','textarea',6,'pl_PL','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (558,1,'FCS_APP_EMAIL','Adres e-mail kooperatywy <br /> <div class = \"small\"> </div>','','text',7,'pl_PL','2017-01-12 00:00:00','2017-01-12 00:00:00'),
-(559,1,'FCS_PLATFORM_OWNER','Operator platformy <br /> <div class = \"small\"> Aby zapoznać się z polityką prywatności i warunkami użytkowania, dodaj również adres. Można pozostawić puste, jeśli sama kooperatywa jest operatorem. </div>','','textarea',8,'pl_PL','2017-01-12 00:00:00','2017-01-12 00:00:00'),
+(559,1,'FCS_PLATFORM_OWNER','Operator platformy <br /> <div class = \"small\"> Aby zapoznać się z polityką prywatności i warunkami użytkowania, dodaj również adres. Można pozostawić puste, jeśli sama kooperatywa jest operatorem. </div>','','textarea',9,'pl_PL','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (563,1,'FCS_EMAIL_LOG_ENABLED','Czy wszystkie wysłane wiadomości e-mail powinny być przechowywane w bazie danych? <br /> <div class = \"small\"> Do debugowania i testów jednostkowych. </div>','0','readonly',30,'pl_PL','2017-07-05 00:00:00','2017-07-05 00:00:00'),
 (564,1,'FCS_ORDER_COMMENT_ENABLED','Pokaż pole komentarza podczas składania zamówienia? <br /> <div class = \"small\"> Widoczne w obszarze administracyjnym w obszarze \"Zamówienia\". </div>','0','boolean',13,'pl_PL','2017-07-09 00:00:00','2017-07-09 00:00:00'),
 (565,1,'FCS_USE_VARIABLE_MEMBER_FEE','Użyj zmiennej opłaty członkowskiej? <br /> <div class = \"small\"> Zmniejsz zmienną opłatę członkowską na fakturach producenta? Tym samym, ceny muszą być zwiększone. </div>','0','readonly',40,'pl_PL','2017-08-02 00:00:00','2017-08-02 00:00:00'),
@@ -121,7 +121,8 @@ INSERT INTO `fcs_configuration` VALUES
 (581,1,'FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS','Pokazywać tylko produkty magazynowane przy zamówieniach błyskawicznych?','0','boolean',76,'pl_PL','2019-02-18 12:38:00','2019-02-18 12:38:00'),
 (582,1,'FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES','Zawrzyj w fakturach produkty magazynowane?','1','readonly',60,'pl_PL','2019-02-18 12:38:00','2019-02-18 12:38:00'),
 (583,1,'FCS_REGISTRATION_NOTIFICATION_EMAILS','Kto powinien być powiadamiany o nowych rejestracjach? <br /> <div class = \"small\"> Oddziel wiele adresów e-mail przecinkami (bez spacji). </div>','','text',55,'pl_PL','2019-03-05 20:01:59','2019-03-05 20:01:59'),
-(584,1,'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED','Użyć trybu samoobsługowego dla produktów magazynowych?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/pl/self-service-mode\" target=\"_blank\">Dokumentacja</a></div>','0','readonly',57,'pl_PL','2019-04-17 20:01:59','2019-04-17 20:01:59');
+(584,1,'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED','Użyć trybu samoobsługowego dla produktów magazynowych?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/pl/self-service-mode\" target=\"_blank\">Dokumentacja</a></div>','0','readonly',57,'pl_PL','2019-04-17 20:01:59','2019-04-17 20:01:59'),
+(585,1,'FCS_APP_ADDITIONAL_DATA','Additional food-coop infos','','textarea',8,'pl_PL','2019-08-03 20:07:12','2019-08-03 20:07:12');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -249,7 +250,8 @@ INSERT INTO `phinxlog` VALUES
 (20190331192259,'DifferentCartForInstantOrder','2019-03-31 09:53:00','2019-03-31 09:53:00',0),
 (20190417072617,'SelfServiceModeConfiguration','2019-04-17 09:53:00','2019-04-17 09:53:00',0),
 (20190527070456,'CartProductUnits','2019-05-27 09:17:21','2019-05-27 09:17:21',0),
-(20190617201728,'RemoveLegacyPasswordHasher','2019-06-17 20:28:34','2019-06-17 20:28:34',0);
+(20190617201728,'RemoveLegacyPasswordHasher','2019-06-17 20:28:34','2019-06-17 20:28:34',0),
+(20190803174327,'AdditionalFieldForPrivacyPolicy','2019-08-03 18:07:12','2019-08-03 18:07:12',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
