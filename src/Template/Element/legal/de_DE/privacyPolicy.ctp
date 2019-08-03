@@ -23,10 +23,10 @@ use Cake\Core\Configure;
 <p>
     <?php
     if (Configure::read('appDb.FCS_PLATFORM_OWNER') != '') {
-        echo str_replace('<br />', ', ', Configure::read('appDb.FCS_PLATFORM_OWNER'));
+        echo Configure::read('appDb.FCS_PLATFORM_OWNER');
     } else {
         echo Configure::read('appDb.FCS_APP_NAME');
-        echo ', '.str_replace('<br />', ', ', $this->MyHtml->getAddressFromAddressConfiguration());
+        echo '<br />' . $this->MyHtml->getAddressFromAddressConfiguration();
     }
     ?>
 </p>
@@ -127,14 +127,6 @@ Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
         Zweck: Zum Anzeigen der Open-Street-Map auf der Startseite.
       </li>
     <?php } ?>
-</ul>
-<ul>
-  <li>
-    
-remember_me<br />
-Dauer: 6 Tage<br />
-Zweck: 
-  </li>
 </ul>
 
 <h3>3.4 Verwaltung der Benutzer (Mitglieder) und der Bestellungen</h3>
