@@ -25,7 +25,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Wie bei jedem Release zahlreiche Dependency-Updates und viele kleinere Bugfixes (CakePHP 3.8.x).
 
 ### Datenschutzerklärung
-- Update der Datenschutzerklärung [PR#397](https://github.com/foodcoopshop/foodcoopshop/pull/397) <a href="https://github.com/CH83"><img src="https://github.com/CH83.png" width="20"></a>
+- Update der Datenschutzerklärung und Möglichkeit, darin die ZVR-Zahl anzugeben. [PR#397](https://github.com/foodcoopshop/foodcoopshop/pull/397) / [PR#399](https://github.com/foodcoopshop/foodcoopshop/pull/399) / <a href="https://github.com/CH83"><img src="https://github.com/CH83.png" width="20"></a> / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
 ## v2.5.4 / 2019-07-30 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.5.3...v2.5.4)
