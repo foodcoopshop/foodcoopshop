@@ -5,7 +5,6 @@ namespace App\Controller;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
-use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -269,7 +268,6 @@ class CartsController extends FrontendController
             $message .= '</div>';
         }
 
-        Log::error($message);
         $this->Flash->success($message);
 
     }
