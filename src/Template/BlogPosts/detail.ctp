@@ -37,7 +37,9 @@ if ($blogPost->short_description != '') {
     echo '<p><b>'.$blogPost->short_description.'</b></p>';
 }
 
-    echo $blogPost->content;
+    echo '<div class="content">';
+        echo $blogPost->content;
+    echo '</div>';
 
     echo '<p><i>';
         echo '<br />'.__('Modified_on'). ' ' . $blogPost->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
@@ -65,7 +67,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
 }
 
 if (!empty($neighbors['prev']) || !empty($neighbors['next'])) {
-    echo '<h2>'.__('Further_news').'</h2>';
+    echo '<h2 class="further-news">'.__('Further_news').'</h2>';
 }
 if (!empty($neighbors['prev'])) {
     echo $this->element('blogPosts', [

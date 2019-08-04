@@ -59,7 +59,9 @@ use Cake\Core\Configure;
         color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
     }
     
-    .blog-wrapper .owl-nav button {
+    .blog-wrapper .owl-nav button,
+    body.blog_posts.detail #inner-content h2.further-news,
+    body.customers.registration_successful #inner-content h2.further-news {
         color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
     }
     

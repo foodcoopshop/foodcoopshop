@@ -33,7 +33,7 @@ $this->element('addScript', ['script' =>
 
 <?php
 if (!empty($blogPosts) && $blogPosts->count() > 0) {
-    echo '<h2><a href="'.$this->Slug->getBlogList().'">'.__('News').'</a></h2>';
+    echo '<h2 class="further-news"><a href="'.$this->Slug->getBlogList().'">'.__('News').'</a></h2>';
     echo $this->element('blogPosts', [
     'blogPosts' => $blogPosts
     ]);

@@ -124,8 +124,7 @@ button,
 .hide {
 	display: none;
 }
-h1,
-body.pages.detail h4 {
+h1 {
     font-size: 26px;
     color: #719f41;
     margin-bottom: 10px;
