@@ -26,6 +26,9 @@ use Cake\Core\Configure;
     } else {
         echo Configure::read('appDb.FCS_APP_NAME');
         echo '<br />'.$this->MyHtml->getAddressFromAddressConfiguration();
+        if (Configure::read('appDb.FCS_APP_ADDITIONAL_DATA') != '') {
+            echo '<br />' . Configure::read('appDb.FCS_APP_ADDITIONAL_DATA');
+        }
     }
     ?>
 </p>
