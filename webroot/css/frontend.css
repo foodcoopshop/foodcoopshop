@@ -1200,7 +1200,7 @@ body.categories.detail .blog-wrapper {
     margin-right: auto;
 }
 body.blog_posts.detail #inner-content .content h2,
-body.pages.detail #inner-content h2,
+body.pages:not(.home) #inner-content h2,
 body.manufacturers.detail .manufacturer-infos h2,
 body.categories.detail .description-wrapper h2 {
     color: #333;
@@ -1208,7 +1208,7 @@ body.categories.detail .description-wrapper h2 {
 	font-size: 18px;
 }
 body.blog_posts.detail #inner-content .content h3,
-body.pages.detail #inner-content h3,
+body.pages:not(.home) #inner-content h3,
 body.manufacturers.detail .manufacturer-infos h3,
 body.categories.detail .description-wrapper h3 {
     color: #333;
