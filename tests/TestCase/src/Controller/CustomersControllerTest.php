@@ -151,8 +151,7 @@ class CustomersControllerTest extends AppCakeTestCase
                     'phone_mobile' => '',
                     'phone' => ''
                 ]
-            ],
-            'antiSpam' => 0
+            ]
         ];
 
         // 1) check for spam protection

@@ -10,6 +10,7 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Http\Cookie\Cookie;
 use Cake\I18n\Date;
+use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use DateTime;
 use Cake\Http\Exception\NotFoundException;
@@ -286,10 +287,10 @@ class CustomersController extends FrontendController
         );
 
         if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getRegistration()) {
-            // prevent spam
-            // http://stackoverflow.com/questions/8472/practical-non-image-based-captcha-approaches?lq=1
-            if (!empty($this->getRequest()->getData()) && ($this->getRequest()->getData('antiSpam') == 'lalala' || $this->getRequest()->getData('antiSpam') < 3)) {
+            // prevent spam: http://stackoverflow.com/questions/8472/practical-non-image-based-captcha-approaches?lq=1
+            if (!empty($this->getRequest()->getData()) && ($this->getRequest()->getData('antiSpam') == '' || $this->getRequest()->getData('antiSpam') < 3)) {
                 $this->Flash->error('S-p-a-m-!');
+                Log::write('error', 'potential registration spam attack');
                 $this->redirect('/');
                 return;
             }

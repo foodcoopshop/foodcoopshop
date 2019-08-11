@@ -98,8 +98,6 @@ $this->element('addScript', ['script' =>
                         echo '<p>'.Configure::read('appDb.FCS_AUTHENTICATION_INFO_TEXT').'</p>';
                     }
         
-                          echo $this->Form->hidden('antiSpam', ['value' => 'lalala', 'id' => 'antiSpam']);
-        
                           echo $this->Form->control('Customers.firstname', ['label' => __('Firstname'), 'required' => true]); // required should not be necessary here
                           echo $this->Form->control('Customers.lastname', ['label' => __('Lastname'), 'required' => true]); // required should not be necessary here
         

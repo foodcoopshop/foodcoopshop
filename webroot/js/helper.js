@@ -302,19 +302,20 @@ foodcoopshop.Helper = {
      */
     updateAntiSpamField: function (form) {
 
-        if (document.getElementById('antiSpam')) {
-            var a = document.getElementById('antiSpam');
-            if (isNaN(a.value) == true) {
-                a.value = 0;
-            } else {
-                a.value = parseInt(a.value) + 1;
-            }
+        if ($('#antiSpam').length == 0) {
+            var inputField = $('<input />').attr('id', 'antiSpam').attr('name', 'antiSpam').attr('type', 'hidden');
+            $('#RegistrationForm').prepend(inputField);
+        }
+        var a = document.getElementById('antiSpam');
+        if (isNaN(a.value) == true) {
+            a.value = 0;
+        } else {
+            a.value = parseInt(a.value) + 1;
         }
 
         setTimeout(function () {
             foodcoopshop.Helper.updateAntiSpamField(form);
         }, 1000);
-
     },
 
     changeOutgoingLinksTargetToBlank: function () {
