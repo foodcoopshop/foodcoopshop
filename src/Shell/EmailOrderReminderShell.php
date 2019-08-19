@@ -82,9 +82,6 @@ class EmailOrderReminderShell extends AppShell
             $outString .= $customer->name . '<br />';
 
             $i ++;
-            
-            // wait for 0.5 seconds to avoid SMTP Error: 454 4.7.0 Too many login attempts, please try again later.
-            usleep(500000);
         }
 
         $outString .= __('Sent_emails') . ': ' . $i;
