@@ -557,6 +557,7 @@ body.order_details td .pickup-day-comment-edit-button.btn-disabled i.fas,
 body.customers.index td .customer-comment-edit-button.btn-disabled i.fas {
   opacity: 0.3;
 }
+body.manufacturers.index a.edit-link,
 body.customers.index a.edit-link {
     float: left;
     margin-right: 3px;
@@ -1116,11 +1117,22 @@ body.attributes.index table.list td .toggle-link {
 }
 body.customers.index .customer-details-wrapper,
 body.manufacturers.index .manufacturer-details-wrapper {
-    float: right;
-    margin-left: 5px;
+    position: absolute;
+    right: 5px;
+    top: 3px;
 }
-body.customers.index .name {
+body.manufacturers.index td.name {
+	position: relative;
+    width: 260px;
+}
+body.customers.index td.name {
+	position: relative;
+	width: 260px;
+}
+body.customers.index span.name,
+body.manufacturers.index span.name {
     float: left;
+    width: 201px;
 }
 body.deposits table.list,
 body.deposits .bottom-button-container {

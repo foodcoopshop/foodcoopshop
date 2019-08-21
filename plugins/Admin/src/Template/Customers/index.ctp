@@ -83,7 +83,7 @@ foreach ($customers as $customer) {
     echo $customer->id_customer;
     echo '</td>';
 
-    echo '<td>';
+    echo '<td class="name">';
 
         $customerName = $this->Html->getNameRespectingIsDeleted($customer);
 

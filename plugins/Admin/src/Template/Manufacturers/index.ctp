@@ -94,7 +94,7 @@ foreach ($manufacturers as $manufacturer) {
         }
     echo '</td>';
 
-    echo '<td>';
+    echo '<td class="name">';
 
         $details = $manufacturer->address_manufacturer->firstname . ' ' . $manufacturer->address_manufacturer->lastname;
         if ($manufacturer->address_manufacturer->phone_mobile != '') {
@@ -111,19 +111,21 @@ foreach ($manufacturers as $manufacturer) {
             '<i class="fas fa-pencil-alt ok"></i>',
             $this->Slug->getManufacturerEdit($manufacturer->id_manufacturer),
             [
-                'class' => 'btn btn-outline-light',
+                'class' => 'btn btn-outline-light edit-link',
                 'title' => __d('admin', 'Edit'),
                 'escape' => false
             ]
         );
         
-        echo '&nbsp;<b>' . $manufacturer->name . '</b><br />';
+        echo '<span class="name">';
+        echo '<b>' . $manufacturer->name . '</b><br />';
         echo $manufacturer->address_manufacturer->city;
         echo '<br /><span class="email">' . $manufacturer->address_manufacturer->email . '</span>';
 
         if (!empty($manufacturer->customer)) {
             echo '<br /><i class="fas fa-fw fa-user" title="' . __d('admin', 'Contact_person') . '"></i>' . $manufacturer->customer->firstname . ' ' . $manufacturer->customer->lastname;
         }
+        echo '</span>';
 
     echo '</td>';
 
