@@ -1121,13 +1121,10 @@ body.manufacturers.index .manufacturer-details-wrapper {
     right: 5px;
     top: 3px;
 }
+body.customers.index td.name,
 body.manufacturers.index td.name {
 	position: relative;
-    width: 260px;
-}
-body.customers.index td.name {
-	position: relative;
-	width: 260px;
+    min-width: 260px; /* width does not work on mobile */
 }
 body.customers.index span.name,
 body.manufacturers.index span.name {
