@@ -261,3 +261,7 @@ body.self_services .btn-flash-message {
 body.self_services .btn-flash-message-continue {
     float: right;
 }
+body.self_services #categoryid {
+	width: 193px;
+	height: 32px;
+}
