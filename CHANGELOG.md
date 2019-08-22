@@ -19,6 +19,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Verbesserter Spamschutz für das Registrierungsformular. <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/cd3990daf2f9cd185de4254d2e22825b01eecdc4) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
  
 ### Bugfix
+- Das Erstellen eines neuen Produktes funktioniert jetzt auch auf dem Smartphone. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/871e40e46343cd0f7a6e21ad4d8f3afdeb3e441d) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Der Bestell-Erinnerungs-Cronjob wird nicht mehr erneut aufgerufen, wenn die E-Mails über die Fallback-Configuration versendet werden. [PR#390](https://github.com/foodcoopshop/foodcoopshop/pull/390) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Für Entwickler
