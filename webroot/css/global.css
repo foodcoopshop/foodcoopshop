@@ -658,7 +658,7 @@ tr.selected td > div > i.far {
     position: absolute;
     top: 10px;
     width: 98%;
-    left: 1% ! important;
+    left: 50% ! important;
 }
 .featherlight-content #flashMessage {
     z-index: 10000;
