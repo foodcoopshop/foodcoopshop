@@ -346,9 +346,9 @@ foodcoopshop.Admin = {
                             document.location.reload();
                         },
                         onError: function (data) {
-                            dialog.dialog('close');
-                            $('#product-deposit-edit-form .ajax-loader').hide();
-                            alert(data.msg);
+                            var form = $('#product-deposit-edit-form form');
+                            form.find('.ajax-loader').hide();
+                            foodcoopshop.Helper.appendFlashMessageToDialog(form, data.msg);
                         }
                     }
                 );
