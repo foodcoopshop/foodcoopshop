@@ -14,7 +14,7 @@
          alt="Build status">
   </a>
   <a href="LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"
+    <img src="https://img.shields.io/github/license/foodcoopshop/foodcoopshop"
          alt="Software license">
   </a>
 </p>
