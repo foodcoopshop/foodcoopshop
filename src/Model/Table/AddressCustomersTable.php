@@ -41,7 +41,7 @@ class AddressCustomersTable extends AddressesTable
             'rule' => array('custom', PHONE_REGEX),
             'message' => __('The_mobile_number_is_not_valid.')
         ]);
-        $validator->allowEmpty('phone');
+        $validator->allowEmptyString('phone');
         $validator->add('phone', 'validFormat', [
             'rule' => array('custom', PHONE_REGEX),
             'message' => __('The_phone_number_is_not_valid.')

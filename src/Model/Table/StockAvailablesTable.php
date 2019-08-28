@@ -37,7 +37,7 @@ class StockAvailablesTable extends AppTable
         
         $validator->numeric('sold_out_quantity', __('The_sold_out_quantity_needs_to_be_a_number.'));
         $validator = $this->getNumberRangeValidator($validator, 'sold_out_quantity', -5000, 5000, __('Field:_Notification_if_quantity_limit_reached'));
-        $validator->allowEmpty('sold_out_quantity');
+        $validator->allowEmptyString('sold_out_quantity');
         
         return $validator;
     }

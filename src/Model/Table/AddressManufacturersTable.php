@@ -32,17 +32,17 @@ class AddressManufacturersTable extends AddressesTable
             'provider' => 'table',
             'message' => __('The_email_address_is_already_used_by_another_member_or_manufacturer.')
         ]);
-        $validator->allowEmpty('postcode');
+        $validator->allowEmptyString('postcode');
         $validator->add('postcode', 'validFormat', [
             'rule' => array('custom', ZIP_REGEX),
             'message' => __('The_zip_is_not_valid.')
         ]);
-        $validator->allowEmpty('phone_mobile');
+        $validator->allowEmptyString('phone_mobile');
         $validator->add('phone_mobile', 'validFormat', [
             'rule' => array('custom', PHONE_REGEX),
             'message' => __('The_mobile_number_is_not_valid.')
         ]);
-        $validator->allowEmpty('phone');
+        $validator->allowEmptyString('phone');
         $validator->add('phone', 'validFormat', [
             'rule' => array('custom', PHONE_REGEX),
             'message' => __('The_phone_number_is_not_valid.')

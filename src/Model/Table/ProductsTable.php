@@ -85,9 +85,9 @@ class ProductsTable extends AppTable
             },
             'message' => __('The_delivery_ryhthm_is_not_valid.')
         ]);
-        $validator->allowEmpty('delivery_rhythm_first_delivery_day');
+        $validator->allowEmptyString('delivery_rhythm_first_delivery_day');
         $validator->notEquals('delivery_rhythm_first_delivery_day', '1970-01-01', __('The_first_delivery_day_is_not_valid.'));
-        $validator->allowEmpty('delivery_rhythm_order_possible_until');
+        $validator->allowEmptyString('delivery_rhythm_order_possible_until');
         $validator->notEquals('delivery_rhythm_order_possible_until', '1970-01-01', __('The_order_possible_until_field_is_not_valid.'));
         $validator->add('delivery_rhythm_order_possible_until', 'allowed-only-smaller-than-first-delivery-day', [
             'rule' => function ($value, $context) {
@@ -102,7 +102,7 @@ class ProductsTable extends AppTable
         $validator = $this->getLastOrFirstDayOfMonthValidator($validator, 'delivery_rhythm_first_delivery_day', 'last');
         $validator = $this->getAllowOnlyOneWeekdayValidator($validator, 'delivery_rhythm_first_delivery_day', __('The_first_delivery_day'));
         $validator->range('delivery_rhythm_send_order_list_weekday', [0, 6], __('Please_enter_a_number_between_{0}_and_{1}.', [0, 6]));
-        $validator->allowEmpty('delivery_rhythm_send_order_list_day');
+        $validator->allowEmptyString('delivery_rhythm_send_order_list_day');
         $validator->notEquals('delivery_rhythm_send_order_list_day', '1970-01-01', __('The_send_order_list_day_field_is_not_valid.'));
         $validator->add('delivery_rhythm_send_order_list_day', 'allowed-only-between-two-dates', [
             'rule' => function ($value, $context) {

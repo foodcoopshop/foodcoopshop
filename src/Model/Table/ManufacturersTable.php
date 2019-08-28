@@ -48,31 +48,31 @@ class ManufacturersTable extends AppTable
         $validator->notEmptyString('name', __('Please_enter_a_name.'));
         $range = [3, 64];
         $validator->lengthBetween('name', $range, __('Please_enter_between_{0}_and_{1}_characters.', $range));
-        $validator->allowEmpty('iban');
+        $validator->allowEmptyString('iban');
         $validator->add('iban', 'iban', [
             'rule' => 'iban',
             'message' => __('Please_enter_a_valid_IBAN.')
         ]);
-        $validator->allowEmpty('bic');
+        $validator->allowEmptyString('bic');
         $validator->add('bic', 'validFormat', [
             'rule' => array('custom', BIC_REGEX),
             'message' => __('Please_enter_a_valid_BIC.')
         ]);
-        $validator->allowEmpty('homepage');
+        $validator->allowEmptyString('homepage');
         $validator->urlWithProtocol('homepage', __('Please_enter_a_valid_internet_address.'));
         return $validator;
     }
 
     public function validationEditOptions(Validator $validator)
     {
-        $validator->allowEmpty('send_order_list_cc');
+        $validator->allowEmptyString('send_order_list_cc');
         $validator->add('send_order_list_cc', 'multipleEmails', [
             'rule' => 'ruleMultipleEmails',
             'provider' => 'table',
             'message' => __('At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space.')
         ]);
         
-        $validator->allowEmpty('no_delivery_days');
+        $validator->allowEmptyString('no_delivery_days');
         $validator->add('no_delivery_days', 'noDeliveryDaysOrdersExist', [
             'provider' => 'table',
             'rule' => 'noDeliveryDaysOrdersExist'

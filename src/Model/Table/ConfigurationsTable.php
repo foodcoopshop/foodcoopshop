@@ -52,7 +52,7 @@ class ConfigurationsTable extends AppTable
 
     public function validationFcsFacebookUrl(Validator $validator)
     {
-        $validator->allowEmpty('value');
+        $validator->allowEmptyString('value');
         $validator->urlWithProtocol('value', __('Please_enter_a_valid_internet_address.'));
         return $validator;
     }
@@ -73,7 +73,7 @@ class ConfigurationsTable extends AppTable
 
     public function validationFcsRegistrationNotificationEmails(Validator $validator)
     {
-        $validator->allowEmpty('value');
+        $validator->allowEmptyString('value');
         $validator->add('value', 'multipleEmails', [
             'rule' => 'ruleMultipleEmails',
             'provider' => 'table',
@@ -84,7 +84,7 @@ class ConfigurationsTable extends AppTable
     
     public function validationFcsBackupEmailAddressBcc(Validator $validator)
     {
-        $validator->allowEmpty('value');
+        $validator->allowEmptyString('value');
         $validator->email('value', false, __('The_email_address_is_not_valid.'));
         return $validator;
     }

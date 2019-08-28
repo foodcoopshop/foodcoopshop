@@ -31,7 +31,7 @@ class PickupDaysTable extends AppTable
     
     public function validationDefault(Validator $validator)
     {
-        $validator->allowEmpty('comment');
+        $validator->allowEmptyString('comment');
         $validator->maxLength('comment', 500, __('Please_enter_max_{0}_characters.', [500]));
         return $validator;
     }

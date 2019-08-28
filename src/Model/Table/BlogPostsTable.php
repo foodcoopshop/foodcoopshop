@@ -38,9 +38,9 @@ class BlogPostsTable extends AppTable
     {
         $validator->notEmptyString('title', __('Please_enter_a_title.'));
         $validator->minLength('title', 3, __('Please_enter_at_least_{0}_characters.', [3]));
-        $validator->allowEmpty('content');
+        $validator->allowEmptyString('content');
         $validator->minLength('content', 3, __('Please_enter_at_least_{0}_characters.', [3]));
-        $validator->allowEmpty('short_description');
+        $validator->allowEmptyString('short_description');
         $validator->maxLength('short_description', 100, __('Please_enter_max_{0}_characters.', [100]));
         return $validator;
     }
