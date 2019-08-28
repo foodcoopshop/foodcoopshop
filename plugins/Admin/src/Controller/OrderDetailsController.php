@@ -131,7 +131,7 @@ class OrderDetailsController extends AdminAppController
      * 1) re-open all order details of the wrong invoice using config/sql/_helper/change-order-state-of-order-details.sql
      * 2) run this script by calling it via url (as superadmin)
      * 3) remove appropriate record of manufacturer in fcs_invoices
-     * 4) re-send invoice using SendInvoicesShell yyyy-mm
+     * 4) re-send invoice using `bin/cake SendInvoices yyyy-mm-dd` (month is one month later than order details)
      * 
      * @param int $orderDetailId
      * @param int $newTaxId
