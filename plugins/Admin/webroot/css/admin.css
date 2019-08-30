@@ -1166,7 +1166,7 @@ body.payments i.payment-approval,
 body.reports.payment i.payment-approval {
     float: left;
     margin-top: 4px;
-    margin-right: 3px;
+    margin-right: 2px;
 }
 body.payments .payment-approval-comment,
 body.reports.payment .payment-approval-comment {
