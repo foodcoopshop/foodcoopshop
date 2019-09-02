@@ -91,6 +91,10 @@
         z-index: 100000 ! important;
         transform: inherit ! important;
     }
+	.ui-dialog-content #flashMessage,
+	.featherlight-content #flashMessage {
+	    left: 50% ! important;
+	}
 	.featherlight-content .add-payment-form,
 	.add-payment-form.featherlight-inner {
 	    min-width: 200px ! important;
