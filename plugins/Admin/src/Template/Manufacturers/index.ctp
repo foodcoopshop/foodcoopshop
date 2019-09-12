@@ -28,6 +28,9 @@ use Cake\Core\Configure;
             Configure::read('app.cakeServerName') . "');".
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.manufacturer-details-read-button');"
     ]);
+    $this->element('highlightRowAfterEdit', [
+        'rowIdPrefix' => '#manufacturer-'
+    ]);
     ?>
 
     <div class="filter-container">
