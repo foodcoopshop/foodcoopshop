@@ -105,7 +105,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertEquals($manufacturer->description, '<b>Text</b>', 'tags must not be stripped');
         $this->assertEquals($manufacturer->short_description, '<i>Test Description</i>', 'tags must not be stripped');
         $this->assertEquals($manufacturer->firmenbuchnummer, 'number', 'tags must be stripped');
-
+        $this->assertEquals($manufacturer->is_private, true);
+        
         $this->logout();
     }
 
