@@ -30,6 +30,54 @@ foodcoopshop.Helper = {
         }
     },
     
+    addPrevAndNextCategoryLinks : function() {
+        this.addPrevAndNextLinks(
+            '#categories-menu li a',
+            '#inner-content h1',
+            '#inner-content .product-wrapper:last'
+        );
+    },
+    
+    addPrevAndNextManufacturerLinks : function() {
+        this.addPrevAndNextLinks(
+            '#manufacturers-menu li a',
+            '#inner-content .manufacturer-infos',
+            '#inner-content .imprint'
+        );
+    },
+    
+    addPrevAndNextLinks : function(menu, afterContainerA, afterContainerB) {
+        var menu = $(menu);
+        var activeElementHref = document.location.pathname;
+        var nextElement = null;
+        var prevElement = null;
+        var i = 0;
+        menu.each(function() {
+            if (activeElementHref == $(this).attr('href')) {
+                if ($(menu[i+1]).length > 0) {
+                    nextElement = $(menu[i+1]).clone();
+                }
+                if ($(menu[i-1]).length > 0) {
+                    prevElement = $(menu[i-1]).clone();
+                }
+            }
+            i++;
+        });
+        if (prevElement) {
+            prevElement.attr('class', 'prev-button btn btn-outline-light');
+            prevElement.html('<i class="fas fa-arrow-circle-left fa"></i> ' + prevElement.text());
+            $(afterContainerA + ', ' + afterContainerB).after(prevElement);
+        }
+        if (nextElement) {
+            nextElement.attr('class', 'next-button btn btn-outline-light');
+            nextElement.html(nextElement.text() + ' <i class="fas fa-arrow-circle-right fa"></i>');
+            $(afterContainerA + ', ' + afterContainerB).after(nextElement);
+        }
+        if (prevElement || nextElement) {
+            $(afterContainerA + ', ' + afterContainerB).after($('<hr style="clear:both;" />'));
+        }
+    },
+    
     initBootstrapSelect : function(container) {
         container.find('select').each(function () {
             var options = {

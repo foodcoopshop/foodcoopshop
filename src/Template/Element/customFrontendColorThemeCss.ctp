@@ -55,6 +55,7 @@ use Cake\Core\Configure;
     a:not(.btn), a:not(.btn):visited, a:not(.btn):active,
     #footer i.fab, #footer i.far, #footer i.fas,
     a.btn.edit-shortcut-button,
+    a.btn.prev-button i, a.btn.next-button i,
     .featherlight-content h3 {
         color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
     }
@@ -100,7 +101,7 @@ use Cake\Core\Configure;
             .sb-slidebar i.fas:not(.gold),
             .sb-slidebar i.fas.fa-tags,
             .sb-slidebar i.fas.fa-shopping-bag,
-            a.btn i.fas:not(.fa-plus-circle):not(.fa-minus-circle):not(.fa-times-circle):not(.gold):not(.fa-pencil-alt):not(.fa-circle-notch) {
+            a.btn i.fas:not(.fa-plus-circle):not(.fa-minus-circle):not(.fa-times-circle):not(.gold):not(.fa-pencil-alt):not(.fa-circle-notch):not(.fa-arrow-circle-left):not(.fa-arrow-circle-right) {
                 color: #fff ! important;
             }
             .sb-slidebar,

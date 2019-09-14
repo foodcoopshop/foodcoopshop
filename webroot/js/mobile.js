@@ -214,7 +214,7 @@ foodcoopshop.Mobile = {
         });
 
         $('.sidebar ul#categories-menu > li').each(function () {
-            menuItems.push($(this));
+            menuItems.push($(this).clone());
         });
 
         var pageItems = ['<li class="header">' + foodcoopshop.LocalizedJs.mobile.pages + '</li>'];
