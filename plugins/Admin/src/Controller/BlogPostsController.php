@@ -63,6 +63,7 @@ class BlogPostsController extends AdminAppController
         $blogPost = $this->BlogPost->newEntity(
             [
                 'active' => APP_ON,
+                'is_private' => APP_ON,
                 'is_featured' => APP_ON
             ],
             ['validate' => false]

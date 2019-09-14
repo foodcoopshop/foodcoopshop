@@ -1,3 +1,4 @@
+
 # Changelog
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
@@ -12,13 +13,15 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Neue Funktionen
 - Selbstbedienungs-Modus für Lagerprodukte - Details in der [Online-Dokumentation](https://foodcoopshop.github.io/de/selbstbedienungs-modus). [PR#384](https://github.com/foodcoopshop/foodcoopshop/pull/384) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/AndreasEgger"><img src="https://github.com/AndreasEgger.png" width="20"></a>
+- Die Standard-Einstellung des Feldes "Nur für Mitglieder" für neue Seiten, Hersteller und Blog-Artikel wurde auf "ja" geändert. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/927d5c8466b2be6b79b34820986d976b4e2b5552) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Verbesserungen WYSIWYG-Editor: Nach Copy/Paste bleiben die Formatierungen vorhanden. Kursiv, zentriert und rechtsbündig ist jetzt möglich. <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
 - Der Lieferrhythmus "Individuelles Datum" heißt jetzt "Sammelbestellung" (das klingt nicht so sperrig).
-- Beim Produkt wird z. B. "in 3 Wochen und 2 Tagen" angezeigt, falls später als am kommenden (regulären) Liefertag geliefert wird. <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/1aa540999c4028cdee058d1876318f80ad85df59) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Beim Produkt wird z. B. "in 3 Wochen und 2 Tagen" angezeigt, falls später als am kommenden (regulären) Liefertag geliefert wird. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/1aa540999c4028cdee058d1876318f80ad85df59) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Bei Bestelllisten und Rechnungen wird nun im Footer angezeigt, wann das PDF generiert wurde. / [PR#388](https://github.com/foodcoopshop/foodcoopshop/pull/388) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Verbesserter Spamschutz für das Registrierungsformular. <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/cd3990daf2f9cd185de4254d2e22825b01eecdc4) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Bequemeres Bestellen: Auf den Hersteller- bzw. Kategorien-Seiten befinden sich nun ein Vor- und Zurück-Button. <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / [PR#402](https://github.com/foodcoopshop/foodcoopshop/pull/402) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-
+- Verbesserter Spamschutz für das Registrierungsformular. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/cd3990daf2f9cd185de4254d2e22825b01eecdc4) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Bequemeres Bestellen: Auf den Hersteller- bzw. Kategorien-Seiten befinden sich nun ein Vor- und Zurück-Button. / [PR#402](https://github.com/foodcoopshop/foodcoopshop/pull/402) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Update der Datenschutzerklärung und Möglichkeit, darin die ZVR-Zahl anzugeben. [PR#397](https://github.com/foodcoopshop/foodcoopshop/pull/397) / [PR#399](https://github.com/foodcoopshop/foodcoopshop/pull/399) / <a href="https://github.com/CH83"><img src="https://github.com/CH83.png" width="20"></a> / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+ 
 ### Bugfix
 - Das Erstellen eines neuen Produktes funktioniert jetzt auch auf dem Smartphone. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/871e40e46343cd0f7a6e21ad4d8f3afdeb3e441d) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Der Bestell-Erinnerungs-Cronjob wird nicht mehr erneut aufgerufen, wenn die E-Mails über die Fallback-Configuration versendet werden. [PR#390](https://github.com/foodcoopshop/foodcoopshop/pull/390) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
@@ -26,9 +29,6 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Für Entwickler
 - Legacy-Passwort-Hasher wurde entfernt. [PR#380](https://github.com/foodcoopshop/foodcoopshop/pull/380) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Wie bei jedem Release zahlreiche Dependency-Updates und viele kleinere Bugfixes (CakePHP 3.8.x).
-
-### Datenschutzerklärung
-- Update der Datenschutzerklärung und Möglichkeit, darin die ZVR-Zahl anzugeben. [PR#397](https://github.com/foodcoopshop/foodcoopshop/pull/397) / [PR#399](https://github.com/foodcoopshop/foodcoopshop/pull/399) / <a href="https://github.com/CH83"><img src="https://github.com/CH83.png" width="20"></a> / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
 ## v2.5.4 / 2019-07-30 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.5.3...v2.5.4)

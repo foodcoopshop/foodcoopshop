@@ -70,7 +70,10 @@ class ManufacturersController extends AdminAppController
     public function add()
     {
         $manufacturer = $this->Manufacturer->newEntity(
-            ['active' => APP_ON],
+            [
+                'active' => APP_ON,
+                'is_private' => APP_ON
+            ],
             ['validate' => false]
         );
         $this->set('title_for_layout', __d('admin', 'Add_manufacturer'));
@@ -112,7 +115,6 @@ class ManufacturersController extends AdminAppController
     {
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
-
         if (empty($this->getRequest()->getData())) {
             $this->set('manufacturer', $manufacturer);
             return;
