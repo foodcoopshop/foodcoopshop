@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-07-30 22:13+0200\n"
+"POT-Creation-Date: 2019-09-15 19:03+0200\n"
 "PO-Revision-Date: 2019-07-22 16:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2606,16 +2606,15 @@ msgstr "północ"
 msgid "Instant_order"
 msgstr "Zamówienie błyskawiczne"
 
-# every {0} week
+# {0,plural,=1{1 product} other{# products}}
 #, fuzzy
-msgid "in_{0}_weeks"
-msgstr "co {0} tydzień"
+msgid "{0,plural,=1{1_week} other{#_weeks}}"
+msgstr "{0,plural,=1{1 produkt} other{# produkty}}"
 
-msgid "in_{0}_weeks_and_{1}_day"
-msgstr ""
-
-msgid "in_{0}_weeks_and_{1}_days"
-msgstr ""
+# {0,plural,=1{1 product} other{# products}}
+#, fuzzy
+msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
+msgstr "{0,plural,=1{1 produkt} other{# produkty}}"
 
 # from which {0} %
 msgid "from_which_{0}_%"
@@ -3157,6 +3156,11 @@ msgstr "information-about-right-of-withdrawal"
 # product
 msgid "route_product"
 msgstr "product"
+
+# every {0} week
+#, fuzzy
+#~ msgid "in_{0}_weeks"
+#~ msgstr "co {0} tydzień"
 
 # individual date
 #~ msgid "individual_date"

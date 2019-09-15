@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-07-30 22:13+0200\n"
-"PO-Revision-Date: 2019-07-30 22:14+0200\n"
+"POT-Creation-Date: 2019-09-15 19:03+0200\n"
+"PO-Revision-Date: 2019-09-15 19:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1947,14 +1947,11 @@ msgstr "midnight"
 msgid "Instant_order"
 msgstr "Instant order"
 
-msgid "in_{0}_weeks"
-msgstr "in {0} weeks"
+msgid "{0,plural,=1{1_week} other{#_weeks}}"
+msgstr "{0,plural,=1{1 week} other{# week}}"
 
-msgid "in_{0}_weeks_and_{1}_day"
-msgstr "in {0} weeks and {1} days"
-
-msgid "in_{0}_weeks_and_{1}_days"
-msgstr "in {0} weeks and {1} day"
+msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
+msgstr "{0,plural,=1{1 week} other{# week}} {1,plural,=1{and 1 day} other{and # days}}"
 
 msgid "from_which_{0}_%"
 msgstr "from which {0} %"
@@ -2357,6 +2354,15 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "in_{0}_weeks"
+#~ msgstr "in {0} weeks"
+
+#~ msgid "in_{0}_weeks_and_{1}_day"
+#~ msgstr "in {0} weeks and {1} days"
+
+#~ msgid "in_{0}_weeks_and_{1}_days"
+#~ msgstr "in {0} weeks and {1} day"
 
 #~ msgid "individual_date"
 #~ msgstr "individual date"

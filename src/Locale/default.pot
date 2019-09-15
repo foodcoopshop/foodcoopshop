@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-07-30 22:13+0200\n"
+"POT-Creation-Date: 2019-09-15 19:03+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1946,13 +1946,10 @@ msgstr ""
 msgid "Instant_order"
 msgstr ""
 
-msgid "in_{0}_weeks"
+msgid "{0,plural,=1{1_week} other{#_weeks}}"
 msgstr ""
 
-msgid "in_{0}_weeks_and_{1}_day"
-msgstr ""
-
-msgid "in_{0}_weeks_and_{1}_days"
+msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
 msgstr ""
 
 msgid "from_which_{0}_%"
