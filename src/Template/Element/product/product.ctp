@@ -114,13 +114,9 @@ if ($product['description'] != '') {
             $fullWeeks = (int) ($weeksAsFloat / 7);
             $days = $weeksAsFloat % 7;
             if ($days == 0) {
-                echo ' - <b>'. __('in_{0}_weeks', [$fullWeeks]) . '</b>';
+                echo ' - <b>'. __('{0,plural,=1{1_week} other{#_weeks}}', [$fullWeeks]) . '</b>';
             } else {
-                if ($days == 1) {
-                    echo ' - <b>'. __('in_{0}_weeks_and_{1}_day', [$fullWeeks, $days]) . '</b>';
-                } else {
-                    echo ' - <b>'. __('in_{0}_weeks_and_{1}_days', [$fullWeeks, $days]) . '</b>';
-                }
+                echo ' - <b>'. __('{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}', [$fullWeeks, $days]) . '</b>';
             }
         }
     }
