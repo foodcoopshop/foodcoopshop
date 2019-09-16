@@ -33,7 +33,6 @@ foodcoopshop.Helper = {
     addPrevAndNextCategoryLinks : function() {
         this.addPrevAndNextLinks(
             '#categories-menu li a',
-            '#inner-content .product-wrapper:last',
             '#inner-content h1'
         );
     },
@@ -41,12 +40,11 @@ foodcoopshop.Helper = {
     addPrevAndNextManufacturerLinks : function() {
         this.addPrevAndNextLinks(
             '#manufacturers-menu li a',
-            '#inner-content .imprint',
             '#inner-content .manufacturer-infos'
         );
     },
     
-    addPrevAndNextLinks : function(menu, afterContainerA, afterContainerB) {
+    addPrevAndNextLinks : function(menu, afterContainerTop) {
         var menu = $(menu);
         var activeElementHref = document.location.pathname;
         var nextElement = null;
@@ -65,25 +63,25 @@ foodcoopshop.Helper = {
         });
         var productsAvailable = $('#inner-content .product-wrapper').length > 0;
         if (prevElement) {
-            prevElement.attr('class', 'prev-button btn btn-outline-light');
+            prevElement.attr('class', 'prev-next-button prev-button btn btn-outline-light');
             prevElement.html('<i class="fas fa-arrow-circle-left fa"></i> ' + prevElement.text());
-            $(afterContainerA).after(prevElement.clone());
             if (productsAvailable) {
-                $(afterContainerB).after(prevElement);
+                $(afterContainerTop).after(prevElement.clone());
             }
+            $('#inner-content').append(prevElement.addClass('bottom'));
         }
         if (nextElement) {
-            nextElement.attr('class', 'next-button btn btn-outline-light');
+            nextElement.attr('class', 'prev-next-button next-button btn btn-outline-light');
             nextElement.html(nextElement.text() + ' <i class="fas fa-arrow-circle-right fa"></i>');
-            $(afterContainerA).after(nextElement.clone());
             if (productsAvailable) {
-                $(afterContainerB).after(nextElement);
+                $(afterContainerTop).after(nextElement.clone());
             }
+            $('#inner-content').append(nextElement.addClass('bottom'));
         }
         if ((prevElement || nextElement)) {
-            $(afterContainerA).after($('<hr style="clear:both;" />'));
+            $('#inner-content .prev-next-button.bottom').first().before($('<hr style="clear:both;" />'));
             if (productsAvailable) {
-                $(afterContainerB).after($('<hr style="clear:both;" />'));
+                $(afterContainerTop).after($('<hr style="clear:both;" />'));
             }
         }
     },

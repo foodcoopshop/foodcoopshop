@@ -938,8 +938,7 @@ body.carts.detail .cart:not(#cart) .featherlight-overlay,
 #LoginForm .featherlight-overlay {
     display: none;
 }
-#inner-content .prev-button,
-#inner-content .next-button {
+#inner-content .prev-next-button {
 	float: left;
 	margin-bottom: 15px;
 }
