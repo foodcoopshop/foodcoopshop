@@ -33,16 +33,16 @@ foodcoopshop.Helper = {
     addPrevAndNextCategoryLinks : function() {
         this.addPrevAndNextLinks(
             '#categories-menu li a',
-            '#inner-content h1',
-            '#inner-content .product-wrapper:last'
+            '#inner-content .product-wrapper:last',
+            '#inner-content h1'
         );
     },
     
     addPrevAndNextManufacturerLinks : function() {
         this.addPrevAndNextLinks(
             '#manufacturers-menu li a',
-            '#inner-content .manufacturer-infos',
-            '#inner-content .imprint'
+            '#inner-content .imprint',
+            '#inner-content .manufacturer-infos'
         );
     },
     
@@ -63,18 +63,28 @@ foodcoopshop.Helper = {
             }
             i++;
         });
+        var productsAvailable = $('#inner-content .product-wrapper').length > 0;
         if (prevElement) {
             prevElement.attr('class', 'prev-button btn btn-outline-light');
             prevElement.html('<i class="fas fa-arrow-circle-left fa"></i> ' + prevElement.text());
-            $(afterContainerA + ', ' + afterContainerB).after(prevElement);
+            $(afterContainerA).after(prevElement.clone());
+            if (productsAvailable) {
+                $(afterContainerB).after(prevElement);
+            }
         }
         if (nextElement) {
             nextElement.attr('class', 'next-button btn btn-outline-light');
             nextElement.html(nextElement.text() + ' <i class="fas fa-arrow-circle-right fa"></i>');
-            $(afterContainerA + ', ' + afterContainerB).after(nextElement);
+            $(afterContainerA).after(nextElement.clone());
+            if (productsAvailable) {
+                $(afterContainerB).after(nextElement);
+            }
         }
-        if (prevElement || nextElement) {
-            $(afterContainerA + ', ' + afterContainerB).after($('<hr style="clear:both;" />'));
+        if ((prevElement || nextElement)) {
+            $(afterContainerA).after($('<hr style="clear:both;" />'));
+            if (productsAvailable) {
+                $(afterContainerB).after($('<hr style="clear:both;" />'));
+            }
         }
     },
     
