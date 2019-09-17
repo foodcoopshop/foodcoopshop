@@ -3,7 +3,12 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.5.4...develop)
+## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.6.0...develop)
+
+# Neue Funktionen
+- Selbstbedienungs-Modus für Lagerprodukte - Details in der [Online-Dokumentation](https://foodcoopshop.github.io/de/selbstbedienungs-modus). [PR#384](https://github.com/foodcoopshop/foodcoopshop/pull/384) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/AndreasEgger"><img src="https://github.com/AndreasEgger.png" width="20"></a>
+
+## v2.6.0 / 2019-09-17 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.5.4...v2.6.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
 * [AndreasEgger](https://github.com/AndreasEgger)
@@ -12,7 +17,6 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 * [mrothauer](https://github.com/mrothauer)
 
 ### Neue Funktionen
-- Selbstbedienungs-Modus für Lagerprodukte - Details in der [Online-Dokumentation](https://foodcoopshop.github.io/de/selbstbedienungs-modus). [PR#384](https://github.com/foodcoopshop/foodcoopshop/pull/384) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/AndreasEgger"><img src="https://github.com/AndreasEgger.png" width="20"></a>
 - Die Standard-Einstellung des Feldes "Nur für Mitglieder" für neue Seiten, Hersteller und Blog-Artikel wurde auf "ja" geändert. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/927d5c8466b2be6b79b34820986d976b4e2b5552) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Verbesserungen WYSIWYG-Editor: Nach Copy/Paste bleiben die Formatierungen vorhanden. Kursiv, zentriert und rechtsbündig ist jetzt möglich. <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> 
 - Der Lieferrhythmus "Individuelles Datum" heißt jetzt "Sammelbestellung" (das klingt nicht so sperrig).
@@ -22,7 +26,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Bequemeres Bestellen: Auf den Hersteller- bzw. Kategorien-Seiten befinden sich nun ein Vor- und Zurück-Button. / [PR#403](https://github.com/foodcoopshop/foodcoopshop/pull/403) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Update der Datenschutzerklärung und Möglichkeit, darin die ZVR-Zahl anzugeben. [PR#397](https://github.com/foodcoopshop/foodcoopshop/pull/397) / [PR#399](https://github.com/foodcoopshop/foodcoopshop/pull/399) / <a href="https://github.com/CH83"><img src="https://github.com/CH83.png" width="20"></a> / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
  
-### Bugfix
+### Bugfixes
 - Das Erstellen eines neuen Produktes funktioniert jetzt auch auf dem Smartphone. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/871e40e46343cd0f7a6e21ad4d8f3afdeb3e441d) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Der Bestell-Erinnerungs-Cronjob wird nicht mehr erneut aufgerufen, wenn die E-Mails über die Fallback-Configuration versendet werden. [PR#390](https://github.com/foodcoopshop/foodcoopshop/pull/390) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
