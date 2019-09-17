@@ -12,7 +12,7 @@ use Cake\ORM\Entity;
  * Redistributions of files must retain the above copyright notice.
  *
  * @since         FoodCoopShop 2.0.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
