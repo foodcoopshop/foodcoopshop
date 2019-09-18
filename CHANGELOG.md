@@ -7,6 +7,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Neue Funktionen
 - Selbstbedienungs-Modus für Lagerprodukte - Details in der [Online-Dokumentation](https://foodcoopshop.github.io/de/selbstbedienungs-modus). [PR#384](https://github.com/foodcoopshop/foodcoopshop/pull/384) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/AndreasEgger"><img src="https://github.com/AndreasEgger.png" width="20"></a>
+- Bequemeres Bestellen: Auf den Hersteller- bzw. Kategorien-Seiten befinden sich nun ein Vor- und Zurück-Button. / [PR#403](https://github.com/foodcoopshop/foodcoopshop/pull/403) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ## v2.6.0 / 2019-09-17 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.5.4...v2.6.0)
 
@@ -23,7 +24,6 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Beim Produkt wird z. B. "in 3 Wochen und 2 Tagen" angezeigt, falls später als am kommenden (regulären) Liefertag geliefert wird. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/1aa540999c4028cdee058d1876318f80ad85df59) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Bei Bestelllisten und Rechnungen wird nun im Footer angezeigt, wann das PDF generiert wurde. / [PR#388](https://github.com/foodcoopshop/foodcoopshop/pull/388) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Verbesserter Spamschutz für das Registrierungsformular. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/cd3990daf2f9cd185de4254d2e22825b01eecdc4) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Bequemeres Bestellen: Auf den Hersteller- bzw. Kategorien-Seiten befinden sich nun ein Vor- und Zurück-Button. / [PR#403](https://github.com/foodcoopshop/foodcoopshop/pull/403) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Update der Datenschutzerklärung und Möglichkeit, darin die ZVR-Zahl anzugeben. [PR#397](https://github.com/foodcoopshop/foodcoopshop/pull/397) / [PR#399](https://github.com/foodcoopshop/foodcoopshop/pull/399) / <a href="https://github.com/CH83"><img src="https://github.com/CH83.png" width="20"></a> / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
  
 ### Bugfixes
