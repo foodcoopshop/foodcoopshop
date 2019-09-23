@@ -30,6 +30,62 @@ foodcoopshop.Helper = {
         }
     },
     
+    addPrevAndNextCategoryLinks : function() {
+        this.addPrevAndNextLinks(
+            '#categories-menu li a',
+            '#inner-content h1'
+        );
+    },
+    
+    addPrevAndNextManufacturerLinks : function() {
+        this.addPrevAndNextLinks(
+            '#manufacturers-menu li a',
+            '#inner-content .manufacturer-infos'
+        );
+    },
+    
+    addPrevAndNextLinks : function(menu, afterContainerTop) {
+        var menu = $(menu);
+        var activeElementHref = document.location.pathname;
+        var nextElement = null;
+        var prevElement = null;
+        var i = 0;
+        menu.each(function() {
+            if (activeElementHref == $(this).attr('href')) {
+                if ($(menu[i+1]).length > 0) {
+                    nextElement = $(menu[i+1]).clone();
+                }
+                if ($(menu[i-1]).length > 0) {
+                    prevElement = $(menu[i-1]).clone();
+                }
+            }
+            i++;
+        });
+        var productsAvailable = $('#inner-content .product-wrapper').length > 0;
+        if (prevElement) {
+            prevElement.attr('class', 'prev-next-button prev-button btn btn-outline-light');
+            prevElement.html('<i class="fas fa-arrow-circle-left fa"></i> ' + prevElement.text());
+            if (productsAvailable) {
+                $(afterContainerTop).after(prevElement.clone());
+            }
+            $('#inner-content').append(prevElement.addClass('bottom'));
+        }
+        if (nextElement) {
+            nextElement.attr('class', 'prev-next-button next-button btn btn-outline-light');
+            nextElement.html(nextElement.text() + ' <i class="fas fa-arrow-circle-right fa"></i>');
+            if (productsAvailable) {
+                $(afterContainerTop).after(nextElement.clone());
+            }
+            $('#inner-content').append(nextElement.addClass('bottom'));
+        }
+        if ((prevElement || nextElement)) {
+            $('#inner-content .prev-next-button.bottom').first().before($('<hr style="clear:both;" />'));
+            if (productsAvailable) {
+                $(afterContainerTop).after($('<hr style="clear:both;" />'));
+            }
+        }
+    },
+    
     initBootstrapSelect : function(container) {
         container.find('select').each(function () {
             var options = {

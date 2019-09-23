@@ -17,6 +17,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
+    Configure::read('app.jsNamespace').".Helper.addPrevAndNextCategoryLinks();".
     Configure::read('app.jsNamespace').".AppFeatherlight.addLightboxToCkeditorImages('.product-wrapper .toggle-content.description img');".
     Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForImages('.product-wrapper a.lightbox');".
     Configure::read('app.jsNamespace').".Helper.bindToggleLinks();".

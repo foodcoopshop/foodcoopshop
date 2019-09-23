@@ -114,6 +114,7 @@ body.categories.detail div.img-wrapper img {
 }
 body.categories.detail div.description-wrapper {
     margin-bottom: 10px;
+    clear: both;
 }
 #slider {
     position: relative;
@@ -937,7 +938,13 @@ body.carts.detail .cart:not(#cart) .featherlight-overlay,
 #LoginForm .featherlight-overlay {
     display: none;
 }
-
+#inner-content .prev-next-button {
+	float: left;
+	margin-bottom: 15px;
+}
+#inner-content .next-button {
+	float: right;
+}
 body.carts.detail .cart:not(#cart) span.amount .btn {
     color: #719f41;
 }
