@@ -45,15 +45,19 @@ class FileAndEmailLog extends FileLog
             'MissingActionException',
             'RecordNotFoundException',
             'MissingRouteException',
+            'UnauthorizedException',
             'cancellation_terms_accepted',
             'general_terms_and_conditions_accepted',
             'terms_of_use_accepted_date_checkbox',
             '{"passwd_old',
             '{"passwd_1',
             '{"passwd_2',
+            '{"pickup_day":{"allow-only-one-weekday"',
             '{"email":{"unique"',
             '{"email":{"exists"',
             '{"delivery_rhythm_',
+            '{"quantity_in_units"',
+            '{"email":{"account_inactive"',
             __('You_are_not_signed_in.')
         ];
         $ignoredExceptionsRegex = '/('.join('|', $ignoredPatterns).')/';
