@@ -629,6 +629,11 @@ class CartsControllerTest extends AppCakeTestCase
             ]
         );
         
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $actionLogs = $this->ActionLog->find('all', [])->toArray();
+        $this->assertEquals('carts', $actionLogs[0]->object_type);
+        $this->assertEquals($cart->id_cart, $actionLogs[0]->object_id);
+        $this->assertEquals(Configure::read('test.superadminId'), $actionLogs[0]->customer_id);
     }
     
     public function testFinishEmptyCart()

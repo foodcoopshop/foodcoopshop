@@ -437,6 +437,7 @@ class CartComponent extends Component
             $cart['Cart'] = $this->markAsSaved(); // modified timestamp is needed later on!
             
             $cartType = $this->AppAuth->getCartType();
+            $userIdForActionLog = $this->AppAuth->getUserId();
             
             switch($cartType) {
                 case $this->Cart::CART_TYPE_WEEKLY_RHYTHM;
@@ -447,6 +448,7 @@ class CartComponent extends Component
                     break;
                 case $this->Cart::CART_TYPE_INSTANT_ORDER;
                     $actionLogType = 'instant_order_added';
+                    $userIdForActionLog = $this->_registry->getController()->request->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
                     if (empty($manufacturersThatReceivedInstantOrderNotification)) {
                         $message = __('Instant_order_({0})_successfully_placed_for_{1}.', [
                             Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
@@ -475,7 +477,7 @@ class CartComponent extends Component
             }
             
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-            $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), 0, '', $messageForActionLog);
+            $this->ActionLog->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
             $this->_registry->getController()->Flash->success($message);
 
         }
