@@ -10,7 +10,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Bequemeres Bestellen: Auf den Hersteller- bzw. Kategorien-Seiten befinden sich nun ein Vor- und Zurück-Button. / [PR#403](https://github.com/foodcoopshop/foodcoopshop/pull/403) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Bugfixes
-- Beim Aktivitäten-Log für Sofort-Bestellungen wird nun in der Spalte "Benutzer" der richtige Benutzer angezeigt. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Beim Aktivitäten-Log für Sofort-Bestellungen wird nun in der Spalte "Benutzer" der richtige Benutzer angezeigt. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/7d1c935094e3cd8992c2282e84525db54af57dfa) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ## v2.6.0 / 2019-09-17 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.5.4...v2.6.0)
 
