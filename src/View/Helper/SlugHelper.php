@@ -175,9 +175,13 @@ class SlugHelper extends Helper
         return '/' . __('route_category') . '/' . $categoryId . '-' . StringComponent::slugify($name);
     }
 
-    public function getLogin()
+    public function getLogin($redirect='')
     {
-        return '/'.__('route_sign_in');
+        $url = '/'.__('route_sign_in');
+        if ($redirect != '') {
+            $url .= '?redirect=' . $redirect;
+        }
+        return $url;
     }
 
     public function getLogout()
