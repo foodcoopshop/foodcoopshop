@@ -35,13 +35,13 @@ class SelfServiceController extends FrontendController
         
         $categoryId = Configure::read('app.categoryAllProducts');
         if (!empty($this->getRequest()->getQuery('categoryId'))) {
-            $categoryId = $this->getRequest()->getQuery('categoryId');
+            $categoryId = h($this->getRequest()->getQuery('categoryId'));
         }
         $this->set('categoryId', $categoryId);
         
         $keyword = '';
         if (!empty($this->getRequest()->getQuery('keyword'))) {
-            $keyword = trim($this->getRequest()->getQuery('keyword'));
+            $keyword = h(trim($this->getRequest()->getQuery('keyword')));
             $this->set('keyword', $keyword);
         }
         

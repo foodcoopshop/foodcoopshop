@@ -42,19 +42,19 @@ class ReportsController extends AdminAppController
 
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
-            $dateFrom = $this->getRequest()->getQuery('dateFrom');
+            $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         }
         $this->set('dateFrom', $dateFrom);
 
         $dateTo = Configure::read('app.timeHelper')->getLastDayOfThisYear();
         if (! empty($this->getRequest()->getQuery('dateTo'))) {
-            $dateTo = $this->getRequest()->getQuery('dateTo');
+            $dateTo = h($this->getRequest()->getQuery('dateTo'));
         }
         $this->set('dateTo', $dateTo);
 
         $customerId = '';
         if (! empty($this->getRequest()->getQuery('customerId'))) {
-            $customerId = $this->getRequest()->getQuery('customerId');
+            $customerId = h($this->getRequest()->getQuery('customerId'));
         }
         $this->set('customerId', $customerId);
 

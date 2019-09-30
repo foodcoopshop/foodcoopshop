@@ -158,8 +158,8 @@ class PagesController extends FrontendController
         $sso = new SSOHelper();
         $sso->setSecret($discourse_sso_secret);
 
-        $payload = $this->getRequest()->getQuery('sso');
-        $signature = $this->getRequest()->getQuery('sig');
+        $payload = h($this->getRequest()->getQuery('sso'));
+        $signature = h($this->getRequest()->getQuery('sig'));
 
         if (!($sso->validatePayload($payload, $signature))) {
             die('Bad SSO request');

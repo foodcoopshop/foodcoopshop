@@ -112,7 +112,7 @@ class ProductsController extends AdminAppController
     
     public function generateProductCards()
     {
-        $productIds = $this->getRequest()->getQuery('productIds');
+        $productIds = h($this->getRequest()->getQuery('productIds'));
         $productIds = explode(',', $productIds);
         
         if (empty($productIds)) {
@@ -1031,13 +1031,13 @@ class ProductsController extends AdminAppController
     {
         $productId = '';
         if (! empty($this->getRequest()->getQuery('productId'))) {
-            $productId = $this->getRequest()->getQuery('productId');
+            $productId = h($this->getRequest()->getQuery('productId'));
         }
         $this->set('productId', $productId);
 
         $manufacturerId = '';
         if (! empty($this->getRequest()->getQuery('manufacturerId'))) {
-            $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
+            $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
         }
 
         // always filter by manufacturer id so that no other products than the own are shown
@@ -1048,25 +1048,25 @@ class ProductsController extends AdminAppController
 
         $active = 'all'; // default value
         if (in_array('active', array_keys($this->getRequest()->getQueryParams()))) {
-            $active = $this->getRequest()->getQuery('active');
+            $active = h($this->getRequest()->getQuery('active'));
         }
         $this->set('active', $active);
 
         $categoryId = ''; // default value
         if (!empty($this->getRequest()->getQuery('categoryId'))) {
-            $categoryId = $this->getRequest()->getQuery('categoryId');
+            $categoryId = h($this->getRequest()->getQuery('categoryId'));
         }
         $this->set('categoryId', $categoryId);
 
         $isQuantityMinFilterSet = 0; // default value
         if (!empty($this->getRequest()->getQuery('isQuantityMinFilterSet'))) {
-            $isQuantityMinFilterSet = $this->getRequest()->getQuery('isQuantityMinFilterSet');
+            $isQuantityMinFilterSet = h($this->getRequest()->getQuery('isQuantityMinFilterSet'));
         }
         $this->set('isQuantityMinFilterSet', $isQuantityMinFilterSet);
 
         $isPriceZero = 0; // default value
         if (!empty($this->getRequest()->getQuery('isPriceZero'))) {
-            $isPriceZero = $this->getRequest()->getQuery('isPriceZero');
+            $isPriceZero = h($this->getRequest()->getQuery('isPriceZero'));
         }
         $this->set('isPriceZero', $isPriceZero);
 

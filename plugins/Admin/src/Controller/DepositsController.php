@@ -48,7 +48,7 @@ class DepositsController extends AdminAppController
     {
         $manufacturerId = '';
         if (!empty($this->getRequest()->getQuery('manufacturerId'))) {
-            $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
+            $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
         } if ($this->manufacturerId > 0) {
             $manufacturerId = $this->manufacturerId;
         }

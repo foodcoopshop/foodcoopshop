@@ -120,7 +120,7 @@ class OrderDetailsController extends AdminAppController
     {
         $sortDirection = 'ASC';
         if (!empty($this->getRequest()->getQuery('direction') && in_array($this->getRequest()->getQuery('direction'), ['asc', 'desc']))) {
-            $sortDirection = $this->getRequest()->getQuery('direction');
+            $sortDirection = h($this->getRequest()->getQuery('direction'));
         }
         return $sortDirection;
     }
@@ -247,21 +247,21 @@ class OrderDetailsController extends AdminAppController
     {
 
         if (!empty($this->getRequest()->getQuery('message'))) {
-            $this->Flash->success($this->getRequest()->getQuery('message'));
+            $this->Flash->success(h($this->getRequest()->getQuery('message')));
             $this->redirect($this->referer());
         }
         
         // for filter from action logs page
         $orderDetailId = '';
         if (! empty($this->getRequest()->getQuery('orderDetailId'))) {
-            $orderDetailId = $this->getRequest()->getQuery('orderDetailId');
+            $orderDetailId = h($this->getRequest()->getQuery('orderDetailId'));
         }
 
         $legacyCall = false;
         $pickupDay = [];
         if ($orderDetailId == '') {
             if (in_array('pickupDay', array_keys($this->getRequest()->getQueryParams()))) {
-                $pickupDay = $this->getRequest()->getQuery('pickupDay');
+                $pickupDay = h($this->getRequest()->getQuery('pickupDay'));
                 $explodedPickupDay = explode(',', $pickupDay[0]); // param can be passed comma separated
                 if (count($explodedPickupDay) == 2) {
                     $pickupDay = $explodedPickupDay;
@@ -274,10 +274,10 @@ class OrderDetailsController extends AdminAppController
             // assures that old links (before v2.2) in emails to the financial responsible person still work after v2.2
             if ($this->getRequest()->getQuery('dateFrom')) {
                 $legacyCall = true;
-                $pickupDay[0] = $this->getRequest()->getQuery('dateFrom');
+                $pickupDay[0] = h($this->getRequest()->getQuery('dateFrom'));
             }
             if ($this->getRequest()->getQuery('dateTo')) {
-                $pickupDay[1] = $this->getRequest()->getQuery('dateTo');
+                $pickupDay[1] = h($this->getRequest()->getQuery('dateTo'));
             }
             // END legacy code
         }
@@ -287,31 +287,31 @@ class OrderDetailsController extends AdminAppController
 
         $manufacturerId = '';
         if (! empty($this->getRequest()->getQuery('manufacturerId'))) {
-            $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
+            $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
         }
         $this->set('manufacturerId', $manufacturerId);
 
         $deposit = '';
         if (! empty($this->getRequest()->getQuery('deposit'))) {
-            $deposit = $this->getRequest()->getQuery('deposit');
+            $deposit = h($this->getRequest()->getQuery('deposit'));
         }
         $this->set('deposit', $deposit);
 
         $productId = '';
         if (! empty($this->getRequest()->getQuery('productId'))) {
-            $productId = $this->getRequest()->getQuery('productId');
+            $productId = h($this->getRequest()->getQuery('productId'));
         }
         $this->set('productId', $productId);
 
         $customerId = '';
         if (! empty($this->getRequest()->getQuery('customerId'))) {
-            $customerId = $this->getRequest()->getQuery('customerId');
+            $customerId = h($this->getRequest()->getQuery('customerId'));
         }
         $this->set('customerId', $customerId);
 
         $groupBy = '';
         if (! empty($this->getRequest()->getQuery('groupBy'))) {
-            $groupBy = $this->getRequest()->getQuery('groupBy');
+            $groupBy = h($this->getRequest()->getQuery('groupBy'));
         }
         if ($this->AppAuth->isManufacturer() && $groupBy != 'product') {
             $groupBy = '';
