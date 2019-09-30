@@ -479,7 +479,7 @@ class PaymentsController extends AdminAppController
     {
         $customerId = '';
         if (!empty($this->getRequest()->getQuery('customerId'))) {
-            $customerId = $this->getRequest()->getQuery('customerId');
+            $customerId = h($this->getRequest()->getQuery('customerId'));
         } if ($this->customerId > 0) {
             $customerId = $this->customerId;
         }

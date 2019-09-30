@@ -45,7 +45,7 @@ class StatisticsController extends AdminAppController
     {
         $manufacturerId = 'all';
         if (!empty($this->getRequest()->getQuery('manufacturerId'))) {
-            $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
+            $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
         }
         if ($this->manufacturerId > 0) {
             $manufacturerId = $this->manufacturerId;
@@ -66,7 +66,7 @@ class StatisticsController extends AdminAppController
 
         $year = '';
         if (!empty($this->getRequest()->getQuery('year'))) {
-            $year = $this->getRequest()->getQuery('year');
+            $year = h($this->getRequest()->getQuery('year'));
         }
         $this->set('year', $year);
         

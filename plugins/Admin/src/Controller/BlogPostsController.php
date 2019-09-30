@@ -181,7 +181,7 @@ class BlogPostsController extends AdminAppController
 
         $customerId = '';
         if (! empty($this->getRequest()->getQuery('customerId'))) {
-            $customerId = $this->getRequest()->getQuery('customerId');
+            $customerId = h($this->getRequest()->getQuery('customerId'));
             $conditions = [
                 'BlogPosts.id_customer' => $customerId
             ];
@@ -190,7 +190,7 @@ class BlogPostsController extends AdminAppController
 
         $manufacturerId = '';
         if (! empty($this->getRequest()->getQuery('manufacturerId'))) {
-            $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
+            $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
         }
         $this->set('manufacturerId', $manufacturerId);
 

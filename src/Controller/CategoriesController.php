@@ -56,7 +56,7 @@ class CategoriesController extends FrontendController
     {
         $keyword = '';
         if (! empty($this->getRequest()->getQuery('keyword'))) {
-            $keyword = trim($this->getRequest()->getQuery('keyword'));
+            $keyword = h(trim($this->getRequest()->getQuery('keyword')));
         }
 
         if ($keyword == '') {

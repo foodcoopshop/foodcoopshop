@@ -260,19 +260,19 @@ class ManufacturersController extends AdminAppController
     {
         $dateFrom = Configure::read('app.timeHelper')->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
-            $dateFrom = $this->getRequest()->getQuery('dateFrom');
+            $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         }
         $this->set('dateFrom', $dateFrom);
 
         $dateTo = Configure::read('app.timeHelper')->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
         if (! empty($this->getRequest()->getQuery('dateTo'))) {
-            $dateTo = $this->getRequest()->getQuery('dateTo');
+            $dateTo = h($this->getRequest()->getQuery('dateTo'));
         }
         $this->set('dateTo', $dateTo);
 
         $active = 1; // default value
         if (in_array('active', array_keys($this->getRequest()->getQueryParams()))) {
-            $active = $this->getRequest()->getQuery('active');
+            $active = h($this->getRequest()->getQuery('active'));
         }
         $this->set('active', $active);
 
@@ -339,9 +339,9 @@ class ManufacturersController extends AdminAppController
     public function sendInvoice()
     {
 
-        $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
-        $dateFrom = $this->getRequest()->getQuery('dateFrom');
-        $dateTo = $this->getRequest()->getQuery('dateTo');
+        $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
+        $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
+        $dateTo = h($this->getRequest()->getQuery('dateTo'));
 
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
@@ -439,9 +439,9 @@ class ManufacturersController extends AdminAppController
     public function sendOrderList()
     {
 
-        $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
-        $pickupDay = $this->getRequest()->getQuery('pickupDay');
-        $cronjobRunDay = $this->getRequest()->getQuery('cronjobRunDay');
+        $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
+        $pickupDay = h($this->getRequest()->getQuery('pickupDay'));
+        $cronjobRunDay = h($this->getRequest()->getQuery('cronjobRunDay'));
         $pickupDayDbFormat = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
         
         $manufacturer = $this->Manufacturer->find('all', [
@@ -765,9 +765,9 @@ class ManufacturersController extends AdminAppController
 
     public function getInvoice()
     {
-        $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
-        $dateFrom = $this->getRequest()->getQuery('dateFrom');
-        $dateTo = $this->getRequest()->getQuery('dateTo');
+        $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
+        $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
+        $dateTo = h($this->getRequest()->getQuery('dateTo'));
 
         $results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, []);
         if (empty($results)) {
@@ -789,8 +789,8 @@ class ManufacturersController extends AdminAppController
     
     private function getOrderList($type)
     {
-        $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
-        $pickupDay = $this->getRequest()->getQuery('pickupDay');
+        $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
+        $pickupDay = h($this->getRequest()->getQuery('pickupDay'));
         $pickupDayDbFormat = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
         
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');

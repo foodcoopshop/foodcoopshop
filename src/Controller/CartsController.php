@@ -219,7 +219,7 @@ class CartsController extends FrontendController
 
     public function addOrderToCart()
     {
-        $deliveryDate = $this->getRequest()->getQuery('deliveryDate');
+        $deliveryDate = h($this->getRequest()->getQuery('deliveryDate'));
         $this->doAddOrderToCart($deliveryDate);
         $this->redirect($this->referer());
     }

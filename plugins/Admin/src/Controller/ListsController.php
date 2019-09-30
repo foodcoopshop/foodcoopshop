@@ -39,7 +39,7 @@ class ListsController extends AdminAppController
 
         $dateFrom = Configure::read('app.timeHelper')->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
-            $dateFrom = $this->getRequest()->getQuery('dateFrom');
+            $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         }
         $this->set('dateFrom', $dateFrom);
 
@@ -120,12 +120,12 @@ class ListsController extends AdminAppController
     
     public function getOrderList()
     {
-        $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder_order_lists')) . DS . $this->getRequest()->getQuery('file');
+        $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder_order_lists')) . DS . h($this->getRequest()->getQuery('file'));
         
         if ($this->AppAuth->isManufacturer()) {
-            preg_match('/'.__d('admin', '_Order_list_filename_').'('.__d('admin', 'product').'|'.__d('admin', 'member').'|Artikel)/', $this->getRequest()->getQuery('file'), $matches);
+            preg_match('/'.__d('admin', '_Order_list_filename_').'('.__d('admin', 'product').'|'.__d('admin', 'member').'|Artikel)/', h($this->getRequest()->getQuery('file')), $matches);
             if (!empty($matches[1])) {
-                $splittedFileName = $this->splitOrderDetailStringIntoParts($this->getRequest()->getQuery('file'), $matches[1]);
+                $splittedFileName = $this->splitOrderDetailStringIntoParts(h($this->getRequest()->getQuery('file')), $matches[1]);
                 $manufacturerId = $splittedFileName['manufacturerId'];
                 if ($manufacturerId != $this->AppAuth->getManufacturerId()) {
                     throw new UnauthorizedException();
@@ -138,7 +138,7 @@ class ListsController extends AdminAppController
     
     public function getInvoice()
     {
-        $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder_invoices')) . DS . $this->getRequest()->getQuery('file');
+        $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder_invoices')) . DS . h($this->getRequest()->getQuery('file'));
         $this->getFile($filenameWithPath);
     }
 

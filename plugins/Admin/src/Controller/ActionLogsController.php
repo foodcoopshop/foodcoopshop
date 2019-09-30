@@ -37,13 +37,13 @@ class ActionLogsController extends AdminAppController
 
         $dateFrom = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime('-6 day'));
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
-            $dateFrom = $this->getRequest()->getQuery('dateFrom');
+            $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         }
         $this->set('dateFrom', $dateFrom);
 
         $dateTo = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'));
         if (! empty($this->getRequest()->getQuery('dateTo'))) {
-            $dateTo = $this->getRequest()->getQuery('dateTo');
+            $dateTo = h($this->getRequest()->getQuery('dateTo'));
         }
         $this->set('dateTo', $dateTo);
 
@@ -52,7 +52,7 @@ class ActionLogsController extends AdminAppController
 
         $customerId = '';
         if (! empty($this->getRequest()->getQuery('customerId'))) {
-            $customerId = $this->getRequest()->getQuery('customerId');
+            $customerId = h($this->getRequest()->getQuery('customerId'));
         }
         $this->set('customerId', $customerId);
 
@@ -62,7 +62,7 @@ class ActionLogsController extends AdminAppController
 
         $productId = '';
         if (! empty($this->getRequest()->getQuery('productId'))) {
-            $productId = $this->getRequest()->getQuery('productId');
+            $productId = h($this->getRequest()->getQuery('productId'));
         }
         $this->set('productId', $productId);
 
@@ -98,7 +98,7 @@ class ActionLogsController extends AdminAppController
 
         $types = [];
         if (! empty($this->getRequest()->getQuery('types'))) {
-            $types = $this->getRequest()->getQuery('types');
+            $types = h($this->getRequest()->getQuery('types'));
             $conditions['ActionLogs.type IN'] = $types;
         }
         $this->set('types', $types);

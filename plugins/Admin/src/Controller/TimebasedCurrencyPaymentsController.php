@@ -382,7 +382,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
 
     public function myPaymentsCustomer()
     {
-        $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
+        $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
         $this->set('showAddForm', true);
         $this->set('isDeleteAllowedGlobally', true);
         $this->set('isEditAllowedGlobally', false);
@@ -430,7 +430,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
      */
     public function paymentDetailsSuperadmin($customerId)
     {
-        $manufacturerId = $this->getRequest()->getQuery('manufacturerId');
+        $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
 
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [

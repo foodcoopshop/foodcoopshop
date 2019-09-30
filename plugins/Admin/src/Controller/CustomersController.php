@@ -66,7 +66,7 @@ class CustomersController extends AdminAppController
     
     public function generateMemberCards()
     {
-        $customerIds = $this->getRequest()->getQuery('customerIds');
+        $customerIds = h($this->getRequest()->getQuery('customerIds'));
         $customerIds = explode(',', $customerIds);
         $this->prepareGenerateMemberCards($customerIds);
     }
@@ -541,13 +541,13 @@ class CustomersController extends AdminAppController
     {
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
-            $dateFrom = $this->getRequest()->getQuery('dateFrom');
+            $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         }
         $this->set('dateFrom', $dateFrom);
 
         $dateTo = Configure::read('app.timeHelper')->getLastDayOfThisYear();
         if (! empty($this->getRequest()->getQuery('dateTo'))) {
-            $dateTo = $this->getRequest()->getQuery('dateTo');
+            $dateTo = h($this->getRequest()->getQuery('dateTo'));
         }
         $this->set('dateTo', $dateTo);
 
@@ -605,31 +605,31 @@ class CustomersController extends AdminAppController
     {
         $active = 1; // default value
         if (in_array('active', array_keys($this->getRequest()->getQueryParams()))) {
-            $active = $this->getRequest()->getQuery('active');
+            $active = h($this->getRequest()->getQuery('active'));
         }
         $this->set('active', $active);
 
         $validOrdersCountFrom = ''; // default value
         if (!empty($this->getRequest()->getQuery('validOrdersCountFrom'))) {
-            $validOrdersCountFrom = $this->getRequest()->getQuery('validOrdersCountFrom');
+            $validOrdersCountFrom = h($this->getRequest()->getQuery('validOrdersCountFrom'));
         }
         $this->set('validOrdersCountFrom', $validOrdersCountFrom);
 
         $validOrdersCountTo = ''; // default value
         if (!empty($this->getRequest()->getQuery('validOrdersCountTo'))) {
-            $validOrdersCountTo = $this->getRequest()->getQuery('validOrdersCountTo');
+            $validOrdersCountTo = h($this->getRequest()->getQuery('validOrdersCountTo'));
         }
         $this->set('validOrdersCountTo', $validOrdersCountTo);
 
         $dateFrom = '';
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
-            $dateFrom = $this->getRequest()->getQuery('dateFrom');
+            $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         }
         $this->set('dateFrom', $dateFrom);
 
         $dateTo = '';
         if (! empty($this->getRequest()->getQuery('dateTo'))) {
-            $dateTo = $this->getRequest()->getQuery('dateTo');
+            $dateTo = h($this->getRequest()->getQuery('dateTo'));
         }
         $this->set('dateTo', $dateTo);
 
