@@ -7,7 +7,6 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Neue Funktionen
 - Selbstbedienungs-Modus für Lagerprodukte - Details in der [Online-Dokumentation](https://foodcoopshop.github.io/de/selbstbedienungs-modus). [PR#384](https://github.com/foodcoopshop/foodcoopshop/pull/384) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/AndreasEgger"><img src="https://github.com/AndreasEgger.png" width="20"></a>
-- Bequemeres Bestellen: Auf den Hersteller- bzw. Kategorien-Seiten befinden sich nun ein Vor- und Zurück-Button. / [PR#403](https://github.com/foodcoopshop/foodcoopshop/pull/403) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ## v2.6.1 / 2019-09-30 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.6.0...v2.6.1)
 
@@ -15,8 +14,11 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 * [mrothauer](https://github.com/mrothauer)
 * [tomgrassmann](https://github.com/tomgrassmann)
 
+### Neue Funktionen
+- Bequemeres Bestellen: Auf den Hersteller- bzw. Kategorien-Seiten befinden sich nun ein Vor- und Zurück-Button. / [PR#403](https://github.com/foodcoopshop/foodcoopshop/pull/403) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
 ### Bugfixes
-- Cross Site Scripting-Sicherheitslücke beim Such-Formular geschlossen. [I#405](https://github.com/foodcoopshop/foodcoopshop/issues/405) / [PR#406](https://github.com/foodcoopshop/foodcoopshop/pull/406) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> <a href="https://github.com/tomgrassmann"><img src="https://github.com/tomgrassmann.png" width="20"></a>
+- Cross Site Scripting-Sicherheitslücke beim Such-Formular geschlossen. [I#405](https://github.com/foodcoopshop/foodcoopshop/issues/405) / [PR#407](https://github.com/foodcoopshop/foodcoopshop/pull/407) / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> <a href="https://github.com/tomgrassmann"><img src="https://github.com/tomgrassmann.png" width="20"></a>
 - Beim Aktivitäten-Log für Sofort-Bestellungen wird nun in der Spalte "Benutzer" der richtige Benutzer angezeigt. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/7d1c935094e3cd8992c2282e84525db54af57dfa) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
