@@ -50,8 +50,6 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = '346'; // artischocke
 
-        //TODO calling the method addProductToCart only once leads to order error - needs debugging
-        $this->addProductToCart($productId, 1);
         $this->addProductToCart($productId, 1);
         $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
@@ -147,20 +145,58 @@ class SendOrderListsShellTest extends AppCakeTestCase
         
     }
     
-    public function testSendOrderListsWithIndividualSendOrderListDay()
+    public function testSendOrderListsWithDifferentIndividualSendOrderListDayAndWeeklySendDay()
     {
         $this->loginAsSuperadmin();
         $productId = 346;
-        $this->changeProductDeliveryRhythm($productId, '0-individual', '2018-02-02', '2018-01-30', '', '2018-01-31');
+        $orderDetailIdIndividualDate = 1;
+        $deliveryDay = '2019-10-11';
+        $cronjobRunDay = '2019-10-02';
         
-        $cronjobRunDay = '2018-01-31';
-        $orderDetailId = 1;
+        $this->OrderDetail->save(
+            $this->OrderDetail->patchEntity(
+                $this->OrderDetail->get($orderDetailIdIndividualDate),
+                [
+                    'pickup_day' => $deliveryDay,
+                ]
+            )
+        );
+        $this->changeProductDeliveryRhythm($productId, '0-individual', $deliveryDay, '2019-10-01', '', $cronjobRunDay);
         
-        // 1) run cronjob and assert no changings
+        $this->addProductToCart(344, 1); //knoblauch
+        $this->finishCart();
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
+        $cart = $this->getCartById($cartId);
+        $orderDetailIdWeekly = $cart->cart_products[0]->order_detail->id_order_detail;
+        $this->OrderDetail->save(
+            $this->OrderDetail->patchEntity(
+                $this->OrderDetail->get($orderDetailIdWeekly),
+                [
+                    'pickup_day' => '2019-10-04',
+                ]
+            )
+        );
+        
+        // 1) run cronjob and assert changings
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
-        $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState($orderDetailIdIndividualDate, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState($orderDetailIdWeekly, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(3, count($emailLogs), 'amount of sent emails wrong');
+        $this->assertEquals(2, count($emailLogs), 'amount of sent emails wrong');
+        
+        $this->assertEmailLogs(
+            $emailLogs[1],
+            'Bestellungen für den',
+            [
+                'im Anhang findest du zwei Bestelllisten',
+                'Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test.pdf',
+                'Content-Type: application/pdf'
+            ],
+            [
+                Configure::read('test.loginEmailVegetableManufacturer')
+            ]
+        );
         
     }
     
