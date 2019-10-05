@@ -14,7 +14,7 @@
     "install": "bash ../bin/cake npm_post_install"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.11.1",
+    "@fortawesome/fontawesome-free": "^5.11.2",
     "blueimp-file-upload": "^10.2.0",
     "bootstrap": "^4.3.1",
     "bootstrap-select": "^1.13.11",
@@ -36,6 +36,6 @@
     "tooltipster": "^4.2.7"
   },
   "devDependencies": {
-    "eslint": "^6.4.0"
+    "eslint": "^6.5.1"
   }
 }
