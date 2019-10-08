@@ -39,7 +39,10 @@ class SanitizeComponent extends Component
      */
     public function stripTagsRecursive($data, $excludedFields = [])
     {
-        $purifier = new \HTMLPurifier();
+        $config = \HTMLPurifier_Config::createDefault();
+        $config->set('Cache.SerializerPath', TMP . 'cache' . DS . 'html_purifier');
+        $purifier = new \HTMLPurifier($config);
+        
         array_walk_recursive($data, function (&$item, $key) use ($excludedFields, $purifier) {
             if (is_string($item)) {
                 if (!in_array($key, $excludedFields)) {
