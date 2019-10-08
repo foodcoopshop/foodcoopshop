@@ -39,13 +39,14 @@ class SanitizeComponent extends Component
      */
     public function stripTagsRecursive($data, $excludedFields = [])
     {
-        array_walk_recursive($data, function (&$item, $key) use ($excludedFields) {
+        $purifier = new \HTMLPurifier();
+        array_walk_recursive($data, function (&$item, $key) use ($excludedFields, $purifier) {
             if (is_string($item)) {
                 if (!in_array($key, $excludedFields)) {
                     $item = strip_tags($item);
                 }
-                // remove script tag for all fields, including the excluded fields
-                $item = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $item);
+                // avoid xss attacs
+                $item = $purifier->purify($item);
             }
         });
         return $data;
