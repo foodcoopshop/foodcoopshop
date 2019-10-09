@@ -48,7 +48,7 @@ class SanitizeComponent extends Component
                 if (!in_array($key, $excludedFields)) {
                     $item = strip_tags($item);
                 }
-                // avoid xss attacs
+                // avoid xss attacks
                 $item = $purifier->purify($item);
             }
         });
