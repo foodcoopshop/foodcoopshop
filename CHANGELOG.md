@@ -3,10 +3,15 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
-## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.6.1...develop)
+## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.6.2...develop)
 
-### Neue Funktionen
-- Selbstbedienungs-Modus für Lagerprodukte - Details in der [Online-Dokumentation](https://foodcoopshop.github.io/de/selbstbedienungs-modus). [PR#384](https://github.com/foodcoopshop/foodcoopshop/pull/384) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/AndreasEgger"><img src="https://github.com/AndreasEgger.png" width="20"></a>
+## v2.6.2 / 2019-10-10 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.6.1...v2.6.2)
+
+### Herzlichen Dank an alle beteiligten Personen
+* [mrothauer](https://github.com/mrothauer)
+
+### Bugfixes
+- Jeglicher User-Input wird nun mit HtmlPurifier auf Sicherheitsrisiken (XSS) überprüft und ggfs. bereinigt. <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ## v2.6.1 / 2019-09-30 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.6.0...v2.6.1)
 
