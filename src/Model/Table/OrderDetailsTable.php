@@ -281,17 +281,17 @@ class OrderDetailsTable extends AppTable
 
         $sql =  'SELECT SUM(od.deposit) as sumDepositDelivered ';
         if ($groupByMonth) {
-            $sql .= ', DATE_FORMAT(od.created, \'%Y-%c\') as monthAndYear ';
+            $sql .= ', DATE_FORMAT(od.pickup_day, \'%Y-%c\') as monthAndYear ';
         }
         $sql .= 'FROM '.$this->tablePrefix.'order_detail od ';
         $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';
         $sql .= 'WHERE p.id_manufacturer = :manufacturerId ';
-        $sql .= 'AND DATE_FORMAT(od.created, \'%Y-%m-%d\') >= :depositForManufacturersStartDate ';
+        $sql .= 'AND DATE_FORMAT(od.pickup_day, \'%Y-%m-%d\') >= :depositForManufacturersStartDate ';
         if ($groupByMonth) {
             $sql .= 'GROUP BY monthAndYear ';
             $sql .= 'ORDER BY monthAndYear DESC;';
         } else {
-            $sql .= 'ORDER BY od.created DESC;';
+            $sql .= 'ORDER BY od.pickup_day DESC;';
         }
         $params = [
             'manufacturerId' => $manufacturerId,
