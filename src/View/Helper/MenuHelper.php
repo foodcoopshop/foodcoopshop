@@ -116,7 +116,7 @@ class MenuHelper extends Helper
             }
         }
 
-        if ($slug == '/' && $_SERVER['REQUEST_URI'] == '/') {
+        if ($slug == $_SERVER['REQUEST_URI']) {
             $class[] = 'active';
         }
 
