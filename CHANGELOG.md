@@ -5,8 +5,14 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.6.2...develop)
 
+* [mantensteiner](https://github.com/mantensteiner)
+* [mrothauer](https://github.com/mrothauer)
+
 ### Neue Funktionen
 - Selbstbedienungs-Modus für Lagerprodukte - Details in der [Online-Dokumentation](https://foodcoopshop.github.io/de/selbstbedienungs-modus). [PR#384](https://github.com/foodcoopshop/foodcoopshop/pull/384) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/AndreasEgger"><img src="https://github.com/AndreasEgger.png" width="20"></a>
+
+### Für Entwickler
+- FoodCoopShop kann jetzt auch mittels Docker installiert bzw. gehostet werden. [I#376](https://github.com/foodcoopshop/foodcoopshop/issues/376) / [PR#1](foodcoopshop/foodcoopshop-docker/pull/1) <a href="https://github.com/mantensteiner"><img src="https://github.com/mantensteiner.png" width="20"></a>
 
 
 ## v2.6.2 / 2019-10-10 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.6.1...v2.6.2)
