@@ -41,6 +41,8 @@ class SanitizeComponent extends Component
     {
         $config = \HTMLPurifier_Config::createDefault();
         $config->set('Cache.SerializerPath', TMP . 'cache' . DS . 'html_purifier');
+        $config->set('HTML.SafeIframe', true);
+        $config->set('URI.SafeIframeRegexp', '%(.*)%');
         $purifier = new \HTMLPurifier($config);
         
         array_walk_recursive($data, function (&$item, $key) use ($excludedFields, $purifier) {
