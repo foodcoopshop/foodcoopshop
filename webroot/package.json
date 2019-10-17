@@ -17,7 +17,7 @@
     "@fortawesome/fontawesome-free": "^5.11.2",
     "blueimp-file-upload": "^10.2.0",
     "bootstrap": "^4.3.1",
-    "bootstrap-select": "^1.13.11",
+    "bootstrap-select": "^1.13.12",
     "chart.js": "^2.8.0",
     "ckeditor": "^4.12.1",
     "clipboard": "^2.0.4",
@@ -31,7 +31,7 @@
     "jquery.idle": "^1.3.0",
     "jquery.scrollto": "^2.1.2",
     "owl.carousel": "^2.3.4",
-    "popper.js": "^1.15.0",
+    "popper.js": "^1.16.0",
     "slidebars": "^2.0.2",
     "tooltipster": "^4.2.7"
   },
