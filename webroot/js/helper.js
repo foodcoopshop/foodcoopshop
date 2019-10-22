@@ -433,18 +433,21 @@ foodcoopshop.Helper = {
         container.addClass('owl-carousel');
 
         container.owlCarousel({
-            responsiveClass: true,
             autoplay: true,
             autoplayHoverPause: true,
-            animateOut: 'fadeOut',
             smartSpeed: 1500,
             loop: true,
-            nav: true,
+            nav: false,
             items: 1,
             navText: [
                 '<i class="far fa-arrow-alt-circle-left fa-3x"></i>',
                 '<i class="far fa-arrow-alt-circle-right fa-3x"></i>'
-            ]
+            ],
+            responsive : {
+                768: {
+                    nav: true
+                }
+            }
         });
     },
 
