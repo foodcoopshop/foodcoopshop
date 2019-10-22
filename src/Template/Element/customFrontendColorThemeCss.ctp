@@ -49,7 +49,6 @@ use Cake\Core\Configure;
     .product-wrapper .price,
     #scroll-to-top a,
     #scroll-to-top a i,
-    body.pages.home .cycle-pager span.cycle-pager-active,
     .vertical.menu a i.fas,
     .vertical.menu span.additional-info,
     a:not(.btn), a:not(.btn):visited, a:not(.btn):active,
