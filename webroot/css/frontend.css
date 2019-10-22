@@ -13,7 +13,6 @@
  */
 body {
     font-family: 'Open Sans';
-    margin: 3px;
     color: #333333;
     font-size: 10pt;
     background-image: url(/img/bg.jpg);
@@ -52,7 +51,7 @@ body.pages.home .cycle-pager > * {
 }
 
 #container {
-    width: 1235px;
+    width: 1234px;
     float: left;
     display: none;
 }
@@ -60,11 +59,12 @@ body.pages.home .cycle-pager > * {
 #content {
     line-height: 20px;
     min-height: 500px; /* hack for mobile with little content */
-    width: 927px;
+    width: 928px;
     float: left;
     background: #fff;
     z-index: 100;
     margin-right: 3px;
+    border-right: 1px solid #d6d4d4;
 }
 #inner-content {
     float: left;
@@ -75,11 +75,13 @@ body.pages.home .cycle-pager > * {
     padding-bottom: 15px;
 }
 #header {
-    width: 927px;
+    width: 928px;
     background: #fff;
     padding-top: 5px;
     float: left;
-    border-bottom: 1px solid #d6d4d4;
+    border: 1px solid #d6d4d4;
+    border-left: none;
+    border-top: none;
 }
 #header .logo-wrapper {
     margin: 5px 10px 5px 0;
@@ -120,7 +122,7 @@ body.categories.detail div.description-wrapper {
     position: relative;
     overflow: hidden;
     margin-left: 10px;
-    width: 905px;
+    width: 908px;
     margin-top: 10px;
     margin-bottom: -5px;
 }
@@ -610,7 +612,7 @@ body.manufacturers.detail .imprint {
 #footer {
     background-color: #3f3f3f;
     color: #fff;
-    width: 927px;
+    width: 928px;
     min-height: 172px;
     float: left;
 }
@@ -625,15 +627,15 @@ body.manufacturers.detail .imprint {
 #footer .fcs-backlink {
     float: right;
     clear: both;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 #footer .first-column {
     width: 250px;
     float: left;
     text-align: left;
     font-size: 14px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     margin-left: 10px;
 }
 #footer .second-column {
@@ -669,9 +671,6 @@ body.manufacturers.detail .imprint {
     clear: both;
     margin-bottom: 5px;
 }
-#footer-menu li {
-    margin-bottom: 5px;
-}
 #footer-menu ul {
     padding-left: 10px;
     font-size: 12px;
@@ -680,13 +679,12 @@ body.manufacturers.detail .imprint {
 }
 #footer h2 {
     font-size: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     color: #fff;
     margin-top: 0;
 }
 #right {
     float: left;
-    width: 305px;
     margin-top: -148px;
 }
 #right .inner-right {
@@ -696,7 +694,7 @@ body.manufacturers.detail .imprint {
     left: 927px;
     width: 305px;
     background: #fff;
-    margin-bottom: 3px;
+    border-bottom: 1px solid #d6d4d4;
 }
 .box h3 {
     color: #fff;

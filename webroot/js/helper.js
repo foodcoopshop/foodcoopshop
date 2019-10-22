@@ -485,7 +485,7 @@ foodcoopshop.Helper = {
     onWindowResize: function () {
 
         // keep right column on its place
-        var newLeft = $(window).scrollLeft() * -1 + parseInt($('#content').width()) + parseInt($('#content').css('padding-left')) + 6;
+        var newLeft = $(window).scrollLeft() * -1 + parseInt($('#content').width()) + parseInt($('#content').css('padding-left')) + 1;
         $('.inner-right').css('left', newLeft);
 
         // adapt height of cart
