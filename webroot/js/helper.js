@@ -428,14 +428,23 @@ foodcoopshop.Helper = {
     },
 
     initSlider: function () {
-        $('#slider').cycle({
-            fx: 'scrollHorz',
-            prev: '#slider-wrapper .prev',
-            next: '#slider-wrapper .next',
-            timeout: 6000,
-            speed: 3000,
-            swipe: true,
-            pause: 0
+        
+        var container = $('#slider');
+        container.addClass('owl-carousel');
+
+        container.owlCarousel({
+            responsiveClass: true,
+            autoplay: true,
+            autoplayHoverPause: true,
+            animateOut: 'fadeOut',
+            smartSpeed: 1500,
+            loop: true,
+            nav: true,
+            items: 1,
+            navText: [
+                '<i class="far fa-arrow-alt-circle-left fa-3x"></i>',
+                '<i class="far fa-arrow-alt-circle-right fa-3x"></i>'
+            ]
         });
     },
 

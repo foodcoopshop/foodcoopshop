@@ -126,6 +126,20 @@ body.categories.detail div.description-wrapper {
     margin-top: 10px;
     margin-bottom: -5px;
 }
+#slider .owl-nav button {
+	position: absolute;
+    top: 45%;
+    transform: translateY(-45%);
+    text-shadow: 2px 2px 4px #fff;
+    border-radius: 20px;
+    padding: 2px ! important;
+}
+#slider .owl-prev {
+	left: 20px;
+}
+#slider .owl-next {
+    right: 20px;
+}
 .vertical.menu {
     float: left;
     margin-bottom: 10px;
@@ -1147,7 +1161,7 @@ a.blog-post-wrapper:hover .img-wrapper {
     top: 100px;
     outline: none ! important;
 }
-.blog-wrapper .owl-nav button:hover {
+.owl-nav button:hover {
     opacity: 0.8;
 }
 .blog-wrapper .owl-prev.disabled i,

@@ -61,6 +61,7 @@ use Cake\Core\Configure;
     }
     
     .blog-wrapper .owl-nav button,
+    #slider .owl-nav button,
     body.blog_posts.detail #inner-content h2.further-news,
     body.customers.registration_successful #inner-content h2.further-news {
         color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
