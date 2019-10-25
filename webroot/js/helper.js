@@ -434,6 +434,8 @@ foodcoopshop.Helper = {
 
         container.owlCarousel({
             autoplay: true,
+            autoHeight: true,
+            autoplayTimeout: 7000,
             autoplayHoverPause: true,
             smartSpeed: 1500,
             loop: true,
