@@ -9,10 +9,12 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 * [mrothauer](https://github.com/mrothauer)
 
 ### Neue Funktionen
+- Die Swipe-Funktion des Sliders auf der Home ist verbessert, es gibt nun auch Navigations-Pfeile statt der Punkte. [PR#416](https://github.com/foodcoopshop/foodcoopshop/pull/416) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Frontend-Layout-Verbesserung: Falls ein eigenens Hintergrundbild verwendet wird, scheint dieses nicht mehr durch. [PR#416](https://github.com/foodcoopshop/foodcoopshop/pull/416) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Selbstbedienungs-Modus für Lagerprodukte - Details in der [Online-Dokumentation](https://foodcoopshop.github.io/de/selbstbedienungs-modus). [PR#384](https://github.com/foodcoopshop/foodcoopshop/pull/384) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/AndreasEgger"><img src="https://github.com/AndreasEgger.png" width="20"></a>
 
 ### Für Entwickler
-- FoodCoopShop kann jetzt auch mittels Docker installiert bzw. gehostet werden. [I#376](https://github.com/foodcoopshop/foodcoopshop/issues/376) / [PR#1](foodcoopshop/foodcoopshop-docker/pull/1) <a href="https://github.com/mantensteiner"><img src="https://github.com/mantensteiner.png" width="20"></a>
+- FoodCoopShop kann jetzt auch mittels Docker installiert bzw. gehostet werden: [https://github.com/foodcoopshop/foodcoopshop-docker](https://github.com/foodcoopshop/foodcoopshop-docker). [I#376](https://github.com/foodcoopshop/foodcoopshop/issues/376) / [PR#1](foodcoopshop/foodcoopshop-docker/pull/1) <a href="https://github.com/mantensteiner"><img src="https://github.com/mantensteiner.png" width="20"></a>
 
 
 ## v2.6.2 / 2019-10-10 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.6.1...v2.6.2)
