@@ -57,7 +57,7 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
 echo '<div class="input">';
 echo '<label>' . __d('admin', 'Slider_image');
 if ($imageSrc) {
-    echo '<br /><span class="small">'.__d('admin', 'Click_on_image_to_change_it.').'<br />'.__d('admin', 'Width').': 905px</span>';
+    echo '<br /><span class="small">'.__d('admin', 'Click_on_image_to_change_it.').'<br />'.__d('admin', 'Width').': 908px</span>';
 }
 echo '</label>';
 echo '<div style="float:right;">';

@@ -20,11 +20,8 @@ if (!empty($sliders)) {
         Configure::read('app.jsNamespace').".Helper.initSlider();"
     ]);
     echo '<div id="slider">';
-    foreach ($sliders as $slider) {
-        echo '<img width="905" src="'.$this->Html->getSliderImageSrc($slider->image).'" />';
-    }
-    if ($sliders->count() > 1) {
-        echo '<div class=cycle-pager></div>';
-    }
+        foreach ($sliders as $slider) {
+            echo '<img width="908" src="'.$this->Html->getSliderImageSrc($slider->image).'" />';
+        }
     echo '</div>';
 }

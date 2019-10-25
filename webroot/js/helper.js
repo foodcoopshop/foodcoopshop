@@ -428,14 +428,28 @@ foodcoopshop.Helper = {
     },
 
     initSlider: function () {
-        $('#slider').cycle({
-            fx: 'scrollHorz',
-            prev: '#slider-wrapper .prev',
-            next: '#slider-wrapper .next',
-            timeout: 6000,
-            speed: 3000,
-            swipe: true,
-            pause: 0
+        
+        var container = $('#slider');
+        container.addClass('owl-carousel');
+
+        container.owlCarousel({
+            autoplay: true,
+            autoHeight: true,
+            autoplayTimeout: 7000,
+            autoplayHoverPause: true,
+            smartSpeed: 1500,
+            loop: true,
+            nav: false,
+            items: 1,
+            navText: [
+                '<i class="far fa-arrow-alt-circle-left fa-3x"></i>',
+                '<i class="far fa-arrow-alt-circle-right fa-3x"></i>'
+            ],
+            responsive : {
+                768: {
+                    nav: true
+                }
+            }
         });
     },
 
@@ -485,7 +499,7 @@ foodcoopshop.Helper = {
     onWindowResize: function () {
 
         // keep right column on its place
-        var newLeft = $(window).scrollLeft() * -1 + parseInt($('#content').width()) + parseInt($('#content').css('padding-left')) + 6;
+        var newLeft = $(window).scrollLeft() * -1 + parseInt($('#content').width()) + parseInt($('#content').css('padding-left')) + 1;
         $('.inner-right').css('left', newLeft);
 
         // adapt height of cart
