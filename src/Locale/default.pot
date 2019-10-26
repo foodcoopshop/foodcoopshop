@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-09-15 19:03+0200\n"
+"POT-Creation-Date: 2019-10-26 20:53+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1331,6 +1331,9 @@ msgstr ""
 msgid "{0}_needs_to_be_a_{1}."
 msgstr ""
 
+msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._Please_manually_cancel_them_to_save_the_delivery_break."
+msgstr ""
+
 msgid "Please_enter_a_number_between_{0}_and_{1}."
 msgstr ""
 
@@ -1458,9 +1461,6 @@ msgid "Please_enter_a_valid_IBAN."
 msgstr ""
 
 msgid "Please_enter_a_valid_BIC."
-msgstr ""
-
-msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._Please_manually_cancel_them_to_save_the_delivery_break."
 msgstr ""
 
 msgid "Delivery_break"
@@ -1826,6 +1826,9 @@ msgstr ""
 msgid "Bank_account_member_fee"
 msgstr ""
 
+msgid "Attention_order_break!"
+msgstr ""
+
 msgid "Help?"
 msgstr ""
 
@@ -1836,9 +1839,6 @@ msgid "Upload_new_image"
 msgstr ""
 
 msgid "Image_upload_legal_hint."
-msgstr ""
-
-msgid "DELIVERY_DAY"
 msgstr ""
 
 msgid "Print"
@@ -2175,6 +2175,9 @@ msgid "Deleted_Email_Address"
 msgstr ""
 
 msgid "The_manufacturer_{0}_has_delivery_break:_{1}"
+msgstr ""
+
+msgid "{0}_makes_a_break:_{1}"
 msgstr ""
 
 msgid "Website"

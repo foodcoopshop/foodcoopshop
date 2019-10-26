@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-09-15 19:03+0200\n"
+"POT-Creation-Date: 2019-10-26 20:53+0200\n"
 "PO-Revision-Date: 2019-07-22 16:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1781,6 +1781,10 @@ msgstr "Podaj adres mailowy."
 msgid "{0}_needs_to_be_a_{1}."
 msgstr "{0} musi być {1}."
 
+# The following delivery day(s) already contain orders: {0}. You need to manually cancel them to proceed saving the delivery break.
+msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._Please_manually_cancel_them_to_save_the_delivery_break."
+msgstr "Następujące dni odbioru posiadją już zamówienia: {0}. Musisz ręcznie anulować zamówienia aby móc ustawić przerwę w dostawach."
+
 # Please enter a number between {0} and {1}.
 msgid "Please_enter_a_number_between_{0}_and_{1}."
 msgstr "Podaj liczbę z przedziłu od {0} do {1}."
@@ -1953,10 +1957,6 @@ msgstr "Podaj poprawny IBAN."
 # Please enter a valid BIC.
 msgid "Please_enter_a_valid_BIC."
 msgstr "Podaj poprawny BIC."
-
-# The following delivery day(s) already contain orders: {0}. You need to manually cancel them to proceed saving the delivery break.
-msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._Please_manually_cancel_them_to_save_the_delivery_break."
-msgstr "Następujące dni odbioru posiadją już zamówienia: {0}. Musisz ręcznie anulować zamówienia aby móc ustawić przerwę w dostawach."
 
 # Delivery break
 msgid "Delivery_break"
@@ -2443,6 +2443,11 @@ msgstr "Konto bankowe (kredyt)"
 msgid "Bank_account_member_fee"
 msgstr "Konto bankowe (opłata członkowska)"
 
+# Delivery break
+#, fuzzy
+msgid "Attention_order_break!"
+msgstr "Przerwa w dostawach"
+
 # Help?
 msgid "Help?"
 msgstr "Pomoc?"
@@ -2457,10 +2462,6 @@ msgstr "Prześlij nowy obraz"
 
 msgid "Image_upload_legal_hint."
 msgstr ""
-
-# DELIVERY_DAY
-msgid "DELIVERY_DAY"
-msgstr "DELIVERY_DAY"
 
 # Print
 msgid "Print"
@@ -2921,6 +2922,11 @@ msgstr "Usuń adres mailowy"
 msgid "The_manufacturer_{0}_has_delivery_break:_{1}"
 msgstr "Producent {0} ma przerwę w dostawach: {1}"
 
+# The manufacturer {0} is on delivery break: {1}
+#, fuzzy
+msgid "{0}_makes_a_break:_{1}"
+msgstr "Producent {0} ma przerwę w dostawach: {1}"
+
 # Website
 msgid "Website"
 msgstr "Strona"
@@ -3156,6 +3162,10 @@ msgstr "information-about-right-of-withdrawal"
 # product
 msgid "route_product"
 msgstr "product"
+
+# DELIVERY_DAY
+#~ msgid "DELIVERY_DAY"
+#~ msgstr "DELIVERY_DAY"
 
 # every {0} week
 #, fuzzy

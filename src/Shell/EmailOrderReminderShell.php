@@ -27,7 +27,7 @@ class EmailOrderReminderShell extends AppShell
     public function main()
     {
 
-        if (! Configure::read('app.emailOrderReminderEnabled') || ! Configure::read('appDb.FCS_CART_ENABLED')) {
+        if (! Configure::read('app.emailOrderReminderEnabled')) {
             return true;
         }
 

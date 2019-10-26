@@ -77,6 +77,11 @@ class ConfigurationsController extends AdminAppController
         if ($configuration->name == 'FCS_FACEBOOK_URL') {
             $this->setRequest($this->getRequest()->withData('Configurations.value', StringComponent::addHttpToUrl($this->getRequest()->getData('Configurations.value'))));
         }
+        if (in_array($configuration->type, ['multiple_dropdown'])) {
+            if ($this->getRequest()->getData('Configurations.value') != '') {
+                $this->setRequest($this->getRequest()->withData('Configurations.value', implode(',', $this->getRequest()->getData('Configurations.value'))));
+            }
+        }
 
         $validationName = Inflector::camelize(strtolower($configuration->name));
         $validatorExists = false;

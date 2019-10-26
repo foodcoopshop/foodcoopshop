@@ -50,7 +50,7 @@ class CartsController extends FrontendController
 
     public function isAuthorized($user)
     {
-        return $this->AppAuth->user() && Configure::read('appDb.FCS_CART_ENABLED') && !$this->AppAuth->isManufacturer();
+        return $this->AppAuth->user() && !$this->AppAuth->isManufacturer();
     }
 
     public function ajaxGetTimebasedCurrencyHoursDropdown($maxSeconds)

@@ -96,9 +96,14 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
 
-    public function validationFcsCartEnabled(Validator $validator)
+    public function validationFcsNoDeliveryDaysGlobal(Validator $validator)
     {
-        return $this->getNumberRangeValidator($validator, 'value', 0, 1);
+        $validator->allowEmptyString('value');
+        $validator->add('value', 'noDeliveryDaysOrdersExist', [
+            'provider' => 'table',
+            'rule' => 'noDeliveryDaysOrdersExist'
+        ]);
+        return $validator;
     }
 
     public function validationFcsShowProductsForGuests(Validator $validator)

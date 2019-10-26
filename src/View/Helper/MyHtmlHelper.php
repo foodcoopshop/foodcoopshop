@@ -208,14 +208,7 @@ class MyHtmlHelper extends HtmlHelper
             return $result;
         }
         
-        $explodedNoDeliveryDays = explode(',', $manufacturer->no_delivery_days);
-        $formattedAndCleanedDeliveryDays = [];
-        foreach($explodedNoDeliveryDays as $noDeliveryDay) {
-            if (date('Y-m-d') <= $noDeliveryDay) {
-                $formattedAndCleanedDeliveryDays[] = $this->MyTime->formatToDateShort($noDeliveryDay);
-            }
-        }
-        
+        $formattedAndCleanedDeliveryDays = $this->getFormattedAndCleanedDeliveryDays($manufacturer->no_delivery_days);
         if (empty($formattedAndCleanedDeliveryDays)) {
             return $result;
         }
@@ -233,6 +226,41 @@ class MyHtmlHelper extends HtmlHelper
         
         return $result;
 
+    }
+    
+    public function getGlobalNoDeliveryDaysString()
+    {
+        
+        $result = '';
+        if (Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL') == '') {
+            return $result;
+        }
+        
+        $formattedAndCleanedDeliveryDays = $this->getFormattedAndCleanedDeliveryDays(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'));
+        if (empty($formattedAndCleanedDeliveryDays)) {
+            return $result;
+        }
+        
+        $csvNoDeliveryDays = join(', ', $formattedAndCleanedDeliveryDays);
+        
+        $result = __('{0}_makes_a_break:_{1}', [
+            Configure::read('appDb.FCS_APP_NAME'),
+            '<b>' . $csvNoDeliveryDays . '</b>'
+        ]);
+        
+        return $result;
+    }
+    
+    public function getFormattedAndCleanedDeliveryDays($deliveryDays)
+    {
+        $explodedNoDeliveryDays = explode(',', $deliveryDays);
+        $formattedAndCleanedDeliveryDays = [];
+        foreach($explodedNoDeliveryDays as $noDeliveryDay) {
+            if (date('Y-m-d') <= $noDeliveryDay) {
+                $formattedAndCleanedDeliveryDays[] = $this->MyTime->formatToDateShort($noDeliveryDay);
+            }
+        }
+        return $formattedAndCleanedDeliveryDays;
     }
 
     public function getCustomerAddress($customer)

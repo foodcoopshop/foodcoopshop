@@ -98,6 +98,9 @@ $this->element('addScript', [
                     case 'dropdown':
                         echo $this->Configuration->getConfigurationDropdownOption($configuration->name, $configuration->value);
                         break;
+                    case 'multiple_dropdown':
+                        echo $this->Configuration->getConfigurationMultipleDropdownOptions($configuration->name, $configuration->value);
+                        break;
                     case 'boolean':
                         echo (boolean) $configuration->value ? __d('admin', 'yes') : __d('admin', 'no');
                         break;

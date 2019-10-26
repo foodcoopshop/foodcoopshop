@@ -108,47 +108,6 @@ class ManufacturersTable extends AppTable
         
     }
     
-    public function noDeliveryDaysOrdersExist ($value, $context) {
-        
-        $manufacturerId = $context['data']['id_manufacturer'];
-        
-        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
-        
-        $productsAssociation = $orderDetailsTable->getAssociation('Products');
-        $productsAssociation->setJoinType('INNER'); // necessary to apply condition
-        $productsAssociation->setConditions([
-            'Products.id_manufacturer' => $manufacturerId
-        ]);
-        
-        $query = $orderDetailsTable->find('all', [
-            'conditions' => [
-                'pickup_day IN' => $value
-            ],
-            'group' => 'pickup_day',
-            'contain' => [
-                'Products'
-            ]
-        ]);
-        $query->select(
-            [
-                'PickupDayCount' => $query->func()->count('OrderDetails.pickup_day'),
-                'pickup_day'
-            ]
-        );
-        
-        $result = true;
-        if (!empty($query->toArray())) {
-            $pickupDaysInfo = [];
-            foreach($query->toArray() as $orderDetail) {
-                $formattedPickupDay = $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
-                $pickupDaysInfo[] = $formattedPickupDay . ' (' . $orderDetail->PickupDayCount . 'x)';
-            }
-            $result = __('The_following_delivery_day(s)_already_contain_orders:_{0}._Please_manually_cancel_them_to_save_the_delivery_break.', [join(', ', $pickupDaysInfo)]);
-        }
-        
-        return $result;
-    }
-    
     public function getTimebasedCurrencyMoney($price, $percentage)
     {
         return $price * $percentage / 100;

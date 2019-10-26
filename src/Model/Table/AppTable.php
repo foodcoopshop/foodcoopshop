@@ -60,6 +60,52 @@ class AppTable extends Table
         return $validator;    
     }
 
+    public function noDeliveryDaysOrdersExist ($value, $context) {
+        
+        $manufacturerId = null;
+        if (!empty($context['data']) && !empty($context['data']['id_manufacturer'])) {
+            $manufacturerId = $context['data']['id_manufacturer'];
+        }
+        
+        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        
+        if (!is_null($manufacturerId)) {
+            $productsAssociation = $orderDetailsTable->getAssociation('Products');
+            $productsAssociation->setJoinType('INNER'); // necessary to apply condition
+            $productsAssociation->setConditions([
+                'Products.id_manufacturer' => $manufacturerId
+            ]);
+        }
+        
+        $query = $orderDetailsTable->find('all', [
+            'conditions' => [
+                'pickup_day IN' => $value
+            ],
+            'group' => 'pickup_day',
+            'contain' => [
+                'Products'
+            ]
+        ]);
+        $query->select(
+            [
+                'PickupDayCount' => $query->func()->count('OrderDetails.pickup_day'),
+                'pickup_day'
+            ]
+            );
+        
+        $result = true;
+        if (!empty($query->toArray())) {
+            $pickupDaysInfo = [];
+            foreach($query->toArray() as $orderDetail) {
+                $formattedPickupDay = $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
+                $pickupDaysInfo[] = $formattedPickupDay . ' (' . $orderDetail->PickupDayCount . 'x)';
+            }
+            $result = __('The_following_delivery_day(s)_already_contain_orders:_{0}._Please_manually_cancel_them_to_save_the_delivery_break.', [join(', ', $pickupDaysInfo)]);
+        }
+        
+        return $result;
+    }
+    
     public function getNumberRangeValidator(Validator $validator, $field, $min, $max, $additionalErrorMessageSuffix='', $showDefaultErrorMessage=true)
     {
         $message = __('Please_enter_a_number_between_{0}_and_{1}.', [
@@ -237,20 +283,16 @@ class AppTable extends Table
                 unset($products[$i]);
             }
             
+            if ($this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $deliveryDate)) {
+                unset($products[$i]);
+            }
+            
             if ($product['delivery_rhythm_type'] == 'individual') {
                 // hides products when order_possible_until is reached
                 if ($product['delivery_rhythm_order_possible_until'] < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
                     unset($products[$i]);
                 }
             }
-            /*
-             if ($product['delivery_rhythm_type'] == 'week' && $product['delivery_rhythm_first_delivery_day'] > $deliveryDate) {
-             unset($products[$i]);
-             }
-             if ($product['delivery_rhythm_type'] == 'month' && $product['delivery_rhythm_first_delivery_day'] > $deliveryDate) {
-             unset($products[$i]);
-             }
-             */
         }
         return $products;
     }
