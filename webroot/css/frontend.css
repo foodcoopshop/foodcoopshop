@@ -1242,7 +1242,7 @@ body.customers.registration_successful #inner-content h2.further-news {
     padding-bottom: 5px;
 }
 #info-box p:last-of-type,
-#global-delivery-day-box p:last-of-type {
+#global-no-delivery-day-box p:last-of-type {
 	padding-bottom: 5px;
 }
 body.blog_posts.detail p.neighbors {

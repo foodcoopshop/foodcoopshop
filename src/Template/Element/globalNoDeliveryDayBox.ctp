@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
-?><div id="global-delivery-day-box" class="box">
+?><div id="global-no-delivery-day-box" class="box">
     <?php
         if ($this->Html->getGlobalNoDeliveryDaysString() != '') {
             echo '<h3>' . __('Attention_order_break!') . '</h3>';
