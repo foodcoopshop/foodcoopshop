@@ -100,7 +100,7 @@ class AppTable extends Table
                 $formattedPickupDay = $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
                 $pickupDaysInfo[] = $formattedPickupDay . ' (' . $orderDetail->PickupDayCount . 'x)';
             }
-            $result = __('The_following_delivery_day(s)_already_contain_orders:_{0}._Please_manually_cancel_them_to_save_the_delivery_break.', [join(', ', $pickupDaysInfo)]);
+            $result = __('The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day.', [join(', ', $pickupDaysInfo)]);
         }
         
         return $result;
