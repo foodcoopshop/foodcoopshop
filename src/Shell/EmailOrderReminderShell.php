@@ -20,6 +20,7 @@ namespace App\Shell;
 
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 class EmailOrderReminderShell extends AppShell
 {
@@ -27,8 +28,23 @@ class EmailOrderReminderShell extends AppShell
     public function main()
     {
 
+        // $this->cronjobRunDay can is set in unit test
+        if (!isset($this->args[0])) {
+            $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
+        } else {
+            $this->cronjobRunDay = $this->args[0];
+        }
+        
         if (! Configure::read('app.emailOrderReminderEnabled')) {
             return true;
+        }
+        
+        if (Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL') != '') {
+            $this->Product = TableRegistry::getTableLocator()->get('Products');
+            $nextDeliveryDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($this->cronjobRunDay));
+            if ($this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $nextDeliveryDay)) {
+                return true;
+            }
         }
 
         parent::main();

@@ -41,6 +41,22 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
         $this->assertEmailLogs($emailLogs[2], 'Bestell-Erinnerung', ['Hallo Demo Superadmin,', 'ist schon wieder der letzte Bestelltag'], [Configure::read('test.loginEmailSuperadmin')]);
     }
 
+    public function testGlobalDeliveryBreakEnabledAndNextDeliveryDay()
+    {
+        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', '2019-11-01');
+        $this->commandRunner->run(['cake', 'email_order_reminder', '2019-10-27']);
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(0, count($emailLogs));
+    }
+    
+    public function testGlobalDeliveryBreakEnabledAndNotNextDeliveryDay()
+    {
+        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', '2019-11-08');
+        $this->commandRunner->run(['cake', 'email_order_reminder', '2019-10-27']);
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(3, count($emailLogs));
+    }
+    
     public function testActiveOrderDetail()
     {
         $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
