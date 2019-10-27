@@ -85,7 +85,7 @@ INSERT INTO `fcs_configuration` VALUES
 (508,1,'FCS_FACEBOOK_URL','Facebook url for embedding in footer','https://www.facebook.com/FoodCoopShop/','text',90,'en_US','2015-07-08 13:23:54','2015-07-08 13:23:54'),
 (538,1,'FCS_REGISTRATION_EMAIL_TEXT','Additional text that is sent in the registration e-mail after a successful registration. <br /> <a href=\"/admin/configurations/previewEmail/FCS_REGISTRATION_EMAIL_TEXT\" target=\"_blank\"><i class=\"fas fa-info-circle\"></i> E-mail preview</a>','','textarea_big',170,'en_US','2016-06-26 00:00:00','2016-06-26 00:00:00'),
 (543,1,'FCS_RIGHT_INFO_BOX_HTML','Content of the box in the right column below the shopping cart. <br /><div class=\"small\">To make the background of a row green, please format as \"Heading 3\".</div>','<h3>Delivery time</h3>\r\n\r\n<p>The pickup day can be seen in the product description, you can pick the product up on <strong>{DELIVERY_DAY}</strong>&nbsp;between 5 and 7 pm.</p>\r\n\r\n<p>You can order every week until Tuesday midnight and pick them up the following Friday.</p>\r\n','textarea_big',150,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
-(544,1,'FCS_NO_DELIVERY_DAYS_GLOBAL','Delivery break for all manufacturers?<br /><div class=\"small\">Here you can define delivery-free days for the whole food-coop.</div>','','multiple_dropdown',10,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
+(544,1,'FCS_NO_DELIVERY_DAYS_GLOBAL','Delivery break for all manufacturers?<br /><div class=\"small\">Here you can define delivery-free days for the whole food-coop. An info box is shown automatically two weeks before the delivery break.</div>','','multiple_dropdown',10,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (545,1,'FCS_ACCOUNTING_EMAIL','E-mail address for the financial manager<br /><div class=\"small\">Who receives the notification that invoices have been sent?</div>','','text',110,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (546,1,'FCS_AUTHENTICATION_INFO_TEXT','Info text in registration form<br /><div class=\"small\">This info text is shown in the registration form below the e-mail address.</div>','You need to be a member if you want to order here.','textarea',160,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (547,1,'FCS_SHOW_PRODUCTS_FOR_GUESTS','Products visible for guests?','0','boolean',20,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
@@ -252,7 +252,7 @@ INSERT INTO `phinxlog` VALUES
 (20190527070456,'CartProductUnits','2019-05-27 09:17:17','2019-05-27 09:17:17',0),
 (20190617201728,'RemoveLegacyPasswordHasher','2019-06-17 20:28:29','2019-06-17 20:28:29',0),
 (20190803174327,'AdditionalFieldForPrivacyPolicy','2019-08-03 18:07:08','2019-08-03 18:07:08',0),
-(20191026164156,'DeliveryBreakForFoodcoop','2019-10-26 17:02:59','2019-10-26 17:02:59',0);
+(20191026164156,'GlobalDeliveryBreak','2019-10-26 17:02:59','2019-10-26 17:02:59',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
