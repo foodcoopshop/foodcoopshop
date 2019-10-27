@@ -43,7 +43,7 @@ class CategoriesController extends FrontendController
         $this->set('blogPosts', $blogPosts);
 
         $this->Category = TableRegistry::getTableLocator()->get('Categories');
-        $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), true);
+        $products = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), true);
         $products = $this->prepareProductsForFrontend($products);
         $this->set('products', $products);
 
@@ -70,7 +70,7 @@ class CategoriesController extends FrontendController
         $this->set('blogPosts', $blogPosts);
 
         $this->Category = TableRegistry::getTableLocator()->get('Categories');
-        $products = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, $keyword);
+        $products = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), false, $keyword);
         $products = $this->prepareProductsForFrontend($products);
         $this->set('products', $products);
 
@@ -104,7 +104,7 @@ class CategoriesController extends FrontendController
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
-        $products = $this->Category->getProductsByCategoryId($categoryId);
+        $products = $this->Category->getProductsByCategoryId($this->AppAuth, $categoryId);
         $products = $this->prepareProductsForFrontend($products);
 
         $this->set('products', $products);

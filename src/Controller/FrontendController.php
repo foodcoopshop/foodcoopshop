@@ -166,9 +166,9 @@ class FrontendController extends AppController
         $categoriesForMenu = [];
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
             $this->Category = TableRegistry::getTableLocator()->get('Categories');
-            $allProductsCount = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, '', 0, true);
-            $newProductsCount = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), true, '', 0, true);
-            $categoriesForMenu = $this->Category->getForMenu();
+            $allProductsCount = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', 0, true);
+            $newProductsCount = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), true, '', 0, true);
+            $categoriesForMenu = $this->Category->getForMenu($this->AppAuth);
             array_unshift($categoriesForMenu, [
                 'slug' => Configure::read('app.slugHelper')->getNewProducts(),
                 'name' => __('New_products') . ' <span class="additional-info"> (' . $newProductsCount . ')</span>',

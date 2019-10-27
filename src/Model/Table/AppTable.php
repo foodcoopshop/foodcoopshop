@@ -256,13 +256,17 @@ class AppTable extends Table
         return " ORDER BY Products.name ASC, Images.id_image DESC;";
     }
     
-    protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products)
+    protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products)
     {
+        if ($appAuth->isInstantOrderMode() || $appAuth->isSelfServiceModeByUrl()) {
+            return $products;
+        }
         $this->Product = TableRegistry::getTableLocator()->get('Products');
         $i = -1;
         foreach($products as $product) {
             $i++;
-            if ($product['is_stock_product']) {
+            // always show stock products
+            if ($product['is_stock_product'] && $product['stock_management_enabled']) {
                 continue;
             }
             $deliveryDate = $this->Product->calculatePickupDayRespectingDeliveryRhythm(
@@ -278,11 +282,12 @@ class AppTable extends Table
                 )
             );
             
-            // hides the product if manufacturer has enabled delivery break
+            // hides the product if manufacturer based delivery break is enabled
             if ($this->Product->deliveryBreakEnabled($product['no_delivery_days'], $deliveryDate)) {
                 unset($products[$i]);
             }
             
+            // hides the product if global delivery break is enabled
             if ($this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $deliveryDate)) {
                 unset($products[$i]);
             }

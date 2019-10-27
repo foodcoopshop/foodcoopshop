@@ -298,9 +298,6 @@ class ManufacturersTable extends AppTable
     public function getForMenu($appAuth)
     {
 
-        if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-            $productModel = TableRegistry::getTableLocator()->get('Products');
-        }
         $conditions = [
             'Manufacturers.active' => APP_ON
         ];
@@ -325,7 +322,7 @@ class ManufacturersTable extends AppTable
             $manufacturerName = $manufacturer->name;
             $additionalInfo = '';
             if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-                $additionalInfo = $this->getProductsByManufacturerId($manufacturer->id_manufacturer, true);
+                $additionalInfo = $this->getProductsByManufacturerId($appAuth, $manufacturer->id_manufacturer, true);
             }
             $noDeliveryDaysString = Configure::read('app.htmlHelper')->getManufacturerNoDeliveryDaysString($manufacturer);
             if ($noDeliveryDaysString != '') {
@@ -422,7 +419,7 @@ class ManufacturersTable extends AppTable
         return $manufacturersForDropdown;
     }
 
-    public function getProductsByManufacturerId($manufacturerId, $countMode = false)
+    public function getProductsByManufacturerId($appAuth, $manufacturerId, $countMode = false)
     {
         $sql = "SELECT ";
         $sql .= $this->getFieldsForProductListQuery();
@@ -443,7 +440,7 @@ class ManufacturersTable extends AppTable
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $products = $statement->fetchAll('assoc');
-        $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
+        $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
         
         if (! $countMode) {
             return $products;
