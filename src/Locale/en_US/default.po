@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-10-27 20:02+0100\n"
-"PO-Revision-Date: 2019-10-27 20:04+0100\n"
+"POT-Creation-Date: 2019-10-27 20:52+0100\n"
+"PO-Revision-Date: 2019-10-27 20:53+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -920,6 +920,9 @@ msgstr "The manufacturer of the product {0} either has a delivery break or the p
 
 msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
 msgstr "It's not possible to order the product {0} any more."
+
+msgid "{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered."
+msgstr "{0} has activated the delivery break and the product {1} cannot be ordered."
 
 msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
 msgstr "Please enter how much you want to pay in {0}."

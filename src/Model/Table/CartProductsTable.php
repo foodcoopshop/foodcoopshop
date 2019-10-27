@@ -197,6 +197,20 @@ class CartProductsTable extends AppTable
                 ];
             }
         }
+        
+        if ($this->Products->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $product->next_delivery_day)) {
+            $message = __('{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered.',
+                [
+                    Configure::read('appDb.FCS_APP_NAME'),
+                    '<b>' . $product->name . '</b>'
+                ]
+            );
+            return [
+                'status' => 0,
+                'msg' => $message,
+                'productId' => $initialProductId
+            ];
+        }
 
         // update amount if cart product already exists
         $cart = $appAuth->getCart();
