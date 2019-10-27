@@ -154,6 +154,7 @@ h2.info2 {
     margin-bottom: 2px;
     color: #fff;
     line-height: 19px;
+    clear: both;
 }
 h2.warning {
     background-color: #f3515c;
