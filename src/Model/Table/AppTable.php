@@ -265,10 +265,6 @@ class AppTable extends Table
         $i = -1;
         foreach($products as $product) {
             $i++;
-            // always show stock products
-            if ($product['is_stock_product'] && $product['stock_management_enabled']) {
-                continue;
-            }
             $deliveryDate = $this->Product->calculatePickupDayRespectingDeliveryRhythm(
                 $this->Product->newEntity(
                     [
