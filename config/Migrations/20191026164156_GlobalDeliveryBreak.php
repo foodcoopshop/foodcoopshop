@@ -11,11 +11,11 @@ class GlobalDeliveryBreak extends AbstractMigration
         
         switch(I18n::getLocale()) {
             case 'de_DE':
-                $text = 'Lieferpause für alle Hersteller?<br /><div class="small">Hier können lieferfreie Tage (z.B. Feiertage) für die gesamte Foodcoop festgelegt werden. Eine Info-Box wird automatisch zwei Wochen vor Beginn der Lieferpause angezeigt.</div>';
+                $text = 'Lieferpause für alle Hersteller?<br /><div class="small">Hier können lieferfreie Tage (z.B. Feiertage) für die gesamte Foodcoop festgelegt werden.</div>';
                 break;
             case 'pl_PL':
             case 'en_US':
-                $text = 'Delivery break for all manufacturers?<br /><div class="small">Here you can define delivery-free days for the whole food-coop. An info box is shown automatically two weeks before the delivery break.</div>';
+                $text = 'Delivery break for all manufacturers?<br /><div class="small">Here you can define delivery-free days for the whole food-coop.</div>';
                 break;
         }
         
