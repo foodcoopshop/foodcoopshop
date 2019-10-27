@@ -13,6 +13,10 @@
  * @link          https://www.foodcoopshop.com
  */
 
+if ($appAuth->isInstantOrderMode() || $appAuth->isSelfServiceModeByUrl()) {
+    return;
+}
+
 ?><div id="global-no-delivery-day-box" class="box">
     <?php
         if ($this->Html->getGlobalNoDeliveryDaysString() != '') {

@@ -52,11 +52,13 @@ foreach ($manufacturers as $manufacturer) {
             ).'</h4>';
             echo $manufacturer->short_description;
 
-            $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer);
-            if ($manufacturerNoDeliveryDaysString != '') {
-                echo '<h2 class="info">'.__('Delivery_break') . ': ' . $manufacturerNoDeliveryDaysString.'</h2>';
+            if (!$appAuth->isInstantOrderMode() && !$appAuth->isSelfServiceModeByUrl()) {
+                $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer);
+                if ($manufacturerNoDeliveryDaysString != '') {
+                    echo '<h2 class="info">'.__('Delivery_break') . ': ' . $manufacturerNoDeliveryDaysString.'</h2>';
+                }
             }
-
+            
         echo '</div>';
 
         echo '<div class="third-column">';
