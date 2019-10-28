@@ -6,16 +6,22 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 1.0.0
+ * @since         FoodCoopShop 2.7.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-use Cake\Core\Configure;
 
-?><div id="info-box" class="box">
+if ($appAuth->isInstantOrderMode() || $appAuth->isSelfServiceModeByUrl()) {
+    return;
+}
+
+?><div id="global-no-delivery-day-box" class="box">
     <?php
-        echo Configure::read('appDb.FCS_RIGHT_INFO_BOX_HTML');
+        if ($this->Html->getGlobalNoDeliveryDaysString() != '') {
+            echo '<h3>' . __('Attention_order_break!') . '</h3>';
+            echo '<p>' . $this->Html->getGlobalNoDeliveryDaysString() . '</p>';
+        }
     ?>
 </div>

@@ -15,7 +15,7 @@
 
 use Cake\Core\Configure;
 
-if (!$appAuth->user() || !Configure::read('appDb.FCS_CART_ENABLED') || $hideButton) {
+if (!$appAuth->user() || $hideButton) {
     return;
 }
 ?>

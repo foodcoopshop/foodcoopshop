@@ -82,9 +82,11 @@ if (!empty($blogPosts) && $blogPosts->count() > 0) {
     ]);
 }
 
-$manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true);
-if ($manufacturerNoDeliveryDaysString != '') {
-    echo '<h2 class="info">'.$manufacturerNoDeliveryDaysString.'</h2>';
+if (!$appAuth->isInstantOrderMode() && !$appAuth->isSelfServiceModeByUrl()) {
+    $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true);
+    if ($manufacturerNoDeliveryDaysString != '') {
+        echo '<h2 class="info">'.$manufacturerNoDeliveryDaysString.'</h2>';
+    }
 }
 
 echo $this->element('stockProductInListInfo');

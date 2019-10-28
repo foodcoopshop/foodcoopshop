@@ -212,6 +212,18 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeManufacturerNoDeliveryDays($manufacturerId);
     }
 
+    public function testGlobalDeliveryBreakActivatedWhileShopping()
+    {
+        $this->loginAsSuperadmin();
+        $this->fillCart();
+        $this->checkCartStatus();
+        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
+        $this->loginAsSuperadmin();
+        $this->finishCart(0, 0);
+        $this->checkValidationError();
+        $this->assertRegExp('/(.*) hat die Lieferpause aktiviert und das Produkt (.*) ist nicht mehr bestellbar./', $this->httpClient->getContent());
+    }
+    
     public function testProductStockAvailableDecreasedWhileShopping()
     {
         $this->loginAsSuperadmin();

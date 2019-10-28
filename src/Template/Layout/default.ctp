@@ -49,6 +49,7 @@ echo $this->element('layout/header');
     
     <div id="right">
         <div class="inner-right">
+            <?php echo $this->element('globalNoDeliveryDayBox'); ?>
             <?php echo $this->element('cart', [
                 'selfServiceModeEnabled' => false,
                 'showLoadLastOrderDetailsDropdown' => true,

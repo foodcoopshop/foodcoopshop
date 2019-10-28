@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-09-15 19:03+0200\n"
-"PO-Revision-Date: 2019-09-15 19:05+0200\n"
+"POT-Creation-Date: 2019-10-27 20:52+0100\n"
+"PO-Revision-Date: 2019-10-27 20:53+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.2.4\n"
 
 msgid "You_have_been_signed_out."
 msgstr "You have been signed out."
@@ -921,6 +921,9 @@ msgstr "The manufacturer of the product {0} either has a delivery break or the p
 msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
 msgstr "It's not possible to order the product {0} any more."
 
+msgid "{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered."
+msgstr "{0} has activated the delivery break and the product {1} cannot be ordered."
+
 msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
 msgstr "Please enter how much you want to pay in {0}."
 
@@ -1332,6 +1335,9 @@ msgstr "Please enter an email address."
 msgid "{0}_needs_to_be_a_{1}."
 msgstr "{0} needs to be a {1}."
 
+msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day."
+msgstr "The following delivery day(s) already contain orders: {0}. To save the delivery break, either cancel them or change the pickup day."
+
 msgid "Please_enter_a_number_between_{0}_and_{1}."
 msgstr "Please enter a number between {0} and {1}."
 
@@ -1460,9 +1466,6 @@ msgstr "Please enter a valid IBAN."
 
 msgid "Please_enter_a_valid_BIC."
 msgstr "Please enter a valid BIC."
-
-msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._Please_manually_cancel_them_to_save_the_delivery_break."
-msgstr "The following delivery day(s) already contain orders: {0}. You need to manually cancel them to proceed saving the delivery break."
 
 msgid "Delivery_break"
 msgstr "Delivery break"
@@ -1827,6 +1830,9 @@ msgstr "Bank account (credit)"
 msgid "Bank_account_member_fee"
 msgstr "Bank account (member fee)"
 
+msgid "Attention_order_break!"
+msgstr "Attention, order break!"
+
 msgid "Help?"
 msgstr "Help?"
 
@@ -1838,9 +1844,6 @@ msgstr "Upload new image"
 
 msgid "Image_upload_legal_hint."
 msgstr "Please upload images only if you have the rights to use!"
-
-msgid "DELIVERY_DAY"
-msgstr "DELIVERY_DAY"
 
 msgid "Print"
 msgstr "Print"
@@ -2178,6 +2181,9 @@ msgstr "Deleted e-mail address"
 msgid "The_manufacturer_{0}_has_delivery_break:_{1}"
 msgstr "The manufacturer {0} is on delivery break: {1}"
 
+msgid "{0}_makes_a_break:_{1}"
+msgstr "{0} makes a break: {1}"
+
 msgid "Website"
 msgstr "Website"
 
@@ -2354,6 +2360,9 @@ msgstr "information-about-right-of-withdrawal"
 
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "DELIVERY_DAY"
+#~ msgstr "DELIVERY_DAY"
 
 #~ msgid "in_{0}_weeks"
 #~ msgstr "in {0} weeks"

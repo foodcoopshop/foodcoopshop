@@ -23,7 +23,6 @@ class ConfigurationHelper extends Helper
     public function getConfigurationDropdownOptions($name)
     {
         switch ($name) {
-            case 'FCS_CART_ENABLED':
             case 'FCS_SHOW_PRODUCTS_FOR_GUESTS':
             case 'FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS':
             case 'FCS_DEFAULT_NEW_MEMBER_ACTIVE':
@@ -41,11 +40,24 @@ class ConfigurationHelper extends Helper
             case 'FCS_CUSTOMER_GROUP':
                 return array_slice(Configure::read('app.htmlHelper')->getGroups(), 0, 2, true); // true: preserveKeys
                 break;
+            case 'FCS_NO_DELIVERY_DAYS_GLOBAL':
+                return Configure::read('app.timeHelper')->getNextDeliveryDays();
+                break;
         }
     }
 
     public function getConfigurationDropdownOption($name, $value)
     {
         return self::getConfigurationDropdownOptions($name)[$value];
+    }
+    
+    public function getConfigurationMultipleDropdownOptions($name, $value)
+    {
+        switch($name) {
+            case 'FCS_NO_DELIVERY_DAYS_GLOBAL':
+                $formattedAndCleanedDeliveryDays = Configure::read('app.htmlHelper')->getFormattedAndCleanedDeliveryDays($value);
+                return join(', ', $formattedAndCleanedDeliveryDays);
+                break;
+        }
     }
 }

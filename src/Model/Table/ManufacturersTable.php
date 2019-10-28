@@ -108,47 +108,6 @@ class ManufacturersTable extends AppTable
         
     }
     
-    public function noDeliveryDaysOrdersExist ($value, $context) {
-        
-        $manufacturerId = $context['data']['id_manufacturer'];
-        
-        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
-        
-        $productsAssociation = $orderDetailsTable->getAssociation('Products');
-        $productsAssociation->setJoinType('INNER'); // necessary to apply condition
-        $productsAssociation->setConditions([
-            'Products.id_manufacturer' => $manufacturerId
-        ]);
-        
-        $query = $orderDetailsTable->find('all', [
-            'conditions' => [
-                'pickup_day IN' => $value
-            ],
-            'group' => 'pickup_day',
-            'contain' => [
-                'Products'
-            ]
-        ]);
-        $query->select(
-            [
-                'PickupDayCount' => $query->func()->count('OrderDetails.pickup_day'),
-                'pickup_day'
-            ]
-        );
-        
-        $result = true;
-        if (!empty($query->toArray())) {
-            $pickupDaysInfo = [];
-            foreach($query->toArray() as $orderDetail) {
-                $formattedPickupDay = $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
-                $pickupDaysInfo[] = $formattedPickupDay . ' (' . $orderDetail->PickupDayCount . 'x)';
-            }
-            $result = __('The_following_delivery_day(s)_already_contain_orders:_{0}._Please_manually_cancel_them_to_save_the_delivery_break.', [join(', ', $pickupDaysInfo)]);
-        }
-        
-        return $result;
-    }
-    
     public function getTimebasedCurrencyMoney($price, $percentage)
     {
         return $price * $percentage / 100;
@@ -339,9 +298,6 @@ class ManufacturersTable extends AppTable
     public function getForMenu($appAuth)
     {
 
-        if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-            $productModel = TableRegistry::getTableLocator()->get('Products');
-        }
         $conditions = [
             'Manufacturers.active' => APP_ON
         ];
@@ -366,7 +322,7 @@ class ManufacturersTable extends AppTable
             $manufacturerName = $manufacturer->name;
             $additionalInfo = '';
             if ($appAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
-                $additionalInfo = $this->getProductsByManufacturerId($manufacturer->id_manufacturer, true);
+                $additionalInfo = $this->getProductsByManufacturerId($appAuth, $manufacturer->id_manufacturer, true);
             }
             $noDeliveryDaysString = Configure::read('app.htmlHelper')->getManufacturerNoDeliveryDaysString($manufacturer);
             if ($noDeliveryDaysString != '') {
@@ -463,7 +419,7 @@ class ManufacturersTable extends AppTable
         return $manufacturersForDropdown;
     }
 
-    public function getProductsByManufacturerId($manufacturerId, $countMode = false)
+    public function getProductsByManufacturerId($appAuth, $manufacturerId, $countMode = false)
     {
         $sql = "SELECT ";
         $sql .= $this->getFieldsForProductListQuery();
@@ -484,7 +440,7 @@ class ManufacturersTable extends AppTable
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $products = $statement->fetchAll('assoc');
-        $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
+        $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
         
         if (! $countMode) {
             return $products;

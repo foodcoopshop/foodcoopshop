@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-09-15 19:03+0200\n"
-"PO-Revision-Date: 2019-10-01 10:49+0200\n"
+"POT-Creation-Date: 2019-10-27 20:52+0100\n"
+"PO-Revision-Date: 2019-10-27 20:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.2.4\n"
 
 msgid "You_have_been_signed_out."
 msgstr "Du hast dich erfolgreich abgemeldet."
@@ -921,6 +921,9 @@ msgstr "Der Hersteller des Produktes {0} hat entweder Lieferpause oder er ist ni
 msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
 msgstr "Das Produkt {0} kann nicht mehr bestellt werden."
 
+msgid "{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered."
+msgstr "{0} hat die Lieferpause aktiviert und das Produkt {1} ist nicht mehr bestellbar."
+
 msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
 msgstr "Bitte gib an, wie viel du in {0} zahlen möchtest."
 
@@ -1332,6 +1335,9 @@ msgstr "Bitte gib eine E-Mail-Adresse an."
 msgid "{0}_needs_to_be_a_{1}."
 msgstr "{0} muss ein {1} sein."
 
+msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day."
+msgstr "Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: {0}. Die Lieferpause kann erst gespeichert werden, wenn du die Produkte stornierst oder der Abholtag geändert wird."
+
 msgid "Please_enter_a_number_between_{0}_and_{1}."
 msgstr "Bitte gib eine Zahl zwischen {0} und {1} an."
 
@@ -1460,9 +1466,6 @@ msgstr "Bitte gib einen gültigen IBAN ein."
 
 msgid "Please_enter_a_valid_BIC."
 msgstr "Bitte gib einen gültigen BIC ein."
-
-msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._Please_manually_cancel_them_to_save_the_delivery_break."
-msgstr "Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: {0}. Erst nach erfolgter Stornierung kann die Lieferpause gespeichert werden."
 
 msgid "Delivery_break"
 msgstr "Lieferpause"
@@ -1827,6 +1830,9 @@ msgstr "Kontodaten (Guthaben aufladen)"
 msgid "Bank_account_member_fee"
 msgstr "Kontodaten (Mitgliedsbeitrag)"
 
+msgid "Attention_order_break!"
+msgstr "Achtung, Bestellpause!"
+
 msgid "Help?"
 msgstr "Hilfe?"
 
@@ -1838,9 +1844,6 @@ msgstr "Neues Bild hochladen"
 
 msgid "Image_upload_legal_hint."
 msgstr "Bilder bitte nur hochladen, wenn du über die Nutzungsrechte verfügst!"
-
-msgid "DELIVERY_DAY"
-msgstr "ABHOLTAG"
 
 msgid "Print"
 msgstr "Drucken"
@@ -2178,6 +2181,9 @@ msgstr "Gelöschte E-Mail-Adresse"
 msgid "The_manufacturer_{0}_has_delivery_break:_{1}"
 msgstr "Der Hersteller {0} hat Lieferpause: {1}"
 
+msgid "{0}_makes_a_break:_{1}"
+msgstr "{0} macht Pause: {1}"
+
 msgid "Website"
 msgstr "Homepage"
 
@@ -2354,6 +2360,9 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "DELIVERY_DAY"
+#~ msgstr "ABHOLTAG"
 
 #~ msgid "in_{0}_weeks"
 #~ msgstr "in {0} Wochen"

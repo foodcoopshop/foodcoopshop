@@ -87,6 +87,19 @@ switch ($configuration->type) {
             'escape' => false
         ]);
         break;
+    case 'multiple_dropdown':
+        $this->element('addScript', ['script' =>
+            Configure::read('app.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#configurations-value');"
+        ]);
+        echo $this->Form->control('Configurations.value', [
+            'type' => 'select',
+            'multiple' => true,
+            'data-val' => $configuration->value,
+            'label' => $label,
+            'options' => $this->Configuration->getConfigurationDropdownOptions($configuration->name),
+            'escape' => false
+        ]);
+        break;
 }
 
 echo '<div class="sc"></div>';

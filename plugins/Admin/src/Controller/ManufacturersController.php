@@ -318,7 +318,7 @@ class ManufacturersController extends AdminAppController
         }
 
         foreach ($manufacturers as $manufacturer) {
-            $manufacturer->product_count = $this->Manufacturer->getProductsByManufacturerId($manufacturer->id_manufacturer, true);
+            $manufacturer->product_count = $this->Manufacturer->getProductsByManufacturerId($this->AppAuth, $manufacturer->id_manufacturer, true);
             $sumDepositDelivered = $this->OrderDetail->getDepositSum($manufacturer->id_manufacturer, false);
             $sumDepositReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturer->id_manufacturer, false);
             $manufacturer->sum_deposit_delivered = $sumDepositDelivered[0]['sumDepositDelivered'];

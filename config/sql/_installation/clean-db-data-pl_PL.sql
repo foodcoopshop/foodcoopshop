@@ -85,7 +85,7 @@ INSERT INTO `fcs_configuration` VALUES
 (508,1,'FCS_FACEBOOK_URL','Adres URL Facebooka do osadzenia w stopce','https://www.facebook.com/FoodCoopShop/','text',90,'pl_PL','2015-07-08 13:23:54','2015-07-08 13:23:54'),
 (538,1,'FCS_REGISTRATION_EMAIL_TEXT','Dodatkowy tekst wysyłany w e-mailu rejestracyjnym po udanej rejestracji. <br /> <a href=\"/admin/configurations/previewEmail/FCS_REGISTRATION_EMAIL_TEXT\" target=\"_blank\"> <i class = \"fas fa-info-circle\"> </i> podgląd wiadomości e-mail </a>','','textarea_big',170,'pl_PL','2016-06-26 00:00:00','2016-06-26 00:00:00'),
 (543,1,'FCS_RIGHT_INFO_BOX_HTML','Treść pola w prawej kolumnie poniżej koszyka. <br /> <div class = \"small\"> Aby tło w wierszu było zielone, należy sformatować jako \"Nagłówek 3\". </div>','<h3>Odbiory</h3>\r\n\r\n<p>Dzień odbioru jest widoczny w opisie produktu, możesz odebrać produkty w <strong>{DELIVERY_DAY}</strong>&nbsp;pomiędzy 19, a 21.</p>\r\n\r\n<p>Zam&oacute;wienia składamy co tydzień, maksymalnie do środy (zależy od produktu).</p>','textarea_big',150,'pl_PL','2017-07-26 13:24:47','2017-07-26 13:24:47'),
-(544,1,'FCS_CART_ENABLED','Czy koszyk jest aktywny? <br /> <div class = \"small\"> Jeśli kooperatywa jest na wakacjach, wyłącz możliwość zamawiania tutaj. </div>','1','boolean',10,'pl_PL','2017-07-26 13:24:47','2017-07-26 13:24:47'),
+(544,1,'FCS_NO_DELIVERY_DAYS_GLOBAL','Delivery break for all manufacturers?<br /><div class=\"small\">Here you can define delivery-free days for the whole food-coop.</div>','','multiple_dropdown',10,'pl_PL','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (545,1,'FCS_ACCOUNTING_EMAIL','Adres e-mail osoby odpowiedzialnej za finanse <br /> <div class = \"small\"> Kto otrzymuje powiadomienie o wysłaniu faktur? </div>','','text',110,'pl_PL','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (546,1,'FCS_AUTHENTICATION_INFO_TEXT','Tekst informacyjny w formularzu rejestracyjnym <br /> <div class = \"small\"> Ten tekst informacyjny jest wyświetlany w formularzu rejestracyjnym poniżej adresu e-mail. </div>','Musisz być członkiem jeśli chcesz złożyć zamówienie.','textarea',160,'pl_PL','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (547,1,'FCS_SHOW_PRODUCTS_FOR_GUESTS','Produkty widoczne dla gości?','0','boolean',20,'pl_PL','2017-07-26 13:24:47','2017-07-26 13:24:47'),
@@ -251,7 +251,8 @@ INSERT INTO `phinxlog` VALUES
 (20190417072617,'SelfServiceModeConfiguration','2019-04-17 09:53:00','2019-04-17 09:53:00',0),
 (20190527070456,'CartProductUnits','2019-05-27 09:17:21','2019-05-27 09:17:21',0),
 (20190617201728,'RemoveLegacyPasswordHasher','2019-06-17 20:28:34','2019-06-17 20:28:34',0),
-(20190803174327,'AdditionalFieldForPrivacyPolicy','2019-08-03 18:07:12','2019-08-03 18:07:12',0);
+(20190803174327,'AdditionalFieldForPrivacyPolicy','2019-08-03 18:07:12','2019-08-03 18:07:12',0),
+(20191026164156,'GlobalDeliveryBreak','2019-10-26 17:03:03','2019-10-26 17:03:03',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

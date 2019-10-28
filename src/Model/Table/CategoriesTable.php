@@ -58,13 +58,13 @@ class CategoriesTable extends AppTable
         return $this->flattenedArray;
     }
 
-    public function getForMenu()
+    public function getForMenu($appAuth)
     {
         $conditions = [
             $this->getAlias() . '.active' => APP_ON
         ];
         $categories = $this->getThreaded($conditions);
-        $categorieForMenu = $this->prepareTreeResultForMenu($categories);
+        $categorieForMenu = $this->prepareTreeResultForMenu($appAuth, $categories);
         return $categorieForMenu;
     }
 
@@ -107,7 +107,7 @@ class CategoriesTable extends AppTable
      * custom sql for best performance
      * product attributes ARE NOT fetched in this query!
      */
-    public function getProductsByCategoryId($categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false)
+    public function getProductsByCategoryId($appAuth, $categoryId, $filterByNewProducts = false, $keyword = '', $productId = 0, $countMode = false, $getOnlyStockProducts = false)
     {
         $params = [
             'active' => APP_ON
@@ -167,7 +167,7 @@ class CategoriesTable extends AppTable
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $products = $statement->fetchAll('assoc');
-        $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($products);
+        $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
         
         if (! $countMode) {
             return $products;
@@ -181,18 +181,18 @@ class CategoriesTable extends AppTable
      *
      * @param array $conditions
      */
-    public function prepareTreeResultForMenu($items)
+    public function prepareTreeResultForMenu($appAuth, $items)
     {
         $itemsForMenu = [];
         foreach ($items as $index => $item) {
-            $itemsForMenu[] = $this->buildItemForTree($item, $index);
+            $itemsForMenu[] = $this->buildItemForTree($appAuth, $item, $index);
         }
         return $itemsForMenu;
     }
 
-    private function buildItemForTree($item, $index)
+    private function buildItemForTree($appAuth, $item, $index)
     {
-        $productCount = $this->getProductsByCategoryId($item->id_category, false, '', 0, true);
+        $productCount = $this->getProductsByCategoryId($appAuth, $item->id_category, false, '', 0, true);
 
         $tmpMenuItem = [
             'name' => $item->name . ' <span class="additional-info">(' . $productCount . ')</span>',
@@ -201,7 +201,7 @@ class CategoriesTable extends AppTable
         ];
         if (! empty($item->children)) {
             foreach ($item->children as $index => $child) {
-                $tmpMenuItem['children'][] = $this->buildItemForTree($child, $index);
+                $tmpMenuItem['children'][] = $this->buildItemForTree($appAuth, $child, $index);
             }
         }
 

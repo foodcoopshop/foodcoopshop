@@ -60,7 +60,7 @@ class ProductsController extends FrontendController
         $this->set('blogPosts', $blogPosts);
 
         $this->Category = TableRegistry::getTableLocator()->get('Categories');
-        $product = $this->Category->getProductsByCategoryId(Configure::read('app.categoryAllProducts'), false, '', $productId);
+        $product = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', $productId);
         $product = $this->prepareProductsForFrontend($product);
 
         if (empty($product) || !isset($product[0])) {

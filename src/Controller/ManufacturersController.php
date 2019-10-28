@@ -74,7 +74,7 @@ class ManufacturersController extends FrontendController
 
         if ($this->AppAuth->user() || Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
             foreach ($manufacturers as $manufacturer) {
-                $manufacturer->product_count = $this->Manufacturer->getProductsByManufacturerId($manufacturer->id_manufacturer, true);
+                $manufacturer->product_count = $this->Manufacturer->getProductsByManufacturerId($this->AppAuth, $manufacturer->id_manufacturer, true);
             }
         }
 
@@ -112,7 +112,7 @@ class ManufacturersController extends FrontendController
         }
 
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
-            $products = $this->Manufacturer->getProductsByManufacturerId($manufacturerId);
+            $products = $this->Manufacturer->getProductsByManufacturerId($this->AppAuth, $manufacturerId);
             $manufacturer['Products'] = $this->prepareProductsForFrontend($products);
         }
 
