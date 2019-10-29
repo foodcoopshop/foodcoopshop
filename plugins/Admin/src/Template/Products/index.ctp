@@ -128,6 +128,10 @@ use Cake\Core\Configure;
     <?php
 
     if (!empty($manufacturer)) {
+        $globalNoDeliveryDaysString = $this->Html->getGlobalNoDeliveryDaysString();
+        if ($globalNoDeliveryDaysString != '') {
+            echo '<h2 class="info">' . $globalNoDeliveryDaysString . '</h2>';
+        }
         $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true);
         if ($manufacturerNoDeliveryDaysString != '') {
             echo '<h2 class="info">'.$manufacturerNoDeliveryDaysString.'</h2>';
