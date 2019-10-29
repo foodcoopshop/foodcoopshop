@@ -225,6 +225,7 @@ if ($product['description'] != '') {
                     'hideAmountSelector' => $isStockProductOrderPossible
                 ]);
                 echo $this->element('product/cartButton', [
+                    'deliveryBreakEnabled' => isset($product['delivery_break_enabled']) ? $product['delivery_break_enabled'] : false,
                     'productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute'],
                     'stockAvailableQuantity' => $attribute['StockAvailables']['quantity'],
                     'stockAvailableQuantityLimit' => $attribute['StockAvailables']['quantity_limit'],
@@ -309,6 +310,7 @@ if ($product['description'] != '') {
                     'hideAmountSelector' => $isStockProductOrderPossible
                 ]);
                 echo $this->element('product/cartButton', [
+                    'deliveryBreakEnabled' => isset($product['delivery_break_enabled']) ? $product['delivery_break_enabled'] : false,
                     'productId' => $product['id_product'],
                     'stockAvailableQuantity' => $product['quantity'],
                     'stockAvailableQuantityLimit' => $product['quantity_limit'],
