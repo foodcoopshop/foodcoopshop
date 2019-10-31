@@ -56,7 +56,7 @@ class SelfServiceController extends FrontendController
         $this->set('title_for_layout', __('Self_service_for_stock_products'));
         
         if (!empty($this->getRequest()->getQuery('keyword')) && count($products) == 1) {
-            $hashedProductId = substr($keyword, 0, 4);
+            $hashedProductId = strtolower(substr($keyword, 0, 4));
             $attributeId = (int) substr($keyword, 4, 4);
             if ($hashedProductId == $products[0]['ProductIdentifier']) {
                 $this->CartProduct = TableRegistry::getTableLocator()->get('CartProducts');
