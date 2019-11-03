@@ -15,10 +15,10 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.11.2",
-    "blueimp-file-upload": "^10.2.0",
+    "blueimp-file-upload": "^10.3.0",
     "bootstrap": "^4.3.1",
     "bootstrap-select": "^1.13.12",
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.2",
     "ckeditor": "^4.12.1",
     "clipboard": "^2.0.4",
     "components-jqueryui": "~1.12",
@@ -34,6 +34,6 @@
     "tooltipster": "^4.2.7"
   },
   "devDependencies": {
-    "eslint": "^6.5.1"
+    "eslint": "^6.6.0"
   }
 }
