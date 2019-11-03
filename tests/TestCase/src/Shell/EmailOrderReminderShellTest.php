@@ -47,6 +47,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
         $this->commandRunner->run(['cake', 'email_order_reminder', '2019-10-27']);
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(0, count($emailLogs));
+        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', '');
     }
     
     public function testGlobalDeliveryBreakEnabledAndNotNextDeliveryDay()
@@ -55,11 +56,12 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
         $this->commandRunner->run(['cake', 'email_order_reminder', '2019-10-27']);
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(3, count($emailLogs));
+        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', '');
     }
     
     public function testActiveOrderDetail()
     {
-        $pickupDay = Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb();
+        $pickupDay = '2019-11-08';
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         
         $this->OrderDetail->save(
@@ -70,9 +72,10 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
                 ]
             )
         );
-        $this->commandRunner->run(['cake', 'email_order_reminder']);
+        $this->commandRunner->run(['cake', 'email_order_reminder', '2019-11-05']);
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(2, count($emailLogs), 'superadmin has open order and got reminder email');
+        $this->assertEmailLogs($emailLogs[0], '', ['heute'], ['fcs-demo-admin@mailinator.com']);
     }
 
     public function testIfServiceNotSubscribed()

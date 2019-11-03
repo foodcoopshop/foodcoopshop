@@ -39,9 +39,9 @@ class EmailOrderReminderShell extends AppShell
             return true;
         }
         
+        $nextDeliveryDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($this->cronjobRunDay));
         if (Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL') != '') {
             $this->Product = TableRegistry::getTableLocator()->get('Products');
-            $nextDeliveryDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($this->cronjobRunDay));
             if ($this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $nextDeliveryDay)) {
                 return true;
             }
@@ -62,9 +62,7 @@ class EmailOrderReminderShell extends AppShell
 
         $this->Customer->getAssociation('ActiveOrderDetails')->setConditions(
             [
-                'DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\') = \'' . 
-                    Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb()
-                . '\'',
+                'DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\') = \'' . $nextDeliveryDay . '\'',
             ]
         );
 
@@ -91,7 +89,7 @@ class EmailOrderReminderShell extends AppShell
             $email->setSubject(__('Order_reminder') . ' ' . Configure::read('appDb.FCS_APP_NAME'))
             ->setViewVars([
                 'customer' => $customer,
-                'lastOrderDayAsString' => (Configure::read('app.timeHelper')->getSendOrderListsWeekday() - date('N')) == 1 ? __('today') : __('tomorrow')
+                'lastOrderDayAsString' => (Configure::read('app.timeHelper')->getSendOrderListsWeekday() - date('N', strtotime($this->cronjobRunDay))) == 1 ? __('today') : __('tomorrow')
             ])
             ->send();
 
