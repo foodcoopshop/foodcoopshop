@@ -53,7 +53,17 @@ foodcoopshop.SelfService = {
     },
     
     initSearchForm : function() {
+        
         var searchForm = $('#product-search');
+        
+        formIsSubmitted = false;
+        searchForm.on('submit', function(e) {
+            if (formIsSubmitted) {
+                return false;
+            }
+            formIsSubmitted = true;
+        });
+        
         if (!foodcoopshop.Helper.isMobile()) {
             foodcoopshop.Helper.initBootstrapSelect(searchForm);
         }
