@@ -275,7 +275,12 @@ foodcoopshop.Mobile = {
 
         // add info box to right side bar
         $('#container').after(this.getSlidebarMenu('right')).attr('canvas', '');
-        $('.sb-right').html('<div class="inner">' + $('#global-no-delivery-day-box').html() + $('#info-box').html() + '</div>');
+        var noGlobalDeliveryBreakHtml = '';
+        var noGlobalDeliveryBreakElement = $('#global-no-delivery-day-box');
+        if (noGlobalDeliveryBreakElement.length > 0) {
+            noGlobalDeliveryBreakHtml = noGlobalDeliveryBreakHtmlElement.html();
+        }
+        $('.sb-right').html('<div class="inner">' + noGlobalDeliveryBreakHtml + $('#info-box').html() + '</div>');
 
         // add special infos to cart page
         var cartPage = $('body.carts.detail #inner-content h1:first');
