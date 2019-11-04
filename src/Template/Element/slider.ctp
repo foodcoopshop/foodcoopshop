@@ -21,7 +21,7 @@ if (!empty($sliders)) {
     ]);
     echo '<div id="slider">';
         foreach ($sliders as $slider) {
-            echo '<img width="908" src="'.$this->Html->getSliderImageSrc($slider->image).'" />';
+            echo '<img class="item" width="908" src="'.$this->Html->getSliderImageSrc($slider->image).'" />';
         }
     echo '</div>';
 }

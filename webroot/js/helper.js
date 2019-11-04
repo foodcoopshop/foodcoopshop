@@ -431,14 +431,16 @@ foodcoopshop.Helper = {
         
         var container = $('#slider');
         container.addClass('owl-carousel');
+        
+        var hasOnlyOneSlide = $('.owl-carousel .item').length == 1;
 
         container.owlCarousel({
-            autoplay: true,
+            autoplay: hasOnlyOneSlide ? false : true,
             autoHeight: true,
             autoplayTimeout: 7000,
             autoplayHoverPause: true,
             smartSpeed: 1500,
-            loop: true,
+            loop: hasOnlyOneSlide ? false : true,
             nav: false,
             items: 1,
             navText: [
