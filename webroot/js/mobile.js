@@ -278,7 +278,7 @@ foodcoopshop.Mobile = {
         var noGlobalDeliveryBreakHtml = '';
         var noGlobalDeliveryBreakElement = $('#global-no-delivery-day-box');
         if (noGlobalDeliveryBreakElement.length > 0) {
-            noGlobalDeliveryBreakHtml = noGlobalDeliveryBreakHtmlElement.html();
+            noGlobalDeliveryBreakHtml = noGlobalDeliveryBreakElement.html();
         }
         $('.sb-right').html('<div class="inner">' + noGlobalDeliveryBreakHtml + $('#info-box').html() + '</div>');
 
