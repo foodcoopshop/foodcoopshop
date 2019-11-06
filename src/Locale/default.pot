@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-10-27 20:52+0100\n"
+"POT-Creation-Date: 2019-11-06 21:34+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -570,6 +570,24 @@ msgid "Be_careful_there_is_no_way_back!"
 msgstr ""
 
 msgid "Errors_occurred_while_member_was_deleted"
+msgstr ""
+
+msgid "Delete_products?"
+msgstr ""
+
+msgid "Really_delete_{0}_products?"
+msgstr ""
+
+msgid "Errors_occurred_while_products_were_deleted"
+msgstr ""
+
+msgid "Delete_product?"
+msgstr ""
+
+msgid "Really_delete_1_product?"
+msgstr ""
+
+msgid "Errors_occurred_while_product_was_deleted"
 msgstr ""
 
 msgid "Add_comment"

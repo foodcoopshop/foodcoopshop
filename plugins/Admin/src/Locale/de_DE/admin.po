@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-06-07 15:02+0200\n"
+"POT-Creation-Date: 2019-11-06 21:34+0100\n"
 "PO-Revision-Date: 2019-06-09 23:25+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -969,9 +969,6 @@ msgstr "Bitte wähle einen Hersteller aus."
 msgid "Add_return_of_empty_glasses"
 msgstr "Pfand-Rücknahme eintragen"
 
-msgid "Add_deposit_return"
-msgstr "Pfand-Rückgabe eintragen"
-
 msgid "Since_{0}_there_was_no_deposit_delivered_or_returned."
 msgstr "Seit dem {0} wurde noch kein Pfand geliefert oder zurückgenommen."
 
@@ -1146,9 +1143,6 @@ msgstr "Pfand"
 msgid "Picked_up"
 msgstr "Abgeholt"
 
-msgid "Amount_minus_eventual_variable_member_fee"
-msgstr "Betrag abzügl. eventuellem variablen Mitgliedsbeitrag"
-
 msgid "Invoice_for_the_order_period_{0}_to_{1}"
 msgstr "Rechnung für den Bestell-Zeitraum {0} - {1}"
 
@@ -1217,6 +1211,10 @@ msgstr "Mitglieds-Nr."
 
 msgid "Member_card"
 msgstr "Mitgliedskarte"
+
+#, fuzzy
+msgid "Delete_selected_products"
+msgstr "Ausgewählte Produkte stornieren"
 
 msgid "Edit_delivery_rhythm_for_selected_products"
 msgstr "Lieferrhythmus für ausgewählte Produkte bearbeiten"
@@ -2000,6 +1998,12 @@ msgstr "Steuersätze sind später nicht änderbar."
 
 msgid "Delete"
 msgstr "Löschen"
+
+#~ msgid "Add_deposit_return"
+#~ msgstr "Pfand-Rückgabe eintragen"
+
+#~ msgid "Amount_minus_eventual_variable_member_fee"
+#~ msgstr "Betrag abzügl. eventuellem variablen Mitgliedsbeitrag"
 
 #~ msgid "Statistics"
 #~ msgstr "Statistik"

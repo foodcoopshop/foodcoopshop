@@ -10,6 +10,7 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\ORM\TableRegistry;
 use Intervention\Image\ImageManagerStatic as Image;
+use Cake\I18n\FrozenTime;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -35,6 +36,7 @@ class ProductsController extends AdminAppController
                 break;
             case 'index':
             case 'add':
+            case 'delete':
             case 'ajaxGetProductsForDropdown':
                 return $this->AppAuth->user();
                 break;
@@ -108,6 +110,38 @@ class ProductsController extends AdminAppController
         parent::beforeFilter($event);
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->Product = TableRegistry::getTableLocator()->get('Products');
+    }
+    
+    public function delete()
+    {
+        
+        $this->RequestHandler->renderAs($this, 'json');
+        
+        $productIds = $this->getRequest()->getData('productIds');
+        $this->Product->updateAll([
+            'active' => APP_DEL,
+            'modified' => FrozenTime::now() // Timestamp behavior does not work here...
+        ], [
+            'id_product IN' => $productIds
+        ]);
+        
+//         $actionLogMessage = __d('admin', 'The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', [
+//             '<b>' . $oldProduct->name . '</b>',
+//             '<b>' . $oldProduct->manufacturer->name . '</b>',
+//             $oldPrice,
+//             $newPrice
+//         ]);
+        
+//         $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
+//         $this->Flash->success($actionLogMessage);
+        
+        $this->set('data', [
+            'status' => 1,
+            'msg' => 'ok'
+        ]);
+        
+        $this->set('_serialize', 'data');
+        
     }
     
     public function generateProductCards()
