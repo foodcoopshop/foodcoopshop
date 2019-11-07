@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-11-07 19:14+0100\n"
-"PO-Revision-Date: 2019-11-07 19:15+0100\n"
+"POT-Creation-Date: 2019-11-07 19:36+0100\n"
+"PO-Revision-Date: 2019-11-07 19:35+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -386,6 +386,9 @@ msgstr "Show order"
 
 msgid "of_{0}"
 msgstr "of {0}"
+
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deleted_successfully."
+msgstr "{0,plural,=1{One product was} other{# products were}} deleted successfully."
 
 msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
 msgstr "Image (ID {0}) from manufacturer {1} was deleted successfully. Product: {1}, manufacturer: {2}."

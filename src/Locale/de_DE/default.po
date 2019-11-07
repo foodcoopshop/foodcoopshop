@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-11-06 21:34+0100\n"
-"PO-Revision-Date: 2019-11-06 21:37+0100\n"
+"POT-Creation-Date: 2019-11-07 19:36+0100\n"
+"PO-Revision-Date: 2019-11-07 19:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1097,6 +1097,9 @@ msgstr "Netzwerk-Modul: Produkte synchronisiert"
 
 msgid "Action_Log_Delivery_rhythm_changed"
 msgstr "Produkt: Lieferrhythmus geändert"
+
+msgid "Action_Log_Product_deleted"
+msgstr "Produkt: gelöscht"
 
 msgid "Action_Log_Order_status_changed"
 msgstr "Bestellung: Status geändert"

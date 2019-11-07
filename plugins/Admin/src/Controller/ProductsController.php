@@ -118,22 +118,30 @@ class ProductsController extends AdminAppController
         $this->RequestHandler->renderAs($this, 'json');
         
         $productIds = $this->getRequest()->getData('productIds');
+        $products = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product IN' => $productIds
+            ],
+            'contain' => [
+                'Manufacturers'
+            ]
+        ]);
+        $preparedProductsForActionLog = [];
+        foreach($products as $product) {
+            $preparedProductsForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
+        }
         $this->Product->updateAll([
             'active' => APP_DEL,
-            'modified' => FrozenTime::now() // Timestamp behavior does not work here...
+            'modified' => FrozenTime::now() // timestamp behavior does not work here...
         ], [
             'id_product IN' => $productIds
         ]);
         
-//         $actionLogMessage = __d('admin', 'The_price_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}.', [
-//             '<b>' . $oldProduct->name . '</b>',
-//             '<b>' . $oldProduct->manufacturer->name . '</b>',
-//             $oldPrice,
-//             $newPrice
-//         ]);
-        
-//         $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
-//         $this->Flash->success($actionLogMessage);
+        $message = __d('admin', '{0,plural,=1{1_product_was} other{#_products_were}}_deleted_successfully.', [
+            count($productIds)
+        ]);
+        $this->Flash->success($message);
+        $this->ActionLog->customSave('product_deleted', $this->AppAuth->getUserId(), 0, 'products', $message . '<br />' . join('<br />', $preparedProductsForActionLog));
         
         $this->set('data', [
             'status' => 1,
