@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-10-27 20:52+0100\n"
+"POT-Creation-Date: 2019-11-06 21:34+0100\n"
 "PO-Revision-Date: 2019-07-22 16:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -759,6 +759,36 @@ msgstr "Zalecana ostrożność, czynności nie da się cofnąć!"
 
 # Errors occurred while member was deleted
 msgid "Errors_occurred_while_member_was_deleted"
+msgstr "Wystąpiły błędy podczas usuwania członka"
+
+# New products
+#, fuzzy
+msgid "Delete_products?"
+msgstr "Nowe produkty"
+
+# Really cancel the selected products?
+#, fuzzy
+msgid "Really_delete_{0}_products?"
+msgstr "Na pewno anulować wybrane produkty?"
+
+# Errors occurred while member was deleted
+#, fuzzy
+msgid "Errors_occurred_while_products_were_deleted"
+msgstr "Wystąpiły błędy podczas usuwania członka"
+
+# Deactivate product
+#, fuzzy
+msgid "Delete_product?"
+msgstr "Dezaktywuj produkt"
+
+# Do you really want to add a new product?
+#, fuzzy
+msgid "Really_delete_1_product?"
+msgstr "Na pewno chcesz dodać nowy produkt?"
+
+# Errors occurred while member was deleted
+#, fuzzy
+msgid "Errors_occurred_while_product_was_deleted"
 msgstr "Wystąpiły błędy podczas usuwania członka"
 
 # Add comment
