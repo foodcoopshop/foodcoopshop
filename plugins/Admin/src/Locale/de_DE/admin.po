@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-11-07 19:36+0100\n"
-"PO-Revision-Date: 2019-11-07 19:35+0100\n"
+"POT-Creation-Date: 2019-11-07 20:20+0100\n"
+"PO-Revision-Date: 2019-11-07 20:21+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -386,6 +386,12 @@ msgstr "Bestellung anzeigen"
 
 msgid "of_{0}"
 msgstr "von {0}"
+
+msgid "The_product_{0}_has_{1,plural,=1{1_open_order} other{#_open_orders}}."
+msgstr "Das Produkt {0} hat {1,plural,=1{1 offene Bestellung} other{# offene Bestellungen}}."
+
+msgid "Please_try_again_as_soon_as_the_next_invoice_has_been_generated."
+msgstr "Bitte probiere es nochmal, sobald die nächsten Rechnungen erstellt wurden."
 
 msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deleted_successfully."
 msgstr "{0,plural,=1{Ein Produkt wurde} other{# Produkte wurden}} erfolgreich gelöscht."

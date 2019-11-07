@@ -7,6 +7,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
 use Cake\Filesystem\Folder;
 use Cake\Core\Configure;
+use Cake\Core\Exception\Exception;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\ORM\TableRegistry;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -130,6 +131,49 @@ class ProductsController extends AdminAppController
         foreach($products as $product) {
             $preparedProductsForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
         }
+        
+        try {
+            // check if open order exist
+            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+            $query = $this->OrderDetail->find('all', [
+                'conditions' => [
+                    'OrderDetails.product_id IN' => $productIds,
+                    'OrderDetails.order_state IN' => [ORDER_STATE_ORDER_PLACED, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER]
+                ],
+                'contain' => [
+                    'Products'
+                ]
+            ]);
+            $query->select(
+                [
+                    'orderDetailsCount' => $query->func()->count('OrderDetails.product_id'),
+                    'productName' => 'Products.name'
+                ]
+            );
+            $query->group('OrderDetails.product_id');
+            
+            $errors = [];
+            if ($query->count() > 0) {
+                foreach($query as $orderDetail) {
+                    $errors[] = __d('admin', 'The_product_{0}_has_{1,plural,=1{1_open_order} other{#_open_orders}}.',
+                        [
+                            $orderDetail->productName,
+                            $orderDetail->orderDetailsCount
+                        ]
+                    );
+                }
+            }
+            if (!empty($errors)) {
+                $errorString = '<ul><li>' . join('</li><li>', $errors) . '</li></ul>';
+                $errorString .= __d('admin', 'Please_try_again_as_soon_as_the_next_invoice_has_been_generated.');
+                $this->log('error while trying to delete a product: <br />' . $errorString);
+                throw new Exception($errorString);
+            }
+        } catch (Exception $e) {
+            $this->sendAjaxError($e);
+        }
+    
+            
         $this->Product->updateAll([
             'active' => APP_DEL,
             'modified' => FrozenTime::now() // timestamp behavior does not work here...

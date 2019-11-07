@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-11-07 19:36+0100\n"
+"POT-Creation-Date: 2019-11-07 20:20+0100\n"
 "PO-Revision-Date: 2019-04-28 03:51+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -403,6 +403,13 @@ msgstr "Pokaż zamówienie"
 
 msgid "of_{0}"
 msgstr "z {0}"
+
+#, fuzzy
+msgid "The_product_{0}_has_{1,plural,=1{1_open_order} other{#_open_orders}}."
+msgstr "{0,plural,=1{1 produkt} other{# produkty}}"
+
+msgid "Please_try_again_as_soon_as_the_next_invoice_has_been_generated."
+msgstr ""
 
 #, fuzzy
 msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deleted_successfully."

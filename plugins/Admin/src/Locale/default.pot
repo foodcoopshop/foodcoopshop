@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-11-07 19:36+0100\n"
+"POT-Creation-Date: 2019-11-07 20:20+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -384,6 +384,12 @@ msgid "Show_order"
 msgstr ""
 
 msgid "of_{0}"
+msgstr ""
+
+msgid "The_product_{0}_has_{1,plural,=1{1_open_order} other{#_open_orders}}."
+msgstr ""
+
+msgid "Please_try_again_as_soon_as_the_next_invoice_has_been_generated."
 msgstr ""
 
 msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deleted_successfully."
