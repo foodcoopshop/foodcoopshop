@@ -692,6 +692,8 @@ class ProductsTable extends AppTable
 
         if ($active != 'all') {
             $conditions['Products.active'] = $active;
+        } else {
+            $conditions['Products.active >'] = APP_DEL;
         }
 
         if ($isQuantityMinFilterSet != '') {
@@ -999,7 +1001,9 @@ class ProductsTable extends AppTable
 
     public function getForDropdown($appAuth, $manufacturerId)
     {
-        $conditions = [];
+        $conditions = [
+            'Products.active >' => APP_DEL
+        ];
 
         if ($appAuth->isManufacturer()) {
             $manufacturerId = $appAuth->getManufacturerId();
