@@ -424,7 +424,7 @@ CREATE TABLE `fcs_product` (
   `unity` varchar(255) DEFAULT NULL,
   `is_declaration_ok` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `is_stock_product` tinyint(4) unsigned NOT NULL DEFAULT '0',
-  `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `active` int(1) NOT NULL DEFAULT '0',
   `delivery_rhythm_type` varchar(10) NOT NULL DEFAULT 'week',
   `delivery_rhythm_count` tinyint(10) NOT NULL DEFAULT '1',
   `delivery_rhythm_first_delivery_day` date DEFAULT NULL,
