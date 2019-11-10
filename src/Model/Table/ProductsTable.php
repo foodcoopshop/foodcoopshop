@@ -1001,9 +1001,7 @@ class ProductsTable extends AppTable
 
     public function getForDropdown($appAuth, $manufacturerId)
     {
-        $conditions = [
-            'Products.active >' => APP_DEL
-        ];
+        $conditions = [];
 
         if ($appAuth->isManufacturer()) {
             $manufacturerId = $appAuth->getManufacturerId();
@@ -1025,28 +1023,40 @@ class ProductsTable extends AppTable
             ]
         ]);
 
-        $offlineProducts = [];
         $onlineProducts = [];
+        $offlineProducts = [];
+        $deletedProducts = [];
         foreach ($products as $product) {
             $productNameForDropdown = $product->name . (!empty($product->manufacturer) ? ' - ' . $product->manufacturer->name : '');
-            if ($product->active == 0) {
-                $offlineProducts[$product->id_product] = $productNameForDropdown;
-            } else {
-                $onlineProducts[$product->id_product] = $productNameForDropdown;
+            switch($product->active) {
+                case 1:
+                    $onlineProducts[$product->id_product] = $productNameForDropdown;
+                    break;
+                case 0:
+                    $offlineProducts[$product->id_product] = $productNameForDropdown;
+                    break;
+                case -1:
+                    $deletedProducts[$product->id_product] = $productNameForDropdown;
+                    break;
             }
         }
 
         $productsForDropdown = [];
         if (! empty($onlineProducts)) {
             $onlineCount = count($onlineProducts);
-            $productsForDropdown['online-' . $onlineCount] = $onlineProducts;
+            $productsForDropdown[__('online') . '-' . $onlineCount] = $onlineProducts;
         }
 
         if (! empty($offlineProducts)) {
             $offlineCount = count($offlineProducts);
-            $productsForDropdown['offline-' . $offlineCount] = $offlineProducts;
+            $productsForDropdown[__('offline') . '-' . $offlineCount] = $offlineProducts;
         }
 
+        if (! empty($deletedProducts)) {
+            $deletedCount = count($deletedProducts);
+            $productsForDropdown[__('deleted') . '-' . $deletedCount] = $deletedProducts;
+        }
+        
         return $productsForDropdown;
     }
 

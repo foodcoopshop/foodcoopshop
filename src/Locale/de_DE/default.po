@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-11-07 20:20+0100\n"
-"PO-Revision-Date: 2019-11-07 19:36+0100\n"
+"POT-Creation-Date: 2019-11-10 20:04+0100\n"
+"PO-Revision-Date: 2019-11-10 20:04+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1538,6 +1538,9 @@ msgstr "Der erste Liefertag muss ein erster {0} im Monat sein."
 
 msgid "The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long."
 msgstr "Der Name des Produktes {0} muss aus mindestens {1} Zeichen bestehen."
+
+msgid "deleted"
+msgstr "gelöscht"
 
 msgid "New_product_of"
 msgstr "Neues Produkt von"
