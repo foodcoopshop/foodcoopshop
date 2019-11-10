@@ -37,7 +37,6 @@ class ProductsController extends AdminAppController
                 break;
             case 'index':
             case 'add':
-            case 'delete':
             case 'ajaxGetProductsForDropdown':
                 return $this->AppAuth->user();
                 break;
@@ -115,7 +114,6 @@ class ProductsController extends AdminAppController
     
     public function delete()
     {
-        
         $this->RequestHandler->renderAs($this, 'json');
         
         $productIds = $this->getRequest()->getData('productIds');

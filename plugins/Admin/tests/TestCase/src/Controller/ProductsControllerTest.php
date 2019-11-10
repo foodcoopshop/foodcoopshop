@@ -243,6 +243,48 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
     
+    public function testDeleteProduct()
+    {
+        $this->loginAsSuperadmin();
+        $productId = 346;
+        $this->httpClient->post('/admin/products/delete', [
+            'productIds' => [$productId]
+        ]);
+        $this->assertJsonOk();
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId
+            ]
+        ])->first();
+        $this->assertEquals($product->active, APP_DEL);
+        $this->httpClient->get($this->Slug->getProductDetail($productId, 'Demo Product'));
+        $this->assert404NotFoundHeader();
+    }
+    
+    public function testDeleteProductAccessLoggedOut()
+    {
+        $this->httpClient->post('/admin/products/delete', [
+            'productIds' => [346]
+        ]);
+        $this->assertRedirectToLoginPage();
+    }
+    
+    public function testDeleteProductAccessLoggedInAsWrongManufacturer()
+    {
+        $productId = 346;
+        $this->loginAsMeatManufacturer();
+        $this->httpClient->post('/admin/products/delete', [
+            'productIds' => [$productId]
+        ]);
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId
+            ]
+        ])->first();
+        // active must not be changed!
+        $this->assertEquals($product->active, APP_ON);
+    }
+    
     /**
      * asserts price in database (getGrossPrice)
      */
