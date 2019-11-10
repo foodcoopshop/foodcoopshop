@@ -173,13 +173,22 @@ class ProductsController extends AdminAppController
             $this->sendAjaxError($e);
         }
     
-            
+        // 1) set field active to -1
         $this->Product->updateAll([
             'active' => APP_DEL,
             'modified' => FrozenTime::now() // timestamp behavior does not work here...
         ], [
             'id_product IN' => $productIds
         ]);
+        
+        // 2) delete image
+        foreach($productIds as $productId) {
+            $this->Product->changeImage(
+                [
+                    [$productId => 'no-image']
+                ]
+            );
+        }
         
         $message = __d('admin', '{0,plural,=1{1_product_was} other{#_products_were}}_deleted_successfully.', [
             count($productIds)
