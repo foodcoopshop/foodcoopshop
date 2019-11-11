@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-06-07 15:02+0200\n"
-"PO-Revision-Date: 2019-06-07 14:38+0200\n"
+"POT-Creation-Date: 2019-11-07 20:20+0100\n"
+"PO-Revision-Date: 2019-11-07 20:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.2.4\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -386,6 +386,15 @@ msgstr "Show order"
 
 msgid "of_{0}"
 msgstr "of {0}"
+
+msgid "The_product_{0}_has_{1,plural,=1{1_open_order} other{#_open_orders}}."
+msgstr "The product {0} has {1,plural,=1{1 open order} other{# open orders}}."
+
+msgid "Please_try_again_as_soon_as_the_next_invoice_has_been_generated."
+msgstr "Please try again as soon as the next invoice has been generated."
+
+msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deleted_successfully."
+msgstr "{0,plural,=1{One product was} other{# products were}} deleted successfully."
 
 msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
 msgstr "Image (ID {0}) from manufacturer {1} was deleted successfully. Product: {1}, manufacturer: {2}."
@@ -969,9 +978,6 @@ msgstr "Please chose a manufacturer."
 msgid "Add_return_of_empty_glasses"
 msgstr "Add return of empty glasses"
 
-msgid "Add_deposit_return"
-msgstr "Add deposit return"
-
 msgid "Since_{0}_there_was_no_deposit_delivered_or_returned."
 msgstr "Since {0} deposit was neither delivered nor returned."
 
@@ -1146,9 +1152,6 @@ msgstr "Deposit"
 msgid "Picked_up"
 msgstr "Picked up"
 
-msgid "Amount_minus_eventual_variable_member_fee"
-msgstr "Amount minus eventual variable member fee"
-
 msgid "Invoice_for_the_order_period_{0}_to_{1}"
 msgstr "Invoice for the order period {0} to {1}"
 
@@ -1217,6 +1220,9 @@ msgstr "Customer-ID"
 
 msgid "Member_card"
 msgstr "Member card"
+
+msgid "Delete_selected_products"
+msgstr "Delete selected products"
 
 msgid "Edit_delivery_rhythm_for_selected_products"
 msgstr "Edit delivery rhythm for selected products"
@@ -2000,6 +2006,12 @@ msgstr "Tax rates can not be changed later."
 
 msgid "Delete"
 msgstr "Delete"
+
+#~ msgid "Add_deposit_return"
+#~ msgstr "Add deposit return"
+
+#~ msgid "Amount_minus_eventual_variable_member_fee"
+#~ msgstr "Amount minus eventual variable member fee"
 
 #~ msgid "Statistics"
 #~ msgstr "Statistics"

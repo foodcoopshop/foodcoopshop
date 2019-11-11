@@ -199,6 +199,12 @@ class ActionLogsTable extends AppTable
                     'manufacturer'
                 ]
             ],
+            'product_deleted' => [
+                'name' => __('Action_Log_Product_deleted'),
+                'access' => [
+                    'manufacturer'
+                ]
+            ],
             
             'orders_state_changed' => [
                 'name' => __('Action_Log_Order_status_changed')
