@@ -307,14 +307,20 @@ class CartsController extends FrontendController
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
 
-        if (is_array($result)) {
-            die(json_encode($result));
+        // result is ok
+        if (!is_array($result)) {
+            $result = [
+                'status' => 1,
+                'msg' => 'ok'
+            ];
+            
+            if ($orderedQuantityInUnits > 0 && $this->AppAuth->isSelfServiceModeByReferer()) {
+                $result['callback'] = "foodcoopshop.SelfService.setFocusToSearchInputField();";
+            }
+            
         }
-
-        die(json_encode([
-            'status' => 1,
-            'msg' => 'ok'
-        ]));
+        
+        die(json_encode($result));
 
     }
 }

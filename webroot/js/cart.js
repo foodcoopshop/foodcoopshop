@@ -300,6 +300,9 @@ foodcoopshop.Cart = {
                         foodcoopshop.Helper.enableButton(button);
                         foodcoopshop.Helper.enableButton($(foodcoopshop.Cart.orderButtons));
                         foodcoopshop.Helper.removeSpinnerFromButton(button, foodcoopshop.Cart.cartButtonIcon);
+                        if (data.callback) {
+                            eval(data.callback);
+                        }
                     },
                     onError: function (data) {
                         foodcoopshop.Helper.enableButton(button);
