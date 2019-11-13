@@ -25,16 +25,29 @@ foodcoopshop.SelfService = {
     },
     
     initLoginForm : function() {
+        
         var barcodeInputField = $('#barcode'); 
         barcodeInputField.on('keyup focus', function (e) {
             $(this).prop('type', 'password'); // to avoid autocomplete
         });
+        
+        var loginForm = $('#LoginForm');
+        formIsSubmitted = false;
+        loginForm.on('submit', function(e) {
+            if (formIsSubmitted) {
+                return false;
+            }
+            formIsSubmitted = true;
+        });
+
         barcodeInputField.on('keypress', foodcoopshop.Helper.debounce(
             function() {
-                $(this).closest('form').find('button[type="submit"]').trigger('click');
+                foodcoopshop.SelfService.submitForm(loginForm, 'fa-sign-in-alt');
             }, 1000)
         );
+        
         barcodeInputField.focus();
+        
     },
     
     initDepositPayment : function() {
@@ -72,16 +85,16 @@ foodcoopshop.SelfService = {
         });
         searchForm.find('select, input[type="text"]').on('keypress', foodcoopshop.Helper.debounce(
             function() {
-                foodcoopshop.SelfService.submitSearchForm(searchForm);
+                foodcoopshop.SelfService.submitForm(searchForm, 'fa-search');
             }, 1000)
         );
         
         searchForm.find('input[type="text"]').focus();
     },
     
-    submitSearchForm : function(searchForm) {
+    submitForm : function(searchForm, icon) {
         var submitButton = searchForm.find('.btn[type="submit"]');
-        foodcoopshop.Helper.addSpinnerToButton(submitButton, 'fa-search');
+        foodcoopshop.Helper.addSpinnerToButton(submitButton, icon);
         foodcoopshop.Helper.disableButton(submitButton);
         searchForm.submit();
     },
