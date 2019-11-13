@@ -176,7 +176,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * back tick ` allows using forward slash in $unquotedString
+     * back tick allows using forward slash in $unquotedString
      * @param string $unquotedString
      * @param string $response
      * @param string $msg
@@ -324,7 +324,6 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     *
      * @param int $productId
      * @param int $amount
      * @return string
@@ -337,7 +336,6 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         ]);
         return $this->httpClient->getJsonDecodedContent();
     }
-
 
     protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '', $timebaseCurrencyTimeSum = null)
     {
@@ -365,7 +363,6 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         );
     }
     
-    
     protected function getCartById($cartId)
     {
         $cart = $this->Cart->find('all', [
@@ -380,7 +377,6 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         ])->first();
         return $cart;
     }
-    
 
     /**
      * @param string $productId

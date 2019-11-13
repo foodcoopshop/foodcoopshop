@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-10-27 20:52+0100\n"
+"POT-Creation-Date: 2019-11-10 20:04+0100\n"
 "PO-Revision-Date: 2019-07-22 16:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -761,6 +761,36 @@ msgstr "Zalecana ostrożność, czynności nie da się cofnąć!"
 msgid "Errors_occurred_while_member_was_deleted"
 msgstr "Wystąpiły błędy podczas usuwania członka"
 
+# New products
+#, fuzzy
+msgid "Delete_products?"
+msgstr "Nowe produkty"
+
+# Really cancel the selected products?
+#, fuzzy
+msgid "Really_delete_{0}_products?"
+msgstr "Na pewno anulować wybrane produkty?"
+
+# Errors occurred while member was deleted
+#, fuzzy
+msgid "Errors_occurred_while_products_were_deleted"
+msgstr "Wystąpiły błędy podczas usuwania członka"
+
+# Deactivate product
+#, fuzzy
+msgid "Delete_product?"
+msgstr "Dezaktywuj produkt"
+
+# Do you really want to add a new product?
+#, fuzzy
+msgid "Really_delete_1_product?"
+msgstr "Na pewno chcesz dodać nowy produkt?"
+
+# Errors occurred while member was deleted
+#, fuzzy
+msgid "Errors_occurred_while_product_was_deleted"
+msgstr "Wystąpiły błędy podczas usuwania członka"
+
 # Add comment
 msgid "Add_comment"
 msgstr "Dodaj komentarz"
@@ -1443,6 +1473,11 @@ msgstr "Moduł sieciowy: Produkty zsynchronizowane"
 msgid "Action_Log_Delivery_rhythm_changed"
 msgstr "Produkt: Zmieniono harmonogram dostaw"
 
+# Product: Image deleted
+#, fuzzy
+msgid "Action_Log_Product_deleted"
+msgstr "Produkt: Usunięto obraz"
+
 # Order: Status changed
 msgid "Action_Log_Order_status_changed"
 msgstr "Zamówienie: Zmieniono status"
@@ -2029,6 +2064,11 @@ msgstr "Pierwszym dniem dostaw musi być pierwszy {0} w miesiącu."
 # The name of the product {0} needs to be at least {1} characters long.
 msgid "The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long."
 msgstr "Nazwa produktu {0} musi mieć conajmniej {1} znaków."
+
+# delete
+#, fuzzy
+msgid "deleted"
+msgstr "usuń"
 
 # New product of
 msgid "New_product_of"

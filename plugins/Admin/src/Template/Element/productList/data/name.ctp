@@ -30,7 +30,7 @@ echo '<td class="cell-name">';
     if (! isset($product->product_attributes)) {
         echo '<span style="float:left;margin-right: 5px;">';
         echo $this->Html->link(
-            '<i class="fas fa-times-circle not-ok"></i>',
+            '<i class="far fa-trash-alt not-ok"></i>',
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light delete-product-attribute-button',

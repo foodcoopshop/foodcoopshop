@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-10-27 20:52+0100\n"
+"POT-Creation-Date: 2019-11-10 20:04+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -572,6 +572,24 @@ msgstr ""
 msgid "Errors_occurred_while_member_was_deleted"
 msgstr ""
 
+msgid "Delete_products?"
+msgstr ""
+
+msgid "Really_delete_{0}_products?"
+msgstr ""
+
+msgid "Errors_occurred_while_products_were_deleted"
+msgstr ""
+
+msgid "Delete_product?"
+msgstr ""
+
+msgid "Really_delete_1_product?"
+msgstr ""
+
+msgid "Errors_occurred_while_product_was_deleted"
+msgstr ""
+
 msgid "Add_comment"
 msgstr ""
 
@@ -1079,6 +1097,9 @@ msgstr ""
 msgid "Action_Log_Delivery_rhythm_changed"
 msgstr ""
 
+msgid "Action_Log_Product_deleted"
+msgstr ""
+
 msgid "Action_Log_Order_status_changed"
 msgstr ""
 
@@ -1515,6 +1536,9 @@ msgid "The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month."
 msgstr ""
 
 msgid "The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long."
+msgstr ""
+
+msgid "deleted"
 msgstr ""
 
 msgid "New_product_of"
