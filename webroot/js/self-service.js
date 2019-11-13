@@ -98,11 +98,11 @@ foodcoopshop.SelfService = {
         $(rowId).one('mouseover', function () {
             $(this).removeAttr('style');
         });
+        $(rowId).find('.quantity-in-units-input-field-wrapper input').focus();
     },
     
     initCartErrors: function (cartErrors) {
         cartErrors = $.parseJSON(cartErrors);
-        console.log(cartErrors);
         for (var key in cartErrors) {
             var productContainer = $('#cart .product.' + key);
             productContainer.addClass('error');
@@ -115,6 +115,10 @@ foodcoopshop.SelfService = {
             foodcoopshop.SelfService.onWindowResize();
         });
         foodcoopshop.SelfService.onWindowResize();
+    },
+    
+    setFocusToSearchInputField : function() {
+        $('#product-search input[name="keyword"]').focus();
     },
     
     onWindowResize : function() {
