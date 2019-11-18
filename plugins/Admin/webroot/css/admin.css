@@ -450,6 +450,9 @@ body.products.index .toggle-sync-button-wrapper {
 body.configurations.index td.sync-domain-list a.btn {
   float: right;
 }
+body.configurations.index td {
+    word-break: break-word;
+}
 
 #actionLogs div.changed {
     background: lightgray;
