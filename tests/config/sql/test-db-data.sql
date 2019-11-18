@@ -127,7 +127,7 @@ INSERT INTO `fcs_configuration` VALUES
 (543,1,'FCS_RIGHT_INFO_BOX_HTML','Inhalt der Box in der rechten Spalte unterhalb des Warenkorbes. <br /><div class=\"small\">Um eine Zeile grün zu hinterlegen (Überschrift) bitte als \"Überschrift 3\" formatieren.</div>','<h3>Abholzeiten</h3>\r\n\r\n<p>Der Abholtag steht jetzt immer in der Produktbeschreibung, du kannst deine Produkte am Freitag abholen.</p>\r\n\r\n<p>Du kannst jede Woche bis sp&auml;testens Dienstag Mitternacht bestellen und sie am darauffolgenden Freitag abholen.</p>\r\n','textarea_big',150,'de_DE','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (544,1,'FCS_NO_DELIVERY_DAYS_GLOBAL','Lieferpause für alle Hersteller?<br /><div class=\"small\">Hier können lieferfreie Tage (z.B. Feiertage) für die gesamte Foodcoop festgelegt werden.</div>','','multiple_dropdown',10,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (545,1,'FCS_ACCOUNTING_EMAIL','E-Mail-Adresse des Finanzverantwortlichen<br /><div class=\"small\">Wer bekommt die Benachrichtigung über den erfolgten Rechnungsversand?</div>','fcs-demo-superadmin@mailinator.com','text',110,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
-(546,1,'FCS_AUTHENTICATION_INFO_TEXT','Info-Text beim Registrierungsformular<br /><div class=\"small\">Beim Registrierungsformlar wird unterhalb der E-Mail-Adresse dieser Text angezeigt.</div>','Um bei uns zu bestellen musst du Vereinsmitglied sein.','textarea',160,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
+(546,1,'FCS_REGISTRATION_INFO_TEXT','Info-Text beim Registrierungsformular<br /><div class=\"small\">Beim Registrierungsformlar wird unterhalb der E-Mail-Adresse dieser Text angezeigt.</div>','Um bei uns zu bestellen musst du Vereinsmitglied sein.','textarea_big',160,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (547,1,'FCS_SHOW_PRODUCTS_FOR_GUESTS','Produkte für nicht eingeloggte Mitglieder sichtbar?','0','boolean',20,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (548,1,'FCS_DEFAULT_NEW_MEMBER_ACTIVE','Neue Mitglieder automatisch aktivieren?','0','boolean',50,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (549,1,'FCS_MINIMAL_CREDIT_BALANCE','Höhe des Bestell-Limits, ab dem den Mitgliedern kein Bestellen mehr möglich ist.<br /><div class=\"small\">Z.B.: \"100\" für 100 € im Minus. 0 bedeutet \"kein Bestell-Limit\".</div>','100','number',125,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
@@ -388,7 +388,8 @@ INSERT INTO `phinxlog` VALUES
 (20190803174327,'AdditionalFieldForPrivacyPolicy','2019-08-03 18:07:17','2019-08-03 18:07:17',0),
 (20191026164156,'GlobalDeliveryBreak','2019-10-26 16:56:44','2019-10-26 16:56:44',0),
 (20191104064912,'RemoveVarAbholtagFromSetting','2019-11-04 06:57:50','2019-11-04 06:57:50',0),
-(20191107180825,'DeleteProducts','2019-11-08 06:52:07','2019-11-08 06:52:07',0);
+(20191107180825,'DeleteProducts','2019-11-08 06:52:07','2019-11-08 06:52:07',0),
+(20191118074039,'ChangeRegistrationInfoTextConfiguration','2019-11-18 07:43:39','2019-11-18 07:43:39',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

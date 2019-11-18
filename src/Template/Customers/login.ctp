@@ -93,8 +93,8 @@ $this->element('addScript', ['script' =>
     
                   echo '<div class="detail-form">';
     
-                if (Configure::read('appDb.FCS_AUTHENTICATION_INFO_TEXT') != '') {
-                    echo '<p>'.Configure::read('appDb.FCS_AUTHENTICATION_INFO_TEXT').'</p>';
+                if (Configure::read('appDb.FCS_REGISTRATION_INFO_TEXT') != '') {
+                    echo '<p>'.Configure::read('appDb.FCS_REGISTRATION_INFO_TEXT').'</p>';
                 }
     
                       echo $this->Form->control('Customers.firstname', ['label' => __('Firstname'), 'required' => true]); // required should not be necessary here

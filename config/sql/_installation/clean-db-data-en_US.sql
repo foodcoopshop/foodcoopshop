@@ -87,7 +87,7 @@ INSERT INTO `fcs_configuration` VALUES
 (543,1,'FCS_RIGHT_INFO_BOX_HTML','Content of the box in the right column below the shopping cart. <br /><div class=\"small\">To make the background of a row green, please format as \"Heading 3\".</div>','<h3>Delivery time</h3><p>You can order every week until Tuesday midnight and pick them up the following Friday.</p>','textarea_big',150,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (544,1,'FCS_NO_DELIVERY_DAYS_GLOBAL','Delivery break for all manufacturers?<br /><div class=\"small\">Here you can define delivery-free days for the whole food-coop.</div>','','multiple_dropdown',10,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (545,1,'FCS_ACCOUNTING_EMAIL','E-mail address for the financial manager<br /><div class=\"small\">Who receives the notification that invoices have been sent?</div>','','text',110,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
-(546,1,'FCS_AUTHENTICATION_INFO_TEXT','Info text in registration form<br /><div class=\"small\">This info text is shown in the registration form below the e-mail address.</div>','You need to be a member if you want to order here.','textarea',160,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
+(546,1,'FCS_REGISTRATION_INFO_TEXT','Info text in registration form<br /><div class=\"small\">This info text is shown in the registration form below the e-mail address.</div>','You need to be a member if you want to order here.','textarea_big',160,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (547,1,'FCS_SHOW_PRODUCTS_FOR_GUESTS','Products visible for guests?','0','boolean',20,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (548,1,'FCS_DEFAULT_NEW_MEMBER_ACTIVE','Automatically activate new members?','0','boolean',50,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (549,1,'FCS_MINIMAL_CREDIT_BALANCE','Credit limit too low? When is ordering deactivated?<br /><div class=\"small\">E.g.: \"100\" for 100 € minus. 0 means \"no order limit\".</div>','1','number',125,'en_US','2017-07-26 13:24:47','2017-07-26 13:24:47'),
@@ -254,7 +254,8 @@ INSERT INTO `phinxlog` VALUES
 (20190803174327,'AdditionalFieldForPrivacyPolicy','2019-08-03 18:07:08','2019-08-03 18:07:08',0),
 (20191026164156,'GlobalDeliveryBreak','2019-10-26 17:02:59','2019-10-26 17:02:59',0),
 (20191104064912,'RemoveVarAbholtagFromSetting','2019-11-04 06:57:41','2019-11-04 06:57:41',0),
-(20191107180825,'DeleteProducts','2019-11-08 06:51:58','2019-11-08 06:51:58',0);
+(20191107180825,'DeleteProducts','2019-11-08 06:51:58','2019-11-08 06:51:58',0),
+(20191118074039,'ChangeRegistrationInfoTextConfiguration','2019-11-18 07:43:30','2019-11-18 07:43:30',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

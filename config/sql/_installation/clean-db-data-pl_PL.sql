@@ -87,7 +87,7 @@ INSERT INTO `fcs_configuration` VALUES
 (543,1,'FCS_RIGHT_INFO_BOX_HTML','Treść pola w prawej kolumnie poniżej koszyka. <br /> <div class = \"small\"> Aby tło w wierszu było zielone, należy sformatować jako \"Nagłówek 3\". </div>','<h3>Odbiory</h3>\r\n\r\n<p>Dzień odbioru jest widoczny w opisie produktu, możesz odebrać produkty w <strong>{DELIVERY_DAY}</strong>&nbsp;pomiędzy 19, a 21.</p>\r\n\r\n<p>Zam&oacute;wienia składamy co tydzień, maksymalnie do środy (zależy od produktu).</p>','textarea_big',150,'pl_PL','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (544,1,'FCS_NO_DELIVERY_DAYS_GLOBAL','Delivery break for all manufacturers?<br /><div class=\"small\">Here you can define delivery-free days for the whole food-coop.</div>','','multiple_dropdown',10,'pl_PL','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (545,1,'FCS_ACCOUNTING_EMAIL','Adres e-mail osoby odpowiedzialnej za finanse <br /> <div class = \"small\"> Kto otrzymuje powiadomienie o wysłaniu faktur? </div>','','text',110,'pl_PL','2017-07-26 13:24:47','2017-07-26 13:24:47'),
-(546,1,'FCS_AUTHENTICATION_INFO_TEXT','Tekst informacyjny w formularzu rejestracyjnym <br /> <div class = \"small\"> Ten tekst informacyjny jest wyświetlany w formularzu rejestracyjnym poniżej adresu e-mail. </div>','Musisz być członkiem jeśli chcesz złożyć zamówienie.','textarea',160,'pl_PL','2017-07-26 13:24:47','2017-07-26 13:24:47'),
+(546,1,'FCS_REGISTRATION_INFO_TEXT','Tekst informacyjny w formularzu rejestracyjnym <br /> <div class = \"small\"> Ten tekst informacyjny jest wyświetlany w formularzu rejestracyjnym poniżej adresu e-mail. </div>','Musisz być członkiem jeśli chcesz złożyć zamówienie.','textarea_big',160,'pl_PL','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (547,1,'FCS_SHOW_PRODUCTS_FOR_GUESTS','Produkty widoczne dla gości?','0','boolean',20,'pl_PL','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (548,1,'FCS_DEFAULT_NEW_MEMBER_ACTIVE','Automatycznie aktywuj nowych członków?','0','boolean',50,'pl_PL','2017-07-26 13:24:47','2017-07-26 13:24:47'),
 (549,1,'FCS_MINIMAL_CREDIT_BALANCE','Za niski limit kredytowy? Kiedy zamawianie jest wyłączone? <br /> <div class = \"small\"> Np .: \"100\" oznacza  -100zł. \"0\" oznacza brak limitu zamówień. </div>','1','number',125,'pl_PL','2017-07-26 13:24:47','2017-07-26 13:24:47'),
@@ -254,7 +254,8 @@ INSERT INTO `phinxlog` VALUES
 (20190803174327,'AdditionalFieldForPrivacyPolicy','2019-08-03 18:07:12','2019-08-03 18:07:12',0),
 (20191026164156,'GlobalDeliveryBreak','2019-10-26 17:03:03','2019-10-26 17:03:03',0),
 (20191104064912,'RemoveVarAbholtagFromSetting','2019-11-04 06:57:46','2019-11-04 06:57:46',0),
-(20191107180825,'DeleteProducts','2019-11-08 06:52:02','2019-11-08 06:52:02',0);
+(20191107180825,'DeleteProducts','2019-11-08 06:52:02','2019-11-08 06:52:02',0),
+(20191118074039,'ChangeRegistrationInfoTextConfiguration','2019-11-18 07:43:35','2019-11-18 07:43:35',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
