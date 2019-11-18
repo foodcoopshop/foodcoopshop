@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-11-10 20:04+0100\n"
+"POT-Creation-Date: 2019-11-18 08:28+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -678,9 +678,6 @@ msgid "No_stock_products_selected."
 msgstr ""
 
 msgid "Were_the_products_picked_up?"
-msgstr ""
-
-msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
 msgstr ""
 
 msgid "All_products_picked_up?"

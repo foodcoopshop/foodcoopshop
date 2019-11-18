@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-11-10 20:04+0100\n"
+"POT-Creation-Date: 2019-11-18 08:28+0100\n"
 "PO-Revision-Date: 2019-07-22 16:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -909,10 +909,6 @@ msgstr "Nie wybrano danych produktu."
 # Were the products picked up?
 msgid "Were_the_products_picked_up?"
 msgstr "Czy produkty zostały odebrane?"
-
-# This input is helpful for the pickup team, but not mandatory.
-msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
-msgstr "Ta informacja będzie przydatna dla ekipy odbierającej, lecz nie jest obowiązkowa."
 
 # All products picked up?
 msgid "All_products_picked_up?"
@@ -3206,6 +3202,10 @@ msgstr "information-about-right-of-withdrawal"
 # product
 msgid "route_product"
 msgstr "product"
+
+# This input is helpful for the pickup team, but not mandatory.
+#~ msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
+#~ msgstr "Ta informacja będzie przydatna dla ekipy odbierającej, lecz nie jest obowiązkowa."
 
 # DELIVERY_DAY
 #~ msgid "DELIVERY_DAY"

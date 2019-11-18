@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-11-10 20:04+0100\n"
-"PO-Revision-Date: 2019-11-10 20:04+0100\n"
+"POT-Creation-Date: 2019-11-18 08:28+0100\n"
+"PO-Revision-Date: 2019-11-18 08:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -681,14 +681,11 @@ msgstr "Es wurden keine Lagerprodukte ausgewählt."
 msgid "Were_the_products_picked_up?"
 msgstr "Wurden die Produkte abgeholt?"
 
-msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
-msgstr "Diese Funktion ist nicht zwingend notwendig, doch für den Abholdienst hilfreich."
-
 msgid "All_products_picked_up?"
 msgstr "Alle Produkte abgeholt?"
 
 msgid "Were_the_products_of_all_members_picked_up?"
-msgstr "Wurden die Produkte von allem Mitgliedern abgeholt?"
+msgstr "Wurden die Produkte von allen Mitgliedern abgeholt?"
 
 msgid "Change_pickup_day_comment"
 msgstr "Kommentar zu Abholtag ändern"
@@ -2384,6 +2381,9 @@ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "route_product"
 msgstr "produkt"
+
+#~ msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
+#~ msgstr "Diese Funktion ist nicht zwingend notwendig, doch für den Abholdienst hilfreich."
 
 #~ msgid "DELIVERY_DAY"
 #~ msgstr "ABHOLTAG"

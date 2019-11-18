@@ -231,7 +231,6 @@ class LocalizedController extends Controller
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),
-                'ThisInformationServesThePickupTeamToSeeWhoWasAlreadyHere' => __('This_information_serves_the_pickup_team_to_see_who_was_already_here.'),
                 'AllProductsPickedUp' => __('All_products_picked_up?'),
                 'WereTheProductsOfAllMembersPickedUp' => __('Were_the_products_of_all_members_picked_up?'),
                 'ChangePickupDayComment' => __('Change_pickup_day_comment')
