@@ -330,7 +330,7 @@ td span.description-for-dialog {
 }
 .bottom-button-container .btn {
     float: right;
-    margin-left: 10px;
+    margin-left: 5px;
     margin-bottom: 5px;
 }
 #customers-list input:not(.datepicker):not(.form-control) {
