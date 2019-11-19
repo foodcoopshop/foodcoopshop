@@ -505,10 +505,14 @@ foodcoopshop.Helper = {
         $('.inner-right').css('left', newLeft);
 
         // adapt height of cart
-        var difference = 150;
+        var difference = 146;
         var loadLastOrderDetailsDropdown = $('#cart #load-last-order-details');
         if (loadLastOrderDetailsDropdown.length > 0) {
             difference += loadLastOrderDetailsDropdown.closest('.input').height();
+        }
+        var globalNoDeliveryDayBox = $('#global-no-delivery-day-box');
+        if (globalNoDeliveryDayBox.length > 0) {
+            difference += globalNoDeliveryDayBox.height();
         }
         $('#cart p.products').css('max-height', parseInt($(window).height()) - difference);
 
