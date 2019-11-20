@@ -95,6 +95,16 @@ class StringComponent extends Component
     public static function slugify($string)
     {
         $string = html_entity_decode($string);
+        $specialCases = [
+            'Ä' => 'Ae',
+            'Ö' => 'Oe',
+            'Ü' => 'Ue',
+            'ä' => 'ae',
+            'ö' => 'oe',
+            'ü' => 'ue',
+            'ß' => 'ss'
+        ];
+        $string = str_replace(array_keys($specialCases), array_values($specialCases), $string);
         $string = Text::slug($string);
         return $string;
     }
