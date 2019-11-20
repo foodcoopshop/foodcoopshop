@@ -486,7 +486,7 @@ class ProductsController extends AdminAppController
         
         $this->loadComponent('Sanitize');
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
         
         $productIds = $this->getRequest()->getData('productIds');
         $deliveryRhythmTypeCombined = $this->getRequest()->getData('deliveryRhythmType');
@@ -892,7 +892,7 @@ class ProductsController extends AdminAppController
 
         $this->loadComponent('Sanitize');
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
         $originalProductId = $this->getRequest()->getData('productId');
 

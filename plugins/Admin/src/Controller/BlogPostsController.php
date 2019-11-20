@@ -121,7 +121,7 @@ class BlogPostsController extends AdminAppController
 
         $this->loadComponent('Sanitize');
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData(), ['content'])));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['content'])));
 
         $this->setRequest($this->getRequest()->withData('BlogPosts.id_customer', $this->AppAuth->getUserId()));
 

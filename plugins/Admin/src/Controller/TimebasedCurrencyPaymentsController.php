@@ -164,7 +164,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
 
         $this->loadComponent('Sanitize');
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData(), ['approval_comment', 'text'])));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['approval_comment', 'text'])));
 
         if (!empty($this->getRequest()->getData('TimebasedCurrencyPayments.working_day'))) {
             $this->setRequest($this->getRequest()->withData('TimebasedCurrencyPayments.working_day', new Time($this->getRequest()->getData('TimebasedCurrencyPayments.working_day'))));
