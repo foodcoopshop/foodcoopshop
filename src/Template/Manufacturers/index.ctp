@@ -48,7 +48,8 @@ foreach ($manufacturers as $manufacturer) {
         echo '<div class="second-column">';
             echo '<h4>'.$this->Html->link(
                 $manufacturer->name,
-                $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name)
+                $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name),
+                ['escape' => false]
             ).'</h4>';
             echo $manufacturer->short_description;
 
