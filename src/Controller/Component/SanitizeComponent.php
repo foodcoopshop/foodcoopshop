@@ -37,7 +37,7 @@ class SanitizeComponent extends Component
      * @param array $array
      * @return array
      */
-    public function stripTagsRecursive($data, $excludedFields = [])
+    public function stripTagsAndPurifyRecursive($data, $excludedFields = [])
     {
         $config = \HTMLPurifier_Config::createDefault();
         $config->set('Cache.SerializerPath', TMP . 'cache' . DS . 'html_purifier');

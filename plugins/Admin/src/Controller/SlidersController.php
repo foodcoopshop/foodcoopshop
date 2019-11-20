@@ -75,7 +75,7 @@ class SlidersController extends AdminAppController
 
         $this->loadComponent('Sanitize');
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
         $slider = $this->Slider->patchEntity($slider, $this->getRequest()->getData());
         if ($slider->hasErrors()) {

@@ -83,7 +83,7 @@ class SyncDomainsController extends AppController
 
         $this->loadComponent('Sanitize');
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
         $syncDomain = $this->SyncDomain->patchEntity(
             $syncDomain,

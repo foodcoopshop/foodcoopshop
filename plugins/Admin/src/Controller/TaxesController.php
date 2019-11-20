@@ -80,7 +80,7 @@ class TaxesController extends AdminAppController
 
         $this->loadComponent('Sanitize');
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
+        $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
 
         $tax = $this->Tax->patchEntity($tax, $this->getRequest()->getData());
         if ($tax->hasErrors()) {

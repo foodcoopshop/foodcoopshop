@@ -72,7 +72,7 @@ class ConfigurationsController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
 
         if (!in_array($configuration->type, ['textarea', 'textarea_big'])) {
-            $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsRecursive($this->getRequest()->getData())));
+            $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
         }
         if ($configuration->name == 'FCS_FACEBOOK_URL') {
             $this->setRequest($this->getRequest()->withData('Configurations.value', StringComponent::addHttpToUrl($this->getRequest()->getData('Configurations.value'))));
