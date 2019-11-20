@@ -2,6 +2,7 @@
 namespace App\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Utility\Text;
 
 /**
  * StringComponent
@@ -87,38 +88,15 @@ class StringComponent extends Component
     }
 
     /**
-     *
-     * http://stackoverflow.com/questions/5305879/automatic-clean-and-seo-friendly-url-slugs
-     *
      * @param string $string
      * @param string $separator
      * @return string
      */
-    public static function slugify($string, $separator = '-', $toLower = true)
+    public static function slugify($string)
     {
-        $accents_regex = '~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i';
-        $special_cases = [
-            '&' => 'and',
-            "'" => '',
-            'ä' => 'ae',
-            'ö' => 'oe',
-            'ü' => 'ue',
-            'ß' => 'ss'
-        ];
-        $string = trim($string);
-        if ($toLower) {
-            $string = mb_strtolower($string, 'UTF-8');
-        }
-        $string = str_replace(array_keys($special_cases), array_values($special_cases), $string);
-        $string = preg_replace($accents_regex, '$1', htmlentities($string, ENT_QUOTES, 'UTF-8'));
-        $string = preg_replace("/[^a-zA-Z0-9]/u", "$separator", $string);
-        $string = preg_replace("/[$separator]+/u", "$separator", $string);
+        $string = html_entity_decode($string);
+        $string = Text::slug($string);
         return $string;
-    }
-
-    public static function slugifyAndKeepCase($string)
-    {
-        return self::slugify($string, '-', false);
     }
 
     /**

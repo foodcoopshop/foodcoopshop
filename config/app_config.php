@@ -16,6 +16,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Utility\Text;
+
 define('APP_ON', 1);
 define('APP_OFF', 0);
 define('APP_DEL', -1);
@@ -39,6 +41,8 @@ define('BIC_REGEX', '/^[a-z]{6}[2-9a-z][0-9a-np-z]([a-z0-9]{3}|x{3})?$/i');
 define('HTTPS_REGEX', '/^https\:\/\//');
 // copied from Cake/Utility/Validation.php with additional $ at the end
 define('HOSTNAME_REGEX', '/(?:[_\p{L}0-9][-_\p{L}0-9]*\.)*(?:[\p{L}0-9][-\p{L}0-9]{0,62})\.(?:(?:[a-z]{2}\.)?[a-z]{2,})$/');
+
+Text::setTransliteratorId('de-ASCII; Any-Latin; Latin-ASCII; [\u0080-\u7fff] remove ');
 
 return [
     'Email' => [

@@ -113,7 +113,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $productId = 346;
         $manufacturerId = 5;
         $this->changeManufacturerNoDeliveryDays($manufacturerId, Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
-        $this->httpClient->get($this->Slug->getProductDetail($productId, 'artischocke'));
+        $this->httpClient->get($this->Slug->getProductDetail($productId, 'Artischocke'));
         $this->assertRegExpWithUnquotedString('<i class="fa fa-lg fa-times"></i> Lieferpause!', $this->httpClient->getContent());
         
     }

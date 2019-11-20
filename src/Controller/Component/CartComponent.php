@@ -729,7 +729,7 @@ class CartComponent extends Component
             foreach($uniqueManufacturers as $manufacturerId => $manufacturer) {
                 $src = Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrc($manufacturerId);
                 if ($src !== false) {
-                    $generalTermsAndConditionsFiles[__('Filename_General-terms-and-conditions') . '-' . StringComponent::slugifyAndKeepCase($manufacturer['name']) . '.pdf'] = [
+                    $generalTermsAndConditionsFiles[__('Filename_General-terms-and-conditions') . '-' . StringComponent::slugify($manufacturer['name']) . '.pdf'] = [
                         'file' => WWW_ROOT . Configure::read('app.htmlHelper')->getManufacturerTermsOfUseSrcTemplate($manufacturerId), // avoid timestamp
                         'mimetype' => 'application/pdf'
                     ];

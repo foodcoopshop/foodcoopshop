@@ -2,6 +2,7 @@
 
 use App\Controller\Component\StringComponent;
 use App\Test\TestCase\AppCakeTestCase;
+use Cake\Utility\Text;
 
 /**
  * StringComponentTest
@@ -31,16 +32,36 @@ class StringComponentTest extends AppCakeTestCase
         $tests = [
             [
                 'name' => 'Getränke alkoholisch',
-                'slug' => 'getraenke-alkoholisch'
+                'slug' => 'Getraenke-alkoholisch'
             ],
             [
                 'name' => 'Die Äpfel der letzten Saison',
-                'slug' => 'die-aepfel-der-letzten-saison'
+                'slug' => 'Die-Aepfel-der-letzten-Saison'
+            ],
+            [
+                'name' => 'Champs-Élysées',
+                'slug' => 'Champs-Elysees'
             ],
             [
                 'name' => 'Öle und Essig',
-                'slug' => 'oele-und-essig'
-            ]
+                'slug' => 'Oele-und-Essig'
+            ],
+            [
+                'name' => 'Smith &amp; Sons',
+                'slug' => 'Smith-Sons'
+            ],
+            [
+                'name' => 'Smith &gt; Sons',
+                'slug' => 'Smith-Sons'
+            ],
+            [
+                'name' => 'Smith &lt; Sons',
+                'slug' => 'Smith-Sons'
+            ],
+            [
+                'name' => 'Manufacturer "Name"',
+                'slug' => 'Manufacturer-Name'
+            ],
         ];
 
         foreach ($tests as $test) {
@@ -84,8 +105,8 @@ class StringComponentTest extends AppCakeTestCase
                 'slug' => 'bla-bla-bla'
             ],
             [
-                'url' => '25-getraenke-alkoholisch',
-                'slug' => 'getraenke-alkoholisch'
+                'url' => '25-Getraenke-alkoholisch',
+                'slug' => 'Getraenke-alkoholisch'
             ],
             [
                 'url' => '29-heilmassage-mittermeier',
