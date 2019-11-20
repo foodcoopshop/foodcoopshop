@@ -95,9 +95,10 @@ class CategoriesController extends FrontendController
             throw new RecordNotFoundException('category not found');
         }
 
-        $correctSlug = Configure::read('app.slugHelper')->getCategoryDetail($categoryId, $category->name);
-        if ($correctSlug != Configure::read('app.slugHelper')->getCategoryDetail($categoryId, StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]))) {
-            $this->redirect($correctSlug);
+        $correctSlug = StringComponent::slugify($category->name);
+        $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]);
+        if ($correctSlug != $givenSlug) {
+            $this->redirect(Configure::read('app.slugHelper')->getCategoryDetail($categoryId, $category->name));
         }
 
         $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');

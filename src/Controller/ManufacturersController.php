@@ -106,9 +106,10 @@ class ManufacturersController extends FrontendController
             throw new RecordNotFoundException('manufacturer not found or not active');
         }
 
-        $correctSlug = Configure::read('app.slugHelper')->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name);
-        if ($correctSlug != Configure::read('app.slugHelper')->getManufacturerDetail($manufacturerId, StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]))) {
-            $this->redirect($correctSlug);
+        $correctSlug = StringComponent::slugify($manufacturer->name);
+        $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]);
+        if ($correctSlug != $givenSlug) {
+            $this->redirect(Configure::read('app.slugHelper')->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name));
         }
 
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {

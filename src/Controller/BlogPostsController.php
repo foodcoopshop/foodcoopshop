@@ -73,11 +73,12 @@ class BlogPostsController extends FrontendController
             throw new RecordNotFoundException('blogPost not found');
         }
 
-        $correctSlug = Configure::read('app.slugHelper')->getBlogPostDetail($blogPostId, $blogPost->title);
-        if ($correctSlug != Configure::read('app.slugHelper')->getBlogPostDetail($blogPostId, StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]))) {
-            $this->redirect($correctSlug);
+        $correctSlug = StringComponent::slugify($blogPost->title);
+        $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]);
+        if ($correctSlug != $givenSlug) {
+            $this->redirect(Configure::read('app.slugHelper')->getBlogPostDetail($blogPostId, $blogPost->title));
         }
-
+        
         $this->set('blogPost', $blogPost);
 
         // START find neighbors

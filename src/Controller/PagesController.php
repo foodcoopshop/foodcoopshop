@@ -134,9 +134,10 @@ class PagesController extends FrontendController
             ]
         ]);
 
-        $correctSlug = Configure::read('app.slugHelper')->getPageDetail($page->id_page, $page->title);
-        if ($correctSlug != Configure::read('app.slugHelper')->getPageDetail($pageId, StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]))) {
-            $this->redirect($correctSlug);
+        $correctSlug = StringComponent::slugify($page->title);
+        $givenSlug = StringComponent::removeIdFromSlug($this->getRequest()->getParam('pass')[0]);
+        if ($correctSlug != $givenSlug) {
+            $this->redirect(Configure::read('app.slugHelper')->getPageDetail($pageId, $page->title));
         }
 
         $this->set('page', $page);
