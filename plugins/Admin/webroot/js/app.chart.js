@@ -68,7 +68,24 @@ foodcoopshop.AppChart = {
                     return label + ': ' + foodcoopshop.Helper.formatFloatAsCurrency(value);
                 }
             }
-        },                
+        },
+        pieceLabel: [
+            {
+                render: 'label',
+                fontSize: 14,
+                textShadow: true,
+                position: 'outside',
+                fontColor: '#333',
+                textMargin: 4,
+            },
+            {
+                render: 'percentage',
+                fontSize: 14,
+                fontColor: '#fff',
+                textShadow: true,
+            }
+            
+        ],
     },
         
     initBarChart : function(xAxisData, yAxisData) {
@@ -103,6 +120,7 @@ foodcoopshop.AppChart = {
                 data: dataPieChart,
                 borderColor: '#fff',
                 backgroundColor: backgroundColorPieChart,
+                hoverBackgroundColor: 'rgba(113,159,65,1)',
                 borderWidth: 1,
             }],
             labels: labelsPieChart,

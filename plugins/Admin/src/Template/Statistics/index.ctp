@@ -82,6 +82,6 @@ if ($manufacturerId == 'all') {
 
 <canvas id="myBarChart" width="1000" height="500" style="margin-top:10px;"></canvas>
 <?php if ($manufacturerId == 'all') { ?>
-	<canvas id="myPieChart" width="1000" height="500" style="margin-top:10px;"></canvas>
+	<canvas id="myPieChart" width="1000" height="500" style="margin-top:30px;margin-bottom:30px;"></canvas>
 <?php } ?>
 <div class="sc"></div>
