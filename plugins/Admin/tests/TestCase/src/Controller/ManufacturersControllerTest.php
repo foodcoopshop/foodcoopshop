@@ -274,7 +274,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
             $this->Slug->getManufacturerEdit($manufacturerId),
             [
                 'Manufacturers' => [
-                    'name' => 'Huhuu',
+                    'name' => 'Manufacturer & Sons',
                     'address_manufacturer' => [
                         'email' => 'fcs-demo-mitglied@mailinator.com'
                     ]
@@ -290,7 +290,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
             $this->Slug->getManufacturerEdit($manufacturerId),
             [
                 'Manufacturers' => [
-                    'name' => 'Huhuu',
+                    'name' => 'Manufacturer & Sons',
                     'address_manufacturer' => [
                         'email' => 'fcs-demo-gemuese-hersteller@mailinator.com'
                     ],
@@ -306,7 +306,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
             $this->Slug->getManufacturerEdit($manufacturerId),
             [
                 'Manufacturers' => [
-                    'name' => 'Huhuu',
+                    'name' => 'Manufacturer & Sons',
                     'homepage' => 'https://www.foodcoopshop.com',
                     'address_manufacturer' => [
                         'firstname' => 'firstname',
@@ -317,7 +317,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'referer' => '/'
             ]
         );
-        $this->assertRegExpWithUnquotedString('Der Hersteller <b>Huhuu</b> wurde geändert.', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('Der Hersteller <b>Manufacturer &amp; Sons</b> wurde geändert.', $this->httpClient->getContent());
 
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
