@@ -69,7 +69,7 @@ CREATE TABLE `fcs_blog_posts` (
   `short_description` varchar(100) NOT NULL,
   `content` text NOT NULL,
   `id_customer` int(11) unsigned NOT NULL DEFAULT '0',
-  `id_manufacturer` int(11) unsigned NOT NULL DEFAULT '0',
+  `id_manufacturer` int(11) unsigned DEFAULT NULL,
   `is_private` int(11) unsigned NOT NULL DEFAULT '0',
   `active` int(11) DEFAULT NULL,
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -118,7 +118,7 @@ DROP TABLE IF EXISTS `fcs_category`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fcs_category` (
   `id_category` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id_parent` int(10) unsigned NOT NULL DEFAULT '0',
+  `id_parent` int(10) unsigned DEFAULT NULL,
   `name` varchar(128) NOT NULL,
   `description` text NOT NULL,
   `nleft` int(10) NOT NULL DEFAULT '0',
@@ -467,7 +467,7 @@ DROP TABLE IF EXISTS `fcs_sliders`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fcs_sliders` (
   `id_slider` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `image` varchar(255) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `position` int(10) unsigned NOT NULL DEFAULT '0',
   `active` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_slider`)
