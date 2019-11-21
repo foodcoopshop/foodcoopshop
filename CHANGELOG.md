@@ -16,7 +16,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Neuer Selbstbedienungs-Modus für Lagerprodukte - Details in der [Online-Dokumentation](https://foodcoopshop.github.io/de/selbstbedienungs-modus). [PR#384](https://github.com/foodcoopshop/foodcoopshop/pull/384) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/AndreasEgger"><img src="https://github.com/AndreasEgger.png" width="20"></a>
 
 ### Bugfixes
-- Escaping von Sonderzeichen war nicht ganz sauber. [PR#425](https://github.com/foodcoopshop/foodcoopshop/pull/425) [I#424](https://github.com/foodcoopshop/foodcoopshop/issues/424) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Escaping von Sonderzeichen war nicht ganz sauber. [I#424](https://github.com/foodcoopshop/foodcoopshop/issues/424) / [PR#425](https://github.com/foodcoopshop/foodcoopshop/pull/425) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
 ### Für Entwickler
