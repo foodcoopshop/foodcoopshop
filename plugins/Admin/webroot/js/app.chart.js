@@ -13,7 +13,7 @@
  */
 foodcoopshop.AppChart = {
     
-    chartOptions : {
+    barChartOptions : {
         tension : 0.3,
         datasetStrokeWidth : 1,
         scaleOverride: true,
@@ -52,13 +52,28 @@ foodcoopshop.AppChart = {
                 }
             }]
         }        
-    },    
+    },
+    
+    pieChartOptions : {
+        cutoutPercentage: 25,
+        rotation: 10,
+        legend: {
+            display: false
+        },
+        tooltips: {
+            callbacks: {
+                label: function(item, data) {
+                    var label = data.labels[item.index];
+                    var value = data.datasets[item.datasetIndex].data[item.index];
+                    return label + ': ' + foodcoopshop.Helper.formatFloatAsCurrency(value);
+                }
+            }
+        },                
+    },
         
-    init : function(xAxisData, yAxisData) {
+    initBarChart : function(xAxisData, yAxisData) {
         
-        var ctx = $('#myChart').get(0).getContext('2d');
-        xAxisData = $.parseJSON(xAxisData);
-        yAxisData = $.parseJSON(yAxisData);
+        var ctx = $('#myBarChart').get(0).getContext('2d');
         
         var barChartData = {
             labels: xAxisData,
@@ -69,13 +84,38 @@ foodcoopshop.AppChart = {
             }]
         };
 
-        var ctx = $('#myChart').get(0).getContext('2d');
+        var ctx = $('#myBarChart').get(0).getContext('2d');
         var myNewChart = new Chart(ctx, {
             responsive : true,
             type: 'bar',
             data: barChartData,
-            options: this.chartOptions
-        });        
+            options: this.barChartOptions
+        });
+        
+    },
+    
+    initPieChart : function(dataPieChart, labelsPieChart, backgroundColorPieChart) {
+        
+        var ctx = $('#myPieChart').get(0).getContext('2d');
+
+        var pieChartData = {
+            datasets: [{
+                data: dataPieChart,
+                borderColor: '#fff',
+                backgroundColor: backgroundColorPieChart,
+                borderWidth: 1,
+            }],
+            labels: labelsPieChart,
+        };
+
+        var ctx = $('#myPieChart').get(0).getContext('2d');
+        var myNewChart = new Chart(ctx, {
+            responsive : true,
+            type: 'pie',
+            data: pieChartData,
+            options: this.pieChartOptions
+        });            
+        
     }
     
 };
