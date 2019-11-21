@@ -54,15 +54,22 @@ if (empty($manufacturers)) {
     return;
 }
 
-if (empty($xAxisData)) {
+if (empty($xAxisDataBarChart)) {
     echo '<h2 class="info">' . __d('admin', 'No_turnover_available.') . '</h2>';
     return;
 }
 
 $this->element('addScript', [
     'script' =>
-    Configure::read('app.jsNamespace') . ".AppChart.init('".json_encode($xAxisData)."', '".json_encode($yAxisData)."');"
+    Configure::read('app.jsNamespace') . ".AppChart.initBarChart(".json_encode($xAxisDataBarChart).", ".json_encode($yAxisDataBarChart).");"
 ]);
+
+if ($manufacturerId == 'all') {
+    $this->element('addScript', [
+        'script' =>
+        Configure::read('app.jsNamespace') . ".AppChart.initPieChart(".json_encode($dataPieChart).", ".json_encode($labelsPieChart).", ".json_encode($backgroundColorPieChart).");"
+    ]);
+}
 ?>
 
 <p><?php
@@ -73,6 +80,8 @@ $this->element('addScript', [
     }
 ?></p>
 
-<canvas id="myChart" width="1000" height="500" style="margin-top:10px;"></canvas>
-
+<canvas id="myBarChart" width="1000" height="500" style="margin-top:10px;"></canvas>
+<?php if ($manufacturerId == 'all') { ?>
+	<canvas id="myPieChart" width="1000" height="500" style="margin-top:30px;margin-bottom:30px;"></canvas>
+<?php } ?>
 <div class="sc"></div>

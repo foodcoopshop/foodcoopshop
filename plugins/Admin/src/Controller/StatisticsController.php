@@ -160,10 +160,55 @@ class StatisticsController extends AdminAppController
         $xAxisDataWithYearSeparators = array_splice($xAxisDataWithYearSeparators, $firstIndexWithValue, $lastIndexWithValue * -1);
         $yAxisDataWithYearSeparators = array_splice($yAxisDataWithYearSeparators, $firstIndexWithValue, $lastIndexWithValue * -1);
         
-        $this->set('xAxisData', $xAxisDataWithYearSeparators);
-        $this->set('yAxisData', $yAxisDataWithYearSeparators);
+        $this->set('xAxisDataBarChart', $xAxisDataWithYearSeparators);
+        $this->set('yAxisDataBarChart', $yAxisDataWithYearSeparators);
         $this->set('totalTurnover', array_sum($monthsWithTurnoverSumTotalPaid));
         $this->set('averageTurnover', array_sum($monthsWithTurnoverSumTotalPaid) / count($monthsWithTurnoverMonthAndYear));
+        
+        // show pie chart if no specific manufacturer is selected
+        if ($manufacturerId == 'all') {
+            $data = [];
+            foreach($manufacturers as $manufacturer) {
+                
+                $monthlySumProductsQuery = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturer->id_manufacturer, $year);
+                $monthlySumProducts = 0;
+                foreach($monthlySumProductsQuery as $monthlySum) {
+                    $monthlySumProducts += $monthlySum->SumTotalPaid;
+                }
+                
+                if ($monthlySumProducts == 0) {
+                    continue;
+                }
+                
+                $preparedData = [];
+                $preparedData['sum'] = $monthlySumProducts;
+                $preparedData['label'] = $manufacturer->name;
+                $data[] = $preparedData;
+                
+            }
+            
+            arsort($data);
+            
+            $labelsPieChart = [];
+            $dataPieChart = [];
+            $backgroundColorPieChart = [];
+            $i = 0;
+            foreach($data as $d) {
+                $i++;
+                $labelsPieChart[] = $d['label'];
+                $dataPieChart[] = $d['sum'];
+                $opacity = 100 - ($i * 4);
+                if ($opacity < 20) {
+                    $opacity = 20;
+                }
+                $backgroundColorPieChart[] = 'rgba(113,159,65,0.'.$opacity.')';
+            }
+            
+            // start retrieving data for pie chart 
+            $this->set('labelsPieChart', $labelsPieChart);
+            $this->set('dataPieChart', $dataPieChart);
+            $this->set('backgroundColorPieChart', $backgroundColorPieChart);
+        }
         
     }
 }
