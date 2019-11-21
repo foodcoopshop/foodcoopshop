@@ -401,7 +401,7 @@ class ManufacturersTable extends AppTable
         $offlineManufacturers = [];
         $onlineManufacturers = [];
         foreach ($manufacturers as $manufacturer) {
-            $manufacturerNameForDropdown = $manufacturer->name;
+            $manufacturerNameForDropdown = html_entity_decode($manufacturer->name);
             if ($manufacturer->active == 0) {
                 $offlineManufacturers[$manufacturer->id_manufacturer] = $manufacturerNameForDropdown;
             } else {
