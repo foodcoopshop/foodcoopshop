@@ -165,7 +165,29 @@ class StatisticsController extends AdminAppController
         $this->set('totalTurnover', array_sum($monthsWithTurnoverSumTotalPaid));
         $this->set('averageTurnover', array_sum($monthsWithTurnoverSumTotalPaid) / count($monthsWithTurnoverMonthAndYear));
         
-        // show pie chart if no specific manufacturer is selected
+        // START prepare line chart
+        if ($year == '') {
+            $xAxisDataLineChart = [];
+            $yAxisDataLineChart = [];
+            $i = 0;
+            $j = 0;
+            foreach($xAxisDataWithYearSeparators as $x) {
+                $year = (int) substr($x, -4);
+                if (!in_array($year, $xAxisDataLineChart) && $year > 0) {
+                    $xAxisDataLineChart[] = $year;
+                    $i++;
+                }
+                @$yAxisDataLineChart[$i-1] += $yAxisDataWithYearSeparators[$j];
+                $j++;
+            }
+            
+            $this->set('xAxisDataLineChart', $xAxisDataLineChart);
+            $this->set('yAxisDataLineChart', $yAxisDataLineChart);
+        }
+        // END prepare line chart
+        
+        
+        // START prepare pie chart
         if ($manufacturerId == 'all') {
             $data = [];
             foreach($manufacturers as $manufacturer) {
@@ -209,6 +231,7 @@ class StatisticsController extends AdminAppController
             $this->set('dataPieChart', $dataPieChart);
             $this->set('backgroundColorPieChart', $backgroundColorPieChart);
         }
+        // END prepare pie chart
         
     }
 }

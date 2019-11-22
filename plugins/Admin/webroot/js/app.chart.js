@@ -87,10 +87,61 @@ foodcoopshop.AppChart = {
             
         ],
     },
+    
+    lineChartOptions : {
+        legend: {
+            display: false
+        },
+        tooltips: {
+            callbacks: {
+                label: function(item, data) {
+                    var value = data.datasets[item.datasetIndex].data[item.index];
+                    return foodcoopshop.Helper.formatFloatAsCurrency(value);
+                }
+            }
+        },
+        scales: {
+            xAxes: [{
+                gridLines: {
+                    display: false
+                },
+            }],
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    callback: function(value, index, values) {
+                        return foodcoopshop.Helper.formatFloatAsCurrency(value);
+                    }
+                }
+            }]
+        }        
+    },
+    
+    initLineChart : function(xAxisData, yAxisData) {
+        
+        var lineChartData = {
+            labels: xAxisData,
+            datasets: [{
+                data: yAxisData,
+                fill: false,
+                borderColor: 'rgba(113,159,65,.5)',
+                pointBorderColor: 'rgba(113,159,65,1)',
+                pointBackgroundColor: 'rgba(113,159,65,1)',
+                pointRadius: 5
+            }]
+        };
+
+        var ctx = $('#myLineChart').get(0).getContext('2d');
+        var myNewChart = new Chart(ctx, {
+            responsive : true,
+            type: 'line',
+            data: lineChartData,
+            options: this.lineChartOptions
+        });
+
+    },
         
     initBarChart : function(xAxisData, yAxisData) {
-        
-        var ctx = $('#myBarChart').get(0).getContext('2d');
         
         var barChartData = {
             labels: xAxisData,
@@ -113,8 +164,6 @@ foodcoopshop.AppChart = {
     
     initPieChart : function(dataPieChart, labelsPieChart, backgroundColorPieChart) {
         
-        var ctx = $('#myPieChart').get(0).getContext('2d');
-
         var pieChartData = {
             datasets: [{
                 data: dataPieChart,
