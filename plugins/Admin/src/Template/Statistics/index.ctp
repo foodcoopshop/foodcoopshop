@@ -64,6 +64,13 @@ $this->element('addScript', [
     Configure::read('app.jsNamespace') . ".AppChart.initBarChart(".json_encode($xAxisDataBarChart).", ".json_encode($yAxisDataBarChart).");"
 ]);
 
+if ($year == '') {
+    $this->element('addScript', [
+        'script' =>
+        Configure::read('app.jsNamespace') . ".AppChart.initLineChart(".json_encode($xAxisDataLineChart).", ".json_encode($yAxisDataLineChart).");"
+    ]);
+}
+
 if ($manufacturerId == 'all') {
     $this->element('addScript', [
         'script' =>
@@ -81,6 +88,9 @@ if ($manufacturerId == 'all') {
 ?></p>
 
 <canvas id="myBarChart" width="1000" height="500" style="margin-top:10px;"></canvas>
+<?php if ($year == '') { ?>
+	<canvas id="myLineChart" width="1000" height="500" style="margin-top:30px;"></canvas>
+<?php } ?>
 <?php if ($manufacturerId == 'all') { ?>
 	<canvas id="myPieChart" width="1000" height="500" style="margin-top:30px;margin-bottom:30px;"></canvas>
 <?php } ?>
