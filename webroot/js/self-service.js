@@ -81,7 +81,7 @@ foodcoopshop.SelfService = {
             foodcoopshop.Helper.initBootstrapSelect(searchForm);
         }
         searchForm.find('select, input[type="text"]').on('change', function() {
-            foodcoopshop.SelfService.submitSearchForm(searchForm);
+            foodcoopshop.SelfService.submitForm(searchForm, 'fa-search');
         });
         searchForm.find('select, input[type="text"]').on('keypress', foodcoopshop.Helper.debounce(
             function() {
