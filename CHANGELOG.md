@@ -18,7 +18,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Bugfixes
 - Escaping von Sonderzeichen war nicht ganz sauber. [I#424](https://github.com/foodcoopshop/foodcoopshop/issues/424) / [PR#425](https://github.com/foodcoopshop/foodcoopshop/pull/425) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- Bei bestimmte DB-Felder ist jetzt null erlaubt. [I#413](https://github.com/foodcoopshop/foodcoopshop/issues/413) / [PR#428](https://github.com/foodcoopshop/foodcoopshop/pull/428) <a href="https://github.com/mantensteiner"><img src="https://github.com/mantensteiner.png" width="20"></a> / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Bei bestimmten Datebank-Feldern ist jetzt null erlaubt. [I#413](https://github.com/foodcoopshop/foodcoopshop/issues/413) / [PR#428](https://github.com/foodcoopshop/foodcoopshop/pull/428) <a href="https://github.com/mantensteiner"><img src="https://github.com/mantensteiner.png" width="20"></a> / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
 ### Für Entwickler
