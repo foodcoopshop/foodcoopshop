@@ -46,7 +46,11 @@ class AppView extends View
         $this->loadHelper('Number', [
             'className' => 'MyNumber'
         ]);
-        $this->loadHelper('Form');
+        $this->loadHelper('Form', [
+            'widgets' => [
+                '_default' => ['MyBasic']
+            ]
+        ]);
         $this->loadHelper('Menu');
         $this->loadHelper('Slug');
         $this->loadHelper('Text');

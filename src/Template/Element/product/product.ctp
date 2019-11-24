@@ -125,7 +125,10 @@ if ($product['description'] != '') {
     if ($showManufacturerDetailLink) {
         echo $this->Html->link(
             $product['ManufacturersName'],
-            $this->Slug->getManufacturerDetail($product['id_manufacturer'], $product['ManufacturersName'])
+            $this->Slug->getManufacturerDetail($product['id_manufacturer'], $product['ManufacturersName']),
+            [
+                'escape' => false
+            ]
         );
     } else {
         echo $product['ManufacturersName'];

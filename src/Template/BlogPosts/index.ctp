@@ -46,7 +46,8 @@ foreach ($blogPosts as $blogPost) {
         echo '<div class="second-column">';
         echo '<h4>'.$this->Html->link(
             $blogPost->title,
-            $blogDetailLink
+            $blogDetailLink,
+            ['escape' => false]
         ).'</h4>';
         echo $blogPost->short_description.'<br />';
         echo $this->Html->link(
