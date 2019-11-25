@@ -20,15 +20,19 @@ if ($groupBy != '') {
         '?pickupDay[]=' . join(',', $pickupDay) .
         '&' . $groupBy.'Id=' . $orderDetail[$groupBy . '_id'] .
         (isset($orderDetail['customer_id']) ? '' : '&customerId=' . $customerId );
-        $groupByObjectLink = $this->Html->link($orderDetail['name'], $groupByObjectHref);
+        $groupByObjectLink = $this->Html->link($orderDetail['name'], $groupByObjectHref, ['escape' => false]);
 }
 
 if ($groupBy == '' || $groupBy == 'product') {
     echo '<td>';
     if ($groupBy == '') {
-        echo $this->MyHtml->link($orderDetail->product_name, '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&productId=' . $orderDetail->product_id, [
-            'class' => 'name-for-dialog'
-        ]);
+        echo $this->MyHtml->link(
+            $orderDetail->product_name,
+            '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&productId=' . $orderDetail->product_id,
+            [
+                'class' => 'name-for-dialog'
+            ]
+        );
     }
     if ($groupBy == 'product') {
         echo $groupByObjectLink;
@@ -38,7 +42,13 @@ if ($groupBy == '' || $groupBy == 'product') {
 
 echo '<td class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">';
 if ($groupBy == '') {
-    echo $this->MyHtml->link($orderDetail->product->manufacturer->name, '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&manufacturerId=' . $orderDetail->product->id_manufacturer .  '&customerId=' . $customerId . '&groupBy='.$groupBy);
+    echo $this->MyHtml->link(
+        $orderDetail->product->manufacturer->name,
+        '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&manufacturerId=' . $orderDetail->product->id_manufacturer .  '&customerId=' . $customerId . '&groupBy='.$groupBy,
+        [
+            'escape' => false
+        ]
+    );
 }
 if ($groupBy == 'manufacturer') {
     echo $groupByObjectLink;
@@ -66,7 +76,13 @@ if ($groupBy == 'customer') {
     echo $name;
 }
 if ($groupBy == 'product') {
-    echo $this->MyHtml->link($orderDetail['manufacturer_name'], '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&' . 'manufacturerId=' . $orderDetail['manufacturer_id'] . '&customerId=' . $customerId . '&groupBy=product');
+    echo $this->MyHtml->link(
+        $orderDetail['manufacturer_name'],
+        '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&' . 'manufacturerId=' . $orderDetail['manufacturer_id'] . '&customerId=' . $customerId . '&groupBy=product',
+        [
+            'escape' => false
+        ]
+    );
 }
 echo '</td>';
 
