@@ -91,8 +91,8 @@ echo $this->Html->script('/node_modules/bootstrap-select/dist/js/bootstrap-selec
 echo $this->Html->script('/node_modules/components-jqueryui/jquery-ui.js');
 echo $this->Html->script('/node_modules/blueimp-file-upload/js/jquery.fileupload.js');
 echo $this->Html->script('/node_modules/bootstrap-select/dist/js/i18n/defaults-'.I18n::getLocale().'.js');
-echo $this->Html->script('/node_modules/ckeditor/ckeditor');
-echo $this->Html->script('/node_modules/ckeditor/adapters/jquery');
+echo $this->Html->script('/node_modules/ckeditor4/ckeditor');
+echo $this->Html->script('/node_modules/ckeditor4/adapters/jquery');
 
 $scripts = $this->fetch('script');
 if ($scripts != '') {
