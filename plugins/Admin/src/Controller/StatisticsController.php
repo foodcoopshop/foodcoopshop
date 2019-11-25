@@ -172,9 +172,9 @@ class StatisticsController extends AdminAppController
             $i = 0;
             $j = 0;
             foreach($xAxisDataWithYearSeparators as $x) {
-                $year = (int) substr($x, -4);
-                if (!in_array($year, $xAxisDataLineChart) && $year > 0) {
-                    $xAxisDataLineChart[] = $year;
+                $yearFromString = (int) substr($x, -4);
+                if (!in_array($yearFromString, $xAxisDataLineChart) && $yearFromString > 0) {
+                    $xAxisDataLineChart[] = $yearFromString;
                     $i++;
                 }
                 @$yAxisDataLineChart[$i-1] += $yAxisDataWithYearSeparators[$j];
