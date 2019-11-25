@@ -5,6 +5,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.6.2...develop)
 
+### Herzlichen Dank an alle beteiligten Personen
 * [AndreasEgger](https://github.com/AndreasEgger)
 * [mantensteiner](https://github.com/mantensteiner)
 * [mrothauer](https://github.com/mrothauer)
