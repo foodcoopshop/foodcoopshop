@@ -54,6 +54,7 @@ if (!$appAuth->termsOfUseAccepted()) {
             echo $this->Form->create($cart, [
                 'class' => 'fcs-form',
                 'id' => 'CartsDetailForm',
+                'novalidate' => 'novalidate',
                 'url' => $this->Slug->getCartFinish()
             ]);
             echo $this->element('cart/timebasedCurrencyDropdown');
