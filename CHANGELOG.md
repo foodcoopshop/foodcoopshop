@@ -7,6 +7,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Herzlichen Dank an alle beteiligten Personen
 * [AndreasEgger](https://github.com/AndreasEgger)
+* [hasslerf](https://github.com/hasslerf)
 * [mantensteiner](https://github.com/mantensteiner)
 * [mrothauer](https://github.com/mrothauer)
 
@@ -21,7 +22,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Bugfixes
 - Escaping von Sonderzeichen war nicht ganz sauber. [I#424](https://github.com/foodcoopshop/foodcoopshop/issues/424) / [PR#425](https://github.com/foodcoopshop/foodcoopshop/pull/425) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Bei bestimmten Datebank-Feldern ist jetzt null erlaubt. [I#413](https://github.com/foodcoopshop/foodcoopshop/issues/413) / [PR#428](https://github.com/foodcoopshop/foodcoopshop/pull/428) <a href="https://github.com/mantensteiner"><img src="https://github.com/mantensteiner.png" width="20"></a> / <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-
+- Bestellung abschließen hat im Firefox nicht funktioniert, wenn das Anhaken einer Checkbox vergessen wurde. [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/3e690448f5a1201a01a46aafbab07031f18545f3) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/hasslerf"><img src="https://github.com/hasslerf.png" width="20"></a>
 
 ### Für Entwickler
 - FoodCoopShop kann jetzt auch mittels Docker installiert bzw. gehostet werden: [https://github.com/foodcoopshop/foodcoopshop-docker](https://github.com/foodcoopshop/foodcoopshop-docker). [I#376](https://github.com/foodcoopshop/foodcoopshop/issues/376) / [PR#1](foodcoopshop/foodcoopshop-docker/pull/1) <a href="https://github.com/mantensteiner"><img src="https://github.com/mantensteiner.png" width="20"></a>
