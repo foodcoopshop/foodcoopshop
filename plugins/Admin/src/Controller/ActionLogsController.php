@@ -115,7 +115,9 @@ class ActionLogsController extends AdminAppController
         $types = [];
         if (! empty($this->getRequest()->getQuery('types'))) {
             $types = h($this->getRequest()->getQuery('types'));
-            $conditions['ActionLogs.type IN'] = $types;
+            if (!empty($types[0])) {
+                $conditions['ActionLogs.type IN'] = $types;
+            }
         }
         $this->set('types', $types);
 
