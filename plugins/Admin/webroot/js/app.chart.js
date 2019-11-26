@@ -19,7 +19,6 @@ foodcoopshop.AppChart = {
         scaleOverride: true,
         scaleStartValue: 0,
         scaleGridLineColor: 'rgba(0,0,0,.15)',
-        animation: false,
         tooltips: {
             callbacks: {
                 label: function(item, data) {
