@@ -77,6 +77,14 @@ class ActionLogsController extends AdminAppController
                 ' OR Products.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
                 ' OR Payments.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
                 ' OR Manufacturers.id_manufacturer = ' . $this->AppAuth->getManufacturerId() . ') '.
+                ' OR (ActionLogs.object_type = "order_details"
+                     AND ActionLogs.object_id IN (
+                         SELECT id_order_detail
+                         FROM fcs_order_detail od
+             			 INNER JOIN fcs_product p ON p.id_product = od.product_id
+                         WHERE p.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
+                    ') '.
+                ') '.
               ' OR (ActionLogs.customer_id = ' .$this->AppAuth->getUserId().') )';
         }
 
