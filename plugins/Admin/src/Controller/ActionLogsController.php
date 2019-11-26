@@ -67,8 +67,16 @@ class ActionLogsController extends AdminAppController
         $this->set('productId', $productId);
 
         if ($productId != '') {
-            $conditions['ActionLogs.object_type'] = "products";
-            $conditions['ActionLogs.object_id'] = $productId;
+            $conditions[] =
+                '((ActionLogs.object_id = ' . $productId . ' AND ActionLogs.object_type = "products") ' . 
+                ' OR ' . 
+                '(ActionLogs.object_type = "order_details"
+                     AND ActionLogs.object_id IN (
+                         SELECT id_order_detail
+                         FROM fcs_order_detail od
+                         WHERE od.product_id = ' . $productId .
+                     ') ' . 
+                 ')) ';
         }
 
         // manufacturers should only see their own product logs
@@ -77,6 +85,14 @@ class ActionLogsController extends AdminAppController
                 ' OR Products.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
                 ' OR Payments.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
                 ' OR Manufacturers.id_manufacturer = ' . $this->AppAuth->getManufacturerId() . ') '.
+                ' OR (ActionLogs.object_type = "order_details"
+                     AND ActionLogs.object_id IN (
+                         SELECT id_order_detail
+                         FROM fcs_order_detail od
+             			 INNER JOIN fcs_product p ON p.id_product = od.product_id
+                         WHERE p.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
+                    ') '.
+                ') '.
               ' OR (ActionLogs.customer_id = ' .$this->AppAuth->getUserId().') )';
         }
 
@@ -99,7 +115,9 @@ class ActionLogsController extends AdminAppController
         $types = [];
         if (! empty($this->getRequest()->getQuery('types'))) {
             $types = h($this->getRequest()->getQuery('types'));
-            $conditions['ActionLogs.type IN'] = $types;
+            if (!empty($types[0])) {
+                $conditions['ActionLogs.type IN'] = $types;
+            }
         }
         $this->set('types', $types);
 
