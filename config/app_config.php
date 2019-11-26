@@ -16,8 +16,6 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use Cake\Utility\Text;
-
 define('APP_ON', 1);
 define('APP_OFF', 0);
 define('APP_DEL', -1);
@@ -167,6 +165,8 @@ return [
         'isBlogFeatureEnabled' => true,
         
         'isCustomerAllowedToModifyOwnOrders' => true,
+        
+        'showStatisticsForAdmins' => true,
         
         'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),
         'timeHelper' => new App\View\Helper\MyTimeHelper(new Cake\View\View()),

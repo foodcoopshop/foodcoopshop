@@ -155,13 +155,15 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         ];
     }
 
-    $manufacturerMenu['children'][] = [
-        'slug' => $this->Slug->getStatistics(),
-        'name' => __d('admin', 'Turnover_statistics'),
-        'options' => [
-            'fa-icon' => 'fa-fw fa-chart-bar'
-        ]
-    ];
+    if ($appAuth->isSuperadmin() || ($appAuth->isAdmin() && Configure::read('app.showStatisticsForAdmins'))) {
+        $manufacturerMenu['children'][] = [
+            'slug' => $this->Slug->getStatistics(),
+            'name' => __d('admin', 'Turnover_statistics'),
+            'options' => [
+                'fa-icon' => 'fa-fw fa-chart-bar'
+            ]
+        ];
+    }
     
     $menu[] = $manufacturerMenu;
 

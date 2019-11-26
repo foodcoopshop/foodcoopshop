@@ -26,7 +26,7 @@ class StatisticsController extends AdminAppController
     {
         switch ($this->getRequest()->getParam('action')) {
             case 'index':
-                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
+                return $this->AppAuth->isSuperadmin() || ($this->AppAuth->isAdmin() && Configure::read('app.showStatisticsForAdmins'));
                 break;
             case 'myIndex':
                 return $this->AppAuth->isManufacturer();
