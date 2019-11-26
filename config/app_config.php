@@ -16,8 +16,6 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use Cake\Utility\Text;
-
 define('APP_ON', 1);
 define('APP_OFF', 0);
 define('APP_DEL', -1);
