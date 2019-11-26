@@ -21,14 +21,15 @@
 
 <h1></h1>
 
-**FoodCoopShop** provides plenty of useful functions to help the people running a food-coop. Such as:
+**FoodCoopShop** provides a lot of of useful functions to help the people running a food-coop.
 
 * a user-friendly web shop for the consumers
-* an admin area for both manufacturers and admins 
-* a fully automated payment system based on a credit system
+* an admin area for both manufacturers and admins
+* a fully automated payment system
 * different delivery rhythms for products
 * adapting orders in many ways
-* stock management... and much more!
+* self-service mode for stock products
+* beautiful turnover charts
 
 The software can be used with any modern web browser, tablet or smartphone. It's available in **German**, **English** and **Polish**.
 
@@ -44,7 +45,7 @@ The software can be used with any modern web browser, tablet or smartphone. It's
 * Before installing please read the legal information in [German](https://foodcoopshop.github.io/de/rechtliches) or [English](https://foodcoopshop.github.io/en/legal-information).
 
 ## Requirements
-* Server with shell access and cronjobs
+* Server with **shell access** and **cronjobs**
 * Apache with `mod_rewrite`
 * PHP >= 7.2
 * MySQL >= 5.6
@@ -60,13 +61,8 @@ The software can be used with any modern web browser, tablet or smartphone. It's
 * If you work on a local machine, do not change the owner of the files to www-data. Instead set permissions as shown below
 
 ## Install required packages
-Install the composer vendors
 ```
 $ composer install
-```
-
-Install packages from package.json
-```
 $ npm --prefix ./webroot install ./webroot
 ```
 
@@ -92,3 +88,7 @@ $ vendor/bin/phpunit
 The FoodCoopShop project was supported by Netidee in [2016](https://www.netidee.at/foodcoopshop) and [2018](https://www.netidee.at/foodcoopshop-0). Netidee supports Internet and Open Source ideas with up to 50.000 Euro in funding. If you are working on an Open Source projects and are permanent resident in Austria, [apply](https://netidee.at/einreichen) for your own funding!
 
 <img src="https://www.foodcoopshop.com/wp-content/uploads/2016/08/netidee-relaunched-300x93.png" alt="Netidee Logo" width="250">
+
+## Maintainer
+
+Mario Rothauer created the project in 2014 and maintains it: [mrothauer on Github](https://github.com/mrothauer)
