@@ -24,6 +24,10 @@ body {
     margin-left: 0;
     background: transparent;
 }
+#content {
+	border: none;
+	margin-right: none;
+}
 #inner-content {
     margin-top: 110px;
 }
