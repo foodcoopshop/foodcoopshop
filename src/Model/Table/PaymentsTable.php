@@ -102,6 +102,7 @@ class PaymentsTable extends AppTable
         $query->select(
             ['sumManufacturerMoneyDeposit' => $query->func()->sum('Payments.amount')]
         );
+        $query->group('Payments.amount');
 
         return $query->toArray()[0]['sumManufacturerMoneyDeposit'];
     }
