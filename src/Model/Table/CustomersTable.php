@@ -295,6 +295,7 @@ class CustomersTable extends AppTable
                 'Customers.id_customer IS NULL'
             ]
         ]);
+        $query->select('OrderDetails.id_customer'); // avoids error if sql_mode = ONLY_FULL_GROUP_BY
         $query->group('OrderDetails.id_customer');
 
         $removedCustomerIds = [];
@@ -339,6 +340,7 @@ class CustomersTable extends AppTable
                 'Customers.id_customer IS NULL'
             ]
         ]);
+        $query->select('Payments.id_customer'); // avoids error if sql_mode = ONLY_FULL_GROUP_BY
         $query->group('Payments.id_customer');
 
         $removedCustomerIds = [];
