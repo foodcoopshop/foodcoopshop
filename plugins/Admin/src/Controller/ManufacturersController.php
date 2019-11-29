@@ -12,6 +12,7 @@ use Cake\Http\Exception\NotFoundException;
 use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
+use Cake\I18n\FrozenDate;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -447,66 +448,76 @@ class ManufacturersController extends AdminAppController
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->getOrderDetailsForSendingOrderLists($pickupDayDbFormat, $cronjobRunDay);
         $orderDetails->where(['Products.id_manufacturer' => $manufacturerId]);
-        $orderDetailIds = $orderDetails->all()->extract('id_order_detail')->toArray();
         
-        if (empty($orderDetailIds)) {
+        if ($orderDetails->count() == 0) {
             // do not throw exception because no debug mails wanted
             die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }
         
-        // override pickupDay necessary for order details with products that have an individual date as delivery rhythm
-        $pickupDayDbFormat = $orderDetails->first()->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
-        $pickupDay = $orderDetails->first()->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
-        
         $validOrderStates = [ORDER_STATE_ORDER_PLACED];
         
-        // generate and save PDF - should be done here because count of results will be checked
-        $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $pickupDayDbFormat, null, [], 'F', $orderDetailIds);
-
-        // no orders in current period => do not send pdf but send information email
-        if (count($productResults) == 0) {
-            // orders exist => send pdf and email
-        } else {
-            $this->RequestHandler->renderAs($this, 'pdf');
-
-            // generate order list by procuct
-            $this->render('get_order_list_by_product');
-            $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, $pickupDayDbFormat, __d('admin', 'product'));
-
-            // generate order list by customer
-            $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $pickupDayDbFormat, null, [], 'F', $orderDetailIds);
-            $this->render('get_order_list_by_customer');
-            $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, $pickupDayDbFormat, __d('admin', 'member'));
-
-            $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
-            $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
-
-            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-            $orderDetailIds = Hash::extract($customerResults, '{n}.OrderDetailId');
-            $this->OrderDetail->updateOrderState(null, null, $validOrderStates, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturerId, $orderDetailIds);
+        // it can happen, that with one request orders with different pickup days are sent
+        // multiple order lists need to be sent then!
+        // see https://github.com/foodcoopshop/foodcoopshop/issues/408
+        $groupedOrderDetails = [];
+        foreach($orderDetails as $orderDetail) {
+            @$groupedOrderDetails[$orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'))][] = $orderDetail;
+        }
+        foreach($groupedOrderDetails as $pickupDayDbFormat => $orderDetails) {
             
-            $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}.', ['<b>'.$manufacturer->name.'</b>']);
-
-            if ($sendEmail) {
-                $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{1}.', ['<b>'.$manufacturer->name.'</b>', $manufacturer->address_manufacturer->email]);
-                $email = new AppEmail();
-                $email->viewBuilder()->setTemplate('Admin.send_order_list');
-                $email->setTo($manufacturer->address_manufacturer->email)
-                ->setAttachments([
-                    $productPdfFile,
-                    $customerPdfFile
-                ])
-                ->setSubject(__d('admin', 'Order_lists_for_the_day') . ' ' . $pickupDay)
-                ->setViewVars([
-                'manufacturer' => $manufacturer,
-                'appAuth' => $this->AppAuth,
-                'showManufacturerUnsubscribeLink' => true
-                ]);
-                if (!empty($ccRecipients)) {
-                    $email->setCc($ccRecipients);
+            $pickupDayFormated = new FrozenDate($pickupDayDbFormat);
+            $pickupDayFormated = $pickupDayFormated->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
+            $orderDetailIds = Hash::extract($orderDetails, '{n}.id_order_detail');
+            
+            // generate and save PDF - should be done here because count of results will be checked
+            $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $pickupDayDbFormat, null, [], 'F', $orderDetailIds);
+            
+            // no orders in current period => do not send pdf but send information email
+            if (count($productResults) == 0) {
+                // orders exist => send pdf and email
+            } else {
+                $this->RequestHandler->renderAs($this, 'pdf');
+                
+                // generate order list by procuct
+                $this->render('get_order_list_by_product');
+                $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, $pickupDayDbFormat, __d('admin', 'product'));
+                
+                // generate order list by customer
+                $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $pickupDayDbFormat, null, [], 'F', $orderDetailIds);
+                $this->render('get_order_list_by_customer');
+                $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, $pickupDayDbFormat, __d('admin', 'member'));
+                
+                $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
+                $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
+                
+                $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+                $orderDetailIds = Hash::extract($customerResults, '{n}.OrderDetailId');
+                $this->OrderDetail->updateOrderState(null, null, $validOrderStates, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturerId, $orderDetailIds);
+                
+                $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}.', ['<b>'.$manufacturer->name.'</b>']);
+                
+                if ($sendEmail) {
+                    $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{1}.', ['<b>'.$manufacturer->name.'</b>', $manufacturer->address_manufacturer->email]);
+                    $email = new AppEmail();
+                    $email->viewBuilder()->setTemplate('Admin.send_order_list');
+                    $email->setTo($manufacturer->address_manufacturer->email)
+                    ->setAttachments([
+                        $productPdfFile,
+                        $customerPdfFile
+                    ])
+                    ->setSubject(__d('admin', 'Order_lists_for_the_day') . ' ' . $pickupDayFormated)
+                    ->setViewVars([
+                        'manufacturer' => $manufacturer,
+                        'appAuth' => $this->AppAuth,
+                        'showManufacturerUnsubscribeLink' => true
+                    ]);
+                    if (!empty($ccRecipients)) {
+                        $email->setCc($ccRecipients);
+                    }
+                    $email->send();
                 }
-                $email->send();
             }
+            
         }
 
         $flashMessage .= '.';
