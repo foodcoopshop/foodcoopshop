@@ -52,22 +52,6 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         $this->assertOrderDetailProductPriceChangedEmails(0, $expectedToEmails, $expectedCcEmails);
     }
     
-    public function testEditOrderDetailPriceAsSuperadminWithEnabledBulkOrders()
-    {
-        $this->loginAsSuperadmin();
-        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
-        $this->changeManufacturer($manufacturerId, 'bulk_orders_allowed', 1);
-        
-        $this->editOrderDetailPrice($this->orderDetailIdA, $this->newPrice, $this->editPriceReason);
-        
-        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$this->orderDetailIdA]);
-        $this->assertEquals($this->newPrice, Configure::read('app.numberHelper')->formatAsDecimal($changedOrderDetails[0]->total_price_tax_incl), 'order detail price was not changed properly');
-        
-        $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
-        $expectedCcEmails = [];
-        $this->assertOrderDetailProductPriceChangedEmails(0, $expectedToEmails, $expectedCcEmails);
-    }
-    
     public function testEditOrderDetailPriceWithTimebasedCurrency()
     {
         $cart = $this->prepareTimebasedCurrencyCart();

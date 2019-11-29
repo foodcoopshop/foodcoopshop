@@ -587,8 +587,7 @@ class CartComponent extends Component
             }
             
             $sendInstantOrderNotification = $this->Manufacturer->getOptionSendInstantOrderNotification($manufacturer->send_instant_order_notification);
-            $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer->bulk_orders_allowed);
-            if ($sendInstantOrderNotification && !$bulkOrdersAllowed) {
+            if ($sendInstantOrderNotification) {
                 $manufacturersThatReceivedInstantOrderNotification[] = $manufacturer->name;
                 $email = new AppEmail();
                 $email->viewBuilder()->setTemplate('instant_order_notification');

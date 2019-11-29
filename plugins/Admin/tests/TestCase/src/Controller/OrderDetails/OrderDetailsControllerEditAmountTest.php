@@ -120,27 +120,6 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertChangedStockAvailable($this->productIdA, 96);
     }
     
-    public function testEditOrderDetailAmountAsSuperadminWithEnabledBulkOrders()
-    {
-        $this->loginAsSuperadmin();
-        $this->mockCart = $this->generateAndGetCart(1, 2);
-        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
-        $this->changeManufacturer($manufacturerId, 'bulk_orders_allowed', 1);
-        
-        $this->editOrderDetailAmount($this->mockCart->cart_products[1]->order_detail->id_order_detail, $this->newAmount, $this->editAmountReason);
-        
-        $changedOrder = $this->getChangedMockCartFromDatabase();
-        $this->assertEquals($this->newAmount, $changedOrder->cart_products[1]->order_detail->product_amount, 'order detail amount was not changed properly');
-        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->order_detail_tax->unit_amount);
-        $this->assertEquals(0.17, $changedOrder->cart_products[1]->order_detail->order_detail_tax->total_amount);
-        
-        $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
-        $expectedCcEmails = [];
-        $this->assertOrderDetailProductAmountChangedEmails(1, $expectedToEmails, $expectedCcEmails);
-        
-        $this->assertChangedStockAvailable($this->productIdA, 96);
-    }
-    
     private function assertOrderDetailProductAmountChangedEmails($emailLogIndex, $expectedToEmails, $expectedCcEmails)
     {
         $emailLogs = $this->EmailLog->find('all')->toArray();

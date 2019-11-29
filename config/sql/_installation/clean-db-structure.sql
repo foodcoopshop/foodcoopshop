@@ -286,7 +286,6 @@ CREATE TABLE `fcs_manufacturer` (
   `send_order_list` tinyint(4) unsigned DEFAULT NULL,
   `default_tax_id` int(8) unsigned DEFAULT NULL,
   `send_order_list_cc` varchar(512) DEFAULT NULL,
-  `bulk_orders_allowed` tinyint(4) unsigned DEFAULT NULL,
   `send_instant_order_notification` tinyint(4) unsigned DEFAULT NULL,
   `send_ordered_product_deleted_notification` int(10) unsigned DEFAULT NULL,
   `send_ordered_product_price_changed_notification` int(10) unsigned DEFAULT NULL,

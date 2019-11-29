@@ -75,9 +75,8 @@ class SendOrderListsShell extends AppShell
         $this->initHttpClient();
         $this->httpClient->doFoodCoopShopLogin();
         foreach ($manufacturers as $manufacturer) {
-            $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer->bulk_orders_allowed);
             $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
-            if (!empty($manufacturer->order_detail_amount_sum) && $sendOrderList && !$bulkOrdersAllowed) {
+            if (!empty($manufacturer->order_detail_amount_sum) && $sendOrderList) {
                 $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->order_detail_amount_sum]);
                 $outString .= ' - ' . $manufacturer->name . ': ' . $productString . ' / ' . Configure::read('app.numberHelper')->formatAsCurrency($manufacturer->order_detail_price_sum) . '<br />';
                 $url = $this->httpClient->adminPrefix . '/manufacturers/sendOrderList?manufacturerId=' . $manufacturer->id_manufacturer . '&pickupDay=' . $formattedPickupDay . '&cronjobRunDay=' . $this->cronjobRunDay;
