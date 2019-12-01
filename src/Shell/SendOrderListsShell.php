@@ -17,6 +17,7 @@ namespace App\Shell;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
 
 class SendOrderListsShell extends AppShell
 {
@@ -94,6 +95,7 @@ class SendOrderListsShell extends AppShell
             $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
             if ($sendOrderList) {
                 if (in_array($manufacturer->id_manufacturer, array_keys($tmpActionLogDatas))) {
+                    ksort($tmpActionLogDatas[$manufacturer->id_manufacturer]);
                     foreach($tmpActionLogDatas[$manufacturer->id_manufacturer] as $pickupDayDbFormat => $tmpActionLogData) {
                         $pickupDayFormated = new FrozenDate($pickupDayDbFormat);
                         $pickupDayFormated = $pickupDayFormated->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
