@@ -17,7 +17,6 @@ namespace App\Shell;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\ORM\TableRegistry;
-use Cake\Utility\Hash;
 
 class SendOrderListsShell extends AppShell
 {
@@ -28,11 +27,11 @@ class SendOrderListsShell extends AppShell
     public function main()
     {
         parent::main();
-        
+
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-        
+
         $this->startTimeLogging();
         
         // $this->cronjobRunDay can is set in unit test
@@ -44,14 +43,14 @@ class SendOrderListsShell extends AppShell
         
         $pickupDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($this->cronjobRunDay));
         $formattedPickupDay = Configure::read('app.timeHelper')->formatToDateShort($pickupDay);
-        
+
         // 1) get all manufacturers (not only active ones)
         $manufacturers = $this->Manufacturer->find('all', [
             'order' => [
                 'Manufacturers.name' => 'ASC'
             ]
         ])->toArray();
-        
+
         // 2) get all order details with pickup day in the given date range
         $orderDetails = $this->OrderDetail->getOrderDetailsForSendingOrderLists($pickupDay, $this->cronjobRunDay);
         
