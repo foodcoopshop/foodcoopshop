@@ -150,7 +150,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
                 'type' => 'cronjob_send_order_lists'
             ]
         ])->toArray();
-        $this->assertRegExpWithUnquotedString('Verschickte Bestelllisten: 1<br />- Demo Gemüse-Hersteller: 1 Produkt / 1,82 € / Liefertag: 02.02.2018', $actionLogs[1]->text);
+        $this->assertRegExpWithUnquotedString('- Demo Gemüse-Hersteller: 1 Produkt / 1,82 € / Liefertag: 02.02.2018<br />Verschickte Bestelllisten: 1', $actionLogs[1]->text);
         
     }
     
@@ -240,7 +240,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
                 'type' => 'cronjob_send_order_lists'
             ]
         ])->first();
-        $this->assertRegExpWithUnquotedString('Verschickte Bestelllisten: 2<br />- Demo Gemüse-Hersteller: 2 Produkte / 2,00 € / Liefertag: 04.10.2019<br />- Demo Gemüse-Hersteller: 1 Produkt / 1,82 € / Liefertag: 11.10.2019', $actionLog->text);
+        $this->assertRegExpWithUnquotedString('- Demo Gemüse-Hersteller: 2 Produkte / 2,00 € / Liefertag: 04.10.2019<br />- Demo Gemüse-Hersteller: 1 Produkt / 1,82 € / Liefertag: 11.10.2019<br />Verschickte Bestelllisten: 2', $actionLog->text);
         
         // 3) run cronjob again - no additional emails must be sent
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);

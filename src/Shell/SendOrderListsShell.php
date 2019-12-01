@@ -112,10 +112,11 @@ class SendOrderListsShell extends AppShell
         
         $this->httpClient->doFoodCoopShopLogout();
         
-        $outString = __('Sent_order_lists') . ': ' . count($actionLogDatas);
+        $outString = '';
         if (count($actionLogDatas) > 0) {
-            $outString .= '<br />' . join('<br />', $actionLogDatas);
+            $outString .= join('<br />', $actionLogDatas) . '<br />';
         }
+        $outString .= __('Sent_order_lists') . ': ' . count($actionLogDatas);
         
         $this->stopTimeLogging();
         
