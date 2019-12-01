@@ -773,10 +773,7 @@ body.customers form.mini-upload-form a.img-delete {
 .ui-dialog {
     z-index: 2147483648; /* 1 more than featherlight */
 }
-.cke_dialog_background_cover {
-    z-index: 2147483649 ! important; /* open upload from dialog - 1 more than .ui-dialog */
-}
-.cke_dialog {
+.cke_dialog_container { 
     z-index: 2147483650 ! important; /* open upload from dialog - 2 more than .ui-dialog */
 }
 #manufacturer-options-edit-form h3 {
