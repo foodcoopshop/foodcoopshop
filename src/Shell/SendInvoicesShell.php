@@ -143,7 +143,7 @@ class SendInvoicesShell extends AppShell
                 }
                 $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->order_detail_amount_sum]);
                 $tableData .= '<tr>';
-                $tableData .= '<td>' . $manufacturer->name . '</td>';
+                $tableData .= '<td>' . html_entity_decode($manufacturer->name) . '</td>';
                 $tableData .= '<td>' . $invoiceNumber . '</td>';
                 $tableData .= '<td>' . ($sendInvoice ? __('yes') : __('no')) . '</td>';
                 $tableData .= '<td>' . $productString . '</td>';
