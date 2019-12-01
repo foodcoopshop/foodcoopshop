@@ -79,7 +79,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
             'Bestellungen für den',
             [
                 'im Anhang findest du zwei Bestelllisten',
-                'Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test.pdf',
+                'Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test-',
                 'Content-Type: application/pdf'
             ],
             [
@@ -105,7 +105,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
             'Bestellungen für den',
             [
                 'im Anhang findest du zwei Bestelllisten',
-                'Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test.pdf',
+                'Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test-',
                 'Content-Type: application/pdf'
             ],
             [
@@ -212,7 +212,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
             'Bestellungen für den 11.10.2019',
             [
                 'im Anhang findest du zwei Bestelllisten',
-                '2019-10-11_Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test.pdf',
+                '2019-10-11_Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test-',
                 'Content-Type: application/pdf'
             ],
             [
@@ -225,7 +225,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
             'Bestellungen für den 04.10.2019',
             [
                 'im Anhang findest du zwei Bestelllisten',
-                '2019-10-04_Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test.pdf',
+                '2019-10-04_Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test-',
                 'Content-Type: application/pdf'
             ],
             [
