@@ -13,7 +13,6 @@ use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\I18n\FrozenDate;
-use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -459,7 +458,7 @@ class ManufacturersController extends AdminAppController
         
         // it can happen, that - with one request - orders with different pickup days are sent
         // => multiple order lists need to be sent then!
-        // see https://github.com/foodcoopshop/foodcoopshop/issues/408
+        // @see https://github.com/foodcoopshop/foodcoopshop/issues/408
         $groupedOrderDetails = [];
         foreach($orderDetails as $orderDetail) {
             @$groupedOrderDetails[$orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'))][] = $orderDetail;

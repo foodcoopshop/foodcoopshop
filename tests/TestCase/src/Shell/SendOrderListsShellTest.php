@@ -143,6 +143,15 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(1, count($emailLogs), 'amount of sent emails wrong');
         
+        // 3) assert action log
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $actionLogs = $this->ActionLog->find('all', [
+            'conditions' => [
+                'type' => 'cronjob_send_order_lists'
+            ]
+        ])->toArray();
+        $this->assertRegExpWithUnquotedString('Verschickte Bestelllisten: 1<br />- Demo Gemüse-Hersteller: 1 Produkt / 1,82 € / Liefertag: 02.02.2018', $actionLogs[1]->text);
+        
     }
     
     public function testSendOrderListsWithDifferentIndividualSendOrderListDayAndWeeklySendDay()
@@ -223,6 +232,21 @@ class SendOrderListsShellTest extends AppCakeTestCase
                 Configure::read('test.loginEmailVegetableManufacturer')
             ]
         );
+        
+        // 2) assert action log
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $actionLog = $this->ActionLog->find('all', [
+            'conditions' => [
+                'type' => 'cronjob_send_order_lists'
+            ]
+        ])->first();
+        $this->assertRegExpWithUnquotedString('Verschickte Bestelllisten: 2<br />- Demo Gemüse-Hersteller: 1 Produkt / 1,82 € / Liefertag: 11.10.2019<br />- Demo Gemüse-Hersteller: 2 Produkte / 2,00 € / Liefertag: 04.10.2019', $actionLog->text);
+        
+        // 3) run cronjob again - no additional emails must be sent
+        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(3, count($emailLogs));
+        
     }
     
     public function testSendOrderListsWithEmptyIndividualSendOrderListDay()
@@ -234,7 +258,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $cronjobRunDay = '2018-01-30';
         $orderDetailId = 1;
         
-        // 1) run cronjob and assert no changings
+        // run cronjob and assert no changings
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_PLACED);
         $emailLogs = $this->EmailLog->find('all')->toArray();
