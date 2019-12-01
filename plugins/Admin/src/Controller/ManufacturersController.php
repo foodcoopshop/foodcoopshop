@@ -13,6 +13,7 @@ use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\I18n\FrozenDate;
+use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -456,8 +457,8 @@ class ManufacturersController extends AdminAppController
         
         $validOrderStates = [ORDER_STATE_ORDER_PLACED];
         
-        // it can happen, that with one request orders with different pickup days are sent
-        // multiple order lists need to be sent then!
+        // it can happen, that - with one request - orders with different pickup days are sent
+        // => multiple order lists need to be sent then!
         // see https://github.com/foodcoopshop/foodcoopshop/issues/408
         $groupedOrderDetails = [];
         foreach($orderDetails as $orderDetail) {
@@ -494,10 +495,7 @@ class ManufacturersController extends AdminAppController
                 $orderDetailIds = Hash::extract($customerResults, '{n}.OrderDetailId');
                 $this->OrderDetail->updateOrderState(null, null, $validOrderStates, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturerId, $orderDetailIds);
                 
-                $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}.', ['<b>'.$manufacturer->name.'</b>']);
-                
                 if ($sendEmail) {
-                    $flashMessage = __d('admin', 'Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{1}.', ['<b>'.$manufacturer->name.'</b>', $manufacturer->address_manufacturer->email]);
                     $email = new AppEmail();
                     $email->viewBuilder()->setTemplate('Admin.send_order_list');
                     $email->setTo($manufacturer->address_manufacturer->email)
@@ -519,8 +517,16 @@ class ManufacturersController extends AdminAppController
             }
             
         }
+        
+        $flashMessage = __d('admin', '{0,plural,=1{1_Order_list} other{#_Order_lists}}_successfully_generated_for_manufacturer_{1}.', [
+            count($groupedOrderDetails),
+            '<b>'.$manufacturer->name.'</b>'
+        ]);
+        
+        if ($sendEmail) {
+            $flashMessage .= ' ' . __d('admin', 'Email_sent_to:{0}', [$manufacturer->address_manufacturer->email]);
+        }
 
-        $flashMessage .= '.';
         $this->Flash->success($flashMessage);
         $this->redirect($this->referer());
     }

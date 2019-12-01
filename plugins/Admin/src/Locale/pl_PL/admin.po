@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-11-07 20:20+0100\n"
+"POT-Creation-Date: 2019-12-01 19:53+0100\n"
 "PO-Revision-Date: 2019-04-28 03:51+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -214,14 +214,16 @@ msgstr "Faktura nr {0}, {1}"
 msgid "No_orders_within_the_given_time_range."
 msgstr "Brak zamówień w wybranym okresie"
 
-msgid "Order_lists_successfully_generated_for_manufacturer_{0}."
-msgstr "Listy zamówień dla producenta {0} zostały utworzone poprawnie."
-
-msgid "Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{1}."
-msgstr "Listy zamówień dla producenta {0} zostały utworzone poprawnie i wysłane do {1}."
-
 msgid "Order_lists_for_the_day"
 msgstr "Listy zamówień dla"
+
+#, fuzzy
+msgid "{0,plural,=1{1_Order_list} other{#_Order_lists}}_successfully_generated_for_manufacturer_{1}."
+msgstr "Listy zamówień dla producenta {0} zostały utworzone poprawnie."
+
+#, fuzzy
+msgid "Email_sent_to:{0}"
+msgstr "Mail został wysłany do {0}."
 
 msgid "Edit_settings"
 msgstr "Edytuj ustawienia"
@@ -1770,18 +1772,6 @@ msgstr "Sold out limit reached notification for contact person?"
 msgid "The_contact_person_wants_to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
 msgstr "The contact person wants to receive an email when the stock limit for a product is reached."
 
-msgid "Manufacturer_optimized_for_bulk_orders?"
-msgstr "Manufacturer optimized for bulk orders?"
-
-msgid "Disables_all_notifications_except_sent_invoices."
-msgstr "Disables all notifications except the one for sent invoices."
-
-msgid "docs_route_bulk_orders"
-msgstr "bulk-orders"
-
-msgid "Info_page_for_bulk_orders"
-msgstr "Info page for bulk orders"
-
 msgid "Chose_member"
 msgstr "Wybierz członka..."
 
@@ -2081,6 +2071,21 @@ msgstr "Stawki podatkowe nie będą mogły zostać zmienione później."
 
 msgid "Delete"
 msgstr "Usuń"
+
+#~ msgid "Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{1}."
+#~ msgstr "Listy zamówień dla producenta {0} zostały utworzone poprawnie i wysłane do {1}."
+
+#~ msgid "Manufacturer_optimized_for_bulk_orders?"
+#~ msgstr "Manufacturer optimized for bulk orders?"
+
+#~ msgid "Disables_all_notifications_except_sent_invoices."
+#~ msgstr "Disables all notifications except the one for sent invoices."
+
+#~ msgid "docs_route_bulk_orders"
+#~ msgstr "bulk-orders"
+
+#~ msgid "Info_page_for_bulk_orders"
+#~ msgstr "Info page for bulk orders"
 
 #~ msgid "Add_deposit_return"
 #~ msgstr "Dodaj zwrot kaucji"
