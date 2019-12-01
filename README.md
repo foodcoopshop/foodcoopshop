@@ -84,11 +84,9 @@ $ vendor/bin/phpunit
 ```
 
 ## Supported by Netidee Calls 10 and 12
-
 The FoodCoopShop project was supported by Netidee in [2016](https://www.netidee.at/foodcoopshop) and [2018](https://www.netidee.at/foodcoopshop-0). Netidee supports Internet and Open Source ideas with up to 50.000 Euro in funding. If you are working on an Open Source projects and are permanent resident in Austria, [apply](https://netidee.at/einreichen) for your own funding!
 
 <img src="https://www.foodcoopshop.com/wp-content/uploads/2016/08/netidee-relaunched-300x93.png" alt="Netidee Logo" width="250">
 
 ## Maintainer
-
-Mario Rothauer created the project in 2014 and maintains it: [mrothauer on Github](https://github.com/mrothauer)
+[Mario Rothauer](https://github.com/mrothauer) created the project in 2014 and maintains it.
