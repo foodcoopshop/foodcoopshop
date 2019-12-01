@@ -130,8 +130,8 @@ echo '</tr>';
 foreach ($orderDetails as $orderDetail) {
     
     $editRecordAllowed = $groupBy == '' && (
-        in_array($orderDetail->order_state, [ORDER_STATE_ORDER_PLACED, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER]) ||
-        $orderDetail->bulkOrdersAllowed) && (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'));
+        in_array($orderDetail->order_state, [ORDER_STATE_ORDER_PLACED, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER])) 
+        && (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'));
 
     $rowClasses = [];
     if (isset($orderDetail->row_class)) {

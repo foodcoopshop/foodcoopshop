@@ -70,7 +70,6 @@ return [
         'defaultSendOrderList' => true,
         'defaultSendInvoice' => true,
         'defaultTaxId' => 2,
-        'defaultBulkOrdersAllowed' => false,
         'defaultSendInstantOrderNotification' => true,
         'defaultSendOrderedProductDeletedNotification' => true,
         'defaultSendOrderedProductPriceChangedNotification' => true,

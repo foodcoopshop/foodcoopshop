@@ -240,17 +240,7 @@ class OrderDetailsTable extends AppTable
             ]
         ])->toArray();
 
-        // manually remove products from bulk orders manufacturers
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-        $cleanedOrderDetails = [];
-        foreach($orderDetails as $orderDetail) {
-            $isBulkOrderManufacturer = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail->product->manufacturer->bulk_orders_allowed);
-            if (!$isBulkOrderManufacturer) {
-                $cleanedOrderDetails[] = $orderDetail;
-            }
-        }
-
-        return $cleanedOrderDetails;
+        return $orderDetails;
     }
 
     public function deleteOrderDetail($orderDetail)

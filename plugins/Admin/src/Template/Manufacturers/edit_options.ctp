@@ -175,15 +175,6 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
     }
 
     if (!$appAuth->isManufacturer()) {
-        echo $this->Form->control('Manufacturers.bulk_orders_allowed', [
-        'label' => __d('admin', 'Manufacturer_optimized_for_bulk_orders?').' <span class="after small">'.__d('admin', 'Disables_all_notifications_except_sent_invoices.').' <a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_bulk_orders')).'" target="_blank">'.__d('admin', 'Info_page_for_bulk_orders').'</a>.</span>',
-        'type' => 'checkbox',
-        'escape' => false
-        ]);
-        echo '<div class="sc"></div>';
-    }
-
-    if (!$appAuth->isManufacturer()) {
         echo $this->Form->control('Manufacturers.id_customer', [
         'type' => 'select',
         'label' => __d('admin', 'Contact_person'),

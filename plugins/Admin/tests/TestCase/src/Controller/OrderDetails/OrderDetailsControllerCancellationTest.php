@@ -80,23 +80,6 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->assertChangedStockAvailable($this->productIdA, 98);
     }
     
-    public function testCancellationAsSuperadminWithEnabledBulkOrders()
-    {
-        $this->loginAsSuperadmin();
-        $this->simulateSendOrderListsCronjob($this->orderDetailIdA);
-        
-        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
-        $this->changeManufacturer($manufacturerId, 'bulk_orders_allowed', 1);
-        
-        $this->deleteAndAssertRemoveFromDatabase([$this->orderDetailIdA]);
-        
-        $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
-        $expectedCcEmails = [];
-        $this->assertOrderDetailDeletedEmails(0, $expectedToEmails, $expectedCcEmails);
-        
-        $this->assertChangedStockAvailable($this->productIdA, 98);
-    }
-    
     public function testCancellationProductAttributeStockAvailableAsSuperadmin()
     {
         $this->loginAsSuperadmin();

@@ -772,12 +772,10 @@ class OrderDetailsController extends AdminAppController
 
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
-            // never send email to manufacturer if bulk orders are allowed
             $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-            $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail->product->manufacturer->bulk_orders_allowed);
             $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
 
-            if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
+            if (! $this->AppAuth->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
                 $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
                     '<b>' . $oldOrderDetail->customer->name . '</b>',
                     '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
@@ -867,12 +865,10 @@ class OrderDetailsController extends AdminAppController
 
         $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
-        // never send email to manufacturer if bulk orders are allowed
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail->product->manufacturer->bulk_orders_allowed);
         $sendOrderedProductAmountChangedNotification = $this->Manufacturer->getOptionSendOrderedProductAmountChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_amount_changed_notification);
 
-        if (! $this->AppAuth->isManufacturer() && $oldOrderDetail->order_state == ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER && ! $bulkOrdersAllowed && $sendOrderedProductAmountChangedNotification) {
+        if (! $this->AppAuth->isManufacturer() && $oldOrderDetail->order_state == ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER && $sendOrderedProductAmountChangedNotification) {
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
                 '<b>' . $oldOrderDetail->customer->name . '</b>',
                 '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
@@ -962,11 +958,9 @@ class OrderDetailsController extends AdminAppController
 
         $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
-        // never send email to manufacturer if bulk orders are allowed
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($oldOrderDetail->product->manufacturer->bulk_orders_allowed);
         $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
-        if (! $this->AppAuth->isManufacturer() && ! $bulkOrdersAllowed && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
+        if (! $this->AppAuth->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
                 '<b>' . $oldOrderDetail->customer->name . '</b>',
                 '<b>' . $oldOrderDetail->product->manufacturer->name . '</b>'
@@ -1239,12 +1233,10 @@ class OrderDetailsController extends AdminAppController
 
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $orderDetail->customer->name . '</b>']);
 
-            // never send email to manufacturer if bulk orders are allowed
             $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-            $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($orderDetail->product->manufacturer->bulk_orders_allowed);
             $sendOrderedProductDeletedNotification = $this->Manufacturer->getOptionSendOrderedProductDeletedNotification($orderDetail->product->manufacturer->send_ordered_product_deleted_notification);
 
-            if (! $this->AppAuth->isManufacturer() && $orderDetail->order_state == ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER && ! $bulkOrdersAllowed && $sendOrderedProductDeletedNotification) {
+            if (! $this->AppAuth->isManufacturer() && $orderDetail->order_state == ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER && $sendOrderedProductDeletedNotification) {
                 $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
                     '<b>' . $orderDetail->customer->name . '</b>',
                     '<b>' . $orderDetail->product->manufacturer->name . '</b>'

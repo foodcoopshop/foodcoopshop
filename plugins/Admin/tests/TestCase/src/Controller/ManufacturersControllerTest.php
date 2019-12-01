@@ -120,7 +120,6 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $newSendOrderedProductPriceChangedNotification = 0;
         $newSendOrderedProductAmountChangedNotification = 0;
         $newSendInstantOrderNotification = 0;
-        $newBulkOrdersAllowed = 0;
         $newDefaultTaxId = 3;
 
         $newSendOrderListCc = ['office@rothauer-it.com', 'test@test.com'];
@@ -160,7 +159,6 @@ class ManufacturersControllerTest extends AppCakeTestCase
                     'send_ordered_product_price_changed_notification' => $newSendOrderedProductPriceChangedNotification,
                     'send_ordered_product_amount_changed_notification' => $newSendOrderedProductAmountChangedNotification,
                     'send_instant_order_notification' => $newSendInstantOrderNotification,
-                    'bulk_orders_allowed' => $newBulkOrdersAllowed,
                     'default_tax_id' => $newDefaultTaxId,
                     // althouth the following property is not tested, it needs to be included in the request to avoid
                     // [InvalidArgumentException] Cannot convert value of type `boolean` to integer
@@ -192,9 +190,6 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $sendInstantOrderNotification = $this->Manufacturer->getOptionSendInstantOrderNotification($manufacturerNew->send_instant_order_notification);
         $this->assertEquals($sendInstantOrderNotification, $newSendInstantOrderNotification, 'saving option send_instant_order_notification failed');
-
-        $bulkOrdersAllowed = $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturerNew->bulk_orders_allowed);
-        $this->assertEquals($bulkOrdersAllowed, $newBulkOrdersAllowed, 'saving option bulk_orders_allowed failed');
 
         $defaultTaxId = $this->Manufacturer->getOptionDefaultTaxId($manufacturerNew->default_tax_id);
         $this->assertEquals($defaultTaxId, $newDefaultTaxId, 'saving option default_tax_id failed');
@@ -241,7 +236,6 @@ class ManufacturersControllerTest extends AppCakeTestCase
                     // [InvalidArgumentException] Cannot convert value of type `boolean` to integer
                     'send_invoice' => 1,
                     'send_order_list' => 1,
-                    'bulk_orders_allowed' => 1,
                     'send_instant_order_notification' => 1,
                     'send_ordered_product_deleted_notification' => 1,
                     'send_ordered_product_price_changed_notification' => 1,

@@ -416,16 +416,6 @@ class ManufacturersController extends AdminAppController
         $this->redirect($this->referer());
     }
 
-    private function getOptionBulkOrdersAllowed($manufacturerId)
-    {
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ]
-        ])->first();
-        return $this->Manufacturer->getOptionBulkOrdersAllowed($manufacturer->bulk_orders_allowed);
-    }
-
     private function getOptionVariableMemberFee($manufacturerId)
     {
         $manufacturer = $this->Manufacturer->find('all', [
@@ -570,9 +560,6 @@ class ManufacturersController extends AdminAppController
         if (is_null($manufacturer->default_tax_id)) {
             $manufacturer->default_tax_id = Configure::read('app.defaultTaxId');
         }
-        if (!$this->AppAuth->isManufacturer() && is_null($manufacturer->bulk_orders_allowed)) {
-            $manufacturer->bulk_orders_allowed = Configure::read('app.defaultBulkOrdersAllowed');
-        }
         if (is_null($manufacturer->send_instant_order_notification)) {
             $manufacturer->send_instant_order_notification = Configure::read('app.defaultSendInstantOrderNotification');
         }
@@ -653,9 +640,6 @@ class ManufacturersController extends AdminAppController
             if ($this->getRequest()->getData('Manufacturers.send_invoice') == Configure::read('app.defaultSendInvoice')) {
                 $this->setRequest($this->getRequest()->withData('Manufacturers.send_invoice', null));
             }
-            if (!$this->AppAuth->isManufacturer() && $this->getRequest()->getData('Manufacturers.bulk_orders_allowed') == Configure::read('app.defaultBulkOrdersAllowed')) {
-                $this->setRequest($this->getRequest()->withData('Manufacturers.bulk_orders_allowed', null));
-            }
             if ($this->getRequest()->getData('Manufacturers.send_instant_order_notification') == Configure::read('app.defaultSendInstantOrderNotification')) {
                 $this->setRequest($this->getRequest()->withData('Manufacturers.send_instant_order_notification', null));
             }
@@ -681,7 +665,6 @@ class ManufacturersController extends AdminAppController
             
             // remove post data that could be set by hacking attempt
             if ($this->AppAuth->isManufacturer()) {
-                $this->setRequest($this->getRequest()->withData('Manufacturers.bulk_orders_allowed', null));
                 $this->setRequest($this->getRequest()->withData('Manufacturers.variable_member_fee', null));
                 $this->setRequest($this->getRequest()->withData('Manufacturers.id_customer', null));
             }
@@ -757,7 +740,6 @@ class ManufacturersController extends AdminAppController
         $this->set('sumTimebasedCurrencyPriceIncl', $sumTimebasedCurrencyPriceIncl);
 
         $this->set('variableMemberFee', $this->getOptionVariableMemberFee($manufacturerId));
-        $this->set('bulkOrdersAllowed', $this->getOptionBulkOrdersAllowed($manufacturerId));
 
         $this->set('saveParam', $saveParam);
         return $results;

@@ -186,19 +186,6 @@ class ManufacturersTable extends AppTable
     }
 
     /**
-     * @param $boolean $bulkOrdersAllowed
-     * @return boolean
-     */
-    public function getOptionBulkOrdersAllowed($bulkOrdersAllowed)
-    {
-        $result = $bulkOrdersAllowed;
-        if (is_null($bulkOrdersAllowed)) {
-            $result = Configure::read('app.defaultBulkOrdersAllowed');
-        }
-        return $result;
-    }
-
-    /**
      * @param int $defaultTaxId
      * @return int
      */
