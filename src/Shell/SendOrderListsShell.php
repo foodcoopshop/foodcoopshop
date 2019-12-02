@@ -81,7 +81,7 @@ class SendOrderListsShell extends AppShell
         }
         
         // prepare action log string is complicated because of
-        // see https://github.com/foodcoopshop/foodcoopshop/issues/408
+        // @see https://github.com/foodcoopshop/foodcoopshop/issues/408
         $tmpActionLogDatas = [];
         foreach($orderDetails as $orderDetail) {
             $orderDetailPickupDay = $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
