@@ -101,9 +101,11 @@ class SendOrderListsShell extends AppShell
                         $newData = '- ' .
                             html_entity_decode($manufacturer->name) . ': ' .
                             __('{0,plural,=1{1_product} other{#_products}}', [$tmpActionLogData['order_detail_amount_sum']]) . ' / ' .
-                            Configure::read('app.numberHelper')->formatAsCurrency($tmpActionLogData['order_detail_price_sum']) . ' / ' .
-                            __('Delivery_day') . ': ' . $pickupDayFormated;
-                            $actionLogDatas[] = $newData;
+                            Configure::read('app.numberHelper')->formatAsCurrency($tmpActionLogData['order_detail_price_sum']);
+                            if ($pickupDayDbFormat != $pickupDay) {
+                                $newData .=  ' / ' . __('Delivery_day') . ': ' . $pickupDayFormated;
+                            }
+                        $actionLogDatas[] = $newData;
                     }
                 }
             }
