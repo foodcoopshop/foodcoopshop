@@ -84,10 +84,10 @@ class SendOrderListsShell extends AppShell
         // see https://github.com/foodcoopshop/foodcoopshop/issues/408
         $tmpActionLogDatas = [];
         foreach($orderDetails as $orderDetail) {
-            $pickupDay = $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+            $orderDetailPickupDay = $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
             $manufacturerId = $orderDetail->product->id_manufacturer;
-            @$tmpActionLogDatas[$manufacturerId][$pickupDay]['order_detail_amount_sum'] += $orderDetail->product_amount;
-            @$tmpActionLogDatas[$manufacturerId][$pickupDay]['order_detail_price_sum'] += $orderDetail->total_price_tax_incl;
+            @$tmpActionLogDatas[$manufacturerId][$orderDetailPickupDay]['order_detail_amount_sum'] += $orderDetail->product_amount;
+            @$tmpActionLogDatas[$manufacturerId][$orderDetailPickupDay]['order_detail_price_sum'] += $orderDetail->total_price_tax_incl;
         }
         $actionLogDatas = [];
         foreach ($manufacturers as $manufacturer) {
