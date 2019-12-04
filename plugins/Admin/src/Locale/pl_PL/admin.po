@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-12-04 09:25+0100\n"
+"POT-Creation-Date: 2019-12-04 09:35+0100\n"
 "PO-Revision-Date: 2019-04-28 03:51+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -169,7 +169,8 @@ msgstr "Suma kredytów <b>usuniętych</b> członków"
 msgid "Sum_of_deposit_compensation_payments_for_manufactures"
 msgstr "Suma rekompensat kaucji dla producentów"
 
-msgid "Credit_and_deposit"
+#, fuzzy
+msgid "Credit_and_deposit_balance"
 msgstr "Kredyt i kaucja"
 
 msgid "Members"

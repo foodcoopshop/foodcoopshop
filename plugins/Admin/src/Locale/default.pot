@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-12-04 09:25+0100\n"
+"POT-Creation-Date: 2019-12-04 09:35+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -164,7 +164,7 @@ msgstr ""
 msgid "Sum_of_deposit_compensation_payments_for_manufactures"
 msgstr ""
 
-msgid "Credit_and_deposit"
+msgid "Credit_and_deposit_balance"
 msgstr ""
 
 msgid "Members"

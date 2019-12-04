@@ -476,7 +476,7 @@ class MyHtmlHelper extends HtmlHelper
             ];
         }
         $tabs[] = [
-            'name' => __('credit_and_deposit'),
+            'name' => __('Credit_and_deposit_balance'),
             'url' => Configure::read('app.slugHelper')->getCreditBalanceSum(),
             'key' => 'credit_balance_sum'
         ];

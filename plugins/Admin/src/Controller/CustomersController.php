@@ -598,7 +598,7 @@ class CustomersController extends AdminAppController
         }
         $this->set('sums', $sums);
 
-        $this->set('title_for_layout', __d('admin', 'Credit_and_deposit'));
+        $this->set('title_for_layout', __d('admin', 'Credit_and_deposit_balance'));
     }
 
     public function index()

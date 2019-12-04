@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-12-04 09:25+0100\n"
+"POT-Creation-Date: 2019-12-04 09:35+0100\n"
 "PO-Revision-Date: 2019-12-01 19:55+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -165,7 +165,8 @@ msgstr "Sum of credits of <b>deleted</b> members"
 msgid "Sum_of_deposit_compensation_payments_for_manufactures"
 msgstr "Sum of compensation payments for manufacturers"
 
-msgid "Credit_and_deposit"
+#, fuzzy
+msgid "Credit_and_deposit_balance"
 msgstr "Credit and deposit"
 
 msgid "Members"
