@@ -164,10 +164,18 @@ class MyHtmlHelper extends HtmlHelper
         return $currencyIcon;
     }
 
+    /**
+     * so far software documentation only exists in DE
+     * @param string $page
+     * @return string
+     */
     public function getDocsUrl($page)
     {
         $languageCode = substr(I18n::getLocale(), 0, 2);
-        $url = 'https://foodcoopshop.github.io/' . $languageCode . '/' . $page;
+        $url = 'https://foodcoopshop.github.io/' . $languageCode . '/';
+        if ($languageCode == 'de') {
+            $url .= $page;
+        }
         return $url;
     }
 
