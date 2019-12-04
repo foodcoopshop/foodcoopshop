@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-12-01 19:53+0100\n"
+"POT-Creation-Date: 2019-12-04 09:25+0100\n"
 "PO-Revision-Date: 2019-04-28 03:51+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2015,8 +2015,9 @@ msgstr "Harmonogram dostaw"
 msgid "Product_ID"
 msgstr "Produkt"
 
-msgid "docs_route_financial_reports"
-msgstr "financial-reports"
+#, fuzzy
+msgid "docs_route_infos_for_success"
+msgstr "bulk-orders"
 
 msgid "Added_on"
 msgstr "Dodane w dniu"
@@ -2072,6 +2073,9 @@ msgstr "Stawki podatkowe nie będą mogły zostać zmienione później."
 msgid "Delete"
 msgstr "Usuń"
 
+#~ msgid "docs_route_financial_reports"
+#~ msgstr "financial-reports"
+
 #~ msgid "Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{1}."
 #~ msgstr "Listy zamówień dla producenta {0} zostały utworzone poprawnie i wysłane do {1}."
 
@@ -2080,9 +2084,6 @@ msgstr "Usuń"
 
 #~ msgid "Disables_all_notifications_except_sent_invoices."
 #~ msgstr "Disables all notifications except the one for sent invoices."
-
-#~ msgid "docs_route_bulk_orders"
-#~ msgstr "bulk-orders"
 
 #~ msgid "Info_page_for_bulk_orders"
 #~ msgstr "Info page for bulk orders"
