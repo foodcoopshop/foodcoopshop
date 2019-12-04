@@ -79,7 +79,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
             'Bestellungen für den',
             [
                 'im Anhang findest du zwei Bestelllisten',
-                'Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test.pdf',
+                'Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test-',
                 'Content-Type: application/pdf'
             ],
             [
@@ -105,7 +105,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
             'Bestellungen für den',
             [
                 'im Anhang findest du zwei Bestelllisten',
-                'Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test.pdf',
+                'Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test-',
                 'Content-Type: application/pdf'
             ],
             [
@@ -143,6 +143,15 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(1, count($emailLogs), 'amount of sent emails wrong');
         
+        // 3) assert action log
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $actionLogs = $this->ActionLog->find('all', [
+            'conditions' => [
+                'type' => 'cronjob_send_order_lists'
+            ]
+        ])->toArray();
+        $this->assertRegExpWithUnquotedString('- Demo Gemüse-Hersteller: 1 Produkt / 1,82 €<br />Verschickte Bestelllisten: 1', $actionLogs[1]->text);
+        
     }
     
     public function testSendOrderListsWithDifferentIndividualSendOrderListDayAndWeeklySendDay()
@@ -164,39 +173,79 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->changeProductDeliveryRhythm($productId, '0-individual', $deliveryDay, '2019-10-01', '', $cronjobRunDay);
         
         $this->addProductToCart(344, 1); //knoblauch
+        $this->addProductToCart(163, 1); //mangold
         $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
         $cart = $this->getCartById($cartId);
-        $orderDetailIdWeekly = $cart->cart_products[0]->order_detail->id_order_detail;
+        
+        $orderDetailIdWeeklyA = $cart->cart_products[0]->order_detail->id_order_detail;
         $this->OrderDetail->save(
             $this->OrderDetail->patchEntity(
-                $this->OrderDetail->get($orderDetailIdWeekly),
+                $this->OrderDetail->get($orderDetailIdWeeklyA),
                 [
                     'pickup_day' => '2019-10-04',
                 ]
             )
         );
         
+        $orderDetailIdWeeklyB = $cart->cart_products[1]->order_detail->id_order_detail;
+        $this->OrderDetail->save(
+            $this->OrderDetail->patchEntity(
+                $this->OrderDetail->get($orderDetailIdWeeklyB),
+                [
+                    'pickup_day' => '2019-10-04',
+                ]
+            )
+        );
+    
         // 1) run cronjob and assert changings
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
         $this->assertOrderDetailState($orderDetailIdIndividualDate, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
-        $this->assertOrderDetailState($orderDetailIdWeekly, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState($orderDetailIdWeeklyA, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState($orderDetailIdWeeklyB, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
         
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(2, count($emailLogs), 'amount of sent emails wrong');
+        $this->assertEquals(3, count($emailLogs), 'amount of sent emails wrong');
         
         $this->assertEmailLogs(
             $emailLogs[1],
-            'Bestellungen für den',
+            'Bestellungen für den 11.10.2019',
             [
                 'im Anhang findest du zwei Bestelllisten',
-                'Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test.pdf',
+                '2019-10-11_Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test-',
                 'Content-Type: application/pdf'
             ],
             [
                 Configure::read('test.loginEmailVegetableManufacturer')
             ]
         );
+        
+        $this->assertEmailLogs(
+            $emailLogs[2],
+            'Bestellungen für den 04.10.2019',
+            [
+                'im Anhang findest du zwei Bestelllisten',
+                '2019-10-04_Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test-',
+                'Content-Type: application/pdf'
+            ],
+            [
+                Configure::read('test.loginEmailVegetableManufacturer')
+            ]
+        );
+        
+        // 2) assert action log
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $actionLog = $this->ActionLog->find('all', [
+            'conditions' => [
+                'type' => 'cronjob_send_order_lists'
+            ]
+        ])->first();
+        $this->assertRegExpWithUnquotedString('- Demo Gemüse-Hersteller: 2 Produkte / 2,00 €<br />- Demo Gemüse-Hersteller: 1 Produkt / 1,82 € / Liefertag: 11.10.2019<br />Verschickte Bestelllisten: 2', $actionLog->text);
+        
+        // 3) run cronjob again - no additional emails must be sent
+        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(3, count($emailLogs));
         
     }
     
@@ -209,7 +258,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $cronjobRunDay = '2018-01-30';
         $orderDetailId = 1;
         
-        // 1) run cronjob and assert no changings
+        // run cronjob and assert no changings
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_PLACED);
         $emailLogs = $this->EmailLog->find('all')->toArray();

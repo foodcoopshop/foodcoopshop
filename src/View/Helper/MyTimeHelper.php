@@ -90,6 +90,10 @@ class MyTimeHelper extends TimeHelper
     {
         return date($this->getI18Format('DatabaseWithTimeAlt'));
     }
+    public function getCurrentDateTimeForFilename()
+    {
+        return date($this->getI18Format('DateWithTimeForFilename'));
+    }
     
     public function getCurrentDateForDatabase()
     {

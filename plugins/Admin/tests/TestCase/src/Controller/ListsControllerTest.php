@@ -3,6 +3,8 @@
 use App\Application;
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Console\CommandRunner;
+use Cake\Core\Configure;
+use Cake\Filesystem\Folder;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -37,7 +39,10 @@ class ListsControllerTest extends AppCakeTestCase
     {
         $this->commandRunner->run(['cake', 'send_order_lists', '2018-01-31']);
         $listPageUrl = $this->Slug->getOrderLists().'?dateFrom=02.02.2018';
-        $orderListDownloadUrl = '/admin/lists/getOrderList?file=2018/02/2018-02-02_Demo-Fleisch-Hersteller_4_Bestellliste_Produkt_FoodCoop-Test.pdf';
+        
+        $folder = new Folder(Configure::read('app.folder_order_lists').DS.'2018'.DS.'02');
+        $objects = $folder->read();
+        $orderListDownloadUrl = '/admin/lists/getOrderList?file=2018/02/'.$objects[1][0];
         
         // check list page as manufacturer
         $this->loginAsMeatManufacturer();
