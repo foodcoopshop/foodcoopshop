@@ -17,5 +17,6 @@ echo $this->element('pdf/order_list', [
     'groupType' => 'product',
     'groupTypeLabel' => __d('admin', 'product'),
     'results' => $results_product,
-    'manufacturer' => isset($manufacturer) ? $manufacturer : []
-]); // not defined in sendOrderList
+    'manufacturer' => isset($manufacturer) ? $manufacturer : [],
+    'currentDateForOrderLists' => isset($currentDateForOrderLists) ? $currentDateForOrderLists : null
+]);

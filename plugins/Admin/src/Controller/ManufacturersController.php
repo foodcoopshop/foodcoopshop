@@ -478,14 +478,17 @@ class ManufacturersController extends AdminAppController
             } else {
                 $this->RequestHandler->renderAs($this, 'pdf');
                 
+                $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();
+                $this->set('currentDateForOrderLists', $currentDateForOrderLists);
+                
                 // generate order list by procuct
                 $this->render('get_order_list_by_product');
-                $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, $pickupDayDbFormat, __d('admin', 'product'));
+                $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, $pickupDayDbFormat, __d('admin', 'product'), $currentDateForOrderLists);
                 
                 // generate order list by customer
                 $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $pickupDayDbFormat, null, [], 'F', $orderDetailIds);
                 $this->render('get_order_list_by_customer');
-                $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, $pickupDayDbFormat, __d('admin', 'member'));
+                $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, $pickupDayDbFormat, __d('admin', 'member'), $currentDateForOrderLists);
                 
                 $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
                 $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
