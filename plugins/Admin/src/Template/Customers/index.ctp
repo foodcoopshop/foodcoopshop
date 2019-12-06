@@ -116,7 +116,7 @@ foreach ($customers as $customer) {
                 $imageSrc = $this->Html->privateImage($imageSrc);
                 $customerDetails = '<div style="height:270px;">';
                 $customerDetails .= $this->Html->getCustomerAddress($customer);
-                $customerDetails .= '<img style="margin-top:10px;" class="no-max-width" height="200" src="'.$imageSrc.'" />';
+                $customerDetails .= '<br /><img style="margin-top:10px;" class="no-max-width" height="200" src="'.$imageSrc.'" />';
                 $customerDetails .= '</div>';
             } else {
                 $customerDetails = $this->Html->getCustomerAddress($customer);
