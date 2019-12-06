@@ -16,7 +16,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.11.2",
     "blueimp-file-upload": "^10.4.0",
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^4.4.1",
     "bootstrap-select": "^1.13.12",
     "chart.js": "^2.9.3",
     "chart.piecelabel.js": "^0.15.0",
@@ -35,6 +35,6 @@
     "tooltipster": "^4.2.7"
   },
   "devDependencies": {
-    "eslint": "^6.7.1"
+    "eslint": "^6.7.2"
   }
 }
