@@ -36,13 +36,12 @@ foodcoopshop.Helper = {
         // scroll is still position
         var scroll = $(document).scrollTop();
         var headerHeight = $('#header').height();
-        console.log(headerHeight);
+
         $(window).scroll(function() {
             // scrolled is new position just obtained
             var scrolled = $(document).scrollTop();
                             
             // optionally emulate non-fixed positioning behaviour
-        
             if (scrolled > headerHeight){
                 $('#header').addClass('off-canvas');
             } else {
