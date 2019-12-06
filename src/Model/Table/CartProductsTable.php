@@ -3,7 +3,6 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
-use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use App\Lib\Error\Exception\InvalidParameterException;
 
