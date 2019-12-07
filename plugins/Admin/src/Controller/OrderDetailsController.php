@@ -1067,6 +1067,11 @@ class OrderDetailsController extends AdminAppController
             }
             
             $message = __d('admin', 'The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified.', [count($orderDetailIds), '<b>'.$newPickupDay.'</b>', count($customers)]);
+            
+            if ($changePickupDayReason != '') {
+                $message .= ' ' . __d('admin', 'Reason') . ': <b>"' . $changePickupDayReason . '"</b>';
+            }
+            
             $this->Flash->success($message);
             
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
