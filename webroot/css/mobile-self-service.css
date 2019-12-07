@@ -42,7 +42,7 @@
 	.self-service .header hr {
 	   margin-top: 0;
 	}
-	form div.error-message {
+	.self-service form div.error-message {
 	   width: 100% ! important;
 	}
 	.self-service {
