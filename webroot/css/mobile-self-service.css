@@ -27,6 +27,12 @@
 	.self-service #login-form form {
 	   padding: 0 2%;
 	}
+	body.self_services #content {
+	   border-right: none;
+	}
+	.self-service .product-wrapper {
+	   padding-left: 10px;
+	}
 	.self-service #login-form {
 	   padding-top: 0;
 	   text-align: center;
@@ -40,7 +46,10 @@
 	   width: 95%;
 	}
 	.self-service .header hr {
-	   margin-top: 0;
+	   display: none;
+	}
+	.self-service #SelfServiceForm {
+	   border-left: none;
 	}
 	.self-service form div.error-message {
 	   width: 100% ! important;
@@ -57,6 +66,7 @@
        position: static;
        display: none;
        margin-top: 10px;
+       padding-bottom: 20px;
 	}
 	.self-service .right-box .input.checkbox,
 	.self-service #cart {

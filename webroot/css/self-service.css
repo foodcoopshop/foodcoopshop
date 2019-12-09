@@ -20,6 +20,9 @@ body.self_services #content,
 .self-service .footer {
 	width: 917px;
 }
+body.self_services #content {
+	margin-top: 104px;
+}
 .self-service {
     background-color: #fff;
     min-height: 500px;
@@ -29,9 +32,10 @@ body.self_services #content,
 }
 .self-service .right-box {
 	position: fixed;
-	left: 612px;
+	left: 611px;
 	top: 0;
 	overflow-y: auto;
+	background-color: #fff;
 }
 .self-service .btn-order {
 	margin-left: 5%;
@@ -45,7 +49,7 @@ body.self_services #content,
 }
 .self-service #product-search {
     top: 53px;
-    left: 0;
+    left: 10px;
 }
 .self-service #product-search .btn[type="submit"] {
 	margin-left: 5px;
@@ -61,11 +65,11 @@ body.self_services #content,
 }
 .self-service #products {
 	float: left;
-	width: 603px;
+	width: 602px;
 	margin-left: 10px;
-	margin-top: 10px;
+	margin-top: -5px;
 	margin-bottom: 50px;
-	padding-top: 90px;
+	padding-top: 10px;
 }
 .self-service .product-wrapper {
 	background: #fff;
@@ -134,8 +138,9 @@ body.self_services #content,
     position: fixed;
     top: 0;
     height: 110px;
-    width: 602px;
+    width: 611px;
     z-index: 1000;
+    padding-left: 10px;
 }
 .self-service .header hr {
 	float: left;
@@ -145,7 +150,7 @@ body.self_services #content,
 	margin-bottom: 10px;
 	border-color: #d6d4d4;
 }
-.product-wrapper:nth-child(2) {
+.product-wrapper {
 	border-top: none;
 	padding-top: 10px;
 }
@@ -190,8 +195,9 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
 	display: none;
 }
 .self-service #SelfServiceForm {
-    margin-top: 10px;
+    padding-top: 10px;
     padding-bottom: 80px;
+    border-left: 1px solid #d6d4d4;
 }
 .self-service .product.error,
 .self-service .error-message {
