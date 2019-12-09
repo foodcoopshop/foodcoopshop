@@ -181,6 +181,9 @@ body.customers.login .self-service .footer {
 	height: auto;
 	border: none;
 }
+body.customers.login .self-service {
+	margin-top: 0 ! important;
+}
 body.customers.login .footer .left-wrapper,
 body.customers.login .footer .right-wrapper .btn-add-deposit {
 	display: none;
