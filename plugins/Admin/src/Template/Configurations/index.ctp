@@ -68,6 +68,10 @@ $this->element('addScript', [
                 continue;
             }
 
+            if (! Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && $configuration->name == 'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED') {
+                continue;
+            }
+            
             echo '<tr>';
 
                 echo '<td class="first">';

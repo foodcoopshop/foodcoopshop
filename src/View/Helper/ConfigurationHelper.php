@@ -32,6 +32,8 @@ class ConfigurationHelper extends Helper
             case 'FCS_FOODCOOPS_MAP_ENABLED':
             case 'FCS_ORDER_POSSIBLE_FOR_STOCK_PRODUCTS_IN_ORDERS_WITH_DELIVERY_RHYTHM':
             case 'FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS':
+            case 'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED':
+            case 'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED':
                 return Configure::read('app.htmlHelper')->getYesNoArray();
                 break;
             case 'FCS_LOCALE':

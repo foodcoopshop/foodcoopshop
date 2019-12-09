@@ -161,8 +161,9 @@ INSERT INTO `fcs_configuration` VALUES
 (581,1,'FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS','In der Sofort-Bestellung ausschließlich Lagerprodukte anzeigen?','0','boolean',76,'de_DE','2019-02-18 12:38:00','2019-02-18 12:38:00'),
 (582,1,'FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES','Lagerprodukte in Rechnungen miteinbeziehen?','1','readonly',60,'de_DE','2019-02-18 12:38:00','2019-02-18 12:38:00'),
 (583,1,'FCS_REGISTRATION_NOTIFICATION_EMAILS','Wer soll bei neuen Registrierungen informiert werden?<br /><div class=\"small\">Mehrere E-Mail-Adressen mit , (ohne Leerzeichen) trennen.</div>','fcs-demo-superadmin@mailinator.com','text',55,'de_DE','2019-03-05 20:08:00','2019-03-05 20:08:00'),
-(584,1,'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED','Selbstbedienungs-Modus für Lagerprodukte verwenden?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/selbstbedienungs-modus\" target=\"_blank\">Zur Online-Doku</a></div>','0','readonly',57,'de_DE','2019-04-17 20:01:59','2019-04-17 20:01:59'),
-(585,1,'FCS_APP_ADDITIONAL_DATA','Zusätzliche Infos zur Foodcoop<br /><div class=\"small\">Z.B. ZVR-Zahl</div>','','textarea',8,'de_DE','2019-08-03 20:07:17','2019-08-03 20:07:17');
+(584,1,'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED','Selbstbedienungs-Modus für Lagerprodukte aktiv?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/selbstbedienungs-modus\" target=\"_blank\">Zur Online-Doku</a></div>','0','boolean',300,'de_DE','2019-04-17 20:01:59','2019-04-17 20:01:59'),
+(585,1,'FCS_APP_ADDITIONAL_DATA','Zusätzliche Infos zur Foodcoop<br /><div class=\"small\">Z.B. ZVR-Zahl</div>','','textarea',8,'de_DE','2019-08-03 20:07:17','2019-08-03 20:07:17'),
+(586,1,'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED','Selbstbedienungs-Modus im Test-Modus ausführen?<br /><div class=\"small\">Keine Verlinkung im Haupt-Menü und bei Lagerprodukten.</div>','1','boolean',310,'de_DE','2019-12-09 13:46:41','2019-12-09 13:46:41');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -391,7 +392,8 @@ INSERT INTO `phinxlog` VALUES
 (20191107180825,'DeleteProducts','2019-11-08 06:52:07','2019-11-08 06:52:07',0),
 (20191118074039,'ChangeRegistrationInfoTextConfiguration','2019-11-18 07:43:39','2019-11-18 07:43:39',0),
 (20191121185721,'NullableDbFields','2019-11-21 19:04:50','2019-11-21 19:04:50',0),
-(20191129075800,'RemoveBulkOrderOption','2019-11-29 08:16:53','2019-11-29 08:16:53',0);
+(20191129075800,'RemoveBulkOrderOption','2019-11-29 08:16:53','2019-11-29 08:16:53',0),
+(20191209122308,'AddSelfServiceDbConfigTest','2019-12-09 12:46:41','2019-12-09 12:46:41',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
