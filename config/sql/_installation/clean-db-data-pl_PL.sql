@@ -121,8 +121,9 @@ INSERT INTO `fcs_configuration` VALUES
 (581,1,'FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS','Pokazywać tylko produkty magazynowane przy zamówieniach błyskawicznych?','0','boolean',76,'pl_PL','2019-02-18 12:38:00','2019-02-18 12:38:00'),
 (582,1,'FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES','Zawrzyj w fakturach produkty magazynowane?','1','readonly',60,'pl_PL','2019-02-18 12:38:00','2019-02-18 12:38:00'),
 (583,1,'FCS_REGISTRATION_NOTIFICATION_EMAILS','Kto powinien być powiadamiany o nowych rejestracjach? <br /> <div class = \"small\"> Oddziel wiele adresów e-mail przecinkami (bez spacji). </div>','','text',55,'pl_PL','2019-03-05 20:01:59','2019-03-05 20:01:59'),
-(584,1,'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED','Użyć trybu samoobsługowego dla produktów magazynowych?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/pl/self-service-mode\" target=\"_blank\">Dokumentacja</a></div>','0','readonly',57,'pl_PL','2019-04-17 20:01:59','2019-04-17 20:01:59'),
-(585,1,'FCS_APP_ADDITIONAL_DATA','Additional food-coop infos','','textarea',8,'pl_PL','2019-08-03 20:07:12','2019-08-03 20:07:12');
+(584,1,'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED','Użyć trybu samoobsługowego dla produktów magazynowych?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/pl/self-service-mode\" target=\"_blank\">Dokumentacja</a></div>','0','boolean',300,'pl_PL','2019-04-17 20:01:59','2019-04-17 20:01:59'),
+(585,1,'FCS_APP_ADDITIONAL_DATA','Additional food-coop infos','','textarea',8,'pl_PL','2019-08-03 20:07:12','2019-08-03 20:07:12'),
+(586,1,'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED','Run self-service mode in test mode?<br /><div class=\"small\">Does not add links to main menu and to stock products.</div>','0','boolean',310,'pl_PL','2019-12-09 13:46:37','2019-12-09 13:46:37');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -257,7 +258,8 @@ INSERT INTO `phinxlog` VALUES
 (20191107180825,'DeleteProducts','2019-11-08 06:52:02','2019-11-08 06:52:02',0),
 (20191118074039,'ChangeRegistrationInfoTextConfiguration','2019-11-18 07:43:35','2019-11-18 07:43:35',0),
 (20191121185721,'NullableDbFields','2019-11-21 19:05:28','2019-11-21 19:05:28',0),
-(20191129075800,'RemoveBulkOrderOption','2019-11-29 08:16:48','2019-11-29 08:16:48',0);
+(20191129075800,'RemoveBulkOrderOption','2019-11-29 08:16:48','2019-11-29 08:16:48',0),
+(20191209122308,'AddSelfServiceDbConfigTest','2019-12-09 12:46:37','2019-12-09 12:46:37',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

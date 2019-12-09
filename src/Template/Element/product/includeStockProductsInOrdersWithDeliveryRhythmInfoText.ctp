@@ -23,7 +23,7 @@ if (!$appAuth->user() || !$showInfoText) {
 <div class="line">
 	<p>
 	<?php
-	if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && Configure::read('app.serviceModeTestingEnabled')) {
+	if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED')) {
             echo __('Stock_product:_order_possible_only_by_{0}.', [
                 $this->Html->link(__('Self_service'), $this->Slug->getSelfService($keyword))
             ]);
