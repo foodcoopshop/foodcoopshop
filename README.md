@@ -37,6 +37,8 @@ The software can be used with any modern web browser, tablet or smartphone. It's
 * Official homepage: [https://www.foodcoopshop.com](https://www.foodcoopshop.com/)
 * Demo version in [German](https://demo-de.foodcoopshop.com), [English](https://demo-en.foodcoopshop.com) and [Polish](https://demo-pl.foodcoopshop.com)
 * Software documentation: [https://foodcoopshop.github.io](https://foodcoopshop.github.io)
+* Facebook: [https://facebook.com/foodcoopshop](https://facebook.com/foodcoopshop)
+* Twitter: [https://twitter.com/FoodCoopShop](https://twitter.com/FoodCoopShop)
 
 ## Who uses FoodCoopShop?
 * [List](https://foodcoopshop.github.io/en/foodcoops) / [OpenStreetMap](http://umap.openstreetmap.fr/en/map/verbreitung-foodcoopshop_211165)
