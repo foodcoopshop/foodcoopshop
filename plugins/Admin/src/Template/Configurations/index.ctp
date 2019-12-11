@@ -320,7 +320,7 @@ $this->element('addScript', [
 
         <tr>
             <td><?php echo __d('admin', 'Logo_for_website,_width:'); ?> 260px<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/logo.jpg</td>
-            <td><img src="<?php echo Configure::read('app.cakeServerName'); ?>/files/images/logo.jpg" /></td>
+            <td><img src="/files/images/logo.jpg" /></td>
         </tr>
 
         <tr>
