@@ -37,11 +37,7 @@ The software can be used with any modern web browser, tablet or smartphone. It's
 * Official homepage: [https://www.foodcoopshop.com](https://www.foodcoopshop.com/)
 * Demo version in [German](https://demo-de.foodcoopshop.com), [English](https://demo-en.foodcoopshop.com) and [Polish](https://demo-pl.foodcoopshop.com)
 * Software documentation: [https://foodcoopshop.github.io](https://foodcoopshop.github.io)
-* Facebook: [https://facebook.com/foodcoopshop](https://facebook.com/foodcoopshop)
-* Twitter: [https://twitter.com/FoodCoopShop](https://twitter.com/FoodCoopShop)
-
-## Who uses FoodCoopShop?
-* [List](https://foodcoopshop.github.io/en/foodcoops) / [OpenStreetMap](http://umap.openstreetmap.fr/en/map/verbreitung-foodcoopshop_211165)
+* [Facebook](https://facebook.com/FoodCoopShop) / [Twitter](https://twitter.com/FoodCoopShop) / [List of users](https://foodcoopshop.github.io/en/foodcoops) / [Map of users](http://umap.openstreetmap.fr/en/map/verbreitung-foodcoopshop_211165)
 
 ## Legal information
 * Before installing please read the legal information in [German](https://foodcoopshop.github.io/de/rechtliches) or [English](https://foodcoopshop.github.io/en/legal-information).
@@ -56,7 +52,7 @@ The software can be used with any modern web browser, tablet or smartphone. It's
 * Basic understanding of Apache Webserver, MySQL Database and Linux Server administration
 * PHP needs to be able to call mysqldump with exec() for database backups
 
-## Setting up dev environment / Installation
+## Installation / Setting up dev environment
 * Follow the [installation guide](https://foodcoopshop.github.io/en/installation-guide) for setup.
 * If you have questions please [create a new issue](https://github.com/foodcoopshop/foodcoopshop/issues/new) on Github.
 * Before doing any of the configuration changes, follow the steps below.
@@ -91,4 +87,4 @@ The FoodCoopShop project was supported by Netidee in [2016](https://www.netidee.
 <img src="https://www.foodcoopshop.com/wp-content/uploads/2016/08/netidee-relaunched-300x93.png" alt="Netidee Logo" width="250">
 
 ## Maintainer
-[Mario Rothauer](https://github.com/mrothauer) created the project in 2014 and maintains it.
+[Mario Rothauer](https://github.com/mrothauer) started the project in 2014 and maintains it.
