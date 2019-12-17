@@ -3,6 +3,12 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.7.0...develop)
+
+### Neue Funktionen
+- Das Hauptmenü des Frontends wird nun eingeblendet, sobald man nach oben scrollt. [I#438](https://github.com/foodcoopshop/foodcoopshop/issues/438) / [PR#440](https://github.com/foodcoopshop/foodcoopshop/pull/440) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+
 ## v2.7.0 / 2019-12-17 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.6.2...v2.7.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
