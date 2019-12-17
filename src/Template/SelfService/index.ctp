@@ -39,18 +39,19 @@ if ($this->request->getSession()->read('highlightedProductId')) {
 
 ?>
 
+<div class="header">
+	<h2><?php echo __('Self_service_for_stock_products'); ?></h2>
+	<h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
+	<?php echo $this->element('productSearch', [
+	    'action' => __('route_self_service'),
+	    'placeholder' => __('Search:_name_id_or_barcode'),
+	    'resetSearchUrl' => $this->Slug->getSelfService(),
+	    'includeCategoriesDropdown' => true
+	]); ?>
+	<hr />
+</div>
+
 <div id="products">
-	<div class="header">
-    	<h2><?php echo __('Self_service_for_stock_products'); ?></h2>
-    	<h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
-    	<?php echo $this->element('productSearch', [
-    	    'action' => __('route_self_service'),
-    	    'placeholder' => __('Search:_name_id_or_barcode'),
-    	    'resetSearchUrl' => $this->Slug->getSelfService(),
-    	    'includeCategoriesDropdown' => true
-    	]); ?>
-    	<hr />
-    </div>
     <?php
     foreach ($products as $product) {
         echo $this->element('product/product', [
