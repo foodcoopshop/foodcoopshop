@@ -167,6 +167,18 @@ class SelfServiceControllerTest extends AppCakeTestCase
         );
     }
     
+    public function testSelfServideOrderWithDeliveryBreak()
+    {
+        $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
+        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
+        $this->doBarCodeLogin();
+        $this->addProductToSelfServiceCart('350-15', 1, '1,5');
+        $this->finishSelfServiceCart(1, 1);
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $actionLogs = $this->ActionLog->find('all', [])->toArray();
+        $this->assertRegExpWithUnquotedString('Demo Superadmin hat eine neue Bestellung getätigt (15,00 €).', $actionLogs[0]->text);
+    }
+    
     private function addProductToSelfServiceCart($productId, $amount, $orderedQuantityInUnits = -1)
     {
         $this->httpClient->ajaxPost(
