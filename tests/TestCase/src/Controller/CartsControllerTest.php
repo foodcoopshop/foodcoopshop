@@ -648,6 +648,18 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals(Configure::read('test.superadminId'), $actionLogs[0]->customer_id);
     }
     
+    public function testInstantOrderWithDeliveryBreak()
+    {
+        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
+        $this->loginAsSuperadmin();
+        $this->httpClient->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
+        $this->addProductToCart($this->productId1, 1);
+        $this->finishCart(1, 1);
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $actionLogs = $this->ActionLog->find('all', [])->toArray();
+        $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung (1,82 €) für <b>Demo Mitglied</b> wurde erfolgreich getätigt.', $actionLogs[0]->text);
+    }
+    
     public function testFinishEmptyCart()
     {
         $this->loginAsCustomer();
