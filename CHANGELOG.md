@@ -3,6 +3,11 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+## v2.7.1 / 2019-12-18 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.7.0...v2.7.1)
+
+### Bugfix
+- Bei aktivierter Lieferpause haben Sofort-Bestellung und Selbstbedienungs-Modus nicht funktioniert. [PR#442](https://github.com/foodcoopshop/foodcoopshop/pull/442) / [I#441](https://github.com/foodcoopshop/foodcoopshop/issues/441) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/mantensteiner"><img src="https://github.com/mantensteiner.png" width="20"></a>
+
 ## v2.7.0 / 2019-12-17 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.6.2...v2.7.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
