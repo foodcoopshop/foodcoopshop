@@ -118,12 +118,11 @@ class AppController extends Controller
         $rememberMeCookie = $this->getRequest()->getCookie('remember_me');
         if (empty($this->AppAuth->user()) && !empty($rememberMeCookie)) {
             $value = json_decode($rememberMeCookie);
-            if (isset($value->email) && isset($value->passwd)) {
+            if (isset($value->auto_login_hash)) {
                 $this->Customer = TableRegistry::getTableLocator()->get('Customers');
                 $customer = $this->Customer->find('all', [
                     'conditions' => [
-                        'Customers.email' => $value->email,
-                        'Customers.passwd' => $value->passwd
+                        'Customers.auto_login_hash' => $value->auto_login_hash
                     ],
                     'contain' => [
                         'AddressCustomers'

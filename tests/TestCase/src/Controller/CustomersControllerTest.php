@@ -271,6 +271,31 @@ class CustomersControllerTest extends AppCakeTestCase
         ])->first();
         $this->assertEmpty($customer);
     }
+    
+    public function testAutoLogin()
+    {
+        $this->httpClient->post($this->Slug->getLogin(), [
+            'email' => Configure::read('test.loginEmailCustomer'),
+            'passwd' => $this->httpClient->loginPassword,
+            'remember_me' => true
+        ]);
+        $cookies = $this->httpClient->cookies();
+        $this->assertTrue($cookies->has('remember_me'));
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $customer = $this->Customer->find('all', [
+            'email' => Configure::read('test.loginEmailCustomer')
+        ])->first();
+        $cookieValue = json_decode($cookies->get('remember_me')->getValue());
+        $this->assertEquals($customer->auto_login_hash, $cookieValue->auto_login_hash);
+        
+        $this->httpClient->doFoodCoopShopLogout();
+        $cookies = $this->httpClient->cookies();
+        $this->assertFalse($cookies->has('remember_me'));
+        $customer = $this->Customer->find('all', [
+            'email' => Configure::read('test.loginEmailCustomer')
+        ])->first();
+        $this->assertEmpty($customer->auto_login_hash);
+    }
 
     private function checkForMainErrorMessage($response)
     {

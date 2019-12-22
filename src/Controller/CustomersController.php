@@ -12,6 +12,7 @@ use Cake\Http\Cookie\Cookie;
 use Cake\I18n\Date;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Security;
 use DateTime;
 use Cake\Http\Exception\NotFoundException;
 
@@ -218,6 +219,7 @@ class CustomersController extends FrontendController
 
     public function login()
     {
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $title = __('Sign_in');
         $enableRegistrationForm = true;
         $enableBarCodeLogin = false;
@@ -241,7 +243,6 @@ class CustomersController extends FrontendController
         /**
          * login start
          */
-        $ph = new DefaultPasswordHasher();
         if ($this->getRequest()->getUri()->getPath() == Configure::read('app.slugHelper')->getLogin()) {
             if ($this->AppAuth->user()) {
                 $this->Flash->error(__('You_are_already_signed_in.'));
@@ -257,11 +258,13 @@ class CustomersController extends FrontendController
                 }
 
                 if (!empty($this->getRequest()->getData('remember_me')) && $this->getRequest()->getData('remember_me')) {
+                    $customer = $this->Customer->get($customer['id_customer']);
+                    $customer->auto_login_hash = Security::hash(rand());
+                    $this->Customer->save($customer);
                     $cookie = (new Cookie('remember_me'))
                     ->withValue(
                         [
-                            'passwd' => $ph->hash($this->getRequest()->getData('passwd')),
-                            'email' => $this->getRequest()->getData('email')
+                            'auto_login_hash' => $customer->auto_login_hash
                         ]
                     )
                     ->withExpiry(new DateTime('+6 day'));
@@ -273,7 +276,7 @@ class CustomersController extends FrontendController
         /**
          * registration start
          */
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $ph = new DefaultPasswordHasher();
         $newPassword = StringComponent::createRandomString(12);
         $customer = $this->Customer->newEntity(
             [
@@ -396,6 +399,13 @@ class CustomersController extends FrontendController
         $this->Flash->success(__('You_have_been_signed_out.'));
         $this->response = $this->response->withCookie((new Cookie('remember_me')));
         $this->destroyInstantOrderCustomer();
+        
+        // remove auto_login_hash from database
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $customer = $this->Customer->get($this->AppAuth->getUserId());
+        $customer->auto_login_hash = '';
+        $this->Customer->save($customer);
+        
         $this->AppAuth->logout();
         $redirectUrl = '/';
         if ($this->request->getQuery('redirect')) {
