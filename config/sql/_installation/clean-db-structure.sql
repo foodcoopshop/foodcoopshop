@@ -199,7 +199,7 @@ CREATE TABLE `fcs_customer` (
   `passwd` char(60) DEFAULT NULL,
   `tmp_new_passwd` char(60) DEFAULT NULL,
   `activate_new_password_code` varchar(12) DEFAULT NULL,
-  `auto_login_hash` varchar(40) NOT NULL,
+  `auto_login_hash` varchar(40) DEFAULT NULL,
   `email_order_reminder` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `terms_of_use_accepted_date` date NOT NULL DEFAULT '1000-01-01',
   `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
