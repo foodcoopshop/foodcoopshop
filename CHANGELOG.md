@@ -9,7 +9,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Das Hauptmenü des Frontends wird nun eingeblendet, sobald man nach oben scrollt. [I#438](https://github.com/foodcoopshop/foodcoopshop/issues/438) / [PR#440](https://github.com/foodcoopshop/foodcoopshop/pull/440) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Bugfix
-- Der Auto-Login ("Angemeldet bleiben") hat nicht mehr richtig funktioniert. [I#439](https://github.com/foodcoopshop/foodcoopshop/issues/439) / [PR#444](https://github.com/foodcoopshop/foodcoopshop/pull/444) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Die Auto-Login-Funktion ("Angemeldet bleiben") hat nicht mehr richtig funktioniert. [I#439](https://github.com/foodcoopshop/foodcoopshop/issues/439) / [PR#444](https://github.com/foodcoopshop/foodcoopshop/pull/444) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ## v2.7.1 / 2019-12-18 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.7.0...v2.7.1)
 
