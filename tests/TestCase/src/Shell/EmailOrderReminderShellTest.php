@@ -47,7 +47,6 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
         $this->commandRunner->run(['cake', 'email_order_reminder', '2019-10-27']);
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(0, count($emailLogs));
-        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', '');
     }
     
     public function testGlobalDeliveryBreakEnabledAndNotNextDeliveryDay()
@@ -56,7 +55,6 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
         $this->commandRunner->run(['cake', 'email_order_reminder', '2019-10-27']);
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(3, count($emailLogs));
-        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', '');
     }
     
     public function testActiveOrderDetail()
