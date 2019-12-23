@@ -71,6 +71,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
 
         $this->resetTestDatabaseData();
         $this->resetLogs();
+        $this->Configuration->loadConfigurations();
         
     }
     
