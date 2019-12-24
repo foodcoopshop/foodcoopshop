@@ -315,12 +315,6 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->httpClient->doFoodCoopShopLogout();
         $cookies = $this->httpClient->cookies();
         $this->assertFalse($cookies->has('remember_me'));
-        $customer = $this->Customer->find('all', [
-            'conditions' => [
-                'email' => $userEmail
-            ]
-        ])->first();
-        $this->assertEmpty($customer->auto_login_hash);
     }
 
     private function checkForMainErrorMessage($response)

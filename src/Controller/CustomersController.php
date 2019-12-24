@@ -402,12 +402,6 @@ class CustomersController extends FrontendController
         $this->response = $this->response->withCookie((new Cookie('remember_me')));
         $this->destroyInstantOrderCustomer();
         
-        // remove auto_login_hash from database
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
-        $customer = $this->Customer->get($this->AppAuth->getUserId());
-        $customer->auto_login_hash = '';
-        $this->Customer->save($customer);
-        
         $this->AppAuth->logout();
         $redirectUrl = '/';
         if ($this->request->getQuery('redirect')) {
