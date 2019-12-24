@@ -259,8 +259,10 @@ class CustomersController extends FrontendController
 
                 if (!empty($this->getRequest()->getData('remember_me')) && $this->getRequest()->getData('remember_me')) {
                     $customer = $this->Customer->get($customer['id_customer']);
-                    $customer->auto_login_hash = Security::hash(rand());
-                    $this->Customer->save($customer);
+                    if ($customer->auto_login_hash == '') {
+                        $customer->auto_login_hash = Security::hash(rand());
+                        $this->Customer->save($customer);
+                    }
                     $cookie = (new Cookie('remember_me'))
                     ->withValue(
                         [
