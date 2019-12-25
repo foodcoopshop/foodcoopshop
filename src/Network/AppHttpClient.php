@@ -105,12 +105,12 @@ class AppHttpClient extends Client
         if (empty($options)) {
             $options = [
                 'headers' => [
-                    'X-Requested-With:XMLHttpRequest'
+                    'X-Requested-With' => 'XMLHttpRequest'
                 ],
                 'type' => 'json',
             ];
         }
-        $this->resposne = parent::post(
+        $this->response = parent::post(
             $url,
             $data,
             $options
