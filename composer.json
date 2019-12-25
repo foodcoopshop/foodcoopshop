@@ -16,11 +16,11 @@
     },
     "require": {
         "php": ">=7.2",
-        "cakephp/cakephp": "3.8.*",
+        "cakephp/cakephp": "4.*",
         "mobiledetect/mobiledetectlib": "2.*",
-        "cakephp/migrations": "@stable",
+        "cakephp/migrations": "3.*",
         "cakephp/plugin-installer": "~1.0",
-        "markstory/asset_compress": "3.*",
+        "markstory/asset_compress": "4.*",
         "intervention/image": "2.*",
         "tecnickcom/tcpdf": "6.2.*",
         "natxet/cssmin": "3.*",
@@ -31,7 +31,7 @@
     },
     "require-dev": {
         "psy/psysh": "@stable",
-        "cakephp/debug_kit": "3.*",
+        "cakephp/debug_kit": "4.*",
         "cakephp/cakephp-codesniffer": "3.*",
         "phpunit/phpunit": "8.*",
         "phpstan/phpstan": "0.*"
@@ -65,5 +65,6 @@
         "cs-fix": "phpcbf --colors --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests",
         "test": "phpunit --colors=always"
     },
+    "minimum-stability": "dev",
     "prefer-stable": true
 }

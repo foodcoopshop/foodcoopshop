@@ -5,7 +5,7 @@ namespace Network\Controller;
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -47,7 +47,7 @@ class ApiController extends Controller
         ]
     ];
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
 
         // enables basic authentication with php in cgi mode

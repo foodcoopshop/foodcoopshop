@@ -16,16 +16,19 @@ use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\Routing\Route\DashedRoute;
 
+$routes->scope('/network', function (RouteBuilder $builder) {
+    $builder->setExtensions(['json']);
+    $builder->connect('/:controller/:action/*');
+    $builder->connect(
+        '/api/:action',
+        ['controller' => 'Api']
+    );
+});
+    
 Router::plugin(
     'Network',
-    ['path' => '/'],
+    ['path' => '/network'],
     function (RouteBuilder $routes) {
-        $routes->connect('/network/:controller/:action/*', ['plugin' => 'Network']);
-        $routes->connect(
-            '/api/:action',
-            ['plugin' => 'Network', 'controller' => 'Api']
-        )
-        ->setExtensions(['json']);
         $routes->fallbacks(DashedRoute::class);
     }
 );

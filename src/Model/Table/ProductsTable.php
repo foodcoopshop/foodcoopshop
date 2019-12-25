@@ -27,7 +27,7 @@ use Cake\I18n\I18n;
 class ProductsTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('product');
         parent::initialize($config);

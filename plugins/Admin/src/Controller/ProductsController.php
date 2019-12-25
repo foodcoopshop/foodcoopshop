@@ -4,7 +4,7 @@ namespace Admin\Controller;
 
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Filesystem\Folder;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
@@ -105,7 +105,7 @@ class ProductsController extends AdminAppController
         }
     }
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');

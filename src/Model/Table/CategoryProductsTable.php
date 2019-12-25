@@ -18,7 +18,7 @@ namespace App\Model\Table;
 class CategoryProductsTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('category_product');
         parent::initialize($config);

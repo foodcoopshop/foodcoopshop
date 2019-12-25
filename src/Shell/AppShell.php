@@ -69,7 +69,7 @@ class AppShell extends Shell
         }
     }
 
-    public function out($message = null, $newlines = 1, $level = Shell::NORMAL)
+    public function out($message, int $newlines = 1, int $level = Shell::NORMAL): ?int
     {
         if ($this->isCalledFromUnitTest()) {
             return;

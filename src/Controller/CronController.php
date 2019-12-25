@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -21,7 +21,7 @@ use Cake\ORM\TableRegistry;
 class CronController extends AppController
 {
     
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
         $this->AppAuth->allow('index');

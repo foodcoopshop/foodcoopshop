@@ -21,14 +21,14 @@ use Cake\Validation\Validator;
 class TaxesTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('tax');
         parent::initialize($config);
         $this->setPrimaryKey('id_tax');
     }
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator->notEmptyString('rate', __('Please_enter_a_tax_rate.'));
         $validator->range('rate', [0.01, 99.99], __('Please_enter_a_number_between_{0}_and_{1}.', [0.01,99.99]));

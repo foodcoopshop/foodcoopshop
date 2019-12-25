@@ -20,7 +20,7 @@ use App\Lib\Error\Exception\InvalidParameterException;
 class UnitsTable extends AppTable
 {
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator->numeric('price_incl_per_unit', __('The_price_per_unit_needs_to_be_a_number.'));
         $validator->greaterThan('price_incl_per_unit', 0, __('The_price_per_unit_needs_to_be_greater_than_0.'));

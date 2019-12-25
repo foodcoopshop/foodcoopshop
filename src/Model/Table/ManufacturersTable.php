@@ -23,7 +23,7 @@ use Cake\Validation\Validator;
 class ManufacturersTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('manufacturer');
         parent::initialize($config);
@@ -43,7 +43,7 @@ class ManufacturersTable extends AppTable
         $this->addBehavior('Timestamp');
     }
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator->notEmptyString('name', __('Please_enter_a_name.'));
         $range = [3, 64];

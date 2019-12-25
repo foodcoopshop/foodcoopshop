@@ -21,7 +21,7 @@ use Cake\Validation\Validator;
 class AddressManufacturersTable extends AddressesTable
 {
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator->notEmptyString('firstname', __('Please_enter_the_first_name_of_the_invoice_holder.'));
         $validator->notEmptyString('lastname', __('Please_enter_the_last_name_of_the_invoice_holder.'));

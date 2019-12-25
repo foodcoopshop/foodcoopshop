@@ -7,7 +7,7 @@ use App\Mailer\AppEmail;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Http\Cookie\Cookie;
 use Cake\I18n\Date;
 use Cake\Log\Log;
@@ -32,7 +32,7 @@ use Cake\Http\Exception\NotFoundException;
 class CustomersController extends FrontendController
 {
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
         $this->AppAuth->allow('login', 'logout', 'new_password_request', 'registration_successful');

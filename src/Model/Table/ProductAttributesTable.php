@@ -20,7 +20,7 @@ use Cake\ORM\TableRegistry;
 class ProductAttributesTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('product_attribute');
         parent::initialize($config);

@@ -22,7 +22,7 @@ use App\Lib\Error\Exception\InvalidParameterException;
 class CartProductsTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
         $this->setPrimaryKey('id_cart_product');

@@ -24,7 +24,7 @@ use Cake\Validation\Validator;
 class CustomersTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('customer');
         parent::initialize($config);

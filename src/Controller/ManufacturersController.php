@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
@@ -26,7 +26,7 @@ use Cake\ORM\TableRegistry;
 class ManufacturersController extends FrontendController
 {
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
 
         parent::beforeFilter($event);

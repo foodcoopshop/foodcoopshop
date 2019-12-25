@@ -20,7 +20,7 @@ use Cake\View\Widget\BasicWidget;
 class MyBasicWidget extends BasicWidget
 {
 
-    public function render(array $data, ContextInterface $context)
+    public function render(array $data, ContextInterface $context): string
     {
         $data += [
             'name' => '',

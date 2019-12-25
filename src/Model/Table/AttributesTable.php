@@ -20,7 +20,7 @@ use Cake\Validation\Validator;
 class AttributesTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('attribute');
         parent::initialize($config);
@@ -28,7 +28,7 @@ class AttributesTable extends AppTable
         $this->addBehavior('Timestamp');
     }
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator->notEmptyString('name', __('Please_enter_a_name.'));
         $validator->add('name', 'unique', [

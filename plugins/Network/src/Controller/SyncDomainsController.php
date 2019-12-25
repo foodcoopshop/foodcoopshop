@@ -3,7 +3,7 @@
 namespace Network\Controller;
 
 use App\Controller\AppController;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
@@ -30,7 +30,7 @@ class SyncDomainsController extends AppController
         return $this->AppAuth->isSuperadmin();
     }
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
         $this->viewBuilder()->setLayout('Admin.default');

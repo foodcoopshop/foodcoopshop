@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -30,11 +32,10 @@ require __DIR__ . '/paths.php';
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
 use Cake\Cache\Cache;
-use Cake\Console\ConsoleErrorHandler;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
-use Cake\Database\Type;
 use Cake\Datasource\ConnectionManager;
+use Cake\Error\ConsoleErrorHandler;
 use Cake\Error\ErrorHandler;
 use Cake\Http\ServerRequest;
 use Cake\I18n\I18n;
@@ -42,7 +43,30 @@ use Cake\Log\Log;
 use Cake\Mailer\Email;
 use Cake\Mailer\TransportFactory;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 use Cake\Utility\Security;
+
+/*
+ * See https://github.com/josegonzalez/php-dotenv for API details.
+ *
+ * Uncomment block of code below if you want to use `.env` file during development.
+ * You should copy `config/.env.example` to `config/.env` and set/modify the
+ * variables as required.
+ *
+ * The purpose of the .env file is to emulate the presence of the environment
+ * variables like they would be present in production.
+ *
+ * If you use .env files, be careful to not commit them to source control to avoid
+ * security risks. See https://github.com/josegonzalez/php-dotenv#general-security-information
+ * for more information for recommended practices.
+ */
+// if (!env('APP_NAME') && file_exists(CONFIG . '.env')) {
+//     $dotenv = new \josegonzalez\Dotenv\Loader([CONFIG . '.env']);
+//     $dotenv->parse()
+//         ->putenv()
+//         ->toEnv()
+//         ->toServer();
+// }
 
 /*
  * Read configuration file and inject configuration into various
@@ -60,30 +84,39 @@ try {
 }
 
 /*
- * Load an environment local configuration file.
- * You can use a file like app_local.php to provide local overrides to your
- * shared configuration.
+ * Load an environment local configuration file to provide overrides to your configuration.
+ * Notice: For security reasons app_local.php will not be included in your git repo.
  */
 Configure::load('app_config', 'default');
 Configure::load('custom_config', 'default');
 Configure::load('credentials', 'default');
 
-// disable caching if debug is on
+/*
+ * When debug = true the metadata cache should only last
+ * for a short time.
+ */
 if (Configure::read('debug')) {
     Cache::disable();
+    // disable router cache during development
+    Configure::write('Cache._cake_routes_.duration', '+2 seconds');
 }
 
 /*
- * Set server timezone to UTC. You can change it to another timezone of your
- * choice but using UTC makes time calculations / conversions easier.
+ * Set the default server timezone. Using UTC makes time calculations / conversions easier.
  * Check http://php.net/manual/en/timezones.php for list of valid timezone strings.
  */
-date_default_timezone_set('UTC');
+date_default_timezone_set(Configure::read('App.defaultTimezone'));
 
 /*
  * Configure the mbstring extension to use the correct encoding.
  */
 mb_internal_encoding(Configure::read('App.encoding'));
+
+/*
+ * Set the default locale. This controls how dates, number and currency is
+ * formatted and sets the default language to use for translations.
+ */
+ini_set('intl.default_locale', Configure::read('App.defaultLocale'));
 
 /*
  * Register application error and exception handlers.
@@ -105,21 +138,24 @@ if ($isCli) {
 /*
  * Set the full base URL.
  * This URL is used as the base of all absolute links.
- *
- * If you define fullBaseUrl in your config file you can remove this.
  */
-if (!Configure::read('App.fullBaseUrl')) {
+$fullBaseUrl = Configure::read('App.fullBaseUrl');
+if (!$fullBaseUrl) {
     $s = null;
     if (env('HTTPS')) {
         $s = 's';
     }
-
+    
     $httpHost = env('HTTP_HOST');
     if (isset($httpHost)) {
-        Configure::write('App.fullBaseUrl', 'http' . $s . '://' . $httpHost);
+        $fullBaseUrl = 'http' . $s . '://' . $httpHost;
     }
     unset($httpHost, $s);
 }
+if ($fullBaseUrl) {
+    Router::fullBaseUrl($fullBaseUrl);
+}
+unset($fullBaseUrl);
 
 Cache::setConfig(Configure::consume('Cache'));
 ConnectionManager::setConfig(Configure::consume('Datasources'));
@@ -132,44 +168,47 @@ if (isset($_SERVER['HTTP_X_UNIT_TEST_MODE'])
     || (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]))) {
         Security::setSalt(Configure::read('Security.salt_for_unit_tests'));
     }
-
-/*
- * The default crypto extension in 3.0 is OpenSSL.
- * If you are migrating from 2.x uncomment this code to
- * use a more compatible Mcrypt based implementation
- */
-//Security::engine(new \Cake\Utility\Crypto\Mcrypt());
-
+    
 /*
  * Setup detectors for mobile and tablet.
  */
 ServerRequest::addDetector('mobile', function ($request) {
     $detector = new \Detection\MobileDetect();
-
+    
     return $detector->isMobile();
 });
 ServerRequest::addDetector('tablet', function ($request) {
     $detector = new \Detection\MobileDetect();
-
+    
     return $detector->isTablet();
 });
-
+        
 /*
- * Enable immutable time objects in the ORM.
+ * You can set whether the ORM uses immutable or mutable Time types.
+ * The default changed in 4.0 to immutable types. You can uncomment
+ * below to switch back to mutable types.
  *
  * You can enable default locale format parsing by adding calls
  * to `useLocaleParser()`. This enables the automatic conversion of
  * locale specific date formats. For details see
- * @link https://book.cakephp.org/3.0/en/core-libraries/internationalization-and-localization.html#parsing-localized-datetime-data
+ * @link https://book.cakephp.org/4/en/core-libraries/internationalization-and-localization.html#parsing-localized-datetime-data
  */
-Type::build('time')
-    ->useImmutable();
-Type::build('date')
-    ->useImmutable();
-Type::build('datetime')
-    ->useImmutable();
-Type::build('timestamp')
-    ->useImmutable();
+// TypeFactory::build('time')
+//    ->useMutable();
+// TypeFactory::build('date')
+//    ->useMutable();
+// TypeFactory::build('datetime')
+//    ->useMutable();
+// TypeFactory::build('timestamp')
+//    ->useMutable();
+// TypeFactory::build('datetimefractional')
+//    ->useMutable();
+// TypeFactory::build('timestampfractional')
+//    ->useMutable();
+// TypeFactory::build('datetimetimezone')
+//    ->useMutable();
+// TypeFactory::build('timestamptimezone')
+//    ->useMutable();
 
 /*
  * Custom Inflector rules, can be set to correctly pluralize or singularize
@@ -180,7 +219,7 @@ Type::build('timestamp')
 //Inflector::rules('irregular', ['red' => 'redlings']);
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
-
+        
 // foodcoopshop
 mb_internal_encoding('UTF-8');
 date_default_timezone_set('Europe/Berlin');
@@ -200,4 +239,5 @@ Configure::load('localized_config', 'default');
 if (file_exists(CONFIG.DS.'localized_custom_config.php')) {
     Configure::load('localized_custom_config', 'default');
 }
-
+        
+        

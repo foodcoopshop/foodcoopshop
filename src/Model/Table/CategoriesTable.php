@@ -21,7 +21,7 @@ use Cake\Validation\Validator;
 class CategoriesTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('category');
         $this->addBehavior('Tree', [
@@ -34,7 +34,7 @@ class CategoriesTable extends AppTable
         $this->addBehavior('Timestamp');
     }
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator->notEmptyString('name', __('Please_enter_a_name.'));
         return $validator;

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -23,7 +23,7 @@ use Cake\ORM\TableRegistry;
 class AppController extends Controller
 {
 
-    public function initialize()
+    public function initialize(): void
     {
 
         parent::initialize();
@@ -67,14 +67,14 @@ class AppController extends Controller
             'authenticate' => $authenticate,
             'storage' => 'Session'
         ]);
-
+        
         $this->paginate = [
             'limit' => 300000,
             'maxLimit' => 300000
         ];
     }
 
-    public function beforeRender(Event $event)
+    public function beforeRender(EventInterface $event)
     {
         parent::beforeRender($event);
         $this->set('appAuth', $this->AppAuth);
@@ -104,7 +104,7 @@ class AppController extends Controller
         }
     }
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
 
         $this->validateAuthentication();

@@ -5,7 +5,7 @@ namespace Admin\Controller;
 use App\Controller\Component\StringComponent;
 use App\Mailer\AppEmail;
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\Http\Exception\NotFoundException;
@@ -52,7 +52,7 @@ class ManufacturersController extends AdminAppController
         }
     }
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');

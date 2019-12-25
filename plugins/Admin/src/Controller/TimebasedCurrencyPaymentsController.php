@@ -3,7 +3,7 @@
 namespace Admin\Controller;
 
 use App\Mailer\AppEmail;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\I18n\FrozenDate;
 use Cake\I18n\Time;
 use Cake\Core\Configure;
@@ -71,7 +71,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
      * $param Event $event
      * @see \App\Controller\AppController::beforeFilter()
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         $this->TimebasedCurrencyPayment = TableRegistry::getTableLocator()->get('TimebasedCurrencyPayments');
         $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');

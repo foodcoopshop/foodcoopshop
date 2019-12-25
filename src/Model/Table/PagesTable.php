@@ -20,7 +20,7 @@ use Cake\Validation\Validator;
 class PagesTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
         $this->setPrimaryKey('id_page');
@@ -33,7 +33,7 @@ class PagesTable extends AppTable
         ]);
     }
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator->notEmptyString('title', __('Please_enter_a_title.'));
         $validator->minLength('title', 2, __('Please_enter_at_least_{0}_characters.', [2]));

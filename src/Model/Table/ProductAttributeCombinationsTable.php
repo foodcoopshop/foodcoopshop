@@ -21,7 +21,7 @@ use Cake\Utility\Hash;
 class ProductAttributeCombinationsTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('product_attribute_combination');
         parent::initialize($config);

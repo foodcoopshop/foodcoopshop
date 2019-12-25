@@ -4,7 +4,7 @@ namespace Admin\Controller;
 
 use App\Mailer\AppEmail;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\I18n\FrozenDate;
 use Cake\I18n\Time;
 use Cake\Core\Configure;
@@ -68,7 +68,7 @@ class PaymentsController extends AdminAppController
         }
     }
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         $this->Payment = TableRegistry::getTableLocator()->get('Payments');
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');

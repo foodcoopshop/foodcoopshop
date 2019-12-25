@@ -5,7 +5,7 @@ namespace Network\Controller;
 use App\Controller\AppController;
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -37,7 +37,7 @@ class SyncsController extends AppController
         return $isAllowedToUseAsMasterFoodcoop && count($syncDomains) > 0;
     }
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
 

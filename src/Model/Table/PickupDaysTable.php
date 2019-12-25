@@ -20,7 +20,7 @@ use Cake\Validation\Validator;
 class PickupDaysTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
         $this->belongsTo('Customers', [
@@ -29,7 +29,7 @@ class PickupDaysTable extends AppTable
         $this->setPrimaryKey(['customer_id']);
     }
     
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator->allowEmptyString('comment');
         $validator->maxLength('comment', 500, __('Please_enter_max_{0}_characters.', [500]));

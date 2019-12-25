@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\TableRegistry;
 use Cake\I18n\FrozenDate;
 
@@ -149,12 +149,12 @@ class FrontendController extends AppController
     }
 
     // is not called on ajax actions!
-    public function beforeRender(Event $event)
+    public function beforeRender(EventInterface $event)
     {
-
+        
         parent::beforeRender($event);
 
-        // when a shop order was placed, the pdfs that are rendered for the order confirmation email
+        // when an instant order was placed, the pdfs that are rendered for the order confirmation email
         // called this method and therefore called resetOriginalLoggedCustomer() => email was sent t
         // the user who placed the order for a member and not to the member
         if ($this->getResponse()->getType() != 'text/html') {
@@ -213,7 +213,7 @@ class FrontendController extends AppController
         $this->set('pagesForFooter', $pagesForFooter);
     }
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
         

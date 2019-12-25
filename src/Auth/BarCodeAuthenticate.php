@@ -18,18 +18,19 @@ namespace App\Auth;
 use Cake\Auth\BaseAuthenticate;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
+use Cake\ORM\Query;
 use Cake\Utility\Security;
 
 class BarCodeAuthenticate extends BaseAuthenticate {
 
-    public function authenticate(ServerRequest $request, Response $response){
-
+    public function authenticate(ServerRequest $request, Response $response) {
         $fields = $this->_config['fields'];
-        $user = $this->_findUser(
-            $request->getData($fields['identifier'])
-        );
-        return $user;
-  }
+        $identifier = $request->getData($fields['identifier']);
+        if ($identifier == '') {
+            return null;
+        }
+        return $this->_findUser($identifier);
+    }
   
   public function getIdentifierField($table)
   {
@@ -52,7 +53,7 @@ class BarCodeAuthenticate extends BaseAuthenticate {
       return true;
   }
   
-  protected function _query($username)
+  protected function _query(string $username): Query
   {
       $config = $this->_config;
       $table = $this->getTableLocator()->get($config['userModel']);

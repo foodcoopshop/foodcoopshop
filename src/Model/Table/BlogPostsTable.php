@@ -21,7 +21,7 @@ use Cake\Validation\Validator;
 class BlogPostsTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
         $this->setPrimaryKey('id_blog_post');
@@ -34,7 +34,7 @@ class BlogPostsTable extends AppTable
         $this->addBehavior('Timestamp');
     }
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator->notEmptyString('title', __('Please_enter_a_title.'));
         $validator->minLength('title', 3, __('Please_enter_at_least_{0}_characters.', [3]));

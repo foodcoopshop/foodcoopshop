@@ -20,7 +20,7 @@ namespace App\Model\Table;
 class UnitProductsTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('units');
         parent::initialize($config);

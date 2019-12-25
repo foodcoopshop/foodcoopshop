@@ -21,7 +21,7 @@ use App\Lib\Error\Exception\InvalidParameterException;
 class TimebasedCurrencyPaymentsTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
         $this->belongsTo('Manufacturers', [
@@ -56,7 +56,7 @@ class TimebasedCurrencyPaymentsTable extends AppTable
      * @param Validator $validator
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator->add('hours', 'greaterThan', [
             'rule' => ['equalTo', [0]],
