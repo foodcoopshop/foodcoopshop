@@ -25,7 +25,7 @@ use Cake\Utility\Text;
 class FileAndEmailLog extends FileLog
 {
 
-    public function log($level, $message, array $context = [])
+    public function log($level, $message, array $context = []): void
     {
 
         $result = parent::log($level, $message, $context);
