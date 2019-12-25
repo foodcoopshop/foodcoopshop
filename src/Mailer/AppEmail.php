@@ -69,7 +69,7 @@ class AppEmail extends Email
      * uses fallback transport config if default email transport config is wrong (e.g. password changed party)
      * @see credentials.php
      */
-    public function send($content = null)
+    public function send($content = null): array
     {
         try {
             $email = parent::send($content);
