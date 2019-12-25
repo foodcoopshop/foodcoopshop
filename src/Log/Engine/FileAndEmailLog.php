@@ -27,14 +27,10 @@ class FileAndEmailLog extends FileLog
 
     public function log($level, $message, array $context = []): void
     {
-
-        $result = parent::log($level, $message, $context);
-
+        parent::log($level, $message, $context);
         if (Configure::read('app.emailErrorLoggingEnabled')) {
             $this->sendEmailWithErrorInformation($message);
         }
-
-        return $result;
     }
 
     private function sendEmailWithErrorInformation($message)
