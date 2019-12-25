@@ -271,6 +271,51 @@ class CustomersControllerTest extends AppCakeTestCase
         ])->first();
         $this->assertEmpty($customer);
     }
+    
+    public function testAutoLogin()
+    {
+        // 1) login
+        $userEmail = Configure::read('test.loginEmailSuperadmin');
+        $this->httpClient->post($this->Slug->getLogin(), [
+            'email' => $userEmail,
+            'passwd' => Configure::read('test.loginPassword'),
+            'remember_me' => true
+        ]);
+        
+        // 2) cookie must exist
+        $cookies = $this->httpClient->cookies();
+        $this->assertTrue($cookies->has('remember_me'));
+        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'email' => $userEmail
+            ]
+        ])->first();
+        $autoLoginHash = $customer->auto_login_hash;
+        
+        // 3) login again (simulate login on other device)
+        $this->httpClient->post($this->Slug->getLogin(), [
+            'email' => $userEmail,
+            'passwd' => Configure::read('test.loginPassword'),
+            'remember_me' => true
+        ]);
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'email' => $userEmail
+            ]
+        ])->first();
+        
+        // 4) hash needs to be the same as after first login
+        $this->assertEquals($autoLoginHash, $customer->auto_login_hash);
+        
+        $cookieValue = json_decode($cookies->get('remember_me')->getValue());
+        $this->assertEquals($customer->auto_login_hash, $cookieValue->auto_login_hash);
+        
+        // 5) logout
+        $this->httpClient->doFoodCoopShopLogout();
+        $cookies = $this->httpClient->cookies();
+        $this->assertFalse($cookies->has('remember_me'));
+    }
 
     private function checkForMainErrorMessage($response)
     {
