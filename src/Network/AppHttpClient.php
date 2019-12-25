@@ -5,6 +5,7 @@ namespace App\Network;
 use App\View\Helper\SlugHelper;
 use Cake\Core\Configure;
 use Cake\Http\Client;
+use Cake\Http\Client\Response;
 use Cake\ORM\TableRegistry;
 use Cake\View\View;
 
@@ -84,7 +85,7 @@ class AppHttpClient extends Client
         return $this->response->getHeaderline('Location');
     }
     
-    public function get($url, $data = [], array $options = [])
+    public function get($url, $data = [], array $options = []): Response
     {
         $options = array_merge($options, [
             'redirect' => $this->redirect
@@ -117,7 +118,7 @@ class AppHttpClient extends Client
         return $this->getContent();
     }
 
-    public function post($url, $data = [], array $options = [])
+    public function post($url, $data = [], array $options = []): Response
     {
         $options = array_merge($options, [
             'redirect' => $this->redirect
