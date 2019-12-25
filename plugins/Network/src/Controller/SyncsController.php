@@ -43,7 +43,7 @@ class SyncsController extends AppController
 
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
         $this->viewBuilder()->setLayout('Admin.default');
-        $this->helpers[] = 'Network.Network';
+        $this->viewBuilder()->setHelpers(['Network.Network']);
 
         $this->SyncDomain = TableRegistry::getTableLocator()->get('Network.SyncDomains');
         $this->SyncProduct = TableRegistry::getTableLocator()->get('Network.SyncProducts');

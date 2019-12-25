@@ -103,7 +103,7 @@ class CartsController extends FrontendController
         
         $cart = $this->AppAuth->Cart->finish();
         
-        if (empty($this->viewVars['cartErrors']) && empty($this->viewVars['formErrors'])) {
+        if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
             $this->resetOriginalLoggedCustomer();
             $this->redirect(Configure::read('app.slugHelper')->getCartFinished($cart['Cart']->id_cart));
             return;

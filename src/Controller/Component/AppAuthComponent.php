@@ -200,7 +200,7 @@ class AppAuthComponent extends AuthComponent
     {
         $result = $this->getController()->getRequest()->getPath() == '/' . __('route_self_service');
         if (!empty($this->getController()->getRequest()->getQuery('redirect'))) {
-            $result |= preg_match('`' . '/' . __('route_self_service') . '`', $this->getController()->request->getQuery('redirect'));
+            $result |= preg_match('`' . '/' . __('route_self_service') . '`', $this->getController()->getRequest()->getQuery('redirect'));
         }
         return $result;
     }

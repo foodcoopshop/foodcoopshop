@@ -36,7 +36,7 @@ class ConfigurationsController extends AdminAppController
     public function edit($configurationId)
     {
 
-        $this->helpers[] = 'Configuration';
+        $this->viewBuilder()->setHelpers(['Configuration']);
 
         if ($configurationId === null) {
             throw new NotFoundException;
@@ -152,7 +152,7 @@ class ConfigurationsController extends AdminAppController
 
     public function index()
     {
-        $this->helpers[] = 'Configuration';
+        $this->viewBuilder()->setHelpers(['Configuration']);
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
         $this->set('configurations', $this->Configuration->getConfigurations());
         $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
@@ -164,7 +164,7 @@ class ConfigurationsController extends AdminAppController
         $this->set('defaultTax', $defaultTax);
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
-            $this->helpers[] = 'Network.Network';
+            $this->viewBuilder()->setHelpers(['Network.Network']);
             $this->SyncDomain = TableRegistry::getTableLocator()->get('Network.SyncDomains');
             $syncDomains = $this->SyncDomain->getSyncDomains(APP_OFF);
             $this->set('syncDomains', $syncDomains);

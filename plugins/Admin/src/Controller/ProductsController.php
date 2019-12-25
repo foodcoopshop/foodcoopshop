@@ -1202,7 +1202,7 @@ class ProductsController extends AdminAppController
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED') && $this->AppAuth->isManufacturer()) {
             $this->SyncManufacturer = TableRegistry::getTableLocator()->get('Network.SyncManufacturers');
             $this->SyncDomain = TableRegistry::getTableLocator()->get('Network.SyncDomains');
-            $this->helpers[] = 'Network.Network';
+            $this->viewBuilder()->setHelpers(['Network.Network']);
             $isAllowedToUseAsMasterFoodcoop = $this->SyncManufacturer->isAllowedToUseAsMasterFoodcoop($this->AppAuth);
             $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->manufacturer->enabled_sync_domains);
             $showSyncProductsButton = $isAllowedToUseAsMasterFoodcoop && count($syncDomains) > 0;

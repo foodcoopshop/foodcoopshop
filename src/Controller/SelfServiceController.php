@@ -85,7 +85,7 @@ class SelfServiceController extends FrontendController
             
             $this->AppAuth->Cart->finish();
             
-            if (empty($this->viewVars['cartErrors']) && empty($this->viewVars['formErrors'])) {
+            if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
                 $this->redirect(Configure::read('app.slugHelper')->getSelfService());
                 return;
             }

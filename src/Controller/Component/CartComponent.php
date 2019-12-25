@@ -395,18 +395,18 @@ class CartComponent extends Component
                 ]
             ];
             $fixedPickupDayRequest = [];
-            $pickupEntities = $this->getController()->request->getData('Carts.pickup_day_entities');
+            $pickupEntities = $this->getController()->getRequest()->getData('Carts.pickup_day_entities');
             if (!empty($pickupEntities)) {
                 foreach($pickupEntities as $pickupDay) {
                     $pickupDay['pickup_day'] = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
                     $fixedPickupDayRequest[] = $pickupDay;
                 }
-                $this->getController()->setRequest($this->getController()->request->withData('Carts.pickup_day_entities', $fixedPickupDayRequest));
+                $this->getController()->setRequest($this->getController()->getRequest()->withData('Carts.pickup_day_entities', $fixedPickupDayRequest));
             }
         }
         $cart['Cart'] = $this->Cart->patchEntity(
             $cart['Cart'],
-            $this->getController()->request->getData(),
+            $this->getController()->getRequest()->getData(),
             $options
         );
         
@@ -423,8 +423,8 @@ class CartComponent extends Component
             
             $selectedTimebasedCurrencySeconds = 0;
             $selectedTimeAdaptionFactor = 0;
-            if (!empty($this->getController()->request->getData('Carts.timebased_currency_seconds_sum_tmp')) && $this->getController()->request->getData('Carts.timebased_currency_seconds_sum_tmp') > 0) {
-                $selectedTimebasedCurrencySeconds = $this->getController()->request->getData('Carts.timebased_currency_seconds_sum_tmp');
+            if (!empty($this->getController()->getRequest()->getData('Carts.timebased_currency_seconds_sum_tmp')) && $this->getController()->getRequest()->getData('Carts.timebased_currency_seconds_sum_tmp') > 0) {
+                $selectedTimebasedCurrencySeconds = $this->getController()->getRequest()->getData('Carts.timebased_currency_seconds_sum_tmp');
                 $selectedTimeAdaptionFactor = $selectedTimebasedCurrencySeconds / $this->getTimebasedCurrencySecondsSum();
             }
             
@@ -459,16 +459,16 @@ class CartComponent extends Component
                     break;
                 case $this->Cart::CART_TYPE_INSTANT_ORDER;
                     $actionLogType = 'instant_order_added';
-                    $userIdForActionLog = $this->getController()->request->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
+                    $userIdForActionLog = $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
                     if (empty($manufacturersThatReceivedInstantOrderNotification)) {
                         $message = __('Instant_order_({0})_successfully_placed_for_{1}.', [
                             Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
-                            '<b>' . $this->getController()->request->getSession()->read('Auth.instantOrderCustomer')->name . '</b>'
+                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.instantOrderCustomer')->name . '</b>'
                         ]);
                     } else {
                         $message = __('Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}', [
                             Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
-                            '<b>' . $this->getController()->request->getSession()->read('Auth.instantOrderCustomer')->name . '</b>',
+                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.instantOrderCustomer')->name . '</b>',
                             '<b>' . join(', ', $manufacturersThatReceivedInstantOrderNotification) . '</b>'
                         ]);
                     }
@@ -596,7 +596,7 @@ class CartComponent extends Component
                 ->setViewVars([
                     'appAuth' => $this->AppAuth,
                     'cart' => ['CartProducts' => $cartProducts],
-                    'originalLoggedCustomer' => $this->getController()->request->getSession()->read('Auth.originalLoggedCustomer'),
+                    'originalLoggedCustomer' => $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer'),
                     'manufacturer' => $manufacturer,
                     'depositSum' => $depositSum,
                     'productSum' => $productSum,
