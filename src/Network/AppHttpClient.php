@@ -92,7 +92,7 @@ class AppHttpClient extends Client
         ]);
         $this->redirect = 0;
         $this->response = parent::get($url, $data, $options);
-        return $this->getContent();
+        return $this->response;
     }
 
     /**
@@ -100,7 +100,7 @@ class AppHttpClient extends Client
      * @param string $url
      * @param array $parameters
      */
-    public function ajaxPost($url, $data = [], array $options = [])
+    public function ajaxPost($url, $data = [], array $options = []): Response
     {
         if (empty($options)) {
             $options = [
@@ -110,12 +110,12 @@ class AppHttpClient extends Client
                 'type' => 'json',
             ];
         }
-        $this->response = parent::post(
+        $this->resposne = parent::post(
             $url,
             $data,
             $options
         );
-        return $this->getContent();
+        return $this->response;
     }
 
     public function post($url, $data = [], array $options = []): Response
@@ -129,7 +129,7 @@ class AppHttpClient extends Client
             $data,
             $options
         );
-        return $this->getContent();
+        return $this->response;
     }
 
     public function getJsonDecodedContent()
