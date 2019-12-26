@@ -209,7 +209,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
         return [
             'headers' => [
-                'X-Requested-With:XMLHttpRequest',
+                'X-Requested-With' => 'XMLHttpRequest',
                 'REFERER' => Configure::read('app.cakeServerName') . '/' . __('route_self_service')
             ],
             'type' => 'json'
