@@ -624,9 +624,9 @@ class PaymentsController extends AdminAppController
         $this->set('payments', $payments);
         $this->set('customerId', $this->getCustomerId());
 
-        $this->set('column_title', $this->viewVars['title_for_layout']);
+        $this->set('column_title', $this->viewBuilder()->getVars()['title_for_layout']);
 
-        $title = $this->viewVars['title_for_layout'];
+        $title = $this->viewBuilder()->getVars()['title_for_layout'];
         if (in_array($this->getRequest()->getParam('action'), ['product', 'member_fee'])) {
             $title .= ' '.__d('admin', 'of_{0}', [$customer->name]);
         }
