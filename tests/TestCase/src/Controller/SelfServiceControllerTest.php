@@ -22,7 +22,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testBarCodeLoginAsSuperadminIfNotEnabled()
     {
         $this->doBarCodeLogin();
-        $this->assertRegExpWithUnquotedString(__('Signing_in_failed_account_inactive_or_password_wrong?'), $this->httpClient->getStringBody());
+        $this->assertRegExpWithUnquotedString(__('Signing_in_failed_account_inactive_or_password_wrong?'), $this->httpClient->getContent());
     }
     
     public function testPageSelfService()
@@ -39,7 +39,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->doBarCodeLogin();
-        $this->assertNotRegExpWithUnquotedString(__('Signing_in_failed_account_inactive_or_password_wrong?'), $this->httpClient->getStringBody());
+        $this->assertNotRegExpWithUnquotedString(__('Signing_in_failed_account_inactive_or_password_wrong?'), $this->httpClient->getContent());
     }
     
     public function testSelfServiceAddProductPricePerUnitWrong()
@@ -69,8 +69,8 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->doBarCodeLogin();
         $this->addProductToSelfServiceCart(349, 1);
         $this->finishSelfServiceCart(0, 0);
-        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die AGB.', $this->httpClient->getStringBody());
-        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.', $this->httpClient->getStringBody());
+        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die AGB.', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.', $this->httpClient->getContent());
     }
     
     public function testSelfServiceRemoveProductWithPricePerUnit()

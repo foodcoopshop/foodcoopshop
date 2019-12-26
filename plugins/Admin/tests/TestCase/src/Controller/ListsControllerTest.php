@@ -47,10 +47,10 @@ class ListsControllerTest extends AppCakeTestCase
         // check list page as manufacturer
         $this->loginAsMeatManufacturer();
         $this->httpClient->get($listPageUrl);
-        $this->assertRegExpWithUnquotedString('<b>1</b> Datensatz', $this->httpClient->getStringBody());
-        $this->assertRegExpWithUnquotedString('<td>Demo Fleisch-Hersteller</td>', $this->httpClient->getStringBody());
-        $this->assertNotRegExpWithUnquotedString('<td>Demo Gemüse-Hersteller</td>', $this->httpClient->getStringBody());
-        $this->assertNotRegExpWithUnquotedString('<td>Demo Milch-Hersteller</td>', $this->httpClient->getStringBody());
+        $this->assertRegExpWithUnquotedString('<b>1</b> Datensatz', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('<td>Demo Fleisch-Hersteller</td>', $this->httpClient->getContent());
+        $this->assertNotRegExpWithUnquotedString('<td>Demo Gemüse-Hersteller</td>', $this->httpClient->getContent());
+        $this->assertNotRegExpWithUnquotedString('<td>Demo Milch-Hersteller</td>', $this->httpClient->getContent());
         
         // check downloadable file as correct manufacturer
         $this->httpClient->get($orderListDownloadUrl);
@@ -68,10 +68,10 @@ class ListsControllerTest extends AppCakeTestCase
         
         // check list page as admin
         $this->httpClient->get($listPageUrl);
-        $this->assertRegExpWithUnquotedString('<b>3</b> Datensätze', $this->httpClient->getStringBody());
-        $this->assertRegExpWithUnquotedString('<td>Demo Fleisch-Hersteller</td>', $this->httpClient->getStringBody());
-        $this->assertRegExpWithUnquotedString('<td>Demo Gemüse-Hersteller</td>', $this->httpClient->getStringBody());
-        $this->assertRegExpWithUnquotedString('<td>Demo Milch-Hersteller</td>', $this->httpClient->getStringBody());
+        $this->assertRegExpWithUnquotedString('<b>3</b> Datensätze', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('<td>Demo Fleisch-Hersteller</td>', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('<td>Demo Gemüse-Hersteller</td>', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('<td>Demo Milch-Hersteller</td>', $this->httpClient->getContent());
         
     }
 

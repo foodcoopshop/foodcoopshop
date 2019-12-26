@@ -45,25 +45,25 @@ class ConfigurationsControllerTest extends AppCakeTestCase
     public function testConfigurationEditFormFcsCustomerGroupOk()
     {
         $this->changeConfigurationEditForm('FCS_CUSTOMER_GROUP', CUSTOMER_GROUP_ADMIN);
-        $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->httpClient->getStringBody());
+        $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->httpClient->getContent());
     }
 
     public function testConfigurationEditFormFcsCustomerGroupInvalidId()
     {
         $this->changeConfigurationEditForm('FCS_CUSTOMER_GROUP', 44);
-        $this->assertRegExpWithUnquotedString('Bitte gib eine Zahl zwischen 3 und 4 an.', $this->httpClient->getStringBody());
+        $this->assertRegExpWithUnquotedString('Bitte gib eine Zahl zwischen 3 und 4 an.', $this->httpClient->getContent());
     }
 
     public function testConfigurationEditFormFcsAppNameEmpty()
     {
         $this->changeConfigurationEditForm('FCS_APP_NAME', '');
-        $this->assertRegExpWithUnquotedString('Bitte gib den Namen der Foodcoop an.', $this->httpClient->getStringBody());
+        $this->assertRegExpWithUnquotedString('Bitte gib den Namen der Foodcoop an.', $this->httpClient->getContent());
     }
 
     public function testConfigurationEditFormFcsAppNameNotEnoughChars()
     {
         $this->changeConfigurationEditForm('FCS_APP_NAME', 'Bla');
-        $this->assertRegExpWithUnquotedString('Die Anzahl der Zeichen muss zwischen 5 und 255 liegen.', $this->httpClient->getStringBody());
+        $this->assertRegExpWithUnquotedString('Die Anzahl der Zeichen muss zwischen 5 und 255 liegen.', $this->httpClient->getContent());
     }
 
     public function testConfigurationEditFormFcsRegistrationEmailTextStripTags()
@@ -71,7 +71,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
         $configurationName = 'FCS_REGISTRATION_EMAIL_TEXT';
         $newValue = '<b>HalloHallo</b>';
         $this->changeConfigurationEditForm($configurationName, $newValue);
-        $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->httpClient->getStringBody());
+        $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->httpClient->getContent());
         $configuration = $this->Configuration->find('all', [
             'conditions' => [
                 'Configurations.name' => $configurationName
@@ -83,7 +83,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
     public function testConfigurationEditFormFcsAppNameStripTags()
     {
         $this->changeConfigurationEditForm('FCS_APP_NAME', '<b>HalloHallo</b>');
-        $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->httpClient->getStringBody());
+        $this->assertRegExpWithUnquotedString('Die Einstellung wurde erfolgreich geändert.', $this->httpClient->getContent());
         $configuration = $this->Configuration->find('all', [
             'conditions' => [
                 'Configurations.name' => 'FCS_APP_NAME'
@@ -101,7 +101,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
     public function testConfigurationEditFormFcsGlobalDeliveryBreak()
     {
         $this->changeConfigurationEditForm('FCS_NO_DELIVERY_DAYS_GLOBAL', ['2018-02-02']);
-        $this->assertRegExpWithUnquotedString('Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: 02.02.2018 (3x).', $this->httpClient->getStringBody());
+        $this->assertRegExpWithUnquotedString('Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: 02.02.2018 (3x).', $this->httpClient->getContent());
     }
     
     public function testShowProductsForGuestsDisabledAndLoggedIn()
@@ -137,7 +137,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
             if (!$expectPrice) {
                 $priceAssertFunction = 'assertNotRegExpWithUnquotedString';
             }
-            $this->{$priceAssertFunction}($priceRegExp, $this->httpClient->getStringBody(), 'price expected: ' . $expectPrice);
+            $this->{$priceAssertFunction}($priceRegExp, $this->httpClient->getContent(), 'price expected: ' . $expectPrice);
         }
     }
 }
