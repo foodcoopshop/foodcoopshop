@@ -98,7 +98,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         ])->first();
 
         $response = $this->httpClient->get($this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name));
-        $this->assertRegExpWithUnquotedString('<h1>' . $manufacturer->name, $response->getContent());
+        $this->assertRegExpWithUnquotedString('<h1>' . $manufacturer->name, $response->getStringBody());
 
         $this->doTestCustomerRecord($manufacturer);
 
