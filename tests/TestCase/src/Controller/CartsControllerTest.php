@@ -180,7 +180,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeProductStatus($this->productId1, APP_OFF);
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertRegExp('/Das Produkt (.*) ist leider nicht mehr aktiviert und somit nicht mehr bestellbar./', $this->httpClient->getContent());
+        $this->assertRegExp('/Das Produkt (.*) ist leider nicht mehr aktiviert und somit nicht mehr bestellbar./', $this->httpClient->getStringBody());
         $this->changeProductStatus($this->productId1, APP_ON);
     }
 
@@ -194,7 +194,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeManufacturerStatus($manufacturerId, APP_OFF);
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertRegExp('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->httpClient->getContent());
+        $this->assertRegExp('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->httpClient->getStringBody());
         $this->changeManufacturerStatus($manufacturerId, APP_ON);
     }
 
@@ -208,7 +208,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeManufacturerNoDeliveryDays($manufacturerId, Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertRegExp('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->httpClient->getContent());
+        $this->assertRegExp('/Der Hersteller des Produktes (.*) hat entweder Lieferpause oder er ist nicht mehr aktiviert und das Produkt ist somit nicht mehr bestellbar./', $this->httpClient->getStringBody());
         $this->changeManufacturerNoDeliveryDays($manufacturerId);
     }
 
@@ -221,7 +221,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->finishCart(0, 0);
         $this->checkValidationError();
-        $this->assertRegExp('/(.*) hat die Lieferpause aktiviert und das Produkt (.*) ist nicht mehr bestellbar./', $this->httpClient->getContent());
+        $this->assertRegExp('/(.*) hat die Lieferpause aktiviert und das Produkt (.*) ist nicht mehr bestellbar./', $this->httpClient->getStringBody());
     }
     
     public function testProductStockAvailableDecreasedWhileShopping()
@@ -233,8 +233,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeStockAvailable($this->productId1, 1);
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertRegExp('/Anzahl <b>2/', $this->httpClient->getContent());
-        $this->assertRegExpWithUnquotedString('Menge: 1', $this->httpClient->getContent()); // ü needs to be escaped properly
+        $this->assertRegExp('/Anzahl <b>2/', $this->httpClient->getStringBody());
+        $this->assertRegExpWithUnquotedString('Menge: 1', $this->httpClient->getStringBody()); // ü needs to be escaped properly
         $this->changeStockAvailable($this->productId1, 98); // reset to old stock available
     }
 
@@ -247,8 +247,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeStockAvailable($this->productId2, 1);
         $this->finishCart();
         $this->checkValidationError();
-        $this->assertRegExp('/Anzahl \<b\>3/', $this->httpClient->getContent());
-        $this->assertRegExpWithUnquotedString('Menge: 1', $this->httpClient->getContent()); // ü needs to be escaped properly
+        $this->assertRegExp('/Anzahl \<b\>3/', $this->httpClient->getStringBody());
+        $this->assertRegExpWithUnquotedString('Menge: 1', $this->httpClient->getStringBody()); // ü needs to be escaped properly
         $this->changeStockAvailable($this->productId2, 20); // reset to old stock available
     }
 
@@ -259,8 +259,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatus();
 
         $this->finishCart(0, 0);
-        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die AGB.', $this->httpClient->getContent(), 'checkbox validation general_terms_and_conditions_accepted did not work');
-        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.', $this->httpClient->getContent(), 'checkbox validation cancellation_terms_accepted did not work');
+        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die AGB.', $this->httpClient->getStringBody(), 'checkbox validation general_terms_and_conditions_accepted did not work');
+        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.', $this->httpClient->getStringBody(), 'checkbox validation cancellation_terms_accepted did not work');
     }
 
     public function testFinishCartOrderCommentValidation()
@@ -270,7 +270,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatus();
 
         $this->finishCart(1, 1, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, adfasfd sa');
-        $this->assertRegExpWithUnquotedString('Bitte gib maximal 500 Zeichen ein.', $this->httpClient->getContent(), 'order comment validation did not work');
+        $this->assertRegExpWithUnquotedString('Bitte gib maximal 500 Zeichen ein.', $this->httpClient->getStringBody(), 'order comment validation did not work');
     }
 
     public function testFinishOrderWithComment()
@@ -476,7 +476,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart(103, 99);
         
         $this->finishCart(1, 1, '', '38000');
-        $this->assertRegExpWithUnquotedString('Dein Überziehungsrahmen von 10 h ist erreicht.', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('Dein Überziehungsrahmen von 10 h ist erreicht.', $this->httpClient->getStringBody());
     }
     
     public function testFinishOrderTimebasedCurrencyEnabled()
@@ -493,10 +493,10 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatus();
 
         $this->finishCart(1, 1, '', '1700');
-        $this->assertRegExp('/Bitte gib eine Zahl zwischen 0 und (.*) an./', $this->httpClient->getContent());
+        $this->assertRegExp('/Bitte gib eine Zahl zwischen 0 und (.*) an./', $this->httpClient->getStringBody());
 
         $this->finishCart(1, 1, '', '');
-        $this->assertRegExp('/Bitte gib eine Zahl zwischen 0 und (.*) an./', $this->httpClient->getContent());
+        $this->assertRegExp('/Bitte gib eine Zahl zwischen 0 und (.*) an./', $this->httpClient->getStringBody());
 
         $this->finishCart(1, 1, '', '1200');
 
@@ -607,7 +607,7 @@ class CartsControllerTest extends AppCakeTestCase
         ])->first();
         $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
-        $this->assertRegExpWithUnquotedString('Diese Bestellung wird für <b>' . $testCustomer->name . '</b> getätigt.', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('Diese Bestellung wird für <b>' . $testCustomer->name . '</b> getätigt.', $this->httpClient->getStringBody());
         
         $this->addProductToCart($this->productId2, 3); // attribute
         $this->addProductToCart(349, 1); // stock product - no notification!
@@ -667,7 +667,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->removeProduct($this->productId1);
         $this->httpClient->followOneRedirectForNextRequest();
         $this->finishCart();
-        $this->assertRegExp('/Dein Warenkorb war leer/', $this->httpClient->getContent());
+        $this->assertRegExp('/Dein Warenkorb war leer/', $this->httpClient->getStringBody());
     }
 
     /**
@@ -736,7 +736,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     private function checkValidationError()
     {
-        $this->assertRegExp('/initCartErrors()/', $this->httpClient->getContent());
+        $this->assertRegExp('/initCartErrors()/', $this->httpClient->getStringBody());
     }
 
     private function changeStockAvailable($productId, $amount)

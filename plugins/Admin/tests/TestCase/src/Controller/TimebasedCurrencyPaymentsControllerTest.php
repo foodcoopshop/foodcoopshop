@@ -43,9 +43,9 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         
         $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->get($this->Slug->getMyTimebasedCurrencyBalanceForCustomers());
-        $this->assertRegExpWithUnquotedString('0,50 h', $this->httpClient->getContent());
-        $this->assertRegExpWithUnquotedString('3,20 h', $this->httpClient->getContent());
-        $this->assertRegExpWithUnquotedString('<b>3,70 h</b>', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('0,50 h', $this->httpClient->getStringBody());
+        $this->assertRegExpWithUnquotedString('3,20 h', $this->httpClient->getStringBody());
+        $this->assertRegExpWithUnquotedString('<b>3,70 h</b>', $this->httpClient->getStringBody());
     }
 
     public function testEditPaymentAsWrongManufacturer()
@@ -135,7 +135,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
             'id_manufacturer' => $manufacturerId,
             'text' => $text
         ]);
-        return $this->httpClient->getContent();
+        return $this->httpClient->getStringBody();
     }
 
 }

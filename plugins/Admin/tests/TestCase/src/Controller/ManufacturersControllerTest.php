@@ -98,7 +98,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         ])->first();
 
         $response = $this->httpClient->get($this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name));
-        $this->assertRegExpWithUnquotedString('<h1>' . $manufacturer->name, $response->getContent());
+        $this->assertRegExpWithUnquotedString('<h1>' . $manufacturer->name, $response->getStringBody());
 
         $this->doTestCustomerRecord($manufacturer);
 
@@ -135,7 +135,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 ]
             ]
         );
-        $this->assertRegExpWithUnquotedString($emailErrorMsg, $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString($emailErrorMsg, $this->httpClient->getStringBody());
 
         $this->httpClient->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),
@@ -147,7 +147,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 ]
             ]
         );
-        $this->assertRegExpWithUnquotedString($emailErrorMsg, $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString($emailErrorMsg, $this->httpClient->getStringBody());
 
         $this->httpClient->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),
@@ -222,7 +222,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'referer' => '/'
             ]
         );
-        $this->assertRegExpWithUnquotedString('Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: ' . Configure::read('app.timeHelper')->formatToDateShort($noDeliveryDays) . ' (1x)', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: ' . Configure::read('app.timeHelper')->formatToDateShort($noDeliveryDays) . ' (1x)', $this->httpClient->getStringBody());
         
         $noDeliveryDays = date('Y-m-d', strtotime($noDeliveryDays . ' + 2 week'));
         
@@ -245,7 +245,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
             ]
         );
         
-        $this->assertRegExpWithUnquotedString('wurden erfolgreich gespeichert.', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('wurden erfolgreich gespeichert.', $this->httpClient->getStringBody());
         
         $manufacturerNew = $this->Manufacturer->find('all', [
             'conditions' => [
@@ -277,7 +277,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
             ]
         );
         // test with valid customer email address must fail
-        $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $this->httpClient->getStringBody());
 
         // test with valid manufacturer email address must fail
         $this->httpClient->post(
@@ -292,7 +292,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'referer' => '/'
             ]
         );
-        $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $this->httpClient->getStringBody());
 
         // test with valid email address
         $this->httpClient->followOneRedirectForNextRequest();
@@ -311,7 +311,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'referer' => '/'
             ]
         );
-        $this->assertRegExpWithUnquotedString('Der Hersteller <b>Manufacturer &amp; Sons</b> wurde geändert.', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('Der Hersteller <b>Manufacturer &amp; Sons</b> wurde geändert.', $this->httpClient->getStringBody());
 
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
@@ -344,6 +344,6 @@ class ManufacturersControllerTest extends AppCakeTestCase
     {
         $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->post($this->Slug->getManufacturerAdd(), $data);
-        return $this->httpClient->getContent();
+        return $this->httpClient->getStringBody();
     }
 }
