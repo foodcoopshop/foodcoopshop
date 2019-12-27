@@ -24,9 +24,14 @@ use Cake\ORM\TableRegistry;
 class ApiController extends Controller
 {
 
-    public $components = [
-        'RequestHandler',
-        'AppAuth' => [
+    public function initialize(): void
+    {
+        
+        parent::initialize();
+        
+        $this->loadComponent('RequestHandler');
+        
+        $this->loadComponent('AppAuth', [
             'authError' => ACCESS_DENIED_MESSAGE,
             'authorize' => [
                 'Controller'
@@ -44,9 +49,10 @@ class ApiController extends Controller
             // stateless authentication
             'unauthorizedRedirect' => false,
             'storage' => 'Memory'
-        ]
-    ];
+        ]);
 
+    }
+    
     public function beforeFilter(EventInterface $event)
     {
 
