@@ -31,12 +31,6 @@ use Cake\Http\Exception\NotFoundException;
  */
 class CustomersController extends FrontendController
 {
-
-    public function beforeFilter(EventInterface $event)
-    {
-        parent::beforeFilter($event);
-        $this->AppAuth->allow('login', 'logout', 'new_password_request', 'registration_successful');
-    }
     
     public function profileImage()
     {
