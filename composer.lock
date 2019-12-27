@@ -1316,12 +1316,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/phinx.git",
-                "reference": "9777d057186dd84bb1a320ee847857eff46c8aa9"
+                "reference": "9024fd33f02bc9b564dbf2eb050818f865582e65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/phinx/zipball/9777d057186dd84bb1a320ee847857eff46c8aa9",
-                "reference": "9777d057186dd84bb1a320ee847857eff46c8aa9",
+                "url": "https://api.github.com/repos/cakephp/phinx/zipball/9024fd33f02bc9b564dbf2eb050818f865582e65",
+                "reference": "9024fd33f02bc9b564dbf2eb050818f865582e65",
                 "shasum": ""
             },
             "require": {
@@ -1334,7 +1334,7 @@
             },
             "require-dev": {
                 "cakephp/cakephp-codesniffer": "^3.0",
-                "phpunit/phpunit": ">=6.0,<8.0",
+                "phpunit/phpunit": "^8.5",
                 "sebastian/comparator": ">=1.2.3"
             },
             "bin": [
@@ -1383,7 +1383,7 @@
                 "migrations",
                 "phinx"
             ],
-            "time": "2019-12-24T01:57:34+00:00"
+            "time": "2019-12-27T12:55:10+00:00"
         },
         {
             "name": "seld/cli-prompt",
@@ -3558,16 +3558,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.5.0",
+            "version": "8.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "3ee1c1fd6fc264480c25b6fb8285edefe1702dab"
+                "reference": "7870c78da3c5e4883eaef36ae47853ebb3cb86f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3ee1c1fd6fc264480c25b6fb8285edefe1702dab",
-                "reference": "3ee1c1fd6fc264480c25b6fb8285edefe1702dab",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7870c78da3c5e4883eaef36ae47853ebb3cb86f2",
+                "reference": "7870c78da3c5e4883eaef36ae47853ebb3cb86f2",
                 "shasum": ""
             },
             "require": {
@@ -3637,7 +3637,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-12-06T05:41:38+00:00"
+            "time": "2019-12-25T14:49:39+00:00"
         },
         {
             "name": "psy/psysh",
