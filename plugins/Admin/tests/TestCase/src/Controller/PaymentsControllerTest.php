@@ -30,7 +30,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testAddPaymentLoggedOut()
     {
         $this->addPayment(Configure::read('test.customerId'), 0, 'product');
-        $this->assertRedirectToLoginPage();
+        $this->assert403ForbiddenHeader();
     }
 
     public function testAddPaymentParameterPriceOk()
@@ -168,7 +168,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testDeletePaymentLoggedOut()
     {
         $this->deletePayment(1);
-        $this->assertRedirectToLoginPage();
+        $this->assert403ForbiddenHeader();
     }
 
     public function testDeletePaymentWithApprovalOk()
