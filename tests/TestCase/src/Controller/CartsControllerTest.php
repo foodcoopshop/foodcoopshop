@@ -698,6 +698,34 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId3, 1); // product with zero tax
     }
 
+    
+    public function testSaveDecimalOk()
+    {
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail->save(
+            $this->OrderDetail->newEntity([
+                'total_price_tax_incl' => '10.3',
+            ], [
+                'validate' => false
+            ])
+	     );
+    }
+    
+    public function testSaveDecimalNotOk()
+    {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Cannot convert value of type `string` to a decimal');
+        
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail->save(
+            $this->OrderDetail->newEntity([
+                'total_price_tax_incl' => 10.3,
+            ], [
+                'validate' => false
+            ])
+        );
+    }
+    
     /**
      * before finishing cart!
      */
