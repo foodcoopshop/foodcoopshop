@@ -5,7 +5,6 @@ use Cake\Database\Connection;
 use Cake\Database\Driver\Mysql;
 use Cake\Error\ExceptionRenderer;
 use Cake\Log\Engine\FileLog;
-use Cake\Mailer\Transport\MailTransport;
 
 return [
     /*
@@ -51,7 +50,7 @@ return [
         'namespace' => 'App',
         'encoding' => env('APP_ENCODING', 'UTF-8'),
         'defaultLocale' => env('APP_DEFAULT_LOCALE', 'de_DE'),
-        'defaultTimezone' => env('APP_DEFAULT_TIMEZONE', 'UTC'),
+        'defaultTimezone' => env('APP_DEFAULT_TIMEZONE', date('e')),
         'base' => false,
         'dir' => 'src',
         'webroot' => 'webroot',
@@ -184,69 +183,6 @@ return [
     ],
     
     /*
-     * Email configuration.
-     *
-     * By defining transports separately from delivery profiles you can easily
-     * re-use transport configuration across multiple profiles.
-     *
-     * You can specify multiple configurations for production, development and
-     * testing.
-     *
-     * Each transport needs a `className`. Valid options are as follows:
-     *
-     *  Mail   - Send using PHP mail function
-     *  Smtp   - Send using SMTP
-     *  Debug  - Do not send the email, just return the result
-     *
-     * You can add custom transports (or override existing transports) by adding the
-     * appropriate file to src/Mailer/Transport. Transports should be named
-     * 'YourTransport.php', where 'Your' is the name of the transport.
-     */
-    'EmailTransport' => [
-        'default' => [
-            'className' => MailTransport::class,
-            /*
-             * The keys host, port, timeout, username, password, client and tls
-             * are used in SMTP transports
-             */
-            'host' => 'localhost',
-            'port' => 25,
-            'timeout' => 30,
-            'timezone' => date('P'),
-            'log' => false,
-            /*
-             * It is recommended to set these options through your environment or app_local.php
-             */
-            //'username' => null,
-            //'password' => null,
-            'client' => null,
-            'tls' => false,
-            'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
-        ],
-    ],
-    
-    /*
-     * Email delivery profiles
-     *
-     * Delivery profiles allow you to predefine various properties about email
-     * messages from your application and give the settings a name. This saves
-     * duplication across your application and makes maintenance and development
-     * easier. Each profile accepts a number of keys. See `Cake\Mailer\Email`
-     * for more information.
-     */
-    'Email' => [
-        'default' => [
-            'transport' => 'default',
-            'from' => 'you@localhost',
-            /*
-             * Will by default be set to config value of App.encoding, if that exists otherwise to UTF-8.
-             */
-            //'charset' => 'utf-8',
-            //'headerCharset' => 'utf-8',
-        ],
-    ],
-    
-    /*
      * Connection information used by the ORM to connect
      * to your application's datastores.
      *
@@ -274,7 +210,7 @@ return [
             'className' => Connection::class,
             'driver' => Mysql::class,
             'persistent' => false,
-            'timezone' => 'UTC',
+            'timezone' => date('P'),
             
             /**
              * For MariaDB/MySQL the internal default changed from utf8 to utf8mb4, aka full utf-8 support, in CakePHP 3.6
@@ -317,7 +253,7 @@ return [
             'className' => Connection::class,
             'driver' => Mysql::class,
             'persistent' => false,
-            'timezone' => 'UTC',
+            'timezone' => date('P'),
             //'encoding' => 'utf8mb4',
             'flags' => [],
             'cacheMetadata' => true,
@@ -327,7 +263,7 @@ return [
         ],
     ],
     
-    /*
+	/*
      * Configures logging options
      */
     'Log' => [
