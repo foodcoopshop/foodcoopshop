@@ -182,7 +182,7 @@ ServerRequest::addDetector('tablet', function ($request) {
     
     return $detector->isTablet();
 });
-        
+
 /*
  * You can set whether the ORM uses immutable or mutable Time types.
  * The default changed in 4.0 to immutable types. You can uncomment
@@ -228,10 +228,14 @@ TableRegistry::getTableLocator()->get('Configurations')->loadConfigurations();
 if (in_array(Configure::read('appDb.FCS_DEFAULT_LOCALE'), Configure::read('app.implementedLocales'))) {
     ini_set('intl.default_locale', Configure::read('appDb.FCS_DEFAULT_LOCALE'));
     locale_set_default(Configure::read('appDb.FCS_DEFAULT_LOCALE'));
-    setlocale(LC_ALL, Configure::read('appDb.FCS_DEFAULT_LOCALE').'.UTF-8');
     I18n::setLocale(Configure::read('appDb.FCS_DEFAULT_LOCALE'));
     Configure::load('Locale' . DS . Configure::read('appDb.FCS_DEFAULT_LOCALE') . DS . 'date', 'default');
+    // never use the following line - it messes up NumberFormatter!
+    // setlocale(LC_ALL, Configure::read('appDb.FCS_DEFAULT_LOCALE').'.UTF-8');
 }
+
+// Number::config(Configure::read('appDb.FCS_DEFAULT_LOCALE'), NumberFormatter::DECIMAL);
+// TypeFactory::build('decimal')->useLocaleParser();
 
 // gettext not available in app_config
 Configure::load('localized_config', 'default');
