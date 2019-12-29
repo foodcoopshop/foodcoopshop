@@ -455,7 +455,7 @@ class ProductsTable extends AppTable
                     $ids['productId'],
                     $ids['attributeId'],
                     $pricePerUnitEnabled,
-                    $priceInclPerUnit,
+                    $priceInclPerUnit == -1 ? 0 : $priceInclPerUnit,
                     $product[$productId]['unit_product_name'],
                     $product[$productId]['unit_product_amount'],
                     Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['unit_product_quantity_in_units'])
