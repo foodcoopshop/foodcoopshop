@@ -763,7 +763,8 @@ class CartComponent extends Component
         $this->getController()->set('manufacturers', $manufacturers);
         $this->getController()->set('saveParam', 'I');
         $this->RequestHandler->renderAs($this->getController(), 'pdf');
-        return $this->getController()->render('generateRightOfWithdrawalInformationAndForm');
+        $response = $this->getController()->render('generateRightOfWithdrawalInformationAndForm');
+        return $response->__toString();
     }
     
     /**
@@ -774,7 +775,8 @@ class CartComponent extends Component
     {
         $this->getController()->set('saveParam', 'I');
         $this->RequestHandler->renderAs($this->getController(), 'pdf');
-        return $this->getController()->render('generateGeneralTermsAndConditions');
+        $response = $this->getController()->render('generateGeneralTermsAndConditions');
+        return $response->__toString();
     }
     
     /**
@@ -810,7 +812,8 @@ class CartComponent extends Component
         $this->getController()->set('manufacturers', $manufacturers);
         $this->getController()->set('saveParam', 'I');
         $this->RequestHandler->renderAs($this->getController(), 'pdf');
-        return $this->getController()->render('generateOrderConfirmation');
+        $response = $this->getController()->render('generateOrderConfirmation');
+        return $response->__toString();
     }
     
 }
