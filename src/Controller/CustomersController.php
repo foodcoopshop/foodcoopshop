@@ -7,7 +7,6 @@ use App\Mailer\AppEmail;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
-use Cake\Event\EventInterface;
 use Cake\Http\Cookie\Cookie;
 use Cake\I18n\Date;
 use Cake\Log\Log;
@@ -111,7 +110,7 @@ class CustomersController extends FrontendController
         ]);
 
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
-        $customer = $this->Customer->newEntity();
+        $customer = $this->Customer->newEntity([]);
 
         if (!empty($this->getRequest()->getData())) {
 
