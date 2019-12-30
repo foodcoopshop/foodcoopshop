@@ -350,7 +350,7 @@ class ProductsTable extends AppTable
                 ])->first();
 
                 if (empty($oldDeposit)) {
-                    $entity = $this->DepositProducts->newEntity();
+                    $entity = $this->DepositProducts->newEntity([]);
                 } else {
                     $this->DepositProducts->setPrimaryKey('id_product_attribute');
                     $entity = $this->DepositProducts->get($oldDeposit->id_product_attribute);
@@ -369,7 +369,7 @@ class ProductsTable extends AppTable
                 ])->first();
 
                 if (empty($oldDeposit)) {
-                    $entity = $this->DepositProducts->newEntity();
+                    $entity = $this->DepositProducts->newEntity([]);
                 } else {
                     $entity = $this->DepositProducts->get($oldDeposit->id_product);
                 }
