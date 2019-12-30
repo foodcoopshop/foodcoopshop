@@ -54,16 +54,16 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "4.0.0",
+            "version": "4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "767b164747df789db8c0fbcf3bcf9eaf3be55b38"
+                "reference": "f782537868167c6abb26971e0c834d474d069764"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/767b164747df789db8c0fbcf3bcf9eaf3be55b38",
-                "reference": "767b164747df789db8c0fbcf3bcf9eaf3be55b38",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/f782537868167c6abb26971e0c834d474d069764",
+                "reference": "f782537868167c6abb26971e0c834d474d069764",
                 "shasum": ""
             },
             "require": {
@@ -99,10 +99,10 @@
                 "cakephp/validation": "self.version"
             },
             "require-dev": {
-                "cakephp/cakephp-codesniffer": "dev-next",
+                "cakephp/cakephp-codesniffer": "^4.0",
                 "mikey179/vfsstream": "^1.6",
                 "paragonie/csp-builder": "^2.3",
-                "phpunit/phpunit": "~8.4.0"
+                "phpunit/phpunit": "~8.5.0"
             },
             "suggest": {
                 "ext-curl": "To enable more efficient network calls in Http\\Client.",
@@ -145,7 +145,7 @@
                 "rapid-development",
                 "validation"
             ],
-            "time": "2019-12-16T01:57:50+00:00"
+            "time": "2019-12-30T02:00:01+00:00"
         },
         {
             "name": "cakephp/chronos",
