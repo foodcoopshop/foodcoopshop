@@ -449,16 +449,16 @@ class ProductsTable extends AppTable
             
             if (isset($product[$productId]['unit_product_price_per_unit_enabled'])) {
                 $this->Unit = TableRegistry::getTableLocator()->get('Units');
-                $pricePerUnitEnabled = $product[$productId]['unit_product_price_per_unit_enabled'];
                 $priceInclPerUnit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['unit_product_price_incl_per_unit']);
+                $quantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['unit_product_quantity_in_units']);
                 $this->Unit->saveUnits(
                     $ids['productId'],
                     $ids['attributeId'],
-                    $pricePerUnitEnabled,
+                    $product[$productId]['unit_product_price_per_unit_enabled'],
                     $priceInclPerUnit == -1 ? 0 : $priceInclPerUnit,
                     $product[$productId]['unit_product_name'],
                     $product[$productId]['unit_product_amount'],
-                    Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['unit_product_quantity_in_units'])
+                    $quantityInUnits == -1 ? 0 : $quantityInUnits
                 );
             }
         }
