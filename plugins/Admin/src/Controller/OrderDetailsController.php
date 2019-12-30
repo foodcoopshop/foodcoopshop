@@ -354,16 +354,24 @@ class OrderDetailsController extends AdminAppController
                     $group[] = 'PickupDayEntities.comment';
                     $group[] = 'PickupDayEntities.products_picked_up';
                 }
+                $group[] = 'OrderDetails.total_price_tax_incl';
                 break;
             case 'manufacturer':
                 $group[] = 'Products.id_manufacturer';
                 $group[] = 'Manufacturers.name';
+                $group[] = 'OrderDetails.total_price_tax_incl';
+                $group[] = 'OrderDetails.product_amount';
+                $group[] = 'OrderDetails.deposit';
                 break;
             case 'product':
                 $group[] = 'OrderDetails.product_id';
                 $group[] = 'Products.name';
                 $group[] = 'Products.id_manufacturer';
                 $group[] = 'Manufacturers.name';
+                $group[] = 'OrderDetails.total_price_tax_incl';
+                $group[] = 'OrderDetails.product_amount';
+                $group[] = 'OrderDetails.deposit';
+                $group[] = 'OrderDetails.product_name';
                 break;
         }
         
