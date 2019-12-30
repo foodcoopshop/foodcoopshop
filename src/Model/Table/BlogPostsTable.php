@@ -49,15 +49,19 @@ class BlogPostsTable extends AppTable
     /**
      * Find neighbors method
      */
-    public function findNeighbors(Query $query, array $options)
+    public function findNeighborPrev(Query $query, array $options): Query
     {
         $previous = $this->find()
             ->orderAsc($this->getAlias().'.modified')
             ->where($this->getAlias() . '.modified > \'' . $options['modified'] . '\'');
+        return $previous;
+    }
+    public function findNeighborNext(Query $query, array $options): Query
+    {
         $next = $this->find()
             ->orderDesc($this->getAlias().'.modified')
             ->where($this->getAlias() . '.modified < \'' . $options['modified'] . '\'');
-        return ['prev' => $previous, 'next' => $next];
+        return $next;
     }
 
     public function findFeatured($appAuth)

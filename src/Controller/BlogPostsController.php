@@ -89,12 +89,9 @@ class BlogPostsController extends FrontendController
         }
 
         $options = ['modified' => $blogPost->modified->i18nFormat(Configure::read('DateFormat.DatabaseWithTime'))];
-        $tmpNeighbors = $this->BlogPost->find('neighbors', $options);
-        $tmpNeighbors['prev']->contain('Manufacturers')->where($conditions)->first();
-        $tmpNeighbors['next']->contain('Manufacturers')->where($conditions)->first();
         $neighbors = [
-            'prev' => $tmpNeighbors['prev']->first(),
-            'next' => $tmpNeighbors['next']->first()
+            'prev' => $this->BlogPost->find('neighborPrev', $options)->contain('Manufacturers')->where($conditions)->first(),
+            'next' => $this->BlogPost->find('neighborNext', $options)->contain('Manufacturers')->where($conditions)->first(),
         ];
         $this->set('neighbors', $neighbors);
 
