@@ -222,7 +222,6 @@ ServerRequest::addDetector('tablet', function ($request) {
         
 // foodcoopshop
 mb_internal_encoding('UTF-8');
-date_default_timezone_set('Europe/Berlin');
 
 TableRegistry::getTableLocator()->get('Configurations')->loadConfigurations();
 if (in_array(Configure::read('appDb.FCS_DEFAULT_LOCALE'), Configure::read('app.implementedLocales'))) {
