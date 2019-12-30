@@ -66,7 +66,8 @@ class CustomersController extends FrontendController
         $this->set('customer', $customer);
         $this->set('saveParam', 'I');
         $this->RequestHandler->renderAs($this, 'pdf');
-        return $this->render('generateTermsOfUsePdf');
+        $response = $this->render('generateTermsOfUsePdf');
+        return $response->__toString();
     }
 
     public function acceptUpdatedTermsOfUse()
