@@ -35,16 +35,6 @@ class AppMailer extends Mailer
     }
 
     /**
-     * declaring this method public enables rendering an email (for preview)
-     * {@inheritDoc}
-     * @see Mailer::_renderTemplates()
-     */
-    public function _renderTemplates($content)
-    {
-        return parent::_renderTemplates($content);
-    }
-
-    /**
      * method needs to be called *before* send-method to be able to work with travis-ci
      * travis-ci uses an email mock
      * @param string|array $content
@@ -69,10 +59,10 @@ class AppMailer extends Mailer
      * uses fallback transport config if default email transport config is wrong (e.g. password changed party)
      * @see credentials.php
      */
-    public function send($content = null): array
+    public function send(?string $action = null, array $args = [], array $headers = []): array
     {
         try {
-            $email = parent::send($content);
+            $email = parent::send($action);
             if (Configure::read('appDb.FCS_EMAIL_LOG_ENABLED')) {
                 $this->logEmailInDatabase($email);
             }
@@ -85,7 +75,7 @@ class AppMailer extends Mailer
                 }
                 Log::error('The email could not be sent but was resent with the fallback configuration.<br /><br />' . $e->__toString());
                 $this->setTransport('fallback');
-                return parent::send($content);
+                return parent::send($action);
             } else {
                 throw $e;
             }

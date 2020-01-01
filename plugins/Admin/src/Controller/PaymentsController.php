@@ -107,11 +107,8 @@ class PaymentsController extends AdminAppController
                 'newStatusAsString' => Configure::read('app.htmlHelper')->getApprovalStates()[$approval],
                 'payment' => $payment
             ]);
-        $html = $email->_renderTemplates(null)['html'];
-        if ($html != '') {
-            echo $html;
-            exit;
-        }
+        echo $email->render()->getMessage()->getBodyString();
+        exit;
     }
 
     public function edit($paymentId)

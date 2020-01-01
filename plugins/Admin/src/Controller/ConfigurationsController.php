@@ -142,12 +142,8 @@ class ConfigurationsController extends AdminAppController
                 ]);
                 break;
         }
-        $html = $email->_renderTemplates(null)['html'];
-        if ($html != '') {
-            echo $html;
-            exit;
-        }
-        throw new RecordNotFoundException('no email template defined for configuration: ' . $configurationName);
+        echo $email->render()->getMessage()->getBodyString();
+        exit;
     }
 
     public function index()
