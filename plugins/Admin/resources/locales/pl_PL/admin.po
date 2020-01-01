@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-12-04 09:35+0100\n"
+"POT-Creation-Date: 2020-01-01 22:28+0100\n"
 "PO-Revision-Date: 2019-04-28 03:51+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1038,495 +1038,8 @@ msgstr "Zwrócony wkład"
 msgid "Your_deposit_balance"
 msgstr "Twoje saldo wkładów"
 
-msgid "Add_deposit_amount"
-msgstr "Dodaj kwotę wkładu"
-
-msgid "Add_deposit"
-msgstr "Dodaj wkład"
-
-msgid "Add_deposit_amount_for_{0}"
-msgstr "Dodaj kwotę wkładu dla {0}"
-
-msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
-msgstr "Proszę dodać wartość pustych opakowań, które są odbierane przez producenta."
-
-msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
-msgstr "Czy producent zabrał puste opakowania, czy jego konto wkładu zostało zasilone?"
-
-msgid "Amount_in_{0}"
-msgstr "Kwota w {0}"
-
-msgid "Instant_order_for_today"
-msgstr "Zamówienie błyskawiczne na dziś"
-
-msgid "chose_member..."
-msgstr "wybierz członka..."
-
-msgid "1_day_ahead"
-msgstr "1 dzień wprzód"
-
-msgid "1_day_back"
-msgstr "1 dzień wstecz"
-
-msgid "to"
-msgstr "do"
-
-msgid "Order_adaptions"
-msgstr "Mod. zamówień"
-
-msgid "Deposit_returns"
-msgstr "Zwroty kaucji"
-
-msgid "My_data"
-msgstr "Moje dane"
-
-msgid "Configurations"
-msgstr "Ustawienia"
-
-msgid "My_products"
-msgstr "Moje produkty"
-
-msgid "My_profile"
-msgstr "Mój profil"
-
-msgid "Contact_person"
-msgstr "Osoba kontaktowa"
-
-msgid "Bank_account_data"
-msgstr "Dane konta bankowego"
-
-msgid "Add_new_payment"
-msgstr "Dodaj nową wpłatę"
-
-msgid "Please_enter_the_amount_that_you_just_transfered_to_our_bank_account."
-msgstr "Podaj kwotę, która została wpłacona na nasze konto bankowe."
-
-msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
-msgstr "Jeśli wybierzesz \"zwrot\", wpisz kwotę, która została przelana na konto bankowe użytkownika."
-
-msgid "Please_chose_the_months_for_your_payment."
-msgstr "Please chose the months for your payment."
-
-msgid "Copy_all_email_addresses"
-msgstr "Kopiuj wszystkie adresy e-mail"
-
-#, fuzzy
-msgid "Generate_member_cards"
-msgstr "Generuj zamówienia w formie PDF"
-
-msgid "Delivery_days"
-msgstr "Dni dostawy"
-
 msgid "Pickup_day"
 msgstr "Dzień odbioru"
-
-msgid "Pickup_days"
-msgstr "Dni odbioru"
-
-msgid "All_products_picked_up?"
-msgstr "Czy wszystkie produkty zostały odebrane?"
-
-msgid "Back_to_deposit_account"
-msgstr "Wróć do konta wkładów"
-
-msgid "Cancel_selected_products"
-msgstr "Anuluj wybór produktów"
-
-msgid "Change_pickup_day"
-msgstr "Zmień dzień odbioru"
-
-msgid "Generate_orders_as_pdf"
-msgstr "Generuj zamówienia w formie PDF"
-
-msgid "Multiple_pickup_days"
-msgstr "Wiele dni odbioru"
-
-msgid "Click_to_change_amount"
-msgstr "Kliknij aby zmienić ilość"
-
-msgid "Click_to_cancel_product"
-msgstr "Kliknij aby anulować produkt"
-
-#, fuzzy
-msgid "Click_to_change_member"
-msgstr "Kliknij aby zmienić cenę"
-
-msgid "Deposit_return"
-msgstr "Zwrot wkładu"
-
-msgid "Show_all_ordered_products_from_{0}"
-msgstr "Pokaż wszystkie produkty zamówione od {0}"
-
-msgid "products_picked_up"
-msgstr "Produkty odebrane"
-
-msgid "Click_to_change_price"
-msgstr "Kliknij aby zmienić cenę"
-
-msgid "Additional_in_{0}"
-msgstr "Dodatkowo w {0}"
-
-msgid "Yes"
-msgstr "Tak"
-
-msgid "No"
-msgstr "Nie"
-
-msgid "Click_to_change_weight"
-msgstr "Kliknij aby zmienić wagę"
-
-msgid "Product"
-msgstr "Produkt"
-
-msgid "Price"
-msgstr "Cena"
-
-msgid "Deposit"
-msgstr "Kaucja"
-
-msgid "Picked_up"
-msgstr "Odebrane"
-
-msgid "Invoice_for_the_order_period_{0}_to_{1}"
-msgstr "Faktura za zamówienia za okres od {0} do {1}"
-
-msgid "conveyed_for"
-msgstr "przekazane"
-
-msgid "Invoice_number_abbreviation"
-msgstr "Faktura nr"
-
-msgid "Orders_from"
-msgstr "Zamówienia od"
-
-msgid "Invoice_date"
-msgstr "Data faktury"
-
-msgid "VAT_number"
-msgstr "numer VAT"
-
-msgid "Price_excl."
-msgstr "Cena z wyłączeniem"
-
-msgid "VAT"
-msgstr "VAT"
-
-msgid "Price_incl."
-msgstr "Cena z"
-
-msgid "variable_member_fee"
-msgstr "zmienna opłata członkowska"
-
-msgid "New_total_sum"
-msgstr "Nowa suma łącznie"
-
-msgid "The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
-msgstr "Suma łącznie poniżej (minus {0}% zmiennej opłaty członkowskiej) zostanie przelana na twoje konto bankowe tak szybko jak to możliwe."
-
-msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
-msgstr "Suma łącznie po prawej (cena z) zostanie przelana na twoje konto bankowe tak szybko jak to możliwe."
-
-msgid "Paid_by_members_in_{0}"
-msgstr "Zapłacone przez wszystkich członków w {0}"
-
-msgid "Paid_by_members_in"
-msgstr "Zapłacone przez wszystkich członków w"
-
-msgid "Kept_variable_member_fee"
-msgstr "Kept variable member fee"
-
-msgid "Amount_that_will_be_transferred_to_your_bank_account"
-msgstr "Kwóta, która zostanie przelana na twoje konto bankowe"
-
-msgid "Thank_you_very_much_for_delivering_your_products_to_us!"
-msgstr "Bardzo dziękujemy za dostarczenie do nas produktów!"
-
-msgid "Detail_view"
-msgstr "Widok szczegółowy"
-
-msgid "Order_day"
-msgstr "Dzień zamówienia"
-
-msgid "Order_list_grouped_by"
-msgstr "Listy zamówień zgrupowane wg"
-
-msgid "Customer_ID"
-msgstr ""
-
-#, fuzzy
-msgid "Member_card"
-msgstr "Członek"
-
-#, fuzzy
-msgid "Delete_selected_products"
-msgstr "Anuluj wybór produktów"
-
-msgid "Edit_delivery_rhythm_for_selected_products"
-msgstr "Edytuj harmonogram dostaw dla wybranych produktów"
-
-#, fuzzy
-msgid "Generate_product_cards"
-msgstr "Generuj zamówienia w formie PDF"
-
-msgid "Add_new_attribute_for_product_{0}"
-msgstr "Dodaj nowy atrybut do produktu {0}"
-
-msgid "change_amount"
-msgstr "zmień ilość"
-
-msgid "No_email_notifications_are_sent_for_this_product."
-msgstr "Powiadomienia nigdy nie będą wysyłane dla tego produktu jeśli ilość magazynowa jest zbyt niska."
-
-msgid "change_delivery_rhythm"
-msgstr "zmieńharmonogram dostaw"
-
-msgid "delivery_rhythm_from"
-msgstr "początek"
-
-#, fuzzy
-msgid "change_deposit"
-msgstr "zmień wkład"
-
-msgid "add_image"
-msgstr "dodaj obraz"
-
-msgid "New"
-msgstr "Nowy"
-
-msgid "Mark_product_as_new_for_the_next_{0}_days?"
-msgstr "Oznaczyć produkt jako nowy przez kolejnych {0} dni?"
-
-msgid "Do_not_mark_product_as_new_any_more?"
-msgstr "Nie oznaczać już produktu jako nowy?"
-
-msgid "Is_stock_product"
-msgstr "Czy jest produktem magazynowanym"
-
-msgid "Long_description"
-msgstr "Długi opis"
-
-msgid "Delete_attribute_for_product_{0}"
-msgstr "Usuń atrybut dla produktu {0}"
-
-msgid "This_attribute_is_the_default_attribute."
-msgstr "Ten atrybut jest domyślny"
-
-msgid "Define_as_new_default_attribute"
-msgstr "Ustaw jako nowy atrybut domyślny"
-
-msgid "change_category"
-msgstr "zmień kategorię"
-
-msgid "chose_category..."
-msgstr "wybierz kategorię..."
-
-msgid "Category_\"all_products\"_is_missing!"
-msgstr "Brakuje kategorii \"Wszystkie produkty\""
-
-msgid "product_preview"
-msgstr "podgląd produktu"
-
-msgid "change_price"
-msgstr "zmień cenę"
-
-msgid "change_tax_rate"
-msgstr "zmień stawkę podatku"
-
-msgid "Dear_financial_responsible"
-msgstr "Osobo odpowiedzialna za finanse"
-
-msgid "the_invoices_from_{0}_have_just_been_sent."
-msgstr "faktura od {0} została wysłana."
-
-msgid "Here_you_find_the_overview_for_making_the_transfers:"
-msgstr "Znajdziesz tu przegląd do wykonywania przelewów pieniężnych"
-
-#, fuzzy
-msgid "This_is_a_great_opportunity_to_check_the_credit_uploads_link_below."
-msgstr "Jest to świetna okazja dosprawdzenia spłat kredytów."
-
-msgid "(Link_only_works_for_superadmins)."
-msgstr "(Linki działają wyłącznie u superadminów)."
-
-msgid "Thank_you_very_much_for_your_work!"
-msgstr "Bardzo dziękujemy za wykonaną pracę!"
-
-#, fuzzy
-msgid "your_credit_is_used_up_and_equals_{0}."
-msgstr "twój kredyt został wykorzystany i wynosi {0}."
-
-#, fuzzy
-msgid "Please_soon_transfer_new_credit_(eg_100_{0})_to_our_bank_account."
-msgstr "Proszę wkrótce odnowić swój kredyt przelewając środki na nasze konto bankowe (np 100 {0})."
-
-#, fuzzy
-msgid "Do_not_forget_to_add_it_to_our_credit_system_after_the_bank_transfer."
-msgstr "Nie zapomnij dodać go do systemu kredytowego po wpłacie."
-
-#, fuzzy
-msgid "Here_you_find_the_link_to_add_the_credit:"
-msgstr "Oto link do odnowienia kredytu:"
-
-msgid "{0}_is_the_last_day_to_order._You_can_do_that_until_{0}_midnight."
-msgstr "{0} jest ostatnim dniem zamówień. Można zamawiać do {0}, do północy."
-
-msgid "Do_you_want_to_load_your_last_order_into_your_shopping_cart?_The_current_cart_will_be_emptied_for_that."
-msgstr ""
-"Do you want to load your last order into your shopping cart? The current cart will be emptied for that.\n"
-"Czy chcesz wczytać do koszyka swoje poprzednie zamówienie? Bieżąca zawartość koszyka zostanie usunięta."
-
-msgid "route_cart"
-msgstr "cart"
-
-msgid "Click_here_to_open_the"
-msgstr "Kliknij tu aby przejść do"
-
-msgid "Website"
-msgstr "Strona"
-
-msgid "And_here_you_can_unsubscribe_this_email_reminder"
-msgstr "Tu możesz wyłączyć przypomnienia mailowe"
-
-msgid "The_amount_of_the_product_{0}_has_been_adapted."
-msgstr "Ilość produktu {0} została zmodyfikowana."
-
-msgid "You_have_ordered_it_on_{0}_at_manufacturer_{1}."
-msgstr "Zamówiono dnia {0} od producenta {1}."
-
-msgid "Old_amount"
-msgstr "Stara ilość"
-
-msgid "New_amount"
-msgstr "Nowa ilość"
-
-msgid "Why_has_the_amount_been_adpated?"
-msgstr "Dlaczego ilość została dostosowana?"
-
-#, fuzzy
-msgid "PS:_Your_credit_has_been_adapted_automatically."
-msgstr "PS: Twój kredyt został automatycznie dostosowany."
-
-#, fuzzy
-msgid "Why_has_another_member_been_assigned?"
-msgstr "Dlaczego cena została dostosowana?"
-
-msgid "sorry,_{0}_can_not_be_delivered."
-msgstr "przepraszamy, produkt \"{0}\" nie może zostać dostarczony."
-
-msgid "Order_date"
-msgstr "Data zamówienia"
-
-msgid "Why_has_the_product_been_cancelled?"
-msgstr "Dlaczego produkt został anulowany?"
-
-msgid "Sorry,_but_sometimes_our_manufacturers_cannot_deliver_the_ordered_products._You_receive_this_email_so_you_can_buy_the_products_elsewhere."
-msgstr "Przepraszamy, lecz czasem nasi producenci nie są w stanie dostarczyć zamówionych produktów. Otrzymujesz ten mail aby móc kupić produkry w innym miejscu."
-
-#, fuzzy
-msgid "Thanks_for_respecting_that!"
-msgstr "Dziękujemy za przestrzeganie tego!"
-
-msgid "New_pickup_day"
-msgstr "Nowy dzień odbioru"
-
-msgid "Old_pickup_day"
-msgstr "Stary dzień odbioru"
-
-msgid "Why_was_the_pickup_day_changed?"
-msgstr "Dlaczego dzień odbioru uległ zmianie?"
-
-msgid "The_following_product_is_affected"
-msgstr "Będzie to miało wpływ na następujący produkt"
-
-msgid "The_following_{0}_products_are_affected"
-msgstr "Będzie to miało wpływ na następujące produkty"
-
-#, fuzzy
-msgid "The_price_of_the_product_{0}_has_been_adapted."
-msgstr "Cena produktu {0} została dostosowana."
-
-#, fuzzy
-msgid "You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}."
-msgstr "Zamówiono {0} jednostek produktu dnia {1} od producenta {2}."
-
-msgid "Old_price"
-msgstr "Stara cena"
-
-msgid "New_price"
-msgstr "Nowa cena"
-
-#, fuzzy
-msgid "Why_has_the_price_been_adpated?"
-msgstr "Dlaczego cena została dostosowana?"
-
-#, fuzzy
-msgid "The_weight_of_the_product_{0}_has_been_adapted."
-msgstr "Waga produktu {0} została dostosowana."
-
-msgid "Old_price_for"
-msgstr "Stara cena dla"
-
-msgid "New_price_for"
-msgstr "Nowa cena dla"
-
-msgid "The_base_price_is_{0}."
-msgstr "Cena bazowa wynosi {0}."
-
-#, fuzzy
-msgid "The_status_of_your_credit_upload_of_{0}_({1}_amount)_was_changed_to_{2}."
-msgstr "Status twojeje wpłaty kredytowej {0} ({1}) został zmieniony na {2}."
-
-msgid "Please_compare_the_credit_upload_that_you_added_to_our_system_with_the_actual_bank_account_transfer."
-msgstr "Proszę porównać wpłatę kredytową dodaną do systemu z rzeczywistym przelewem bankowym."
-
-msgid "Comment"
-msgstr "Komentarz"
-
-msgid "Please_do_not_forget_that_you_have_products_to_pick_up_on_{0}."
-msgstr "Nie zapomnij, że masz produkty do odbioru w {0}."
-
-msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
-msgstr "Otrzymujesz to przypomnienie ponieważ twoje zamówienie zostało złożone wcześniej niż {0} dni temu."
-
-msgid "Hello"
-msgstr "Cześć"
-
-msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
-msgstr "ta faktura zawiera wszystkie produkty, które zostały dostarczone dnia {0}."
-
-msgid "If_the_invoice_amount_should_differ_from_your_own_recordings_please_tell_us."
-msgstr "W razie niezgodności rzeczywistych ilości z tymi na fakturze, prosimy o kontakt."
-
-msgid "The_invoice_amount_will_be_transfered_to_your_bank_accound_withing_the_next_days."
-msgstr "Kwota na fakturze zostanie przelana na konto bankowe w przeciągu najbliższych dni."
-
-msgid "please_find_two_order_lists_attached_for_the_next_delivery_(grouped_by_product_and_member)."
-msgstr "w załączeniu dwie listy zamówień do najbliższej dostawy (pogrupowane wg produktów oraz zamawiających)."
-
-msgid "Your_personal_manufacturer_panel"
-msgstr "Twój własny panel producenta"
-
-msgid "Help_pages"
-msgstr "Pomoc online"
-
-msgid "docs_route_manufacturers"
-msgstr "manufacturers"
-
-msgid "docs_route_order_handling"
-msgstr "order-handling"
-
-#, fuzzy
-msgid "You_can_change_your_imprint_by_yourself."
-msgstr "Możesz zmienić swój podpis samemu."
-
-msgid "Your_products_are_only_visible_for_members._To_view_your_products_as_the_member_sees_them_you_need_to_be_logged_in."
-msgstr "Twoje produkty są widoczne wyłącznie dla członków. Musisz być zalogowany żeby wyświetlić produkty tak, jak widzą je członkowie."
-
-msgid "For_signing_in_please_use_the_email_address_of_this_message._If_you_want_to_order_products_from_other_manufacturers_please_sign_on_with_a_different_email_address."
-msgstr "W celu zalogowania się proszę użyć adresu email z tej wiadomości. Aby zamówić produkty od innych producentów, proszę się zalogować za pomocą innego adresu email."
-
-msgid "Your_contact_person"
-msgstr "Twoja osoba kontaktowa"
 
 msgid "docs_route_pick_up_products"
 msgstr "pick-up-products"
@@ -1550,6 +1063,9 @@ msgstr "Pokaż listę (pogrupowaną wg produktu)"
 msgid "Show_list_(grouped_by_member)"
 msgstr "Pokaż listę (pogrupowaną wg członków)"
 
+msgid "docs_route_manufacturers"
+msgstr "manufacturers"
+
 msgid "General"
 msgstr "Ogólne"
 
@@ -1571,6 +1087,9 @@ msgstr "Będzie widoczne w podpisie {0}."
 
 msgid "Example_given_abbreviation"
 msgstr "Np."
+
+msgid "Website"
+msgstr "Strona"
 
 msgid "To_your_settings"
 msgstr "Idź do swoich ustawień"
@@ -1600,12 +1119,18 @@ msgstr "Usunąć logo?"
 msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
 msgstr "Będzie widoczne na stronie podsumowania producenta. Nie może zostać zmienione przez samego producenta."
 
+msgid "Long_description"
+msgstr "Długi opis"
+
 #, fuzzy
 msgid "To_save_long_description_press_save_and_then_edit_manufacturer."
 msgstr "Aby zapisać długi opis proszę kliknąć \"Zapisz\", a następnie przejdź do edycji producenta."
 
 msgid "Will_be_shown_on_the_manufacturer_profile."
 msgstr "Będzie widoczne na stronie profilowej producenta."
+
+msgid "Bank_account_data"
+msgstr "Dane konta bankowego"
 
 msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
 msgstr "nie jest widoczne publicznie. Będzie używane wyłącznie do przelewów na twoje konto bankowe."
@@ -1624,6 +1149,9 @@ msgstr "Dane firmy"
 
 msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
 msgstr "do twojego podpisu oraz twoich faktur. Podpis można znaleźć na stronie profilowej, w prawym dolnym rogu."
+
+msgid "VAT_number"
+msgstr "numer VAT"
 
 msgid "if_it_is_available"
 msgstr "jeśli dostępne"
@@ -1773,6 +1301,9 @@ msgstr "Sold out limit reached notification for contact person?"
 msgid "The_contact_person_wants_to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
 msgstr "The contact person wants to receive an email when the stock limit for a product is reached."
 
+msgid "Contact_person"
+msgstr "Osoba kontaktowa"
+
 msgid "Chose_member"
 msgstr "Wybierz członka..."
 
@@ -1793,6 +1324,12 @@ msgstr "do którego członek może zapłacić w {0}."
 
 msgid "Zero_means_no_limit_and_global_limit_of_{0}_is_used."
 msgstr "0 oznacza, że limit globalny {0} został zużyty."
+
+msgid "Pickup_days"
+msgstr "Dni odbioru"
+
+msgid "Deposit"
+msgstr "Kaucja"
 
 msgid "Stock_products"
 msgstr "Produkty magazynowane"
@@ -1822,11 +1359,17 @@ msgstr "Edytuj ustawienia producenta"
 msgid "Test_order_list"
 msgstr "Testowa lista zamówień"
 
+msgid "Product"
+msgstr "Produkt"
+
 msgid "Test_invoice"
 msgstr "Testowa faktura"
 
 msgid "Manufacturer_profile"
 msgstr "Profil producenta"
+
+msgid "Copy_all_email_addresses"
+msgstr "Kopiuj wszystkie adresy e-mail"
 
 msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
 msgstr "Wybierz z listy poniżej czlonka, za którego chcesz złożyć zamówienie błyskawiczne."
@@ -1840,6 +1383,9 @@ msgstr "wszyscy członkowie"
 msgid "Group_by..."
 msgstr "Grupuj wg..."
 
+msgid "Deposit_return"
+msgstr "Zwrot wkładu"
+
 msgid "No_orders_found_for_pickup_day_{0}."
 msgstr "Nie znaleziono zamówień dla dnia odbioru {0}."
 
@@ -1851,6 +1397,12 @@ msgstr "Wszystkie produkty"
 
 msgid "Show_all_ordered_products"
 msgstr "Pokaż wszystkie zamówione produkty"
+
+msgid "Comment"
+msgstr "Komentarz"
+
+msgid "Price"
+msgstr "Cena"
 
 msgid "Total"
 msgstr ""
@@ -1976,6 +1528,9 @@ msgstr "Twoje saldo kredytowe"
 msgid "chose_manufacturer..."
 msgstr "wybierz producenta..."
 
+msgid "chose_category..."
+msgstr "wybierz kategorię..."
+
 msgid "amount"
 msgstr "kwota"
 
@@ -2073,6 +1628,451 @@ msgstr "Stawki podatkowe nie będą mogły zostać zmienione później."
 
 msgid "Delete"
 msgstr "Usuń"
+
+msgid "Add_deposit_amount"
+msgstr "Dodaj kwotę wkładu"
+
+msgid "Add_deposit"
+msgstr "Dodaj wkład"
+
+msgid "Add_deposit_amount_for_{0}"
+msgstr "Dodaj kwotę wkładu dla {0}"
+
+msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
+msgstr "Proszę dodać wartość pustych opakowań, które są odbierane przez producenta."
+
+msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
+msgstr "Czy producent zabrał puste opakowania, czy jego konto wkładu zostało zasilone?"
+
+msgid "Amount_in_{0}"
+msgstr "Kwota w {0}"
+
+msgid "Instant_order_for_today"
+msgstr "Zamówienie błyskawiczne na dziś"
+
+msgid "chose_member..."
+msgstr "wybierz członka..."
+
+#, fuzzy
+msgid "Generate_member_cards"
+msgstr "Generuj zamówienia w formie PDF"
+
+msgid "1_day_ahead"
+msgstr "1 dzień wprzód"
+
+msgid "1_day_back"
+msgstr "1 dzień wstecz"
+
+msgid "to"
+msgstr "do"
+
+msgid "Order_adaptions"
+msgstr "Mod. zamówień"
+
+msgid "Deposit_returns"
+msgstr "Zwroty kaucji"
+
+msgid "My_data"
+msgstr "Moje dane"
+
+msgid "Configurations"
+msgstr "Ustawienia"
+
+msgid "My_products"
+msgstr "Moje produkty"
+
+msgid "My_profile"
+msgstr "Mój profil"
+
+msgid "All_products_picked_up?"
+msgstr "Czy wszystkie produkty zostały odebrane?"
+
+msgid "Back_to_deposit_account"
+msgstr "Wróć do konta wkładów"
+
+msgid "Cancel_selected_products"
+msgstr "Anuluj wybór produktów"
+
+msgid "Change_pickup_day"
+msgstr "Zmień dzień odbioru"
+
+msgid "Generate_orders_as_pdf"
+msgstr "Generuj zamówienia w formie PDF"
+
+msgid "Multiple_pickup_days"
+msgstr "Wiele dni odbioru"
+
+msgid "Click_to_change_amount"
+msgstr "Kliknij aby zmienić ilość"
+
+msgid "Click_to_cancel_product"
+msgstr "Kliknij aby anulować produkt"
+
+#, fuzzy
+msgid "Click_to_change_member"
+msgstr "Kliknij aby zmienić cenę"
+
+msgid "Show_all_ordered_products_from_{0}"
+msgstr "Pokaż wszystkie produkty zamówione od {0}"
+
+msgid "products_picked_up"
+msgstr "Produkty odebrane"
+
+msgid "Click_to_change_price"
+msgstr "Kliknij aby zmienić cenę"
+
+msgid "Additional_in_{0}"
+msgstr "Dodatkowo w {0}"
+
+msgid "Yes"
+msgstr "Tak"
+
+msgid "No"
+msgstr "Nie"
+
+msgid "Click_to_change_weight"
+msgstr "Kliknij aby zmienić wagę"
+
+msgid "Picked_up"
+msgstr "Odebrane"
+
+msgid "Delivery_days"
+msgstr "Dni dostawy"
+
+msgid "Add_new_payment"
+msgstr "Dodaj nową wpłatę"
+
+msgid "Please_enter_the_amount_that_you_just_transfered_to_our_bank_account."
+msgstr "Podaj kwotę, która została wpłacona na nasze konto bankowe."
+
+msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
+msgstr "Jeśli wybierzesz \"zwrot\", wpisz kwotę, która została przelana na konto bankowe użytkownika."
+
+msgid "Please_chose_the_months_for_your_payment."
+msgstr "Please chose the months for your payment."
+
+msgid "Invoice_for_the_order_period_{0}_to_{1}"
+msgstr "Faktura za zamówienia za okres od {0} do {1}"
+
+msgid "conveyed_for"
+msgstr "przekazane"
+
+msgid "Invoice_number_abbreviation"
+msgstr "Faktura nr"
+
+msgid "Orders_from"
+msgstr "Zamówienia od"
+
+msgid "Invoice_date"
+msgstr "Data faktury"
+
+msgid "Price_excl."
+msgstr "Cena z wyłączeniem"
+
+msgid "VAT"
+msgstr "VAT"
+
+msgid "Price_incl."
+msgstr "Cena z"
+
+msgid "variable_member_fee"
+msgstr "zmienna opłata członkowska"
+
+msgid "New_total_sum"
+msgstr "Nowa suma łącznie"
+
+msgid "The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr "Suma łącznie poniżej (minus {0}% zmiennej opłaty członkowskiej) zostanie przelana na twoje konto bankowe tak szybko jak to możliwe."
+
+msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr "Suma łącznie po prawej (cena z) zostanie przelana na twoje konto bankowe tak szybko jak to możliwe."
+
+msgid "Paid_by_members_in_{0}"
+msgstr "Zapłacone przez wszystkich członków w {0}"
+
+msgid "Paid_by_members_in"
+msgstr "Zapłacone przez wszystkich członków w"
+
+msgid "Kept_variable_member_fee"
+msgstr "Kept variable member fee"
+
+msgid "Amount_that_will_be_transferred_to_your_bank_account"
+msgstr "Kwóta, która zostanie przelana na twoje konto bankowe"
+
+msgid "Thank_you_very_much_for_delivering_your_products_to_us!"
+msgstr "Bardzo dziękujemy za dostarczenie do nas produktów!"
+
+msgid "Detail_view"
+msgstr "Widok szczegółowy"
+
+msgid "Order_day"
+msgstr "Dzień zamówienia"
+
+msgid "Order_list_grouped_by"
+msgstr "Listy zamówień zgrupowane wg"
+
+msgid "Customer_ID"
+msgstr ""
+
+#, fuzzy
+msgid "Member_card"
+msgstr "Członek"
+
+#, fuzzy
+msgid "Delete_selected_products"
+msgstr "Anuluj wybór produktów"
+
+msgid "Edit_delivery_rhythm_for_selected_products"
+msgstr "Edytuj harmonogram dostaw dla wybranych produktów"
+
+#, fuzzy
+msgid "Generate_product_cards"
+msgstr "Generuj zamówienia w formie PDF"
+
+msgid "Add_new_attribute_for_product_{0}"
+msgstr "Dodaj nowy atrybut do produktu {0}"
+
+msgid "change_amount"
+msgstr "zmień ilość"
+
+msgid "No_email_notifications_are_sent_for_this_product."
+msgstr "Powiadomienia nigdy nie będą wysyłane dla tego produktu jeśli ilość magazynowa jest zbyt niska."
+
+msgid "change_delivery_rhythm"
+msgstr "zmieńharmonogram dostaw"
+
+msgid "delivery_rhythm_from"
+msgstr "początek"
+
+#, fuzzy
+msgid "change_deposit"
+msgstr "zmień wkład"
+
+msgid "add_image"
+msgstr "dodaj obraz"
+
+msgid "New"
+msgstr "Nowy"
+
+msgid "Mark_product_as_new_for_the_next_{0}_days?"
+msgstr "Oznaczyć produkt jako nowy przez kolejnych {0} dni?"
+
+msgid "Do_not_mark_product_as_new_any_more?"
+msgstr "Nie oznaczać już produktu jako nowy?"
+
+msgid "Is_stock_product"
+msgstr "Czy jest produktem magazynowanym"
+
+msgid "Delete_attribute_for_product_{0}"
+msgstr "Usuń atrybut dla produktu {0}"
+
+msgid "This_attribute_is_the_default_attribute."
+msgstr "Ten atrybut jest domyślny"
+
+msgid "Define_as_new_default_attribute"
+msgstr "Ustaw jako nowy atrybut domyślny"
+
+msgid "change_category"
+msgstr "zmień kategorię"
+
+msgid "Category_\"all_products\"_is_missing!"
+msgstr "Brakuje kategorii \"Wszystkie produkty\""
+
+msgid "product_preview"
+msgstr "podgląd produktu"
+
+msgid "change_price"
+msgstr "zmień cenę"
+
+msgid "change_tax_rate"
+msgstr "zmień stawkę podatku"
+
+msgid "Dear_financial_responsible"
+msgstr "Osobo odpowiedzialna za finanse"
+
+msgid "the_invoices_from_{0}_have_just_been_sent."
+msgstr "faktura od {0} została wysłana."
+
+msgid "Here_you_find_the_overview_for_making_the_transfers:"
+msgstr "Znajdziesz tu przegląd do wykonywania przelewów pieniężnych"
+
+#, fuzzy
+msgid "This_is_a_great_opportunity_to_check_the_credit_uploads_link_below."
+msgstr "Jest to świetna okazja dosprawdzenia spłat kredytów."
+
+msgid "(Link_only_works_for_superadmins)."
+msgstr "(Linki działają wyłącznie u superadminów)."
+
+msgid "Thank_you_very_much_for_your_work!"
+msgstr "Bardzo dziękujemy za wykonaną pracę!"
+
+#, fuzzy
+msgid "your_credit_is_used_up_and_equals_{0}."
+msgstr "twój kredyt został wykorzystany i wynosi {0}."
+
+#, fuzzy
+msgid "Please_soon_transfer_new_credit_(eg_100_{0})_to_our_bank_account."
+msgstr "Proszę wkrótce odnowić swój kredyt przelewając środki na nasze konto bankowe (np 100 {0})."
+
+#, fuzzy
+msgid "Do_not_forget_to_add_it_to_our_credit_system_after_the_bank_transfer."
+msgstr "Nie zapomnij dodać go do systemu kredytowego po wpłacie."
+
+#, fuzzy
+msgid "Here_you_find_the_link_to_add_the_credit:"
+msgstr "Oto link do odnowienia kredytu:"
+
+msgid "{0}_is_the_last_day_to_order._You_can_do_that_until_{0}_midnight."
+msgstr "{0} jest ostatnim dniem zamówień. Można zamawiać do {0}, do północy."
+
+msgid "Do_you_want_to_load_your_last_order_into_your_shopping_cart?_The_current_cart_will_be_emptied_for_that."
+msgstr ""
+"Do you want to load your last order into your shopping cart? The current cart will be emptied for that.\n"
+"Czy chcesz wczytać do koszyka swoje poprzednie zamówienie? Bieżąca zawartość koszyka zostanie usunięta."
+
+msgid "route_cart"
+msgstr "cart"
+
+msgid "Click_here_to_open_the"
+msgstr "Kliknij tu aby przejść do"
+
+msgid "And_here_you_can_unsubscribe_this_email_reminder"
+msgstr "Tu możesz wyłączyć przypomnienia mailowe"
+
+msgid "The_amount_of_the_product_{0}_has_been_adapted."
+msgstr "Ilość produktu {0} została zmodyfikowana."
+
+msgid "You_have_ordered_it_on_{0}_at_manufacturer_{1}."
+msgstr "Zamówiono dnia {0} od producenta {1}."
+
+msgid "Old_amount"
+msgstr "Stara ilość"
+
+msgid "New_amount"
+msgstr "Nowa ilość"
+
+msgid "Why_has_the_amount_been_adpated?"
+msgstr "Dlaczego ilość została dostosowana?"
+
+#, fuzzy
+msgid "PS:_Your_credit_has_been_adapted_automatically."
+msgstr "PS: Twój kredyt został automatycznie dostosowany."
+
+#, fuzzy
+msgid "Why_has_another_member_been_assigned?"
+msgstr "Dlaczego cena została dostosowana?"
+
+msgid "sorry,_{0}_can_not_be_delivered."
+msgstr "przepraszamy, produkt \"{0}\" nie może zostać dostarczony."
+
+msgid "Order_date"
+msgstr "Data zamówienia"
+
+msgid "Why_has_the_product_been_cancelled?"
+msgstr "Dlaczego produkt został anulowany?"
+
+msgid "Sorry,_but_sometimes_our_manufacturers_cannot_deliver_the_ordered_products._You_receive_this_email_so_you_can_buy_the_products_elsewhere."
+msgstr "Przepraszamy, lecz czasem nasi producenci nie są w stanie dostarczyć zamówionych produktów. Otrzymujesz ten mail aby móc kupić produkry w innym miejscu."
+
+#, fuzzy
+msgid "Thanks_for_respecting_that!"
+msgstr "Dziękujemy za przestrzeganie tego!"
+
+msgid "New_pickup_day"
+msgstr "Nowy dzień odbioru"
+
+msgid "Old_pickup_day"
+msgstr "Stary dzień odbioru"
+
+msgid "Why_was_the_pickup_day_changed?"
+msgstr "Dlaczego dzień odbioru uległ zmianie?"
+
+msgid "The_following_product_is_affected"
+msgstr "Będzie to miało wpływ na następujący produkt"
+
+msgid "The_following_{0}_products_are_affected"
+msgstr "Będzie to miało wpływ na następujące produkty"
+
+#, fuzzy
+msgid "The_price_of_the_product_{0}_has_been_adapted."
+msgstr "Cena produktu {0} została dostosowana."
+
+#, fuzzy
+msgid "You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}."
+msgstr "Zamówiono {0} jednostek produktu dnia {1} od producenta {2}."
+
+msgid "Old_price"
+msgstr "Stara cena"
+
+msgid "New_price"
+msgstr "Nowa cena"
+
+#, fuzzy
+msgid "Why_has_the_price_been_adpated?"
+msgstr "Dlaczego cena została dostosowana?"
+
+#, fuzzy
+msgid "The_weight_of_the_product_{0}_has_been_adapted."
+msgstr "Waga produktu {0} została dostosowana."
+
+msgid "Old_price_for"
+msgstr "Stara cena dla"
+
+msgid "New_price_for"
+msgstr "Nowa cena dla"
+
+msgid "The_base_price_is_{0}."
+msgstr "Cena bazowa wynosi {0}."
+
+#, fuzzy
+msgid "The_status_of_your_credit_upload_of_{0}_({1}_amount)_was_changed_to_{2}."
+msgstr "Status twojeje wpłaty kredytowej {0} ({1}) został zmieniony na {2}."
+
+msgid "Please_compare_the_credit_upload_that_you_added_to_our_system_with_the_actual_bank_account_transfer."
+msgstr "Proszę porównać wpłatę kredytową dodaną do systemu z rzeczywistym przelewem bankowym."
+
+msgid "Please_do_not_forget_that_you_have_products_to_pick_up_on_{0}."
+msgstr "Nie zapomnij, że masz produkty do odbioru w {0}."
+
+msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
+msgstr "Otrzymujesz to przypomnienie ponieważ twoje zamówienie zostało złożone wcześniej niż {0} dni temu."
+
+msgid "Hello"
+msgstr "Cześć"
+
+msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
+msgstr "ta faktura zawiera wszystkie produkty, które zostały dostarczone dnia {0}."
+
+msgid "If_the_invoice_amount_should_differ_from_your_own_recordings_please_tell_us."
+msgstr "W razie niezgodności rzeczywistych ilości z tymi na fakturze, prosimy o kontakt."
+
+msgid "The_invoice_amount_will_be_transfered_to_your_bank_accound_withing_the_next_days."
+msgstr "Kwota na fakturze zostanie przelana na konto bankowe w przeciągu najbliższych dni."
+
+msgid "please_find_two_order_lists_attached_for_the_next_delivery_(grouped_by_product_and_member)."
+msgstr "w załączeniu dwie listy zamówień do najbliższej dostawy (pogrupowane wg produktów oraz zamawiających)."
+
+msgid "Your_personal_manufacturer_panel"
+msgstr "Twój własny panel producenta"
+
+msgid "Help_pages"
+msgstr "Pomoc online"
+
+msgid "docs_route_order_handling"
+msgstr "order-handling"
+
+#, fuzzy
+msgid "You_can_change_your_imprint_by_yourself."
+msgstr "Możesz zmienić swój podpis samemu."
+
+msgid "Your_products_are_only_visible_for_members._To_view_your_products_as_the_member_sees_them_you_need_to_be_logged_in."
+msgstr "Twoje produkty są widoczne wyłącznie dla członków. Musisz być zalogowany żeby wyświetlić produkty tak, jak widzą je członkowie."
+
+msgid "For_signing_in_please_use_the_email_address_of_this_message._If_you_want_to_order_products_from_other_manufacturers_please_sign_on_with_a_different_email_address."
+msgstr "W celu zalogowania się proszę użyć adresu email z tej wiadomości. Aby zamówić produkty od innych producentów, proszę się zalogować za pomocą innego adresu email."
+
+msgid "Your_contact_person"
+msgstr "Twoja osoba kontaktowa"
 
 #~ msgid "docs_route_financial_reports"
 #~ msgstr "financial-reports"

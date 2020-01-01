@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-10-18 09:00+0200\n"
+"POT-Creation-Date: 2020-01-01 22:28+0100\n"
 "PO-Revision-Date: 2019-04-25 23:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -17,6 +17,31 @@ msgstr ""
 
 msgid "No_fields_were_selected_for_synchronizing."
 msgstr "Żadne pola nie zostały wybrane do synchronizacji."
+
+msgid "Image"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+msgid "Stock_product"
+msgstr "produkt"
+
+msgid "Amount"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "Deposit"
+msgstr ""
+
+msgid "Delivery_rhythm"
+msgstr ""
+
+msgid "Status"
+msgstr ""
 
 msgid "product"
 msgstr "produkt"
@@ -103,14 +128,8 @@ msgstr "Domena musi zaczynać się od https://."
 msgid "The_domain_already_exists."
 msgstr "Domena już istnieje."
 
-msgid "Show_more"
-msgstr "Pokaż więcej"
-
-msgid "Email"
-msgstr "Email"
-
-msgid "Password"
-msgstr "Hasło"
+msgid "docs_route_network_module"
+msgstr "modul-sieciowy"
 
 msgid "Save"
 msgstr "Zapisz"
@@ -148,5 +167,11 @@ msgstr "Wspaniale! Możesz się odchylić i zrelaksować, ponieważ wszystkie pr
 msgid "Load_products"
 msgstr "Załaduj produkty"
 
-msgid "docs_route_network_module"
-msgstr "modul-sieciowy"
+msgid "Show_more"
+msgstr "Pokaż więcej"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Password"
+msgstr "Hasło"

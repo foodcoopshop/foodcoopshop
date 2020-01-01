@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-12-04 09:35+0100\n"
+"POT-Creation-Date: 2020-01-01 22:28+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1004,472 +1004,7 @@ msgstr ""
 msgid "Your_deposit_balance"
 msgstr ""
 
-msgid "Add_deposit_amount"
-msgstr ""
-
-msgid "Add_deposit"
-msgstr ""
-
-msgid "Add_deposit_amount_for_{0}"
-msgstr ""
-
-msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
-msgstr ""
-
-msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
-msgstr ""
-
-msgid "Amount_in_{0}"
-msgstr ""
-
-msgid "Instant_order_for_today"
-msgstr ""
-
-msgid "chose_member..."
-msgstr ""
-
-msgid "1_day_ahead"
-msgstr ""
-
-msgid "1_day_back"
-msgstr ""
-
-msgid "to"
-msgstr ""
-
-msgid "Order_adaptions"
-msgstr ""
-
-msgid "Deposit_returns"
-msgstr ""
-
-msgid "My_data"
-msgstr ""
-
-msgid "Configurations"
-msgstr ""
-
-msgid "My_products"
-msgstr ""
-
-msgid "My_profile"
-msgstr ""
-
-msgid "Contact_person"
-msgstr ""
-
-msgid "Bank_account_data"
-msgstr ""
-
-msgid "Add_new_payment"
-msgstr ""
-
-msgid "Please_enter_the_amount_that_you_just_transfered_to_our_bank_account."
-msgstr ""
-
-msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
-msgstr ""
-
-msgid "Please_chose_the_months_for_your_payment."
-msgstr ""
-
-msgid "Copy_all_email_addresses"
-msgstr ""
-
-msgid "Generate_member_cards"
-msgstr ""
-
-msgid "Delivery_days"
-msgstr ""
-
 msgid "Pickup_day"
-msgstr ""
-
-msgid "Pickup_days"
-msgstr ""
-
-msgid "All_products_picked_up?"
-msgstr ""
-
-msgid "Back_to_deposit_account"
-msgstr ""
-
-msgid "Cancel_selected_products"
-msgstr ""
-
-msgid "Change_pickup_day"
-msgstr ""
-
-msgid "Generate_orders_as_pdf"
-msgstr ""
-
-msgid "Multiple_pickup_days"
-msgstr ""
-
-msgid "Click_to_change_amount"
-msgstr ""
-
-msgid "Click_to_cancel_product"
-msgstr ""
-
-msgid "Click_to_change_member"
-msgstr ""
-
-msgid "Deposit_return"
-msgstr ""
-
-msgid "Show_all_ordered_products_from_{0}"
-msgstr ""
-
-msgid "products_picked_up"
-msgstr ""
-
-msgid "Click_to_change_price"
-msgstr ""
-
-msgid "Additional_in_{0}"
-msgstr ""
-
-msgid "Yes"
-msgstr ""
-
-msgid "No"
-msgstr ""
-
-msgid "Click_to_change_weight"
-msgstr ""
-
-msgid "Product"
-msgstr ""
-
-msgid "Price"
-msgstr ""
-
-msgid "Deposit"
-msgstr ""
-
-msgid "Picked_up"
-msgstr ""
-
-msgid "Invoice_for_the_order_period_{0}_to_{1}"
-msgstr ""
-
-msgid "conveyed_for"
-msgstr ""
-
-msgid "Invoice_number_abbreviation"
-msgstr ""
-
-msgid "Orders_from"
-msgstr ""
-
-msgid "Invoice_date"
-msgstr ""
-
-msgid "VAT_number"
-msgstr ""
-
-msgid "Price_excl."
-msgstr ""
-
-msgid "VAT"
-msgstr ""
-
-msgid "Price_incl."
-msgstr ""
-
-msgid "variable_member_fee"
-msgstr ""
-
-msgid "New_total_sum"
-msgstr ""
-
-msgid "The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
-msgstr ""
-
-msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
-msgstr ""
-
-msgid "Paid_by_members_in_{0}"
-msgstr ""
-
-msgid "Paid_by_members_in"
-msgstr ""
-
-msgid "Kept_variable_member_fee"
-msgstr ""
-
-msgid "Amount_that_will_be_transferred_to_your_bank_account"
-msgstr ""
-
-msgid "Thank_you_very_much_for_delivering_your_products_to_us!"
-msgstr ""
-
-msgid "Detail_view"
-msgstr ""
-
-msgid "Order_day"
-msgstr ""
-
-msgid "Order_list_grouped_by"
-msgstr ""
-
-msgid "Customer_ID"
-msgstr ""
-
-msgid "Member_card"
-msgstr ""
-
-msgid "Delete_selected_products"
-msgstr ""
-
-msgid "Edit_delivery_rhythm_for_selected_products"
-msgstr ""
-
-msgid "Generate_product_cards"
-msgstr ""
-
-msgid "Add_new_attribute_for_product_{0}"
-msgstr ""
-
-msgid "change_amount"
-msgstr ""
-
-msgid "No_email_notifications_are_sent_for_this_product."
-msgstr ""
-
-msgid "change_delivery_rhythm"
-msgstr ""
-
-msgid "delivery_rhythm_from"
-msgstr ""
-
-msgid "change_deposit"
-msgstr ""
-
-msgid "add_image"
-msgstr ""
-
-msgid "New"
-msgstr ""
-
-msgid "Mark_product_as_new_for_the_next_{0}_days?"
-msgstr ""
-
-msgid "Do_not_mark_product_as_new_any_more?"
-msgstr ""
-
-msgid "Is_stock_product"
-msgstr ""
-
-msgid "Long_description"
-msgstr ""
-
-msgid "Delete_attribute_for_product_{0}"
-msgstr ""
-
-msgid "This_attribute_is_the_default_attribute."
-msgstr ""
-
-msgid "Define_as_new_default_attribute"
-msgstr ""
-
-msgid "change_category"
-msgstr ""
-
-msgid "chose_category..."
-msgstr ""
-
-msgid "Category_\"all_products\"_is_missing!"
-msgstr ""
-
-msgid "product_preview"
-msgstr ""
-
-msgid "change_price"
-msgstr ""
-
-msgid "change_tax_rate"
-msgstr ""
-
-msgid "Dear_financial_responsible"
-msgstr ""
-
-msgid "the_invoices_from_{0}_have_just_been_sent."
-msgstr ""
-
-msgid "Here_you_find_the_overview_for_making_the_transfers:"
-msgstr ""
-
-msgid "This_is_a_great_opportunity_to_check_the_credit_uploads_link_below."
-msgstr ""
-
-msgid "(Link_only_works_for_superadmins)."
-msgstr ""
-
-msgid "Thank_you_very_much_for_your_work!"
-msgstr ""
-
-msgid "your_credit_is_used_up_and_equals_{0}."
-msgstr ""
-
-msgid "Please_soon_transfer_new_credit_(eg_100_{0})_to_our_bank_account."
-msgstr ""
-
-msgid "Do_not_forget_to_add_it_to_our_credit_system_after_the_bank_transfer."
-msgstr ""
-
-msgid "Here_you_find_the_link_to_add_the_credit:"
-msgstr ""
-
-msgid "{0}_is_the_last_day_to_order._You_can_do_that_until_{0}_midnight."
-msgstr ""
-
-msgid "Do_you_want_to_load_your_last_order_into_your_shopping_cart?_The_current_cart_will_be_emptied_for_that."
-msgstr ""
-
-msgid "route_cart"
-msgstr ""
-
-msgid "Click_here_to_open_the"
-msgstr ""
-
-msgid "Website"
-msgstr ""
-
-msgid "And_here_you_can_unsubscribe_this_email_reminder"
-msgstr ""
-
-msgid "The_amount_of_the_product_{0}_has_been_adapted."
-msgstr ""
-
-msgid "You_have_ordered_it_on_{0}_at_manufacturer_{1}."
-msgstr ""
-
-msgid "Old_amount"
-msgstr ""
-
-msgid "New_amount"
-msgstr ""
-
-msgid "Why_has_the_amount_been_adpated?"
-msgstr ""
-
-msgid "PS:_Your_credit_has_been_adapted_automatically."
-msgstr ""
-
-msgid "Why_has_another_member_been_assigned?"
-msgstr ""
-
-msgid "sorry,_{0}_can_not_be_delivered."
-msgstr ""
-
-msgid "Order_date"
-msgstr ""
-
-msgid "Why_has_the_product_been_cancelled?"
-msgstr ""
-
-msgid "Sorry,_but_sometimes_our_manufacturers_cannot_deliver_the_ordered_products._You_receive_this_email_so_you_can_buy_the_products_elsewhere."
-msgstr ""
-
-msgid "Thanks_for_respecting_that!"
-msgstr ""
-
-msgid "New_pickup_day"
-msgstr ""
-
-msgid "Old_pickup_day"
-msgstr ""
-
-msgid "Why_was_the_pickup_day_changed?"
-msgstr ""
-
-msgid "The_following_product_is_affected"
-msgstr ""
-
-msgid "The_following_{0}_products_are_affected"
-msgstr ""
-
-msgid "The_price_of_the_product_{0}_has_been_adapted."
-msgstr ""
-
-msgid "You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}."
-msgstr ""
-
-msgid "Old_price"
-msgstr ""
-
-msgid "New_price"
-msgstr ""
-
-msgid "Why_has_the_price_been_adpated?"
-msgstr ""
-
-msgid "The_weight_of_the_product_{0}_has_been_adapted."
-msgstr ""
-
-msgid "Old_price_for"
-msgstr ""
-
-msgid "New_price_for"
-msgstr ""
-
-msgid "The_base_price_is_{0}."
-msgstr ""
-
-msgid "The_status_of_your_credit_upload_of_{0}_({1}_amount)_was_changed_to_{2}."
-msgstr ""
-
-msgid "Please_compare_the_credit_upload_that_you_added_to_our_system_with_the_actual_bank_account_transfer."
-msgstr ""
-
-msgid "Comment"
-msgstr ""
-
-msgid "Please_do_not_forget_that_you_have_products_to_pick_up_on_{0}."
-msgstr ""
-
-msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
-msgstr ""
-
-msgid "Hello"
-msgstr ""
-
-msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
-msgstr ""
-
-msgid "If_the_invoice_amount_should_differ_from_your_own_recordings_please_tell_us."
-msgstr ""
-
-msgid "The_invoice_amount_will_be_transfered_to_your_bank_accound_withing_the_next_days."
-msgstr ""
-
-msgid "please_find_two_order_lists_attached_for_the_next_delivery_(grouped_by_product_and_member)."
-msgstr ""
-
-msgid "Your_personal_manufacturer_panel"
-msgstr ""
-
-msgid "Help_pages"
-msgstr ""
-
-msgid "docs_route_manufacturers"
-msgstr ""
-
-msgid "docs_route_order_handling"
-msgstr ""
-
-msgid "You_can_change_your_imprint_by_yourself."
-msgstr ""
-
-msgid "Your_products_are_only_visible_for_members._To_view_your_products_as_the_member_sees_them_you_need_to_be_logged_in."
-msgstr ""
-
-msgid "For_signing_in_please_use_the_email_address_of_this_message._If_you_want_to_order_products_from_other_manufacturers_please_sign_on_with_a_different_email_address."
-msgstr ""
-
-msgid "Your_contact_person"
 msgstr ""
 
 msgid "docs_route_pick_up_products"
@@ -1493,6 +1028,9 @@ msgstr ""
 msgid "Show_list_(grouped_by_member)"
 msgstr ""
 
+msgid "docs_route_manufacturers"
+msgstr ""
+
 msgid "General"
 msgstr ""
 
@@ -1509,6 +1047,9 @@ msgid "Will_be_shown_in_imprint_{0}."
 msgstr ""
 
 msgid "Example_given_abbreviation"
+msgstr ""
+
+msgid "Website"
 msgstr ""
 
 msgid "To_your_settings"
@@ -1538,10 +1079,16 @@ msgstr ""
 msgid "Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer."
 msgstr ""
 
+msgid "Long_description"
+msgstr ""
+
 msgid "To_save_long_description_press_save_and_then_edit_manufacturer."
 msgstr ""
 
 msgid "Will_be_shown_on_the_manufacturer_profile."
+msgstr ""
+
+msgid "Bank_account_data"
 msgstr ""
 
 msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
@@ -1560,6 +1107,9 @@ msgid "Company_data"
 msgstr ""
 
 msgid "for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right."
+msgstr ""
+
+msgid "VAT_number"
 msgstr ""
 
 msgid "if_it_is_available"
@@ -1703,6 +1253,9 @@ msgstr ""
 msgid "The_contact_person_wants_to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached."
 msgstr ""
 
+msgid "Contact_person"
+msgstr ""
+
 msgid "Chose_member"
 msgstr ""
 
@@ -1722,6 +1275,12 @@ msgid "up_to_which_it_can_be_paid_in_{0}."
 msgstr ""
 
 msgid "Zero_means_no_limit_and_global_limit_of_{0}_is_used."
+msgstr ""
+
+msgid "Pickup_days"
+msgstr ""
+
+msgid "Deposit"
 msgstr ""
 
 msgid "Stock_products"
@@ -1751,10 +1310,16 @@ msgstr ""
 msgid "Test_order_list"
 msgstr ""
 
+msgid "Product"
+msgstr ""
+
 msgid "Test_invoice"
 msgstr ""
 
 msgid "Manufacturer_profile"
+msgstr ""
+
+msgid "Copy_all_email_addresses"
 msgstr ""
 
 msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
@@ -1769,6 +1334,9 @@ msgstr ""
 msgid "Group_by..."
 msgstr ""
 
+msgid "Deposit_return"
+msgstr ""
+
 msgid "No_orders_found_for_pickup_day_{0}."
 msgstr ""
 
@@ -1779,6 +1347,12 @@ msgid "All_products"
 msgstr ""
 
 msgid "Show_all_ordered_products"
+msgstr ""
+
+msgid "Comment"
+msgstr ""
+
+msgid "Price"
 msgstr ""
 
 msgid "Total"
@@ -1904,6 +1478,9 @@ msgstr ""
 msgid "chose_manufacturer..."
 msgstr ""
 
+msgid "chose_category..."
+msgstr ""
+
 msgid "amount"
 msgstr ""
 
@@ -1992,5 +1569,428 @@ msgid "Tax_rates_can_not_be_changed_later."
 msgstr ""
 
 msgid "Delete"
+msgstr ""
+
+msgid "Add_deposit_amount"
+msgstr ""
+
+msgid "Add_deposit"
+msgstr ""
+
+msgid "Add_deposit_amount_for_{0}"
+msgstr ""
+
+msgid "Please_add_value_of_empty_glasses__that_is_taken_back_by_manufacturer."
+msgstr ""
+
+msgid "Did_the_manufacturer_taken_away_empty_glasses_or_was_his_deposit_account_compensated_with_money?"
+msgstr ""
+
+msgid "Amount_in_{0}"
+msgstr ""
+
+msgid "Instant_order_for_today"
+msgstr ""
+
+msgid "chose_member..."
+msgstr ""
+
+msgid "Generate_member_cards"
+msgstr ""
+
+msgid "1_day_ahead"
+msgstr ""
+
+msgid "1_day_back"
+msgstr ""
+
+msgid "to"
+msgstr ""
+
+msgid "Order_adaptions"
+msgstr ""
+
+msgid "Deposit_returns"
+msgstr ""
+
+msgid "My_data"
+msgstr ""
+
+msgid "Configurations"
+msgstr ""
+
+msgid "My_products"
+msgstr ""
+
+msgid "My_profile"
+msgstr ""
+
+msgid "All_products_picked_up?"
+msgstr ""
+
+msgid "Back_to_deposit_account"
+msgstr ""
+
+msgid "Cancel_selected_products"
+msgstr ""
+
+msgid "Change_pickup_day"
+msgstr ""
+
+msgid "Generate_orders_as_pdf"
+msgstr ""
+
+msgid "Multiple_pickup_days"
+msgstr ""
+
+msgid "Click_to_change_amount"
+msgstr ""
+
+msgid "Click_to_cancel_product"
+msgstr ""
+
+msgid "Click_to_change_member"
+msgstr ""
+
+msgid "Show_all_ordered_products_from_{0}"
+msgstr ""
+
+msgid "products_picked_up"
+msgstr ""
+
+msgid "Click_to_change_price"
+msgstr ""
+
+msgid "Additional_in_{0}"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "Click_to_change_weight"
+msgstr ""
+
+msgid "Picked_up"
+msgstr ""
+
+msgid "Delivery_days"
+msgstr ""
+
+msgid "Add_new_payment"
+msgstr ""
+
+msgid "Please_enter_the_amount_that_you_just_transfered_to_our_bank_account."
+msgstr ""
+
+msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member."
+msgstr ""
+
+msgid "Please_chose_the_months_for_your_payment."
+msgstr ""
+
+msgid "Invoice_for_the_order_period_{0}_to_{1}"
+msgstr ""
+
+msgid "conveyed_for"
+msgstr ""
+
+msgid "Invoice_number_abbreviation"
+msgstr ""
+
+msgid "Orders_from"
+msgstr ""
+
+msgid "Invoice_date"
+msgstr ""
+
+msgid "Price_excl."
+msgstr ""
+
+msgid "VAT"
+msgstr ""
+
+msgid "Price_incl."
+msgstr ""
+
+msgid "variable_member_fee"
+msgstr ""
+
+msgid "New_total_sum"
+msgstr ""
+
+msgid "The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr ""
+
+msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr ""
+
+msgid "Paid_by_members_in_{0}"
+msgstr ""
+
+msgid "Paid_by_members_in"
+msgstr ""
+
+msgid "Kept_variable_member_fee"
+msgstr ""
+
+msgid "Amount_that_will_be_transferred_to_your_bank_account"
+msgstr ""
+
+msgid "Thank_you_very_much_for_delivering_your_products_to_us!"
+msgstr ""
+
+msgid "Detail_view"
+msgstr ""
+
+msgid "Order_day"
+msgstr ""
+
+msgid "Order_list_grouped_by"
+msgstr ""
+
+msgid "Customer_ID"
+msgstr ""
+
+msgid "Member_card"
+msgstr ""
+
+msgid "Delete_selected_products"
+msgstr ""
+
+msgid "Edit_delivery_rhythm_for_selected_products"
+msgstr ""
+
+msgid "Generate_product_cards"
+msgstr ""
+
+msgid "Add_new_attribute_for_product_{0}"
+msgstr ""
+
+msgid "change_amount"
+msgstr ""
+
+msgid "No_email_notifications_are_sent_for_this_product."
+msgstr ""
+
+msgid "change_delivery_rhythm"
+msgstr ""
+
+msgid "delivery_rhythm_from"
+msgstr ""
+
+msgid "change_deposit"
+msgstr ""
+
+msgid "add_image"
+msgstr ""
+
+msgid "New"
+msgstr ""
+
+msgid "Mark_product_as_new_for_the_next_{0}_days?"
+msgstr ""
+
+msgid "Do_not_mark_product_as_new_any_more?"
+msgstr ""
+
+msgid "Is_stock_product"
+msgstr ""
+
+msgid "Delete_attribute_for_product_{0}"
+msgstr ""
+
+msgid "This_attribute_is_the_default_attribute."
+msgstr ""
+
+msgid "Define_as_new_default_attribute"
+msgstr ""
+
+msgid "change_category"
+msgstr ""
+
+msgid "Category_\"all_products\"_is_missing!"
+msgstr ""
+
+msgid "product_preview"
+msgstr ""
+
+msgid "change_price"
+msgstr ""
+
+msgid "change_tax_rate"
+msgstr ""
+
+msgid "Dear_financial_responsible"
+msgstr ""
+
+msgid "the_invoices_from_{0}_have_just_been_sent."
+msgstr ""
+
+msgid "Here_you_find_the_overview_for_making_the_transfers:"
+msgstr ""
+
+msgid "This_is_a_great_opportunity_to_check_the_credit_uploads_link_below."
+msgstr ""
+
+msgid "(Link_only_works_for_superadmins)."
+msgstr ""
+
+msgid "Thank_you_very_much_for_your_work!"
+msgstr ""
+
+msgid "your_credit_is_used_up_and_equals_{0}."
+msgstr ""
+
+msgid "Please_soon_transfer_new_credit_(eg_100_{0})_to_our_bank_account."
+msgstr ""
+
+msgid "Do_not_forget_to_add_it_to_our_credit_system_after_the_bank_transfer."
+msgstr ""
+
+msgid "Here_you_find_the_link_to_add_the_credit:"
+msgstr ""
+
+msgid "{0}_is_the_last_day_to_order._You_can_do_that_until_{0}_midnight."
+msgstr ""
+
+msgid "Do_you_want_to_load_your_last_order_into_your_shopping_cart?_The_current_cart_will_be_emptied_for_that."
+msgstr ""
+
+msgid "route_cart"
+msgstr ""
+
+msgid "Click_here_to_open_the"
+msgstr ""
+
+msgid "And_here_you_can_unsubscribe_this_email_reminder"
+msgstr ""
+
+msgid "The_amount_of_the_product_{0}_has_been_adapted."
+msgstr ""
+
+msgid "You_have_ordered_it_on_{0}_at_manufacturer_{1}."
+msgstr ""
+
+msgid "Old_amount"
+msgstr ""
+
+msgid "New_amount"
+msgstr ""
+
+msgid "Why_has_the_amount_been_adpated?"
+msgstr ""
+
+msgid "PS:_Your_credit_has_been_adapted_automatically."
+msgstr ""
+
+msgid "Why_has_another_member_been_assigned?"
+msgstr ""
+
+msgid "sorry,_{0}_can_not_be_delivered."
+msgstr ""
+
+msgid "Order_date"
+msgstr ""
+
+msgid "Why_has_the_product_been_cancelled?"
+msgstr ""
+
+msgid "Sorry,_but_sometimes_our_manufacturers_cannot_deliver_the_ordered_products._You_receive_this_email_so_you_can_buy_the_products_elsewhere."
+msgstr ""
+
+msgid "Thanks_for_respecting_that!"
+msgstr ""
+
+msgid "New_pickup_day"
+msgstr ""
+
+msgid "Old_pickup_day"
+msgstr ""
+
+msgid "Why_was_the_pickup_day_changed?"
+msgstr ""
+
+msgid "The_following_product_is_affected"
+msgstr ""
+
+msgid "The_following_{0}_products_are_affected"
+msgstr ""
+
+msgid "The_price_of_the_product_{0}_has_been_adapted."
+msgstr ""
+
+msgid "You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}."
+msgstr ""
+
+msgid "Old_price"
+msgstr ""
+
+msgid "New_price"
+msgstr ""
+
+msgid "Why_has_the_price_been_adpated?"
+msgstr ""
+
+msgid "The_weight_of_the_product_{0}_has_been_adapted."
+msgstr ""
+
+msgid "Old_price_for"
+msgstr ""
+
+msgid "New_price_for"
+msgstr ""
+
+msgid "The_base_price_is_{0}."
+msgstr ""
+
+msgid "The_status_of_your_credit_upload_of_{0}_({1}_amount)_was_changed_to_{2}."
+msgstr ""
+
+msgid "Please_compare_the_credit_upload_that_you_added_to_our_system_with_the_actual_bank_account_transfer."
+msgstr ""
+
+msgid "Please_do_not_forget_that_you_have_products_to_pick_up_on_{0}."
+msgstr ""
+
+msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
+msgstr ""
+
+msgid "Hello"
+msgstr ""
+
+msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
+msgstr ""
+
+msgid "If_the_invoice_amount_should_differ_from_your_own_recordings_please_tell_us."
+msgstr ""
+
+msgid "The_invoice_amount_will_be_transfered_to_your_bank_accound_withing_the_next_days."
+msgstr ""
+
+msgid "please_find_two_order_lists_attached_for_the_next_delivery_(grouped_by_product_and_member)."
+msgstr ""
+
+msgid "Your_personal_manufacturer_panel"
+msgstr ""
+
+msgid "Help_pages"
+msgstr ""
+
+msgid "docs_route_order_handling"
+msgstr ""
+
+msgid "You_can_change_your_imprint_by_yourself."
+msgstr ""
+
+msgid "Your_products_are_only_visible_for_members._To_view_your_products_as_the_member_sees_them_you_need_to_be_logged_in."
+msgstr ""
+
+msgid "For_signing_in_please_use_the_email_address_of_this_message._If_you_want_to_order_products_from_other_manufacturers_please_sign_on_with_a_different_email_address."
+msgstr ""
+
+msgid "Your_contact_person"
 msgstr ""
 

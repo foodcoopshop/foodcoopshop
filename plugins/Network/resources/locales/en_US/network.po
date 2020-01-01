@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-04-07 22:21+0200\n"
+"POT-Creation-Date: 2020-01-01 22:28+0100\n"
 "PO-Revision-Date: 2019-04-07 22:22+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -126,14 +126,8 @@ msgstr "The domain needs to start with https://."
 msgid "The_domain_already_exists."
 msgstr "The domain already exists."
 
-msgid "Show_more"
-msgstr "Show more"
-
-msgid "Email"
-msgstr "Email"
-
-msgid "Password"
-msgstr "Password"
+msgid "docs_route_network_module"
+msgstr "network-module"
 
 msgid "Save"
 msgstr "Save"
@@ -171,5 +165,11 @@ msgstr "Perfect! You can lean back and relax as all products are synchronized."
 msgid "Load_products"
 msgstr "Load products"
 
-msgid "docs_route_network_module"
-msgstr "network-module"
+msgid "Show_more"
+msgstr "Show more"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Password"
+msgstr "Password"

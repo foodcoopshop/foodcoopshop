@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2019-12-04 09:35+0100\n"
+"POT-Creation-Date: 2020-01-01 22:28+0100\n"
 "PO-Revision-Date: 2019-12-06 10:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -65,6 +65,102 @@ msgstr "New products"
 
 msgid "Search"
 msgstr "Search"
+
+msgid "route_self_service"
+msgstr "self-service"
+
+msgid "route_cart"
+msgstr "cart"
+
+msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
+msgstr "The desired amount {0} of the product {1} is not available any more. Available amount: {2}"
+
+msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
+msgstr "Please change the amout or remove product from cart to place order."
+
+msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
+msgstr "The desired amount {0} of the attribute {1} of the product {2} is not available any more. Available amount: {3}"
+
+msgid "The_attribute_does_not_exist."
+msgstr "The attribute does not exist."
+
+msgid "Please_delete_product_from_cart_to_place_order."
+msgstr "Please remove product from cart to place order."
+
+msgid "The_product_{0}_is_not_activated_any_more."
+msgstr "The product {0} is not activated any more."
+
+msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
+msgstr "The manufacturer of the product {0} either has a delivery break or the product is not activated any more."
+
+msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
+msgstr "It's not possible to order the product {0} any more."
+
+msgid "{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered."
+msgstr "{0} has activated the delivery break and the product {1} cannot be ordered."
+
+msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
+msgstr "Please enter how much you want to pay in {0}."
+
+msgid "Please_enter_a_number."
+msgstr "Please enter a number."
+
+msgid "Your_overdraft_frame_of_{0}_is_reached."
+msgstr "Your overdraft frame of {0} is reached."
+
+msgid "Errors_occurred."
+msgstr "Errors occurred."
+
+msgid "Your_order_has_been_placed_succesfully."
+msgstr "Your order was placed successfully."
+
+msgid "{0}_has_placed_a_new_order_({1})."
+msgstr "{0} has placed a new order ({1})."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}."
+msgstr "Instant order ({0}) successfully placed for {1}."
+
+msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
+msgstr "Instant order ({0}) successfully placed for {1}. The following manufacturers were notified: {2}"
+
+msgid "Pickup_day"
+msgstr "Pickup day"
+
+msgid "Thank_you_for_your_purchase!"
+msgstr "Thank you for your purchase!"
+
+msgid "Sign_out"
+msgstr "Sign out"
+
+msgid "Continue_shopping?"
+msgstr "Continue shopping?"
+
+msgid "Notification_about_instant_order_order"
+msgstr "Notification about instant order"
+
+msgid "Product_{0}:_Only_{1}_units_on_stock"
+msgstr "Low stock for product \"{0}\": {1}"
+
+msgid "Hello"
+msgstr "Hello"
+
+msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
+msgstr "You can unsubscribe this e-mail <a href=\"{0}\">in the manufacturer's settings</a>."
+
+msgid "Your_purchase"
+msgstr "Your purchase"
+
+msgid "Order_confirmation"
+msgstr "Order confirmation"
+
+msgid "Filename_Right-of-withdrawal-information-and-form"
+msgstr "Right-of-withdrawal-information-and-form"
+
+msgid "Filename_Order-confirmation"
+msgstr "Order-confirmation"
+
+msgid "Filename_General-terms-and-conditions"
+msgstr "General-terms-and-conditions"
 
 msgid "Accept_terms_of_use"
 msgstr "Accepting terms of use"
@@ -146,9 +242,6 @@ msgstr "Sign out?"
 
 msgid "route_sign_out"
 msgstr "sign-out"
-
-msgid "route_self_service"
-msgstr "self-service"
 
 msgid "An_error_occurred"
 msgstr "An error occurred"
@@ -294,9 +387,6 @@ msgstr "Show less"
 msgid "Close"
 msgstr "Close"
 
-msgid "route_cart"
-msgstr "cart"
-
 msgid "Empty_cart"
 msgstr "Remove products from cart"
 
@@ -320,9 +410,6 @@ msgstr "each"
 
 msgid "approx."
 msgstr "approx."
-
-msgid "Pickup_day"
-msgstr "Pickup day"
 
 msgid "Home"
 msgstr "Home"
@@ -464,9 +551,6 @@ msgstr "Please tell us, why you want to adapt the price."
 
 msgid "Cancellation_reason_is_mandatory."
 msgstr "Please tell us, why you want to cancel the product."
-
-msgid "Please_enter_a_number."
-msgstr "Please enter a number."
 
 msgid "Add_new_attribute_for_product"
 msgstr "Add new attribute for product"
@@ -911,90 +995,6 @@ msgstr "Self-service for stock products"
 
 msgid "Your_shopping_bag_was_empty."
 msgstr "Your shopping bag was empty."
-
-msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
-msgstr "The desired amount {0} of the product {1} is not available any more. Available amount: {2}"
-
-msgid "Please_change_amount_or_delete_product_from_cart_to_place_order."
-msgstr "Please change the amout or remove product from cart to place order."
-
-msgid "The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}."
-msgstr "The desired amount {0} of the attribute {1} of the product {2} is not available any more. Available amount: {3}"
-
-msgid "The_attribute_does_not_exist."
-msgstr "The attribute does not exist."
-
-msgid "Please_delete_product_from_cart_to_place_order."
-msgstr "Please remove product from cart to place order."
-
-msgid "The_product_{0}_is_not_activated_any_more."
-msgstr "The product {0} is not activated any more."
-
-msgid "The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated."
-msgstr "The manufacturer of the product {0} either has a delivery break or the product is not activated any more."
-
-msgid "It_is_not_possible_to_order_the_product_{0}_any_more."
-msgstr "It's not possible to order the product {0} any more."
-
-msgid "{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered."
-msgstr "{0} has activated the delivery break and the product {1} cannot be ordered."
-
-msgid "Please_enter_how_much_you_want_to_pay_in_{0}."
-msgstr "Please enter how much you want to pay in {0}."
-
-msgid "Your_overdraft_frame_of_{0}_is_reached."
-msgstr "Your overdraft frame of {0} is reached."
-
-msgid "Errors_occurred."
-msgstr "Errors occurred."
-
-msgid "Your_order_has_been_placed_succesfully."
-msgstr "Your order was placed successfully."
-
-msgid "{0}_has_placed_a_new_order_({1})."
-msgstr "{0} has placed a new order ({1})."
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}."
-msgstr "Instant order ({0}) successfully placed for {1}."
-
-msgid "Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}"
-msgstr "Instant order ({0}) successfully placed for {1}. The following manufacturers were notified: {2}"
-
-msgid "Thank_you_for_your_purchase!"
-msgstr "Thank you for your purchase!"
-
-msgid "Sign_out"
-msgstr "Sign out"
-
-msgid "Continue_shopping?"
-msgstr "Continue shopping?"
-
-msgid "Notification_about_instant_order_order"
-msgstr "Notification about instant order"
-
-msgid "Product_{0}:_Only_{1}_units_on_stock"
-msgstr "Low stock for product \"{0}\": {1}"
-
-msgid "Hello"
-msgstr "Hello"
-
-msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
-msgstr "You can unsubscribe this e-mail <a href=\"{0}\">in the manufacturer's settings</a>."
-
-msgid "Your_purchase"
-msgstr "Your purchase"
-
-msgid "Order_confirmation"
-msgstr "Order confirmation"
-
-msgid "Filename_Right-of-withdrawal-information-and-form"
-msgstr "Right-of-withdrawal-information-and-form"
-
-msgid "Filename_Order-confirmation"
-msgstr "Order-confirmation"
-
-msgid "Filename_General-terms-and-conditions"
-msgstr "General-terms-and-conditions"
 
 msgid "Tax_rates_overview_table"
 msgstr "Tax rates overview table"
@@ -1647,525 +1647,6 @@ msgstr "Generated invoices"
 msgid "Sent_order_lists"
 msgstr "Sent order lists"
 
-msgid "Modified_on"
-msgstr "Modified on"
-
-msgid "Go_to_blog_from"
-msgstr "Show blog from"
-
-msgid "by"
-msgstr "by"
-
-msgid "Edit"
-msgstr "Edit"
-
-msgid "Further_news"
-msgstr "Further news"
-
-msgid "of_{0}"
-msgstr "of {0}"
-
-msgid "found"
-msgstr "found"
-
-msgid "Show_Blog_post"
-msgstr "Show blog post"
-
-msgid "Go_to_manufacturer"
-msgstr "Show manufacturer"
-
-msgid "Your_cart_is_empty"
-msgstr "Your cart is empty"
-
-msgid "Product_sum_including_vat"
-msgstr "Product sum including VAT"
-
-msgid "Deposit_sum"
-msgstr "Deposit sum"
-
-msgid "From_which_in"
-msgstr "From which in"
-
-msgid "Including_vat"
-msgstr "Included VAT"
-
-msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
-msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
-
-msgid "To_finish_order_click_here."
-msgstr "To finish your order please click the button below."
-
-msgid "Order_placed"
-msgstr "Order placed"
-
-msgid "Thank_you_your_order_was_placed_succesfully."
-msgstr "Thank you, your order was placed successfully."
-
-msgid "The_order_confirmation_was_sent_by_email_to_{0}."
-msgstr "The order confirmation was sent to you by e-mail ({0})."
-
-msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
-msgstr "Please pick up the ordered products in our pick up store."
-
-msgid "Increase_credit"
-msgstr "Increase your credit"
-
-msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
-msgstr "Please do not forget to bring the exact amount of cash."
-
-msgid "Scan_member_card"
-msgstr "Scan member card"
-
-msgid "or"
-msgstr "or"
-
-msgid "Email"
-msgstr "E-mail"
-
-msgid "Password"
-msgstr "Password"
-
-msgid "Stay_signed_in"
-msgstr "Stay signed in"
-
-msgid "and"
-msgstr "and"
-
-msgid "accept_cookie"
-msgstr "accept cookie"
-
-msgid "Forgot_password?"
-msgstr "Forgot password?"
-
-msgid "Create_account"
-msgstr "Create account"
-
-msgid "Firstname"
-msgstr "First name"
-
-msgid "Lastname"
-msgstr "Last name"
-
-msgid "Street"
-msgstr "Street"
-
-msgid "Additional_address_information"
-msgstr "Additional information"
-
-msgid "Zip"
-msgstr "Zip"
-
-msgid "City"
-msgstr "City"
-
-msgid "Mobile"
-msgstr "Mobile"
-
-msgid "Phone"
-msgstr "Phone"
-
-msgid "Want_to_receive_reminder_emails?"
-msgstr "Do you want to receive an order reminder e-mail every week?"
-
-msgid "terms_of_use"
-msgstr "terms of use"
-
-msgid "I_accept_the_{0}"
-msgstr "I accept the {0}"
-
-msgid "Please_enter_your_email_address_and_click_on_send_button."
-msgstr "Please enter your email address and click on send button."
-
-msgid "Send"
-msgstr "Send"
-
-msgid "The_confirmation_of_your_registration_was_sent_to_you_by_email."
-msgstr "The confirmation of your registration was sent to you by email."
-
-msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
-msgstr "Your account was created but not activated yet. This means, you can't login yet!"
-
-msgid "You_will_get_an_email_as_soon_as_we_activated_you."
-msgstr "You will get an e-mail as soon as we activate you."
-
-msgid "terms_and_conditions"
-msgstr "terms and conditions"
-
-msgid "if_you_want_to_continue_to_use_this_platform_please_read_and_accept_the_{0}."
-msgstr "if you want to continue to use this platform, please read the changed {0} and accept them."
-
-msgid "I_accept_the_{0}."
-msgstr "I accept the {0}."
-
-msgid "Load_past_orders"
-msgstr "Load past orders"
-
-msgid "This_order_will_be_placed_for_{0}."
-msgstr "This order will be placed for {0}."
-
-msgid "Only_stock_products_are_shown."
-msgstr "Only stock products are shown."
-
-msgid "Your_credit_balance"
-msgstr "Your credit balance"
-
-msgid "You_reached_the_order_limit_{0}_please_add_credit."
-msgstr "You reached the order limit of {0}. Please add credit."
-
-msgid "Add_credit"
-msgstr "Add credit"
-
-msgid "Value_added_tax"
-msgstr "Value added tax"
-
-msgid "Show_cart_button"
-msgstr "Show cart"
-
-msgid "Already_ordered_products"
-msgstr "Already ordered products"
-
-msgid "Replace_existing_file"
-msgstr "Replace existing file"
-
-msgid "Upload_new_file"
-msgstr "Upload new file"
-
-msgid "Search_PC"
-msgstr "Search computer"
-
-msgid "Other_initiaives_working_with_FoodCoopShop"
-msgstr "Other initiatives working with FoodCoopShop"
-
-msgid "Map_with_all_Austrian_foodocops"
-msgstr "Map with <b>all</b> Austrian Foodcoops"
-
-msgid "Information"
-msgstr "Information"
-
-msgid "Contact"
-msgstr "Contact"
-
-msgid "Bank_account_credit_balance"
-msgstr "Bank account (credit)"
-
-msgid "Bank_account_member_fee"
-msgstr "Bank account (member fee)"
-
-msgid "Attention_order_break!"
-msgstr "Attention, order break!"
-
-msgid "Help?"
-msgstr "Help?"
-
-msgid "Replace_existing_image"
-msgstr "Replace existing image"
-
-msgid "Upload_new_image"
-msgstr "Upload new image"
-
-msgid "Image_upload_legal_hint."
-msgstr "Please upload images only if you have the rights to use!"
-
-msgid "Print"
-msgstr "Print"
-
-msgid "Reset_search"
-msgstr "Reset search"
-
-msgid "Categories"
-msgstr "Categories"
-
-msgid "There_are_only_stock_products_shown_in_this_list."
-msgstr "There are only stock products shown in this list."
-
-msgid "Admin_area"
-msgstr "Admin panel"
-
-msgid "Manufacturer_area"
-msgstr "Manufacturer panel"
-
-msgid "To_change_your_profile_please_stop_the_instant_order_mode."
-msgstr "To change your profile please stop the instant order mode."
-
-msgid "Signed_in"
-msgstr "Signed in"
-
-msgid "Self_service"
-msgstr "Self-service"
-
-msgid "right_of_withdrawal"
-msgstr "right of withdrawal"
-
-msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
-msgstr "I accept the {0} and accept that this is not valid for perishable goods."
-
-msgid "general_terms_and_conditions"
-msgstr "general terms and conditions"
-
-msgid "General_terms_and_conditions_of_{0}"
-msgstr "general terms and conditions of {0}"
-
-msgid "Order_button"
-msgstr "Buy now"
-
-msgid "The_amount_will_be_reduced_from_the_credit_balance."
-msgstr "The amount will be reduced from the credit balance."
-
-msgid "Please_pay_when_picking_up_products."
-msgstr "Please pay when picking up your products."
-
-msgid "Write_message_to_pick_up_team_for_{0}?"
-msgstr "Want to write a message to the pick up team on {0}?"
-
-msgid "Placeholder_message_pickup_day_comment."
-msgstr "Your message will be shown next to your order in the admin panel. Manufacturers cannot not this message."
-
-msgid "Pickup_place:_{0}"
-msgstr "Pickup place: {0}"
-
-msgid "I_promise_to_pick_up_the_products_on_the_selected_pickup_day_and_to_pay_in_cash_in_the_shop."
-msgstr "I promise to pick up the products on the selected pickup day and I will pay in cash in the shop."
-
-msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
-msgstr "How much of it do I want to pay in {0}?"
-
-msgid "Total"
-msgstr "Total"
-
-msgid "You_can_sign_in_here_for_ordering"
-msgstr "You can sign in here for placing a new order"
-
-msgid "E-mail_address"
-msgstr "E-mail address"
-
-msgid "You_can_change_your_password_here"
-msgstr "You can change your password here"
-
-msgid "You_can_change_your_profile_here"
-msgstr "You can change your profile here"
-
-msgid "available"
-msgstr "available"
-
-msgid "Stock_product:_order_possible_only_by_{0}."
-msgstr "Stock product: order possible only by {0}."
-
-msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
-msgstr "Stock product: order possible only with instant order when picking it up."
-
-msgid "Currently_not_on_stock"
-msgstr "Currently not on stock"
-
-msgid "New"
-msgstr "New"
-
-msgid "More_infos_to_product_{0}"
-msgstr "More infos to product {0}"
-
-msgid "Last_order_day"
-msgstr "Last order day"
-
-msgid "midnight"
-msgstr "midnight"
-
-msgid "Instant_order"
-msgstr "Instant order"
-
-msgid "{0,plural,=1{1_week} other{#_weeks}}"
-msgstr "{0,plural,=1{1 week} other{# week}}"
-
-msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
-msgstr "{0,plural,=1{1 week} other{# week}} {1,plural,=1{and 1 day} other{and # days}}"
-
-msgid "from_which_{0}_%"
-msgstr "from which {0} %"
-
-msgid "Move_in_shopping_bag"
-msgstr "Move in shopping bag"
-
-msgid "Move_in_cart"
-msgstr "Add to cart"
-
-msgid "Weight_in"
-msgstr "Weight in"
-
-msgid "Add_deposit"
-msgstr "Add deposit"
-
-msgid "Add_deposit_amount_for_{0}"
-msgstr "Add deposit amount for {0}"
-
-msgid "Amount_in_{0}"
-msgstr "Amount in {0}"
-
-msgid "The_manufacturer_has_reached_the_limit_to_pay_in_{0}."
-msgstr "The manufacturer has reached the limit to pay in {0}."
-
-msgid "Part_in_{0}"
-msgstr "Part in {0}"
-
-msgid "in"
-msgstr "in"
-
-msgid "Your_account_at_{0}_has_just_been_activated."
-msgstr "Your account at {0} has just been activated."
-
-msgid "Your_registration_at_{0}_has_just_been_successful!"
-msgstr "Your registration at {0} has been successful!"
-
-msgid "Dear_responsible_person_for_new_members,"
-msgstr "Dear responsible for new members,"
-
-msgid "there_has_been_a_new_registration:_{0}_({1})_from_{2}."
-msgstr "there has been a new registration: {0} ({1}) from {2}."
-
-msgid "Here_you_can_activate_the_new_member_and_see_the_data"
-msgstr "Here you can activate the new member and see the data"
-
-msgid "Here_you_can_see_the_data_of_the_new_member"
-msgstr "Here you can see the data of the new member"
-
-msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1})."
-msgstr "There has been placed a instant order for {0} by {1}."
-
-msgid "You_receive_this_message_because_the_delivery_day_of_this_order_was_automatically_set_to_today_{0}_and_therefore_it_does_not_appear_on_your_order_lists."
-msgstr "You receive this message because the delivery day for this order was set to <b>today ({0})</b>, and therefore it does not appear on your order lists."
-
-msgid "your_new_password_is:"
-msgstr "your new password:"
-
-msgid "Please_click_on_this_link_to_activate_your_new_password"
-msgstr "Please click on this link to activate your new password"
-
-msgid "thank_you_for_your_order_from_{0}."
-msgstr "thank you for order from {0}."
-
-msgid "The_amount_was_reduced_from_your_credit_balance."
-msgstr "The amount was reduced from your credit balance."
-
-msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
-msgstr "You can find a detailed list of your ordered products in the attached order confirmation."
-
-msgid "thank_you_for_your_purchase."
-msgstr "thank you for your purchase."
-
-msgid "This_is_the_text_of_the_email_(with_attached_logo)."
-msgstr "This is the text of the email (with attached logo)."
-
-msgid "Units_on_stock:"
-msgstr "Units on stock:"
-
-msgid "Product_orders_are_not_possible_any_more!"
-msgstr "Orders are not possible any more!"
-
-msgid "Product_orders_possible_until:"
-msgstr "Product orders possible until:"
-
-msgid "This_notification_triggered_if_stock_available_is_less_than:"
-msgstr "This email notification triggered if stock is less or equals:"
-
-msgid "Click_here_to_edit_the_product."
-msgstr "Click here to edit the product."
-
-msgid "route_search"
-msgstr "search"
-
-msgid "Cart"
-msgstr "Cart"
-
-msgid "Your_cart_is_empty."
-msgstr "Your cart is empty."
-
-msgid "homepage"
-msgstr "homepage"
-
-msgid "page_you_have_just_been_to"
-msgstr "page you have just been to"
-
-msgid "Click_here_to_open_the"
-msgstr "Click here to go the the"
-
-msgid "Auto_logout_in_X_sec"
-msgstr "Auto-logout in X sec."
-
-msgid "This_email_was_created_automatcially."
-msgstr "This e-mail was automatically created."
-
-msgid "You_can_unsubscribe_it_<a href=\"{0}\">in_your_settings</a>."
-msgstr "You can unsubscribe it <a href=\"{0}\">in your settings</a>."
-
-msgid "News_from"
-msgstr "News from"
-
-msgid "Imprint"
-msgstr "Imprint"
-
-msgid "Search:_name_id_or_barcode"
-msgstr "Search: name, ID or barcode"
-
-msgid "Shopping_bag"
-msgstr "Shopping bag"
-
-msgid "docs_route_self_service"
-msgstr "self-service-mode"
-
-msgid "Your_shopping_bag_is_empty."
-msgstr "Your shopping bag is empty."
-
-msgid "Finish_pickup"
-msgstr "Finish pickup"
-
-msgid "Terms_and_conditions"
-msgstr "Terms and conditions"
-
-msgid "Order_overview"
-msgstr "Order overview"
-
-msgid "Order_of"
-msgstr "Order of"
-
-msgid "placed_on"
-msgstr "placed on"
-
-msgid "Prices_are_including_vat."
-msgstr "The prices include the VAT."
-
-msgid "Information_about_right_of_withdrawal"
-msgstr "Information about the right of withdrawal"
-
-msgid "and_withdrawal_form"
-msgstr "and withdrawal form"
-
-msgid "Withdrawal_form"
-msgstr "Withdrawal form"
-
-msgid "If_you_want_to_cancel_the_contract_please_fill_out_this_form_and_send_it_back."
-msgstr "If you want to cancel the contract, please fill out this form and send it back."
-
-msgid "Hereby_I_cancel_the_contract_about_the_purchase_of_following_goods_or_service."
-msgstr "Hereby I cancel the contract of the purchase of the following goods or service."
-
-msgid "Ordered_on"
-msgstr "Ordered on"
-
-msgid "Received_on"
-msgstr "Received on"
-
-msgid "Name_of_consumer(s)"
-msgstr "Name of consumer(s)"
-
-msgid "Address_of_consumer(s)"
-msgstr "Address of consumer(s)"
-
-msgid "Signature_of_consumer_only_if_transmitted_on_paper."
-msgstr "Signature of consumer (only if transmitted on paper)."
-
-msgid "Strike_out_unnecessary_items."
-msgstr "Strike out unwanted items."
-
-msgid "Filename_Information-about-right-of-withdrawal"
-msgstr "Informationen-ueber-Ruecktrittsrecht"
-
 msgid "Members"
 msgstr "Members"
 
@@ -2204,6 +1685,15 @@ msgstr "The manufacturer {0} is on delivery break: {1}"
 
 msgid "{0}_makes_a_break:_{1}"
 msgstr "{0} makes a break: {1}"
+
+msgid "Mobile"
+msgstr "Mobile"
+
+msgid "Phone"
+msgstr "Phone"
+
+msgid "Email"
+msgstr "E-mail"
 
 msgid "Website"
 msgstr "Website"
@@ -2279,6 +1769,9 @@ msgstr "inactive"
 
 msgid "active_state_all"
 msgstr "all"
+
+msgid "midnight"
+msgstr "midnight"
 
 msgid "default_value"
 msgstr "default value"
@@ -2379,8 +1872,515 @@ msgstr "billing complete and paid in cash"
 msgid "route_information_about_right_of_withdrawal"
 msgstr "information-about-right-of-withdrawal"
 
+msgid "route_search"
+msgstr "search"
+
 msgid "route_product"
 msgstr "product"
+
+#~ msgid "Modified_on"
+#~ msgstr "Modified on"
+
+#~ msgid "Go_to_blog_from"
+#~ msgstr "Show blog from"
+
+#~ msgid "by"
+#~ msgstr "by"
+
+#~ msgid "Edit"
+#~ msgstr "Edit"
+
+#~ msgid "Further_news"
+#~ msgstr "Further news"
+
+#~ msgid "of_{0}"
+#~ msgstr "of {0}"
+
+#~ msgid "found"
+#~ msgstr "found"
+
+#~ msgid "Show_Blog_post"
+#~ msgstr "Show blog post"
+
+#~ msgid "Go_to_manufacturer"
+#~ msgstr "Show manufacturer"
+
+#~ msgid "Your_cart_is_empty"
+#~ msgstr "Your cart is empty"
+
+#~ msgid "Product_sum_including_vat"
+#~ msgstr "Product sum including VAT"
+
+#~ msgid "Deposit_sum"
+#~ msgstr "Deposit sum"
+
+#~ msgid "From_which_in"
+#~ msgstr "From which in"
+
+#~ msgid "Including_vat"
+#~ msgstr "Included VAT"
+
+#~ msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+#~ msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
+#~ msgid "To_finish_order_click_here."
+#~ msgstr "To finish your order please click the button below."
+
+#~ msgid "Order_placed"
+#~ msgstr "Order placed"
+
+#~ msgid "Thank_you_your_order_was_placed_succesfully."
+#~ msgstr "Thank you, your order was placed successfully."
+
+#~ msgid "The_order_confirmation_was_sent_by_email_to_{0}."
+#~ msgstr "The order confirmation was sent to you by e-mail ({0})."
+
+#~ msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
+#~ msgstr "Please pick up the ordered products in our pick up store."
+
+#~ msgid "Increase_credit"
+#~ msgstr "Increase your credit"
+
+#~ msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
+#~ msgstr "Please do not forget to bring the exact amount of cash."
+
+#~ msgid "Scan_member_card"
+#~ msgstr "Scan member card"
+
+#~ msgid "or"
+#~ msgstr "or"
+
+#~ msgid "Password"
+#~ msgstr "Password"
+
+#~ msgid "Stay_signed_in"
+#~ msgstr "Stay signed in"
+
+#~ msgid "and"
+#~ msgstr "and"
+
+#~ msgid "accept_cookie"
+#~ msgstr "accept cookie"
+
+#~ msgid "Forgot_password?"
+#~ msgstr "Forgot password?"
+
+#~ msgid "Create_account"
+#~ msgstr "Create account"
+
+#~ msgid "Firstname"
+#~ msgstr "First name"
+
+#~ msgid "Lastname"
+#~ msgstr "Last name"
+
+#~ msgid "Street"
+#~ msgstr "Street"
+
+#~ msgid "Additional_address_information"
+#~ msgstr "Additional information"
+
+#~ msgid "Zip"
+#~ msgstr "Zip"
+
+#~ msgid "City"
+#~ msgstr "City"
+
+#~ msgid "Want_to_receive_reminder_emails?"
+#~ msgstr "Do you want to receive an order reminder e-mail every week?"
+
+#~ msgid "terms_of_use"
+#~ msgstr "terms of use"
+
+#~ msgid "I_accept_the_{0}"
+#~ msgstr "I accept the {0}"
+
+#~ msgid "Please_enter_your_email_address_and_click_on_send_button."
+#~ msgstr "Please enter your email address and click on send button."
+
+#~ msgid "Send"
+#~ msgstr "Send"
+
+#~ msgid "The_confirmation_of_your_registration_was_sent_to_you_by_email."
+#~ msgstr "The confirmation of your registration was sent to you by email."
+
+#~ msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
+#~ msgstr "Your account was created but not activated yet. This means, you can't login yet!"
+
+#~ msgid "You_will_get_an_email_as_soon_as_we_activated_you."
+#~ msgstr "You will get an e-mail as soon as we activate you."
+
+#~ msgid "terms_and_conditions"
+#~ msgstr "terms and conditions"
+
+#~ msgid "if_you_want_to_continue_to_use_this_platform_please_read_and_accept_the_{0}."
+#~ msgstr "if you want to continue to use this platform, please read the changed {0} and accept them."
+
+#~ msgid "I_accept_the_{0}."
+#~ msgstr "I accept the {0}."
+
+#~ msgid "Load_past_orders"
+#~ msgstr "Load past orders"
+
+#~ msgid "This_order_will_be_placed_for_{0}."
+#~ msgstr "This order will be placed for {0}."
+
+#~ msgid "Only_stock_products_are_shown."
+#~ msgstr "Only stock products are shown."
+
+#~ msgid "Your_credit_balance"
+#~ msgstr "Your credit balance"
+
+#~ msgid "You_reached_the_order_limit_{0}_please_add_credit."
+#~ msgstr "You reached the order limit of {0}. Please add credit."
+
+#~ msgid "Add_credit"
+#~ msgstr "Add credit"
+
+#~ msgid "Value_added_tax"
+#~ msgstr "Value added tax"
+
+#~ msgid "Show_cart_button"
+#~ msgstr "Show cart"
+
+#~ msgid "Already_ordered_products"
+#~ msgstr "Already ordered products"
+
+#~ msgid "Replace_existing_file"
+#~ msgstr "Replace existing file"
+
+#~ msgid "Upload_new_file"
+#~ msgstr "Upload new file"
+
+#~ msgid "Search_PC"
+#~ msgstr "Search computer"
+
+#~ msgid "Other_initiaives_working_with_FoodCoopShop"
+#~ msgstr "Other initiatives working with FoodCoopShop"
+
+#~ msgid "Map_with_all_Austrian_foodocops"
+#~ msgstr "Map with <b>all</b> Austrian Foodcoops"
+
+#~ msgid "Information"
+#~ msgstr "Information"
+
+#~ msgid "Contact"
+#~ msgstr "Contact"
+
+#~ msgid "Bank_account_credit_balance"
+#~ msgstr "Bank account (credit)"
+
+#~ msgid "Bank_account_member_fee"
+#~ msgstr "Bank account (member fee)"
+
+#~ msgid "Attention_order_break!"
+#~ msgstr "Attention, order break!"
+
+#~ msgid "Help?"
+#~ msgstr "Help?"
+
+#~ msgid "Replace_existing_image"
+#~ msgstr "Replace existing image"
+
+#~ msgid "Upload_new_image"
+#~ msgstr "Upload new image"
+
+#~ msgid "Image_upload_legal_hint."
+#~ msgstr "Please upload images only if you have the rights to use!"
+
+#~ msgid "Print"
+#~ msgstr "Print"
+
+#~ msgid "Reset_search"
+#~ msgstr "Reset search"
+
+#~ msgid "Categories"
+#~ msgstr "Categories"
+
+#~ msgid "There_are_only_stock_products_shown_in_this_list."
+#~ msgstr "There are only stock products shown in this list."
+
+#~ msgid "Admin_area"
+#~ msgstr "Admin panel"
+
+#~ msgid "Manufacturer_area"
+#~ msgstr "Manufacturer panel"
+
+#~ msgid "To_change_your_profile_please_stop_the_instant_order_mode."
+#~ msgstr "To change your profile please stop the instant order mode."
+
+#~ msgid "Signed_in"
+#~ msgstr "Signed in"
+
+#~ msgid "Self_service"
+#~ msgstr "Self-service"
+
+#~ msgid "right_of_withdrawal"
+#~ msgstr "right of withdrawal"
+
+#~ msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
+#~ msgstr "I accept the {0} and accept that this is not valid for perishable goods."
+
+#~ msgid "general_terms_and_conditions"
+#~ msgstr "general terms and conditions"
+
+#~ msgid "General_terms_and_conditions_of_{0}"
+#~ msgstr "general terms and conditions of {0}"
+
+#~ msgid "Order_button"
+#~ msgstr "Buy now"
+
+#~ msgid "The_amount_will_be_reduced_from_the_credit_balance."
+#~ msgstr "The amount will be reduced from the credit balance."
+
+#~ msgid "Please_pay_when_picking_up_products."
+#~ msgstr "Please pay when picking up your products."
+
+#~ msgid "Write_message_to_pick_up_team_for_{0}?"
+#~ msgstr "Want to write a message to the pick up team on {0}?"
+
+#~ msgid "Placeholder_message_pickup_day_comment."
+#~ msgstr "Your message will be shown next to your order in the admin panel. Manufacturers cannot not this message."
+
+#~ msgid "Pickup_place:_{0}"
+#~ msgstr "Pickup place: {0}"
+
+#~ msgid "I_promise_to_pick_up_the_products_on_the_selected_pickup_day_and_to_pay_in_cash_in_the_shop."
+#~ msgstr "I promise to pick up the products on the selected pickup day and I will pay in cash in the shop."
+
+#~ msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
+#~ msgstr "How much of it do I want to pay in {0}?"
+
+#~ msgid "Total"
+#~ msgstr "Total"
+
+#~ msgid "You_can_sign_in_here_for_ordering"
+#~ msgstr "You can sign in here for placing a new order"
+
+#~ msgid "E-mail_address"
+#~ msgstr "E-mail address"
+
+#~ msgid "You_can_change_your_password_here"
+#~ msgstr "You can change your password here"
+
+#~ msgid "You_can_change_your_profile_here"
+#~ msgstr "You can change your profile here"
+
+#~ msgid "available"
+#~ msgstr "available"
+
+#~ msgid "Stock_product:_order_possible_only_by_{0}."
+#~ msgstr "Stock product: order possible only by {0}."
+
+#~ msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
+#~ msgstr "Stock product: order possible only with instant order when picking it up."
+
+#~ msgid "Currently_not_on_stock"
+#~ msgstr "Currently not on stock"
+
+#~ msgid "New"
+#~ msgstr "New"
+
+#~ msgid "More_infos_to_product_{0}"
+#~ msgstr "More infos to product {0}"
+
+#~ msgid "Last_order_day"
+#~ msgstr "Last order day"
+
+#~ msgid "Instant_order"
+#~ msgstr "Instant order"
+
+#~ msgid "{0,plural,=1{1_week} other{#_weeks}}"
+#~ msgstr "{0,plural,=1{1 week} other{# week}}"
+
+#~ msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
+#~ msgstr "{0,plural,=1{1 week} other{# week}} {1,plural,=1{and 1 day} other{and # days}}"
+
+#~ msgid "from_which_{0}_%"
+#~ msgstr "from which {0} %"
+
+#~ msgid "Move_in_shopping_bag"
+#~ msgstr "Move in shopping bag"
+
+#~ msgid "Move_in_cart"
+#~ msgstr "Add to cart"
+
+#~ msgid "Weight_in"
+#~ msgstr "Weight in"
+
+#~ msgid "Add_deposit"
+#~ msgstr "Add deposit"
+
+#~ msgid "Add_deposit_amount_for_{0}"
+#~ msgstr "Add deposit amount for {0}"
+
+#~ msgid "Amount_in_{0}"
+#~ msgstr "Amount in {0}"
+
+#~ msgid "The_manufacturer_has_reached_the_limit_to_pay_in_{0}."
+#~ msgstr "The manufacturer has reached the limit to pay in {0}."
+
+#~ msgid "Part_in_{0}"
+#~ msgstr "Part in {0}"
+
+#~ msgid "in"
+#~ msgstr "in"
+
+#~ msgid "Your_account_at_{0}_has_just_been_activated."
+#~ msgstr "Your account at {0} has just been activated."
+
+#~ msgid "Your_registration_at_{0}_has_just_been_successful!"
+#~ msgstr "Your registration at {0} has been successful!"
+
+#~ msgid "Dear_responsible_person_for_new_members,"
+#~ msgstr "Dear responsible for new members,"
+
+#~ msgid "there_has_been_a_new_registration:_{0}_({1})_from_{2}."
+#~ msgstr "there has been a new registration: {0} ({1}) from {2}."
+
+#~ msgid "Here_you_can_activate_the_new_member_and_see_the_data"
+#~ msgstr "Here you can activate the new member and see the data"
+
+#~ msgid "Here_you_can_see_the_data_of_the_new_member"
+#~ msgstr "Here you can see the data of the new member"
+
+#~ msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1})."
+#~ msgstr "There has been placed a instant order for {0} by {1}."
+
+#~ msgid "You_receive_this_message_because_the_delivery_day_of_this_order_was_automatically_set_to_today_{0}_and_therefore_it_does_not_appear_on_your_order_lists."
+#~ msgstr "You receive this message because the delivery day for this order was set to <b>today ({0})</b>, and therefore it does not appear on your order lists."
+
+#~ msgid "your_new_password_is:"
+#~ msgstr "your new password:"
+
+#~ msgid "Please_click_on_this_link_to_activate_your_new_password"
+#~ msgstr "Please click on this link to activate your new password"
+
+#~ msgid "thank_you_for_your_order_from_{0}."
+#~ msgstr "thank you for order from {0}."
+
+#~ msgid "The_amount_was_reduced_from_your_credit_balance."
+#~ msgstr "The amount was reduced from your credit balance."
+
+#~ msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
+#~ msgstr "You can find a detailed list of your ordered products in the attached order confirmation."
+
+#~ msgid "thank_you_for_your_purchase."
+#~ msgstr "thank you for your purchase."
+
+#~ msgid "This_is_the_text_of_the_email_(with_attached_logo)."
+#~ msgstr "This is the text of the email (with attached logo)."
+
+#~ msgid "Units_on_stock:"
+#~ msgstr "Units on stock:"
+
+#~ msgid "Product_orders_are_not_possible_any_more!"
+#~ msgstr "Orders are not possible any more!"
+
+#~ msgid "Product_orders_possible_until:"
+#~ msgstr "Product orders possible until:"
+
+#~ msgid "This_notification_triggered_if_stock_available_is_less_than:"
+#~ msgstr "This email notification triggered if stock is less or equals:"
+
+#~ msgid "Click_here_to_edit_the_product."
+#~ msgstr "Click here to edit the product."
+
+#~ msgid "Cart"
+#~ msgstr "Cart"
+
+#~ msgid "Your_cart_is_empty."
+#~ msgstr "Your cart is empty."
+
+#~ msgid "homepage"
+#~ msgstr "homepage"
+
+#~ msgid "page_you_have_just_been_to"
+#~ msgstr "page you have just been to"
+
+#~ msgid "Click_here_to_open_the"
+#~ msgstr "Click here to go the the"
+
+#~ msgid "Auto_logout_in_X_sec"
+#~ msgstr "Auto-logout in X sec."
+
+#~ msgid "This_email_was_created_automatcially."
+#~ msgstr "This e-mail was automatically created."
+
+#~ msgid "You_can_unsubscribe_it_<a href=\"{0}\">in_your_settings</a>."
+#~ msgstr "You can unsubscribe it <a href=\"{0}\">in your settings</a>."
+
+#~ msgid "News_from"
+#~ msgstr "News from"
+
+#~ msgid "Imprint"
+#~ msgstr "Imprint"
+
+#~ msgid "Search:_name_id_or_barcode"
+#~ msgstr "Search: name, ID or barcode"
+
+#~ msgid "Shopping_bag"
+#~ msgstr "Shopping bag"
+
+#~ msgid "docs_route_self_service"
+#~ msgstr "self-service-mode"
+
+#~ msgid "Your_shopping_bag_is_empty."
+#~ msgstr "Your shopping bag is empty."
+
+#~ msgid "Finish_pickup"
+#~ msgstr "Finish pickup"
+
+#~ msgid "Terms_and_conditions"
+#~ msgstr "Terms and conditions"
+
+#~ msgid "Order_overview"
+#~ msgstr "Order overview"
+
+#~ msgid "Order_of"
+#~ msgstr "Order of"
+
+#~ msgid "placed_on"
+#~ msgstr "placed on"
+
+#~ msgid "Prices_are_including_vat."
+#~ msgstr "The prices include the VAT."
+
+#~ msgid "Information_about_right_of_withdrawal"
+#~ msgstr "Information about the right of withdrawal"
+
+#~ msgid "and_withdrawal_form"
+#~ msgstr "and withdrawal form"
+
+#~ msgid "Withdrawal_form"
+#~ msgstr "Withdrawal form"
+
+#~ msgid "If_you_want_to_cancel_the_contract_please_fill_out_this_form_and_send_it_back."
+#~ msgstr "If you want to cancel the contract, please fill out this form and send it back."
+
+#~ msgid "Hereby_I_cancel_the_contract_about_the_purchase_of_following_goods_or_service."
+#~ msgstr "Hereby I cancel the contract of the purchase of the following goods or service."
+
+#~ msgid "Ordered_on"
+#~ msgstr "Ordered on"
+
+#~ msgid "Received_on"
+#~ msgstr "Received on"
+
+#~ msgid "Name_of_consumer(s)"
+#~ msgstr "Name of consumer(s)"
+
+#~ msgid "Address_of_consumer(s)"
+#~ msgstr "Address of consumer(s)"
+
+#~ msgid "Signature_of_consumer_only_if_transmitted_on_paper."
+#~ msgstr "Signature of consumer (only if transmitted on paper)."
+
+#~ msgid "Strike_out_unnecessary_items."
+#~ msgstr "Strike out unwanted items."
+
+#~ msgid "Filename_Information-about-right-of-withdrawal"
+#~ msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 #~ msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
 #~ msgstr "This input is helpful for the pickup team, but not mandatory."
