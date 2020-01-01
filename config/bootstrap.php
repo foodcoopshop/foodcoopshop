@@ -162,7 +162,8 @@ ConnectionManager::setConfig(Configure::consume('Datasources'));
 TransportFactory::setConfig(Configure::consume('EmailTransport'));
 Mailer::setConfig(Configure::consume('Email'));
 Log::setConfig(Configure::consume('Log'));
-if (is_string(Configure::read('Security.salt'))) {
+
+if (!is_null(Configure::read('Security.salt'))) {
     Security::setSalt(Configure::consume('Security.salt'));
 }
 
