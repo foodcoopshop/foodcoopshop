@@ -40,7 +40,6 @@ use Cake\Error\ErrorHandler;
 use Cake\Http\ServerRequest;
 use Cake\I18n\I18n;
 use Cake\Log\Log;
-use Cake\Mailer\Email;
 use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
 use Cake\ORM\TableRegistry;
@@ -163,7 +162,9 @@ ConnectionManager::setConfig(Configure::consume('Datasources'));
 TransportFactory::setConfig(Configure::consume('EmailTransport'));
 Mailer::setConfig(Configure::consume('Email'));
 Log::setConfig(Configure::consume('Log'));
-Security::setSalt(Configure::consume('Security.salt'));
+if (Configure::read('Security.salt')) {
+    Security::setSalt(Configure::consume('Security.salt'));
+}
 
 if (isset($_SERVER['HTTP_X_UNIT_TEST_MODE'])
     || (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]))) {
