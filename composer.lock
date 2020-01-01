@@ -707,16 +707,16 @@
         },
         {
             "name": "markstory/mini-asset",
-            "version": "1.7.0",
+            "version": "1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/markstory/mini-asset.git",
-                "reference": "d31c44cd2195bde2151c1b9fb97a99eebcffb36e"
+                "reference": "4e638fb449ce33a56930bbeefd62b256682d04e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/markstory/mini-asset/zipball/d31c44cd2195bde2151c1b9fb97a99eebcffb36e",
-                "reference": "d31c44cd2195bde2151c1b9fb97a99eebcffb36e",
+                "url": "https://api.github.com/repos/markstory/mini-asset/zipball/4e638fb449ce33a56930bbeefd62b256682d04e0",
+                "reference": "4e638fb449ce33a56930bbeefd62b256682d04e0",
                 "shasum": ""
             },
             "require": {
@@ -740,10 +740,10 @@
             "bin": [
                 "bin/mini_asset"
             ],
-            "type": "cakephp-plugin",
+            "type": "library",
             "autoload": {
                 "psr-4": {
-                    "MiniAsset\\": "src"
+                    "MiniAsset\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -768,7 +768,7 @@
                 "psr7",
                 "sass"
             ],
-            "time": "2019-11-04T23:06:20+00:00"
+            "time": "2020-01-01T18:20:38+00:00"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -2146,6 +2146,7 @@
                 "psr",
                 "psr-7"
             ],
+            "abandoned": "laminas/laminas-diactoros",
             "time": "2019-11-13T19:16:13+00:00"
         },
         {
@@ -2201,6 +2202,7 @@
                 "psr-7",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-httphandlerrunner",
             "time": "2019-02-19T18:20:34+00:00"
         }
     ],
