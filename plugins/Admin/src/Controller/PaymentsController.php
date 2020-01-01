@@ -2,7 +2,7 @@
 
 namespace Admin\Controller;
 
-use App\Mailer\AppEmail;
+use App\Mailer\AppMailer;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\I18n\FrozenDate;
@@ -98,7 +98,7 @@ class PaymentsController extends AdminAppController
 
         $payment->approval = $approval;
         $payment->approval_comment = __d('admin', 'Your_comment_will_be_shown_here.');
-        $email = new AppEmail();
+        $email = new AppMailer();
         $email->viewBuilder()->setTemplate('Admin.payment_status_changed');
         $email->setTo($payment->customer->email)
             ->setViewVars([
@@ -180,7 +180,7 @@ class PaymentsController extends AdminAppController
             $message = __d('admin', 'The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}.', ['<b>'.$payment->customer->name.'</b>', '<b>' .$newStatusAsString.'</b>']);
 
             if ($payment->send_email) {
-                $email = new AppEmail();
+                $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('Admin.payment_status_changed');
                 $email->setTo($payment->customer->email)
                     ->setSubject(__d('admin', 'The_status_of_your_credit_upload_was_successfully_changed_to_{0}.', ['"' .$newStatusAsString.'"']))

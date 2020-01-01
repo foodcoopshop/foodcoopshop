@@ -2,7 +2,7 @@
 namespace Admin\Controller;
 
 use App\Lib\Error\Exception\InvalidParameterException;
-use App\Mailer\AppEmail;
+use App\Mailer\AppMailer;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
@@ -474,7 +474,7 @@ class CustomersController extends AdminAppController
         if ($sendEmail) {
             $newPassword = $this->Customer->setNewPassword($customer->id_customer);
 
-            $email = new AppEmail();
+            $email = new AppMailer();
             $email->viewBuilder()->setTemplate('customer_activated');
             $email->setTo($customer->email)
                 ->setSubject(__d('admin', 'The_account_was_activated'))

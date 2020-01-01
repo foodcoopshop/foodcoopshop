@@ -4,7 +4,7 @@ namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
-use App\Mailer\AppEmail;
+use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\TableRegistry;
@@ -684,7 +684,7 @@ class OrderDetailsController extends AdminAppController
         ];
         // send email to customers
         foreach($recipients as $recipient) {
-            $email = new AppEmail();
+            $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_customer_changed');
             $email->setTo($recipient['email'])
             ->setSubject(__d('admin', 'Assigned_to_another_member') . ': ' . $oldOrderDetail->product_name)
@@ -767,7 +767,7 @@ class OrderDetailsController extends AdminAppController
 
         // send email to customer if price was changed
         if (!$doNotChangePrice) {
-            $email = new AppEmail();
+            $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_quantity_changed');
             $email->setTo($oldOrderDetail->customer->email)
             ->setSubject(__d('admin', 'Weight_adapted') . ': ' . $oldOrderDetail->product_name)
@@ -860,7 +860,7 @@ class OrderDetailsController extends AdminAppController
         ]);
 
         // send email to customer
-        $email = new AppEmail();
+        $email = new AppMailer();
         $email->viewBuilder()->setTemplate('Admin.order_detail_amount_changed');
         $email->setTo($oldOrderDetail->customer->email)
         ->setSubject(__d('admin', 'Ordered_amount_adapted') . ': ' . $oldOrderDetail->product_name)
@@ -953,7 +953,7 @@ class OrderDetailsController extends AdminAppController
         $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $productPrice, $object->product_amount);
 
         // send email to customer
-        $email = new AppEmail();
+        $email = new AppMailer();
         $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
         $email->setTo($oldOrderDetail->customer->email)
         ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
@@ -1059,7 +1059,7 @@ class OrderDetailsController extends AdminAppController
             }
             
             foreach($customers as $orderDetails) {
-                $email = new AppEmail();
+                $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('Admin.order_detail_pickup_day_changed');
                 $email->setTo($orderDetails[0]->customer->email)
                 ->setSubject(__d('admin', 'The_pickup_day_of_your_order_was_changed_to').': ' . $newPickupDay)
@@ -1234,7 +1234,7 @@ class OrderDetailsController extends AdminAppController
             $newQuantity = $this->increaseQuantityForProduct($orderDetail, $orderDetail->product_amount * 2);
 
             // send email to customer
-            $email = new AppEmail();
+            $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_deleted');
             $email->setTo($orderDetail->customer->email)
             ->setSubject(__d('admin', 'Product_was_cancelled').': ' . $orderDetail->product_name)

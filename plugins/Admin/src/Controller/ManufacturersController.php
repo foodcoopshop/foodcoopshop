@@ -3,7 +3,7 @@
 namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
-use App\Mailer\AppEmail;
+use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Filesystem\File;
@@ -397,7 +397,7 @@ class ManufacturersController extends AdminAppController
 
             $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
             if ($sendEmail) {
-                $email = new AppEmail();
+                $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('Admin.send_invoice');
                 $email->setTo($manufacturer->address_manufacturer->email)
                     ->setAttachments([
@@ -498,7 +498,7 @@ class ManufacturersController extends AdminAppController
                 $this->OrderDetail->updateOrderState(null, null, $validOrderStates, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturerId, $orderDetailIds);
                 
                 if ($sendEmail) {
-                    $email = new AppEmail();
+                    $email = new AppMailer();
                     $email->viewBuilder()->setTemplate('Admin.send_order_list');
                     $email->setTo($manufacturer->address_manufacturer->email)
                     ->setAttachments([

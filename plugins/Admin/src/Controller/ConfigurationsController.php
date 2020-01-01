@@ -2,7 +2,7 @@
 namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
-use App\Mailer\AppEmail;
+use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\NotFoundException;
@@ -115,7 +115,7 @@ class ConfigurationsController extends AdminAppController
     {
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
         $this->Configuration->getConfigurations();
-        $email = new AppEmail();
+        $email = new AppMailer();
         $email
             ->setViewVars([
                 'appAuth' => $this->AppAuth
@@ -184,7 +184,7 @@ class ConfigurationsController extends AdminAppController
     public function sendTestEmail()
     {
         $this->set('title_for_layout', __d('admin', 'Send_test_email'));
-        $email = new AppEmail(false);
+        $email = new AppMailer(false);
         $success = $email->setTo(Configure::read('app.hostingEmail'))
         ->setSubject(__d('admin', 'Test_email'))
         ->viewBuilder()->setTemplate('send_test_email_template');

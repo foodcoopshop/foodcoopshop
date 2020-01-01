@@ -18,7 +18,7 @@
 
 namespace App\Shell;
 
-use App\Mailer\AppEmail;
+use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
@@ -83,7 +83,7 @@ class EmailOrderReminderShell extends AppShell
                 continue;
             }
 
-            $email = new AppEmail();
+            $email = new AppMailer();
             $email->setTo($customer->email)
             ->viewBuilder()->setTemplate('Admin.email_order_reminder');
             $email->setSubject(__('Order_reminder') . ' ' . Configure::read('appDb.FCS_APP_NAME'))

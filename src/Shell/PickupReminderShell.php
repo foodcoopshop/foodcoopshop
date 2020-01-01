@@ -15,7 +15,7 @@
 
 namespace App\Shell;
 
-use App\Mailer\AppEmail;
+use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
@@ -81,7 +81,7 @@ class PickupReminderShell extends AppShell
                 continue;
             }
 
-            $email = new AppEmail();
+            $email = new AppMailer();
             $email->setTo($customer->email)
             ->viewBuilder()->setTemplate('Admin.pickup_reminder');
             $email->setSubject(__('Pickup_reminder_for') . ' ' . $formattedPickupDay)

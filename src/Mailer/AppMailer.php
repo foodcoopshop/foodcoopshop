@@ -5,7 +5,7 @@ namespace App\Mailer;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Log\Log;
-use Cake\Mailer\Email;
+use Cake\Mailer\Mailer;
 use Cake\ORM\TableRegistry;
 use Cake\Mailer\TransportFactory;
 
@@ -22,7 +22,7 @@ use Cake\Mailer\TransportFactory;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class AppEmail extends Email
+class AppMailer extends Mailer
 {
 
     public function __construct($addBccBackupAddress = true)
@@ -37,7 +37,7 @@ class AppEmail extends Email
     /**
      * declaring this method public enables rendering an email (for preview)
      * {@inheritDoc}
-     * @see Email::_renderTemplates()
+     * @see Mailer::_renderTemplates()
      */
     public function _renderTemplates($content)
     {

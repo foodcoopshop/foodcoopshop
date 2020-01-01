@@ -2,7 +2,7 @@
 
 namespace App\Controller\Component;
 
-use App\Mailer\AppEmail;
+use App\Mailer\AppMailer;
 use Cake\Controller\Component;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
@@ -589,7 +589,7 @@ class CartComponent extends Component
             $sendInstantOrderNotification = $this->Manufacturer->getOptionSendInstantOrderNotification($manufacturer->send_instant_order_notification);
             if ($sendInstantOrderNotification) {
                 $manufacturersThatReceivedInstantOrderNotification[] = $manufacturer->name;
-                $email = new AppEmail();
+                $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('instant_order_notification');
                 $email->setTo($manufacturer->address_manufacturer->email)
                 ->setSubject(__('Notification_about_instant_order_order'))
@@ -638,7 +638,7 @@ class CartComponent extends Component
             
             // send email to manufacturer
             if ($stockAvailableLimitReached && $cartProduct->product->manufacturer->stock_management_enabled && $cartProduct->product->is_stock_product && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_manufacturer) {
-                $email = new AppEmail();
+                $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('stock_available_limit_reached_notification');
                 $email->setTo($cartProduct->product->manufacturer->address_manufacturer->email)
                 ->setSubject(__('Product_{0}:_Only_{1}_units_on_stock', [
@@ -659,7 +659,7 @@ class CartComponent extends Component
             
             // send email to contact person
             if ($stockAvailableLimitReached && $cartProduct->product->manufacturer->stock_management_enabled && $cartProduct->product->is_stock_product && !empty($cartProduct->product->manufacturer->customer) && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_contact_person) {
-                $email = new AppEmail();
+                $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('stock_available_limit_reached_notification');
                 $email->setTo($cartProduct->product->manufacturer->customer->address_customer->email)
                 ->setSubject(__('Product_{0}:_Only_{1}_units_on_stock', [
@@ -685,7 +685,7 @@ class CartComponent extends Component
     
     private function sendConfirmationEmailToCustomerSelfService($cart, $products)
     {
-        $email = new AppEmail();
+        $email = new AppMailer();
         $email->viewBuilder()->setTemplate('order_successful_self_service');
         $email->setTo($this->AppAuth->getEmail())
         ->setSubject(__('Your_purchase'))
@@ -708,7 +708,7 @@ class CartComponent extends Component
             return false;
         }
         
-        $email = new AppEmail();
+        $email = new AppMailer();
         $email->viewBuilder()->setTemplate('order_successful');
         $email->setTo($this->AppAuth->getEmail())
         ->setSubject(__('Order_confirmation'))
