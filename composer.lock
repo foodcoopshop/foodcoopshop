@@ -2255,16 +2255,16 @@
         },
         {
             "name": "cakephp/debug_kit",
-            "version": "4.0.1",
+            "version": "4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "fb177fb4afcf95e272f5beea89afece32fc825a9"
+                "reference": "6ce871a49e4d06eca7c5ec54a921ee67f397c5a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/fb177fb4afcf95e272f5beea89afece32fc825a9",
-                "reference": "fb177fb4afcf95e272f5beea89afece32fc825a9",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/6ce871a49e4d06eca7c5ec54a921ee67f397c5a5",
+                "reference": "6ce871a49e4d06eca7c5ec54a921ee67f397c5a5",
                 "shasum": ""
             },
             "require": {
@@ -2276,7 +2276,7 @@
                 "php": ">=7.2"
             },
             "require-dev": {
-                "cakephp/cakephp-codesniffer": "dev-next",
+                "cakephp/cakephp-codesniffer": "^4.0",
                 "phpunit/phpunit": "^8.0"
             },
             "suggest": {
@@ -2311,7 +2311,7 @@
                 "debug",
                 "kit"
             ],
-            "time": "2019-12-19T01:39:05+00:00"
+            "time": "2020-01-01T20:40:58+00:00"
         },
         {
             "name": "composer/composer",
