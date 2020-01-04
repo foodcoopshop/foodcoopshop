@@ -360,7 +360,7 @@ class OrderDetailsController extends AdminAppController
                 break;
             case 'product':
                 $group[] = 'OrderDetails.product_id';
-                $group[] = 'OrderDetails.product_name';
+                $group[] = 'Products.name';
                 $group[] = 'Products.id_manufacturer';
                 $group[] = 'Manufacturers.name';
                 break;
@@ -389,7 +389,7 @@ class OrderDetailsController extends AdminAppController
             case 'product':
                 $query = $this->addSelectGroupFields($query);
                 $query->select(['OrderDetails.product_id']);
-                $query->select(['OrderDetails.product_name', 'Products.id_manufacturer']);
+                $query->select(['Products.name', 'Products.id_manufacturer']);
                 $query->select(['Manufacturers.name']);
                 break;
         }
@@ -412,6 +412,7 @@ class OrderDetailsController extends AdminAppController
                 'sum_price',
                 'sum_amount',
                 'sum_deposit',
+                'Products.name'
             ]
         ])->toArray();
         
