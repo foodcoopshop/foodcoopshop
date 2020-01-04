@@ -101,11 +101,10 @@ class OrderDetailsController extends AdminAppController
     {
         $sortField = 'name';
         $sortMatches = [
-            'OrderDetails.product_name' => 'name',
             'Manufacturers.name' => $manufacturerNameField,
-            'OrderDetails.total_price_tax_incl' => 'sum_price',
-            'OrderDetails.product_amount' => 'sum_amount',
-            'OrderDetails.deposit' => 'sum_deposit'
+            'sum_price' => 'sum_price',
+            'sum_amount' => 'sum_amount',
+            'sum_deposit' => 'sum_deposit'
         ];
         if (!empty($this->getRequest()->getQuery('sort')) && isset($sortMatches[$this->getRequest()->getQuery('sort')])) {
             $sortField = $sortMatches[$this->getRequest()->getQuery('sort')];
@@ -354,24 +353,16 @@ class OrderDetailsController extends AdminAppController
                     $group[] = 'PickupDayEntities.comment';
                     $group[] = 'PickupDayEntities.products_picked_up';
                 }
-                $group[] = 'OrderDetails.total_price_tax_incl';
                 break;
             case 'manufacturer':
                 $group[] = 'Products.id_manufacturer';
                 $group[] = 'Manufacturers.name';
-                $group[] = 'OrderDetails.total_price_tax_incl';
-                $group[] = 'OrderDetails.product_amount';
-                $group[] = 'OrderDetails.deposit';
                 break;
             case 'product':
                 $group[] = 'OrderDetails.product_id';
-                $group[] = 'Products.name';
+                $group[] = 'OrderDetails.product_name';
                 $group[] = 'Products.id_manufacturer';
                 $group[] = 'Manufacturers.name';
-                $group[] = 'OrderDetails.total_price_tax_incl';
-                $group[] = 'OrderDetails.product_amount';
-                $group[] = 'OrderDetails.deposit';
-                $group[] = 'OrderDetails.product_name';
                 break;
         }
         
@@ -398,7 +389,7 @@ class OrderDetailsController extends AdminAppController
             case 'product':
                 $query = $this->addSelectGroupFields($query);
                 $query->select(['OrderDetails.product_id']);
-                $query->select(['Products.name', 'Products.id_manufacturer']);
+                $query->select(['OrderDetails.product_name', 'Products.id_manufacturer']);
                 $query->select(['Manufacturers.name']);
                 break;
         }
@@ -409,7 +400,18 @@ class OrderDetailsController extends AdminAppController
         
         $orderDetails = $this->paginate($query, [
             'sortWhitelist' => [
-                'OrderDetails.product_amount', 'OrderDetails.product_name', 'OrderDetails.total_price_tax_incl', 'OrderDetails.deposit', 'OrderDetails.order_state', 'OrderDetails.pickup_day', 'Manufacturers.name', 'Customers.' . Configure::read('app.customerMainNamePart'), 'OrderDetailUnits.product_quantity_in_units'
+                'OrderDetails.product_amount',
+                'OrderDetails.product_name',
+                'OrderDetails.total_price_tax_incl',
+                'OrderDetails.deposit',
+                'OrderDetails.order_state',
+                'OrderDetails.pickup_day',
+                'Manufacturers.name',
+                'Customers.' . Configure::read('app.customerMainNamePart'),
+                'OrderDetailUnits.product_quantity_in_units',
+                'sum_price',
+                'sum_amount',
+                'sum_deposit',
             ]
         ])->toArray();
         

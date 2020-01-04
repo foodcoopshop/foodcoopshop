@@ -23,7 +23,7 @@ echo '<th>';
 echo '</th>';
 
 echo '<th class="right">';
-    echo $this->Paginator->sort('OrderDetails.total_price_tax_incl', __d('admin', 'Price'));
+    echo $this->Paginator->sort('sum_price', __d('admin', 'Price'));
 echo '</th>';
 
 if (Configure::read('app.isDepositPaymentCashless')) {
