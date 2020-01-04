@@ -18,7 +18,7 @@ echo '<th class="right">';
 echo '</th>';
 
 echo '<th>';
-    echo $this->Paginator->sort('OrderDetails.product_name', __d('admin', 'Product'));
+    echo $this->Paginator->sort('Products.name', __d('admin', 'Product'));
 echo '</th>';
 
 echo '<th class="' . ($appAuth->isManufacturer() ? 'hide' : '') . '">';
