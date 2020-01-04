@@ -16,14 +16,14 @@
 use Cake\Core\Configure;
 
 echo '<th>';
-    echo $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member'));
+echo $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member'));
 echo '</th>';
 
 echo '<th>';
 echo '</th>';
 
 echo '<th class="right">';
-    echo $this->Paginator->sort('OrderDetails.total_price_tax_incl', __d('admin', 'Price'));
+echo $this->Paginator->sort('sum_price', __d('admin', 'Price'));
 echo '</th>';
 
 if (Configure::read('app.isDepositPaymentCashless')) {
