@@ -719,7 +719,7 @@ class CartsControllerTest extends AppCakeTestCase
                 'Carts.id_cart' => 1
             ]
         ])->first();
-        $this->assertEquals($cart['Cart']['status'], 0, 'cake cart status wrong');
+        $this->assertEquals($cart->status, 0, 'cake cart status wrong');
     }
 
     private function addTooManyProducts($productId, $amount, $expectedAmount, $expectedErrorMessage, $productIndex)
