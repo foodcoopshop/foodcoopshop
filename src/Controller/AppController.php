@@ -78,8 +78,6 @@ class AppController extends Controller
     {
         parent::beforeRender($event);
         $this->set('appAuth', $this->AppAuth);
-        $loggedUser = $this->AppAuth->user();
-        $this->set('loggedUser', $loggedUser['firstname'] . ' ' . $loggedUser['lastname']);
     }
 
     /**
