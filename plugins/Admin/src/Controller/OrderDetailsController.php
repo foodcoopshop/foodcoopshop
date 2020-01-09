@@ -622,14 +622,14 @@ class OrderDetailsController extends AdminAppController
             
             // 2) copy old order detail and modify it
             $newEntity = $oldOrderDetail;
-            $newEntity->isNew(true);
+            $newEntity->setNew(true);
             $newEntity->id_order_detail = null;
             $newEntity->id_customer = $customerId;
             $savedEntity = $this->OrderDetail->save($newEntity, [
                 'associated' => false
             ]);
             $newEntity->order_detail_tax->id_order_detail = $savedEntity->id_order_detail;
-            $newEntity->order_detail_tax->isNew(true);
+            $newEntity->order_detail_tax->setNew(true);
             $newOrderDetailTaxEntity = $this->OrderDetail->OrderDetailTaxes->save($newEntity->order_detail_tax);
             $savedEntity->order_detail_tax = $newOrderDetailTaxEntity;
             
@@ -638,7 +638,7 @@ class OrderDetailsController extends AdminAppController
             
             if (!empty($newEntity->order_detail_unit)) {
                 $newEntity->order_detail_unit->id_order_detail = $savedEntity->id_order_detail;
-                $newEntity->order_detail_unit->isNew(true);
+                $newEntity->order_detail_unit->setNew(true);
                 $newOrderDetailUnitEntity = $this->OrderDetail->OrderDetailUnits->save($newEntity->order_detail_unit);
                 $savedEntity->order_detail_unit = $newOrderDetailUnitEntity;
                 $productQuantity = $savedEntity->order_detail_unit->product_quantity_in_units / $originalProductAmount * $amount;
