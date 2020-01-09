@@ -20,7 +20,7 @@
  */
 
 return [
-    'debug' => true,
+    'debug' => false,
     'EmailTransport' => [
         'default' => [
             'className' => 'Mail',
