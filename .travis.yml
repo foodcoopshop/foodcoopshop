@@ -55,7 +55,7 @@ before_script:
 
 script:
   - vendor/bin/phpstan analyze -c phpstan.neon --no-interaction --no-progress
-  - vendor/bin/phpunit --stderr
+  - vendor/bin/phpunit --filter ApiControllerTest --stderr
   # - sudo cat ./logs/error.log
   
 notifications:
