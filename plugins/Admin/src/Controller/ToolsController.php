@@ -31,9 +31,10 @@ class ToolsController extends AdminAppController
         $this->RequestHandler->renderAs($this, 'ajax');
         
         // check if uploaded file is pdf
-        $mimeType = mime_content_type($this->getRequest()->getData('upload.tmp_name'));
-        // non-image files will return false
-        if ($mimeType != 'application/pdf') {
+        $upload = $this->getRequest()->getData('upload');
+        
+        // non-pdf files will return false
+        if ($upload->getClientMediaType() != 'application/pdf') {
             $message = 'only pdf format is allowed';
             die(json_encode([
                 'status' => 0,
@@ -41,11 +42,11 @@ class ToolsController extends AdminAppController
             ]));
         }
         
-        $extension = strtolower(pathinfo($this->getRequest()->getData('upload.name'), PATHINFO_EXTENSION));
+        $extension = strtolower(pathinfo($upload->getClientFilename(), PATHINFO_EXTENSION));
         $filename = StringComponent::createRandomString(10) . '.' . $extension;
         $filenameWithPath = Configure::read('app.tmpUploadFilesDir') . DS . $filename;
-        $file = new File($this->getRequest()->getData('upload.tmp_name'));
-        $file->copy(WWW_ROOT . $filenameWithPath);
+        
+        $upload->moveTo(WWW_ROOT . $filenameWithPath);
         
         die(json_encode([
             'status' => 1,
@@ -59,9 +60,10 @@ class ToolsController extends AdminAppController
         $this->RequestHandler->renderAs($this, 'ajax');
 
         // check if uploaded file is image file
-        $formatInfo = getimagesize($this->getRequest()->getData('upload.tmp_name'));
+        $upload = $this->getRequest()->getData('upload');
+        
         // non-image files will return false
-        if ($formatInfo === false || $formatInfo['mime'] != 'image/jpeg') {
+        if ($upload->getClientMediaType() != 'image/jpeg') {
             $message = 'the uploaded file needs to have jpg format.';
             die(json_encode([
                 'status' => 0,
@@ -69,13 +71,15 @@ class ToolsController extends AdminAppController
             ]));
         }
 
-        $extension = strtolower(pathinfo($this->getRequest()->getData('upload.name'), PATHINFO_EXTENSION));
+        $extension = strtolower(pathinfo($upload->getClientFilename(), PATHINFO_EXTENSION));
         if ($extension == 'jpeg') {
             $extension = 'jpg';
         }
         $filename = StringComponent::createRandomString(10) . '.' . $extension;
         $filenameWithPath = Configure::read('app.tmpUploadImagesDir') . DS . $filename;
-        Image::make($this->getRequest()->getData('upload.tmp_name'))
+        $upload->moveTo(WWW_ROOT . $filenameWithPath);
+        
+        Image::make(WWW_ROOT . $filenameWithPath) 
             ->widen($this->getMaxTmpUploadFileSize())
             ->save(WWW_ROOT . $filenameWithPath);
 
