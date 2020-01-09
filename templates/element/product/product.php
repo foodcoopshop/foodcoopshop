@@ -71,7 +71,7 @@ if ($product['description'] != '') {
         'javascript:void(0);',
         [
         'class' => 'toggle-link',
-        'title' => __('More_infos_to_product_{0}', [$product['name']]),
+        'title' => __('More_infos_to_product_{0}', [h($product['name'])]),
         'escape' => false
         ]
     );
