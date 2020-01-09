@@ -5,6 +5,7 @@ namespace App\Controller;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
+use Cake\Http\Cookie\Cookie;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -97,6 +98,7 @@ class AppController extends Controller
             if (empty($query->first())) {
                 $this->Flash->error(__('You_have_been_signed_out.'));
                 $this->AppAuth->logout();
+                $this->response = $this->response->withCookie((new Cookie('remember_me')));
                 $this->redirect(Configure::read('app.slugHelper')->getHome());
             }
         }
