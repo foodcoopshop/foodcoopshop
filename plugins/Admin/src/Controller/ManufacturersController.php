@@ -250,11 +250,13 @@ class ManufacturersController extends AdminAppController
             'uploadUrl' => Configure::read('app.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
             'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
         ];
-        $this->set('data', [
+        
+        $this->set([
             'status' => true,
-            'msg' => 'OK'
+            'msg' => 'OK',
         ]);
-        $this->set('_serialize', 'data');
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+        
     }
 
     public function index()

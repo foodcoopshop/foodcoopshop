@@ -194,12 +194,11 @@ class ProductsController extends AdminAppController
         $this->Flash->success($message);
         $this->ActionLog->customSave('product_deleted', $this->AppAuth->getUserId(), 0, 'products', $message . '<br />' . join('<br />', $preparedProductsForActionLog));
         
-        $this->set('data', [
+        $this->set([
             'status' => 1,
-            'msg' => 'ok'
+            'msg' => 'ok',
         ]);
-        
-        $this->set('_serialize', 'data');
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
         
     }
     
@@ -968,12 +967,12 @@ class ProductsController extends AdminAppController
         $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
-        $this->set('data', [
+        $this->set([
             'status' => 1,
-            'msg' => 'ok'
+            'msg' => 'ok',
         ]);
-
-        $this->set('_serialize', 'data');
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+        
     }
 
     public function editDeposit()
@@ -1038,12 +1037,11 @@ class ProductsController extends AdminAppController
         $this->Flash->success($actionLogMessage);
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
-        $this->set('data', [
+        $this->set([
             'status' => 1,
-            'msg' => 'ok'
+            'msg' => 'ok',
         ]);
-
-        $this->set('_serialize', 'data');
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
     public function editName()
