@@ -1,5 +1,6 @@
 <?php
 
+use App\Log\Engine\FileAndEmailLog;
 use Cake\Cache\Engine\FileEngine;
 use Cake\Database\Connection;
 use Cake\Database\Driver\Mysql;
@@ -268,7 +269,7 @@ return [
      */
     'Log' => [
         'debug' => [
-            'className' => FileLog::class,
+            'className' => FileAndEmailLog::class,
             'path' => LOGS,
             'file' => 'debug',
             'url' => env('LOG_DEBUG_URL', null),
@@ -276,7 +277,7 @@ return [
             'levels' => ['notice', 'info', 'debug'],
         ],
         'error' => [
-            'className' => FileLog::class,
+            'className' => FileAndEmailLog::class,
             'path' => LOGS,
             'file' => 'error',
             'url' => env('LOG_ERROR_URL', null),

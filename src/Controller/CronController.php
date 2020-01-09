@@ -35,11 +35,10 @@ class CronController extends AppController
         $this->Cronjob = TableRegistry::getTableLocator()->get('Cronjobs');
                 
         $executedCronjobs = $this->Cronjob->run();
-        $this->set('data', [
-            'executedCronjobs' => $executedCronjobs
+        $this->set([
+            'executedCronjobs' => $executedCronjobs,
         ]);
-        
-        $this->set('_serialize', 'data');
+        $this->viewBuilder()->setOption('serialize', ['executedCronjobs']);
            
     }
 

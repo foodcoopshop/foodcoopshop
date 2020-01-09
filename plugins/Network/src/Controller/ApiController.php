@@ -382,17 +382,17 @@ class ApiController extends Controller
                 $this->ActionLog->customSave('product_remotely_changed', $this->AppAuth->getUserId(), 0, 'products', $actionLogMessage);
             }
         }
-
-        $this->set('data', [
+        
+        $this->set([
             'app' => [
                 'name' => $this->getInstallationName(),
                 'domain' => Configure::read('app.cakeServerName')
             ],
             'status' => count($syncFieldsError) == 0,
-            'msg' => $message
+            'msg' => $message,
         ]);
-
-        $this->set('_serialize', 'data');
+        $this->viewBuilder()->setOption('serialize', ['app', 'status', 'msg']);
+        
     }
 
     private function getInstallationName()
@@ -411,8 +411,8 @@ class ApiController extends Controller
             $this->AppAuth->manufacturer->variable_member_fee
         );
         $preparedProducts = $this->Product->getProductsForBackend($this->AppAuth, '', $this->AppAuth->getManufacturerId(), 'all', '', 0, 0, true);
-
-        $this->set('data', [
+        
+        $this->set([
             'app' => [
                 'name' => $this->getInstallationName(),
                 'domain' => Configure::read('app.cakeServerName'),
@@ -421,7 +421,6 @@ class ApiController extends Controller
             'loggedUser' => $this->AppAuth->user(),
             'products' => $preparedProducts
         ]);
-
-        $this->set('_serialize', 'data');
+        $this->viewBuilder()->setOption('serialize', ['app', 'loggedUser', 'products']);
     }
 }

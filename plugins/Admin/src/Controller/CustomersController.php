@@ -304,14 +304,13 @@ class CustomersController extends AdminAppController
             $this->AppAuth->logout();
         }
 
-        $this->set('data', [
+        $this->set([
             'status' => 1,
             'msg' => 'ok',
             'redirectUrl' => $redirectUrl
         ]);
-
-        $this->set('_serialize', 'data');
-
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'redirectUrl']);
+        
     }
 
     public function profile()
