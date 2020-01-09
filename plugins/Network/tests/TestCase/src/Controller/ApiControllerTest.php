@@ -50,6 +50,7 @@ class ApiControllerTest extends TestCase
                 'PHP_AUTH_PW' => Configure::read('test.loginPassword'),
             ]
         ]);
+        // try catch block avoids fail on travis
         try {
             $this->get('/api/getProducts.json');
             $this->assertResponseCode(403);
@@ -65,6 +66,7 @@ class ApiControllerTest extends TestCase
                 'PHP_AUTH_PW' => Configure::read('test.loginPassword'),
             ]
         ]);
+        // try catch block avoids fail on travis
         try {
             $this->get('/api/getProducts.json');
             $this->assertResponseOk();
