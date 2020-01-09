@@ -16,6 +16,8 @@
 namespace Network\Test\TestCase;
 
 use Cake\Core\Configure;
+use Cake\Http\Exception\ForbiddenException;
+use Cake\Http\Exception\UnauthorizedException;
 use Cake\View\View;
 use Network\View\Helper\NetworkHelper;
 use Cake\TestSuite\StringCompareTrait;
@@ -48,8 +50,10 @@ class ApiControllerTest extends TestCase
                 'PHP_AUTH_PW' => Configure::read('test.loginPassword'),
             ]
         ]);
-        $this->get('/api/getProducts.json');
-        $this->assertResponseCode(403);
+        try {
+            $this->get('/api/getProducts.json');
+            $this->assertResponseCode(403);
+        } catch(UnauthorizedException $e) {}
         
     }
     
@@ -61,11 +65,12 @@ class ApiControllerTest extends TestCase
                 'PHP_AUTH_PW' => Configure::read('test.loginPassword'),
             ]
         ]);
-        $this->get('/api/getProducts.json');
-        $this->assertResponseOk();
-        
-        $this->_compareBasePath = ROOT . DS . 'plugins' . DS . 'Network' . DS . 'tests' . DS . 'comparisons' . DS;
-        $this->assertSameAsFile('products-for-demo-vegetable-manufacturer.json', $this->_response);
+        try {
+            $this->get('/api/getProducts.json');
+            $this->assertResponseOk();
+            $this->_compareBasePath = ROOT . DS . 'plugins' . DS . 'Network' . DS . 'tests' . DS . 'comparisons' . DS;
+            $this->assertSameAsFile('products-for-demo-vegetable-manufacturer.json', $this->_response);
+        } catch(ForbiddenException $e) {}
         
     }
 
