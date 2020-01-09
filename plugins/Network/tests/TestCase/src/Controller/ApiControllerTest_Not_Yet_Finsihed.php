@@ -13,6 +13,15 @@
  * @link          https://www.foodcoopshop.com
  */
 
+
+/**
+ * this is a first try with the new cakephp integration test trait
+ * @TODO import test database as fixture
+ * @TODO rename filename to ApiControllerTest.php
+ * @TODO check if tests run without --filter!
+ * @TODO maybe more stuff
+ */
+
 namespace Network\Test\TestCase;
 
 use Cake\Core\Configure;
@@ -34,12 +43,20 @@ class ApiControllerTest extends TestCase
         $this->Network = new NetworkHelper(new View());
     }
     
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState
+     */
     public function testGetProductsLoggedOut()
     {
         $this->get('/api/getProducts.json');
         $this->assertResponseCode(401);
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState
+     */
     public function testGetProductsAsSuperadmin()
     {
         $this->configRequest([
@@ -52,6 +69,11 @@ class ApiControllerTest extends TestCase
         $this->assertResponseCode(403);
     }
     
+    /**
+     * 
+     * @runInSeparateProcess
+     * @preserveGlobalState enabled
+     */
     public function testGetProductsAsManufacturer()
     {
         $this->configRequest([
