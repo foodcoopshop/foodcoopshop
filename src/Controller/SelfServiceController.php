@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -22,7 +22,7 @@ use Cake\ORM\TableRegistry;
 class SelfServiceController extends FrontendController
 {
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
         if (!(Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && $this->AppAuth->user())) {
@@ -85,7 +85,7 @@ class SelfServiceController extends FrontendController
             
             $this->AppAuth->Cart->finish();
             
-            if (empty($this->viewVars['cartErrors']) && empty($this->viewVars['formErrors'])) {
+            if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
                 $this->redirect(Configure::read('app.slugHelper')->getSelfService());
                 return;
             }

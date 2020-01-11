@@ -27,7 +27,7 @@ class CartsTable extends AppTable
     public const CART_TYPE_INSTANT_ORDER = 2;
     public const CART_TYPE_SELF_SERVICE  = 3;
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
         $this->setPrimaryKey('id_cart');
@@ -46,7 +46,7 @@ class CartsTable extends AppTable
         $this->addBehavior('Timestamp');
     }
     
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator->equals('cancellation_terms_accepted', 1, __('Please_accept_the_information_about_right_of_withdrawal.'));
         $validator->equals('general_terms_and_conditions_accepted', 1, __('Please_accept_the_general_terms_and_conditions.'));

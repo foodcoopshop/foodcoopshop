@@ -41,7 +41,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
         $expectedCcEmails = [Configure::read('test.loginEmailMeatManufacturer')];
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs($emailLogs[1], 'Gewicht angepasst: Forelle : Stück', [$newQuantity, 'Demo Superadmin', 'Der Basis-Preis beträgt 1,50 € / 100 g'], $expectedToEmails, $expectedCcEmails);
+        $this->assertEmailLogs($emailLogs[1], 'Gewicht angepasst: Forelle : Stück', [Configure::read('app.numberHelper')->formatUnitAsDecimal($newQuantity), 'Demo Superadmin', 'Der Basis-Preis beträgt 1,50 € / 100 g'], $expectedToEmails, $expectedCcEmails);
     }
     
     public function testEditOrderDetailQuantityAsSuperadminDoNotChangePrice()

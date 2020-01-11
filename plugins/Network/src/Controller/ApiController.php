@@ -5,7 +5,7 @@ namespace Network\Controller;
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -24,9 +24,14 @@ use Cake\ORM\TableRegistry;
 class ApiController extends Controller
 {
 
-    public $components = [
-        'RequestHandler',
-        'AppAuth' => [
+    public function initialize(): void
+    {
+        
+        parent::initialize();
+        
+        $this->loadComponent('RequestHandler');
+        
+        $this->loadComponent('AppAuth', [
             'authError' => ACCESS_DENIED_MESSAGE,
             'authorize' => [
                 'Controller'
@@ -44,10 +49,11 @@ class ApiController extends Controller
             // stateless authentication
             'unauthorizedRedirect' => false,
             'storage' => 'Memory'
-        ]
-    ];
+        ]);
 
-    public function beforeFilter(Event $event)
+    }
+    
+    public function beforeFilter(EventInterface $event)
     {
 
         // enables basic authentication with php in cgi mode
@@ -61,9 +67,9 @@ class ApiController extends Controller
         
         $this->RequestHandler->renderAs($this, 'json');
 
-        header('Access-Control-Allow-Origin: *');
-        header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
-        header('Access-Control-Allow-Headers: Content-Type, Authorization');
+        @header('Access-Control-Allow-Origin: *');
+        @header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+        @header('Access-Control-Allow-Headers: Content-Type, Authorization');
         
         if ($this->getRequest()->is('options')) {
             return $this->getResponse();
@@ -376,17 +382,17 @@ class ApiController extends Controller
                 $this->ActionLog->customSave('product_remotely_changed', $this->AppAuth->getUserId(), 0, 'products', $actionLogMessage);
             }
         }
-
-        $this->set('data', [
+        
+        $this->set([
             'app' => [
                 'name' => $this->getInstallationName(),
                 'domain' => Configure::read('app.cakeServerName')
             ],
             'status' => count($syncFieldsError) == 0,
-            'msg' => $message
+            'msg' => $message,
         ]);
-
-        $this->set('_serialize', 'data');
+        $this->viewBuilder()->setOption('serialize', ['app', 'status', 'msg']);
+        
     }
 
     private function getInstallationName()
@@ -405,8 +411,8 @@ class ApiController extends Controller
             $this->AppAuth->manufacturer->variable_member_fee
         );
         $preparedProducts = $this->Product->getProductsForBackend($this->AppAuth, '', $this->AppAuth->getManufacturerId(), 'all', '', 0, 0, true);
-
-        $this->set('data', [
+        
+        $this->set([
             'app' => [
                 'name' => $this->getInstallationName(),
                 'domain' => Configure::read('app.cakeServerName'),
@@ -415,7 +421,6 @@ class ApiController extends Controller
             'loggedUser' => $this->AppAuth->user(),
             'products' => $preparedProducts
         ]);
-
-        $this->set('_serialize', 'data');
+        $this->viewBuilder()->setOption('serialize', ['app', 'loggedUser', 'products']);
     }
 }

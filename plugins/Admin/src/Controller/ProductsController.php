@@ -4,7 +4,7 @@ namespace Admin\Controller;
 
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Filesystem\Folder;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
@@ -105,7 +105,7 @@ class ProductsController extends AdminAppController
         }
     }
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
@@ -194,12 +194,11 @@ class ProductsController extends AdminAppController
         $this->Flash->success($message);
         $this->ActionLog->customSave('product_deleted', $this->AppAuth->getUserId(), 0, 'products', $message . '<br />' . join('<br />', $preparedProductsForActionLog));
         
-        $this->set('data', [
+        $this->set([
             'status' => 1,
-            'msg' => 'ok'
+            'msg' => 'ok',
         ]);
-        
-        $this->set('_serialize', 'data');
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
         
     }
     
@@ -968,12 +967,12 @@ class ProductsController extends AdminAppController
         $this->ActionLog->customSave('product_price_changed', $this->AppAuth->getUserId(), $productId, 'products', $actionLogMessage);
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
-        $this->set('data', [
+        $this->set([
             'status' => 1,
-            'msg' => 'ok'
+            'msg' => 'ok',
         ]);
-
-        $this->set('_serialize', 'data');
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+        
     }
 
     public function editDeposit()
@@ -1038,12 +1037,11 @@ class ProductsController extends AdminAppController
         $this->Flash->success($actionLogMessage);
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
-        $this->set('data', [
+        $this->set([
             'status' => 1,
-            'msg' => 'ok'
+            'msg' => 'ok',
         ]);
-
-        $this->set('_serialize', 'data');
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
     public function editName()
@@ -1202,7 +1200,7 @@ class ProductsController extends AdminAppController
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED') && $this->AppAuth->isManufacturer()) {
             $this->SyncManufacturer = TableRegistry::getTableLocator()->get('Network.SyncManufacturers');
             $this->SyncDomain = TableRegistry::getTableLocator()->get('Network.SyncDomains');
-            $this->helpers[] = 'Network.Network';
+            $this->viewBuilder()->setHelpers(['Network.Network']);
             $isAllowedToUseAsMasterFoodcoop = $this->SyncManufacturer->isAllowedToUseAsMasterFoodcoop($this->AppAuth);
             $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->manufacturer->enabled_sync_domains);
             $showSyncProductsButton = $isAllowedToUseAsMasterFoodcoop && count($syncDomains) > 0;

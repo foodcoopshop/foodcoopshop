@@ -2,7 +2,7 @@
 
 namespace App\Log\Engine;
 
-use App\Mailer\AppEmail;
+use App\Mailer\AppMailer;
 use App\Network\AppSession;
 use Cake\Core\Configure;
 use Cake\Log\Engine\FileLog;
@@ -25,16 +25,12 @@ use Cake\Utility\Text;
 class FileAndEmailLog extends FileLog
 {
 
-    public function log($level, $message, array $context = [])
+    public function log($level, $message, array $context = []): void
     {
-
-        $result = parent::log($level, $message, $context);
-
+        parent::log($level, $message, $context);
         if (Configure::read('app.emailErrorLoggingEnabled')) {
             $this->sendEmailWithErrorInformation($message);
         }
-
-        return $result;
     }
 
     private function sendEmailWithErrorInformation($message)
@@ -73,7 +69,7 @@ class FileAndEmailLog extends FileLog
 
         $subject = Configure::read('app.cakeServerName') . ' ' . Text::truncate($message, 90) . ' ' . date(Configure::read('DateFormat.DatabaseWithTimeAlt'));
         try {
-            $email = new AppEmail(false);
+            $email = new AppMailer(false);
             $email->setProfile('debug');
             $email->setTransport('debug');
             $email->setTo(Configure::read('app.debugEmail'))

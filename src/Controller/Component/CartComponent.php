@@ -2,7 +2,7 @@
 
 namespace App\Controller\Component;
 
-use App\Mailer\AppEmail;
+use App\Mailer\AppMailer;
 use Cake\Controller\Component;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
@@ -355,7 +355,7 @@ class CartComponent extends Component
             ];
         }
         
-        $this->_registry->getController()->set('cartErrors', $cartErrors);
+        $this->getController()->set('cartErrors', $cartErrors);
         
         if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
             $validator = $this->Cart->getValidator('default');
@@ -395,18 +395,18 @@ class CartComponent extends Component
                 ]
             ];
             $fixedPickupDayRequest = [];
-            $pickupEntities = $this->_registry->getController()->request->getData('Carts.pickup_day_entities');
+            $pickupEntities = $this->getController()->getRequest()->getData('Carts.pickup_day_entities');
             if (!empty($pickupEntities)) {
                 foreach($pickupEntities as $pickupDay) {
                     $pickupDay['pickup_day'] = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), $pickupDay['pickup_day']);
                     $fixedPickupDayRequest[] = $pickupDay;
                 }
-                $this->_registry->getController()->setRequest($this->_registry->getController()->request->withData('Carts.pickup_day_entities', $fixedPickupDayRequest));
+                $this->getController()->setRequest($this->getController()->getRequest()->withData('Carts.pickup_day_entities', $fixedPickupDayRequest));
             }
         }
         $cart['Cart'] = $this->Cart->patchEntity(
             $cart['Cart'],
-            $this->_registry->getController()->request->getData(),
+            $this->getController()->getRequest()->getData(),
             $options
         );
         
@@ -414,17 +414,17 @@ class CartComponent extends Component
         if ($cart['Cart']->hasErrors()) {
             $formErrors = true;
         }
-        $this->_registry->getController()->set('cart', $cart['Cart']); // to show error messages in form (from validation)
-        $this->_registry->getController()->set('formErrors', $formErrors);
+        $this->getController()->set('cart', $cart['Cart']); // to show error messages in form (from validation)
+        $this->getController()->set('formErrors', $formErrors);
         
         if (!empty($cartErrors) || !empty($formErrors)) {
-            $this->_registry->getController()->Flash->error(__('Errors_occurred.'));
+            $this->getController()->Flash->error(__('Errors_occurred.'));
         } else {
             
             $selectedTimebasedCurrencySeconds = 0;
             $selectedTimeAdaptionFactor = 0;
-            if (!empty($this->_registry->getController()->request->getData('Carts.timebased_currency_seconds_sum_tmp')) && $this->_registry->getController()->request->getData('Carts.timebased_currency_seconds_sum_tmp') > 0) {
-                $selectedTimebasedCurrencySeconds = $this->_registry->getController()->request->getData('Carts.timebased_currency_seconds_sum_tmp');
+            if (!empty($this->getController()->getRequest()->getData('Carts.timebased_currency_seconds_sum_tmp')) && $this->getController()->getRequest()->getData('Carts.timebased_currency_seconds_sum_tmp') > 0) {
+                $selectedTimebasedCurrencySeconds = $this->getController()->getRequest()->getData('Carts.timebased_currency_seconds_sum_tmp');
                 $selectedTimeAdaptionFactor = $selectedTimebasedCurrencySeconds / $this->getTimebasedCurrencySecondsSum();
             }
             
@@ -459,16 +459,16 @@ class CartComponent extends Component
                     break;
                 case $this->Cart::CART_TYPE_INSTANT_ORDER;
                     $actionLogType = 'instant_order_added';
-                    $userIdForActionLog = $this->_registry->getController()->request->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
+                    $userIdForActionLog = $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer')['id_customer'];
                     if (empty($manufacturersThatReceivedInstantOrderNotification)) {
                         $message = __('Instant_order_({0})_successfully_placed_for_{1}.', [
                             Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
-                            '<b>' . $this->_registry->getController()->request->getSession()->read('Auth.instantOrderCustomer')->name . '</b>'
+                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.instantOrderCustomer')->name . '</b>'
                         ]);
                     } else {
                         $message = __('Instant_order_({0})_successfully_placed_for_{1}._The_following_manufacturers_were_notified:_{2}', [
                             Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum()),
-                            '<b>' . $this->_registry->getController()->request->getSession()->read('Auth.instantOrderCustomer')->name . '</b>',
+                            '<b>' . $this->getController()->getRequest()->getSession()->read('Auth.instantOrderCustomer')->name . '</b>',
                             '<b>' . join(', ', $manufacturersThatReceivedInstantOrderNotification) . '</b>'
                         ]);
                     }
@@ -489,7 +489,7 @@ class CartComponent extends Component
             
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
-            $this->_registry->getController()->Flash->success($message);
+            $this->getController()->Flash->success($message);
 
         }
         
@@ -589,14 +589,14 @@ class CartComponent extends Component
             $sendInstantOrderNotification = $this->Manufacturer->getOptionSendInstantOrderNotification($manufacturer->send_instant_order_notification);
             if ($sendInstantOrderNotification) {
                 $manufacturersThatReceivedInstantOrderNotification[] = $manufacturer->name;
-                $email = new AppEmail();
+                $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('instant_order_notification');
                 $email->setTo($manufacturer->address_manufacturer->email)
                 ->setSubject(__('Notification_about_instant_order_order'))
                 ->setViewVars([
                     'appAuth' => $this->AppAuth,
                     'cart' => ['CartProducts' => $cartProducts],
-                    'originalLoggedCustomer' => $this->_registry->getController()->request->getSession()->read('Auth.originalLoggedCustomer'),
+                    'originalLoggedCustomer' => $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer'),
                     'manufacturer' => $manufacturer,
                     'depositSum' => $depositSum,
                     'productSum' => $productSum,
@@ -638,7 +638,7 @@ class CartComponent extends Component
             
             // send email to manufacturer
             if ($stockAvailableLimitReached && $cartProduct->product->manufacturer->stock_management_enabled && $cartProduct->product->is_stock_product && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_manufacturer) {
-                $email = new AppEmail();
+                $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('stock_available_limit_reached_notification');
                 $email->setTo($cartProduct->product->manufacturer->address_manufacturer->email)
                 ->setSubject(__('Product_{0}:_Only_{1}_units_on_stock', [
@@ -659,7 +659,7 @@ class CartComponent extends Component
             
             // send email to contact person
             if ($stockAvailableLimitReached && $cartProduct->product->manufacturer->stock_management_enabled && $cartProduct->product->is_stock_product && !empty($cartProduct->product->manufacturer->customer) && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_contact_person) {
-                $email = new AppEmail();
+                $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('stock_available_limit_reached_notification');
                 $email->setTo($cartProduct->product->manufacturer->customer->address_customer->email)
                 ->setSubject(__('Product_{0}:_Only_{1}_units_on_stock', [
@@ -685,7 +685,7 @@ class CartComponent extends Component
     
     private function sendConfirmationEmailToCustomerSelfService($cart, $products)
     {
-        $email = new AppEmail();
+        $email = new AppMailer();
         $email->viewBuilder()->setTemplate('order_successful_self_service');
         $email->setTo($this->AppAuth->getEmail())
         ->setSubject(__('Your_purchase'))
@@ -708,14 +708,14 @@ class CartComponent extends Component
             return false;
         }
         
-        $email = new AppEmail();
+        $email = new AppMailer();
         $email->viewBuilder()->setTemplate('order_successful');
         $email->setTo($this->AppAuth->getEmail())
         ->setSubject(__('Order_confirmation'))
         ->setViewVars([
             'cart' => $this->Cart->getCartGroupedByPickupDay($cart),
             'appAuth' => $this->AppAuth,
-            'originalLoggedCustomer' => $this->_registry->getController()->getRequest()->getSession()->check('Auth.originalLoggedCustomer') ? $this->_registry->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer') : null
+            'originalLoggedCustomer' => $this->getController()->getRequest()->getSession()->check('Auth.originalLoggedCustomer') ? $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer') : null
         ]);
         
         if (Configure::read('app.rightOfWithdrawalEnabled')) {
@@ -755,15 +755,16 @@ class CartComponent extends Component
      */
     private function generateRightOfWithdrawalInformationAndForm($cart, $products)
     {
-        $this->_registry->getController()->set('cart', $cart);
+        $this->getController()->set('cart', $cart);
         $manufacturers = [];
         foreach ($products as $product) {
             $manufacturers[$product->manufacturer->id_manufacturer][] = $product;
         }
-        $this->_registry->getController()->set('manufacturers', $manufacturers);
-        $this->_registry->getController()->set('saveParam', 'I');
-        $this->RequestHandler->renderAs($this->_registry->getController(), 'pdf');
-        return $this->_registry->getController()->render('generateRightOfWithdrawalInformationAndForm');
+        $this->getController()->set('manufacturers', $manufacturers);
+        $this->getController()->set('saveParam', 'I');
+        $this->RequestHandler->renderAs($this->getController(), 'pdf');
+        $response = $this->getController()->render('generateRightOfWithdrawalInformationAndForm');
+        return $response->__toString();
     }
     
     /**
@@ -772,9 +773,10 @@ class CartComponent extends Component
      */
     private function generateGeneralTermsAndConditions()
     {
-        $this->_registry->getController()->set('saveParam', 'I');
-        $this->RequestHandler->renderAs($this->_registry->getController(), 'pdf');
-        return $this->_registry->getController()->render('generateGeneralTermsAndConditions');
+        $this->getController()->set('saveParam', 'I');
+        $this->RequestHandler->renderAs($this->getController(), 'pdf');
+        $response = $this->getController()->render('generateGeneralTermsAndConditions');
+        return $response->__toString();
     }
     
     /**
@@ -785,7 +787,7 @@ class CartComponent extends Component
     private function generateOrderConfirmation($cart)
     {
         
-        $this->_registry->getController()->set('cart', $cart);
+        $this->getController()->set('cart', $cart);
         $manufacturers = [];
         
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
@@ -807,10 +809,11 @@ class CartComponent extends Component
             ];
         }
         
-        $this->_registry->getController()->set('manufacturers', $manufacturers);
-        $this->_registry->getController()->set('saveParam', 'I');
-        $this->RequestHandler->renderAs($this->_registry->getController(), 'pdf');
-        return $this->_registry->getController()->render('generateOrderConfirmation');
+        $this->getController()->set('manufacturers', $manufacturers);
+        $this->getController()->set('saveParam', 'I');
+        $this->RequestHandler->renderAs($this->getController(), 'pdf');
+        $response = $this->getController()->render('generateOrderConfirmation');
+        return $response->__toString();
     }
     
 }

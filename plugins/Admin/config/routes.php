@@ -19,8 +19,10 @@ use Cake\Routing\Route\DashedRoute;
 Router::plugin(
     'Admin',
     ['path' => '/admin'],
-    function (RouteBuilder $routes) {
-        $routes->setExtensions(['pdf']);
-        $routes->fallbacks(DashedRoute::class);
+    function (RouteBuilder $builder) {
+        $builder->setExtensions(['pdf']);
+        $builder->connect('/', ['plugin' => 'Admin', 'controller' => 'Pages', 'action' => 'home']);
+        $builder->redirect('/orders', '/admin/order-details?groupBy=customer');
+        $builder->fallbacks(DashedRoute::class);
     }
 );

@@ -21,7 +21,7 @@ use Cake\Utility\Hash;
 class ProductAttributeCombinationsTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('product_attribute_combination');
         parent::initialize($config);
@@ -53,6 +53,12 @@ class ProductAttributeCombinationsTable extends AppTable
         ];
 
         foreach ($combinations as $combination) {
+            
+            // product might have been hard deleted from database
+            if (empty($combination->product_attribute->product)) {
+                continue;
+            }
+            
             $preparedProduct = $combination->product_attribute->product;
 
             $tmpProduct = [];
@@ -71,7 +77,7 @@ class ProductAttributeCombinationsTable extends AppTable
 
         $result['online'] = Hash::sort($result['online'], '{n}.name', 'asc');
         $result['offline'] = Hash::sort($result['offline'], '{n}.name', 'asc');
-
+        
         return $result;
     }
 }

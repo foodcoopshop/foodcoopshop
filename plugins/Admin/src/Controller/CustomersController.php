@@ -2,7 +2,7 @@
 namespace Admin\Controller;
 
 use App\Lib\Error\Exception\InvalidParameterException;
-use App\Mailer\AppEmail;
+use App\Mailer\AppMailer;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
@@ -304,14 +304,13 @@ class CustomersController extends AdminAppController
             $this->AppAuth->logout();
         }
 
-        $this->set('data', [
+        $this->set([
             'status' => 1,
             'msg' => 'ok',
             'redirectUrl' => $redirectUrl
         ]);
-
-        $this->set('_serialize', 'data');
-
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'redirectUrl']);
+        
     }
 
     public function profile()
@@ -433,7 +432,8 @@ class CustomersController extends AdminAppController
         $this->set('customer', $customer);
         $this->set('saveParam', 'I');
         $this->RequestHandler->renderAs($this, 'pdf');
-        return $this->render('generateTermsOfUsePdf');
+        $response = $this->render('generateTermsOfUsePdf');
+        return $response->__toString();
     }
 
     public function changeStatus($customerId, $status, $sendEmail)
@@ -474,7 +474,7 @@ class CustomersController extends AdminAppController
         if ($sendEmail) {
             $newPassword = $this->Customer->setNewPassword($customer->id_customer);
 
-            $email = new AppEmail();
+            $email = new AppMailer();
             $email->viewBuilder()->setTemplate('customer_activated');
             $email->setTo($customer->email)
                 ->setSubject(__d('admin', 'The_account_was_activated'))

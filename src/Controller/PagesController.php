@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Event\EventInterface;
 use Cake\Core\Configure;
-use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Security;
 use Cviebrock\DiscoursePHP\SSOHelper as SSOHelper;
@@ -28,7 +28,7 @@ use Cviebrock\DiscoursePHP\SSOHelper as SSOHelper;
 class PagesController extends FrontendController
 {
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
 
         parent::beforeFilter($event);

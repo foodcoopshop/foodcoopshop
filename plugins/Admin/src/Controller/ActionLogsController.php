@@ -2,7 +2,7 @@
 namespace Admin\Controller;
 
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -23,7 +23,7 @@ use Cake\ORM\TableRegistry;
 class ActionLogsController extends AdminAppController
 {
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');

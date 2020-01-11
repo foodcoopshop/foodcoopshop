@@ -3,7 +3,6 @@
 namespace Network\Model\Table;
 
 use App\Model\Table\AppTable;
-use Cake\Utility\Hash;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -21,7 +20,7 @@ use Cake\Utility\Hash;
 class SyncProductsTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
         $this->belongsTo('SyncDomains', [

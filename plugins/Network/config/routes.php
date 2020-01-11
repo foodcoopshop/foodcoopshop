@@ -13,19 +13,13 @@
  * @link          https://www.foodcoopshop.com
  */
 use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
-use Cake\Routing\Route\DashedRoute;
 
-Router::plugin(
-    'Network',
-    ['path' => '/'],
-    function (RouteBuilder $routes) {
-        $routes->connect('/network/:controller/:action/*', ['plugin' => 'Network']);
-        $routes->connect(
-            '/api/:action',
-            ['plugin' => 'Network', 'controller' => 'Api']
-        )
-        ->setExtensions(['json']);
-        $routes->fallbacks(DashedRoute::class);
-    }
-);
+$routes->scope('/', function (RouteBuilder $builder) {
+    $builder->setExtensions(['json']);
+    $builder->connect('/api/:action', ['plugin' => 'Network', 'controller' => 'Api']);
+});
+    
+$routes->scope('/network', function (RouteBuilder $builder) {
+    $builder->setExtensions(['json']);
+    $builder->connect('/:controller/:action/*', ['plugin' => 'Network']);
+});

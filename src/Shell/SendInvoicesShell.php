@@ -14,7 +14,7 @@
  */
 namespace App\Shell;
 
-use App\Mailer\AppEmail;
+use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
@@ -188,7 +188,7 @@ class SendInvoicesShell extends AppShell
         // START send email to accounting employee
         $accountingEmail = Configure::read('appDb.FCS_ACCOUNTING_EMAIL');
         if ($accountingEmail != '') {
-            $email = new AppEmail();
+            $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.accounting_information_invoices_sent');
             $email->setTo($accountingEmail)
                 ->setSubject(__('Invoices_for_{0}_have_been_sent', [Configure::read('app.timeHelper')->getLastMonthNameAndYear()]))

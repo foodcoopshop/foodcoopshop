@@ -5,6 +5,7 @@ namespace App\Network;
 use App\View\Helper\SlugHelper;
 use Cake\Core\Configure;
 use Cake\Http\Client;
+use Cake\Http\Client\Response;
 use Cake\ORM\TableRegistry;
 use Cake\View\View;
 
@@ -84,14 +85,14 @@ class AppHttpClient extends Client
         return $this->response->getHeaderline('Location');
     }
     
-    public function get($url, $data = [], array $options = [])
+    public function get($url, $data = [], array $options = []): Response
     {
         $options = array_merge($options, [
             'redirect' => $this->redirect
         ]);
         $this->redirect = 0;
         $this->response = parent::get($url, $data, $options);
-        return $this->getContent();
+        return $this->response;
     }
 
     /**
@@ -99,12 +100,12 @@ class AppHttpClient extends Client
      * @param string $url
      * @param array $parameters
      */
-    public function ajaxPost($url, $data = [], array $options = [])
+    public function ajaxPost($url, $data = [], array $options = []): Response
     {
         if (empty($options)) {
             $options = [
                 'headers' => [
-                    'X-Requested-With:XMLHttpRequest'
+                    'X-Requested-With' => 'XMLHttpRequest'
                 ],
                 'type' => 'json',
             ];
@@ -114,10 +115,10 @@ class AppHttpClient extends Client
             $data,
             $options
         );
-        return $this->getContent();
+        return $this->response;
     }
 
-    public function post($url, $data = [], array $options = [])
+    public function post($url, $data = [], array $options = []): Response
     {
         $options = array_merge($options, [
             'redirect' => $this->redirect
@@ -128,7 +129,7 @@ class AppHttpClient extends Client
             $data,
             $options
         );
-        return $this->getContent();
+        return $this->response;
     }
 
     public function getJsonDecodedContent()

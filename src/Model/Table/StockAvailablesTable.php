@@ -20,14 +20,14 @@ use Cake\Validation\Validator;
 class StockAvailablesTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('stock_available');
         parent::initialize($config);
         $this->setPrimaryKey('id_product');
     }
     
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator->numeric('quantity', __('The_quantity_needs_to_be_a_number.'));
         $validator = $this->getNumberRangeValidator($validator, 'quantity', -5000, 5000, __('Field:_Stock'));

@@ -20,7 +20,7 @@ namespace App\Model\Table;
 class DepositProductAttributesTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('deposits');
         parent::initialize($config);

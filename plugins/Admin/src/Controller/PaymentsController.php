@@ -2,9 +2,9 @@
 
 namespace Admin\Controller;
 
-use App\Mailer\AppEmail;
+use App\Mailer\AppMailer;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\I18n\FrozenDate;
 use Cake\I18n\Time;
 use Cake\Core\Configure;
@@ -68,7 +68,7 @@ class PaymentsController extends AdminAppController
         }
     }
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         $this->Payment = TableRegistry::getTableLocator()->get('Payments');
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
@@ -98,7 +98,7 @@ class PaymentsController extends AdminAppController
 
         $payment->approval = $approval;
         $payment->approval_comment = __d('admin', 'Your_comment_will_be_shown_here.');
-        $email = new AppEmail();
+        $email = new AppMailer();
         $email->viewBuilder()->setTemplate('Admin.payment_status_changed');
         $email->setTo($payment->customer->email)
             ->setViewVars([
@@ -107,11 +107,8 @@ class PaymentsController extends AdminAppController
                 'newStatusAsString' => Configure::read('app.htmlHelper')->getApprovalStates()[$approval],
                 'payment' => $payment
             ]);
-        $html = $email->_renderTemplates(null)['html'];
-        if ($html != '') {
-            echo $html;
-            exit;
-        }
+        echo $email->render()->getMessage()->getBodyString();
+        exit;
     }
 
     public function edit($paymentId)
@@ -180,7 +177,7 @@ class PaymentsController extends AdminAppController
             $message = __d('admin', 'The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}.', ['<b>'.$payment->customer->name.'</b>', '<b>' .$newStatusAsString.'</b>']);
 
             if ($payment->send_email) {
-                $email = new AppEmail();
+                $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('Admin.payment_status_changed');
                 $email->setTo($payment->customer->email)
                     ->setSubject(__d('admin', 'The_status_of_your_credit_upload_was_successfully_changed_to_{0}.', ['"' .$newStatusAsString.'"']))
@@ -624,9 +621,9 @@ class PaymentsController extends AdminAppController
         $this->set('payments', $payments);
         $this->set('customerId', $this->getCustomerId());
 
-        $this->set('column_title', $this->viewVars['title_for_layout']);
+        $this->set('column_title', $this->viewBuilder()->getVars()['title_for_layout']);
 
-        $title = $this->viewVars['title_for_layout'];
+        $title = $this->viewBuilder()->getVars()['title_for_layout'];
         if (in_array($this->getRequest()->getParam('action'), ['product', 'member_fee'])) {
             $title .= ' '.__d('admin', 'of_{0}', [$customer->name]);
         }

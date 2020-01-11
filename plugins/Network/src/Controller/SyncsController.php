@@ -5,7 +5,7 @@ namespace Network\Controller;
 use App\Controller\AppController;
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -37,13 +37,13 @@ class SyncsController extends AppController
         return $isAllowedToUseAsMasterFoodcoop && count($syncDomains) > 0;
     }
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
 
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
         $this->viewBuilder()->setLayout('Admin.default');
-        $this->helpers[] = 'Network.Network';
+        $this->viewBuilder()->setHelpers(['Network.Network']);
 
         $this->SyncDomain = TableRegistry::getTableLocator()->get('Network.SyncDomains');
         $this->SyncProduct = TableRegistry::getTableLocator()->get('Network.SyncProducts');
@@ -112,13 +112,13 @@ class SyncsController extends AppController
             $message = __d('network', '{0}_{1}_could_not_be_associated.', [$type, '<b>'.$product['productName'].'</b>']);
         }
 
-        $this->set('data', [
-                'status' => !empty($status) ? true : $status,
-                'product' => $product,
-                'msg' => $message
-            ]);
-
-        $this->set('_serialize', 'data');
+        $this->set([
+            'status' => !empty($status) ? true : $status,
+            'product' => $product,
+            'msg' => $message
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'product', 'msg']);
+        
     }
 
     public function products()
@@ -182,13 +182,13 @@ class SyncsController extends AppController
             $message = __d('network', 'While_deleting_the_product_{0}_there_has_an_error_occurred.', ['<b>'.$product['productName'].'</b>']);
         }
 
-        $this->set('data', [
-                'status' => $status,
-                'syncProduct' => $syncProduct,
-                'msg' => $message
-            ]);
-
-        $this->set('_serialize', 'data');
+        $this->set([
+            'status' => $status,
+            'syncProduct' => $syncProduct,
+            'msg' => $message
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'syncProduct', 'msg']);
+        
     }
 
     public function productData()

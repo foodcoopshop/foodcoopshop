@@ -19,7 +19,9 @@
 
 use Cake\Core\Configure;
 
-define('ACCESS_DENIED_MESSAGE', __('Access_denied_please_sign_in.'));
+if (!defined('ACCESS_DENIED_MESSAGE')) {
+    define('ACCESS_DENIED_MESSAGE', __('Access_denied_please_sign_in.'));
+}
 
 // called only for translation
 __('order_state_cash');

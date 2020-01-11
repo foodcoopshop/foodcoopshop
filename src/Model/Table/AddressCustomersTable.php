@@ -20,7 +20,7 @@ use Cake\Validation\Validator;
 class AddressCustomersTable extends AddressesTable
 {
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator->notEmptyString('email', __('Please_enter_your_email_address.'));
         $validator->email('email', false, __('The_email_address_is_not_valid.'));

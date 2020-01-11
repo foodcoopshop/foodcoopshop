@@ -6,6 +6,7 @@ use App\Network\AppSession;
 use App\ORM\AppMarshaller;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
+use Cake\ORM\Marshaller;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
@@ -32,7 +33,7 @@ class AppTable extends Table
 
     public $tablePrefix = 'fcs_'; // legacy from CakePHP2
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable($this->tablePrefix . $this->getTable());
         // HttpClient needs special header HTTP_X_UNIT_TEST_MODE => set in AppCakeTestCase::initHttpClient()
@@ -146,7 +147,7 @@ class AppTable extends Table
      * {@inheritDoc}
      * @see \Cake\ORM\Table::marshaller()
      */
-    public function marshaller()
+    public function marshaller(): Marshaller
     {
         return new AppMarshaller($this);
     }

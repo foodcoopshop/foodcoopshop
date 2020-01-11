@@ -3,9 +3,9 @@
 namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
-use App\Mailer\AppEmail;
+use App\Mailer\AppMailer;
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\Http\Exception\NotFoundException;
@@ -52,7 +52,7 @@ class ManufacturersController extends AdminAppController
         }
     }
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
@@ -250,11 +250,13 @@ class ManufacturersController extends AdminAppController
             'uploadUrl' => Configure::read('app.cakeServerName') . "/files/kcfinder/manufacturers/" . $manufacturerId,
             'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/manufacturers/" . $manufacturerId
         ];
-        $this->set('data', [
+        
+        $this->set([
             'status' => true,
-            'msg' => 'OK'
+            'msg' => 'OK',
         ]);
-        $this->set('_serialize', 'data');
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+        
     }
 
     public function index()
@@ -397,7 +399,7 @@ class ManufacturersController extends AdminAppController
 
             $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
             if ($sendEmail) {
-                $email = new AppEmail();
+                $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('Admin.send_invoice');
                 $email->setTo($manufacturer->address_manufacturer->email)
                     ->setAttachments([
@@ -498,7 +500,7 @@ class ManufacturersController extends AdminAppController
                 $this->OrderDetail->updateOrderState(null, null, $validOrderStates, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturerId, $orderDetailIds);
                 
                 if ($sendEmail) {
-                    $email = new AppEmail();
+                    $email = new AppMailer();
                     $email->viewBuilder()->setTemplate('Admin.send_order_list');
                     $email->setTo($manufacturer->address_manufacturer->email)
                     ->setAttachments([
@@ -603,7 +605,7 @@ class ManufacturersController extends AdminAppController
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
             $this->SyncDomain = TableRegistry::getTableLocator()->get('Network.SyncDomains');
-            $this->helpers[] = 'Network.Network';
+            $this->viewBuilder()->setHelpers(['Network.Network']);
             $this->set('syncDomainsForDropdown', $this->SyncDomain->getForDropdown());
             $isAllowedEditManufacturerOptionsDropdown = $this->SyncDomain->isAllowedEditManufacturerOptionsDropdown($this->AppAuth);
             $this->set('isAllowedEditManufacturerOptionsDropdown', $isAllowedEditManufacturerOptionsDropdown);

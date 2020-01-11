@@ -24,7 +24,7 @@ use Cake\Validation\Validator;
 class SyncDomainsTable extends AppTable
 {
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator->add('domain', 'hostname', [
             'rule' => array('custom', HOSTNAME_REGEX),

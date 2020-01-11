@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -23,7 +23,7 @@ use Cake\ORM\TableRegistry;
 class CartsController extends FrontendController
 {
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
 
         parent::beforeFilter($event);
@@ -58,11 +58,11 @@ class CartsController extends FrontendController
         $this->RequestHandler->renderAs($this, 'json');
         $maxSeconds = (int) $maxSeconds;
         $options = Configure::read('app.timebasedCurrencyHelper')->getTimebasedCurrencyHoursDropdown($maxSeconds, Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'));
-        $this->set('data', [
+        $this->set([
             'options' => $options,
             'status' => !empty($options)
         ]);
-        $this->set('_serialize', 'data');
+        $this->viewBuilder()->setOption('serialize', ['options', 'status']);
     }
 
     public function detail()
@@ -103,7 +103,7 @@ class CartsController extends FrontendController
         
         $cart = $this->AppAuth->Cart->finish();
         
-        if (empty($this->viewVars['cartErrors']) && empty($this->viewVars['formErrors'])) {
+        if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
             $this->resetOriginalLoggedCustomer();
             $this->redirect(Configure::read('app.slugHelper')->getCartFinished($cart['Cart']->id_cart));
             return;

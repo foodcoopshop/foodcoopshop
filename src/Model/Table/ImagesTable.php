@@ -18,7 +18,7 @@ namespace App\Model\Table;
 class ImagesTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
         $this->setPrimaryKey('id_image');

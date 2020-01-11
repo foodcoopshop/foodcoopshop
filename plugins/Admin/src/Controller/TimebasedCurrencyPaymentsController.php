@@ -2,8 +2,8 @@
 
 namespace Admin\Controller;
 
-use App\Mailer\AppEmail;
-use Cake\Event\Event;
+use App\Mailer\AppMailer;
+use Cake\Event\EventInterface;
 use Cake\I18n\FrozenDate;
 use Cake\I18n\Time;
 use Cake\Core\Configure;
@@ -71,7 +71,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
      * $param Event $event
      * @see \App\Controller\AppController::beforeFilter()
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         $this->TimebasedCurrencyPayment = TableRegistry::getTableLocator()->get('TimebasedCurrencyPayments');
         $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
@@ -124,7 +124,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         }
 
         if ($this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $payment->id_customer) {
-            $email = new AppEmail();
+            $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.timebased_currency_payment_deleted');
             $email->setTo($payment->customer->email)
             ->setSubject(__d('admin', 'Your_time_entry_from_{0}_has_been_deleted.', [$payment->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'))]))
@@ -222,7 +222,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
 
             $sendEmailToCustomer = $isEditMode && ($unchangedPaymentSeconds != $payment->seconds) || ($unchangedPaymentApproval != -1 && $payment->approval == -1);
             if ($sendEmailToCustomer) {
-                $email = new AppEmail();
+                $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('Admin.timebased_currency_payment_information');
                 $email->setTo($payment->customer->email)
                 ->setSubject('Wichtige Informationen zu deiner Zeit-Eintragung vom ' . $payment->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')))

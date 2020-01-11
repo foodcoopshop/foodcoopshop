@@ -3,11 +3,10 @@
 namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
-use App\Mailer\AppEmail;
+use App\Mailer\AppMailer;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
-use Cake\Event\Event;
 use Cake\Http\Cookie\Cookie;
 use Cake\I18n\Date;
 use Cake\Log\Log;
@@ -31,12 +30,6 @@ use Cake\Http\Exception\NotFoundException;
  */
 class CustomersController extends FrontendController
 {
-
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-        $this->AppAuth->allow('login', 'logout', 'new_password_request', 'registration_successful');
-    }
     
     public function profileImage()
     {
@@ -73,7 +66,8 @@ class CustomersController extends FrontendController
         $this->set('customer', $customer);
         $this->set('saveParam', 'I');
         $this->RequestHandler->renderAs($this, 'pdf');
-        return $this->render('generateTermsOfUsePdf');
+        $response = $this->render('generateTermsOfUsePdf');
+        return $response->__toString();
     }
 
     public function acceptUpdatedTermsOfUse()
@@ -117,7 +111,7 @@ class CustomersController extends FrontendController
         ]);
 
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
-        $customer = $this->Customer->newEntity();
+        $customer = $this->Customer->newEntity([]);
 
         if (!empty($this->getRequest()->getData())) {
 
@@ -161,7 +155,7 @@ class CustomersController extends FrontendController
                 $this->Customer->save($patchedEntity);
                 
                 // send email
-                $email = new AppEmail();
+                $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('new_password_request_successful');
                 $email->setSubject(__('New_password_for_{0}', [Configure::read('appDb.FCS_APP_NAME')]))
                     ->setTo($this->getRequest()->getData('Customers.email'))
@@ -345,7 +339,7 @@ class CustomersController extends FrontendController
                     $this->ActionLog->customSave('customer_registered', $newCustomer->id_customer, $newCustomer->id_customer, 'customers', $message);
 
                     // START send confirmation email to customer
-                    $email = new AppEmail();
+                    $email = new AppMailer();
                     if (Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
                         $template = 'customer_registered_active';
                         if (Configure::read('app.termsOfUseEnabled')) {
@@ -367,7 +361,7 @@ class CustomersController extends FrontendController
 
                     // START send notification email
                     if (! empty(Configure::read('appDb.FCS_REGISTRATION_NOTIFICATION_EMAILS'))) {
-                        $email = new AppEmail();
+                        $email = new AppMailer();
                         $email->viewBuilder()->setTemplate('customer_registered_notification');
                         $email->setTo(explode(',', Configure::read('appDb.FCS_REGISTRATION_NOTIFICATION_EMAILS')))
                             ->setSubject(__('New_registration_{0}', [$newCustomer->firstname . ' ' . $newCustomer->lastname]))

@@ -30,7 +30,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testAddPaymentLoggedOut()
     {
         $this->addPayment(Configure::read('test.customerId'), 0, 'product');
-        $this->assertRedirectToLoginPage();
+        $this->assert403ForbiddenHeader();
     }
 
     public function testAddPaymentParameterPriceOk()
@@ -168,7 +168,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function testDeletePaymentLoggedOut()
     {
         $this->deletePayment(1);
-        $this->assertRedirectToLoginPage();
+        $this->assert403ForbiddenHeader();
     }
 
     public function testDeletePaymentWithApprovalOk()
@@ -233,7 +233,8 @@ class PaymentsControllerTest extends AppCakeTestCase
         $creditBalanceBeforeAdd = $this->Customer->getCreditBalance($customerId);
         $jsonDecodedContent = $this->addPayment($customerId, $amountToAdd, $paymentType);
         $creditBalanceAfterAdd = $this->Customer->getCreditBalance($customerId);
-        $this->assertEquals($amountToAdd, $creditBalanceAfterAdd - $creditBalanceBeforeAdd, 'add payment '.$paymentType.' did not increase credit balance');
+        $amountToAddAsDecimal = Configure::read('app.numberHelper')->getStringAsFloat($amountToAdd);
+        $this->assertEquals($amountToAddAsDecimal, $creditBalanceAfterAdd - $creditBalanceBeforeAdd, 'add payment '.$paymentType.' did not increase credit balance');
         $this->assertEquals(1, $jsonDecodedContent->status);
         $this->assertEquals($amountToAdd, Configure::read('app.numberHelper')->formatAsDecimal($jsonDecodedContent->amount, 1));
     }

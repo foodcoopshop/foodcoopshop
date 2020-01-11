@@ -4,7 +4,7 @@ namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
-use App\Mailer\AppEmail;
+use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\TableRegistry;
@@ -160,12 +160,11 @@ class OrderDetailsController extends AdminAppController
         
         $orderDetailWithChangedPrice = $this->changeOrderDetailPriceDepositTax($orderDetailWithNewTax, $orderDetailWithNewTax->total_price_tax_incl, $orderDetailWithNewTax->product_amount);
         
-        $this->set('data', [
+        $this->set([
             'status' => 0,
-            'orderDetailWithChangedPrice' => $orderDetailWithChangedPrice
+            'orderDetailWithChangedPrice' => $orderDetailWithChangedPrice,
         ]);
-        
-        $this->set('_serialize', 'data');
+        $this->viewBuilder()->setOption('serialize', ['status', 'orderDetailWithChangedPrice']);
         
     }
     
@@ -623,14 +622,14 @@ class OrderDetailsController extends AdminAppController
             
             // 2) copy old order detail and modify it
             $newEntity = $oldOrderDetail;
-            $newEntity->isNew(true);
+            $newEntity->setNew(true);
             $newEntity->id_order_detail = null;
             $newEntity->id_customer = $customerId;
             $savedEntity = $this->OrderDetail->save($newEntity, [
                 'associated' => false
             ]);
             $newEntity->order_detail_tax->id_order_detail = $savedEntity->id_order_detail;
-            $newEntity->order_detail_tax->isNew(true);
+            $newEntity->order_detail_tax->setNew(true);
             $newOrderDetailTaxEntity = $this->OrderDetail->OrderDetailTaxes->save($newEntity->order_detail_tax);
             $savedEntity->order_detail_tax = $newOrderDetailTaxEntity;
             
@@ -639,7 +638,7 @@ class OrderDetailsController extends AdminAppController
             
             if (!empty($newEntity->order_detail_unit)) {
                 $newEntity->order_detail_unit->id_order_detail = $savedEntity->id_order_detail;
-                $newEntity->order_detail_unit->isNew(true);
+                $newEntity->order_detail_unit->setNew(true);
                 $newOrderDetailUnitEntity = $this->OrderDetail->OrderDetailUnits->save($newEntity->order_detail_unit);
                 $savedEntity->order_detail_unit = $newOrderDetailUnitEntity;
                 $productQuantity = $savedEntity->order_detail_unit->product_quantity_in_units / $originalProductAmount * $amount;
@@ -687,7 +686,7 @@ class OrderDetailsController extends AdminAppController
         ];
         // send email to customers
         foreach($recipients as $recipient) {
-            $email = new AppEmail();
+            $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_customer_changed');
             $email->setTo($recipient['email'])
             ->setSubject(__d('admin', 'Assigned_to_another_member') . ': ' . $oldOrderDetail->product_name)
@@ -770,7 +769,7 @@ class OrderDetailsController extends AdminAppController
 
         // send email to customer if price was changed
         if (!$doNotChangePrice) {
-            $email = new AppEmail();
+            $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_quantity_changed');
             $email->setTo($oldOrderDetail->customer->email)
             ->setSubject(__d('admin', 'Weight_adapted') . ': ' . $oldOrderDetail->product_name)
@@ -863,7 +862,7 @@ class OrderDetailsController extends AdminAppController
         ]);
 
         // send email to customer
-        $email = new AppEmail();
+        $email = new AppMailer();
         $email->viewBuilder()->setTemplate('Admin.order_detail_amount_changed');
         $email->setTo($oldOrderDetail->customer->email)
         ->setSubject(__d('admin', 'Ordered_amount_adapted') . ': ' . $oldOrderDetail->product_name)
@@ -956,7 +955,7 @@ class OrderDetailsController extends AdminAppController
         $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $productPrice, $object->product_amount);
 
         // send email to customer
-        $email = new AppEmail();
+        $email = new AppMailer();
         $email->viewBuilder()->setTemplate('Admin.order_detail_price_changed');
         $email->setTo($oldOrderDetail->customer->email)
         ->setSubject(__d('admin', 'Ordered_price_adapted') . ': ' . $oldOrderDetail->product_name)
@@ -1062,7 +1061,7 @@ class OrderDetailsController extends AdminAppController
             }
             
             foreach($customers as $orderDetails) {
-                $email = new AppEmail();
+                $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('Admin.order_detail_pickup_day_changed');
                 $email->setTo($orderDetails[0]->customer->email)
                 ->setSubject(__d('admin', 'The_pickup_day_of_your_order_was_changed_to').': ' . $newPickupDay)
@@ -1088,13 +1087,12 @@ class OrderDetailsController extends AdminAppController
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave('order_detail_pickup_day_changed', $this->AppAuth->getUserId(), 0, 'order_details', $message . ' Ids: ' . join(', ', $orderDetailIds));
             
-            $this->set('data', [
+            $this->set([
                 'result' => [],
                 'status' => true,
-                'msg' => 'ok'
+                'msg' => 'ok',
             ]);
-            
-            $this->set('_serialize', 'data');
+            $this->viewBuilder()->setOption('serialize', ['result', 'status', 'msg']);
             
         } catch (InvalidParameterException $e) {
             $this->sendAjaxError($e);
@@ -1134,13 +1132,13 @@ class OrderDetailsController extends AdminAppController
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', __d('admin', 'The_pickup_day_comment_of_{0}_was_changed:', [$customer->name]) . ' <div class="changed">' . $pickupDayComment . ' </div>');
         
-        $this->set('data', [
+        $this->set([
             'result' => $result,
             'status' => !empty($result),
-            'msg' => 'ok'
+            'msg' => 'ok',
         ]);
+        $this->viewBuilder()->setOption('serialize', ['result', 'status', 'msg']);
         
-        $this->set('_serialize', 'data');
     }
     
     public function changeProductsPickedUp()
@@ -1177,15 +1175,14 @@ class OrderDetailsController extends AdminAppController
             $redirectUrl = '/admin/order-details?pickupDay[]='.$this->getRequest()->getData('pickupDay').'&groupBy=customer';
         }
         
-        $this->set('data', [
+        $this->set([
             'pickupDay' => $pickupDay,
             'result' => $result,
             'status' => !empty($result),
             'redirectUrl' => $redirectUrl,
-            'msg' => $message
+            'msg' => $message,
         ]);
-        
-        $this->set('_serialize', 'data');
+        $this->viewBuilder()->setOption('serialize', ['pickupDay', 'result', 'status', 'redirectUrl', 'msg']);
         
     }
 
@@ -1237,7 +1234,7 @@ class OrderDetailsController extends AdminAppController
             $newQuantity = $this->increaseQuantityForProduct($orderDetail, $orderDetail->product_amount * 2);
 
             // send email to customer
-            $email = new AppEmail();
+            $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_deleted');
             $email->setTo($orderDetail->customer->email)
             ->setSubject(__d('admin', 'Product_was_cancelled').': ' . $orderDetail->product_name)

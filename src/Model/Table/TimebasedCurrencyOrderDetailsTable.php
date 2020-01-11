@@ -21,7 +21,7 @@ use Cake\ORM\TableRegistry;
 class TimebasedCurrencyOrderDetailsTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('timebased_currency_order_detail');
         parent::initialize($config);

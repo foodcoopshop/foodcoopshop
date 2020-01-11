@@ -41,7 +41,6 @@ class CartsControllerTest extends AppCakeTestCase
         parent::setUp();
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
         $this->Product = TableRegistry::getTableLocator()->get('Products');
-        $this->Order = TableRegistry::getTableLocator()->get('Orders');
         $this->StockAvailable = TableRegistry::getTableLocator()->get('StockAvailables');
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
     }
@@ -698,7 +697,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId2, 3); // attribute
         $this->addProductToCart($this->productId3, 1); // product with zero tax
     }
-
+    
     /**
      * before finishing cart!
      */

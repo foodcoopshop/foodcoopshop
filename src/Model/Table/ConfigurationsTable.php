@@ -25,7 +25,7 @@ use Cake\Validation\Validator;
 class ConfigurationsTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('configuration');
         parent::initialize($config);
@@ -57,7 +57,7 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
 
-    public function validationFcsAppEmail(Validator $validator)
+    public function validationFcsAppMailer(Validator $validator)
     {
         $validator->notEmptyString('value', __('Please_enter_an_email_address.'));
         $validator->email('value', false, __('The_email_address_is_not_valid.'));

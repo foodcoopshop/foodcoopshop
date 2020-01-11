@@ -22,7 +22,7 @@ use Cake\Validation\Validator;
 class OrderDetailsTable extends AppTable
 {
 
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->setTable('order_detail');
         parent::initialize($config);

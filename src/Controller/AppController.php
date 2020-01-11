@@ -4,7 +4,8 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
+use Cake\Http\Cookie\Cookie;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -23,7 +24,7 @@ use Cake\ORM\TableRegistry;
 class AppController extends Controller
 {
 
-    public function initialize()
+    public function initialize(): void
     {
 
         parent::initialize();
@@ -67,19 +68,17 @@ class AppController extends Controller
             'authenticate' => $authenticate,
             'storage' => 'Session'
         ]);
-
+        
         $this->paginate = [
             'limit' => 300000,
             'maxLimit' => 300000
         ];
     }
 
-    public function beforeRender(Event $event)
+    public function beforeRender(EventInterface $event)
     {
         parent::beforeRender($event);
         $this->set('appAuth', $this->AppAuth);
-        $loggedUser = $this->AppAuth->user();
-        $this->set('loggedUser', $loggedUser['firstname'] . ' ' . $loggedUser['lastname']);
     }
 
     /**
@@ -99,12 +98,13 @@ class AppController extends Controller
             if (empty($query->first())) {
                 $this->Flash->error(__('You_have_been_signed_out.'));
                 $this->AppAuth->logout();
+                $this->response = $this->response->withCookie((new Cookie('remember_me')));
                 $this->redirect(Configure::read('app.slugHelper')->getHome());
             }
         }
     }
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
 
         $this->validateAuthentication();

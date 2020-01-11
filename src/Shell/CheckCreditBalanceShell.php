@@ -15,7 +15,7 @@
 
 namespace App\Shell;
 
-use App\Mailer\AppEmail;
+use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 
 class CheckCreditBalanceShell extends AppShell
@@ -56,7 +56,7 @@ class CheckCreditBalanceShell extends AppShell
                 $deltaSum -= $delta;
                 $delta = Configure::read('app.numberHelper')->formatAsCurrency($delta);
                 $outString .= $customer->name . ': ' . $delta . '<br />';
-                $email = new AppEmail();
+                $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('Admin.check_credit_balance');
                 $email->setTo($customer->email)
                     ->setSubject(__('Your_credit_is_used_up'))

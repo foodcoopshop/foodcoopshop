@@ -32,7 +32,7 @@ class AppAuthComponent extends AuthComponent
 
     public $manufacturer;
 
-    public function flash($message)
+    public function flash($message): void
     {
         $this->Flash->error($message);
     }
@@ -88,17 +88,19 @@ class AppAuthComponent extends AuthComponent
         if (!empty($this->manufacturer)) {
             return;
         }
-
-        $mm = TableRegistry::getTableLocator()->get('Manufacturers');
-        $this->manufacturer = $mm->find('all', [
-            'conditions' => [
-                'AddressManufacturers.email' => $this->user('email'),
-                'AddressManufacturers.id_manufacturer > ' . APP_OFF
-            ],
-            'contain' => [
-                'AddressManufacturers'
-            ]
-        ])->first();
+        
+        if (!empty($this->user())) {
+            $mm = TableRegistry::getTableLocator()->get('Manufacturers');
+            $this->manufacturer = $mm->find('all', [
+                'conditions' => [
+                    'AddressManufacturers.email' => $this->user('email'),
+                    'AddressManufacturers.id_manufacturer > ' . APP_OFF
+                ],
+                'contain' => [
+                    'AddressManufacturers'
+                ]
+            ])->first();
+        }
     }
 
     public function isSuperadmin()
@@ -119,7 +121,6 @@ class AppAuthComponent extends AuthComponent
     public function isManufacturer()
     {
         $this->setManufacturer();
-
         if (! empty($this->manufacturer)) {
             return true;
         }
@@ -197,9 +198,9 @@ class AppAuthComponent extends AuthComponent
 
     public function isSelfServiceModeByUrl()
     {
-        $result = $this->_registry->getController()->request->getPath() == '/' . __('route_self_service');
-        if (!empty($this->_registry->getController()->request->getQuery('redirect'))) {
-            $result |= preg_match('`' . '/' . __('route_self_service') . '`', $this->_registry->getController()->request->getQuery('redirect'));
+        $result = $this->getController()->getRequest()->getPath() == '/' . __('route_self_service');
+        if (!empty($this->getController()->getRequest()->getQuery('redirect'))) {
+            $result |= preg_match('`' . '/' . __('route_self_service') . '`', $this->getController()->getRequest()->getQuery('redirect'));
         }
         return $result;
     }
@@ -207,7 +208,7 @@ class AppAuthComponent extends AuthComponent
     public function isSelfServiceModeByReferer()
     {
         $result = false;
-        $serverParams = $this->_registry->getController()->request->getServerParams();
+        $serverParams = $this->getController()->getRequest()->getServerParams();
         $requestUriWhitelist = [
             '/' . __('route_cart') . '/ajaxAdd/',
             '/' . __('route_cart') . '/ajaxRemove/'

@@ -2,7 +2,7 @@
 namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
-use App\Mailer\AppEmail;
+use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\NotFoundException;
@@ -36,7 +36,7 @@ class ConfigurationsController extends AdminAppController
     public function edit($configurationId)
     {
 
-        $this->helpers[] = 'Configuration';
+        $this->viewBuilder()->setHelpers(['Configuration']);
 
         if ($configurationId === null) {
             throw new NotFoundException;
@@ -115,7 +115,7 @@ class ConfigurationsController extends AdminAppController
     {
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
         $this->Configuration->getConfigurations();
-        $email = new AppEmail();
+        $email = new AppMailer();
         $email
             ->setViewVars([
                 'appAuth' => $this->AppAuth
@@ -142,17 +142,13 @@ class ConfigurationsController extends AdminAppController
                 ]);
                 break;
         }
-        $html = $email->_renderTemplates(null)['html'];
-        if ($html != '') {
-            echo $html;
-            exit;
-        }
-        throw new RecordNotFoundException('no email template defined for configuration: ' . $configurationName);
+        echo $email->render()->getMessage()->getBodyString();
+        exit;
     }
 
     public function index()
     {
-        $this->helpers[] = 'Configuration';
+        $this->viewBuilder()->setHelpers(['Configuration']);
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
         $this->set('configurations', $this->Configuration->getConfigurations());
         $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
@@ -164,7 +160,7 @@ class ConfigurationsController extends AdminAppController
         $this->set('defaultTax', $defaultTax);
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
-            $this->helpers[] = 'Network.Network';
+            $this->viewBuilder()->setHelpers(['Network.Network']);
             $this->SyncDomain = TableRegistry::getTableLocator()->get('Network.SyncDomains');
             $syncDomains = $this->SyncDomain->getSyncDomains(APP_OFF);
             $this->set('syncDomains', $syncDomains);
@@ -184,7 +180,7 @@ class ConfigurationsController extends AdminAppController
     public function sendTestEmail()
     {
         $this->set('title_for_layout', __d('admin', 'Send_test_email'));
-        $email = new AppEmail(false);
+        $email = new AppMailer(false);
         $success = $email->setTo(Configure::read('app.hostingEmail'))
         ->setSubject(__d('admin', 'Test_email'))
         ->viewBuilder()->setTemplate('send_test_email_template');

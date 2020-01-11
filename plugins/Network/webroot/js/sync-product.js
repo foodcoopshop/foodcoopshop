@@ -62,7 +62,15 @@ foodcoopshop.SyncProduct = {
     },
     
     getPricePerUnitBaseInfo : function(priceInclPerUnit, unitName, unitAmount, unitQuantityInUnits) {
-        return foodcoopshop.Helper.formatFloatAsCurrency(priceInclPerUnit) + ' / ' + (unitAmount > 1 ? unitAmount + ' ' : '') + unitName + ' - ca. ' + unitQuantityInUnits + ' ' + unitName;
+        priceInclPerUnit = parseFloat(priceInclPerUnit);
+        unitQuantityInUnits = parseFloat(unitQuantityInUnits);
+        unitQuantityInUnits = unitQuantityInUnits.toLocaleString(
+            foodcoopshop.LocalizedJs.helper.defaultLocaleInBCP47,
+            {
+                minimumSignificantDigits: 1 // converts 1,00 to 1 but leaves 3,22 as it is
+            }
+        );
+        return foodcoopshop.Helper.formatFloatAsCurrency(priceInclPerUnit) + ' / ' + (unitAmount > 1 ? unitAmount + ' ' : '') + unitName + ' - ' + foodcoopshop.LocalizedJs.cart.approx + ' ' + unitQuantityInUnits + ' ' + unitName;
     },
     
     getIsStockProductString(isStockProduct) {
