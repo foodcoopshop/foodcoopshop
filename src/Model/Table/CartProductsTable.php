@@ -224,7 +224,7 @@ class CartProductsTable extends AppTable
         
         $options = [];
         if ($orderedQuantityInUnits > 0) {
-            if (!is_null($existingCartProduct['orderedQuantityInUnits'])) {
+            if ($existingCartProduct && !is_null($existingCartProduct['orderedQuantityInUnits'])) {
                 $orderedQuantityInUnits += $existingCartProduct['orderedQuantityInUnits'];
             }
             $cartProduct2save['cart_product_unit'] = [

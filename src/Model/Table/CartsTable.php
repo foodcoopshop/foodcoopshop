@@ -252,7 +252,7 @@ class CartsTable extends AppTable
     {
         $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
         
-        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && $this->getLoggedUser()['timebased_currency_enabled']) {
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && is_array($this->getLoggedUser()) && $this->getLoggedUser()['timebased_currency_enabled']) {
             if ($manufacturersTable->getOptionTimebasedCurrencyEnabled($cartProduct->product->manufacturer->timebased_currency_enabled)) {
                 $manufacturerLimitReached = $manufacturersTable->hasManufacturerReachedTimebasedCurrencyLimit($cartProduct->product->id_manufacturer);
                 if (!$manufacturerLimitReached) {
