@@ -10,7 +10,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Bugfixes / Updates
 - Die Auto-Login-Funktion ("Angemeldet bleiben") hat nicht mehr richtig funktioniert. [I#439](https://github.com/foodcoopshop/foodcoopshop/issues/439) / [PR#444](https://github.com/foodcoopshop/foodcoopshop/pull/444) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
-- FoodCoopShop verwendet jetzt [CakePHP v4.0](https://book.cakephp.org/4/en/index.html) [I#445](https://github.com/foodcoopshop/foodcoopshop/issues/445) / [PR#446](https://github.com/foodcoopshop/foodcoopshop/pull/446) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- FoodCoopShop verwendet jetzt [CakePHP v4.0](https://book.cakephp.org/4/en/index.html). [I#445](https://github.com/foodcoopshop/foodcoopshop/issues/445) / [PR#446](https://github.com/foodcoopshop/foodcoopshop/pull/446) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - FoodCoopShop ist jetzt mit PHP 7.4 kompatibel. [I#448](https://github.com/foodcoopshop/foodcoopshop/issues/448) / [PR#449](https://github.com/foodcoopshop/foodcoopshop/pull/449) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
