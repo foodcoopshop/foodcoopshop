@@ -18,7 +18,7 @@ use Cake\Core\Configure;
 <!DOCTYPE html>
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <meta name="theme-color" content="#719f41">
+    <meta name="theme-color" content="<?php echo Configure::read('app.customFrontendColorTheme'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>Error - <?php echo Configure::read('appDb.FCS_APP_NAME'); ?></title>
@@ -26,11 +26,20 @@ use Cake\Core\Configure;
     
     <?php echo $this->element('jsNamespace'); ?>
     
-    <?php echo $this->element('renderCss', ['configs' => ['error']]); ?>
     <?php
-    if ($isMobile) {
-        echo $this->Html->css(['mobile-error']);
-    }
+        // do not use AssetCompressPlugin here (not loaded for errors!)
+        echo $this->Html->css([
+            'reset',
+            '/node_modules/bootstrap/dist/css/bootstrap.css',
+            'global',
+            'fonts',
+            'frontend',
+            'error',
+            'custom',
+        ]);
+        if ($isMobile) {
+            echo $this->Html->css(['mobile-error']);
+        }
     ?>
     
 </head>
@@ -66,7 +75,12 @@ use Cake\Core\Configure;
 <?php
 
     echo $this->element('localizedJavascript');
-    echo $this->element('renderJs', ['configs' => ['frontend']]);
+    // do not use AssetCompressPlugin here (not loaded for errors!)
+    echo $this->Html->script([
+        '/node_modules/jquery/dist/jquery.js',
+        '/node_modules/jquery-backstretch/jquery.backstretch.js',
+        'helper.js',
+    ]);
 
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".Helper.initAnystretch();"
@@ -74,7 +88,7 @@ use Cake\Core\Configure;
 
     $scripts = $this->fetch('script');
     if ($scripts != '') {
-        echo $this->Html->wrapJavascriptBlock($scripts);
+        echo $this->MyHtml->wrapJavascriptBlock($scripts);
     }
 
 ?>
