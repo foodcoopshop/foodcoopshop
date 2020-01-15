@@ -165,7 +165,7 @@ $opts = array(
             'driver'        => 'LocalFileSystem',           // driver for accessing file system (REQUIRED)
             'path'          => $uploadPath, // path to files (REQUIRED)
             'URL'           => $uploadUrl, // URL to files (REQUIRED)
-            'trashHash'     => 't1_Lw',                     // elFinder's hash of trash folder
+//            'trashHash'     => 't1_Lw',                     // elFinder's hash of trash folder
             'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
             'uploadDeny'    => array('all'),                // All Mimetypes not allowed to upload
             'uploadAllow'   => $allowed,// Mimetype `image` and `text/plain` allowed to upload
