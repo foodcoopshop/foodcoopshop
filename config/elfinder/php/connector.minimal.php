@@ -1,5 +1,4 @@
 <?php
-@ini_set('session.name', 'CAKEPHP');
 @session_start();
 ini_set('upload_max_filesize', '100M');
 ini_set('post_max_size', '100M');
@@ -9,20 +8,28 @@ if (empty($_SESSION['Auth'])) {
 
 error_reporting(0); // Set E_ALL for debuging
 
-// load composer autoload before load elFinder autoload If you need composer
+// // To Enable(true) handling of PostScript files by ImageMagick
+// // It is disabled by default as a countermeasure 
+// // of Ghostscript multiple -dSAFER sandbox bypass vulnerabilities
+// // see https://www.kb.cert.org/vuls/id/332928
+// define('ELFINDER_IMAGEMAGICK_PS', true);
+// ===============================================
+
+// // load composer autoload before load elFinder autoload If you need composer
+// // You need to run the composer command in the php directory.
 //require './vendor/autoload.php';
 
-// elFinder autoload
+// // elFinder autoload
 require './autoload.php';
 // ===============================================
 
-// Enable FTP connector netmount
+// // Enable FTP connector netmount
 elFinder::$netDrivers['ftp'] = 'FTP';
 // ===============================================
 
 // // Required for Dropbox network mount
 // // Installation by composer
-// // `composer require kunalvarma05/dropbox-php-sdk`
+// // `composer require kunalvarma05/dropbox-php-sdk` on php directory
 // // Enable network mount
 // elFinder::$netDrivers['dropbox2'] = 'Dropbox2';
 // // Dropbox2 Netmount driver need next two settings. You can get at https://www.dropbox.com/developers/apps
@@ -33,7 +40,7 @@ elFinder::$netDrivers['ftp'] = 'FTP';
 
 // // Required for Google Drive network mount
 // // Installation by composer
-// // `composer require google/apiclient:^2.0`
+// // `composer require google/apiclient:^2.0` on php directory
 // // Enable network mount
 // elFinder::$netDrivers['googledrive'] = 'GoogleDrive';
 // // GoogleDrive Netmount driver need next two settings. You can get at https://console.developers.google.com
@@ -46,13 +53,14 @@ elFinder::$netDrivers['ftp'] = 'FTP';
 
 // // Required for Google Drive network mount with Flysystem
 // // Installation by composer
-// // `composer require nao-pon/flysystem-google-drive:~1.1 nao-pon/elfinder-flysystem-driver-ext`
+// // `composer require nao-pon/flysystem-google-drive:~1.1 nao-pon/elfinder-flysystem-driver-ext` on php directory
 // // Enable network mount
 // elFinder::$netDrivers['googledrive'] = 'FlysystemGoogleDriveNetmount';
 // // GoogleDrive Netmount driver need next two settings. You can get at https://console.developers.google.com
 // // AND reuire regist redirect url to "YOUR_CONNECTOR_URL?cmd=netmount&protocol=googledrive&host=1"
 // define('ELFINDER_GOOGLEDRIVE_CLIENTID',     '');
 // define('ELFINDER_GOOGLEDRIVE_CLIENTSECRET', '');
+// // And "php/.tmp" directory must exist and be writable by PHP.
 // ===============================================
 
 // // Required for One Drive network mount
@@ -82,9 +90,14 @@ elFinder::$netDrivers['ftp'] = 'FTP';
 // define('ELFINDER_ZOHO_OFFICE_APIKEY', '');
 // ===============================================
 
+// // Online converter (online-convert.com) APIKey
+// // https://apiv2.online-convert.com/docs/getting_started/api_key.html
+// define('ELFINDER_ONLINE_CONVERT_APIKEY', '');
+// ===============================================
+
 // // Zip Archive editor
 // // Installation by composer
-// // `composer require nao-pon/elfinder-flysystem-ziparchive-netmount`
+// // `composer require nao-pon/elfinder-flysystem-ziparchive-netmount` on php directory
 // define('ELFINDER_DISABLE_ZIPEDITOR', false); // set `true` to disable zip editor
 // ===============================================
 
@@ -133,7 +146,6 @@ if (isset($_SESSION['ELFINDER']['uploadUrl'])) {
 mkdir($uploadPath, 0777, true);
 
 $opts = array(
-	// 'debug' => true,
     'bind' => array(
         'upload.presave' => array(
             'Plugin.AutoResize.onUpLoadPreSave'
@@ -146,17 +158,32 @@ $opts = array(
             'quality' => 95
         )
     ),
-	'roots' => array(
-		array(
+    // 'debug' => true,
+    'roots' => array(
+	    // Items volume
+	    array(
 			'driver'        => 'LocalFileSystem',           // driver for accessing file system (REQUIRED)
 		    'path'          => $uploadPath, // path to files (REQUIRED)
 			'URL'           => $uploadUrl, // URL to files (REQUIRED)
-			'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
+	        'trashHash'     => 't1_Lw',                     // elFinder's hash of trash folder
+	        'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
 			'uploadDeny'    => array('all'),                // All Mimetypes not allowed to upload
 			'uploadAllow'   => $allowed,// Mimetype `image` and `text/plain` allowed to upload
 			'uploadOrder'   => array('deny', 'allow'),      // allowed Mimetype `image` and `text/plain` only
 			'accessControl' => 'access'                     // disable and hide dot starting files (OPTIONAL)
-		)
+		),
+	    // Trash volume
+	    array(
+	        'id'            => '1',
+	        'driver'        => 'Trash',
+	        'path'          => '../files/.trash/',
+	        'tmbURL'        => $uploadPath . '/.trash/.tmb/',
+	        'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
+	        'uploadDeny'    => array('all'),                // Recomend the same settings as the original volume that uses the trash
+	        'uploadAllow'   => array('image/x-ms-bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/x-icon', 'text/plain'), // Same as above
+	        'uploadOrder'   => array('deny', 'allow'),      // Same as above
+	        'accessControl' => 'access',                    // Same as above
+	    )
 	)
 );
 
