@@ -14,6 +14,7 @@
  */
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
+use Cake\I18n\FrozenDate;
 use Cake\ORM\TableRegistry;
 
 class CartsControllerTest extends AppCakeTestCase
@@ -650,6 +651,29 @@ class CartsControllerTest extends AppCakeTestCase
     public function testInstantOrderWithDeliveryBreak()
     {
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
+        $this->loginAsSuperadmin();
+        $this->httpClient->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
+        $this->addProductToCart($this->productId1, 1);
+        $this->finishCart(1, 1);
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $actionLogs = $this->ActionLog->find('all', [])->toArray();
+        $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung (1,82 €) für <b>Demo Mitglied</b> wurde erfolgreich getätigt.', $actionLogs[0]->text);
+    }
+    
+    public function testInstantOrderWithExpiredBulkOrder()
+    {
+        $this->Product->save(
+            $this->Product->patchEntity(
+                $this->Product->get($this->productId1),
+                [
+                    'delivery_rhythm_type' => 'individual',
+                    'delivery_rhythm_count' => '0',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2018-08-03')
+                ]
+            )
+        );
+        
         $this->loginAsSuperadmin();
         $this->httpClient->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
         $this->addProductToCart($this->productId1, 1);
