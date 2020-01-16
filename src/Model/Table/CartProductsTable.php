@@ -186,14 +186,17 @@ class CartProductsTable extends AppTable
                 'productId' => $initialProductId
             ];
         }
-        if (!($product->manufacturer->stock_management_enabled && $product->is_stock_product) && $product->delivery_rhythm_type == 'individual') {
-            if ($product->delivery_rhythm_order_possible_until->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')) < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
-                $message = __('It_is_not_possible_to_order_the_product_{0}_any_more.', ['<b>' . $product->name . '</b>']);
-                return [
-                    'status' => 0,
-                    'msg' => $message,
-                    'productId' => $initialProductId
-                ];
+        
+        if (!$appAuth->isInstantOrderMode()) {
+            if (!($product->manufacturer->stock_management_enabled && $product->is_stock_product) && $product->delivery_rhythm_type == 'individual') {
+                if ($product->delivery_rhythm_order_possible_until->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')) < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
+                    $message = __('It_is_not_possible_to_order_the_product_{0}_any_more.', ['<b>' . $product->name . '</b>']);
+                    return [
+                        'status' => 0,
+                        'msg' => $message,
+                        'productId' => $initialProductId
+                    ];
+                }
             }
         }
         
