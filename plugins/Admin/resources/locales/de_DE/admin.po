@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-01-01 22:28+0100\n"
-"PO-Revision-Date: 2019-12-04 09:34+0100\n"
+"POT-Creation-Date: 2020-01-16 09:48+0100\n"
+"PO-Revision-Date: 2020-01-16 09:49+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -99,8 +99,8 @@ msgstr "Das Mitglied {0} hat sein Passwort geändert."
 msgid "Your_new_password_has_been_saved_successfully."
 msgstr "Dein neues Passwort wurde erfolgreich gespeichert."
 
-msgid "Amount_of_orders_that_have_not_been_placed_before_two_months:"
-msgstr "Anzahl der Bestellungen, die noch nicht vor mindestens zwei Monaten getätigt worden sind:"
+msgid "Amount_of_orders_where_the_invoice_has_not_been_sent_yet_to_the_manufacturer:"
+msgstr "Anzahl der Bestellungen, die noch mit dem Hersteller verrechnet wurden:"
 
 msgid "The_credit_is"
 msgstr "Das Guthaben beträgt"
@@ -1994,6 +1994,9 @@ msgstr "Bitte verwende zum Einloggen die E-Mail-Adresse dieser Nachricht. Falls 
 
 msgid "Your_contact_person"
 msgstr "Deine Ansprechperson"
+
+#~ msgid "Amount_of_orders_that_have_not_yet_been_billed:"
+#~ msgstr "Anzahl der Bestellungen, die noch nicht mit dem Hersteller verrechnet wurden:"
 
 #~ msgid "docs_route_financial_reports"
 #~ msgstr "finanzberichte"

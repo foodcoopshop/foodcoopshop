@@ -207,8 +207,16 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(3, count($emailLogs), 'amount of sent emails wrong');
         
+        // sometimes the records change in database and tests "fail"
+        $emailLogA = $emailLogs[1];
+        $emailLogB = $emailLogs[2];
+        if ($emailLogs[1]->subject == 'Bestellungen für den 04.10.2019') {
+            $emailLogA = $emailLogs[2];
+            $emailLogB = $emailLogs[1];
+        }
+        
         $this->assertEmailLogs(
-            $emailLogs[1],
+            $emailLogA,
             'Bestellungen für den 11.10.2019',
             [
                 'im Anhang findest du zwei Bestelllisten',
@@ -221,7 +229,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         );
         
         $this->assertEmailLogs(
-            $emailLogs[2],
+            $emailLogB,
             'Bestellungen für den 04.10.2019',
             [
                 'im Anhang findest du zwei Bestelllisten',

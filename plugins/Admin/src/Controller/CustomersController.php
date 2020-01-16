@@ -225,10 +225,6 @@ class CustomersController extends AdminAppController
 
         try {
 
-            $this->Customer->getAssociation('ActiveOrderDetails')->setConditions([
-                'DATE_FORMAT(ActiveOrderDetails.created, \'%Y-%m-%d\') > DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 2 MONTH), \'%Y-%m-%d\')'
-            ]);
-
             $customer = $this->Customer->find('all', [
                 'conditions' => [
                     'Customers.id_customer' => $customerId
@@ -246,13 +242,13 @@ class CustomersController extends AdminAppController
             $errors = [];
             $openOrderDetails = count($customer->active_order_details);
             if ($openOrderDetails > 0) {
-                $errors[] = __d('admin', 'Amount_of_orders_that_have_not_been_placed_before_two_months:'). ' '. $openOrderDetails . '.';
+                $errors[] = __d('admin', 'Amount_of_orders_where_the_invoice_has_not_been_sent_yet_to_the_manufacturer:'). ' '. $openOrderDetails . '.';
             }
 
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
                 $creditBalance = $this->Customer->getCreditBalance($customerId);
                 if ($creditBalance != 0) {
-                    $errors[] = __d('admin', 'The_credit_is') . ' ' . Configure::read('app.numberHelper')->formatAsCurrency($creditBalance) . ' ' . __d('admin', 'It_needs_to_be_zero.');
+                    $errors[] = __d('admin', 'The_credit_is') . ' ' . Configure::read('app.numberHelper')->formatAsCurrency($creditBalance) . '. ' . __d('admin', 'It_needs_to_be_zero.');
                 }
             }
 
@@ -272,7 +268,6 @@ class CustomersController extends AdminAppController
 
             if (!empty($errors)) {
                 $errorString = '<ul><li>' . join('</li><li>', $errors) . '</li></ul>';
-                $this->log('error while trying to delete an account: (' . $customer->name . '): <br />' . $errorString);
                 throw new Exception($errorString);
             }
         } catch (Exception $e) {
