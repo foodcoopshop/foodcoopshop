@@ -208,7 +208,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->assertEquals(3, count($emailLogs), 'amount of sent emails wrong');
         
         $this->assertEmailLogs(
-            $emailLogs[1],
+            $emailLogs[2],
             'Bestellungen für den 11.10.2019',
             [
                 'im Anhang findest du zwei Bestelllisten',
@@ -221,7 +221,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         );
         
         $this->assertEmailLogs(
-            $emailLogs[2],
+            $emailLogs[1],
             'Bestellungen für den 04.10.2019',
             [
                 'im Anhang findest du zwei Bestelllisten',
