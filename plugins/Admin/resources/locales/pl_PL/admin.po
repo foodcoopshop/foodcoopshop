@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-01-01 22:28+0100\n"
+"POT-Creation-Date: 2020-01-16 09:48+0100\n"
 "PO-Revision-Date: 2019-04-28 03:51+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -100,8 +100,9 @@ msgstr "Członek {0} zmienił swoje hasło."
 msgid "Your_new_password_has_been_saved_successfully."
 msgstr "Twoje nowe hasło zostało zapisane."
 
-msgid "Amount_of_orders_that_have_not_been_placed_before_two_months:"
-msgstr "Ilość zamówień, które nie zostały złożone od dwóch miesięcy:"
+#, fuzzy
+msgid "Amount_of_orders_where_the_invoice_has_not_been_sent_yet_to_the_manufacturer:"
+msgstr "Tu znajdują się niezmienione listy zamówień wysłane do producentów."
 
 msgid "The_credit_is"
 msgstr "Kredyt wynosi"
@@ -2073,6 +2074,10 @@ msgstr "W celu zalogowania się proszę użyć adresu email z tej wiadomości. A
 
 msgid "Your_contact_person"
 msgstr "Twoja osoba kontaktowa"
+
+#, fuzzy
+#~ msgid "Amount_of_orders_that_have_not_yet_been_billed:"
+#~ msgstr "Ilość zamówień, które nie zostały złożone od dwóch miesięcy:"
 
 #~ msgid "docs_route_financial_reports"
 #~ msgstr "financial-reports"

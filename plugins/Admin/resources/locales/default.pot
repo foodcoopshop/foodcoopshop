@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-01-01 22:28+0100\n"
+"POT-Creation-Date: 2020-01-16 09:48+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -98,7 +98,7 @@ msgstr ""
 msgid "Your_new_password_has_been_saved_successfully."
 msgstr ""
 
-msgid "Amount_of_orders_that_have_not_been_placed_before_two_months:"
+msgid "Amount_of_orders_where_the_invoice_has_not_been_sent_yet_to_the_manufacturer:"
 msgstr ""
 
 msgid "The_credit_is"

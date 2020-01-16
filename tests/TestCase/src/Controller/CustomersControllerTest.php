@@ -258,6 +258,23 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertEquals($customerPhone, $customer->address_customer->phone, 'saving field phone failed');
     }
     
+    public function testDeleteWithNotYetBilledOrders()
+    {
+        
+        $this->loginAsSuperadmin();
+        $this->httpClient->ajaxPost('/admin/customers/delete/' . Configure::read('test.superadminId'), [
+            'referer' => '/'
+        ]);
+        $response = $this->httpClient->getJsonDecodedContent();
+        $this->assertRegExpWithUnquotedString('<ul><li>Anzahl der Bestellungen, die noch mit dem Hersteller verrechnet wurden: 3.</li><li>Das Guthaben beträgt 92,02 €. Es muss 0 betragen.</li></ul>', $response->msg);
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => Configure::read('test.customerId')
+            ]
+        ])->first();
+        $this->assertNotEmpty($customer);
+    }
+    
     public function testDeleteOk()
     {
         $this->loginAsSuperadmin();
