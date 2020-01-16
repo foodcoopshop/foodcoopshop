@@ -47,7 +47,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
     public function testSendInvoicesOk()
     {
         
-        Configure::write('app.dateOfFirstSendInvoiceCronjobWithPickupDayUpdate', '2018-03-11');
+        Configure::write('app.dateOfFirstSendInvoiceCronjobWithPickupDayUpdate', '2018-03-11 10:20:30');
         
         $this->prepareSendInvoices();
         
@@ -66,7 +66,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'variable_member_fee', 10);
         
-        $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11']);
+        $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11 10:20:30']);
         
         $orderDetails = $this->OrderDetail->find('all')->toArray();
         foreach($orderDetails as $orderDetail) {
@@ -96,6 +96,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $content = $this->httpClient->getContent();
         $this->assertRegExpWithUnquotedString('4,09 €</b> (10%)', $content);
         $this->assertRegExpWithUnquotedString('0,62 €</b>', $content);
+        $this->assertRegExpWithUnquotedString('11.03.2018 10:20:30', $content);
         
     }
 
@@ -103,8 +104,8 @@ class SendInvoicesShellTest extends AppCakeTestCase
     {
 
         $this->prepareSendInvoices();
-        $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11']);
-        $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11']); // sic! run again
+        $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11 10:20:30']);
+        $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11 10:20:30']); // sic! run again
         
         $emailLogs = $this->EmailLog->find('all')->toArray();
         
