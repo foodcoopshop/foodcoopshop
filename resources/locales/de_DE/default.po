@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-01-01 22:28+0100\n"
-"PO-Revision-Date: 2019-12-06 10:33+0100\n"
+"POT-Creation-Date: 2020-01-20 16:27+0100\n"
+"PO-Revision-Date: 2020-01-20 16:26+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -905,6 +905,15 @@ msgstr "Die Bestelllisten werden automatisch am nächsten Tag in der Früh verse
 
 msgid "Order_lists_are_sent_automatically_on_this_day."
 msgstr "Die Bestelllisten werden automatisch am angegebenen Tag in der Früh versendet. <b>Leeres Feld</b> bedeutet: Bestelllisten werden <b>nicht automatisch versendet</b>."
+
+msgid "Is_the_product_always_available?"
+msgstr "Produkt immer verfügbar?"
+
+msgid "Default_quantity_after_sending_order_lists"
+msgstr "Standard-Anzahl pro Lieferrhythmus"
+
+msgid "After_the_order_lists_are_sent_available_amount_is_set_to_this_value."
+msgstr "Nach jedem Bestelllisten-Versand wird die verfügbare Anzahl automatisch wieder auf diesen Wert gesetzt. Zum Deaktivieren leer lassen."
 
 msgid "delete"
 msgstr "löschen"
@@ -2165,9 +2174,6 @@ msgstr "produkt"
 
 #~ msgid "You_can_change_your_profile_here"
 #~ msgstr "Hier kannst du dein Profil ändern"
-
-#~ msgid "available"
-#~ msgstr "verfügbar"
 
 #~ msgid "Stock_product:_order_possible_only_by_{0}."
 #~ msgstr "Lagerprodukt: nur über {0} bestellbar."

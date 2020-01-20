@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-01-20 09:49+0100\n"
-"PO-Revision-Date: 2020-01-20 09:53+0100\n"
+"POT-Creation-Date: 2020-01-20 16:27+0100\n"
+"PO-Revision-Date: 2020-01-20 14:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1775,6 +1775,9 @@ msgstr "Add new attribute for product {0}"
 
 msgid "change_amount"
 msgstr "change amount"
+
+msgid "This_product_is_always_available."
+msgstr "This product is always available."
 
 msgid "No_email_notifications_are_sent_for_this_product."
 msgstr "Notifications are never sent for this product if the stock is low."

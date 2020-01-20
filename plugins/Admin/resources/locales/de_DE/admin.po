@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-01-20 09:49+0100\n"
-"PO-Revision-Date: 2020-01-20 09:49+0100\n"
+"POT-Creation-Date: 2020-01-20 16:27+0100\n"
+"PO-Revision-Date: 2020-01-20 14:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1775,6 +1775,9 @@ msgstr "Neue Variante für Produkt {0} erstellen"
 
 msgid "change_amount"
 msgstr "Anzahl ändern"
+
+msgid "This_product_is_always_available."
+msgstr "Dieses Produkt ist immer verfügbar."
 
 msgid "No_email_notifications_are_sent_for_this_product."
 msgstr "Für dieses Produkt werden niemals Benachrichtigungen bezüglich Lagerstand verschickt."

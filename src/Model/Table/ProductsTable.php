@@ -960,7 +960,9 @@ class ProductsTable extends AppTable
                         'stock_available' => [
                             'quantity' => $attribute->stock_available->quantity,
                             'quantity_limit' => $attribute->stock_available->quantity_limit,
-                            'sold_out_limit' => $attribute->stock_available->sold_out_limit
+                            'sold_out_limit' => $attribute->stock_available->sold_out_limit,
+                            'always_available' => $attribute->stock_available->always_available,
+                            'default_quantity_after_sending_order_lists' => $attribute->stock_available->default_quantity_after_sending_order_lists,
                         ],
                         'deposit' => !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0,
                         'unit' => !empty($attribute->unit_product_attribute) ? $attribute->unit_product_attribute : [],
@@ -1331,6 +1333,8 @@ class ProductsTable extends AppTable
     public function add($manufacturer)
     {
 
+        $defaultQuantity = 0;
+        
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         
         // INSERT PRODUCT
@@ -1364,7 +1368,7 @@ class ProductsTable extends AppTable
             $this->StockAvailables->newEntity(
                 [
                     'id_product' => $newProductId,
-                    'quantity' => 999
+                    'quantity' => $defaultQuantity
                 ]
             )
         );

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-01-01 22:28+0100\n"
+"POT-Creation-Date: 2020-01-20 16:27+0100\n"
 "PO-Revision-Date: 2019-07-22 16:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1212,6 +1212,19 @@ msgstr "Listy zamówień są wysyłane automatycznie następnego dnia rano."
 
 # The order lists are sent automatically on the given day. If left <b>empty</b>, the order lists <b>are not sent</b>.
 msgid "Order_lists_are_sent_automatically_on_this_day."
+msgstr "Listy zamówień są wysyłane automatycznie danego dnia. Jeśli pozostawione <b>puste</b>, listy zamówień <b>nie będą wysyłane</b>."
+
+# available
+#, fuzzy
+msgid "Is_the_product_always_available?"
+msgstr "dostępne"
+
+msgid "Default_quantity_after_sending_order_lists"
+msgstr ""
+
+# The order lists are sent automatically on the given day. If left <b>empty</b>, the order lists <b>are not sent</b>.
+#, fuzzy
+msgid "After_the_order_lists_are_sent_available_amount_is_set_to_this_value."
 msgstr "Listy zamówień są wysyłane automatycznie danego dnia. Jeśli pozostawione <b>puste</b>, listy zamówień <b>nie będą wysyłane</b>."
 
 # delete
@@ -2897,10 +2910,6 @@ msgstr "product"
 # You can change your profile here
 #~ msgid "You_can_change_your_profile_here"
 #~ msgstr "Możesz tu zmienić swój profil"
-
-# available
-#~ msgid "available"
-#~ msgstr "dostępne"
 
 # Stock product: order possible only with instant order when picking it up.
 #, fuzzy

@@ -95,8 +95,17 @@ foodcoopshop.DialogProduct = {
     getHtmlForProductQuantityEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogQuantityQuantity"></label>';
         dialogHtml += '<div class="field-wrapper">';
-            dialogHtml += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.AvailableAmount + '</label>';
-            dialogHtml += '<input type="number" step="1" name="dialogQuantityQuantity" id="dialogQuantityQuantity" />';
+            dialogHtml += '<label class="checkbox">';
+                dialogHtml += '<input type="checkbox" name="dialogQuantityAlwaysAvailable" id="dialogQuantityAlwaysAvailable" />';
+            dialogHtml += ' ' + foodcoopshop.LocalizedJs.dialogProduct.IsTheProductAlwaysAvailable
+            dialogHtml += '</label>';
+            dialogHtml += '<div class="quantity-wrapper">';
+                dialogHtml += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.AvailableAmount + '</label>';
+                dialogHtml += '<input type="number" step="1" name="dialogQuantityQuantity" id="dialogQuantityQuantity" />';
+                dialogHtml += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.DefaultQuantityAfterSendingOrderLists + '</label>';
+                dialogHtml += '<input type="number" step="1" name="dialogQuantityDefaultQuantityAfterSendingOrderLists" id="dialogQuantityDefaultQuantityAfterSendingOrderLists" />';
+                dialogHtml += '<span style="float:left;" class="small">' + foodcoopshop.LocalizedJs.dialogProduct.DefaultQuantityAfterSendingOrderListsHelpText + '</span>'; 
+            dialogHtml += '</div>';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogQuantityProductId" id="dialogQuantityProductId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.ChangeAmount, dialogId, dialogHtml);
@@ -145,7 +154,7 @@ foodcoopshop.DialogProduct = {
             dialogHtml += '<label class="dynamic-element individual">' + foodcoopshop.LocalizedJs.dialogProduct.DeliveryDay + '</label>';
             
             dialogHtml += '<input autocomplete="off" class="datepicker" type="text" name="dialogDeliveryRhythmFirstDeliveryDay" id="dialogDeliveryRhythmFirstDeliveryDay" /><br />';
-            dialogHtml += '<div style="float:left;line-height:14px;"><span class="small">';
+            dialogHtml += '<div style="float:right;line-height:14px;"><span class="small">';
             if (productIds.length == 1) {
                 dialogHtml += foodcoopshop.LocalizedJs.dialogProduct.FirstDeliveryDayInfoOneProduct;
             } else {

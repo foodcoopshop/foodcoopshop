@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-01-20 09:49+0100\n"
+"POT-Creation-Date: 2020-01-20 16:27+0100\n"
 "PO-Revision-Date: 2019-04-28 03:51+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1839,6 +1839,10 @@ msgstr "Dodaj nowy atrybut do produktu {0}"
 
 msgid "change_amount"
 msgstr "zmień ilość"
+
+#, fuzzy
+msgid "This_product_is_always_available."
+msgstr "jeśli dostępne"
 
 msgid "No_email_notifications_are_sent_for_this_product."
 msgstr "Powiadomienia nigdy nie będą wysyłane dla tego produktu jeśli ilość magazynowa jest zbyt niska."

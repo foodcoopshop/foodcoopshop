@@ -48,7 +48,7 @@ class ProductAttributesTableTest extends AppCakeTestCase
 
         $this->assertEquals($product->product_attributes[0]->default_on, 1);
         $this->assertEquals($product->product_attributes[0]->price, 0);
-        $this->assertEquals($product->product_attributes[0]->stock_available->quantity, 999);
+        $this->assertEquals($product->product_attributes[0]->stock_available->quantity, 0);
         $this->assertEquals($product->price, 0);
     }
 }

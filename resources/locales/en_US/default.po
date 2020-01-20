@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-01-01 22:28+0100\n"
-"PO-Revision-Date: 2019-12-06 10:34+0100\n"
+"POT-Creation-Date: 2020-01-20 16:27+0100\n"
+"PO-Revision-Date: 2020-01-20 16:27+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -905,6 +905,15 @@ msgstr "The order lists are sent automatically on the next day in the morning."
 
 msgid "Order_lists_are_sent_automatically_on_this_day."
 msgstr "The order lists are sent automatically on the given day. If left <b>empty</b>, the order lists <b>are not sent</b>."
+
+msgid "Is_the_product_always_available?"
+msgstr "Product always available?"
+
+msgid "Default_quantity_after_sending_order_lists"
+msgstr "Default quantity after sending order lists"
+
+msgid "After_the_order_lists_are_sent_available_amount_is_set_to_this_value."
+msgstr "After the order lists are sent, the available amount is set to this value."
 
 msgid "delete"
 msgstr "delete"
@@ -2165,9 +2174,6 @@ msgstr "product"
 
 #~ msgid "You_can_change_your_profile_here"
 #~ msgstr "You can change your profile here"
-
-#~ msgid "available"
-#~ msgstr "available"
 
 #~ msgid "Stock_product:_order_possible_only_by_{0}."
 #~ msgstr "Stock product: order possible only by {0}."

@@ -24,7 +24,7 @@ foodcoopshop.Admin = {
         this.adaptContentMargin();
         foodcoopshop.Helper.initScrolltopButton();
     },
-
+    
     bindDeleteCustomerButton : function(customerId) {
 
         var buttons = {};
@@ -985,10 +985,12 @@ foodcoopshop.Admin = {
 
                     $('#product-quantity-edit-form .ajax-loader').show();
                     $('.ui-dialog button').attr('disabled', 'disabled');
-
+                    
                     var data = {
                         productId: $('#dialogQuantityProductId').val(),
                         quantity: $('#dialogQuantityQuantity').val(),
+                        alwaysAvailable: $('#dialogQuantityAlwaysAvailable:checked').length > 0 ? 1 : 0,
+                        defaultQuantityAfterSendingOrderLists: $('#dialogQuantityDefaultQuantityAfterSendingOrderLists').val() == '' ? null : $('#dialogQuantityDefaultQuantityAfterSendingOrderLists').val(),
                     };
                     
                     if (foodcoopshop.Admin.isAdvancedStockManagementEnabled(row)) {
@@ -1016,13 +1018,15 @@ foodcoopshop.Admin = {
             
             var dialogOptions = {
                 autoOpen: false,
-                height: 250,
+                height: 350,
                 width: 390,
                 modal: true,
                 close: function () {
                     $('#dialogQuantityQuantity').val('');
                     $('#dialogQuantityQuantityLimit').val('');
                     $('#dialogQuantitySoldOutLimit').val('');
+                    $('#dialogQuantityAlwaysAvailable').val('');
+                    $('#dialogQuantityDefaultQuantityAfterSendingOrderLists').val('');
                     $('#dialogQuantityProductId').val('');
                 },
                 buttons: buttons
@@ -1046,17 +1050,47 @@ foodcoopshop.Admin = {
                 dialogOptions.height = 390;
             }
             
+            foodcoopshop.Admin.bindToggleQuantityQuantity(dialogId);
+
             $('#' + dialogId + ' #dialogQuantityQuantity').val(row.find('span.quantity-for-dialog').html().replace(/\./, ''));
+            if (row.find('.amount').html().match('fa-battery-full')) {
+                $('#' + dialogId + ' #dialogQuantityAlwaysAvailable').trigger('click');
+            }
+            $('#' + dialogId + ' #dialogQuantityDefaultQuantityAfterSendingOrderLists').val(row.find('span.default-quantity-after-sending-order-lists-for-dialog').html());
             $('#' + dialogId + ' #dialogQuantityProductId').val(row.find('td.cell-id').html());
             var label = foodcoopshop.Admin.getProductNameForDialog(row);
             $('#' + dialogId + ' label[for="dialogQuantityQuantity"]').html(label);
 
+
             var dialog = $('#' + dialogId).dialog(dialogOptions);
             dialog.dialog('open');
+            
         });
 
     },
     
+    bindToggleQuantityQuantity : function(dialogId) {
+        var dialog = $('#' + dialogId);
+        dialog.find('#dialogQuantityAlwaysAvailable').on('change', function() {
+            var quantityWrapper = dialog.find('.quantity-wrapper');
+            var dialogQuantityElement = dialog.find('#dialogQuantityAlwaysAvailable');
+            if (dialogQuantityElement.prop('checked')) {
+                quantityWrapper.hide();
+            } else {
+                quantityWrapper.show();
+            }
+        });
+    },
+    
+    initProductQuantityList(container) {
+        var rowContainer = $(container).find('td.amount');
+        rowContainer.each(function() {
+            var elements = $(this).find('> i, > span').not('.hide');
+            elements.addClass('has-separator');
+            elements.last().removeClass('has-separator');
+        })
+    },
+
     isAdvancedStockManagementEnabled : function(row) {
         if (row.hasClass('sub-row')) {
             row = row.prevAll('.main-product').first();

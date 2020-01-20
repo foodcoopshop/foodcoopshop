@@ -281,7 +281,10 @@ class LocalizedController extends Controller
                 'LastOrderWeekday' => __('Last_order_weekday'),
                 'SendOrderListsDay' => __('Send_order_lists_day'),
                 'OrderListsAreSentAutomaticallyNextDayInTheMorning' => __('Order_lists_are_sent_automatically_next_day_in_the_morning.'),
-                'OrderListsAreSentAutomaticallyOnThisDay' => __('Order_lists_are_sent_automatically_on_this_day.')
+                'OrderListsAreSentAutomaticallyOnThisDay' => __('Order_lists_are_sent_automatically_on_this_day.'),
+                'IsTheProductAlwaysAvailable' => __('Is_the_product_always_available?'),
+                'DefaultQuantityAfterSendingOrderLists' => __('Default_quantity_after_sending_order_lists'),
+                'DefaultQuantityAfterSendingOrderListsHelpText' => __('After_the_order_lists_are_sent_available_amount_is_set_to_this_value.'),
             ],
             'upload' => [
                 'delete' => __('delete'),

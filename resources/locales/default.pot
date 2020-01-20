@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-01-01 22:28+0100\n"
+"POT-Creation-Date: 2020-01-20 16:27+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -903,6 +903,15 @@ msgid "Order_lists_are_sent_automatically_next_day_in_the_morning."
 msgstr ""
 
 msgid "Order_lists_are_sent_automatically_on_this_day."
+msgstr ""
+
+msgid "Is_the_product_always_available?"
+msgstr ""
+
+msgid "Default_quantity_after_sending_order_lists"
+msgstr ""
+
+msgid "After_the_order_lists_are_sent_available_amount_is_set_to_this_value."
 msgstr ""
 
 msgid "delete"
