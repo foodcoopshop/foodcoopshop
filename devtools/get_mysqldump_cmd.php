@@ -22,8 +22,12 @@ if (!is_array($lines)
     foreach ($lines as $line) {
         if (($pos = strpos($line, '\'mysqlDumpCommand\'')) !== false) {
             $line = substr($line, $pos + strlen('\'mysqlDumpCommand\','));
-            $line = explode('\'', $line, 3);
-            $mysqldump_cmd = $line[1];
+            $line = explode('\'', $line);
+            if (count($line) == 3) {
+                $mysqldump_cmd = $line[1];
+            } else {
+                $mysqldump_cmd = $line[0];
+            }
         }
     }
     
