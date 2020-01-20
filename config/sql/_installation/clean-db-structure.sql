@@ -483,6 +483,8 @@ CREATE TABLE `fcs_stock_available` (
   `quantity` int(10) NOT NULL DEFAULT '0',
   `quantity_limit` int(10) NOT NULL DEFAULT '0',
   `sold_out_limit` int(10) DEFAULT NULL,
+  `always_available` tinyint(1) unsigned DEFAULT '1',
+  `default_quantity_after_sending_order_lists` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id_stock_available`),
   UNIQUE KEY `product_sqlstock` (`id_product`,`id_product_attribute`),
   KEY `id_product` (`id_product`),
