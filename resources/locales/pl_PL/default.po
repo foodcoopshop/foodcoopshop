@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-01-20 16:27+0100\n"
+"POT-Creation-Date: 2020-01-20 16:36+0100\n"
 "PO-Revision-Date: 2019-07-22 16:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -15,6 +15,139 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "X-Generator: Poedit 2.2.3\n"
 "X-Poedit-Bookmarks: 725,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
+
+# Access denied, please sign in.
+msgid "Access_denied_please_sign_in."
+msgstr "Dostęp wzbroniony. Proszę się zalogować."
+
+# paid in cash
+msgid "order_state_cash"
+msgstr "opłacono gotówką"
+
+# This order contains the variable member fee.
+msgid "This_order_contains_the_variable_member_fee."
+msgstr "To zamówienie zawiera zmienną opłatę członkowską."
+
+# order placed
+msgid "order_state_order_placed"
+msgstr "złożone"
+
+# closed
+msgid "order_state_closed"
+msgstr "zamknięte"
+
+# Order list sent to manufacturer
+msgid "order_state_order_list_sent_to_manufacturer"
+msgstr "Lista zamówień wysłana do producenta"
+
+# billing complete
+msgid "order_state_billed_cashless"
+msgstr "rozliczenie zakończone"
+
+# billing complete and paid in cash
+msgid "order_state_billed_cash"
+msgstr "rozliczenie zakończone i opłacone gotówką"
+
+# sign-in
+msgid "route_sign_in"
+msgstr "sign-in"
+
+# sign-out
+msgid "route_sign_out"
+msgstr "sign-out"
+
+# register
+msgid "route_registration"
+msgstr "register"
+
+# registration-successful
+msgid "route_registration_successful"
+msgstr "registration-successful"
+
+# information-about-right-of-withdrawal
+msgid "route_information_about_right_of_withdrawal"
+msgstr "information-about-right-of-withdrawal"
+
+# terms-of-use
+msgid "route_terms_of_use"
+msgstr "terms-of-use"
+
+# privacy-policy
+msgid "route_privacy_policy"
+msgstr "privacy-policy"
+
+# list-of-allergens
+msgid "route_list_of_allergens"
+msgstr "list-of-allergens"
+
+# accept-terms-of-use
+msgid "route_accept_terms_of_use"
+msgstr "accept-terms-of-use"
+
+# new-products
+msgid "route_new_products"
+msgstr "new-products"
+
+# request-new-password
+msgid "route_request_new_password"
+msgstr "request-new-password"
+
+# activate-new-password
+msgid "route_activate_new_password"
+msgstr "activate-new-password"
+
+# news
+msgid "route_news_list"
+msgstr "news"
+
+# news
+msgid "route_news_detail"
+msgstr "news"
+
+# search
+msgid "route_search"
+msgstr "search"
+
+# category
+msgid "route_category"
+msgstr "category"
+
+# product
+msgid "route_product"
+msgstr "product"
+
+# manufacturers
+msgid "route_manufacturer_list"
+msgstr "manufacturers"
+
+# manufacturer
+msgid "route_manufacturer_detail"
+msgstr "manufacturer"
+
+# content
+msgid "route_content"
+msgstr "content"
+
+# cart
+msgid "route_cart"
+msgstr "cart"
+
+# show
+msgid "route_cart_show"
+msgstr "show"
+
+# finish
+msgid "route_cart_finish"
+msgstr "finish"
+
+# finished
+msgid "route_cart_finished"
+msgstr "finished"
+
+# search
+#, fuzzy
+msgid "route_self_service"
+msgstr "search"
 
 # You have been signed out.
 msgid "You_have_been_signed_out."
@@ -84,15 +217,6 @@ msgstr "Nowe produkty"
 # Search
 msgid "Search"
 msgstr "Szukaj"
-
-# search
-#, fuzzy
-msgid "route_self_service"
-msgstr "search"
-
-# cart
-msgid "route_cart"
-msgstr "cart"
 
 # The desired amount {0} of the product {1} is not available any more. Available amount: {2}
 msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
@@ -316,10 +440,6 @@ msgstr "Na pewno chcesz się wylogować?"
 # Sign out?
 msgid "Sign_out?"
 msgstr "Wylogować?"
-
-# sign-out
-msgid "route_sign_out"
-msgstr "sign-out"
 
 # An error occurred
 msgid "An_error_occurred"
@@ -549,17 +669,9 @@ msgstr "około"
 msgid "Home"
 msgstr "Główna"
 
-# manufacturers
-msgid "route_manufacturer_list"
-msgstr "manufacturers"
-
 # Manufacturers
 msgid "Manufacturers"
 msgstr "Producenci"
-
-# news
-msgid "route_news_list"
-msgstr "news"
 
 # Pages
 msgid "Pages"
@@ -576,10 +688,6 @@ msgstr "Pokaż"
 # Show all products
 msgid "Show_all_products"
 msgstr "Pokaż wszystkie produkty"
-
-# finished
-msgid "route_cart_finished"
-msgstr "finished"
 
 # Place instant order for
 msgid "Place_instant_order_for"
@@ -2401,77 +2509,13 @@ msgstr "wartość domyślna"
 msgid "price_will_be_eventually_adapted."
 msgstr "ostateczna cena zostanie dostosowana."
 
-# accept-terms-of-use
-msgid "route_accept_terms_of_use"
-msgstr "accept-terms-of-use"
-
-# manufacturer
-msgid "route_manufacturer_detail"
-msgstr "manufacturer"
-
 # news
 msgid "route_news"
 msgstr "news"
 
-# content
-msgid "route_content"
-msgstr "content"
-
-# terms-of-use
-msgid "route_terms_of_use"
-msgstr "terms-of-use"
-
-# privacy-policy
-msgid "route_privacy_policy"
-msgstr "privacy-policy"
-
-# list-of-allergens
-msgid "route_list_of_allergens"
-msgstr "list-of-allergens"
-
-# show
-msgid "route_cart_show"
-msgstr "show"
-
-# finish
-msgid "route_cart_finish"
-msgstr "finish"
-
-# new-products
-msgid "route_new_products"
-msgstr "new-products"
-
 # all-products
 msgid "route_all_products"
 msgstr "all-products"
-
-# category
-msgid "route_category"
-msgstr "category"
-
-# sign-in
-msgid "route_sign_in"
-msgstr "sign-in"
-
-# registration-successful
-msgid "route_registration_successful"
-msgstr "registration-successful"
-
-# register
-msgid "route_registration"
-msgstr "register"
-
-# activate-new-password
-msgid "route_activate_new_password"
-msgstr "activate-new-password"
-
-# request-new-password
-msgid "route_request_new_password"
-msgstr "request-new-password"
-
-# news
-msgid "route_news_detail"
-msgstr "news"
 
 # product
 msgid "routes_product"
@@ -2489,705 +2533,693 @@ msgstr "Zamówienie zostało opłacone częściowo w {0}."
 msgid "Paying_with_time_account_name_{0}"
 msgstr "Konto {0}"
 
-# Access denied, please sign in.
-msgid "Access_denied_please_sign_in."
-msgstr "Dostęp wzbroniony. Proszę się zalogować."
-
-# paid in cash
-msgid "order_state_cash"
-msgstr "opłacono gotówką"
-
-# This order contains the variable member fee.
-msgid "This_order_contains_the_variable_member_fee."
-msgstr "To zamówienie zawiera zmienną opłatę członkowską."
-
-# order placed
-msgid "order_state_order_placed"
-msgstr "złożone"
-
-# closed
-msgid "order_state_closed"
-msgstr "zamknięte"
-
-# Order list sent to manufacturer
-msgid "order_state_order_list_sent_to_manufacturer"
-msgstr "Lista zamówień wysłana do producenta"
-
-# billing complete
-msgid "order_state_billed_cashless"
-msgstr "rozliczenie zakończone"
-
-# billing complete and paid in cash
-msgid "order_state_billed_cash"
-msgstr "rozliczenie zakończone i opłacone gotówką"
-
-# information-about-right-of-withdrawal
-msgid "route_information_about_right_of_withdrawal"
-msgstr "information-about-right-of-withdrawal"
-
-# search
-msgid "route_search"
-msgstr "search"
-
-# product
-msgid "route_product"
-msgstr "product"
-
 # Modified on
-#~ msgid "Modified_on"
-#~ msgstr "Zmodyfikowano dnia"
+msgid "Modified_on"
+msgstr "Zmodyfikowano dnia"
 
 # Show blog from
-#~ msgid "Go_to_blog_from"
-#~ msgstr "Pokaż blogi od"
+msgid "Go_to_blog_from"
+msgstr "Pokaż blogi od"
 
 # by
-#~ msgid "by"
-#~ msgstr "przez"
+msgid "by"
+msgstr "przez"
 
 # Edit
-#~ msgid "Edit"
-#~ msgstr "Edytuj"
+msgid "Edit"
+msgstr "Edytuj"
 
 # Further news
-#~ msgid "Further_news"
-#~ msgstr "Kolejne nowości"
+msgid "Further_news"
+msgstr "Kolejne nowości"
 
 # of {0}
-#~ msgid "of_{0}"
-#~ msgstr "z {0}"
+msgid "of_{0}"
+msgstr "z {0}"
 
 # found
-#~ msgid "found"
-#~ msgstr "znaleziono"
+msgid "found"
+msgstr "znaleziono"
 
 # Show blog post
-#~ msgid "Show_Blog_post"
-#~ msgstr "Pokaż post"
+msgid "Show_Blog_post"
+msgstr "Pokaż post"
 
 # Show manufacturer
-#~ msgid "Go_to_manufacturer"
-#~ msgstr "Pokaż producenta"
+msgid "Go_to_manufacturer"
+msgstr "Pokaż producenta"
 
 # Your cart is empty
-#~ msgid "Your_cart_is_empty"
-#~ msgstr "Twój koszyk jest pusty"
+msgid "Your_cart_is_empty"
+msgstr "Twój koszyk jest pusty"
 
 # Product sum including VAT
-#~ msgid "Product_sum_including_vat"
-#~ msgstr "Suma produktów zawiera VAT"
+msgid "Product_sum_including_vat"
+msgstr "Suma produktów zawiera VAT"
 
 # Deposit sum
-#~ msgid "Deposit_sum"
-#~ msgstr "Suma kaucji"
+msgid "Deposit_sum"
+msgstr "Suma kaucji"
 
 # From which in
-#~ msgid "From_which_in"
-#~ msgstr "Z czego w"
+msgid "From_which_in"
+msgstr "Z czego w"
 
 # Included VAT
-#~ msgid "Including_vat"
-#~ msgstr "Zawiera VAT"
+msgid "Including_vat"
+msgstr "Zawiera VAT"
 
 # The delivered weight will eventually be adapted, so the price can change slightly.
-#~ msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
-#~ msgstr "Wagi dostarczonych produktów mogą ulec zmianie, więc cena również może nieco się zmienić."
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr "Wagi dostarczonych produktów mogą ulec zmianie, więc cena również może nieco się zmienić."
 
 # To finish your order please click the button below.
-#~ msgid "To_finish_order_click_here."
-#~ msgstr "Kliknij przycisk poniżej aby dokończyć zamówienie."
+msgid "To_finish_order_click_here."
+msgstr "Kliknij przycisk poniżej aby dokończyć zamówienie."
 
 # Order placed
-#~ msgid "Order_placed"
-#~ msgstr "Zamówienie złożone"
+msgid "Order_placed"
+msgstr "Zamówienie złożone"
 
 # Thank you, your order was placed successfully.
-#~ msgid "Thank_you_your_order_was_placed_succesfully."
-#~ msgstr "Dziękujemy. Twoje zamówienie zostało złożone poprawnie."
+msgid "Thank_you_your_order_was_placed_succesfully."
+msgstr "Dziękujemy. Twoje zamówienie zostało złożone poprawnie."
 
 # The order confirmation was sent to you by e-mail ({0}).
-#~ msgid "The_order_confirmation_was_sent_by_email_to_{0}."
-#~ msgstr "Potwierdzenie zamówienia zostało wysłane mailowo ({0})."
+msgid "The_order_confirmation_was_sent_by_email_to_{0}."
+msgstr "Potwierdzenie zamówienia zostało wysłane mailowo ({0})."
 
 # Please pick up the ordered products in our pick up store.
-#~ msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
-#~ msgstr "Odbierz zamówione produkty w miejscu odbioru."
+msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
+msgstr "Odbierz zamówione produkty w miejscu odbioru."
 
 # Increase your credit
-#~ msgid "Increase_credit"
-#~ msgstr "Zwiększ swój kredyt"
+msgid "Increase_credit"
+msgstr "Zwiększ swój kredyt"
 
 # Please do not forget to bring the exact amount of cash.
-#~ msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
-#~ msgstr "Nie zapomnij przynieść odliczonej kwoty pieniędzy."
+msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
+msgstr "Nie zapomnij przynieść odliczonej kwoty pieniędzy."
+
+# Change member comment
+#, fuzzy
+msgid "Scan_member_card"
+msgstr "Zmień komentarz do członka"
 
 # for
 #, fuzzy
-#~ msgid "or"
-#~ msgstr "za"
+msgid "or"
+msgstr "za"
 
 # Password
-#~ msgid "Password"
-#~ msgstr "Hasło"
+msgid "Password"
+msgstr "Hasło"
 
 # Stay signed in
-#~ msgid "Stay_signed_in"
-#~ msgstr "Pozostań zalogowany"
+msgid "Stay_signed_in"
+msgstr "Pozostań zalogowany"
+
+msgid "and"
+msgstr ""
 
 # and accept cookie
 #, fuzzy
-#~ msgid "accept_cookie"
-#~ msgstr "i zaakceptuj ciasteczka"
+msgid "accept_cookie"
+msgstr "i zaakceptuj ciasteczka"
 
 # Forgot password?
-#~ msgid "Forgot_password?"
-#~ msgstr "Zapomniałeś hasła?"
+msgid "Forgot_password?"
+msgstr "Zapomniałeś hasła?"
 
 # Create account
-#~ msgid "Create_account"
-#~ msgstr "Utwórz konto"
+msgid "Create_account"
+msgstr "Utwórz konto"
 
 # First name
-#~ msgid "Firstname"
-#~ msgstr "Imię"
+msgid "Firstname"
+msgstr "Imię"
 
 # Last name
-#~ msgid "Lastname"
-#~ msgstr "Nazwisko"
+msgid "Lastname"
+msgstr "Nazwisko"
 
 # Street
-#~ msgid "Street"
-#~ msgstr "Ulica"
+msgid "Street"
+msgstr "Ulica"
 
 # Additional information
-#~ msgid "Additional_address_information"
-#~ msgstr "Informacje dodatkowe"
+msgid "Additional_address_information"
+msgstr "Informacje dodatkowe"
 
 # Zip
-#~ msgid "Zip"
-#~ msgstr "Kod pocztowy"
+msgid "Zip"
+msgstr "Kod pocztowy"
 
 # City
-#~ msgid "City"
-#~ msgstr "Miasto"
+msgid "City"
+msgstr "Miasto"
 
 # Do you want to receive an order reminder e-mail every week?
-#~ msgid "Want_to_receive_reminder_emails?"
-#~ msgstr "Czy chcesz co tydzień otrzymywać przypomnienia mailowe o zamówieniach?"
+msgid "Want_to_receive_reminder_emails?"
+msgstr "Czy chcesz co tydzień otrzymywać przypomnienia mailowe o zamówieniach?"
 
 # terms of use
-#~ msgid "terms_of_use"
-#~ msgstr "warunki korzystania"
+msgid "terms_of_use"
+msgstr "warunki korzystania"
 
 # I accept the {0}
-#~ msgid "I_accept_the_{0}"
-#~ msgstr "Akceptuję {0}"
+msgid "I_accept_the_{0}"
+msgstr "Akceptuję {0}"
 
 # Please enter your email address and click on send button.
-#~ msgid "Please_enter_your_email_address_and_click_on_send_button."
-#~ msgstr "Podaj swój adres mailowy i kliknij przycisk \"Wyślij\"."
+msgid "Please_enter_your_email_address_and_click_on_send_button."
+msgstr "Podaj swój adres mailowy i kliknij przycisk \"Wyślij\"."
 
 # Send
-#~ msgid "Send"
-#~ msgstr "Wyślij"
+msgid "Send"
+msgstr "Wyślij"
 
 # The confirmation of your registration was sent to you by email.
-#~ msgid "The_confirmation_of_your_registration_was_sent_to_you_by_email."
-#~ msgstr "Potwierdzenie rejestracji zostało wysłane mailowo."
+msgid "The_confirmation_of_your_registration_was_sent_to_you_by_email."
+msgstr "Potwierdzenie rejestracji zostało wysłane mailowo."
 
 # Your account was created but not activated yet. This means, you can't login yet!
-#~ msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
-#~ msgstr "Twoje konto zostało utworzone, lecz nie jest jeszcze aktywne. Oznacza to, że jeszcze nie możesz się zalogować!"
+msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
+msgstr "Twoje konto zostało utworzone, lecz nie jest jeszcze aktywne. Oznacza to, że jeszcze nie możesz się zalogować!"
 
 # You will get an e-mail as soon as we activate you.
-#~ msgid "You_will_get_an_email_as_soon_as_we_activated_you."
-#~ msgstr "Otrzymasz maila jak tylko aktywujemy twoje konto."
-
-# terms and conditions
-#~ msgid "terms_and_conditions"
-#~ msgstr "regulamin"
-
-# if you want to continue to use this platform, please read the changed {0} and accept them.
-#~ msgid "if_you_want_to_continue_to_use_this_platform_please_read_and_accept_the_{0}."
-#~ msgstr "jeśli chcesz dalej korzystać z systemu, musisz przeczytać i zaakceptować zmienione {0}."
-
-# I accept the {0}.
-#~ msgid "I_accept_the_{0}."
-#~ msgstr "Akceptuję {0}."
-
-# Load past orders
-#~ msgid "Load_past_orders"
-#~ msgstr "Załaduj wcześniejsze zamówienia"
-
-# This order will be placed for {0}.
-#~ msgid "This_order_will_be_placed_for_{0}."
-#~ msgstr "Zamówienie zostanie złożone za {0}."
-
-# Only stock products are shown.
-#~ msgid "Only_stock_products_are_shown."
-#~ msgstr "Wyłącznie produkty magazynowane są widoczne."
-
-# Your credit balance
-#~ msgid "Your_credit_balance"
-#~ msgstr "Twoje saldo kredytowe"
-
-# You reached the order limit of {0}. Please add credit.
-#~ msgid "You_reached_the_order_limit_{0}_please_add_credit."
-#~ msgstr "Osiągnąłeś limit zamówień ({0}). Uzupełnij kredyt."
-
-# Add credit
-#~ msgid "Add_credit"
-#~ msgstr "Dodaj kredyt"
-
-# Value added tax
-#~ msgid "Value_added_tax"
-#~ msgstr "VAT"
-
-# Show cart
-#~ msgid "Show_cart_button"
-#~ msgstr "Pokaż koszyk"
-
-# Already ordered products
-#~ msgid "Already_ordered_products"
-#~ msgstr "Już zamówiono produkty"
-
-# Replace existing file
-#~ msgid "Replace_existing_file"
-#~ msgstr "Zastąp istniejący plik"
-
-# Upload new file
-#~ msgid "Upload_new_file"
-#~ msgstr "Prześlij nowy plik"
-
-# Search computer
-#~ msgid "Search_PC"
-#~ msgstr "Przeszukaj komputer"
-
-# Other initiatives working with FoodCoopShop
-#~ msgid "Other_initiaives_working_with_FoodCoopShop"
-#~ msgstr "Inne inicjatywy współpracujące z nami"
-
-# Map with <b>all</b> Austrian Foodcoops
-#~ msgid "Map_with_all_Austrian_foodocops"
-#~ msgstr "Mapa ze wszystkimi kooperatywami w Austrii"
-
-# Information
-#~ msgid "Information"
-#~ msgstr "Informacje"
-
-# Contact
-#~ msgid "Contact"
-#~ msgstr "Kontakt"
-
-# Bank account (credit)
-#~ msgid "Bank_account_credit_balance"
-#~ msgstr "Konto bankowe (kredyt)"
-
-# Bank account (member fee)
-#~ msgid "Bank_account_member_fee"
-#~ msgstr "Konto bankowe (opłata członkowska)"
-
-# Delivery break
-#, fuzzy
-#~ msgid "Attention_order_break!"
-#~ msgstr "Przerwa w dostawach"
-
-# Help?
-#~ msgid "Help?"
-#~ msgstr "Pomoc?"
-
-# Replace existing image
-#~ msgid "Replace_existing_image"
-#~ msgstr "Zastąp istniejący obraz"
-
-# Upload new image
-#~ msgid "Upload_new_image"
-#~ msgstr "Prześlij nowy obraz"
-
-# Print
-#~ msgid "Print"
-#~ msgstr "Drukuj"
-
-# search
-#, fuzzy
-#~ msgid "Reset_search"
-#~ msgstr "search"
-
-# Categories
-#~ msgid "Categories"
-#~ msgstr "Kategorie"
-
-# There are only stock products shown in this list.
-#~ msgid "There_are_only_stock_products_shown_in_this_list."
-#~ msgstr "Na liście widoczne są wyłącznie produkty magazynowane."
-
-# Admin panel
-#~ msgid "Admin_area"
-#~ msgstr "Panel administracyjny"
-
-# Manufacturer panel
-#~ msgid "Manufacturer_area"
-#~ msgstr "Panel producenta"
-
-# To change your profile please stop the instant order mode.
-#~ msgid "To_change_your_profile_please_stop_the_instant_order_mode."
-#~ msgstr "W celu zmiany profilu musisz wyjść z trybu zamówień błyskawicznych."
-
-# Signed in
-#~ msgid "Signed_in"
-#~ msgstr "Zalogowany"
-
-# search
-#, fuzzy
-#~ msgid "Self_service"
-#~ msgstr "search"
-
-# right of withdrawal
-#~ msgid "right_of_withdrawal"
-#~ msgstr "prawo do odstąpienia"
-
-# I accept the {0} and accept that this is not valid for perishable goods.
-#~ msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
-#~ msgstr "Akceptuję {0} i rozumiem, że nie dotyczy to towarów łatwo psujących się."
-
-# general terms and conditions
-#~ msgid "general_terms_and_conditions"
-#~ msgstr "regulamin"
-
-# general terms and conditions of {0}
-#~ msgid "General_terms_and_conditions_of_{0}"
-#~ msgstr "regulamin {0}"
-
-# Buy now
-#~ msgid "Order_button"
-#~ msgstr "Kup teraz"
-
-# The amount will be reduced from the credit balance.
-#~ msgid "The_amount_will_be_reduced_from_the_credit_balance."
-#~ msgstr "Kwota obciąży saldo kredytowe."
-
-# Please pay when picking up your products.
-#~ msgid "Please_pay_when_picking_up_products."
-#~ msgstr "Zapłać przy odbiorze produktów."
-
-# Want to write a message to the pick up team on {0}?
-#~ msgid "Write_message_to_pick_up_team_for_{0}?"
-#~ msgstr "Chcesz napisać wiadomość do ekipy odbierającej na {0}?"
-
-# Your message will be shown next to your order in the admin panel. Manufacturers cannot not this message.
-#~ msgid "Placeholder_message_pickup_day_comment."
-#~ msgstr "Twoja wiadomość będzie widoczna obok twojego zamówienia w panelu administracyjnym. Producenci jej nie zobaczą."
-
-# Pickup place: {0}
-#~ msgid "Pickup_place:_{0}"
-#~ msgstr "Miejsce odbioru: {0}"
-
-# I promise to pick up the products on the selected pickup day and I will pay in cash in the shop.
-#~ msgid "I_promise_to_pick_up_the_products_on_the_selected_pickup_day_and_to_pay_in_cash_in_the_shop."
-#~ msgstr "Zobowiązuję się do odbioru produktów w wyznaczonym dniu odbioru i do opłacenia zamówienia gotówką."
-
-# How much of it do I want to pay in {0}?
-#, fuzzy
-#~ msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
-#~ msgstr "Za jak wiele z tego chcę zapłacić w {0}?"
-
-# Total
-#~ msgid "Total"
-#~ msgstr "Łącznie"
-
-# You can sign in here for placing a new order
-#~ msgid "You_can_sign_in_here_for_ordering"
-#~ msgstr "Możesz się tu zalogować żeby złożyć nowe zamówienie"
-
-# E-mail address
-#~ msgid "E-mail_address"
-#~ msgstr "Adres mailowy"
-
-# You can change your password here
-#~ msgid "You_can_change_your_password_here"
-#~ msgstr "Możesz tu zmienić swoje hasło"
-
-# You can change your profile here
-#~ msgid "You_can_change_your_profile_here"
-#~ msgstr "Możesz tu zmienić swój profil"
-
-# Stock product: order possible only with instant order when picking it up.
-#, fuzzy
-#~ msgid "Stock_product:_order_possible_only_by_{0}."
-#~ msgstr "Produkt magazynowany: zamówienie możliwe wyłącznie jako zamówienie błyskawiczne podczas odbioru."
-
-# Stock product: order possible only with instant order when picking it up.
-#~ msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
-#~ msgstr "Produkt magazynowany: zamówienie możliwe wyłącznie jako zamówienie błyskawiczne podczas odbioru."
-
-# Currently not on stock
-#~ msgid "Currently_not_on_stock"
-#~ msgstr "Aktualnie brak na stanie"
-
-# New
-#~ msgid "New"
-#~ msgstr "Nowy"
-
-# More infos to product {0}
-#~ msgid "More_infos_to_product_{0}"
-#~ msgstr "Więcej informacji o produkcie {0}"
-
-# Last order day
-#~ msgid "Last_order_day"
-#~ msgstr "Ostatni dzień zamówień"
-
-# Instant order
-#~ msgid "Instant_order"
-#~ msgstr "Zamówienie błyskawiczne"
-
-# {0,plural,=1{1 product} other{# products}}
-#, fuzzy
-#~ msgid "{0,plural,=1{1_week} other{#_weeks}}"
-#~ msgstr "{0,plural,=1{1 produkt} other{# produkty}}"
-
-# {0,plural,=1{1 product} other{# products}}
-#, fuzzy
-#~ msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
-#~ msgstr "{0,plural,=1{1 produkt} other{# produkty}}"
-
-# from which {0} %
-#~ msgid "from_which_{0}_%"
-#~ msgstr "z czego {0} %"
-
-# Add to cart
-#~ msgid "Move_in_cart"
-#~ msgstr "Dodaj do koszyka"
-
-# Weight
-#, fuzzy
-#~ msgid "Weight_in"
-#~ msgstr "Waga"
-
-# deposit
-#, fuzzy
-#~ msgid "Add_deposit"
-#~ msgstr "kaucja"
-
-# Part in {0}
-#, fuzzy
-#~ msgid "Amount_in_{0}"
-#~ msgstr "Część w {0}"
-
-# The manufacturer has reached the limit to pay in {0}.
-#, fuzzy
-#~ msgid "The_manufacturer_has_reached_the_limit_to_pay_in_{0}."
-#~ msgstr "Producent osiągnął limit aby zapłacić w {0}."
-
-# Part in {0}
-#, fuzzy
-#~ msgid "Part_in_{0}"
-#~ msgstr "Część w {0}"
-
-# in
-#~ msgid "in"
-#~ msgstr "w"
-
-# Your account at {0} has just been activated.
-#~ msgid "Your_account_at_{0}_has_just_been_activated."
-#~ msgstr "Twoje konto na {0} właśnie zostało aktywowane."
-
-# Your registration at {0} has been successful!
-#~ msgid "Your_registration_at_{0}_has_just_been_successful!"
-#~ msgstr "Rejestracja na {0} przebiegła pomyślnie!"
-
-# Dear responsible for new members,
-#~ msgid "Dear_responsible_person_for_new_members,"
-#~ msgstr "Osobo odpowiedzialna za nowych członków,"
-
-# there has been a new registration: {0} ({1}) from {2}.
-#~ msgid "there_has_been_a_new_registration:_{0}_({1})_from_{2}."
-#~ msgstr "nowa rejestracja: {0} ({1}) z {2}."
-
-# Here you can activate the new member and see the data
-#~ msgid "Here_you_can_activate_the_new_member_and_see_the_data"
-#~ msgstr "Tu możesz aktywować nowych członków i podejrzeć ich dane"
-
-# Here you can see the data of the new member
-#~ msgid "Here_you_can_see_the_data_of_the_new_member"
-#~ msgstr "Tu możesz podejrzeć dane nowych członków"
-
-# There has been placed a instant order for {0} by {1}.
-#~ msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1})."
-#~ msgstr "Zamówienie błyskawiczne złożone dla {0} przez {1}."
-
-# You receive this message because the delivery day for this order was set to <b>today ({0})</b>, and therefore it does not appear on your order lists.
-#~ msgid "You_receive_this_message_because_the_delivery_day_of_this_order_was_automatically_set_to_today_{0}_and_therefore_it_does_not_appear_on_your_order_lists."
-#~ msgstr "Otrzymujesz tą wiadomość, ponieważ dzień dostawy dla tego zamówienia został ustawiony na <b>dziś ({0})</b>i tym samym nie jest ono widoczne na twojej liście zamówień."
-
-# your new password:
-#~ msgid "your_new_password_is:"
-#~ msgstr "twoje nowe hasło:"
-
-# Please click on this link to activate your new password
-#~ msgid "Please_click_on_this_link_to_activate_your_new_password"
-#~ msgstr "Kliknij w link aby aktywować swoje nowe hasło"
-
-# thank you for order from {0}.
-#~ msgid "thank_you_for_your_order_from_{0}."
-#~ msgstr "dziękujemy za zamówienie od {0}."
-
-# The amount was reduced from your credit balance.
-#, fuzzy
-#~ msgid "The_amount_was_reduced_from_your_credit_balance."
-#~ msgstr "Kwota została odjęta od twojego salda kredytowego."
-
-# You can find a detailed list of your ordered products in the attached order confirmation.
-#~ msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
-#~ msgstr "Szczegółową listę zamówionych produktów można znaleźć w załączonym potwierdzeniu zamówienia."
-
-# thank you for order from {0}.
-#, fuzzy
-#~ msgid "thank_you_for_your_purchase."
-#~ msgstr "dziękujemy za zamówienie od {0}."
-
-# This is the text of the email (with attached logo).
-#~ msgid "This_is_the_text_of_the_email_(with_attached_logo)."
-#~ msgstr "To jest tekst wiadomości e-mail (z dołączonym logo)."
-
-# Units on stock:
-#~ msgid "Units_on_stock:"
-#~ msgstr "Jednostek w magazynie:"
-
-# Orders are not possible any more!
-#~ msgid "Product_orders_are_not_possible_any_more!"
-#~ msgstr "Składanie zamówień nie jest już możliwe!"
-
-# Product orders possible until:
-#~ msgid "Product_orders_possible_until:"
-#~ msgstr "Składanie zamówień możliwe do:"
-
-# This email notification triggered if stock is less or equals:
-#~ msgid "This_notification_triggered_if_stock_available_is_less_than:"
-#~ msgstr "To powiadomienie mailowe jest wysyłane, gdy stan magazynowy jest mniejszy lub równy:"
-
-# Click here to edit the product.
-#~ msgid "Click_here_to_edit_the_product."
-#~ msgstr "Kliknij tutaj, aby edytować produkt."
-
-# Cart
-#~ msgid "Cart"
-#~ msgstr "Koszyk"
-
-# Your cart is empty
-#, fuzzy
-#~ msgid "Your_cart_is_empty."
-#~ msgstr "Twój koszyk jest pusty"
-
-# homepage
-#~ msgid "homepage"
-#~ msgstr "strona główna"
-
-# page you have just been to
-#~ msgid "page_you_have_just_been_to"
-#~ msgstr "strona, którą właśnie odwiedziłeś"
-
-# Click here to go the the
-#~ msgid "Click_here_to_open_the"
-#~ msgstr "Kliknij tu aby przejść do"
-
-# This e-mail was automatically created.
-#~ msgid "This_email_was_created_automatcially."
-#~ msgstr "Ta wiadomość została utworzona automatycznie."
-
-# You can unsubscribe it <a href=\"{0}\">in your settings</a>.
-#~ msgid "You_can_unsubscribe_it_<a href=\"{0}\">in_your_settings</a>."
-#~ msgstr "Możesz anulować subskrypcję <a href=\"{0}\">w swoich ustawieniach</a>."
+msgid "You_will_get_an_email_as_soon_as_we_activated_you."
+msgstr "Otrzymasz maila jak tylko aktywujemy twoje konto."
 
 # News from
-#~ msgid "News_from"
-#~ msgstr "Nowości od"
+msgid "News_from"
+msgstr "Nowości od"
 
 # Imprint
-#~ msgid "Imprint"
-#~ msgstr "Sygnatura"
+msgid "Imprint"
+msgstr "Sygnatura"
+
+msgid "Search:_name_id_or_barcode"
+msgstr ""
+
+msgid "Shopping_bag"
+msgstr ""
 
 # search
 #, fuzzy
-#~ msgid "docs_route_self_service"
-#~ msgstr "search"
+msgid "docs_route_self_service"
+msgstr "search"
 
 # Your cart is empty
 #, fuzzy
-#~ msgid "Your_shopping_bag_is_empty."
-#~ msgstr "Twój koszyk jest pusty"
+msgid "Your_shopping_bag_is_empty."
+msgstr "Twój koszyk jest pusty"
 
 # Koszyk
 #, fuzzy
-#~ msgid "Finish_pickup"
-#~ msgstr "Dokończ zakupy"
+msgid "Finish_pickup"
+msgstr "Dokończ zakupy"
+
+# terms and conditions
+msgid "terms_and_conditions"
+msgstr "regulamin"
+
+# if you want to continue to use this platform, please read the changed {0} and accept them.
+msgid "if_you_want_to_continue_to_use_this_platform_please_read_and_accept_the_{0}."
+msgstr "jeśli chcesz dalej korzystać z systemu, musisz przeczytać i zaakceptować zmienione {0}."
+
+# I accept the {0}.
+msgid "I_accept_the_{0}."
+msgstr "Akceptuję {0}."
+
+# Load past orders
+msgid "Load_past_orders"
+msgstr "Załaduj wcześniejsze zamówienia"
+
+# This order will be placed for {0}.
+msgid "This_order_will_be_placed_for_{0}."
+msgstr "Zamówienie zostanie złożone za {0}."
+
+# Only stock products are shown.
+msgid "Only_stock_products_are_shown."
+msgstr "Wyłącznie produkty magazynowane są widoczne."
+
+# Your credit balance
+msgid "Your_credit_balance"
+msgstr "Twoje saldo kredytowe"
+
+# You reached the order limit of {0}. Please add credit.
+msgid "You_reached_the_order_limit_{0}_please_add_credit."
+msgstr "Osiągnąłeś limit zamówień ({0}). Uzupełnij kredyt."
+
+# Add credit
+msgid "Add_credit"
+msgstr "Dodaj kredyt"
+
+# Value added tax
+msgid "Value_added_tax"
+msgstr "VAT"
+
+# Show cart
+msgid "Show_cart_button"
+msgstr "Pokaż koszyk"
+
+# Already ordered products
+msgid "Already_ordered_products"
+msgstr "Już zamówiono produkty"
+
+# right of withdrawal
+msgid "right_of_withdrawal"
+msgstr "prawo do odstąpienia"
+
+# I accept the {0} and accept that this is not valid for perishable goods.
+msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
+msgstr "Akceptuję {0} i rozumiem, że nie dotyczy to towarów łatwo psujących się."
+
+# general terms and conditions
+msgid "general_terms_and_conditions"
+msgstr "regulamin"
+
+# general terms and conditions of {0}
+msgid "General_terms_and_conditions_of_{0}"
+msgstr "regulamin {0}"
+
+# Buy now
+msgid "Order_button"
+msgstr "Kup teraz"
+
+# The amount will be reduced from the credit balance.
+msgid "The_amount_will_be_reduced_from_the_credit_balance."
+msgstr "Kwota obciąży saldo kredytowe."
+
+# Please pay when picking up your products.
+msgid "Please_pay_when_picking_up_products."
+msgstr "Zapłać przy odbiorze produktów."
+
+# Want to write a message to the pick up team on {0}?
+msgid "Write_message_to_pick_up_team_for_{0}?"
+msgstr "Chcesz napisać wiadomość do ekipy odbierającej na {0}?"
+
+# Your message will be shown next to your order in the admin panel. Manufacturers cannot not this message.
+msgid "Placeholder_message_pickup_day_comment."
+msgstr "Twoja wiadomość będzie widoczna obok twojego zamówienia w panelu administracyjnym. Producenci jej nie zobaczą."
+
+# Pickup place: {0}
+msgid "Pickup_place:_{0}"
+msgstr "Miejsce odbioru: {0}"
+
+# I promise to pick up the products on the selected pickup day and I will pay in cash in the shop.
+msgid "I_promise_to_pick_up_the_products_on_the_selected_pickup_day_and_to_pay_in_cash_in_the_shop."
+msgstr "Zobowiązuję się do odbioru produktów w wyznaczonym dniu odbioru i do opłacenia zamówienia gotówką."
+
+# How much of it do I want to pay in {0}?
+#, fuzzy
+msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
+msgstr "Za jak wiele z tego chcę zapłacić w {0}?"
+
+# Total
+msgid "Total"
+msgstr "Łącznie"
+
+# You can sign in here for placing a new order
+msgid "You_can_sign_in_here_for_ordering"
+msgstr "Możesz się tu zalogować żeby złożyć nowe zamówienie"
+
+# E-mail address
+msgid "E-mail_address"
+msgstr "Adres mailowy"
+
+# You can change your password here
+msgid "You_can_change_your_password_here"
+msgstr "Możesz tu zmienić swoje hasło"
+
+# You can change your profile here
+msgid "You_can_change_your_profile_here"
+msgstr "Możesz tu zmienić swój profil"
+
+# Replace existing file
+msgid "Replace_existing_file"
+msgstr "Zastąp istniejący plik"
+
+# Upload new file
+msgid "Upload_new_file"
+msgstr "Prześlij nowy plik"
+
+# Search computer
+msgid "Search_PC"
+msgstr "Przeszukaj komputer"
+
+# Other initiatives working with FoodCoopShop
+msgid "Other_initiaives_working_with_FoodCoopShop"
+msgstr "Inne inicjatywy współpracujące z nami"
+
+# Map with <b>all</b> Austrian Foodcoops
+msgid "Map_with_all_Austrian_foodocops"
+msgstr "Mapa ze wszystkimi kooperatywami w Austrii"
+
+# Information
+msgid "Information"
+msgstr "Informacje"
+
+# Contact
+msgid "Contact"
+msgstr "Kontakt"
+
+# Bank account (credit)
+msgid "Bank_account_credit_balance"
+msgstr "Konto bankowe (kredyt)"
+
+# Bank account (member fee)
+msgid "Bank_account_member_fee"
+msgstr "Konto bankowe (opłata członkowska)"
+
+# Delivery break
+#, fuzzy
+msgid "Attention_order_break!"
+msgstr "Przerwa w dostawach"
+
+# Help?
+msgid "Help?"
+msgstr "Pomoc?"
+
+# Replace existing image
+msgid "Replace_existing_image"
+msgstr "Zastąp istniejący obraz"
+
+# Upload new image
+msgid "Upload_new_image"
+msgstr "Prześlij nowy obraz"
+
+msgid "Image_upload_legal_hint."
+msgstr ""
+
+# Print
+msgid "Print"
+msgstr "Drukuj"
+
+# search
+#, fuzzy
+msgid "Reset_search"
+msgstr "search"
+
+# Available amount
+#, fuzzy
+msgid "available"
+msgstr "Dostępna ilość"
+
+# Stock product: order possible only with instant order when picking it up.
+#, fuzzy
+msgid "Stock_product:_order_possible_only_by_{0}."
+msgstr "Produkt magazynowany: zamówienie możliwe wyłącznie jako zamówienie błyskawiczne podczas odbioru."
+
+# search
+#, fuzzy
+msgid "Self_service"
+msgstr "search"
+
+# Stock product: order possible only with instant order when picking it up.
+msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
+msgstr "Produkt magazynowany: zamówienie możliwe wyłącznie jako zamówienie błyskawiczne podczas odbioru."
+
+# Currently not on stock
+msgid "Currently_not_on_stock"
+msgstr "Aktualnie brak na stanie"
+
+# New
+msgid "New"
+msgstr "Nowy"
+
+# More infos to product {0}
+msgid "More_infos_to_product_{0}"
+msgstr "Więcej informacji o produkcie {0}"
+
+# Last order day
+msgid "Last_order_day"
+msgstr "Ostatni dzień zamówień"
+
+# Instant order
+msgid "Instant_order"
+msgstr "Zamówienie błyskawiczne"
+
+# {0,plural,=1{1 product} other{# products}}
+#, fuzzy
+msgid "{0,plural,=1{1_week} other{#_weeks}}"
+msgstr "{0,plural,=1{1 produkt} other{# produkty}}"
+
+# {0,plural,=1{1 product} other{# products}}
+#, fuzzy
+msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
+msgstr "{0,plural,=1{1 produkt} other{# produkty}}"
+
+# from which {0} %
+msgid "from_which_{0}_%"
+msgstr "z czego {0} %"
+
+msgid "Move_in_shopping_bag"
+msgstr ""
+
+# Add to cart
+msgid "Move_in_cart"
+msgstr "Dodaj do koszyka"
+
+# Weight
+#, fuzzy
+msgid "Weight_in"
+msgstr "Waga"
+
+# deposit
+#, fuzzy
+msgid "Add_deposit"
+msgstr "kaucja"
+
+msgid "Add_deposit_amount_for_{0}"
+msgstr ""
+
+# Part in {0}
+#, fuzzy
+msgid "Amount_in_{0}"
+msgstr "Część w {0}"
+
+# Categories
+msgid "Categories"
+msgstr "Kategorie"
+
+# There are only stock products shown in this list.
+msgid "There_are_only_stock_products_shown_in_this_list."
+msgstr "Na liście widoczne są wyłącznie produkty magazynowane."
+
+# The manufacturer has reached the limit to pay in {0}.
+#, fuzzy
+msgid "The_manufacturer_has_reached_the_limit_to_pay_in_{0}."
+msgstr "Producent osiągnął limit aby zapłacić w {0}."
+
+# Part in {0}
+#, fuzzy
+msgid "Part_in_{0}"
+msgstr "Część w {0}"
+
+# in
+msgid "in"
+msgstr "w"
+
+# Admin panel
+msgid "Admin_area"
+msgstr "Panel administracyjny"
+
+# Manufacturer panel
+msgid "Manufacturer_area"
+msgstr "Panel producenta"
+
+# To change your profile please stop the instant order mode.
+msgid "To_change_your_profile_please_stop_the_instant_order_mode."
+msgstr "W celu zmiany profilu musisz wyjść z trybu zamówień błyskawicznych."
+
+# Signed in
+msgid "Signed_in"
+msgstr "Zalogowany"
+
+# Your account at {0} has just been activated.
+msgid "Your_account_at_{0}_has_just_been_activated."
+msgstr "Twoje konto na {0} właśnie zostało aktywowane."
+
+# Your registration at {0} has been successful!
+msgid "Your_registration_at_{0}_has_just_been_successful!"
+msgstr "Rejestracja na {0} przebiegła pomyślnie!"
+
+# Dear responsible for new members,
+msgid "Dear_responsible_person_for_new_members,"
+msgstr "Osobo odpowiedzialna za nowych członków,"
+
+# there has been a new registration: {0} ({1}) from {2}.
+msgid "there_has_been_a_new_registration:_{0}_({1})_from_{2}."
+msgstr "nowa rejestracja: {0} ({1}) z {2}."
+
+# Here you can activate the new member and see the data
+msgid "Here_you_can_activate_the_new_member_and_see_the_data"
+msgstr "Tu możesz aktywować nowych członków i podejrzeć ich dane"
+
+# Here you can see the data of the new member
+msgid "Here_you_can_see_the_data_of_the_new_member"
+msgstr "Tu możesz podejrzeć dane nowych członków"
+
+# There has been placed a instant order for {0} by {1}.
+msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1})."
+msgstr "Zamówienie błyskawiczne złożone dla {0} przez {1}."
+
+# You receive this message because the delivery day for this order was set to <b>today ({0})</b>, and therefore it does not appear on your order lists.
+msgid "You_receive_this_message_because_the_delivery_day_of_this_order_was_automatically_set_to_today_{0}_and_therefore_it_does_not_appear_on_your_order_lists."
+msgstr "Otrzymujesz tą wiadomość, ponieważ dzień dostawy dla tego zamówienia został ustawiony na <b>dziś ({0})</b>i tym samym nie jest ono widoczne na twojej liście zamówień."
+
+# your new password:
+msgid "your_new_password_is:"
+msgstr "twoje nowe hasło:"
+
+# Please click on this link to activate your new password
+msgid "Please_click_on_this_link_to_activate_your_new_password"
+msgstr "Kliknij w link aby aktywować swoje nowe hasło"
+
+# thank you for order from {0}.
+msgid "thank_you_for_your_order_from_{0}."
+msgstr "dziękujemy za zamówienie od {0}."
+
+# The amount was reduced from your credit balance.
+#, fuzzy
+msgid "The_amount_was_reduced_from_your_credit_balance."
+msgstr "Kwota została odjęta od twojego salda kredytowego."
+
+# You can find a detailed list of your ordered products in the attached order confirmation.
+msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
+msgstr "Szczegółową listę zamówionych produktów można znaleźć w załączonym potwierdzeniu zamówienia."
+
+# thank you for order from {0}.
+#, fuzzy
+msgid "thank_you_for_your_purchase."
+msgstr "dziękujemy za zamówienie od {0}."
+
+# This is the text of the email (with attached logo).
+msgid "This_is_the_text_of_the_email_(with_attached_logo)."
+msgstr "To jest tekst wiadomości e-mail (z dołączonym logo)."
+
+# Units on stock:
+msgid "Units_on_stock:"
+msgstr "Jednostek w magazynie:"
+
+# Orders are not possible any more!
+msgid "Product_orders_are_not_possible_any_more!"
+msgstr "Składanie zamówień nie jest już możliwe!"
+
+# Product orders possible until:
+msgid "Product_orders_possible_until:"
+msgstr "Składanie zamówień możliwe do:"
+
+# This email notification triggered if stock is less or equals:
+msgid "This_notification_triggered_if_stock_available_is_less_than:"
+msgstr "To powiadomienie mailowe jest wysyłane, gdy stan magazynowy jest mniejszy lub równy:"
+
+# Click here to edit the product.
+msgid "Click_here_to_edit_the_product."
+msgstr "Kliknij tutaj, aby edytować produkt."
+
+# Cart
+msgid "Cart"
+msgstr "Koszyk"
+
+# Your cart is empty
+#, fuzzy
+msgid "Your_cart_is_empty."
+msgstr "Twój koszyk jest pusty"
+
+# This e-mail was automatically created.
+#, fuzzy
+msgid "This_email_was_created_automatically."
+msgstr "Ta wiadomość została utworzona automatycznie."
+
+# You can unsubscribe it <a href=\"{0}\">in your settings</a>.
+msgid "You_can_unsubscribe_it_<a href=\"{0}\">in_your_settings</a>."
+msgstr "Możesz anulować subskrypcję <a href=\"{0}\">w swoich ustawieniach</a>."
+
+# homepage
+msgid "homepage"
+msgstr "strona główna"
+
+# page you have just been to
+msgid "page_you_have_just_been_to"
+msgstr "strona, którą właśnie odwiedziłeś"
+
+# Click here to go the the
+msgid "Click_here_to_open_the"
+msgstr "Kliknij tu aby przejść do"
+
+msgid "Auto_logout_in_X_sec"
+msgstr ""
 
 # Terms and conditions
-#~ msgid "Terms_and_conditions"
-#~ msgstr "Regulamin"
+msgid "Terms_and_conditions"
+msgstr "Regulamin"
 
 # Order overview
-#~ msgid "Order_overview"
-#~ msgstr "Przegląd zamówień"
+msgid "Order_overview"
+msgstr "Przegląd zamówień"
 
 # Order of
-#~ msgid "Order_of"
-#~ msgstr "Zamówienie"
+msgid "Order_of"
+msgstr "Zamówienie"
 
 # placed on
-#~ msgid "placed_on"
-#~ msgstr "złożone w dniu"
+msgid "placed_on"
+msgstr "złożone w dniu"
 
 # The prices include the VAT.
-#~ msgid "Prices_are_including_vat."
-#~ msgstr "Ceny zawierają podatek VAT."
+msgid "Prices_are_including_vat."
+msgstr "Ceny zawierają podatek VAT."
 
 # Information about the right of withdrawal
-#~ msgid "Information_about_right_of_withdrawal"
-#~ msgstr "Informacje o prawie odstąpienia"
+msgid "Information_about_right_of_withdrawal"
+msgstr "Informacje o prawie odstąpienia"
 
 # and withdrawal form
-#~ msgid "and_withdrawal_form"
-#~ msgstr "i formularz odstąpienia"
+msgid "and_withdrawal_form"
+msgstr "i formularz odstąpienia"
 
 # Withdrawal form
-#~ msgid "Withdrawal_form"
-#~ msgstr "Formularz odstąpienia"
+msgid "Withdrawal_form"
+msgstr "Formularz odstąpienia"
 
 # If you want to cancel the contract, please fill out this form and send it back.
-#~ msgid "If_you_want_to_cancel_the_contract_please_fill_out_this_form_and_send_it_back."
-#~ msgstr "Jeśli chcesz anulować umowę, wypełnij ten formularz i odeślij go z powrotem."
+msgid "If_you_want_to_cancel_the_contract_please_fill_out_this_form_and_send_it_back."
+msgstr "Jeśli chcesz anulować umowę, wypełnij ten formularz i odeślij go z powrotem."
 
 # Hereby I cancel the contract of the purchase of the following goods or service.
-#~ msgid "Hereby_I_cancel_the_contract_about_the_purchase_of_following_goods_or_service."
-#~ msgstr "Niniejszym anuluję umowę zakupu następujących towarów lub usług."
+msgid "Hereby_I_cancel_the_contract_about_the_purchase_of_following_goods_or_service."
+msgstr "Niniejszym anuluję umowę zakupu następujących towarów lub usług."
 
 # Ordered on
-#~ msgid "Ordered_on"
-#~ msgstr "Zamówione w dniu"
+msgid "Ordered_on"
+msgstr "Zamówione w dniu"
 
 # Received on
-#~ msgid "Received_on"
-#~ msgstr "Otrzymane w dniu"
+msgid "Received_on"
+msgstr "Otrzymane w dniu"
 
 # Name of consumer(s)
-#~ msgid "Name_of_consumer(s)"
-#~ msgstr "Imię i nazwisko konsumenta"
+msgid "Name_of_consumer(s)"
+msgstr "Imię i nazwisko konsumenta"
 
 # Address of consumer(s)
-#~ msgid "Address_of_consumer(s)"
-#~ msgstr "Adres konsumenta"
+msgid "Address_of_consumer(s)"
+msgstr "Adres konsumenta"
 
 # Signature of consumer (only if transmitted on paper).
-#~ msgid "Signature_of_consumer_only_if_transmitted_on_paper."
-#~ msgstr "Podpis konsumenta (tylko w przypadku przesłania na papierze)."
+msgid "Signature_of_consumer_only_if_transmitted_on_paper."
+msgstr "Podpis konsumenta (tylko w przypadku przesłania na papierze)."
 
 # Strike out unwanted items.
-#~ msgid "Strike_out_unnecessary_items."
-#~ msgstr "Niepotrzebne skreślić."
+msgid "Strike_out_unnecessary_items."
+msgstr "Niepotrzebne skreślić."
 
 # Informationen-ueber-Ruecktrittsrecht
-#~ msgid "Filename_Information-about-right-of-withdrawal"
-#~ msgstr "Informacja-o-prawie-do-odstapienia"
+msgid "Filename_Information-about-right-of-withdrawal"
+msgstr "Informacja-o-prawie-do-odstapienia"
 
 # This input is helpful for the pickup team, but not mandatory.
 #~ msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
