@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-01-16 09:48+0100\n"
+"POT-Creation-Date: 2020-01-20 09:49+0100\n"
 "PO-Revision-Date: 2019-04-28 03:51+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -188,6 +188,10 @@ msgstr "_Lista_zamowien_"
 
 msgid "product"
 msgstr "produkt"
+
+#, fuzzy
+msgid "Order_list"
+msgstr "Lista zamówień"
 
 msgid "member"
 msgstr "Członek"
