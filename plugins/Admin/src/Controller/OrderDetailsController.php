@@ -1373,7 +1373,7 @@ class OrderDetailsController extends AdminAppController
 
         $quantity = $stockAvailableObject->quantity;
         
-        if ($stockAvailableObject->always_available) {
+        if (!($stockAvailableObject->is_stock_product && $orderDetail->product->manufacturer->is_stock_management_enabled) && $stockAvailableObject->always_available) {
             return false;
         }
 

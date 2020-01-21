@@ -102,7 +102,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonOk();
     }
     
-    public function testOrderAlwaysAvailableWithNotEnoughQuantityForAttribute()
+    public function testOrderAlwaysAvailableWithNotEnoughQuantityForProductAttribute()
     {
         $originalQuantity = 2;
         $this->doPrepareAlwaysAvailable($this->productId2, $originalQuantity);
@@ -132,6 +132,33 @@ class CartsControllerTest extends AppCakeTestCase
         ])->first();
         // quantity must not have changed
         $this->assertEquals($originalQuantity, $product->stock_available->quantity);
+    }
+    
+    public function testOrderAlwaysAvailableWithNotEnoughQuantityForEnabledStockProduct() {
+        $originalQuantity = 2;
+        $this->changeManufacturer(5, 'stock_management_enabled', 1);
+        $this->Product->changeIsStockProduct([[$this->productId1 => true]]);
+        $this->Product->changeQuantity([[$this->productId1 => [
+            'always_available' => 1,
+            'quantity' => $originalQuantity,
+        ]]]);
+        $this->loginAsCustomer();
+        $response = $this->addProductToCart($this->productId1, 50);
+        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>50</b> des Produktes <b>Artischocke</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 2', $response->msg);
+    }
+    
+    public function testOrderAlwaysAvailableWithNotEnoughQuantityForEnabledStockProductAttributes() {
+        $originalQuantity = 2;
+        $this->changeManufacturer(15, 'stock_management_enabled', 1);
+        $productId = $this->Product->getProductIdAndAttributeId($this->productId2)['productId'];
+        $this->Product->changeIsStockProduct([[$productId => true]]);
+        $this->Product->changeQuantity([[$this->productId2 => [
+            'always_available' => 1,
+            'quantity' => $originalQuantity,
+        ]]]);
+        $this->loginAsCustomer();
+        $response = $this->addProductToCart($this->productId2, 50);
+        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>50</b> der Variante <b>0,5l</b> des Produktes <b>Milch</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 2', $response->msg);
     }
     
     private function doPrepareAlwaysAvailable($productId, $originalQuantity)

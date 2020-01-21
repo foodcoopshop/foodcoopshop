@@ -954,7 +954,8 @@ class ProductsTable extends AppTable
                         'description' => '',
                         'unity' => '',
                         'manufacturer' => [
-                            'name' => (!empty($product->manufacturer) ? $product->manufacturer->name : '')
+                            'name' => (!empty($product->manufacturer) ? $product->manufacturer->name : ''),
+                            'stock_management_enabled' => (!empty($product->manufacturer) ? $product->manufacturer->stock_management_enabled : false),
                         ],
                         'default_on' => $attribute->default_on,
                         'stock_available' => [

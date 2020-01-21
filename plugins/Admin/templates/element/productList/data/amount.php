@@ -13,7 +13,21 @@
  * @link          https://www.foodcoopshop.com
  */
 
-echo '<td class="amount ' . (empty($product->product_attributes) && $product->stock_available->quantity <= 0 && !$product->stock_available->always_available ? 'not-available' : '') . '">';
+$available = true;
+
+if (empty($product->product_attributes)) {
+    if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
+        if ($product->stock_available->quantity <= 0) {
+            $available = false;
+        }
+    } else {
+        if ($product->stock_available->quantity <= 0 && !$product->stock_available->always_available) {
+            $available = false;
+        }
+    }
+}
+
+echo '<td class="amount ' . (!$available ? 'not-available' : '') . '">';
 
     if (empty($product->product_attributes)) {
         echo $this->Html->link(
@@ -28,20 +42,20 @@ echo '<td class="amount ' . (empty($product->product_attributes) && $product->st
         
         $elementsToRender = [];
         
-        if ($product->stock_available->always_available) {
+        if (!($product->is_stock_product && $product->manufacturer->stock_management_enabled) && $product->stock_available->always_available) {
             $elementsToRender[] = '<i class="always-available fas fa-circle" title="'.__d('admin', 'This_product_is_always_available.').'"></i>';
         }
         
         $elementsToRender[] =
-            '<span class="quantity-for-dialog'.($product->stock_available->always_available ? ' hide' : '').'">' . 
+        '<span class="quantity-for-dialog'.(!($product->is_stock_product && $product->manufacturer->stock_management_enabled) && $product->stock_available->always_available ? ' hide' : '').'">' . 
                  $this->Number->formatAsDecimal($product->stock_available->quantity, 0) . 
             '</span>';
 
         $elementsToRender[] =
-         '<span class="default-quantity-after-sending-order-lists-for-dialog'.($product->stock_available->always_available || is_null($product->stock_available->default_quantity_after_sending_order_lists) ? ' hide' : '').'">' . 
-            (!is_null($product->stock_available->default_quantity_after_sending_order_lists) ? 
+        '<span class="default-quantity-after-sending-order-lists-for-dialog'.(($product->is_stock_product && $product->manufacturer->stock_management_enabled) || $product->stock_available->always_available || is_null($product->stock_available->default_quantity_after_sending_order_lists) ? ' hide' : '').'">' . 
+            (!($product->is_stock_product && $product->manufacturer->stock_management_enabled) && !is_null($product->stock_available->default_quantity_after_sending_order_lists) ? 
                 $this->Number->formatAsDecimal($product->stock_available->default_quantity_after_sending_order_lists, 0)
-            : 'hide') . 
+            : '') . 
          '</span>';
         
         if ($product->is_stock_product) {
