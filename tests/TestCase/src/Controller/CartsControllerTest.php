@@ -102,6 +102,52 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonOk();
     }
     
+    public function testOrderAlwaysAvailableWithNotEnoughQuantityForAttribute()
+    {
+        $originalQuantity = 2;
+        $this->doPrepareAlwaysAvailable($this->productId2, $originalQuantity);
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $this->Product->getProductIdAndAttributeId($this->productId2)['productId'],
+            ],
+            'contain' => [
+                'ProductAttributes.StockAvailables'
+            ]
+        ])->first();
+        // quantity must not have changed
+        $this->assertEquals($originalQuantity, $product->product_attributes[0]->stock_available->quantity);
+    }
+    
+    public function testOrderAlwaysAvailableWithNotEnoughQuantityForProduct()
+    {
+        $originalQuantity = 2;
+        $this->doPrepareAlwaysAvailable($this->productId1, $originalQuantity);
+        $product = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $this->productId1,
+            ],
+            'contain' => [
+                'StockAvailables'
+            ]
+        ])->first();
+        // quantity must not have changed
+        $this->assertEquals($originalQuantity, $product->stock_available->quantity);
+    }
+    
+    private function doPrepareAlwaysAvailable($productId, $originalQuantity)
+    {
+        $this->Product->changeQuantity([[$productId => [
+            'always_available' => 1,
+            'quantity' => $originalQuantity,
+        ]]]);
+        $this->loginAsCustomer();
+        $this->addProductToCart($productId, 50);
+        $this->assertJsonOk();
+        $this->finishCart();
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
+        $this->assertTrue(is_int($cartId), 'cart not finished correctly');
+    }
+    
     public function testRemoveProduct()
     {
         $this->loginAsCustomer();
