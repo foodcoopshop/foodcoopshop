@@ -90,7 +90,7 @@ foodcoopshop.SyncProduct = {
                 return 'Please update FoodCoopShop.';
             }
             if (alwaysAvailable) {
-                return '<i class="fas fa-circle ok" title="' + foodcoopshop.LocalizedJs.syncProducts.ThisProductIsAlwaysAvailable + '"></i>';
+                return '<i class="fas fa-infinity ok" title="' + foodcoopshop.LocalizedJs.syncProducts.ThisProductIsAlwaysAvailable + '"></i>';
             }
             result += quantity;
             if (defaultQuantityAfterSendingOrderLists) {

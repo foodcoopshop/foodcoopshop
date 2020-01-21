@@ -1054,7 +1054,7 @@ foodcoopshop.Admin = {
             foodcoopshop.Admin.bindToggleQuantityQuantity(dialogId);
 
             $('#' + dialogId + ' #dialogQuantityQuantity').val(row.find('span.quantity-for-dialog').html().replace(/\./, ''));
-            if (row.find('.amount').html().match('fa-circle')) {
+            if (row.find('.amount').html().match('fa-infinity')) {
                 $('#' + dialogId + ' #dialogQuantityAlwaysAvailable').trigger('click');
             }
             $('#' + dialogId + ' #dialogQuantityDefaultQuantityAfterSendingOrderLists').val(row.find('span.default-quantity-after-sending-order-lists-for-dialog').html());
