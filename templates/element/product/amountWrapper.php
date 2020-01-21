@@ -29,7 +29,7 @@ use Cake\Core\Configure;
     <?php } ?>
     <?php
         $availableQuantity = $stockAvailable['quantity'] - $stockAvailable['quantity_limit'];
-        if ($availableQuantity <= Configure::read('appDb.FCS_PRODUCT_AVAILABILITY_LOW')) { ?>
+        if (!$stockAvailable['always_available'] && $availableQuantity <= Configure::read('appDb.FCS_PRODUCT_AVAILABILITY_LOW')) { ?>
         	<span <?php echo !$hideAmountSelector ? 'class="right-of-input availibility"' : ''; ?>>(<?php echo $availableQuantity . ' ' . __('available'); ?>)</span>
     <?php } ?>
 

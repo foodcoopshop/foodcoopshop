@@ -16,7 +16,7 @@
 // render empty line is ok - to avoid jumping on attribute change
 $notAvailableInfoText = '';
 $availableQuantity = $stockAvailable['quantity'] - $stockAvailable['quantity_limit'];
-if ($availableQuantity == 0) {
+if (!$stockAvailable['always_available'] && $availableQuantity == 0) {
     $notAvailableInfoText = __('Currently_not_on_stock').'.';
 }
 echo '<div class="line">

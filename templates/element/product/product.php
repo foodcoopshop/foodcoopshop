@@ -157,7 +157,7 @@ if ($product['description'] != '') {
         $i = 0;
         $preparedProductAttributes = [];
         foreach ($product['attributes'] as $attribute) {
-            if ($attribute['StockAvailables']['quantity'] - $attribute['StockAvailables']['quantity_limit'] > 0) {
+            if ($attribute['StockAvailables']['always_available'] || $attribute['StockAvailables']['quantity'] - $attribute['StockAvailables']['quantity_limit'] > 0) {
                 $preparedProductAttributes[] = $attribute;
             }
             $i++;
@@ -232,6 +232,7 @@ if ($product['description'] != '') {
                     'productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute'],
                     'stockAvailableQuantity' => $attribute['StockAvailables']['quantity'],
                     'stockAvailableQuantityLimit' => $attribute['StockAvailables']['quantity_limit'],
+                    'stockAvailableAlwaysAvailable' => $attribute['StockAvailables']['always_available'],
                     'hideButton' => $isStockProductOrderPossible,
                     'cartButtonLabel' => $appAuth->isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
                     'cartButtonIcon' => $appAuth->isSelfServiceModeByUrl() ? 'fa-shopping-bag' : 'fa-cart-plus'
@@ -317,6 +318,7 @@ if ($product['description'] != '') {
                     'productId' => $product['id_product'],
                     'stockAvailableQuantity' => $product['quantity'],
                     'stockAvailableQuantityLimit' => $product['quantity_limit'],
+                    'stockAvailableAlwaysAvailable' => $product['always_available'],
                     'hideButton' => $isStockProductOrderPossible,
                     'cartButtonLabel' => $appAuth->isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
                     'cartButtonIcon' => $appAuth->isSelfServiceModeByUrl() ? 'fa-shopping-bag' : 'fa-cart-plus'
