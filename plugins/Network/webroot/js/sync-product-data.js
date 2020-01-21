@@ -57,7 +57,9 @@ foodcoopshop.SyncProductData = {
             data: {
                 'stock_available_quantity': 'stock_available.quantity',
                 'stock_available_quantity_limit': 'stock_available.quantity_limit',
-                'stock_available_sold_out_limit': 'stock_available.sold_out_limit'
+                'stock_available_sold_out_limit': 'stock_available.sold_out_limit',
+                'stock_available_always_available': 'stock_available.always_available',
+                'stock_available_default_quantity_after_sending_order_lists': 'stock_available.default_quantity_after_sending_order_lists',
             },
             column: 5
         },
@@ -201,7 +203,9 @@ foodcoopshop.SyncProductData = {
                                 product.is_stock_product,
                                 product.stock_available.quantity,
                                 product.stock_available.quantity_limit,
-                                product.stock_available.sold_out_limit
+                                product.stock_available.sold_out_limit,
+                                product.stock_available.always_available,
+                                product.stock_available.default_quantity_after_sending_order_lists,
                             );
                     }
                 tableData += '</td>';
@@ -421,13 +425,17 @@ foodcoopshop.SyncProductData = {
                                 product.is_stock_product,
                                 product.stock_available.quantity,
                                 product.stock_available.quantity_limit,
-                                product.stock_available.sold_out_limit
+                                product.stock_available.sold_out_limit,
+                                product.stock_available.always_available,
+                                product.stock_available.default_quantity_after_sending_order_lists,
                             );
                         var localProductQuantityString = foodcoopshop.SyncProduct.getQuantityString(
                                 localProduct.is_stock_product,
                                 localProduct.stock_available.quantity,
                                 localProduct.stock_available.quantity_limit,
-                                localProduct.stock_available.sold_out_limit
+                                localProduct.stock_available.sold_out_limit,
+                                localProduct.stock_available.always_available,
+                                localProduct.stock_available.default_quantity_after_sending_order_lists,
                             );
                         $(this).find('td.quantity').html(remoteProductQuantityString);
                         foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.quantity', remoteProductQuantityString, localProductQuantityString, $(this), localProductRow);

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-01-21 11:47+0100\n"
-"PO-Revision-Date: 2020-01-21 11:55+0100\n"
+"POT-Creation-Date: 2020-01-21 13:35+0100\n"
+"PO-Revision-Date: 2020-01-21 13:35+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1028,6 +1028,9 @@ msgstr "An attribute cannot be assigned to a product."
 
 msgid "A_product_cannot_be_assigned_to_an_attribute."
 msgstr "A product cannot be assigned to an attribute."
+
+msgid "This_product_is_always_available."
+msgstr "This product is always available."
 
 msgid "Image"
 msgstr "Image"

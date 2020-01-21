@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-01-21 11:47+0100\n"
+"POT-Creation-Date: 2020-01-21 13:35+0100\n"
 "PO-Revision-Date: 2019-07-22 16:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1377,6 +1377,11 @@ msgstr "Atrybut nie może zostać przydzielony do produktu."
 # A product cannot be assigned to an attribute.
 msgid "A_product_cannot_be_assigned_to_an_attribute."
 msgstr "Produkt nie może zostać przydzielony do atrybutu."
+
+# available
+#, fuzzy
+msgid "This_product_is_always_available."
+msgstr "dostępne"
 
 # Image
 msgid "Image"

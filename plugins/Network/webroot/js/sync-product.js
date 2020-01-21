@@ -81,10 +81,21 @@ foodcoopshop.SyncProduct = {
         return result;
     },
     
-    getQuantityString : function(isStockProduct, quantity, quantityLimit, soldOutLimit) {
-        var result = quantity; 
+    getQuantityString : function(isStockProduct, quantity, quantityLimit, soldOutLimit, alwaysAvailable, defaultQuantityAfterSendingOrderLists) {
+        var result = '';
         if (isStockProduct) {
-            result += ' / <i>' + (quantityLimit === null ? '-' : quantityLimit) + '</i> / <i>' + (soldOutLimit === null ? '-' : soldOutLimit) + '</i>';
+            result += quantity + ' / <i>' + (quantityLimit === null ? '-' : quantityLimit) + '</i> / <i>' + (soldOutLimit === null ? '-' : soldOutLimit) + '</i>';
+        } else {
+            if (alwaysAvailable === undefined) {
+                return 'Please update FoodCoopShop.';
+            }
+            if (alwaysAvailable) {
+                return '<i class="fas fa-circle ok" title="' + foodcoopshop.LocalizedJs.syncProducts.ThisProductIsAlwaysAvailable + '"></i>';
+            }
+            result += quantity;
+            if (defaultQuantityAfterSendingOrderLists) {
+                result += ' / ' + defaultQuantityAfterSendingOrderLists;
+            }
         }
         return result;
     },

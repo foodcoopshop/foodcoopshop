@@ -303,6 +303,7 @@ class LocalizedController extends Controller
                 'Product' => __('Product'),
                 'AnAttributeCannotBeAssignedToAProduct' => __('An_attribute_cannot_be_assigned_to_a_product.'),
                 'AProductCannotBeAssignedToAnAttribute' => __('A_product_cannot_be_assigned_to_an_attribute.'),
+                'ThisProductIsAlwaysAvailable' => __('This_product_is_always_available.'),
             ],
             
             'syncProductData' => [
