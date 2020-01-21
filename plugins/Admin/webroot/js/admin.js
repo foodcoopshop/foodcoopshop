@@ -1053,7 +1053,7 @@ foodcoopshop.Admin = {
             foodcoopshop.Admin.bindToggleQuantityQuantity(dialogId);
 
             $('#' + dialogId + ' #dialogQuantityQuantity').val(row.find('span.quantity-for-dialog').html().replace(/\./, ''));
-            if (row.find('.amount').html().match('fa-battery-full')) {
+            if (row.find('.amount').html().match('fa-circle')) {
                 $('#' + dialogId + ' #dialogQuantityAlwaysAvailable').trigger('click');
             }
             $('#' + dialogId + ' #dialogQuantityDefaultQuantityAfterSendingOrderLists').val(row.find('span.default-quantity-after-sending-order-lists-for-dialog').html());

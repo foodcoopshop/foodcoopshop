@@ -29,7 +29,7 @@ echo '<td class="amount ' . (empty($product->product_attributes) && $product->st
         $elementsToRender = [];
         
         if ($product->stock_available->always_available) {
-            $elementsToRender[] = '<i class="always-available fas fa-battery-full" title="'.__d('admin', 'This_product_is_always_available.').'"></i>';
+            $elementsToRender[] = '<i class="always-available fas fa-circle" title="'.__d('admin', 'This_product_is_always_available.').'"></i>';
         }
         
         $elementsToRender[] =
