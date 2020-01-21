@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-01-20 16:36+0100\n"
-"PO-Revision-Date: 2020-01-20 16:39+0100\n"
+"POT-Creation-Date: 2020-01-21 11:47+0100\n"
+"PO-Revision-Date: 2020-01-21 11:55+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1652,6 +1652,12 @@ msgstr "The quantity for sending a notification needs to be a number."
 
 msgid "Field:_Notification_if_quantity_limit_reached"
 msgstr "Field: notification if quantity limit reached"
+
+msgid "The_default_quantity_after_sending_order_lists_needs_to_be_a_number."
+msgstr "The default quantity after sending order lists needs to be a number."
+
+msgid "Field:_Default_quantity_after_sending_order_lists"
+msgstr "Field: Default quantity after sending order lists"
 
 msgid "Please_enter_a_tax_rate."
 msgstr "Please enter a tax rate."

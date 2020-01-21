@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-01-20 16:36+0100\n"
+"POT-Creation-Date: 2020-01-21 11:47+0100\n"
 "PO-Revision-Date: 2019-07-22 16:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2218,6 +2218,14 @@ msgstr "Ilość do wysyłki powiadomień musi być liczbą."
 # Field: notification if quantity limit reached
 msgid "Field:_Notification_if_quantity_limit_reached"
 msgstr "Pole: powiadom jeśli limit ilościowy został osiągnięty"
+
+# The quantity limit needs to be a number.
+#, fuzzy
+msgid "The_default_quantity_after_sending_order_lists_needs_to_be_a_number."
+msgstr "Limit ilości musi być liczbą."
+
+msgid "Field:_Default_quantity_after_sending_order_lists"
+msgstr ""
 
 # Please enter a tax rate.
 msgid "Please_enter_a_tax_rate."
