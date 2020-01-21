@@ -234,7 +234,7 @@ class CartComponent extends Component
             $stockAvailableAvailableQuantity = $product->stock_available->quantity - $product->stock_available->quantity_limit;
             
             // stock available check for product (without attributeId)
-            if ($ids['attributeId'] == 0 && $stockAvailableAvailableQuantity < $cartProduct['amount']) {
+            if (!$product->stock_available->always_available && $ids['attributeId'] == 0 && $stockAvailableAvailableQuantity < $cartProduct['amount']) {
                 $message = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}.', ['<b>' . $cartProduct['amount'] . '</b>', '<b>' . $product->name . '</b>', $stockAvailableAvailableQuantity]);
                 $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
@@ -248,7 +248,7 @@ class CartComponent extends Component
                         $stockAvailableQuantity = $attribute->stock_available->quantity;
                         $stockAvailableAvailableQuantity = $attribute->stock_available->quantity - $attribute->stock_available->quantity_limit;
                         // stock available check for attribute
-                        if ($stockAvailableAvailableQuantity < $cartProduct['amount']) {
+                        if (!$attribute->stock_available->always_available && $stockAvailableAvailableQuantity < $cartProduct['amount']) {
                             $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
                             $attribute = $this->Attribute->find('all', [
                                 'conditions' => [
@@ -347,14 +347,21 @@ class CartComponent extends Component
             
             $orderDetails2save[] = $orderDetail2save;
             
-            $newQuantity = $stockAvailableQuantity - $cartProduct['amount'];
-            $stockAvailable2saveData[] = [
-                'quantity' => $newQuantity
-            ];
-            $stockAvailable2saveConditions[] = [
-                'id_product' => $ids['productId'],
-                'id_product_attribute' => $ids['attributeId']
-            ];
+            $decreaseQuantity = !$product->stock_available->always_available;
+            if (isset($attribute->stock_available) && $attribute->stock_available->always_available) {
+                $decreaseQuantity = false;
+            }
+            
+            if ($decreaseQuantity) {
+                $newQuantity = $stockAvailableQuantity - $cartProduct['amount'];
+                $stockAvailable2saveData[] = [
+                    'quantity' => $newQuantity
+                ];
+                $stockAvailable2saveConditions[] = [
+                    'id_product' => $ids['productId'],
+                    'id_product_attribute' => $ids['attributeId']
+                ];
+            }
         }
         
         $this->getController()->set('cartErrors', $cartErrors);

@@ -119,7 +119,7 @@ class CartProductsTable extends AppTable
 
         // stock available check for product
         $availableQuantity = $product->stock_available->quantity - $product->stock_available->quantity_limit;
-        if ($attributeId == 0 && $availableQuantity < $combinedAmount && $amount > 0) {
+        if (!$product->stock_available->always_available && $attributeId == 0 && $availableQuantity < $combinedAmount && $amount > 0) {
             $message = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}.', ['<b>' . $combinedAmount . '</b>', '<b>' . $product->name . '</b>', $availableQuantity]);
             return [
                 'status' => 0,
@@ -138,7 +138,7 @@ class CartProductsTable extends AppTable
                     
                     // stock available check for attribute
                     $availableQuantity = $attribute->stock_available->quantity - $attribute->stock_available->quantity_limit;
-                    if ($availableQuantity < $combinedAmount && $amount > 0) {
+                    if (!$attribute->stock_available->always_available && $availableQuantity < $combinedAmount && $amount > 0) {
                         $message = __('The_desired_amount_{0}_of_the_attribute_{1}_of_the_product_{2}_is_not_available_any_more_available_amount_{3}.', ['<b>' . $combinedAmount . '</b>', '<b>' . $attribute->product_attribute_combination->attribute->name . '</b>', '<b>' . $product->name . '</b>', $availableQuantity]);
                         return [
                             'status' => 0,
