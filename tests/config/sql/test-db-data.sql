@@ -264,12 +264,12 @@ INSERT INTO `fcs_product` VALUES
 
 /*!40000 ALTER TABLE `fcs_product_attribute` DISABLE KEYS */;
 INSERT INTO `fcs_product_attribute` VALUES
-(10,60,0.545455,0,0),
-(11,348,0.000000,0,1),
-(12,348,0.000000,0,0),
-(13,350,1.818182,0,1),
-(14,350,3.636364,0,0),
-(15,350,0.000000,0,0);
+(10,60,0.545455,0),
+(11,348,0.000000,1),
+(12,348,0.000000,0),
+(13,350,1.818182,1),
+(14,350,3.636364,0),
+(15,350,0.000000,0);
 /*!40000 ALTER TABLE `fcs_product_attribute` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_product_attribute_combination` DISABLE KEYS */;
