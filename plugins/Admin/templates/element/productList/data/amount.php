@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
-echo '<td class="amount ' . (empty($product->product_attributes) && $product->stock_available->quantity <= 0 ? 'not-available' : '') . '">';
+echo '<td class="amount ' . (empty($product->product_attributes) && $product->stock_available->quantity <= 0 && !$product->stock_available->always_available ? 'not-available' : '') . '">';
 
     if (empty($product->product_attributes)) {
         echo $this->Html->link(
