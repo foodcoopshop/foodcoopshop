@@ -979,7 +979,8 @@ foodcoopshop.Admin = {
             buttons['save'] = {
                 text: foodcoopshop.LocalizedJs.helper.save,
                 click: function() {
-                    if ($('#dialogQuantityQuantity').val() == '' || $('#dialogQuantityProductId').val() == '') {
+                    if ($('#dialogQuantityProductId').val() == '') {
+                        alert('no product id set');
                         return false;
                     }
 
