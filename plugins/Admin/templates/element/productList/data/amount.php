@@ -58,7 +58,7 @@ echo '<td class="amount ' . (!$available ? 'not-available' : '') . '">';
             : '') . 
          '</span>';
         
-        if ($product->is_stock_product) {
+        if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
             if ($product->stock_available->quantity_limit != 0) {
                 $elementsToRender[] =
                     ' <i class="small quantity-limit-for-dialog">'.
