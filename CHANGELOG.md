@@ -5,7 +5,12 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.7.1...develop)
 
+### Herzlichen Dank an alle beteiligten Personen
+* [AndreasEgger](https://github.com/AndreasEgger)
+* [mrothauer](https://github.com/mrothauer)
+
 ### Neue Funktionen
+- Bei Produkten kann nun als Anzahl "immer verfügbar" eingestellt werden. Weiters kann mittels "Standard-Anzahl pro Lieferrhythmus" eingestellt werden, welche verfügbare Menge nach erfolgtem Bestelllisten-Versand automatisch wieder eingestellt wird. Details in der [Online-Dokumentation](https://foodcoopshop.github.io/de/produkte). [I#452](https://github.com/foodcoopshop/foodcoopshop/issues/452) / [I#324](https://github.com/foodcoopshop/foodcoopshop/issues/324) / [PR#457](https://github.com/foodcoopshop/foodcoopshop/pull/457) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/AndreasEgger"><img src="https://github.com/AndreasEgger.png" width="20"></a>
 - Das Hauptmenü des Frontends wird nun eingeblendet, sobald man nach oben scrollt. [I#438](https://github.com/foodcoopshop/foodcoopshop/issues/438) / [PR#440](https://github.com/foodcoopshop/foodcoopshop/pull/440) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Produkte von Sammelbestellungen, bei denen die Bestellfrist bereits erreicht wurde, können über die Sofort-Bestellung jetzt trotzdem bestellt werden. Das ist praktisch für Nachbuchungen. [I#443](https://github.com/foodcoopshop/foodcoopshop/issues/454) / [PR#454](https://github.com/foodcoopshop/foodcoopshop/pull/440) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>  
 
