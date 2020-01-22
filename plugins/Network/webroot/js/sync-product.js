@@ -87,7 +87,7 @@ foodcoopshop.SyncProduct = {
             result += quantity + ' / <i>' + (quantityLimit === null ? '-' : quantityLimit) + '</i> / <i>' + (soldOutLimit === null ? '-' : soldOutLimit) + '</i>';
         } else {
             if (alwaysAvailable === undefined) {
-                return foodcoopshop.LocalizeJs.syncProducts.UpdateSoftwareNotification;
+                return foodcoopshop.LocalizedJs.syncProducts.UpdateSoftwareNotification;
             }
             if (alwaysAvailable) {
                 return '<i class="fas fa-infinity ok" title="' + foodcoopshop.LocalizedJs.syncProducts.ThisProductIsAlwaysAvailable + '"></i>';
