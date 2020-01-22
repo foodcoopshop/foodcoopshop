@@ -117,8 +117,8 @@ class SendOrderListsShell extends AppShell
         foreach($orderDetails as $orderDetail) {
             $compositeProductId = $this->Product->getCompositeProductIdAndAttributeId($orderDetail->product_id, $orderDetail->product_attribute_id);
             $stockAvailableObject = $orderDetail->product->stock_available;
-            if (!empty($orderDetail->product_attributes)) {
-                $stockAvailableObject = $product->product_attributes[0]->stock_available;
+            if (!empty($orderDetail->product_attribute)) {
+                $stockAvailableObject = $orderDetail->product_attribute->stock_available;
             }
             if (!is_null($stockAvailableObject->default_quantity_after_sending_order_lists) && $stockAvailableObject->quantity != $stockAvailableObject->default_quantity_after_sending_order_lists) {
                 $productsToSave[] = [

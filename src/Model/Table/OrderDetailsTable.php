@@ -85,7 +85,8 @@ class OrderDetailsTable extends AppTable
         $query = $this->find('all', [
             'contain' => [
                 'Products',
-                'Products.StockAvailables'
+                'Products.StockAvailables',
+                'ProductAttributes.StockAvailables'
             ]
         ]);
         $query->where(['OrderDetails.order_state' => ORDER_STATE_ORDER_PLACED]);
