@@ -273,7 +273,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
     }
     
-    public function testSendOrderListAndResetAvailableAmount()
+    public function testSendOrderListAndResetQuantity()
     {
         $productId1 = 346;
         $productId2 = '60-10';
