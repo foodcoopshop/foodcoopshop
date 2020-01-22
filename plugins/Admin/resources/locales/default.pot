@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-01-20 16:27+0100\n"
+"POT-Creation-Date: 2020-01-22 21:04+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -458,7 +458,7 @@ msgstr ""
 msgid "The_amount_of_the_product_{0}_was_changed_successfully."
 msgstr ""
 
-msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed."
 msgstr ""
 
 msgid "The_price_of_the_product_{0}_was_changed_successfully."

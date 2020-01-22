@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-01-20 16:27+0100\n"
-"PO-Revision-Date: 2020-01-20 14:43+0100\n"
+"POT-Creation-Date: 2020-01-22 21:04+0100\n"
+"PO-Revision-Date: 2020-01-22 21:04+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -459,8 +459,8 @@ msgstr "Das Produkt {0} wurde erfolgreich zu einem Lagerprodukt geändert."
 msgid "The_amount_of_the_product_{0}_was_changed_successfully."
 msgstr "Die Anzahl des Produktes {0} wurde erfolgreich geändert."
 
-msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
-msgstr "Die Anzahl des Produktes {0} vom Hersteller {1} wurde erfolgreich von {2} auf {3} geändert."
+msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed."
+msgstr "Die Anzahl des Produktes {0} vom Hersteller {1} wurde geändert."
 
 msgid "The_price_of_the_product_{0}_was_changed_successfully."
 msgstr "Der Preis des Produktes {0} wurde erfolgreich geändert."
@@ -2000,6 +2000,9 @@ msgstr "Bitte verwende zum Einloggen die E-Mail-Adresse dieser Nachricht. Falls 
 
 msgid "Your_contact_person"
 msgstr "Deine Ansprechperson"
+
+#~ msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+#~ msgstr "Die Anzahl des Produktes {0} vom Hersteller {1} wurde erfolgreich von {2} auf {3} geändert."
 
 #~ msgid "Amount_of_orders_that_have_not_yet_been_billed:"
 #~ msgstr "Anzahl der Bestellungen, die noch nicht mit dem Hersteller verrechnet wurden:"

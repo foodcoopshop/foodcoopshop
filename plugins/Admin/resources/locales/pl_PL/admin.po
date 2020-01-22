@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-01-20 16:27+0100\n"
+"POT-Creation-Date: 2020-01-22 21:04+0100\n"
 "PO-Revision-Date: 2019-04-28 03:51+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -484,8 +484,9 @@ msgstr "produkt {0} został ustawiony jako magazynowany."
 msgid "The_amount_of_the_product_{0}_was_changed_successfully."
 msgstr "Ilość produktu {0} została pomyślnie zmieniona."
 
-msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
-msgstr "Ilość produktu {0} od producenta {1} została zmieniona z {2} na {3}."
+#, fuzzy
+msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed."
+msgstr "Jednostka produktu {0} od producenta {1} została zmieniona na {2}."
 
 msgid "The_price_of_the_product_{0}_was_changed_successfully."
 msgstr "Cena produktu {0} została pomyślnie zmieniona."
@@ -2082,6 +2083,9 @@ msgstr "W celu zalogowania się proszę użyć adresu email z tej wiadomości. A
 
 msgid "Your_contact_person"
 msgstr "Twoja osoba kontaktowa"
+
+#~ msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
+#~ msgstr "Ilość produktu {0} od producenta {1} została zmieniona z {2} na {3}."
 
 #, fuzzy
 #~ msgid "Amount_of_orders_that_have_not_yet_been_billed:"
