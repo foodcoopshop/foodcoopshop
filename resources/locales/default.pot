@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-01-21 13:35+0100\n"
+"POT-Creation-Date: 2020-01-22 09:29+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1029,6 +1029,9 @@ msgid "A_product_cannot_be_assigned_to_an_attribute."
 msgstr ""
 
 msgid "This_product_is_always_available."
+msgstr ""
+
+msgid "Please_update_FoodCoopShop."
 msgstr ""
 
 msgid "Image"
