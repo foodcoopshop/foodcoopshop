@@ -1083,7 +1083,7 @@ foodcoopshop.Admin = {
         });
     },
     
-    initProductQuantityList(container) {
+    initProductQuantityList: function(container) {
         var rowContainer = $(container).find('td.amount');
         rowContainer.each(function() {
             var elements = $(this).find('> i, > span').not('.hide');
