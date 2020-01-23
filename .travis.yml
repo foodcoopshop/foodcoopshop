@@ -55,6 +55,7 @@ before_script:
 
 script:
   - vendor/bin/phpstan analyze -c phpstan.neon --no-interaction --no-progress
+  - devtools/eslint.sh
   - vendor/bin/phpunit --stderr
   # - sudo cat ./logs/error.log
   
