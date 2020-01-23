@@ -851,7 +851,7 @@ foodcoopshop.Admin = {
         html += '</p><p>' + foodcoopshop.LocalizedJs.admin.BeCarefulNoWayBack + '</p>';
         
         var products = [];
-        for (i in productIds) {
+        for (var i in productIds) {
             products.push($('tr#product-' + productIds[i] + ' span.product-name').html());
         }
         html += '<ul><li>' + products.join('</li><li>') + '</li></ul>';

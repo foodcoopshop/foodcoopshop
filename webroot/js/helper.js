@@ -97,7 +97,7 @@ foodcoopshop.Helper = {
     },
     
     addPrevAndNextLinks : function(menu, afterContainerTop) {
-        var menu = $(menu);
+        menu = $(menu);
         var activeElementHref = document.location.pathname;
         var nextElement = null;
         var prevElement = null;

@@ -4,9 +4,12 @@ module.exports = {
         "jquery": true,
         "es6": true
     },
+    "ignorePatterns": ["webroot/js/elFinder/"],    
     "globals": {
-        "foodcoopshop": true,
+        "Chart": true,
         "CKEDITOR": true,
+        "ClipboardJS": true,
+        "foodcoopshop": true,
         "slidebars": true
     },
     "extends": "eslint:recommended",

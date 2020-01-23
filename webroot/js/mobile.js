@@ -208,7 +208,7 @@ foodcoopshop.Mobile = {
         });
 
         $('#main-menu > li > a').each(function () {
-            if ($(this).html().replace(/\<i class="fas "\>\<\/i\>/, '') == foodcoopshop.LocalizedJs.mobile.news) {
+            if ($(this).html().replace(/<i class="fas "><\/i>/, '') == foodcoopshop.LocalizedJs.mobile.news) {
                 menuItems.push('<li><a href="/' + foodcoopshop.LocalizedJs.mobile.routeNewsList + '"><i class="fa"></i>' + foodcoopshop.LocalizedJs.mobile.news + '</a></li>');
             }
         });
