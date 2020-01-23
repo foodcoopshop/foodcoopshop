@@ -106,7 +106,7 @@ foodcoopshop.PickupDay = {
             infoMessage.html('<p><br />' + foodcoopshop.LocalizedJs.admin.Member + ': <b>' + customerName + '</b></p>');
         }
         if (customerName == '') {
-            infoMessage.html('<p><br />' + foodcoopshop.LocalizedJs.pickupDay.WereTheProductsOfAllMembersPickedUp) + '</p>'
+            infoMessage.html('<p><br />' + foodcoopshop.LocalizedJs.pickupDay.WereTheProductsOfAllMembersPickedUp) + '</p>';
         }
         
         dialog.dialog('open');        

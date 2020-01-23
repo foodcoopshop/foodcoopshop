@@ -827,13 +827,13 @@ foodcoopshop.Admin = {
                             document.location.reload();
                         },
                         onError: function (data) {
-                           var form = $('#delete-products-dialog');
+                            var form = $('#delete-products-dialog');
                             form.find('.ajax-loader').hide();
                             var message = '<p><b>';
                             if (productIds.length == 1) {
                                 message += foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileProductWasDeleted;
                             } else {
-                                message += foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileProductsWereDeleted
+                                message += foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileProductsWereDeleted;
                             }
                             message += ':</b> </p>';
                             foodcoopshop.Helper.appendFlashMessageToDialog(form, message + data.msg);
@@ -847,7 +847,7 @@ foodcoopshop.Admin = {
             html += foodcoopshop.LocalizedJs.admin.ReallyDeleteOneProduct;
         } else {
             html += foodcoopshop.LocalizedJs.admin.ReallyDelete0Products.replace(/\{0\}/, '<b>' + productIds.length + '</b>');
-        };
+        }
         html += '</p><p>' + foodcoopshop.LocalizedJs.admin.BeCarefulNoWayBack + '</p>';
         
         var products = [];
@@ -1089,7 +1089,7 @@ foodcoopshop.Admin = {
             var elements = $(this).find('> i, > span').not('.hide');
             elements.addClass('has-separator');
             elements.last().removeClass('has-separator');
-        })
+        });
     },
 
     isAdvancedStockManagementEnabled : function(row) {

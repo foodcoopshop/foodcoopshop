@@ -49,15 +49,15 @@ foodcoopshop.Helper = {
             }
 
             if (scrolled > scroll){
-                 // scrolling down
-                 $('#header').removeClass('fixed');
-              } else {
-                  //scrolling up
-                  $('#header').addClass('fixed');
+                // scrolling down
+                $('#header').removeClass('fixed');
+            } else {
+                //scrolling up
+                $('#header').addClass('fixed');
             }               
              
             scroll = $(document).scrollTop();   
-         });
+        });
     },
     
     /**
@@ -264,7 +264,7 @@ foodcoopshop.Helper = {
             $.map($(domElements),
                 function(element) {
                     return $(element).html();
-            })
+                })
         );
         if (values.length > 1) {
             values = defaultValue;
@@ -427,7 +427,7 @@ foodcoopshop.Helper = {
     },
 
     changeOutgoingLinksTargetToBlank: function () {
-         $('a[href^="http://"]:not(".do-not-change-to-target-blank"):not([href^="' + window.location.host + '"])').attr('target', '_blank');
+        $('a[href^="http://"]:not(".do-not-change-to-target-blank"):not([href^="' + window.location.host + '"])').attr('target', '_blank');
         $('a[href^="https://"]:not(".do-not-change-to-target-blank"):not([href^="' + window.location.host + '"])').attr('target', '_blank');
     },
 
