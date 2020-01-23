@@ -1172,7 +1172,7 @@ class ProductsTable extends AppTable
 
     private function getIsQuantityMinFilterSetCondition()
     {
-        return 'StockAvailables.quantity < 3';
+        return '(StockAvailables.quantity < 3 && (StockAvailables.always_available = 0 || (Products.is_stock_product = 1 && Manufacturers.stock_management_enabled = 1)))';
     }
 
     private function getIsPriceZeroCondition()
