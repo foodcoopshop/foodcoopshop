@@ -643,7 +643,6 @@ class CartComponent extends Component
             if (is_null($stockAvailable->sold_out_limit)) {
                 continue;
             }
-            Log::error($stockAvailable);
             
             $stockAvailableLimitReached = $stockAvailable->quantity <= $stockAvailable->sold_out_limit;
             
