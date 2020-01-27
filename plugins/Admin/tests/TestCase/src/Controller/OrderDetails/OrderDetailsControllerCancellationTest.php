@@ -90,7 +90,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
     public function testCancellationStockAvailableAlwaysAvailableAsSuperadminAttribute()
     {
         $this->Product = TableRegistry::getTableLocator()->get('Products');
-        $this->Product->changeQuantity([[$this->Product->getProductIdAndAttributeId($this->productIdC)['productId'] => [
+        $this->Product->changeQuantity([[$this->productIdC => [
             'always_available' => 1,
             'quantity' => 10,
         ]]]);
