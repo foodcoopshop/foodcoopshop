@@ -347,9 +347,9 @@ class CartComponent extends Component
             
             $orderDetails2save[] = $orderDetail2save;
             
-            $decreaseQuantity = !$product->stock_available->always_available;
-            if (isset($attribute->stock_available) && $attribute->stock_available->always_available) {
-                $decreaseQuantity = false;
+            $decreaseQuantity = ($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$product->stock_available->always_available;
+            if (isset($attribute->stock_available)) {
+                $decreaseQuantity = ($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$attribute->stock_available->always_available;
             }
             
             if ($decreaseQuantity) {
@@ -643,6 +643,8 @@ class CartComponent extends Component
             if (is_null($stockAvailable->sold_out_limit)) {
                 continue;
             }
+            Log::error($stockAvailable);
+            
             $stockAvailableLimitReached = $stockAvailable->quantity <= $stockAvailable->sold_out_limit;
             
             // send email to manufacturer
