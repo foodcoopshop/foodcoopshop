@@ -371,7 +371,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkOrderDetails($cart->cart_products[1]->order_detail, 'Knoblauch : 100 g', 1, 0, 0, 0.64, 0.64, 0.000000, 0.000000, 0, $pickupDay);
 
         $this->checkStockAvailable($this->productId1, 95);
-        $this->checkStockAvailable($this->productId2, 16);
+        $this->checkStockAvailable($this->productId2, 19);
         $this->checkStockAvailable($this->productId3, 77);
 
         // check new (empty) cart
