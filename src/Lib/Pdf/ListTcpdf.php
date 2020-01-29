@@ -115,7 +115,8 @@ class ListTcpdf extends AppTcpdf
             $priceExcl = $result['OrderDetailPriceExcl'];
             $tax = $result['OrderDetailTaxAmount'];
             $productName = $result['ProductName'];
-            $customerName = $result['CustomerName'];
+            // invoices can also be generated for past date ranges where deleted members would cause an error
+            $customerName = $result['CustomerName'] ?? __('Deleted_member');
             $taxRate = $result['TaxRate'];
             $showPricePerUnitSign = false;
             
@@ -203,7 +204,13 @@ class ListTcpdf extends AppTcpdf
                 }
                 
                 $indexForWidth ++;
-                $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $this->textHelper->truncate($result['CustomerName'], 27) . '</td>';
+                // invoices can also be generated for past date ranges where deleted members would cause an error
+                if ($result['CustomerName']) {
+                    $customerNameForColumn = $this->textHelper->truncate($result['CustomerName'], 27);
+                } else {
+                    $customerNameForColumn = __('Deleted_Member');
+                }
+                $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . $customerNameForColumn . '</td>';
                 
                 $this->table .= '</tr>';
             }
