@@ -620,7 +620,7 @@ foodcoopshop.SyncProductData = {
                                         var newValue;
                                         if ($.type(dataIndex) == 'string') {
                                             newValue = foodcoopshop.Helper.resolveIndex(dataIndex, syncProduct);
-                                            if ($.inArray(attributeName, ['active', 'is_stock_product']) !== -1) {
+                                            if ($.inArray(attributeName, ['active', 'is_stock_product', 'always_available']) !== -1) {
                                                 newValue = newValue ? 1 : 0; // transform true or false to 1 or 0
                                             }
                                             if (attributeName == 'deposit') {
