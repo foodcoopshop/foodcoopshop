@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.12.0",
-    "blueimp-file-upload": "^10.5.0",
+    "blueimp-file-upload": "^10.7.0",
     "bootstrap": "^4.4.1",
     "bootstrap-select": "^1.13.12",
     "chart.js": "^2.9.3",
@@ -30,11 +30,11 @@
     "jquery.idle": "^1.3.0",
     "jquery.scrollto": "^2.1.2",
     "owl.carousel": "^2.3.4",
-    "popper.js": "^1.16.0",
+    "popper.js": "^1.16.1",
     "slidebars": "^2.0.2",
     "tooltipster": "^4.2.7"
   },
   "devDependencies": {
-    "eslint": "^6.7.2"
+    "eslint": "^6.8.0"
   }
 }
