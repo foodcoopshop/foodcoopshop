@@ -45,7 +45,7 @@ use Cake\Core\Configure;
             </tr>
             <tr>
                 <td style="padding-top:20px;font-size:12px;">
-                	<?php echo __('This_email_was_created_automatcially.'); ?>
+                	<?php echo __('This_email_was_created_automatically.'); ?>
                         <?php if (isset($showManufacturerUnsubscribeLink) && $showManufacturerUnsubscribeLink) { ?>
                            <?php echo __('You_can_unsubscribe_it_<a href="{0}">in_your_settings</a>.', [Configure::read('app.cakeServerName') . $this->Slug->getManufacturerMyOptions()]); ?>
                         <?php } ?><br /><br />

@@ -44,7 +44,7 @@ class ProductAttributesTable extends AppTable
 
     public function add($productId, $attributeId)
     {
-        $defaultQuantity = 999;
+        $defaultQuantity = 0;
 
         $productAttributesCount = $this->find('all', [
             'conditions' => [

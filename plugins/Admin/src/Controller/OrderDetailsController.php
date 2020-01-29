@@ -846,7 +846,7 @@ class OrderDetailsController extends AdminAppController
 
         $object = clone $oldOrderDetail; // $oldOrderDetail would be changed if passed to function
         $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $productPrice, $productAmount);
-        $newAmount = $this->increaseQuantityForProduct($newOrderDetail, $oldOrderDetail->product_amount);
+        $newQuantity = $this->increaseQuantityForProduct($newOrderDetail, $oldOrderDetail->product_amount);
 
         if (!empty($object->order_detail_unit)) {
             $productQuantity = $oldOrderDetail->order_detail_unit->product_quantity_in_units / $oldOrderDetail->product_amount * $productAmount;
@@ -894,10 +894,12 @@ class OrderDetailsController extends AdminAppController
             $message .= ' ' . __d('admin', 'Reason') . ': <b>"' . $editAmountReason . '"</b>';
         }
 
-        $message .= ' ' . __d('admin', 'The_stock_was_increased_to_{0}.', [
-            Configure::read('app.numberHelper')->formatAsDecimal($newAmount, 0)
-        ]);
-
+        if ($newQuantity !== false) {
+            $message .= ' ' . __d('admin', 'The_stock_was_increased_to_{0}.', [
+                Configure::read('app.numberHelper')->formatAsDecimal($newQuantity, 0)
+            ]);
+        }
+        
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_detail_product_amount_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
 
@@ -1265,10 +1267,12 @@ class OrderDetailsController extends AdminAppController
                 $message .= ' '.__d('admin', 'Reason').': <b>"' . $cancellationReason . '"</b>';
             }
 
-            $message .= ' ' . __d('admin', 'The_stock_was_increased_to_{0}.', [
-                Configure::read('app.numberHelper')->formatAsDecimal($newQuantity, 0)
-            ]);
-
+            if ($newQuantity !== false) {
+                $message .= ' ' . __d('admin', 'The_stock_was_increased_to_{0}.', [
+                    Configure::read('app.numberHelper')->formatAsDecimal($newQuantity, 0)
+                ]);
+            }
+            
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave('order_detail_cancelled', $this->AppAuth->getUserId(), $orderDetail->product_id, 'products', $message);
         }
@@ -1368,6 +1372,10 @@ class OrderDetailsController extends AdminAppController
         }
 
         $quantity = $stockAvailableObject->quantity;
+        
+        if (!($stockAvailableObject->is_stock_product && $orderDetail->product->manufacturer->is_stock_management_enabled) && $stockAvailableObject->always_available) {
+            return false;
+        }
 
         // do the acutal updates for increasing quantity
         $this->StockAvailable = TableRegistry::getTableLocator()->get('StockAvailables');

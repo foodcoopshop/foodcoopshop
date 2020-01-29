@@ -18,7 +18,7 @@ foodcoopshop.SelfService = {
         
     init : function() {
         foodcoopshop.Helper.initLogoutButton(document.location.href);
-  	    this.initWindowResize();
+        this.initWindowResize();
         this.initAutoLogout();
         this.initSearchForm();
         this.initDepositPayment();
@@ -32,7 +32,7 @@ foodcoopshop.SelfService = {
         });
         
         var loginForm = $('#LoginForm');
-        formIsSubmitted = false;
+        var formIsSubmitted = false;
         loginForm.on('submit', function(e) {
             if (formIsSubmitted) {
                 return false;
@@ -69,7 +69,7 @@ foodcoopshop.SelfService = {
         
         var searchForm = $('#product-search');
         
-        formIsSubmitted = false;
+        var formIsSubmitted = false;
         searchForm.on('submit', function(e) {
             if (formIsSubmitted) {
                 return false;

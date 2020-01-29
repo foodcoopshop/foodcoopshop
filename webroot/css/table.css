@@ -64,7 +64,8 @@ table.list tr.sub-row td {
     font-size: 11px;
     font-style: italic;
 }
-table.list td.not-available {
+table.list td.not-available,
+table.list td.not-available i.sold-out-limit-for-dialog i {
     background-color: red;
     color: white;
 }

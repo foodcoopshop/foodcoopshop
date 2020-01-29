@@ -22,8 +22,12 @@ if (!is_array($lines)
     foreach ($lines as $line) {
         if (($pos = strpos($line, '\'mysqlCommand\'')) !== false) {
             $line = substr($line, $pos + strlen('\'mysqlCommand\','));
-            $line = explode('\'', $line, 3);
-            $mysql_cmd = $line[1];
+            $line = explode('\'', $line);
+            if (count($line) == 3) {
+                $mysql_cmd = $line[1];
+            } else {
+                $mysql_cmd = $line[0];
+            }
         }
     }
     

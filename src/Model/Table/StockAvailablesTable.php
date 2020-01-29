@@ -39,6 +39,10 @@ class StockAvailablesTable extends AppTable
         $validator = $this->getNumberRangeValidator($validator, 'sold_out_quantity', -5000, 5000, __('Field:_Notification_if_quantity_limit_reached'));
         $validator->allowEmptyString('sold_out_quantity');
         
+        $validator->numeric('default_quantity_after_sending_order_lists', __('The_default_quantity_after_sending_order_lists_needs_to_be_a_number.'));
+        $validator = $this->getNumberRangeValidator($validator, 'default_quantity_after_sending_order_lists', 1, 5000, __('Field:_Default_quantity_after_sending_order_lists'));
+        $validator->allowEmptyString('default_quantity_after_sending_order_lists');
+        
         return $validator;
     }
 

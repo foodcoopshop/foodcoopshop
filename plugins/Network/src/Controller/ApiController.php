@@ -182,7 +182,9 @@ class ApiController extends Controller
                 $product['quantity'] = [
                     'quantity' => $product['quantity']['stock_available_quantity'],
                     'quantity_limit' => $product['quantity']['stock_available_quantity_limit'],
-                    'sold_out_limit' => $product['quantity']['stock_available_sold_out_limit']
+                    'sold_out_limit' => $product['quantity']['stock_available_sold_out_limit'],
+                    'always_available' => $product['quantity']['stock_available_always_available'],
+                    'default_quantity_after_sending_order_lists' => $product['quantity']['stock_available_default_quantity_after_sending_order_lists'],
                 ];
                 $products2saveForQuantity[] = [
                     $product['remoteProductId'] => $product['quantity']

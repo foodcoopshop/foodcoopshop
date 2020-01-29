@@ -84,7 +84,9 @@ class OrderDetailsTable extends AppTable
         $cronjobRunDayWeekday = date('w', strtotime($cronjobRunDay));
         $query = $this->find('all', [
             'contain' => [
-                'Products'
+                'Products',
+                'Products.StockAvailables',
+                'ProductAttributes.StockAvailables'
             ]
         ]);
         $query->where(['OrderDetails.order_state' => ORDER_STATE_ORDER_PLACED]);

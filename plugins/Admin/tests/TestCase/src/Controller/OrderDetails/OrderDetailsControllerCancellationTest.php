@@ -87,6 +87,30 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->assertChangedStockAvailable($this->productIdC, 20);
     }
     
+    public function testCancellationStockAvailableAlwaysAvailableAsSuperadminAttribute()
+    {
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product->changeQuantity([[$this->productIdC => [
+            'always_available' => 1,
+            'quantity' => 10,
+        ]]]);
+        $this->loginAsSuperadmin();
+        $this->deleteAndAssertRemoveFromDatabase([$this->orderDetailIdC]);
+        $this->assertChangedStockAvailable($this->productIdC, 10);
+    }
+    
+    public function testCancellationStockAvailableAlwaysAvailableAsSuperadminProduct()
+    {
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product->changeQuantity([[$this->productIdA => [
+            'always_available' => 1,
+            'quantity' => 10,
+        ]]]);
+        $this->loginAsSuperadmin();
+        $this->deleteAndAssertRemoveFromDatabase([$this->orderDetailIdA]);
+        $this->assertChangedStockAvailable($this->productIdA, 10);
+    }
+    
     public function testCancellationWithTimebasedCurrency()
     {
         $cart = $this->prepareTimebasedCurrencyCart();

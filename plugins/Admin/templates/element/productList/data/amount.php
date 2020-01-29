@@ -13,7 +13,21 @@
  * @link          https://www.foodcoopshop.com
  */
 
-echo '<td class="amount ' . (empty($product->product_attributes) && $product->stock_available->quantity <= 0 ? 'not-available' : '') . '">';
+$available = true;
+
+if (empty($product->product_attributes)) {
+    if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
+        if ($product->stock_available->quantity <= 0) {
+            $available = false;
+        }
+    } else {
+        if ($product->stock_available->quantity <= 0 && !$product->stock_available->always_available) {
+            $available = false;
+        }
+    }
+}
+
+echo '<td class="amount ' . (!$available ? 'not-available' : '') . '">';
 
     if (empty($product->product_attributes)) {
         echo $this->Html->link(
@@ -25,25 +39,44 @@ echo '<td class="amount ' . (empty($product->product_attributes) && $product->st
                 'escape' => false
             ]
         );
-        echo '<span class="quantity-for-dialog">';
-        echo $this->Number->formatAsDecimal($product->stock_available->quantity, 0);
-        echo '</span>';
-        if ($product->is_stock_product) {
+        
+        $elementsToRender = [];
+        
+        if (!($product->is_stock_product && $product->manufacturer->stock_management_enabled) && $product->stock_available->always_available) {
+            $elementsToRender[] = '<i class="always-available fas fa-infinity" title="'.__d('admin', 'This_product_is_always_available.').'"></i>';
+        }
+        
+        $elementsToRender[] =
+        '<span class="quantity-for-dialog'.(!($product->is_stock_product && $product->manufacturer->stock_management_enabled) && $product->stock_available->always_available ? ' hide' : '').'">' . 
+                 $this->Number->formatAsDecimal($product->stock_available->quantity, 0) . 
+            '</span>';
+
+        $elementsToRender[] =
+        '<span class="default-quantity-after-sending-order-lists-for-dialog'.(($product->is_stock_product && $product->manufacturer->stock_management_enabled) || $product->stock_available->always_available || is_null($product->stock_available->default_quantity_after_sending_order_lists) ? ' hide' : '').'">' . 
+            (!($product->is_stock_product && $product->manufacturer->stock_management_enabled) && !is_null($product->stock_available->default_quantity_after_sending_order_lists) ? 
+                $this->Number->formatAsDecimal($product->stock_available->default_quantity_after_sending_order_lists, 0)
+            : '') . 
+         '</span>';
+        
+        if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
             if ($product->stock_available->quantity_limit != 0) {
-                echo ' <i class="small quantity-limit-for-dialog">';
-                    echo $this->Number->formatAsDecimal($product->stock_available->quantity_limit, 0);
-                echo '</i>';
+                $elementsToRender[] =
+                    ' <i class="small quantity-limit-for-dialog">'.
+                        $this->Number->formatAsDecimal($product->stock_available->quantity_limit, 0) .
+                '</i>';
             }
             if (is_null($product->stock_available->sold_out_limit) || $product->stock_available->sold_out_limit != 0) {
-                echo ' / <i class="small sold-out-limit-for-dialog">';
-                    if (is_null($product->stock_available->sold_out_limit)) {
-                        echo '<i class="fas fa-times" title="'.__d('admin', 'No_email_notifications_are_sent_for_this_product.').'"></i>';
-                    } else {
-                        echo $this->Number->formatAsDecimal($product->stock_available->sold_out_limit, 0);
-                    }
-                echo '</i>';
+                $element = ' <i class="small sold-out-limit-for-dialog">';
+                if (is_null($product->stock_available->sold_out_limit)) {
+                    $element .= '<i class="fas fa-times" title="'.__d('admin', 'No_email_notifications_are_sent_for_this_product.').'"></i>';
+                } else {
+                    $element .= $this->Number->formatAsDecimal($product->stock_available->sold_out_limit, 0);
+                }
+                $element .= '</i>';
+                $elementsToRender[] = $element;
             }
         }
+        echo join('', $elementsToRender);
     }
 
 echo '</td>';

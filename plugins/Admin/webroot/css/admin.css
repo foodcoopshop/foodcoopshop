@@ -189,7 +189,8 @@ span.product-price-for-dialog,
 span.product-quantity-for-dialog,
 span.delivery-rhythm-for-dialog,
 span.quantity-in-units,
-span.customer-name-for-dialog {
+span.customer-name-for-dialog,
+i.always-available {
     line-height: 21px;
     margin-left: 5px;
 }
@@ -208,7 +209,8 @@ span.product-declaration-header {
 }
 span.is-declaration-ok-wrapper .fa-check,
 td.is-stock-product .fa-check,
-td.delivery-rhythm .fa-check {
+td.delivery-rhythm .fa-check,
+td.amount i.always-available {
   color: #719f41;
 }
 td.is-stock-product i.fas.no-button {
@@ -661,6 +663,9 @@ body.order_details.index .table-cell-wrapper.price {
 .table-cell-wrapper.group span {
     margin-left: 5px;
 }
+table.list td.amount > .has-separator:after {
+    content: ' / ';
+}
 
 /* START upload */
 .featherlight-content .mini-upload-form {
@@ -871,7 +876,8 @@ body.payments .bottom-button-container {
 	z-index: 2147483646 ! important;
 }
 #product-is-stock-product-edit-form input,
-#product-delivery-rhythm-edit-form input {
+#product-delivery-rhythm-edit-form input,
+#product-quantity-edit-form input {
 	float: right ! important;
 }
 #product-price-edit-form label.radio input:focus {
@@ -898,6 +904,9 @@ body.payments .bottom-button-container {
     width: 250px;
     float: left;
     margin-right: 5px;
+}
+#product-quantity-edit-form .field-wrapper label.checkbox {
+	width: 100%;
 }
 #product-delivery-rhythm-edit-form .field-wrapper label:not(.checkbox) {
 	width: 110px;

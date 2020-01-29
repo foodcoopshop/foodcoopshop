@@ -78,14 +78,13 @@ if (file_exists($dir . 'config' . DS . 'custom_config.php')) {
 
 echo 'done' . PHP_EOL;
 echo 'Resetting database and executing migrations...';
-
-$cmd = sprintf('%1$s -h %2$s -u %3$s -p%4$s -e "DROP DATABASE %5$s;"', $mysql_cmd, $db_conf['host'], $db_conf['username'], $db_conf['password'], $tmpDbName);
+$cmd = sprintf('"%1$s" -h %2$s -u %3$s -p%4$s -e "DROP DATABASE %5$s;"', $mysql_cmd, $db_conf['host'], $db_conf['username'], $db_conf['password'], $tmpDbName);
 exec($cmd);
-$cmd = sprintf('%1$s -h %2$s -u %3$s -p%4$s -e "CREATE DATABASE %5$s;"', $mysql_cmd, $db_conf['host'], $db_conf['username'], $db_conf['password'], $tmpDbName);
+$cmd = sprintf('"%1$s" -h %2$s -u %3$s -p%4$s -e "CREATE DATABASE %5$s;"', $mysql_cmd, $db_conf['host'], $db_conf['username'], $db_conf['password'], $tmpDbName);
 exec($cmd);
-$cmd = sprintf('%1$s -h %2$s -u %3$s -p%4$s %5$s < %6$s', $mysql_cmd, $db_conf['host'], $db_conf['username'], $db_conf['password'], $tmpDbName, $unmodifiedStructureFile);
+$cmd = sprintf('"%1$s" -h %2$s -u %3$s -p%4$s %5$s < %6$s', $mysql_cmd, $db_conf['host'], $db_conf['username'], $db_conf['password'], $tmpDbName, $unmodifiedStructureFile);
 exec($cmd);
-$cmd = sprintf('%1$s -h %2$s -u %3$s -p%4$s %5$s < %6$s', $mysql_cmd, $db_conf['host'], $db_conf['username'], $db_conf['password'], $tmpDbName, $dir . $datasource[DATASOURCE]['data']);
+$cmd = sprintf('"%1$s" -h %2$s -u %3$s -p%4$s %5$s < %6$s', $mysql_cmd, $db_conf['host'], $db_conf['username'], $db_conf['password'], $tmpDbName, $dir . $datasource[DATASOURCE]['data']);
 exec($cmd);
 
 $cmd = 'bash ' . $dir . 'bin/cake migrations migrate';
@@ -96,7 +95,7 @@ foreach ($result as $line) {
 
 echo PHP_EOL . 'Dumping structure...';
 $result = array();
-$cmd = sprintf('%1$s --host="%2$s" --user="%3$s" --password="%4$s" --no-create-db --no-data --events --routines --skip-opt --create-options --add-drop-table --disable-keys --extended-insert --quick --set-charset --quote-names --skip-comments --skip-add-locks --single-transaction --force --result-file="%5$s" %6$s 2>&1', $mysqldump_cmd, $db_conf['host'], $db_conf['username'], $db_conf['password'], $dir . $datasource[DATASOURCE]['structure'] . '.tmp', $tmpDbName);
+$cmd = sprintf('"%1$s" --host="%2$s" --user="%3$s" --password="%4$s" --no-create-db --no-data --events --routines --skip-opt --create-options --add-drop-table --disable-keys --extended-insert --quick --set-charset --quote-names --skip-comments --skip-add-locks --single-transaction --force --result-file="%5$s" %6$s 2>&1', $mysqldump_cmd, $db_conf['host'], $db_conf['username'], $db_conf['password'], $dir . $datasource[DATASOURCE]['structure'] . '.tmp', $tmpDbName);
 exec($cmd, $result);
 
 foreach ($result as $line) {
@@ -120,7 +119,7 @@ echo 'done' . PHP_EOL;
 echo 'Dumping data...';
 
 $result = array();
-$cmd = sprintf('%1$s --host="%2$s" --user="%3$s" --password="%4$s" --no-create-info --skip-opt --create-options --disable-keys --extended-insert --quick --set-charset --quote-names --skip-comments --skip-add-locks --single-transaction --force --result-file="%5$s" %6$s 2>&1', $mysqldump_cmd, $db_conf['host'], $db_conf['username'], $db_conf['password'], $dir . $datasource[DATASOURCE]['data'] . '.tmp', $tmpDbName);
+$cmd = sprintf('"%1$s" --host="%2$s" --user="%3$s" --password="%4$s" --no-create-info --skip-opt --create-options --disable-keys --extended-insert --quick --set-charset --quote-names --skip-comments --skip-add-locks --single-transaction --force --result-file="%5$s" %6$s 2>&1', $mysqldump_cmd, $db_conf['host'], $db_conf['username'], $db_conf['password'], $dir . $datasource[DATASOURCE]['data'] . '.tmp', $tmpDbName);
 exec($cmd, $result);
 
 foreach ($result as $line) {

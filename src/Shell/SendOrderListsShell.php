@@ -31,7 +31,8 @@ class SendOrderListsShell extends AppShell
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        
         $this->startTimeLogging();
         
         // $this->cronjobRunDay can is set in unit test
@@ -109,6 +110,26 @@ class SendOrderListsShell extends AppShell
                     }
                 }
             }
+        }
+        
+        // reset quantity to default_quantity_after_sending_order_lists
+        $productsToSave = [];
+        foreach($orderDetails as $orderDetail) {
+            $compositeProductId = $this->Product->getCompositeProductIdAndAttributeId($orderDetail->product_id, $orderDetail->product_attribute_id);
+            $stockAvailableObject = $orderDetail->product->stock_available;
+            if (!empty($orderDetail->product_attribute)) {
+                $stockAvailableObject = $orderDetail->product_attribute->stock_available;
+            }
+            if (!is_null($stockAvailableObject->default_quantity_after_sending_order_lists) && $stockAvailableObject->quantity != $stockAvailableObject->default_quantity_after_sending_order_lists) {
+                $productsToSave[] = [
+                    $compositeProductId => [
+                        'quantity' => $stockAvailableObject->default_quantity_after_sending_order_lists
+                    ]
+                ];
+            }
+        }
+        if (!empty($productsToSave)) {
+            $this->Product->changeQuantity($productsToSave);
         }
         
         $this->httpClient->doFoodCoopShopLogout();

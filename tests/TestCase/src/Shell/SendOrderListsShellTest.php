@@ -271,7 +271,46 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_PLACED);
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
+    }
+    
+    public function testSendOrderListAndResetQuantity()
+    {
+        $productId1 = 346;
+        $productId2 = '60-10';
+        $defaultQuantity = 20;
         
+        $newProductData = [
+            'default_quantity_after_sending_order_lists' => $defaultQuantity,
+            'quantity' => 10,
+        ];
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product->changeQuantity([
+            [$productId1 => $newProductData],
+            [$productId2 => $newProductData]
+        ]);
+        $cronjobRunDay = '2018-01-31';
+        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+        $product1 = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $productId1
+            ],
+            'contain' => [
+                'StockAvailables'
+            ]
+        ])->first();
+        $this->assertEquals($defaultQuantity, $product1->stock_available->default_quantity_after_sending_order_lists);
+        $this->assertEquals($defaultQuantity, $product1->stock_available->quantity);
+        
+        $product2 = $this->Product->find('all', [
+            'conditions' => [
+                'Products.id_product' => $this->Product->getProductIdAndAttributeId($productId2)['productId']
+            ],
+            'contain' => [
+                'ProductAttributes.StockAvailables'
+            ]
+        ])->first();
+        $this->assertEquals($defaultQuantity, $product2->product_attributes[0]->stock_available->default_quantity_after_sending_order_lists);
+        $this->assertEquals($defaultQuantity, $product2->product_attributes[0]->stock_available->quantity);
     }
     
     private function assertOrderDetailState($orderDetailId, $expectedOrderState)

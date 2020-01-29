@@ -106,7 +106,7 @@ foodcoopshop.PickupDay = {
             infoMessage.html('<p><br />' + foodcoopshop.LocalizedJs.admin.Member + ': <b>' + customerName + '</b></p>');
         }
         if (customerName == '') {
-            infoMessage.html('<p><br />' + foodcoopshop.LocalizedJs.pickupDay.WereTheProductsOfAllMembersPickedUp) + '</p>'
+            infoMessage.html('<p><br />' + foodcoopshop.LocalizedJs.pickupDay.WereTheProductsOfAllMembersPickedUp) + '</p>';
         }
         
         dialog.dialog('open');        
@@ -118,7 +118,6 @@ foodcoopshop.PickupDay = {
             $(container).find('table.list tr.data').each(function() {
                 customerIds.push($(this).find('td:nth-child(2)').html());
             });
-            var title = foodcoopshop.LocalizedJs.pickupDay.WereTheProductsOfAllMembersPickedUp;
             var title = foodcoopshop.LocalizedJs.pickupDay.AllProductsPickedUp;
             foodcoopshop.PickupDay.initChangeProductsPickedUpDialogGroupedByCustomer(container, title, customerIds, '', false);
         });

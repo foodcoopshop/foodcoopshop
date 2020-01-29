@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-01-01 22:28+0100\n"
+"POT-Creation-Date: 2020-01-22 09:29+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -13,6 +13,105 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "Access_denied_please_sign_in."
+msgstr ""
+
+msgid "order_state_cash"
+msgstr ""
+
+msgid "This_order_contains_the_variable_member_fee."
+msgstr ""
+
+msgid "order_state_order_placed"
+msgstr ""
+
+msgid "order_state_closed"
+msgstr ""
+
+msgid "order_state_order_list_sent_to_manufacturer"
+msgstr ""
+
+msgid "order_state_billed_cashless"
+msgstr ""
+
+msgid "order_state_billed_cash"
+msgstr ""
+
+msgid "route_sign_in"
+msgstr ""
+
+msgid "route_sign_out"
+msgstr ""
+
+msgid "route_registration"
+msgstr ""
+
+msgid "route_registration_successful"
+msgstr ""
+
+msgid "route_information_about_right_of_withdrawal"
+msgstr ""
+
+msgid "route_terms_of_use"
+msgstr ""
+
+msgid "route_privacy_policy"
+msgstr ""
+
+msgid "route_list_of_allergens"
+msgstr ""
+
+msgid "route_accept_terms_of_use"
+msgstr ""
+
+msgid "route_new_products"
+msgstr ""
+
+msgid "route_request_new_password"
+msgstr ""
+
+msgid "route_activate_new_password"
+msgstr ""
+
+msgid "route_news_list"
+msgstr ""
+
+msgid "route_news_detail"
+msgstr ""
+
+msgid "route_search"
+msgstr ""
+
+msgid "route_category"
+msgstr ""
+
+msgid "route_product"
+msgstr ""
+
+msgid "route_manufacturer_list"
+msgstr ""
+
+msgid "route_manufacturer_detail"
+msgstr ""
+
+msgid "route_content"
+msgstr ""
+
+msgid "route_cart"
+msgstr ""
+
+msgid "route_cart_show"
+msgstr ""
+
+msgid "route_cart_finish"
+msgstr ""
+
+msgid "route_cart_finished"
+msgstr ""
+
+msgid "route_self_service"
+msgstr ""
 
 msgid "You_have_been_signed_out."
 msgstr ""
@@ -63,12 +162,6 @@ msgid "New_products"
 msgstr ""
 
 msgid "Search"
-msgstr ""
-
-msgid "route_self_service"
-msgstr ""
-
-msgid "route_cart"
 msgstr ""
 
 msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
@@ -237,9 +330,6 @@ msgid "Really_sign_out?"
 msgstr ""
 
 msgid "Sign_out?"
-msgstr ""
-
-msgid "route_sign_out"
 msgstr ""
 
 msgid "An_error_occurred"
@@ -413,13 +503,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-msgid "route_manufacturer_list"
-msgstr ""
-
 msgid "Manufacturers"
-msgstr ""
-
-msgid "route_news_list"
 msgstr ""
 
 msgid "Pages"
@@ -432,9 +516,6 @@ msgid "Show"
 msgstr ""
 
 msgid "Show_all_products"
-msgstr ""
-
-msgid "route_cart_finished"
 msgstr ""
 
 msgid "Place_instant_order_for"
@@ -905,6 +986,15 @@ msgstr ""
 msgid "Order_lists_are_sent_automatically_on_this_day."
 msgstr ""
 
+msgid "Is_the_product_always_available?"
+msgstr ""
+
+msgid "Default_quantity_after_sending_order_lists"
+msgstr ""
+
+msgid "After_the_order_lists_are_sent_available_amount_is_set_to_this_value."
+msgstr ""
+
 msgid "delete"
 msgstr ""
 
@@ -936,6 +1026,12 @@ msgid "An_attribute_cannot_be_assigned_to_a_product."
 msgstr ""
 
 msgid "A_product_cannot_be_assigned_to_an_attribute."
+msgstr ""
+
+msgid "This_product_is_always_available."
+msgstr ""
+
+msgid "Please_update_FoodCoopShop."
 msgstr ""
 
 msgid "Image"
@@ -1562,6 +1658,12 @@ msgstr ""
 msgid "Field:_Notification_if_quantity_limit_reached"
 msgstr ""
 
+msgid "The_default_quantity_after_sending_order_lists_needs_to_be_a_number."
+msgstr ""
+
+msgid "Field:_Default_quantity_after_sending_order_lists"
+msgstr ""
+
 msgid "Please_enter_a_tax_rate."
 msgstr ""
 
@@ -1778,58 +1880,10 @@ msgstr ""
 msgid "price_will_be_eventually_adapted."
 msgstr ""
 
-msgid "route_accept_terms_of_use"
-msgstr ""
-
-msgid "route_manufacturer_detail"
-msgstr ""
-
 msgid "route_news"
 msgstr ""
 
-msgid "route_content"
-msgstr ""
-
-msgid "route_terms_of_use"
-msgstr ""
-
-msgid "route_privacy_policy"
-msgstr ""
-
-msgid "route_list_of_allergens"
-msgstr ""
-
-msgid "route_cart_show"
-msgstr ""
-
-msgid "route_cart_finish"
-msgstr ""
-
-msgid "route_new_products"
-msgstr ""
-
 msgid "route_all_products"
-msgstr ""
-
-msgid "route_category"
-msgstr ""
-
-msgid "route_sign_in"
-msgstr ""
-
-msgid "route_registration_successful"
-msgstr ""
-
-msgid "route_registration"
-msgstr ""
-
-msgid "route_activate_new_password"
-msgstr ""
-
-msgid "route_request_new_password"
-msgstr ""
-
-msgid "route_news_detail"
 msgstr ""
 
 msgid "routes_product"
@@ -1844,36 +1898,507 @@ msgstr ""
 msgid "Paying_with_time_account_name_{0}"
 msgstr ""
 
-msgid "Access_denied_please_sign_in."
+msgid "Modified_on"
 msgstr ""
 
-msgid "order_state_cash"
+msgid "Go_to_blog_from"
 msgstr ""
 
-msgid "This_order_contains_the_variable_member_fee."
+msgid "by"
 msgstr ""
 
-msgid "order_state_order_placed"
+msgid "Edit"
 msgstr ""
 
-msgid "order_state_closed"
+msgid "Further_news"
 msgstr ""
 
-msgid "order_state_order_list_sent_to_manufacturer"
+msgid "of_{0}"
 msgstr ""
 
-msgid "order_state_billed_cashless"
+msgid "found"
 msgstr ""
 
-msgid "order_state_billed_cash"
+msgid "Show_Blog_post"
 msgstr ""
 
-msgid "route_information_about_right_of_withdrawal"
+msgid "Go_to_manufacturer"
 msgstr ""
 
-msgid "route_search"
+msgid "Your_cart_is_empty"
 msgstr ""
 
-msgid "route_product"
+msgid "Product_sum_including_vat"
+msgstr ""
+
+msgid "Deposit_sum"
+msgstr ""
+
+msgid "From_which_in"
+msgstr ""
+
+msgid "Including_vat"
+msgstr ""
+
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr ""
+
+msgid "To_finish_order_click_here."
+msgstr ""
+
+msgid "Order_placed"
+msgstr ""
+
+msgid "Thank_you_your_order_was_placed_succesfully."
+msgstr ""
+
+msgid "The_order_confirmation_was_sent_by_email_to_{0}."
+msgstr ""
+
+msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
+msgstr ""
+
+msgid "Increase_credit"
+msgstr ""
+
+msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
+msgstr ""
+
+msgid "Scan_member_card"
+msgstr ""
+
+msgid "or"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Stay_signed_in"
+msgstr ""
+
+msgid "and"
+msgstr ""
+
+msgid "accept_cookie"
+msgstr ""
+
+msgid "Forgot_password?"
+msgstr ""
+
+msgid "Create_account"
+msgstr ""
+
+msgid "Firstname"
+msgstr ""
+
+msgid "Lastname"
+msgstr ""
+
+msgid "Street"
+msgstr ""
+
+msgid "Additional_address_information"
+msgstr ""
+
+msgid "Zip"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "Want_to_receive_reminder_emails?"
+msgstr ""
+
+msgid "terms_of_use"
+msgstr ""
+
+msgid "I_accept_the_{0}"
+msgstr ""
+
+msgid "Please_enter_your_email_address_and_click_on_send_button."
+msgstr ""
+
+msgid "Send"
+msgstr ""
+
+msgid "The_confirmation_of_your_registration_was_sent_to_you_by_email."
+msgstr ""
+
+msgid "Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!"
+msgstr ""
+
+msgid "You_will_get_an_email_as_soon_as_we_activated_you."
+msgstr ""
+
+msgid "News_from"
+msgstr ""
+
+msgid "Imprint"
+msgstr ""
+
+msgid "Search:_name_id_or_barcode"
+msgstr ""
+
+msgid "Shopping_bag"
+msgstr ""
+
+msgid "docs_route_self_service"
+msgstr ""
+
+msgid "Your_shopping_bag_is_empty."
+msgstr ""
+
+msgid "Finish_pickup"
+msgstr ""
+
+msgid "terms_and_conditions"
+msgstr ""
+
+msgid "if_you_want_to_continue_to_use_this_platform_please_read_and_accept_the_{0}."
+msgstr ""
+
+msgid "I_accept_the_{0}."
+msgstr ""
+
+msgid "Load_past_orders"
+msgstr ""
+
+msgid "This_order_will_be_placed_for_{0}."
+msgstr ""
+
+msgid "Only_stock_products_are_shown."
+msgstr ""
+
+msgid "Your_credit_balance"
+msgstr ""
+
+msgid "You_reached_the_order_limit_{0}_please_add_credit."
+msgstr ""
+
+msgid "Add_credit"
+msgstr ""
+
+msgid "Value_added_tax"
+msgstr ""
+
+msgid "Show_cart_button"
+msgstr ""
+
+msgid "Already_ordered_products"
+msgstr ""
+
+msgid "right_of_withdrawal"
+msgstr ""
+
+msgid "I_accept_the_{0}_and_accept_that_it_is_not_valid_for_perishable_goods."
+msgstr ""
+
+msgid "general_terms_and_conditions"
+msgstr ""
+
+msgid "General_terms_and_conditions_of_{0}"
+msgstr ""
+
+msgid "Order_button"
+msgstr ""
+
+msgid "The_amount_will_be_reduced_from_the_credit_balance."
+msgstr ""
+
+msgid "Please_pay_when_picking_up_products."
+msgstr ""
+
+msgid "Write_message_to_pick_up_team_for_{0}?"
+msgstr ""
+
+msgid "Placeholder_message_pickup_day_comment."
+msgstr ""
+
+msgid "Pickup_place:_{0}"
+msgstr ""
+
+msgid "I_promise_to_pick_up_the_products_on_the_selected_pickup_day_and_to_pay_in_cash_in_the_shop."
+msgstr ""
+
+msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "You_can_sign_in_here_for_ordering"
+msgstr ""
+
+msgid "E-mail_address"
+msgstr ""
+
+msgid "You_can_change_your_password_here"
+msgstr ""
+
+msgid "You_can_change_your_profile_here"
+msgstr ""
+
+msgid "Replace_existing_file"
+msgstr ""
+
+msgid "Upload_new_file"
+msgstr ""
+
+msgid "Search_PC"
+msgstr ""
+
+msgid "Other_initiaives_working_with_FoodCoopShop"
+msgstr ""
+
+msgid "Map_with_all_Austrian_foodocops"
+msgstr ""
+
+msgid "Information"
+msgstr ""
+
+msgid "Contact"
+msgstr ""
+
+msgid "Bank_account_credit_balance"
+msgstr ""
+
+msgid "Bank_account_member_fee"
+msgstr ""
+
+msgid "Attention_order_break!"
+msgstr ""
+
+msgid "Help?"
+msgstr ""
+
+msgid "Replace_existing_image"
+msgstr ""
+
+msgid "Upload_new_image"
+msgstr ""
+
+msgid "Image_upload_legal_hint."
+msgstr ""
+
+msgid "Print"
+msgstr ""
+
+msgid "Reset_search"
+msgstr ""
+
+msgid "available"
+msgstr ""
+
+msgid "Stock_product:_order_possible_only_by_{0}."
+msgstr ""
+
+msgid "Self_service"
+msgstr ""
+
+msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
+msgstr ""
+
+msgid "Currently_not_on_stock"
+msgstr ""
+
+msgid "New"
+msgstr ""
+
+msgid "More_infos_to_product_{0}"
+msgstr ""
+
+msgid "Last_order_day"
+msgstr ""
+
+msgid "Instant_order"
+msgstr ""
+
+msgid "{0,plural,=1{1_week} other{#_weeks}}"
+msgstr ""
+
+msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
+msgstr ""
+
+msgid "from_which_{0}_%"
+msgstr ""
+
+msgid "Move_in_shopping_bag"
+msgstr ""
+
+msgid "Move_in_cart"
+msgstr ""
+
+msgid "Weight_in"
+msgstr ""
+
+msgid "Add_deposit"
+msgstr ""
+
+msgid "Add_deposit_amount_for_{0}"
+msgstr ""
+
+msgid "Amount_in_{0}"
+msgstr ""
+
+msgid "Categories"
+msgstr ""
+
+msgid "There_are_only_stock_products_shown_in_this_list."
+msgstr ""
+
+msgid "The_manufacturer_has_reached_the_limit_to_pay_in_{0}."
+msgstr ""
+
+msgid "Part_in_{0}"
+msgstr ""
+
+msgid "in"
+msgstr ""
+
+msgid "Admin_area"
+msgstr ""
+
+msgid "Manufacturer_area"
+msgstr ""
+
+msgid "To_change_your_profile_please_stop_the_instant_order_mode."
+msgstr ""
+
+msgid "Signed_in"
+msgstr ""
+
+msgid "Your_account_at_{0}_has_just_been_activated."
+msgstr ""
+
+msgid "Your_registration_at_{0}_has_just_been_successful!"
+msgstr ""
+
+msgid "Dear_responsible_person_for_new_members,"
+msgstr ""
+
+msgid "there_has_been_a_new_registration:_{0}_({1})_from_{2}."
+msgstr ""
+
+msgid "Here_you_can_activate_the_new_member_and_see_the_data"
+msgstr ""
+
+msgid "Here_you_can_see_the_data_of_the_new_member"
+msgstr ""
+
+msgid "There_has_been_placed_a_instant_order_for_{0}_by_{1})."
+msgstr ""
+
+msgid "You_receive_this_message_because_the_delivery_day_of_this_order_was_automatically_set_to_today_{0}_and_therefore_it_does_not_appear_on_your_order_lists."
+msgstr ""
+
+msgid "your_new_password_is:"
+msgstr ""
+
+msgid "Please_click_on_this_link_to_activate_your_new_password"
+msgstr ""
+
+msgid "thank_you_for_your_order_from_{0}."
+msgstr ""
+
+msgid "The_amount_was_reduced_from_your_credit_balance."
+msgstr ""
+
+msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
+msgstr ""
+
+msgid "thank_you_for_your_purchase."
+msgstr ""
+
+msgid "This_is_the_text_of_the_email_(with_attached_logo)."
+msgstr ""
+
+msgid "Units_on_stock:"
+msgstr ""
+
+msgid "Product_orders_are_not_possible_any_more!"
+msgstr ""
+
+msgid "Product_orders_possible_until:"
+msgstr ""
+
+msgid "This_notification_triggered_if_stock_available_is_less_than:"
+msgstr ""
+
+msgid "Click_here_to_edit_the_product."
+msgstr ""
+
+msgid "Cart"
+msgstr ""
+
+msgid "Your_cart_is_empty."
+msgstr ""
+
+msgid "This_email_was_created_automatically."
+msgstr ""
+
+msgid "You_can_unsubscribe_it_<a href=\"{0}\">in_your_settings</a>."
+msgstr ""
+
+msgid "homepage"
+msgstr ""
+
+msgid "page_you_have_just_been_to"
+msgstr ""
+
+msgid "Click_here_to_open_the"
+msgstr ""
+
+msgid "Auto_logout_in_X_sec"
+msgstr ""
+
+msgid "Terms_and_conditions"
+msgstr ""
+
+msgid "Order_overview"
+msgstr ""
+
+msgid "Order_of"
+msgstr ""
+
+msgid "placed_on"
+msgstr ""
+
+msgid "Prices_are_including_vat."
+msgstr ""
+
+msgid "Information_about_right_of_withdrawal"
+msgstr ""
+
+msgid "and_withdrawal_form"
+msgstr ""
+
+msgid "Withdrawal_form"
+msgstr ""
+
+msgid "If_you_want_to_cancel_the_contract_please_fill_out_this_form_and_send_it_back."
+msgstr ""
+
+msgid "Hereby_I_cancel_the_contract_about_the_purchase_of_following_goods_or_service."
+msgstr ""
+
+msgid "Ordered_on"
+msgstr ""
+
+msgid "Received_on"
+msgstr ""
+
+msgid "Name_of_consumer(s)"
+msgstr ""
+
+msgid "Address_of_consumer(s)"
+msgstr ""
+
+msgid "Signature_of_consumer_only_if_transmitted_on_paper."
+msgstr ""
+
+msgid "Strike_out_unnecessary_items."
+msgstr ""
+
+msgid "Filename_Information-about-right-of-withdrawal"
 msgstr ""
 

@@ -281,7 +281,10 @@ class LocalizedController extends Controller
                 'LastOrderWeekday' => __('Last_order_weekday'),
                 'SendOrderListsDay' => __('Send_order_lists_day'),
                 'OrderListsAreSentAutomaticallyNextDayInTheMorning' => __('Order_lists_are_sent_automatically_next_day_in_the_morning.'),
-                'OrderListsAreSentAutomaticallyOnThisDay' => __('Order_lists_are_sent_automatically_on_this_day.')
+                'OrderListsAreSentAutomaticallyOnThisDay' => __('Order_lists_are_sent_automatically_on_this_day.'),
+                'IsTheProductAlwaysAvailable' => __('Is_the_product_always_available?'),
+                'DefaultQuantityAfterSendingOrderLists' => __('Default_quantity_after_sending_order_lists'),
+                'DefaultQuantityAfterSendingOrderListsHelpText' => __('After_the_order_lists_are_sent_available_amount_is_set_to_this_value.'),
             ],
             'upload' => [
                 'delete' => __('delete'),
@@ -300,6 +303,8 @@ class LocalizedController extends Controller
                 'Product' => __('Product'),
                 'AnAttributeCannotBeAssignedToAProduct' => __('An_attribute_cannot_be_assigned_to_a_product.'),
                 'AProductCannotBeAssignedToAnAttribute' => __('A_product_cannot_be_assigned_to_an_attribute.'),
+                'ThisProductIsAlwaysAvailable' => __('This_product_is_always_available.'),
+                'UpdateSoftwareNotification' => __('Please_update_FoodCoopShop.'),
             ],
             
             'syncProductData' => [

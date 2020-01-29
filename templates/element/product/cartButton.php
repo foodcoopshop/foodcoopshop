@@ -22,7 +22,7 @@ if (!$appAuth->user() || $hideButton) {
 
 <div class="line">
     <?php
-    if ($stockAvailableQuantity - $stockAvailableQuantityLimit == 0
+    if (((($product['is_stock_product'] && $product['stock_management_enabled']) || !$stockAvailableAlwaysAvailable) && $stockAvailableQuantity - $stockAvailableQuantityLimit == 0)
         || (isset($shoppingLimitReached) && $shoppingLimitReached) 
         || $appAuth->isManufacturer() 
         || $deliveryBreakEnabled) {

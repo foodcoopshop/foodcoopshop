@@ -117,7 +117,9 @@ body.syncs.product div.product-list table.list th, body.syncs.product div.produc
 body.syncs.product div.product-list>b {
   margin-top: 5px;
 }
-
+div.product-list td {
+	line-height: 18px;
+}
 body.syncs.product div.product-list>b, form.sync-login-form>b {
   margin-bottom: 5px;
   float: left;
@@ -216,8 +218,8 @@ body.syncs.product_data table.product-list td.image img {
   height: auto;
 }
 
-body.syncs.product_data table.product-list td.quantity, body.syncs.product_data table.product-list td.price,
-  body.syncs.product_data table.product-list td.deposit {
+body.syncs.product_data table.product-list td.price,
+body.syncs.product_data table.product-list td.deposit {
   text-align: right;
 }
 
@@ -225,6 +227,7 @@ body.syncs.product_data table.product-list td.name .fas {
 	float: right;
 	margin-left: 5px;
 }
+body.syncs.product_data table.product-list td.quantity,
 body.syncs.product_data table.product-list td.active,
 body.syncs.product_data table.product-list td.is_stock_product {
   text-align: center;

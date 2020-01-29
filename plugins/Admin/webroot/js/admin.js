@@ -24,7 +24,7 @@ foodcoopshop.Admin = {
         this.adaptContentMargin();
         foodcoopshop.Helper.initScrolltopButton();
     },
-
+    
     bindDeleteCustomerButton : function(customerId) {
 
         var buttons = {};
@@ -827,13 +827,13 @@ foodcoopshop.Admin = {
                             document.location.reload();
                         },
                         onError: function (data) {
-                           var form = $('#delete-products-dialog');
+                            var form = $('#delete-products-dialog');
                             form.find('.ajax-loader').hide();
                             var message = '<p><b>';
                             if (productIds.length == 1) {
                                 message += foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileProductWasDeleted;
                             } else {
-                                message += foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileProductsWereDeleted
+                                message += foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileProductsWereDeleted;
                             }
                             message += ':</b> </p>';
                             foodcoopshop.Helper.appendFlashMessageToDialog(form, message + data.msg);
@@ -847,11 +847,11 @@ foodcoopshop.Admin = {
             html += foodcoopshop.LocalizedJs.admin.ReallyDeleteOneProduct;
         } else {
             html += foodcoopshop.LocalizedJs.admin.ReallyDelete0Products.replace(/\{0\}/, '<b>' + productIds.length + '</b>');
-        };
+        }
         html += '</p><p>' + foodcoopshop.LocalizedJs.admin.BeCarefulNoWayBack + '</p>';
         
         var products = [];
-        for (i in productIds) {
+        for (var i in productIds) {
             products.push($('tr#product-' + productIds[i] + ' span.product-name').html());
         }
         html += '<ul><li>' + products.join('</li><li>') + '</li></ul>';
@@ -979,16 +979,19 @@ foodcoopshop.Admin = {
             buttons['save'] = {
                 text: foodcoopshop.LocalizedJs.helper.save,
                 click: function() {
-                    if ($('#dialogQuantityQuantity').val() == '' || $('#dialogQuantityProductId').val() == '') {
+                    if ($('#dialogQuantityProductId').val() == '') {
+                        alert('no product id set');
                         return false;
                     }
 
                     $('#product-quantity-edit-form .ajax-loader').show();
                     $('.ui-dialog button').attr('disabled', 'disabled');
-
+                    
                     var data = {
                         productId: $('#dialogQuantityProductId').val(),
                         quantity: $('#dialogQuantityQuantity').val(),
+                        alwaysAvailable: $('#dialogQuantityAlwaysAvailable:checked').length > 0 ? 1 : 0,
+                        defaultQuantityAfterSendingOrderLists: $('#dialogQuantityDefaultQuantityAfterSendingOrderLists').val() == '' ? null : $('#dialogQuantityDefaultQuantityAfterSendingOrderLists').val(),
                     };
                     
                     if (foodcoopshop.Admin.isAdvancedStockManagementEnabled(row)) {
@@ -1016,13 +1019,15 @@ foodcoopshop.Admin = {
             
             var dialogOptions = {
                 autoOpen: false,
-                height: 250,
+                height: 350,
                 width: 390,
                 modal: true,
                 close: function () {
                     $('#dialogQuantityQuantity').val('');
                     $('#dialogQuantityQuantityLimit').val('');
                     $('#dialogQuantitySoldOutLimit').val('');
+                    $('#dialogQuantityAlwaysAvailable').val('');
+                    $('#dialogQuantityDefaultQuantityAfterSendingOrderLists').val('');
                     $('#dialogQuantityProductId').val('');
                 },
                 buttons: buttons
@@ -1046,17 +1051,47 @@ foodcoopshop.Admin = {
                 dialogOptions.height = 390;
             }
             
+            foodcoopshop.Admin.bindToggleQuantityQuantity(dialogId);
+
             $('#' + dialogId + ' #dialogQuantityQuantity').val(row.find('span.quantity-for-dialog').html().replace(/\./, ''));
+            if (row.find('.amount').html().match('fa-infinity')) {
+                $('#' + dialogId + ' #dialogQuantityAlwaysAvailable').trigger('click');
+            }
+            $('#' + dialogId + ' #dialogQuantityDefaultQuantityAfterSendingOrderLists').val(row.find('span.default-quantity-after-sending-order-lists-for-dialog').html());
             $('#' + dialogId + ' #dialogQuantityProductId').val(row.find('td.cell-id').html());
             var label = foodcoopshop.Admin.getProductNameForDialog(row);
             $('#' + dialogId + ' label[for="dialogQuantityQuantity"]').html(label);
 
+
             var dialog = $('#' + dialogId).dialog(dialogOptions);
             dialog.dialog('open');
+            
         });
 
     },
     
+    bindToggleQuantityQuantity : function(dialogId) {
+        var dialog = $('#' + dialogId);
+        dialog.find('#dialogQuantityAlwaysAvailable').on('change', function() {
+            var quantityWrapper = dialog.find('.quantity-wrapper');
+            var dialogQuantityElement = dialog.find('#dialogQuantityAlwaysAvailable');
+            if (dialogQuantityElement.prop('checked')) {
+                quantityWrapper.hide();
+            } else {
+                quantityWrapper.show();
+            }
+        });
+    },
+    
+    initProductQuantityList: function(container) {
+        var rowContainer = $(container).find('td.amount');
+        rowContainer.each(function() {
+            var elements = $(this).find('> i, > span').not('.hide');
+            elements.addClass('has-separator');
+            elements.last().removeClass('has-separator');
+        });
+    },
+
     isAdvancedStockManagementEnabled : function(row) {
         if (row.hasClass('sub-row')) {
             row = row.prevAll('.main-product').first();
