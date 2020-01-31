@@ -118,7 +118,7 @@ DROP TABLE IF EXISTS `fcs_category`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fcs_category` (
   `id_category` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id_parent` int(10) unsigned DEFAULT NULL,
+  `id_parent` int(10) unsigned DEFAULT '0',
   `name` varchar(128) NOT NULL,
   `description` text NOT NULL,
   `nleft` int(10) NOT NULL DEFAULT '0',
@@ -370,7 +370,7 @@ CREATE TABLE `fcs_pages` (
   `modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `full_width` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `id_parent` int(10) unsigned DEFAULT NULL,
+  `id_parent` int(10) unsigned DEFAULT '0',
   `lft` int(10) NOT NULL DEFAULT '0',
   `rght` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_page`)

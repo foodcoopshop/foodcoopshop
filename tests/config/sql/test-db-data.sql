@@ -234,7 +234,7 @@ INSERT INTO `fcs_order_detail_tax` VALUES
 
 /*!40000 ALTER TABLE `fcs_pages` DISABLE KEYS */;
 INSERT INTO `fcs_pages` VALUES
-(3,'Page','',1,'header',1,'',88,0,'2016-08-29 13:36:43','2016-08-29 13:36:43',0,NULL,0,0);
+(3,'Page','',1,'header',1,'',88,0,'2016-08-29 13:36:43','2016-08-29 13:36:43',0,0,0,0);
 /*!40000 ALTER TABLE `fcs_pages` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_payments` DISABLE KEYS */;
@@ -396,7 +396,8 @@ INSERT INTO `phinxlog` VALUES
 (20191129075800,'RemoveBulkOrderOption','2019-11-29 08:16:53','2019-11-29 08:16:53',0),
 (20191209122308,'AddSelfServiceDbConfigTest','2019-12-09 12:46:41','2019-12-09 12:46:41',0),
 (20191222194750,'AddAutoLoginHash','2019-12-22 20:26:26','2019-12-22 20:26:26',0),
-(20200120095222,'StockAlwaysAvailableAndDefaultQuantity','2020-01-20 10:44:32','2020-01-20 10:44:32',0);
+(20200120095222,'StockAlwaysAvailableAndDefaultQuantity','2020-01-20 10:44:32','2020-01-20 10:44:32',0),
+(20200131081923,'FixCategoryAndPageTree','2020-01-31 08:36:17','2020-01-31 08:36:17',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
