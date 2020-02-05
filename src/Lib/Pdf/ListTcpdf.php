@@ -359,7 +359,14 @@ class ListTcpdf extends AppTcpdf
     {
         $this->SetY(4);
         
-        $this->MultiCell(50, 0, '<img src="' . $this->logoPath . '">', 0, 'L', 0, 0, '', '', true, null, true);
+        // it seems that TCPDF deletes images after they were used by MultiCell
+        // this might be a bug in TCPDF v6.3.2 (it worked before)
+        // in the meantime we just copy the image to a tmp image which will be used
+        // and automatically is removed by the bug itself :-)
+        $tmpLogoFileName = str_replace('logo-pdf', 'tmp-logo-pdf', $this->logoPath);
+        copy($this->logoPath, $tmpLogoFileName);
+        
+        $this->MultiCell(50, 0, '<img src="' . $tmpLogoFileName . '">', 0, 'L', 0, 0, '', '', true, null, true);
         $this->setFontSize(10);
         
         $convertedHeaderRight = '<br />'.Configure::read('appDb.FCS_APP_NAME').'<br />'.Configure::read('appDb.FCS_APP_ADDRESS').'<br />'.Configure::read('appDb.FCS_APP_EMAIL');
