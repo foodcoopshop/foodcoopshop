@@ -164,7 +164,6 @@ class ProductsController extends AdminAppController
             if (!empty($errors)) {
                 $errorString = '<ul><li>' . join('</li><li>', $errors) . '</li></ul>';
                 $errorString .= __d('admin', 'Please_try_again_as_soon_as_the_next_invoice_has_been_generated.');
-                $this->log('error while trying to delete a product: <br />' . $errorString);
                 throw new Exception($errorString);
             }
         } catch (Exception $e) {
