@@ -103,7 +103,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     {
         $this->dbConnection = ConnectionManager::get('test');
         $this->testDumpDir = ROOT . DS .  'tests' . DS . 'config' . DS . 'sql' . DS;
-        $this->importDump($this->testDumpDir . 'test-db-data.sql');
+        $this->dbConnection->query(file_get_contents($this->testDumpDir . 'test-db-data.sql'));
     }
 
     public function initHttpClient()
@@ -115,11 +115,6 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         ]);
         $this->httpClient->loginEmail = Configure::read('test.loginEmailSuperadmin');
         $this->httpClient->loginPassword = Configure::read('test.loginPassword');
-    }
-
-    protected function importDump($file)
-    {
-        $this->dbConnection->query(file_get_contents($file));
     }
 
     protected function assertJsonError()

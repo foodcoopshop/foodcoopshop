@@ -25,8 +25,10 @@
 namespace Network\Test\TestCase;
 
 use Cake\Core\Configure;
+use Cake\Datasource\ConnectionManager;
 use Cake\View\View;
 use Network\View\Helper\NetworkHelper;
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\StringCompareTrait;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
@@ -41,22 +43,24 @@ class ApiControllerTest extends TestCase
     {
         parent::setUp();
         $this->Network = new NetworkHelper(new View());
+        $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
     }
     
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState
-     */
+    protected function resetTestDatabaseData()
+    {
+        $this->dbConnection = ConnectionManager::get('test');
+        $this->testDumpDir = ROOT . DS .  'tests' . DS . 'config' . DS . 'sql' . DS;
+        $this->dbConnection->query(file_get_contents($this->testDumpDir . 'test-db-data.sql'));
+        $this->resetTestDatabaseData();
+        $this->Configuration->loadConfigurations();
+    }
+    
     public function testGetProductsLoggedOut()
     {
         $this->get('/api/getProducts.json');
         $this->assertResponseCode(401);
     }
 
-    /**
-     * @runInSeparateProcess
-     * @preserveGlobalState
-     */
     public function testGetProductsAsSuperadmin()
     {
         $this->configRequest([
@@ -69,11 +73,6 @@ class ApiControllerTest extends TestCase
         $this->assertResponseCode(403);
     }
     
-    /**
-     * 
-     * @runInSeparateProcess
-     * @preserveGlobalState enabled
-     */
     public function testGetProductsAsManufacturer()
     {
         $this->configRequest([
@@ -85,7 +84,11 @@ class ApiControllerTest extends TestCase
         $this->get('/api/getProducts.json');
         $this->assertResponseOk();
         $this->_compareBasePath = ROOT . DS . 'plugins' . DS . 'Network' . DS . 'tests' . DS . 'comparisons' . DS;
-        $this->assertSameAsFile('products-for-demo-vegetable-manufacturer.json', $this->_response);
+        $preparedResponse = str_replace(
+            Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate(date('Y-m-d')),
+            '2020-01-17',
+        $this->_response);
+        $this->assertSameAsFile('products-for-demo-vegetable-manufacturer.json', $preparedResponse);
     }
 
 }

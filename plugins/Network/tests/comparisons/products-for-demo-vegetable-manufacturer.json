@@ -50,7 +50,9 @@
                 "id_product_attribute": 0,
                 "quantity": 97,
                 "quantity_limit": 0,
-                "sold_out_limit": null
+                "sold_out_limit": null,
+                "always_available": false,
+                "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
                 "id_manufacturer": 5,
@@ -166,7 +168,9 @@
                 "id_product_attribute": 0,
                 "quantity": 2959,
                 "quantity_limit": 0,
-                "sold_out_limit": null
+                "sold_out_limit": null,
+                "always_available": true,
+                "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
                 "id_manufacturer": 5,
@@ -274,7 +278,9 @@
                 "id_product_attribute": 0,
                 "quantity": 78,
                 "quantity_limit": 0,
-                "sold_out_limit": null
+                "sold_out_limit": null,
+                "always_available": false,
+                "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
                 "id_manufacturer": 5,
@@ -382,7 +388,9 @@
                 "id_product_attribute": 0,
                 "quantity": 5,
                 "quantity_limit": -5,
-                "sold_out_limit": 0
+                "sold_out_limit": 0,
+                "always_available": false,
+                "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
                 "id_manufacturer": 5,
@@ -511,7 +519,9 @@
                 "id_product_attribute": 0,
                 "quantity": 999,
                 "quantity_limit": 0,
-                "sold_out_limit": null
+                "sold_out_limit": null,
+                "always_available": true,
+                "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
                 "id_manufacturer": 5,
@@ -638,7 +648,6 @@
                     "id_product_attribute": 13,
                     "id_product": 350,
                     "price": "1.818182",
-                    "quantity": 0,
                     "default_on": true,
                     "product_attribute_combination": {
                         "id_attribute": 36,
@@ -669,14 +678,15 @@
                         "id_product_attribute": 13,
                         "quantity": 5,
                         "quantity_limit": -5,
-                        "sold_out_limit": 0
+                        "sold_out_limit": 0,
+                        "always_available": false,
+                        "default_quantity_after_sending_order_lists": null
                     }
                 },
                 {
                     "id_product_attribute": 14,
                     "id_product": 350,
                     "price": "3.636364",
-                    "quantity": 0,
                     "default_on": false,
                     "product_attribute_combination": {
                         "id_attribute": 35,
@@ -707,14 +717,15 @@
                         "id_product_attribute": 14,
                         "quantity": 999,
                         "quantity_limit": 0,
-                        "sold_out_limit": null
+                        "sold_out_limit": null,
+                        "always_available": true,
+                        "default_quantity_after_sending_order_lists": null
                     }
                 },
                 {
                     "id_product_attribute": 15,
                     "id_product": 350,
                     "price": "0.000000",
-                    "quantity": 0,
                     "default_on": false,
                     "product_attribute_combination": {
                         "id_attribute": 36,
@@ -745,7 +756,9 @@
                         "id_product_attribute": 15,
                         "quantity": 999,
                         "quantity_limit": 0,
-                        "sold_out_limit": null
+                        "sold_out_limit": null,
+                        "always_available": true,
+                        "default_quantity_after_sending_order_lists": null
                     }
                 }
             ],
@@ -755,7 +768,9 @@
                 "id_product_attribute": 0,
                 "quantity": 1004,
                 "quantity_limit": 0,
-                "sold_out_limit": null
+                "sold_out_limit": null,
+                "always_available": true,
+                "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
                 "id_manufacturer": 5,
@@ -853,13 +868,16 @@
             "description": "",
             "unity": "",
             "manufacturer": {
-                "name": "Demo Gem\u00fcse-Hersteller"
+                "name": "Demo Gem\u00fcse-Hersteller",
+                "stock_management_enabled": 0
             },
             "default_on": true,
             "stock_available": {
                 "quantity": 5,
                 "quantity_limit": -5,
-                "sold_out_limit": 0
+                "sold_out_limit": 0,
+                "always_available": false,
+                "default_quantity_after_sending_order_lists": null
             },
             "deposit": 0,
             "unit": {
@@ -891,13 +909,16 @@
             "description": "",
             "unity": "",
             "manufacturer": {
-                "name": "Demo Gem\u00fcse-Hersteller"
+                "name": "Demo Gem\u00fcse-Hersteller",
+                "stock_management_enabled": 0
             },
             "default_on": false,
             "stock_available": {
                 "quantity": 999,
                 "quantity_limit": 0,
-                "sold_out_limit": null
+                "sold_out_limit": null,
+                "always_available": true,
+                "default_quantity_after_sending_order_lists": null
             },
             "deposit": 0,
             "unit": {
@@ -929,13 +950,16 @@
             "description": "",
             "unity": "",
             "manufacturer": {
-                "name": "Demo Gem\u00fcse-Hersteller"
+                "name": "Demo Gem\u00fcse-Hersteller",
+                "stock_management_enabled": 0
             },
             "default_on": false,
             "stock_available": {
                 "quantity": 999,
                 "quantity_limit": 0,
-                "sold_out_limit": null
+                "sold_out_limit": null,
+                "always_available": true,
+                "default_quantity_after_sending_order_lists": null
             },
             "deposit": 0,
             "unit": {
@@ -981,7 +1005,9 @@
                 "id_product_attribute": 0,
                 "quantity": 988,
                 "quantity_limit": 0,
-                "sold_out_limit": null
+                "sold_out_limit": null,
+                "always_available": true,
+                "default_quantity_after_sending_order_lists": null
             },
             "manufacturer": {
                 "id_manufacturer": 5,
