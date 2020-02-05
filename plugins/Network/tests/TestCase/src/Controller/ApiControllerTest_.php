@@ -15,11 +15,9 @@
 
 
 /**
- * this is a first try with the new cakephp integration test trait
- * @TODO import test database as fixture
+ * still fails on travis
+ * https://travis-ci.com/foodcoopshop/foodcoopshop/jobs/283746006
  * @TODO rename filename to ApiControllerTest.php
- * @TODO check if tests run without --filter!
- * @TODO maybe more stuff
  */
 
 namespace Network\Test\TestCase;
