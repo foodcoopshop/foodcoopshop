@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-10 09:19+0100\n"
+"POT-Creation-Date: 2020-02-10 09:50+0100\n"
 "PO-Revision-Date: 2019-04-28 03:51+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -110,7 +110,7 @@ msgstr "Kredyt wynosi"
 msgid "It_needs_to_be_zero."
 msgstr "Musi wynosić 0."
 
-msgid "Amount_of_not_approved_payments:"
+msgid "Amount_of_not_approved_payments_within_the_last_2_years:"
 msgstr ""
 
 msgid "The_credit_of_the_paying_with_time_account_is:"

@@ -263,7 +263,7 @@ class CustomersController extends AdminAppController
                 ]
             ])->count();
             if ($notApprovedPaymentsCount > 0) {
-                $errors[] = __d('admin', 'Amount_of_not_approved_payments:'). ' '. $notApprovedPaymentsCount . '.';
+                $errors[] = __d('admin', 'Amount_of_not_approved_payments_within_the_last_2_years:'). ' '. $notApprovedPaymentsCount . '.';
             }
             
             $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');

@@ -2,6 +2,7 @@
 
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
+use Cake\I18n\FrozenDate;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -258,7 +259,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertEquals($customerPhone, $customer->address_customer->phone, 'saving field phone failed');
     }
     
-    public function testDeleteWithNotYetBilledOrders()
+    public function testDeleteWithNotYetBilledOrdersAndNotEqualPayments()
     {
         
         $this->loginAsSuperadmin();
@@ -266,7 +267,7 @@ class CustomersControllerTest extends AppCakeTestCase
             'referer' => '/'
         ]);
         $response = $this->httpClient->getJsonDecodedContent();
-        $this->assertRegExpWithUnquotedString('<ul><li>Anzahl der Bestellungen, die noch mit dem Hersteller verrechnet wurden: 3.</li><li>Das Guthaben beträgt 92,02 €. Es muss 0 betragen.</li></ul>', $response->msg);
+        $this->assertRegExpWithUnquotedString('<ul><li>Anzahl der Bestellungen, die noch mit dem Hersteller verrechnet wurden: 3.</li><li>Das Guthaben beträgt 92,02 €. Es muss 0 betragen.</li>', $response->msg);
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => Configure::read('test.customerId')
@@ -275,7 +276,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertNotEmpty($customer);
     }
     
-    public function testDeleteWithNotOkPayments()
+    public function testDeleteWithNotApprovedPayments()
     {
         
         $this->Payment = TableRegistry::getTableLocator()->get('Payments');
@@ -284,6 +285,7 @@ class CustomersControllerTest extends AppCakeTestCase
             $this->Payment->patchEntity(
                 $this->Payment->get($paymentId),
                 [
+                    'date_add' => new FrozenDate(),
                     'approval' => APP_OFF
                 ]
             )
@@ -294,7 +296,7 @@ class CustomersControllerTest extends AppCakeTestCase
             'referer' => '/'
         ]);
         $response = $this->httpClient->getJsonDecodedContent();
-        $this->assertRegExpWithUnquotedString('<li>Anzahl der nicht bestätigten Guthaben-Aufladungen in den letzten zwei Jahren: 1.</li>', $response->msg);
+        $this->assertRegExpWithUnquotedString('<li>Anzahl der nicht bestätigten Guthaben-Aufladungen in den letzten 2 Jahren: 1.</li>', $response->msg);
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => Configure::read('test.customerId')
