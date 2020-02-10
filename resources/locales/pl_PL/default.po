@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-01-22 09:29+0100\n"
+"POT-Creation-Date: 2020-02-10 09:50+0100\n"
 "PO-Revision-Date: 2019-07-22 16:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1485,6 +1485,11 @@ msgstr "Suma podatków"
 msgid "Sum_price_incl."
 msgstr "Suma cen łącznie z"
 
+# Deleted member?
+#, fuzzy
+msgid "Deleted_member"
+msgstr "Usunąć członka?"
+
 # Price excl.
 msgid "Price_excl."
 msgstr "Cena z wyłączeniem"
@@ -1496,6 +1501,10 @@ msgstr "VAT"
 # Order day
 msgid "Order_day"
 msgstr "Dzień zamówienia"
+
+# Deleted member
+msgid "Deleted_Member"
+msgstr "Usuń członka"
 
 # Price per weight
 msgid "Price_per_weight"
@@ -2382,10 +2391,6 @@ msgstr "w każdy(ą) ostatni(ą) {0} miesiąca"
 
 msgid "bulk_order"
 msgstr ""
-
-# Deleted member
-msgid "Deleted_Member"
-msgstr "Usuń członka"
 
 # Deleted e-mail address
 msgid "Deleted_Email_Address"
