@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-01-22 21:04+0100\n"
+"POT-Creation-Date: 2020-02-10 09:19+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -105,6 +105,9 @@ msgid "The_credit_is"
 msgstr ""
 
 msgid "It_needs_to_be_zero."
+msgstr ""
+
+msgid "Amount_of_not_approved_payments:"
 msgstr ""
 
 msgid "The_credit_of_the_paying_with_time_account_is:"

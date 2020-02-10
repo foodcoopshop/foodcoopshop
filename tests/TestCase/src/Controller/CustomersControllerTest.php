@@ -275,6 +275,34 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertNotEmpty($customer);
     }
     
+    public function testDeleteWithNotOkPayments()
+    {
+        
+        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
+        $paymentId = 1;
+        $this->Payment->save(
+            $this->Payment->patchEntity(
+                $this->Payment->get($paymentId),
+                [
+                    'approval' => APP_OFF
+                ]
+            )
+        );
+        
+        $this->loginAsSuperadmin();
+        $this->httpClient->ajaxPost('/admin/customers/delete/' . Configure::read('test.superadminId'), [
+            'referer' => '/'
+        ]);
+        $response = $this->httpClient->getJsonDecodedContent();
+        $this->assertRegExpWithUnquotedString('<li>Anzahl der nicht bestätigten Guthaben-Aufladungen in den letzten zwei Jahren: 1.</li>', $response->msg);
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => Configure::read('test.customerId')
+            ]
+        ])->first();
+        $this->assertNotEmpty($customer);
+    }
+    
     public function testDeleteOk()
     {
         $this->loginAsSuperadmin();
