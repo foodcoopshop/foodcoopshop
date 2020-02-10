@@ -177,13 +177,15 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->addPayment(Configure::read('test.customerId'), '10.5', 'product');
         $addResponse = $this->httpClient->getJsonDecodedContent();
 
-        $query = 'UPDATE ' . $this->Payment->getTable().' SET approval = :approval WHERE id = :paymentId';
-        $params = [
-            'approval' => APP_ON,
-            'paymentId' => $addResponse->paymentId
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        $statement->execute($params);
+        $this->Payment->save(
+            $this->Payment->patchEntity(
+                $this->Payment->get($addResponse->paymentId),
+                [
+                    'approval' => APP_ON,
+                    'paymentId' => $addResponse->paymentId
+                ]
+            )
+        );
 
         $this->deletePayment($addResponse->paymentId);
         $deleteResponse = $this->httpClient->getJsonDecodedContent();
