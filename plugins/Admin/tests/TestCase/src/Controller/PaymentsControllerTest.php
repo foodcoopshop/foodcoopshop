@@ -181,8 +181,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             $this->Payment->patchEntity(
                 $this->Payment->get($addResponse->paymentId),
                 [
-                    'approval' => APP_ON,
-                    'paymentId' => $addResponse->paymentId
+                    'approval' => APP_ON
                 ]
             )
         );
