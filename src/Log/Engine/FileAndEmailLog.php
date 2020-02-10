@@ -54,6 +54,9 @@ class FileAndEmailLog extends FileLog
             '{"delivery_rhythm_',
             '{"quantity_in_units"',
             '{"email":{"account_inactive"',
+            '{"short_description":{"maxLength":',
+            '{"firstname":{"_empty":',
+            '{"lastname":{"_empty":',
             __('You_are_not_signed_in.')
         ];
         $ignoredExceptionsRegex = '/('.join('|', $ignoredPatterns).')/';
