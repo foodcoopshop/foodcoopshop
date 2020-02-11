@@ -6,6 +6,7 @@ use Cake\Auth\DefaultPasswordHasher;
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Security;
 use Cake\Validation\Validator;
 
 /**
@@ -134,7 +135,6 @@ class CustomersTable extends AppTable
         return $validator;
     }
 
-
     public function validationNewPasswordRequest(Validator $validator)
     {
         $validator->notEmptyString('email', __('Please_enter_your_email_address.'));
@@ -200,6 +200,11 @@ class CustomersTable extends AppTable
         $this->getAssociation('PaidCashlessOrderDetails')->setConditions([
             'PaidCashlessOrderDetails.order_state IN (' . join(',', Configure::read('app.htmlHelper')->getOrderStatesCashless()). ')'
         ]);
+    }
+    
+    public function getPersonalTransactionCodeField()
+    {
+        return 'UPPER(SUBSTRING(SHA1(CONCAT(Customers.id_customer, "' .  Security::getSalt() . '", "personal-transaction-code")), 1, 8))';
     }
 
     public function getConditionToExcludeHostingUser()

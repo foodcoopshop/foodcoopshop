@@ -495,8 +495,17 @@ class PaymentsController extends AdminAppController
         $this->customerId = $this->AppAuth->getUserId();
         $this->paymentType = 'product';
         
-        $personalTransactionCode = 'ABCXYZ';
-        $this->set('personalTransactionCode', $personalTransactionCode);
+        if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
+            $customer = $this->Customer->find('all', [
+                'conditions' => [
+                    'Customers.id_customer' => $this->customerId
+                ],
+                'fields' => [
+                    'personalTransactionCode' => $this->Customer->getPersonalTransactionCodeField()
+                ]
+            ])->first();
+            $this->set('personalTransactionCode', $customer->personalTransactionCode);
+        }
         
         $this->product();
         $this->render('product');
