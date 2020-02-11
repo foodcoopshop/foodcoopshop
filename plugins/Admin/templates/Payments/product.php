@@ -12,11 +12,9 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-
-use App\Model\Table\ConfigurationsTable;
 use Cake\Core\Configure;
 
-if (Configure::read('appDb.FCS_CASHLESS_PAYMENT_ADD_TYPE') == ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_MANUAL || $this->request->getParam('action') == 'product') {
+if (Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() || $this->request->getParam('action') == 'product') {
     echo $this->element('payment/addTypeManualHeader', [
         'icons' => $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_credit_system'))]),
         'extraInfo' => Configure::read('appDb.FCS_BANK_ACCOUNT_DATA'),

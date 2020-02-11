@@ -60,7 +60,7 @@ class PaymentsController extends AdminAppController
                 return $this->AppAuth->isSuperadmin();
                 break;
             case 'add':
-                if (Configure::read('appDb.FCS_CASHLESS_PAYMENT_ADD_TYPE') == ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_MANUAL) {
+                if (Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
                     return $this->AppAuth->user();
                 } else {
                     return $this->AppAuth->isSuperadmin();

@@ -52,6 +52,11 @@ class ConfigurationHelper extends Helper
         }
     }
     
+    public function isCashlessPaymentTypeManual()
+    {
+        return Configure::read('appDb.FCS_CASHLESS_PAYMENT_ADD_TYPE') == ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_MANUAL;
+    }
+    
     public function getCashlessPaymentAddTypeOptions()
     {
         return [
