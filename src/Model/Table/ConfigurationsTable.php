@@ -203,12 +203,6 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
 
-    private function getRuleEqualsToMultipleValuesValidator($validator, $field, $values)
-    {
-        $validator->inList($field, array_keys($values), __('The_following_values_are_valid:') . ' ' . implode(', ', array_keys($values)));
-        return $validator;
-    }
-
     private function getLengthBetweenValidator($validator, $field, $min, $max)
     {
         $message = __('The_amount_of_characters_needs_to_be_between_{0}_and_{1}.', [$min, $max]);
