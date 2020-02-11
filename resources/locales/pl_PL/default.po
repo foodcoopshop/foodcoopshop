@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-02-10 09:50+0100\n"
+"POT-Creation-Date: 2020-02-11 10:06+0100\n"
 "PO-Revision-Date: 2019-07-22 16:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2027,6 +2027,10 @@ msgstr "Przynajmniej jeden adres mailowy jest nieprawidłowy. Oddziel wiele adre
 msgid "Decimals_are_not_allowed."
 msgstr "Liczby niecałkowite nie są dozwolone."
 
+# The following values are valid:
+msgid "The_following_values_are_valid:"
+msgstr "Następujące wartości są nieprawidłowe:"
+
 # Please enter the name of the food-coop.
 msgid "Please_enter_the_name_of_the_foodcoop."
 msgstr "Podaj nazwę kooperatywy."
@@ -2050,10 +2054,6 @@ msgstr "Wprowadź dokładnie dwa miejsca po przecinku."
 # Please provide a value.
 msgid "Please_provide_a_value."
 msgstr "Podaj wartość."
-
-# The following values are valid:
-msgid "The_following_values_are_valid:"
-msgstr "Następujące wartości są nieprawidłowe:"
 
 # The amount of characters needs to be between {0} and {1}.
 msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
@@ -2356,6 +2356,12 @@ msgstr "Wygenerowane faktury"
 # Sent order lists
 msgid "Sent_order_lists"
 msgstr "Wysłane listy zamówień"
+
+msgid "Customer_adds_payment_manually"
+msgstr ""
+
+msgid "Payment_is_added_by_uploading_a_list"
+msgstr ""
 
 # Members
 msgid "Members"

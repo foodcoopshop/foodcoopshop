@@ -143,6 +143,12 @@ class ConfigurationsTable extends AppTable
         return $this->getNumberRangeValidator($validator, 'value', 0, 14);
     }
 
+    public function validationFcsCashlessPaymentAddType(Validator $validator)
+    {
+        $values = array_keys(Configure::read('app.configurationHelper')->getCashlessPaymentAddTypeOptions());
+        return $validator->inList('value', $values, __('The_following_values_are_valid:') . ' ' . implode(', ', $values));
+    }
+    
     public function validationFcsCustomerGroup(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', CUSTOMER_GROUP_MEMBER, CUSTOMER_GROUP_ADMIN);

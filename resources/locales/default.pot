@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-02-10 09:50+0100\n"
+"POT-Creation-Date: 2020-02-11 10:06+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1508,6 +1508,9 @@ msgstr ""
 msgid "Decimals_are_not_allowed."
 msgstr ""
 
+msgid "The_following_values_are_valid:"
+msgstr ""
+
 msgid "Please_enter_the_name_of_the_foodcoop."
 msgstr ""
 
@@ -1524,9 +1527,6 @@ msgid "Please_enter_exactly_2_decimals."
 msgstr ""
 
 msgid "Please_provide_a_value."
-msgstr ""
-
-msgid "The_following_values_are_valid:"
 msgstr ""
 
 msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
@@ -1752,6 +1752,12 @@ msgid "Generated_invoices"
 msgstr ""
 
 msgid "Sent_order_lists"
+msgstr ""
+
+msgid "Customer_adds_payment_manually"
+msgstr ""
+
+msgid "Payment_is_added_by_uploading_a_list"
 msgstr ""
 
 msgid "Members"

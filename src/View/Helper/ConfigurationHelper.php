@@ -45,7 +45,18 @@ class ConfigurationHelper extends Helper
             case 'FCS_NO_DELIVERY_DAYS_GLOBAL':
                 return Configure::read('app.timeHelper')->getNextDeliveryDays();
                 break;
+            case 'FCS_CASHLESS_PAYMENT_ADD_TYPE':
+                return $this->getCashlessPaymentAddTypeOptions();
+                break;
         }
+    }
+    
+    public function getCashlessPaymentAddTypeOptions()
+    {
+        return [
+            'manual' => __('Customer_adds_payment_manually'),
+            'list-upload' => __('Payment_is_added_by_uploading_a_list'),
+        ];
     }
 
     public function getConfigurationDropdownOption($name, $value)

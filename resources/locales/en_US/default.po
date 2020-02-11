@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-02-10 09:50+0100\n"
-"PO-Revision-Date: 2020-01-22 09:29+0100\n"
+"POT-Creation-Date: 2020-02-11 10:06+0100\n"
+"PO-Revision-Date: 2020-02-11 10:11+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
@@ -1107,9 +1107,8 @@ msgstr "Sum tax"
 msgid "Sum_price_incl."
 msgstr "Sum price incl."
 
-#, fuzzy
 msgid "Deleted_member"
-msgstr "Deleted member?"
+msgstr "Deleted member"
 
 msgid "Price_excl."
 msgstr "Price excl."
@@ -1510,6 +1509,9 @@ msgstr "At least one email address is not valid. Please separate multiple addres
 msgid "Decimals_are_not_allowed."
 msgstr "Decimals are not allowed."
 
+msgid "The_following_values_are_valid:"
+msgstr "The following values are valid:"
+
 msgid "Please_enter_the_name_of_the_foodcoop."
 msgstr "Please enter the name of the food-coop."
 
@@ -1527,9 +1529,6 @@ msgstr "Please enter exactly 2 decimals."
 
 msgid "Please_provide_a_value."
 msgstr "Please provide a value."
-
-msgid "The_following_values_are_valid:"
-msgstr "The following values are valid:"
 
 msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
 msgstr "The amount of characters needs to be between {0} and {1}."
@@ -1755,6 +1754,12 @@ msgstr "Generated invoices"
 
 msgid "Sent_order_lists"
 msgstr "Sent order lists"
+
+msgid "Customer_adds_payment_manually"
+msgstr "Members add their payments manually"
+
+msgid "Payment_is_added_by_uploading_a_list"
+msgstr "Payments are added by a superadmin by uploading a CSV list"
 
 msgid "Members"
 msgstr "Members"

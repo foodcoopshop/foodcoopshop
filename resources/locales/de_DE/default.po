@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-10 09:50+0100\n"
-"PO-Revision-Date: 2020-01-22 09:29+0100\n"
+"POT-Creation-Date: 2020-02-11 10:06+0100\n"
+"PO-Revision-Date: 2020-02-11 10:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Zugriff verweigert, bitte melde dich an."
@@ -1107,9 +1107,8 @@ msgstr "Summe Steuer"
 msgid "Sum_price_incl."
 msgstr "Summe Preis inkl."
 
-#, fuzzy
 msgid "Deleted_member"
-msgstr "Mitglied löschen?"
+msgstr "Gelöschtes Mitglied"
 
 msgid "Price_excl."
 msgstr "Preis exkl."
@@ -1510,6 +1509,9 @@ msgstr "Mindestens eine E-Mail-Adresse ist nicht gültig. Mehrere bitte mit , tr
 msgid "Decimals_are_not_allowed."
 msgstr "Kommastellen sind nicht zulässig."
 
+msgid "The_following_values_are_valid:"
+msgstr "Folgende Werte sind gültig:"
+
 msgid "Please_enter_the_name_of_the_foodcoop."
 msgstr "Bitte gib den Namen der Foodcoop an."
 
@@ -1527,9 +1529,6 @@ msgstr "Bitte trage genau 2 Kommastellen ein."
 
 msgid "Please_provide_a_value."
 msgstr "Bitte gib einen Wert an."
-
-msgid "The_following_values_are_valid:"
-msgstr "Folgende Werte sind gültig:"
 
 msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
 msgstr "Die Anzahl der Zeichen muss zwischen {0} und {1} liegen."
@@ -1755,6 +1754,12 @@ msgstr "Generierte Rechnungen"
 
 msgid "Sent_order_lists"
 msgstr "Verschickte Bestelllisten"
+
+msgid "Customer_adds_payment_manually"
+msgstr "Guthaben-Aufladungen werden von den Mitgliedern selbst durchgeführt"
+
+msgid "Payment_is_added_by_uploading_a_list"
+msgstr "Guthaben-Aufladungen werden von Superadmins über eine CSV-Liste ins System geladen"
 
 msgid "Members"
 msgstr "Mitglieder"
