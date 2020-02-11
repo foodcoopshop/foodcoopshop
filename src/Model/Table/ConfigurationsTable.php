@@ -8,8 +8,6 @@ use Cake\Filesystem\File;
 use Cake\Validation\Validator;
 
 /**
- * Configuration
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -25,6 +23,9 @@ use Cake\Validation\Validator;
 class ConfigurationsTable extends AppTable
 {
 
+    public const CASHLESS_PAYMENT_ADD_TYPE_MANUAL = 'manual';
+    public const CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD = 'list-upload';
+    
     public function initialize(array $config): void
     {
         $this->setTable('configuration');

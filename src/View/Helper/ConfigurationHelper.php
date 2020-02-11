@@ -2,6 +2,7 @@
 
 namespace App\View\Helper;
 
+use App\Model\Table\ConfigurationsTable;
 use Cake\Core\Configure;
 use Cake\View\Helper;
 
@@ -54,8 +55,8 @@ class ConfigurationHelper extends Helper
     public function getCashlessPaymentAddTypeOptions()
     {
         return [
-            'manual' => __('Customer_adds_payment_manually'),
-            'list-upload' => __('Payment_is_added_by_uploading_a_list'),
+            ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_MANUAL => __('Customer_adds_payment_manually'),
+            ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD => __('Payment_is_added_by_uploading_a_list'),
         ];
     }
 
