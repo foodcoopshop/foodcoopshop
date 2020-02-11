@@ -3,6 +3,7 @@
 namespace Admin\Controller;
 
 use App\Mailer\AppMailer;
+use App\Model\Table\ConfigurationsTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\I18n\FrozenDate;
@@ -59,6 +60,12 @@ class PaymentsController extends AdminAppController
                 return $this->AppAuth->isSuperadmin();
                 break;
             case 'add':
+                if (Configure::read('appDb.FCS_CASHLESS_PAYMENT_ADD_TYPE') == ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_MANUAL) {
+                    return $this->AppAuth->user();
+                } else {
+                    return $this->AppAuth->isSuperadmin();
+                }
+                break;
             case 'changeState':
                 return $this->AppAuth->user();
                 break;
@@ -487,6 +494,10 @@ class PaymentsController extends AdminAppController
     {
         $this->customerId = $this->AppAuth->getUserId();
         $this->paymentType = 'product';
+        
+        $personalTransactionCode = 'ABCXYZ';
+        $this->set('personalTransactionCode', $personalTransactionCode);
+        
         $this->product();
         $this->render('product');
     }
@@ -533,9 +544,6 @@ class PaymentsController extends AdminAppController
 
         $this->preparePayments();
         $this->set('creditBalance', $this->Customer->getCreditBalance($this->getCustomerId()));
-        
-        $personalTransactionCode = 'ABCXYZ';
-        $this->set('personalTransactionCode', $personalTransactionCode);
     }
 
     private function preparePayments()
