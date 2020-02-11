@@ -808,7 +808,8 @@ body.payments.product table.list,
 body.payments.overview table.list,
 body.payments.member_fee table.list,
 body.payments.my_member_fee table.list,
-body.payments .bottom-button-container {
+body.payments .bottom-button-container,
+body.payments h2 {
     width: 650px;
 }
 

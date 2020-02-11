@@ -533,6 +533,9 @@ class PaymentsController extends AdminAppController
 
         $this->preparePayments();
         $this->set('creditBalance', $this->Customer->getCreditBalance($this->getCustomerId()));
+        
+        $personalTransactionCode = 'ABCXYZ';
+        $this->set('personalTransactionCode', $personalTransactionCode);
     }
 
     private function preparePayments()
