@@ -27,7 +27,8 @@
         "tedivm/jshrink": "^1.3",
         "cviebrock/discourse-php": "^0.9.3",
         "studio-42/elfinder": "^2.1",
-        "ezyang/htmlpurifier": "^4.11"
+        "ezyang/htmlpurifier": "^4.11",
+        "league/csv": "^9.5"
     },
     "require-dev": {
         "psy/psysh": "@stable",
