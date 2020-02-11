@@ -17,34 +17,14 @@ use Cake\Core\Configure;
 use App\Model\Table\ConfigurationsTable;
 
 if (Configure::read('appDb.FCS_CASHLESS_PAYMENT_ADD_TYPE') == ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_MANUAL) {
-    echo $this->element('paymentHeader', [
+    echo $this->element('payment/addTypeManualHeader', [
         'icons' => $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_credit_system'))]),
         'extraInfo' => Configure::read('appDb.FCS_BANK_ACCOUNT_DATA'),
         'buttonText' => __d('admin', 'Add_transfered_credit'),
         'icon' => $this->Html->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName'))
     ]);
 } else {
-    ?>
-    <?php
-    $this->element('addScript', [
-        'script' =>
-        Configure::read('app.jsNamespace') . ".Admin.init();" .
-        Configure::read('app.jsNamespace') . ".Admin.initDeletePayment();"
-    ]);
-    ?>
-    <div class="filter-container">
-    <h1><?php echo $title_for_layout; ?></h1>
-        <div class="right">
-        	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_credit_system_with_csv_upload'))]); ?>
-        </div>
-    </div>
-
-	<p>
-		<b><?php echo __d('admin', 'Bank_account_data'); ?>: </b><?php echo Configure::read('appDb.FCS_BANK_ACCOUNT_DATA'); ?><br />
-		<b><?php echo __d('admin', 'Your_personal_transaction_code')?></b>: <?php echo $personalTransactionCode; ?>
-	</p>
-	<h2 class="info"><?php echo __d('admin', 'Please_add_your_personal_transaction_code_to_your_transaction!'); ?></h2>
-	<?php    
+    echo $this->element('payment/addTypeManualListUpload');
 }
 if (count($payments) == 0) {
     ?>
