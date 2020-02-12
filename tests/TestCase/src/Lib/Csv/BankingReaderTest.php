@@ -13,9 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 use App\Test\TestCase\AppCakeTestCase;
-use App\Lib\Csv\CsvReader;
+use App\Lib\Csv\BankingReader;
 
-class CsvReaderTest extends AppCakeTestCase
+class BankingReaderTest extends AppCakeTestCase
 {
     
     public function setUp(): void
@@ -23,17 +23,15 @@ class CsvReaderTest extends AppCakeTestCase
         // do not import database - no database needed for this test
     }
     
-    public function testReadCsvRaiffeisen()
+    public function testReadRaiffeisen()
     {
-        $reader = CsvReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-bank-account-data.csv');
-        $reader->setType(CsvReader::TYPE_RAIFFEISEN);
-        $records = $reader->getRecords();
-        $this->assertEquals(3, count($reader));
-        
+        $reader = BankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen.csv');
+        $reader->setType(BankingReader::TYPE_RAIFFEISEN);
+        $records = $reader->getPreparedRecords($reader->getRecords());
         foreach($records as $record) {
-            $this->assertEquals(7, count($record));
+            $this->assertEquals(3, count($record));
         }
-        
+        $this->assertEquals(2, count($records));
     }
     
 }
