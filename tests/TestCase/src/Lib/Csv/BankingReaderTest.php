@@ -14,6 +14,8 @@
  */
 use App\Test\TestCase\AppCakeTestCase;
 use App\Lib\Csv\BankingReader;
+use App\Model\Entity\Customer;
+use Cake\Core\Configure;
 
 class BankingReaderTest extends AppCakeTestCase
 {
@@ -29,9 +31,16 @@ class BankingReaderTest extends AppCakeTestCase
         $reader->setType(BankingReader::TYPE_RAIFFEISEN);
         $records = $reader->getPreparedRecords($reader->getRecords());
         foreach($records as $record) {
-            $this->assertEquals(3, count($record));
+            $this->assertEquals(4, count($record));
         }
-        $this->assertEquals(2, count($records));
+        
+        $this->assertTrue(get_class($records[0]['customer']) == Customer::class);
+        $this->assertTrue(get_class($records[1]['customer']) == Customer::class);
+        $this->assertEquals($records[0]['customer']['id_customer'], Configure::read('test.adminId'));
+        $this->assertEquals($records[1]['customer']['id_customer'], Configure::read('test.superadminId'));
+        $this->assertNull($records[2]['customer']);
+        
+        $this->assertEquals(3, count($records));
     }
     
 }

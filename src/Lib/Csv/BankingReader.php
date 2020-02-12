@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 namespace App\Lib\Csv;
+use App\Model\Entity\Customer;
+use Cake\ORM\TableRegistry;
 use League\Csv\Reader;
 
 class BankingReader extends Reader {
@@ -29,6 +31,30 @@ class BankingReader extends Reader {
     private function prepareRecords1($record): array
     {
         return array_filter($record); // remove empty array elements
+    }
+    
+    private function getCustomerByPersonalTransactionCode($text): ?Customer
+    {
+        $customerModel = TableRegistry::getTableLocator()->get('Customers');
+        $query = $customerModel->find('all', [
+            'fields' => [
+                'personalTransactionCode' => $customerModel->getPersonalTransactionCodeField(),
+            ]
+        ]);
+        $personalTransactionCodes = $query->all()->extract('personalTransactionCode')->toArray();
+        
+        $regex = '/' . join('|', $personalTransactionCodes) .  '/';
+        preg_match_all($regex, $text, $matches);
+        
+        $foundCustomer = null;
+        if (!empty($matches[0][0])) {
+            $foundCustomer = $customerModel->find('all', [
+                'conditions' => [
+                    $customerModel->getPersonalTransactionCodeField() . ' = "' . $matches[0][0] . '"'
+                ]
+            ])->first();
+        }
+        return $foundCustomer;
     }
     
     public function setType($type): void
@@ -55,11 +81,12 @@ class BankingReader extends Reader {
         
         $preparedRecords = [];
         foreach($records as $record) {
-            $preparedRecords[] = [
-                'text' => $record[1],
-                'amount' => $record[3],
-                'data' => $record[5]
-            ];
+            $preparedRecord = [];
+            $preparedRecord['text'] = $record[1];
+            $preparedRecord['amount'] = $record[3];
+            $preparedRecord['date'] = $record[5];
+            $preparedRecord['customer'] = $this->getCustomerByPersonalTransactionCode($preparedRecord['text']);
+            $preparedRecords[] = $preparedRecord;
         }
         
         return $preparedRecords;
