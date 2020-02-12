@@ -50,24 +50,50 @@ echo $this->element('reportNavTabs', [
 
 if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() && $this->request->getParam('pass')[0] == 'product') {
     
-    echo $this->Form->create(null, ['type' => 'file']);
-    echo $this->Form->file('upload');
-    echo $this->Form->submit();
-    echo $this->Form->end();
-    
     if (empty($csvRecords)) {
-        echo '<p>Keine Daten enthalten</p>';
-    } else {
-        echo '<table class="list no-clone-last-row" style="margin-bottom:20px;">';
-            foreach($csvRecords as $csvRecord) {
-                echo '<tr>';
-                    echo '<td>' . (!is_null($csvRecord['customer']) ? $csvRecord['customer']->name : '<b>Keine Zuordnung vorhanden</b>') . '</td>';
-                    echo '<td>' . $csvRecord['text'] . '</td>';
-                    echo '<td>' . $this->Number->formatAsCurrency($csvRecord['amount']) . '</td>';
-                    echo '<td>' . $csvRecord['date']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs')) . '</td>';
-                echo '</tr>';
-            }
-        echo '</table>';
+        echo $this->Form->create(null, ['type' => 'file']);
+        echo $this->Form->file('upload');
+        echo $this->Form->submit();
+        echo $this->Form->end();
+    }
+    
+    if (!empty($csvRecords)) {
+        
+        echo $this->Form->create(null, ['style' => 'padding-bottom:20px;']);
+        
+            echo '<table class="list no-clone-last-row" style="margin-bottom:20px;margin-top:20px;">';
+                
+                echo '<th>' . __d('admin', 'Member'). '</th>';
+                echo '<th style="text-align:right;">' . $this->Html->getPaymentText($paymentType) . '</th>';
+                echo '<th style="text-align:right;">' . __d('admin', 'Date'). '</th>';
+                
+                foreach($csvRecords as $csvRecord) {
+                    
+                    echo '<tr>';
+                    
+                        echo '<td>';
+                            if (!is_null($csvRecord['customer'])) {
+                                echo $csvRecord['customer']->name;
+                            } else {
+                                echo '<b>Keine Zuordnung vorhanden</b>';
+                            }
+                        echo  '</td>';
+                        echo '<td style="text-align:right;">';
+                            echo $this->Number->formatAsCurrency($csvRecord['amount']);
+                        echo '</td>';
+                        
+                        echo '<td style="text-align:right;">';
+                            echo $csvRecord['date']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
+                        echo '</td>';
+                        
+                    echo '</tr>';
+                    
+                }
+            echo '</table>';
+        
+            echo $this->Form->submit(__d('admin', 'Save'));
+            
+        echo $this->Form->end();
     }
     
 }
