@@ -2,6 +2,7 @@
 
 namespace Admin\Controller;
 
+use App\Lib\Csv\BankingReader;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 
@@ -38,6 +39,14 @@ class ReportsController extends AdminAppController
 
     public function payments($paymentType)
     {
+        
+        if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() && !empty($this->getRequest()->getData('upload'))) {
+            $upload = $this->getRequest()->getData('upload');
+            $content = $upload->getStream()->getContents();
+            $reader = BankingReader::createFromString($content);
+            $csvRecords = $reader->getPreparedRecords($reader->getRecords());
+            $this->set('csvRecords', $csvRecords);
+        }
         $this->Payment = TableRegistry::getTableLocator()->get('Payments');
 
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();

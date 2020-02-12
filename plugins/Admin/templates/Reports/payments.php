@@ -48,6 +48,30 @@ echo $this->element('reportNavTabs', [
     'dateTo' => $dateTo,
 ]);
 
+if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
+    
+    echo $this->Form->create(null, ['type' => 'file']);
+    echo $this->Form->file('upload');
+    echo $this->Form->submit();
+    echo $this->Form->end();
+    
+    if (empty($csvRecords)) {
+        echo '<p>Keine Daten enthalten</p>';
+    } else {
+        echo '<table class="list no-clone-last-row" style="margin-bottom:20px;">';
+            foreach($csvRecords as $csvRecord) {
+                echo '<tr>';
+                    echo '<td>' . (!is_null($csvRecord['customer']) ? $csvRecord['customer']->name : '<b>Keine Zuordnung vorhanden</b>') . '</td>';
+                    echo '<td>' . $csvRecord['text'] . '</td>';
+                    echo '<td>' . $csvRecord['amount'] . '</td>';
+                    echo '<td>' . $csvRecord['date'] . '</td>';
+                echo '</tr>';
+            }
+        echo '</table>';
+    }
+    
+}
+
 echo '<table class="list">';
 echo '<tr class="sort">';
 $colspan = 3;
