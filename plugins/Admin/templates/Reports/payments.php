@@ -48,7 +48,7 @@ echo $this->element('reportNavTabs', [
     'dateTo' => $dateTo,
 ]);
 
-if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
+if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() && $this->request->getParam('pass')[0] == 'product') {
     
     echo $this->Form->create(null, ['type' => 'file']);
     echo $this->Form->file('upload');
