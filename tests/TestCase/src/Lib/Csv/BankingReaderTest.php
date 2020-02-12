@@ -28,7 +28,6 @@ class BankingReaderTest extends AppCakeTestCase
     public function testReadRaiffeisen()
     {
         $reader = BankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen.csv');
-        $reader->setType(BankingReader::TYPE_RAIFFEISEN);
         $records = $reader->getPreparedRecords($reader->getRecords());
         foreach($records as $record) {
             $this->assertEquals(4, count($record));

@@ -57,6 +57,15 @@ class BankingReader extends Reader {
         return $foundCustomer;
     }
     
+    public function __construct($document)
+    {
+        parent::__construct($document);
+        
+        // as long as there is only one bank implementation set default type in constructor
+        // later use method setType($type)
+        $this->setType(self::TYPE_RAIFFEISEN);
+    }
+    
     public function setType($type): void
     {
         $this->type = $type;
