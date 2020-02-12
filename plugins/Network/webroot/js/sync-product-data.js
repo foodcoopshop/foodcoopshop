@@ -620,7 +620,7 @@ foodcoopshop.SyncProductData = {
                                         var newValue;
                                         if ($.type(dataIndex) == 'string') {
                                             newValue = foodcoopshop.Helper.resolveIndex(dataIndex, syncProduct);
-                                            if ($.inArray(attributeName, ['active', 'is_stock_product', 'stock_available_always_available']) !== -1) {
+                                            if ($.inArray(attributeName, ['active', 'is_stock_product']) !== -1) {
                                                 newValue = newValue ? 1 : 0; // transform true or false to 1 or 0
                                             }
                                             if (attributeName == 'deposit') {
@@ -631,6 +631,7 @@ foodcoopshop.SyncProductData = {
                                             }
                                             attributes[attributeName] = newValue;
                                         }
+                                        // if data is an object (eg. quantity)
                                         if ($.type(dataIndex) == 'object') {
                                             attributes[attributeName] = [];
                                             var dataIndexKeys = Object.keys(dataIndex);
@@ -644,6 +645,9 @@ foodcoopshop.SyncProductData = {
                                                     var regex = new RegExp(/00:00:00+00:00/);
                                                     if (regex.test(newValue[newIndex])) {
                                                         newValue[newIndex] = newValue[newIndex].substr(0, 10);
+                                                    }
+                                                    if ($.inArray(dataI, ['stock_available_always_available']) !== -1) {
+                                                        newValue[newIndex] = newValue[newIndex] ? 1 : 0; // transform true or false to 1 or 0
                                                     }
                                                 }
 
