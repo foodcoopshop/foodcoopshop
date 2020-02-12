@@ -63,8 +63,8 @@ if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() &
                 echo '<tr>';
                     echo '<td>' . (!is_null($csvRecord['customer']) ? $csvRecord['customer']->name : '<b>Keine Zuordnung vorhanden</b>') . '</td>';
                     echo '<td>' . $csvRecord['text'] . '</td>';
-                    echo '<td>' . $csvRecord['amount'] . '</td>';
-                    echo '<td>' . $csvRecord['date'] . '</td>';
+                    echo '<td>' . $this->Number->formatAsCurrency($csvRecord['amount']) . '</td>';
+                    echo '<td>' . $csvRecord['date']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs')) . '</td>';
                 echo '</tr>';
             }
         echo '</table>';
