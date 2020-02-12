@@ -13,8 +13,11 @@
  * @link          https://www.foodcoopshop.com
  */
 namespace App\Lib\Csv;
+
 use App\Model\Entity\Customer;
 use Cake\ORM\TableRegistry;
+use Cake\Core\Configure;
+use Cake\I18n\FrozenTime;
 use League\Csv\Reader;
 
 class BankingReader extends Reader {
@@ -30,7 +33,13 @@ class BankingReader extends Reader {
     
     private function prepareRecords1($record): array
     {
-        return array_filter($record); // remove empty array elements
+        // 1) remove empty array elements
+        $record = array_filter($record);
+        
+        // 2) 01.02.2019 02:51:14:563 replaces last : to . (microseconds)
+        $record[5] =  substr_replace($record[5], '.', 19, 1);
+        
+        return $record;
     }
     
     private function getCustomerByPersonalTransactionCode($text): ?Customer
@@ -92,8 +101,8 @@ class BankingReader extends Reader {
         foreach($records as $record) {
             $preparedRecord = [];
             $preparedRecord['text'] = $record[1];
-            $preparedRecord['amount'] = $record[3];
-            $preparedRecord['date'] = $record[5];
+            $preparedRecord['amount'] = Configure::read('app.numberHelper')->getStringAsFloat($record[3]);
+            $preparedRecord['date'] = new FrozenTime($record[5]);
             $preparedRecord['customer'] = $this->getCustomerByPersonalTransactionCode($preparedRecord['text']);
             $preparedRecords[] = $preparedRecord;
         }

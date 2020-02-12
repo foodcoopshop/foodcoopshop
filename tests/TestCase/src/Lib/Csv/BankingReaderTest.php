@@ -33,10 +33,13 @@ class BankingReaderTest extends AppCakeTestCase
             $this->assertEquals(4, count($record));
         }
         
-        $this->assertTrue(get_class($records[0]['customer']) == Customer::class);
-        $this->assertTrue(get_class($records[1]['customer']) == Customer::class);
-        $this->assertEquals($records[0]['customer']['id_customer'], Configure::read('test.adminId'));
-        $this->assertEquals($records[1]['customer']['id_customer'], Configure::read('test.superadminId'));
+        $this->assertEquals('01.02.2019 02:51:14', $records[0]['date']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs')));
+        $this->assertEquals(100, $records[0]['amount']);
+        
+        $this->assertTrue(Customer::class == get_class($records[0]['customer']));
+        $this->assertTrue(Customer::class == get_class($records[1]['customer']));
+        $this->assertEquals(Configure::read('test.adminId'), $records[0]['customer']['id_customer']);
+        $this->assertEquals(Configure::read('test.superadminId'), $records[1]['customer']['id_customer']);
         $this->assertNull($records[2]['customer']);
         
         $this->assertEquals(3, count($records));
