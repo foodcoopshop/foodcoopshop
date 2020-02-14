@@ -361,7 +361,6 @@ class PaymentsController extends AdminAppController
                     'amount' => $amount,
                     'text' => $text,
                     'created_by' => $this->AppAuth->getUserId(),
-                    'approval_comment' => ''  // column type text cannot have a default value, must be set explicitly even if unused
                 ]
             )
         );
