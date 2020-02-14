@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-11 10:06+0100\n"
-"PO-Revision-Date: 2020-02-11 10:09+0100\n"
+"POT-Creation-Date: 2020-02-14 14:56+0100\n"
+"PO-Revision-Date: 2020-02-14 14:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1608,6 +1608,15 @@ msgstr "Bitte gib eine korrekte Zahl ein."
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr "Der Betrag muss größer als 0 sein."
 
+msgid "Please_enter_a_correct_amount."
+msgstr "Bitte gib einen korrekten Betrag ein."
+
+msgid "Please_enter_a_correct_date."
+msgstr "Bitte gib eine korrektes Datum ein."
+
+msgid "Please_select_a_customer."
+msgstr "Bitte wähle ein Mitglied aus."
+
 msgid "The_delivery_ryhthm_is_not_valid."
 msgstr "Der Lieferrhythmus ist nicht gültig."
 
@@ -2411,6 +2420,9 @@ msgstr "Unzutreffendes streichen"
 
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
+
+#~ msgid "Please_select_a_correct_customer."
+#~ msgstr "Bitte wähle eine korrektes Mitglied aus."
 
 #~ msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
 #~ msgstr "Diese Funktion ist nicht zwingend notwendig, doch für den Abholdienst hilfreich."

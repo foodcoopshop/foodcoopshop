@@ -63,36 +63,35 @@ if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() &
         echo $this->Form->end();
     }
     
-    if (!empty($csvRecords)) {
+    if (!empty($csvPayments)) {
         
-        echo $this->Form->create(null, ['style' => 'padding-bottom:20px;']);
+        echo $this->Form->create($csvPayments, ['id' => 'csv-records']);
         
-            echo '<table class="list no-clone-last-row" style="margin-bottom:20px;margin-top:20px;">';
+            echo '<table class="list no-clone-last-row">';
                 
                 echo '<th>' . __d('admin', 'Member'). '</th>';
                 echo '<th style="text-align:right;">' . $this->Html->getPaymentText($paymentType) . '</th>';
                 echo '<th style="text-align:right;">' . __d('admin', 'Date'). '</th>';
                 
-                foreach($csvRecords as $csvRecord) {
+                $i = 0;
+                foreach($csvPayments as $csvPayment) {
                     
                     echo '<tr>';
                     
                         echo '<td>';
-                            if (!is_null($csvRecord['customer'])) {
-                                echo $csvRecord['customer']->name;
-                            } else {
-                                echo '<b>Keine Zuordnung vorhanden</b>';
-                            }
+                            echo $this->Form->control('Payments.'.$i.'.id_customer', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'Please_select_a_member.'), 'options' => $customersForDropdown]);
                         echo  '</td>';
                         echo '<td style="text-align:right;">';
-                            echo $this->Number->formatAsCurrency($csvRecord['amount']);
+                            echo $this->Form->control('Payments.'.$i.'.amount', ['label' => '']);
                         echo '</td>';
                         
                         echo '<td style="text-align:right;">';
-                            echo $csvRecord['date']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
+                            echo $this->Form->control('Payments.'.$i.'.date', ['label' => '']);
                         echo '</td>';
                         
                     echo '</tr>';
+                    
+                    $i++;
                     
                 }
             echo '</table>';

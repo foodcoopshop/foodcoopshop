@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-02-11 10:06+0100\n"
+"POT-Creation-Date: 2020-02-14 14:56+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1605,6 +1605,15 @@ msgid "Please_enter_a_correct_number."
 msgstr ""
 
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
+msgstr ""
+
+msgid "Please_enter_a_correct_amount."
+msgstr ""
+
+msgid "Please_enter_a_correct_date."
+msgstr ""
+
+msgid "Please_select_a_customer."
 msgstr ""
 
 msgid "The_delivery_ryhthm_is_not_valid."

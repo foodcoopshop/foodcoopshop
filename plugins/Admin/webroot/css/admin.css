@@ -1190,6 +1190,20 @@ body.reports.payment form#csv-upload label {
 	margin-right: 10px;
 	font-weight: bold;
 }
+body.reports.payment form#csv-records {
+    padding-bottom: 20px;
+    margin-top: -20px;
+}
+body.reports.payment form#csv-records table.list {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+body.reports.payment form#csv-records select {
+	width: 250px;
+}
+body.reports.payment form#csv-records .error-message {
+	margin-left: 0;
+}
 body.payments.edit form {
 	width: 530px;
 }

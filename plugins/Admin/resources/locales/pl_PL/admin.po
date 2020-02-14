@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-14 10:13+0100\n"
+"POT-Creation-Date: 2020-02-14 14:56+0100\n"
 "PO-Revision-Date: 2019-04-28 03:51+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -262,7 +262,7 @@ msgid "Orders"
 msgstr "Zamówienia"
 
 #, fuzzy
-msgid "Please_select_a_member."
+msgid "Please_select_a_new_member."
 msgstr "Proszę wybrać producenta."
 
 #, fuzzy
@@ -1587,6 +1587,10 @@ msgstr "bulk-orders"
 msgid "Upload_CSV_file_with_bank_transactions"
 msgstr ""
 
+#, fuzzy
+msgid "Please_select_a_member."
+msgstr "Proszę wybrać producenta."
+
 msgid "Added_on"
 msgstr "Dodane w dniu"
 
@@ -2102,6 +2106,14 @@ msgstr "W celu zalogowania się proszę użyć adresu email z tej wiadomości. A
 msgid "Your_contact_person"
 msgstr "Twoja osoba kontaktowa"
 
+#, fuzzy
+msgid "The_CSV_data_was_sucessfully_imported."
+msgstr "1 ordered product was changed successfully to closed."
+
+#, fuzzy
+#~ msgid "Please_select..."
+#~ msgstr "Proszę wybrać producenta."
+
 #~ msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
 #~ msgstr "Ilość produktu {0} od producenta {1} została zmieniona z {2} na {3}."
 
@@ -2179,9 +2191,6 @@ msgstr "Twoja osoba kontaktowa"
 
 #~ msgid "The_order_status_of_the_ordered_products_{0}_were_successfully_changed_to_{1}."
 #~ msgstr "The order state of the ordered products of {0} was successfully changed to {1}."
-
-#~ msgid "1_ordered_product_was_successfully_closed."
-#~ msgstr "1 ordered product was changed successfully to closed."
 
 #~ msgid "{0}_ordered_product_were_successfully_closed."
 #~ msgstr "{0} ordered product were changed successfully to closed."

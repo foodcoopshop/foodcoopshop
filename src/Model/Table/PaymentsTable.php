@@ -51,6 +51,16 @@ class PaymentsTable extends AppTable
         $validator->greaterThanOrEqual('amount', 0.01, __('The_amount_(money)_needs_to_be_greater_than_0.'));
         return $validator;
     }
+    
+    public function validationCsvImport(Validator $validator)
+    {
+        $validator = $this->validationAdd($validator);
+        $validator->requirePresence('amount', true, __('Please_enter_a_correct_amount.'));
+        $validator->requirePresence('date', true, __('Please_enter_a_correct_date.'));
+        $validator->requirePresence('id_customer', true, __('Please_select_a_customer.'));
+        $validator->numeric('id_customer', __('Please_select_a_customer.'));
+        return $validator;
+    }
 
     private function getManufacturerDepositConditions($manufacturerId = null)
     {

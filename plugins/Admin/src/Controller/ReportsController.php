@@ -5,6 +5,7 @@ namespace Admin\Controller;
 use App\Lib\Csv\BankingReader;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\ORM\Exception\PersistenceFailedException;
 
 /**
  * ReportsController
@@ -40,15 +41,40 @@ class ReportsController extends AdminAppController
     public function payments($paymentType)
     {
         
+        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
+        
+        $csvPayments = [];
+        $csvRecords = [];
         if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() && !empty($this->getRequest()->getData('upload'))) {
             $upload = $this->getRequest()->getData('upload');
             $content = $upload->getStream()->getContents();
             $reader = BankingReader::createFromString($content);
             $csvRecords = $reader->getPreparedRecords($reader->getRecords());
-            $this->set('csvRecords', $csvRecords);
         }
-        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
+        
+        if (!empty($this->getRequest()->getData('Payments'))) {
+            $csvRecords = $this->getRequest()->getData('Payments');
+        }
 
+        if (!empty($csvRecords)) {
+            $csvPayments = $this->Payment->newEntities(
+                $csvRecords,
+                [
+                    'validate' => 'csvImport',
+                ]
+            );
+            try {
+                $success = $this->Payment->saveManyOrFail($csvPayments);
+                if ($success) {
+                    $this->Flash->success(__('The_CSV_data_was_sucessfully_imported.'));
+                    $this->redirect($this->referer());
+                }
+            } catch(PersistenceFailedException $e) {
+                $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+                $this->set('csvPayments', $csvPayments);
+            }
+        }
+        
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
             $dateFrom = h($this->getRequest()->getQuery('dateFrom'));

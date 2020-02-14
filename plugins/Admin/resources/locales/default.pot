@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-02-14 10:13+0100\n"
+"POT-Creation-Date: 2020-02-14 14:56+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -251,7 +251,7 @@ msgstr ""
 msgid "Orders"
 msgstr ""
 
-msgid "Please_select_a_member."
+msgid "Please_select_a_new_member."
 msgstr ""
 
 msgid "The_same_member_must_not_be_selected."
@@ -1529,6 +1529,9 @@ msgstr ""
 msgid "Upload_CSV_file_with_bank_transactions"
 msgstr ""
 
+msgid "Please_select_a_member."
+msgstr ""
+
 msgid "Added_on"
 msgstr ""
 
@@ -2013,5 +2016,8 @@ msgid "For_signing_in_please_use_the_email_address_of_this_message._If_you_want_
 msgstr ""
 
 msgid "Your_contact_person"
+msgstr ""
+
+msgid "The_CSV_data_was_sucessfully_imported."
 msgstr ""
 

@@ -30,16 +30,17 @@ class BankingReaderTest extends AppCakeTestCase
         $reader = BankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen.csv');
         $records = $reader->getPreparedRecords($reader->getRecords());
         foreach($records as $record) {
-            $this->assertEquals(4, count($record));
+            $this->assertEquals(5, count($record));
         }
         
-        $this->assertEquals('01.02.2019 02:51:14', $records[0]['date']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs')));
+        $this->assertEquals('01.02.2019 12:51:14', $records[0]['date']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs')));
         $this->assertEquals(100, $records[0]['amount']);
-        
         $this->assertTrue(Customer::class == get_class($records[0]['customer']));
         $this->assertTrue(Customer::class == get_class($records[1]['customer']));
         $this->assertEquals(Configure::read('test.adminId'), $records[0]['customer']['id_customer']);
         $this->assertEquals(Configure::read('test.superadminId'), $records[1]['customer']['id_customer']);
+        $this->assertEquals(Configure::read('test.adminId'), $records[0]['id_customer']);
+        $this->assertEquals(Configure::read('test.superadminId'), $records[1]['id_customer']);
         $this->assertNull($records[2]['customer']);
         
         $this->assertEquals(3, count($records));

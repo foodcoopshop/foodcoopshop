@@ -110,7 +110,11 @@ class BankingReader extends Reader {
             $preparedRecord['text'] = $record[1];
             $preparedRecord['amount'] = $amount;
             $preparedRecord['date'] = new FrozenTime($record[5]);
-            $preparedRecord['customer'] = $this->getCustomerByPersonalTransactionCode($preparedRecord['text']);
+            
+            $customer = $this->getCustomerByPersonalTransactionCode($preparedRecord['text']);
+            $preparedRecord['id_customer'] = !is_null($customer) ? $customer->id_customer : '';
+            $preparedRecord['customer'] = $customer;
+            
             $preparedRecords[] = $preparedRecord;
             
         }

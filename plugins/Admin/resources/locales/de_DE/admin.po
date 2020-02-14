@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-14 10:13+0100\n"
-"PO-Revision-Date: 2020-02-14 10:13+0100\n"
+"POT-Creation-Date: 2020-02-14 14:56+0100\n"
+"PO-Revision-Date: 2020-02-14 14:57+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -252,7 +252,7 @@ msgstr "Gruppieren nach Hersteller"
 msgid "Orders"
 msgstr "Bestellungen"
 
-msgid "Please_select_a_member."
+msgid "Please_select_a_new_member."
 msgstr "Bitte wähle ein neues Mitglied aus."
 
 msgid "The_same_member_must_not_be_selected."
@@ -1530,6 +1530,9 @@ msgstr "wichtige-infos-zum-gelingen"
 msgid "Upload_CSV_file_with_bank_transactions"
 msgstr "CSV-Datei mit Überweisungen hochladen"
 
+msgid "Please_select_a_member."
+msgstr "Bitte wähle ein Mitglied aus."
+
 msgid "Added_on"
 msgstr "Eingetragen am"
 
@@ -2016,6 +2019,12 @@ msgstr "Bitte verwende zum Einloggen die E-Mail-Adresse dieser Nachricht. Falls 
 msgid "Your_contact_person"
 msgstr "Deine Ansprechperson"
 
+msgid "The_CSV_data_was_sucessfully_imported."
+msgstr "Die CSV-Datei wurde erfolgreich importiert."
+
+#~ msgid "Please_select..."
+#~ msgstr "Bitte auswählen..."
+
 #~ msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
 #~ msgstr "Die Anzahl des Produktes {0} vom Hersteller {1} wurde erfolgreich von {2} auf {3} geändert."
 
@@ -2104,9 +2113,6 @@ msgstr "Deine Ansprechperson"
 
 #~ msgid "The_order_status_of_the_ordered_products_{0}_were_successfully_changed_to_{1}."
 #~ msgstr "Der Bestellstatus des bestellten Produktes von {0} wurde erfolgreich auf {1} geändert."
-
-#~ msgid "1_ordered_product_was_successfully_closed."
-#~ msgstr "Das bestellte Produkt wurde erfolgreich auf abgeschlossen geändert."
 
 #~ msgid "{0}_ordered_product_were_successfully_closed."
 #~ msgstr "{0} bestellte Produkte wurden erfolgreich auf abgeschlossen geändert."
