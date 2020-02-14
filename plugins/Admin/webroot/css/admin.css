@@ -1183,6 +1183,13 @@ body.reports.payment .payment-approval-comment {
     float: left;
     margin-right: 2px;
 }
+body.reports.payment form#csv-upload {
+	padding: 10px 0 5px 0;
+}
+body.reports.payment form#csv-upload label {
+	margin-right: 10px;
+	font-weight: bold;
+}
 body.payments.edit form {
 	width: 530px;
 }

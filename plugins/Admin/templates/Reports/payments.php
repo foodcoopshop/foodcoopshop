@@ -51,9 +51,15 @@ echo $this->element('reportNavTabs', [
 if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() && $this->request->getParam('pass')[0] == 'product') {
     
     if (empty($csvRecords)) {
-        echo $this->Form->create(null, ['type' => 'file']);
-        echo $this->Form->file('upload');
-        echo $this->Form->submit();
+        echo $this->Form->create(null, [
+            'type' => 'file',
+            'id' => 'csv-upload',
+        ]);
+        echo $this->Form->control('upload', [
+            'type' => 'file',
+            'onchange' => 'form.submit()',
+            'label' => __d('admin', 'Upload_CSV_file_with_bank_transactions') . ': ',
+        ]);
         echo $this->Form->end();
     }
     

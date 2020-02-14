@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-11 11:44+0100\n"
-"PO-Revision-Date: 2020-02-11 11:38+0100\n"
+"POT-Creation-Date: 2020-02-14 10:13+0100\n"
+"PO-Revision-Date: 2020-02-14 10:15+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1473,16 +1473,6 @@ msgstr "credit-system"
 msgid "Add_transfered_credit"
 msgstr "Add transfered credit"
 
-msgid "docs_route_credit_system_with_csv_upload"
-msgstr ""
-
-msgid "Your_personal_transaction_code"
-msgstr "Your personal transaction code"
-
-#, fuzzy
-msgid "Please_add_your_personal_transaction_code_to_your_transaction!"
-msgstr "Your personal transaction code"
-
 msgid "Order_value"
 msgstr "Order value"
 
@@ -1536,6 +1526,9 @@ msgstr "ProductID"
 
 msgid "docs_route_infos_for_success"
 msgstr "infos-for-success"
+
+msgid "Upload_CSV_file_with_bank_transactions"
+msgstr "Upload CSV file with bank transactions"
 
 msgid "Added_on"
 msgstr "Added on"
@@ -1707,6 +1700,15 @@ msgstr "If you chose \"payback\", please enter the amount that you just transfer
 
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Please chose the months for your payment."
+
+msgid "docs_route_credit_system_with_csv_upload"
+msgstr ""
+
+msgid "Your_personal_transaction_code"
+msgstr "Your personal transaction code"
+
+msgid "Please_add_your_personal_transaction_code_to_your_transaction!"
+msgstr "Please add your personal transaction code to your transaction!"
 
 msgid "Invoice_for_the_order_period_{0}_to_{1}"
 msgstr "Invoice for the order period {0} to {1}"

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-11 11:44+0100\n"
-"PO-Revision-Date: 2020-02-11 11:45+0100\n"
+"POT-Creation-Date: 2020-02-14 10:13+0100\n"
+"PO-Revision-Date: 2020-02-14 10:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1473,15 +1473,6 @@ msgstr "guthaben-system"
 msgid "Add_transfered_credit"
 msgstr "Eingezahltes Guthaben eintragen"
 
-msgid "docs_route_credit_system_with_csv_upload"
-msgstr "guthaben-system-mit-automatischem-kontoabgleich"
-
-msgid "Your_personal_transaction_code"
-msgstr "Dein persönlicher Überweisungs-Code"
-
-msgid "Please_add_your_personal_transaction_code_to_your_transaction!"
-msgstr "Bitte trage deinen persönlichen Überweisungs-Code im Feld \"Verwendungszweck\" ein."
-
 msgid "Order_value"
 msgstr "Bestellwert"
 
@@ -1535,6 +1526,9 @@ msgstr "Produkt-Nr."
 
 msgid "docs_route_infos_for_success"
 msgstr "wichtige-infos-zum-gelingen"
+
+msgid "Upload_CSV_file_with_bank_transactions"
+msgstr "CSV-Datei mit Überweisungen hochladen"
 
 msgid "Added_on"
 msgstr "Eingetragen am"
@@ -1706,6 +1700,15 @@ msgstr "Wenn es sich um eine Rückzahlung handelt, trage bitte ein, wie viel du 
 
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Bitte wähle die Monate aus, für die deine Zahlung gedacht ist."
+
+msgid "docs_route_credit_system_with_csv_upload"
+msgstr "guthaben-system-mit-automatischem-kontoabgleich"
+
+msgid "Your_personal_transaction_code"
+msgstr "Dein persönlicher Überweisungs-Code"
+
+msgid "Please_add_your_personal_transaction_code_to_your_transaction!"
+msgstr "Bitte trage deinen persönlichen Überweisungs-Code im Feld \"Verwendungszweck\" ein."
 
 msgid "Invoice_for_the_order_period_{0}_to_{1}"
 msgstr "Rechnung für den Bestell-Zeitraum {0} - {1}"
