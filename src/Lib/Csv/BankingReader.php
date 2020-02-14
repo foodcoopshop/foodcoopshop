@@ -99,12 +99,20 @@ class BankingReader extends Reader {
         
         $preparedRecords = [];
         foreach($records as $record) {
+            
+            // never import negative transactions
+            $amount = Configure::read('app.numberHelper')->getStringAsFloat($record[3]);
+            if ($amount <= 0) {
+                continue;
+            }
+            
             $preparedRecord = [];
             $preparedRecord['text'] = $record[1];
-            $preparedRecord['amount'] = Configure::read('app.numberHelper')->getStringAsFloat($record[3]);
+            $preparedRecord['amount'] = $amount;
             $preparedRecord['date'] = new FrozenTime($record[5]);
             $preparedRecord['customer'] = $this->getCustomerByPersonalTransactionCode($preparedRecord['text']);
             $preparedRecords[] = $preparedRecord;
+            
         }
         
         return $preparedRecords;
