@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-02-11 10:06+0100\n"
+"POT-Creation-Date: 2020-02-14 14:56+0100\n"
 "PO-Revision-Date: 2019-07-22 16:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2159,6 +2159,21 @@ msgstr "Podaj poprawny numer."
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr "Ilość musi być większa od 0."
 
+# Please enter a correct number.
+#, fuzzy
+msgid "Please_enter_a_correct_amount."
+msgstr "Podaj poprawny numer."
+
+# Please enter a correct number.
+#, fuzzy
+msgid "Please_enter_a_correct_date."
+msgstr "Podaj poprawny numer."
+
+# Please enter a number.
+#, fuzzy
+msgid "Please_select_a_customer."
+msgstr "Wprowadź liczbę."
+
 # The delivery rhythm is not valid.
 msgid "The_delivery_ryhthm_is_not_valid."
 msgstr "Harmonogram dostaw jest nieprawidłowy."
@@ -3247,6 +3262,11 @@ msgstr "Niepotrzebne skreślić."
 # Informationen-ueber-Ruecktrittsrecht
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informacja-o-prawie-do-odstapienia"
+
+# Please enter a correct number.
+#, fuzzy
+#~ msgid "Please_select_a_correct_customer."
+#~ msgstr "Podaj poprawny numer."
 
 # This input is helpful for the pickup team, but not mandatory.
 #~ msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
