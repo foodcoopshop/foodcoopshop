@@ -94,6 +94,8 @@ echo $this->Html->script('/node_modules/bootstrap-select/dist/js/i18n/defaults-'
 echo $this->Html->script('/node_modules/ckeditor4/ckeditor');
 echo $this->Html->script('/node_modules/ckeditor4/adapters/jquery');
 
+echo $this->element('layout/customFooter');
+
 $scripts = $this->fetch('script');
 if ($scripts != '') {
     echo $this->Html->wrapJavascriptBlock($scripts);
