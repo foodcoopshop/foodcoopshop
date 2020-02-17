@@ -57,19 +57,33 @@ class ReportsController extends AdminAppController
         }
 
         if (!empty($csvRecords)) {
+            
             $csvPayments = $this->Payment->newEntities(
                 $csvRecords,
                 [
                     'validate' => 'csvImport',
                 ]
             );
+            
             try {
+                foreach($csvPayments as &$csvPayment) {
+                    $csvPayment = $this->Payment->patchEntity(
+                        $csvPayment,
+                        [
+                            'approval' => APP_ON,
+                            'approval_comment' => $csvPayment->text,
+                            'created_by' => $this->AppAuth->getUserId(),
+                       ]
+                    );
+                }
+                
                 $this->Payment->getConnection()->transactional(function () use ($csvPayments) {
                     $success = $this->Payment->saveManyOrFail($csvPayments);
                     if ($success) {
                         $this->Flash->success(__d('admin', '{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported.', [count($csvPayments)]));
                         $this->redirect($this->referer());
                     }
+                    
                 });
             } catch(PersistenceFailedException $e) {
                 $this->Flash->error(__d('admin', 'Errors_while_saving!'));
