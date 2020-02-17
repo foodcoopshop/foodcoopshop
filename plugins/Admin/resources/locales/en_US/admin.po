@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-14 14:56+0100\n"
-"PO-Revision-Date: 2020-02-14 14:58+0100\n"
+"POT-Creation-Date: 2020-02-17 16:04+0100\n"
+"PO-Revision-Date: 2020-02-17 16:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -512,6 +512,9 @@ msgstr "The product {0} of manufacturer {1} has been deactivated."
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr "The product {0} of manufacturer {1} has been activated."
+
+msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported."
+msgstr "{0,plural,=1{1 record was} other{# records were}} successfully imported."
 
 msgid "Report"
 msgstr "Report"
@@ -2019,8 +2022,8 @@ msgstr "For signing in please use the email address of this message. If you want
 msgid "Your_contact_person"
 msgstr "Your contact person"
 
-msgid "The_CSV_data_was_sucessfully_imported."
-msgstr "The CSV data was successfully imported."
+#~ msgid "The_CSV_data_was_sucessfully_imported."
+#~ msgstr "The CSV data was successfully imported."
 
 #, fuzzy
 #~ msgid "Please_select..."

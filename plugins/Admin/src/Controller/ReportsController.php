@@ -64,11 +64,13 @@ class ReportsController extends AdminAppController
                 ]
             );
             try {
-                $success = $this->Payment->saveManyOrFail($csvPayments);
-                if ($success) {
-                    $this->Flash->success(__('The_CSV_data_was_sucessfully_imported.'));
-                    $this->redirect($this->referer());
-                }
+                $this->Payment->getConnection()->transactional(function () use ($csvPayments) {
+                    $success = $this->Payment->saveManyOrFail($csvPayments);
+                    if ($success) {
+                        $this->Flash->success(__d('admin', '{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported.', [count($csvPayments)]));
+                        $this->redirect($this->referer());
+                    }
+                });
             } catch(PersistenceFailedException $e) {
                 $this->Flash->error(__d('admin', 'Errors_while_saving!'));
                 $this->set('csvPayments', $csvPayments);

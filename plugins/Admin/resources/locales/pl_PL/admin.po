@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-14 14:56+0100\n"
+"POT-Creation-Date: 2020-02-17 16:04+0100\n"
 "PO-Revision-Date: 2019-04-28 03:51+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -538,6 +538,10 @@ msgstr "Produkt {0} od producenta {1} został dezaktywowany."
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr "Produkt {0} od producenta {1} został aktywowany."
+
+#, fuzzy
+msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported."
+msgstr "{0,plural,=1{product was cancelled succesfully.} other{products were cancelled succesfully.}}"
 
 msgid "Report"
 msgstr "Raport"
@@ -2107,8 +2111,8 @@ msgid "Your_contact_person"
 msgstr "Twoja osoba kontaktowa"
 
 #, fuzzy
-msgid "The_CSV_data_was_sucessfully_imported."
-msgstr "1 ordered product was changed successfully to closed."
+#~ msgid "The_CSV_data_was_sucessfully_imported."
+#~ msgstr "1 ordered product was changed successfully to closed."
 
 #, fuzzy
 #~ msgid "Please_select..."

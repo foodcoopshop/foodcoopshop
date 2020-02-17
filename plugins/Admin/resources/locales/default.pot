@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-02-14 14:56+0100\n"
+"POT-Creation-Date: 2020-02-17 16:04+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -510,6 +510,9 @@ msgid "The_product_{0}_from_manufacturer_{1}_was_deactivated."
 msgstr ""
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
+msgstr ""
+
+msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported."
 msgstr ""
 
 msgid "Report"
@@ -2016,8 +2019,5 @@ msgid "For_signing_in_please_use_the_email_address_of_this_message._If_you_want_
 msgstr ""
 
 msgid "Your_contact_person"
-msgstr ""
-
-msgid "The_CSV_data_was_sucessfully_imported."
 msgstr ""
 

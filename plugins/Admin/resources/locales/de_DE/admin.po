@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-14 14:56+0100\n"
-"PO-Revision-Date: 2020-02-14 14:57+0100\n"
+"POT-Creation-Date: 2020-02-17 16:04+0100\n"
+"PO-Revision-Date: 2020-02-17 16:04+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -512,6 +512,9 @@ msgstr "Das Produkt {0} vom Hersteller {1} wurde deaktiviert."
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr "Das Produkt {0} vom Hersteller {1} wurde aktiviert."
+
+msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported."
+msgstr "{0,plural,=1{Ein Datensatz wurde} other{# Datensätze wurden}} erfolgreich importiert."
 
 msgid "Report"
 msgstr "Bericht"
@@ -2019,8 +2022,8 @@ msgstr "Bitte verwende zum Einloggen die E-Mail-Adresse dieser Nachricht. Falls 
 msgid "Your_contact_person"
 msgstr "Deine Ansprechperson"
 
-msgid "The_CSV_data_was_sucessfully_imported."
-msgstr "Die CSV-Datei wurde erfolgreich importiert."
+#~ msgid "The_CSV_data_was_sucessfully_imported."
+#~ msgstr "Die CSV-Datei wurde erfolgreich importiert."
 
 #~ msgid "Please_select..."
 #~ msgstr "Bitte auswählen..."
