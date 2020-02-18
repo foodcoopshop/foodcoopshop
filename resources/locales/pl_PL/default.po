@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-02-14 14:56+0100\n"
+"POT-Creation-Date: 2020-02-18 12:14+0100\n"
 "PO-Revision-Date: 2019-07-22 16:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2173,6 +2173,11 @@ msgstr "Podaj poprawny numer."
 #, fuzzy
 msgid "Please_select_a_customer."
 msgstr "Wprowadź liczbę."
+
+# The tax rate is already used.
+#, fuzzy
+msgid "The_transaction_was_already_imported."
+msgstr "Stawka podatku jest już użyta."
 
 # The delivery rhythm is not valid.
 msgid "The_delivery_ryhthm_is_not_valid."

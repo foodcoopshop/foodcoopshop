@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-02-14 14:56+0100\n"
-"PO-Revision-Date: 2020-02-14 14:55+0100\n"
+"POT-Creation-Date: 2020-02-18 12:14+0100\n"
+"PO-Revision-Date: 2020-02-18 12:15+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1616,6 +1616,9 @@ msgstr "Please enter a correct date."
 
 msgid "Please_select_a_customer."
 msgstr "Please select a member."
+
+msgid "The_transaction_was_already_imported."
+msgstr "This transaction was already imported."
 
 msgid "The_delivery_ryhthm_is_not_valid."
 msgstr "The delivery rhythm is not valid."
