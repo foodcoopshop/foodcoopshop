@@ -14,7 +14,6 @@
  */
 use App\Test\TestCase\AppCakeTestCase;
 use App\Lib\Csv\BankingReader;
-use App\Model\Entity\Customer;
 use Cake\Core\Configure;
 
 class BankingReaderTest extends AppCakeTestCase
@@ -35,18 +34,13 @@ class BankingReaderTest extends AppCakeTestCase
         $reader = BankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen.csv');
         $records = $reader->getPreparedRecords($reader->getRecords());
         foreach($records as $record) {
-            $this->assertEquals(5, count($record));
+            $this->assertEquals(4, count($record));
         }
 
         $this->assertEquals('2019-02-01 12:51:14.563000', $records[0]['date']);
         $this->assertEquals(100, $records[0]['amount']);
-        $this->assertTrue(Customer::class == get_class($records[0]['original_customer']));
-        $this->assertTrue(Customer::class == get_class($records[1]['original_customer']));
-        $this->assertEquals(Configure::read('test.adminId'), $records[0]['original_customer']['id_customer']);
-        $this->assertEquals(Configure::read('test.superadminId'), $records[1]['original_customer']['id_customer']);
         $this->assertEquals(Configure::read('test.adminId'), $records[0]['original_id_customer']);
         $this->assertEquals(Configure::read('test.superadminId'), $records[1]['original_id_customer']);
-        $this->assertNull($records[2]['original_customer']);
         
         $this->assertEquals(3, count($records));
     }

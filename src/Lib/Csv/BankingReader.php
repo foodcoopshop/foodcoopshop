@@ -115,7 +115,6 @@ class BankingReader extends Reader {
             
             $customer = $this->getCustomerByPersonalTransactionCode($preparedRecord['content']);
             $preparedRecord['original_id_customer'] = !is_null($customer) ? $customer->id_customer : '';
-            $preparedRecord['original_customer'] = $customer;
             
             $preparedRecords[] = $preparedRecord;
             
