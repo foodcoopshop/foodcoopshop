@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-17 16:04+0100\n"
-"PO-Revision-Date: 2020-02-17 16:04+0100\n"
+"POT-Creation-Date: 2020-02-18 10:08+0100\n"
+"PO-Revision-Date: 2020-02-18 10:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1439,6 +1439,9 @@ msgstr "Datum der Aufladung"
 
 msgid "Date_last_modified"
 msgstr "Datum der letzten Änderung"
+
+msgid "Transaction_added_on"
+msgstr "Überweisung eingelangt am"
 
 msgid "Last_editor"
 msgstr "Zuletzt bearbeitet von"

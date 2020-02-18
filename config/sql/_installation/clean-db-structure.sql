@@ -388,6 +388,7 @@ CREATE TABLE `fcs_payments` (
   `text` varchar(255) NOT NULL DEFAULT '',
   `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_changed` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_transaction_add` datetime DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1',
   `approval` tinyint(4) NOT NULL DEFAULT '0',
   `approval_comment` text,

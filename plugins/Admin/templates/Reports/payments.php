@@ -14,6 +14,7 @@
  */
 
 use Cake\Core\Configure;
+use Cake\I18n\FrozenTime;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
@@ -48,7 +49,9 @@ echo $this->element('reportNavTabs', [
     'dateTo' => $dateTo,
 ]);
 
-if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() && $this->request->getParam('pass')[0] == 'product') {
+$useCsvUpload = !Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() && $this->request->getParam('pass')[0] == 'product';
+
+if ($useCsvUpload) {
     
     if (empty($csvRecords)) {
         echo $this->Form->create(null, [
@@ -71,7 +74,7 @@ if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() &
                 
                 echo '<th>' . __d('admin', 'Member'). '</th>';
                 echo '<th style="text-align:right;">' . $this->Html->getPaymentText($paymentType) . '</th>';
-                echo '<th style="text-align:right;">' . __d('admin', 'Date'). '</th>';
+                echo '<th style="text-align:right;">' . __d('admin', 'Transaction_added_on'). '</th>';
                 
                 $i = 0;
                 foreach($csvPayments as $csvPayment) {
@@ -82,11 +85,14 @@ if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() &
                             echo $this->Form->control('Payments.'.$i.'.id_customer', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'Please_select_a_member.'), 'options' => $customersForDropdown]);
                         echo  '</td>';
                         echo '<td style="text-align:right;">';
-                            echo $this->Form->control('Payments.'.$i.'.amount', ['label' => '']);
+                            echo $this->Form->hidden('Payments.'.$i.'.amount');
+                            echo $this->Number->formatAsCurrency($csvPayment->amount);
                         echo '</td>';
                         
                         echo '<td style="text-align:right;">';
-                            echo $this->Form->control('Payments.'.$i.'.date', ['label' => '']);
+                            echo $this->Form->hidden('Payments.'.$i.'.date');
+                            $date = new FrozenTime($csvPayment->date);
+                            echo $date->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
                         echo '</td>';
                         
                         echo $this->Form->hidden('Payments.'.$i.'.content');
@@ -108,6 +114,9 @@ if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() &
 echo '<table class="list">';
 echo '<tr class="sort">';
 $colspan = 3;
+if ($useCsvUpload) {
+    $colspan++;
+}
 if ($paymentType == 'product') {
     echo '<th style="width:25px;"></th>';
     echo '<th style="width:50px;">' . $this->Paginator->sort('Payments.approval', __d('admin', 'Status')) . '</th>';
@@ -116,6 +125,9 @@ if ($paymentType == 'product') {
 echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Member')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Payments.date_add', __d('admin', 'Added_on')) . '</th>';
 echo '<th>' . $this->Paginator->sort('CreatedBy.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Added_by')) . '</th>';
+if ($useCsvUpload) {
+    echo '<th>' . $this->Paginator->sort('Payments.date_transaction_add', __d('admin', 'Transaction_added_on')) . '</th>';
+}
 echo '<th>' . $this->Html->getPaymentText($paymentType) . '</th>';
 if ($showTextColumn) {
     echo '<th>' . $this->Paginator->sort('Payments.text', __d('admin', 'Text')) . '</th>';
@@ -194,6 +206,14 @@ foreach ($payments as $payment) {
     }
     echo '</td>';
 
+    if ($useCsvUpload) {
+        echo '<td style="text-align:right;width:135px;">';
+            if ($payment->date_transaction_add) {
+                echo $payment->date_transaction_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
+            }
+        echo '</td>';
+    }
+    
     echo '<td style="text-align:right;">';
         echo $this->Number->formatAsCurrency($payment->amount);
     echo '</td>';

@@ -4,6 +4,7 @@ namespace Admin\Controller;
 
 use App\Lib\Csv\BankingReader;
 use Cake\Core\Configure;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Exception\PersistenceFailedException;
 
@@ -70,6 +71,7 @@ class ReportsController extends AdminAppController
                     $csvPayment = $this->Payment->patchEntity(
                         $csvPayment,
                         [
+                            'date_transaction_add' => new FrozenTime($csvPayment->date),
                             'approval' => APP_ON,
                             'approval_comment' => $csvPayment->content,
                             'created_by' => $this->AppAuth->getUserId(),

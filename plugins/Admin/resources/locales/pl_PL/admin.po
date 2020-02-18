@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-17 16:04+0100\n"
+"POT-Creation-Date: 2020-02-18 10:08+0100\n"
 "PO-Revision-Date: 2019-04-28 03:51+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1491,6 +1491,9 @@ msgstr "Data przesłania"
 
 msgid "Date_last_modified"
 msgstr "Data ostatniej modyfikacji"
+
+msgid "Transaction_added_on"
+msgstr ""
 
 msgid "Last_editor"
 msgstr "Ostatni redaktor"

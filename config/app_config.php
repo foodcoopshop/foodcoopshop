@@ -179,6 +179,7 @@ return [
         'DatabaseWithTime' => 'yyyy-MM-dd HH:mm:ss',
         'DatabaseAlt' => 'Y-m-d',
         'DatabaseWithTimeAlt' => 'Y-m-d H:i:s',
+        'DatabaseWithTimeAndMicrosecondsAlt' => 'Y-m-d H:i:s.u',
         'DateWithTimeForFilename' => 'Y-m-d_H-i-s'
     ]
 ];

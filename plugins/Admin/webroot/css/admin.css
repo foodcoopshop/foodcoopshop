@@ -1207,6 +1207,11 @@ body.reports.payment form#csv-records .error-message {
 body.payments.edit form {
 	width: 530px;
 }
+body.payments.edit form p {
+	float: left;
+	clear: both;
+	margin-bottom: 0;
+}
 body.payments.edit .email-template-info {
     float: left;
     margin-left: 3px;
