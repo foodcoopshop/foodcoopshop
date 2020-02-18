@@ -22,7 +22,12 @@ class BankingReaderTest extends AppCakeTestCase
     
     public function setUp(): void
     {
-        // do not import database - no database needed for this test
+        $this->resetLogs();
+    }
+    
+    public function tearDown(): void
+    {
+        $this->assertLogFilesForErrors();
     }
     
     public function testReadRaiffeisen()
