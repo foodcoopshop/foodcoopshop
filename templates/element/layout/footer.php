@@ -43,8 +43,6 @@ use Cake\I18n\I18n;
     echo $this->Html->script('/node_modules/components-jqueryui/jquery-ui.js');
     echo $this->Html->script('/node_modules/bootstrap-select/dist/js/i18n/defaults-'.I18n::getLocale().'.js');
     
-    echo $this->element('layout/customFooter');
-    
     $scripts = $this->fetch('script');
     if ($scripts != '') {
         echo $this->Html->wrapJavascriptBlock($scripts);

@@ -43,6 +43,7 @@ use Cake\Utility\Inflector;
     if ($isMobile) {
         echo $this->Html->css(['/node_modules/slidebars/dist/slidebars', 'mobile-global', 'Admin.mobile']);
     }
+    echo $this->element('layout/customHeader');
     ?>
     
 </head>
@@ -93,8 +94,6 @@ echo $this->Html->script('/node_modules/blueimp-file-upload/js/jquery.fileupload
 echo $this->Html->script('/node_modules/bootstrap-select/dist/js/i18n/defaults-'.I18n::getLocale().'.js');
 echo $this->Html->script('/node_modules/ckeditor4/ckeditor');
 echo $this->Html->script('/node_modules/ckeditor4/adapters/jquery');
-
-echo $this->element('layout/customFooter');
 
 $scripts = $this->fetch('script');
 if ($scripts != '') {
