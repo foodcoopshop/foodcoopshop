@@ -89,7 +89,7 @@ if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() &
                             echo $this->Form->control('Payments.'.$i.'.date', ['label' => '']);
                         echo '</td>';
                         
-                        echo $this->Form->hidden('Payments.'.$i.'.text');
+                        echo $this->Form->hidden('Payments.'.$i.'.content');
                         
                     echo '</tr>';
                     

@@ -42,7 +42,7 @@ class BankingReader extends Reader {
         return $record;
     }
     
-    private function getCustomerByPersonalTransactionCode($text): ?Customer
+    private function getCustomerByPersonalTransactionCode($content): ?Customer
     {
         $customerModel = TableRegistry::getTableLocator()->get('Customers');
         $query = $customerModel->find('all', [
@@ -53,7 +53,7 @@ class BankingReader extends Reader {
         $personalTransactionCodes = $query->all()->extract('personalTransactionCode')->toArray();
         
         $regex = '/' . join('|', $personalTransactionCodes) .  '/';
-        preg_match_all($regex, $text, $matches);
+        preg_match_all($regex, $content, $matches);
         
         $foundCustomer = null;
         if (!empty($matches[0][0])) {
@@ -109,11 +109,11 @@ class BankingReader extends Reader {
             }
             
             $preparedRecord = [];
-            $preparedRecord['text'] = $record[1];
+            $preparedRecord['content'] = $record[1];
             $preparedRecord['amount'] = $amount;
             $preparedRecord['date'] = new FrozenTime($record[5]);
             
-            $customer = $this->getCustomerByPersonalTransactionCode($preparedRecord['text']);
+            $customer = $this->getCustomerByPersonalTransactionCode($preparedRecord['content']);
             $preparedRecord['id_customer'] = !is_null($customer) ? $customer->id_customer : '';
             $preparedRecord['customer'] = $customer;
             

@@ -71,7 +71,7 @@ class ReportsController extends AdminAppController
                         $csvPayment,
                         [
                             'approval' => APP_ON,
-                            'approval_comment' => $csvPayment->text,
+                            'approval_comment' => $csvPayment->content,
                             'created_by' => $this->AppAuth->getUserId(),
                        ]
                     );
