@@ -59,10 +59,12 @@ class BankingReader extends Reader {
         if (!empty($matches[0][0])) {
             $foundCustomer = $customerModel->find('all', [
                 'conditions' => [
-                    $customerModel->getPersonalTransactionCodeField() . ' = "' . $matches[0][0] . '"'
+                    $customerModel->getPersonalTransactionCodeField() . ' = :personalTransactionCode'
                 ]
-            ])->first();
+            ])->bind(':personalTransactionCode', $matches[0][0], 'string')
+            ->first();
         }
+        
         return $foundCustomer;
     }
     
