@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 
 /**
@@ -59,6 +60,23 @@ class PaymentsTable extends AppTable
         $validator->requirePresence('date', true, __('Please_enter_a_correct_date.'));
         $validator->requirePresence('id_customer', true, __('Please_select_a_customer.'));
         $validator->numeric('id_customer', __('Please_select_a_customer.'));
+        
+        $validator->add('content', 'transaction-already-imported', [
+            'rule' => function ($value, $context) {
+                $ct = TableRegistry::getTableLocator()->get('Payments');
+                $record  = $ct->find('all', [
+                    'conditions' => [
+                        'transaction_text' => $value
+                    ]
+                ])->first();
+                if (!empty($record) && !$record->active) {
+                    return false;
+                }
+                return true;
+            },
+            'message' => __('The_transaction_was_already_imported.')
+        ]);
+        
         return $validator;
     }
 

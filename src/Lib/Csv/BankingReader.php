@@ -108,7 +108,7 @@ class BankingReader extends Reader {
             }
             
             $preparedRecord = [];
-            $preparedRecord['content'] = $record[1];
+            $preparedRecord['content'] = h($record[1]);
             $preparedRecord['amount'] = $amount;
             $date = new FrozenTime($record[5]);
             $preparedRecord['date'] = $date->format(Configure::read('DateFormat.DatabaseWithTimeAndMicrosecondsAlt'));

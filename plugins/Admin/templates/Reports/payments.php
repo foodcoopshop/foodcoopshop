@@ -71,9 +71,15 @@ if ($useCsvUpload) {
         
         echo $this->Form->create($csvPayments, ['id' => 'csv-records']);
         
+            $this->element('addScript', [
+                'script' => 
+                Configure::read('app.jsNamespace') . ".Helper.initTooltip('.transaction-text');"
+            ]);
+            
             echo '<table class="list no-clone-last-row">';
                 
                 echo '<th>' . __d('admin', 'Member'). '</th>';
+                echo '<th>' . __d('admin', 'Transaction_text'). '</th>';
                 echo '<th style="text-align:right;">' . $this->Html->getPaymentText($paymentType) . '</th>';
                 echo '<th style="text-align:right;">' . __d('admin', 'Transaction_added_on'). '</th>';
                 
@@ -102,6 +108,16 @@ if ($useCsvUpload) {
                                 ]);
                             }
                         echo  '</td>';
+                        
+                        echo '<td style="text-align:center;">';
+                            echo $this->Form->hidden('Payments.'.$i.'.content');
+                            $error = $csvPayment->getError('content');
+                            if ($error) {
+                                echo '<b style="color:red;float:left;">' . $error['transaction-already-imported'] . '</b>';
+                            }
+                            echo '<i class="fa fa-info-circle transaction-text ok fa-lg" title="'.$csvPayment->content.'" />';
+                        echo '</td>';
+                        
                         echo '<td style="text-align:right;">';
                             echo $this->Form->hidden('Payments.'.$i.'.amount');
                             echo $this->Number->formatAsCurrency($csvPayment->amount);
@@ -112,8 +128,6 @@ if ($useCsvUpload) {
                             $date = new FrozenTime($csvPayment->date);
                             echo $date->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
                         echo '</td>';
-                        
-                        echo $this->Form->hidden('Payments.'.$i.'.content');
                         
                     echo '</tr>';
                     

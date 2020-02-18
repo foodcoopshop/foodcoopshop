@@ -29,6 +29,6 @@ class CashlessPaymentAddTypeConfiguration extends AbstractMigration
         $this->execute("ALTER TABLE `fcs_timebased_currency_payments` CHANGE `approval_comment` `approval_comment` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;");
         
         $this->execute("ALTER TABLE `fcs_payments` ADD `date_transaction_add` DATETIME NULL DEFAULT NULL AFTER `date_changed`;");
-        
+        $this->execute("ALTER TABLE `fcs_payments` ADD `transaction_text` TEXT NULL DEFAULT NULL AFTER `date_transaction_add`;");
     }
 }

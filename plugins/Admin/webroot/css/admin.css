@@ -1212,6 +1212,10 @@ body.payments.edit form p {
 	clear: both;
 	margin-bottom: 0;
 }
+body.payments.edit form p span {
+	float: left;
+	margin-bottom: 5px;
+}
 body.payments.edit .email-template-info {
     float: left;
     margin-left: 3px;
