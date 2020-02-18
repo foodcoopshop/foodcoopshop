@@ -15,6 +15,7 @@
 
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
+use Cake\ORM\TableRegistry;
 
 $this->element('addScript', [
     'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
@@ -82,7 +83,24 @@ if ($useCsvUpload) {
                     echo '<tr>';
                     
                         echo '<td>';
-                            echo $this->Form->control('Payments.'.$i.'.id_customer', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'Please_select_a_member.'), 'options' => $customersForDropdown]);
+                            echo $this->Form->hidden('Payments.'.$i.'.original_id_customer');
+                            if ($csvPayment->original_id_customer > 0) {
+                                $customerModel = TableRegistry::getTableLocator()->get('Customers');
+                                $customer = $customerModel->find('all', [
+                                    'conditions' => [
+                                        'id_customer' => $csvPayment->original_id_customer
+                                    ]
+                                ])->first();
+                                echo $customer->name;
+                            } else {
+                                echo $this->Form->control('Payments.'.$i.'.id_customer', [
+                                    'type' => 'select',
+                                    'label' => '',
+                                    'empty' => __d('admin', 'Please_select_a_member.'),
+                                    'options' => $customersForDropdown,
+                                    'value' => $csvPayment->original_id_customer == 0 ? $csvPayment->id_customer : $csvPayment->original_id_customer,
+                                ]);
+                            }
                         echo  '</td>';
                         echo '<td style="text-align:right;">';
                             echo $this->Form->hidden('Payments.'.$i.'.amount');

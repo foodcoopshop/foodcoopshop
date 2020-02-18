@@ -22,7 +22,7 @@ class BankingReaderTest extends AppCakeTestCase
     
     public function setUp(): void
     {
-        $this->resetLogs();
+        parent::setUp();
     }
     
     public function tearDown(): void
@@ -37,16 +37,16 @@ class BankingReaderTest extends AppCakeTestCase
         foreach($records as $record) {
             $this->assertEquals(5, count($record));
         }
-        
+
         $this->assertEquals('2019-02-01 12:51:14.563000', $records[0]['date']);
         $this->assertEquals(100, $records[0]['amount']);
-        $this->assertTrue(Customer::class == get_class($records[0]['customer']));
-        $this->assertTrue(Customer::class == get_class($records[1]['customer']));
-        $this->assertEquals(Configure::read('test.adminId'), $records[0]['customer']['id_customer']);
-        $this->assertEquals(Configure::read('test.superadminId'), $records[1]['customer']['id_customer']);
-        $this->assertEquals(Configure::read('test.adminId'), $records[0]['id_customer']);
-        $this->assertEquals(Configure::read('test.superadminId'), $records[1]['id_customer']);
-        $this->assertNull($records[2]['customer']);
+        $this->assertTrue(Customer::class == get_class($records[0]['original_customer']));
+        $this->assertTrue(Customer::class == get_class($records[1]['original_customer']));
+        $this->assertEquals(Configure::read('test.adminId'), $records[0]['original_customer']['id_customer']);
+        $this->assertEquals(Configure::read('test.superadminId'), $records[1]['original_customer']['id_customer']);
+        $this->assertEquals(Configure::read('test.adminId'), $records[0]['original_id_customer']);
+        $this->assertEquals(Configure::read('test.superadminId'), $records[1]['original_id_customer']);
+        $this->assertNull($records[2]['original_customer']);
         
         $this->assertEquals(3, count($records));
     }

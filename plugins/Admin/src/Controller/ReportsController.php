@@ -73,6 +73,7 @@ class ReportsController extends AdminAppController
                         [
                             'date_transaction_add' => new FrozenTime($csvPayment->date),
                             'approval' => APP_ON,
+                            'id_customer' => $csvPayment->original_id_customer == 0 ? $csvPayment->id_customer : $csvPayment->original_id_customer,
                             'approval_comment' => $csvPayment->content,
                             'created_by' => $this->AppAuth->getUserId(),
                        ]

@@ -64,7 +64,6 @@ class BankingReader extends Reader {
             ])->bind(':personalTransactionCode', $matches[0][0], 'string')
             ->first();
         }
-        
         return $foundCustomer;
     }
     
@@ -115,8 +114,8 @@ class BankingReader extends Reader {
             $preparedRecord['date'] = $date->format(Configure::read('DateFormat.DatabaseWithTimeAndMicrosecondsAlt'));
             
             $customer = $this->getCustomerByPersonalTransactionCode($preparedRecord['content']);
-            $preparedRecord['id_customer'] = !is_null($customer) ? $customer->id_customer : '';
-            $preparedRecord['customer'] = $customer;
+            $preparedRecord['original_id_customer'] = !is_null($customer) ? $customer->id_customer : '';
+            $preparedRecord['original_customer'] = $customer;
             
             $preparedRecords[] = $preparedRecord;
             
