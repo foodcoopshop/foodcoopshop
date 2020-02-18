@@ -48,7 +48,8 @@ header('Pragma: no-cache');
             echo $this->Html->css(['/node_modules/slidebars/dist/slidebars', 'mobile-global', 'mobile-frontend', 'mobile-self-service', 'mobile-frontend-custom']);
         }
         echo $this->element('customFrontendColorThemeCss');
-    ?>
+        echo $this->element('layout/customHeader');
+   ?>
     
 </head>
 
