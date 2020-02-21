@@ -46,6 +46,7 @@ The software can be used with any modern web browser, tablet or smartphone. It's
 * Server with **shell access** and **cronjobs**
 * Apache with `mod_rewrite`
 * PHP >= 7.3
+* PHP intl extension INTL_ICU_VERSION >= 50.1
 * MySQL >= 5.7
 * Node.js and npm ([installation](https://www.npmjs.com/get-npm)) developer packages
 * Composer ([installation](https://getcomposer.org/download/)) developer packages
