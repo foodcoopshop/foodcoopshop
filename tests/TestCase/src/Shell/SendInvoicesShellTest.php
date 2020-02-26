@@ -67,7 +67,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
         }
         
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(4, count($emailLogs), 'amount of sent emails wrong');
+        $this->assertEquals(5, count($emailLogs), 'amount of sent emails wrong');
         $this->assertEmailLogs(
             $emailLogs[1],
             'Rechnung Nr. 0001',
