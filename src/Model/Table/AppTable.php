@@ -31,7 +31,7 @@ use Cake\I18n\FrozenDate;
 class AppTable extends Table
 {
 
-    public $tablePrefix = 'fcs_'; // legacy from CakePHP2
+    public $tablePrefix = 'fcs_';
 
     public function initialize(array $config): void
     {

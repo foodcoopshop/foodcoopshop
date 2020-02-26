@@ -51,17 +51,6 @@ class SendInvoicesShellTest extends AppCakeTestCase
         
         $this->prepareSendInvoices();
         
-        // reset order detail created in order to make OrderDetail::legacyUpdateOrderStateToNewBilledState happen
-        // can be removed safely in FCS v3.0
-        $this->OrderDetail->save(
-            $this->OrderDetail->patchEntity(
-                $this->OrderDetail->get(1),
-                [
-                    'created' => FrozenTime::create(2018,1,31,10,0,0)
-                ]
-            )
-        );
-        
         $this->changeConfiguration('FCS_USE_VARIABLE_MEMBER_FEE', 1);
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'variable_member_fee', 10);

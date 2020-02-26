@@ -109,8 +109,6 @@ class MyHtmlHelper extends HtmlHelper
                 break;
             case ORDER_STATE_BILLED_CASHLESS:
             case ORDER_STATE_BILLED_CASH:
-            case ORDER_STATE_CASH_FREE:
-            case ORDER_STATE_CASH:
                 return 'fa fa-lock not-ok';
                 break;
         }
@@ -752,7 +750,6 @@ class MyHtmlHelper extends HtmlHelper
     public function getOrderStatesCashless()
     {
         return [
-            ORDER_STATE_CASH_FREE,
             ORDER_STATE_ORDER_PLACED,
             ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
             ORDER_STATE_BILLED_CASHLESS

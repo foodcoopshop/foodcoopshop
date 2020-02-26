@@ -148,9 +148,6 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->assertEquals(404, $this->httpClient->getStatusCode());
     }
 
-    /**
-     * since cakephp v3 the redirect page contains a get param "redirect"
-     */
     protected function assertRedirectToLoginPage()
     {
         $this->assertRegExpWithUnquotedString($this->httpClient->baseUrl . $this->Slug->getLogin(), $this->httpClient->getUrl(), 'redirect to login page failed');

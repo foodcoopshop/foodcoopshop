@@ -193,23 +193,6 @@ class OrderDetailsTable extends AppTable
         }
             
     }
-    /**
-     * can be removed safely in FCS v3.0
-     */
-    public function legacyUpdateOrderStateToNewBilledState($dateFrom, $statusOld, $statusNew)
-    {
-        $conditions = ['order_state' => $statusOld];
-        if (!is_null($dateFrom)) {
-            $conditions[] = 'DATE_FORMAT(created, \'%Y-%m-%d\') < \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'';
-        }
-        $rows = $this->updateAll(
-            [
-                'order_state' => $statusNew
-            ],
-            $conditions
-        );
-        return $rows;
-    }
 
     public function getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId)
     {
@@ -309,7 +292,7 @@ class OrderDetailsTable extends AppTable
         $sql .= 'FROM '.$this->tablePrefix.'order_detail od ';
         $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';
         $sql .= 'WHERE p.id_manufacturer = :manufacturerId ';
-        $sql .= 'AND od.order_state NOT IN ('.ORDER_STATE_CASH.', ' . ORDER_STATE_CASH_FREE.', ' . ORDER_STATE_BILLED_CASHLESS.',' . ORDER_STATE_BILLED_CASH . ') ';
+        $sql .= 'AND od.order_state NOT IN (' . ORDER_STATE_BILLED_CASHLESS.',' . ORDER_STATE_BILLED_CASH . ') ';
         $sql .= 'AND DATE_FORMAT(od.pickup_day, \'%Y-%m-%d\') = :dateFrom ';
         $sql .= 'GROUP BY p.id_manufacturer ';
         $params = [

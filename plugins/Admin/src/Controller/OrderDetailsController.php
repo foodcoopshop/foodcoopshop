@@ -255,7 +255,6 @@ class OrderDetailsController extends AdminAppController
             $orderDetailId = h($this->getRequest()->getQuery('orderDetailId'));
         }
 
-        $legacyCall = false;
         $pickupDay = [];
         if ($orderDetailId == '') {
             if (in_array('pickupDay', array_keys($this->getRequest()->getQueryParams()))) {
@@ -268,16 +267,6 @@ class OrderDetailsController extends AdminAppController
                 // default value
                 $pickupDay[0] = Configure::read('app.timeHelper')->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
             }
-            // START legacy code - can be safely removed in v3
-            // assures that old links (before v2.2) in emails to the financial responsible person still work after v2.2
-            if ($this->getRequest()->getQuery('dateFrom')) {
-                $legacyCall = true;
-                $pickupDay[0] = h($this->getRequest()->getQuery('dateFrom'));
-            }
-            if ($this->getRequest()->getQuery('dateTo')) {
-                $pickupDay[1] = h($this->getRequest()->getQuery('dateTo'));
-            }
-            // END legacy code
         }
         
         $pickupDay = Configure::read('app.timeHelper')->sortArrayByDate($pickupDay);
@@ -315,11 +304,6 @@ class OrderDetailsController extends AdminAppController
             $groupBy = '';
         }
 
-        // legacy: still allow old variable "groupByManufacturer"
-        if (! empty($this->getRequest()->getQuery('groupByManufacturer'))) {
-            $groupBy = 'manufacturer';
-        }
-
         $this->set('groupBy', $groupBy);
 
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
@@ -333,12 +317,6 @@ class OrderDetailsController extends AdminAppController
             $contain[] = 'PickupDayEntities';
         }
 
-        if ($legacyCall) {
-            foreach($odParams['conditions'] as &$condition) {
-                $condition = preg_replace('/OrderDetails.pickup_day/', 'OrderDetails.created', $condition);
-            }
-        }
-        
         $group = null;
         
         switch($groupBy) {

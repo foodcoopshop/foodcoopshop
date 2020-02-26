@@ -47,17 +47,6 @@ class SendInvoicesShell extends AppShell
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfLastMonth($this->cronjobRunDay);
         $dateTo = Configure::read('app.timeHelper')->getLastDayOfLastMonth($this->cronjobRunDay);
         
-        // update all order details that are already billed but cronjob did not change the order state
-        // to new order state ORDER_STATE_BILLED (introduced in FCS 2.2)
-        // can be removed safely in FCS v3.0
-        if ($this->cronjobRunDay == Configure::read('app.dateOfFirstSendInvoiceCronjobWithPickupDayUpdate')) {
-            $this->OrderDetail->legacyUpdateOrderStateToNewBilledState($dateFrom, ORDER_STATE_CASH_FREE, ORDER_STATE_BILLED_CASHLESS);
-            $this->OrderDetail->legacyUpdateOrderStateToNewBilledState($dateFrom, ORDER_STATE_CASH, ORDER_STATE_BILLED_CASH);
-            $this->OrderDetail->legacyUpdateOrderStateToNewBilledState($dateFrom, ORDER_STATE_ORDER_PLACED, Configure::read('app.htmlHelper')->getOrderStateBilled());
-            $this->OrderDetail->legacyUpdateOrderStateToNewBilledState(null, ORDER_STATE_CASH_FREE, ORDER_STATE_ORDER_PLACED);
-            $this->OrderDetail->legacyUpdateOrderStateToNewBilledState(null, ORDER_STATE_CASH, ORDER_STATE_ORDER_PLACED);
-        }
-        
         // 1) get all manufacturers (not only active ones)
         $manufacturers = $this->Manufacturer->find('all', [
             'order' => [

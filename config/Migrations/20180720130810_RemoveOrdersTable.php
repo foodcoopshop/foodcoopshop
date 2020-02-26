@@ -98,10 +98,7 @@ class RemoveOrdersTable extends AbstractMigration
         foreach($orders as $order) {
             
             $productsPickedUp = 0;
-            if (in_array($order['current_state'], [
-                ORDER_STATE_CASH,
-                ORDER_STATE_CASH_FREE
-            ])) {
+            if (in_array($order['current_state'], [2,1])) {
                 $productsPickedUp = 1;
             }
             
