@@ -47,8 +47,6 @@ class SendInvoicesShellTest extends AppCakeTestCase
     public function testSendInvoicesOk()
     {
         
-        Configure::write('app.dateOfFirstSendInvoiceCronjobWithPickupDayUpdate', '2018-03-11 10:20:30');
-        
         $this->prepareSendInvoices();
         
         $this->changeConfiguration('FCS_USE_VARIABLE_MEMBER_FEE', 1);
