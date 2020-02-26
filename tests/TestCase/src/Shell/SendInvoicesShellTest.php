@@ -3,7 +3,6 @@
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
-use Cake\I18n\FrozenTime;
 use App\Application;
 use Cake\Console\CommandRunner;
 
