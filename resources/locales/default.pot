@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-02-10 09:50+0100\n"
+"POT-Creation-Date: 2020-02-26 12:49+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -17,16 +17,10 @@ msgstr ""
 msgid "Access_denied_please_sign_in."
 msgstr ""
 
-msgid "order_state_cash"
-msgstr ""
-
 msgid "This_order_contains_the_variable_member_fee."
 msgstr ""
 
 msgid "order_state_order_placed"
-msgstr ""
-
-msgid "order_state_closed"
 msgstr ""
 
 msgid "order_state_order_list_sent_to_manufacturer"

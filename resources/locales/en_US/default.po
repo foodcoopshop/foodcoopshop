@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-02-10 09:50+0100\n"
-"PO-Revision-Date: 2020-01-22 09:29+0100\n"
+"POT-Creation-Date: 2020-02-26 12:49+0100\n"
+"PO-Revision-Date: 2020-02-26 12:50+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,22 +13,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
-
-msgid "order_state_cash"
-msgstr "paid in cash"
 
 msgid "This_order_contains_the_variable_member_fee."
 msgstr "This order contains the variable member fee."
 
 msgid "order_state_order_placed"
 msgstr "order placed"
-
-msgid "order_state_closed"
-msgstr "closed"
 
 msgid "order_state_order_list_sent_to_manufacturer"
 msgstr "Order list sent to manufacturer"
@@ -2406,6 +2400,12 @@ msgstr "Strike out unwanted items."
 
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
+
+#~ msgid "order_state_cash"
+#~ msgstr "paid in cash"
+
+#~ msgid "order_state_closed"
+#~ msgstr "closed"
 
 #~ msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
 #~ msgstr "This input is helpful for the pickup team, but not mandatory."
