@@ -3,7 +3,6 @@
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
-use Cake\I18n\FrozenTime;
 use App\Application;
 use Cake\Console\CommandRunner;
 
@@ -47,20 +46,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
     public function testSendInvoicesOk()
     {
         
-        Configure::write('app.dateOfFirstSendInvoiceCronjobWithPickupDayUpdate', '2018-03-11 10:20:30');
-        
         $this->prepareSendInvoices();
-        
-        // reset order detail created in order to make OrderDetail::legacyUpdateOrderStateToNewBilledState happen
-        // can be removed safely in FCS v3.0
-        $this->OrderDetail->save(
-            $this->OrderDetail->patchEntity(
-                $this->OrderDetail->get(1),
-                [
-                    'created' => FrozenTime::create(2018,1,31,10,0,0)
-                ]
-            )
-        );
         
         $this->changeConfiguration('FCS_USE_VARIABLE_MEMBER_FEE', 1);
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
@@ -78,7 +64,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
         }
         
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(4, count($emailLogs), 'amount of sent emails wrong');
+        $this->assertEquals(5, count($emailLogs), 'amount of sent emails wrong');
         $this->assertEmailLogs(
             $emailLogs[1],
             'Rechnung Nr. 0001',

@@ -25,10 +25,6 @@ define('ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER', 10);
 define('ORDER_STATE_BILLED_CASHLESS', 11);
 define('ORDER_STATE_BILLED_CASH', 12);
 
-// ORDER_STATE_CASH_FREE and ORDER_STATE_CASH can be safely removed in v3
-define('ORDER_STATE_CASH_FREE', 1);
-define('ORDER_STATE_CASH', 2);
-
 define('CUSTOMER_GROUP_MEMBER', 3);
 define('CUSTOMER_GROUP_ADMIN', 4);
 define('CUSTOMER_GROUP_SUPERADMIN', 5);
@@ -77,7 +73,6 @@ return [
         'isDepositPaymentCashless' => true,
         'depositPaymentCashlessStartDate' => '2016-01-01',
         'depositForManufacturersStartDate' => '2016-01-01',
-        'dateOfFirstSendInvoiceCronjobWithPickupDayUpdate' => '2018-11-11', //pickupDayMigration was released in v2.2
         
         /**
          * not used since v2.4

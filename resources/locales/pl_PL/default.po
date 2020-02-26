@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-02-18 12:14+0100\n"
-"PO-Revision-Date: 2019-07-22 16:07+0200\n"
+"POT-Creation-Date: 2020-02-26 12:49+0100\n"
+"PO-Revision-Date: 2020-02-26 13:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: pl_PL\n"
@@ -13,16 +13,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-Bookmarks: 725,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 # Access denied, please sign in.
 msgid "Access_denied_please_sign_in."
 msgstr "Dostęp wzbroniony. Proszę się zalogować."
-
-# paid in cash
-msgid "order_state_cash"
-msgstr "opłacono gotówką"
 
 # This order contains the variable member fee.
 msgid "This_order_contains_the_variable_member_fee."
@@ -31,10 +27,6 @@ msgstr "To zamówienie zawiera zmienną opłatę członkowską."
 # order placed
 msgid "order_state_order_placed"
 msgstr "złożone"
-
-# closed
-msgid "order_state_closed"
-msgstr "zamknięte"
 
 # Order list sent to manufacturer
 msgid "order_state_order_list_sent_to_manufacturer"
@@ -3272,6 +3264,14 @@ msgstr "Informacja-o-prawie-do-odstapienia"
 #, fuzzy
 #~ msgid "Please_select_a_correct_customer."
 #~ msgstr "Podaj poprawny numer."
+
+# paid in cash
+#~ msgid "order_state_cash"
+#~ msgstr "opłacono gotówką"
+
+# closed
+#~ msgid "order_state_closed"
+#~ msgstr "zamknięte"
 
 # This input is helpful for the pickup team, but not mandatory.
 #~ msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
