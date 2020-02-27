@@ -64,19 +64,16 @@ class PaymentsTable extends AppTable
         $validator->add('content', 'transaction-already-imported', [
             'rule' => function ($value, $context) {
                 $ct = TableRegistry::getTableLocator()->get('Payments');
-                $record  = $ct->find('all', [
+                $found = $ct->find('all', [
                     'conditions' => [
-                        'transaction_text' => $value
+                        'transaction_text' => $value,
+                        'status' => APP_ON,
                     ]
-                ])->first();
-                if (!empty($record) && !$record->active) {
-                    return false;
-                }
-                return true;
+                ])->count();
+                return $found == 0;
             },
             'message' => __('The_transaction_was_already_imported.')
         ]);
-        
         return $validator;
     }
 
