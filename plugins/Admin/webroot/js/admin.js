@@ -2626,6 +2626,21 @@ foodcoopshop.Admin = {
                     console.log(data.msg);
                 }
             });
+    },
+    
+    bindDeleteCsvRecord : function(selector) {
+        $(selector).on('click', function() {
+           var row = $(this).closest('tr');
+           var newVal;
+           if (row.hasClass('deleted')) {
+               row.removeClass('deleted');
+               newVal = 0;
+           } else {
+               row.addClass('deleted');
+               newVal = 1;
+           }
+           row.find('input.deleted').val(newVal);
+        });
     }
 
 };

@@ -73,7 +73,8 @@ if ($useCsvUpload) {
         
             $this->element('addScript', [
                 'script' => 
-                Configure::read('app.jsNamespace') . ".Helper.initTooltip('.transaction-text');"
+                Configure::read('app.jsNamespace') . ".Helper.initTooltip('.transaction-text');" .
+                Configure::read('app.jsNamespace') . ".Admin.bindDeleteCsvRecord('.delete-csv-record');"
             ]);
             
             echo '<table class="list no-clone-last-row">';
@@ -82,6 +83,7 @@ if ($useCsvUpload) {
                 echo '<th>' . __d('admin', 'Transaction_text'). '</th>';
                 echo '<th style="text-align:right;">' . $this->Html->getPaymentText($paymentType) . '</th>';
                 echo '<th style="text-align:right;">' . __d('admin', 'Transaction_added_on'). '</th>';
+                echo '<th style="text-align:center;">' . __d('admin', 'Delete?'). '</th>';
                 
                 $i = 0;
                 foreach($csvPayments as $csvPayment) {
@@ -114,7 +116,7 @@ if ($useCsvUpload) {
                             $value = $csvPayment->content;
                             if ($error) {
                                 $value = $csvPayment->getInvalidField('content');
-                                echo '<b style="color:red;float:left;">' . $error['transaction-already-imported'] . '</b>';
+                                echo '<span style="color:red;float:left;">' . $error['transaction-already-imported'] . '</span>';
                             }
                             echo '<i class="fa fa-info-circle transaction-text ok fa-lg" title="'.$value.'"></i>';
                             echo $this->Form->hidden('Payments.'.$i.'.content', ['value' => $value]);
@@ -131,7 +133,14 @@ if ($useCsvUpload) {
                             echo $date->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
                         echo '</td>';
                         
-                    echo '</tr>';
+                        echo '<td style="text-align:center;">';
+                            echo $this->Form->hidden('Payments.'.$i.'.deleted', ['class' => 'deleted']);
+                            echo '<a class="delete-csv-record btn btn-outline-light" href="javascript:void(0);">';
+                                echo '<i class="far fa-trash-alt not-ok" title="'.__d('admin', 'Delete_payment?').'"></i>';
+                            echo '</a>';
+                        echo '</td>';
+                        
+                        echo '</tr>';
                     
                     $i++;
                     

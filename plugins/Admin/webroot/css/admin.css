@@ -1204,6 +1204,13 @@ body.reports.payment form#csv-records select {
 body.reports.payment form#csv-records .error-message {
 	margin-left: 0;
 }
+body.reports.payment form#csv-records tr.deleted {
+    background-color: #EBEBEB;
+}
+body.reports.payment form#csv-records tr.deleted,
+body.reports.payment form#csv-records tr.deleted span {
+	text-decoration: line-through;
+}
 body.payments.edit form {
 	width: 530px;
 }
