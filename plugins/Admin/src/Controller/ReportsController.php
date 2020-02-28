@@ -68,19 +68,36 @@ class ReportsController extends AdminAppController
             
             try {
                 foreach($csvPayments as &$csvPayment) {
+                    
                     $csvPayment = $this->Payment->patchEntity(
                         $csvPayment,
                         [
                             'date_transaction_add' => new FrozenTime($csvPayment->date),
                             'approval' => APP_ON,
+                            'deleted' => $csvPayment->deleted ? $csvPayment->deleted : false,
                             'id_customer' => $csvPayment->original_id_customer == 0 ? $csvPayment->id_customer : $csvPayment->original_id_customer,
                             'transaction_text' => $csvPayment->content,
                             'created_by' => $this->AppAuth->getUserId(),
                        ]
                     );
+                    
                 }
                 
                 $this->Payment->getConnection()->transactional(function () use ($csvPayments) {
+                    
+                    $i = 0;
+                    foreach($csvPayments as $csvPayment) {
+                        if ($csvPayment->deleted) {
+                            unset($csvPayments[$i]);
+                        }
+                        $i++;
+                    }
+                    
+                    if (empty($csvPayments)) {
+                        $this->Flash->error(__d('admin', 'No_records_were_imported.'));
+                        $this->redirect($this->referer());
+                    }
+                    
                     $success = $this->Payment->saveManyOrFail($csvPayments);
                     if ($success) {
                         $this->Flash->success(__d('admin', '{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported.', [count($csvPayments)]));

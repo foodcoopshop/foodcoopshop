@@ -91,9 +91,7 @@ if ($useCsvUpload) {
             $i = 0;
             foreach($csvPayments as $csvPayment) {
                 
-                $contentError = $csvPayment->getError('content');
-                
-                echo '<tr class="' . ($contentError ? ' deleted' : '') . '">';
+                echo '<tr class="' . ($csvPayment->deleted ? ' deleted' : '') . '">';
                 
                     echo '<td>';
                         echo $this->Form->hidden('Payments.'.$i.'.original_id_customer');
@@ -118,6 +116,7 @@ if ($useCsvUpload) {
                     
                     echo '<td style="text-align:center;">';
                         $value = $csvPayment->content;
+                        $contentError = $csvPayment->getError('content');
                         if ($contentError) {
                             $value = $csvPayment->getInvalidField('content');
                             echo '<span style="color:red;float:left;">' . $contentError['transaction-already-imported'] . '</span>';
@@ -138,7 +137,7 @@ if ($useCsvUpload) {
                     echo '</td>';
                     
                     echo '<td style="text-align:center;">';
-                        echo $this->Form->hidden('Payments.'.$i.'.deleted', ['class' => 'deleted']);
+                        echo $this->Form->hidden('Payments.'.$i.'.deleted', ['class' => 'deleted', 'value' => $csvPayment->deleted]);
                         echo '<a class="delete-csv-record btn btn-outline-light" href="javascript:void(0);">';
                             echo '<i class="far fa-trash-alt not-ok" title="'.__d('admin', 'Delete_payment?').'"></i>';
                         echo '</a>';

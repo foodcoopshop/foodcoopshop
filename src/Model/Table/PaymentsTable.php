@@ -63,6 +63,9 @@ class PaymentsTable extends AppTable
         
         $validator->add('content', 'transaction-already-imported', [
             'rule' => function ($value, $context) {
+                if (isset($context['data']['deleted']) && !$context['data']['deleted']) {
+                    return true;
+                }
                 $ct = TableRegistry::getTableLocator()->get('Payments');
                 $found = $ct->find('all', [
                     'conditions' => [

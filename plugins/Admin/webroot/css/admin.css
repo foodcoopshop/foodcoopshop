@@ -1207,6 +1207,9 @@ body.reports.payment form#csv-records .error-message {
 body.reports.payment form#csv-records tr.deleted {
     background-color: #EBEBEB;
 }
+body.reports.payment form#csv-records tr.deleted .error-message {
+    display: none;
+}
 body.reports.payment form#csv-records tr.deleted,
 body.reports.payment form#csv-records tr.deleted span,
 body.reports.payment form#csv-records tr.deleted select {
