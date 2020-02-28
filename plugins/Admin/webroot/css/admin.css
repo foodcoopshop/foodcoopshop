@@ -1208,7 +1208,8 @@ body.reports.payment form#csv-records tr.deleted {
     background-color: #EBEBEB;
 }
 body.reports.payment form#csv-records tr.deleted,
-body.reports.payment form#csv-records tr.deleted span {
+body.reports.payment form#csv-records tr.deleted span,
+body.reports.payment form#csv-records tr.deleted select {
 	text-decoration: line-through;
 }
 body.payments.edit form {
