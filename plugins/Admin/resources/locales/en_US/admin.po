@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-18 11:44+0100\n"
-"PO-Revision-Date: 2020-02-18 11:45+0100\n"
+"POT-Creation-Date: 2020-02-28 21:06+0100\n"
+"PO-Revision-Date: 2020-02-28 21:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1538,6 +1538,9 @@ msgstr "infos-for-success"
 
 msgid "Upload_CSV_file_with_bank_transactions"
 msgstr "Upload CSV file with bank transactions"
+
+msgid "Delete?"
+msgstr "Delete?"
 
 msgid "Please_select_a_member."
 msgstr "Please select a member."

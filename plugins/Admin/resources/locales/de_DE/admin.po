@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-18 11:44+0100\n"
-"PO-Revision-Date: 2020-02-18 11:54+0100\n"
+"POT-Creation-Date: 2020-02-28 21:06+0100\n"
+"PO-Revision-Date: 2020-02-28 21:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1538,6 +1538,9 @@ msgstr "wichtige-infos-zum-gelingen"
 
 msgid "Upload_CSV_file_with_bank_transactions"
 msgstr "CSV-Datei mit Überweisungen hochladen"
+
+msgid "Delete?"
+msgstr "Löschen?"
 
 msgid "Please_select_a_member."
 msgstr "Bitte wähle ein Mitglied aus."

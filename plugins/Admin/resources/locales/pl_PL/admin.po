@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-18 11:44+0100\n"
-"PO-Revision-Date: 2019-04-28 03:51+0200\n"
+"POT-Creation-Date: 2020-02-28 21:06+0100\n"
+"PO-Revision-Date: 2020-02-28 21:08+0100\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: pl_PL\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-Bookmarks: 586,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 msgid "Activities"
@@ -1596,6 +1596,10 @@ msgstr "bulk-orders"
 
 msgid "Upload_CSV_file_with_bank_transactions"
 msgstr ""
+
+#, fuzzy
+msgid "Delete?"
+msgstr "Usuń"
 
 #, fuzzy
 msgid "Please_select_a_member."
