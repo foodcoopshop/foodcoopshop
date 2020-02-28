@@ -2628,6 +2628,14 @@ foodcoopshop.Admin = {
             });
     },
     
+    initSaveCsvUploadPayments : function() {
+        $('body.reports.payment form#csv-records button[type="submit"]').on('click', function () {
+            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-check');
+            foodcoopshop.Helper.disableButton($(this));
+            $(this).closest('form').submit();
+        });
+    },
+    
     bindDeleteCsvRecord : function(selector) {
         $(selector).on('click', function() {
            var row = $(this).closest('tr');
