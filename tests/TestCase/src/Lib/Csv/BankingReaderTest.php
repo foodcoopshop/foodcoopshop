@@ -37,9 +37,9 @@ class BankingReaderTest extends AppCakeTestCase
             $this->assertEquals(4, count($record));
         }
 
-        $this->assertEquals('2019-02-01 12:51:14.563000', $records[0]['date']);
-        $this->assertEquals(100, $records[0]['amount']);
-        $this->assertEquals(Configure::read('test.adminId'), $records[0]['original_id_customer']);
+        $this->assertEquals('2019-02-01 12:51:14.563000', $records[2]['date']);
+        $this->assertEquals(100, $records[2]['amount']);
+        $this->assertEquals(Configure::read('test.adminId'), $records[2]['original_id_customer']);
         $this->assertEquals(Configure::read('test.superadminId'), $records[1]['original_id_customer']);
         
         $this->assertEquals(3, count($records));

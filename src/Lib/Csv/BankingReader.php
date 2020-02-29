@@ -18,6 +18,7 @@ use App\Model\Entity\Customer;
 use Cake\ORM\TableRegistry;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
+use Cake\Utility\Hash;
 use League\Csv\Reader;
 
 class BankingReader extends Reader {
@@ -119,6 +120,8 @@ class BankingReader extends Reader {
             $preparedRecords[] = $preparedRecord;
             
         }
+        
+        $preparedRecords = Hash::sort($preparedRecords, '{n}.date', 'desc');
         
         return $preparedRecords;
     }
