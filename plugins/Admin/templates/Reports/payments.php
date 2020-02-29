@@ -77,22 +77,31 @@ if ($useCsvUpload) {
             'script' => 
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.transaction-text');" .
             Configure::read('app.jsNamespace') . ".Admin.initSaveCsvUploadPayments();" .
-            Configure::read('app.jsNamespace') . ".Admin.bindDeleteCsvRecord('.delete-csv-record');"
+            Configure::read('app.jsNamespace') . ".Admin.bindSelectCsvRecord('.select-csv-record');"
         ]);
         
         echo '<table class="list no-clone-last-row">';
             
+            echo '<th style="text-align:center;"></th>';
             echo '<th>' . __d('admin', 'Member'). '</th>';
             echo '<th>' . __d('admin', 'Transaction_text'). '</th>';
             echo '<th style="text-align:right;">' . $this->Html->getPaymentText($paymentType) . '</th>';
             echo '<th style="text-align:right;">' . __d('admin', 'Transaction_added_on'). '</th>';
-            echo '<th style="text-align:center;">' . __d('admin', 'Delete?'). '</th>';
             
             $i = 0;
             foreach($csvPayments as $csvPayment) {
                 
-                echo '<tr class="' . ($csvPayment->deleted ? ' deleted' : '') . '">';
+                echo '<tr class="' . (!$csvPayment->selected ? ' not-selected' : '') . '">';
                 
+                    echo '<td style="text-align:center;">';
+                        echo $this->Form->control('Payments.'.$i.'.selected', [
+                            'type' => 'checkbox',
+                            'label' => '',
+                            'class' => 'select-csv-record',
+                            'value' => !$csvPayment->selected,
+                        ]);
+                    echo '</td>';
+                    
                     echo '<td>';
                         echo $this->Form->hidden('Payments.'.$i.'.original_id_customer');
                         if ($csvPayment->original_id_customer > 0) {
@@ -132,13 +141,6 @@ if ($useCsvUpload) {
                         echo $this->Form->hidden('Payments.'.$i.'.date');
                         $date = new FrozenTime($csvPayment->date);
                         echo $date->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
-                    echo '</td>';
-                    
-                    echo '<td style="text-align:center;">';
-                        echo $this->Form->hidden('Payments.'.$i.'.deleted', ['class' => 'deleted', 'value' => $csvPayment->deleted]);
-                        echo '<a class="delete-csv-record btn btn-outline-light" href="javascript:void(0);">';
-                            echo '<i class="far fa-trash-alt not-ok" title="'.__d('admin', 'Delete_payment?').'"></i>';
-                        echo '</a>';
                     echo '</td>';
                     
                     echo '</tr>';

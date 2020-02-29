@@ -2636,18 +2636,14 @@ foodcoopshop.Admin = {
         });
     },
     
-    bindDeleteCsvRecord : function(selector) {
-        $(selector).on('click', function() {
+    bindSelectCsvRecord : function(selector) {
+        $(selector).on('change', function() {
            var row = $(this).closest('tr');
-           var newVal;
-           if (row.hasClass('deleted')) {
-               row.removeClass('deleted');
-               newVal = 0;
+           if (row.hasClass('not-selected')) {
+               row.removeClass('not-selected');
            } else {
-               row.addClass('deleted');
-               newVal = 1;
+               row.addClass('not-selected');
            }
-           row.find('input.deleted').val(newVal);
         });
     }
 

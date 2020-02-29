@@ -1204,15 +1204,15 @@ body.reports.payment form#csv-records select {
 body.reports.payment form#csv-records .error-message {
 	margin-left: 0;
 }
-body.reports.payment form#csv-records tr.deleted {
+body.reports.payment form#csv-records tr.not-selected {
     background-color: #EBEBEB;
 }
-body.reports.payment form#csv-records tr.deleted .error-message {
+body.reports.payment form#csv-records tr.not-selected .error-message {
     display: none;
 }
-body.reports.payment form#csv-records tr.deleted,
-body.reports.payment form#csv-records tr.deleted span,
-body.reports.payment form#csv-records tr.deleted select {
+body.reports.payment form#csv-records tr.not-selected,
+body.reports.payment form#csv-records tr.not-selected span,
+body.reports.payment form#csv-records tr.not-selected select {
 	text-decoration: line-through;
 }
 body.payments.edit form {

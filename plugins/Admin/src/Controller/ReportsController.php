@@ -82,8 +82,8 @@ class ReportsController extends AdminAppController
             try {
                 foreach($csvPayments as &$csvPayment) {
                     
-                    if ($csvPayment->already_imported && !isset($csvPayment->deleted)) {
-                        $csvPayment->deleted = true;
+                    if ($csvPayment->already_imported && isset($csvPayment->selected)) {
+                        $csvPayment->selected = false;
                     }
                     
                     $csvPayment = $this->Payment->patchEntity(
@@ -91,7 +91,7 @@ class ReportsController extends AdminAppController
                         [
                             'date_transaction_add' => new FrozenTime($csvPayment->date),
                             'approval' => APP_ON,
-                            'deleted' => $csvPayment->deleted,
+                            'selected' => $csvPayment->selected,
                             'id_customer' => $csvPayment->original_id_customer == 0 ? $csvPayment->id_customer : $csvPayment->original_id_customer,
                             'transaction_text' => $csvPayment->content,
                             'created_by' => $this->AppAuth->getUserId(),
@@ -105,11 +105,12 @@ class ReportsController extends AdminAppController
                         
                         $i = 0;
                         foreach($csvPayments as $csvPayment) {
-                            if ($csvPayment->deleted) {
+                            if ($csvPayment->isDirty('selected') && $csvPayment->getOriginal('selected') == 0) {
                                 unset($csvPayments[$i]);
                             }
                             $i++;
                         }
+                        
                         if (empty($csvPayments)) {
                             $this->Flash->error(__d('admin', 'No_records_were_imported.'));
                             $this->redirect($this->referer());
