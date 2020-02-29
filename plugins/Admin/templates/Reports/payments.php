@@ -115,14 +115,12 @@ if ($useCsvUpload) {
                     echo  '</td>';
                     
                     echo '<td style="text-align:center;">';
-                        $value = $csvPayment->content;
-                        $contentError = $csvPayment->getError('content');
-                        if ($contentError) {
-                            $value = $csvPayment->getInvalidField('content');
-                            echo '<span style="color:red;float:left;">' . $contentError['transaction-already-imported'] . '</span>';
+                        if ($csvPayment->already_imported) {
+                            echo '<span style="color:red;float:left;"">'.__d('admin', 'This_transaction_was_already_imported.') . '</span>';
                         }
-                        echo '<i class="fa fa-info-circle transaction-text ok fa-lg" title="'.$value.'"></i>';
-                        echo $this->Form->hidden('Payments.'.$i.'.content', ['value' => $value]);
+                        echo '<i class="fa fa-info-circle transaction-text ok fa-lg" title="'.$csvPayment->content.'"></i>';
+                        echo $this->Form->hidden('Payments.'.$i.'.content', ['value' => $csvPayment->content]);
+                        echo $this->Form->hidden('Payments.'.$i.'.already_imported', ['value' => $csvPayment->already_imported]);
                     echo '</td>';
                     
                     echo '<td style="text-align:right;">';

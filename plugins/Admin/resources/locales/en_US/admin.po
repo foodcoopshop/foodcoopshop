@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-28 21:06+0100\n"
-"PO-Revision-Date: 2020-02-28 21:08+0100\n"
+"POT-Creation-Date: 2020-02-29 22:38+0100\n"
+"PO-Revision-Date: 2020-02-29 22:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -513,8 +513,14 @@ msgstr "The product {0} of manufacturer {1} has been deactivated."
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr "The product {0} of manufacturer {1} has been activated."
 
+msgid "No_records_were_imported."
+msgstr ""
+
 msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported."
 msgstr "{0,plural,=1{1 record was} other{# records were}} successfully imported."
+
+msgid "Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button."
+msgstr "Upload successful. Please select the records you want to import and then click the save button."
 
 msgid "Report"
 msgstr "Report"
@@ -1544,6 +1550,9 @@ msgstr "Delete?"
 
 msgid "Please_select_a_member."
 msgstr "Please select a member."
+
+msgid "This_transaction_was_already_imported."
+msgstr "This transaction was already imported."
 
 msgid "Added_on"
 msgstr "Added on"

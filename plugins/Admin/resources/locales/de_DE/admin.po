@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-28 21:06+0100\n"
-"PO-Revision-Date: 2020-02-28 21:08+0100\n"
+"POT-Creation-Date: 2020-02-29 22:38+0100\n"
+"PO-Revision-Date: 2020-02-29 22:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -513,8 +513,14 @@ msgstr "Das Produkt {0} vom Hersteller {1} wurde deaktiviert."
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr "Das Produkt {0} vom Hersteller {1} wurde aktiviert."
 
+msgid "No_records_were_imported."
+msgstr ""
+
 msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported."
 msgstr "{0,plural,=1{Ein Datensatz wurde} other{# Datensätze wurden}} erfolgreich importiert."
+
+msgid "Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button."
+msgstr "Upload erfolgreich. Bitte wähle die Überweisungen aus, die du importieren möchtest und klicke dann auf \"Speichern\"."
 
 msgid "Report"
 msgstr "Bericht"
@@ -1544,6 +1550,9 @@ msgstr "Löschen?"
 
 msgid "Please_select_a_member."
 msgstr "Bitte wähle ein Mitglied aus."
+
+msgid "This_transaction_was_already_imported."
+msgstr "Diese Übeweisung wurde bereits importiert."
 
 msgid "Added_on"
 msgstr "Eingetragen am"

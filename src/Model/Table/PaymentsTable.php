@@ -60,23 +60,6 @@ class PaymentsTable extends AppTable
         $validator->requirePresence('date', true, __('Please_enter_a_correct_date.'));
         $validator->requirePresence('id_customer', true, __('Please_select_a_customer.'));
         $validator->numeric('id_customer', __('Please_select_a_customer.'));
-        
-        $validator->add('content', 'transaction-already-imported', [
-            'rule' => function ($value, $context) {
-                if (isset($context['data']['deleted']) && !$context['data']['deleted']) {
-                    return true;
-                }
-                $ct = TableRegistry::getTableLocator()->get('Payments');
-                $found = $ct->find('all', [
-                    'conditions' => [
-                        'transaction_text' => $value,
-                        'status' => APP_ON,
-                    ]
-                ])->count();
-                return $found == 0;
-            },
-            'message' => __('The_transaction_was_already_imported.')
-        ]);
         return $validator;
     }
 

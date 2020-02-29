@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-28 21:06+0100\n"
-"PO-Revision-Date: 2020-02-28 21:08+0100\n"
+"POT-Creation-Date: 2020-02-29 22:38+0100\n"
+"PO-Revision-Date: 2020-02-29 22:35+0100\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: pl_PL\n"
@@ -539,9 +539,15 @@ msgstr "Produkt {0} od producenta {1} został dezaktywowany."
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr "Produkt {0} od producenta {1} został aktywowany."
 
+msgid "No_records_were_imported."
+msgstr ""
+
 #, fuzzy
 msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported."
 msgstr "{0,plural,=1{product was cancelled succesfully.} other{products were cancelled succesfully.}}"
+
+msgid "Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button."
+msgstr ""
 
 msgid "Report"
 msgstr "Raport"
@@ -1604,6 +1610,9 @@ msgstr "Usuń"
 #, fuzzy
 msgid "Please_select_a_member."
 msgstr "Proszę wybrać producenta."
+
+msgid "This_transaction_was_already_imported."
+msgstr ""
 
 msgid "Added_on"
 msgstr "Dodane w dniu"

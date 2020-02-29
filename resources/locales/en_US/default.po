@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-02-26 12:49+0100\n"
-"PO-Revision-Date: 2020-02-26 13:09+0100\n"
+"POT-Creation-Date: 2020-02-29 22:34+0100\n"
+"PO-Revision-Date: 2020-02-29 22:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1611,9 +1611,6 @@ msgstr "Please enter a correct date."
 msgid "Please_select_a_customer."
 msgstr "Please select a member."
 
-msgid "The_transaction_was_already_imported."
-msgstr "This transaction was already imported."
-
 msgid "The_delivery_ryhthm_is_not_valid."
 msgstr "The delivery rhythm is not valid."
 
@@ -2417,6 +2414,9 @@ msgstr "Strike out unwanted items."
 
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
+
+#~ msgid "The_transaction_was_already_imported."
+#~ msgstr "This transaction was already imported."
 
 #~ msgid "Please_select_a_correct_customer."
 #~ msgstr "Please select a correct member."

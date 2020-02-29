@@ -46,15 +46,28 @@ class ReportsController extends AdminAppController
         
         $csvPayments = [];
         $csvRecords = [];
+        $saveRecords = false;
+        
         if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() && !empty($this->getRequest()->getData('upload'))) {
             $upload = $this->getRequest()->getData('upload');
             $content = $upload->getStream()->getContents();
             $reader = BankingReader::createFromString($content);
             $csvRecords = $reader->getPreparedRecords($reader->getRecords());
+            
+            foreach($csvRecords as &$csvRecord) {
+                $csvRecord['already_imported'] = $this->Payment->find('all', [
+                    'conditions' => [
+                        'transaction_text' => $csvRecord['content'],
+                        'status' => APP_ON,
+                    ]
+                ])->count() > 0;
+            }
+
         }
         
         if (!empty($this->getRequest()->getData('Payments'))) {
             $csvRecords = $this->getRequest()->getData('Payments');
+            $saveRecords = true;
         }
 
         if (!empty($csvRecords)) {
@@ -69,12 +82,16 @@ class ReportsController extends AdminAppController
             try {
                 foreach($csvPayments as &$csvPayment) {
                     
+                    if ($csvPayment->already_imported && !isset($csvPayment->deleted)) {
+                        $csvPayment->deleted = true;
+                    }
+                    
                     $csvPayment = $this->Payment->patchEntity(
                         $csvPayment,
                         [
                             'date_transaction_add' => new FrozenTime($csvPayment->date),
                             'approval' => APP_ON,
-                            'deleted' => $csvPayment->deleted ? $csvPayment->deleted : false,
+                            'deleted' => $csvPayment->deleted,
                             'id_customer' => $csvPayment->original_id_customer == 0 ? $csvPayment->id_customer : $csvPayment->original_id_customer,
                             'transaction_text' => $csvPayment->content,
                             'created_by' => $this->AppAuth->getUserId(),
@@ -82,29 +99,34 @@ class ReportsController extends AdminAppController
                     );
                     
                 }
-                
-                $this->Payment->getConnection()->transactional(function () use ($csvPayments) {
+                if ($saveRecords) {
                     
-                    $i = 0;
-                    foreach($csvPayments as $csvPayment) {
-                        if ($csvPayment->deleted) {
-                            unset($csvPayments[$i]);
+                    $this->Payment->getConnection()->transactional(function () use ($csvPayments) {
+                        
+                        $i = 0;
+                        foreach($csvPayments as $csvPayment) {
+                            if ($csvPayment->deleted) {
+                                unset($csvPayments[$i]);
+                            }
+                            $i++;
                         }
-                        $i++;
-                    }
+                        if (empty($csvPayments)) {
+                            $this->Flash->error(__d('admin', 'No_records_were_imported.'));
+                            $this->redirect($this->referer());
+                        }
+                        
+                        $success = $this->Payment->saveManyOrFail($csvPayments);
+                        if ($success) {
+                            $this->Flash->success(__d('admin', '{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported.', [count($csvPayments)]));
+                            $this->redirect($this->referer());
+                        }
+                        
+                    });
                     
-                    if (empty($csvPayments)) {
-                        $this->Flash->error(__d('admin', 'No_records_were_imported.'));
-                        $this->redirect($this->referer());
-                    }
-                    
-                    $success = $this->Payment->saveManyOrFail($csvPayments);
-                    if ($success) {
-                        $this->Flash->success(__d('admin', '{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported.', [count($csvPayments)]));
-                        $this->redirect($this->referer());
-                    }
-                    
-                });
+                } else {
+                    $this->Flash->success(__d('admin', 'Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button.'));
+                    $this->set('csvPayments', $csvPayments);
+                }
             } catch(PersistenceFailedException $e) {
                 $this->Flash->error(__d('admin', 'Errors_while_saving!'));
                 $this->set('csvPayments', $csvPayments);
