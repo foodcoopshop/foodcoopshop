@@ -45,4 +45,16 @@ class BankingReaderTest extends AppCakeTestCase
         $this->assertEquals(3, count($records));
     }
     
+    public function testCheckStructureRaiffeisenOk()
+    {
+        $reader = BankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen.csv');
+        $this->assertTrue($reader->checkStructure());
+    }
+    
+    public function testCheckStructureRaiffeisenNotOk()
+    {
+        $reader = BankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen-wrong-structure.csv');
+        $this->assertFalse($reader->checkStructure());
+    }
+
 }

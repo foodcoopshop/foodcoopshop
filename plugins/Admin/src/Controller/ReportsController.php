@@ -52,7 +52,12 @@ class ReportsController extends AdminAppController
             $upload = $this->getRequest()->getData('upload');
             $content = $upload->getStream()->getContents();
             $reader = BankingReader::createFromString($content);
-            $csvRecords = $reader->getPreparedRecords($reader->getRecords());
+            try {
+                $csvRecords = $reader->getPreparedRecords($reader->getRecords());
+            } catch(\Exception $e) {
+                $this->Flash->error(__d('admin', 'Structure_of_uploaded_file_is_not_valid.'));
+                $this->redirect($this->referer());
+            }
             
             foreach($csvRecords as &$csvRecord) {
                 $csvRecord['already_imported'] = $this->Payment->find('all', [

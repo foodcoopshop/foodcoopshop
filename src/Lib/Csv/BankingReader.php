@@ -43,6 +43,24 @@ class BankingReader extends Reader {
         return $record;
     }
     
+    private function checkStructure1($record): bool
+    {
+        $result = false;
+        
+        if (count($record) == 7 &&
+            strlen($record[0]) == 10 &&
+            strlen($record[2]) == 10 &&
+            is_numeric(Configure::read('app.numberHelper')->getStringAsFloat($record[3])) &&
+            $record[4] == 'EUR' &&
+            strlen($record[5]) == 23 &&
+            empty($record[6])
+            ) {
+            $result = true;
+        }
+        
+        return $result;
+    }
+    
     private function getCustomerByPersonalTransactionCode($content): ?Customer
     {
         $customerModel = TableRegistry::getTableLocator()->get('Customers');
@@ -89,6 +107,10 @@ class BankingReader extends Reader {
     
     public function getPreparedRecords(): array
     {
+        if (!$this->checkStructure()) {
+            throw new \Exception('structure of csv is not valid');
+        }
+        
         $records = $this->getRecords();
         $records = iterator_to_array($records);
         
@@ -124,6 +146,25 @@ class BankingReader extends Reader {
         $preparedRecords = Hash::sort($preparedRecords, '{n}.date', 'desc');
         
         return $preparedRecords;
+    }
+    
+    public function checkStructure(): bool
+    {
+        $records = $this->getRecords();
+        $records = iterator_to_array($records);
+        
+        
+        $method = 'checkStructure' . $this->type;
+        if (!method_exists($this, $method)) {
+            throw new \Exception('method does not exist: ' . $method);
+        }
+        
+        $structureIsOk = false;
+        foreach($records as $record) {
+            $structureIsOk |= $this->$method($record);
+        }
+        
+        return $structureIsOk;
     }
     
 }
