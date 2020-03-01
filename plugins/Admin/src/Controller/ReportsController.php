@@ -38,10 +38,10 @@ class ReportsController extends AdminAppController
         }
         return $this->AppAuth->isSuperadmin() && Configure::read('app.htmlHelper')->paymentIsCashless();
     }
-
-    public function payments($paymentType)
+    
+    private function handleCsvUpload()
     {
-        
+
         $this->Payment = TableRegistry::getTableLocator()->get('Payments');
         
         $csvPayments = [];
@@ -62,14 +62,14 @@ class ReportsController extends AdminAppController
                     ]
                 ])->count() > 0;
             }
-
+            
         }
         
         if (!empty($this->getRequest()->getData('Payments'))) {
             $csvRecords = $this->getRequest()->getData('Payments');
             $saveRecords = true;
         }
-
+        
         if (!empty($csvRecords)) {
             
             $csvPayments = $this->Payment->newEntities(
@@ -97,7 +97,7 @@ class ReportsController extends AdminAppController
                             'id_customer' => $csvPayment->original_id_customer == 0 ? $csvPayment->id_customer : $csvPayment->original_id_customer,
                             'transaction_text' => $csvPayment->content,
                             'created_by' => $this->AppAuth->getUserId(),
-                       ]
+                        ]
                     );
                     
                 }
@@ -125,7 +125,7 @@ class ReportsController extends AdminAppController
                         }
                         
                     });
-                    
+                        
                 } else {
                     $this->Flash->success(__d('admin', 'Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button.'));
                     $this->set('csvPayments', $csvPayments);
@@ -135,6 +135,12 @@ class ReportsController extends AdminAppController
                 $this->set('csvPayments', $csvPayments);
             }
         }
+    }
+
+    public function payments($paymentType)
+    {
+        
+        $this->handleCsvUpload();
         
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
@@ -166,7 +172,8 @@ class ReportsController extends AdminAppController
 
         // exluce "empty_glasses" deposit payments for manufacturers
         $conditions[] = "((Payments.id_manufacturer > 0 && Payments.text = 'money') || Payments.id_manufacturer = 0)";
-
+        
+        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
         $query = $this->Payment->find('all', [
             'conditions' => $conditions,
             'contain' => [
