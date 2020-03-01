@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-03-01 20:14+0100\n"
-"PO-Revision-Date: 2020-03-01 20:15+0100\n"
+"POT-Creation-Date: 2020-03-01 21:11+0100\n"
+"PO-Revision-Date: 2020-03-01 21:11+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -512,6 +512,9 @@ msgstr "Das Produkt {0} vom Hersteller {1} wurde deaktiviert."
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr "Das Produkt {0} vom Hersteller {1} wurde aktiviert."
+
+msgid "The_uploaded_file_is_not_valid."
+msgstr "Die hochgeladene Datei ist nicht gültig."
 
 msgid "No_records_were_imported."
 msgstr ""
@@ -1542,15 +1545,6 @@ msgstr "Produkt-Nr."
 msgid "docs_route_infos_for_success"
 msgstr "wichtige-infos-zum-gelingen"
 
-msgid "Upload_CSV_file_with_bank_transactions"
-msgstr "CSV-Datei mit Überweisungen hochladen"
-
-msgid "Please_select_a_member."
-msgstr "Bitte wähle ein Mitglied aus."
-
-msgid "This_transaction_was_already_imported."
-msgstr "Diese Überweisung wurde bereits importiert."
-
 msgid "Added_on"
 msgstr "Eingetragen am"
 
@@ -1730,6 +1724,15 @@ msgstr "Dein persönlicher Überweisungs-Code"
 
 msgid "Please_add_your_personal_transaction_code_to_your_transaction!"
 msgstr "Bitte trage deinen persönlichen Überweisungs-Code im Feld \"Verwendungszweck\" ein."
+
+msgid "Upload_CSV_file_with_bank_transactions"
+msgstr "CSV-Datei mit Überweisungen hochladen"
+
+msgid "Please_select_a_member."
+msgstr "Bitte wähle ein Mitglied aus."
+
+msgid "This_transaction_was_already_imported."
+msgstr "Diese Überweisung wurde bereits importiert."
 
 msgid "Invoice_for_the_order_period_{0}_to_{1}"
 msgstr "Rechnung für den Bestell-Zeitraum {0} - {1}"

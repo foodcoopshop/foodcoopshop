@@ -24,6 +24,7 @@ if (empty($csvRecords)) {
     ]);
     echo $this->Form->control('upload', [
         'type' => 'file',
+        'accept' => '.csv',
         'onchange' => 'form.submit()',
         'label' => __d('admin', 'Upload_CSV_file_with_bank_transactions') . ': ',
     ]);

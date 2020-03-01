@@ -55,7 +55,7 @@ class ReportsController extends AdminAppController
             try {
                 $csvRecords = $reader->getPreparedRecords($reader->getRecords());
             } catch(\Exception $e) {
-                $this->Flash->error(__d('admin', 'Structure_of_uploaded_file_is_not_valid.'));
+                $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.'));
                 $this->redirect($this->referer());
             }
             
