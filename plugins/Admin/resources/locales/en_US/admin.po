@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-29 22:38+0100\n"
-"PO-Revision-Date: 2020-02-29 22:39+0100\n"
+"POT-Creation-Date: 2020-03-01 20:14+0100\n"
+"PO-Revision-Date: 2020-03-01 20:15+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -514,7 +514,7 @@ msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr "The product {0} of manufacturer {1} has been activated."
 
 msgid "No_records_were_imported."
-msgstr ""
+msgstr "No records were imported."
 
 msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported."
 msgstr "{0,plural,=1{1 record was} other{# records were}} successfully imported."
@@ -1545,9 +1545,6 @@ msgstr "infos-for-success"
 msgid "Upload_CSV_file_with_bank_transactions"
 msgstr "Upload CSV file with bank transactions"
 
-msgid "Delete?"
-msgstr "Delete?"
-
 msgid "Please_select_a_member."
 msgstr "Please select a member."
 
@@ -2039,6 +2036,16 @@ msgstr "For signing in please use the email address of this message. If you want
 
 msgid "Your_contact_person"
 msgstr "Your contact person"
+
+#~ msgid "Transfer?"
+#~ msgstr "Transfer?"
+
+#, fuzzy
+#~ msgid "Save?"
+#~ msgstr "Save"
+
+#~ msgid "Delete?"
+#~ msgstr "Delete?"
 
 #~ msgid "The_CSV_data_was_sucessfully_imported."
 #~ msgstr "The CSV data was successfully imported."

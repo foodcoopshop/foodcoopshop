@@ -82,8 +82,11 @@ class ReportsController extends AdminAppController
             try {
                 foreach($csvPayments as &$csvPayment) {
                     
-                    if ($csvPayment->already_imported && isset($csvPayment->selected)) {
-                        $csvPayment->selected = false;
+                    if (!isset($csvPayment->selected)) {
+                        $csvPayment->selected = true;
+                        if ($csvPayment->already_imported) {
+                            $csvPayment->selected = false;
+                        }
                     }
                     
                     $csvPayment = $this->Payment->patchEntity(
@@ -91,7 +94,6 @@ class ReportsController extends AdminAppController
                         [
                             'date_transaction_add' => new FrozenTime($csvPayment->date),
                             'approval' => APP_ON,
-                            'selected' => $csvPayment->selected,
                             'id_customer' => $csvPayment->original_id_customer == 0 ? $csvPayment->id_customer : $csvPayment->original_id_customer,
                             'transaction_text' => $csvPayment->content,
                             'created_by' => $this->AppAuth->getUserId(),

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-29 22:38+0100\n"
+"POT-Creation-Date: 2020-03-01 20:14+0100\n"
 "PO-Revision-Date: 2020-02-29 22:35+0100\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1604,10 +1604,6 @@ msgid "Upload_CSV_file_with_bank_transactions"
 msgstr ""
 
 #, fuzzy
-msgid "Delete?"
-msgstr "Usuń"
-
-#, fuzzy
 msgid "Please_select_a_member."
 msgstr "Proszę wybrać producenta."
 
@@ -2128,6 +2124,14 @@ msgstr "W celu zalogowania się proszę użyć adresu email z tej wiadomości. A
 
 msgid "Your_contact_person"
 msgstr "Twoja osoba kontaktowa"
+
+#, fuzzy
+#~ msgid "Save?"
+#~ msgstr "Zapisz"
+
+#, fuzzy
+#~ msgid "Delete?"
+#~ msgstr "Usuń"
 
 #, fuzzy
 #~ msgid "The_CSV_data_was_sucessfully_imported."

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-02-29 22:38+0100\n"
+"POT-Creation-Date: 2020-03-01 20:14+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1542,9 +1542,6 @@ msgid "docs_route_infos_for_success"
 msgstr ""
 
 msgid "Upload_CSV_file_with_bank_transactions"
-msgstr ""
-
-msgid "Delete?"
 msgstr ""
 
 msgid "Please_select_a_member."

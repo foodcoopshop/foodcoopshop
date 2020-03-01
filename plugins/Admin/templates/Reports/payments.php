@@ -82,7 +82,7 @@ if ($useCsvUpload) {
         
         echo '<table class="list no-clone-last-row">';
             
-            echo '<th style="text-align:center;"></th>';
+            echo '<th style="text-align:center;">'.__d('admin', 'Save').'?</th>';
             echo '<th>' . __d('admin', 'Member'). '</th>';
             echo '<th>' . __d('admin', 'Transaction_text'). '</th>';
             echo '<th style="text-align:right;">' . $this->Html->getPaymentText($paymentType) . '</th>';
@@ -98,7 +98,7 @@ if ($useCsvUpload) {
                             'type' => 'checkbox',
                             'label' => '',
                             'class' => 'select-csv-record',
-                            'value' => !$csvPayment->selected,
+                            'checked' => $csvPayment->selected,
                         ]);
                     echo '</td>';
                     

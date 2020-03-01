@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-29 22:38+0100\n"
-"PO-Revision-Date: 2020-02-29 22:58+0100\n"
+"POT-Creation-Date: 2020-03-01 20:14+0100\n"
+"PO-Revision-Date: 2020-03-01 20:15+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1545,9 +1545,6 @@ msgstr "wichtige-infos-zum-gelingen"
 msgid "Upload_CSV_file_with_bank_transactions"
 msgstr "CSV-Datei mit Überweisungen hochladen"
 
-msgid "Delete?"
-msgstr "Löschen?"
-
 msgid "Please_select_a_member."
 msgstr "Bitte wähle ein Mitglied aus."
 
@@ -2039,6 +2036,16 @@ msgstr "Bitte verwende zum Einloggen die E-Mail-Adresse dieser Nachricht. Falls 
 
 msgid "Your_contact_person"
 msgstr "Deine Ansprechperson"
+
+#~ msgid "Transfer?"
+#~ msgstr "Übernehmen?"
+
+#, fuzzy
+#~ msgid "Save?"
+#~ msgstr "Speichern"
+
+#~ msgid "Delete?"
+#~ msgstr "Löschen?"
 
 #~ msgid "The_CSV_data_was_sucessfully_imported."
 #~ msgstr "Die CSV-Datei wurde erfolgreich importiert."
