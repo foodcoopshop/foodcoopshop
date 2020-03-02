@@ -1215,6 +1215,10 @@ body.reports.payment form#csv-records tr.not-selected span,
 body.reports.payment form#csv-records tr.not-selected select {
 	text-decoration: line-through;
 }
+body.reports.payment form#csv-records .checkbox label {
+	margin-bottom: 0;
+	margin-top: 6px;
+}
 body.payments.edit form {
 	width: 530px;
 }
