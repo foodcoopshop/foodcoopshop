@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-02-29 22:34+0100\n"
+"POT-Creation-Date: 2020-03-02 10:30+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1230,6 +1230,9 @@ msgid "Action_Log_Ordered_product_pickup_day_changed"
 msgstr ""
 
 msgid "Action_Log_Member_credit_upload_added"
+msgstr ""
+
+msgid "Action_Log_Credit_upload_csv_imported"
 msgstr ""
 
 msgid "Action_Log_Credit_upload_approval_ok"

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-02-29 22:34+0100\n"
+"POT-Creation-Date: 2020-03-02 10:30+0100\n"
 "PO-Revision-Date: 2020-02-29 22:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1656,6 +1656,11 @@ msgstr "Zamówiony produkt: Zmieniono dzień odbioru"
 # Member: Credit uploaded
 msgid "Action_Log_Member_credit_upload_added"
 msgstr "Członek: Przesłano kredyt"
+
+# Credit upload: Approval open
+#, fuzzy
+msgid "Action_Log_Credit_upload_csv_imported"
+msgstr "Przesył kredytu: Potwierdzenie otwarte"
 
 # Credit upload: OK
 msgid "Action_Log_Credit_upload_approval_ok"

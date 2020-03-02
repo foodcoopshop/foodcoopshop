@@ -261,6 +261,9 @@ class ActionLogsTable extends AppTable
             'payment_product_added' => [
                 'name' => __('Action_Log_Member_credit_upload_added')
             ],
+            'payment_product_csv_imported' => [
+                'name' => __('Action_Log_Credit_upload_csv_imported')
+            ],
             'payment_product_approval_ok' => [
                 'name' => __('Action_Log_Credit_upload_approval_ok')
             ],

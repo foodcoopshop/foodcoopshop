@@ -125,7 +125,10 @@ class ReportsController extends AdminAppController
                         
                         $success = $this->Payment->saveManyOrFail($csvPayments);
                         if ($success) {
-                            $this->Flash->success(__d('admin', '{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported.', [count($csvPayments)]));
+                            $message = __d('admin', '{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported.', [count($csvPayments)]);
+                            $this->Flash->success($message);
+                            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+                            $this->ActionLog->customSave('payment_product_csv_imported', $this->AppAuth->getUserId(), 0, 'payments', $message);
                             $this->redirect($this->referer());
                         }
                         

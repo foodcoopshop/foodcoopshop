@@ -3,7 +3,6 @@
 namespace Admin\Controller;
 
 use App\Mailer\AppMailer;
-use App\Model\Table\ConfigurationsTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\I18n\FrozenDate;
