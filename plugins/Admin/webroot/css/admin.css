@@ -1191,12 +1191,12 @@ body.reports.payment form#csv-upload label {
 	font-weight: bold;
 }
 body.reports.payment form#csv-records {
-    padding-bottom: 20px;
+    padding-bottom: 40px;
     margin-top: -20px;
 }
 body.reports.payment form#csv-records table.list {
-    margin-bottom: 20px;
     margin-top: 20px;
+    margin-bottom: 10px;
 }
 body.reports.payment form#csv-records select {
 	width: 250px;
@@ -1218,6 +1218,9 @@ body.reports.payment form#csv-records tr.not-selected select {
 body.reports.payment form#csv-records .checkbox label {
 	margin-bottom: 0;
 	margin-top: 6px;
+}
+body.reports.payment form#csv-records button {
+	float: right;
 }
 body.payments.edit form {
 	width: 530px;
