@@ -43,6 +43,7 @@ $this->element('addScript', [
     'script' =>
     Configure::read('app.jsNamespace') . ".Helper.initTooltip('.transaction-text');" .
     Configure::read('app.jsNamespace') . ".Admin.initSaveCsvUploadPayments();" .
+    Configure::read('app.jsNamespace') . ".Admin.initRemoveValidationErrorAfterSelectChange('form#csv-records .select-member');" .
     Configure::read('app.jsNamespace') . ".Admin.bindSelectCsvRecord('.select-csv-record');"
 ]);
 
@@ -83,6 +84,7 @@ foreach($csvPayments as $csvPayment) {
             'type' => 'select',
             'label' => '',
             'empty' => __d('admin', 'Please_select_a_member.'),
+            'class' => 'select-member',
             'options' => $customersForDropdown,
             'value' => $csvPayment->original_id_customer == 0 ? $csvPayment->id_customer : $csvPayment->original_id_customer,
         ]);

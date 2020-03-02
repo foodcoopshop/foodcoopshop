@@ -2645,6 +2645,16 @@ foodcoopshop.Admin = {
                row.addClass('not-selected');
            }
         });
+    },
+    
+    initRemoveValidationErrorAfterSelectChange : function(selector) {
+        $(selector).on('change', function() {
+            if ($(this).val() > 0) {
+                var wrapper = $(this).closest('.select'); 
+                wrapper.removeClass('error');
+                wrapper.find('.error-message').remove();
+            }
+        });
     }
-
+    
 };
