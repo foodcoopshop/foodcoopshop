@@ -21,47 +21,15 @@ use Cake\I18n\FrozenTime;
 use Cake\Utility\Hash;
 use League\Csv\Reader;
 
-class BankingReader extends Reader {
+abstract class BankingReader extends Reader implements BankingReaderInterface {
 
-    const TYPE_RAIFFEISEN = 1;
-    
-    private $type;
-    
-    private function configureType1(): void
+    public function __construct($document)
     {
-        $this->setDelimiter(';');
+        parent::__construct($document);
+        $this->configureType();
     }
     
-    private function prepareRecords1($record): array
-    {
-        // 1) remove empty array elements
-        $record = array_filter($record);
-        
-        // 2) 01.02.2019 02:51:14:563 replaces last : to . (microseconds)
-        $record[5] =  substr_replace($record[5], '.', 19, 1);
-        
-        return $record;
-    }
-    
-    private function checkStructure1($record): bool
-    {
-        $result = false;
-        
-        if (count($record) == 7 &&
-            strlen($record[0]) == 10 &&
-            strlen($record[2]) == 10 &&
-            is_numeric(Configure::read('app.numberHelper')->getStringAsFloat($record[3])) &&
-            $record[4] == 'EUR' &&
-            strlen($record[5]) == 23 &&
-            empty($record[6])
-            ) {
-            $result = true;
-        }
-        
-        return $result;
-    }
-    
-    private function getCustomerByPersonalTransactionCode($content): ?Customer
+    protected function getCustomerByPersonalTransactionCode($content): ?Customer
     {
         $customerModel = TableRegistry::getTableLocator()->get('Customers');
         $query = $customerModel->find('all', [
@@ -86,25 +54,6 @@ class BankingReader extends Reader {
         return $foundCustomer;
     }
     
-    public function __construct($document)
-    {
-        parent::__construct($document);
-        
-        // as long as there is only one bank implementation set default type in constructor
-        // later use method setType($type)
-        $this->setType(self::TYPE_RAIFFEISEN);
-    }
-    
-    public function setType($type): void
-    {
-        $this->type = $type;
-        $method = 'configureType' . $this->type;
-        if (!method_exists($this, $method)) {
-            throw new \Exception('method does not exist: ' . $method);
-        }
-        $this->$method();
-    }
-    
     public function getPreparedRecords(): array
     {
         if (!$this->checkStructure()) {
@@ -114,12 +63,7 @@ class BankingReader extends Reader {
         $records = $this->getRecords();
         $records = iterator_to_array($records);
         
-        $method = 'prepareRecords' . $this->type;
-        if (!method_exists($this, $method)) {
-            throw new \Exception('method does not exist: ' . $method);
-        }
-        
-        $records = array_map([$this, $method], $records);
+        $records = array_map([$this, 'prepareRecord'], $records);
         
         $preparedRecords = [];
         foreach($records as $record) {
@@ -153,15 +97,9 @@ class BankingReader extends Reader {
         $records = $this->getRecords();
         $records = iterator_to_array($records);
         
-        
-        $method = 'checkStructure' . $this->type;
-        if (!method_exists($this, $method)) {
-            throw new \Exception('method does not exist: ' . $method);
-        }
-        
         $structureIsOk = false;
         foreach($records as $record) {
-            $structureIsOk |= $this->$method($record);
+            $structureIsOk |= $this->checkStructureForRecord($record);
         }
         
         return $structureIsOk;

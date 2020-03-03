@@ -12,11 +12,11 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Lib\Csv\RaiffeisenBankingReader;
 use App\Test\TestCase\AppCakeTestCase;
-use App\Lib\Csv\BankingReader;
 use Cake\Core\Configure;
 
-class BankingReaderTest extends AppCakeTestCase
+class RaiffeisenBankingReaderTest extends AppCakeTestCase
 {
     
     public function setUp(): void
@@ -29,9 +29,9 @@ class BankingReaderTest extends AppCakeTestCase
         $this->assertLogFilesForErrors();
     }
     
-    public function testReadRaiffeisen()
+    public function testRead()
     {
-        $reader = BankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen.csv');
+        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen.csv');
         $records = $reader->getPreparedRecords($reader->getRecords());
         foreach($records as $record) {
             $this->assertEquals(4, count($record));
@@ -45,15 +45,15 @@ class BankingReaderTest extends AppCakeTestCase
         $this->assertEquals(3, count($records));
     }
     
-    public function testCheckStructureRaiffeisenOk()
+    public function testCheckStructureOk()
     {
-        $reader = BankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen.csv');
+        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen.csv');
         $this->assertTrue($reader->checkStructure());
     }
     
-    public function testCheckStructureRaiffeisenNotOk()
+    public function testCheckStructureNotOk()
     {
-        $reader = BankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen-wrong-structure.csv');
+        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen-wrong-structure.csv');
         $this->assertFalse($reader->checkStructure());
     }
 

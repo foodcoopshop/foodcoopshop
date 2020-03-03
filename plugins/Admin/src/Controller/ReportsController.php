@@ -2,7 +2,7 @@
 
 namespace Admin\Controller;
 
-use App\Lib\Csv\BankingReader;
+use App\Lib\Csv\RaiffeisenBankingReader;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\TableRegistry;
@@ -51,7 +51,7 @@ class ReportsController extends AdminAppController
         if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() && !empty($this->getRequest()->getData('upload'))) {
             $upload = $this->getRequest()->getData('upload');
             $content = $upload->getStream()->getContents();
-            $reader = BankingReader::createFromString($content);
+            $reader = RaiffeisenBankingReader::createFromString($content);
             try {
                 $csvRecords = $reader->getPreparedRecords($reader->getRecords());
             } catch(\Exception $e) {
