@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-03-01 21:11+0100\n"
-"PO-Revision-Date: 2020-03-02 10:20+0100\n"
+"POT-Creation-Date: 2020-03-03 09:20+0100\n"
+"PO-Revision-Date: 2020-03-03 09:21+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1716,14 +1716,17 @@ msgstr "Wenn es sich um eine Rückzahlung handelt, trage bitte ein, wie viel du 
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Bitte wähle die Monate aus, für die deine Zahlung gedacht ist."
 
+msgid "Your_code_has_been_copied_successfully_into_the_clipboard."
+msgstr "Dein Code wurde erfolgreich in die Zwischenablage kopiert."
+
 msgid "docs_route_credit_system_with_csv_upload"
 msgstr "guthaben-system-mit-automatischem-kontoabgleich"
 
-msgid "Your_personal_transaction_code"
-msgstr "Dein persönlicher Überweisungs-Code"
+msgid "Please_add_this_code_to_your_transaction:_{0}"
+msgstr "Bitte trage diesen Code im Feld \"Verwendungszweck\" ein: {0}"
 
-msgid "Please_add_your_personal_transaction_code_to_your_transaction!"
-msgstr "Bitte trage deinen persönlichen Überweisungs-Code im Feld \"Verwendungszweck\" ein."
+msgid "Copy_to_clipboard"
+msgstr ""
 
 msgid "Upload_CSV_file_with_bank_transactions"
 msgstr "CSV-Datei mit Überweisungen hochladen"
@@ -2039,6 +2042,9 @@ msgstr "Bitte verwende zum Einloggen die E-Mail-Adresse dieser Nachricht. Falls 
 
 msgid "Your_contact_person"
 msgstr "Deine Ansprechperson"
+
+#~ msgid "Your_personal_transaction_code"
+#~ msgstr "Dein persönlicher Überweisungs-Code"
 
 #~ msgid "Transfer?"
 #~ msgstr "Übernehmen?"

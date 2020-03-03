@@ -2655,6 +2655,14 @@ foodcoopshop.Admin = {
                 wrapper.find('.error-message').remove();
             }
         });
-    }
+    },
+    
+    initCopyPersonalTransactionCodeToClipboardButton: function (successMessage) {
+        var clipboard = new ClipboardJS('.btn-clipboard');
+        clipboard.on('success', function(e) {
+            alert(successMessage);
+        });
+    },
+
     
 };
