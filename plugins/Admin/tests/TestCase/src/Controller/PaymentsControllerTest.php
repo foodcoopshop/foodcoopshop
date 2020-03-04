@@ -1,8 +1,10 @@
 <?php
 
+use App\Model\Table\ConfigurationsTable;
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\Http\Client\FormData;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -203,6 +205,21 @@ class PaymentsControllerTest extends AppCakeTestCase
 
         $creditBalanceAfterAddAndDelete = $this->Customer->getCreditBalance(Configure::read('test.customerId'));
         $this->assertEquals($creditBalanceBeforeAddAndDelete, $creditBalanceAfterAddAndDelete);
+    }
+    
+    public function testCsvUploadCustomerNotFoundError()
+    {
+        $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
+        $this->loginAsSuperadmin();
+        $this->httpClient->post(
+            Configure::read('app.slugHelper')->getReport('product'),
+            [
+                'upload' => fopen(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen.csv', 'r')
+            ]
+            
+        );
+        $this->assertRegExpWithUnquotedString('name="Payments[0][id_customer]" class="select-member form-error"', $this->httpClient->getContent());
+        $this->assertRegExpWithUnquotedString('Bitte wähle ein Mitglied aus.', $this->httpClient->getContent());
     }
 
     private function addDepositToManufacturer($depositText, $ActionLogText)
