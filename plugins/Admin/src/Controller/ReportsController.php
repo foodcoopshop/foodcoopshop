@@ -47,8 +47,7 @@ class ReportsController extends AdminAppController
         $csvPayments = [];
         $csvRecords = [];
         $saveRecords = false;
-        
-        if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() && !empty($this->getRequest()->getData('upload'))) {
+        if (!empty($this->getRequest()->getData('upload'))) {
             $upload = $this->getRequest()->getData('upload');
             $content = $upload->getStream()->getContents();
             $reader = RaiffeisenBankingReader::createFromString($content);
@@ -148,7 +147,9 @@ class ReportsController extends AdminAppController
     public function payments($paymentType)
     {
         
-        $this->handleCsvUpload();
+        if ($paymentType == 'product' && !Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
+            $this->handleCsvUpload();
+        }
         
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
