@@ -62,22 +62,21 @@ abstract class BankingReader extends Reader implements BankingReaderInterface {
         
         $records = $this->getRecords();
         $records = iterator_to_array($records);
-        
-        $records = array_map([$this, 'prepareRecord'], $records);
+        $records = $this->equalizeStructure($records);
         
         $preparedRecords = [];
         foreach($records as $record) {
             
             // never import negative transactions
-            $amount = Configure::read('app.numberHelper')->getStringAsFloat($record[3]);
+            $amount = Configure::read('app.numberHelper')->getStringAsFloat($record['amount']);
             if ($amount <= 0) {
                 continue;
             }
             
             $preparedRecord = [];
-            $preparedRecord['content'] = h($record[1]);
+            $preparedRecord['content'] = h($record['content']);
             $preparedRecord['amount'] = $amount;
-            $date = new FrozenTime($record[5]);
+            $date = new FrozenTime($record['date']);
             $preparedRecord['date'] = $date->format(Configure::read('DateFormat.DatabaseWithTimeAndMicrosecondsAlt'));
             
             $customer = $this->getCustomerByPersonalTransactionCode($preparedRecord['content']);

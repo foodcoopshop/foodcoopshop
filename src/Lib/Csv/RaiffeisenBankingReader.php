@@ -23,17 +23,6 @@ class RaiffeisenBankingReader extends BankingReader {
         $this->setDelimiter(';');
     }
     
-    public function prepareRecord($record): array
-    {
-        // 1) remove empty array elements
-        $record = array_filter($record);
-        
-        // 2) 01.02.2019 02:51:14:563 replaces last : to . (microseconds)
-        $record[5] =  substr_replace($record[5], '.', 19, 1);
-        
-        return $record;
-    }
-    
     public function checkStructureForRecord($record): bool
     {
         $result = false;
@@ -51,6 +40,29 @@ class RaiffeisenBankingReader extends BankingReader {
         
         return $result;
     }
+    
+    public function equalizeStructure($records): array
+    {
+        
+        $preparedRecords = [];
+        foreach($records as $record){
+            
+            // remove empty array elements
+            $record = array_filter($record);
+            
+            $record['content'] = $record[1];
+            
+            $record['amount'] = $record[3];
+            
+            // create a valid date format: 01.02.2019 02:51:14:563 replaces last : to . (microseconds)
+            $record['date'] =  substr_replace($record[5], '.', 19, 1);
+            
+            $preparedRecords[] = $record;
+        }
+        
+        return $preparedRecords;
+    }
+
     
 }
 

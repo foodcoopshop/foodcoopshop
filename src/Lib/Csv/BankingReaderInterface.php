@@ -16,12 +16,11 @@ namespace App\Lib\Csv;
 
 interface BankingReaderInterface {
 
+    public function checkStructureForRecord($record): bool;
+
     public function configureType(): void;
     
-    public function prepareRecord($record): array;
-    
-    public function checkStructureForRecord($record): bool;
-    
+    public function equalizeStructure($records): array;
 }
 
 ?>
