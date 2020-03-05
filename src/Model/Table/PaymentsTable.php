@@ -62,6 +62,17 @@ class PaymentsTable extends AppTable
         $validator->numeric('id_customer', __('Please_select_a_customer.'));
         return $validator;
     }
+    
+    public function isAlreadyImported(string $transactionText): bool
+    {
+        $alreadyImported = $this->find('all', [
+            'conditions' => [
+                'transaction_text' => $transactionText,
+                'status' => APP_ON,
+            ]
+        ])->count() > 0;
+        return $alreadyImported;
+    }
 
     private function getManufacturerDepositConditions($manufacturerId = null)
     {

@@ -59,12 +59,7 @@ class ReportsController extends AdminAppController
             }
             
             foreach($csvRecords as &$csvRecord) {
-                $csvRecord['already_imported'] = $this->Payment->find('all', [
-                    'conditions' => [
-                        'transaction_text' => $csvRecord['content'],
-                        'status' => APP_ON,
-                    ]
-                ])->count() > 0;
+                $csvRecord['already_imported'] = $this->Payment->isAlreadyImported($csvRecord['content']);
             }
             
         }
