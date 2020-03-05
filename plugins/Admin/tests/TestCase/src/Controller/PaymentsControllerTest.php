@@ -3,8 +3,8 @@
 use App\Model\Table\ConfigurationsTable;
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\TableRegistry;
-use Cake\Http\Client\FormData;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -222,6 +222,47 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Bitte wähle ein Mitglied aus.', $this->httpClient->getContent());
     }
 
+    public function testCsvUploadSaveOk()
+    {
+        $newPaymentCustomerId = Configure::read('test.adminId');
+        $newPaymentAmount = 200;
+        $newPaymentContent = 'transaction text';
+        $newPaymentDate = '2019-03-03 02:51:25.165000';
+        
+        $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
+        $this->loginAsSuperadmin();
+        $this->httpClient->followOneRedirectForNextRequest();
+        $this->httpClient->post(
+            Configure::read('app.slugHelper')->getReport('product'),
+            [
+                'Payments' => [
+                    [
+                            'selected' => true,
+                            'original_id_customer' => 0,
+                            'id_customer' => $newPaymentCustomerId,
+                            'content' => $newPaymentContent,
+                            'already_imported' => false,
+                            'amount' => $newPaymentAmount,
+                            'date' => $newPaymentDate,
+                    ]
+                 ]
+            ]
+        );
+        
+        $this->assertRegExpWithUnquotedString('Ein Datensatz wurde erfolgreich importiert.', $this->httpClient->getContent());
+        $payments = $this->Payment->find('all')->toArray();
+        $newPayment = $payments[1];
+        $this->assertEquals(2, count($payments));
+        $this->assertEquals($newPaymentCustomerId, $newPayment->id_customer);
+        $this->assertEquals('product', $newPayment->type);
+        $this->assertEquals($newPaymentContent, $newPayment->transaction_text);
+        $newPaymentDateFrozen = new FrozenTime($newPaymentDate);
+        $this->assertEquals($newPaymentDateFrozen->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')), $newPayment->date_transaction_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')));
+        $this->assertEquals(APP_ON, $newPayment->status);
+        $this->assertEquals(APP_ON, $newPayment->approval);
+        $this->assertEquals(Configure::read('test.superadminId'), $newPayment->created_by);
+    }
+    
     private function addDepositToManufacturer($depositText, $ActionLogText)
     {
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
