@@ -41,7 +41,7 @@ class RaiffeisenBankingReader extends BankingReader {
         return $result;
     }
     
-    public function equalizeStructure($records): array
+    public function equalizeStructure(array $records): array
     {
         
         $preparedRecords = [];
