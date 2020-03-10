@@ -388,9 +388,11 @@ CREATE TABLE `fcs_payments` (
   `text` varchar(255) NOT NULL DEFAULT '',
   `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_changed` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_transaction_add` datetime DEFAULT NULL,
+  `transaction_text` text,
   `status` tinyint(4) NOT NULL DEFAULT '1',
   `approval` tinyint(4) NOT NULL DEFAULT '0',
-  `approval_comment` text NOT NULL,
+  `approval_comment` text,
   `changed_by` int(10) unsigned NOT NULL DEFAULT '0',
   `created_by` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
@@ -551,7 +553,7 @@ CREATE TABLE `fcs_timebased_currency_payments` (
   `modified` datetime DEFAULT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '1',
   `approval` tinyint(4) NOT NULL DEFAULT '0',
-  `approval_comment` text NOT NULL,
+  `approval_comment` text,
   `modified_by` int(10) unsigned DEFAULT NULL,
   `created_by` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)

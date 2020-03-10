@@ -15,7 +15,7 @@
 
 use Cake\Core\Configure;
 
-echo $this->element('paymentHeader', [
+echo $this->element('payment/addTypeManualHeader', [
     'icons' => $this->element('printIcon'),
     'extraInfo' => Configure::read('appDb.FCS_MEMBER_FEE_BANK_ACCOUNT_DATA'),
     'buttonText' => __d('admin', 'Add_transfered_member_fee'),

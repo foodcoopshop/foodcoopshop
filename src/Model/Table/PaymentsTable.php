@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 
 /**
@@ -50,6 +51,27 @@ class PaymentsTable extends AppTable
         $validator->numeric('amount', __('Please_enter_a_correct_number.'));
         $validator->greaterThanOrEqual('amount', 0.01, __('The_amount_(money)_needs_to_be_greater_than_0.'));
         return $validator;
+    }
+    
+    public function validationCsvImport(Validator $validator)
+    {
+        $validator = $this->validationAdd($validator);
+        $validator->requirePresence('amount', true, __('Please_enter_a_correct_amount.'));
+        $validator->requirePresence('date', true, __('Please_enter_a_correct_date.'));
+        $validator->requirePresence('id_customer', true, __('Please_select_a_customer.'));
+        $validator->numeric('id_customer', __('Please_select_a_customer.'));
+        return $validator;
+    }
+    
+    public function isAlreadyImported(string $transactionText): bool
+    {
+        $alreadyImported = $this->find('all', [
+            'conditions' => [
+                'transaction_text' => $transactionText,
+                'status' => APP_ON,
+            ]
+        ])->count() > 0;
+        return $alreadyImported;
     }
 
     private function getManufacturerDepositConditions($manufacturerId = null)

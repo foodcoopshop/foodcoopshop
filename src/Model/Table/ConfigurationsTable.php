@@ -8,8 +8,6 @@ use Cake\Filesystem\File;
 use Cake\Validation\Validator;
 
 /**
- * Configuration
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -25,6 +23,9 @@ use Cake\Validation\Validator;
 class ConfigurationsTable extends AppTable
 {
 
+    public const CASHLESS_PAYMENT_ADD_TYPE_MANUAL = 'manual';
+    public const CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD = 'list-upload';
+    
     public function initialize(array $config): void
     {
         $this->setTable('configuration');
@@ -143,6 +144,12 @@ class ConfigurationsTable extends AppTable
         return $this->getNumberRangeValidator($validator, 'value', 0, 14);
     }
 
+    public function validationFcsCashlessPaymentAddType(Validator $validator)
+    {
+        $values = array_keys(Configure::read('app.configurationHelper')->getCashlessPaymentAddTypeOptions());
+        return $validator->inList('value', $values, __('The_following_values_are_valid:') . ' ' . implode(', ', $values));
+    }
+    
     public function validationFcsCustomerGroup(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', CUSTOMER_GROUP_MEMBER, CUSTOMER_GROUP_ADMIN);
@@ -194,12 +201,6 @@ class ConfigurationsTable extends AppTable
         $validator->notEmptyString('value', __('Please_provide_a_value.'));
         $validator->numeric('value', __('Decimals_are_not_allowed.'));
         $validator = $this->getNumberRangeValidator($validator, 'value', 0, 200);
-        return $validator;
-    }
-
-    private function getRuleEqualsToMultipleValuesValidator($validator, $field, $values)
-    {
-        $validator->inList($field, array_keys($values), __('The_following_values_are_valid:') . ' ' . implode(', ', array_keys($values)));
         return $validator;
     }
 

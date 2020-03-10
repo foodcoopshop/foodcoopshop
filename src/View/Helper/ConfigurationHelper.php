@@ -2,6 +2,7 @@
 
 namespace App\View\Helper;
 
+use App\Model\Table\ConfigurationsTable;
 use Cake\Core\Configure;
 use Cake\View\Helper;
 
@@ -45,7 +46,23 @@ class ConfigurationHelper extends Helper
             case 'FCS_NO_DELIVERY_DAYS_GLOBAL':
                 return Configure::read('app.timeHelper')->getNextDeliveryDays();
                 break;
+            case 'FCS_CASHLESS_PAYMENT_ADD_TYPE':
+                return $this->getCashlessPaymentAddTypeOptions();
+                break;
         }
+    }
+    
+    public function isCashlessPaymentTypeManual()
+    {
+        return Configure::read('appDb.FCS_CASHLESS_PAYMENT_ADD_TYPE') == ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_MANUAL;
+    }
+    
+    public function getCashlessPaymentAddTypeOptions()
+    {
+        return [
+            ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_MANUAL => __('Customer_adds_payment_manually'),
+            ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD => __('Payment_is_added_by_uploading_a_list'),
+        ];
     }
 
     public function getConfigurationDropdownOption($name, $value)

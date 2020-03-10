@@ -164,7 +164,8 @@ INSERT INTO `fcs_configuration` VALUES
 (583,1,'FCS_REGISTRATION_NOTIFICATION_EMAILS','Wer soll bei neuen Registrierungen informiert werden?<br /><div class=\"small\">Mehrere E-Mail-Adressen mit , (ohne Leerzeichen) trennen.</div>','fcs-demo-superadmin@mailinator.com','text',55,'de_DE','2019-03-05 20:08:00','2019-03-05 20:08:00'),
 (584,1,'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED','Selbstbedienungs-Modus für Lagerprodukte aktiv?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/selbstbedienungs-modus\" target=\"_blank\">Zur Online-Doku</a></div>','0','boolean',300,'de_DE','2019-04-17 20:01:59','2019-04-17 20:01:59'),
 (585,1,'FCS_APP_ADDITIONAL_DATA','Zusätzliche Infos zur Foodcoop<br /><div class=\"small\">Z.B. ZVR-Zahl</div>','','textarea',8,'de_DE','2019-08-03 20:07:17','2019-08-03 20:07:17'),
-(586,1,'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED','Selbstbedienungs-Modus im Test-Modus ausführen?<br /><div class=\"small\">Keine Verlinkung im Haupt-Menü und bei Lagerprodukten.</div>','1','boolean',310,'de_DE','2019-12-09 13:46:41','2019-12-09 13:46:41');
+(586,1,'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED','Selbstbedienungs-Modus im Test-Modus ausführen?<br /><div class=\"small\">Keine Verlinkung im Haupt-Menü und bei Lagerprodukten.</div>','1','boolean',310,'de_DE','2019-12-09 13:46:41','2019-12-09 13:46:41'),
+(587,1,'FCS_CASHLESS_PAYMENT_ADD_TYPE','Art der Eintragung der Guthaben-Aufladungen<br /><div class=\"small\">Wie gelangen die Guthaben-Aufladungen vom Bankkonto in den FoodCoopShop?</div>','manual','dropdown',145,'de_DE','2020-02-11 10:13:10','2020-02-11 10:13:10');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -239,7 +240,7 @@ INSERT INTO `fcs_pages` VALUES
 
 /*!40000 ALTER TABLE `fcs_payments` DISABLE KEYS */;
 INSERT INTO `fcs_payments` VALUES
-(1,92,0,'product',100.00,'','2018-07-03 20:00:20','2018-07-03 20:00:20',1,0,'',0,92);
+(1,92,0,'product',100.00,'','2018-07-03 20:00:20','2018-07-03 20:00:20',NULL,NULL,1,0,'',0,92);
 /*!40000 ALTER TABLE `fcs_payments` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_pickup_days` DISABLE KEYS */;
@@ -398,7 +399,8 @@ INSERT INTO `phinxlog` VALUES
 (20191222194750,'AddAutoLoginHash','2019-12-22 20:26:26','2019-12-22 20:26:26',0),
 (20200120095222,'StockAlwaysAvailableAndDefaultQuantity','2020-01-20 10:44:32','2020-01-20 10:44:32',0),
 (20200131081923,'FixCategoryAndPageTree','2020-01-31 08:36:17','2020-01-31 08:36:17',0),
-(20200202135400,'ChangeTextToLongtext','2020-02-02 14:06:16','2020-02-02 14:06:16',0);
+(20200202135400,'ChangeTextToLongtext','2020-02-02 14:06:16','2020-02-02 14:06:16',0),
+(20200211083925,'CashlessPaymentAddTypeConfiguration','2020-02-11 09:13:10','2020-02-11 09:13:10',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-02-26 12:49+0100\n"
+"POT-Creation-Date: 2020-03-02 10:30+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1232,6 +1232,9 @@ msgstr ""
 msgid "Action_Log_Member_credit_upload_added"
 msgstr ""
 
+msgid "Action_Log_Credit_upload_csv_imported"
+msgstr ""
+
 msgid "Action_Log_Credit_upload_approval_ok"
 msgstr ""
 
@@ -1502,6 +1505,9 @@ msgstr ""
 msgid "Decimals_are_not_allowed."
 msgstr ""
 
+msgid "The_following_values_are_valid:"
+msgstr ""
+
 msgid "Please_enter_the_name_of_the_foodcoop."
 msgstr ""
 
@@ -1518,9 +1524,6 @@ msgid "Please_enter_exactly_2_decimals."
 msgstr ""
 
 msgid "Please_provide_a_value."
-msgstr ""
-
-msgid "The_following_values_are_valid:"
 msgstr ""
 
 msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
@@ -1599,6 +1602,15 @@ msgid "Please_enter_a_correct_number."
 msgstr ""
 
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
+msgstr ""
+
+msgid "Please_enter_a_correct_amount."
+msgstr ""
+
+msgid "Please_enter_a_correct_date."
+msgstr ""
+
+msgid "Please_select_a_customer."
 msgstr ""
 
 msgid "The_delivery_ryhthm_is_not_valid."
@@ -1746,6 +1758,12 @@ msgid "Generated_invoices"
 msgstr ""
 
 msgid "Sent_order_lists"
+msgstr ""
+
+msgid "Customer_adds_payment_manually"
+msgstr ""
+
+msgid "Payment_is_added_by_uploading_a_list"
 msgstr ""
 
 msgid "Members"

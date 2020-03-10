@@ -557,7 +557,7 @@ class OrderDetailsController extends AdminAppController
         
         $errors = [];
         if (empty($newCustomer)) {
-            $errors[] = __d('admin', 'Please_select_a_member.');
+            $errors[] = __d('admin', 'Please_select_a_new_member.');
         } else {
             if ($newCustomer->id_customer == $oldOrderDetail->id_customer) {
                 $errors[] = __d('admin', 'The_same_member_must_not_be_selected.');

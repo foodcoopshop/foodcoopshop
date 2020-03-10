@@ -2,8 +2,11 @@
 
 namespace Admin\Controller;
 
+use App\Lib\Csv\RaiffeisenBankingReader;
 use Cake\Core\Configure;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\TableRegistry;
+use Cake\ORM\Exception\PersistenceFailedException;
 
 /**
  * ReportsController
@@ -35,11 +38,114 @@ class ReportsController extends AdminAppController
         }
         return $this->AppAuth->isSuperadmin() && Configure::read('app.htmlHelper')->paymentIsCashless();
     }
+    
+    private function handleCsvUpload()
+    {
+
+        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
+        
+        $csvPayments = [];
+        $csvRecords = [];
+        $saveRecords = false;
+        if (!empty($this->getRequest()->getData('upload'))) {
+            $upload = $this->getRequest()->getData('upload');
+            $content = $upload->getStream()->getContents();
+            $reader = RaiffeisenBankingReader::createFromString($content);
+            try {
+                $csvRecords = $reader->getPreparedRecords($reader->getRecords());
+            } catch(\Exception $e) {
+                $this->Flash->error(__d('admin', 'The_uploaded_file_is_not_valid.'));
+                $this->redirect($this->referer());
+            }
+            
+            foreach($csvRecords as &$csvRecord) {
+                $csvRecord['already_imported'] = $this->Payment->isAlreadyImported($csvRecord['content']);
+            }
+            
+        }
+        
+        if (!empty($this->getRequest()->getData('Payments'))) {
+            $csvRecords = $this->getRequest()->getData('Payments');
+            $saveRecords = true;
+        }
+        
+        if (!empty($csvRecords)) {
+            
+            $csvPayments = $this->Payment->newEntities(
+                $csvRecords,
+                [
+                    'validate' => 'csvImport',
+                ]
+            );
+            
+            try {
+                foreach($csvPayments as &$csvPayment) {
+                    
+                    if (!isset($csvPayment->selected)) {
+                        $csvPayment->selected = true;
+                        if ($csvPayment->already_imported) {
+                            $csvPayment->selected = false;
+                        }
+                    }
+                    
+                    $csvPayment = $this->Payment->patchEntity(
+                        $csvPayment,
+                        [
+                            'date_transaction_add' => new FrozenTime($csvPayment->date),
+                            'approval' => APP_ON,
+                            'id_customer' => $csvPayment->original_id_customer == 0 ? $csvPayment->id_customer : $csvPayment->original_id_customer,
+                            'transaction_text' => $csvPayment->content,
+                            'created_by' => $this->AppAuth->getUserId(),
+                        ]
+                    );
+                    
+                }
+                if ($saveRecords) {
+                    
+                    $this->Payment->getConnection()->transactional(function () use ($csvPayments) {
+                        
+                        $i = 0;
+                        foreach($csvPayments as $csvPayment) {
+                            if ($csvPayment->isDirty('selected') && $csvPayment->getOriginal('selected') == 0) {
+                                unset($csvPayments[$i]);
+                            }
+                            $i++;
+                        }
+                        
+                        if (empty($csvPayments)) {
+                            $this->Flash->error(__d('admin', 'No_records_were_imported.'));
+                            $this->redirect($this->referer());
+                        }
+                        
+                        $success = $this->Payment->saveManyOrFail($csvPayments);
+                        if ($success) {
+                            $message = __d('admin', '{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported.', [count($csvPayments)]);
+                            $this->Flash->success($message);
+                            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+                            $this->ActionLog->customSave('payment_product_csv_imported', $this->AppAuth->getUserId(), 0, 'payments', $message);
+                            $this->redirect($this->referer());
+                        }
+                        
+                    });
+                        
+                } else {
+                    $this->Flash->success(__d('admin', 'Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button.'));
+                    $this->set('csvPayments', $csvPayments);
+                }
+            } catch(PersistenceFailedException $e) {
+                $this->Flash->error(__d('admin', 'Errors_while_saving!'));
+                $this->set('csvPayments', $csvPayments);
+            }
+        }
+    }
 
     public function payments($paymentType)
     {
-        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
-
+        
+        if ($paymentType == 'product' && !Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
+            $this->handleCsvUpload();
+        }
+        
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
             $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
@@ -70,7 +176,8 @@ class ReportsController extends AdminAppController
 
         // exluce "empty_glasses" deposit payments for manufacturers
         $conditions[] = "((Payments.id_manufacturer > 0 && Payments.text = 'money') || Payments.id_manufacturer = 0)";
-
+        
+        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
         $query = $this->Payment->find('all', [
             'conditions' => $conditions,
             'contain' => [

@@ -808,7 +808,8 @@ body.payments.product table.list,
 body.payments.overview table.list,
 body.payments.member_fee table.list,
 body.payments.my_member_fee table.list,
-body.payments .bottom-button-container {
+body.payments .bottom-button-container,
+body.payments h2 {
     width: 650px;
 }
 
@@ -1182,8 +1183,56 @@ body.reports.payment .payment-approval-comment {
     float: left;
     margin-right: 2px;
 }
+body.reports.payment form#csv-upload {
+	padding: 10px 0 5px 0;
+}
+body.reports.payment form#csv-upload label {
+	margin-right: 10px;
+	font-weight: bold;
+}
+body.reports.payment form#csv-records {
+    padding-bottom: 40px;
+    margin-top: -20px;
+}
+body.reports.payment form#csv-records table.list {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+body.reports.payment form#csv-records select {
+	width: 250px;
+}
+body.reports.payment form#csv-records .error-message {
+	margin-left: 0;
+}
+body.reports.payment form#csv-records tr.not-selected {
+    background-color: #EBEBEB;
+}
+body.reports.payment form#csv-records tr.not-selected .error-message {
+    display: none;
+}
+body.reports.payment form#csv-records tr.not-selected,
+body.reports.payment form#csv-records tr.not-selected span,
+body.reports.payment form#csv-records tr.not-selected select {
+	text-decoration: line-through;
+}
+body.reports.payment form#csv-records .checkbox label {
+	margin-bottom: 0;
+	margin-top: 6px;
+}
+body.reports.payment form#csv-records button {
+	float: right;
+}
 body.payments.edit form {
 	width: 530px;
+}
+body.payments.edit form p {
+	float: left;
+	clear: both;
+	margin-bottom: 0;
+}
+body.payments.edit form p span {
+	float: left;
+	margin-bottom: 5px;
 }
 body.payments.edit .email-template-info {
     float: left;

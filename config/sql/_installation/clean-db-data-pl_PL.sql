@@ -124,7 +124,8 @@ INSERT INTO `fcs_configuration` VALUES
 (583,1,'FCS_REGISTRATION_NOTIFICATION_EMAILS','Kto powinien być powiadamiany o nowych rejestracjach? <br /> <div class = \"small\"> Oddziel wiele adresów e-mail przecinkami (bez spacji). </div>','','text',55,'pl_PL','2019-03-05 20:01:59','2019-03-05 20:01:59'),
 (584,1,'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED','Użyć trybu samoobsługowego dla produktów magazynowych?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/pl/self-service-mode\" target=\"_blank\">Dokumentacja</a></div>','0','boolean',300,'pl_PL','2019-04-17 20:01:59','2019-04-17 20:01:59'),
 (585,1,'FCS_APP_ADDITIONAL_DATA','Additional food-coop infos','','textarea',8,'pl_PL','2019-08-03 20:07:12','2019-08-03 20:07:12'),
-(586,1,'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED','Run self-service mode in test mode?<br /><div class=\"small\">Does not add links to main menu and to stock products.</div>','0','boolean',310,'pl_PL','2019-12-09 13:46:37','2019-12-09 13:46:37');
+(586,1,'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED','Run self-service mode in test mode?<br /><div class=\"small\">Does not add links to main menu and to stock products.</div>','0','boolean',310,'pl_PL','2019-12-09 13:46:37','2019-12-09 13:46:37'),
+(587,1,'FCS_CASHLESS_PAYMENT_ADD_TYPE','Type of adding the payments<br /><div class=\"small\">How do the payment addings get into FoodCoopShop?</div>','manual','dropdown',145,'pl_PL','2020-02-11 10:13:06','2020-02-11 10:13:06');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -264,7 +265,8 @@ INSERT INTO `phinxlog` VALUES
 (20191222194750,'AddAutoLoginHash','2019-12-22 20:26:21','2019-12-22 20:26:21',0),
 (20200120095222,'StockAlwaysAvailableAndDefaultQuantity','2020-01-20 10:44:28','2020-01-20 10:44:28',0),
 (20200131081923,'FixCategoryAndPageTree','2020-01-31 08:36:13','2020-01-31 08:36:13',0),
-(20200202135400,'ChangeTextToLongtext','2020-02-02 14:06:11','2020-02-02 14:06:12',0);
+(20200202135400,'ChangeTextToLongtext','2020-02-02 14:06:11','2020-02-02 14:06:12',0),
+(20200211083925,'CashlessPaymentAddTypeConfiguration','2020-02-11 09:13:06','2020-02-11 09:13:06',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

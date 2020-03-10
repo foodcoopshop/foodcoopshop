@@ -57,6 +57,20 @@ echo '<p><label>'.__d('admin', 'Member').'</label>' . (!empty($payment->customer
 echo '<p><label>'.__d('admin', 'Amount').'</label>' . $this->Number->formatAsCurrency($payment->amount).'</p>';
 echo '<p><label>'.__d('admin', 'Date_of_upload').'</label>' . $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')) .'</p>';
 echo '<p><label>'.__d('admin', 'Date_last_modified').'</label>' . $payment->date_changed->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')).'</p>';
+
+if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
+    echo '<p><label>'.__d('admin', 'Transaction_added_on').'</label>';
+    if ($payment->date_transaction_add) {
+        echo $payment->date_transaction_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
+    }
+    echo '</p>';
+    echo '<p><label>'.__d('admin', 'Transaction_text').'</label>';
+    if ($payment->transaction_text) {
+        echo '<span>"'.$payment->transaction_text.'"</span>';
+    }
+    echo '</p>';
+}
+
 echo '<p><label>'.__d('admin', 'Last_editor').'</label>' . (empty($payment->changed_by_customer) ? __d('admin', 'This_payment_has_not_been_changed_yet.') : $payment->changed_by_customer->name).'</p>';
 echo $this->Form->control('Payments.approval', [
     'type' => 'select',

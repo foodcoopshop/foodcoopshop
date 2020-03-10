@@ -12,16 +12,18 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-
 use Cake\Core\Configure;
 
-echo $this->element('paymentHeader', [
-    'icons' => $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_credit_system'))]),
-    'extraInfo' => Configure::read('appDb.FCS_BANK_ACCOUNT_DATA'),
-    'buttonText' => __d('admin', 'Add_transfered_credit'),
-    'icon' => $this->Html->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName'))
-]);
-
+if (Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() || $this->request->getParam('action') == 'product') {
+    echo $this->element('payment/addTypeManualHeader', [
+        'icons' => $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_credit_system'))]),
+        'extraInfo' => Configure::read('appDb.FCS_BANK_ACCOUNT_DATA'),
+        'buttonText' => __d('admin', 'Add_transfered_credit'),
+        'icon' => $this->Html->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName'))
+    ]);
+} else {
+    echo $this->element('payment/addTypeManualListUploadHeader');
+}
 if (count($payments) == 0) {
     ?>
 <p><?php echo __d('admin', 'There_is_no_{0}_available.', [$title_for_layout]); ?></p>

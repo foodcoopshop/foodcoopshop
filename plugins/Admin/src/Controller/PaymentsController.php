@@ -55,6 +55,12 @@ class PaymentsController extends AdminAppController
                 return $this->AppAuth->isSuperadmin();
                 break;
             case 'add':
+                if (Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
+                    return $this->AppAuth->user();
+                } else {
+                    return $this->AppAuth->isSuperadmin();
+                }
+                break;
             case 'changeState':
                 return $this->AppAuth->user();
                 break;
@@ -350,7 +356,6 @@ class PaymentsController extends AdminAppController
                     'amount' => $amount,
                     'text' => $text,
                     'created_by' => $this->AppAuth->getUserId(),
-                    'approval_comment' => ''  // column type text cannot have a default value, must be set explicitly even if unused
                 ]
             )
         );
@@ -483,6 +488,19 @@ class PaymentsController extends AdminAppController
     {
         $this->customerId = $this->AppAuth->getUserId();
         $this->paymentType = 'product';
+        
+        if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
+            $customer = $this->Customer->find('all', [
+                'conditions' => [
+                    'Customers.id_customer' => $this->customerId
+                ],
+                'fields' => [
+                    'personalTransactionCode' => $this->Customer->getPersonalTransactionCodeField()
+                ]
+            ])->first();
+            $this->set('personalTransactionCode', $customer->personalTransactionCode);
+        }
+        
         $this->product();
         $this->render('product');
     }

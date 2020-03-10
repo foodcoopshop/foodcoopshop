@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-02-10 09:50+0100\n"
+"POT-Creation-Date: 2020-03-03 09:20+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -251,7 +251,7 @@ msgstr ""
 msgid "Orders"
 msgstr ""
 
-msgid "Please_select_a_member."
+msgid "Please_select_a_new_member."
 msgstr ""
 
 msgid "The_same_member_must_not_be_selected."
@@ -510,6 +510,18 @@ msgid "The_product_{0}_from_manufacturer_{1}_was_deactivated."
 msgstr ""
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
+msgstr ""
+
+msgid "The_uploaded_file_is_not_valid."
+msgstr ""
+
+msgid "No_records_were_imported."
+msgstr ""
+
+msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported."
+msgstr ""
+
+msgid "Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button."
 msgstr ""
 
 msgid "Report"
@@ -1436,6 +1448,12 @@ msgstr ""
 msgid "Date_last_modified"
 msgstr ""
 
+msgid "Transaction_added_on"
+msgstr ""
+
+msgid "Transaction_text"
+msgstr ""
+
 msgid "Last_editor"
 msgstr ""
 
@@ -1695,6 +1713,27 @@ msgid "If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account
 msgstr ""
 
 msgid "Please_chose_the_months_for_your_payment."
+msgstr ""
+
+msgid "Your_code_has_been_copied_successfully_into_the_clipboard."
+msgstr ""
+
+msgid "docs_route_credit_system_with_csv_upload"
+msgstr ""
+
+msgid "Please_add_this_code_to_your_transaction:_{0}"
+msgstr ""
+
+msgid "Copy_to_clipboard"
+msgstr ""
+
+msgid "Upload_CSV_file_with_bank_transactions"
+msgstr ""
+
+msgid "Please_select_a_member."
+msgstr ""
+
+msgid "This_transaction_was_already_imported."
 msgstr ""
 
 msgid "Invoice_for_the_order_period_{0}_to_{1}"

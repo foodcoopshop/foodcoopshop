@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-02-26 12:49+0100\n"
-"PO-Revision-Date: 2020-02-26 12:50+0100\n"
+"POT-Creation-Date: 2020-03-02 10:30+0100\n"
+"PO-Revision-Date: 2020-02-29 22:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: pl_PL\n"
@@ -1657,6 +1657,11 @@ msgstr "Zamówiony produkt: Zmieniono dzień odbioru"
 msgid "Action_Log_Member_credit_upload_added"
 msgstr "Członek: Przesłano kredyt"
 
+# Credit upload: Approval open
+#, fuzzy
+msgid "Action_Log_Credit_upload_csv_imported"
+msgstr "Przesył kredytu: Potwierdzenie otwarte"
+
 # Credit upload: OK
 msgid "Action_Log_Credit_upload_approval_ok"
 msgstr "Przesył kredytu: OK"
@@ -2019,6 +2024,10 @@ msgstr "Przynajmniej jeden adres mailowy jest nieprawidłowy. Oddziel wiele adre
 msgid "Decimals_are_not_allowed."
 msgstr "Liczby niecałkowite nie są dozwolone."
 
+# The following values are valid:
+msgid "The_following_values_are_valid:"
+msgstr "Następujące wartości są nieprawidłowe:"
+
 # Please enter the name of the food-coop.
 msgid "Please_enter_the_name_of_the_foodcoop."
 msgstr "Podaj nazwę kooperatywy."
@@ -2042,10 +2051,6 @@ msgstr "Wprowadź dokładnie dwa miejsca po przecinku."
 # Please provide a value.
 msgid "Please_provide_a_value."
 msgstr "Podaj wartość."
-
-# The following values are valid:
-msgid "The_following_values_are_valid:"
-msgstr "Następujące wartości są nieprawidłowe:"
 
 # The amount of characters needs to be between {0} and {1}.
 msgid "The_amount_of_characters_needs_to_be_between_{0}_and_{1}."
@@ -2150,6 +2155,21 @@ msgstr "Podaj poprawny numer."
 # The amount needs to be greater than 0.
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr "Ilość musi być większa od 0."
+
+# Please enter a correct number.
+#, fuzzy
+msgid "Please_enter_a_correct_amount."
+msgstr "Podaj poprawny numer."
+
+# Please enter a correct number.
+#, fuzzy
+msgid "Please_enter_a_correct_date."
+msgstr "Podaj poprawny numer."
+
+# Please enter a number.
+#, fuzzy
+msgid "Please_select_a_customer."
+msgstr "Wprowadź liczbę."
 
 # The delivery rhythm is not valid.
 msgid "The_delivery_ryhthm_is_not_valid."
@@ -2348,6 +2368,12 @@ msgstr "Wygenerowane faktury"
 # Sent order lists
 msgid "Sent_order_lists"
 msgstr "Wysłane listy zamówień"
+
+msgid "Customer_adds_payment_manually"
+msgstr ""
+
+msgid "Payment_is_added_by_uploading_a_list"
+msgstr ""
 
 # Members
 msgid "Members"
@@ -3233,6 +3259,16 @@ msgstr "Niepotrzebne skreślić."
 # Informationen-ueber-Ruecktrittsrecht
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informacja-o-prawie-do-odstapienia"
+
+# The tax rate is already used.
+#, fuzzy
+#~ msgid "The_transaction_was_already_imported."
+#~ msgstr "Stawka podatku jest już użyta."
+
+# Please enter a correct number.
+#, fuzzy
+#~ msgid "Please_select_a_correct_customer."
+#~ msgstr "Podaj poprawny numer."
 
 # paid in cash
 #~ msgid "order_state_cash"

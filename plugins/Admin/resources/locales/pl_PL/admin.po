@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-02-10 09:50+0100\n"
-"PO-Revision-Date: 2019-04-28 03:51+0200\n"
+"POT-Creation-Date: 2020-03-03 09:20+0100\n"
+"PO-Revision-Date: 2020-03-01 21:11+0100\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: pl_PL\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-Bookmarks: 586,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 msgid "Activities"
@@ -262,7 +262,7 @@ msgid "Orders"
 msgstr "Zamówienia"
 
 #, fuzzy
-msgid "Please_select_a_member."
+msgid "Please_select_a_new_member."
 msgstr "Proszę wybrać producenta."
 
 #, fuzzy
@@ -538,6 +538,20 @@ msgstr "Produkt {0} od producenta {1} został dezaktywowany."
 
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr "Produkt {0} od producenta {1} został aktywowany."
+
+#, fuzzy
+msgid "The_uploaded_file_is_not_valid."
+msgstr "Konto zostało aktywowane."
+
+msgid "No_records_were_imported."
+msgstr ""
+
+#, fuzzy
+msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported."
+msgstr "{0,plural,=1{product was cancelled succesfully.} other{products were cancelled succesfully.}}"
+
+msgid "Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button."
+msgstr ""
 
 msgid "Report"
 msgstr "Raport"
@@ -1488,6 +1502,12 @@ msgstr "Data przesłania"
 msgid "Date_last_modified"
 msgstr "Data ostatniej modyfikacji"
 
+msgid "Transaction_added_on"
+msgstr ""
+
+msgid "Transaction_text"
+msgstr ""
+
 msgid "Last_editor"
 msgstr "Ostatni redaktor"
 
@@ -1759,6 +1779,31 @@ msgstr "Jeśli wybierzesz \"zwrot\", wpisz kwotę, która została przelana na k
 
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Please chose the months for your payment."
+
+#, fuzzy
+msgid "Your_code_has_been_copied_successfully_into_the_clipboard."
+msgstr "Twoje konto zostało usunięte pomyślnie."
+
+#, fuzzy
+msgid "docs_route_credit_system_with_csv_upload"
+msgstr "credit-system"
+
+#, fuzzy
+msgid "Please_add_this_code_to_your_transaction:_{0}"
+msgstr "Twój własny panel producenta"
+
+msgid "Copy_to_clipboard"
+msgstr ""
+
+msgid "Upload_CSV_file_with_bank_transactions"
+msgstr ""
+
+#, fuzzy
+msgid "Please_select_a_member."
+msgstr "Proszę wybrać producenta."
+
+msgid "This_transaction_was_already_imported."
+msgstr ""
 
 msgid "Invoice_for_the_order_period_{0}_to_{1}"
 msgstr "Faktura za zamówienia za okres od {0} do {1}"
@@ -2087,6 +2132,26 @@ msgstr "W celu zalogowania się proszę użyć adresu email z tej wiadomości. A
 msgid "Your_contact_person"
 msgstr "Twoja osoba kontaktowa"
 
+#, fuzzy
+#~ msgid "Your_personal_transaction_code"
+#~ msgstr "Twój własny panel producenta"
+
+#, fuzzy
+#~ msgid "Save?"
+#~ msgstr "Zapisz"
+
+#, fuzzy
+#~ msgid "Delete?"
+#~ msgstr "Usuń"
+
+#, fuzzy
+#~ msgid "The_CSV_data_was_sucessfully_imported."
+#~ msgstr "1 ordered product was changed successfully to closed."
+
+#, fuzzy
+#~ msgid "Please_select..."
+#~ msgstr "Proszę wybrać producenta."
+
 #~ msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
 #~ msgstr "Ilość produktu {0} od producenta {1} została zmieniona z {2} na {3}."
 
@@ -2164,9 +2229,6 @@ msgstr "Twoja osoba kontaktowa"
 
 #~ msgid "The_order_status_of_the_ordered_products_{0}_were_successfully_changed_to_{1}."
 #~ msgstr "The order state of the ordered products of {0} was successfully changed to {1}."
-
-#~ msgid "1_ordered_product_was_successfully_closed."
-#~ msgstr "1 ordered product was changed successfully to closed."
 
 #~ msgid "{0}_ordered_product_were_successfully_closed."
 #~ msgstr "{0} ordered product were changed successfully to closed."

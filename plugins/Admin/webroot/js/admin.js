@@ -2626,6 +2626,43 @@ foodcoopshop.Admin = {
                     console.log(data.msg);
                 }
             });
-    }
+    },
+    
+    initSaveCsvUploadPayments : function() {
+        $('body.reports.payment form#csv-records button[type="submit"]').on('click', function () {
+            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-check');
+            foodcoopshop.Helper.disableButton($(this));
+            $(this).closest('form').submit();
+        });
+    },
+    
+    bindSelectCsvRecord : function(selector) {
+        $(selector).on('change', function() {
+           var row = $(this).closest('tr');
+           if (row.hasClass('not-selected')) {
+               row.removeClass('not-selected');
+           } else {
+               row.addClass('not-selected');
+           }
+        });
+    },
+    
+    initRemoveValidationErrorAfterSelectChange : function(selector) {
+        $(selector).on('change', function() {
+            if ($(this).val() > 0) {
+                var wrapper = $(this).closest('.select'); 
+                wrapper.removeClass('error');
+                wrapper.find('.error-message').remove();
+            }
+        });
+    },
+    
+    initCopyPersonalTransactionCodeToClipboardButton: function (successMessage) {
+        var clipboard = new ClipboardJS('.btn-clipboard');
+        clipboard.on('success', function(e) {
+            alert(successMessage);
+        });
+    },
 
+    
 };
