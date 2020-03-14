@@ -42,5 +42,5 @@ CKEDITOR.editorConfig = function ( config ) {
 
 };
 
-CKEDITOR.timestamp = 'v4.13.0'; // change this string if version is updated in package.json
+CKEDITOR.timestamp = 'v4.14.0'; // change this string if version is updated in package.json
 
