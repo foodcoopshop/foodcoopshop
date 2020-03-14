@@ -100,10 +100,6 @@ msgstr "Członek {0} zmienił swoje hasło."
 msgid "Your_new_password_has_been_saved_successfully."
 msgstr "Twoje nowe hasło zostało zapisane."
 
-#, fuzzy
-msgid "Amount_of_orders_where_the_invoice_has_not_been_sent_yet_to_the_manufacturer:"
-msgstr "Tu znajdują się niezmienione listy zamówień wysłane do producentów."
-
 msgid "The_credit_is"
 msgstr "Kredyt wynosi"
 
@@ -158,24 +154,8 @@ msgstr "Komentarz został zmodyfikowany pomyślnie."
 msgid "The_comment_of_the_member_{0}_was_changed:"
 msgstr "Komentarz członka {0} został zmodyfikowany:"
 
-#, fuzzy
-msgid "Sum_of_credits_of_activated_members"
-msgstr "Suma kredytów <b>aktywnych</b> członków"
-
-#, fuzzy
-msgid "Sum_of_credits_of_deactivated_members"
-msgstr "Suma kredytów <b>nieaktywnych</b> członków"
-
-#, fuzzy
-msgid "Sum_of_credits_of_deleted_members"
-msgstr "Suma kredytów <b>usuniętych</b> członków"
-
 msgid "Sum_of_deposit_compensation_payments_for_manufactures"
 msgstr "Suma rekompensat kaucji dla producentów"
-
-#, fuzzy
-msgid "Credit_and_deposit_balance"
-msgstr "Kredyt i kaucja"
 
 msgid "Members"
 msgstr "Członkowie"
@@ -191,10 +171,6 @@ msgstr "_Lista_zamowien_"
 
 msgid "product"
 msgstr "produkt"
-
-#, fuzzy
-msgid "Order_list"
-msgstr "Lista zamówień"
 
 msgid "member"
 msgstr "Członek"
@@ -226,14 +202,6 @@ msgstr "Brak zamówień w wybranym okresie"
 msgid "Order_lists_for_the_day"
 msgstr "Listy zamówień dla"
 
-#, fuzzy
-msgid "{0,plural,=1{1_Order_list} other{#_Order_lists}}_successfully_generated_for_manufacturer_{1}."
-msgstr "Listy zamówień dla producenta {0} zostały utworzone poprawnie."
-
-#, fuzzy
-msgid "Email_sent_to:{0}"
-msgstr "Mail został wysłany do {0}."
-
 msgid "Edit_settings"
 msgstr "Edytuj ustawienia"
 
@@ -261,24 +229,8 @@ msgstr "Grupuj wg producenta"
 msgid "Orders"
 msgstr "Zamówienia"
 
-#, fuzzy
-msgid "Please_select_a_new_member."
-msgstr "Proszę wybrać producenta."
-
-#, fuzzy
-msgid "The_same_member_must_not_be_selected."
-msgstr "Wpis czasu został usunięty"
-
-#, fuzzy
-msgid "The_amount_is_not_valid."
-msgstr "Konto zostało aktywowane."
-
 msgid "The_reason_for_changing_the_member_is_mandatory."
 msgstr ""
-
-#, fuzzy
-msgid "The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}."
-msgstr "Ilość zamówionego produktu {0} została zmodyfikowana z {1} na {2}."
 
 msgid "Amount"
 msgstr "Kwota"
@@ -289,16 +241,8 @@ msgstr "Powód"
 msgid "Assigned_to_another_member"
 msgstr ""
 
-#, fuzzy
-msgid "An_email_was_sent_to_{0}_and_{1}."
-msgstr "Mail został wysłany do {0}."
-
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
 msgstr "Waga zamówionego produktu {0} (ilość {1}) została zmodyfikowana z {2} na {3}."
-
-#, fuzzy
-msgid "Weight_adapted"
-msgstr "Waga zmodyfikowana"
 
 msgid "An_email_was_sent_to_{0}."
 msgstr "Mail został wysłany do {0}."
@@ -308,10 +252,6 @@ msgstr "Mail został wysłany do {0} oraz do producenta {1}."
 
 msgid "The_amount_of_the_ordered_product_{0}_was_successfully_changed_from_{1}_to_{2}."
 msgstr "Ilość zamówionego produktu {0} została zmodyfikowana z {1} na {2}."
-
-#, fuzzy
-msgid "Ordered_amount_adapted"
-msgstr "Ilość zamówiona zmodyfikowana"
 
 msgid "The_stock_was_increased_to_{0}."
 msgstr "Stan magazynowy został zwiększony do {0}."
@@ -361,22 +301,6 @@ msgstr "Strony"
 msgid "Your_comment_will_be_shown_here."
 msgstr "Twoje komentarze pojawią się w tym miejscu."
 
-#, fuzzy
-msgid "Check_credit_upload"
-msgstr "Sprawdź wpłaty kredytowe"
-
-#, fuzzy
-msgid "The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}."
-msgstr "Status twojej wpłaty kredytowej za {0} został pomyślnie zmieniony na {1}."
-
-#, fuzzy
-msgid "The_status_of_your_credit_upload_was_successfully_changed_to_{0}."
-msgstr "Status twojej wpłaty kredytowej został pomyślnie zmieniony na {0}."
-
-#, fuzzy
-msgid "The_status_of_the_credit_upload_for_{0}_was_successfully_changed_to_{1}_and_an_email_was_sent_to_the_member."
-msgstr "Status twojej wpłaty kredytowej za {0} został pomyślnie zmieniony na {1}. Mail został wysłany do członka."
-
 msgid "for"
 msgstr "za"
 
@@ -385,10 +309,6 @@ msgstr "Odbiór kaucji"
 
 msgid "was_added_successfully:_{0}"
 msgstr "został dodany pomyślnie: {0}"
-
-#, fuzzy
-msgid "The_amount_was_added_to_the_credit_system_of_{0}_and_can_be_deleted_there."
-msgstr "Kwota została dodana do systemu kredytowego {0} i tam może zostać usunięta."
 
 msgid "The_amount_was_added_to_the_deposit_account_of_{0}_and_can_be_deleted_there."
 msgstr "Kwota została dodana do konta kaucji {0} i tam może zostać usunięta."
@@ -405,26 +325,14 @@ msgstr "Płatność ({0}, {1}) z {2} została usunięta pomyślnie."
 msgid "Member_fee"
 msgstr "Opłata członkowska"
 
-#, fuzzy
-msgid "Credit"
-msgstr "Kredyt"
-
 msgid "Show_order"
 msgstr "Pokaż zamówienie"
 
 msgid "of_{0}"
 msgstr "z {0}"
 
-#, fuzzy
-msgid "The_product_{0}_has_{1,plural,=1{1_open_order} other{#_open_orders}}."
-msgstr "{0,plural,=1{1 produkt} other{# produkty}}"
-
 msgid "Please_try_again_as_soon_as_the_next_invoice_has_been_generated."
 msgstr ""
-
-#, fuzzy
-msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deleted_successfully."
-msgstr "{0,plural,=1{product was cancelled succesfully.} other{products were cancelled succesfully.}}"
 
 msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
 msgstr "Obraz (ID {0}) u producenta {1} został pomyślnie usunięty. Produkt: {1}, producent: {2}."
@@ -446,10 +354,6 @@ msgstr "Zamówienia możliwe do"
 
 msgid "Send_order_lists_day"
 msgstr "Dzień wysyłki list zamówień"
-
-#, fuzzy
-msgid "Order_list_is_not_sent"
-msgstr "Lista zamówień"
 
 msgid "Last_order_weekday"
 msgstr "Ostatni dzień zamówień"
@@ -486,10 +390,6 @@ msgstr "produkt {0} został ustawiony jako magazynowany."
 
 msgid "The_amount_of_the_product_{0}_was_changed_successfully."
 msgstr "Ilość produktu {0} została pomyślnie zmieniona."
-
-#, fuzzy
-msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed."
-msgstr "Jednostka produktu {0} od producenta {1} została zmieniona na {2}."
 
 msgid "The_price_of_the_product_{0}_was_changed_successfully."
 msgstr "Cena produktu {0} została pomyślnie zmieniona."
@@ -539,16 +439,8 @@ msgstr "Produkt {0} od producenta {1} został dezaktywowany."
 msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr "Produkt {0} od producenta {1} został aktywowany."
 
-#, fuzzy
-msgid "The_uploaded_file_is_not_valid."
-msgstr "Konto zostało aktywowane."
-
 msgid "No_records_were_imported."
 msgstr ""
-
-#, fuzzy
-msgid "{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported."
-msgstr "{0,plural,=1{product was cancelled succesfully.} other{products were cancelled succesfully.}}"
 
 msgid "Upload_successful._Please_select_the_records_you_want_to_import_and_then_click_save_button."
 msgstr ""
@@ -570,10 +462,6 @@ msgstr "Pokaz slajdów"
 
 msgid "Turnover_statistics"
 msgstr ""
-
-#, fuzzy
-msgid "December"
-msgstr "Członek"
 
 msgid "Add_tax_rate"
 msgstr "Dodaj stawkę podatku"
@@ -608,19 +496,11 @@ msgstr "Dodaj wpis czasu"
 msgid "Edit_time_entry"
 msgstr "Edytuj wpis czasu"
 
-#, fuzzy
-msgid "Credit_balance_of_{0}"
-msgstr "Saldo kredytowe {0}"
-
 msgid "of"
 msgstr "z"
 
 msgid "My_{0}_(time_account)"
 msgstr "Mój {0}"
-
-#, fuzzy
-msgid "My_credit_balance"
-msgstr "Moje saldo kredytowe"
 
 msgid "Filename_General-terms-and-conditions"
 msgstr "Regulamin"
@@ -889,10 +769,6 @@ msgstr "Administracja stroną"
 msgid "Financial_reports"
 msgstr "Raporty finansowe"
 
-#, fuzzy
-msgid "Sum_of_credits"
-msgstr "Suma kredytów"
-
 msgid "Included_deposit"
 msgstr "Zawiera kaucję"
 
@@ -908,27 +784,11 @@ msgstr "Imię"
 msgid "Lastname"
 msgstr "Nazwisko"
 
-#, fuzzy
-msgid "Profile_image"
-msgstr "Obraz suwaka"
-
-#, fuzzy
-msgid "Click_on_profile_image_to_change_it."
-msgstr "Kliknij na obraz aby go zmienić."
-
 msgid "Only_visible_for_other_membes_in_the_member_list."
 msgstr ""
 
 msgid "Is_shown_on_member_card."
 msgstr ""
-
-#, fuzzy
-msgid "Upload_new_profile_image_or_change_it"
-msgstr "Prześlij nowy obraz lub zmień go"
-
-#, fuzzy
-msgid "Delete_profile_image?"
-msgstr "Usunąć obraz suwaka?"
 
 msgid "Email"
 msgstr "E-mail"
@@ -969,10 +829,6 @@ msgstr "paying-with-time-module"
 msgid "How_do_I_use_the_paying_with_time_module?"
 msgstr "Jak używać modułu płacenia czasem?"
 
-#, fuzzy
-msgid "Generate_my_member_card"
-msgstr "Generuj zamówienia w formie PDF"
-
 msgid "Delete_member_irrevocably?"
 msgstr "Usunąć nieodwracalnie konto?"
 
@@ -1011,10 +867,6 @@ msgstr "dezaktywuj"
 
 msgid "activate"
 msgstr "aktywuj"
-
-#, fuzzy
-msgid "Show_credit"
-msgstr "Pokaż kredyt"
 
 msgid "Show_{0}"
 msgstr "Pokaż {0}"
@@ -1067,10 +919,6 @@ msgstr "Dzień odbioru"
 msgid "docs_route_pick_up_products"
 msgstr "pick-up-products"
 
-#, fuzzy
-msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_you."
-msgstr "Tu znajdują się niezmienione listy zamówień wysłane do producentów."
-
 msgid "Here_you_find_the_unchanged_order_lists_that_were_sent_to_the_manufacturers."
 msgstr "Tu znajdują się niezmienione listy zamówień wysłane do producentów."
 
@@ -1092,22 +940,6 @@ msgstr "manufacturers"
 msgid "General"
 msgstr "Ogólne"
 
-#, fuzzy
-msgid "in_your_imprint"
-msgstr "w twoim podpisie"
-
-#, fuzzy
-msgid "in_the_imprint_of_the_manufacturer"
-msgstr "podpis producenta"
-
-#, fuzzy
-msgid "Will_be_shown_in_imprint_{0}_and_spamprotected."
-msgstr "Will be shown spam-protected {0}."
-
-#, fuzzy
-msgid "Will_be_shown_in_imprint_{0}."
-msgstr "Będzie widoczne w podpisie {0}."
-
 msgid "Example_given_abbreviation"
 msgstr "Np."
 
@@ -1119,10 +951,6 @@ msgstr "Idź do swoich ustawień"
 
 msgid "To_the_settings_of_manufacturer"
 msgstr "Idź do ustawień producenta"
-
-#, fuzzy
-msgid "Profile"
-msgstr "Mój profil"
 
 msgid "To_manufacturer_profile"
 msgstr "Idź do profilu producenta"
@@ -1144,10 +972,6 @@ msgstr "Będzie widoczne na stronie podsumowania producenta. Nie może zostać z
 
 msgid "Long_description"
 msgstr "Długi opis"
-
-#, fuzzy
-msgid "To_save_long_description_press_save_and_then_edit_manufacturer."
-msgstr "Aby zapisać długi opis proszę kliknąć \"Zapisz\", a następnie przejdź do edycji producenta."
 
 msgid "Will_be_shown_on_the_manufacturer_profile."
 msgstr "Będzie widoczne na stronie profilowej producenta."
@@ -1196,14 +1020,6 @@ msgstr "Jeśli nie prześlesz własnego regulaminu (jako pdf), podczas zamawiani
 
 msgid "Delete_general_terms_and_conditions?"
 msgstr "Usunąć regulamin?"
-
-#, fuzzy
-msgid "Commercial_register_number"
-msgstr "KRS"
-
-#, fuzzy
-msgid "Company_court"
-msgstr "Sąd gospodarczy"
 
 msgid "Supervisory_authority"
 msgstr "Jednostka nadzorcza"
@@ -1259,24 +1075,8 @@ msgstr "Odbiorcy DW dla list zamówień"
 msgid "Separate_multiple_emails_with_comma"
 msgstr "Wiele adresów email oddzielamy przecinkiem"
 
-#, fuzzy
-msgid "Invoices_by_email"
-msgstr "Faktury mailowo"
-
 msgid "to_receive_his_invoice_every_month_by_email."
 msgstr "otrzymywać co miesiąc faktury drogą mailową."
-
-#, fuzzy
-msgid "Cancellations"
-msgstr "Anulowania"
-
-#, fuzzy
-msgid "to_receive_an_email_on_every_cancellation."
-msgstr "otrzymywać informację o każdym anulowaniu drogą mailową."
-
-#, fuzzy
-msgid "Adaptions_of_price_and_weight_of_ordered_products"
-msgstr "Modyfikacje cen i wag zamówionych produktów"
 
 msgid "to_receive_an_email_on_every_adaption_of_price_or_weight_of_a_ordered_product."
 msgstr "otrzymywać mail o każdej modyfikacji ceny lub wagi"
@@ -1295,10 +1095,6 @@ msgstr "otrzymywać mail o każdym zamówieniu błyskawicznym (oprócz produktó
 
 msgid "Other_settings"
 msgstr "Inne ustawienia"
-
-#, fuzzy
-msgid "Variable_member_fee_in"
-msgstr "Zmienna opłata członkowska w"
 
 msgid "The_invoice_for_the_manufacturer_will_be_reduced_by_the_given_percentage_no_decimals_allowed."
 msgstr "The invoice for the manufacturer will be reduced by the given percentage. No decimals allowed."
@@ -1371,10 +1167,6 @@ msgstr "{0,plural,=1{1 produkt} other{# produkty}}"
 
 msgid "Show_all_products_from_{0}"
 msgstr "Pokaż wszystkie produkty od {0}"
-
-#, fuzzy
-msgid "Show_deposit_account"
-msgstr "Pokaż konto wkładów"
 
 msgid "Edit_manufacturer_settings"
 msgstr "Edytuj ustawienia producenta"
@@ -1547,10 +1339,6 @@ msgstr "Dodaj wpłatę kredytową"
 msgid "Order_value"
 msgstr "Wartość zamówienia"
 
-#, fuzzy
-msgid "Delete_upload?"
-msgstr "Usunąć przekaz?"
-
 msgid "Your_credit_balance"
 msgstr "Twoje saldo kredytowe"
 
@@ -1572,16 +1360,8 @@ msgstr "Dodaj produkt"
 msgid "Synchronize_products"
 msgstr "Synchronizuj produkty"
 
-#, fuzzy
-msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
-msgstr "Wskazówka: możesz zmienić harmonogram dostaw dla wielu produktów zaznaczjąc je. Następnie kliknij przycisk na dole."
-
 msgid "Name_and_categories"
 msgstr "Nazwy i kategorie"
-
-#, fuzzy
-msgid "Product_declaration"
-msgstr "Zakładanie produktu"
 
 msgid "Stock_product"
 msgstr "Produkt magazynowany"
@@ -1591,18 +1371,6 @@ msgstr "Stawka podatkowa"
 
 msgid "New?"
 msgstr "Nowy?"
-
-#, fuzzy
-msgid "Delivery_rhythm"
-msgstr "Harmonogram dostaw"
-
-#, fuzzy
-msgid "Product_ID"
-msgstr "Produkt"
-
-#, fuzzy
-msgid "docs_route_infos_for_success"
-msgstr "bulk-orders"
 
 msgid "Added_on"
 msgstr "Dodane w dniu"
@@ -1628,23 +1396,11 @@ msgstr "Pozycja"
 msgid "Delete_slider_image?"
 msgstr "Usunąć obraz suwaka?"
 
-#, fuzzy
-msgid "Show_all_years"
-msgstr "Pokaż wszystkie zamówienia od {0}"
-
-#, fuzzy
-msgid "No_turnover_available."
-msgstr "jeśli dostępne"
-
 msgid "Total_turnover:_{0}"
 msgstr ""
 
 msgid "Average_turnover_for_months_where_products_were_delivered:_{0}"
 msgstr ""
-
-#, fuzzy
-msgid "Variable_member_fee_is_included_in_turnover."
-msgstr "Zmienna opłata członkowska w"
 
 msgid "Tax_rates_can_not_be_changed."
 msgstr "Stawki podatkowe nie mogą być zmieniane."
@@ -1681,10 +1437,6 @@ msgstr "Zamówienie błyskawiczne na dziś"
 
 msgid "chose_member..."
 msgstr "wybierz członka..."
-
-#, fuzzy
-msgid "Generate_member_cards"
-msgstr "Generuj zamówienia w formie PDF"
 
 msgid "1_day_ahead"
 msgstr "1 dzień wprzód"
@@ -1737,10 +1489,6 @@ msgstr "Kliknij aby zmienić ilość"
 msgid "Click_to_cancel_product"
 msgstr "Kliknij aby anulować produkt"
 
-#, fuzzy
-msgid "Click_to_change_member"
-msgstr "Kliknij aby zmienić cenę"
-
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Pokaż wszystkie produkty zamówione od {0}"
 
@@ -1780,27 +1528,11 @@ msgstr "Jeśli wybierzesz \"zwrot\", wpisz kwotę, która została przelana na k
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Please chose the months for your payment."
 
-#, fuzzy
-msgid "Your_code_has_been_copied_successfully_into_the_clipboard."
-msgstr "Twoje konto zostało usunięte pomyślnie."
-
-#, fuzzy
-msgid "docs_route_credit_system_with_csv_upload"
-msgstr "credit-system"
-
-#, fuzzy
-msgid "Please_add_this_code_to_your_transaction:_{0}"
-msgstr "Twój własny panel producenta"
-
 msgid "Copy_to_clipboard"
 msgstr ""
 
 msgid "Upload_CSV_file_with_bank_transactions"
 msgstr ""
-
-#, fuzzy
-msgid "Please_select_a_member."
-msgstr "Proszę wybrać producenta."
 
 msgid "This_transaction_was_already_imported."
 msgstr ""
@@ -1868,30 +1600,14 @@ msgstr "Listy zamówień zgrupowane wg"
 msgid "Customer_ID"
 msgstr ""
 
-#, fuzzy
-msgid "Member_card"
-msgstr "Członek"
-
-#, fuzzy
-msgid "Delete_selected_products"
-msgstr "Anuluj wybór produktów"
-
 msgid "Edit_delivery_rhythm_for_selected_products"
 msgstr "Edytuj harmonogram dostaw dla wybranych produktów"
-
-#, fuzzy
-msgid "Generate_product_cards"
-msgstr "Generuj zamówienia w formie PDF"
 
 msgid "Add_new_attribute_for_product_{0}"
 msgstr "Dodaj nowy atrybut do produktu {0}"
 
 msgid "change_amount"
 msgstr "zmień ilość"
-
-#, fuzzy
-msgid "This_product_is_always_available."
-msgstr "jeśli dostępne"
 
 msgid "No_email_notifications_are_sent_for_this_product."
 msgstr "Powiadomienia nigdy nie będą wysyłane dla tego produktu jeśli ilość magazynowa jest zbyt niska."
@@ -1901,10 +1617,6 @@ msgstr "zmieńharmonogram dostaw"
 
 msgid "delivery_rhythm_from"
 msgstr "początek"
-
-#, fuzzy
-msgid "change_deposit"
-msgstr "zmień wkład"
 
 msgid "add_image"
 msgstr "dodaj obraz"
@@ -1954,31 +1666,11 @@ msgstr "faktura od {0} została wysłana."
 msgid "Here_you_find_the_overview_for_making_the_transfers:"
 msgstr "Znajdziesz tu przegląd do wykonywania przelewów pieniężnych"
 
-#, fuzzy
-msgid "This_is_a_great_opportunity_to_check_the_credit_uploads_link_below."
-msgstr "Jest to świetna okazja dosprawdzenia spłat kredytów."
-
 msgid "(Link_only_works_for_superadmins)."
 msgstr "(Linki działają wyłącznie u superadminów)."
 
 msgid "Thank_you_very_much_for_your_work!"
 msgstr "Bardzo dziękujemy za wykonaną pracę!"
-
-#, fuzzy
-msgid "your_credit_is_used_up_and_equals_{0}."
-msgstr "twój kredyt został wykorzystany i wynosi {0}."
-
-#, fuzzy
-msgid "Please_soon_transfer_new_credit_(eg_100_{0})_to_our_bank_account."
-msgstr "Proszę wkrótce odnowić swój kredyt przelewając środki na nasze konto bankowe (np 100 {0})."
-
-#, fuzzy
-msgid "Do_not_forget_to_add_it_to_our_credit_system_after_the_bank_transfer."
-msgstr "Nie zapomnij dodać go do systemu kredytowego po wpłacie."
-
-#, fuzzy
-msgid "Here_you_find_the_link_to_add_the_credit:"
-msgstr "Oto link do odnowienia kredytu:"
 
 msgid "{0}_is_the_last_day_to_order._You_can_do_that_until_{0}_midnight."
 msgstr "{0} jest ostatnim dniem zamówień. Można zamawiać do {0}, do północy."
@@ -2012,14 +1704,6 @@ msgstr "Nowa ilość"
 msgid "Why_has_the_amount_been_adpated?"
 msgstr "Dlaczego ilość została dostosowana?"
 
-#, fuzzy
-msgid "PS:_Your_credit_has_been_adapted_automatically."
-msgstr "PS: Twój kredyt został automatycznie dostosowany."
-
-#, fuzzy
-msgid "Why_has_another_member_been_assigned?"
-msgstr "Dlaczego cena została dostosowana?"
-
 msgid "sorry,_{0}_can_not_be_delivered."
 msgstr "przepraszamy, produkt \"{0}\" nie może zostać dostarczony."
 
@@ -2031,10 +1715,6 @@ msgstr "Dlaczego produkt został anulowany?"
 
 msgid "Sorry,_but_sometimes_our_manufacturers_cannot_deliver_the_ordered_products._You_receive_this_email_so_you_can_buy_the_products_elsewhere."
 msgstr "Przepraszamy, lecz czasem nasi producenci nie są w stanie dostarczyć zamówionych produktów. Otrzymujesz ten mail aby móc kupić produkry w innym miejscu."
-
-#, fuzzy
-msgid "Thanks_for_respecting_that!"
-msgstr "Dziękujemy za przestrzeganie tego!"
 
 msgid "New_pickup_day"
 msgstr "Nowy dzień odbioru"
@@ -2051,27 +1731,11 @@ msgstr "Będzie to miało wpływ na następujący produkt"
 msgid "The_following_{0}_products_are_affected"
 msgstr "Będzie to miało wpływ na następujące produkty"
 
-#, fuzzy
-msgid "The_price_of_the_product_{0}_has_been_adapted."
-msgstr "Cena produktu {0} została dostosowana."
-
-#, fuzzy
-msgid "You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}."
-msgstr "Zamówiono {0} jednostek produktu dnia {1} od producenta {2}."
-
 msgid "Old_price"
 msgstr "Stara cena"
 
 msgid "New_price"
 msgstr "Nowa cena"
-
-#, fuzzy
-msgid "Why_has_the_price_been_adpated?"
-msgstr "Dlaczego cena została dostosowana?"
-
-#, fuzzy
-msgid "The_weight_of_the_product_{0}_has_been_adapted."
-msgstr "Waga produktu {0} została dostosowana."
 
 msgid "Old_price_for"
 msgstr "Stara cena dla"
@@ -2081,10 +1745,6 @@ msgstr "Nowa cena dla"
 
 msgid "The_base_price_is_{0}."
 msgstr "Cena bazowa wynosi {0}."
-
-#, fuzzy
-msgid "The_status_of_your_credit_upload_of_{0}_({1}_amount)_was_changed_to_{2}."
-msgstr "Status twojeje wpłaty kredytowej {0} ({1}) został zmieniony na {2}."
 
 msgid "Please_compare_the_credit_upload_that_you_added_to_our_system_with_the_actual_bank_account_transfer."
 msgstr "Proszę porównać wpłatę kredytową dodaną do systemu z rzeczywistym przelewem bankowym."
@@ -2119,10 +1779,6 @@ msgstr "Pomoc online"
 msgid "docs_route_order_handling"
 msgstr "order-handling"
 
-#, fuzzy
-msgid "You_can_change_your_imprint_by_yourself."
-msgstr "Możesz zmienić swój podpis samemu."
-
 msgid "Your_products_are_only_visible_for_members._To_view_your_products_as_the_member_sees_them_you_need_to_be_logged_in."
 msgstr "Twoje produkty są widoczne wyłącznie dla członków. Musisz być zalogowany żeby wyświetlić produkty tak, jak widzą je członkowie."
 
@@ -2131,153 +1787,3 @@ msgstr "W celu zalogowania się proszę użyć adresu email z tej wiadomości. A
 
 msgid "Your_contact_person"
 msgstr "Twoja osoba kontaktowa"
-
-#, fuzzy
-#~ msgid "Your_personal_transaction_code"
-#~ msgstr "Twój własny panel producenta"
-
-#, fuzzy
-#~ msgid "Save?"
-#~ msgstr "Zapisz"
-
-#, fuzzy
-#~ msgid "Delete?"
-#~ msgstr "Usuń"
-
-#, fuzzy
-#~ msgid "The_CSV_data_was_sucessfully_imported."
-#~ msgstr "1 ordered product was changed successfully to closed."
-
-#, fuzzy
-#~ msgid "Please_select..."
-#~ msgstr "Proszę wybrać producenta."
-
-#~ msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed_from_{2}_to_{3}."
-#~ msgstr "Ilość produktu {0} od producenta {1} została zmieniona z {2} na {3}."
-
-#, fuzzy
-#~ msgid "Amount_of_orders_that_have_not_yet_been_billed:"
-#~ msgstr "Ilość zamówień, które nie zostały złożone od dwóch miesięcy:"
-
-#~ msgid "docs_route_financial_reports"
-#~ msgstr "financial-reports"
-
-#~ msgid "Order_lists_successfully_generated_for_manufacturer_{0}_and_sent_to_{1}."
-#~ msgstr "Listy zamówień dla producenta {0} zostały utworzone poprawnie i wysłane do {1}."
-
-#~ msgid "Manufacturer_optimized_for_bulk_orders?"
-#~ msgstr "Manufacturer optimized for bulk orders?"
-
-#~ msgid "Disables_all_notifications_except_sent_invoices."
-#~ msgstr "Disables all notifications except the one for sent invoices."
-
-#~ msgid "Info_page_for_bulk_orders"
-#~ msgstr "Info page for bulk orders"
-
-#~ msgid "Add_deposit_return"
-#~ msgstr "Dodaj zwrot kaucji"
-
-#~ msgid "Amount_minus_eventual_variable_member_fee"
-#~ msgstr "Kwota minus ewentualna zmienna opłata członkowska"
-
-#~ msgid "Show_ordered_product"
-#~ msgstr "Pokaż zamówione produkty"
-
-#, fuzzy
-#~ msgid "aactivate"
-#~ msgstr "activate"
-
-#, fuzzy
-#~ msgid "Terms_of_use"
-#~ msgstr "Terms-of-use"
-
-#, fuzzy
-#~ msgid "Change_terms_of_use"
-#~ msgstr "Change group"
-
-#, fuzzy
-#~ msgid "Upload_terms_of_use"
-#~ msgstr "Terms-of-use"
-
-#, fuzzy
-#~ msgid "Delete_terms_of_use?"
-#~ msgstr "Delete attribute?"
-
-#~ msgid "Zero_means_no_limit."
-#~ msgstr "0 means \"no limit\"."
-
-#~ msgid "Global_limit: {0}"
-#~ msgstr "Global limit: {0}"
-
-#~ msgid "The_pickup_day_was_not_changed."
-#~ msgstr "The pickup day was not changed."
-
-#~ msgid "docs_route_paying-with-time-module"
-#~ msgstr "paying-with-time-module"
-
-#~ msgid "Order_period"
-#~ msgstr "Order period"
-
-#~ msgid "per"
-#~ msgstr "per"
-
-#~ msgid "Stock"
-#~ msgstr "Stock"
-
-#~ msgid "The_order_status_of_the_ordered_product_{0}_of_{1}_was_successfully_changed_to_{2}."
-#~ msgstr "The order state of the ordered product of {0} of {1} was successfully changed to {2}."
-
-#~ msgid "The_order_status_of_the_ordered_products_{0}_were_successfully_changed_to_{1}."
-#~ msgstr "The order state of the ordered products of {0} was successfully changed to {1}."
-
-#~ msgid "{0}_ordered_product_were_successfully_closed."
-#~ msgstr "{0} ordered product were changed successfully to closed."
-
-#~ msgid "Delivery_date"
-#~ msgstr "Delivery date"
-
-#~ msgid "Be_careful:_it_is_the_order_date_that_counts_not_the_delivery_date."
-#~ msgstr "Be careful: It is the order date that counts, not the delivery date!"
-
-#~ msgid "Last_pickup_day_between"
-#~ msgstr "Last pickup day between"
-
-#~ msgid "Amount_orders_between"
-#~ msgstr "Amount orders between"
-
-#~ msgid "and"
-#~ msgstr "and"
-
-#~ msgid "Manually_send_order_list"
-#~ msgstr "Manually send order list"
-
-#~ msgid "The_comment_of_the_order_number_{0}_by_{1}_was_changed:"
-#~ msgstr "The comment of the order number {0} by {1} was changed:"
-
-#~ msgid "The_date_of_the_order_{0}_of_{1}_was_changed_to_{2}."
-#~ msgstr "The date of the order {0} of {1} was changed to {2}."
-
-#~ msgid "Change_order_status"
-#~ msgstr "Change order status"
-
-#~ msgid "Set_date_of_order_back"
-#~ msgstr "Set date of order back"
-
-#~ msgid "Close_all_orders"
-#~ msgstr "Close all orders"
-
-#~ msgid "Instant_order_nr_{0}_successfully_placed_for_{1}_and_the_date_was_changed_to_{2}._The_manufacturer_was_notified_unless_the_notification_was_deactivated."
-#~ msgstr "Instant order nrº {0} successfully placed for {1} and date changed to {2}. The manufacturer was notified unless the notification was disabled."
-
-#~ msgid "Order_number_abbr"
-#~ msgstr "Order nº"
-
-#, fuzzy
-#~ msgid "Picked_up?"
-#~ msgstr "Pick-up day"
-
-#~ msgid "The_order_status_of_the_orders_{0}_was_successfully_changed_to_{1}."
-#~ msgstr "The order state of the orders {0} was successfully changed to {1}."
-
-#~ msgid "Pick_up_date"
-#~ msgstr "Pick-up date"

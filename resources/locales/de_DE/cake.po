@@ -33,10 +33,6 @@ msgstr "Oooohhh, es ist ein Fehler aufgetreten."
 msgid "The requested file contains `..` and will not be read."
 msgstr ""
 
-#, fuzzy
-msgid "The requested file was not found"
-msgstr "Die Seite %s wurde leider nicht gefunden."
-
 msgid "{0,number,#,###.##} KB"
 msgstr ""
 
@@ -223,6 +219,3 @@ msgstr ""
 
 msgid "December"
 msgstr ""
-
-#~ msgid "Error"
-#~ msgstr "Fehler"

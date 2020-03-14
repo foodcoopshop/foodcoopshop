@@ -136,11 +136,6 @@ msgstr "finish"
 msgid "route_cart_finished"
 msgstr "finished"
 
-# search
-#, fuzzy
-msgid "route_self_service"
-msgstr "search"
-
 # You have been signed out.
 msgid "You_have_been_signed_out."
 msgstr "Zostałeś wylogowany."
@@ -160,11 +155,6 @@ msgstr "Przepraszamy, ale producenci nie mają dostępu."
 # Your cart
 msgid "Your_cart"
 msgstr "Twój koszyk"
-
-# Koszyk
-#, fuzzy
-msgid "Finish_cart"
-msgstr "Dokończ zakupy"
 
 # Your cart was empty.
 msgid "Your_cart_was_empty."
@@ -281,11 +271,6 @@ msgstr "Pomyślnie złożono zamówienie błyskawiczne ({0}) dla {1}. Informacja
 msgid "Pickup_day"
 msgstr "Dzień odbioru"
 
-# thank you for order from {0}.
-#, fuzzy
-msgid "Thank_you_for_your_purchase!"
-msgstr "dziękujemy za zamówienie od {0}."
-
 # Sign out
 msgid "Sign_out"
 msgstr "Wyloguj się"
@@ -308,11 +293,6 @@ msgstr "Cześć"
 # You can unsubscribe this e-mail <a href=\"{0}\">in the manufacturer's settings</a>.
 msgid "You_can_unsubscribe_this_email_<a href=\"{0}\">in_the_settings_of_the_manufacturer</a>."
 msgstr "Możesz anulować supskrypcię mailową <a href=\"{0}\">w ustawieniach producenta</a>."
-
-# Your cart
-#, fuzzy
-msgid "Your_purchase"
-msgstr "Twój koszyk"
 
 # Order confirmation
 msgid "Order_confirmation"
@@ -745,11 +725,6 @@ msgstr "Powód modyfikacji ceny (pole obowiązkowe)?"
 msgid "Original_price_without_reduction_of_price_in_time"
 msgstr "Oryginalna cena nie pomniejszona o płatności czasem"
 
-# From which really paid in
-#, fuzzy
-msgid "From_which_really_paid_in"
-msgstr "Z czego, w rzeczywistości zapłacono z"
-
 # Adapt weight?
 msgid "Adapt_weight?"
 msgstr "Zmodyfikować wagę?"
@@ -973,36 +948,6 @@ msgstr "Zalecana ostrożność, czynności nie da się cofnąć!"
 msgid "Errors_occurred_while_member_was_deleted"
 msgstr "Wystąpiły błędy podczas usuwania członka"
 
-# New products
-#, fuzzy
-msgid "Delete_products?"
-msgstr "Nowe produkty"
-
-# Really cancel the selected products?
-#, fuzzy
-msgid "Really_delete_{0}_products?"
-msgstr "Na pewno anulować wybrane produkty?"
-
-# Errors occurred while member was deleted
-#, fuzzy
-msgid "Errors_occurred_while_products_were_deleted"
-msgstr "Wystąpiły błędy podczas usuwania członka"
-
-# Deactivate product
-#, fuzzy
-msgid "Delete_product?"
-msgstr "Dezaktywuj produkt"
-
-# Do you really want to add a new product?
-#, fuzzy
-msgid "Really_delete_1_product?"
-msgstr "Na pewno chcesz dodać nowy produkt?"
-
-# Errors occurred while member was deleted
-#, fuzzy
-msgid "Errors_occurred_while_product_was_deleted"
-msgstr "Wystąpiły błędy podczas usuwania członka"
-
 # Add comment
 msgid "Add_comment"
 msgstr "Dodaj komentarz"
@@ -1089,34 +1034,14 @@ msgstr ""
 msgid "Why_is_the_member_edited?"
 msgstr ""
 
-# Change member comment
-#, fuzzy
-msgid "Change_member"
-msgstr "Zmień komentarz do członka"
-
 msgid "To_which_member_should_the_ordered_product_{0}_of_{1}_be_assigned_to?"
 msgstr ""
-
-# Please enter a number.
-#, fuzzy
-msgid "Please_select_new_member."
-msgstr "Wprowadź liczbę."
 
 msgid "Amount_that_should_be_changed_to_member?"
 msgstr ""
 
-# Please enter your city.
-#, fuzzy
-msgid "Please_select..."
-msgstr "Podaj miasto."
-
 msgid "all"
 msgstr ""
-
-# No product data selected.
-#, fuzzy
-msgid "No_stock_products_selected."
-msgstr "Nie wybrano danych produktu."
 
 # Were the products picked up?
 msgid "Were_the_products_picked_up?"
@@ -1157,26 +1082,6 @@ msgstr "Cena jednostkowa"
 # incl. VAT
 msgid "incl_vat"
 msgstr "zaw. VAT"
-
-# Price per weight (for adapting the weight after delivery)
-#, fuzzy
-msgid "Price_per_weight_(for_adaption_after_delivery)"
-msgstr "Cena za wagę (do modyfikacji wagi po dostawie)"
-
-# for
-#, fuzzy
-msgid "for"
-msgstr "za"
-
-# approximate delivery weight in {0} per unit
-#, fuzzy
-msgid "approximate_delivery_weight_in_{0}_per_unit"
-msgstr "szacunkowa waga dostawy w {0} za jednostkę"
-
-# Name
-#, fuzzy
-msgid "Name"
-msgstr "Nazwa"
 
 # Important: Please do not rename products in other products. Create a new product instead!
 msgid "Product_rename_info_text"
@@ -1314,18 +1219,8 @@ msgstr "Listy zamówień są wysyłane automatycznie następnego dnia rano."
 msgid "Order_lists_are_sent_automatically_on_this_day."
 msgstr "Listy zamówień są wysyłane automatycznie danego dnia. Jeśli pozostawione <b>puste</b>, listy zamówień <b>nie będą wysyłane</b>."
 
-# available
-#, fuzzy
-msgid "Is_the_product_always_available?"
-msgstr "dostępne"
-
 msgid "Default_quantity_after_sending_order_lists"
 msgstr ""
-
-# The order lists are sent automatically on the given day. If left <b>empty</b>, the order lists <b>are not sent</b>.
-#, fuzzy
-msgid "After_the_order_lists_are_sent_available_amount_is_set_to_this_value."
-msgstr "Listy zamówień są wysyłane automatycznie danego dnia. Jeśli pozostawione <b>puste</b>, listy zamówień <b>nie będą wysyłane</b>."
 
 # delete
 msgid "delete"
@@ -1369,11 +1264,6 @@ msgstr "Atrybut nie może zostać przydzielony do produktu."
 # A product cannot be assigned to an attribute.
 msgid "A_product_cannot_be_assigned_to_an_attribute."
 msgstr "Produkt nie może zostać przydzielony do atrybutu."
-
-# available
-#, fuzzy
-msgid "This_product_is_always_available."
-msgstr "dostępne"
 
 msgid "Please_update_FoodCoopShop."
 msgstr ""
@@ -1446,16 +1336,6 @@ msgstr "Polityka prywatności"
 msgid "List_of_allergens"
 msgstr "Lista alergenów"
 
-# Is the product a stock product?
-#, fuzzy
-msgid "Self_service_for_stock_products"
-msgstr "Czy ten produkt jest magazynowany?"
-
-# Your cart was empty.
-#, fuzzy
-msgid "Your_shopping_bag_was_empty."
-msgstr "Twój koszyk był pusty."
-
 # Tax rates overview table
 msgid "Tax_rates_overview_table"
 msgstr "Tabela stawek podatkowych"
@@ -1464,11 +1344,6 @@ msgstr "Tabela stawek podatkowych"
 msgid "Tax_rate"
 msgstr "Stawka podatkowa"
 
-# Sum price excl.
-#, fuzzy
-msgid "Sum_price_excl."
-msgstr "Suma cen z wyłączeniem"
-
 # Sum tax
 msgid "Sum_tax"
 msgstr "Suma podatków"
@@ -1476,11 +1351,6 @@ msgstr "Suma podatków"
 # Sum price incl.
 msgid "Sum_price_incl."
 msgstr "Suma cen łącznie z"
-
-# Deleted member?
-#, fuzzy
-msgid "Deleted_member"
-msgstr "Usunąć członka?"
 
 # Price excl.
 msgid "Price_excl."
@@ -1505,11 +1375,6 @@ msgstr "Cena za wagę"
 # Total sum
 msgid "Total_sum"
 msgstr "Suma łącznie"
-
-# Generated invoices
-#, fuzzy
-msgid "Generated_on_{0}"
-msgstr "Wygenerowane faktury"
 
 # Page {0} of {1}
 msgid "Page_{0}_of_{1}"
@@ -1555,11 +1420,6 @@ msgstr "Produkt: Zmieniono cenę"
 msgid "Action_Log_Product_name_changed"
 msgstr "Produkt: Zmieniono nazwę"
 
-# Product: Unity changed
-#, fuzzy
-msgid "Action_Log_Product_unity_changed"
-msgstr "Produkt: Zmieniono jednostkę"
-
 # Product: Description changed
 msgid "Action_Log_Product_description_changed"
 msgstr "Produkt: Zmieniono opis"
@@ -1599,11 +1459,6 @@ msgstr "Moduł sieciowy: Produkty zsynchronizowane"
 msgid "Action_Log_Delivery_rhythm_changed"
 msgstr "Produkt: Zmieniono harmonogram dostaw"
 
-# Product: Image deleted
-#, fuzzy
-msgid "Action_Log_Product_deleted"
-msgstr "Produkt: Usunięto obraz"
-
 # Order: Status changed
 msgid "Action_Log_Order_status_changed"
 msgstr "Zamówienie: Zmieniono status"
@@ -1624,11 +1479,6 @@ msgstr "Zamówienie: Cofnięto datę"
 msgid "Action_Log_Instant_order_placed"
 msgstr "Zamówienie: Złożono zamówienie błyskawiczne"
 
-# Member: Instant order placed
-#, fuzzy
-msgid "Action_Log_Self_service_order_placed"
-msgstr "Członek: Złożono zamówienie błyskawiczne"
-
 # Ordered product: Price changed
 msgid "Action_Log_Order_detail_product_price_changed"
 msgstr "Zamówiony produkt: Zmieniono cenę"
@@ -1641,10 +1491,6 @@ msgstr "Zamówiony produkt: Zmieniono wagę"
 msgid "Action_Log_Order_detail_product_amount_changed"
 msgstr "Zamówiony produkt: Zmieniono ilość"
 
-#, fuzzy
-msgid "Action_Log_Order_detail_customer_changed"
-msgstr "Ordered product: Status changed"
-
 # Ordered product: Cancelled
 msgid "Action_Log_Ordered_product_cancelled"
 msgstr "Zamówiony produkt: Anulowano"
@@ -1656,11 +1502,6 @@ msgstr "Zamówiony produkt: Zmieniono dzień odbioru"
 # Member: Credit uploaded
 msgid "Action_Log_Member_credit_upload_added"
 msgstr "Członek: Przesłano kredyt"
-
-# Credit upload: Approval open
-#, fuzzy
-msgid "Action_Log_Credit_upload_csv_imported"
-msgstr "Przesył kredytu: Potwierdzenie otwarte"
 
 # Credit upload: OK
 msgid "Action_Log_Credit_upload_approval_ok"
@@ -1950,11 +1791,6 @@ msgstr "Podaj adres mailowy."
 msgid "{0}_needs_to_be_a_{1}."
 msgstr "{0} musi być {1}."
 
-# The following delivery day(s) already contain orders: {0}. You need to manually cancel them to proceed saving the delivery break.
-#, fuzzy
-msgid "The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day."
-msgstr "Następujące dni odbioru posiadją już zamówienia: {0}. Musisz ręcznie anulować zamówienia aby móc ustawić przerwę w dostawach."
-
 # Please enter a number between {0} and {1}.
 msgid "Please_enter_a_number_between_{0}_and_{1}."
 msgstr "Podaj liczbę z przedziłu od {0} do {1}."
@@ -1978,11 +1814,6 @@ msgstr "Wprowadź przynajmniej {0} znaków."
 # Please enter maximal {0} characters.
 msgid "Please_enter_max_{0}_characters."
 msgstr "Wprowadź najwyżej {0} znaków."
-
-# Please provide a value.
-#, fuzzy
-msgid "Please_provide_a_valid_ordered_quantity_in_units."
-msgstr "Podaj wartość."
 
 # The desired amount {0} is not valid.
 msgid "The_desired_amount_{0}_is_not_valid."
@@ -2156,21 +1987,6 @@ msgstr "Podaj poprawny numer."
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr "Ilość musi być większa od 0."
 
-# Please enter a correct number.
-#, fuzzy
-msgid "Please_enter_a_correct_amount."
-msgstr "Podaj poprawny numer."
-
-# Please enter a correct number.
-#, fuzzy
-msgid "Please_enter_a_correct_date."
-msgstr "Podaj poprawny numer."
-
-# Please enter a number.
-#, fuzzy
-msgid "Please_select_a_customer."
-msgstr "Wprowadź liczbę."
-
 # The delivery rhythm is not valid.
 msgid "The_delivery_ryhthm_is_not_valid."
 msgstr "Harmonogram dostaw jest nieprawidłowy."
@@ -2211,11 +2027,6 @@ msgstr "Pierwszym dniem dostaw musi być pierwszy {0} w miesiącu."
 msgid "The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long."
 msgstr "Nazwa produktu {0} musi mieć conajmniej {1} znaków."
 
-# delete
-#, fuzzy
-msgid "deleted"
-msgstr "usuń"
-
 # New product of
 msgid "New_product_of"
 msgstr "Nowy produkt od"
@@ -2247,11 +2058,6 @@ msgstr "Ilość do wysyłki powiadomień musi być liczbą."
 # Field: notification if quantity limit reached
 msgid "Field:_Notification_if_quantity_limit_reached"
 msgstr "Pole: powiadom jeśli limit ilościowy został osiągnięty"
-
-# The quantity limit needs to be a number.
-#, fuzzy
-msgid "The_default_quantity_after_sending_order_lists_needs_to_be_a_number."
-msgstr "Limit ilości musi być liczbą."
 
 msgid "Field:_Default_quantity_after_sending_order_lists"
 msgstr ""
@@ -2291,11 +2097,6 @@ msgstr "Szacunkowa waga musi być liczbą."
 # The approximate weight needs to be greater or equal than 0.
 msgid "The_approximate_weight_needs_to_be_greater_or_equal_than_0."
 msgstr "Szacunkowa waga musi być większa lub równa 0."
-
-# Runtime
-#, fuzzy
-msgid "Runtime"
-msgstr "Runtime"
 
 # seconds
 msgid "seconds"
@@ -2418,11 +2219,6 @@ msgstr "Usuń adres mailowy"
 msgid "The_manufacturer_{0}_has_delivery_break:_{1}"
 msgstr "Producent {0} ma przerwę w dostawach: {1}"
 
-# The manufacturer {0} is on delivery break: {1}
-#, fuzzy
-msgid "{0}_makes_a_break:_{1}"
-msgstr "Producent {0} ma przerwę w dostawach: {1}"
-
 # Mobile
 msgid "Mobile"
 msgstr "Numer telefonu (kom)"
@@ -2474,11 +2270,6 @@ msgstr "Admin"
 # Superadmin
 msgid "Superadmin"
 msgstr "Superadmin"
-
-# Credit and deposit
-#, fuzzy
-msgid "Credit_and_deposit_balance"
-msgstr "Kredyt i kaucja"
 
 # Credit upload
 msgid "Payment_type_credit_upload"
@@ -2660,16 +2451,6 @@ msgstr "Zwiększ swój kredyt"
 msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
 msgstr "Nie zapomnij przynieść odliczonej kwoty pieniędzy."
 
-# Change member comment
-#, fuzzy
-msgid "Scan_member_card"
-msgstr "Zmień komentarz do członka"
-
-# for
-#, fuzzy
-msgid "or"
-msgstr "za"
-
 # Password
 msgid "Password"
 msgstr "Hasło"
@@ -2680,11 +2461,6 @@ msgstr "Pozostań zalogowany"
 
 msgid "and"
 msgstr ""
-
-# and accept cookie
-#, fuzzy
-msgid "accept_cookie"
-msgstr "i zaakceptuj ciasteczka"
 
 # Forgot password?
 msgid "Forgot_password?"
@@ -2763,21 +2539,6 @@ msgstr ""
 
 msgid "Shopping_bag"
 msgstr ""
-
-# search
-#, fuzzy
-msgid "docs_route_self_service"
-msgstr "search"
-
-# Your cart is empty
-#, fuzzy
-msgid "Your_shopping_bag_is_empty."
-msgstr "Twój koszyk jest pusty"
-
-# Koszyk
-#, fuzzy
-msgid "Finish_pickup"
-msgstr "Dokończ zakupy"
 
 # terms and conditions
 msgid "terms_and_conditions"
@@ -2871,11 +2632,6 @@ msgstr "Miejsce odbioru: {0}"
 msgid "I_promise_to_pick_up_the_products_on_the_selected_pickup_day_and_to_pay_in_cash_in_the_shop."
 msgstr "Zobowiązuję się do odbioru produktów w wyznaczonym dniu odbioru i do opłacenia zamówienia gotówką."
 
-# How much of it do I want to pay in {0}?
-#, fuzzy
-msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
-msgstr "Za jak wiele z tego chcę zapłacić w {0}?"
-
 # Total
 msgid "Total"
 msgstr "Łącznie"
@@ -2932,11 +2688,6 @@ msgstr "Konto bankowe (kredyt)"
 msgid "Bank_account_member_fee"
 msgstr "Konto bankowe (opłata członkowska)"
 
-# Delivery break
-#, fuzzy
-msgid "Attention_order_break!"
-msgstr "Przerwa w dostawach"
-
 # Help?
 msgid "Help?"
 msgstr "Pomoc?"
@@ -2955,26 +2706,6 @@ msgstr ""
 # Print
 msgid "Print"
 msgstr "Drukuj"
-
-# search
-#, fuzzy
-msgid "Reset_search"
-msgstr "search"
-
-# Available amount
-#, fuzzy
-msgid "available"
-msgstr "Dostępna ilość"
-
-# Stock product: order possible only with instant order when picking it up.
-#, fuzzy
-msgid "Stock_product:_order_possible_only_by_{0}."
-msgstr "Produkt magazynowany: zamówienie możliwe wyłącznie jako zamówienie błyskawiczne podczas odbioru."
-
-# search
-#, fuzzy
-msgid "Self_service"
-msgstr "search"
 
 # Stock product: order possible only with instant order when picking it up.
 msgid "Stock_product:_order_possible_only_with_instant_order_on_pick_up."
@@ -3000,16 +2731,6 @@ msgstr "Ostatni dzień zamówień"
 msgid "Instant_order"
 msgstr "Zamówienie błyskawiczne"
 
-# {0,plural,=1{1 product} other{# products}}
-#, fuzzy
-msgid "{0,plural,=1{1_week} other{#_weeks}}"
-msgstr "{0,plural,=1{1 produkt} other{# produkty}}"
-
-# {0,plural,=1{1 product} other{# products}}
-#, fuzzy
-msgid "{0,plural,=1{1_week} other{#_weeks}} {1,plural,=1{and_1_day} other{and_#_days}}"
-msgstr "{0,plural,=1{1 produkt} other{# produkty}}"
-
 # from which {0} %
 msgid "from_which_{0}_%"
 msgstr "z czego {0} %"
@@ -3021,23 +2742,8 @@ msgstr ""
 msgid "Move_in_cart"
 msgstr "Dodaj do koszyka"
 
-# Weight
-#, fuzzy
-msgid "Weight_in"
-msgstr "Waga"
-
-# deposit
-#, fuzzy
-msgid "Add_deposit"
-msgstr "kaucja"
-
 msgid "Add_deposit_amount_for_{0}"
 msgstr ""
-
-# Part in {0}
-#, fuzzy
-msgid "Amount_in_{0}"
-msgstr "Część w {0}"
 
 # Categories
 msgid "Categories"
@@ -3046,16 +2752,6 @@ msgstr "Kategorie"
 # There are only stock products shown in this list.
 msgid "There_are_only_stock_products_shown_in_this_list."
 msgstr "Na liście widoczne są wyłącznie produkty magazynowane."
-
-# The manufacturer has reached the limit to pay in {0}.
-#, fuzzy
-msgid "The_manufacturer_has_reached_the_limit_to_pay_in_{0}."
-msgstr "Producent osiągnął limit aby zapłacić w {0}."
-
-# Part in {0}
-#, fuzzy
-msgid "Part_in_{0}"
-msgstr "Część w {0}"
 
 # in
 msgid "in"
@@ -3121,19 +2817,9 @@ msgstr "Kliknij w link aby aktywować swoje nowe hasło"
 msgid "thank_you_for_your_order_from_{0}."
 msgstr "dziękujemy za zamówienie od {0}."
 
-# The amount was reduced from your credit balance.
-#, fuzzy
-msgid "The_amount_was_reduced_from_your_credit_balance."
-msgstr "Kwota została odjęta od twojego salda kredytowego."
-
 # You can find a detailed list of your ordered products in the attached order confirmation.
 msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
 msgstr "Szczegółową listę zamówionych produktów można znaleźć w załączonym potwierdzeniu zamówienia."
-
-# thank you for order from {0}.
-#, fuzzy
-msgid "thank_you_for_your_purchase."
-msgstr "dziękujemy za zamówienie od {0}."
 
 # This is the text of the email (with attached logo).
 msgid "This_is_the_text_of_the_email_(with_attached_logo)."
@@ -3162,16 +2848,6 @@ msgstr "Kliknij tutaj, aby edytować produkt."
 # Cart
 msgid "Cart"
 msgstr "Koszyk"
-
-# Your cart is empty
-#, fuzzy
-msgid "Your_cart_is_empty."
-msgstr "Twój koszyk jest pusty"
-
-# This e-mail was automatically created.
-#, fuzzy
-msgid "This_email_was_created_automatically."
-msgstr "Ta wiadomość została utworzona automatycznie."
 
 # You can unsubscribe it <a href=\"{0}\">in your settings</a>.
 msgid "You_can_unsubscribe_it_<a href=\"{0}\">in_your_settings</a>."
@@ -3259,175 +2935,3 @@ msgstr "Niepotrzebne skreślić."
 # Informationen-ueber-Ruecktrittsrecht
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informacja-o-prawie-do-odstapienia"
-
-# The tax rate is already used.
-#, fuzzy
-#~ msgid "The_transaction_was_already_imported."
-#~ msgstr "Stawka podatku jest już użyta."
-
-# Please enter a correct number.
-#, fuzzy
-#~ msgid "Please_select_a_correct_customer."
-#~ msgstr "Podaj poprawny numer."
-
-# paid in cash
-#~ msgid "order_state_cash"
-#~ msgstr "opłacono gotówką"
-
-# closed
-#~ msgid "order_state_closed"
-#~ msgstr "zamknięte"
-
-# This input is helpful for the pickup team, but not mandatory.
-#~ msgid "This_information_serves_the_pickup_team_to_see_who_was_already_here."
-#~ msgstr "Ta informacja będzie przydatna dla ekipy odbierającej, lecz nie jest obowiązkowa."
-
-# DELIVERY_DAY
-#~ msgid "DELIVERY_DAY"
-#~ msgstr "DELIVERY_DAY"
-
-# every {0} week
-#, fuzzy
-#~ msgid "in_{0}_weeks"
-#~ msgstr "co {0} tydzień"
-
-# individual date
-#~ msgid "individual_date"
-#~ msgstr "indywidualna data"
-
-# Please only use self-made images (no images from the internet).
-#~ msgid "Please_only_use_self_made_images_(not_from_the_internet)."
-#~ msgstr "Używaj wyłącznie własnych obrazów (bez obrazów z internetu)."
-
-# thank you for order from {0}.
-#, fuzzy
-#~ msgid "thank_you_for_your_purchase_from_{0}."
-#~ msgstr "dziękujemy za zamówienie od {0}."
-
-# Deposit sum
-#, fuzzy
-#~ msgid "Deposit_return"
-#~ msgstr "Suma kaucji"
-
-#~ msgid "There_are_no_stock_products_shown_in_this_list."
-#~ msgstr "There are no stock products shown in this list."
-
-#~ msgid "Edit_product"
-#~ msgstr "Edit product"
-
-#, fuzzy
-#~ msgid "You_selected_1_product_for_changing_the_delivery_rhythm"
-#~ msgstr "You selected 1 product for cancellation"
-
-#, fuzzy
-#~ msgid "You_selected_{0}_products_for_for_changing_the_delivery_rhythm"
-#~ msgstr "You selected {0} products for cancellation"
-
-#~ msgid "You_will_then_get_a_link_to_change_your_password."
-#~ msgstr "You will then get a link to change your password."
-
-#~ msgid "Request_for_new_password_for_{0}"
-#~ msgstr "Request for new password for {0}"
-
-#~ msgid "We_sent_a_link_to_you_for_generating_a_new_password."
-#~ msgstr "We sent a link to you to generate a new password."
-
-#~ msgid "you_just_generated_a_new_password_which_is"
-#~ msgstr "you just generated a new password which is"
-
-#~ msgid "You_can_sign_in_and_change_your_password_here"
-#~ msgstr "You can sign in and change your password here"
-
-#~ msgid "route_generate_new_password"
-#~ msgstr "generate-new-password"
-
-#~ msgid "Individual_delivery_day_info."
-#~ msgstr "The product can be ordered from now on and will be deactivated automatically as soon as the last order day of the given delivery day is reached."
-
-#~ msgid "Order_possible_until_info."
-#~ msgstr "The product can only be ordered until this date."
-
-#~ msgid "The_manufacturer_of_the_product_{0}_is_on_holiday_or_product_is_not_activated."
-#~ msgstr "The manufacturer of the product {0} either has a delivery break or the product is not activated any more."
-
-#~ msgid "delivery_break_since_holiday_active"
-#~ msgstr "since"
-
-#~ msgid "delivery_break_since_holiday_not_active"
-#~ msgstr "since"
-
-#~ msgid "delivery_break_until"
-#~ msgstr "until"
-
-#~ msgid "Always_online"
-#~ msgstr "Always online"
-
-#~ msgid "Always_online_explanation"
-#~ msgstr "Should the product always appear online to be ordered, or just in the last week before the delivery day?"
-
-#, fuzzy
-#~ msgid "First_delivery_day_explanation"
-#~ msgstr "First delivery day"
-
-#~ msgid "monthly"
-#~ msgstr "monthly"
-
-#~ msgid "every"
-#~ msgstr "every"
-
-#~ msgid "week"
-#~ msgstr "week"
-
-#~ msgid "month"
-#~ msgstr "month"
-
-#~ msgid "delivery_rhythm_type_week"
-#~ msgstr "week"
-
-#~ msgid "delivery_rhythm_type_month"
-#~ msgstr "month"
-
-#~ msgid "Product_{0}_is_almost_sold_out."
-#~ msgstr "The product {0} is almost sold out."
-
-#~ msgid "Change_order_status?"
-#~ msgstr "Change order status?"
-
-#~ msgid "Really_change_order_status_from_{0}?"
-#~ msgstr "Do you really want to change the status of the order from {0}?"
-
-#~ msgid "order_state_cancelled"
-#~ msgstr "cancelled"
-
-#~ msgid "order_state_open"
-#~ msgstr "open"
-
-#~ msgid "Change_stock"
-#~ msgstr "Change stock"
-
-#~ msgid "Action_Log_Order_details_closed"
-#~ msgstr "Ordered product: closed"
-
-#~ msgid "Set_date_of_order_back_to"
-#~ msgstr "Set date of order back to"
-
-#~ msgid "Set_date_of_order_back"
-#~ msgstr "Set date of order back"
-
-#~ msgid "Instant_order_date_is_set_back_after_placing_it."
-#~ msgstr "Instant order date is set back after placing it."
-
-#~ msgid "Please_pick_up_your_products_on_{0}_at_{1}."
-#~ msgstr "Please pick up your products on {0} at {1}."
-
-#~ msgid "Error_while_creating_the_order."
-#~ msgstr "Error while creating the order."
-
-#~ msgid "Error_while_saving_the_ordered_products."
-#~ msgstr "Error while saving the ordered products."
-
-#~ msgid "The_product_value_{0}_with_an_additional_deposit_of_{1}_was_automatically_reduced_from_your_credit."
-#~ msgstr "The product value {0} with an additional deposit value of {1} was automatically reduced from your credit."
-
-#~ msgid "The_product_value_{0}_was_automatically_reduced_from_your_credit."
-#~ msgstr "The product value {0} was automatically reduced from your credit."
