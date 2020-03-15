@@ -16,7 +16,6 @@ namespace App\Shell;
 
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
-use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 
 class SendOrderListsShell extends AppShell
@@ -130,7 +129,6 @@ class SendOrderListsShell extends AppShell
             }
         }
         if (!empty($productsToSave)) {
-            Log::error(print_r($productsToSave));
             $this->Product->changeQuantity($productsToSave);
         }
         
