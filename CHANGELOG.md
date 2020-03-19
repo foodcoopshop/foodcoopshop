@@ -3,6 +3,10 @@
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
+
+- 😍 Ab sofort können Emojis verwendet werden: Z.B. in Blog-Artikeln, Seiten oder beim Stornieren. [I#464](https://github.com/foodcoopshop/foodcoopshop/issues/464) / [PR#478](https://github.com/foodcoopshop/foodcoopshop/pull/478) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
+
 ## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.7.1...develop)
 
 ### Herzlichen Dank an alle beteiligten Personen
