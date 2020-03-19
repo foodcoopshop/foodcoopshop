@@ -400,7 +400,8 @@ INSERT INTO `phinxlog` VALUES
 (20200120095222,'StockAlwaysAvailableAndDefaultQuantity','2020-01-20 10:44:32','2020-01-20 10:44:32',0),
 (20200131081923,'FixCategoryAndPageTree','2020-01-31 08:36:17','2020-01-31 08:36:17',0),
 (20200202135400,'ChangeTextToLongtext','2020-02-02 14:06:16','2020-02-02 14:06:16',0),
-(20200211083925,'CashlessPaymentAddTypeConfiguration','2020-02-11 09:13:10','2020-02-11 09:13:10',0);
+(20200211083925,'CashlessPaymentAddTypeConfiguration','2020-02-11 09:13:10','2020-02-11 09:13:10',0),
+(20200319092123,'ChangeDefaultTableCollationToUtf8mb4','2020-03-19 09:49:27','2020-03-19 09:49:28',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
