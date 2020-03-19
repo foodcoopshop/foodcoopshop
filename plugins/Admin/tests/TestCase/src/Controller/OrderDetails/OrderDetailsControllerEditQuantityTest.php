@@ -19,7 +19,7 @@ use Cake\Core\Configure;
 class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestCase
 {
     
-    public function testEditOrderDetailQuantityAsSuperadmin()
+    public function testEditOrderDetailQuantityAsSuperadminDifferentQuantity()
     {
         $this->loginAsSuperadmin();
         
@@ -34,6 +34,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertEquals(12.01, $changedOrderDetails[0]->total_price_tax_incl);
         $this->assertEquals(10.91, $changedOrderDetails[0]->total_price_tax_excl);
         $this->assertEquals($newQuantity, $changedOrderDetails[0]->order_detail_unit->product_quantity_in_units);
+        $this->assertEquals(1, $changedOrderDetails[0]->order_detail_unit->mark_as_saved);
         
         $this->assertEquals(0.55, $changedOrderDetails[0]->order_detail_tax->unit_amount);
         $this->assertEquals(1.10, $changedOrderDetails[0]->order_detail_tax->total_amount);
@@ -42,6 +43,30 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $expectedCcEmails = [Configure::read('test.loginEmailMeatManufacturer')];
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEmailLogs($emailLogs[1], 'Gewicht angepasst: Forelle : Stück', [Configure::read('app.numberHelper')->formatUnitAsDecimal($newQuantity), 'Demo Superadmin', 'Der Basis-Preis beträgt 1,50 € / 100 g'], $expectedToEmails, $expectedCcEmails);
+    }
+    
+    public function testEditOrderDetailQuantityAsSuperadminSameQuantity()
+    {
+        $this->loginAsSuperadmin();
+        
+        $cart = $this->preparePricePerUnitOrder();
+        
+        $newQuantity = 700;
+        $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
+        $this->editOrderDetailQuantity($orderDetailId, $newQuantity, false);
+        
+        $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId]);
+        
+        $this->assertEquals(10.50, $changedOrderDetails[0]->total_price_tax_incl);
+        $this->assertEquals(9.54, $changedOrderDetails[0]->total_price_tax_excl);
+        $this->assertEquals($newQuantity, $changedOrderDetails[0]->order_detail_unit->product_quantity_in_units);
+        $this->assertEquals(1, $changedOrderDetails[0]->order_detail_unit->mark_as_saved);
+        
+        $this->assertEquals(0.48, $changedOrderDetails[0]->order_detail_tax->unit_amount);
+        $this->assertEquals(0.96, $changedOrderDetails[0]->order_detail_tax->total_amount);
+        
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(1, count($emailLogs));
     }
     
     public function testEditOrderDetailQuantityAsSuperadminDoNotChangePrice()

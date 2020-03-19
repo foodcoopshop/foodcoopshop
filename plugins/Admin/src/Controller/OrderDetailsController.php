@@ -498,8 +498,12 @@ class OrderDetailsController extends AdminAppController
                 foreach ($orderDetails as $orderDetail) {
                     $orderDetail->quantityInUnitsNotYetChanged = false;
                     if (!empty($orderDetail->order_detail_unit)) {
+                        // quantity comparison can be removed in v4. it was replaced by mark_as_saved in v3.1. default value needs to be set to true then
                         if (round($orderDetail->order_detail_unit->product_quantity_in_units, 3) == round($orderDetail->order_detail_unit->quantity_in_units * $orderDetail->product_amount, 3)) {
                             $orderDetail->quantityInUnitsNotYetChanged = true;
+                        }
+                        if ($orderDetail->order_detail_unit->mark_as_saved) {
+                            $orderDetail->quantityInUnitsNotYetChanged = false;
                         }
                     }
                     $deliveryDay[] = $orderDetail->pickup_day;
@@ -744,9 +748,11 @@ class OrderDetailsController extends AdminAppController
             Configure::read('app.numberHelper')->formatUnitAsDecimal($oldOrderDetail->order_detail_unit->product_quantity_in_units) . ' ' . $oldOrderDetail->order_detail_unit->unit_name,
             Configure::read('app.numberHelper')->formatUnitAsDecimal($productQuantity) . ' ' . $oldOrderDetail->order_detail_unit->unit_name
         ]);
-
+        
+        $quantityWasChanged = $oldOrderDetail->order_detail_unit->product_quantity_in_units != $productQuantity;
+        
         // send email to customer if price was changed
-        if (!$doNotChangePrice) {
+        if (!$doNotChangePrice && $quantityWasChanged) {
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('Admin.order_detail_quantity_changed');
             $email->setTo($oldOrderDetail->customer->email)
@@ -777,10 +783,12 @@ class OrderDetailsController extends AdminAppController
             
         }
 
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-        $this->ActionLog->customSave('order_detail_product_quantity_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
-        $this->Flash->success($message);
-
+        if ($quantityWasChanged) {
+            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog->customSave('order_detail_product_quantity_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
+            $this->Flash->success($message);
+        }
+        
         die(json_encode([
             'status' => 1,
             'msg' => 'ok'
@@ -1275,7 +1283,8 @@ class OrderDetailsController extends AdminAppController
     private function changeOrderDetailQuantity($oldOrderDetailUnit, $productQuantity)
     {
         $orderDetailUnit2save = [
-            'product_quantity_in_units' => $productQuantity
+            'product_quantity_in_units' => $productQuantity,
+            'mark_as_saved' => 1,
         ];
         $patchedEntity = $this->OrderDetail->OrderDetailUnits->patchEntity($oldOrderDetailUnit, $orderDetailUnit2save);
         $this->OrderDetail->OrderDetailUnits->save($patchedEntity);

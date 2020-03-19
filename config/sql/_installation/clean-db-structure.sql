@@ -351,6 +351,7 @@ CREATE TABLE `fcs_order_detail_units` (
   `quantity_in_units` decimal(10,3) unsigned DEFAULT NULL,
   `unit_name` varchar(50) NOT NULL DEFAULT '',
   `unit_amount` int(10) unsigned DEFAULT NULL,
+  `mark_as_saved` tinyint(3) unsigned NOT NULL DEFAULT '0',
   UNIQUE KEY `id_order_detail` (`id_order_detail`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
