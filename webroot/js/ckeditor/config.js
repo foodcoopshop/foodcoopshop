@@ -19,15 +19,15 @@ CKEDITOR.editorConfig = function ( config ) {
     config.language = foodcoopshop.LocalizedJs.helper.defaultLocale;
 
     config.enterMode = CKEDITOR.ENTER_BR;
-    config.extraPlugins = 'format';
+    config.extraPlugins = 'format,emoji';
 
     config.startupOutlineBlocks = false;
 
     config.toolbar = [
-        { name: 'toolbar', items: ['RemoveFormat', 'Italic', 'Bold'] },
+        { name: 'toolbar', items: ['RemoveFormat', 'Italic', 'Bold', 'EmojiPanel'] },
     ];
 
 };
 
-CKEDITOR.timestamp = 'v4.14.0'; // change this string if version is updated in package.json
+CKEDITOR.timestamp = 'v4.14.0-emoji'; // change this string if version is updated in package.json
 

@@ -19,12 +19,12 @@ CKEDITOR.editorConfig = function ( config ) {
     config.language = foodcoopshop.LocalizedJs.helper.defaultLocale;
 
     config.enterMode = CKEDITOR.ENTER_BR;
-    config.extraPlugins = 'format';
+    config.extraPlugins = 'format,emoji';
 
     config.startupOutlineBlocks = false;
     
     config.contentsCss = [
-        '/node_modules/ckeditor/contents.css',
+        '/node_modules/ckeditor4/contents.css',
         '/js/ckeditor/config-small-with-upload.css'
     ];
 
@@ -32,10 +32,10 @@ CKEDITOR.editorConfig = function ( config ) {
     config.filebrowserImageBrowseUrl = '/js/elfinder/elfinder.html';
 
     config.toolbar = [
-        { name: 'toolbar', items: [ 'Image', 'RemoveFormat', 'Italic', 'Bold'] },
+        { name: 'toolbar', items: [ 'Image', 'RemoveFormat', 'Italic', 'Bold', 'EmojiPanel'] }
     ];
 
 };
 
-CKEDITOR.timestamp = 'v4.14.0'; // change this string if version is updated in package.json
+CKEDITOR.timestamp = 'v4.14.0-emoji'; // change this string if version is updated in package.json
 
