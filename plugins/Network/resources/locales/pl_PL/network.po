@@ -24,6 +24,10 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
+#, fuzzy
+msgid "Stock_product"
+msgstr "produkt"
+
 msgid "Amount"
 msgstr ""
 
@@ -52,6 +56,10 @@ msgid "attributes"
 msgstr "atrybuty"
 
 msgid "{0}_and_{1}_({2})_have_been_successfully_synchronized."
+msgstr "{0} oraz {1} ({2}) zostały poprawnie zsynchronizowane."
+
+#, fuzzy
+msgid "Via_{0}_there_have_been_{1}_and_{2}_({3})_successfully_synchronized."
 msgstr "{0} oraz {1} ({2}) zostały poprawnie zsynchronizowane."
 
 msgid "Errors_occurred_while_synchronizing!"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-03-03 09:20+0100\n"
+"POT-Creation-Date: 2020-03-19 21:00+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -281,7 +281,7 @@ msgstr ""
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
 msgstr ""
 
-msgid "Weight_adapted"
+msgid "Weight_adapted_for_\"0\":"
 msgstr ""
 
 msgid "An_email_was_sent_to_{0}."
