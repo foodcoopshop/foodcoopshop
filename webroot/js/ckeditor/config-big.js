@@ -19,7 +19,7 @@ CKEDITOR.editorConfig = function ( config ) {
     config.language = foodcoopshop.LocalizedJs.helper.defaultLocale;
     config.enterMode = CKEDITOR.ENTER_BR;
 
-    config.extraPlugins = 'showblocks,justify,format,colorbutton';
+    config.extraPlugins = 'showblocks,justify,format,colorbutton,emoji';
 
     config.startupOutlineBlocks = false;
     config.allowedContent = true;
@@ -42,5 +42,5 @@ CKEDITOR.editorConfig = function ( config ) {
 
 };
 
-CKEDITOR.timestamp = 'v4.14.0'; // change this string if version is updated in package.json
+CKEDITOR.timestamp = 'v4.14.0-emoji'; // change this string if version is updated in package.json
 

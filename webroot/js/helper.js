@@ -830,7 +830,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = 'v4.14.0';
+        CKEDITOR.timestamp = 'v4.14.0-emoji';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config.js'
         });
@@ -858,7 +858,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = 'v4.14.0';
+        CKEDITOR.timestamp = 'v4.14.0-emoji';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config-big.js'
         });
@@ -873,7 +873,7 @@ foodcoopshop.Helper = {
 
         this.destroyCkeditor(name);
 
-        CKEDITOR.timestamp = 'v4.14.0';
+        CKEDITOR.timestamp = 'v4.14.0-emoji';
         $('textarea#' + name + '.ckeditor').ckeditor({
             customConfig: '/js/ckeditor/config-small-with-upload.js'
         });

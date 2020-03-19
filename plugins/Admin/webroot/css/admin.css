@@ -1252,3 +1252,6 @@ label[for="groupbycustomer"] {
 i.fa-fw.far.fa-money-bill-alt {
     margin-right: 3px;
 }
+.cke_emoji-panel {
+	z-index: 10000000001 ! important;
+}
