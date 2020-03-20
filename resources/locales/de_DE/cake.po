@@ -33,6 +33,9 @@ msgstr "Oooohhh, es ist ein Fehler aufgetreten."
 msgid "The requested file contains `..` and will not be read."
 msgstr ""
 
+msgid "The requested file was not found"
+msgstr ""
+
 msgid "{0,number,#,###.##} KB"
 msgstr ""
 

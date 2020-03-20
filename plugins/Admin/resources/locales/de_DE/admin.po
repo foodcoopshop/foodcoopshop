@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-03-03 09:20+0100\n"
-"PO-Revision-Date: 2020-03-04 10:56+0100\n"
+"POT-Creation-Date: 2020-03-19 21:00+0100\n"
+"PO-Revision-Date: 2020-03-19 21:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -282,8 +282,8 @@ msgstr "Eine E-Mail wurde an {0} und {1} verschickt."
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
 msgstr "Das Gewicht des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich von {2} auf {3} angepasst."
 
-msgid "Weight_adapted"
-msgstr "Gewicht angepasst"
+msgid "Weight_adapted_for_\"0\":"
+msgstr "Gewicht angepasst für \"{0}\":"
 
 msgid "An_email_was_sent_to_{0}."
 msgstr "Eine E-Mail wurde an {0} verschickt."
@@ -2042,3 +2042,6 @@ msgstr "Bitte verwende zum Einloggen die E-Mail-Adresse dieser Nachricht. Falls 
 
 msgid "Your_contact_person"
 msgstr "Deine Ansprechperson"
+
+#~ msgid "Weight_adapted"
+#~ msgstr "Gewicht angepasst"
