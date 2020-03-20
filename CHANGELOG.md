@@ -4,11 +4,14 @@
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
 
+## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.0.0...develop)
+
+### Neue Funktionen
 - Verbesserungen bei der Gewichtsanpassung: Auch gleiches Gewicht ist nach dem Speichern nicht mehr rot hinterlegt. / Bei bereits verrechneten Bestellungen wird das Gewicht niemals rot angezeigt. / Neues Gewicht ist in der E-Mail-Betreffzeile - damit Fehler wie z.B. 540 kg (statt g) schneller auffallen. / Kein E-Mail-Versand falls das Gewicht gleich bleibt. [I#423](https://github.com/foodcoopshop/foodcoopshop/issues/423) / [PR#479](https://github.com/foodcoopshop/foodcoopshop/pull/479) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - 😍 Ab sofort können Emojis verwendet werden: Z.B. in Blog-Artikeln, Seiten oder beim Stornieren. Im Editor gibt's dazu ein neues Icon, beim Tippen von einem Doppelpunkt und zwei Buchstaben wird automatisch eine Liste mit Emojis angezeigt. [I#464](https://github.com/foodcoopshop/foodcoopshop/issues/464) / [PR#478](https://github.com/foodcoopshop/foodcoopshop/pull/478) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
-## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.7.1...develop)
+## v3.0.0 / 2020-03-20 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.7.1...3.0.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
 * [AndreasEgger](https://github.com/AndreasEgger)
