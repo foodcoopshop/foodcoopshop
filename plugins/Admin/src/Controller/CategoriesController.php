@@ -92,6 +92,9 @@ class CategoriesController extends AdminAppController
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData(), ['description'])));
 
+        if ($this->getRequest()->getData('Categories.id_parent') == '') {
+            $this->request = $this->request->withData('Categories.id_parent', 0);
+        }
         $category = $this->Category->patchEntity($category, $this->getRequest()->getData());
         if ($category->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));

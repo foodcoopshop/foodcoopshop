@@ -121,6 +121,10 @@ class PagesController extends AdminAppController
         $this->setRequest($this->getRequest()->withData('Pages.extern_url', StringComponent::addHttpToUrl($this->getRequest()->getData('Pages.extern_url'))));
         $this->setRequest($this->getRequest()->withData('Pages.id_customer', $this->AppAuth->getUserId()));
 
+        if ($this->getRequest()->getData('Pages.id_parent') == '') {
+            $this->request = $this->request->withData('Pages.id_parent', 0);
+        }
+        
         $page = $this->Page->patchEntity($page, $this->getRequest()->getData());
         if ($page->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
