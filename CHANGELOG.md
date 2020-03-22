@@ -14,7 +14,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ## v3.0.1 / 2020-03-22 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.0.0...v3.0.1)
 
 ### Bugfix
-- Kategorien wurden nicht korrekt sortiert. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/35d940d82912200d6aab60dd6adc5fedbb68b4de) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a> / <a href="https://github.com/mantensteiner"><img src="https://github.com/mantensteiner.png" width="20"></a>
+- Kategorien wurden nicht korrekt sortiert. / [Commit](https://github.com/foodcoopshop/foodcoopshop/commit/35d940d82912200d6aab60dd6adc5fedbb68b4de) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
 ## v3.0.0 / 2020-03-20 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v2.7.1...3.0.0)
