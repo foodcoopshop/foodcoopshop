@@ -89,7 +89,7 @@ $homepageAdministrationElement = [
     ]
 ];
 $menu = [];
-$logoHtml = '<img class="logo" src="/files/images/logo.jpg" width="100%" />';
+$logoHtml = '<img class="logo" src="/files/images/logo.jpg?' . filemtime(WWW_ROOT.'files'.DS.'images'.DS.'logo.jpg') . '" width="100%" />';
 $menu[] = [
     'slug' => $this->Slug->getHome(),
     'name' => $logoHtml,

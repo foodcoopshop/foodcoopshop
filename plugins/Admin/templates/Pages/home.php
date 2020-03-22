@@ -38,6 +38,6 @@ echo '<h1>'.__d('admin', 'Welcome') . '<br />' . $adminNameGreeting . '</h1>';
 echo $this->element('acceptUpdatedTermsOfUseForm');
 echo '<br />';
 echo '<div class="filter-container"></div>';
-echo '<img id="installation-logo" src="/files/images/logo.jpg" />';
+echo '<img id="installation-logo" src="/files/images/logo.jpg?' . filemtime(WWW_ROOT.'files'.DS.'images'.DS.'logo.jpg') . '" />';
 echo '<div class="sc"></div>';
 echo '</div>';
