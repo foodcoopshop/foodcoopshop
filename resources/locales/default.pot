@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-03-02 10:30+0100\n"
+"POT-Creation-Date: 2020-03-23 19:13+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1796,10 +1796,10 @@ msgstr ""
 msgid "Deleted_Email_Address"
 msgstr ""
 
-msgid "The_manufacturer_{0}_has_delivery_break:_{1}"
+msgid "The_manufacturer_{0}_takes_a_break_on_{1}."
 msgstr ""
 
-msgid "{0}_makes_a_break:_{1}"
+msgid "{0}_takes_a_break_on_{1}."
 msgstr ""
 
 msgid "Mobile"

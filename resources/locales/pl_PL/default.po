@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-03-02 10:30+0100\n"
+"POT-Creation-Date: 2020-03-23 19:13+0100\n"
 "PO-Revision-Date: 2020-02-29 22:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2406,12 +2406,13 @@ msgid "Deleted_Email_Address"
 msgstr "Usuń adres mailowy"
 
 # The manufacturer {0} is on delivery break: {1}
-msgid "The_manufacturer_{0}_has_delivery_break:_{1}"
+#, fuzzy
+msgid "The_manufacturer_{0}_takes_a_break_on_{1}."
 msgstr "Producent {0} ma przerwę w dostawach: {1}"
 
 # {0} needs to be a {1}.
 #, fuzzy
-msgid "{0}_makes_a_break:_{1}"
+msgid "{0}_takes_a_break_on_{1}."
 msgstr "{0} musi być {1}."
 
 # Mobile

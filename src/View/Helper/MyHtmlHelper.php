@@ -4,6 +4,7 @@ namespace App\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
+use Cake\Utility\Text;
 use Cake\View\View;
 use Cake\View\Helper\HtmlHelper;
 use App\Controller\Component\StringComponent;
@@ -219,15 +220,15 @@ class MyHtmlHelper extends HtmlHelper
             return $result;
         }
         
-        $csvNoDeliveryDays = join(', ', $formattedAndCleanedDeliveryDays);
+        $csvNoDeliveryDays = Text::toList($formattedAndCleanedDeliveryDays);
         
         if (!$long) {
             return $csvNoDeliveryDays;
         } 
         
-        $result = __('The_manufacturer_{0}_has_delivery_break:_{1}', [
+        $result = __('The_manufacturer_{0}_takes_a_break_on_{1}.', [
             '<b>' . $manufacturer->name . '</b>',
-            $csvNoDeliveryDays
+            '<b>' . $csvNoDeliveryDays . '</b>'
         ]);
         
         return $result;
@@ -247,11 +248,9 @@ class MyHtmlHelper extends HtmlHelper
             return $result;
         }
         
-        $csvNoDeliveryDays = join(', ', $formattedAndCleanedDeliveryDays);
-        
-        $result = __('{0}_makes_a_break:_{1}', [
+        $result = __('{0}_takes_a_break_on_{1}.', [
             Configure::read('appDb.FCS_APP_NAME'),
-            '<b>' . $csvNoDeliveryDays . '</b>'
+            '<b>' . Text::toList($formattedAndCleanedDeliveryDays) . '</b>'
         ]);
         
         return $result;
