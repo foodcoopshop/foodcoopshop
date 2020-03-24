@@ -161,6 +161,21 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>50</b> der Variante <b>0,5l</b> des Produktes <b>Milch</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 2', $response->msg);
     }
     
+    public function testStockManagementEnabledIsStockProductFalseAndQuantityLimitLessThanZero()
+    {
+        $this->changeManufacturer(15, 'stock_management_enabled', 1);
+        $productId = $this->Product->getProductIdAndAttributeId($this->productId2)['productId'];
+        $this->Product->changeIsStockProduct([[$productId => false]]);
+        $this->Product->changeQuantity([[$this->productId2 => [
+            'always_available' => 0,
+            'quantity' => 0,
+            'quantity_limit' => -5,
+        ]]]);
+        $this->loginAsCustomer();
+        $response = $this->addProductToCart($this->productId2, 1);
+        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>1</b> der Variante <b>0,5l</b> des Produktes <b>Milch</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 0', $response->msg);
+    }
+    
     private function doPrepareAlwaysAvailable($productId, $originalQuantity)
     {
         $this->Product->changeQuantity([[$productId => [
