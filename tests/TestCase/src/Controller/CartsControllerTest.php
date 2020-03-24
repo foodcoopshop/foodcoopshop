@@ -415,12 +415,14 @@ class CartsControllerTest extends AppCakeTestCase
     }
     
     public function testProductsWithAllowedNegativeStock() {
+        $this->changeManufacturer(5, 'stock_management_enabled', true);
         $this->loginAsCustomer();
         $this->addProductToCart(349, 8);
         $this->assertJsonOk();
     }
     
     public function testProductsWithAllowedNegativeStockButTooHighAmount() {
+        $this->changeManufacturer(5, 'stock_management_enabled', true);
         $this->loginAsCustomer();
         $response = $this->addProductToCart(349, 11);
         $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>11</b> des Produktes <b>Lagerprodukt</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 10', $response->msg);
