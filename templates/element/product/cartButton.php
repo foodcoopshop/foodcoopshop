@@ -22,7 +22,11 @@ if (!$appAuth->user() || $hideButton) {
 
 <div class="line">
     <?php
-    if (((($product['is_stock_product'] && $product['stock_management_enabled']) || !$stockAvailableAlwaysAvailable) && $stockAvailableQuantity - $stockAvailableQuantityLimit == 0)
+    $availableQuantity = $stockAvailableQuantity;
+    if ($product['is_stock_product'] && $product['stock_management_enabled']) {
+        $availableQuantity = $stockAvailableQuantity - $stockAvailableQuantityLimit;
+    }
+    if (((($product['is_stock_product'] && $product['stock_management_enabled']) || !$stockAvailableAlwaysAvailable) && $availableQuantity <= 0)
         || (isset($shoppingLimitReached) && $shoppingLimitReached) 
         || $appAuth->isManufacturer() 
         || $deliveryBreakEnabled) {
