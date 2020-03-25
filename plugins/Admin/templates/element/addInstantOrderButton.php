@@ -15,12 +15,11 @@
 
 use Cake\Core\Configure;
 
-if ($appAuth->isAdmin() || $appAuth->isSuperadmin() || $appAuth->isCustomer()) {
-    $this->element('addScript', [
-        'script' =>
-            Configure::read('app.jsNamespace') . ".Admin.initAddInstantOrder('#add-instant-order-button-wrapper .btn');"
-    ]);
-    echo '<div id="add-instant-order-button-wrapper" class="add-button-wrapper '.(isset($additionalClass) ? $additionalClass : '') . '">';
+$this->element('addScript', [
+    'script' =>
+        Configure::read('app.jsNamespace') . ".Admin.initAddInstantOrder('#add-instant-order-button-wrapper .btn');"
+]);
+echo '<div id="add-instant-order-button-wrapper" class="add-button-wrapper '.(isset($additionalClass) ? $additionalClass : '') . '">';
     $options = [
         'escape' => false
     ];
@@ -34,5 +33,4 @@ if ($appAuth->isAdmin() || $appAuth->isSuperadmin() || $appAuth->isCustomer()) {
         'empty' => __d('admin', 'chose_member...'),
         'options' => $customers
     ]);
-    echo '</div>';
-}
+echo '</div>';
