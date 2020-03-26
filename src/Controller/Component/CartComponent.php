@@ -553,8 +553,6 @@ class CartComponent extends Component
     
     private function saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions)
     {
-        Log::error(print_r($stockAvailable2saveData, true));
-        Log::error(print_r($stockAvailable2saveConditions, true));
         $this->Product = TableRegistry::getTableLocator()->get('Products');
         $i = 0;
         foreach ($stockAvailable2saveData as &$data) {
