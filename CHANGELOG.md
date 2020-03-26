@@ -14,6 +14,12 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Infotext bei der Lieferpause ist jetzt leichter verständlich. [I#469](https://github.com/foodcoopshop/foodcoopshop/issues/469) / [PR#482](https://github.com/foodcoopshop/foodcoopshop/pull/482) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
+## v3.0.2 / 2020-03-26 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.0.1...v3.0.2)
+
+### Bugfix
+- Produkte waren fehlerhafterweise bestellbar, wenn das Produkt früher mal als Lagerprodukt deklariert war und das Feld "Bestellbar bis zu einer Anzahl von" einen Wert < 0 enthielt.
+- Es gab immer wieder Probleme beim automatischen Vermindern der Anzahl, wenn im gleichen Warenkorb ein Produkt mit einer Variante vorhanden war und dieses Produkt genau vor dem entsprechenden Produkt gereiht war. War schwer zu finden... / [PR#484](https://github.com/foodcoopshop/foodcoopshop/pull/484) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
 ## v3.0.1 / 2020-03-22 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.0.0...v3.0.1)
 
 ### Bugfix

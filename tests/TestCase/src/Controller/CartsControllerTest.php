@@ -161,6 +161,41 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>50</b> der Variante <b>0,5l</b> des Produktes <b>Milch</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 2', $response->msg);
     }
     
+    public function testStockManagementEnabledIsStockProductFalseAndQuantityLimitLessThanZero()
+    {
+        $this->changeManufacturer(15, 'stock_management_enabled', 1);
+        $productId = $this->Product->getProductIdAndAttributeId($this->productId2)['productId'];
+        $this->Product->changeIsStockProduct([[$productId => false]]);
+        $this->Product->changeQuantity([[$this->productId2 => [
+            'always_available' => 0,
+            'quantity' => 0,
+            'quantity_limit' => -5,
+        ]]]);
+        $this->loginAsCustomer();
+        $response = $this->addProductToCart($this->productId2, 1);
+        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>1</b> der Variante <b>0,5l</b> des Produktes <b>Milch</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 0', $response->msg);
+    }
+    
+    /**
+     * very rarely product ids were mixed
+     */
+    public function testDecreaseQuantityIfProductWithAttributeWasInSameCart()
+    {
+        $this->changeManufacturer(5, 'stock_management_enabled', 0);
+        $this->Product->changeIsStockProduct([[$this->productId1 => false]]);
+        $this->Product->changeQuantity([[$this->productId1 => [
+            'always_available' => 0,
+            'quantity' => 6,
+            'quantity_limit' => 0,
+            'sold_out_limit' => 0,
+        ]]]);
+        $this->loginAsSuperadmin();
+        $this->addProductToCart($this->productId1, 1);
+        $this->addProductToCart('348-12', 5);
+        $this->finishCart();
+        $this->checkStockAvailable($this->productId1, 5);
+    }
+    
     private function doPrepareAlwaysAvailable($productId, $originalQuantity)
     {
         $this->Product->changeQuantity([[$productId => [
@@ -400,12 +435,14 @@ class CartsControllerTest extends AppCakeTestCase
     }
     
     public function testProductsWithAllowedNegativeStock() {
+        $this->changeManufacturer(5, 'stock_management_enabled', true);
         $this->loginAsCustomer();
         $this->addProductToCart(349, 8);
         $this->assertJsonOk();
     }
     
     public function testProductsWithAllowedNegativeStockButTooHighAmount() {
+        $this->changeManufacturer(5, 'stock_management_enabled', true);
         $this->loginAsCustomer();
         $response = $this->addProductToCart(349, 11);
         $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>11</b> des Produktes <b>Lagerprodukt</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 10', $response->msg);
