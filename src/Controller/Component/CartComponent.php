@@ -230,9 +230,12 @@ class CartComponent extends Component
                 ]
             ])->first();
             $products[] = $product;
-            $stockAvailableQuantity = $product->stock_available->quantity;
-            $stockAvailableAvailableQuantity = $product->stock_available->quantity - $product->stock_available->quantity_limit;
             
+            $stockAvailableQuantity = $product->stock_available->quantity;
+            $stockAvailableAvailableQuantity = $stockAvailableQuantity;
+            if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
+                $stockAvailableAvailableQuantity = $product->stock_available->quantity - $product->stock_available->quantity_limit;
+            }
             // stock available check for product (without attributeId)
             if ((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$product->stock_available->always_available) && $ids['attributeId'] == 0 && $stockAvailableAvailableQuantity < $cartProduct['amount']) {
                 $message = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}.', ['<b>' . $cartProduct['amount'] . '</b>', '<b>' . $product->name . '</b>', $stockAvailableAvailableQuantity]);
@@ -240,13 +243,19 @@ class CartComponent extends Component
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
             
+            $attribute = null;
             if ($ids['attributeId'] > 0) {
                 $attributeIdFound = false;
                 foreach ($product->product_attributes as $attribute) {
                     if ($attribute->id_product_attribute == $ids['attributeId']) {
+                        
                         $attributeIdFound = true;
                         $stockAvailableQuantity = $attribute->stock_available->quantity;
-                        $stockAvailableAvailableQuantity = $attribute->stock_available->quantity - $attribute->stock_available->quantity_limit;
+                        $stockAvailableAvailableQuantity = $stockAvailableQuantity;
+                        if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
+                            $stockAvailableAvailableQuantity = $attribute->stock_available->quantity - $attribute->stock_available->quantity_limit;
+                        }
+                        
                         // stock available check for attribute
                         if ((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$attribute->stock_available->always_available) && $stockAvailableAvailableQuantity < $cartProduct['amount']) {
                             $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
