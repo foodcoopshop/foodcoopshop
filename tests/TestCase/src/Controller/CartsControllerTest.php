@@ -179,7 +179,7 @@ class CartsControllerTest extends AppCakeTestCase
     /**
      * very rarely product ids were mixed
      */
-    public function testDecreaseQuantityIfMoreThanOneProductFromOneManufacturerIsOrdered()
+    public function testDecreaseQuantityIfProductWithAttributeWasInSameCart()
     {
         $this->changeManufacturer(5, 'stock_management_enabled', 0);
         $this->Product->changeIsStockProduct([[$this->productId1 => false]]);
@@ -191,10 +191,7 @@ class CartsControllerTest extends AppCakeTestCase
         ]]]);
         $this->loginAsSuperadmin();
         $this->addProductToCart($this->productId1, 1);
-        $this->addProductToCart(344, 2);
-        $this->addProductToCart(102, 2);
-        $this->addProductToCart(347, 4);
-        $this->addProductToCart(348, 5);
+        $this->addProductToCart('348-12', 5);
         $this->finishCart();
         $this->checkStockAvailable($this->productId1, 5);
     }
