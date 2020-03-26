@@ -12,6 +12,8 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 ?>
 <ul class="nav nav-tabs">
     <?php
@@ -21,8 +23,7 @@
         if ($tab['key'] == $key) {
             $btnClass = 'active';
         }
-        // show deposit report also for cash configuration
-        if ($this->Html->paymentIsCashless() || in_array($tab['key'], ['deposit', 'member_fee', 'member_fee_flexible', 'credit-balance-sum'])) {
+        if (($this->Html->paymentIsCashless() && Configure::read('app.isDepositPaymentCashless')) || in_array($tab['key'], ['deposit', 'member_fee', 'member_fee_flexible', 'credit-balance-sum'])) {
             echo '<li class="' . $btnClass . '"><a href="' . $tab['url'] . '?dateFrom=' . $dateFrom . '&dateTo=' . $dateTo . '">' . $tab['name'] . '</a></li>';
         }
     }

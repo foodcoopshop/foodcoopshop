@@ -227,18 +227,22 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
                 'fa-icon' => 'fa-fw fa-percent'
             ]
         ];
-        // show deposit report also for cash configuration
-        $reportSlug = $this->Slug->getReport('product');
-        if (!$this->Html->paymentIsCashless()) {
+        $reportSlug = null;
+        if (!$this->Html->paymentIsCashless() && !Configure::read('app.isDepositPaymentCashless')) {
             $reportSlug = $this->Slug->getReport('deposit');
         }
-        $homepageAdministrationElement['children'][] = [
-            'slug' => $reportSlug,
-            'name' => __d('admin', 'Financial_reports'),
-            'options' => [
-                'fa-icon' => 'fa-fw fa-money-bill-alt'
-            ]
-        ];
+        if ($this->Html->paymentIsCashless()) {
+            $reportSlug = $this->Slug->getReport('product');
+        }
+        if ($reportSlug) {
+            $homepageAdministrationElement['children'][] = [
+                'slug' => $reportSlug,
+                'name' => __d('admin', 'Financial_reports'),
+                'options' => [
+                    'fa-icon' => 'fa-fw fa-money-bill-alt'
+                ]
+            ];
+        }
         $homepageAdministrationElement['children'][] = [
             'slug' => $this->Slug->getConfigurationsList(),
             'name' => __d('admin', 'Configurations'),
