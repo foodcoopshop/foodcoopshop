@@ -228,7 +228,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             ]
         ];
         $reportSlug = null;
-        if (!$this->Html->paymentIsCashless() && !Configure::read('app.isDepositPaymentCashless')) {
+        if (!$this->Html->paymentIsCashless() && Configure::read('app.isDepositPaymentCashless')) {
             $reportSlug = $this->Slug->getReport('deposit');
         }
         if ($this->Html->paymentIsCashless()) {
