@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-03-23 19:13+0100\n"
+"POT-Creation-Date: 2020-03-27 20:44+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -779,7 +779,7 @@ msgstr ""
 msgid "Change_group_for"
 msgstr ""
 
-msgid "The_member_needs_to_sign_again."
+msgid "The_user_needs_to_sign_again."
 msgstr ""
 
 msgid "Member"

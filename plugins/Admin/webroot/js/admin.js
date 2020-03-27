@@ -2209,7 +2209,7 @@ foodcoopshop.Admin = {
             select.append($('#selectgroupid').html());
             select.val(selectedGroupId);
             var html = foodcoopshop.LocalizedJs.admin.ChangeGroupFor + ': ' + $(this).closest('tr').find('td:nth-child(3) a').text();
-            html += '<p style="font-weight: normal;"><br />' + foodcoopshop.LocalizedJs.admin.TheMemberNeedsToSignInAgain + '</p>';
+            html += '<p style="font-weight: normal;"><br />' + foodcoopshop.LocalizedJs.admin.TheUserNeedsToSignInAgain + '</p>';
             $('#' + dialogId + ' #dialogCustomerGroupEditText').html(html);
             $('#' + dialogId + ' #dialogCustomerGroupEditCustomerId').val($(this).closest('tr').find('td:nth-child(2)').html());
             dialog.dialog('open');
