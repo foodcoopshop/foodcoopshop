@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-03-23 19:13+0100\n"
+"POT-Creation-Date: 2020-03-27 20:44+0100\n"
 "PO-Revision-Date: 2020-02-29 22:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1044,7 +1044,8 @@ msgid "Change_group_for"
 msgstr "Zmień grupę dla"
 
 # The member needs to sign in again.
-msgid "The_member_needs_to_sign_again."
+#, fuzzy
+msgid "The_user_needs_to_sign_again."
 msgstr "Członek musi się ponownie zalogować."
 
 # Member
