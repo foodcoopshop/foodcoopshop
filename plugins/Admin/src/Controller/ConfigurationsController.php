@@ -150,7 +150,7 @@ class ConfigurationsController extends AdminAppController
     {
         $this->viewBuilder()->setHelpers(['Configuration']);
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
-        $this->set('configurations', $this->Configuration->getConfigurations());
+        $this->set('configurations', $this->Configuration->getConfigurations(['type != "hidden"']));
         $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
         $defaultTax = $this->Tax->find('all', [
             'conditions' => [

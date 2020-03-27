@@ -211,13 +211,14 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
 
-    public function getConfigurations()
+    public function getConfigurations(array $customConditions = [])
     {
+        $conditions = array_merge([
+            'active' => APP_ON
+        ], $customConditions);
         $configurations = $this->find('all', [
             'fields' => ['id_configuration', 'name', 'value', 'type', 'text'],
-            'conditions' => [
-                'active' => APP_ON
-            ],
+            'conditions' => $conditions,
             'order' => [
                 'position' => 'ASC'
             ]
