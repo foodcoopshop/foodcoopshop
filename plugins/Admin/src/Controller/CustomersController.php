@@ -155,7 +155,7 @@ class CustomersController extends AdminAppController
         $this->set([
             'status' => 1,
         ]);
-        $this->viewBuilder()->setOption('serialize', ['status');
+        $this->viewBuilder()->setOption('serialize', ['status']);
     }
 
     public function changePassword()
