@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Core\Exception\Exception;
 use Cake\Event\EventInterface;
 use Cake\ORM\TableRegistry;
+use Cake\Http\Exception\ForbiddenException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -27,23 +29,16 @@ class CartsController extends FrontendController
     {
 
         parent::beforeFilter($event);
-
         if ($this->getRequest()->is('json')) {
-            $message = '';
-            if (empty($this->AppAuth->user())) {
-                $message = __('You_are_not_signed_in.');
-            }
-            if ($this->AppAuth->isManufacturer()) {
-                $message = __('No_access_for_manufacturers.');
-            }
-            if ($message != '') {
-                $this->log($message);
-                $this->set([
-                    'status' => 0,
-                    'msg' => $message,
-                ]);
-                $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
-                return;
+            try {
+                if (empty($this->AppAuth->user())) {
+                    throw new ForbiddenException(__('You_are_not_signed_in.'));
+                }
+                if ($this->AppAuth->isManufacturer()) {
+                    throw new ForbiddenException(__('No_access_for_manufacturers.'));
+                }
+            } catch (Exception $e) {
+                $this->sendAjaxError($e);
             }
         }
 
