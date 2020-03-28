@@ -8,8 +8,6 @@ use Cake\ORM\TableRegistry;
 use Cake\Http\Exception\UnauthorizedException;
 
 /**
- * ListsController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
