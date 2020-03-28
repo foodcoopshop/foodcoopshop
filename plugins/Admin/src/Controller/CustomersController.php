@@ -103,13 +103,17 @@ class CustomersController extends AdminAppController
         $customerId = (int) $this->getRequest()->getData('customerId');
         $groupId = (int) $this->getRequest()->getData('groupId');
 
+        $this->RequestHandler->renderAs($this, 'json');
+        
         if (! in_array($groupId, array_keys(Configure::read('app.htmlHelper')->getAuthDependentGroups($this->AppAuth->getGroupId())))) {
             $message = 'user group not allowed: ' . $groupId;
             $this->log($message);
-            die(json_encode([
+            $this->set([
                 'status' => 0,
-                'msg' => $message
-            ]));
+                'msg' => $message,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return;
         }
 
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
@@ -123,10 +127,12 @@ class CustomersController extends AdminAppController
         if ($this->AppAuth->getGroupId() < $oldCustomer->id_default_group) {
             $message = 'logged user has lower groupId than the user he wants to edit: customerId: ' . $oldCustomer->id_customer . ', groupId: ' . $oldCustomer->id_default_group;
             $this->log($message);
-            die(json_encode([
+            $this->set([
                 'status' => 0,
-                'msg' => $message
-            ]));
+                'msg' => $message,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return;
         }
 
         $this->Customer->save(
@@ -146,9 +152,10 @@ class CustomersController extends AdminAppController
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('customer_group_changed', $this->AppAuth->getUserId(), $customerId, 'customers', $messageString);
 
-        die(json_encode([
-            'status' => 1
-        ]));
+        $this->set([
+            'status' => 1,
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status');
     }
 
     public function changePassword()
@@ -511,7 +518,7 @@ class CustomersController extends AdminAppController
 
     public function editComment()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
 
         $customerId = $this->getRequest()->getData('customerId');
         $customerComment = htmlspecialchars_decode($this->getRequest()->getData('customerComment'));
@@ -540,10 +547,11 @@ class CustomersController extends AdminAppController
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('customer_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', __d('admin', 'The_comment_of_the_member_{0}_was_changed:', ['<b>' . $oldCustomer->name . '</b>']) . ' <div class="changed">' . $customerComment . ' </div>');
 
-        die(json_encode([
+        $this->set([
             'status' => 1,
-            'msg' => 'ok'
-        ]));
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
     public function creditBalanceSum()

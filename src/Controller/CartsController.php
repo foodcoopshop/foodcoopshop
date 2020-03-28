@@ -38,10 +38,12 @@ class CartsController extends FrontendController
             }
             if ($message != '') {
                 $this->log($message);
-                die(json_encode([
+                $this->set([
                     'status' => 0,
-                    'msg' => $message
-                ]));
+                    'msg' => $message,
+                ]);
+                $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+                return;
             }
         }
 
@@ -141,16 +143,17 @@ class CartsController extends FrontendController
 
     public function ajaxDeleteInstantOrderCustomer()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
 
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
         $this->destroyInstantOrderCustomer();
 
-        die(json_encode([
+        $this->set([
             'status' => 1,
-            'msg' => 'ok'
-        ]));
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
     private function doManufacturerCheck($productId)
@@ -158,17 +161,19 @@ class CartsController extends FrontendController
         if ($this->AppAuth->isManufacturer()) {
             $message = __('No_access_for_manufacturers.');
             $this->log($message);
-            die(json_encode([
+            $this->set([
                 'status' => 0,
                 'msg' => $message,
                 'productId' => $productId
-            ]));
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'productId']);
+            return;
         }
     }
 
     public function ajaxRemove()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
 
         $initialProductId = $this->getRequest()->getData('productId');
 
@@ -183,11 +188,13 @@ class CartsController extends FrontendController
         $existingCartProduct = $this->AppAuth->Cart->getProduct($initialProductId);
         if (empty($existingCartProduct)) {
             $message = __('Product_{0}_was_not_available_in_cart.', [$ids['productId']]);
-            die(json_encode([
+            $this->set([
                 'status' => 0,
                 'msg' => $message,
-                'productId' => $initialProductId
-            ]));
+                'productId' => $initialProductId,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'productId']);
+            return;
         }
 
         $cartProductTable = TableRegistry::getTableLocator()->get('CartProducts');
@@ -196,10 +203,11 @@ class CartsController extends FrontendController
         // ajax calls do not call beforeRender
         $this->resetOriginalLoggedCustomer();
 
-        die(json_encode([
+        $this->set([
             'status' => 1,
-            'msg' => 'ok'
-        ]));
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
     public function emptyCart()
@@ -289,7 +297,7 @@ class CartsController extends FrontendController
 
     public function ajaxAdd()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
 
         $initialProductId = $this->getRequest()->getData('productId');
 
@@ -313,14 +321,12 @@ class CartsController extends FrontendController
                 'status' => 1,
                 'msg' => 'ok'
             ];
-            
             if ($orderedQuantityInUnits > 0 && $this->AppAuth->isSelfServiceModeByReferer()) {
                 $result['callback'] = "foodcoopshop.SelfService.setFocusToSearchInputField();";
             }
-            
         }
         
-        die(json_encode($result));
-
+        $this->set($result);
+        $this->viewBuilder()->setOption('serialize', array_keys($result));
     }
 }

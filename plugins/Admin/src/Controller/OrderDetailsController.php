@@ -532,7 +532,7 @@ class OrderDetailsController extends AdminAppController
 
     public function editCustomer()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
         
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $customerId = (int) $this->getRequest()->getData('customerId');
@@ -577,10 +577,12 @@ class OrderDetailsController extends AdminAppController
         }
         
         if (!empty($errors)) {
-            die(json_encode([
+            $this->set([
                 'status' => 0,
-                'msg' => join('<br />', $errors)
-            ]));
+                'msg' => join('<br />', $errors),
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return;
         }
         
         $originalProductAmount = $oldOrderDetail->product_amount;
@@ -692,16 +694,17 @@ class OrderDetailsController extends AdminAppController
         $this->ActionLog->customSave('order_detail_customer_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
         $this->Flash->success($message);
         
-        die(json_encode([
+        $this->set([
             'status' => 1,
-            'msg' => 'ok'
-        ]));
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
         
     }
     
     public function editProductQuantity()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
 
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $productQuantity = trim($this->getRequest()->getData('productQuantity'));
@@ -711,10 +714,12 @@ class OrderDetailsController extends AdminAppController
         if (! is_numeric($orderDetailId) || !$productQuantity || $productQuantity < 0) {
             $message = 'input format wrong';
             $this->log($message);
-            die(json_encode([
+            $this->set([
                 'status' => 0,
-                'msg' => $message
-            ]));
+                'msg' => $message,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return;
         }
 
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
@@ -789,16 +794,17 @@ class OrderDetailsController extends AdminAppController
             $this->Flash->success($message);
         }
         
-        die(json_encode([
+        $this->set([
             'status' => 1,
-            'msg' => 'ok'
-        ]));
-
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+        
     }
 
     public function editProductAmount()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
 
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $productAmount = trim($this->getRequest()->getData('productAmount'));
@@ -807,10 +813,12 @@ class OrderDetailsController extends AdminAppController
         if (! is_numeric($orderDetailId) || ! is_numeric($productAmount) || $productAmount < 1) {
             $message = 'input format wrong';
             $this->log($message);
-            die(json_encode([
+            $this->set([
                 'status' => 0,
-                'msg' => $message
-            ]));
+                'msg' => $message,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return;
         }
 
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
@@ -891,15 +899,16 @@ class OrderDetailsController extends AdminAppController
 
         $this->Flash->success($message);
 
-        die(json_encode([
+        $this->set([
             'status' => 1,
-            'msg' => 'ok'
-        ]));
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
     public function editProductPrice()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
 
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $editPriceReason = strip_tags(html_entity_decode($this->getRequest()->getData('editPriceReason')));
@@ -910,10 +919,12 @@ class OrderDetailsController extends AdminAppController
         if (! is_numeric($orderDetailId) || !$productPrice || $productPrice < 0) {
             $message = 'input format wrong';
             $this->log($message);
-            die(json_encode([
+            $this->set([
                 'status' => 0,
-                'msg' => $message
-            ]));
+                'msg' => $message,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return;
         }
 
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
@@ -978,10 +989,11 @@ class OrderDetailsController extends AdminAppController
         $this->ActionLog->customSave('order_detail_product_price_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
         $this->Flash->success($message);
 
-        die(json_encode([
+        $this->set([
             'status' => 1,
-            'msg' => 'ok'
-        ]));
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
     
     public function editPickupDay()
@@ -1179,16 +1191,18 @@ class OrderDetailsController extends AdminAppController
      */
     public function delete()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
 
         $orderDetailIds = $this->getRequest()->getData('orderDetailIds');
         $cancellationReason = strip_tags(html_entity_decode($this->getRequest()->getData('cancellationReason')));
 
         if (!(is_array($orderDetailIds))) {
-            die(json_encode([
+            $this->set([
                 'status' => 0,
-                'msg' => 'param needs to be an array, given: ' . $orderDetailIds
-            ]));
+                'msg' => 'param needs to be an array, given: ' . $orderDetailIds,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return;
         }
 
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
@@ -1270,10 +1284,11 @@ class OrderDetailsController extends AdminAppController
         }
         $this->Flash->success($flashMessage);
 
-        die(json_encode([
+        $this->set([
             'status' => 1,
-            'msg' => 'ok'
-        ]));
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
     /**

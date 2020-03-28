@@ -80,7 +80,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
 
     public function delete()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
 
         $paymentId = $this->getRequest()->getData('paymentId');
 
@@ -97,10 +97,12 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         if (empty($payment)) {
             $message = 'payment id ('.$paymentId.') not correct or already approved (approval: 1)';
             $this->log($message);
-            die(json_encode([
+            $this->set([
                 'status' => 0,
-                'msg' => $message
-            ]));
+                'msg' => $message,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return;
         }
 
         $this->TimebasedCurrencyPayment->save(
@@ -141,10 +143,11 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->ActionLog->customSave('timebased_currency_payment_deleted', $this->AppAuth->getUserId(), $paymentId, 'timebased_currency_payments', $message . ' (PaymentId: ' . $paymentId . ')');
         $this->Flash->success($message);
 
-        die(json_encode([
+        $this->set([
             'status' => 1,
-            'msg' => 'ok'
-        ]));
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
     /**

@@ -239,7 +239,7 @@ class ProductsController extends AdminAppController
 
     public function ajaxGetProductsForDropdown($manufacturerId = 0)
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
 
         $products = $this->Product->getForDropdown($this->AppAuth, $manufacturerId);
         $productsForDropdown = [];
@@ -251,10 +251,11 @@ class ProductsController extends AdminAppController
             $productsForDropdown[] = '</optgroup>';
         }
 
-        die(json_encode([
+        $this->set([
             'status' => 1,
-            'products' => join('', $productsForDropdown)
-        ]));
+            'products' => join('', $productsForDropdown),
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'products']);
     }
 
     /**
@@ -264,15 +265,19 @@ class ProductsController extends AdminAppController
      */
     public function deleteImage($productId)
     {
+        $this->RequestHandler->renderAs($this, 'json');
+        
         $productId = (int) $productId;
 
         if ($productId == 0 || $productId == '') {
             $message = 'Product ID not correct: ' . $productId;
             $this->log($message);
-            die(json_encode([
+            $this->set([
                 'status' => 0,
-                'msg' => $message
-            ]));
+                'msg' => $message,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return;
         }
 
         $product = $this->Product->find('all', [
@@ -307,7 +312,7 @@ class ProductsController extends AdminAppController
 
     public function saveUploadedImageProduct()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
 
         $productId = $this->getRequest()->getData('objectId');
         $filename = $this->getRequest()->getData('filename');
@@ -363,10 +368,11 @@ class ProductsController extends AdminAppController
 
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
-        die(json_encode([
+        $this->set([
             'status' => 1,
-            'msg' => 'success'
-        ]));
+            'msg' => 'success',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
     public function deleteProductAttribute($productId, $productAttributeId)
@@ -480,7 +486,7 @@ class ProductsController extends AdminAppController
     
     public function editDeliveryRhythm() 
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
         
         $this->loadComponent('Sanitize');
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
@@ -613,10 +619,11 @@ class ProductsController extends AdminAppController
             
             $this->Flash->success($messageString);
             
-            die(json_encode([
+            $this->set([
                 'status' => 1,
-                'msg' => __d('admin', 'Saving_successful.')
-            ]));
+                'msg' => __d('admin', 'Saving_successful.'),
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
             
         } catch (InvalidParameterException $e) {
             $this->sendAjaxError($e);
@@ -626,7 +633,7 @@ class ProductsController extends AdminAppController
 
     public function editTax()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
 
         $productId = (int) $this->getRequest()->getData('productId');
         $taxId = (int) $this->getRequest()->getData('taxId');
@@ -708,15 +715,15 @@ class ProductsController extends AdminAppController
 
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
-        die(json_encode([
+        $this->set([
             'status' => 1,
-            'msg' => __d('admin', 'Saving_successful.')
-        ]));
+            'msg' => __d('admin', 'Saving_successful.'),
+        ]);
     }
 
     public function editCategories()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
 
         $productId = (int) $this->getRequest()->getData('productId');
         $selectedCategories = [];
@@ -766,10 +773,11 @@ class ProductsController extends AdminAppController
 
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
-        die(json_encode([
+        $this->set([
             'status' => 1,
-            'msg' => __d('admin', 'Saving_successful.')
-        ]));
+            'msg' => __d('admin', 'Saving_successful.'),
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
     
     public function editIsStockProduct()
@@ -810,10 +818,11 @@ class ProductsController extends AdminAppController
         
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
         
-        die(json_encode([
+        $this->set([
             'status' => 1,
-            'msg' => 'ok'
-        ]));
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
     public function editQuantity()
@@ -886,10 +895,11 @@ class ProductsController extends AdminAppController
         }
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
-        die(json_encode([
+        $this->set([
             'status' => 1,
-            'msg' => 'ok'
-        ]));
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
     public function editPrice()
@@ -1053,7 +1063,7 @@ class ProductsController extends AdminAppController
 
     public function editName()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
 
         $productId = $this->getRequest()->getData('productId');
 
@@ -1119,10 +1129,11 @@ class ProductsController extends AdminAppController
 
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
 
-        die(json_encode([
+        $this->set([
             'status' => 1,
-            'msg' => 'ok'
-        ]));
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
     public function index()

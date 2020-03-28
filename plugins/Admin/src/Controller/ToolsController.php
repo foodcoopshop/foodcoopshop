@@ -28,7 +28,7 @@ class ToolsController extends AdminAppController
 
     public function doTmpFileUpload()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
         
         // check if uploaded file is pdf
         $upload = $this->getRequest()->getData('upload');
@@ -36,10 +36,12 @@ class ToolsController extends AdminAppController
         // non-pdf files will return false
         if ($upload->getClientMediaType() != 'application/pdf') {
             $message = 'only pdf format is allowed';
-            die(json_encode([
+            $this->set([
                 'status' => 0,
-                'msg' => $message
-            ]));
+                'msg' => $message,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return;
         }
         
         $extension = strtolower(pathinfo($upload->getClientFilename(), PATHINFO_EXTENSION));
@@ -48,16 +50,17 @@ class ToolsController extends AdminAppController
         
         $upload->moveTo(WWW_ROOT . $filenameWithPath);
         
-        die(json_encode([
+        $this->set([
             'status' => 1,
             'text' => __d('admin', 'Filename_General-terms-and-conditions') . '.pdf',
-            'filename' => $filenameWithPath
-        ]));
+            'filename' => $filenameWithPath,
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'text', 'filename']);
     }
     
     public function doTmpImageUpload()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
 
         // check if uploaded file is image file
         $upload = $this->getRequest()->getData('upload');
@@ -65,10 +68,12 @@ class ToolsController extends AdminAppController
         // non-image files will return false
         if ($upload->getClientMediaType() != 'image/jpeg') {
             $message = 'the uploaded file needs to have jpg format.';
-            die(json_encode([
+            $this->set([
                 'status' => 0,
-                'msg' => $message
-            ]));
+                'msg' => $message,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return;
         }
 
         $extension = strtolower(pathinfo($upload->getClientFilename(), PATHINFO_EXTENSION));
@@ -83,15 +88,16 @@ class ToolsController extends AdminAppController
             ->widen($this->getMaxTmpUploadFileSize())
             ->save(WWW_ROOT . $filenameWithPath);
 
-        die(json_encode([
+        $this->set([
             'status' => 1,
-            'filename' => $filenameWithPath
-        ]));
+            'filename' => $filenameWithPath,
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'filename']);
     }
 
     public function rotateImage()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
 
         // check if uploaded file is image file
         $uploadedFile = $_SERVER['DOCUMENT_ROOT'] . $this->getRequest()->getData('filename');
@@ -107,10 +113,12 @@ class ToolsController extends AdminAppController
         }
         if (is_null($directionInDegrees)) {
             $message = 'direction wrong';
-            die(json_encode([
+            $this->set([
                 'status' => 0,
-                'msg' => $message
-            ]));
+                'msg' => $message,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return;
         }
 
         $formatInfo = getimagesize($uploadedFile);
@@ -118,10 +126,12 @@ class ToolsController extends AdminAppController
         // non-image files will return false
         if ($formatInfo === false || $formatInfo['mime'] != 'image/jpeg') {
             $message = 'the uploaded file needs to have jpg format.';
-            die(json_encode([
+            $this->set([
                 'status' => 0,
-                'msg' => $message
-            ]));
+                'msg' => $message,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return;
         }
 
         Image::make($uploadedFile)
@@ -129,10 +139,12 @@ class ToolsController extends AdminAppController
             ->save($uploadedFile);
 
         $rotatedImageSrc = $this->getRequest()->getData('filename') . '?' . StringComponent::createRandomString(3);
-        die(json_encode([
+        
+        $this->set([
             'status' => 1,
             'rotatedImageSrc' => $rotatedImageSrc
-        ]));
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'rotatedImageSrc']);
     }
 
     /*

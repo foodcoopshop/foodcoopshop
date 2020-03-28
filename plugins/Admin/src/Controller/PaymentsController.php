@@ -206,7 +206,7 @@ class PaymentsController extends AdminAppController
 
     public function add()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
 
         $type = trim($this->getRequest()->getData('type'));
         if (! in_array($type, [
@@ -218,10 +218,12 @@ class PaymentsController extends AdminAppController
         ])) {
             $message = 'payment type not correct: ' . $type;
             $this->log($message);
-            die(json_encode([
+            $this->set([
                 'status' => 0,
-                'msg' => $message
-            ]));
+                'msg' => $message,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return;
         }
 
         $this->loadComponent('Sanitize');
@@ -273,11 +275,12 @@ class PaymentsController extends AdminAppController
                 ])->first();
                 if (empty($customer)) {
                     $msg = 'customer id not correct: ' . $customerId;
-                    $this->log($msg);
-                    die(json_encode([
+                    $this->set([
                         'status' => 0,
-                        'msg' => $msg
-                    ]));
+                        'msg' => $msg,
+                    ]);
+                    $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+                    return;
                 }
                 $message .= ' ' . __d('admin', 'for') . ' ' . $customer->name;
             }
@@ -295,10 +298,12 @@ class PaymentsController extends AdminAppController
                 if (empty($manufacturer)) {
                     $msg = 'manufacturer id not correct: ' . $manufacturerId;
                     $this->log($msg);
-                    die(json_encode([
+                    $this->set([
                         'status' => 0,
-                        'msg' => $msg
-                    ]));
+                        'msg' => $msg,
+                    ]);
+                    $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+                    return;
                 }
 
                 $message = __d('admin', 'Deposit_take_back') . ' ('.Configure::read('app.htmlHelper')->getManufacturerDepositPaymentText($text).')';
@@ -328,18 +333,22 @@ class PaymentsController extends AdminAppController
             if (!$this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $customerId) {
                 $msg = 'user without superadmin privileges tried to insert payment for another user: ' . $customerId;
                 $this->log($msg);
-                die(json_encode([
+                $this->set([
                     'status' => 0,
-                    'msg' => $msg
-                ]));
+                    'msg' => $msg,
+                ]);
+                $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+                return;
             }
             if (empty($customer)) {
                 $msg = 'customer id not correct: ' . $customerId;
                 $this->log($msg);
-                die(json_encode([
+                $this->set([
                     'status' => 0,
-                    'msg' => $msg
-                ]));
+                    'msg' => $msg,
+                ]);
+                $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+                return;
             }
         }
 
@@ -386,17 +395,19 @@ class PaymentsController extends AdminAppController
 
         $this->Flash->success($message);
 
-        die(json_encode([
+        $this->set([
             'status' => 1,
             'msg' => 'ok',
             'amount' => $amount,
-            'paymentId' => $newPayment->id
-        ]));
+            'paymentId' => $newPayment->id,
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'amount', 'paymentId']);
+        
     }
 
     public function changeState()
     {
-        $this->RequestHandler->renderAs($this, 'ajax');
+        $this->RequestHandler->renderAs($this, 'json');
 
         $paymentId = $this->getRequest()->getData('paymentId');
 
@@ -414,10 +425,12 @@ class PaymentsController extends AdminAppController
         if (empty($payment)) {
             $message = 'payment id ('.$paymentId.') not correct or already approved (approval: 1)';
             $this->log($message);
-            die(json_encode([
+            $this->set([
                 'status' => 0,
-                'msg' => $message
-            ]));
+                'msg' => $message,
+            ]);
+            $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+            return;
         }
 
         // TODO add payment owner check (also for manufacturers!)
@@ -463,10 +476,11 @@ class PaymentsController extends AdminAppController
 
         $this->Flash->success($message);
 
-        die(json_encode([
+        $this->set([
             'status' => 1,
-            'msg' => 'ok'
-        ]));
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
     /**

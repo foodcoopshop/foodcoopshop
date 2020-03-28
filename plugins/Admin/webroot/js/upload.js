@@ -337,7 +337,7 @@ foodcoopshop.Upload = {
                     imageUploadForm.find('img.uploadedImage').remove();
                     imageUploadForm.find('.modify-icon').remove();
 
-                    var result = JSON.parse(data.result);
+                    var result = data.result;
                     if (result.status) {
                         var container = imageUploadForm.find('.drop');
                         container.find('img').remove();
