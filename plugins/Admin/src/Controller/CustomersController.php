@@ -493,7 +493,7 @@ class CustomersController extends AdminAppController
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('customer_activated');
             $email->setTo($customer->email)
-                ->setSubject(__d('admin', 'The_account_was_activated'))
+                ->setSubject(__d('admin', 'Your_account_was_activated'))
                 ->setViewVars([
                 'appAuth' => $this->AppAuth,
                 'data' => $customer,

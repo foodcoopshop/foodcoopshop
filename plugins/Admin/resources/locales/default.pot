@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-03-19 21:00+0100\n"
+"POT-Creation-Date: 2020-03-29 18:15+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -140,7 +140,7 @@ msgstr ""
 msgid "The_member_{0}_has_been_activated_succesfully."
 msgstr ""
 
-msgid "The_account_was_activated"
+msgid "Your_account_was_activated"
 msgstr ""
 
 msgid "Filename_Terms-of-use"
