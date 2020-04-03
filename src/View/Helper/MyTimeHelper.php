@@ -316,9 +316,11 @@ class MyTimeHelper extends TimeHelper
     public function getSendOrderListsWeekdayOptions()
     {
         $defaultSendOrderListsWeekday = $this->getSendOrderListsWeekday();
+        $weekday3 = $this->getNthWeekdayBeforeWeekday(3, $defaultSendOrderListsWeekday);
         $weekday2 = $this->getNthWeekdayBeforeWeekday(2, $defaultSendOrderListsWeekday);
         $weekday1 = $this->getNthWeekdayBeforeWeekday(1, $defaultSendOrderListsWeekday);
         return [
+            $weekday3 => $this->getWeekdayName($weekday3) . ' ' . __('midnight'),
             $weekday2 => $this->getWeekdayName($weekday2) . ' ' . __('midnight'),
             $weekday1 => $this->getWeekdayName($weekday1) . ' ' . __('midnight') . ' (' . __('default_value') . ')'
         ];
