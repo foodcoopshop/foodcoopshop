@@ -4,5 +4,7 @@ parameters:
         - php
     paths:
         - src
+        - plugins/Admin/src
+        - plugins/Network/src
     autoload_files:
         - tests/bootstrap.php
