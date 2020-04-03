@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-03-27 20:44+0100\n"
+"POT-Creation-Date: 2020-04-03 20:03+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1419,6 +1419,9 @@ msgid "The_email_address_is_already_used_by_another_member_or_manufacturer."
 msgstr ""
 
 msgid "Please_enter_your_street."
+msgstr ""
+
+msgid "Maximum_{0}_characters_please."
 msgstr ""
 
 msgid "Please_enter_your_city."
