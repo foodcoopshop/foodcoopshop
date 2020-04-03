@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
-    "blueimp-file-upload": "^10.9.0",
+    "blueimp-file-upload": "^10.10.0",
     "bootstrap": "^4.4.1",
     "bootstrap-select": "^1.13.12",
     "chart.js": "^2.9.3",
