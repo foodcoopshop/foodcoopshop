@@ -49,8 +49,8 @@ class ListsControllerTest extends AppCakeTestCase
         $this->httpClient->get($listPageUrl);
         $this->assertRegExpWithUnquotedString('<b>1</b> Datensatz', $this->httpClient->getContent());
         $this->assertRegExpWithUnquotedString('<td>Demo Fleisch-Hersteller</td>', $this->httpClient->getContent());
-        $this->assertNotRegExpWithUnquotedString('<td>Demo Gemüse-Hersteller</td>', $this->httpClient->getContent());
-        $this->assertNotRegExpWithUnquotedString('<td>Demo Milch-Hersteller</td>', $this->httpClient->getContent());
+        $this->assertDoesNotMatchRegularExpressionWithUnquotedString('<td>Demo Gemüse-Hersteller</td>', $this->httpClient->getContent());
+        $this->assertDoesNotMatchRegularExpressionWithUnquotedString('<td>Demo Milch-Hersteller</td>', $this->httpClient->getContent());
         
         // check downloadable file as correct manufacturer
         $this->httpClient->get($orderListDownloadUrl);

@@ -96,7 +96,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     {
         $log = $this->getLogFile('debug')->read(true, 'r');
         $log .= $this->getLogFile('error')->read(true, 'r');
-        $this->assertNotRegExp('/(Warning|Notice)/', $log);
+        $this->assertDoesNotMatchRegularExpression('/(Warning|Notice)/', $log);
     }
     
     protected function resetTestDatabaseData()
@@ -190,9 +190,9 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
      * @param string $response
      * @param string $msg
      */
-    protected function assertNotRegExpWithUnquotedString($unquotedString, $response, $msg = '')
+    protected function assertDoesNotMatchRegularExpressionWithUnquotedString($unquotedString, $response, $msg = '')
     {
-        $this->assertNotRegExp('`' . preg_quote($unquotedString) . '`', $response, $msg);
+        $this->assertDoesNotMatchRegularExpression('`' . preg_quote($unquotedString) . '`', $response, $msg);
     }
 
     protected function assertUrl($url, $expectedUrl, $msg = '')
@@ -222,7 +222,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         foreach ($testPages as $url) {
             $this->httpClient->get($url);
             $html = $this->httpClient->getContent();
-            $this->assertNotRegExp('/class="cake-stack-trace"|class="cake-error"|\bFatal error\b|exception \'[^\']+\' with message|\<strong\>(Error|Exception)\s*:\s*\<\/strong\>|Parse error|Not Found|\/app\/views\/errors\/|error in your SQL syntax|ERROR!|^\<\/body\>/', $html);
+            $this->assertDoesNotMatchRegularExpression('/class="cake-stack-trace"|class="cake-error"|\bFatal error\b|exception \'[^\']+\' with message|\<strong\>(Error|Exception)\s*:\s*\<\/strong\>|Parse error|Not Found|\/app\/views\/errors\/|error in your SQL syntax|ERROR!|^\<\/body\>/', $html);
         }
     }
 

@@ -135,7 +135,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
             $priceRegExp = '<div class="price">';
             $priceAssertFunction = 'assertRegExpWithUnquotedString';
             if (!$expectPrice) {
-                $priceAssertFunction = 'assertNotRegExpWithUnquotedString';
+                $priceAssertFunction = 'assertDoesNotMatchRegularExpressionWithUnquotedString';
             }
             $this->{$priceAssertFunction}($priceRegExp, $this->httpClient->getContent(), 'price expected: ' . $expectPrice);
         }

@@ -50,7 +50,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
     {
         $this->httpClient->followOneRedirectForNextRequest();
         $response = $this->httpClient->get($this->Slug->getProductDetail(60, 'Demo Product'));
-        $this->assertNotRegExpWithUnquotedString('0,62 €', $response->getStringBody()); // price must not be shown
+        $this->assertDoesNotMatchRegularExpressionWithUnquotedString('0,62 €', $response->getStringBody()); // price must not be shown
         $this->assert200OkHeader();
     }
 
