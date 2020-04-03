@@ -191,10 +191,12 @@ if ($appAuth->isManufacturer()) {
     'label' => __d('admin', 'Lastname')
     ]);
     echo $this->Form->control('Manufacturers.address_manufacturer.address1', [
-    'label' => __d('admin', 'Street')
+    'label' => __d('admin', 'Street'),
+    'maxLength' => STREET_MAX_CHARS,
     ]);
     echo $this->Form->control('Manufacturers.address_manufacturer.address2', [
-        'label' => __d('admin', 'Additional_address_information')
+        'label' => __d('admin', 'Additional_address_information'),
+        'maxLength' => STREET_MAX_CHARS,
     ]);
     echo $this->Form->control('Manufacturers.address_manufacturer.postcode', [
     'label' => __d('admin', 'Zip')

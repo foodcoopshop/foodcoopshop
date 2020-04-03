@@ -97,11 +97,25 @@ $this->element('addScript', ['script' =>
                     echo '<p>'.Configure::read('appDb.FCS_REGISTRATION_INFO_TEXT').'</p>';
                 }
     
-                      echo $this->Form->control('Customers.firstname', ['label' => __('Firstname'), 'required' => true]); // required should not be necessary here
-                      echo $this->Form->control('Customers.lastname', ['label' => __('Lastname'), 'required' => true]); // required should not be necessary here
+                      echo $this->Form->control('Customers.firstname', [
+                          'label' => __('Firstname'),
+                          'required' => true, // required should not be necessary here
+                          'maxLength' => NAME_MAX_CHARS,
+                      ]);
+                      echo $this->Form->control('Customers.lastname', [
+                          'label' => __('Lastname'),
+                          'required' => true, // required should not be necessary here
+                          'maxLength' => NAME_MAX_CHARS,
+                      ]);
     
-                      echo $this->Form->control('Customers.address_customer.address1', ['label' => __('Street')]);
-                      echo $this->Form->control('Customers.address_customer.address2', ['label' => __('Additional_address_information')]);
+                      echo $this->Form->control('Customers.address_customer.address1', [
+                          'label' => __('Street'),
+                          'maxLength' => STREET_MAX_CHARS,
+                      ]);
+                      echo $this->Form->control('Customers.address_customer.address2', [
+                          'label' => __('Additional_address_information'),
+                          'maxLength' => STREET_MAX_CHARS,
+                      ]);
     
                       echo $this->Form->control('Customers.address_customer.postcode', ['label' => __('Zip')]);
                       echo $this->Form->control('Customers.address_customer.city', ['label' => __('City')]);

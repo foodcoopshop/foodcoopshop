@@ -25,6 +25,8 @@ class AddressManufacturersTable extends AddressesTable
     {
         $validator->notEmptyString('firstname', __('Please_enter_the_first_name_of_the_invoice_holder.'));
         $validator->notEmptyString('lastname', __('Please_enter_the_last_name_of_the_invoice_holder.'));
+        $validator->maxLength('firstname', NAME_MAX_CHARS, __('Maximum_{0}_characters_please.', [NAME_MAX_CHARS]));
+        $validator->maxLength('lastname', NAME_MAX_CHARS, __('Maximum_{0}_characters_please.', [NAME_MAX_CHARS]));
         $validator->notEmptyString('email', __('Please_enter_an_email_address.'));
         $validator->email('email', false, __('The_email_address_is_not_valid.'));
         $validator->add('email', 'unique', [
