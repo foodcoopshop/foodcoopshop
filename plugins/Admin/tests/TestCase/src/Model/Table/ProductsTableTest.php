@@ -165,7 +165,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
     
-    public function testCalculatePickupDayRespectingDeliveryRhythmWeekWithSendOrderListDay()
+    public function testCalculatePickupDayRespectingDeliveryRhythmWeekWithSendOrderListDayOneDayBeforeDefault()
     {
         $data = [
             'product' => $this->Product->newEntity(
@@ -178,6 +178,23 @@ class ProductsTableTest extends AppCakeTestCase
             ),
             'currentDay' => '2017-08-08',
             'result' => '2017-08-18'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+    
+    public function testCalculatePickupDayRespectingDeliveryRhythmWeekWithSendOrderListDayTwoDaysBeforeDefault()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'week',
+                    'delivery_rhythm_count' => '1',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_send_order_list_weekday' => 1
+                ]
+            ),
+            'currentDay' => '2020-04-05',
+            'result' => '2020-04-10'
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
