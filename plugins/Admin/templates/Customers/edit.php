@@ -49,10 +49,12 @@ echo $this->Form->hidden('referer', ['value' => $referer]);
 
 echo $this->Form->control('Customers.firstname', [
     'label' => __d('admin', 'Firstname'),
+    'maxLength' => NAME_MAX_CHARS,
     'required' => true
 ]);
 echo $this->Form->control('Customers.lastname', [
     'label' => __d('admin', 'Lastname'),
+    'maxLength' => NAME_MAX_CHARS,
     'required' => true
 ]);
 
@@ -99,10 +101,12 @@ echo $this->Form->control('Customers.address_customer.email', [
     'label' => __d('admin', 'Email')
 ]);
 echo $this->Form->control('Customers.address_customer.address1', [
-    'label' => __d('admin', 'Street')
+    'label' => __d('admin', 'Street'),
+    'maxLength' => STREET_MAX_CHARS,
 ]);
 echo $this->Form->control('Customers.address_customer.address2', [
-    'label' => __d('admin', 'Additional_address_information')
+    'label' => __d('admin', 'Additional_address_information'),
+    'maxLength' => STREET_MAX_CHARS,
 ]);
 echo $this->Form->control('Customers.address_customer.postcode', [
     'label' => __d('admin', 'Zip')

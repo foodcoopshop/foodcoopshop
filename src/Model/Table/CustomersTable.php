@@ -71,13 +71,14 @@ class CustomersTable extends AppTable
     {
         $validator->notEmptyString('firstname', __('Please_enter_your_first_name.'));
         $validator->notEmptyString('lastname', __('Please_enter_your_last_name.'));
+        $validator->maxLength('firstname', NAME_MAX_CHARS, __('Maximum_{0}_characters_please.', [NAME_MAX_CHARS]));
+        $validator->maxLength('lastname', NAME_MAX_CHARS, __('Maximum_{0}_characters_please.', [NAME_MAX_CHARS]));
         return $validator;
     }
 
     public function validationRegistration(Validator $validator)
     {
-        $validator->notEmptyString('firstname', __('Please_enter_your_first_name.'));
-        $validator->notEmptyString('lastname', __('Please_enter_your_last_name.'));
+        $validator = $this->validationEdit($validator);
         $validator = $this->getValidationTermsOfUse($validator);
         return $validator;
     }

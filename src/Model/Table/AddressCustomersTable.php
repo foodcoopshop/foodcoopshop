@@ -30,6 +30,8 @@ class AddressCustomersTable extends AddressesTable
             'message' => __('The_email_address_is_already_used_by_another_member_or_manufacturer.')
         ]);
         $validator->notEmptyString('address1', __('Please_enter_your_street.'));
+        $validator->maxLength('address1', STREET_MAX_CHARS, __('Maximum_{0}_characters_please.', [STREET_MAX_CHARS]));
+        $validator->maxLength('address2', STREET_MAX_CHARS, __('Maximum_{0}_characters_please.', [STREET_MAX_CHARS]));
         $validator->notEmptyString('city', __('Please_enter_your_city.'));
         $validator->notEmptyString('postcode', __('Please_enter_your_zip.'));
         $validator->add('postcode', 'validFormat', [
