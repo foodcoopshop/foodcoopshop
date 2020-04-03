@@ -57,7 +57,11 @@ class FileAndEmailLog extends FileLog
             '{"short_description":{"maxLength":',
             '{"firstname":{"_empty":',
             '{"lastname":{"_empty":',
-            __('You_are_not_signed_in.')
+            __('You_are_not_signed_in.'),
+            '{"default_quantity_after_sending_order_lists":{"greaterThanOrEqual":',
+            '{"quantity_limit":{"lessThanOrEqual":',
+            '{"phone_mobile":{"_empty":',
+            '{"promise_to_pickup_products":{"equals":',
         ];
         $ignoredExceptionsRegex = '/('.join('|', $ignoredPatterns).')/';
         if (preg_match($ignoredExceptionsRegex, $message)) {
