@@ -263,7 +263,7 @@ class CustomersController extends FrontendController
                             'auto_login_hash' => $customer->auto_login_hash
                         ]
                     )
-                    ->withExpiry(new DateTime('+6 day'));
+                    ->withExpiry(new DateTime('+30 day'));
                     $this->setResponse($this->getResponse()->withCookie($cookie));
                 }
             }
