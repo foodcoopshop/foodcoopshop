@@ -122,7 +122,7 @@ Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
 <ul>
 	<li>
     remember_me<br />
-    Dauer: 6 Tage<br />
+    Dauer: 30 Tage<br />
     Zweck: Speichert, ob der Benutzer die Log-In-Wiedererkennungsfunktion "Angemeldet bleiben" verwendet.
     </li>
 </ul>
