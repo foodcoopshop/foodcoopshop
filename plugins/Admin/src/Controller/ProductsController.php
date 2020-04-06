@@ -719,6 +719,7 @@ class ProductsController extends AdminAppController
             'status' => 1,
             'msg' => __d('admin', 'Saving_successful.'),
         ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
 
     public function editCategories()
