@@ -72,8 +72,12 @@ class AppMailer extends Mailer
                 // only try to reconfigure callback config once
                 if (is_null(TransportFactory::getConfig('fallback'))) {
                     TransportFactory::setConfig('fallback', Configure::read('app.EmailTransport.fallback'));
+                    // setFrom()  avoids "Sender address rejected: not owned by user" if email in from-address
+                    // is not the same as the one in FallbackTransport
                 }
                 Log::error('The email could not be sent but was resent with the fallback configuration.<br /><br />' . $e->__toString());
+                $this->setConfig('fallback', Configure::read('app.Email.fallback'));
+                $this->setFrom([key($this->getFrom()) => Configure::read('appDb.FCS_APP_NAME')]);
                 $this->setTransport('fallback');
                 return parent::send($action);
             } else {
