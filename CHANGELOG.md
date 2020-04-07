@@ -15,6 +15,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Bugfix
 - Wenn im Miglieder-Profil das Feld Nachname mehr als 32 Zeichen enthielt, landete man beim Speichern auf einer Fehler-Seite. Jetzt ist das Eingabefeld beschränkt. [I#485](https://github.com/foodcoopshop/foodcoopshop/issues/485) / [PR#488](https://github.com/foodcoopshop/foodcoopshop/pull/488) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Infotext bei der Lieferpause ist jetzt leichter verständlich. [I#469](https://github.com/foodcoopshop/foodcoopshop/issues/469) / [PR#482](https://github.com/foodcoopshop/foodcoopshop/pull/482) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Bestelllisten sind ab und zu nicht über die Fallback-Konfiguration versendet worden. [I#495](https://github.com/foodcoopshop/foodcoopshop/issues/495) / [PR#496](https://github.com/foodcoopshop/foodcoopshop/pull/496) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
 ## v3.0.2 / 2020-03-26 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.0.1...v3.0.2)
