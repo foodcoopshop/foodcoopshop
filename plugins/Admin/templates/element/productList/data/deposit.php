@@ -13,12 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use Cake\Core\Configure;
-
 echo '<td>';
     if (empty($product->product_attributes)) {
         echo '<div class="table-cell-wrapper deposit">';
-        if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || Configure::read('app.isDepositPaymentCashless')) {
             echo $this->Html->link(
                 '<i class="fas fa-pencil-alt ok"></i>',
                 'javascript:void(0);',
@@ -28,7 +25,6 @@ echo '<td>';
                     'escape' => false
                 ]
             );
-        }
         if ($product->deposit > 0) {
             echo '<span class="deposit-for-dialog">';
             echo $this->Number->formatAsDecimal($product->deposit);
