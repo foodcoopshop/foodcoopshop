@@ -65,6 +65,14 @@ return [
 //             ],
 //         ],
 
+//         'Email' => [
+//             'fallback' => [
+//                 'from' => ['example@example.com'], // only use email address here (no [mail => name] syntax!)
+//                 'charset' => 'utf-8',
+//                 'headerCharset' => 'utf-8',
+//             ],
+//         ],
+
     ],
 
     /**

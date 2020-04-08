@@ -33,7 +33,7 @@ return [
     ],
     'Email' => [
         'default' => [
-            'from' => [],
+            'from' => [], // [email-address => name] syntax necessary (not only [email]
         ]
     ],
     'Datasources' => [
