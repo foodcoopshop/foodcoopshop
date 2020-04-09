@@ -22,7 +22,7 @@
 <h2>Die Rücktrittsfrist beträgt vierzehn Tage</h2>
 
 <p>a) im Falle eines Kaufvertrags: ab dem Tag, an dem Sie oder ein von Ihnen benannter Dritter, der nicht der Beförderer ist, die Waren in Besitz genommen haben bzw. hat.</p>
-<p>b) im Falle eines Vertrags über mehrere Waren, die Sie im Rahmen einer einheitlichen Bestellung bestellt hat und die getrennt geliefert werden: an dem Tag, an dem Sie oder ein von Ihnen benannter Dritter, der nicht der Beförderer ist, die letzte Ware in Besitz genommen haben bzw. hat.</p>
+<p>b) im Falle eines Vertrags über mehrere Waren, die Sie im Rahmen einer einheitlichen Bestellung bestellt haben und die getrennt geliefert werden: an dem Tag, an dem Sie oder ein von Ihnen benannter Dritter, der nicht der Beförderer ist, die letzte Ware in Besitz genommen haben bzw. hat.</p>
 <p>c) im Falle eines Vertrags über die Lieferung einer Ware in mehreren Teilsendungen oder Stücken: an dem Tag, an dem Sie oder ein von Ihnen benannter Dritter, der nicht der Beförderer ist, die letzte Teilsendung oder das letzte Stück in Besitz genommen haben bzw. hat.</p>
 <p>d) im Falle eines Vertrags zur regelmäßigen Lieferung von Waren über einen festgelegten Zeitraum hinweg: an dem Tag, an dem Sie oder ein von Ihnen benannter Dritter, der nicht der Beförderer ist, die erste Ware in Besitz genommen haben bzw. hat.</p>
 
