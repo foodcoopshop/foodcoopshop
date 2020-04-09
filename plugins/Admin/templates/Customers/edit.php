@@ -107,6 +107,7 @@ echo $this->Form->control('Customers.address_customer.address1', [
 echo $this->Form->control('Customers.address_customer.address2', [
     'label' => __d('admin', 'Additional_address_information'),
     'maxLength' => STREET_MAX_CHARS,
+    'required' => false,
 ]);
 echo $this->Form->control('Customers.address_customer.postcode', [
     'label' => __d('admin', 'Zip')
