@@ -27,6 +27,7 @@ foodcoopshop.Helper = {
             this.initWindowResize();
             this.initScrolltopButton();
             this.initMenuAutoHide();
+            this.adaptionsForHorizontalScrolling();
             this.showContent();
         }
     },
@@ -520,6 +521,11 @@ foodcoopshop.Helper = {
         });
 
     },
+    
+    adaptionsForHorizontalScrolling : function() {
+        $('#header').scrollToFixed({'offsetLeft': 2});
+        $('.inner-right').scrollToFixed();
+    },
 
     initWindowResize: function () {
         $(window).on('resize', function () {
@@ -529,10 +535,6 @@ foodcoopshop.Helper = {
     },
 
     onWindowResize: function () {
-
-        // keep right column on its place
-        var newLeft = $(window).scrollLeft() * -1 + parseInt($('#content').width()) + parseInt($('#content').css('padding-left')) + 1;
-        $('.inner-right').css('left', newLeft);
 
         // adapt height of cart
         var difference = 146;

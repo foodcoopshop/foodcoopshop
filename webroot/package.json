@@ -31,6 +31,7 @@
     "jquery.scrollto": "^2.1.2",
     "owl.carousel": "^2.3.4",
     "popper.js": "^1.16.1",
+    "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
     "tooltipster": "^4.2.7"
   },

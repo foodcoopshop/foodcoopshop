@@ -40,7 +40,7 @@ a.transistion {
     float: left;
     background: #fff;
     z-index: 100;
-    margin-right: 3px;
+    margin-right: 0px;
     border-right: 1px solid #d6d4d4;
     margin-top: 148px;
 }
@@ -70,10 +70,10 @@ a.transistion {
     z-index: 300;
 }
 #header.off-canvas {
-    top: -148px;
+    top: -148px ! important;
 }
 #header.fixed {
-  top: 0;
+  top: 0 ! important;
   z-index: 9999;
 }
 
