@@ -141,7 +141,7 @@ class ConfigurationsTable extends AppTable
     public function validationFcsDaysShowProductAsNew(Validator $validator)
     {
         $validator->numeric('value', __('Decimals_are_not_allowed.'));
-        return $this->getNumberRangeValidator($validator, 'value', 0, 14);
+        return $this->getNumberRangeValidator($validator, 'value', 0, 60);
     }
 
     public function validationFcsCashlessPaymentAddType(Validator $validator)
