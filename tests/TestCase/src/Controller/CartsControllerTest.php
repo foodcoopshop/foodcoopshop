@@ -72,8 +72,8 @@ class CartsControllerTest extends AppCakeTestCase
     public function testAddWrongAmount()
     {
         $this->loginAsCustomer();
-        $response = $this->addProductToCart($this->productId1, 100);
-        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>100</b> ist nicht gültig.', $response->msg);
+        $response = $this->addProductToCart($this->productId1, 251);
+        $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>251</b> ist nicht gültig.', $response->msg);
         $this->assertJsonError();
     }
 
@@ -268,7 +268,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $amount = 1;
         $this->addProductToCart($this->productId1, $amount);
-        $this->addTooManyProducts($this->productId1, 99, $amount, 'Die gewünschte Anzahl <b>100</b> des Produktes <b>Artischocke</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 97', 0);
+        $this->addTooManyProducts($this->productId1, 250, $amount, 'Die gewünschte Anzahl <b>251</b> des Produktes <b>Artischocke</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 97', 0);
     }
 
     public function testAddTooManyAttributes()

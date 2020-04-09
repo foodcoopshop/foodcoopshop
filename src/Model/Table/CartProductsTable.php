@@ -66,8 +66,8 @@ class CartProductsTable extends AppTable
 
         $initialProductId = $this->Products->getCompositeProductIdAndAttributeId($productId, $attributeId);
 
-        // allow -1 and 1 - 99
-        if ($amount == 0 || $amount < - 1 || $amount > 99) {
+        // allow -1 and 1 to MAX_PRODUCT_AMOUNT_FOR_CART
+        if ($amount == 0 || $amount < - 1 || $amount > MAX_CART_PRODUCT_AMOUNT) {
             $message = __('The_desired_amount_{0}_is_not_valid.', ['<b>' . $amount . '</b>']);
             return [
                 'status' => 0,
