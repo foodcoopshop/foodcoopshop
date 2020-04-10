@@ -207,7 +207,7 @@ h2.info2 {
 }
 #flashMessage.error a {
     text-decoration: underline ! important;
-    color: #fff;
+    color: #fff ! important;
 }
 
 .vertical.menu {
