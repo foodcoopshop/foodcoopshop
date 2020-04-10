@@ -15,7 +15,7 @@
 
 use Cake\Core\Configure;
 
-if (!$appAuth->user() || $hideButton) {
+if ($hideButton) {
     return;
 }
 ?>
@@ -28,7 +28,6 @@ if (!$appAuth->user() || $hideButton) {
     }
     if (((($product['is_stock_product'] && $product['stock_management_enabled']) || !$stockAvailableAlwaysAvailable) && $availableQuantity <= 0)
         || (isset($shoppingLimitReached) && $shoppingLimitReached) 
-        || $appAuth->isManufacturer() 
         || $deliveryBreakEnabled) {
         $this->element('addScript', ['script' =>
             Configure::read('app.jsNamespace') . ".Helper.disableButton($('#btn-cart-".$productId."'));"
