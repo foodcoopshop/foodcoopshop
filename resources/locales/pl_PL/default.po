@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-04-10 09:12+0200\n"
+"POT-Creation-Date: 2020-04-10 09:34+0200\n"
 "PO-Revision-Date: 2020-02-29 22:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -151,7 +151,7 @@ msgstr "Nowości"
 
 # You can unsubscribe it <a href=\"{0}\">in your settings</a>.
 #, fuzzy
-msgid "For_placing_an_order_<a href=\"{0}\">you_need_to_register</a>."
+msgid "For_placing_an_order_<a href=\"{0}\">you_need_to_sign_in_or_register</a>."
 msgstr "Możesz anulować subskrypcję <a href=\"{0}\">w swoich ustawieniach</a>."
 
 # Sorry, but manufacturers do not have access.

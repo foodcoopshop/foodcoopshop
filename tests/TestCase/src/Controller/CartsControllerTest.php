@@ -49,7 +49,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function testAddLoggedOut()
     {
         $this->addProductToCart($this->productId1, 2);
-        $this->assertRegExpWithUnquotedString('Zum Bestellen <a href="/anmelden">bitte hier registrieren</a>.', $this->httpClient->getJsonDecodedContent()->msg);
+        $this->assertRegExpWithUnquotedString('Zum Bestellen <a href="/anmelden">bitte zuerst anmelden oder neu registrieren</a>.', $this->httpClient->getJsonDecodedContent()->msg);
         $this->assertJsonError();
     }
 

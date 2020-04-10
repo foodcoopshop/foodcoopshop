@@ -32,7 +32,7 @@ class CartsController extends FrontendController
         if ($this->getRequest()->is('json')) {
             try {
                 if (empty($this->AppAuth->user())) {
-                    throw new ForbiddenException(__('For_placing_an_order_<a href="{0}">you_need_to_register</a>.', [
+                    throw new ForbiddenException(__('For_placing_an_order_<a href="{0}">you_need_to_sign_in_or_register</a>.', [
                         Configure::read('app.slugHelper')->getLogin()
                     ]));
                 }
