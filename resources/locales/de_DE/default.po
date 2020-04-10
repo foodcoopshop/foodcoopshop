@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-04-03 20:03+0200\n"
-"PO-Revision-Date: 2020-04-03 20:03+0200\n"
+"POT-Creation-Date: 2020-04-10 09:34+0200\n"
+"PO-Revision-Date: 2020-04-10 09:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -114,8 +114,8 @@ msgstr "Du hast dich erfolgreich abgemeldet."
 msgid "News"
 msgstr "Aktuelles"
 
-msgid "You_are_not_signed_in."
-msgstr "Du bist nicht angemeldet."
+msgid "For_placing_an_order_<a href=\"{0}\">you_need_to_sign_in_or_register</a>."
+msgstr "Zum Bestellen <a href=\"{0}\">bitte zuerst anmelden oder neu registrieren</a>."
 
 msgid "No_access_for_manufacturers."
 msgstr "Herstellern steht diese Funktion leider nicht zur Verfügung."
@@ -1127,6 +1127,9 @@ msgstr "Generiert am {0}"
 
 msgid "Page_{0}_of_{1}"
 msgstr "Seite {0} von {1}"
+
+msgid "You_are_not_signed_in."
+msgstr "Du bist nicht angemeldet."
 
 msgid "Action_Log_Product_added"
 msgstr "Produkt: erstellt"

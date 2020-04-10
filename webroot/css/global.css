@@ -119,7 +119,6 @@ button,
 .btn-warning:hover {
   opacity: 0.8;
 }
-
 .sc { clear: both; height: 0px; font-size: 0px; background-color: transparent; }
 .hide {
 	display: none;
@@ -206,6 +205,11 @@ h2.info2 {
     margin-top: 10px;
     border-radius: 6px;
 }
+#flashMessage.error a {
+    text-decoration: underline ! important;
+    color: #fff ! important;
+}
+
 .vertical.menu {
     width: 145px;
     background: #efefef;

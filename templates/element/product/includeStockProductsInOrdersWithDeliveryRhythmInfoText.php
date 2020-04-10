@@ -15,7 +15,7 @@
 
 use Cake\Core\Configure;
 
-if (!$appAuth->user() || !$showInfoText) {
+if (!$showInfoText) {
     return;
 }
 ?>

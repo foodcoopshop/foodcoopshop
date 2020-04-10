@@ -49,10 +49,18 @@ class CartsControllerTest extends AppCakeTestCase
     public function testAddLoggedOut()
     {
         $this->addProductToCart($this->productId1, 2);
-        $this->assertJsonAccessRestricted();
+        $this->assertRegExpWithUnquotedString('Zum Bestellen <a href="/anmelden">bitte zuerst anmelden oder neu registrieren</a>.', $this->httpClient->getJsonDecodedContent()->msg);
         $this->assertJsonError();
     }
 
+    public function testAddAsManufacturer()
+    {
+        $this->loginAsVegetableManufacturer();
+        $this->addProductToCart($this->productId1, 2);
+        $this->assertRegExpWithUnquotedString('Herstellern steht diese Funktion leider nicht zur Verfügung.', $this->httpClient->getJsonDecodedContent()->msg);
+        $this->assertJsonError();
+    }
+    
     public function testAddWrongProductId1()
     {
         $this->loginAsCustomer();

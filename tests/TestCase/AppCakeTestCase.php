@@ -153,12 +153,6 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->assertRegExpWithUnquotedString($this->httpClient->baseUrl . $this->Slug->getLogin(), $this->httpClient->getUrl(), 'redirect to login page failed');
     }
 
-    protected function assertJsonAccessRestricted()
-    {
-        $response = $this->httpClient->getJsonDecodedContent();
-        $this->assertRegExpWithUnquotedString('Du bist nicht angemeldet.', $response->msg, 'login check does not work');
-    }
-
     protected function assertJsonOk()
     {
         $response = $this->httpClient->getJsonDecodedContent();

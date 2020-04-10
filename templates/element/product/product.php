@@ -221,33 +221,32 @@ if ($product['description'] != '') {
                 echo '<div class="tax">'. $this->Number->formatAsCurrency($attribute['ProductAttributes']['tax']) . '</div>';
                 echo '</div>';
             }
-            if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
-                echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute']]);
-                echo $this->element('product/amountWrapper', [
-                    'product' => $product,
-                    'stockAvailable' => $attribute['StockAvailables'],
-                    'hideAmountSelector' => $isStockProductOrderPossible
-                ]);
-                echo $this->element('product/cartButton', [
-                    'deliveryBreakEnabled' => isset($product['delivery_break_enabled']) ? $product['delivery_break_enabled'] : false,
-                    'productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute'],
-                    'product' => $product,
-                    'stockAvailableQuantity' => $attribute['StockAvailables']['quantity'],
-                    'stockAvailableQuantityLimit' => $attribute['StockAvailables']['quantity_limit'],
-                    'stockAvailableAlwaysAvailable' => $attribute['StockAvailables']['always_available'],
-                    'hideButton' => $isStockProductOrderPossible,
-                    'cartButtonLabel' => $appAuth->isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
-                    'cartButtonIcon' => $appAuth->isSelfServiceModeByUrl() ? 'fa-shopping-bag' : 'fa-cart-plus'
-                ]);
-                echo $this->element('product/notAvailableInfo', [
-                    'product' => $product,
-                    'stockAvailable' => $attribute['StockAvailables']
-                ]);
-                echo $this->element('product/includeStockProductsInOrdersWithDeliveryRhythmInfoText', [
-                    'showInfoText' => $isStockProductOrderPossible,
-                    'keyword' => $appAuth->isSelfServiceModeByUrl() ? $product['ProductIdentifier'] : null
-                ]);
-            }
+            echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute']]);
+            echo $this->element('product/amountWrapper', [
+                'product' => $product,
+                'stockAvailable' => $attribute['StockAvailables'],
+                'hideAmountSelector' => $isStockProductOrderPossible
+            ]);
+            echo $this->element('product/cartButton', [
+                'deliveryBreakEnabled' => isset($product['delivery_break_enabled']) ? $product['delivery_break_enabled'] : false,
+                'productId' => $product['id_product'] . '-' . $attribute['ProductAttributes']['id_product_attribute'],
+                'product' => $product,
+                'stockAvailableQuantity' => $attribute['StockAvailables']['quantity'],
+                'stockAvailableQuantityLimit' => $attribute['StockAvailables']['quantity_limit'],
+                'stockAvailableAlwaysAvailable' => $attribute['StockAvailables']['always_available'],
+                'hideButton' => $isStockProductOrderPossible || !$showProductPrice,
+                'cartButtonLabel' => $appAuth->isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
+                'cartButtonIcon' => $appAuth->isSelfServiceModeByUrl() ? 'fa-shopping-bag' : 'fa-cart-plus'
+            ]);
+            echo $this->element('product/notAvailableInfo', [
+                'product' => $product,
+                'stockAvailable' => $attribute['StockAvailables']
+            ]);
+            echo $this->element('product/includeStockProductsInOrdersWithDeliveryRhythmInfoText', [
+                'showInfoText' => $isStockProductOrderPossible,
+                'keyword' => $appAuth->isSelfServiceModeByUrl() ? $product['ProductIdentifier'] : null
+            ]);
+            
             if ($showProductPrice) {
                 echo $pricePerUnitInfoText;
             }
@@ -312,33 +311,32 @@ if ($product['description'] != '') {
                 echo '<div class="tax">'. $this->Number->formatAsCurrency($product['tax']) . '</div>';
             }
             
-            if (! Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
-                echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product']]);
-                echo $this->element('product/amountWrapper', [
-                    'product' => $product,
-                    'stockAvailable' => $product,
-                    'hideAmountSelector' => $isStockProductOrderPossible
-                ]);
-                echo $this->element('product/cartButton', [
-                    'deliveryBreakEnabled' => isset($product['delivery_break_enabled']) ? $product['delivery_break_enabled'] : false,
-                    'productId' => $product['id_product'],
-                    'product' => $product,
-                    'stockAvailableQuantity' => $product['quantity'],
-                    'stockAvailableQuantityLimit' => $product['quantity_limit'],
-                    'stockAvailableAlwaysAvailable' => $product['always_available'],
-                    'hideButton' => $isStockProductOrderPossible,
-                    'cartButtonLabel' => $appAuth->isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
-                    'cartButtonIcon' => $appAuth->isSelfServiceModeByUrl() ? 'fa-shopping-bag' : 'fa-cart-plus'
-                ]);
-                echo $this->element('product/notAvailableInfo', [
-                    'product' => $product,
-                    'stockAvailable' => $product
-                ]);
-                echo $this->element('product/includeStockProductsInOrdersWithDeliveryRhythmInfoText', [
-                    'showInfoText' => $isStockProductOrderPossible,
-                    'keyword' => $appAuth->isSelfServiceModeByUrl() ? $product['ProductIdentifier'] : null
-                ]);
-            }
+            echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product']]);
+            echo $this->element('product/amountWrapper', [
+                'product' => $product,
+                'stockAvailable' => $product,
+                'hideAmountSelector' => $isStockProductOrderPossible
+            ]);
+            echo $this->element('product/cartButton', [
+                'deliveryBreakEnabled' => isset($product['delivery_break_enabled']) ? $product['delivery_break_enabled'] : false,
+                'productId' => $product['id_product'],
+                'product' => $product,
+                'stockAvailableQuantity' => $product['quantity'],
+                'stockAvailableQuantityLimit' => $product['quantity_limit'],
+                'stockAvailableAlwaysAvailable' => $product['always_available'],
+                'hideButton' => $isStockProductOrderPossible || !$showProductPrice,
+                'cartButtonLabel' => $appAuth->isSelfServiceModeByUrl() ? __('Move_in_shopping_bag') : __('Move_in_cart'),
+                'cartButtonIcon' => $appAuth->isSelfServiceModeByUrl() ? 'fa-shopping-bag' : 'fa-cart-plus'
+            ]);
+            echo $this->element('product/notAvailableInfo', [
+                'product' => $product,
+                'stockAvailable' => $product
+            ]);
+            echo $this->element('product/includeStockProductsInOrdersWithDeliveryRhythmInfoText', [
+                'showInfoText' => $isStockProductOrderPossible,
+                'keyword' => $appAuth->isSelfServiceModeByUrl() ? $product['ProductIdentifier'] : null
+            ]);
+            
             if ($showProductPrice) {
                 echo $pricePerUnitInfoText;
             }

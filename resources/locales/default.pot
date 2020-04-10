@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-04-03 20:03+0200\n"
+"POT-Creation-Date: 2020-04-10 09:34+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -113,7 +113,7 @@ msgstr ""
 msgid "News"
 msgstr ""
 
-msgid "You_are_not_signed_in."
+msgid "For_placing_an_order_<a href=\"{0}\">you_need_to_sign_in_or_register</a>."
 msgstr ""
 
 msgid "No_access_for_manufacturers."
@@ -1125,6 +1125,9 @@ msgid "Generated_on_{0}"
 msgstr ""
 
 msgid "Page_{0}_of_{1}"
+msgstr ""
+
+msgid "You_are_not_signed_in."
 msgstr ""
 
 msgid "Action_Log_Product_added"

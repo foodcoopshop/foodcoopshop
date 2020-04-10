@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-04-03 20:03+0200\n"
-"PO-Revision-Date: 2020-04-03 20:03+0200\n"
+"POT-Creation-Date: 2020-04-10 09:34+0200\n"
+"PO-Revision-Date: 2020-04-10 09:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -114,8 +114,8 @@ msgstr "You have been signed out."
 msgid "News"
 msgstr "News"
 
-msgid "You_are_not_signed_in."
-msgstr "Your are not signed in."
+msgid "For_placing_an_order_<a href=\"{0}\">you_need_to_sign_in_or_register</a>."
+msgstr "For placing an order <a href=\"{0}\">please sign in or register</a>."
 
 msgid "No_access_for_manufacturers."
 msgstr "Sorry, but manufacturers do not have access."
@@ -1127,6 +1127,9 @@ msgstr "Generated on {0}"
 
 msgid "Page_{0}_of_{1}"
 msgstr "Page {0} of {1}"
+
+msgid "You_are_not_signed_in."
+msgstr "Your are not signed in."
 
 msgid "Action_Log_Product_added"
 msgstr "Product: Added"
