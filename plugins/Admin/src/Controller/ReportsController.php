@@ -195,6 +195,7 @@ class ReportsController extends AdminAppController
         ]);
         $this->set('payments', $payments);
 
+        $this->set('customersForDropdown', $this->Payment->Customers->getForDropdown());
         $this->set('title_for_layout', __d('admin', 'Report') . ': ' . Configure::read('app.htmlHelper')->getPaymentText($paymentType));
         $this->set('paymentType', $paymentType);
         $this->set('showTextColumn', in_array($paymentType, array(
