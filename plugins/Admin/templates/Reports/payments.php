@@ -20,6 +20,7 @@ $this->element('addScript', [
         $('input.datepicker').datepicker();" .
         Configure::read('app.jsNamespace') . ".Admin.init();".
         Configure::read('app.jsNamespace') . ".Helper.initTooltip('.payment-approval-comment');".
+        Configure::read('app.jsNamespace') . ".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ");".
         Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');"
 ]);
 if ($paymentType == 'product') {
@@ -33,7 +34,7 @@ if ($paymentType == 'product') {
     <?php echo $this->Form->create(null, ['type' => 'get']); ?>
         <h1><?php echo $title_for_layout; ?></h1>
         <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameTo' => 'dateTo', 'nameFrom' => 'dateFrom']); ?>
-        <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_members'), 'options' => $customersForDropdown, 'default' => isset($customerId) ? $customerId: '']); ?>
+        <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_members'), 'options' => []]); ?>
         <div class="right">
         	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_infos_for_success'))]); ?>
         </div>

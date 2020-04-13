@@ -253,9 +253,9 @@ class ProductsController extends AdminAppController
 
         $this->set([
             'status' => 1,
-            'products' => join('', $productsForDropdown),
+            'dropdownData' => join('', $productsForDropdown),
         ]);
-        $this->viewBuilder()->setOption('serialize', ['status', 'products']);
+        $this->viewBuilder()->setOption('serialize', ['status', 'dropdownData']);
     }
 
     /**
