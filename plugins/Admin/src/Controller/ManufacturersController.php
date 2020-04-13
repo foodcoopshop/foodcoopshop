@@ -598,7 +598,6 @@ class ManufacturersController extends AdminAppController
 
         if (!$this->AppAuth->isManufacturer()) {
             $this->Customer = TableRegistry::getTableLocator()->get('Customers');
-            $this->set('customersForDropdown', $this->Customer->getForDropdown());
         }
 
         $this->setFormReferer();

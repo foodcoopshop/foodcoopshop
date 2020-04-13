@@ -151,10 +151,6 @@ class ActionLogsController extends AdminAppController
 
         $this->set('actionLogModel', $this->ActionLog);
 
-        if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin() || $this->AppAuth->isManufacturer()) {
-            $this->set('customersForDropdown', $this->Customer->getForDropdown(true));
-        }
-
         $titleForLayout = __d('admin', 'Activities');
         $this->set('title_for_layout', $titleForLayout);
     }

@@ -236,7 +236,6 @@ class BlogPostsController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Blog_posts'));
 
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
-        $this->set('customersForDropdown', $this->Customer->getForDropdown());
 
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());

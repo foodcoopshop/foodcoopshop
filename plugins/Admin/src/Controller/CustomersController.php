@@ -50,12 +50,36 @@ class CustomersController extends AdminAppController
                 return $this->AppAuth->isSuperadmin();
                 break;
             case 'changePassword':
+            case 'ajaxGetCustomersForDropdown':
                 return $this->AppAuth->user();
                 break;
             default:
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
                 break;
         }
+    }
+    
+    public function ajaxGetCustomersForDropdown($includeManufacturers)
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+        
+        $includeManufacturers = (bool) $includeManufacturers;
+        
+        $customers = $this->Customer->getForDropdown($includeManufacturers);
+        $customersForDropdown = [];
+        foreach ($customers as $key => $ps) {
+            $customersForDropdown[] = '<optgroup label="' . $key . '">';
+            foreach ($ps as $pId => $p) {
+                $customersForDropdown[] = '<option value="' . $pId . '">' . $p . '</option>';
+            }
+            $customersForDropdown[] = '</optgroup>';
+        }
+        
+        $this->set([
+            'status' => 1,
+            'dropdownData' => join('', $customersForDropdown),
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'dropdownData']);
     }
     
     public function generateMyMemberCard()
