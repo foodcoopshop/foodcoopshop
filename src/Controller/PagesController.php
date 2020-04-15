@@ -90,7 +90,15 @@ class PagesController extends FrontendController
         $this->Slider = TableRegistry::getTableLocator()->get('Sliders');
         $sliders = $this->Slider->getForHome();
         $this->set('sliders', $sliders);
-
+        
+        $newProducts = [];
+        if (Configure::read('appDb.FCS_SHOW_NEW_PRODUCTS_ON_HOME') && Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+            $this->Category = TableRegistry::getTableLocator()->get('Categories');
+            $newProducts = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), true);
+            $newProducts = $this->prepareProductsForFrontend($newProducts);
+        }
+        $this->set('newProducts', $newProducts);
+        
     }
 
     public function detail()
