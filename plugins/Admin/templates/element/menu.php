@@ -39,13 +39,15 @@ $changedOrderedProductsMenuElement = [
         'fa-icon' => 'fa-fw fa-times'
     ]
 ];
-$paymentDepositCustomerAddedMenuElement = [
-    'slug' => $this->Slug->getActionLogsList().'/index/?types[]=payment_deposit_customer_added',
-    'name' => __d('admin', 'Deposit_returns'),
-    'options' => [
-        'fa-icon' => $this->Html->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName'))
-    ]
-];
+if ($this->Html->paymentIsCashless() && Configure::read('app.isDepositPaymentCashless')) {
+    $paymentDepositCustomerAddedMenuElement = [
+        'slug' => $this->Slug->getActionLogsList().'/index/?types[]=payment_deposit_customer_added',
+        'name' => __d('admin', 'Deposit_returns'),
+        'options' => [
+            'fa-icon' => $this->Html->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName'))
+        ]
+    ];
+}
 $orderListsMenuElement = [
     'slug' => $this->Slug->getOrderLists(),
     'name' => __d('admin', 'Order_lists'),
@@ -104,10 +106,10 @@ $menu[] = [
 ];
 
 if ($appAuth->isCustomer()) {
-    $orderDetailsGroupedByCustomerMenuElement['children'] = [
-        $paymentDepositCustomerAddedMenuElement,
-        $changedOrderedProductsMenuElement
-    ];
+    if (isset($paymentDepositCustomerAddedMenuElement)) {
+        $orderDetailsGroupedByCustomerMenuElement['children'][] = $paymentDepositCustomerAddedMenuElement;
+    }
+    $orderDetailsGroupedByCustomerMenuElement['children'][] = $changedOrderedProductsMenuElement;
     $menu[] = $orderDetailsGroupedByCustomerMenuElement;
     $menu[] = $customerProfileMenuElement;
     if (! empty($paymentProductMenuElement)) {
@@ -124,11 +126,11 @@ if ($appAuth->isCustomer()) {
 }
 
 if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-    $orderDetailsGroupedByCustomerMenuElement['children'] = [
-        $paymentDepositCustomerAddedMenuElement,
-        $changedOrderedProductsMenuElement,
-        $orderListsMenuElement
-    ];
+    if (isset($paymentDepositCustomerAddedMenuElement)) {
+        $orderDetailsGroupedByCustomerMenuElement['children'][] = $paymentDepositCustomerAddedMenuElement;
+    }
+    $orderDetailsGroupedByCustomerMenuElement['children'][] = $changedOrderedProductsMenuElement;
+    $orderDetailsGroupedByCustomerMenuElement['children'][] = $orderListsMenuElement;
     $menu[] = $orderDetailsGroupedByCustomerMenuElement;
     $manufacturerMenu = [
         'slug' => '/admin/manufacturers',
