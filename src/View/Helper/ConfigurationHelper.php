@@ -35,6 +35,7 @@ class ConfigurationHelper extends Helper
             case 'FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS':
             case 'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED':
             case 'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED':
+            case 'FCS_SHOW_NEW_PRODUCTS_ON_HOME':
                 return Configure::read('app.htmlHelper')->getYesNoArray();
                 break;
             case 'FCS_LOCALE':

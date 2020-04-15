@@ -165,7 +165,8 @@ INSERT INTO `fcs_configuration` VALUES
 (584,1,'FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED','Selbstbedienungs-Modus für Lagerprodukte aktiv?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/selbstbedienungs-modus\" target=\"_blank\">Zur Online-Doku</a></div>','0','boolean',300,'de_DE','2019-04-17 20:01:59','2019-04-17 20:01:59'),
 (585,1,'FCS_APP_ADDITIONAL_DATA','Zusätzliche Infos zur Foodcoop<br /><div class=\"small\">Z.B. ZVR-Zahl</div>','','textarea',8,'de_DE','2019-08-03 20:07:17','2019-08-03 20:07:17'),
 (586,1,'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED','Selbstbedienungs-Modus im Test-Modus ausführen?<br /><div class=\"small\">Keine Verlinkung im Haupt-Menü und bei Lagerprodukten.</div>','1','boolean',310,'de_DE','2019-12-09 13:46:41','2019-12-09 13:46:41'),
-(587,1,'FCS_CASHLESS_PAYMENT_ADD_TYPE','Art der Eintragung der Guthaben-Aufladungen<br /><div class=\"small\">Wie gelangen die Guthaben-Aufladungen vom Bankkonto in den FoodCoopShop?</div>','manual','dropdown',145,'de_DE','2020-02-11 10:13:10','2020-02-11 10:13:10');
+(587,1,'FCS_CASHLESS_PAYMENT_ADD_TYPE','Art der Eintragung der Guthaben-Aufladungen<br /><div class=\"small\">Wie gelangen die Guthaben-Aufladungen vom Bankkonto in den FoodCoopShop?</div>','manual','dropdown',145,'de_DE','2020-02-11 10:13:10','2020-02-11 10:13:10'),
+(588,1,'FCS_SHOW_NEW_PRODUCTS_ON_HOME','Neue Produkte auch auf der Startseite anzeigen?','1','boolean',22,'de_DE','2020-04-15 09:42:06','2020-04-15 09:42:06');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -352,7 +353,8 @@ INSERT INTO `fcs_units` VALUES
 
 /*!40000 ALTER TABLE `phinxlog` DISABLE KEYS */;
 INSERT INTO `phinxlog` VALUES
-(20200404145856,'RemoveV2Migrations','2020-04-04 15:01:16','2020-04-04 15:01:16',0);
+(20200404145856,'RemoveV2Migrations','2020-04-04 15:01:16','2020-04-04 15:01:16',0),
+(20200415073329,'ShowNewProductsOnHome','2020-04-15 07:42:06','2020-04-15 07:42:06',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

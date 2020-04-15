@@ -64,7 +64,7 @@ $this->element('addScript', [
                 continue;
             }
 
-            if ($configuration->name == 'FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS' && !Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
+            if (in_array($configuration->name, ['FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS', 'FCS_SHOW_NEW_PRODUCTS_ON_HOME']) && !Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS')) {
                 continue;
             }
 
