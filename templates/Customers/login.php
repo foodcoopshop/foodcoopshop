@@ -99,6 +99,7 @@ $this->element('addScript', ['script' =>
     
                       echo $this->Form->control('Customers.firstname', [
                           'label' => __('Firstname'),
+                          'required' => true, // required should not be necessary here
                           'maxLength' => NAME_MAX_CHARS,
                       ]);
                       echo $this->Form->control('Customers.lastname', [
