@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-03-29 18:15+0200\n"
+"POT-Creation-Date: 2020-04-16 11:59+0200\n"
 "PO-Revision-Date: 2020-03-19 21:01+0100\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -772,6 +772,9 @@ msgstr "wysiwyg-editor"
 msgid "How_do_I_use_the_WYSIWYG_editor?"
 msgstr "Jak używać edytora?"
 
+msgid "all_members"
+msgstr "wszyscy członkowie"
+
 msgid "all_manufacturers"
 msgstr "wszyscy producenci"
 
@@ -1387,9 +1390,6 @@ msgstr "Wybierz z listy poniżej czlonka, za którego chcesz złożyć zamówien
 
 msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
 msgstr "Dzień odbioru zamówienia błyskawicznego zostanie automatycznie zmieniony na <b> dziś, {0} </b>"
-
-msgid "all_members"
-msgstr "wszyscy członkowie"
 
 msgid "Group_by..."
 msgstr "Grupuj wg..."

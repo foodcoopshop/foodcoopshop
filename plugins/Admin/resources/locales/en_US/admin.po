@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-03-29 18:15+0200\n"
+"POT-Creation-Date: 2020-04-16 11:59+0200\n"
 "PO-Revision-Date: 2020-03-29 18:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -747,6 +747,9 @@ msgstr "wysiwyg-editor"
 msgid "How_do_I_use_the_WYSIWYG_editor?"
 msgstr "How do I use the editor?"
 
+msgid "all_members"
+msgstr "all members"
+
 msgid "all_manufacturers"
 msgstr "all manufacturers"
 
@@ -1346,9 +1349,6 @@ msgstr "Please chose the member you want to place the instant order for in the d
 
 msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
 msgstr "The pickup day of the instant order will be automatically changed to <b>today, {0}</b>."
-
-msgid "all_members"
-msgstr "all members"
 
 msgid "Group_by..."
 msgstr "Group by..."

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-03-29 18:15+0200\n"
+"POT-Creation-Date: 2020-04-16 11:59+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -746,6 +746,9 @@ msgstr ""
 msgid "How_do_I_use_the_WYSIWYG_editor?"
 msgstr ""
 
+msgid "all_members"
+msgstr ""
+
 msgid "all_manufacturers"
 msgstr ""
 
@@ -1344,9 +1347,6 @@ msgid "Please_chose_member_in_above_dropdown_for_placing_instant_order."
 msgstr ""
 
 msgid "The_pickup_day_of_the_instant_order_will_be_today_{0}."
-msgstr ""
-
-msgid "all_members"
 msgstr ""
 
 msgid "Group_by..."
