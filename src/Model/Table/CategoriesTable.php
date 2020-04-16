@@ -100,6 +100,9 @@ class CategoriesTable extends AppTable
         }
         $categories = $this->getThreaded($conditions);
         $flattenedCategories = $this->flattenNestedArrayWithChildren($categories);
+        $flattenedCategories = array_map(function($category) {
+            return html_entity_decode($category);
+        }, $flattenedCategories);
         return $flattenedCategories;
     }
 
