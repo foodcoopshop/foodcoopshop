@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-04-10 09:34+0200\n"
-"PO-Revision-Date: 2020-04-10 09:35+0200\n"
+"POT-Creation-Date: 2020-04-16 11:59+0200\n"
+"PO-Revision-Date: 2020-04-16 12:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1977,14 +1977,11 @@ msgstr "Thank you, your order was placed successfully."
 msgid "The_order_confirmation_was_sent_by_email_to_{0}."
 msgstr "The order confirmation was sent to you by e-mail ({0})."
 
-msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
-msgstr "Please pick up the ordered products in our pick up store."
+msgid "Please_pick_up_the_ordered_products_at:_{0}"
+msgstr "Please pick up up the ordered products here: {0}"
 
 msgid "Increase_credit"
 msgstr "Increase your credit"
-
-msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
-msgstr "Please do not forget to bring the exact amount of cash."
 
 msgid "Scan_member_card"
 msgstr "Scan member card"
@@ -2423,3 +2420,9 @@ msgstr "Strike out unwanted items."
 
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
+
+#~ msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
+#~ msgstr "Please pick up the ordered products in our pick up store."
+
+#~ msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
+#~ msgstr "Please do not forget to bring the exact amount of cash."

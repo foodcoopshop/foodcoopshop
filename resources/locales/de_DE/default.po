@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-04-10 09:34+0200\n"
-"PO-Revision-Date: 2020-04-10 09:34+0200\n"
+"POT-Creation-Date: 2020-04-16 11:59+0200\n"
+"PO-Revision-Date: 2020-04-16 12:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1977,14 +1977,11 @@ msgstr "Vielen Dank, deine Bestellung wurde erfolgreich abgeschlossen."
 msgid "The_order_confirmation_was_sent_by_email_to_{0}."
 msgstr "Die Bestellbestätigung wurde per E-Mail an {0} versendet."
 
-msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
-msgstr "Bitte hole die bestellten Waren verlässlich in unserem Abhollager ab."
+msgid "Please_pick_up_the_ordered_products_at:_{0}"
+msgstr "Bitte hole die bestellten Produkte hier ab: {0}"
 
 msgid "Increase_credit"
 msgstr "Guthaben aufladen"
-
-msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
-msgstr "Bitte vergiss nicht, den Betrag beim Abholen so genau wie möglich in bar mitzunehmen."
 
 msgid "Scan_member_card"
 msgstr "Mitgliedskarte scannen"
@@ -2128,7 +2125,7 @@ msgid "The_amount_will_be_reduced_from_the_credit_balance."
 msgstr "Der Betrag wird dann automatisch vom Guthaben abgebucht."
 
 msgid "Please_pay_when_picking_up_products."
-msgstr "Den Betrag bitte bei der Abholung in bar bezahlen."
+msgstr "Bezahlung bei Abholung."
 
 msgid "Write_message_to_pick_up_team_for_{0}?"
 msgstr "Nachricht an Abholdienst für den {0} schreiben?"
@@ -2423,3 +2420,9 @@ msgstr "Unzutreffendes streichen"
 
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
+
+#~ msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
+#~ msgstr "Bitte hole die bestellten Waren verlässlich in unserem Abhollager ab."
+
+#~ msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
+#~ msgstr "Bitte vergiss nicht, den Betrag beim Abholen so genau wie möglich in bar mitzunehmen."

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-04-10 09:34+0200\n"
+"POT-Creation-Date: 2020-04-16 11:59+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1976,13 +1976,10 @@ msgstr ""
 msgid "The_order_confirmation_was_sent_by_email_to_{0}."
 msgstr ""
 
-msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
+msgid "Please_pick_up_the_ordered_products_at:_{0}"
 msgstr ""
 
 msgid "Increase_credit"
-msgstr ""
-
-msgid "Please_do_not_forget_to_bring_exact_amount_of_cash."
 msgstr ""
 
 msgid "Scan_member_card"
