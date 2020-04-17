@@ -243,7 +243,7 @@ class OrderDetailsController extends AdminAppController
             'orderDetails' => $preparedOrderDetails,
             'appAuth' => $this->AppAuth,
         ]);
-        die($pdfWriter->writeInline($this));
+        die($pdfWriter->writeInline());
     }
     
     public function index()

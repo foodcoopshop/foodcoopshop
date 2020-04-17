@@ -12,8 +12,8 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-
 echo $this->element('pdf/order_list', [
+    'pdf' => $pdf,
     'groupType' => 'customer',
     'groupTypeLabel' => __d('admin', 'member'),
     'results' => $results_customer,

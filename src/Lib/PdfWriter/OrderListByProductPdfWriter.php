@@ -6,17 +6,29 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 1.0.0
+ * @since         FoodCoopShop 3.1.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-echo $this->element('pdf/order_list', [
-    'pdf' => $pdf,
-    'groupType' => 'product',
-    'groupTypeLabel' => __d('admin', 'product'),
-    'results' => $results_product,
-    'manufacturer' => isset($manufacturer) ? $manufacturer : [],
-    'currentDateForOrderLists' => isset($currentDateForOrderLists) ? $currentDateForOrderLists : null
-]);
+namespace App\Lib\PdfWriter;
+
+use App\Lib\Pdf\ListTcpdf;
+
+class OrderListByProductPdfWriter extends PdfWriter
+{
+    
+    public function __construct()
+    {
+        $this->plugin = 'Admin';
+        $this->setPdfLibrary(new ListTcpdf());
+    }
+    
+    public function getTemplate(): string
+    {
+        return 'pdf' . DS . 'get_order_list_by_product';
+    }
+    
+}
+
