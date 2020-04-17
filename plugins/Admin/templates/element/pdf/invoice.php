@@ -25,10 +25,10 @@ $pdf->SetTitle(__d('admin', 'Invoice_for_the_order_period_{0}_to_{1}', [$dateFro
 $html = '<table border="1" cellspacing="0" cellpadding="7"><tr>';
 $html .= '<td width="200">';
 $html .= '<p><b>'.__d('admin', 'conveyed_for').'</b></p>';
-$manufacturerAddress = '<p>' . $results_product[0]['ManufacturerName'] . '<br />';
-$manufacturerAddress .= $results_product[0]['ManufacturerFirstname'] . ' ' . $results_product[0]['ManufacturerLastname'] . '<br />';
-$manufacturerAddress .= $results_product[0]['ManufacturerAddress1'] . '<br />';
-$manufacturerAddress .= $results_product[0]['ManufacturerPostcode'] . ' ' . $results_product[0]['ManufacturerCity'];
+$manufacturerAddress = '<p>' . $productResults[0]['ManufacturerName'] . '<br />';
+$manufacturerAddress .= $productResults[0]['ManufacturerFirstname'] . ' ' . $productResults[0]['ManufacturerLastname'] . '<br />';
+$manufacturerAddress .= $productResults[0]['ManufacturerAddress1'] . '<br />';
+$manufacturerAddress .= $productResults[0]['ManufacturerPostcode'] . ' ' . $productResults[0]['ManufacturerCity'];
 $html .= $manufacturerAddress . '</p>';
 $html .= '</td>';
 
@@ -40,9 +40,9 @@ $html .= '</td>';
 $html .= '</tr></table>';
 $pdf->writeHTML($html, true, false, true, false, '');
 
-$pdf->infoTextForFooter = $results_product[0]['ManufacturerName'];
-if ($results_product[0]['ManufacturerUidNumber'] != '') {
-    $pdf->infoTextForFooter .= ', ' . __d('admin', 'VAT_number') . ': ' . $results_product[0]['ManufacturerUidNumber'];
+$pdf->infoTextForFooter = $productResults[0]['ManufacturerName'];
+if ($productResults[0]['ManufacturerUidNumber'] != '') {
+    $pdf->infoTextForFooter .= ', ' . __d('admin', 'VAT_number') . ': ' . $productResults[0]['ManufacturerUidNumber'];
 }
 $pdf->infoTextForFooter .= ', '.__d('admin', 'Invoice_number_abbreviation').' ' . $newInvoiceNumber;
 
@@ -61,7 +61,7 @@ $headers = [
     __d('admin', 'VAT'),
     __d('admin', 'Price_incl.')
 ];
-$pdf->renderDetailedOrderList($results_product, $widths, $headers, 'product', true);
+$pdf->renderDetailedOrderList($productResults, $widths, $headers, 'product', true);
 $pdf->addLastSumRow(
     $headers,
     $this->MyNumber->formatAsDecimal($sumPriceExcl),
@@ -113,7 +113,7 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee >
     $pdf->writeHTML($html, true, false, true, false, '');
 }
 
-$pdf->renderTaxRatesTable($results_product);
+$pdf->renderTaxRatesTable($productResults);
 
 if ($sumTimebasedCurrencyPriceIncl > 0) {
 
@@ -176,8 +176,8 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
     $pdf->writeHTML($html, true, false, true, false, '');
 }
 
-if ($results_product[0]['ManufacturerAdditionalTextForInvoice'] != '') {
-    $html = '<p>' . nl2br($results_product[0]['ManufacturerAdditionalTextForInvoice']) . '</p>';
+if ($productResults[0]['ManufacturerAdditionalTextForInvoice'] != '') {
+    $html = '<p>' . nl2br($productResults[0]['ManufacturerAdditionalTextForInvoice']) . '</p>';
     $pdf->Ln(3);
     $pdf->writeHTML($html, true, false, true, false, '');
 }
@@ -212,7 +212,7 @@ $headers = [
     __d('admin', 'Delivery_day'),
     __d('admin', 'Member')
 ];
-$pdf->renderDetailedOrderList($results_customer, $widths, $headers, 'customer');
+$pdf->renderDetailedOrderList($customerResults, $widths, $headers, 'customer');
 $pdf->renderTable();
 // Detailübersicht End
 

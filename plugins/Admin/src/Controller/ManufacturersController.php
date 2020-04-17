@@ -379,8 +379,8 @@ class ManufacturersController extends AdminAppController
             $pdfWriter = new InvoicePdfWriter();
             $pdfWriter->setFilename($invoicePdfFile);
             $pdfWriter->setData([
-                'results_product' => $productResults,
-                'results_customer' => $customerResults,
+                'productResults' => $productResults,
+                'customerResults' => $customerResults,
                 'newInvoiceNumber' => $newInvoiceNumber,
                 'dateFrom' => $dateFrom,
                 'dateTo' => $dateTo,
@@ -499,7 +499,7 @@ class ManufacturersController extends AdminAppController
                 $pdfWriter = new OrderListByProductPdfWriter();
                 $pdfWriter->setFilename($productPdfFile);
                 $pdfWriter->setData([
-                    'results_product' => $productResults,
+                    'productResults' => $productResults,
                     'manufacturer' => $manufacturer,
                     'currentDateForOrderLists' => $currentDateForOrderLists,
                     'sumPriceIncl' => $this->viewBuilder()->getVars()['sumPriceIncl'],
@@ -518,7 +518,7 @@ class ManufacturersController extends AdminAppController
                 $pdfWriter = new OrderListByCustomerPdfWriter();
                 $pdfWriter->setFilename($customerPdfFile);
                 $pdfWriter->setData([
-                    'results_customer' => $customerResults,
+                    'customerResults' => $customerResults,
                     'manufacturer' => $manufacturer,
                     'currentDateForOrderLists' => $currentDateForOrderLists,
                     'sumPriceIncl' => $this->viewBuilder()->getVars()['sumPriceIncl'],
@@ -824,8 +824,8 @@ class ManufacturersController extends AdminAppController
         $pdfWriter->setFilename($invoicePdfFile);
         
         $pdfWriter->setData([
-            'results_product' => $productResults,
-            'results_customer' => $customerResults,
+            'productResults' => $productResults,
+            'customerResults' => $customerResults,
             'newInvoiceNumber' => $newInvoiceNumber,
             'dateFrom' => $dateFrom,
             'dateTo' => $dateTo,
@@ -862,7 +862,7 @@ class ManufacturersController extends AdminAppController
         $productPdfFile = $this->getOrderListFilenameForWriteInline($productResults, __d('admin', 'product'));
         $pdfWriter->setFilename($productPdfFile);
         $pdfWriter->setData([
-            'results_product' => $productResults,
+            'productResults' => $productResults,
             'sumPriceIncl' => $this->viewBuilder()->getVars()['sumPriceIncl'],
             'sumPriceExcl' => $this->viewBuilder()->getVars()['sumPriceExcl'],
             'sumTax' => $this->viewBuilder()->getVars()['sumTax'],
@@ -880,7 +880,7 @@ class ManufacturersController extends AdminAppController
         $productPdfFile = $this->getOrderListFilenameForWriteInline($customerResults, __d('admin', 'customer'));
         $pdfWriter->setFilename($productPdfFile);
         $pdfWriter->setData([
-            'results_customer' => $customerResults,
+            'customerResults' => $customerResults,
             'sumPriceIncl' => $this->viewBuilder()->getVars()['sumPriceIncl'],
             'sumPriceExcl' => $this->viewBuilder()->getVars()['sumPriceExcl'],
             'sumTax' => $this->viewBuilder()->getVars()['sumTax'],

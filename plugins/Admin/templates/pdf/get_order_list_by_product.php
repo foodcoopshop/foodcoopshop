@@ -16,7 +16,7 @@ echo $this->element('pdf/order_list', [
     'pdf' => $pdf,
     'groupType' => 'product',
     'groupTypeLabel' => __d('admin', 'product'),
-    'results' => $results_product,
+    'results' => $productResults,
     'manufacturer' => isset($manufacturer) ? $manufacturer : [],
     'currentDateForOrderLists' => isset($currentDateForOrderLists) ? $currentDateForOrderLists : null
 ]);
