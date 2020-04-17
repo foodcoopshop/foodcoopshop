@@ -13,12 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Lib\Pdf\ListTcpdf;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
-use Cake\Filesystem\Folder;
 
-$pdf = new ListTcpdf();
 $pdf->setTextHelper($this->Text);
 $pdf->SetLeftMargin(12);
 $pdf->AddPage();
@@ -34,11 +31,6 @@ $manufacturerAddress .= $results_product[0]['ManufacturerAddress1'] . '<br />';
 $manufacturerAddress .= $results_product[0]['ManufacturerPostcode'] . ' ' . $results_product[0]['ManufacturerCity'];
 $html .= $manufacturerAddress . '</p>';
 $html .= '</td>';
-
-// invoice number is only set if invoice is sent
-if (! isset($newInvoiceNumber)) {
-    $newInvoiceNumber = 'xxx';
-}
 
 $html .= '<td width="330">';
 $html .= '<h2>'.__d('admin', 'Invoice_number_abbreviation').': ' . $newInvoiceNumber . '</h2>';
@@ -225,29 +217,3 @@ $pdf->renderTable();
 // Detailübersicht End
 
 $pdf->lastPage();
-
-$filename = $this->MyHtml->getInvoiceLink($results_product[0]['ManufacturerName'], $results_product[0]['ManufacturerId'], date('Y-m-d'), $newInvoiceNumber);
-
-if ($saveParam == 'F') {
-    // pdf saved on server
-    if (file_exists($filename)) {
-        unlink($filename);
-    }
-    // assure that folder structure exists
-    $dir = new Folder();
-    $path = dirname($filename);
-    $dir->create($path);
-    $dir->chmod($path, 0755);
-} else {
-    // pdf is generated on the fly and NOT saved on server
-    // set custom filename
-    $filename = explode(DS, $filename);
-    $filename = end($filename);
-    $filename = substr($filename, 11);
-    $filename = $this->request->getQuery('dateFrom'). '-' . $this->request->getQuery('dateTo') . '-' . $filename;
-}
-if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
-    $pdf->outputHtml();
-}
-
-echo $pdf->Output($filename, $saveParam);

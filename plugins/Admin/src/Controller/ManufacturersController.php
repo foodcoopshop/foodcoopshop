@@ -3,6 +3,7 @@
 namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
+use App\Lib\PdfWriter\InvoicePdfWriter;
 use App\Lib\PdfWriter\OrderListByProductPdfWriter;
 use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
 use App\Mailer\AppMailer;
@@ -364,23 +365,34 @@ class ManufacturersController extends AdminAppController
         ];
         
         // generate and save PDF - should be done here because count of results will be checked
-        $product_results = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $validOrderStates);
+        $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $validOrderStates);
 
         // no orders in current period => do not send pdf but send information email
-        if (count($product_results) == 0) {
+        if (count($productResults) == 0) {
             // orders exist => send pdf and email
         } else {
             // generate and save invoice number
             $newInvoiceNumber = $this->Manufacturer->Invoices->getNextInvoiceNumber($manufacturer->invoices);
-            $this->set('newInvoiceNumber', $newInvoiceNumber);
-
-            $this->RequestHandler->renderAs($this, 'pdf');
-            $customer_results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, $validOrderStates);
-
-            // generate invoice
-            $this->render('get_invoice');
-            $invoicePdfUrl = Configure::read('app.htmlHelper')->getInvoiceLink($manufacturer->name, $manufacturerId, date('Y-m-d'), $newInvoiceNumber);
-            $invoicePdfFile = $invoicePdfUrl;
+            $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, $validOrderStates);
+            $invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink($manufacturer->name, $manufacturerId, date('Y-m-d'), $newInvoiceNumber);
+            
+            $pdfWriter = new InvoicePdfWriter();
+            $pdfWriter->setFilename($invoicePdfFile);
+            $pdfWriter->setData([
+                'results_product' => $productResults,
+                'results_customer' => $customerResults,
+                'newInvoiceNumber' => $newInvoiceNumber,
+                'dateFrom' => $dateFrom,
+                'dateTo' => $dateTo,
+                'manufacturer' => $manufacturer,
+                'sumPriceIncl' => $this->viewBuilder()->getVars()['sumPriceIncl'],
+                'sumPriceExcl' => $this->viewBuilder()->getVars()['sumPriceExcl'],
+                'sumTax' => $this->viewBuilder()->getVars()['sumTax'],
+                'sumAmount' => $this->viewBuilder()->getVars()['sumAmount'],
+                'sumTimebasedCurrencyPriceIncl' => $this->viewBuilder()->getVars()['sumTimebasedCurrencyPriceIncl'],
+                'variableMemberFee' => $this->viewBuilder()->getVars()['variableMemberFee'],
+            ]);
+            $pdfWriter->writeFile();
 
             $this->Flash->success(__d('admin', 'Invoice_for_manufacturer_{0}_successfully_sent_to_{1}.', ['<b>' . $manufacturer->name . '</b>', $manufacturer->address_manufacturer->email]));
 
@@ -794,18 +806,61 @@ class ManufacturersController extends AdminAppController
         $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         $dateTo = h($this->getRequest()->getQuery('dateTo'));
 
-        $results = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, []);
-        if (empty($results)) {
+        $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, []);
+        if (empty($customerResults)) {
             // do not throw exception because no debug mails wanted
             die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }
-        $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, []);
+        $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, []);
+        $newInvoiceNumber = 'xxx';
+        
+        $pdfWriter = new InvoicePdfWriter();
+        
+        $invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink($productResults[0]['ManufacturerName'], $productResults[0]['ManufacturerId'], date('Y-m-d'), $newInvoiceNumber);
+        $invoicePdfFile = explode(DS, $invoicePdfFile);
+        $invoicePdfFile = end($invoicePdfFile);
+        $invoicePdfFile = substr($invoicePdfFile, 11);
+        $invoicePdfFile = $this->request->getQuery('dateFrom'). '-' . $this->request->getQuery('dateTo') . '-' . $invoicePdfFile;
+        $pdfWriter->setFilename($invoicePdfFile);
+        
+        $pdfWriter->setData([
+            'results_product' => $productResults,
+            'results_customer' => $customerResults,
+            'newInvoiceNumber' => $newInvoiceNumber,
+            'dateFrom' => $dateFrom,
+            'dateTo' => $dateTo,
+            'sumPriceIncl' => $this->viewBuilder()->getVars()['sumPriceIncl'],
+            'sumPriceExcl' => $this->viewBuilder()->getVars()['sumPriceExcl'],
+            'sumTax' => $this->viewBuilder()->getVars()['sumTax'],
+            'sumAmount' => $this->viewBuilder()->getVars()['sumAmount'],
+            'sumTimebasedCurrencyPriceIncl' => $this->viewBuilder()->getVars()['sumTimebasedCurrencyPriceIncl'],
+            'variableMemberFee' => $this->viewBuilder()->getVars()['variableMemberFee'],
+        ]);
+        
+        if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
+            die($pdfWriter->writeHtml());
+        }
+        
+        die($pdfWriter->writeInline());
+    }
+    
+    private function getOrderListFilenameForWriteInline($results, $type): string
+    {
+        $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();
+        $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($results[0]['ManufacturerName'], $results[0]['ManufacturerId'], $results[0]['OrderDetailPickupDay'], $type, $currentDateForOrderLists);
+        $productPdfFile = explode(DS, $productPdfFile);
+        $productPdfFile = end($productPdfFile);
+        $productPdfFile = substr($productPdfFile, 11);
+        $productPdfFile = $this->request->getQuery('pickupDay'). '-' . $productPdfFile;
+        return $productPdfFile;
     }
 
     public function getOrderListByProduct()
     {
         $productResults = $this->getOrderList('product');
         $pdfWriter = new OrderListByProductPdfWriter();
+        $productPdfFile = $this->getOrderListFilenameForWriteInline($productResults, __d('admin', 'product'));
+        $pdfWriter->setFilename($productPdfFile);
         $pdfWriter->setData([
             'results_product' => $productResults,
             'sumPriceIncl' => $this->viewBuilder()->getVars()['sumPriceIncl'],
@@ -815,13 +870,15 @@ class ManufacturersController extends AdminAppController
             'sumTimebasedCurrencyPriceIncl' => $this->viewBuilder()->getVars()['sumTimebasedCurrencyPriceIncl'],
             'variableMemberFee' => $this->viewBuilder()->getVars()['variableMemberFee'],
         ]);
-        $pdfWriter->writeInline();
+        die($pdfWriter->writeInline());
     }
 
     public function getOrderListByCustomer()
     {
         $customerResults = $this->getOrderList('customer');
         $pdfWriter = new OrderListByCustomerPdfWriter();
+        $productPdfFile = $this->getOrderListFilenameForWriteInline($customerResults, __d('admin', 'customer'));
+        $pdfWriter->setFilename($productPdfFile);
         $pdfWriter->setData([
             'results_customer' => $customerResults,
             'sumPriceIncl' => $this->viewBuilder()->getVars()['sumPriceIncl'],
@@ -831,7 +888,7 @@ class ManufacturersController extends AdminAppController
             'sumTimebasedCurrencyPriceIncl' => $this->viewBuilder()->getVars()['sumTimebasedCurrencyPriceIncl'],
             'variableMemberFee' => $this->viewBuilder()->getVars()['variableMemberFee'],
         ]);
-        $pdfWriter->writeInline();
+        die($pdfWriter->writeInline());
     }
     
     private function getOrderList($type)

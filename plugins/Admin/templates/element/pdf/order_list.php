@@ -64,8 +64,3 @@ $html = '<p>'.__d('admin', 'Thank_you_very_much_for_delivering_your_products_to_
 $pdf->writeHTML($html, true, false, true, false, '');
 
 $pdf->lastPage();
-
-// $filename = explode(DS, $filename);
-// $filename = end($filename);
-// $filename = substr($filename, 11);
-// $filename = $this->request->getQuery('dateFrom'). '-' . $this->request->getQuery('dateTo') . '-' . $filename;
