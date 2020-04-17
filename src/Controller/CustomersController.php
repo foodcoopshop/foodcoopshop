@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\Component\StringComponent;
+use App\Lib\PdfWriter\TermsOfUsePdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Datasource\Exception\RecordNotFoundException;
@@ -58,16 +59,10 @@ class CustomersController extends FrontendController
         $this->set('imagePath', $imagePath);
     }
 
-    /**
-     * generates pdf on-the-fly
-     */
-    private function generateTermsOfUsePdf($customer)
+    private function generateTermsOfUsePdf()
     {
-        $this->set('customer', $customer);
-        $this->set('saveParam', 'I');
-        $this->RequestHandler->renderAs($this, 'pdf');
-        $response = $this->render('generateTermsOfUsePdf');
-        return $response->__toString();
+        $pdfWriter = new TermsOfUsePdfWriter();
+        return $pdfWriter->writeAttachment();
     }
 
     public function acceptUpdatedTermsOfUse()
@@ -343,7 +338,7 @@ class CustomersController extends FrontendController
                     if (Configure::read('appDb.FCS_DEFAULT_NEW_MEMBER_ACTIVE')) {
                         $template = 'customer_registered_active';
                         if (Configure::read('app.termsOfUseEnabled')) {
-                            $email->addAttachments([__('Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf($newCustomer), 'mimetype' => 'application/pdf']]);
+                            $email->addAttachments([__('Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf(), 'mimetype' => 'application/pdf']]);
                         }
                     } else {
                         $template = 'customer_registered_inactive';

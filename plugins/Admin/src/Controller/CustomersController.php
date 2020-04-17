@@ -2,6 +2,7 @@
 namespace Admin\Controller;
 
 use App\Lib\Error\Exception\InvalidParameterException;
+use App\Lib\PdfWriter\TermsOfUsePdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Core\Configure;
@@ -464,18 +465,12 @@ class CustomersController extends AdminAppController
         $this->set('customer', $customer);
     }
 
-    /**
-     * generates pdf on-the-fly
-     */
-    private function generateTermsOfUsePdf($customer)
+    private function generateTermsOfUsePdf()
     {
-        $this->set('customer', $customer);
-        $this->set('saveParam', 'I');
-        $this->RequestHandler->renderAs($this, 'pdf');
-        $response = $this->render('generateTermsOfUsePdf');
-        return $response->__toString();
+        $pdfWriter = new TermsOfUsePdfWriter();
+        return $pdfWriter->writeAttachment();
     }
-
+    
     public function changeStatus($customerId, $status, $sendEmail)
     {
         if (! in_array($status, [
