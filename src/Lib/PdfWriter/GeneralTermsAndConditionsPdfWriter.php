@@ -24,11 +24,6 @@ class GeneralTermsAndConditionsPdfWriter extends PdfWriter
         $this->setPdfLibrary(new ListTcpdf());
     }
     
-    public function getFilename(): string
-    {
-        return '';
-    }
-    
     public function getTemplate(): string
     {
         return 'pdf' . DS . 'generate_general_terms_and_conditions';

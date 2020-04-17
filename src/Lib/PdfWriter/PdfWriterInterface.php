@@ -18,7 +18,6 @@ interface PdfWriterInterface {
 
     public function getTemplate(): string;
 
-    public function getFilename(): string;
 }
 
 ?>

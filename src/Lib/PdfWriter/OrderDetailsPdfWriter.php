@@ -25,11 +25,6 @@ class OrderDetailsPdfWriter extends PdfWriter
         $this->setPdfLibrary(new ListTcpdf());
     }
     
-    public function getFilename(): string
-    {
-        return '';
-    }
-    
     public function getTemplate(): string
     {
         return 'OrderDetails' . DS . 'pdf' . DS . 'order_details_as_pdf';

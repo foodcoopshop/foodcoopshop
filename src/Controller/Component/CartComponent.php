@@ -790,7 +790,7 @@ class CartComponent extends Component
             'cart' => $cart,
             'manufacturers' => $manufacturers,
         ]);
-        return $pdfWriter->writeAttachment($this->getController());
+        return $pdfWriter->writeAttachment();
     }
     
     /**
@@ -800,7 +800,7 @@ class CartComponent extends Component
     private function generateGeneralTermsAndConditions()
     {
         $pdfWriter = new GeneralTermsAndConditionsPdfWriter();
-        return $pdfWriter->writeAttachment($this->getController());
+        return $pdfWriter->writeAttachment();
     }
     
     /**
@@ -837,7 +837,7 @@ class CartComponent extends Component
             'cart' => $cart,
             'manufacturers' => $manufacturers,
         ]);
-        return $pdfWriter->writeAttachment($this->getController());
+        return $pdfWriter->writeAttachment();
     }
     
 }

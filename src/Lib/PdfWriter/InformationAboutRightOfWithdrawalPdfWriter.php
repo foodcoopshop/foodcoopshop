@@ -21,12 +21,8 @@ class InformationAboutRightOfWithdrawalPdfWriter extends PdfWriter
     
     public function __construct()
     {
+        $this->setFilename(__('Filename_Information-about-right-of-withdrawal').'.pdf');
         $this->setPdfLibrary(new ListTcpdf());
-    }
-    
-    public function getFilename(): string
-    {
-        return __('Filename_Information-about-right-of-withdrawal').'.pdf';
     }
     
     public function getTemplate(): string

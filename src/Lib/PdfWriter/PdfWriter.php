@@ -13,6 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 namespace App\Lib\PdfWriter;
+use Cake\Filesystem\Folder;
 use Cake\View\ViewBuilder;
 
 abstract class PdfWriter implements PdfWriterInterface
@@ -21,6 +22,7 @@ abstract class PdfWriter implements PdfWriterInterface
     protected $pdfLibrary;
     protected $data;
     protected $plugin = null;
+    protected $filename = '';
     
     public function setPdfLibrary($pdfLibrary): PdfWriter
     {
@@ -31,6 +33,17 @@ abstract class PdfWriter implements PdfWriterInterface
     public function setData($data): PdfWriter
     {
         $this->data = $data;
+        return $this;
+    }
+    
+    public function getFilename(): string
+    {
+        return $this->filename;
+    }
+    
+    public function setFilename($filename): PdfWriter
+    {
+        $this->filename = $filename;
         return $this;
     }
     
@@ -48,16 +61,38 @@ abstract class PdfWriter implements PdfWriterInterface
         return $viewBuilder->setLayout('ajax')->build($this->getData())->render($this->getTemplate());
     }
     
-    public function writeInline($controller)
+    private function setContent()
     {
         $this->pdfLibrary->html = $this->getContent();
+    }
+    
+    public function writeInline()
+    {
+        $this->setContent();
         return $this->pdfLibrary->Output($this->getFilename(), 'I');
     }
     
-    public function writeAttachment($controller)
+    public function writeAttachment()
     {
-        $this->pdfLibrary->html = $this->getContent();
+        $this->setContent();
         return $this->pdfLibrary->Output(null, 'S');
     }
 
+    public function writeFile()
+    {
+        $this->setContent();
+        
+        // pdf saved on server
+        if (file_exists($this->getFilename())) {
+            unlink($this->getFilename());
+        }
+        // assure that folder structure exists
+        $dir = new Folder();
+        $path = dirname($this->getFilename());
+        $dir->create($path);
+        $dir->chmod($path, 0755);
+        
+        return $this->pdfLibrary->Output($this->getFilename(), 'F');
+    }
+    
 }

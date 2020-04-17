@@ -81,7 +81,7 @@ class CartsController extends FrontendController
         $pdfWriter->setData([
             'appAuth' => $this->AppAuth
         ]);
-        die($pdfWriter->writeInline($this));
+        die($pdfWriter->writeInline());
     }
 
     public function finish()
