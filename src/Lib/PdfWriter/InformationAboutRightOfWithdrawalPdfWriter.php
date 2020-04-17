@@ -15,7 +15,6 @@
 namespace App\Lib\PdfWriter;
 
 use App\Lib\Pdf\ListTcpdf;
-use Cake\I18n\I18n;
 
 class InformationAboutRightOfWithdrawalPdfWriter extends PdfWriter
 {
