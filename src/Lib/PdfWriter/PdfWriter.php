@@ -20,6 +20,7 @@ abstract class PdfWriter implements PdfWriterInterface
     
     protected $pdfLibrary;
     protected $data;
+    protected $plugin = null;
     
     public function setPdfLibrary($pdfLibrary): PdfWriter
     {
@@ -40,7 +41,11 @@ abstract class PdfWriter implements PdfWriterInterface
     private function getContent()
     {
         $this->data['pdf'] = $this->pdfLibrary;
-        return (new ViewBuilder())->setLayout('ajax')->build($this->getData())->render($this->getTemplate());
+        $viewBuilder = new ViewBuilder();
+        if ($this->plugin) {
+            $viewBuilder->setPlugin($this->plugin);
+        }
+        return $viewBuilder->setLayout('ajax')->build($this->getData())->render($this->getTemplate());
     }
     
     public function writeAsInline($controller)

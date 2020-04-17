@@ -75,16 +75,13 @@ class CartsController extends FrontendController
         }
     }
 
-    /**
-     * generates pdf on-the-fly
-     */
     public function generateRightOfWithdrawalInformationPdf()
     {
         $pdfWriter = new InformationAboutRightOfWithdrawalPdfWriter();
         $pdfWriter->setData([
             'appAuth' => $this->AppAuth
         ]);
-        return $pdfWriter->writeAsInline($this);
+        die($pdfWriter->writeAsInline($this));
     }
 
     public function finish()
