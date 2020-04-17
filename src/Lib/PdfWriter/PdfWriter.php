@@ -48,13 +48,13 @@ abstract class PdfWriter implements PdfWriterInterface
         return $viewBuilder->setLayout('ajax')->build($this->getData())->render($this->getTemplate());
     }
     
-    public function writeAsInline($controller)
+    public function writeInline($controller)
     {
         $this->pdfLibrary->html = $this->getContent();
         return $this->pdfLibrary->Output($this->getFilename(), 'I');
     }
     
-    public function writeAsAttachment($controller)
+    public function writeAttachment($controller)
     {
         $this->pdfLibrary->html = $this->getContent();
         return $this->pdfLibrary->Output(null, 'S');
