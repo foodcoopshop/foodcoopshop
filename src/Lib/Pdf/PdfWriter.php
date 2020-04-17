@@ -19,6 +19,7 @@ abstract class PdfWriter
 {
     
     protected $pdfLibrary;
+    protected $data;
     
     public function setPdfLibrary($pdfLibrary): PdfWriter
     {
@@ -51,7 +52,7 @@ abstract class PdfWriter
     public function writeAsAttachment($controller)
     {
         $this->pdfLibrary->html = $this->getContent();
-        return $this->pdfLibrary->Output($this->getFilename(), 'S');
+        return $this->pdfLibrary->Output(null, 'S');
     }
 
 }
