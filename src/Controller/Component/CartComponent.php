@@ -2,8 +2,9 @@
 
 namespace App\Controller\Component;
 
-use App\Lib\PdfWriter\InformationAboutRightOfWithdrawalPdfWriter;
 use App\Lib\PdfWriter\GeneralTermsAndConditionsPdfWriter;
+use App\Lib\PdfWriter\InformationAboutRightOfWithdrawalPdfWriter;
+use App\Lib\PdfWriter\OrderConfirmationPdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Controller\Component;
 use Cake\Core\Configure;
@@ -742,6 +743,7 @@ class CartComponent extends Component
         if (Configure::read('app.rightOfWithdrawalEnabled')) {
             $email->addAttachments([__('Filename_Right-of-withdrawal-information-and-form').'.pdf' => ['data' => $this->generateRightOfWithdrawalInformationAndForm($cart, $products), 'mimetype' => 'application/pdf']]);
         }
+
         $email->addAttachments([__('Filename_Order-confirmation').'.pdf' => ['data' => $this->generateOrderConfirmation($cart), 'mimetype' => 'application/pdf']]);
         if (Configure::read('app.generalTermsAndConditionsEnabled')) {
             $generalTermsAndConditionsFiles = [];
@@ -809,9 +811,7 @@ class CartComponent extends Component
     private function generateOrderConfirmation($cart)
     {
         
-        $this->getController()->set('cart', $cart);
         $manufacturers = [];
-        
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
         $cart = $this->Cart->find('all', [
             'conditions' => [
@@ -831,11 +831,13 @@ class CartComponent extends Component
             ];
         }
         
-        $this->getController()->set('manufacturers', $manufacturers);
-        $this->getController()->set('saveParam', 'I');
-        $this->RequestHandler->renderAs($this->getController(), 'pdf');
-        $response = $this->getController()->render('generateOrderConfirmation');
-        return $response->__toString();
+        $pdfWriter = new OrderConfirmationPdfWriter();
+        $pdfWriter->setData([
+            'appAuth' => $this->AppAuth,
+            'cart' => $cart,
+            'manufacturers' => $manufacturers,
+        ]);
+        return $pdfWriter->writeAsAttachment($this->getController());
     }
     
 }

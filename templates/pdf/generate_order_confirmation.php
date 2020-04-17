@@ -13,11 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Controller\Component\StringComponent;
-use App\Lib\Pdf\ListTcpdf;
 use Cake\Core\Configure;
 
-$pdf = new ListTcpdf();
 $pdf->SetLeftMargin(16);
 
 if (!empty($manufacturers)) {
@@ -27,7 +24,7 @@ if (!empty($manufacturers)) {
 
         $pdf->infoTextForFooter = __('Order_overview') . ' ' . $details['Manufacturer']->name;
 
-        $pdf->writeHTML('<h3>' . __('Order_of') . ' '. $appAuth->getUsername().'<br />' . __('placed_on') . ' '. $cart['Cart']->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong')).'</h3>', true, false, true, false, '');
+        $pdf->writeHTML('<h3>' . __('Order_of') . ' '. $appAuth->getUsername().'<br />' . __('placed_on') . ' '. $cart->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLong')).'</h3>', true, false, true, false, '');
         $pdf->Ln(8);
 
         $pdf->writeHTML($this->MyHtml->getManufacturerImprint($details['Manufacturer'], 'pdf', false), true, false, true, false, '');
@@ -132,5 +129,3 @@ if (!empty($manufacturers)) {
         $pdf->writeHTML('<p>' . __('Including_vat') . ': ' . $this->MyNumber->formatAsCurrency($sumOrderDetailTax) . '</p>', true, false, true, false, '');
     }
 }
-
-echo $pdf->Output(StringComponent::createRandomString().'.pdf', $saveParam);
