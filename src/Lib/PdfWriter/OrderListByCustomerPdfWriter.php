@@ -27,7 +27,7 @@ class OrderListByCustomerPdfWriter extends PdfWriter
     
     public function getTemplate(): string
     {
-        return 'pdf' . DS . 'get_order_list_by_customer';
+        return 'pdf' . DS . 'order_list_by_customer';
     }
     
 }

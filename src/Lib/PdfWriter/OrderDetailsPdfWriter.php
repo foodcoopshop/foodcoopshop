@@ -27,7 +27,7 @@ class OrderDetailsPdfWriter extends PdfWriter
     
     public function getTemplate(): string
     {
-        return 'OrderDetails' . DS . 'pdf' . DS . 'order_details_as_pdf';
+        return 'pdf' . DS . 'order_details';
     }
     
 }

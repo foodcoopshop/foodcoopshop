@@ -26,7 +26,7 @@ class OrderConfirmationPdfWriter extends PdfWriter
     
     public function getTemplate(): string
     {
-        return 'pdf' . DS . 'generate_order_confirmation';
+        return 'pdf' . DS . 'order_confirmation';
     }
     
 }

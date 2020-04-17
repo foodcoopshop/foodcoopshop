@@ -26,7 +26,7 @@ class GeneralTermsAndConditionsPdfWriter extends PdfWriter
     
     public function getTemplate(): string
     {
-        return 'pdf' . DS . 'generate_general_terms_and_conditions';
+        return 'pdf' . DS . 'general_terms_and_conditions';
     }
     
 }

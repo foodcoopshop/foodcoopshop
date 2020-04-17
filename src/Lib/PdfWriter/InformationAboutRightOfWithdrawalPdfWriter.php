@@ -27,7 +27,7 @@ class InformationAboutRightOfWithdrawalPdfWriter extends PdfWriter
     
     public function getTemplate(): string
     {
-        return 'pdf' . DS . 'generate_right_of_withdrawal_information_and_form';
+        return 'pdf' . DS . 'right_of_withdrawal_information_and_form';
     }
     
 }

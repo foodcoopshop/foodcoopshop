@@ -27,7 +27,7 @@ class InvoicePdfWriter extends PdfWriter
     
     public function getTemplate(): string
     {
-        return 'pdf' . DS . 'get_invoice';
+        return 'pdf' . DS . 'invoice';
     }
     
 }

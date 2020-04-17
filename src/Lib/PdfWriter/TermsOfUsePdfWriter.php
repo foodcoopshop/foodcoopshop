@@ -26,7 +26,7 @@ class TermsOfUsePdfWriter extends PdfWriter
     
     public function getTemplate(): string
     {
-        return 'pdf' . DS . 'generate_terms_of_use';
+        return 'pdf' . DS . 'terms_of_use';
     }
     
 }
