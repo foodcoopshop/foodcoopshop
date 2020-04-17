@@ -26,7 +26,7 @@ abstract class AppTcpdf extends TCPDF
 
     public $textHelper;
     
-    protected $html = '';
+    public $html = '';
     
     public function setTextHelper($textHelper)
     {

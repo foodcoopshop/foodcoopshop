@@ -2,6 +2,7 @@
 
 namespace App\Controller\Component;
 
+use App\Lib\Pdf\InformationAboutRightOfWithdrawalPdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Controller\Component;
 use Cake\Core\Configure;
@@ -774,16 +775,20 @@ class CartComponent extends Component
      */
     private function generateRightOfWithdrawalInformationAndForm($cart, $products)
     {
-        $this->getController()->set('cart', $cart);
         $manufacturers = [];
         foreach ($products as $product) {
             $manufacturers[$product->manufacturer->id_manufacturer][] = $product;
         }
-        $this->getController()->set('manufacturers', $manufacturers);
-        $this->getController()->set('saveParam', 'I');
-        $this->RequestHandler->renderAs($this->getController(), 'pdf');
-        $response = $this->getController()->render('generateRightOfWithdrawalInformationAndForm');
-        return $response->__toString();
+        
+        $pdfWriter = new InformationAboutRightOfWithdrawalPdfWriter();
+        $pdfWriter->setData([
+            'cart' => $cart,
+            'products' => $products,
+            'appAuth' => $this->AppAuth,
+            'cart' => $cart,
+            'manufacturers' => $manufacturers,
+        ]);
+        return $pdfWriter->writeAsAttachment($this->getController());
     }
     
     /**
