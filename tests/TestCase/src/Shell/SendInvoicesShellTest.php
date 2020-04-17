@@ -39,8 +39,8 @@ class SendInvoicesShellTest extends AppCakeTestCase
     {
         $this->prepareSendInvoices();
         $this->httpClient->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
-        $content = $this->httpClient->getContent();
-        $this->assertRegExpWithUnquotedString('<td>Gesamtsumme</td><td align="right">4,54</td>', $content);
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'invoice.html');
+        $this->assertRegExpWithUnquotedString($expectedResult, $this->httpClient->getContent());
     }
 
     public function testSendInvoicesOk()
