@@ -3,6 +3,7 @@
 namespace App\Controller\Component;
 
 use App\Lib\Pdf\InformationAboutRightOfWithdrawalPdfWriter;
+use App\Lib\Pdf\GeneralTermsAndConditionsPdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Controller\Component;
 use Cake\Core\Configure;
@@ -782,7 +783,6 @@ class CartComponent extends Component
         
         $pdfWriter = new InformationAboutRightOfWithdrawalPdfWriter();
         $pdfWriter->setData([
-            'cart' => $cart,
             'products' => $products,
             'appAuth' => $this->AppAuth,
             'cart' => $cart,
@@ -797,10 +797,8 @@ class CartComponent extends Component
      */
     private function generateGeneralTermsAndConditions()
     {
-        $this->getController()->set('saveParam', 'I');
-        $this->RequestHandler->renderAs($this->getController(), 'pdf');
-        $response = $this->getController()->render('generateGeneralTermsAndConditions');
-        return $response->__toString();
+        $pdfWriter = new GeneralTermsAndConditionsPdfWriter();
+        return $pdfWriter->writeAsAttachment($this->getController());
     }
     
     /**
