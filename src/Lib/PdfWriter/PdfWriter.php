@@ -15,7 +15,7 @@
 namespace App\Lib\PdfWriter;
 use Cake\View\ViewBuilder;
 
-abstract class PdfWriter
+abstract class PdfWriter implements PdfWriterInterface
 {
     
     protected $pdfLibrary;

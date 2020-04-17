@@ -14,26 +14,11 @@
  */
 namespace App\Lib\PdfWriter;
 
-use App\Lib\Pdf\ListTcpdf;
-use Cake\I18n\I18n;
+interface PdfWriterInterface {
 
-class GeneralTermsAndConditionsPdfWriter extends PdfWriter
-{
-    
-    public function __construct()
-    {
-        $this->setPdfLibrary(new ListTcpdf());
-    }
-    
-    public function getFilename(): string
-    {
-        return '';
-    }
-    
-    public function getTemplate(): string
-    {
-        return 'pdf' . DS . 'generate_general_terms_and_conditions';
-    }
-    
+    public function getTemplate(): string;
+
+    public function getFilename(): string;
 }
 
+?>
