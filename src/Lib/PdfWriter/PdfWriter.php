@@ -12,7 +12,7 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\Pdf;
+namespace App\Lib\PdfWriter;
 use Cake\View\ViewBuilder;
 
 abstract class PdfWriter

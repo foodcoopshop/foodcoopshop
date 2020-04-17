@@ -12,12 +12,13 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-namespace App\Lib\Pdf;
+namespace App\Lib\PdfWriter;
 
+use App\Lib\Pdf\ListTcpdf;
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
 
-class InformationAboutRightOfWithdrawalPdfWriter extends PdfWriter
+class GeneralTermsAndConditionsPdfWriter extends PdfWriter
 {
     
     public function __construct()
@@ -25,14 +26,9 @@ class InformationAboutRightOfWithdrawalPdfWriter extends PdfWriter
         $this->setPdfLibrary(new ListTcpdf());
     }
     
-    public function getFilename()
-    {
-        return __('Filename_Information-about-right-of-withdrawal').'.pdf';
-    }
-    
     public function getTemplate()
     {
-        return 'pdf' . DS . 'generate_right_of_withdrawal_information_and_form';
+        return 'pdf' . DS . 'generate_general_terms_and_conditions';
     }
     
 }

@@ -2,8 +2,8 @@
 
 namespace App\Controller\Component;
 
-use App\Lib\Pdf\InformationAboutRightOfWithdrawalPdfWriter;
-use App\Lib\Pdf\GeneralTermsAndConditionsPdfWriter;
+use App\Lib\PdfWriter\InformationAboutRightOfWithdrawalPdfWriter;
+use App\Lib\PdfWriter\GeneralTermsAndConditionsPdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Controller\Component;
 use Cake\Core\Configure;

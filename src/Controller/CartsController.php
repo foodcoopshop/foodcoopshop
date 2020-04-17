@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Lib\Pdf\InformationAboutRightOfWithdrawalPdfWriter;
+use App\Lib\PdfWriter\InformationAboutRightOfWithdrawalPdfWriter;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Exception\Exception;
