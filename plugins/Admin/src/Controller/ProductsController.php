@@ -3,6 +3,7 @@
 namespace Admin\Controller;
 
 use App\Lib\Error\Exception\InvalidParameterException;
+use App\Lib\PdfWriter\ProductCardsPdfWriter;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Filesystem\Folder;
@@ -233,7 +234,12 @@ class ProductsController extends AdminAppController
             $preparedProducts[] = $product;
         }
         
-        $this->set('products', $preparedProducts);
+        $pdfWriter = new ProductCardsPdfWriter();
+        $pdfWriter->setFilename(__d('admin', 'Products').'.pdf');
+        $pdfWriter->setData([
+            'products' => $preparedProducts
+        ]);
+        die($pdfWriter->writeInline());
     }
     
 
