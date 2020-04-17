@@ -95,4 +95,10 @@ abstract class PdfWriter implements PdfWriterInterface
         return $this->pdfLibrary->Output($this->getFilename(), 'F');
     }
     
+    public function writeHtml()
+    {
+        $this->setContent();
+        return $this->pdfLibrary->getHtml();
+    }
+    
 }
