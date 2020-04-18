@@ -1965,11 +1965,13 @@ foodcoopshop.Admin = {
         var dialogHtml = foodcoopshop.DialogOrderDetail.getHtmlForOrderDetailCustomerEdit(dialogId);
         $(container).append(dialogHtml);
         
-        $('#dialogOrderDetailEditCustomerId').selectpicker({
+        var customerDropdownSelector = '#dialogOrderDetailEditCustomerId';
+        $(customerDropdownSelector).selectpicker({
             liveSearch: true,
             size: 7,
             title: foodcoopshop.LocalizedJs.admin.PleaseSelectNewMember
         });
+        foodcoopshop.Admin.initCustomerDropdown(0, false, customerDropdownSelector);
         
         var buttons = {};
         buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
