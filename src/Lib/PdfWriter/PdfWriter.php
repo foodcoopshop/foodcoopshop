@@ -78,6 +78,9 @@ abstract class PdfWriter implements PdfWriterInterface
         return $this->pdfLibrary->Output(null, 'S');
     }
 
+    /**
+     * creates folder structure if not yet existings
+     */
     public function writeFile()
     {
         $this->setContent();
