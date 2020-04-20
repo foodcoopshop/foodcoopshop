@@ -874,6 +874,11 @@ class ManufacturersController extends AdminAppController
             'sumTimebasedCurrencyPriceIncl' => $this->viewBuilder()->getVars()['sumTimebasedCurrencyPriceIncl'],
             'variableMemberFee' => $this->viewBuilder()->getVars()['variableMemberFee'],
         ]);
+        
+        if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
+            die($pdfWriter->writeHtml());
+        }
+        
         die($pdfWriter->writeInline());
     }
 
@@ -892,6 +897,11 @@ class ManufacturersController extends AdminAppController
             'sumTimebasedCurrencyPriceIncl' => $this->viewBuilder()->getVars()['sumTimebasedCurrencyPriceIncl'],
             'variableMemberFee' => $this->viewBuilder()->getVars()['variableMemberFee'],
         ]);
+        
+        if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
+            die($pdfWriter->writeHtml());
+        }
+        
         die($pdfWriter->writeInline());
     }
     
@@ -912,7 +922,6 @@ class ManufacturersController extends AdminAppController
         }
         
         return $this->prepareInvoiceOrOrderList($manufacturerId, $type, $pickupDay, null, [], $orderDetailIds);
-        
     }
 
 }

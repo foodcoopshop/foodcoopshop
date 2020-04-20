@@ -475,6 +475,11 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->changeManufacturer(4, 'timebased_currency_max_percentage', $reducedMaxPercentage);
     }
     
+    protected function getCorrectedLogoPathInHtmlForPdfs($html)
+    {
+        return preg_replace('/\{\{logoPath\}\}/', ROOT . DS . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg', $html);
+    }
+    
     protected function prepareSendingOrderLists()
     {
         $folder = new Folder();
