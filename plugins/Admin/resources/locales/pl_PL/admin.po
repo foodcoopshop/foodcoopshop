@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-04-16 11:59+0200\n"
+"POT-Creation-Date: 2020-04-20 10:00+0200\n"
 "PO-Revision-Date: 2020-03-19 21:01+0100\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -84,6 +84,13 @@ msgstr "Wyślij mail testowy"
 
 msgid "Test_email"
 msgstr "Mail testowy"
+
+#, fuzzy
+msgid "Member_card"
+msgstr "Członek"
+
+msgid "Members"
+msgstr "Członkowie"
 
 msgid "The_group_of_the_member_{0}_was_changed_to_{1}."
 msgstr "Grupa czlonków {0} została zmieniona na {1}."
@@ -174,9 +181,6 @@ msgstr "Suma rekompensat kaucji dla producentów"
 #, fuzzy
 msgid "Credit_and_deposit_balance"
 msgstr "Twoje saldo wkładów"
-
-msgid "Members"
-msgstr "Członkowie"
 
 msgid "Deposit_account"
 msgstr "Konto kaucji"
@@ -421,6 +425,9 @@ msgstr ""
 msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deleted_successfully."
 msgstr "{0,plural,=1{product was cancelled succesfully.} other{products were cancelled succesfully.}}"
 
+msgid "Products"
+msgstr "Produkty"
+
 msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
 msgstr "Obraz (ID {0}) u producenta {1} został pomyślnie usunięty. Produkt: {1}, producent: {2}."
 
@@ -515,9 +522,6 @@ msgstr "Krótki opis produktu {0} od producenta {1} został zmieniony: {2}"
 
 msgid "All_manufacturers"
 msgstr "Wszyscy producenci"
-
-msgid "Products"
-msgstr "Produkty"
 
 msgid "The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
 msgstr "Domyślny atrybut produktu {0} od producenta {1} został zmieniony na {2}."
@@ -1409,18 +1413,6 @@ msgstr "Wszystkie produkty"
 msgid "Show_all_ordered_products"
 msgstr "Pokaż wszystkie zamówione produkty"
 
-msgid "Comment"
-msgstr "Komentarz"
-
-msgid "Price"
-msgstr "Cena"
-
-msgid "Total"
-msgstr ""
-
-msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
-msgstr "Wagi dostarczonych produktów mogą ulec zmianie, więc cena również może nieco się zmienić."
-
 msgid "Page_title"
 msgstr "Tytuł strony"
 
@@ -1511,6 +1503,9 @@ msgstr "Jeśli zaznaczone, to po zapisaniu, członek zostanie powiadomiony mailo
 msgid "Email_preview"
 msgstr "Podgląd maila"
 
+msgid "Comment"
+msgstr "Komentarz"
+
 msgid "Add_transfered_member_fee"
 msgstr "Dodaj przekazaną opłatę członkowską"
 
@@ -1573,6 +1568,9 @@ msgstr "Krótki opis"
 msgid "Stock_product"
 msgstr "Produkt magazynowany"
 
+msgid "Price"
+msgstr "Cena"
+
 msgid "Tax_rate"
 msgstr "Stawka podatkowa"
 
@@ -1582,10 +1580,6 @@ msgstr "Nowy?"
 #, fuzzy
 msgid "Delivery_rhythm"
 msgstr "początek"
-
-#, fuzzy
-msgid "Product_ID"
-msgstr "Produkt"
 
 #, fuzzy
 msgid "docs_route_infos_for_success"
@@ -1790,72 +1784,17 @@ msgstr "Proszę wybrać producenta."
 msgid "This_transaction_was_already_imported."
 msgstr ""
 
-msgid "Invoice_for_the_order_period_{0}_to_{1}"
-msgstr "Faktura za zamówienia za okres od {0} do {1}"
-
-msgid "conveyed_for"
-msgstr "przekazane"
-
-msgid "Invoice_number_abbreviation"
-msgstr "Faktura nr"
-
-msgid "Orders_from"
-msgstr "Zamówienia od"
-
-msgid "Invoice_date"
-msgstr "Data faktury"
-
-msgid "Price_excl."
-msgstr "Cena z wyłączeniem"
-
-msgid "VAT"
-msgstr "VAT"
-
-msgid "Price_incl."
-msgstr "Cena z"
-
-msgid "variable_member_fee"
-msgstr "zmienna opłata członkowska"
-
-msgid "New_total_sum"
-msgstr "Nowa suma łącznie"
-
-msgid "The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
-msgstr "Suma łącznie poniżej (minus {0}% zmiennej opłaty członkowskiej) zostanie przelana na twoje konto bankowe tak szybko jak to możliwe."
-
-msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
-msgstr "Suma łącznie po prawej (cena z) zostanie przelana na twoje konto bankowe tak szybko jak to możliwe."
-
-msgid "Paid_by_members_in_{0}"
-msgstr "Zapłacone przez wszystkich członków w {0}"
-
-msgid "Paid_by_members_in"
-msgstr "Zapłacone przez wszystkich członków w"
-
-msgid "Kept_variable_member_fee"
-msgstr "Kept variable member fee"
-
-msgid "Amount_that_will_be_transferred_to_your_bank_account"
-msgstr "Kwóta, która zostanie przelana na twoje konto bankowe"
-
-msgid "Thank_you_very_much_for_delivering_your_products_to_us!"
-msgstr "Bardzo dziękujemy za dostarczenie do nas produktów!"
-
-msgid "Detail_view"
-msgstr "Widok szczegółowy"
+msgid "Order_list_grouped_by"
+msgstr "Listy zamówień zgrupowane wg"
 
 msgid "Order_day"
 msgstr "Dzień zamówienia"
 
-msgid "Order_list_grouped_by"
-msgstr "Listy zamówień zgrupowane wg"
+msgid "Thank_you_very_much_for_delivering_your_products_to_us!"
+msgstr "Bardzo dziękujemy za dostarczenie do nas produktów!"
 
 msgid "Customer_ID"
 msgstr ""
-
-#, fuzzy
-msgid "Member_card"
-msgstr "Członek"
 
 #, fuzzy
 msgid "Delete_selected_products"
@@ -2111,3 +2050,64 @@ msgstr "W celu zalogowania się proszę użyć adresu email z tej wiadomości. A
 
 msgid "Your_contact_person"
 msgstr "Twoja osoba kontaktowa"
+
+msgid "conveyed_for"
+msgstr "przekazane"
+
+msgid "Invoice_number_abbreviation"
+msgstr "Faktura nr"
+
+msgid "Orders_from"
+msgstr "Zamówienia od"
+
+msgid "Invoice_date"
+msgstr "Data faktury"
+
+msgid "Price_excl."
+msgstr "Cena z wyłączeniem"
+
+msgid "VAT"
+msgstr "VAT"
+
+msgid "Price_incl."
+msgstr "Cena z"
+
+msgid "variable_member_fee"
+msgstr "zmienna opłata członkowska"
+
+msgid "New_total_sum"
+msgstr "Nowa suma łącznie"
+
+msgid "The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr "Suma łącznie poniżej (minus {0}% zmiennej opłaty członkowskiej) zostanie przelana na twoje konto bankowe tak szybko jak to możliwe."
+
+msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr "Suma łącznie po prawej (cena z) zostanie przelana na twoje konto bankowe tak szybko jak to możliwe."
+
+msgid "Paid_by_members_in_{0}"
+msgstr "Zapłacone przez wszystkich członków w {0}"
+
+msgid "Paid_by_members_in"
+msgstr "Zapłacone przez wszystkich członków w"
+
+msgid "Kept_variable_member_fee"
+msgstr "Kept variable member fee"
+
+msgid "Amount_that_will_be_transferred_to_your_bank_account"
+msgstr "Kwóta, która zostanie przelana na twoje konto bankowe"
+
+msgid "Detail_view"
+msgstr "Widok szczegółowy"
+
+msgid "Total"
+msgstr ""
+
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr "Wagi dostarczonych produktów mogą ulec zmianie, więc cena również może nieco się zmienić."
+
+#, fuzzy
+msgid "Product_ID"
+msgstr "Produkt"
+
+#~ msgid "Invoice_for_the_order_period_{0}_to_{1}"
+#~ msgstr "Faktura za zamówienia za okres od {0} do {1}"

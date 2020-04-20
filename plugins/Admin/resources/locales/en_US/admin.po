@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-04-16 11:59+0200\n"
-"PO-Revision-Date: 2020-03-29 18:16+0200\n"
+"POT-Creation-Date: 2020-04-20 10:00+0200\n"
+"PO-Revision-Date: 2020-04-20 10:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -83,6 +83,12 @@ msgstr "Send test email"
 
 msgid "Test_email"
 msgstr "Test email"
+
+msgid "Member_card"
+msgstr "Member card"
+
+msgid "Members"
+msgstr "Members"
 
 msgid "The_group_of_the_member_{0}_was_changed_to_{1}."
 msgstr "The group of the member {0} was changed to {1}."
@@ -170,9 +176,6 @@ msgstr "Sum of compensation payments for manufacturers"
 
 msgid "Credit_and_deposit_balance"
 msgstr "Credit and deposit balance"
-
-msgid "Members"
-msgstr "Members"
 
 msgid "Deposit_account"
 msgstr "Deposit account"
@@ -402,6 +405,9 @@ msgstr "Please try again as soon as the next invoice has been generated."
 msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deleted_successfully."
 msgstr "{0,plural,=1{One product was} other{# products were}} deleted successfully."
 
+msgid "Products"
+msgstr "Products"
+
 msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
 msgstr "Image (ID {0}) from manufacturer {1} was deleted successfully. Product: {1}, manufacturer: {2}."
 
@@ -494,9 +500,6 @@ msgstr "The short description of the product {0} from manufacturer {1} has been 
 
 msgid "All_manufacturers"
 msgstr "All manufacturers"
-
-msgid "Products"
-msgstr "Products"
 
 msgid "The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
 msgstr "The default attribute of the product {0} from manufacturer {1} was changed to {2}."
@@ -1368,18 +1371,6 @@ msgstr "All products"
 msgid "Show_all_ordered_products"
 msgstr "Show all ordered products"
 
-msgid "Comment"
-msgstr "Comment"
-
-msgid "Price"
-msgstr "Price"
-
-msgid "Total"
-msgstr "Total"
-
-msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
-msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
-
 msgid "Page_title"
 msgstr "Page title"
 
@@ -1470,6 +1461,9 @@ msgstr "If checked, the member will be notified about the status change by email
 msgid "Email_preview"
 msgstr "Email preview"
 
+msgid "Comment"
+msgstr "Comment"
+
 msgid "Add_transfered_member_fee"
 msgstr "Add transfered member fee"
 
@@ -1530,6 +1524,9 @@ msgstr "Product declaration"
 msgid "Stock_product"
 msgstr "Stock product"
 
+msgid "Price"
+msgstr "Price"
+
 msgid "Tax_rate"
 msgstr "Tax rate"
 
@@ -1538,9 +1535,6 @@ msgstr "New?"
 
 msgid "Delivery_rhythm"
 msgstr "Delivery rhythm"
-
-msgid "Product_ID"
-msgstr "ProductID"
 
 msgid "docs_route_infos_for_success"
 msgstr "infos-for-success"
@@ -1737,71 +1731,17 @@ msgstr "Please select a member."
 msgid "This_transaction_was_already_imported."
 msgstr "This transaction was already imported."
 
-msgid "Invoice_for_the_order_period_{0}_to_{1}"
-msgstr "Invoice for the order period {0} to {1}"
-
-msgid "conveyed_for"
-msgstr "conveyed for"
-
-msgid "Invoice_number_abbreviation"
-msgstr "Invoice nº"
-
-msgid "Orders_from"
-msgstr "Orders from"
-
-msgid "Invoice_date"
-msgstr "Invoice date"
-
-msgid "Price_excl."
-msgstr "Price excl."
-
-msgid "VAT"
-msgstr "VAT"
-
-msgid "Price_incl."
-msgstr "Price incl."
-
-msgid "variable_member_fee"
-msgstr "variable member fee"
-
-msgid "New_total_sum"
-msgstr "New total sum"
-
-msgid "The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
-msgstr "The total sum below right (minus {0}% variable member fee) will be transferred to your bank account as soon as possible."
-
-msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
-msgstr "The total sum to the right (price incl.) will be transferred to your bank account as soon as possible."
-
-msgid "Paid_by_members_in_{0}"
-msgstr "Paid by all members in {0}"
-
-msgid "Paid_by_members_in"
-msgstr "Paid by all members in"
-
-msgid "Kept_variable_member_fee"
-msgstr "Kept variable member fee"
-
-msgid "Amount_that_will_be_transferred_to_your_bank_account"
-msgstr "Amount that will be transferred to your bank account"
-
-msgid "Thank_you_very_much_for_delivering_your_products_to_us!"
-msgstr "Thank you very much for delivering your products to us!"
-
-msgid "Detail_view"
-msgstr "Detail view"
+msgid "Order_list_grouped_by"
+msgstr "Order list grouped by"
 
 msgid "Order_day"
 msgstr "Order day"
 
-msgid "Order_list_grouped_by"
-msgstr "Order list grouped by"
+msgid "Thank_you_very_much_for_delivering_your_products_to_us!"
+msgstr "Thank you very much for delivering your products to us!"
 
 msgid "Customer_ID"
 msgstr "Customer-ID"
-
-msgid "Member_card"
-msgstr "Member card"
 
 msgid "Delete_selected_products"
 msgstr "Delete selected products"
@@ -2042,6 +1982,70 @@ msgstr "For signing in please use the email address of this message. If you want
 
 msgid "Your_contact_person"
 msgstr "Your contact person"
+
+msgid "conveyed_for"
+msgstr "conveyed for"
+
+msgid "Invoice_number_abbreviation"
+msgstr "Invoice nº"
+
+msgid "Orders_from"
+msgstr "Orders from"
+
+msgid "Invoice_date"
+msgstr "Invoice date"
+
+msgid "Price_excl."
+msgstr "Price excl."
+
+msgid "VAT"
+msgstr "VAT"
+
+msgid "Price_incl."
+msgstr "Price incl."
+
+msgid "variable_member_fee"
+msgstr "variable member fee"
+
+msgid "New_total_sum"
+msgstr "New total sum"
+
+msgid "The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr "The total sum below right (minus {0}% variable member fee) will be transferred to your bank account as soon as possible."
+
+msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr "The total sum to the right (price incl.) will be transferred to your bank account as soon as possible."
+
+msgid "Paid_by_members_in_{0}"
+msgstr "Paid by all members in {0}"
+
+msgid "Paid_by_members_in"
+msgstr "Paid by all members in"
+
+msgid "Kept_variable_member_fee"
+msgstr "Kept variable member fee"
+
+msgid "Amount_that_will_be_transferred_to_your_bank_account"
+msgstr "Amount that will be transferred to your bank account"
+
+msgid "Detail_view"
+msgstr "Detail view"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr "The delivered weight will eventually be adapted, so the price can change slightly."
+
+msgid "Product_ID"
+msgstr "ProductID"
+
+#, fuzzy
+#~ msgid "customer"
+#~ msgstr "Customer-ID"
+
+#~ msgid "Invoice_for_the_order_period_{0}_to_{1}"
+#~ msgstr "Invoice for the order period {0} to {1}"
 
 #~ msgid "Weight_adapted"
 #~ msgstr "Weight apapted"

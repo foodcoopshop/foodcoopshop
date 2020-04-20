@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-04-16 11:59+0200\n"
+"POT-Creation-Date: 2020-04-20 09:54+0200\n"
 "PO-Revision-Date: 2020-04-16 12:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1085,6 +1085,9 @@ msgstr "Self-service for stock products"
 
 msgid "Your_shopping_bag_was_empty."
 msgstr "Your shopping bag was empty."
+
+msgid "Filename_Information-about-right-of-withdrawal"
+msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "Tax_rates_overview_table"
 msgstr "Tax rates overview table"
@@ -2373,18 +2376,6 @@ msgstr "Auto-logout in X sec."
 msgid "Terms_and_conditions"
 msgstr "Terms and conditions"
 
-msgid "Order_overview"
-msgstr "Order overview"
-
-msgid "Order_of"
-msgstr "Order of"
-
-msgid "placed_on"
-msgstr "placed on"
-
-msgid "Prices_are_including_vat."
-msgstr "The prices include the VAT."
-
 msgid "Information_about_right_of_withdrawal"
 msgstr "Information about the right of withdrawal"
 
@@ -2418,8 +2409,17 @@ msgstr "Signature of consumer (only if transmitted on paper)."
 msgid "Strike_out_unnecessary_items."
 msgstr "Strike out unwanted items."
 
-msgid "Filename_Information-about-right-of-withdrawal"
-msgstr "Informationen-ueber-Ruecktrittsrecht"
+msgid "Order_overview"
+msgstr "Order overview"
+
+msgid "Order_of"
+msgstr "Order of"
+
+msgid "placed_on"
+msgstr "placed on"
+
+msgid "Prices_are_including_vat."
+msgstr "The prices include the VAT."
 
 #~ msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
 #~ msgstr "Please pick up the ordered products in our pick up store."

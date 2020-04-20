@@ -886,7 +886,7 @@ class ManufacturersController extends AdminAppController
     {
         $customerResults = $this->getOrderList('customer');
         $pdfWriter = new OrderListByCustomerPdfWriter();
-        $productPdfFile = $this->getOrderListFilenameForWriteInline($customerResults, __d('admin', 'customer'));
+        $productPdfFile = $this->getOrderListFilenameForWriteInline($customerResults, __d('admin', 'member'));
         $pdfWriter->setFilename($productPdfFile);
         $pdfWriter->setData([
             'customerResults' => $customerResults,

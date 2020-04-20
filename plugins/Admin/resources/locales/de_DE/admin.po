@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-04-16 11:59+0200\n"
-"PO-Revision-Date: 2020-03-29 18:16+0200\n"
+"POT-Creation-Date: 2020-04-20 10:00+0200\n"
+"PO-Revision-Date: 2020-04-20 10:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -83,6 +83,12 @@ msgstr "Test E-Mail versenden"
 
 msgid "Test_email"
 msgstr "Test E-Mail"
+
+msgid "Member_card"
+msgstr "Mitgliedskarte"
+
+msgid "Members"
+msgstr "Mitglieder"
 
 msgid "The_group_of_the_member_{0}_was_changed_to_{1}."
 msgstr "Die Gruppe des Mitglieds {0} wurde auf {1} geändert."
@@ -170,9 +176,6 @@ msgstr "Summe der geleisteten Pfand-Ausgleichszahlungen für Hersteller"
 
 msgid "Credit_and_deposit_balance"
 msgstr "Guthaben- und Pfand-Saldo"
-
-msgid "Members"
-msgstr "Mitglieder"
 
 msgid "Deposit_account"
 msgstr "Pfandkonto"
@@ -402,6 +405,9 @@ msgstr "Bitte probiere es nochmal, sobald die nächsten Rechnungen erstellt wurd
 msgid "{0,plural,=1{1_product_was} other{#_products_were}}_deleted_successfully."
 msgstr "{0,plural,=1{Ein Produkt wurde} other{# Produkte wurden}} erfolgreich gelöscht."
 
+msgid "Products"
+msgstr "Produkte"
+
 msgid "Image_ID_{0}_from_manufacturer_{1}_was_deleted_successfully_Product_{1}_Manufacturer_{2}."
 msgstr "Bild (ID: {0}) wurde erfolgreich gelöscht. Produkt: {1}, Hersteller: {2}"
 
@@ -494,9 +500,6 @@ msgstr "Die Kurzbeschreibung des Produktes {0} vom Hersteller {1} wurde geänder
 
 msgid "All_manufacturers"
 msgstr "Alle Hersteller"
-
-msgid "Products"
-msgstr "Produkte"
 
 msgid "The_default_attribute_of_the_product_{0}_from_manufacturer_{1}_was_changed_to_{2}."
 msgstr "Die Standard-Variante des Produktes {0} vom Hersteller {1} wurde auf {2} geändert."
@@ -1368,18 +1371,6 @@ msgstr "Alle Produkte"
 msgid "Show_all_ordered_products"
 msgstr "Alle bestellten Produkte anzeigen"
 
-msgid "Comment"
-msgstr "Kommentar"
-
-msgid "Price"
-msgstr "Preis"
-
-msgid "Total"
-msgstr "Gesamt"
-
-msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
-msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
-
 msgid "Page_title"
 msgstr "Seitentitel"
 
@@ -1470,6 +1461,9 @@ msgstr "Wenn angehakt, wird das Mitglied beim Speichern per E-Mail über die Sta
 msgid "Email_preview"
 msgstr "E-Mail-Vorschau"
 
+msgid "Comment"
+msgstr "Kommentar"
+
 msgid "Add_transfered_member_fee"
 msgstr "Eingezahlten Mitgliedsbeitrag eintragen"
 
@@ -1530,6 +1524,9 @@ msgstr "Produktdeklaration"
 msgid "Stock_product"
 msgstr "Lagerprodukt"
 
+msgid "Price"
+msgstr "Preis"
+
 msgid "Tax_rate"
 msgstr "Steuersatz"
 
@@ -1538,9 +1535,6 @@ msgstr "Neu?"
 
 msgid "Delivery_rhythm"
 msgstr "Lieferrhythmus"
-
-msgid "Product_ID"
-msgstr "Produkt-Nr."
 
 msgid "docs_route_infos_for_success"
 msgstr "wichtige-infos-zum-gelingen"
@@ -1737,71 +1731,17 @@ msgstr "Bitte wähle ein Mitglied aus."
 msgid "This_transaction_was_already_imported."
 msgstr "Diese Überweisung wurde bereits importiert."
 
-msgid "Invoice_for_the_order_period_{0}_to_{1}"
-msgstr "Rechnung für den Bestell-Zeitraum {0} - {1}"
-
-msgid "conveyed_for"
-msgstr "vermittelt für"
-
-msgid "Invoice_number_abbreviation"
-msgstr "Rechnung Nr."
-
-msgid "Orders_from"
-msgstr "Bestellungen vom"
-
-msgid "Invoice_date"
-msgstr "Rechnungsdatum"
-
-msgid "Price_excl."
-msgstr "Preis exkl."
-
-msgid "VAT"
-msgstr "USt."
-
-msgid "Price_incl."
-msgstr "Preis inkl."
-
-msgid "variable_member_fee"
-msgstr "variabler Mitgliedsbeitrag"
-
-msgid "New_total_sum"
-msgstr "Neue Gesamtsumme"
-
-msgid "The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
-msgstr "Die neue Gesamtsumme rechts unten (abzüglich {0} % variabler Mitgliedsbeitrag) wird so bald wie möglich auf dein Konto überwiesen."
-
-msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
-msgstr "Die Gesamtsumme ganz rechts (Preis inkl.) wird so bald wie möglich auf dein Konto überwiesen."
-
-msgid "Paid_by_members_in_{0}"
-msgstr "Von Mitgliedern bezahlt in {0}"
-
-msgid "Paid_by_members_in"
-msgstr "Von Mitgliedern bezahlt in"
-
-msgid "Kept_variable_member_fee"
-msgstr "Einbehaltener variabler Mitgliedsbeitrag"
-
-msgid "Amount_that_will_be_transferred_to_your_bank_account"
-msgstr "Betrag, der auf dein Konto überwiesen wird"
-
-msgid "Thank_you_very_much_for_delivering_your_products_to_us!"
-msgstr "Vielen Dank, dass du uns belieferst!"
-
-msgid "Detail_view"
-msgstr "Detailübersicht"
+msgid "Order_list_grouped_by"
+msgstr "Bestellliste gruppiert nach"
 
 msgid "Order_day"
 msgstr "Bestelltag"
 
-msgid "Order_list_grouped_by"
-msgstr "Bestellliste gruppiert nach"
+msgid "Thank_you_very_much_for_delivering_your_products_to_us!"
+msgstr "Vielen Dank, dass du uns belieferst!"
 
 msgid "Customer_ID"
 msgstr "Mitglieds-Nr."
-
-msgid "Member_card"
-msgstr "Mitgliedskarte"
 
 msgid "Delete_selected_products"
 msgstr "Ausgewählte Produkte löschen"
@@ -2042,6 +1982,70 @@ msgstr "Bitte verwende zum Einloggen die E-Mail-Adresse dieser Nachricht. Falls 
 
 msgid "Your_contact_person"
 msgstr "Deine Ansprechperson"
+
+msgid "conveyed_for"
+msgstr "vermittelt für"
+
+msgid "Invoice_number_abbreviation"
+msgstr "Rechnung Nr."
+
+msgid "Orders_from"
+msgstr "Bestellungen vom"
+
+msgid "Invoice_date"
+msgstr "Rechnungsdatum"
+
+msgid "Price_excl."
+msgstr "Preis exkl."
+
+msgid "VAT"
+msgstr "USt."
+
+msgid "Price_incl."
+msgstr "Preis inkl."
+
+msgid "variable_member_fee"
+msgstr "variabler Mitgliedsbeitrag"
+
+msgid "New_total_sum"
+msgstr "Neue Gesamtsumme"
+
+msgid "The_total_sum_below_right_(minus_{0}_%_variable_member_fee)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr "Die neue Gesamtsumme rechts unten (abzüglich {0} % variabler Mitgliedsbeitrag) wird so bald wie möglich auf dein Konto überwiesen."
+
+msgid "The_total_sum_to_the_right_(price_incl)_will_be_transfered_to_your_bank_account_as_soon_as_possible."
+msgstr "Die Gesamtsumme ganz rechts (Preis inkl.) wird so bald wie möglich auf dein Konto überwiesen."
+
+msgid "Paid_by_members_in_{0}"
+msgstr "Von Mitgliedern bezahlt in {0}"
+
+msgid "Paid_by_members_in"
+msgstr "Von Mitgliedern bezahlt in"
+
+msgid "Kept_variable_member_fee"
+msgstr "Einbehaltener variabler Mitgliedsbeitrag"
+
+msgid "Amount_that_will_be_transferred_to_your_bank_account"
+msgstr "Betrag, der auf dein Konto überwiesen wird"
+
+msgid "Detail_view"
+msgstr "Detailübersicht"
+
+msgid "Total"
+msgstr "Gesamt"
+
+msgid "The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly."
+msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der Preis kann sich noch geringfügig ändern."
+
+msgid "Product_ID"
+msgstr "Produkt-Nr."
+
+#, fuzzy
+#~ msgid "customer"
+#~ msgstr "Mitglieds-Nr."
+
+#~ msgid "Invoice_for_the_order_period_{0}_to_{1}"
+#~ msgstr "Rechnung für den Bestell-Zeitraum {0} - {1}"
 
 #~ msgid "Weight_adapted"
 #~ msgstr "Gewicht angepasst"

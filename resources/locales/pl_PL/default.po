@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-04-16 11:59+0200\n"
+"POT-Creation-Date: 2020-04-20 09:54+0200\n"
 "PO-Revision-Date: 2020-04-16 12:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1451,6 +1451,10 @@ msgstr "Czy ten produkt jest magazynowany?"
 #, fuzzy
 msgid "Your_shopping_bag_was_empty."
 msgstr "Twój koszyk był pusty."
+
+# Informationen-ueber-Ruecktrittsrecht
+msgid "Filename_Information-about-right-of-withdrawal"
+msgstr "Informacja-o-prawie-do-odstapienia"
 
 # Tax rates overview table
 msgid "Tax_rates_overview_table"
@@ -3172,22 +3176,6 @@ msgstr ""
 msgid "Terms_and_conditions"
 msgstr "Regulamin"
 
-# Order overview
-msgid "Order_overview"
-msgstr "Przegląd zamówień"
-
-# Order of
-msgid "Order_of"
-msgstr "Zamówienie"
-
-# placed on
-msgid "placed_on"
-msgstr "złożone w dniu"
-
-# The prices include the VAT.
-msgid "Prices_are_including_vat."
-msgstr "Ceny zawierają podatek VAT."
-
 # Information about the right of withdrawal
 msgid "Information_about_right_of_withdrawal"
 msgstr "Informacje o prawie odstąpienia"
@@ -3232,9 +3220,21 @@ msgstr "Podpis konsumenta (tylko w przypadku przesłania na papierze)."
 msgid "Strike_out_unnecessary_items."
 msgstr "Niepotrzebne skreślić."
 
-# Informationen-ueber-Ruecktrittsrecht
-msgid "Filename_Information-about-right-of-withdrawal"
-msgstr "Informacja-o-prawie-do-odstapienia"
+# Order overview
+msgid "Order_overview"
+msgstr "Przegląd zamówień"
+
+# Order of
+msgid "Order_of"
+msgstr "Zamówienie"
+
+# placed on
+msgid "placed_on"
+msgstr "złożone w dniu"
+
+# The prices include the VAT.
+msgid "Prices_are_including_vat."
+msgstr "Ceny zawierają podatek VAT."
 
 # Please pick up the ordered products in our pick up store.
 #~ msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
