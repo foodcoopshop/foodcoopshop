@@ -37,7 +37,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
     
     public function testContentOfInvoice()
     {
-        $this->prepareSendInvoices();
+        $this->loginAsSuperadmin();
         $this->httpClient->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'invoice.html');
         $expectedResult = preg_replace('/\{\{logoPath\}\}/', ROOT . DS . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg', $expectedResult);

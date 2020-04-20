@@ -20,8 +20,6 @@ $pdf->setTextHelper($this->Text);
 $pdf->SetLeftMargin(12);
 $pdf->AddPage();
 
-$pdf->SetTitle(__d('admin', 'Invoice_for_the_order_period_{0}_to_{1}', [$dateFrom, $dateTo]));
-
 $html = '<table border="1" cellspacing="0" cellpadding="7"><tr>';
 $html .= '<td width="200">';
 $html .= '<p><b>'.__d('admin', 'conveyed_for').'</b></p>';
@@ -34,8 +32,8 @@ $html .= '</td>';
 
 $html .= '<td width="330">';
 $html .= '<h2>'.__d('admin', 'Invoice_number_abbreviation').': ' . $newInvoiceNumber . '</h2>';
-$html .= '<h3>'.__d('admin', 'Orders_from').' ' . Configure::read('app.timeHelper')->getLastMonthNameAndYear() . '</h3>';
-$html .= '<h3>'.__d('admin', 'Invoice_date').': ' . date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt')) . '</h3>';
+$html .= '<h3>'.__d('admin', 'Orders_from').' ' . $period . '</h3>';
+$html .= '<h3>'.__d('admin', 'Invoice_date').': ' . $invoiceDate . '</h3>';
 $html .= '</td>';
 $html .= '</tr></table>';
 $pdf->writeHTML($html, true, false, true, false, '');
