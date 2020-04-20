@@ -25,10 +25,5 @@ class OrderListByProductPdfWriter extends PdfWriter
         $this->setPdfLibrary(new ListTcpdf());
     }
     
-    public function getTemplate(): string
-    {
-        return 'pdf' . DS . 'order_list_by_product';
-    }
-    
 }
 

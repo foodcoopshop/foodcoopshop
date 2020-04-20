@@ -14,9 +14,10 @@
  */
 namespace App\Lib\PdfWriter;
 use Cake\Filesystem\Folder;
+use Cake\Utility\Inflector;
 use Cake\View\ViewBuilder;
 
-abstract class PdfWriter implements PdfWriterInterface
+abstract class PdfWriter
 {
     
     protected $pdfLibrary;
@@ -58,7 +59,10 @@ abstract class PdfWriter implements PdfWriterInterface
         if ($this->plugin) {
             $viewBuilder->setPlugin($this->plugin);
         }
-        return $viewBuilder->setLayout('ajax')->build($this->getData())->render($this->getTemplate());
+        $reflect = new \ReflectionClass($this);
+        $templateFile = Inflector::underscore(str_replace('PdfWriter', '', $reflect->getShortName()));
+        $templateFile = DS . 'pdf' . DS . $templateFile;
+        return $viewBuilder->setLayout('ajax')->build($this->getData())->render($templateFile);
     }
     
     private function setContent()

@@ -25,10 +25,5 @@ class MyMemberCardPdfWriter extends PdfWriter
         $this->setPdfLibrary(new BarCodeTcpdf());
     }
     
-    public function getTemplate(): string
-    {
-        return 'pdf' . DS . 'my_member_card';
-    }
-    
 }
 

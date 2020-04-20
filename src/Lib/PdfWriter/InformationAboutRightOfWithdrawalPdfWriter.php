@@ -25,10 +25,5 @@ class InformationAboutRightOfWithdrawalPdfWriter extends PdfWriter
         $this->setPdfLibrary(new ListTcpdf());
     }
     
-    public function getTemplate(): string
-    {
-        return 'pdf' . DS . 'right_of_withdrawal_information_and_form';
-    }
-    
 }
 
