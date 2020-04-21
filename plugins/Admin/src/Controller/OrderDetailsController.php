@@ -259,6 +259,9 @@ class OrderDetailsController extends AdminAppController
         if ($orderDetailId == '') {
             if (in_array('pickupDay', array_keys($this->getRequest()->getQueryParams()))) {
                 $pickupDay = h($this->getRequest()->getQuery('pickupDay'));
+                if ($pickupDay == '') {
+                    throw new InvalidParameterException('parameter pickupDay must not be empty');
+                }
                 $explodedPickupDay = explode(',', $pickupDay[0]); // param can be passed comma separated
                 if (count($explodedPickupDay) == 2) {
                     $pickupDay = $explodedPickupDay;
