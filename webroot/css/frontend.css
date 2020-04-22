@@ -1189,7 +1189,7 @@ body.manufacturers.detail #inner-content {
 body.blog_posts a.edit-shortcut-button,
 body.pages.detail a.edit-shortcut-button,
 body.manufacturers.detail .manufacturer-infos a.edit-shortcut-button {
-    top: -17px;
+	top: -3px;
     right: 3px;
     position: absolute;
 }
