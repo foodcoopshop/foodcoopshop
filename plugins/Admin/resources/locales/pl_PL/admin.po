@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-04-20 10:00+0200\n"
+"POT-Creation-Date: 2020-04-22 08:18+0200\n"
 "PO-Revision-Date: 2020-03-19 21:01+0100\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1891,7 +1891,7 @@ msgid "your_credit_is_used_up_and_equals_{0}."
 msgstr ""
 
 #, fuzzy
-msgid "Please_soon_transfer_new_credit_(eg_100_{0})_to_our_bank_account."
+msgid "Please_soon_transfer_new_credit_to_our_bank_account."
 msgstr "Podaj kwotę, która została wpłacona na nasze konto bankowe."
 
 msgid "Do_not_forget_to_add_it_to_our_credit_system_after_the_bank_transfer."

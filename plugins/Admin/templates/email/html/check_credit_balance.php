@@ -25,7 +25,7 @@ use Cake\Core\Configure;
 
             <p><?php echo __d('admin', 'your_credit_is_used_up_and_equals_{0}.', ['<b style="color: #f3515c;">'.$delta.'</b>']); ?></p>
             
-            <p><?php echo __d('admin', 'Please_soon_transfer_new_credit_(eg_100_{0})_to_our_bank_account.', [Configure::read('appDb.FCS_CURRENCY_SYMBOL')]); ?></p>
+            <p><?php echo __d('admin', 'Please_soon_transfer_new_credit_to_our_bank_account.'); ?></p>
 
             <p><?php echo __d('admin', 'Do_not_forget_to_add_it_to_our_credit_system_after_the_bank_transfer.'); ?></p>
 
