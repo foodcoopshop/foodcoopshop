@@ -13,11 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Lib\Pdf\ListTcpdf;
 use Cake\Core\Configure;
-use Cake\Filesystem\Folder;
 
-$pdf = new ListTcpdf();
 $pdf->setTextHelper($this->Text);
 $pdf->SetLeftMargin(16);
 $pdf->AddPage();
@@ -67,26 +64,3 @@ $html = '<p>'.__d('admin', 'Thank_you_very_much_for_delivering_your_products_to_
 $pdf->writeHTML($html, true, false, true, false, '');
 
 $pdf->lastPage();
-
-$filename = $this->MyHtml->getOrderListLink($results[0]['ManufacturerName'], $results[0]['ManufacturerId'], $results[0]['OrderDetailPickupDay'], $groupTypeLabel, $currentDateForOrderLists);
-
-if ($saveParam == 'F') {
-    // pdf saved on server
-    if (file_exists($filename)) {
-        unlink($filename);
-    }
-    // assure that folder structure exists
-    $dir = new Folder();
-    $path = dirname($filename);
-    $dir->create($path);
-    $dir->chmod($path, 0755);
-} else {
-    // pdf is generated on the fly and NOT saved on server
-    // set custom filename
-    $filename = explode(DS, $filename);
-    $filename = end($filename);
-    $filename = substr($filename, 11);
-    $filename = $this->request->getQuery('dateFrom'). '-' . $this->request->getQuery('dateTo') . '-' . $filename;
-}
-
-echo $pdf->Output($filename, $saveParam);

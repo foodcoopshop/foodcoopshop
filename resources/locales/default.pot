@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-04-16 11:59+0200\n"
+"POT-Creation-Date: 2020-04-20 09:54+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1083,6 +1083,9 @@ msgid "Self_service_for_stock_products"
 msgstr ""
 
 msgid "Your_shopping_bag_was_empty."
+msgstr ""
+
+msgid "Filename_Information-about-right-of-withdrawal"
 msgstr ""
 
 msgid "Tax_rates_overview_table"
@@ -2372,18 +2375,6 @@ msgstr ""
 msgid "Terms_and_conditions"
 msgstr ""
 
-msgid "Order_overview"
-msgstr ""
-
-msgid "Order_of"
-msgstr ""
-
-msgid "placed_on"
-msgstr ""
-
-msgid "Prices_are_including_vat."
-msgstr ""
-
 msgid "Information_about_right_of_withdrawal"
 msgstr ""
 
@@ -2417,6 +2408,15 @@ msgstr ""
 msgid "Strike_out_unnecessary_items."
 msgstr ""
 
-msgid "Filename_Information-about-right-of-withdrawal"
+msgid "Order_overview"
+msgstr ""
+
+msgid "Order_of"
+msgstr ""
+
+msgid "placed_on"
+msgstr ""
+
+msgid "Prices_are_including_vat."
 msgstr ""
 

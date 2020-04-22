@@ -13,12 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Controller\Component\StringComponent;
-use App\Lib\Pdf\ListTcpdf;
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
 
-$pdf = new ListTcpdf();
 $pdf->SetLeftMargin(12);
 $pdf->SetRightMargin(12);
 
@@ -102,9 +99,3 @@ if (!empty($manufacturers)) {
         }
     }
 }
-
-$filename = __('Filename_Information-about-right-of-withdrawal').'.pdf';
-if (isset($order)) {
-    $filename = StringComponent::createRandomString().'.pdf';
-}
-echo $pdf->Output($filename, $saveParam);

@@ -4,6 +4,7 @@ namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
+use App\Lib\PdfWriter\OrderDetailsPdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
@@ -237,8 +238,12 @@ class OrderDetailsController extends AdminAppController
             @$preparedOrderDetails[$orderDetail->id_customer][] = $orderDetail;
         }
 
-        $this->set('orderDetails', $preparedOrderDetails);
-        
+        $pdfWriter = new OrderDetailsPdfWriter();
+        $pdfWriter->setData([
+            'orderDetails' => $preparedOrderDetails,
+            'appAuth' => $this->AppAuth,
+        ]);
+        die($pdfWriter->writeInline());
     }
     
     public function index()

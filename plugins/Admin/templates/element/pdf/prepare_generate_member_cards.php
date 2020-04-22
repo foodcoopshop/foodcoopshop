@@ -13,10 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Lib\Pdf\BarCodeTcpdf;
 use Cake\Core\Configure;
 
-$pdf = new BarCodeTcpdf();
 $pdf->SetLeftMargin(16);
 $pdf->SetTopMargin(54);
 
@@ -92,7 +90,3 @@ foreach($customers as $customer) {
 }
 $pdf->table .= '</table>';
 $pdf->writeHTML($pdf->table, true, false, true, false, '');
-
-// echo $pdf->outputHtml();
-echo $pdf->Output();
-// exit;

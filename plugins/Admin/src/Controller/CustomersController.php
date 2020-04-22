@@ -2,6 +2,9 @@
 namespace Admin\Controller;
 
 use App\Lib\Error\Exception\InvalidParameterException;
+use App\Lib\PdfWriter\MyMemberCardPdfWriter;
+use App\Lib\PdfWriter\MemberCardsPdfWriter;
+use App\Lib\PdfWriter\TermsOfUsePdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Core\Configure;
@@ -85,14 +88,26 @@ class CustomersController extends AdminAppController
     public function generateMyMemberCard()
     {
         $customerId = $this->AppAuth->getUserId();
-        $this->prepareGenerateMemberCards($customerId);
+        $customers = $this->prepareGenerateMemberCards($customerId);
+        $pdfWriter = new MyMemberCardPdfWriter();
+        $pdfWriter->setFilename(__d('admin', 'Member_card') . ' ' . $customers->toArray()[0]->name.'.pdf');
+        $pdfWriter->setData([
+            'customers' => $customers
+        ]);
+        die($pdfWriter->writeInline());
     }
     
     public function generateMemberCards()
     {
         $customerIds = h($this->getRequest()->getQuery('customerIds'));
         $customerIds = explode(',', $customerIds);
-        $this->prepareGenerateMemberCards($customerIds);
+        $customers = $this->prepareGenerateMemberCards($customerIds);
+        $pdfWriter = new MemberCardsPdfWriter();
+        $pdfWriter->setFilename(__d('admin', 'Members') . ' ' . Configure::read('appDb.FCS_APP_NAME').'.pdf');
+        $pdfWriter->setData([
+            'customers' => $customers
+        ]);
+        die($pdfWriter->writeInline());
     }
     
     private function prepareGenerateMemberCards($customerIds)
@@ -119,7 +134,7 @@ class CustomersController extends AdminAppController
         ]);
         $customers->select($this->Customer);
         $customers->select($this->Customer->AddressCustomers);
-        $this->set('customers', $customers);
+        return $customers;
     }
 
     public function ajaxEditGroup()
@@ -464,18 +479,12 @@ class CustomersController extends AdminAppController
         $this->set('customer', $customer);
     }
 
-    /**
-     * generates pdf on-the-fly
-     */
-    private function generateTermsOfUsePdf($customer)
+    private function generateTermsOfUsePdf()
     {
-        $this->set('customer', $customer);
-        $this->set('saveParam', 'I');
-        $this->RequestHandler->renderAs($this, 'pdf');
-        $response = $this->render('generateTermsOfUsePdf');
-        return $response->__toString();
+        $pdfWriter = new TermsOfUsePdfWriter();
+        return $pdfWriter->writeAttachment();
     }
-
+    
     public function changeStatus($customerId, $status, $sendEmail)
     {
         if (! in_array($status, [

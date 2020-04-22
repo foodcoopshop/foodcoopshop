@@ -37,13 +37,14 @@ class SendInvoicesShellTest extends AppCakeTestCase
     
     public function testContentOfInvoice()
     {
-        $this->prepareSendInvoices();
+        $this->loginAsSuperadmin();
         $this->httpClient->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
-        $content = $this->httpClient->getContent();
-        $this->assertRegExpWithUnquotedString('<td>Gesamtsumme</td><td align="right">4,54</td>', $content);
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'invoice.html');
+        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
+        $this->assertRegExpWithUnquotedString($expectedResult, $this->httpClient->getContent());
     }
 
-    public function testSendInvoicesOk()
+    public function testSendInvoicesWithVariableMemberFee()
     {
         
         $this->prepareSendInvoices();
@@ -83,6 +84,11 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('4,09 €</b> (10%)', $content);
         $this->assertRegExpWithUnquotedString('0,62 €</b>', $content);
         $this->assertRegExpWithUnquotedString('11.03.2018 10:20:30', $content);
+
+        $this->httpClient->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'invoiceWithVariableMemberFee.html');
+        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
+        $this->assertRegExpWithUnquotedString($expectedResult, $this->httpClient->getContent());
         
     }
 

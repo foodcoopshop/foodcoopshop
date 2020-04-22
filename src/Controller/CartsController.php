@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Lib\PdfWriter\InformationAboutRightOfWithdrawalPdfWriter;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Exception\Exception;
@@ -74,14 +75,13 @@ class CartsController extends FrontendController
         }
     }
 
-    /**
-     * generates pdf on-the-fly
-     */
     public function generateRightOfWithdrawalInformationPdf()
     {
-        $this->set('saveParam', 'I');
-        $this->RequestHandler->renderAs($this, 'pdf');
-        $this->render('generateRightOfWithdrawalInformationAndForm');
+        $pdfWriter = new InformationAboutRightOfWithdrawalPdfWriter();
+        $pdfWriter->setData([
+            'appAuth' => $this->AppAuth
+        ]);
+        die($pdfWriter->writeInline());
     }
 
     public function finish()

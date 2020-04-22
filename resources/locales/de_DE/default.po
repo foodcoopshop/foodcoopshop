@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-04-16 11:59+0200\n"
+"POT-Creation-Date: 2020-04-20 09:54+0200\n"
 "PO-Revision-Date: 2020-04-21 11:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1085,6 +1085,9 @@ msgstr "Selbstbedienungs-Modus für Lagerprodukte"
 
 msgid "Your_shopping_bag_was_empty."
 msgstr "Deine Einkaufstasche war leer."
+
+msgid "Filename_Information-about-right-of-withdrawal"
+msgstr "Informationen-ueber-Ruecktrittsrecht"
 
 msgid "Tax_rates_overview_table"
 msgstr "Übersichtstabelle nach Steuersatz"
@@ -2373,18 +2376,6 @@ msgstr "Auto-Logout in X Sek."
 msgid "Terms_and_conditions"
 msgstr "Nutzungsbedingungen"
 
-msgid "Order_overview"
-msgstr "Bestellübersicht"
-
-msgid "Order_of"
-msgstr "Bestellung vom"
-
-msgid "placed_on"
-msgstr "getätigt am"
-
-msgid "Prices_are_including_vat."
-msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
-
 msgid "Information_about_right_of_withdrawal"
 msgstr "Informationen über Rücktrittsrecht"
 
@@ -2418,8 +2409,17 @@ msgstr "Unterschrift des/der Verbraucher(s) (nur bei Mitteilung auf Papier)"
 msgid "Strike_out_unnecessary_items."
 msgstr "Unzutreffendes streichen"
 
-msgid "Filename_Information-about-right-of-withdrawal"
-msgstr "Informationen-ueber-Ruecktrittsrecht"
+msgid "Order_overview"
+msgstr "Bestellübersicht"
+
+msgid "Order_of"
+msgstr "Bestellung vom"
+
+msgid "placed_on"
+msgstr "getätigt am"
+
+msgid "Prices_are_including_vat."
+msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
 
 #~ msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
 #~ msgstr "Bitte hole die bestellten Waren verlässlich in unserem Abhollager ab."

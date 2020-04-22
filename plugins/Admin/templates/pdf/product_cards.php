@@ -13,9 +13,6 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Lib\Pdf\BarCodeTcpdf;
-
-$pdf = new BarCodeTcpdf();
 $pdf->SetLeftMargin(16);
 $pdf->SetTopMargin(15);
 
@@ -84,5 +81,3 @@ foreach($products as $product) {
 }
 $pdf->table .= '</table>';
 $pdf->writeHTML($pdf->table, true, false, true, false, '');
-
-echo $pdf->Output();
