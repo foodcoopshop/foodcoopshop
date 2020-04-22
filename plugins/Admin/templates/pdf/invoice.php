@@ -126,47 +126,47 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
     
     $html = '<table border="0" cellspacing="0" cellpadding="1">';
 
-    $html .= '<tr>';
-        $html .= '<td width="' . $firstColumnWidth . '">';
-            $html .= __d('admin', 'Paid_by_members_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]) . ':';
-        $html .= '</td>';
-        $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-            $html .= '<b>' .  $this->MyNumber->formatAsCurrency($sumTimebasedCurrencyPriceIncl) . '</b>';
-        $html .= '</td>';
-    $html .= '</tr>';
-
-    $html .= '<tr>';
-        $html .= '<td width="' . $firstColumnWidth . '">';
-            $html .= __d('admin', 'Paid_by_members_in') . ' ' . Configure::read('app.currencyName') . ':';
-        $html .= '</td>';
-        $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-            $html .= '<b>' .  $this->MyNumber->formatAsCurrency($sumPriceForTimebasedCurrency) . '</b>';
-        $html .= '</td>';
-    $html .= '</tr>';
-
-    if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
-        $m = TableRegistry::getTableLocator()->get('Manufacturers');
-        $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceForTimebasedCurrency, $variableMemberFee);
-        $sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee = $m->decreasePriceWithVariableMemberFee($sumPriceForTimebasedCurrency, $variableMemberFee);
-        
-        $html .= '<tr>';
-        $html .= '<td width="' . $firstColumnWidth . '">';
-        $html .= __d('admin', 'Kept_variable_member_fee') . ':';
-        $html .= '</td>';
-        $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-        $html .= '<b>'.$this->MyNumber->formatAsCurrency($compensatedPrice).'</b>';
-        $html .= '</td>';
-        $html .= '</tr>';
-
         $html .= '<tr>';
             $html .= '<td width="' . $firstColumnWidth . '">';
-                $html .= __d('admin', 'Amount_that_will_be_transferred_to_your_bank_account') . ':';
+                $html .= __d('admin', 'Paid_by_members_in_{0}', [Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')]) . ':';
             $html .= '</td>';
             $html .= '<td align="right" width="' . $secondColumnWidth . '">';
-                $html .= '<b>'.$this->MyNumber->formatAsCurrency($sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee).'</b>';
+                $html .= '<b>' .  $this->MyNumber->formatAsCurrency($sumTimebasedCurrencyPriceIncl) . '</b>';
             $html .= '</td>';
         $html .= '</tr>';
-    }
+    
+        $html .= '<tr>';
+            $html .= '<td width="' . $firstColumnWidth . '">';
+                $html .= __d('admin', 'Paid_by_members_in') . ' ' . Configure::read('app.currencyName') . ':';
+            $html .= '</td>';
+            $html .= '<td align="right" width="' . $secondColumnWidth . '">';
+                $html .= '<b>' .  $this->MyNumber->formatAsCurrency($sumPriceForTimebasedCurrency) . '</b>';
+            $html .= '</td>';
+        $html .= '</tr>';
+    
+        if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
+            $m = TableRegistry::getTableLocator()->get('Manufacturers');
+            $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceForTimebasedCurrency, $variableMemberFee);
+            $sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee = $m->decreasePriceWithVariableMemberFee($sumPriceForTimebasedCurrency, $variableMemberFee);
+            
+            $html .= '<tr>';
+            $html .= '<td width="' . $firstColumnWidth . '">';
+            $html .= __d('admin', 'Kept_variable_member_fee') . ':';
+            $html .= '</td>';
+            $html .= '<td align="right" width="' . $secondColumnWidth . '">';
+            $html .= '<b>'.$this->MyNumber->formatAsCurrency($compensatedPrice).'</b>';
+            $html .= '</td>';
+            $html .= '</tr>';
+    
+            $html .= '<tr>';
+                $html .= '<td width="' . $firstColumnWidth . '">';
+                    $html .= __d('admin', 'Amount_that_will_be_transferred_to_your_bank_account') . ':';
+                $html .= '</td>';
+                $html .= '<td align="right" width="' . $secondColumnWidth . '">';
+                    $html .= '<b>'.$this->MyNumber->formatAsCurrency($sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee).'</b>';
+                $html .= '</td>';
+            $html .= '</tr>';
+        }
 
     $html .= '</table>';
 
