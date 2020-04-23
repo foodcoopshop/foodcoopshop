@@ -22,7 +22,7 @@ if (Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual() ||
         'icon' => $this->Html->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName'))
     ]);
 } else {
-    echo $this->element('payment/addTypeManualListUploadHeader');
+    echo $this->element('payment/addTypeListUploadHeader');
 }
 if (count($payments) == 0) {
     ?>
