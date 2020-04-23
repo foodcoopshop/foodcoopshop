@@ -117,7 +117,7 @@ if ($paymentType == 'member_fee') {
 
 echo '</div>';
 
-if ($appAuth->isSuperadmin()) {
+if ($appAuth->isSuperadmin() && !Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
     echo $this->element('payment/personalTransactionCode', ['personalTransactionCode' => $personalTransactionCode]);
 }
 
