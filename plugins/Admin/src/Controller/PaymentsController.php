@@ -504,15 +504,8 @@ class PaymentsController extends AdminAppController
         $this->paymentType = 'product';
         
         if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
-            $customer = $this->Customer->find('all', [
-                'conditions' => [
-                    'Customers.id_customer' => $this->customerId
-                ],
-                'fields' => [
-                    'personalTransactionCode' => $this->Customer->getPersonalTransactionCodeField()
-                ]
-            ])->first();
-            $this->set('personalTransactionCode', $customer->personalTransactionCode);
+            $personalTransactionCode = $this->Customer->getPersonalTransactionCode($this->customerId);
+            $this->set('personalTransactionCode', $personalTransactionCode);
         }
         
         $this->product();
@@ -561,6 +554,12 @@ class PaymentsController extends AdminAppController
 
         $this->preparePayments();
         $this->set('creditBalance', $this->Customer->getCreditBalance($this->getCustomerId()));
+        
+        if ($this->AppAuth->isSuperadmin() && !Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
+            $personalTransactionCode = $this->Customer->getPersonalTransactionCode($this->getCustomerId());
+            $this->set('personalTransactionCode', $personalTransactionCode);
+        }
+        
     }
 
     private function preparePayments()

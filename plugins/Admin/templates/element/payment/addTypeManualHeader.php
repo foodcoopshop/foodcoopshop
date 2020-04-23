@@ -116,6 +116,11 @@ if ($paymentType == 'member_fee') {
 }
 
 echo '</div>';
+
+if ($appAuth->isSuperadmin()) {
+    echo $this->element('payment/personalTransactionCode', ['personalTransactionCode' => $personalTransactionCode]);
+}
+
 echo '</div>';
 echo '<div class="sc"></div>';
 

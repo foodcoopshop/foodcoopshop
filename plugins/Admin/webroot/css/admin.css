@@ -812,7 +812,9 @@ body.payments .bottom-button-container,
 body.payments h2 {
     width: 650px;
 }
-
+body.payments.product h2.personal-transaction-code {
+    margin-top: 10px;
+}
 body.timebased_currency_payments table.list {
 	width: 850px;
 }

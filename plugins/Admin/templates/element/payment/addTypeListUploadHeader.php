@@ -17,8 +17,7 @@ use Cake\Core\Configure;
 $this->element('addScript', [
     'script' =>
     Configure::read('app.jsNamespace') . ".Admin.init();" .
-    Configure::read('app.jsNamespace') . ".Admin.initDeletePayment();" . 
-    Configure::read('app.jsNamespace') . ".Admin.initCopyPersonalTransactionCodeToClipboardButton('" . __d('admin', 'Your_code_has_been_copied_successfully_into_the_clipboard.') . "');" 
+    Configure::read('app.jsNamespace') . ".Admin.initDeletePayment();"
 ]);
 ?>
 <div class="filter-container">
@@ -31,17 +30,4 @@ $this->element('addScript', [
 <p>
 	<b><?php echo __d('admin', 'Bank_account_data'); ?>: </b><?php echo Configure::read('appDb.FCS_BANK_ACCOUNT_DATA'); ?><br />
 </p>
-<h2 class="info"><?php echo __d('admin', 'Please_add_this_code_to_your_transaction:_{0}', ['<b>' . $personalTransactionCode . '</b>']); ?>
-<?php
-    echo $this->Html->link(
-        '<i class="far fa-clipboard"></i>',
-        'javascript:void(0)',
-        [
-            'data-clipboard-text' => $personalTransactionCode,
-            'class' => 'btn btn-outline-light btn-clipboard',
-            'title' => __d('admin', 'Copy_to_clipboard'),
-            'style' => 'float:right;margin-top:-4px;margin-right:-2px;',
-            'escape' => false
-        ]
-    );
-?></h2>
+<?php echo $this->element('payment/personalTransactionCode', ['personalTransactionCode' => $personalTransactionCode]); ?>

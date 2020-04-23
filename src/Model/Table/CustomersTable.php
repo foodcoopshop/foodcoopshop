@@ -203,6 +203,19 @@ class CustomersTable extends AppTable
         ]);
     }
     
+    public function getPersonalTransactionCode($customerId): string
+    {
+        $customer = $this->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $customerId
+            ],
+            'fields' => [
+                'personalTransactionCode' => $this->getPersonalTransactionCodeField()
+            ]
+        ])->first();
+        return $customer->personalTransactionCode;
+    }
+    
     public function getPersonalTransactionCodeField()
     {
         return 'UPPER(SUBSTRING(SHA1(CONCAT(Customers.id_customer, "' .  Security::getSalt() . '", "personal-transaction-code")), 1, 8))';
