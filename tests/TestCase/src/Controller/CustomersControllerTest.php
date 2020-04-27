@@ -267,7 +267,7 @@ class CustomersControllerTest extends AppCakeTestCase
             'referer' => '/'
         ]);
         $response = $this->httpClient->getJsonDecodedContent();
-        $this->assertRegExpWithUnquotedString('<ul><li>Anzahl der Bestellungen, die noch mit dem Hersteller verrechnet wurden: 3.</li><li>Das Guthaben beträgt 92,02 €. Es muss 0 betragen.</li>', $response->msg);
+        $this->assertRegExpWithUnquotedString('<ul><li>Anzahl der Bestellungen, die noch nicht mit dem Hersteller verrechnet wurden: 3.</li><li>Das Guthaben beträgt 92,02 €. Es muss 0 betragen.</li>', $response->msg);
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => Configure::read('test.customerId')
