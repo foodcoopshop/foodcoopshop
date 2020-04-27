@@ -287,11 +287,14 @@ class CustomersController extends AdminAppController
             }
 
             $errors = [];
-            $openOrderDetails = count($customer->active_order_details);
-            if ($openOrderDetails > 0) {
-                $errors[] = __d('admin', 'Amount_of_orders_where_the_invoice_has_not_been_sent_yet_to_the_manufacturer:'). ' '. $openOrderDetails . '.';
+            
+            if (Configure::read('app.applyOrdersNotYetBilledCheckOnDeletingCustomers')) {
+                $openOrderDetails = count($customer->active_order_details);
+                if ($openOrderDetails > 0) {
+                    $errors[] = __d('admin', 'Amount_of_orders_where_the_invoice_has_not_been_sent_yet_to_the_manufacturer:'). ' '. $openOrderDetails . '.';
+                }
             }
-
+            
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
                 $creditBalance = $this->Customer->getCreditBalance($customerId);
                 if ($creditBalance != 0) {
