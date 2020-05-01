@@ -1112,7 +1112,7 @@ foodcoopshop.Admin = {
         dialogHtml += '<p style="margin-top:10px;float:left;">' + foodcoopshop.LocalizedJs.admin.ChangePickupDayInvoicesInfoText + '</p>';
         dialogHtml += '<div style="margin-top:10px;float:left;" class="textarea-wrapper">';
         dialogHtml += '<label for="dialogChangePickupDayReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPickupDayChanged +'</label>';
-        dialogHtml += '<textarea class="ckeditor" name="dialogChangePickupDayReason" id="dialogChangePickupDayReason" />';
+        dialogHtml += '<textarea class="ckeditor" name="dialogChangePickupDayReason" id="dialogChangePickupDayReason"></textarea>';
         dialogHtml += '</div>';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(
             foodcoopshop.LocalizedJs.admin.ChangePickupDay + ': ' + orderDetailIds.length + ' ' + (
@@ -1223,7 +1223,7 @@ foodcoopshop.Admin = {
 
         dialogHtml += '<div class="textarea-wrapper">';
         dialogHtml += '<label for="dialogCancellationReason">' + textareaLabel +'</label>';
-        dialogHtml += '<textarea class="ckeditor" name="dialogCancellationReason" id="dialogCancellationReason" />';
+        dialogHtml += '<textarea class="ckeditor" name="dialogCancellationReason" id="dialogCancellationReason"></textarea>';
         dialogHtml += '</div>';
         dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
 

@@ -23,7 +23,7 @@ foodcoopshop.DialogCustomer = {
 
     getHtmlForCustomerCommentEdit : function(dialogId) {
         var dialogHtml = '<div class="textarea-wrapper">';
-        dialogHtml += '<textarea class="ckeditor" name="dialogCustomerComment" id="dialogCustomerComment" />';
+        dialogHtml += '<textarea class="ckeditor" name="dialogCustomerComment" id="dialogCustomerComment"></textarea>';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogCustomerId" id="dialogCustomerId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogCustomer.ChangeMemberComment, dialogId, dialogHtml);

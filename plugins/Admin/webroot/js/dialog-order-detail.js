@@ -22,7 +22,7 @@ foodcoopshop.DialogOrderDetail = {
     
     getHtmlForOrderDetailPickupDayCommentEdit : function(dialogId) {
         var dialogHtml = '<div class="textarea-wrapper">';
-        dialogHtml += '<textarea class="ckeditor" name="dialogPickupDayComment" id="dialogPickupDayComment" />';
+        dialogHtml += '<textarea class="ckeditor" name="dialogPickupDayComment" id="dialogPickupDayComment"></textarea>';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogCustomerId" id="dialogCustomerId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.pickupDay.ChangePickupDayComment, dialogId, dialogHtml);
@@ -34,7 +34,7 @@ foodcoopshop.DialogOrderDetail = {
         dialogHtml += '<select name="dialogOrderDetailProductAmountAmount" id="dialogOrderDetailProductAmountAmount" /></select>';
         dialogHtml += '<div class="textarea-wrapper">';
         dialogHtml += '<label for="dialogEditAmountReason">' + foodcoopshop.LocalizedJs.admin.WhyIsAmountDecreased + '</label>';
-        dialogHtml += '<textarea class="ckeditor" name="dialogEditAmountReason" id="dialogEditAmountReason" />';
+        dialogHtml += '<textarea class="ckeditor" name="dialogEditAmountReason" id="dialogEditAmountReason"></textarea>';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogOrderDetailProductAmountOrderDetailId" id="dialogOrderDetailProductAmountOrderDetailId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.admin.DecreaseAmount, dialogId, dialogHtml);
@@ -47,7 +47,7 @@ foodcoopshop.DialogOrderDetail = {
         dialogHtml += '<b>' + foodcoopshop.LocalizedJs.helper.CurrencySymbol + '</b>';
         dialogHtml += '<div class="textarea-wrapper" style="margin-top: 10px;">';
         dialogHtml += '<label for="dialogEditPriceReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPriceAdapted + '</label>';
-        dialogHtml += '<textarea class="ckeditor" name="dialogEditPriceReason" id="dialogEditPriceReason" />';
+        dialogHtml += '<textarea class="ckeditor" name="dialogEditPriceReason" id="dialogEditPriceReason"></textarea>';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogOrderDetailProductPriceOrderDetailId" id="dialogOrderDetailProductPriceOrderDetailId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.admin.AdaptPrice, dialogId, dialogHtml);
@@ -61,7 +61,7 @@ foodcoopshop.DialogOrderDetail = {
         dialogHtml += '<select style="width:200px;" id="dialogOrderDetailEditCustomerAmount"></select>';
         dialogHtml += '<div class="textarea-wrapper" style="margin-top:10px;">';
         dialogHtml += '<label for="dialogEditCustomerReason">' + foodcoopshop.LocalizedJs.admin.WhyIsMemberEdited + '</label>';
-        dialogHtml += '<textarea class="ckeditor" name="dialogEditCustomerReason" id="dialogEditCustomerReason" />';
+        dialogHtml += '<textarea class="ckeditor" name="dialogEditCustomerReason" id="dialogEditCustomerReason"></textarea>';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogOrderDetailEditCustomerOrderDetailId" id="dialogOrderDetailEditCustomerOrderDetailId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.admin.ChangeMember, dialogId, dialogHtml);
