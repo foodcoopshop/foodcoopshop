@@ -101,16 +101,16 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "4.0.6",
+            "version": "4.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "776a053fd360ac9c030730027bf37c7b7f69fba8"
+                "reference": "efd878ce4158eebcb3d124372d498ad947738aeb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/776a053fd360ac9c030730027bf37c7b7f69fba8",
-                "reference": "776a053fd360ac9c030730027bf37c7b7f69fba8",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/efd878ce4158eebcb3d124372d498ad947738aeb",
+                "reference": "efd878ce4158eebcb3d124372d498ad947738aeb",
                 "shasum": ""
             },
             "require": {
@@ -193,7 +193,7 @@
                 "rapid-development",
                 "validation"
             ],
-            "time": "2020-04-19T01:11:57+00:00"
+            "time": "2020-05-02T03:19:58+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -2744,16 +2744,16 @@
         },
         {
             "name": "cakephp/debug_kit",
-            "version": "4.1.1",
+            "version": "4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "e98c06eb05a084cb43832d4bc3f034bb44913c61"
+                "reference": "14d6b6b13286ce67e73722c422c09ed82a7b0e65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/e98c06eb05a084cb43832d4bc3f034bb44913c61",
-                "reference": "e98c06eb05a084cb43832d4bc3f034bb44913c61",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/14d6b6b13286ce67e73722c422c09ed82a7b0e65",
+                "reference": "14d6b6b13286ce67e73722c422c09ed82a7b0e65",
                 "shasum": ""
             },
             "require": {
@@ -2800,7 +2800,7 @@
                 "debug",
                 "kit"
             ],
-            "time": "2020-04-13T17:28:17+00:00"
+            "time": "2020-04-26T23:32:27+00:00"
         },
         {
             "name": "composer/composer",
@@ -3716,16 +3716,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.19",
+            "version": "0.12.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "054f6d76b12ba9a6c13a5a8d5fcdf51219615f4d"
+                "reference": "3d79c7109223aeb2d1157870c5d8875545403917"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/054f6d76b12ba9a6c13a5a8d5fcdf51219615f4d",
-                "reference": "054f6d76b12ba9a6c13a5a8d5fcdf51219615f4d",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/3d79c7109223aeb2d1157870c5d8875545403917",
+                "reference": "3d79c7109223aeb2d1157870c5d8875545403917",
                 "shasum": ""
             },
             "require": {
@@ -3754,7 +3754,21 @@
                 "MIT"
             ],
             "description": "PHPStan - PHP Static Analysis Tool",
-            "time": "2020-04-19T20:35:10+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/phpstan",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-05-03T17:12:46+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -4173,16 +4187,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.10.3",
+            "version": "v0.10.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "2bde2fa03e05dff0aee834598b951d6fc7c6fe02"
+                "reference": "a8aec1b2981ab66882a01cce36a49b6317dc3560"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/2bde2fa03e05dff0aee834598b951d6fc7c6fe02",
-                "reference": "2bde2fa03e05dff0aee834598b951d6fc7c6fe02",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/a8aec1b2981ab66882a01cce36a49b6317dc3560",
+                "reference": "a8aec1b2981ab66882a01cce36a49b6317dc3560",
                 "shasum": ""
             },
             "require": {
@@ -4241,7 +4255,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2020-04-07T06:44:48+00:00"
+            "time": "2020-05-03T19:32:03+00:00"
         },
         {
             "name": "sebastian/code-unit",
