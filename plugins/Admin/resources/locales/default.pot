@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-04-22 08:18+0200\n"
+"POT-Creation-Date: 2020-05-06 10:38+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -467,7 +467,31 @@ msgstr ""
 msgid "The_amount_of_the_product_{0}_was_changed_successfully."
 msgstr ""
 
-msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed."
+msgid "Available_quantity"
+msgstr ""
+
+msgid "Always_available"
+msgstr ""
+
+msgid "yes"
+msgstr ""
+
+msgid "no"
+msgstr ""
+
+msgid "Default_quantity_after_sending_order_lists"
+msgstr ""
+
+msgid "empty"
+msgstr ""
+
+msgid "Quantity_limit"
+msgstr ""
+
+msgid "Sold_out_limit"
+msgstr ""
+
+msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}."
 msgstr ""
 
 msgid "The_price_of_the_product_{0}_was_changed_successfully."
@@ -783,12 +807,6 @@ msgid "Setting"
 msgstr ""
 
 msgid "Value"
-msgstr ""
-
-msgid "yes"
-msgstr ""
-
-msgid "no"
 msgstr ""
 
 msgid "Remote_foodcoops"
@@ -1697,6 +1715,9 @@ msgstr ""
 msgid "Delivery_days"
 msgstr ""
 
+msgid "docs_route_credit_system_with_csv_upload"
+msgstr ""
+
 msgid "Add_new_payment"
 msgstr ""
 
@@ -1709,18 +1730,6 @@ msgstr ""
 msgid "Please_chose_the_months_for_your_payment."
 msgstr ""
 
-msgid "Your_code_has_been_copied_successfully_into_the_clipboard."
-msgstr ""
-
-msgid "docs_route_credit_system_with_csv_upload"
-msgstr ""
-
-msgid "Please_add_this_code_to_your_transaction:_{0}"
-msgstr ""
-
-msgid "Copy_to_clipboard"
-msgstr ""
-
 msgid "Upload_CSV_file_with_bank_transactions"
 msgstr ""
 
@@ -1728,6 +1737,15 @@ msgid "Please_select_a_member."
 msgstr ""
 
 msgid "This_transaction_was_already_imported."
+msgstr ""
+
+msgid "Your_code_has_been_copied_successfully_into_the_clipboard."
+msgstr ""
+
+msgid "Please_add_this_code_to_your_transaction:_{0}"
+msgstr ""
+
+msgid "Copy_to_clipboard"
 msgstr ""
 
 msgid "Order_list_grouped_by"

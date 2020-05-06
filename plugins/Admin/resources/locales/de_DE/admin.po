@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-04-22 08:18+0200\n"
-"PO-Revision-Date: 2020-04-27 09:06+0200\n"
+"POT-Creation-Date: 2020-05-06 10:38+0200\n"
+"PO-Revision-Date: 2020-05-06 10:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -468,8 +468,32 @@ msgstr "Das Produkt {0} wurde erfolgreich zu einem Lagerprodukt geändert."
 msgid "The_amount_of_the_product_{0}_was_changed_successfully."
 msgstr "Die Anzahl des Produktes {0} wurde erfolgreich geändert."
 
-msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed."
-msgstr "Die Anzahl des Produktes {0} vom Hersteller {1} wurde geändert."
+msgid "Available_quantity"
+msgstr "Verfügbare Menge"
+
+msgid "Always_available"
+msgstr "Immer verfügbar"
+
+msgid "yes"
+msgstr "ja"
+
+msgid "no"
+msgstr "nein"
+
+msgid "Default_quantity_after_sending_order_lists"
+msgstr "Standard-Anzahl pro Lieferrhythmus"
+
+msgid "empty"
+msgstr "leer"
+
+msgid "Quantity_limit"
+msgstr "Bestellbar bis zu einer Anzahl von"
+
+msgid "Sold_out_limit"
+msgstr "E-Mail-Benachrichtigung ab Anzahl"
+
+msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}."
+msgstr "Die Anzahl des Produktes {0} vom Hersteller {1} wurde geändert: {2}."
 
 msgid "The_price_of_the_product_{0}_was_changed_successfully."
 msgstr "Der Preis des Produktes {0} wurde erfolgreich geändert."
@@ -785,12 +809,6 @@ msgstr "Einstellung"
 
 msgid "Value"
 msgstr "Wert"
-
-msgid "yes"
-msgstr "ja"
-
-msgid "no"
-msgstr "nein"
 
 msgid "Remote_foodcoops"
 msgstr "Remote Foodcoops"
@@ -1698,6 +1716,9 @@ msgstr "Abgeholt"
 msgid "Delivery_days"
 msgstr "Liefertage"
 
+msgid "docs_route_credit_system_with_csv_upload"
+msgstr "guthaben-system-mit-automatischem-kontoabgleich"
+
 msgid "Add_new_payment"
 msgstr "Neue Zahlung eintragen"
 
@@ -1710,18 +1731,6 @@ msgstr "Wenn es sich um eine Rückzahlung handelt, trage bitte ein, wie viel du 
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Bitte wähle die Monate aus, für die deine Zahlung gedacht ist."
 
-msgid "Your_code_has_been_copied_successfully_into_the_clipboard."
-msgstr "Dein Code wurde erfolgreich in die Zwischenablage kopiert."
-
-msgid "docs_route_credit_system_with_csv_upload"
-msgstr "guthaben-system-mit-automatischem-kontoabgleich"
-
-msgid "Please_add_this_code_to_your_transaction:_{0}"
-msgstr "Bitte trage diesen Code im Feld \"Verwendungszweck\" ein: {0}"
-
-msgid "Copy_to_clipboard"
-msgstr "In die Zwischenablage kopieren"
-
 msgid "Upload_CSV_file_with_bank_transactions"
 msgstr "CSV-Datei mit Überweisungen hochladen"
 
@@ -1730,6 +1739,15 @@ msgstr "Bitte wähle ein Mitglied aus."
 
 msgid "This_transaction_was_already_imported."
 msgstr "Diese Überweisung wurde bereits importiert."
+
+msgid "Your_code_has_been_copied_successfully_into_the_clipboard."
+msgstr "Dein Code wurde erfolgreich in die Zwischenablage kopiert."
+
+msgid "Please_add_this_code_to_your_transaction:_{0}"
+msgstr "Bitte trage diesen Code im Feld \"Verwendungszweck\" ein: {0}"
+
+msgid "Copy_to_clipboard"
+msgstr "In die Zwischenablage kopieren"
 
 msgid "Order_list_grouped_by"
 msgstr "Bestellliste gruppiert nach"
@@ -2039,6 +2057,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Quantity"
+#~ msgstr "Verfügbare Menge"
 
 #, fuzzy
 #~ msgid "customer"

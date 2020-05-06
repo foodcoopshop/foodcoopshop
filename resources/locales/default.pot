@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-04-20 09:54+0200\n"
+"POT-Creation-Date: 2020-05-06 10:33+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2312,10 +2312,10 @@ msgstr ""
 msgid "You_receive_this_message_because_the_delivery_day_of_this_order_was_automatically_set_to_today_{0}_and_therefore_it_does_not_appear_on_your_order_lists."
 msgstr ""
 
-msgid "your_new_password_is:"
+msgid "Please_click_on_this_link_to_activate_your_new_password"
 msgstr ""
 
-msgid "Please_click_on_this_link_to_activate_your_new_password"
+msgid "your_new_password_is:"
 msgstr ""
 
 msgid "thank_you_for_your_order_from_{0}."

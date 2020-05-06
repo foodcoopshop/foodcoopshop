@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-04-22 08:18+0200\n"
-"PO-Revision-Date: 2020-04-22 08:20+0200\n"
+"POT-Creation-Date: 2020-05-06 10:38+0200\n"
+"PO-Revision-Date: 2020-05-06 10:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -468,8 +468,32 @@ msgstr "The product {0} was changed successfully to a stock product."
 msgid "The_amount_of_the_product_{0}_was_changed_successfully."
 msgstr "The amount of the product {0} was changed successfully."
 
-msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed."
-msgstr "The amount of the product {0} from manufacturer {1} was changed."
+msgid "Available_quantity"
+msgstr "Available quantity"
+
+msgid "Always_available"
+msgstr "Always available"
+
+msgid "yes"
+msgstr "yes"
+
+msgid "no"
+msgstr "no"
+
+msgid "Default_quantity_after_sending_order_lists"
+msgstr "Default quantity after sending order lists"
+
+msgid "empty"
+msgstr "empty"
+
+msgid "Quantity_limit"
+msgstr "Order possible until amount of"
+
+msgid "Sold_out_limit"
+msgstr "Notification if amount is lower than"
+
+msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}."
+msgstr "The amount of the product {0} from manufacturer {1} was changed: {2}."
 
 msgid "The_price_of_the_product_{0}_was_changed_successfully."
 msgstr "The price of the product {0} was changed successfully."
@@ -785,12 +809,6 @@ msgstr "Setting"
 
 msgid "Value"
 msgstr "Value"
-
-msgid "yes"
-msgstr "yes"
-
-msgid "no"
-msgstr "no"
 
 msgid "Remote_foodcoops"
 msgstr "Remote food-coops"
@@ -1698,6 +1716,9 @@ msgstr "Picked up"
 msgid "Delivery_days"
 msgstr "Delivery days"
 
+msgid "docs_route_credit_system_with_csv_upload"
+msgstr ""
+
 msgid "Add_new_payment"
 msgstr "Add new payment"
 
@@ -1710,18 +1731,6 @@ msgstr "If you chose \"payback\", please enter the amount that you just transfer
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Please chose the months for your payment."
 
-msgid "Your_code_has_been_copied_successfully_into_the_clipboard."
-msgstr "Your code has been copied successfully into the clipboard."
-
-msgid "docs_route_credit_system_with_csv_upload"
-msgstr ""
-
-msgid "Please_add_this_code_to_your_transaction:_{0}"
-msgstr "Please add this code to your transaction: {0}"
-
-msgid "Copy_to_clipboard"
-msgstr "Copy to clipboard"
-
 msgid "Upload_CSV_file_with_bank_transactions"
 msgstr "Upload CSV file with bank transactions"
 
@@ -1730,6 +1739,15 @@ msgstr "Please select a member."
 
 msgid "This_transaction_was_already_imported."
 msgstr "This transaction was already imported."
+
+msgid "Your_code_has_been_copied_successfully_into_the_clipboard."
+msgstr "Your code has been copied successfully into the clipboard."
+
+msgid "Please_add_this_code_to_your_transaction:_{0}"
+msgstr "Please add this code to your transaction: {0}"
+
+msgid "Copy_to_clipboard"
+msgstr "Copy to clipboard"
 
 msgid "Order_list_grouped_by"
 msgstr "Order list grouped by"
@@ -2039,6 +2057,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Quantity"
+#~ msgstr "Available quantity"
 
 #, fuzzy
 #~ msgid "customer"

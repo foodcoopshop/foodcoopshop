@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-04-20 09:54+0200\n"
+"POT-Creation-Date: 2020-05-06 10:33+0200\n"
 "PO-Revision-Date: 2020-04-16 12:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -3091,13 +3091,13 @@ msgstr "Zamówienie błyskawiczne złożone dla {0} przez {1}."
 msgid "You_receive_this_message_because_the_delivery_day_of_this_order_was_automatically_set_to_today_{0}_and_therefore_it_does_not_appear_on_your_order_lists."
 msgstr "Otrzymujesz tą wiadomość, ponieważ dzień dostawy dla tego zamówienia został ustawiony na <b>dziś ({0})</b>i tym samym nie jest ono widoczne na twojej liście zamówień."
 
-# your new password:
-msgid "your_new_password_is:"
-msgstr "twoje nowe hasło:"
-
 # Please click on this link to activate your new password
 msgid "Please_click_on_this_link_to_activate_your_new_password"
 msgstr "Kliknij w link aby aktywować swoje nowe hasło"
+
+# your new password:
+msgid "your_new_password_is:"
+msgstr "twoje nowe hasło:"
 
 # thank you for order from {0}.
 msgid "thank_you_for_your_order_from_{0}."

@@ -891,13 +891,44 @@ class ProductsController extends AdminAppController
         $this->Flash->success(__d('admin', 'The_amount_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']));
 
         $entity = $this->Product->StockAvailables->patchEntity($oldProduct->stock_available, $object2save);
+
         if ($entity->isDirty()) {
+            $dirtyFieldsWithNewValues = [];
+            foreach($entity->getDirty() as $dirtyField) {
+                $newValue = $entity->get($dirtyField);
+                switch($dirtyField) {
+                    case 'quantity':
+                        $translatedFieldName = __d('admin', 'Available_quantity');
+                        break;
+                    case 'always_available':
+                        $translatedFieldName = __d('admin', 'Always_available');
+                        $newValue = $newValue == 1 ? __d('admin', 'yes') : __d('admin', 'no');
+                        break;
+                    case 'default_quantity_after_sending_order_lists':
+                        $translatedFieldName = __d('admin', 'Default_quantity_after_sending_order_lists');
+                        $newValue = $newValue == '' ? __d('admin', 'empty') : $newValue;
+                        break;
+                    case 'quantity_limit':
+                        $translatedFieldName = __d('admin', 'Quantity_limit');
+                        break;
+                    case 'sold_out_limit':
+                        $translatedFieldName = __d('admin', 'Sold_out_limit');
+                        $newValue = $newValue == '' ? __d('admin', 'empty') : $newValue;
+                        break;
+                }
+                $dirtyFieldsWithNewValues[] = $translatedFieldName . ': <b>' . $newValue . '</b>';
+            }
+
             $this->ActionLog->customSave(
                 'product_quantity_changed',
                 $this->AppAuth->getUserId(),
                 $productId,
                 'products',
-                __d('admin', 'The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed.', ['<b>' . $oldProduct->name . '</b>', '<b>' . $oldProduct->manufacturer->name . '</b>'])
+                __d('admin', 'The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}.', [
+                    '<b>' . $oldProduct->name . '</b>',
+                    '<b>' . $oldProduct->manufacturer->name . '</b>',
+                    join(', ', $dirtyFieldsWithNewValues),
+                ])
             );
         }
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
