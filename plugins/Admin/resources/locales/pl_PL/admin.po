@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-04-22 08:18+0200\n"
+"POT-Creation-Date: 2020-05-06 10:38+0200\n"
 "PO-Revision-Date: 2020-03-19 21:01+0100\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -489,8 +489,33 @@ msgstr "produkt {0} został ustawiony jako magazynowany."
 msgid "The_amount_of_the_product_{0}_was_changed_successfully."
 msgstr "Ilość produktu {0} została pomyślnie zmieniona."
 
+msgid "Available_quantity"
+msgstr ""
+
 #, fuzzy
-msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed."
+msgid "Always_available"
+msgstr "jeśli dostępne"
+
+msgid "yes"
+msgstr "tak"
+
+msgid "no"
+msgstr "nie"
+
+msgid "Default_quantity_after_sending_order_lists"
+msgstr ""
+
+msgid "empty"
+msgstr ""
+
+msgid "Quantity_limit"
+msgstr ""
+
+msgid "Sold_out_limit"
+msgstr ""
+
+#, fuzzy
+msgid "The_amount_of_the_product_{0}_from_manufacturer_{1}_was_changed:_{2}."
 msgstr "Jednostka produktu {0} od producenta {1} została zmieniona na {2}."
 
 msgid "The_price_of_the_product_{0}_was_changed_successfully."
@@ -811,12 +836,6 @@ msgstr "Ustawienia"
 
 msgid "Value"
 msgstr "Wartość"
-
-msgid "yes"
-msgstr "tak"
-
-msgid "no"
-msgstr "nie"
 
 msgid "Remote_foodcoops"
 msgstr "Zdalene kooperatywy"
@@ -1748,6 +1767,10 @@ msgstr "Odebrane"
 msgid "Delivery_days"
 msgstr "Dni dostawy"
 
+#, fuzzy
+msgid "docs_route_credit_system_with_csv_upload"
+msgstr "credit-system"
+
 msgid "Add_new_payment"
 msgstr "Dodaj nową wpłatę"
 
@@ -1760,20 +1783,6 @@ msgstr "Jeśli wybierzesz \"zwrot\", wpisz kwotę, która została przelana na k
 msgid "Please_chose_the_months_for_your_payment."
 msgstr "Please chose the months for your payment."
 
-#, fuzzy
-msgid "Your_code_has_been_copied_successfully_into_the_clipboard."
-msgstr "Twoje konto zostało usunięte pomyślnie."
-
-#, fuzzy
-msgid "docs_route_credit_system_with_csv_upload"
-msgstr "credit-system"
-
-msgid "Please_add_this_code_to_your_transaction:_{0}"
-msgstr ""
-
-msgid "Copy_to_clipboard"
-msgstr ""
-
 msgid "Upload_CSV_file_with_bank_transactions"
 msgstr ""
 
@@ -1782,6 +1791,16 @@ msgid "Please_select_a_member."
 msgstr "Proszę wybrać producenta."
 
 msgid "This_transaction_was_already_imported."
+msgstr ""
+
+#, fuzzy
+msgid "Your_code_has_been_copied_successfully_into_the_clipboard."
+msgstr "Twoje konto zostało usunięte pomyślnie."
+
+msgid "Please_add_this_code_to_your_transaction:_{0}"
+msgstr ""
+
+msgid "Copy_to_clipboard"
 msgstr ""
 
 msgid "Order_list_grouped_by"
