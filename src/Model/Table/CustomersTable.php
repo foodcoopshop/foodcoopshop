@@ -139,7 +139,7 @@ class CustomersTable extends AppTable
     public function validationNewPasswordRequest(Validator $validator)
     {
         $validator->notEmptyString('email', __('Please_enter_your_email_address.'));
-        $validator->email('email', false, __('The_email_address_is_not_valid.'));
+        $validator->email('email', true, __('The_email_address_is_not_valid.'));
         $validator->add('email', 'exists', [
             'rule' => function ($value, $context) {
                 $ct = TableRegistry::getTableLocator()->get('Customers');

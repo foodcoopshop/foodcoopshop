@@ -28,7 +28,7 @@ class AddressManufacturersTable extends AddressesTable
         $validator->maxLength('firstname', NAME_MAX_CHARS, __('Maximum_{0}_characters_please.', [NAME_MAX_CHARS]));
         $validator->maxLength('lastname', NAME_MAX_CHARS, __('Maximum_{0}_characters_please.', [NAME_MAX_CHARS]));
         $validator->notEmptyString('email', __('Please_enter_an_email_address.'));
-        $validator->email('email', false, __('The_email_address_is_not_valid.'));
+        $validator->email('email', true, __('The_email_address_is_not_valid.'));
         $validator->add('email', 'unique', [
             'rule' => 'validateUnique',
             'provider' => 'table',
