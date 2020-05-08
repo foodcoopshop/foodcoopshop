@@ -30,7 +30,11 @@ foodcoopshop.Modal = {
     },
 
     bindSaveButton: function(selector, callback) {
-        $(selector + ' .modal-footer .btn-success').on('click', callback);
+        $(selector + ' .modal-footer .btn-success').on('click', function() {
+            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-check');
+            foodcoopshop.Helper.disableButton($(this));
+            callback();
+        });
     },
 
     appendModalToDom: function(elementId, title, body) {
@@ -46,7 +50,7 @@ foodcoopshop.Modal = {
                         </div>
                         <div class="modal-body">` + body + `</div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-success">` + foodcoopshop.LocalizedJs.helper.save + `</button>
+                            <button type="button" class="btn btn-success"><i class="fa fa-check"></i> ` + foodcoopshop.LocalizedJs.helper.save + `</button>
                             <button type="button" class="btn btn-outline-light" data-dismiss="modal">` + foodcoopshop.LocalizedJs.helper.cancel + `</button>
                         </div>
                     </div>
