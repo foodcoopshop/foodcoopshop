@@ -14,21 +14,6 @@
 
 foodcoopshop.Modal = {
 
-    renderTest: function() {
-        var modalSelector = '#myModal';
-        this.appendModalToDom(
-            modalSelector,
-            'Das ist der Titel',
-            '<p>Das ist der Body.</p>'
-        );
-        this.bindSaveButton(modalSelector, function() {
-            alert('save');
-        });
-        $('h2.info2').on('click', function() {
-            $(modalSelector).modal();
-        });
-    },
-
     bindSaveButton: function(selector, callback) {
         $(selector + ' .modal-footer .btn-success').on('click', function() {
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-check');
