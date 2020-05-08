@@ -13,12 +13,12 @@
  */
 foodcoopshop.DialogCustomer = {
 
-    getHtmlForCustomerGroupEdit : function(dialogId) {
-        var dialogHtml = '<label for="dialogCustomerGroupEditText" id="dialogCustomerGroupEditText"></label><br />';
-        dialogHtml += '<select name="dialogCustomerGroupEditGroup" id="dialogCustomerGroupEditGroup" /></select>';
-        dialogHtml += '<input type="hidden" name="dialogCustomerGroupEditCustomerId" id="dialogCustomerGroupEditCustomerId" value="" />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogCustomer.ChangeGroup, dialogId, dialogHtml);
-        return dialogHtml;
+    getHtmlForCustomerGroupEdit : function() {
+        return `
+            <label for="dialogCustomerGroupEditText" id="dialogCustomerGroupEditText"></label><br />
+            <select name="dialogCustomerGroupEditGroup" id="dialogCustomerGroupEditGroup" /></select>
+            <input type="hidden" name="dialogCustomerGroupEditCustomerId" id="dialogCustomerGroupEditCustomerId" value="" />
+            `;
     },
 
     getHtmlForCustomerCommentEdit : function(dialogId) {
