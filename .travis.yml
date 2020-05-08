@@ -16,12 +16,6 @@ addons:
 env:
   - DB=mysql
 
-before_install:
-    - mysql --version
-    - mysql -e 'CREATE DATABASE foodcoopshop_test;'
-    - mysql foodcoopshop_test < ./config/sql/_installation/clean-db-structure.sql
-    - mysql foodcoopshop_test < ./tests/config/sql/test-db-data.sql
-
 before_script:
   # email mock
   - sudo apt-get install -y -qq postfix
@@ -29,6 +23,10 @@ before_script:
   - smtp-sink -d "%d.%H.%M.%S" localhost:2500 1000 &
   - echo 'sendmail_path = "/usr/sbin/sendmail -t -i "' > $(php --ini|grep -m 1 "ini files in:"|cut -d ":" -f 2)/sendmail.ini
   # start build
+  - mysql --version
+  - mysql -e 'CREATE DATABASE foodcoopshop_test;'
+  - mysql foodcoopshop_test < ./config/sql/_installation/clean-db-structure.sql
+  - mysql foodcoopshop_test < ./tests/config/sql/test-db-data.sql
   - composer install --optimize-autoloader
   - cp ./config/travis/* ./config/
   - npm --prefix ./webroot install ./webroot
@@ -42,20 +40,11 @@ before_script:
   # Disable XDebug to speed up Composer and test suites.
   - phpenv config-rm xdebug.ini
   - php --version
-#  # configure apache virtual hosts
-#  - sudo cp -f ./config/travis/apache /etc/apache2/sites-available/www.foodcoopshop.test.conf
-#  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/www.foodcoopshop.test.conf
-#  - sudo a2dissite 000-default
-#  - sudo a2ensite www.foodcoopshop.test.conf
-#  - sudo a2enmod rewrite actions fastcgi alias
-#  - sudo chown -R travis:travis $TRAVIS_BUILD_DIR
-#  - sudo chmod o+rx /home/travis
-#  - sudo service apache2 restart
-#  - sudo cat /var/log/apache2/www.foodcoopshop.test_error.log
+  - sudo chown -R travis:travis $TRAVIS_BUILD_DIR
+  - sudo chmod o+rx /home/travis
   # run phpdevserver
-  - php -S 127.0.0.1:8080 &
-  - until curl -s 127.0.0.1:8080; do sleep 5; done
-
+  - php -S www.foodcoopshop.test:80 &
+  - until curl -s www.foodcoopshop.test:80; do sleep 5; done
 
 script:
   - vendor/bin/phpstan analyze -c phpstan.neon --no-interaction --no-progress
