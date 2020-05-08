@@ -668,3 +668,8 @@ tr.selected td > div > i.far {
 .featherlight-content #flashMessage {
     z-index: 10000;
 }
+@media (prefers-reduced-motion: reduce){
+  .fade {
+    transition: opacity .15s linear;
+  }
+}
