@@ -674,6 +674,7 @@ tr.selected td > div > i.far {
 }
 .modal-header .close {
 	color: #fff;
+	opacity: 1;
 }
 .modal-backdrop {
     opacity: .5 ! important;
