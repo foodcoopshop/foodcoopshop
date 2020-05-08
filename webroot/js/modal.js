@@ -19,7 +19,7 @@ foodcoopshop.Modal = {
         this.appendModalToDom(
             modalSelector,
             'Das ist der Titel',
-            '<p>Das ist der Body.</p>',
+            '<p>Das ist der Body.</p>'
         );
         this.bindSaveButton(modalSelector, function() {
             alert('save');

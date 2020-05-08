@@ -2161,7 +2161,7 @@ foodcoopshop.Admin = {
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
             foodcoopshop.LocalizedJs.dialogCustomer.ChangeGroup,
-            foodcoopshop.DialogCustomer.getHtmlForCustomerGroupEdit(),
+            foodcoopshop.DialogCustomer.getHtmlForCustomerGroupEdit()
         );
         foodcoopshop.Modal.bindSaveButton(modalSelector, function() {
             
