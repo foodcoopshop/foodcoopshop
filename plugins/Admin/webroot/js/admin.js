@@ -2180,25 +2180,17 @@ foodcoopshop.Admin = {
                         document.location.reload();
                     },
                     onError: function (data) {
-                        dialog.dialog('close');
+                        $(modalSelector).hide();
                         alert(data.msg);
                     }
                 }
             );
         });
-
-        /*
-        var dialog = $('#' + dialogId).dialog({
-            autoOpen: false,
-            width: 400,
-            modal: true,
-            close: function () {
-                $('#dialogCustomerGroupEditGroupId').val('');
-                $('#dialogCustomerGroupEditCustomerId').val('');
-            },
-            buttons: buttons
+        
+        $(modalSelector).on('hidden.bs.modal', function (e) {
+            $('#dialogCustomerGroupEditGroupId').val('');
+            $('#dialogCustomerGroupEditCustomerId').val('');
         });
-        */
 
         $('.customer-group-edit-button').on('click', function () {
             var selectedGroupId = $(this).closest('tr').find('td:nth-child(4) span.group-for-dialog').html();
@@ -2210,7 +2202,7 @@ foodcoopshop.Admin = {
             html += '<p style="font-weight: normal;"><br />' + foodcoopshop.LocalizedJs.admin.TheUserNeedsToSignInAgain + '</p>';
             $(modalSelector + ' #dialogCustomerGroupEditText').html(html);
             $(modalSelector + ' #dialogCustomerGroupEditCustomerId').val($(this).closest('tr').find('td:nth-child(2)').html());
-            $(modalSelector).show();
+            $(modalSelector).modal();
         });
 
     },
