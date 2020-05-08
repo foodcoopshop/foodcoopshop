@@ -24,7 +24,9 @@ foodcoopshop.Modal = {
         this.bindSaveButton(modalSelector, function() {
             alert('save');
         });
-        $(modalSelector).show();
+        $('h2.info2').on('click', function() {
+            $(modalSelector).modal();
+        });
     },
 
     bindSaveButton: function(selector, callback) {
@@ -33,7 +35,7 @@ foodcoopshop.Modal = {
 
     appendModalToDom: function(elementId, title, body) {
         var html = `
-            <div id="` + elementId.replace(/\#/, '') + `" class="modal fade" tabindex="-1" role="dialog">
+            <div id="` + elementId.replace(/\#/, '') + `" class="modal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -51,7 +53,6 @@ foodcoopshop.Modal = {
                 </div>
             </div>`;
         $('body').append(html);
-        $(elementId).modal();
     }
 
 };
