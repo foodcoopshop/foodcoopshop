@@ -668,8 +668,13 @@ tr.selected td > div > i.far {
 .featherlight-content #flashMessage {
     z-index: 10000;
 }
-@media (prefers-reduced-motion: reduce){
-  .fade {
-    transition: opacity .15s linear;
-  }
+.modal-header {
+	background-color: #719f41;
+	color: #fff;
+}
+.modal-header .close {
+	color: #fff;
+}
+.modal-backdrop {
+    opacity: .5 ! important;
 }
