@@ -235,7 +235,7 @@ class LocalizedController extends Controller
                 'WereTheProductsOfAllMembersPickedUp' => __('Were_the_products_of_all_members_picked_up?'),
                 'ChangePickupDayComment' => __('Change_pickup_day_comment')
             ],
-            'dialogCustomer' => [
+            'modalCustomer' => [
                 'ChangeMemberComment' => __('Change_member_comment'),
                 'ChangeGroup' => __('Change_group')
             ],

@@ -2160,31 +2160,11 @@ foodcoopshop.Admin = {
         var modalSelector = '#customer-group-edit-form';
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            foodcoopshop.LocalizedJs.dialogCustomer.ChangeGroup,
-            foodcoopshop.DialogCustomer.getHtmlForCustomerGroupEdit()
+            foodcoopshop.LocalizedJs.modalCustomer.ChangeGroup,
+            foodcoopshop.ModalCustomer.getHtmlForCustomerGroupEdit()
         );
         foodcoopshop.Modal.bindSaveButton(modalSelector, function() {
-            
-            if ($('#dialogCustomerGroupEditGroupId').val() == '' || $('#dialogCustomerGroupEditCustomerId').val() == '') {
-                return false;
-            }
-
-            foodcoopshop.Helper.ajaxCall(
-                '/admin/customers/ajaxEditGroup/',
-                {
-                    customerId: $('#dialogCustomerGroupEditCustomerId').val(),
-                    groupId: $('#dialogCustomerGroupEditGroup').val(),
-                },
-                {
-                    onOk: function (data) {
-                        document.location.reload();
-                    },
-                    onError: function (data) {
-                        $(modalSelector).hide();
-                        alert(data.msg);
-                    }
-                }
-            );
+            foodcoopshop.ModalCustomer.getSaveHandlerForCustomerGroupEdit(modalSelector);
         });
         
         $(modalSelector).on('hidden.bs.modal', function (e) {
@@ -2192,19 +2172,9 @@ foodcoopshop.Admin = {
             $('#dialogCustomerGroupEditCustomerId').val('');
         });
 
-        $('.customer-group-edit-button').on('click', function () {
-            var selectedGroupId = $(this).closest('tr').find('td:nth-child(4) span.group-for-dialog').html();
-            var select = $(modalSelector + ' #dialogCustomerGroupEditGroup');
-            select.find('option').remove();
-            select.append($('#selectgroupid').html());
-            select.val(selectedGroupId);
-            var html = foodcoopshop.LocalizedJs.admin.ChangeGroupFor + ': ' + $(this).closest('tr').find('td:nth-child(3) a').text();
-            html += '<p style="font-weight: normal;"><br />' + foodcoopshop.LocalizedJs.admin.TheUserNeedsToSignInAgain + '</p>';
-            $(modalSelector + ' #dialogCustomerGroupEditText').html(html);
-            $(modalSelector + ' #dialogCustomerGroupEditCustomerId').val($(this).closest('tr').find('td:nth-child(2)').html());
-            $(modalSelector).modal();
+        $('.customer-group-edit-button').on('click', function() {
+            foodcoopshop.ModalCustomer.getOpenModalHandlerForCustomerGroupEdit($(this), modalSelector);
         });
-
     },
     
     getParentLocation: function() {
