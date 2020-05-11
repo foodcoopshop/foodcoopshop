@@ -76,6 +76,8 @@ foodcoopshop.ModalCustomerCommentEdit = {
     
     getOpenHandler : function(button, modalSelector) {
         
+        $('.tooltipster-base ').remove(); // on mobile tooltipster is triggered on click - interferes with ckeditor
+        
         $(modalSelector).modal();
 
         foodcoopshop.Helper.initCkeditor('dialogCustomerComment');
@@ -85,7 +87,7 @@ foodcoopshop.ModalCustomerCommentEdit = {
             text = '';
         }
         
-        CKEDITOR.instances['dialogCustomerComment'].setData(text); // attr title is deleted after toolbar init
+        CKEDITOR.instances['dialogCustomerComment'].setData(text);
         $('#customer-comment-edit-form #dialogCustomerId').val(button.closest('tr').find('td:nth-child(2)').html());
         
         
