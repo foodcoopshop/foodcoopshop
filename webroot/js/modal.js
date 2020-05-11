@@ -24,7 +24,7 @@ foodcoopshop.Modal = {
 
     appendModalToDom: function(elementId, title, body) {
         var html = `
-            <div id="` + elementId.replace(/\#/, '') + `" class="modal" tabindex="-1" role="dialog">
+            <div id="` + elementId.replace(/#/, '') + `" class="modal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
