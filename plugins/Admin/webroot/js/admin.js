@@ -239,82 +239,6 @@ foodcoopshop.Admin = {
 
     },
 
-    createCustomerCommentEditDialog: function (container) {
-
-        var dialogId = 'customer-comment-edit-form';
-        var dialogHtml = foodcoopshop.DialogCustomer.getHtmlForCustomerCommentEdit(dialogId);
-        $(container).append(dialogHtml);
-
-        var buttons = {};
-        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
-        buttons['save'] = {
-            text: foodcoopshop.LocalizedJs.helper.save,
-            click: function() {
-                if ($('#dialogCustomerId').val() == '') {
-                    return false;
-                }
-
-                $('#customer-comment-edit-form .ajax-loader').show();
-                $('.ui-dialog button').attr('disabled', 'disabled');
-
-                foodcoopshop.Helper.ajaxCall(
-                    '/admin/customers/editComment/',
-                    {
-                        customerId: $('#dialogCustomerId').val(),
-                        customerComment: CKEDITOR.instances['dialogCustomerComment'].getData()
-                    },
-                    {
-                        onOk: function (data) {
-                            document.location.reload();
-                        },
-                        onError: function (data) {
-                            console.log(data);
-                        }
-                    }
-                );
-
-            }
-        };
-
-        var dialog = $('#' + dialogId).dialog({
-
-            autoOpen: false,
-            height: 460,
-            width: 350,
-            modal: true,
-
-            close: function () {
-                $('#cke_dialogCustomerComment').val('');
-                $('#dialogCustomerId').val('');
-            },
-            buttons: buttons
-        });
-
-        return dialog;
-
-    },
-
-    initCustomerCommentEditDialog: function (container) {
-
-        $('.customer-comment-edit-button').on('click', function () {
-
-            foodcoopshop.Helper.destroyCkeditor('dialogCustomerComment');
-            $('#customer-comment-edit-form').remove();
-
-            var dialog = foodcoopshop.Admin.createCustomerCommentEditDialog(container);
-            foodcoopshop.Helper.initCkeditor('dialogCustomerComment');
-
-            var text = $(this).attr('originalTitle');
-            if (text == foodcoopshop.LocalizedJs.admin.AddComment) {
-                text = '';
-            }
-            CKEDITOR.instances['dialogCustomerComment'].setData(text); // attr title is deleted after toolbar init
-            $('#customer-comment-edit-form #dialogCustomerId').val($(this).closest('tr').find('td:nth-child(2)').html());
-            dialog.dialog('open');
-        });
-
-    },
-
     initProductDepositEditDialog: function (container) {
 
         var dialogId = 'product-deposit-edit-form';
@@ -2153,28 +2077,6 @@ foodcoopshop.Admin = {
             dialog.dialog('open');
         });
 
-    },
-
-    initCustomerGroupEditDialog: function (container) {
-
-        var modalSelector = '#customer-group-edit-form';
-        foodcoopshop.Modal.appendModalToDom(
-            modalSelector,
-            foodcoopshop.LocalizedJs.modalCustomer.ChangeGroup,
-            foodcoopshop.ModalCustomer.getHtmlForCustomerGroupEdit()
-        );
-        foodcoopshop.Modal.bindSaveButton(modalSelector, function() {
-            foodcoopshop.ModalCustomer.getSaveHandlerForCustomerGroupEdit(modalSelector);
-        });
-        
-        $(modalSelector).on('hidden.bs.modal', function (e) {
-            $('#dialogCustomerGroupEditGroupId').val('');
-            $('#dialogCustomerGroupEditCustomerId').val('');
-        });
-
-        $('.customer-group-edit-button').on('click', function() {
-            foodcoopshop.ModalCustomer.getOpenModalHandlerForCustomerGroupEdit($(this), modalSelector);
-        });
     },
     
     getParentLocation: function() {

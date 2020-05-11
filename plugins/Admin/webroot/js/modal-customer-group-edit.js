@@ -5,15 +5,39 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @since         FoodCoopShop 2.1.0
+ * @since         FoodCoopShop 3.1.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @author        Mario Rothauer <office@foodcoopshop.com>
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-foodcoopshop.ModalCustomer = {
+foodcoopshop.ModalCustomerGroupEdit = {
 
-    getHtmlForCustomerGroupEdit : function() {
+    init : function() {
+        
+        var modalSelector = '#customer-group-edit-form';
+        
+        foodcoopshop.Modal.appendModalToDom(
+            modalSelector,
+            foodcoopshop.LocalizedJs.modalCustomer.ChangeGroup,
+            foodcoopshop.ModalCustomerGroupEdit.getHtml()
+        );
+        
+        foodcoopshop.Modal.bindSaveButton(modalSelector, function() {
+            foodcoopshop.ModalCustomerGroupEdit.getSaveHandler(modalSelector);
+        });
+        
+        $(modalSelector).on('hidden.bs.modal', function (e) {
+            foodcoopshop.ModalCustomerGroupEdit.getCloseHandler();
+        });
+
+        $('.customer-group-edit-button').on('click', function() {
+            foodcoopshop.ModalCustomerGroupEdit.getOpenHandler($(this), modalSelector);
+        });
+
+    },
+    
+    getHtml : function() {
         return `
             <label for="dialogCustomerGroupEditText" id="dialogCustomerGroupEditText"></label><br />
             <select name="dialogCustomerGroupEditGroup" id="dialogCustomerGroupEditGroup" /></select>
@@ -21,7 +45,12 @@ foodcoopshop.ModalCustomer = {
         `;
     },
     
-    getSaveHandlerForCustomerGroupEdit : function(modalSelector) {
+    getCloseHandler : function() {
+        $('#dialogCustomerGroupEditGroupId').val('');
+        $('#dialogCustomerGroupEditCustomerId').val('');
+    },
+    
+    getSaveHandler : function(modalSelector) {
         
         if ($('#dialogCustomerGroupEditGroupId').val() == '' || $('#dialogCustomerGroupEditCustomerId').val() == '') {
             return false;
@@ -45,7 +74,7 @@ foodcoopshop.ModalCustomer = {
         );
     },
     
-    getOpenModalHandlerForCustomerGroupEdit : function(button, modalSelector) {
+    getOpenHandler : function(button, modalSelector) {
         var selectedGroupId = button.closest('tr').find('td:nth-child(4) span.group-for-dialog').html();
         var select = $(modalSelector + ' #dialogCustomerGroupEditGroup');
         select.find('option').remove();
@@ -56,15 +85,6 @@ foodcoopshop.ModalCustomer = {
         $(modalSelector + ' #dialogCustomerGroupEditText').html(html);
         $(modalSelector + ' #dialogCustomerGroupEditCustomerId').val(button.closest('tr').find('td:nth-child(2)').html());
         $(modalSelector).modal();
-    },
-
-    getHtmlForCustomerCommentEdit : function() {
-        return `
-            <div class="textarea-wrapper">';
-                <textarea class="ckeditor" name="dialogCustomerComment" id="dialogCustomerComment"></textarea>';
-            </div>';
-            <input type="hidden" name="dialogCustomerId" id="dialogCustomerId" value="" />
-        `;
     }
 
 };
