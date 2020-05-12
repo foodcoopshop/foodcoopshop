@@ -464,9 +464,6 @@ pre {
     margin-top: 0;
     margin-left: 0;
 }
-.ui-dialog.logout-button {
-    z-index: 100000;
-}
 
 .accept-updated-terms-of-use-form {
     float: left;
@@ -667,6 +664,9 @@ tr.selected td > div > i.far {
 }
 .featherlight-content #flashMessage {
     z-index: 10000;
+}
+.modal {
+    z-index: 100000;
 }
 .modal-header {
 	background-color: #719f41;
