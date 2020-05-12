@@ -21,7 +21,7 @@ foodcoopshop.Helper = {
 
     init: function () {
         this.initMenu();
-        this.initLogoutButton();
+        foodcoopshop.ModalLogout.init();
         this.changeOutgoingLinksTargetToBlank();
         if (!this.isMobile()) {
             this.initWindowResize();
@@ -710,38 +710,6 @@ foodcoopshop.Helper = {
                 transitionDuration: 400
             }
         );
-    },
-
-    initLogoutButton: function (redirect) {
-        $('a.logout-button').on('click', function () {
-
-            var buttons = {};
-            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
-            buttons['yes'] = {
-                text: foodcoopshop.LocalizedJs.helper.yes,
-                click: function() {
-                    $('.ui-dialog .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-                    var redirectUrl = '/' + foodcoopshop.LocalizedJs.helper.routeLogout;
-                    if (redirect !== undefined) {
-                        redirectUrl += '?redirect=' + redirect;
-                    }
-                    document.location.href = redirectUrl;
-                }
-            };
-
-            $('<div></div>').appendTo('body')
-                .html('<p>' + foodcoopshop.LocalizedJs.helper.logoutInfoText + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
-                .dialog({
-                    modal: true,
-                    title: foodcoopshop.LocalizedJs.helper.logout,
-                    dialogClass: 'logout-button',
-                    autoOpen: true,
-                    width: 400,
-                    resizable: false,
-                    buttons: buttons
-                });
-        });
     },
 
     initLogoutInstantOrderCustomerButton: function () {

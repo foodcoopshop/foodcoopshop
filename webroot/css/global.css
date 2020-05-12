@@ -679,3 +679,10 @@ tr.selected td > div > i.far {
 .modal-backdrop {
     opacity: .5 ! important;
 }
+.modal-dialog .btn {
+    font-size: 15px ! important;
+    padding: 6px 10px ! important;
+}
+.modal-dialog .modal-body {
+    font-size: 14px;
+}

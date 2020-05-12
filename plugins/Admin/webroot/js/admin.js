@@ -19,7 +19,7 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initJqueryUiIcons();
         foodcoopshop.Helper.showContent();
         foodcoopshop.Helper.initMenu();
-        foodcoopshop.Helper.initLogoutButton();
+        foodcoopshop.ModalLogout.init();
         this.setMenuFixed();
         this.adaptContentMargin();
         foodcoopshop.Helper.initScrolltopButton();

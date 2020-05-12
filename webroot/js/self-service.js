@@ -17,7 +17,7 @@ foodcoopshop.SelfService = {
     currentLogoutTimer : 0,
         
     init : function() {
-        foodcoopshop.Helper.initLogoutButton(document.location.href);
+        foodcoopshop.ModalLogout.init(document.location.href);
         this.initWindowResize();
         this.initAutoLogout();
         this.initSearchForm();
