@@ -49,6 +49,8 @@
 #instant-order-add .modal-content {
     height: 100%;
 }
-#instant-order-add .modal-body {
+#instant-order-add .modal-body,
+#instant-order-add .modal-footer {
     padding: 0;
 }
+
