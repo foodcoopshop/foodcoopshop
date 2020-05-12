@@ -51,7 +51,7 @@ use Cake\Core\Configure;
         $this->element('addScript', [
             'script' =>
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.pickup-day-comment-edit-button');".
-            Configure::read('app.jsNamespace') . ".PickupDay.initPickupDayCommentEditDialog('#order-details-list');"
+            Configure::read('app.jsNamespace') . ".ModalPickupDayCommentEdit.init();"
         ]);
     }
     

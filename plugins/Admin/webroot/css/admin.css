@@ -1263,6 +1263,7 @@ i.fa-fw.far.fa-money-bill-alt {
 .cke_emoji-panel {
 	z-index: 10000000001 ! important;
 }
-#customer-comment-edit-form #cke_dialogCustomerComment {
+#customer-comment-edit-form .cke,
+#pickup-day-comment-edit-form .cke {
 	width: 100% ! important;
 }
