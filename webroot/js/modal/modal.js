@@ -22,6 +22,17 @@ foodcoopshop.Modal = {
         });
     },
     
+    resetButtons: function(selector) {
+        var successButton = $(selector + ' .modal-footer .btn-success');
+        foodcoopshop.Helper.removeSpinnerFromButton(successButton, 'fa-check');
+        foodcoopshop.Helper.enableButton(successButton);
+    },
+    
+    appendFlashMessage : function(selector, message) {
+        foodcoopshop.Helper.showErrorMessage(message);
+        $(selector + ' .modal-header').after($('#flashMessage'));
+    },
+
     createButton: function(classes, title, faIcon, isCloseButton) {
         var buttonHtml = '<button type="button" class="btn ' + classes.join(' ') + '"';
         if (isCloseButton) {
@@ -50,7 +61,7 @@ foodcoopshop.Modal = {
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">` + title + `</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="` + foodcoopshop.LocalizedJs.helper.close + `">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="` + foodcoopshop.LocalizedJs.helper.Close + `">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>

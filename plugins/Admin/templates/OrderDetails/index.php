@@ -35,7 +35,7 @@ use Cake\Core\Configure;
             'script' =>
             Configure::read('app.jsNamespace').".Admin.initDeleteOrderDetail();" .
             Configure::read('app.jsNamespace').".Admin.initOrderDetailProductPriceEditDialog('#order-details-list');" .
-            Configure::read('app.jsNamespace').".Admin.initOrderDetailProductQuantityEditDialog('#order-details-list');" .
+            Configure::read('app.jsNamespace').".ModalOrderDetailProductQuantityEdit.init();" .
             Configure::read('app.jsNamespace').".Admin.initOrderDetailCustomerEditDialog('#order-details-list');" .
             Configure::read('app.jsNamespace').".Admin.initOrderDetailProductAmountEditDialog('#order-details-list');"
         ]);
