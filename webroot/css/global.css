@@ -665,25 +665,3 @@ tr.selected td > div > i.far {
 .featherlight-content #flashMessage {
     z-index: 10000;
 }
-.modal {
-    z-index: 100000;
-}
-.modal-header {
-	background-color: #719f41;
-	color: #fff;
-}
-.modal-header .close {
-	color: #fff;
-	opacity: 1;
-}
-.modal-backdrop {
-    opacity: .5 ! important;
-    z-index: 99991;
-}
-.modal-dialog .btn {
-    font-size: 15px ! important;
-    padding: 6px 10px ! important;
-}
-.modal-dialog .modal-body {
-    font-size: 14px;
-}

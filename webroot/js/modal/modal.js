@@ -61,7 +61,34 @@ foodcoopshop.Modal = {
                     </div>
                 </div>
             </div>`;
+        
         $('body').append(html);
+        
+        this.makeDraggable(elementId);
+    },
+    
+    makeDraggable : function(elementId) {
+        $(elementId + ' .modal-header').on('mousedown', function(mousedownEvt) {
+            var $draggable = $(this);
+            var x = mousedownEvt.pageX - $draggable.offset().left,
+                y = mousedownEvt.pageY - $draggable.offset().top;
+            $('body').on('mousemove.draggable', function(mousemoveEvt) {
+                $draggable.closest('.modal-content').offset({
+                    'left': mousemoveEvt.pageX - x,
+                    'top': mousemoveEvt.pageY - y
+                });
+            });
+            $('body').one('mouseup', function() {
+                $('body').off('mousemove.draggable');
+            });
+            $draggable.closest('.modal').one('hidden.bs.modal', function(e) {
+                $('body').off('mousemove.draggable');
+                $(elementId + ' .modal-content').css({
+                    'left': 0,
+                    'top': 0
+                });
+            });
+        });        
     }
 
 };
