@@ -53,4 +53,6 @@
 #instant-order-add .modal-footer {
     padding: 0;
 }
-
+#instant-order-add .bootstrap-select {
+	width: 300px ! important;
+}
