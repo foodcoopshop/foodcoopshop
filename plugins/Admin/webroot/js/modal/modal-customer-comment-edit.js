@@ -90,7 +90,6 @@ foodcoopshop.ModalCustomerCommentEdit = {
         CKEDITOR.instances['dialogCustomerComment'].setData(text);
         $('#customer-comment-edit-form #dialogCustomerId').val(button.closest('tr').find('td:nth-child(2)').html());
         
-        
     }
 
 };

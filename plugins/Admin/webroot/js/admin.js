@@ -2177,66 +2177,6 @@ foodcoopshop.Admin = {
         $('#menu').css('min-height', marginTop + $('#content').height() + 4);
     },
 
-    initCustomerChangeActiveState: function () {
-
-        $('.change-active-state').on('click', function () {
-
-            var customerId = $(this).attr('id').split('-');
-            customerId = customerId[customerId.length - 1];
-
-            var newState = 1;
-            var newStateText = foodcoopshop.LocalizedJs.admin.ReallyActivateMember0;
-            var newStateTextShort = foodcoopshop.LocalizedJs.admin.ActivateMember;
-            if ($(this).hasClass('set-state-to-inactive')) {
-                newState = 0;
-                newStateText = foodcoopshop.LocalizedJs.admin.ReallyDeactivateMember0;
-                newStateTextShort = foodcoopshop.LocalizedJs.admin.DeactivateMember;
-            }
-
-            var dataRow = $('#change-active-state-' + customerId).closest('tr');
-
-            var buttons = {};
-            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
-
-            if (newState == 1) {
-                buttons['yes'] = {
-                    text: foodcoopshop.LocalizedJs.admin.YesInfoMailWillBeSent,
-                    click: function () {
-                        $('.ui-dialog .ajax-loader').show();
-                        $('.ui-dialog button').attr('disabled','disabled');
-                        document.location.href = '/admin/customers/changeStatus/' + customerId + '/' + newState + '/1';
-                    }
-                };
-            } else {
-                buttons['yes'] = {
-                    text: foodcoopshop.LocalizedJs.helper.yes,
-                    click: function () {
-                        $('.ui-dialog .ajax-loader').show();
-                        $('.ui-dialog button').attr('disabled','disabled');
-                        document.location.href = '/admin/customers/changeStatus/' + customerId + '/' + newState + '/0';
-                    }
-                };
-            }
-
-            var html = '<p>' + newStateText.replaceI18n(0, '<b>' + dataRow.find('td:nth-child(3) span.name a').html() + '</b>') + '</p>';
-            html += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-            $('<div></div>')
-                .appendTo('body')
-                .html(html)
-                .dialog({
-                    modal: true,
-                    title: newStateTextShort,
-                    autoOpen: true,
-                    width: 400,
-                    resizable: false,
-                    buttons: buttons,
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
-                });
-        });
-    },
-
     initProductChangeActiveState: function () {
 
         $('.change-active-state').on('click', function () {

@@ -21,8 +21,29 @@ foodcoopshop.Modal = {
             callback();
         });
     },
+    
+    createButton: function(classes, title, faIcon, isCloseButton) {
+        var buttonHtml = `<button type="button" class="btn ` + classes.join(' ') + `"`
+        if (isCloseButton) {
+            buttonHtml += ` data-dismiss="modal"`;
+        }
+        buttonHtml += `>`;
+        if (faIcon) {
+            buttonHtml += `<i class="` + faIcon + `"></i> `;
+        }
+        buttonHtml += title;
+        buttonHtml += `</button>`;
+        return buttonHtml;
+    },
 
-    appendModalToDom: function(elementId, title, body) {
+    appendModalToDom: function(elementId, title, body, buttons) {
+        
+        buttons = buttons || 
+            [
+                this.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.save, 'fa fa-check'),
+                this.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
+            ];
+        
         var html = `
             <div id="` + elementId.replace(/#/, '') + `" class="modal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
@@ -34,10 +55,9 @@ foodcoopshop.Modal = {
                             </button>
                         </div>
                         <div class="modal-body">` + body + `</div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success"><i class="fa fa-check"></i> ` + foodcoopshop.LocalizedJs.helper.save + `</button>
-                            <button type="button" class="btn btn-outline-light" data-dismiss="modal">` + foodcoopshop.LocalizedJs.helper.cancel + `</button>
-                        </div>
+                        <div class="modal-footer">`
+                            + buttons.join('') +
+                        `</div>
                     </div>
                 </div>
             </div>`;

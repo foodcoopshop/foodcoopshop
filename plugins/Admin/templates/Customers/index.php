@@ -22,7 +22,7 @@ use Cake\Core\Configure;
             $('input.datepicker').datepicker();".
             Configure::read('app.jsNamespace') . ".Admin.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" .
-            Configure::read('app.jsNamespace') . ".Admin.initCustomerChangeActiveState();" .
+            Configure::read('app.jsNamespace') . ".ModalCustomerStatusEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalCustomerGroupEdit.init();" .
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.customer-details-read-button, .customer-comment-edit-button');" .
             Configure::read('app.jsNamespace') . ".ModalCustomerCommentEdit.init();"
