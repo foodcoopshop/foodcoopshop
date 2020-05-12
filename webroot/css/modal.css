@@ -42,3 +42,13 @@
 	margin-right: auto;
 	margin-left: auto;
 }
+#instant-order-add .modal-dialog {
+	max-width: 95vw;
+    height: 90vh;
+}
+#instant-order-add .modal-content {
+    height: 100%;
+}
+#instant-order-add .modal-body {
+    padding: 0;
+}

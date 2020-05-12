@@ -17,7 +17,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' =>
-        Configure::read('app.jsNamespace') . ".Admin.initAddInstantOrder('#add-instant-order-button-wrapper .btn');"
+        Configure::read('app.jsNamespace') . ".ModalInstantOrderAdd.init('#add-instant-order-button-wrapper .btn');"
 ]);
 echo '<div id="add-instant-order-button-wrapper" class="add-button-wrapper '.(isset($additionalClass) ? $additionalClass : '') . '">';
     $options = [
