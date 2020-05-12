@@ -23,8 +23,8 @@ foodcoopshop.ModalCustomerCommentEdit = {
             foodcoopshop.ModalCustomerCommentEdit.getHtml()
         );
         
-        foodcoopshop.Modal.bindSaveButton(modalSelector, function() {
-            foodcoopshop.ModalCustomerCommentEdit.getSaveHandler(modalSelector);
+        foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
+            foodcoopshop.ModalCustomerCommentEdit.getSuccessHandler(modalSelector);
         });
         
         $(modalSelector).on('hidden.bs.modal', function (e) {
@@ -51,7 +51,7 @@ foodcoopshop.ModalCustomerCommentEdit = {
         $('#dialogCustomerId').val('');
     },
 
-    getSaveHandler : function() {
+    getSuccessHandler : function() {
         
         if ($('#dialogCustomerId').val() == '') {
             return false;

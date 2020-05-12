@@ -23,8 +23,8 @@ foodcoopshop.ModalCustomerGroupEdit = {
             foodcoopshop.ModalCustomerGroupEdit.getHtml()
         );
         
-        foodcoopshop.Modal.bindSaveButton(modalSelector, function() {
-            foodcoopshop.ModalCustomerGroupEdit.getSaveHandler(modalSelector);
+        foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
+            foodcoopshop.ModalCustomerGroupEdit.getSuccessHandler(modalSelector);
         });
         
         $(modalSelector).on('hidden.bs.modal', function (e) {
@@ -50,7 +50,7 @@ foodcoopshop.ModalCustomerGroupEdit = {
         $('#dialogCustomerGroupEditCustomerId').val('');
     },
     
-    getSaveHandler : function(modalSelector) {
+    getSuccessHandler : function(modalSelector) {
         
         if ($('#dialogCustomerGroupEditGroupId').val() == '' || $('#dialogCustomerGroupEditCustomerId').val() == '') {
             return false;

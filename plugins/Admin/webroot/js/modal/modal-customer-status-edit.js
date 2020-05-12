@@ -23,7 +23,7 @@ foodcoopshop.ModalCustomerStatusEdit = {
         
     },
     
-    getSaveHandler: function(customerId, newState, sendMail) {
+    getSuccessHandler: function(customerId, newState, sendMail) {
         document.location.href = '/admin/customers/changeStatus/' + customerId + '/' + newState + '/' + sendMail;
     },
     
@@ -63,8 +63,8 @@ foodcoopshop.ModalCustomerStatusEdit = {
         
         $(modalSelector).modal();
 
-        foodcoopshop.Modal.bindSaveButton(modalSelector, function() {
-            foodcoopshop.ModalCustomerStatusEdit.getSaveHandler(customerId, newState, sendMail);
+        foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
+            foodcoopshop.ModalCustomerStatusEdit.getSuccessHandler(customerId, newState, sendMail);
         });
 
         

@@ -14,7 +14,7 @@
 
 foodcoopshop.Modal = {
 
-    bindSaveButton: function(selector, callback) {
+    bindSuccessButton: function(selector, callback) {
         $(selector + ' .modal-footer .btn-success').on('click', function() {
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-check');
             foodcoopshop.Helper.disableButton($(this));
