@@ -62,49 +62,51 @@ foodcoopshop.ModalInstantOrderAdd = {
     getOpenHandler : function(button, modalSelector) {
         
         $(modalSelector).modal();
+        
+        // START DROPDOWN
+        var header = $('<div class="message-container"><span class="start">' + foodcoopshop.LocalizedJs.admin.PlaceInstantOrderFor + ': <select id="customersDropdown"></select></span></div>');
+        $(modalSelector + ' .modal-title').append(header);
+
+        var customerDropdownSelector = '#customersDropdown';
+        $(customerDropdownSelector).selectpicker({
+            liveSearch: true,
+            size: 7,
+            title: foodcoopshop.LocalizedJs.admin.PleaseSelectMember
+        });
+
+        // always preselect user if there is a dropdown called #customerId (for call from order detail)
+        var customerId = $('#customerid').val();
+        foodcoopshop.Admin.initCustomerDropdown(customerId, false, customerDropdownSelector);
+
+        $(customerDropdownSelector).on('change', function () {
+            var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/order-details/initInstantOrder/' + $(this).val();
+            $(modalSelector + ' iframe').attr('src', newSrc);
+        });
+
+        $(customerDropdownSelector).show();
+        $(customerDropdownSelector).removeClass('hide');
+        
+        // START IFRAME
         var iframe = $('<iframe></iframe>');
         iframe.attr('src', foodcoopshop.Helper.cakeServerName + '/admin/order-details/iframeStartPage');
         iframe.css('width', '100%');
         iframe.css('height', '100%');
         iframe.css('border', 'none');
-        $(modalSelector + ' .modal-body').append(iframe)
+        $(modalSelector + ' .modal-body').append(iframe);
 
-        var header = $('<div class="message-container"><span class="start">' + foodcoopshop.LocalizedJs.admin.PlaceInstantOrderFor + ': </span></div>');
-        $(modalSelector + ' .modal-title').append(header);
-
-        // only clone dropdown once
-        if ($(modalSelector + ' .modal-title span.start select').length == 0) {
-            var customersDropdown = $('#add-instant-order-button-wrapper select').clone(true);
-            customersDropdown.attr('id', 'customersDropdown');
-            customersDropdown.on('change', function () {
-                var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/order-details/initInstantOrder/' + $(this).val();
-                $(modalSelector + ' iframe').attr('src', newSrc);
-            });
-
-            $(modalSelector + ' iframe').on('load', function () {
-                // called after each url change in iframe!
-                var currentUrl = $(this).get(0).contentWindow.document.URL;
-                var cartFinishedRegExp = new RegExp(foodcoopshop.LocalizedJs.admin.routeCartFinished);
-                if (currentUrl.match(cartFinishedRegExp)) {
-                    var message = button.contents().find('#flashMessage').html().replace(/<(a|i|b)[^>]*>/g,'');
-                    document.location.href = foodcoopshop.Admin.addParameterToURL(
-                        foodcoopshop.Admin.getParentLocation(),
-                        'message=' + encodeURIComponent(message)
-                    );
-                }
-            });
-            customersDropdown.show();
-            customersDropdown.removeClass('hide');
-            customersDropdown.appendTo(modalSelector + ' .modal-title span.start');
-
-            // always preselect user if there is a dropdown called #customerId (for call from order detail)
-            var customerId = $('#customerid').val();
-            if (customerId > 0) {
-                customersDropdown.val(customerId);
-                customersDropdown.trigger('change');
+        $(modalSelector + ' iframe').on('load', function () {
+            // called after each url change in iframe!
+            var currentUrl = $(this).get(0).contentWindow.document.URL;
+            var cartFinishedRegExp = new RegExp(foodcoopshop.LocalizedJs.admin.routeCartFinished);
+            if (currentUrl.match(cartFinishedRegExp)) {
+                var message = button.contents().find('#flashMessage').html().replace(/<(a|i|b)[^>]*>/g,'');
+                document.location.href = foodcoopshop.Admin.addParameterToURL(
+                    foodcoopshop.Admin.getParentLocation(),
+                    'message=' + encodeURIComponent(message)
+                );
             }
-        }
-
+        });
+        
         
     }
 
