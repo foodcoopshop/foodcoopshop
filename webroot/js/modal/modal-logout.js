@@ -40,7 +40,7 @@ foodcoopshop.ModalLogout = {
     },
         
     getHtml : function() {
-        return '<p>' + foodcoopshop.LocalizedJs.helper.logoutInfoText + '</p>'
+        return '<p>' + foodcoopshop.LocalizedJs.helper.logoutInfoText + '</p>';
     },
     
     getSuccessHandler : function(redirect) {

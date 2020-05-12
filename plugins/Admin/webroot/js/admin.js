@@ -2476,12 +2476,12 @@ foodcoopshop.Admin = {
     
     bindSelectCsvRecord : function(selector) {
         $(selector).on('change', function() {
-           var row = $(this).closest('tr');
-           if (row.hasClass('not-selected')) {
-               row.removeClass('not-selected');
-           } else {
-               row.addClass('not-selected');
-           }
+            var row = $(this).closest('tr');
+            if (row.hasClass('not-selected')) {
+                row.removeClass('not-selected');
+            } else {
+                row.addClass('not-selected');
+            }
         });
     },
     

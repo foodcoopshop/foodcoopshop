@@ -23,16 +23,16 @@ foodcoopshop.Modal = {
     },
     
     createButton: function(classes, title, faIcon, isCloseButton) {
-        var buttonHtml = `<button type="button" class="btn ` + classes.join(' ') + `"`
+        var buttonHtml = '<button type="button" class="btn ' + classes.join(' ') + '"';
         if (isCloseButton) {
-            buttonHtml += ` data-dismiss="modal"`;
+            buttonHtml += ' data-dismiss="modal"';
         }
-        buttonHtml += `>`;
+        buttonHtml += '>';
         if (faIcon) {
-            buttonHtml += `<i class="` + faIcon + `"></i> `;
+            buttonHtml += '<i class="' + faIcon + '"></i> ';
         }
         buttonHtml += title;
-        buttonHtml += `</button>`;
+        buttonHtml += '</button>';
         return buttonHtml;
     },
 
