@@ -64,10 +64,12 @@ foodcoopshop.ModalInstantOrderAdd = {
         $(modalSelector).modal();
         
         // START DROPDOWN
-        var header = $('<div class="message-container"><span class="start">' + foodcoopshop.LocalizedJs.admin.PlaceInstantOrderFor + ': <select id="customersDropdown"></select></span></div>');
+        var customerDropdownId = 'customerDropdown';
+        var header = $('<div class="message-container"><span class="start">' + foodcoopshop.LocalizedJs.admin.PlaceInstantOrderFor + ': <select id="' + customerDropdownId + '"></select></span></div>');
         $(modalSelector + ' .modal-title').append(header);
 
-        var customerDropdownSelector = '#customersDropdown';
+        var customerDropdownSelector = '#' + customerDropdownId;
+
         $(customerDropdownSelector).selectpicker({
             liveSearch: true,
             size: 7,
@@ -76,13 +78,11 @@ foodcoopshop.ModalInstantOrderAdd = {
 
         // always preselect user if there is a dropdown called #customerId (for call from order detail)
         var customerId = $('#customerid').val();
-        foodcoopshop.Admin.initCustomerDropdown(customerId, false, customerDropdownSelector);
-
-        $(customerDropdownSelector).on('change', function () {
-            var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/order-details/initInstantOrder/' + $(this).val();
+        foodcoopshop.Admin.initCustomerDropdown(customerId, false, customerDropdownSelector, function () {
+            var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/order-details/initInstantOrder/' + $(customerDropdownSelector).val();
             $(modalSelector + ' iframe').attr('src', newSrc);
         });
-
+        
         $(customerDropdownSelector).show();
         $(customerDropdownSelector).removeClass('hide');
         

@@ -2238,34 +2238,35 @@ foodcoopshop.Admin = {
         );
     },
     
-    initCustomerDropdown: function (selectedCustomerId, includeManufacturers, selector) {
+    initCustomerDropdown: function (selectedCustomerId, includeManufacturers, selector, onChange) {
 
         selector = selector || 'select#customerid';
         includeManufacturers = includeManufacturers || 0;
         var customerDropdown = $(selector).closest('.bootstrap-select').find('.dropdown-toggle');
 
         if (selectedCustomerId > 0) {
-            this.populateDropdownWithCustomers(customerDropdown, selectedCustomerId, includeManufacturers, selector);
+            this.populateDropdownWithCustomers(customerDropdown, selectedCustomerId, includeManufacturers, selector, onChange);
         }
 
         customerDropdown.on('click', function () {
             if ($(selector + ' optgroup').length == 0) {
-                foodcoopshop.Admin.populateDropdownWithCustomers($(this), selectedCustomerId, includeManufacturers, selector);
+                foodcoopshop.Admin.populateDropdownWithCustomers($(this), selectedCustomerId, includeManufacturers, selector, onChange);
             }
         });
 
     },
     
-    populateDropdownWithCustomers : function(customerDropdown, selectedCustomerId, includeManufacturers, selector) {
+    populateDropdownWithCustomers : function(customerDropdown, selectedCustomerId, includeManufacturers, selector, onChange) {
         this.populateDropdownWithData(
             '/admin/customers/ajaxGetCustomersForDropdown/' + includeManufacturers,
             selector,
             customerDropdown,
-            selectedCustomerId
+            selectedCustomerId,
+            onChange
         );
     },
     
-    populateDropdownWithData : function(ajaxMethod, selector, dropdown, selectedIndex) {
+    populateDropdownWithData : function(ajaxMethod, selector, dropdown, selectedIndex, onChange) {
         dropdown.parent().find('div.filter-option-inner-inner').append('<i class="fas fa-circle-notch fa-spin"></i>');
         foodcoopshop.Helper.ajaxCall(
             ajaxMethod, {}, {
@@ -2273,8 +2274,16 @@ foodcoopshop.Admin = {
                     var select = $(selector);
                     select.append(data.dropdownData);
                     select.attr('disabled', false);
+                    if (onChange) {
+                        select.on('change', function() {
+                            onChange();
+                        });
+                    }
                     if (selectedIndex) {
                         select.selectpicker('val', selectedIndex);
+                        if (onChange) {
+                            select.trigger('change');
+                        }
                     }
                     select.selectpicker('refresh');
                     select.find('i.fa-circle-notch').remove();
