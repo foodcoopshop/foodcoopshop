@@ -99,10 +99,11 @@ foodcoopshop.ModalProductCategoriesEdit = {
         );
 
         $(modalSelector + ' .categories-checkboxes input[type="checkbox"]').on('click', function() {
+            var label = $(this).closest('label');
             if ($(this).prop('checked')) {
-                foodcoopshop.ModalProductCategoriesEdit.syncWithElementsInHigherHierarchy($(this).closest('label'), $(this).prop('checked'));
+                foodcoopshop.ModalProductCategoriesEdit.syncWithElementsInHigherHierarchy(label);
             } else {
-                foodcoopshop.ModalProductCategoriesEdit.syncWithElementsInLowerHierarchy($(this).closest('label'), );
+                foodcoopshop.ModalProductCategoriesEdit.syncWithElementsInLowerHierarchy(label);
             }
         });
 
