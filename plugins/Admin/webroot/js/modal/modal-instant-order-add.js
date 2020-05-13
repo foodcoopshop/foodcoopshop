@@ -20,26 +20,14 @@ foodcoopshop.ModalInstantOrderAdd = {
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
             '',
-            foodcoopshop.ModalInstantOrderAdd.getHtml(),
+            '',
             []
         );
-        
-        foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-            foodcoopshop.ModalInstantOrderAdd.getSuccessHandler(modalSelector);
-        });
-        
-        $(modalSelector).on('hidden.bs.modal', function (e) {
-            foodcoopshop.ModalInstantOrderAdd.getCloseHandler($(this));
-        });
 
         $(button).on('click', function() {
             foodcoopshop.ModalInstantOrderAdd.getOpenHandler(button, modalSelector);
         });
 
-    },
-    
-    getHtml : function() {
-         return '';
     },
     
     getCloseHandler : function(modal) {
@@ -53,10 +41,6 @@ foodcoopshop.ModalInstantOrderAdd = {
                 onError: function (data) {}
             }
         );
-    },
-    
-    getSuccessHandler : function(modalSelector) {
-        //??
     },
     
     getOpenHandler : function(button, modalSelector) {
