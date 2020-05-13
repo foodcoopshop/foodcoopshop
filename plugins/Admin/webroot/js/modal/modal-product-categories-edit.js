@@ -17,21 +17,31 @@ foodcoopshop.ModalProductCategoriesEdit = {
         
         var modalSelector = '#product-categories-edit-form';
 
-        foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-            foodcoopshop.ModalProductCategoriesEdit.getSuccessHandler(modalSelector);
-        });
-
         $('.product-categories-edit-button').on('click', function() {
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
                 '',
                 ''
             );
+            
             foodcoopshop.ModalProductCategoriesEdit.getOpenHandler($(this), modalSelector);
+            
+            foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
+                foodcoopshop.ModalProductCategoriesEdit.getSuccessHandler(modalSelector);
+            });
+            
+            $(modalSelector).on('hidden.bs.modal', function (e) {
+                foodcoopshop.ModalProductCategoriesEdit.getCloseHandler(modalSelector);
+            });
+            
         });
 
     },
     
+    getCloseHandler : function(modalSelector) {
+        $(modalSelector).remove();
+    },
+
     getSuccessHandler : function(modalSelector) {
         
         var productId = $(modalSelector + ' .product-id').val();
@@ -76,11 +86,11 @@ foodcoopshop.ModalProductCategoriesEdit = {
 
     getOpenHandler : function(button, modalSelector) {
         
+        $(modalSelector).modal();
+
         var productId = button.data('objectId');
         var formHtml = $('.categories-checkboxes').clone();
 
-        $(modalSelector).modal();
-        
         $(modalSelector + ' .modal-body').append(formHtml);
 
         var productName = $('#product-' + productId + ' span.name-for-dialog').html();
@@ -112,7 +122,6 @@ foodcoopshop.ModalProductCategoriesEdit = {
         });
         
         $(modalSelector + ' .product-id').val(productId);
-
 
     }
 
