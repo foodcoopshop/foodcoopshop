@@ -15,20 +15,23 @@ foodcoopshop.ModalInstantOrderAdd = {
 
     init : function(button) {
         
-        var modalSelector = '#instant-order-add';
-        
-        foodcoopshop.Modal.appendModalToDom(
-            modalSelector,
-            '',
-            '',
-            []
-        );
-
-        $(modalSelector).on('hidden.bs.modal', function (e) {
-            foodcoopshop.ModalInstantOrderAdd.getCloseHandler($(this));
-        });
-        
         $(button).on('click', function() {
+            
+            var modalSelector = '#instant-order-add';
+            
+            foodcoopshop.Modal.appendModalToDom(
+                modalSelector,
+                '',
+                '',
+                []
+            );
+
+            $(modalSelector).on('hidden.bs.modal', function (e) {
+                console.log('hidden');
+                console.log(e);
+                foodcoopshop.ModalInstantOrderAdd.getCloseHandler($(this));
+            });
+            
             foodcoopshop.ModalInstantOrderAdd.getOpenHandler(button, modalSelector);
         });
 

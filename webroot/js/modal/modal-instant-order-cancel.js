@@ -11,11 +11,11 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-foodcoopshop.ModalLogout = {
+foodcoopshop.ModalInstantOrderCancel = {
 
-    init : function(redirect) {
+    init : function() {
         
-        var modalSelector = '#logout-form';
+        var modalSelector = '#instant-order-cancel';
         
         var buttons = [
             foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.yes, 'fa fa-check'),
@@ -24,31 +24,41 @@ foodcoopshop.ModalLogout = {
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
-            foodcoopshop.LocalizedJs.helper.logout,
+            foodcoopshop.LocalizedJs.helper.CancelInstantOrder,
             this.getHtml(),
             buttons
         );
         
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-            foodcoopshop.ModalLogout.getSuccessHandler(modalSelector);
+            foodcoopshop.ModalInstantOrderCancel.getSuccessHandler(modalSelector);
         });
 
-        $('a.logout-button').on('click', function () {
-            foodcoopshop.ModalLogout.getOpenHandler(modalSelector);
+        $('#cart .instant-order-customer-info a.btn').on('click', function () {
+            foodcoopshop.ModalInstantOrderCancel.getOpenHandler(modalSelector);
         });
         
     },
         
     getHtml : function() {
-        return '<p>' + foodcoopshop.LocalizedJs.helper.logoutInfoText + '</p>';
+        return '<p>' + foodcoopshop.LocalizedJs.helper.ReallyCancelInstantOrder + '</p>';
     },
     
-    getSuccessHandler : function(redirect) {
-        var redirectUrl = '/' + foodcoopshop.LocalizedJs.helper.routeLogout;
-        if (redirect !== undefined) {
-            redirectUrl += '?redirect=' + redirect;
-        }
-        document.location.href = redirectUrl;        
+    getSuccessHandler : function(modalSelector) {
+        foodcoopshop.Helper.ajaxCall(
+            '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxDeleteInstantOrderCustomer',
+            {},
+            {
+                onOk: function (data) {
+                    // .modal('hide') does not work here
+                    $('.modal-backdrop', window.parent.document).remove();
+                    $('#instant-order-add', window.parent.document).remove();
+                    document.location.reload();
+                },
+                onError: function (data) {
+                    document.location.reload();
+                }
+            }
+        );   
     },
     
     getOpenHandler : function(modalSelector) {

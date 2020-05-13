@@ -76,7 +76,7 @@ if ($appAuth->Cart->getProducts() !== null) {
         if ($appAuth->user() && $this->Html->paymentIsCashless()) {
             if ($appAuth->isInstantOrderMode()) {
                 $this->element('addScript', ['script' =>
-                    Configure::read('app.jsNamespace').".Helper.initLogoutInstantOrderCustomerButton();"
+                    Configure::read('app.jsNamespace').".ModalInstantOrderCancel.init();"
                 ]);
                 echo '<p class="instant-order-customer-info">';
                     echo __('This_order_will_be_placed_for_{0}.', ['<b>'.$this->request->getSession()->read('Auth.instantOrderCustomer')->name.'</b>']);

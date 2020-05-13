@@ -712,47 +712,6 @@ foodcoopshop.Helper = {
         );
     },
 
-    initLogoutInstantOrderCustomerButton: function () {
-        $('#cart .instant-order-customer-info a.btn').on('click', function () {
-            var buttons = {};
-            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
-            buttons['yes'] = {
-                text: foodcoopshop.LocalizedJs.helper.yes,
-                click: function() {
-                    $('.ui-dialog .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-                    foodcoopshop.Helper.ajaxCall(
-                        '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxDeleteInstantOrderCustomer',
-                        {},
-                        {
-                            onOk: function (data) {
-                                $('.featherlight', window.parent.document).remove();
-                                document.location.reload();
-                            },
-                            onError: function (data) {
-                                document.location.reload();
-                            }
-                        }
-                    );
-                }
-            };
-
-            $('<div></div>').appendTo('body')
-                .html('<p>' + foodcoopshop.LocalizedJs.helper.ReallyCancelInstantOrder + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
-                .dialog({
-                    modal: true,
-                    title: foodcoopshop.LocalizedJs.helper.CancelInstantOrder,
-                    autoOpen: true,
-                    width: 400,
-                    resizable: false,
-                    buttons: buttons,
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
-                });
-        });
-    },
-
     initTooltip: function (container) {
         var trigger = 'hover';
         if (this.isMobile()) {
