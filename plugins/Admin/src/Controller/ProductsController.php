@@ -1311,18 +1311,20 @@ class ProductsController extends AdminAppController
             throw new InvalidParameterException('New status needs to be 0 or 1: ' . $status);
         }
 
-        if ($status == 1) {
-            $newCreated = 'NOW()';
-        } else {
-            $newCreated = 'DATE_ADD(NOW(), INTERVAL -8 DAY)';
+        $newCreated = 'NOW()';
+        if ($status == 0) {
+            $newCreated = 'DATE_ADD(NOW(), INTERVAL -'.((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1).' DAY)';
         }
-
+        
         $this->Product = TableRegistry::getTableLocator()->get('Products');
-        $sql = "UPDATE ".$this->Product->getTable()." p 
-                SET p.created  = " . $newCreated . "
-                WHERE p.id_product = " . $productId . ";";
-        $result = $this->Product->getConnection()->query($sql);
-
+        // newCreated can't be set as param because of mysql function DATE_ADD
+        $sql = "UPDATE " . $this->Product->getTable() . " p SET p.created = " . $newCreated . " WHERE p.id_product = :productId;";
+        $params = [
+            'productId' => $productId,
+        ];
+        $statement = $this->Product->getConnection()->prepare($sql);
+        $statement->execute($params);
+        
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
