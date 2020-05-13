@@ -99,7 +99,7 @@ foodcoopshop.ModalInstantOrderAdd = {
             var currentUrl = $(this).get(0).contentWindow.document.URL;
             var cartFinishedRegExp = new RegExp(foodcoopshop.LocalizedJs.admin.routeCartFinished);
             if (currentUrl.match(cartFinishedRegExp)) {
-                var message = button.contents().find('#flashMessage').html().replace(/<(a|i|b)[^>]*>/g,'');
+                var message = $(this).contents().find('#flashMessage').html().replace(/<(a|i)[^>]*>/g,'');
                 document.location.href = foodcoopshop.Admin.addParameterToURL(
                     foodcoopshop.Admin.getParentLocation(),
                     'message=' + encodeURIComponent(message)
