@@ -16,23 +16,22 @@ foodcoopshop.ModalProductCategoriesEdit = {
     init : function() {
         
         var modalSelector = '#product-categories-edit-form';
-        
-        foodcoopshop.Modal.appendModalToDom(
-            modalSelector,
-            '',
-            ''
-        );
-        
+
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             foodcoopshop.ModalProductCategoriesEdit.getSuccessHandler(modalSelector);
         });
 
         $('.product-categories-edit-button').on('click', function() {
+            foodcoopshop.Modal.appendModalToDom(
+                modalSelector,
+                '',
+                ''
+            );
             foodcoopshop.ModalProductCategoriesEdit.getOpenHandler($(this), modalSelector);
         });
 
     },
-
+    
     getSuccessHandler : function(modalSelector) {
         
         var productId = $(modalSelector + ' .product-id').val();
@@ -78,14 +77,18 @@ foodcoopshop.ModalProductCategoriesEdit = {
     getOpenHandler : function(button, modalSelector) {
         
         var productId = button.data('objectId');
-        var formHtml = $('.categories-checkboxes');
+        var formHtml = $('.categories-checkboxes').clone();
+
+        $(modalSelector).modal();
+        
+        $(modalSelector + ' .modal-body').append(formHtml);
 
         var productName = $('#product-' + productId + ' span.name-for-dialog').html();
         $(modalSelector + ' .modal-title').html(
             foodcoopshop.LocalizedJs.admin.ChangeCategories + ': ' + productName
         );
 
-        $('.categories-checkboxes input[type="checkbox"]').on('click', function() {
+        $(modalSelector + ' .categories-checkboxes input[type="checkbox"]').on('click', function() {
             if ($(this).prop('checked')) {
                 foodcoopshop.ModalProductCategoriesEdit.syncWithElementsInHigherHierarchy($(this).closest('label'), $(this).prop('checked'));
             } else {
@@ -93,8 +96,14 @@ foodcoopshop.ModalProductCategoriesEdit = {
             }
         });
 
+        // ids and for attribute needs to be unique - because of clone() it still exists...
+        $(modalSelector + ' .categories-checkboxes label').each(function() {
+            $(this).attr('for', $(this).attr('for') + '-' + productId);
+            $(this).find('input').attr('id', $(this).find('input').attr('id') + '-' + productId);
+        })
+
         var selectedCategories = $('#selected-categories-' + productId).val().split(',');
-        $('.categories-checkboxes input[type="checkbox"]').each(function () {
+        $(modalSelector + ' .categories-checkboxes input[type="checkbox"]').each(function () {
             if ($.inArray($(this).val(), selectedCategories) != -1) {
                 $(this).prop('checked', true);
             } else {
@@ -102,10 +111,7 @@ foodcoopshop.ModalProductCategoriesEdit = {
             }
         });
         
-        $(modalSelector).modal();
-        formHtml.find(' .product-id').val(productId);
-        
-        $(modalSelector + ' .modal-body').html(formHtml);
+        $(modalSelector + ' .product-id').val(productId);
 
 
     }
