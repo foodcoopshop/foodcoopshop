@@ -24,6 +24,10 @@ foodcoopshop.ModalInstantOrderAdd = {
             []
         );
 
+        $(modalSelector).on('hidden.bs.modal', function (e) {
+            foodcoopshop.ModalInstantOrderAdd.getCloseHandler($(this));
+        });
+        
         $(button).on('click', function() {
             foodcoopshop.ModalInstantOrderAdd.getOpenHandler(button, modalSelector);
         });
