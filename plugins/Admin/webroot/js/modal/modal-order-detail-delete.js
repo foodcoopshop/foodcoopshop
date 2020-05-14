@@ -70,7 +70,7 @@ foodcoopshop.ModalOrderDetailDelete = {
         });
         
     },
-        
+    
     init : function() {
         
         $('.delete-order-detail').on('click', function() {
