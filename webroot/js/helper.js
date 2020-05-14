@@ -903,6 +903,11 @@ foodcoopshop.Helper = {
         $('#flashMessage').remove();
     },
 
+    appendFlashMessageToDialog : function(element, message) {
+        foodcoopshop.Helper.showErrorMessage(message);
+        element.prepend($('#flashMessage'));
+    },
+    
     appendFlashMessageCloser: function () {
         $('#flashMessage').prepend('<a class="closer" title="' + foodcoopshop.LocalizedJs.helper.Close + '" href="javascript:void(0);"><i class="far fa-times-circle"></i></a>');
     },
