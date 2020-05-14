@@ -751,8 +751,10 @@ foodcoopshop.Helper = {
         $('body:not(.cake_errors) #container').css('display', 'block');
     },
 
-    initCkeditor: function (name) {
+    initCkeditor: function (name, startupFocus) {
 
+        startupFocus = startupFocus|| false;
+        
         if (!CKEDITOR.env.isCompatible) {
             return false;
         }
@@ -761,7 +763,8 @@ foodcoopshop.Helper = {
 
         CKEDITOR.timestamp = 'v4.14.0-emoji';
         $('textarea#' + name + '.ckeditor').ckeditor({
-            customConfig: '/js/ckeditor/config.js'
+            customConfig: '/js/ckeditor/config.js',
+            startupFocus : startupFocus
         });
 
     },

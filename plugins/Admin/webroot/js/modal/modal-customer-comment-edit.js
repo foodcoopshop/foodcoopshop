@@ -79,7 +79,7 @@ foodcoopshop.ModalCustomerCommentEdit = {
         
         $(modalSelector).modal();
 
-        foodcoopshop.Helper.initCkeditor('dialogCustomerComment');
+        foodcoopshop.Helper.initCkeditor('dialogCustomerComment', true);
 
         var text = button.attr('originalTitle');
         if (text == foodcoopshop.LocalizedJs.admin.AddComment) {
