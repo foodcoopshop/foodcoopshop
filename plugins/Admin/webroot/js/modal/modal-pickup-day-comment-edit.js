@@ -86,8 +86,8 @@ foodcoopshop.ModalPickupDayCommentEdit = {
         CKEDITOR.instances['dialogPickupDayComment'].setData(text);
         var customerId = button.closest('tr').find('td:nth-child(2)').html();
         var customerName = button.closest('tr').find('td:nth-child(3)').text();
-        $('#pickup-day-comment-edit-form #dialogCustomerId').val(customerId);
-        $('#pickup-day-comment-edit-form label b').html(customerName);
+        $(modalSelector + ' #dialogCustomerId').val(customerId);
+        $(modalSelector + ' label b').html(customerName);
         
     }
 
