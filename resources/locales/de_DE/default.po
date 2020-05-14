@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-05-06 10:33+0200\n"
-"PO-Revision-Date: 2020-04-21 11:29+0200\n"
+"POT-Creation-Date: 2020-05-14 09:19+0200\n"
+"PO-Revision-Date: 2020-05-14 09:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.3.1\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Zugriff verweigert, bitte melde dich an."
@@ -585,7 +585,7 @@ msgstr "Das Feld ist rot, wenn das Gewicht noch nicht angepasst wurde."
 msgid "Do_not_automatically_apapt_price_just_change_weight."
 msgstr "Den Preis nicht automatisch anpassen, nur das Gewicht ändern."
 
-msgid "Really_cancel_ordered_product?"
+msgid "Really_delete_ordered_product?"
 msgstr "Bestelltes Produkt wirklich stornieren?"
 
 msgid "Do_you_really_want_to_cancel_product_{0}?"
@@ -600,13 +600,10 @@ msgstr "Warum wird das Produkt storniert (Pflichtfeld)?"
 msgid "Yes_do_cancel_button!"
 msgstr "Ja, stornieren!"
 
-msgid "Do_not_cancel_button"
-msgstr "Abbrechen"
-
 msgid "Please_only_cancel_if_ok_for_manufacturer!"
 msgstr "Bitte nur stornieren, wenn es mit dem Hersteller abgesprochen ist!"
 
-msgid "Really_cancel_selected_products?"
+msgid "Really_delete_selected_products?"
 msgstr "Ausgewählte Produkte wirklich stornieren?"
 
 msgid "You_selected_1_product"
@@ -2420,6 +2417,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Do_not_cancel_button"
+#~ msgstr "Abbrechen"
 
 #~ msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
 #~ msgstr "Bitte hole die bestellten Waren verlässlich in unserem Abhollager ab."

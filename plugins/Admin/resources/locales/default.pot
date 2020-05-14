@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-06 10:38+0200\n"
+"POT-Creation-Date: 2020-05-14 09:16+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1667,10 +1667,10 @@ msgstr ""
 msgid "Back_to_deposit_account"
 msgstr ""
 
-msgid "Cancel_selected_products"
+msgid "Change_pickup_day"
 msgstr ""
 
-msgid "Change_pickup_day"
+msgid "Cancel_selected_products"
 msgstr ""
 
 msgid "Generate_orders_as_pdf"

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-06 10:33+0200\n"
+"POT-Creation-Date: 2020-05-14 09:19+0200\n"
 "PO-Revision-Date: 2020-04-16 12:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -780,7 +780,8 @@ msgid "Do_not_automatically_apapt_price_just_change_weight."
 msgstr "Nie modyfikuj automatycznie ceny, jedynie zmień wagę."
 
 # Really cancel the ordered product?
-msgid "Really_cancel_ordered_product?"
+#, fuzzy
+msgid "Really_delete_ordered_product?"
 msgstr "Na pewno anulować zamówienie produktu?"
 
 # Do you really want to cancel product {0}?
@@ -799,16 +800,13 @@ msgstr "Dlaczego produkt anulowany (pole obowiązkowe)?"
 msgid "Yes_do_cancel_button!"
 msgstr "Anuluj produkt!"
 
-# Close
-msgid "Do_not_cancel_button"
-msgstr "Zamknij"
-
 # Please only cancel if this is ok for the manfacturer!
 msgid "Please_only_cancel_if_ok_for_manufacturer!"
 msgstr "Anuluj wyłącznie jeśli producent wyraża na to zgodę!"
 
 # Really cancel the selected products?
-msgid "Really_cancel_selected_products?"
+#, fuzzy
+msgid "Really_delete_selected_products?"
 msgstr "Na pewno anulować wybrane produkty?"
 
 # You selected 1 product
@@ -3235,6 +3233,10 @@ msgstr "złożone w dniu"
 # The prices include the VAT.
 msgid "Prices_are_including_vat."
 msgstr "Ceny zawierają podatek VAT."
+
+# Close
+#~ msgid "Do_not_cancel_button"
+#~ msgstr "Zamknij"
 
 # Please pick up the ordered products in our pick up store.
 #~ msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."

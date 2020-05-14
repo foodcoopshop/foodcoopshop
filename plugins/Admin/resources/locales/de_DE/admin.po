@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-05-06 10:38+0200\n"
+"POT-Creation-Date: 2020-05-14 09:16+0200\n"
 "PO-Revision-Date: 2020-05-06 10:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1668,11 +1668,11 @@ msgstr "Alle Produkte abgeholt?"
 msgid "Back_to_deposit_account"
 msgstr "Zurück zum Pfandkonto"
 
-msgid "Cancel_selected_products"
-msgstr "Ausgewählte Produkte stornieren"
-
 msgid "Change_pickup_day"
 msgstr "Abholtag ändern"
+
+msgid "Cancel_selected_products"
+msgstr "Ausgewählte Produkte stornieren"
 
 msgid "Generate_orders_as_pdf"
 msgstr "Bestellungen als PDF generieren"

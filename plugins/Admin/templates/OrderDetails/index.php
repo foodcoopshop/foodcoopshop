@@ -33,7 +33,7 @@ use Cake\Core\Configure;
     if ($groupBy == '') {
         $this->element('addScript', [
             'script' =>
-            Configure::read('app.jsNamespace').".Admin.initDeleteOrderDetail();" .
+            Configure::read('app.jsNamespace').".ModalOrderDetailDelete.init();" .
             Configure::read('app.jsNamespace').".Admin.initOrderDetailProductPriceEditDialog('#order-details-list');" .
             Configure::read('app.jsNamespace').".ModalOrderDetailProductQuantityEdit.init();" .
             Configure::read('app.jsNamespace').".Admin.initOrderDetailCustomerEditDialog('#order-details-list');" .
@@ -315,7 +315,7 @@ echo '<div class="bottom-button-container">';
         'groupBy' => $groupBy
     ]);
     
-    echo $this->element('orderDetailList/button/cancelSelectedOrderDetails', [
+    echo $this->element('orderDetailList/button/deleteSelectedOrderDetails', [
         'deposit' => $deposit,
         'orderDetails' => $orderDetails,
         'groupBy' => $groupBy

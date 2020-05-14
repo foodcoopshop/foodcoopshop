@@ -16,9 +16,9 @@ use Cake\Core\Configure;
 
 if ($deposit == '' && $groupBy == '' && count($orderDetails) > 0 && (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'))) {
     $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace').".Admin.initCancelSelectionButton();"
+        'script' => Configure::read('app.jsNamespace').".ModalOrderDetailDelete.initBulk();"
     ]);
-    echo '<a id="cancelSelectedProductsButton" class="btn btn-outline-light" href="javascript:void(0);"><i class="fas fa-minus-circle"></i> ' . __d('admin', 'Cancel_selected_products') . '</a>';
+    echo '<a id="deleteSelectedProductsButton" class="btn btn-outline-light" href="javascript:void(0);"><i class="fas fa-minus-circle"></i> ' . __d('admin', 'Cancel_selected_products') . '</a>';
 }
 
 ?>

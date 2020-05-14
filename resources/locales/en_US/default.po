@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-06 10:33+0200\n"
-"PO-Revision-Date: 2020-04-16 12:00+0200\n"
+"POT-Creation-Date: 2020-05-14 09:19+0200\n"
+"PO-Revision-Date: 2020-05-14 09:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.3.1\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
@@ -585,7 +585,7 @@ msgstr "The field appears read if the weight has not yet been adapted."
 msgid "Do_not_automatically_apapt_price_just_change_weight."
 msgstr "Do not automatically adapt price, just change the weight."
 
-msgid "Really_cancel_ordered_product?"
+msgid "Really_delete_ordered_product?"
 msgstr "Really cancel the ordered product?"
 
 msgid "Do_you_really_want_to_cancel_product_{0}?"
@@ -600,13 +600,10 @@ msgstr "Why is the product cancelled (mandatory)?"
 msgid "Yes_do_cancel_button!"
 msgstr "Cancel product!"
 
-msgid "Do_not_cancel_button"
-msgstr "Close"
-
 msgid "Please_only_cancel_if_ok_for_manufacturer!"
 msgstr "Please only cancel if this is ok for the manfacturer!"
 
-msgid "Really_cancel_selected_products?"
+msgid "Really_delete_selected_products?"
 msgstr "Really cancel the selected products?"
 
 msgid "You_selected_1_product"
@@ -2420,6 +2417,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Do_not_cancel_button"
+#~ msgstr "Close"
 
 #~ msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
 #~ msgstr "Please pick up the ordered products in our pick up store."
