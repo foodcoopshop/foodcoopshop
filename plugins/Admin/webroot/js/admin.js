@@ -1848,42 +1848,6 @@ foodcoopshop.Admin = {
         });
     },
 
-    initGenerateOrderDetailsAsPdf: function () {
-
-        $('button.generate-order-details-as-pdf').on('click', function () {
-
-            var pickupDay = $('input[name="pickupDay[]"]').val(); // filter-dropdown!
-
-            var buttons = {};
-            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
-            buttons['yes'] = {
-                text: foodcoopshop.LocalizedJs.helper.yes,
-                click: function() {
-                    $('.ui-dialog .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-                    window.open('/admin/order-details/orderDetailsAsPdf.pdf?pickupDay=' + pickupDay);
-                    $(this).dialog('close');
-                }
-            };
-
-            $('<div></div>').appendTo('body').html(
-                '<p>' + foodcoopshop.LocalizedJs.admin.ReallyGenerateOrdersAsPdf + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />'
-            ).dialog({
-                modal: true,
-                title: foodcoopshop.LocalizedJs.admin.GenerateOrdersAsPdf,
-                autoOpen: true,
-                width: 400,
-                resizable: false,
-                buttons: buttons,
-                close: function (event, ui) {
-                    $(this).remove();
-                }
-            });
-            
-        });
-
-    },
-
     initAddPaymentInList: function (button) {
 
         foodcoopshop.Helper.changeInputNumberToTextForEdge();
