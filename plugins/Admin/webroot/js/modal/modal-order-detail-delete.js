@@ -13,8 +13,8 @@
  */
 foodcoopshop.ModalOrderDetailDelete = {
 
-    initDeleteSelectionButton : function () {
-
+    initBulk : function() {
+        
         var button = $('#deleteSelectedProductsButton');
         foodcoopshop.Helper.disableButton(button);
 
@@ -23,64 +23,121 @@ foodcoopshop.ModalOrderDetailDelete = {
         });
 
         button.on('click', function () {
+            
             var orderDetailIds = foodcoopshop.Admin.getSelectedOrderDetailIds();
-            foodcoopshop.Admin.openBulkDeleteOrderDetailDialog(orderDetailIds);
+            
+            var infoText = '<p>';
+            var textareaLabel = '';
+            var modalTitle = '';
+            if (orderDetailIds.length == 1) {
+                infoText += foodcoopshop.LocalizedJs.admin.YouSelectedOneProduct;
+                textareaLabel = foodcoopshop.LocalizedJs.admin.WhyIsProductCancelled;
+                modalTitle = foodcoopshop.LocalizedJs.admin.ReallyDeleteSelectedProduct;
+            } else {
+                infoText += foodcoopshop.LocalizedJs.admin.YouSelected0Products.replace(/\{0\}/, '<b>' + orderDetailIds.length + '</b>');
+                textareaLabel = foodcoopshop.LocalizedJs.admin.WhyAreProductsCancelled;
+                modalTitle = foodcoopshop.LocalizedJs.admin.ReallyDeleteSelectedProducts;
+            }
+
+            infoText += ':</p>';
+            infoText += '<ul>';
+            for (var i in orderDetailIds) {
+                var dataRow = $('#delete-order-detail-' + orderDetailIds[i]).closest('tr');
+                infoText += '<li>' + dataRow.find('td:nth-child(4) a').html() + ' / ' + dataRow.find('td:nth-child(9) span.customer-name-for-dialog').html() + '</li>';
+            }
+            infoText += '</ul>';
+
+            var modalSelector = '#order-detail-delete';
+            
+            var buttons = [
+                foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.admin.YesDoCancelButton, 'fa fa-check'),
+                foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
+            ];
+            
+            foodcoopshop.Modal.appendModalToDom(
+                modalSelector,
+                modalTitle,
+                '',
+                buttons
+            );
+            
+            $(modalSelector).on('hidden.bs.modal', function (e) {
+                foodcoopshop.ModalOrderDetailDelete.getCloseHandler(modalSelector);
+            });
+
+            foodcoopshop.ModalOrderDetailDelete.getOpenHandler($(this), modalSelector, orderDetailIds, infoText, textareaLabel);
+            
         });
-
-    },
-
-    initBulk : function() {
-
-        return;
-        
-        var infoText = '<p>';
-        if (orderDetailIds.length == 1) {
-            infoText = foodcoopshop.LocalizedJs.admin.YouSelectedOneProduct;
-        } else {
-            infoText = foodcoopshop.LocalizedJs.admin.YouSelected0Products.replace(/\{0\}/, '<b>' + orderDetailIds.length + '</b>');
-        }
-
-        infoText += ':</p>';
-        infoText += '<ul>';
-        for (var i in orderDetailIds) {
-            var dataRow = $('#delete-order-detail-' + orderDetailIds[i]).closest('tr');
-            infoText += '<li>' + dataRow.find('td:nth-child(4) a').html() + ' / ' + dataRow.find('td:nth-child(9) span.customer-name-for-dialog').html() + '</li>';
-        }
-        infoText += '</ul>';
-
-        foodcoopshop.Admin.openDeleteOrderDetailDialog(orderDetailIds, infoText, textareaLabel, dialogTitle);
         
     },
         
     init : function() {
         
-        var modalSelector = '#order-detail-delete';
-        
-        var buttons = [
-            foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.admin.YesDoCancelButton, 'fa fa-check'),
-            foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.no, null, true)
-        ];
-        
-        foodcoopshop.Modal.appendModalToDom(
-            modalSelector,
-            foodcoopshop.LocalizedJs.admin.ReallyDeleteOrderedProduct,
-            '',
-            buttons
-        );
-        
-        $(modalSelector).on('hidden.bs.modal', function (e) {
-            foodcoopshop.ModalOrderDetailDelete.getCloseHandler();
-        });
-
         $('.delete-order-detail').on('click', function() {
-            foodcoopshop.ModalOrderDetailDelete.getOpenHandler($(this), modalSelector);
+            
+            var orderDetailId = $(this).attr('id').split('-');
+            orderDetailId = orderDetailId[orderDetailId.length - 1];
+
+            var dataRow = $('#delete-order-detail-' + orderDetailId).closest('tr');
+            var infoText = '';
+
+            var customerName = dataRow.find('td:nth-child(4) a').html();
+            var manufacturerName = dataRow.find('td:nth-child(5) a').html();
+
+            if (foodcoopshop.Helper.isManufacturer) {
+                infoText = '<p>' + foodcoopshop.LocalizedJs.admin.DoYouReallyWantToCancelProduct0.replace(/\{0\}/, '<b>' + customerName + '</b>') + '</p>';
+            } else {
+                infoText = '<p>' + foodcoopshop.LocalizedJs.admin.DoYouReallyWantToCancelProduct0From1.replace(/\{0\}/, '<b>' + customerName + '</b>').replace(/\{1\}/, '<b>' + manufacturerName + '</b>') + '</p>';
+            }
+
+            var textareaLabel = foodcoopshop.LocalizedJs.admin.WhyIsProductCancelled;
+            
+            var modalSelector = '#order-detail-delete';
+            
+            var buttons = [
+                foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.admin.YesDoCancelButton, 'fa fa-check'),
+                foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
+            ];
+            
+            foodcoopshop.Modal.appendModalToDom(
+                modalSelector,
+                foodcoopshop.LocalizedJs.admin.ReallyDeleteOrderedProduct,
+                '',
+                buttons
+            );
+            
+            $(modalSelector).on('hidden.bs.modal', function (e) {
+                foodcoopshop.ModalOrderDetailDelete.getCloseHandler(modalSelector);
+            });
+            
+            foodcoopshop.ModalOrderDetailDelete.getOpenHandler($(this), modalSelector, [orderDetailId], infoText, textareaLabel);
         });
 
     },
     
-    getCloseHandler : function() {
-        $('#cke_dialogCancellationReason').val('');
-        $('#flashMessage').remove();
+    getCloseHandler : function(modalSelector) {
+        $(modalSelector).remove();
+    },
+
+    getOpenHandler : function(button, modalSelector, orderDetailIds, infoText, textareaLabel) {
+        
+        $(modalSelector).modal();
+
+        modalHtml = infoText;
+        
+        modalHtml += '<div class="textarea-wrapper">';
+        modalHtml += '<label for="dialogCancellationReason">' + textareaLabel +'</label>';
+        modalHtml += '<textarea class="ckeditor" name="dialogCancellationReason" id="dialogCancellationReason"></textarea>';
+        modalHtml += '</div>';
+        
+        $(modalSelector + ' .modal-body').html(modalHtml);
+        
+        foodcoopshop.Helper.initCkeditor('dialogCancellationReason');
+        
+        foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
+            foodcoopshop.ModalOrderDetailDelete.getSuccessHandler(modalSelector, orderDetailIds);
+        });
+        
     },
     
     getSuccessHandler : function(modalSelector, orderDetailIds) {
@@ -108,47 +165,6 @@ foodcoopshop.ModalOrderDetailDelete = {
             }
         );
         
-    },
-    
-    getOpenHandler : function(button, modalSelector) {
-        
-        $(modalSelector).modal();
-
-        var orderDetailId = button.attr('id').split('-');
-        orderDetailId = orderDetailId[orderDetailId.length - 1];
-
-        var dataRow = $('#delete-order-detail-' + orderDetailId).closest('tr');
-        var modalHtml = '';
-
-        var customerName = dataRow.find('td:nth-child(4) a').html();
-        var manufacturerName = dataRow.find('td:nth-child(5) a').html();
-
-        if (foodcoopshop.Helper.isManufacturer) {
-            modalHtml += '<p>' + foodcoopshop.LocalizedJs.admin.DoYouReallyWantToCancelProduct0.replace(/\{0\}/, '<b>' + customerName + '</b>') + '</p>';
-        } else {
-            modalHtml += '<p>' + foodcoopshop.LocalizedJs.admin.DoYouReallyWantToCancelProduct0From1.replace(/\{0\}/, '<b>' + customerName + '</b>').replace(/\{1\}/, '<b>' + manufacturerName + '</b>') + '</p>';
-        }
-        
-        if (!foodcoopshop.Helper.isManufacturer) {
-            modalHtml += '<p class="overlay-info">' + foodcoopshop.LocalizedJs.admin.PleaseOnlyCancelIfOkForManufacturer + '</p>';
-        }
-
-        modalHtml += '<div class="textarea-wrapper">';
-        modalHtml += '<label for="dialogCancellationReason">' + foodcoopshop.LocalizedJs.admin.WhyIsProductCancelled +'</label>';
-        modalHtml += '<textarea class="ckeditor" name="dialogCancellationReason" id="dialogCancellationReason"></textarea>';
-        modalHtml += '</div>';
-        
-        $(modalSelector + ' .modal-body').html(modalHtml);
-        
-        foodcoopshop.Helper.initCkeditor('dialogCancellationReason');
-        
-        
-        foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-            foodcoopshop.ModalOrderDetailDelete.getSuccessHandler(modalSelector, [orderDetailId]);
-        });
-        
-
-        
     }
-
+    
 };

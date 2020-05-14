@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-05-14 09:19+0200\n"
-"PO-Revision-Date: 2020-05-14 09:20+0200\n"
+"POT-Creation-Date: 2020-05-14 10:05+0200\n"
+"PO-Revision-Date: 2020-05-14 10:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -597,11 +597,17 @@ msgstr "Möchtest du das Produkt {0} von Hersteller {1} wirklich stornieren?"
 msgid "Why_is_product_cancelled_(mandatory_field)?"
 msgstr "Warum wird das Produkt storniert (Pflichtfeld)?"
 
+msgid "Why_are_products_cancelled_(mandatory_field)?"
+msgstr "Warum werden die Produkte storniert (Pflichtfeld)?"
+
 msgid "Yes_do_cancel_button!"
 msgstr "Ja, stornieren!"
 
 msgid "Please_only_cancel_if_ok_for_manufacturer!"
 msgstr "Bitte nur stornieren, wenn es mit dem Hersteller abgesprochen ist!"
+
+msgid "Really_delete_selected_product?"
+msgstr "Ausgewähltes Produkt wirklich stornieren?"
 
 msgid "Really_delete_selected_products?"
 msgstr "Ausgewählte Produkte wirklich stornieren?"
