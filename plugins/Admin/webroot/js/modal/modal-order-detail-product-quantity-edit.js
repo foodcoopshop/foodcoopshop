@@ -142,6 +142,7 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
         $(modalSelector).modal();
         
         foodcoopshop.Helper.changeInputNumberToTextForEdge();
+        $('#dialogOrderDetailProductQuantityQuantity').focus();
         
     }
 
