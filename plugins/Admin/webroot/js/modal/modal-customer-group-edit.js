@@ -38,11 +38,10 @@ foodcoopshop.ModalCustomerGroupEdit = {
     },
     
     getHtml : function() {
-        return `
-            <label for="dialogCustomerGroupEditText" id="dialogCustomerGroupEditText"></label><br />
-            <select name="dialogCustomerGroupEditGroup" id="dialogCustomerGroupEditGroup" /></select>
-            <input type="hidden" name="dialogCustomerGroupEditCustomerId" id="dialogCustomerGroupEditCustomerId" value="" />
-        `;
+        var html = '<label for="dialogCustomerGroupEditText" id="dialogCustomerGroupEditText"></label><br />';
+        html += '<select name="dialogCustomerGroupEditGroup" id="dialogCustomerGroupEditGroup" /></select>';
+        html += '<input type="hidden" name="dialogCustomerGroupEditCustomerId" id="dialogCustomerGroupEditCustomerId" value="" />';
+        return html;
     },
     
     getCloseHandler : function() {

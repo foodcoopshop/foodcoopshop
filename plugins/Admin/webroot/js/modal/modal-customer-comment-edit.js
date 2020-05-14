@@ -38,12 +38,11 @@ foodcoopshop.ModalCustomerCommentEdit = {
     },
         
     getHtml : function() {
-        return `
-            <div class="textarea-wrapper">
-                <textarea class="ckeditor" name="dialogCustomerComment" id="dialogCustomerComment"></textarea>
-            </div>
-            <input type="hidden" name="dialogCustomerId" id="dialogCustomerId" value="" />
-        `;
+        var html = '<div class="textarea-wrapper">';
+        html += '<textarea class="ckeditor" name="dialogCustomerComment" id="dialogCustomerComment"></textarea>';
+        html += '</div>';
+        html += '<input type="hidden" name="dialogCustomerId" id="dialogCustomerId" value="" />';
+        return html;
     },
     
     getCloseHandler : function() {

@@ -38,23 +38,22 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
     },
     
     getHtml : function() {
-        return `
-            <label for="dialogOrderDetailProductQuantityQuantity"></label><br />
-            <br /><span class="quantity-string">` + foodcoopshop.LocalizedJs.admin.DeliveredWeight + `</span>: <input type="number" min="0.01" step="0.01" name="dialogOrderDetailProductQuantityQuantity" id="dialogOrderDetailProductQuantityQuantity" value="" />
-            <b></b>
-            <br />
-            <input type="hidden" name="dialogOrderDetailProductQuantityOrderDetailId" id="dialogOrderDetailProductQuantityOrderDetailId" value="" />
-            <ul style="margin-top:5px;">
-            <li class="price-per-unit-base-info"></li>
-            <li>` + foodcoopshop.LocalizedJs.admin.PriceIsAutomaticallyAdaptedAfterSave + `</li>
-            <li>` + foodcoopshop.LocalizedJs.admin.FieldIsRedIfWeightNotYetAdapted + `</li>
-            </ul>
-            <label class="checkbox">
-            <input type="checkbox" name="dialogOrderDetailProductQuantityDoNotChangePrice" id="dialogOrderDetailProductQuantityDoNotChangePrice" value="" />
-            <span style="font-weight:normal;">` + foodcoopshop.LocalizedJs.admin.DoNotAutomaticallyAdaptPriceJustChangeWeight + `</span>
-            </label>
-            <br />
-        `;
+        var html = '<label for="dialogOrderDetailProductQuantityQuantity"></label><br />';
+            html += '<br /><span class="quantity-string">' + foodcoopshop.LocalizedJs.admin.DeliveredWeight + '</span>: <input type="number" min="0.01" step="0.01" name="dialogOrderDetailProductQuantityQuantity" id="dialogOrderDetailProductQuantityQuantity" value="" />';
+            html += '<b></b>';
+            html += '<br />';
+            html += '<input type="hidden" name="dialogOrderDetailProductQuantityOrderDetailId" id="dialogOrderDetailProductQuantityOrderDetailId" value="" />';
+            html += '<ul style="margin-top:5px;">';
+                html += '<li class="price-per-unit-base-info"></li>';
+                html += '<li>' + foodcoopshop.LocalizedJs.admin.PriceIsAutomaticallyAdaptedAfterSave + '</li>';
+                html += '<li>' + foodcoopshop.LocalizedJs.admin.FieldIsRedIfWeightNotYetAdapted + '</li>';
+            html += '</ul>';
+            html += '<label class="checkbox">';
+                html += '<input type="checkbox" name="dialogOrderDetailProductQuantityDoNotChangePrice" id="dialogOrderDetailProductQuantityDoNotChangePrice" value="" />';
+                html += '<span style="font-weight:normal;">' + foodcoopshop.LocalizedJs.admin.DoNotAutomaticallyAdaptPriceJustChangeWeight + '</span>';
+            html += '</label>';
+            html += '<br />';
+        return html;
     },
     
     getCloseHandler : function() {

@@ -55,23 +55,22 @@ foodcoopshop.Modal = {
                 this.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
             ];
         
-        var html = `
-            <div id="` + elementId.replace(/#/, '') + `" class="modal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">` + title + `</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="` + foodcoopshop.LocalizedJs.helper.Close + `">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">` + body + `</div>
-                        <div class="modal-footer">`
-                            + buttons.join('') +
-                        `</div>
-                    </div>
-                </div>
-            </div>`;
+        var html = '<div id="' + elementId.replace(/#/, '') + '" class="modal" tabindex="-1" role="dialog">';
+                html += '<div class="modal-dialog" role="document">';
+                    html += '<div class="modal-content">';
+                        html += '<div class="modal-header">';
+                            html += '<h5 class="modal-title">' + title + '</h5>';
+                            html += '<button type="button" class="close" data-dismiss="modal" aria-label="' + foodcoopshop.LocalizedJs.helper.Close + '">';
+                                html += '<span aria-hidden="true">&times;</span>';
+                            html += '</button>';
+                            html += '</div>';
+                        html += '<div class="modal-body">' + body + '</div>';
+                    html += '<div class="modal-footer">';
+                        html += buttons.join('');
+                    html += '</div>';
+                html += '</div>';
+            html += '</div>';
+        html += '</div>';
         
         $('body').append(html);
         
