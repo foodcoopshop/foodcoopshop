@@ -77,6 +77,11 @@ foodcoopshop.Modal = {
         this.makeDraggable(elementId);
     },
     
+    destroy : function(modalId, document) {
+        $(modalId, document).remove();
+        $('.modal-backdrop', document).remove();
+    },
+    
     makeDraggable : function(elementId) {
         $(elementId + ' .modal-header').on('mousedown', function(mousedownEvt) {
             var $draggable = $(this);

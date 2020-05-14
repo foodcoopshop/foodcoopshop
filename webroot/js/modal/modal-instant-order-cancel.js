@@ -49,9 +49,7 @@ foodcoopshop.ModalInstantOrderCancel = {
             {},
             {
                 onOk: function (data) {
-                    // .modal('hide') does not work here
-                    $('.modal-backdrop', window.parent.document).remove();
-                    $('#instant-order-add', window.parent.document).remove();
+                    foodcoopshop.Modal.destroy('#instant-order-add', window.parent.document);
                     document.location.reload();
                 },
                 onError: function (data) {
