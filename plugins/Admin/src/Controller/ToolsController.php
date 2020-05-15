@@ -32,7 +32,7 @@ class ToolsController extends AdminAppController
         
         // non-pdf files will return false
         if (mime_content_type($upload->getStream()->getMetadata('uri')) != 'application/pdf') {
-            $message = 'only pdf format is allowed';
+            $message = __d('admin', 'The_uploaded_file_needs_to_have_the_format:_{0}', ['PDF']);
             $this->set([
                 'status' => 0,
                 'msg' => $message,
@@ -64,7 +64,7 @@ class ToolsController extends AdminAppController
         
         // non-image files will return false
         if (mime_content_type($upload->getStream()->getMetadata('uri')) != 'image/jpeg') {
-            $message = 'the uploaded file needs to have jpg format.';
+            $message = __d('admin', 'The_uploaded_file_needs_to_have_the_format:_{0}', ['JPG']);
             $this->set([
                 'status' => 0,
                 'msg' => $message,
@@ -121,7 +121,7 @@ class ToolsController extends AdminAppController
 
         // non-image files will return false
         if ($formatInfo === false || $formatInfo['mime'] != 'image/jpeg') {
-            $message = 'the uploaded file needs to have jpg format.';
+            $message = __d('admin', 'The_uploaded_file_needs_to_have_the_format:_{0}', ['JPG']);
             $this->set([
                 'status' => 0,
                 'msg' => $message,

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-05-14 09:16+0200\n"
+"POT-Creation-Date: 2020-05-15 22:53+0200\n"
 "PO-Revision-Date: 2020-05-06 10:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -617,6 +617,10 @@ msgstr "My {0}"
 
 msgid "My_credit_balance"
 msgstr "My credit balance"
+
+#, fuzzy
+msgid "The_uploaded_file_needs_to_have_the_format:_{0}"
+msgstr "The uploaded file is not valid."
 
 msgid "Filename_General-terms-and-conditions"
 msgstr "General-terms-and-conditions"

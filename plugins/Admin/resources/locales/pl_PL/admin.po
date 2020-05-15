@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-05-14 09:16+0200\n"
+"POT-Creation-Date: 2020-05-15 22:53+0200\n"
 "PO-Revision-Date: 2020-03-19 21:01+0100\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -644,6 +644,9 @@ msgstr "Mój {0}"
 #, fuzzy
 msgid "My_credit_balance"
 msgstr "Twoje saldo kredytowe"
+
+msgid "The_uploaded_file_needs_to_have_the_format:_{0}"
+msgstr ""
 
 msgid "Filename_General-terms-and-conditions"
 msgstr "Regulamin"
