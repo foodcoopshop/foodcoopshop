@@ -178,6 +178,7 @@ foodcoopshop.ModalPaymentAdd = {
         $(modalSelector).modal();
         $(modalSelector).addClass('add-payment-form');
         $(modalSelector + ' .modal-body').append(form.html());
+        $(modalSelector + ' input[type="number"]').focus();
         foodcoopshop.Helper.changeInputNumberToTextForEdge();
     }
 
