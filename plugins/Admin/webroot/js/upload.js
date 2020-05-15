@@ -103,7 +103,7 @@ foodcoopshop.Upload = {
 
     saveProductImage : function (modalSelector) {
 
-        var image = foodcoopshop.Upload.checkForEmptyimage(modalSelector);
+        var image = foodcoopshop.Upload.checkForEmptyImage(modalSelector);
         if (image.length == 0) {
             return;
         }
