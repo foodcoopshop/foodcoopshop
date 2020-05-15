@@ -502,6 +502,7 @@ class OrderDetailsController extends AdminAppController
                 $deliveryDay = [];
                 $manufacturerName = [];
                 $productName = [];
+                $customerName = [];
                 foreach ($orderDetails as $orderDetail) {
                     $orderDetail->quantityInUnitsNotYetChanged = false;
                     if (!empty($orderDetail->order_detail_unit)) {
