@@ -257,36 +257,15 @@ foodcoopshop.Upload = {
 
     initUploadButtonImage : function (modalSelector, imageUploadForm, objectId) {
 
-        var buttons = {};
-        buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
-        buttons['yes'] = {
-            text: foodcoopshop.LocalizedJs.helper.yes,
-            click: function() {
-                $('.ui-dialog .ajax-loader').show();
-                $('.ui-dialog button').attr('disabled', 'disabled');
-                document.location.href = '/admin/products/deleteImage/' + objectId;
-            }
-        };
-
         // bind delete button
         if (imageUploadForm.find('a.img-delete').length == 0) {
             if (imageUploadForm.find('img.existingImage').length == 1) {
                 $('<a title="' + foodcoopshop.LocalizedJs.upload.delete + '" class="modify-icon img-delete" href="javascript:void(0);"><i class="fas fa-times-circle not-ok fa-lg"></i></a>').appendTo(imageUploadForm.find('.drop'));
                 imageUploadForm.find('a.img-delete').on('click', function (e) {
-                    e.preventDefault();
-                    $('<div></div>').appendTo('body')
-                        .html('<p>' + foodcoopshop.LocalizedJs.upload.ReallyDeleteImage + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
-                        .dialog({
-                            modal: true,
-                            title: foodcoopshop.LocalizedJs.upload.DeleteImage,
-                            autoOpen: true,
-                            width: 400,
-                            resizable: false,
-                            buttons: buttons,
-                            close: function (event, ui) {
-                                $(this).remove();
-                            }
-                        });
+                    var result = confirm(foodcoopshop.LocalizedJs.upload.ReallyDeleteImage);
+                    if (result) {
+                        document.location.href = '/admin/products/deleteImage/' + objectId;
+                    }
                 });
             }
         }
