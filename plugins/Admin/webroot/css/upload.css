@@ -65,6 +65,7 @@
     border: 1px solid transparent;
     padding: 10px;
     line-height: 10px;
+    opacity:0.7;
 }
 .modal .mini-upload-form .modify-icon {
     border: 1px solid black;
