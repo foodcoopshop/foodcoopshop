@@ -32,7 +32,7 @@ foodcoopshop.ModalPaymentAdd = {
                 foodcoopshop.Modal.appendModalToDom(
                     modalSelector,
                     heading.html(),
-                    foodcoopshop.ModalPaymentAdd.getHtml()
+                    ''
                 );
                 
                 $(modalSelector).on('hidden.bs.modal', function (e) {
@@ -52,14 +52,35 @@ foodcoopshop.ModalPaymentAdd = {
         
     init : function() {
         
+        $('#add-payment-button-wrapper .btn-success').on('click', function () {
+            
+            var formHtml = $('.add-payment-form');
+            var heading = formHtml.find('h3');
+            formHtml.find('h3').remove();
+            
+            var modalSelector = '#payment-product-add';
+            
+            foodcoopshop.Modal.appendModalToDom(
+                modalSelector,
+                heading.html(),
+                ''
+            );
+            
+            $(modalSelector).on('hidden.bs.modal', function (e) {
+                foodcoopshop.ModalPaymentAdd.getCloseHandler(modalSelector);
+            });
+            
+            foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
+                foodcoopshop.ModalPaymentAdd.getSuccessHandler(modalSelector);
+            });
+            
+            foodcoopshop.ModalPaymentAdd.getOpenHandler(modalSelector, formHtml);
+        });
+        
     },
         
     getCloseHandler : function(modalSelector) {
         $(modalSelector).remove();
-    },
-
-    getHtml : function() {
-        return '';
     },
     
     getSuccessHandler : function(modalSelector) {

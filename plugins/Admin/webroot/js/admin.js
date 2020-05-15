@@ -1848,21 +1848,6 @@ foodcoopshop.Admin = {
         });
     },
 
-    initAddPayment: function (button) {
-
-        foodcoopshop.Helper.changeInputNumberToTextForEdge();
-
-        $(button).featherlight(
-            foodcoopshop.AppFeatherlight.initLightboxForForms(
-                foodcoopshop.Helper.addPaymentFormSave,
-                null,
-                foodcoopshop.AppFeatherlight.closeLightbox,
-                $('.add-payment-form')
-            )
-        );
-
-    },
-
     initDeletePayment: function () {
 
         $('.delete-payment-button').on('click',function () {
