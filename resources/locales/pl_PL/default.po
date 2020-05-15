@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-14 10:05+0200\n"
+"POT-Creation-Date: 2020-05-15 09:31+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -783,6 +783,11 @@ msgstr "Nie modyfikuj automatycznie ceny, jedynie zmień wagę."
 #, fuzzy
 msgid "Really_delete_ordered_product?"
 msgstr "Na pewno anulować zamówienie produktu?"
+
+# Product declaration ok?
+#, fuzzy
+msgid "Product_cancellation"
+msgstr "Czy opis produktu jest poprawny?"
 
 # Do you really want to cancel product {0}?
 msgid "Do_you_really_want_to_cancel_product_{0}?"

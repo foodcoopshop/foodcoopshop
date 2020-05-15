@@ -28,15 +28,12 @@ foodcoopshop.ModalOrderDetailDelete = {
             
             var infoText = '<p>';
             var textareaLabel = '';
-            var modalTitle = '';
             if (orderDetailIds.length == 1) {
                 infoText += foodcoopshop.LocalizedJs.admin.YouSelectedOneProduct;
                 textareaLabel = foodcoopshop.LocalizedJs.admin.WhyIsProductCancelled;
-                modalTitle = foodcoopshop.LocalizedJs.admin.ReallyDeleteSelectedProduct;
             } else {
                 infoText += foodcoopshop.LocalizedJs.admin.YouSelected0Products.replace(/\{0\}/, '<b>' + orderDetailIds.length + '</b>');
                 textareaLabel = foodcoopshop.LocalizedJs.admin.WhyAreProductsCancelled;
-                modalTitle = foodcoopshop.LocalizedJs.admin.ReallyDeleteSelectedProducts;
             }
 
             infoText += ':</p>';
@@ -56,7 +53,7 @@ foodcoopshop.ModalOrderDetailDelete = {
             
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                modalTitle,
+                foodcoopshop.LocalizedJs.admin.ProductCancellation,
                 '',
                 buttons
             );
@@ -101,7 +98,7 @@ foodcoopshop.ModalOrderDetailDelete = {
             
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                foodcoopshop.LocalizedJs.admin.ReallyDeleteOrderedProduct,
+                foodcoopshop.LocalizedJs.admin.ProductCancellation,
                 '',
                 buttons
             );
@@ -124,6 +121,10 @@ foodcoopshop.ModalOrderDetailDelete = {
         $(modalSelector).modal();
 
         modalHtml = infoText;
+        
+        if (!foodcoopshop.Helper.isManufacturer) {
+            modalHtml += '<p class="overlay-info">' + foodcoopshop.LocalizedJs.admin.PleaseOnlyCancelIfOkForManufacturer + '</p>';
+        }
         
         modalHtml += '<div class="textarea-wrapper">';
         modalHtml += '<label for="dialogCancellationReason">' + textareaLabel +'</label>';

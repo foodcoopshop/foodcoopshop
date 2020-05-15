@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-05-14 10:05+0200\n"
-"PO-Revision-Date: 2020-05-14 10:05+0200\n"
+"POT-Creation-Date: 2020-05-15 09:31+0200\n"
+"PO-Revision-Date: 2020-05-15 09:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -588,6 +588,9 @@ msgstr "Den Preis nicht automatisch anpassen, nur das Gewicht ändern."
 msgid "Really_delete_ordered_product?"
 msgstr "Bestelltes Produkt wirklich stornieren?"
 
+msgid "Product_cancellation"
+msgstr "Stornierung"
+
 msgid "Do_you_really_want_to_cancel_product_{0}?"
 msgstr "Möchtest du das Produkt {0} wirklich stornieren?"
 
@@ -604,7 +607,7 @@ msgid "Yes_do_cancel_button!"
 msgstr "Ja, stornieren!"
 
 msgid "Please_only_cancel_if_ok_for_manufacturer!"
-msgstr "Bitte nur stornieren, wenn es mit dem Hersteller abgesprochen ist!"
+msgstr "Nur stornieren, wenn es mit dem Hersteller abgesprochen ist!"
 
 msgid "Really_delete_selected_product?"
 msgstr "Ausgewähltes Produkt wirklich stornieren?"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-14 10:05+0200\n"
+"POT-Creation-Date: 2020-05-15 09:31+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -585,6 +585,9 @@ msgid "Do_not_automatically_apapt_price_just_change_weight."
 msgstr ""
 
 msgid "Really_delete_ordered_product?"
+msgstr ""
+
+msgid "Product_cancellation"
 msgstr ""
 
 msgid "Do_you_really_want_to_cancel_product_{0}?"

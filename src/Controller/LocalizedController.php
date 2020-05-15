@@ -144,6 +144,7 @@ class LocalizedController extends Controller
                 'FieldIsRedIfWeightNotYetAdapted' => __('The_field_is_red_if_weight_not_yet_adapted.'),
                 'DoNotAutomaticallyAdaptPriceJustChangeWeight' => __('Do_not_automatically_apapt_price_just_change_weight.'),
                 'ReallyDeleteOrderedProduct' => __('Really_delete_ordered_product?'),
+                'ProductCancellation' => __('Product_cancellation'),
                 'DoYouReallyWantToCancelProduct0' => __('Do_you_really_want_to_cancel_product_{0}?'),
                 'DoYouReallyWantToCancelProduct0From1' => __('Do_you_really_want_to_cancel_product_{0}_from_{1}?'),
                 'WhyIsProductCancelled' => __('Why_is_product_cancelled_(mandatory_field)?'),
