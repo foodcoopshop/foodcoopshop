@@ -15,9 +15,12 @@
  */
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\ORM\TableRegistry;
+use Cake\TestSuite\IntegrationTestTrait;
 
 class BlogPostsControllerTest extends AppCakeTestCase
 {
+
+    use IntegrationTestTrait;
 
     public $BlogPost;
 
@@ -29,25 +32,26 @@ class BlogPostsControllerTest extends AppCakeTestCase
 
     public function testBlogPostDetailOnlinePublicLoggedOut()
     {
-        $this->httpClient->get($this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'));
-        $this->assert200OkHeader();
+        $_SERVER['REQUEST_URI'] = $this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel');
+        $this->get($_SERVER['REQUEST_URI']);
+        $this->assertResponseCode(200);
     }
 
     public function testBlogPostDetailOfflinePublicLoggedOut()
     {
         $blogPostId = 2;
         $this->changeBlogPost($blogPostId, 0, 0, 0);
-        $this->httpClient->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
-        $this->assert404NotFoundHeader();
+        $this->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
+        $this->assertResponseCode(404);
     }
 
     public function testBlogPostDetailOnlinePrivateLoggedOut()
     {
         $blogPostId = 2;
         $this->changeBlogPost($blogPostId, 1);
-        $this->httpClient->followOneRedirectForNextRequest();
-        $this->httpClient->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
-        $this->assertAccessDeniedWithRedirectToLoginForm();
+        $this->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
+        $this->assertRedirectContains('/anmelden?redirect=%2Faktuelles%2F2-Demo-Blog-Artikel');
+        $this->assertFlashMessage('Zugriff verweigert, bitte melde dich an.');
     }
 
     public function testBlogPostDetailOnlinePrivateLoggedIn()
@@ -55,15 +59,16 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $blogPostId = 2;
         $this->changeBlogPost($blogPostId, 1);
-        $this->httpClient->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
-        $this->assert200OkHeader();
+        $_SERVER['REQUEST_URI'] = $this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel');
+        $this->get($_SERVER['REQUEST_URI']);
+        $this->assertResponseCode(200);
     }
 
     public function testBlogPostDetaiNonExistingLoggedOut()
     {
         $blogPostId = 3;
-        $this->httpClient->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
-        $this->assert404NotFoundHeader();
+        $this->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
+        $this->assertResponseCode(404);
     }
 
     public function testBlogPostDetailOnlinePublicManufacturerPrivateLoggedOut()
@@ -72,9 +77,9 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $manufacturerId = 15;
         $this->changeBlogPost($blogPostId, 0, $manufacturerId);
         $this->changeManufacturer($manufacturerId, 'is_private', 1);
-        $this->httpClient->followOneRedirectForNextRequest();
-        $this->httpClient->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
-        $this->assertAccessDeniedWithRedirectToLoginForm();
+        $this->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
+        $this->assertRedirectContains('/anmelden?redirect=%2Faktuelles%2F2-Demo-Blog-Artikel');
+        $this->assertFlashMessage('Zugriff verweigert, bitte melde dich an.');
     }
 
     public function testBlogPostDetailChangeNullManufacturer()

@@ -17,13 +17,17 @@ use Cake\I18n\I18n;
 use Cake\Utility\Inflector;
 
 // to always get an up-to-date cart if "browser back" or "duplicate tab" is used
-header('Cache-Control: no-store, private, no-cache, must-revalidate'); // HTTP/1.1
-header('Cache-Control: pre-check=0, post-check=0, max-age=0, max-stale = 0', false); // HTTP/1.1
-header('Pragma: public');
-header('Expires: Sat, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-header('Expires: 0', false);
-header('Last-Modified: '.gmdate('D, d M Y H:i:s') . ' GMT');
-header('Pragma: no-cache');
+// check if the software is run from unit tests or not
+// when run from the unit tests, setting the headers conflicts with setting the headers in vendor/phpunit/phpunit/src/Util/Printer.php
+if (! defined('PHPUNIT_COMPOSER_INSTALL') && ! defined('__PHPUNIT_PHAR__')) {
+    header('Cache-Control: no-store, private, no-cache, must-revalidate'); // HTTP/1.1
+    header('Cache-Control: pre-check=0, post-check=0, max-age=0, max-stale = 0', false); // HTTP/1.1
+    header('Pragma: public');
+    header('Expires: Sat, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+    header('Expires: 0', false);
+    header('Last-Modified: '.gmdate('D, d M Y H:i:s') . ' GMT');
+    header('Pragma: no-cache');
+}
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo strtolower(str_replace('_', '-', I18n::getLocale())); ?>">
