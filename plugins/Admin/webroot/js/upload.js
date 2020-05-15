@@ -138,98 +138,72 @@ foodcoopshop.Upload = {
     },
 
     initImageUpload : function (button, saveMethod) {
-        foodcoopshop.ModalImageUpload.init(button, saveMethod);
+        foodcoopshop.ModalUploadForm.init(button, saveMethod, 'image');
     },
 
     initFileUpload : function (button, saveMethod) {
-
-        $(button).each(function () {
-
-            var objectId = $(this).data('objectId');
-            var fileUploadForm = $('form#mini-upload-form-file-' + objectId);
-
-            $(this).featherlight(
-                foodcoopshop.AppFeatherlight.initLightboxForForms(
-                    function () {
-                        saveMethod();
-                    },
-                    function () {
-                        foodcoopshop.AppFeatherlight.disableSaveButton();
-                    },
-                    null,
-                    fileUploadForm
-                )
-            );
-
-            foodcoopshop.Upload.initUploadButtonFile($(this));
-
-        });
-
+        foodcoopshop.ModalUploadForm.init(button, saveMethod, 'file');
     },
     
-    initUploadButtonFile: function (container) {
+    initUploadButtonFile: function (modalSelector, fileUploadForm, objectId) {
 
-        $(container).on('click', function () {
+        var ul = fileUploadForm.find('ul');
 
-            var objectId = $(this).data('objectId');
-            var fileUploadForm = $('form#mini-upload-form-file-' + objectId);
-            var ul = fileUploadForm.find('ul');
+        var button = fileUploadForm.find('.drop a.upload-button');
+        button.off('click');
+        button.on('click', function () {
+            // Simulate a click on the file input button to show the file browser dialog
+            $(this).parent().find('input').trigger('click');
+        });
 
-            var button = fileUploadForm.find('.drop a.upload-button');
-            button.off('click');
-            button.on('click', function () {
-                // Simulate a click on the file input button to show the file browser dialog
-                $(this).parent().find('input').trigger('click');
-            });
+        // Initialize the jQuery File Upload plugin
+        fileUploadForm.fileupload({
 
-            // Initialize the jQuery File Upload plugin
-            fileUploadForm.fileupload({
+            // This element will accept file drag/drop uploading
+            dropZone: fileUploadForm.find('.drop'),
 
-                // This element will accept file drag/drop uploading
-                dropZone: fileUploadForm.find('.drop'),
+            autoUpload: false,
 
-                autoUpload: false,
+            add: function (e, data) {
+                foodcoopshop.Upload.fileUploadAdd(e, data, ul);
+            },
 
-                add: function (e, data) {
-                    foodcoopshop.Upload.fileUploadAdd(e, data, ul);
-                },
+            progress: foodcoopshop.Upload.fileUploadProgress,
+            
+            done: function (e, data) {
 
-                progress: foodcoopshop.Upload.fileUploadProgress,
+                fileUploadForm.find('ul li').remove();
                 
-                done: function (e, data) {
-
+                var result = data.result;
+                if (result.status) {
+                    var container = fileUploadForm.find('.drop');
+                    container.find('a').not('.upload-button').remove();
+                    container.prepend($('<a />').
+                        attr('href', result.filename).
+                        addClass('uploadedFile').
+                        attr('target', '_blank').
+                        text(result.text));
                     fileUploadForm.find('ul li').remove();
-                    
-                    var result = JSON.parse(data.result);
-                    if (result.status) {
-                        var container = fileUploadForm.find('.drop');
-                        container.find('a').not('.upload-button').remove();
-                        container.prepend($('<a />').
-                            attr('href', result.filename).
-                            addClass('uploadedFile').
-                            attr('target', '_blank').
-                            text(result.text));
-                        fileUploadForm.find('ul li').remove();
-                        foodcoopshop.AppFeatherlight.enableSaveButton();
-                    } else {
-                        fileUploadForm.find('ul li').remove();
-                        alert(result.msg);
-                    }
-                },
-
-                fail: function (e, data) {
-                    // Something has gone wrong!
-                    data.context.addClass('error');
+                    foodcoopshop.AppFeatherlight.enableSaveButton();
+                } else {
+                    fileUploadForm.find('ul li').remove();
+                    foodcoopshop.Modal.appendFlashMessage(modalSelector, result.msg);
+                    foodcoopshop.Modal.resetButtons(modalSelector);
                 }
+            },
 
-            });
-
-            // Prevent the default action when a file is dropped on the window
-            $(document).on('drop dragover', function (e) {
-                e.preventDefault();
-            });
+            fail: function (e, data) {
+                // Something has gone wrong!
+                data.context.addClass('error');
+            }
 
         });
+
+        // Prevent the default action when a file is dropped on the window
+        $(document).on('drop dragover', function (e) {
+            e.preventDefault();
+        });
+
     },
 
     /**
@@ -367,10 +341,9 @@ foodcoopshop.Upload = {
 
                     imageUploadForm.find('ul li').remove();
                     imageUploadForm.find('button.deleteImage').remove();
-                    foodcoopshop.AppFeatherlight.enableSaveButton();
                 } else {
                     imageUploadForm.find('ul li').remove();
-                    foodcoopshop.Modal.appendFlashMessage(modalSelector, $.parseJSON(result).msg);
+                    foodcoopshop.Modal.appendFlashMessage(modalSelector, result.msg);
                     foodcoopshop.Modal.resetButtons(modalSelector);
                 }
             },

@@ -31,7 +31,7 @@ class ToolsController extends AdminAppController
         $upload = $this->getRequest()->getData('upload');
         
         // non-pdf files will return false
-        if ($upload->getClientMediaType() != 'application/pdf') {
+        if (mime_content_type($upload->getStream()->getMetadata('uri')) != 'application/pdf') {
             $message = 'only pdf format is allowed';
             $this->set([
                 'status' => 0,
@@ -63,7 +63,7 @@ class ToolsController extends AdminAppController
         $upload = $this->getRequest()->getData('upload');
         
         // non-image files will return false
-        if ($upload->getClientMediaType() != 'image/jpeg') {
+        if (mime_content_type($upload->getStream()->getMetadata('uri')) != 'image/jpeg') {
             $message = 'the uploaded file needs to have jpg format.';
             $this->set([
                 'status' => 0,
@@ -81,17 +81,13 @@ class ToolsController extends AdminAppController
         $filenameWithPath = Configure::read('app.tmpUploadImagesDir') . DS . $filename;
         $upload->moveTo(WWW_ROOT . $filenameWithPath);
         
-        try {
-            Image::make(WWW_ROOT . $filenameWithPath)
-                ->widen($this->getMaxTmpUploadFileSize())
-                ->save(WWW_ROOT . $filenameWithPath);
-                $this->set([
-                    'status' => 1,
-                    'filename' => $filenameWithPath,
-                ]);
-        } catch(\Exception $e) {
-            $this->sendAjaxError($e);
-        }
+        Image::make(WWW_ROOT . $filenameWithPath)
+            ->widen($this->getMaxTmpUploadFileSize())
+            ->save(WWW_ROOT . $filenameWithPath);
+            $this->set([
+                'status' => 1,
+                'filename' => $filenameWithPath,
+            ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'filename']);
     }
 

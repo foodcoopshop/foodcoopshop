@@ -14,7 +14,7 @@
  */
 ?>
 <form data-object-id="<?php echo $id; ?>" id="mini-upload-form-file-<?php echo $id ?>" class="hide mini-upload-form mini-upload-form-file" method="post" action="<?php echo $action; ?>" enctype="multipart/form-data">
-    <p class="heading">
+    <p class="heading hide">
         <?php if ($fileUploadExists) { ?>
             <?php echo __('Replace_existing_file'); ?>
         <?php } else { ?>

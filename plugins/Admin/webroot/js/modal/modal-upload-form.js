@@ -11,19 +11,20 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-foodcoopshop.ModalImageUpload = {
+foodcoopshop.ModalUploadForm = {
 
-    init : function(button, saveMethod) {
+    init : function(button, saveMethod, uploadType) {
         
         $(button).each(function () {
             
-            var modalSelector = '#image-upload';
+            var modalSelector = '#upload-form';
 
             $(this).on('click', function () {
                 
                 var objectId = $(this).data('objectId');
-                var imageUploadForm = $('form#mini-upload-form-image-' + objectId).clone();
-                var heading = imageUploadForm.find('.heading').html();
+                
+                var uploadForm = $('form#mini-upload-form-' + uploadType + '-' + objectId).clone();
+                var heading = uploadForm.find('.heading').html();
 
                 foodcoopshop.Modal.appendModalToDom(
                     modalSelector,
@@ -31,14 +32,14 @@ foodcoopshop.ModalImageUpload = {
                     ''
                 );
                 
-                foodcoopshop.ModalImageUpload.getOpenHandler($(this), modalSelector, imageUploadForm);
+                foodcoopshop.ModalUploadForm.getOpenHandler($(this), modalSelector, uploadForm, uploadType);
                 
                 foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
                     saveMethod(modalSelector);
                 });
 
                 $(modalSelector).on('hidden.bs.modal', function (e) {
-                    foodcoopshop.ModalImageUpload.getCloseHandler(modalSelector);
+                    foodcoopshop.ModalUploadForm.getCloseHandler(modalSelector);
                 });
                 
             });
@@ -51,7 +52,7 @@ foodcoopshop.ModalImageUpload = {
         foodcoopshop.Modal.destroy(modalSelector);
     },
 
-    getOpenHandler : function(button, modalSelector, html) {
+    getOpenHandler : function(button, modalSelector, html, uploadType) {
         
         $('.tooltipster-base ').remove(); // on mobile tooltipster is triggered on click - interferes with ckeditor
 
@@ -59,7 +60,11 @@ foodcoopshop.ModalImageUpload = {
         $(modalSelector + ' .modal-body').append(html);
         var formElement = $(modalSelector + ' .modal-body .mini-upload-form');
         formElement.attr('id', formElement.attr('id') + '-modal');
-        foodcoopshop.Upload.initUploadButtonImage(modalSelector, formElement, button.data('objectId'));
+        if (uploadType == 'image') {
+            foodcoopshop.Upload.initUploadButtonImage(modalSelector, formElement, button.data('objectId'));
+        } else {
+            foodcoopshop.Upload.initUploadButtonFile(modalSelector, formElement, button.data('objectId'));
+        }
         foodcoopshop.Upload.loadImageSrcFromDataAttribute(modalSelector);
         $(modalSelector).modal();
     }
