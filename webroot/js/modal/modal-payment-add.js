@@ -23,7 +23,7 @@ foodcoopshop.ModalPaymentAdd = {
             buttonClass = buttonClass.replace(/-button/, '');
             var form = $('#' + buttonClass + '-form-' + $(this).data('objectId'));
             var heading = form.find('h3');
-            form.find('h3').remove();
+            form.find('h3').addClass('hide');
             
             $(this).on('click', function () {
                 foodcoopshop.ModalPaymentAdd.initDeposit(heading, form);
@@ -36,7 +36,7 @@ foodcoopshop.ModalPaymentAdd = {
     initDepositSingle: function(button, form) {
         
         var heading = form.find('h3');
-        form.find('h3').remove();
+        form.find('h3').addClass('hide');
 
         $(button).on('click', function () {
             foodcoopshop.ModalPaymentAdd.initDeposit(heading, form);
@@ -70,9 +70,9 @@ foodcoopshop.ModalPaymentAdd = {
         
         $('#add-payment-button-wrapper .btn-success').on('click', function () {
             
-            var formHtml = $('.add-payment-form');
-            var heading = formHtml.find('h3');
-            formHtml.find('h3').remove();
+            var form = $('.add-payment-form');
+            var heading = form.find('h3');
+            form.find('h3').addClass('hide');
             
             var modalSelector = '#payment-product-add';
             
@@ -90,7 +90,7 @@ foodcoopshop.ModalPaymentAdd = {
                 foodcoopshop.ModalPaymentAdd.getSuccessHandler(modalSelector);
             });
             
-            foodcoopshop.ModalPaymentAdd.getOpenHandler(modalSelector, formHtml);
+            foodcoopshop.ModalPaymentAdd.getOpenHandler(modalSelector, form);
         });
         
     },
