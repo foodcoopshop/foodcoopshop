@@ -502,6 +502,7 @@ class OrderDetailsController extends AdminAppController
                 $deliveryDay = [];
                 $manufacturerName = [];
                 $productName = [];
+                $customerName = [];
                 foreach ($orderDetails as $orderDetail) {
                     $orderDetail->quantityInUnitsNotYetChanged = false;
                     if (!empty($orderDetail->order_detail_unit)) {
@@ -516,12 +517,14 @@ class OrderDetailsController extends AdminAppController
                     $deliveryDay[] = $orderDetail->pickup_day;
                     $manufacturerName[] = StringComponent::slugify($orderDetail->product->manufacturer->name);
                     $productName[] = StringComponent::slugify($orderDetail->product_name);
+                    $customerName[] = StringComponent::slugify($orderDetail->customer->name);
                 }
                 if (!in_array('sort', array_keys($this->getRequest()->getQueryParams()))) {
                     array_multisort(
                         $deliveryDay, SORT_ASC,
                         $manufacturerName, SORT_ASC,
                         $productName, SORT_ASC,
+                        $customerName, SORT_ASC,
                         $orderDetails
                     );
                 }
