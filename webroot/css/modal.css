@@ -107,6 +107,8 @@ body.iframe_start_page {
 }
 #order-detail-product-quantity-edit-form input[type="number"],
 .modal.add-payment-form input[type="number"] {
+    margin-bottom: 5px;
+    margin-right: 5px;
     font-size: 30px;
     width: 130px;
     text-align: right;
