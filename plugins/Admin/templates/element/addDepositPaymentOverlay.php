@@ -15,10 +15,6 @@
 
 use Cake\Core\Configure;
 
-$this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".ModalPaymentAdd.initDepositInList();"
-]);
-
 echo $this->Html->link(
     '<i class="' . $this->Html->getFontAwesomeIconForCurrencyName(Configure::read('app.currencyName')) . '"></i>' . $buttonText,
     'javascript:void(0);',

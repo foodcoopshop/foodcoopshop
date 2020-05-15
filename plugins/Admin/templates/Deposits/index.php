@@ -49,6 +49,9 @@ if (empty($manufacturer)) {
 }
 
 echo '<div class="add-payment-deposit-wrapper">';
+    $this->element('addScript', [
+        'script' => Configure::read('app.jsNamespace') . ".ModalPaymentAdd.initDepositInList();"
+    ]);
     echo $this->element('addDepositPaymentOverlay', [
         'buttonText' => __d('admin', 'Add_return_of_empty_glasses'),
         'rowId' => $manufacturer->id_manufacturer,
