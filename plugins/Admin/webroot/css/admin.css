@@ -820,12 +820,6 @@ body.payments .bottom-button-container {
     text-align: right;
     width: 70px;
 }
-#order-detail-product-quantity-edit-form input[type="number"],
-#order-detail-product-price-edit-form input[type="number"],
-.add-payment-form input[type="number"] {
-	font-size: 30px;
-	width: 130px;
-}
 #order-detail-product-price-edit-form .price-per-unit-info-text {
 	color:red;
 	float:left;

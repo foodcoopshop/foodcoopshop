@@ -27,8 +27,6 @@ foodcoopshop.ModalInstantOrderAdd = {
             );
 
             $(modalSelector).on('hidden.bs.modal', function (e) {
-                console.log('hidden');
-                console.log(e);
                 foodcoopshop.ModalInstantOrderAdd.getCloseHandler($(this));
             });
             

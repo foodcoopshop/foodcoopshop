@@ -88,3 +88,26 @@ body.iframe_start_page {
 #order-detail-delete .cke {
     width: 100% ! important;
 }
+.modal.add-payment-form label {
+    display: block;
+    font-weight: bold;
+}
+.modal.add-payment-form .input.number {
+	text-align: center;
+}
+.modal.add-payment-form .radio-wrapper {
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+}
+.modal.add-payment-form .radio-wrapper label {
+    float: left;
+    width: auto;
+    margin-right: 5px;
+}
+#order-detail-product-quantity-edit-form input[type="number"],
+.modal.add-payment-form input[type="number"] {
+    font-size: 30px;
+    width: 130px;
+    text-align: right;
+}

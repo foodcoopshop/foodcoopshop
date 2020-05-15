@@ -16,7 +16,7 @@
 use Cake\Core\Configure;
 
 $this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".Admin.initAddPaymentInList('.add-payment-deposit-button');"
+    'script' => Configure::read('app.jsNamespace') . ".ModalPaymentAdd.initDepositInList();"
 ]);
 
 echo $this->Html->link(
