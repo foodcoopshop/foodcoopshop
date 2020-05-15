@@ -13,76 +13,98 @@
  */
 foodcoopshop.Upload = {
 
-    saveBlogPostTmpImageInForm : function () {
-        var filename = $('.featherlight-content form .drop img').attr('src');
-        $('body.blog_posts input[name="BlogPosts[tmp_image]"').val(filename);
-        var button = $('body.blog_posts a.add-image-button');
-        button.removeClass('uploaded').addClass('uploaded');
-        button.html('');
-        var newImage = $('<img />').attr('src', filename);
-        button.append(newImage);
-        foodcoopshop.AppFeatherlight.closeLightbox();
-    },
-
-    saveManufacturerTmpImageInForm : function () {
-        var filename = $('.featherlight-content form .drop img').attr('src');
-        $('body.manufacturers input[name="Manufacturers[tmp_image]"').val(filename);
-        var button = $('body.manufacturers a.add-image-button');
-        button.removeClass('uploaded').addClass('uploaded');
-        button.html('');
-        var newImage = $('<img />').attr('src', filename);
-        button.append(newImage);
-        foodcoopshop.AppFeatherlight.closeLightbox();
-    },
-
-    saveCustomerTmpImageInForm : function () {
-        var filename = $('.featherlight-content form .drop img').attr('src');
-        $('body.customers input[name="Customers[tmp_image]"').val(filename);
-        var button = $('body.customers a.add-image-button');
-        button.removeClass('uploaded').addClass('uploaded');
-        button.html('');
-        var newImage = $('<img />').attr('src', filename);
-        button.append(newImage);
-        foodcoopshop.AppFeatherlight.closeLightbox();
-    },
-
-    saveManufacturerTmpGeneralTermsAndConditionsInForm : function() {
-        var filename = $('.featherlight-content form .drop a').attr('href');
-        $('body.manufacturers input[name="Manufacturers[tmp_general_terms_and_conditions]"').val(filename);
-        var button= $('body.manufacturers a.add-general-terms-and-conditions-button');
-        button.removeClass('uploaded').addClass('uploaded').find('a').attr('href', filename);
-        button.find('span').text(foodcoopshop.LocalizedJs.upload.ChangeGeneralTermsAndConditions);
-        foodcoopshop.AppFeatherlight.closeLightbox();
-    },
-    
-    saveCategoryTmpImageInForm : function () {
-        var filename = $('.featherlight-content form .drop img').attr('src');
-        $('body.categories input[name="Categories[tmp_image]"').val(filename);
-        var button = $('body.categories a.add-image-button');
-        button.removeClass('uploaded').addClass('uploaded');
-        button.html('');
-        var newImage = $('<img />').attr('src', filename);
-        button.append(newImage);
-        foodcoopshop.AppFeatherlight.closeLightbox();
-    },
-
-    saveSliderTmpImageInForm : function () {
-        var filename = $('.featherlight-content form .drop img').attr('src');
-        $('body.sliders input[name="Sliders[tmp_image]"').val(filename);
-        var button = $('body.sliders a.add-image-button');
-        button.removeClass('uploaded').addClass('uploaded');
-        button.html('');
-        var newImage = $('<img />').attr('src', filename);
-        button.append(newImage);
-        foodcoopshop.AppFeatherlight.closeLightbox();
-    },
-
-    saveProductImage : function (modalSelector) {
-
+    checkForEmptyImage : function(modalSelector) {
         var image = $(modalSelector + ' form .drop img');
         if (image.length == 0) {
             foodcoopshop.Modal.appendFlashMessage(modalSelector, foodcoopshop.LocalizedJs.upload.PleaseUploadAnImage);
             foodcoopshop.Modal.resetButtons(modalSelector);
+        }
+        return image;
+    }, 
+        
+    saveBlogPostTmpImageInForm : function (modalSelector) {
+        var image = foodcoopshop.Upload.checkForEmptyImage(modalSelector);
+        if (image.length == 0) {
+            return;
+        }
+        $('body.blog_posts input[name="BlogPosts[tmp_image]"').val(image.attr('src'));
+        var button = $('body.blog_posts a.add-image-button');
+        button.removeClass('uploaded').addClass('uploaded');
+        button.html('');
+        var newImage = $('<img />').attr('src', image.attr('src'));
+        button.append(newImage);
+        foodcoopshop.Modal.destroy(modalSelector);
+    },
+
+    saveManufacturerTmpImageInForm : function (modalSelector) {
+        var image = foodcoopshop.Upload.checkForEmptyImage(modalSelector);
+        if (image.length == 0) {
+            return;
+        }
+        $('body.manufacturers input[name="Manufacturers[tmp_image]"').val(image.attr('src'));
+        var button = $('body.manufacturers a.add-image-button');
+        button.removeClass('uploaded').addClass('uploaded');
+        button.html('');
+        var newImage = $('<img />').attr('src', image.attr('src'));
+        button.append(newImage);
+        foodcoopshop.Modal.destroy(modalSelector);
+    },
+
+    saveCustomerTmpImageInForm : function (modalSelector) {
+        var image = foodcoopshop.Upload.checkForEmptyImage(modalSelector);
+        if (image.length == 0) {
+            return;
+        }
+        $('body.customers input[name="Customers[tmp_image]"').val(image.attr('src'));
+        var button = $('body.customers a.add-image-button');
+        button.removeClass('uploaded').addClass('uploaded');
+        button.html('');
+        var newImage = $('<img />').attr('src', image.attr('src'));
+        button.append(newImage);
+        foodcoopshop.Modal.destroy(modalSelector);
+    },
+
+    saveManufacturerTmpGeneralTermsAndConditionsInForm : function(modalSelector) {
+        var filename = $(modalSelector + ' form .drop a').attr('href');
+        $('body.manufacturers input[name="Manufacturers[tmp_general_terms_and_conditions]"').val(filename);
+        var button= $('body.manufacturers a.add-general-terms-and-conditions-button');
+        button.removeClass('uploaded').addClass('uploaded').find('a').attr('href', filename);
+        button.find('span').text(foodcoopshop.LocalizedJs.upload.ChangeGeneralTermsAndConditions);
+        foodcoopshop.Modal.destroy(modalSelector);
+    },
+    
+    saveCategoryTmpImageInForm : function (modalSelector) {
+        var image = foodcoopshop.Upload.checkForEmptyImage(modalSelector);
+        if (image.length == 0) {
+            return;
+        }
+        $('body.categories input[name="Categories[tmp_image]"').val(image.attr('src'));
+        var button = $('body.categories a.add-image-button');
+        button.removeClass('uploaded').addClass('uploaded');
+        button.html('');
+        var newImage = $('<img />').attr('src', image.attr('src'));
+        button.append(newImage);
+        foodcoopshop.Modal.destroy(modalSelector);
+    },
+
+    saveSliderTmpImageInForm : function (modalSelector) {
+        var image = foodcoopshop.Upload.checkForEmptyImage(modalSelector);
+        if (image.length == 0) {
+            return;
+        }
+        $('body.sliders input[name="Sliders[tmp_image]"').val(image.attr('src'));
+        var button = $('body.sliders a.add-image-button');
+        button.removeClass('uploaded').addClass('uploaded');
+        button.html('');
+        var newImage = $('<img />').attr('src', image.attr('src'));
+        button.append(newImage);
+        foodcoopshop.Modal.destroy(modalSelector);
+    },
+
+    saveProductImage : function (modalSelector) {
+
+        var image = foodcoopshop.Upload.checkForEmptyimage(modalSelector);
+        if (image.length == 0) {
             return;
         }
         var filename = foodcoopshop.Helper.cutRandomStringOffImageSrc(image.attr('src'));
@@ -115,11 +137,11 @@ foodcoopshop.Upload = {
         }
     },
 
-    initImageUpload : function (button, saveMethod, closeMethod) {
-        foodcoopshop.ModalImageUpload.init(button, saveMethod, closeMethod);
+    initImageUpload : function (button, saveMethod) {
+        foodcoopshop.ModalImageUpload.init(button, saveMethod);
     },
 
-    initFileUpload : function (button, saveMethod, closeMethod) {
+    initFileUpload : function (button, saveMethod) {
 
         $(button).each(function () {
 
@@ -134,7 +156,7 @@ foodcoopshop.Upload = {
                     function () {
                         foodcoopshop.AppFeatherlight.disableSaveButton();
                     },
-                    closeMethod,
+                    null,
                     fileUploadForm
                 )
             );

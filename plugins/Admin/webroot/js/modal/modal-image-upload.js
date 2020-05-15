@@ -13,7 +13,7 @@
  */
 foodcoopshop.ModalImageUpload = {
 
-    init : function(button, saveMethod, closeMethod) {
+    init : function(button, saveMethod) {
         
         $(button).each(function () {
             
@@ -48,7 +48,7 @@ foodcoopshop.ModalImageUpload = {
     },
 
     getCloseHandler : function(modalSelector) {
-        $(modalSelector).remove();
+        foodcoopshop.Modal.destroy(modalSelector);
     },
 
     getOpenHandler : function(button, modalSelector, html) {

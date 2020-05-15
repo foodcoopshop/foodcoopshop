@@ -39,6 +39,7 @@
 .modal #flashMessage {
 	left: 0;
 	right: 0;
+	top: 42px ! important;
 	margin-right: auto;
 	margin-left: auto;
 }

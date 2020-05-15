@@ -80,6 +80,7 @@ foodcoopshop.Modal = {
     destroy : function(modalId, document) {
         $(modalId, document).remove();
         $('.modal-backdrop', document).remove();
+        $('body', document).removeClass('modal-open');
     },
     
     makeDraggable : function(elementId) {
