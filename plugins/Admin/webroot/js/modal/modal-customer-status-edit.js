@@ -67,7 +67,6 @@ foodcoopshop.ModalCustomerStatusEdit = {
             foodcoopshop.ModalCustomerStatusEdit.getSuccessHandler(customerId, newState, sendMail);
         });
 
-        
     }
 
 };

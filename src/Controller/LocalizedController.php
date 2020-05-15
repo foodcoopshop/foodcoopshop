@@ -294,7 +294,8 @@ class LocalizedController extends Controller
                 'ReallyDeleteImage' => __('Really_delete_image?'),
                 'rotateAntiClockwise' => __('rotate_anti_clockwise?'),
                 'rotateClockwise' => __('rotate_clockwise?'),
-                'ChangeGeneralTermsAndConditions' => __('Change_general_terms_and_conditions')
+                'ChangeGeneralTermsAndConditions' => __('Change_general_terms_and_conditions'),
+                'PleaseUploadAnImage' => __('Please_upload_an_image.'),
             ],
             
             'syncBase' => [

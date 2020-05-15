@@ -175,7 +175,7 @@ class AppController extends Controller
     }
 
     /**
-     * can be used for returning exceptions as json
+     * can be used for returning exceptions as json or multipart/form-data
      * try {
      *      $this->foo->bar();
      *  } catch (Exception $e) {
@@ -185,15 +185,13 @@ class AppController extends Controller
      */
     protected function sendAjaxError($error)
     {
-        if ($this->getRequest()->is('json')) {
-            $this->getResponse()->withStatus(500);
-            $response = [
-                'status' => APP_OFF,
-                'msg' => $error->getMessage()
-            ];
-            $this->set(compact('response'));
-            $this->render('/Error/errorjson');
-        }
+        $this->getResponse()->withStatus(500);
+        $response = [
+            'status' => APP_OFF,
+            'msg' => $error->getMessage()
+        ];
+        $this->set(compact('response'));
+        $this->render('/Error/errorjson');
     }
 
     /**

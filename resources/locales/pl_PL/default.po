@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-15 09:31+0200\n"
+"POT-Creation-Date: 2020-05-15 16:04+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1360,6 +1360,10 @@ msgstr "obrócić zgodnie z ruchem wskazówek zegara?"
 msgid "Change_general_terms_and_conditions"
 msgstr "Zmień regulamin"
 
+# Please upload an image.
+msgid "Please_upload_an_image."
+msgstr "Zamieść obraz."
+
 msgid "Username_or_password_is_wrong._Please_check_that_there_are_no_special_characters_in_your_password."
 msgstr ""
 
@@ -2238,10 +2242,6 @@ msgstr "usuń"
 # New product of
 msgid "New_product_of"
 msgstr "Nowy produkt od"
-
-# Please upload an image.
-msgid "Please_upload_an_image."
-msgstr "Zamieść obraz."
 
 # The quantity needs to be a number.
 msgid "The_quantity_needs_to_be_a_number."

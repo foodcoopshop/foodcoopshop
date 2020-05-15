@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-05-15 09:31+0200\n"
+"POT-Creation-Date: 2020-05-15 16:04+0200\n"
 "PO-Revision-Date: 2020-05-15 09:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1014,6 +1014,9 @@ msgstr "im Uhrzeigersinn drehen?"
 msgid "Change_general_terms_and_conditions"
 msgstr "AGB ändern"
 
+msgid "Please_upload_an_image."
+msgstr "Bitte lade ein Bild hoch."
+
 msgid "Username_or_password_is_wrong._Please_check_that_there_are_no_special_characters_in_your_password."
 msgstr "E-Mail oder Passwort falsch. Bitte überprüfe, dass im Passwort keine Sonderzeichen (z.B. äöüß) vorkommen und ändere es gegebenfalls bei deiner Remote-Foodcoop."
 
@@ -1664,9 +1667,6 @@ msgstr "gelöscht"
 
 msgid "New_product_of"
 msgstr "Neues Produkt von"
-
-msgid "Please_upload_an_image."
-msgstr "Bitte lade ein Bild hoch."
 
 msgid "The_quantity_needs_to_be_a_number."
 msgstr "Der Lagerstand muss eine Zahl sein."

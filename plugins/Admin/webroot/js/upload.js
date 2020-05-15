@@ -77,15 +77,21 @@ foodcoopshop.Upload = {
         foodcoopshop.AppFeatherlight.closeLightbox();
     },
 
-    saveProductImage : function () {
+    saveProductImage : function (modalSelector) {
 
-        var filename = foodcoopshop.Helper.cutRandomStringOffImageSrc($('.featherlight-content form .drop img').attr('src'));
+        var image = $(modalSelector + ' form .drop img');
+        if (image.length == 0) {
+            foodcoopshop.Modal.appendFlashMessage(modalSelector, foodcoopshop.LocalizedJs.upload.PleaseUploadAnImage);
+            foodcoopshop.Modal.resetButtons(modalSelector);
+            return;
+        }
+        var filename = foodcoopshop.Helper.cutRandomStringOffImageSrc(image.attr('src'));
 
         foodcoopshop.Helper.ajaxCall(
             '/admin/products/saveUploadedImageProduct'
             ,
             {
-                objectId : $('.featherlight-content form').data('objectId'),
+                objectId : $(modalSelector + ' form').data('objectId'),
                 filename: filename
             }
             ,
@@ -100,31 +106,17 @@ foodcoopshop.Upload = {
 
     },
 
+    loadImageSrcFromDataAttribute : function (container) {
+        var img = $(container + ' .existingImage');
+        if (img.attr('src') != img.data('src')) {
+            img.on('load', function () {
+                $(this).removeClass('loading');
+            }).attr('src', img.data('src'));
+        }
+    },
+
     initImageUpload : function (button, saveMethod, closeMethod) {
-
-        $(button).each(function () {
-
-            var objectId = $(this).data('objectId');
-            var imageUploadForm = $('form#mini-upload-form-image-' + objectId);
-
-            $(this).featherlight(
-                foodcoopshop.AppFeatherlight.initLightboxForForms(
-                    function () {
-                        saveMethod();
-                    },
-                    function () {
-                        foodcoopshop.AppFeatherlight.disableSaveButton();
-                        foodcoopshop.AppFeatherlight.loadImageSrcFromDataAttribute();
-                    },
-                    closeMethod,
-                    imageUploadForm
-                )
-            );
-
-            foodcoopshop.Upload.initUploadButtonImage($(this));
-
-        });
-
+        foodcoopshop.ModalImageUpload.init(button, saveMethod, closeMethod);
     },
 
     initFileUpload : function (button, saveMethod, closeMethod) {
@@ -267,116 +259,112 @@ foodcoopshop.Upload = {
         }
     },
 
-    initUploadButtonImage : function (container) {
+    initUploadButtonImage : function (modalSelector, imageUploadForm, objectId) {
 
-        $(container).on('click', function () {
-
-            var objectId = $(this).data('objectId');
-            var imageUploadForm = $('form#mini-upload-form-image-' + objectId);
-
-            var buttons = {};
-            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
-            buttons['yes'] = {
-                text: foodcoopshop.LocalizedJs.helper.yes,
-                click: function() {
-                    $('.ui-dialog .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-                    document.location.href = '/admin/products/deleteImage/' + objectId;
-                }
-            };
-
-            // bind delete button
-            if (imageUploadForm.find('a.img-delete').length == 0) {
-                if (imageUploadForm.find('img.existingImage').length == 1) {
-                    $('<a title="' + foodcoopshop.LocalizedJs.upload.delete + '" class="modify-icon img-delete" href="javascript:void(0);"><i class="fas fa-times-circle not-ok"></i></a>').appendTo(imageUploadForm.find('.drop'));
-                    imageUploadForm.find('a.img-delete').on('click', function (e) {
-                        e.preventDefault();
-                        $('<div></div>').appendTo('body')
-                            .html('<p>' + foodcoopshop.LocalizedJs.upload.ReallyDeleteImage + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
-                            .dialog({
-                                modal: true,
-                                title: foodcoopshop.LocalizedJs.upload.DeleteImage,
-                                autoOpen: true,
-                                width: 400,
-                                resizable: false,
-                                buttons: buttons,
-                                close: function (event, ui) {
-                                    $(this).remove();
-                                }
-                            });
-                    });
-                }
+        var buttons = {};
+        buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
+        buttons['yes'] = {
+            text: foodcoopshop.LocalizedJs.helper.yes,
+            click: function() {
+                $('.ui-dialog .ajax-loader').show();
+                $('.ui-dialog button').attr('disabled', 'disabled');
+                document.location.href = '/admin/products/deleteImage/' + objectId;
             }
+        };
 
-            var ul = imageUploadForm.find('ul');
+        // bind delete button
+        if (imageUploadForm.find('a.img-delete').length == 0) {
+            if (imageUploadForm.find('img.existingImage').length == 1) {
+                $('<a title="' + foodcoopshop.LocalizedJs.upload.delete + '" class="modify-icon img-delete" href="javascript:void(0);"><i class="fas fa-times-circle not-ok fa-lg"></i></a>').appendTo(imageUploadForm.find('.drop'));
+                imageUploadForm.find('a.img-delete').on('click', function (e) {
+                    e.preventDefault();
+                    $('<div></div>').appendTo('body')
+                        .html('<p>' + foodcoopshop.LocalizedJs.upload.ReallyDeleteImage + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
+                        .dialog({
+                            modal: true,
+                            title: foodcoopshop.LocalizedJs.upload.DeleteImage,
+                            autoOpen: true,
+                            width: 400,
+                            resizable: false,
+                            buttons: buttons,
+                            close: function (event, ui) {
+                                $(this).remove();
+                            }
+                        });
+                });
+            }
+        }
 
-            var button = imageUploadForm.find('.drop a.upload-button');
-            button.off('click');
-            button.on('click', function () {
-                // Simulate a click on the file input button to show the file browser dialog
-                $(this).parent().find('input').trigger('click');
-            });
+        var ul = imageUploadForm.find('ul');
+        
+        var button = imageUploadForm.find('.drop a.upload-button');
+        button.off('click');
+        button.on('click', function () {
+            // Simulate a click on the file input button to show the file browser dialog
+            $(this).parent().find('input').trigger('click');
+        });
+        
 
-            // Initialize the jQuery File Upload plugin
-            imageUploadForm.fileupload({
+        // Initialize the jQuery File Upload plugin
+        imageUploadForm.fileupload({
 
-                // This element will accept file drag/drop uploading
-                dropZone: imageUploadForm.find('.drop'),
+            // This element will accept file drag/drop uploading
+            dropZone: imageUploadForm.find('.drop'),
 
-                autoUpload: false,
+            autoUpload: false,
 
-                add: function (e, data) {
-                    foodcoopshop.Upload.fileUploadAdd(e, data, ul);
-                },
+            add: function (e, data) {
+                foodcoopshop.Upload.fileUploadAdd(e, data, ul);
+            },
 
-                progress: foodcoopshop.Upload.fileUploadProgress,
+            progress: foodcoopshop.Upload.fileUploadProgress,
 
-                done: function (e, data) {
+            done: function (e, data) {
+
+                imageUploadForm.find('ul li').remove();
+                imageUploadForm.find('img.uploadedImage').remove();
+                imageUploadForm.find('.modify-icon').remove();
+
+                var result = data.result;
+                if (result.status) {
+                    var container = imageUploadForm.find('.drop');
+                    container.find('img').remove();
+                    container.prepend($('<img />').
+                        attr('src', result.filename).
+                        addClass('uploadedImage'));
+                    container.append('<a title="' + foodcoopshop.LocalizedJs.upload.rotateAntiClockwise + '" class="modify-icon img-rotate-acw" href="javascript:void(0);"><i class="fas fa-undo fa-lg"></a>');
+                    container.append('<a title="' + foodcoopshop.LocalizedJs.upload.rotateClockwise + '" class="modify-icon img-rotate-cw" href="javascript:void(0);"><i class="fas fa-redo fa-lg"></a>');
+
+                    container.find('.img-rotate-acw').on('click', function () {
+                        foodcoopshop.Upload.rotateImage($(this), 'CW'); //SIC
+                    });
+
+                    container.find('.img-rotate-cw').on('click', function () {
+                        foodcoopshop.Upload.rotateImage($(this), 'ACW'); //SIC
+                    });
 
                     imageUploadForm.find('ul li').remove();
-                    imageUploadForm.find('img.uploadedImage').remove();
-                    imageUploadForm.find('.modify-icon').remove();
-
-                    var result = data.result;
-                    if (result.status) {
-                        var container = imageUploadForm.find('.drop');
-                        container.find('img').remove();
-                        container.prepend($('<img />').
-                            attr('src', result.filename).
-                            addClass('uploadedImage'));
-                        container.append('<a title="' + foodcoopshop.LocalizedJs.upload.rotateAntiClockwise + '" class="modify-icon img-rotate-acw" href="javascript:void(0);"><i class="fas fa-undo"></a>');
-                        container.append('<a title="' + foodcoopshop.LocalizedJs.upload.rotateClockwise + '" class="modify-icon img-rotate-cw" href="javascript:void(0);"><i class="fas fa-redo"></a>');
-
-                        container.find('.img-rotate-acw').on('click', function () {
-                            foodcoopshop.Upload.rotateImage($(this), 'CW'); //SIC
-                        });
-
-                        container.find('.img-rotate-cw').on('click', function () {
-                            foodcoopshop.Upload.rotateImage($(this), 'ACW'); //SIC
-                        });
-
-                        imageUploadForm.find('ul li').remove();
-                        imageUploadForm.find('button.deleteImage').remove();
-                        foodcoopshop.AppFeatherlight.enableSaveButton();
-                    } else {
-                        imageUploadForm.find('ul li').remove();
-                        alert(result.msg);
-                    }
-                },
-
-                fail: function (e, data) {
-                    // Something has gone wrong!
-                    data.context.addClass('error');
+                    imageUploadForm.find('button.deleteImage').remove();
+                    foodcoopshop.AppFeatherlight.enableSaveButton();
+                } else {
+                    imageUploadForm.find('ul li').remove();
+                    foodcoopshop.Modal.appendFlashMessage(modalSelector, $.parseJSON(result).msg);
+                    foodcoopshop.Modal.resetButtons(modalSelector);
                 }
+            },
 
-            });
-
-            // Prevent the default action when a file is dropped on the window
-            $(document).on('drop dragover', function (e) {
-                e.preventDefault();
-            });
+            fail: function (e, data) {
+                // Something has gone wrong!
+                data.context.addClass('error');
+            }
 
         });
+
+        // Prevent the default action when a file is dropped on the window
+        $(document).on('drop dragover', function (e) {
+            e.preventDefault();
+        });
+
     },
 
     rotateImage : function (button, direction) {

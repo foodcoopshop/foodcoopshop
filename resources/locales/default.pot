@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-15 09:31+0200\n"
+"POT-Creation-Date: 2020-05-15 16:04+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1013,6 +1013,9 @@ msgstr ""
 msgid "Change_general_terms_and_conditions"
 msgstr ""
 
+msgid "Please_upload_an_image."
+msgstr ""
+
 msgid "Username_or_password_is_wrong._Please_check_that_there_are_no_special_characters_in_your_password."
 msgstr ""
 
@@ -1662,9 +1665,6 @@ msgid "deleted"
 msgstr ""
 
 msgid "New_product_of"
-msgstr ""
-
-msgid "Please_upload_an_image."
 msgstr ""
 
 msgid "The_quantity_needs_to_be_a_number."

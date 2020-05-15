@@ -14,7 +14,7 @@
  */
 ?>
 <form data-object-id="<?php echo $id; ?>" id="mini-upload-form-image-<?php echo $id ?>" class="hide mini-upload-form mini-upload-form-image" method="post" action="<?php echo $action; ?>" enctype="multipart/form-data">
-    <p class="heading">
+    <p class="heading hide">
         <?php if ($imageExists) { ?>
             <?php echo __('Replace_existing_image'); ?>
         <?php } else { ?>
@@ -25,7 +25,7 @@
         <?php if ($imageExists) { ?>
             <?php echo '<img class="existingImage loading" src="/img/ajax-loader.gif" data-src="' . $existingImageSrc . '" />'; ?>
         <?php } ?>
-        <p style="font-size:13px;"><?php echo __('Image_upload_legal_hint.'); ?></p>
+        <p><?php echo __('Image_upload_legal_hint.'); ?></p>
         <a class="upload-button"><?php echo __('Search_PC'); ?></a>
         <input type="file" name="upload"  accept="image/jpeg" />
     </div>

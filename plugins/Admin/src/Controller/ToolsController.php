@@ -4,11 +4,8 @@ namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
-use Cake\Filesystem\File;
 
 /**
- * ToolsController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -84,14 +81,17 @@ class ToolsController extends AdminAppController
         $filenameWithPath = Configure::read('app.tmpUploadImagesDir') . DS . $filename;
         $upload->moveTo(WWW_ROOT . $filenameWithPath);
         
-        Image::make(WWW_ROOT . $filenameWithPath) 
-            ->widen($this->getMaxTmpUploadFileSize())
-            ->save(WWW_ROOT . $filenameWithPath);
-
-        $this->set([
-            'status' => 1,
-            'filename' => $filenameWithPath,
-        ]);
+        try {
+            Image::make(WWW_ROOT . $filenameWithPath)
+                ->widen($this->getMaxTmpUploadFileSize())
+                ->save(WWW_ROOT . $filenameWithPath);
+                $this->set([
+                    'status' => 1,
+                    'filename' => $filenameWithPath,
+                ]);
+        } catch(\Exception $e) {
+            $this->sendAjaxError($e);
+        }
         $this->viewBuilder()->setOption('serialize', ['status', 'filename']);
     }
 

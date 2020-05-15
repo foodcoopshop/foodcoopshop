@@ -1,0 +1,119 @@
+/**
+ * FoodCoopShop - The open source software for your foodcoop
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @since         FoodCoopShop 1.0.0
+ * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @author        Mario Rothauer <office@foodcoopshop.com>
+ * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
+ * @link          https://www.foodcoopshop.com
+ */
+.modal .mini-upload-form {
+    display: block ! important;
+    width: 100%;
+}
+.modal .mini-upload-form .drop {
+    position: relative;
+    min-height: 250px;
+    margin-bottom: 15px;
+    background: none;
+    padding: 0;
+    border: none;
+}
+.modal .mini-upload-form-file .drop {
+    padding-top: 20px;
+    min-height: 230px;
+}
+.modal .mini-upload-form .drop a.upload-button:hover {
+    opacity: 0.8;
+    color: #fff;
+}
+.modal .mini-upload-form  ul li {
+    background: rgba(0,100,0,0.3);
+    list-style-type: none;
+    margin-bottom: 5px;
+    padding: 5px;
+    padding-bottom: 0;
+}
+.modal .mini-upload-form  ul li p {
+    float: right;
+    margin-top: 17px;
+}
+.modal .mini-upload-form  ul li div {
+    position: relative;
+}
+.modal .mini-upload-form  ul li div,
+.modal .mini-upload-form .drop img.existingImage,
+.modal .mini-upload-form .drop img.uploadedImage {
+    width: 100%;
+    margin-bottom: 10px;
+}
+.modal .mini-upload-form .drop img.existingImage.loading {
+  padding: 20px 118px;
+}
+.modal .mini-upload-form p.heading {
+    font-size: 16px;
+    margin-top: -26px;
+    font-weight: bold;
+}
+.modal .mini-upload-form .modify-icon {
+    position: absolute;
+    top: 0px;
+    border: 1px solid transparent;
+    padding: 10px;
+    line-height: 10px;
+}
+.modal .mini-upload-form .modify-icon {
+    border: 1px solid black;
+    background: white;
+}
+.modal .mini-upload-form .modify-icon:hover {
+    background: #ccc;
+}
+.modal .mini-upload-form .img-rotate-acw {
+    left: 0px;
+}
+.modal .mini-upload-form .img-rotate-cw {
+    left: 42px;
+}
+.modal .mini-upload-form .img-delete {
+    right: 0px;
+}
+.add-image-button {
+    float: left;
+}
+body.manufacturers.index span.email {
+    word-wrap: break-word;
+}
+body.manufacturers a.uploaded,
+body.blog_posts a.uploaded,
+body.categories a.uploaded,
+body.customers a.uploaded {
+    float: left;
+    margin-top: 2px; /* layout fix: top line was not shown */
+}
+body.manufacturers a.uploaded img,
+body.customers a.uploaded img {
+    width: 237px;
+    height: auto;
+}
+body.blog_posts a.uploaded img {
+    width: 245px;
+    height: auto;
+}
+body.categories a.uploaded img,
+body.sliders a.uploaded img {
+    width: auto;
+    max-width: 758px;
+    height: auto;
+}
+body.manufacturers form.mini-upload-form a.img-delete,
+body.blog_posts form.mini-upload-form a.img-delete,
+body.categories form.mini-upload-form a.img-delete,
+body.sliders form.mini-upload-form a.img-delete,
+body.customers form.mini-upload-form a.img-delete {
+    display: none;
+}
