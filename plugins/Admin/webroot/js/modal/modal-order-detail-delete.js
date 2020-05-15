@@ -120,7 +120,7 @@ foodcoopshop.ModalOrderDetailDelete = {
         
         $(modalSelector).modal();
 
-        modalHtml = infoText;
+        var modalHtml = infoText;
         
         if (!foodcoopshop.Helper.isManufacturer) {
             modalHtml += '<p class="overlay-info">' + foodcoopshop.LocalizedJs.admin.PleaseOnlyCancelIfOkForManufacturer + '</p>';
