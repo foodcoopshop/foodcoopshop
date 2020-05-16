@@ -75,7 +75,7 @@ foodcoopshop.ModalCustomerCommentEdit = {
     
     getOpenHandler : function(button, modalSelector) {
         
-        $('.tooltipster-base ').remove(); // on mobile tooltipster is triggered on click - interferes with ckeditor
+        foodcoopshop.Modal.removeTooltipster();
         
         $(modalSelector).modal();
 

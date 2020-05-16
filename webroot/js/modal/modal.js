@@ -32,6 +32,13 @@ foodcoopshop.Modal = {
         foodcoopshop.Helper.showErrorMessage(message);
         $(selector + ' .modal-header').after($('#flashMessage'));
     },
+    
+    /**
+     * on mobile tooltipster is triggered on click - interferes with ckeditor
+     */
+    removeTooltipster : function() {
+        $('.tooltipster-base ').remove();
+    },
 
     createButton: function(classes, title, faIcon, isCloseButton) {
         var buttonHtml = '<button type="button" class="btn ' + classes.join(' ') + '"';

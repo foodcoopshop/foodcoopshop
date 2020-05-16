@@ -54,7 +54,7 @@ foodcoopshop.ModalUploadForm = {
 
     getOpenHandler : function(button, modalSelector, html, uploadType) {
         
-        $('.tooltipster-base ').remove(); // on mobile tooltipster is triggered on click - interferes with ckeditor
+        foodcoopshop.Modal.removeTooltipster();
 
         // avoid double id in dom
         $(modalSelector + ' .modal-body').append(html);
