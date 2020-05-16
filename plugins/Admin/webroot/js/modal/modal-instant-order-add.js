@@ -48,6 +48,10 @@ foodcoopshop.ModalInstantOrderAdd = {
         );
     },
     
+    onWindowResize: function(iframe) {
+        iframe.css('height', $(window).height() - 120);
+    },
+    
     getOpenHandler : function(button, modalSelector) {
         
         $(modalSelector).modal();
@@ -79,9 +83,13 @@ foodcoopshop.ModalInstantOrderAdd = {
         var iframe = $('<iframe></iframe>');
         iframe.attr('src', foodcoopshop.Helper.cakeServerName + '/admin/order-details/iframeStartPage');
         iframe.css('width', '100%');
-        iframe.css('height', '100%');
         iframe.css('border', 'none');
         $(modalSelector + ' .modal-body').append(iframe);
+        
+        $(window).on('resize', function () {
+            foodcoopshop.ModalInstantOrderAdd.onWindowResize(iframe);
+        });
+        foodcoopshop.ModalInstantOrderAdd.onWindowResize(iframe);
 
         $(modalSelector + ' iframe').on('load', function () {
             // called after each url change in iframe!
