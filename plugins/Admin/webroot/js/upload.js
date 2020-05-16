@@ -173,6 +173,7 @@ foodcoopshop.Upload = {
             done: function (e, data) {
 
                 fileUploadForm.find('ul li').remove();
+                foodcoopshop.Helper.removeFlashMessage();
                 
                 var result = data.result;
                 if (result.status) {
@@ -184,7 +185,6 @@ foodcoopshop.Upload = {
                         attr('target', '_blank').
                         text(result.text));
                     fileUploadForm.find('ul li').remove();
-                    foodcoopshop.AppFeatherlight.enableSaveButton();
                 } else {
                     fileUploadForm.find('ul li').remove();
                     foodcoopshop.Modal.appendFlashMessage(modalSelector, result.msg);
@@ -299,6 +299,7 @@ foodcoopshop.Upload = {
                 imageUploadForm.find('ul li').remove();
                 imageUploadForm.find('img.uploadedImage').remove();
                 imageUploadForm.find('.modify-icon').remove();
+                foodcoopshop.Helper.removeFlashMessage();
 
                 var result = data.result;
                 if (result.status) {
