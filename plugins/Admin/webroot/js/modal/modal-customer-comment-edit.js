@@ -38,7 +38,8 @@ foodcoopshop.ModalCustomerCommentEdit = {
     },
         
     getHtml : function() {
-        var html = '<div class="textarea-wrapper">';
+        var html = '<label>' + foodcoopshop.LocalizedJs.admin.Member + ': <b></b></label>';
+        html += '<div class="textarea-wrapper">';
         html += '<textarea class="ckeditor" name="dialogCustomerComment" id="dialogCustomerComment"></textarea>';
         html += '</div>';
         html += '<input type="hidden" name="dialogCustomerId" id="dialogCustomerId" value="" />';
@@ -86,8 +87,14 @@ foodcoopshop.ModalCustomerCommentEdit = {
             text = '';
         }
         
+        var customerId = button.closest('tr').find('td:nth-child(2)').html();
+        var customerName = button.closest('tr').find('td.name').text();
+        
         CKEDITOR.instances['dialogCustomerComment'].setData(text);
-        $('#customer-comment-edit-form #dialogCustomerId').val(button.closest('tr').find('td:nth-child(2)').html());
+        $(modalSelector + ' #dialogCustomerId').val(customerId);
+        
+        $(modalSelector + ' #dialogCustomerId').val(customerId);
+        $(modalSelector + ' label b').html(customerName);
         
     }
 
