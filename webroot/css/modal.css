@@ -50,9 +50,11 @@
 #instant-order-add .modal-content {
     height: 100%;
 }
-#instant-order-add .modal-body,
-#instant-order-add .modal-footer {
+#instant-order-add .modal-body {
     padding: 0;
+}
+#instant-order-add .modal-footer {
+	display: none;
 }
 #instant-order-add .bootstrap-select {
 	width: 300px ! important;
