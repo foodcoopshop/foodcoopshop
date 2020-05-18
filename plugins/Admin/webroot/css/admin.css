@@ -695,8 +695,6 @@ body.payments .bottom-button-container {
 #customer-group-edit-form {
     margin-top: 10px;
 }
-#order-detail-product-price-edit-form input[type="number"],
-#order-detail-product-price-edit-form input[type="text"],
 #product-price-edit-form input[type="text"],
 #product-price-edit-form input[type="number"],
 #product-price-edit-form input[type="text"],
@@ -708,11 +706,6 @@ body.payments .bottom-button-container {
     margin-right: 5px;
     text-align: right;
     width: 70px;
-}
-#order-detail-product-price-edit-form .price-per-unit-info-text {
-	color:red;
-	float:left;
-	margin-bottom:5px;
 }
 #product-price-edit-form input#dialogPriceUnitName {
 	text-align: left;

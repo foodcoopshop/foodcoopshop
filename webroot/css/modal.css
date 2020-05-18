@@ -88,7 +88,8 @@ body.iframe_start_page {
 }
 #customer-comment-edit-form .cke,
 #pickup-day-comment-edit-form .cke,
-#order-detail-delete .cke {
+#order-detail-delete .cke,
+#order-detail-product-price-edit-form .cke {
     width: 100% ! important;
 }
 .modal.add-payment-form label {
@@ -109,10 +110,16 @@ body.iframe_start_page {
     margin-right: 5px;
 }
 #order-detail-product-quantity-edit-form input[type="number"],
+#order-detail-product-price-edit-form input[type="number"],
 .modal.add-payment-form input[type="number"] {
     margin-bottom: 5px;
     margin-right: 5px;
     font-size: 30px;
     width: 130px;
     text-align: right;
+}
+#order-detail-product-price-edit-form .price-per-unit-info-text {
+    color:red;
+    float:left;
+    margin-bottom:5px;
 }

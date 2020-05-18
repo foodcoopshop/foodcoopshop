@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-05-15 16:04+0200\n"
-"PO-Revision-Date: 2020-05-15 09:31+0200\n"
+"POT-Creation-Date: 2020-05-18 10:35+0200\n"
+"PO-Revision-Date: 2020-05-18 10:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -557,6 +557,9 @@ msgstr "Um das Gewicht anzupassen, ändere bitte den Wert \"Gewicht\" zwei Spalt
 
 msgid "Why_is_price_adapted_(mandatory_field)?"
 msgstr "Warum wird der Preis angepasst (Pflichtfeld)?"
+
+msgid "Please_enter_a_price."
+msgstr "Bitte gib einen Preis ein."
 
 msgid "Original_price_without_reduction_of_price_in_time"
 msgstr "Original-Preis ohne Abzug von Betrag in Zeit"

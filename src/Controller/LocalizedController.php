@@ -134,6 +134,7 @@ class LocalizedController extends Controller
                 'orderedBy' => __('ordered_by'),
                 'ExplainationTextApdaptPriceFormApaptWeight' => __('Explaination_text_apdapt_price_form_apapt_weight.'),
                 'WhyIsPriceAdapted' => __('Why_is_price_adapted_(mandatory_field)?'),
+                'PleaseEnterAPrice' => __('Please_enter_a_price.'),
                 'OriginalPriceWithoutReductionOfPriceInTime' => __('Original_price_without_reduction_of_price_in_time'),
                 'FromWhichReallyPaidIn' => __('From_which_really_paid_in'),
                 'AdaptWeight' => __('Adapt_weight?'),
