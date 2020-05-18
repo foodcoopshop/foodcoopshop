@@ -109,7 +109,7 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
 
         var row = button.closest('tr');
         var orderDetailId = row.find('td:nth-child(2)').html();
-        var price = foodcoopshop.Helper.getCurrencyAsFloat(row.find('td:nth-child(6) span.product-price-for-dialog').html());
+        var price = foodcoopshop.Helper.getCurrencyAsFloat(row.find('td:nth-child(6) span.product-price-for-dialog').html()).toFixed(2);
         var productPriceField = $(modalSelector + ' #dialogOrderDetailProductPricePrice');
 
         $(modalSelector + ' #dialogOrderDetailProductPriceOrderDetailId').val(orderDetailId);
