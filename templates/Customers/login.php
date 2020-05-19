@@ -100,22 +100,18 @@ $this->element('addScript', ['script' =>
                       echo $this->Form->control('Customers.firstname', [
                           'label' => __('Firstname'),
                           'required' => true, // required should not be necessary here
-                          'maxLength' => NAME_MAX_CHARS,
                       ]);
                       echo $this->Form->control('Customers.lastname', [
                           'label' => __('Lastname'),
                           'required' => true, // required should not be necessary here
-                          'maxLength' => NAME_MAX_CHARS,
                       ]);
     
                       echo $this->Form->control('Customers.address_customer.address1', [
                           'label' => __('Street'),
-                          'maxLength' => STREET_MAX_CHARS,
                       ]);
                       echo $this->Form->control('Customers.address_customer.address2', [
                           'label' => __('Additional_address_information'),
                           'required' => false,
-                          'maxLength' => STREET_MAX_CHARS,
                       ]);
     
                       echo $this->Form->control('Customers.address_customer.postcode', ['label' => __('Zip')]);
