@@ -275,7 +275,7 @@ echo '<td colspan="2"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} oth
 echo '<td><b>' . $sumProductCount . '</b></td>';
 $colspan = 8;
 echo '<td>';
-    if ($sumDeposit > 0) {
+    if ($sumDeposit <> 0) {
         echo '<b class="' . ($sumDeposit < 0 ? 'negative' : '') . '">'.$this->Number->formatAsCurrency($sumDeposit) . '</b>';
     }
 echo '</td>';

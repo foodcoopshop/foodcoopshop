@@ -30,8 +30,6 @@ define('CUSTOMER_GROUP_ADMIN', 4);
 define('CUSTOMER_GROUP_SUPERADMIN', 5);
 
 define('MAX_CART_PRODUCT_AMOUNT', 250);
-define('NAME_MAX_CHARS', 32);
-define('STREET_MAX_CHARS', 128);
 define('PHONE_REGEX', '/^[0-9 ()+-\/]{7,20}$/');
 define('ZIP_REGEX', '/^[0-9]{4,5}$/');
 define('BIC_REGEX', '/^[a-z]{6}[2-9a-z][0-9a-np-z]([a-z0-9]{3}|x{3})?$/i');

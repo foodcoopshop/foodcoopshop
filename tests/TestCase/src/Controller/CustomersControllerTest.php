@@ -43,6 +43,12 @@ class CustomersControllerTest extends AppCakeTestCase
         
     }
     
+    public function testMaxlengthAttributeExistsInRegistrationPage()
+    {
+        $this->httpClient->get($this->Slug->getLogin());
+        $this->assertRegExpWithUnquotedString('maxlength="32"', $this->httpClient->getContent());
+    }
+    
     public function testProfileImagePrivacyForGuests()
     {
         $profileImageTargetFilename = $this->setUpProfileImageTests();
