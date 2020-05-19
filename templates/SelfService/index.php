@@ -80,6 +80,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         echo $this->Form->create($cart, [
             'class' => 'fcs-form',
             'id' => 'SelfServiceForm',
+            'novalidate' => 'novalidate',
             'url' => $this->Slug->getSelfService()
         ]);
         echo $this->element('cart/generalTermsAndConditionsCheckbox');
