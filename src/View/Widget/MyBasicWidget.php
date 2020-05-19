@@ -22,15 +22,30 @@ class MyBasicWidget extends BasicWidget
 
     public function render(array $data, ContextInterface $context): string
     {
-        $data += [
-            'name' => '',
-            'val' => null,
-            'type' => 'text',
-            'escape' => true,
-            'templateVars' => []
-        ];
+
+        $data = $this->mergeDefaults($data, $context);
+
         $data['value'] = $data['val'];
-        
+        unset($data['val']);
+
+        $fieldName = $data['fieldName'] ?? null;
+        if ($fieldName) {
+            if (
+                $data['type'] === 'number'
+                && !isset($data['step'])
+            ) {
+                $data = $this->setStep($data, $context, $fieldName);
+            }
+
+            $typesWithMaxLength = ['text', 'email', 'tel', 'url', 'search'];
+            if (
+                !array_key_exists('maxlength', $data)
+                && in_array($data['type'], $typesWithMaxLength, true)
+                ) {
+                    $data = $this->setMaxLength($data, $context, $fieldName);
+            }
+        }
+
         // since HtmlPurifier converts all database updates to htmlspecialchars (eg. & => &amp;, > => &lt;)
         // they need to be reconverted for being displayed properly in form inputs
         $data['value'] = html_entity_decode($data['value']);
@@ -44,6 +59,7 @@ class MyBasicWidget extends BasicWidget
                 ['name', 'type']
             ),
         ]);
+
     }
 
 }
