@@ -49,7 +49,11 @@ class CategoriesTable extends AppTable
             if (! $item->active) {
                 $statusString = ' ('.__('offline').')';
             }
-            $this->flattenedArray[$item->id_category] = $separator . $item->name . $statusString;
+            $parentIdString = '';
+            if ($item->id_parent > 0) {
+                $parentIdString = '<span class="parent-id hide">' . $item->id_parent . '</span>';
+            }
+            $this->flattenedArray[$item->id_category] = $separator . $item->name . $statusString . $parentIdString;
             if (! empty($item['children'])) {
                 $this->flattenNestedArrayWithChildren($item->children, str_repeat('-', $this->getLevel($item) + 1) . ' ');
             }

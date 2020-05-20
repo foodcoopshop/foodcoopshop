@@ -283,7 +283,8 @@ use Cake\Core\Configure;
         echo $this->Form->control('Products.CategoryProducts', [
             'label' => '',
             'multiple' => 'checkbox',
-            'options' => $categoriesForSelect
+            'options' => $categoriesForSelect,
+            'escape' => false,
         ]);
         echo '</div>';
         echo '<div class="tax-dropdown-wrapper">';
