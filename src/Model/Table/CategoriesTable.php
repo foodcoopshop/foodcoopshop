@@ -67,11 +67,12 @@ class CategoriesTable extends AppTable
             if ($item->id_parent > 0) {
                 $parentIdString = '<span class="parent-id hide">' . $item->id_parent . '</span>';
             }
+            $childrenIdsString = '';
             $childrenIds = $this->getChildrenIds($item);
             if (count($childrenIds) > 0) {
-                $parentIdString = '<span class="children-ids hide">' . join(',', $childrenIds) . '</span>';
+                $childrenIdsString = '<span class="children-ids hide">' . join(',', $childrenIds) . '</span>';
             }
-            $this->flattenedArray[$item->id_category] = $separator . $item->name . $statusString . $parentIdString;
+            $this->flattenedArray[$item->id_category] = $separator . $item->name . $statusString . $parentIdString . $childrenIdsString;
             if (! empty($item['children'])) {
                 $this->flattenNestedArrayWithChildren($item->children, str_repeat('-', $this->getLevel($item) + 1) . ' ');
             }
