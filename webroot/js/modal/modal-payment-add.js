@@ -118,7 +118,7 @@ foodcoopshop.ModalPaymentAdd = {
             // check if radio buttons are in deposit form or product form
             var message;
             var isDepositForm;
-            if ($(modalSelector + ' .add-payment-form').hasClass('add-payment-deposit-form')) {
+            if (modalSelector == '#payment-deposit-add') {
                 message = foodcoopshop.LocalizedJs.admin.PleaseChoseTypeOfPayment;
                 isDepositForm = true;
             } else {
