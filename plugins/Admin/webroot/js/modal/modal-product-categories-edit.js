@@ -69,7 +69,6 @@ foodcoopshop.ModalProductCategoriesEdit = {
     },
 
     syncHigherParentElements: function(element) {
-        
         var parentIdContainer = element.find('span.parent-id').first();
         if (parentIdContainer.length > 0) {
             var parentId = parentIdContainer.text();
@@ -80,10 +79,13 @@ foodcoopshop.ModalProductCategoriesEdit = {
     },
     
     syncLowerParentElements: function(element) {
-        var nextLabel = element.closest('.checkbox').next().find('label');
-        if (nextLabel.text().match(/^-/)) {
-            this.syncLowerParentElements(nextLabel);
-            nextLabel.find('input').prop('checked', false);
+        var childrenIdsContainer = element.find('span.children-ids').first();
+        if (childrenIdsContainer.length > 0) {
+            var childrenIds = childrenIdsContainer.text().split(',');
+            for(var i=0;i<childrenIds.length;i++) {
+                var lowerParentElement = $('input[value="' + childrenIds[i] + '"]');
+                lowerParentElement.prop('checked', false);
+            }
         }
     },
 
