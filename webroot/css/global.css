@@ -464,9 +464,6 @@ pre {
     margin-top: 0;
     margin-left: 0;
 }
-.ui-dialog.logout-button {
-    z-index: 100000;
-}
 
 .accept-updated-terms-of-use-form {
     float: left;
@@ -635,19 +632,6 @@ tr.selected td > div > i.far {
 .featherlight-inner {
     min-width: 350px ! important;
     overflow-y: auto ! important;
-}
-.featherlight-content .add-payment-form label {
-    width: 100%;
-}
-.featherlight-content .add-payment-form .radio-wrapper {
-    width: 100%;
-    float: left;
-    margin-bottom: 10px;
-}
-.featherlight-content .add-payment-form .radio-wrapper label {
-    float: left;
-    width: auto;
-    margin-right: 5px;
 }
 .featherlight-content h3 {
     margin: 0;

@@ -24,6 +24,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace').".Admin.init();" .
             Configure::read('app.jsNamespace').".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');" .
             Configure::read('app.jsNamespace').".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" .
+            Configure::read('app.jsNamespace') . ".ModalPaymentAdd.initDepositInList();" . 
             Configure::read('app.jsNamespace').".Admin.selectMainMenuAdmin('".__d('admin', 'Orders')."');" .
             Configure::read('app.jsNamespace').".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");".
             Configure::read('app.jsNamespace').".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ");
@@ -33,9 +34,9 @@ use Cake\Core\Configure;
     if ($groupBy == '') {
         $this->element('addScript', [
             'script' =>
-            Configure::read('app.jsNamespace').".Admin.initDeleteOrderDetail();" .
-            Configure::read('app.jsNamespace').".Admin.initOrderDetailProductPriceEditDialog('#order-details-list');" .
-            Configure::read('app.jsNamespace').".Admin.initOrderDetailProductQuantityEditDialog('#order-details-list');" .
+            Configure::read('app.jsNamespace').".ModalOrderDetailDelete.init();" .
+            Configure::read('app.jsNamespace').".ModalOrderDetailProductPriceEdit.init();" .
+            Configure::read('app.jsNamespace').".ModalOrderDetailProductQuantityEdit.init();" .
             Configure::read('app.jsNamespace').".Admin.initOrderDetailCustomerEditDialog('#order-details-list');" .
             Configure::read('app.jsNamespace').".Admin.initOrderDetailProductAmountEditDialog('#order-details-list');"
         ]);
@@ -51,7 +52,7 @@ use Cake\Core\Configure;
         $this->element('addScript', [
             'script' =>
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.pickup-day-comment-edit-button');".
-            Configure::read('app.jsNamespace') . ".PickupDay.initPickupDayCommentEditDialog('#order-details-list');"
+            Configure::read('app.jsNamespace') . ".ModalPickupDayCommentEdit.init();"
         ]);
     }
     
@@ -315,7 +316,7 @@ echo '<div class="bottom-button-container">';
         'groupBy' => $groupBy
     ]);
     
-    echo $this->element('orderDetailList/button/cancelSelectedOrderDetails', [
+    echo $this->element('orderDetailList/button/deleteSelectedOrderDetails', [
         'deposit' => $deposit,
         'orderDetails' => $orderDetails,
         'groupBy' => $groupBy

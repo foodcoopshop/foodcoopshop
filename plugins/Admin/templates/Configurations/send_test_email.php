@@ -16,7 +16,11 @@
 use Cake\Core\Configure;
 
 $this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace') . ".Helper.showContent();" . Configure::read('app.jsNamespace') . ".Helper.initLogoutButton();" . Configure::read('app.jsNamespace') . ".Admin.setMenuFixed();" . Configure::read('app.jsNamespace') . ".Helper.initMenu();"
+    'script' => 
+        Configure::read('app.jsNamespace') . ".Helper.showContent();" . 
+        Configure::read('app.jsNamespace') . ".ModalLogout.init();" .
+        Configure::read('app.jsNamespace') . ".Admin.setMenuFixed();" .
+        Configure::read('app.jsNamespace') . ".Helper.initMenu();"
 ]);
 
 print_r($success);

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-06 10:33+0200\n"
-"PO-Revision-Date: 2020-04-16 12:08+0200\n"
+"POT-Creation-Date: 2020-05-18 10:35+0200\n"
+"PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: pl_PL\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.3.1\n"
 "X-Poedit-Bookmarks: 725,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 # Access denied, please sign in.
@@ -742,6 +742,11 @@ msgstr "Aby zmodyfikować wagę, zmień wartość w kolumnie \"waga\" po prawo. 
 msgid "Why_is_price_adapted_(mandatory_field)?"
 msgstr "Powód modyfikacji ceny (pole obowiązkowe)?"
 
+# Please enter a title.
+#, fuzzy
+msgid "Please_enter_a_price."
+msgstr "Podaj tytuł."
+
 # Original price without the reduction of price in time
 msgid "Original_price_without_reduction_of_price_in_time"
 msgstr "Oryginalna cena nie pomniejszona o płatności czasem"
@@ -780,8 +785,14 @@ msgid "Do_not_automatically_apapt_price_just_change_weight."
 msgstr "Nie modyfikuj automatycznie ceny, jedynie zmień wagę."
 
 # Really cancel the ordered product?
-msgid "Really_cancel_ordered_product?"
+#, fuzzy
+msgid "Really_delete_ordered_product?"
 msgstr "Na pewno anulować zamówienie produktu?"
+
+# Product declaration ok?
+#, fuzzy
+msgid "Product_cancellation"
+msgstr "Czy opis produktu jest poprawny?"
 
 # Do you really want to cancel product {0}?
 msgid "Do_you_really_want_to_cancel_product_{0}?"
@@ -795,20 +806,27 @@ msgstr "Na pewno anulować produkt {0} od producenta {1}?"
 msgid "Why_is_product_cancelled_(mandatory_field)?"
 msgstr "Dlaczego produkt anulowany (pole obowiązkowe)?"
 
+# Why is the product cancelled (mandatory)?
+#, fuzzy
+msgid "Why_are_products_cancelled_(mandatory_field)?"
+msgstr "Dlaczego produkt anulowany (pole obowiązkowe)?"
+
 # Cancel product!
 msgid "Yes_do_cancel_button!"
 msgstr "Anuluj produkt!"
-
-# Close
-msgid "Do_not_cancel_button"
-msgstr "Zamknij"
 
 # Please only cancel if this is ok for the manfacturer!
 msgid "Please_only_cancel_if_ok_for_manufacturer!"
 msgstr "Anuluj wyłącznie jeśli producent wyraża na to zgodę!"
 
 # Really cancel the selected products?
-msgid "Really_cancel_selected_products?"
+#, fuzzy
+msgid "Really_delete_selected_product?"
+msgstr "Na pewno anulować wybrane produkty?"
+
+# Really cancel the selected products?
+#, fuzzy
+msgid "Really_delete_selected_products?"
 msgstr "Na pewno anulować wybrane produkty?"
 
 # You selected 1 product
@@ -1346,6 +1364,10 @@ msgstr "obrócić zgodnie z ruchem wskazówek zegara?"
 # Change general terms and conditions
 msgid "Change_general_terms_and_conditions"
 msgstr "Zmień regulamin"
+
+# Please upload an image.
+msgid "Please_upload_an_image."
+msgstr "Zamieść obraz."
 
 msgid "Username_or_password_is_wrong._Please_check_that_there_are_no_special_characters_in_your_password."
 msgstr ""
@@ -2225,10 +2247,6 @@ msgstr "usuń"
 # New product of
 msgid "New_product_of"
 msgstr "Nowy produkt od"
-
-# Please upload an image.
-msgid "Please_upload_an_image."
-msgstr "Zamieść obraz."
 
 # The quantity needs to be a number.
 msgid "The_quantity_needs_to_be_a_number."
@@ -3235,6 +3253,10 @@ msgstr "złożone w dniu"
 # The prices include the VAT.
 msgid "Prices_are_including_vat."
 msgstr "Ceny zawierają podatek VAT."
+
+# Close
+#~ msgid "Do_not_cancel_button"
+#~ msgstr "Zamknij"
 
 # Please pick up the ordered products in our pick up store.
 #~ msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."

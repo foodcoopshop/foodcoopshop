@@ -134,6 +134,7 @@ class LocalizedController extends Controller
                 'orderedBy' => __('ordered_by'),
                 'ExplainationTextApdaptPriceFormApaptWeight' => __('Explaination_text_apdapt_price_form_apapt_weight.'),
                 'WhyIsPriceAdapted' => __('Why_is_price_adapted_(mandatory_field)?'),
+                'PleaseEnterAPrice' => __('Please_enter_a_price.'),
                 'OriginalPriceWithoutReductionOfPriceInTime' => __('Original_price_without_reduction_of_price_in_time'),
                 'FromWhichReallyPaidIn' => __('From_which_really_paid_in'),
                 'AdaptWeight' => __('Adapt_weight?'),
@@ -143,14 +144,16 @@ class LocalizedController extends Controller
                 'PriceIsAutomaticallyAdaptedAfterSave' => __('Price_is_automatically_adapted_after_save.'),
                 'FieldIsRedIfWeightNotYetAdapted' => __('The_field_is_red_if_weight_not_yet_adapted.'),
                 'DoNotAutomaticallyAdaptPriceJustChangeWeight' => __('Do_not_automatically_apapt_price_just_change_weight.'),
-                'ReallyCancelOrderedProduct' => __('Really_cancel_ordered_product?'),
+                'ReallyDeleteOrderedProduct' => __('Really_delete_ordered_product?'),
+                'ProductCancellation' => __('Product_cancellation'),
                 'DoYouReallyWantToCancelProduct0' => __('Do_you_really_want_to_cancel_product_{0}?'),
                 'DoYouReallyWantToCancelProduct0From1' => __('Do_you_really_want_to_cancel_product_{0}_from_{1}?'),
                 'WhyIsProductCancelled' => __('Why_is_product_cancelled_(mandatory_field)?'),
+                'WhyAreProductsCancelled' => __('Why_are_products_cancelled_(mandatory_field)?'),
                 'YesDoCancelButton' => __('Yes_do_cancel_button!'),
-                'DoNotCancelButton' => __('Do_not_cancel_button'),
                 'PleaseOnlyCancelIfOkForManufacturer' => __('Please_only_cancel_if_ok_for_manufacturer!'),
-                'ReallyCancelSelectedProducts' => __('Really_cancel_selected_products?'),
+                'ReallyDeleteSelectedProduct' => __('Really_delete_selected_product?'),
+                'ReallyDeleteSelectedProducts' => __('Really_delete_selected_products?'),
                 'YouSelectedOneProduct' => __('You_selected_1_product'),
                 'YouSelected0Products' => __('You_selected_{0}_products'),
                 'AdaptAmountReasonIsMandatory' => __('Adapt_amount_reason_is_mandatory.'),
@@ -235,7 +238,7 @@ class LocalizedController extends Controller
                 'WereTheProductsOfAllMembersPickedUp' => __('Were_the_products_of_all_members_picked_up?'),
                 'ChangePickupDayComment' => __('Change_pickup_day_comment')
             ],
-            'dialogCustomer' => [
+            'modalCustomer' => [
                 'ChangeMemberComment' => __('Change_member_comment'),
                 'ChangeGroup' => __('Change_group')
             ],
@@ -292,7 +295,8 @@ class LocalizedController extends Controller
                 'ReallyDeleteImage' => __('Really_delete_image?'),
                 'rotateAntiClockwise' => __('rotate_anti_clockwise?'),
                 'rotateClockwise' => __('rotate_clockwise?'),
-                'ChangeGeneralTermsAndConditions' => __('Change_general_terms_and_conditions')
+                'ChangeGeneralTermsAndConditions' => __('Change_general_terms_and_conditions'),
+                'PleaseUploadAnImage' => __('Please_upload_an_image.'),
             ],
             
             'syncBase' => [

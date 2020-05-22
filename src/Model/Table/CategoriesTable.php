@@ -42,6 +42,20 @@ class CategoriesTable extends AppTable
 
     private $flattenedArray = [];
 
+    private function getChildrenIds($item) {
+        $childrenIds = [];
+        if (!empty($item->children)) {
+            foreach($item->children as $child) {
+                $childrenIds[] = $child->id_category;
+                if (!empty($child->children)) {
+                    $childrenIds = array_merge($childrenIds, $this->getChildrenIds($child));
+                }
+            }
+        }
+        return $childrenIds;
+        
+    }
+    
     private function flattenNestedArrayWithChildren($array, $separator = '')
     {
         foreach ($array as $item) {
@@ -49,7 +63,16 @@ class CategoriesTable extends AppTable
             if (! $item->active) {
                 $statusString = ' ('.__('offline').')';
             }
-            $this->flattenedArray[$item->id_category] = $separator . $item->name . $statusString;
+            $parentIdString = '';
+            if ($item->id_parent > 0) {
+                $parentIdString = '<span class="parent-id hide">' . $item->id_parent . '</span>';
+            }
+            $childrenIdsString = '';
+            $childrenIds = $this->getChildrenIds($item);
+            if (count($childrenIds) > 0) {
+                $childrenIdsString = '<span class="children-ids hide">' . join(',', $childrenIds) . '</span>';
+            }
+            $this->flattenedArray[$item->id_category] = $separator . $item->name . $statusString . $parentIdString . $childrenIdsString;
             if (! empty($item['children'])) {
                 $this->flattenNestedArrayWithChildren($item->children, str_repeat('-', $this->getLevel($item) + 1) . ' ');
             }

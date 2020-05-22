@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-05-06 10:38+0200\n"
+"POT-Creation-Date: 2020-05-15 22:53+0200\n"
 "PO-Revision-Date: 2020-03-19 21:01+0100\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -644,6 +644,9 @@ msgstr "Mój {0}"
 #, fuzzy
 msgid "My_credit_balance"
 msgstr "Twoje saldo kredytowe"
+
+msgid "The_uploaded_file_needs_to_have_the_format:_{0}"
+msgstr ""
 
 msgid "Filename_General-terms-and-conditions"
 msgstr "Regulamin"
@@ -1718,11 +1721,11 @@ msgstr "Czy wszystkie produkty zostały odebrane?"
 msgid "Back_to_deposit_account"
 msgstr "Wróć do konta wkładów"
 
-msgid "Cancel_selected_products"
-msgstr "Anuluj wybór produktów"
-
 msgid "Change_pickup_day"
 msgstr "Zmień dzień odbioru"
+
+msgid "Cancel_selected_products"
+msgstr "Anuluj wybór produktów"
 
 msgid "Generate_orders_as_pdf"
 msgstr "Generuj zamówienia w formie PDF"

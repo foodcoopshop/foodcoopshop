@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-06 10:33+0200\n"
+"POT-Creation-Date: 2020-05-18 10:35+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -557,6 +557,9 @@ msgstr ""
 msgid "Why_is_price_adapted_(mandatory_field)?"
 msgstr ""
 
+msgid "Please_enter_a_price."
+msgstr ""
+
 msgid "Original_price_without_reduction_of_price_in_time"
 msgstr ""
 
@@ -584,7 +587,10 @@ msgstr ""
 msgid "Do_not_automatically_apapt_price_just_change_weight."
 msgstr ""
 
-msgid "Really_cancel_ordered_product?"
+msgid "Really_delete_ordered_product?"
+msgstr ""
+
+msgid "Product_cancellation"
 msgstr ""
 
 msgid "Do_you_really_want_to_cancel_product_{0}?"
@@ -596,16 +602,19 @@ msgstr ""
 msgid "Why_is_product_cancelled_(mandatory_field)?"
 msgstr ""
 
-msgid "Yes_do_cancel_button!"
+msgid "Why_are_products_cancelled_(mandatory_field)?"
 msgstr ""
 
-msgid "Do_not_cancel_button"
+msgid "Yes_do_cancel_button!"
 msgstr ""
 
 msgid "Please_only_cancel_if_ok_for_manufacturer!"
 msgstr ""
 
-msgid "Really_cancel_selected_products?"
+msgid "Really_delete_selected_product?"
+msgstr ""
+
+msgid "Really_delete_selected_products?"
 msgstr ""
 
 msgid "You_selected_1_product"
@@ -1005,6 +1014,9 @@ msgid "rotate_clockwise?"
 msgstr ""
 
 msgid "Change_general_terms_and_conditions"
+msgstr ""
+
+msgid "Please_upload_an_image."
 msgstr ""
 
 msgid "Username_or_password_is_wrong._Please_check_that_there_are_no_special_characters_in_your_password."
@@ -1656,9 +1668,6 @@ msgid "deleted"
 msgstr ""
 
 msgid "New_product_of"
-msgstr ""
-
-msgid "Please_upload_an_image."
 msgstr ""
 
 msgid "The_quantity_needs_to_be_a_number."

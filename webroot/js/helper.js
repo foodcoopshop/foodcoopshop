@@ -21,7 +21,7 @@ foodcoopshop.Helper = {
 
     init: function () {
         this.initMenu();
-        this.initLogoutButton();
+        foodcoopshop.ModalLogout.init();
         this.changeOutgoingLinksTargetToBlank();
         if (!this.isMobile()) {
             this.initWindowResize();
@@ -156,81 +156,6 @@ foodcoopshop.Helper = {
             }
             $(this).selectpicker(options);
         });
-    },
-    
-    addPaymentFormSave: function () {
-
-        var amount = $('.featherlight-content #payments-amount').val();
-        var type = $('.featherlight-content input[name="Payments[type]"]').val();
-        var customerIdDomElement = $('.featherlight-content input[name="Payments[customerId]"]');
-        var manufacturerIdDomElement = $('.featherlight-content input[name="Payments[manufacturerId]"]');
-
-        var text = '';
-        if ($('.featherlight-content input[name="Payments[text]"]').length > 0) {
-            text = $('.featherlight-content input[name="Payments[text]"]').val().trim();
-        }
-
-        // radio buttons only if deposit is added to manufacurers
-        if ($('.featherlight-content input[type="radio"]').length > 0) {
-            var selectedRadioButton = $('.featherlight-content input[type="radio"]:checked');
-
-            // check if radio buttons are in deposit form or product form
-            var message;
-            var isDepositForm;
-            if ($('.featherlight-content .add-payment-form').hasClass('add-payment-deposit-form')) {
-                message = foodcoopshop.LocalizedJs.admin.PleaseChoseTypeOfPayment;
-                isDepositForm = true;
-            } else {
-                message = foodcoopshop.LocalizedJs.admin.PleaseChoseIfPaybackOrCreditUpload;
-                isDepositForm = false;
-            }
-
-            if (selectedRadioButton.length == 0) {
-                alert(message);
-                foodcoopshop.AppFeatherlight.enableSaveButton();
-                return;
-            }
-
-            var selectedRadioButtonValue = $('.featherlight-content input[type="radio"]:checked').val();
-            if (isDepositForm) {
-                text = selectedRadioButtonValue;
-            } else {
-                type = selectedRadioButtonValue;
-            }
-        }
-
-        var months_range = [];
-        if ($('.featherlight-content input[type="checkbox"]').length > 0) {
-            $('.featherlight-content input[type="checkbox"]:checked').each(
-                function () {
-                    months_range.push($(this).val());
-                }
-            );
-            if (months_range.length == 0) {
-                alert(foodcoopshop.LocalizedJs.admin.PleaseChoseAtLeastOneMonth);
-                foodcoopshop.AppFeatherlight.enableSaveButton();
-                return;
-            }
-        }
-
-        foodcoopshop.Helper.ajaxCall('/admin/payments/add/', {
-            amount: amount,
-            type: type,
-            text: text,
-            months_range: months_range,
-            customerId: customerIdDomElement.length > 0 ? customerIdDomElement.val() : 0,
-            manufacturerId: manufacturerIdDomElement.length > 0 ? manufacturerIdDomElement.val() : 0
-        }, {
-            onOk: function (data) {
-                document.location.reload();
-            },
-            onError: function (data) {
-                var container = $('.featherlight-content');
-                foodcoopshop.AppFeatherlight.enableSaveButton();
-                foodcoopshop.Helper.appendFlashMessageToDialog(container, data.msg);
-            }
-        });
-
     },
     
     initAmountSwitcher : function() {
@@ -712,79 +637,6 @@ foodcoopshop.Helper = {
         );
     },
 
-    initLogoutButton: function (redirect) {
-        $('a.logout-button').on('click', function () {
-
-            var buttons = {};
-            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
-            buttons['yes'] = {
-                text: foodcoopshop.LocalizedJs.helper.yes,
-                click: function() {
-                    $('.ui-dialog .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-                    var redirectUrl = '/' + foodcoopshop.LocalizedJs.helper.routeLogout;
-                    if (redirect !== undefined) {
-                        redirectUrl += '?redirect=' + redirect;
-                    }
-                    document.location.href = redirectUrl;
-                }
-            };
-
-            $('<div></div>').appendTo('body')
-                .html('<p>' + foodcoopshop.LocalizedJs.helper.logoutInfoText + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
-                .dialog({
-                    modal: true,
-                    title: foodcoopshop.LocalizedJs.helper.logout,
-                    dialogClass: 'logout-button',
-                    autoOpen: true,
-                    width: 400,
-                    resizable: false,
-                    buttons: buttons
-                });
-        });
-    },
-
-    initLogoutInstantOrderCustomerButton: function () {
-        $('#cart .instant-order-customer-info a.btn').on('click', function () {
-            var buttons = {};
-            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
-            buttons['yes'] = {
-                text: foodcoopshop.LocalizedJs.helper.yes,
-                click: function() {
-                    $('.ui-dialog .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-                    foodcoopshop.Helper.ajaxCall(
-                        '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxDeleteInstantOrderCustomer',
-                        {},
-                        {
-                            onOk: function (data) {
-                                $('.featherlight', window.parent.document).remove();
-                                document.location.reload();
-                            },
-                            onError: function (data) {
-                                document.location.reload();
-                            }
-                        }
-                    );
-                }
-            };
-
-            $('<div></div>').appendTo('body')
-                .html('<p>' + foodcoopshop.LocalizedJs.helper.ReallyCancelInstantOrder + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
-                .dialog({
-                    modal: true,
-                    title: foodcoopshop.LocalizedJs.helper.CancelInstantOrder,
-                    autoOpen: true,
-                    width: 400,
-                    resizable: false,
-                    buttons: buttons,
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
-                });
-        });
-    },
-
     initTooltip: function (container) {
         var trigger = 'hover';
         if (this.isMobile()) {
@@ -824,8 +676,10 @@ foodcoopshop.Helper = {
         $('body:not(.cake_errors) #container').css('display', 'block');
     },
 
-    initCkeditor: function (name) {
+    initCkeditor: function (name, startupFocus) {
 
+        startupFocus = startupFocus|| false;
+        
         if (!CKEDITOR.env.isCompatible) {
             return false;
         }
@@ -834,7 +688,8 @@ foodcoopshop.Helper = {
 
         CKEDITOR.timestamp = 'v4.14.0-emoji';
         $('textarea#' + name + '.ckeditor').ckeditor({
-            customConfig: '/js/ckeditor/config.js'
+            customConfig: '/js/ckeditor/config.js',
+            startupFocus : startupFocus
         });
 
     },
@@ -980,7 +835,7 @@ foodcoopshop.Helper = {
         foodcoopshop.Helper.showErrorMessage(message);
         element.prepend($('#flashMessage'));
     },
-
+    
     appendFlashMessageCloser: function () {
         $('#flashMessage').prepend('<a class="closer" title="' + foodcoopshop.LocalizedJs.helper.Close + '" href="javascript:void(0);"><i class="far fa-times-circle"></i></a>');
     },

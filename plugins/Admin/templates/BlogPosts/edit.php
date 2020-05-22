@@ -19,7 +19,7 @@ use Cake\Core\Configure;
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace') . ".Admin.init();" .
     Configure::read('app.jsNamespace') . ".Helper.initCkeditorBig('blogposts-content');" .
-    Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.blog_posts .add-image-button', foodcoopshop.Upload.saveBlogPostTmpImageInForm, foodcoopshop.AppFeatherlight.closeLightbox);" .
+    Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.blog_posts .add-image-button', foodcoopshop.Upload.saveBlogPostTmpImageInForm);" .
     Configure::read('app.jsNamespace') . ".Admin.initForm();
     "
 ]);

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-06 10:33+0200\n"
-"PO-Revision-Date: 2020-04-16 12:00+0200\n"
+"POT-Creation-Date: 2020-05-18 10:35+0200\n"
+"PO-Revision-Date: 2020-05-18 10:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.3.1\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
@@ -558,6 +558,9 @@ msgstr "To adapt the weight, please change the value \"weight\" two columns to t
 msgid "Why_is_price_adapted_(mandatory_field)?"
 msgstr "Why is the price adapted (mandatory)?"
 
+msgid "Please_enter_a_price."
+msgstr "Please enter a price."
+
 msgid "Original_price_without_reduction_of_price_in_time"
 msgstr "Original price without the reduction of price in time"
 
@@ -585,8 +588,11 @@ msgstr "The field appears read if the weight has not yet been adapted."
 msgid "Do_not_automatically_apapt_price_just_change_weight."
 msgstr "Do not automatically adapt price, just change the weight."
 
-msgid "Really_cancel_ordered_product?"
+msgid "Really_delete_ordered_product?"
 msgstr "Really cancel the ordered product?"
+
+msgid "Product_cancellation"
+msgstr "Cancellation"
 
 msgid "Do_you_really_want_to_cancel_product_{0}?"
 msgstr "Do you really want to cancel product {0}?"
@@ -597,16 +603,19 @@ msgstr "Do you really want to cancel product {0} from manufacturer {1}?"
 msgid "Why_is_product_cancelled_(mandatory_field)?"
 msgstr "Why is the product cancelled (mandatory)?"
 
+msgid "Why_are_products_cancelled_(mandatory_field)?"
+msgstr "Why are the products cancelled (mandatory)?"
+
 msgid "Yes_do_cancel_button!"
 msgstr "Cancel product!"
-
-msgid "Do_not_cancel_button"
-msgstr "Close"
 
 msgid "Please_only_cancel_if_ok_for_manufacturer!"
 msgstr "Please only cancel if this is ok for the manfacturer!"
 
-msgid "Really_cancel_selected_products?"
+msgid "Really_delete_selected_product?"
+msgstr "Really cancel the selected product?"
+
+msgid "Really_delete_selected_products?"
 msgstr "Really cancel the selected products?"
 
 msgid "You_selected_1_product"
@@ -1007,6 +1016,9 @@ msgstr "rotate clockwise?"
 
 msgid "Change_general_terms_and_conditions"
 msgstr "Change general terms and conditions"
+
+msgid "Please_upload_an_image."
+msgstr "Please upload an image."
 
 msgid "Username_or_password_is_wrong._Please_check_that_there_are_no_special_characters_in_your_password."
 msgstr "Email or password wrong. Please check that there are no special characters in your password and change it eventually at your remote food-coop."
@@ -1658,9 +1670,6 @@ msgstr "deleted"
 
 msgid "New_product_of"
 msgstr "New product of"
-
-msgid "Please_upload_an_image."
-msgstr "Please upload an image."
 
 msgid "The_quantity_needs_to_be_a_number."
 msgstr "The quantity needs to be a number."
@@ -2420,6 +2429,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Do_not_cancel_button"
+#~ msgstr "Close"
 
 #~ msgid "Please_pick_up_the_ordered_products_in_our_pick_up_store."
 #~ msgstr "Please pick up the ordered products in our pick up store."

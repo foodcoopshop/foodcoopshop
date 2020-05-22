@@ -17,7 +17,7 @@ foodcoopshop.SelfService = {
     currentLogoutTimer : 0,
         
     init : function() {
-        foodcoopshop.Helper.initLogoutButton(document.location.href);
+        foodcoopshop.ModalLogout.init(document.location.href);
         this.initWindowResize();
         this.initAutoLogout();
         this.initSearchForm();
@@ -51,18 +51,7 @@ foodcoopshop.SelfService = {
     },
     
     initDepositPayment : function() {
-        
-        foodcoopshop.Helper.changeInputNumberToTextForEdge();
-
-        $('.btn-add-deposit').featherlight(
-            foodcoopshop.AppFeatherlight.initLightboxForForms(
-                foodcoopshop.Helper.addPaymentFormSave,
-                null,
-                foodcoopshop.AppFeatherlight.closeLightbox,
-                $('#add-payment-deposit-form')
-            )
-        );
-
+        foodcoopshop.ModalPaymentAdd.initDepositSingle('.btn-add-deposit', $('#add-payment-deposit-form'));
     },
     
     initSearchForm : function() {

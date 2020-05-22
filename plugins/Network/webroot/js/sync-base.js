@@ -18,7 +18,7 @@ foodcoopshop.SyncBase = {
     init : function () {
         foodcoopshop.Helper.showContent();
         foodcoopshop.Helper.initMenu();
-        foodcoopshop.Helper.initLogoutButton();
+        foodcoopshop.ModalLogout.init();
         foodcoopshop.Admin.setMenuFixed();
         foodcoopshop.Admin.adaptContentMargin();
     },

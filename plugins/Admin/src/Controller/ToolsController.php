@@ -4,11 +4,8 @@ namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
-use Cake\Filesystem\File;
 
 /**
- * ToolsController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -34,8 +31,8 @@ class ToolsController extends AdminAppController
         $upload = $this->getRequest()->getData('upload');
         
         // non-pdf files will return false
-        if ($upload->getClientMediaType() != 'application/pdf') {
-            $message = 'only pdf format is allowed';
+        if (mime_content_type($upload->getStream()->getMetadata('uri')) != 'application/pdf') {
+            $message = __d('admin', 'The_uploaded_file_needs_to_have_the_format:_{0}', ['PDF']);
             $this->set([
                 'status' => 0,
                 'msg' => $message,
@@ -66,8 +63,8 @@ class ToolsController extends AdminAppController
         $upload = $this->getRequest()->getData('upload');
         
         // non-image files will return false
-        if ($upload->getClientMediaType() != 'image/jpeg') {
-            $message = 'the uploaded file needs to have jpg format.';
+        if (mime_content_type($upload->getStream()->getMetadata('uri')) != 'image/jpeg') {
+            $message = __d('admin', 'The_uploaded_file_needs_to_have_the_format:_{0}', ['JPG']);
             $this->set([
                 'status' => 0,
                 'msg' => $message,
@@ -84,14 +81,13 @@ class ToolsController extends AdminAppController
         $filenameWithPath = Configure::read('app.tmpUploadImagesDir') . DS . $filename;
         $upload->moveTo(WWW_ROOT . $filenameWithPath);
         
-        Image::make(WWW_ROOT . $filenameWithPath) 
+        Image::make(WWW_ROOT . $filenameWithPath)
             ->widen($this->getMaxTmpUploadFileSize())
             ->save(WWW_ROOT . $filenameWithPath);
-
-        $this->set([
-            'status' => 1,
-            'filename' => $filenameWithPath,
-        ]);
+            $this->set([
+                'status' => 1,
+                'filename' => $filenameWithPath,
+            ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'filename']);
     }
 
@@ -125,7 +121,7 @@ class ToolsController extends AdminAppController
 
         // non-image files will return false
         if ($formatInfo === false || $formatInfo['mime'] != 'image/jpeg') {
-            $message = 'the uploaded file needs to have jpg format.';
+            $message = __d('admin', 'The_uploaded_file_needs_to_have_the_format:_{0}', ['JPG']);
             $this->set([
                 'status' => 0,
                 'msg' => $message,

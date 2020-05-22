@@ -21,7 +21,7 @@ use Cake\Core\Configure;
     $this->element('addScript', [
         'script' =>
             Configure::read('app.jsNamespace') . ".Admin.init();" .
-            Configure::read('app.jsNamespace') . ".Admin.initAddPayment('#add-payment-button-wrapper .btn-success');" .
+            Configure::read('app.jsNamespace') . ".ModalPaymentAdd.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initDeletePayment();"
     ]);
     ?>
@@ -53,9 +53,10 @@ echo $this->Form->control('Payments.amount', [
 echo $this->Form->hidden('Payments.customerId', [
     'value' => $customerId
 ]);
+echo '<br />';
 
 if ($paymentType == 'product' && $appAuth->isSuperadmin()) {
-    echo '<p style="margin-top: 10px;">'.__d('admin', 'If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member.').'</p>';
+    echo '<p style="margin-top:10px;">'.__d('admin', 'If_payback_please_add_amount_that_you_transfered_back_to_the_bank_account_of_the_member.').'</p>';
     $i = 0;
     foreach ($this->Html->getSuperadminProductPaymentTexts($appAuth) as $paymentTextKey => $paymentText) {
         echo '<div class="radio-wrapper">';

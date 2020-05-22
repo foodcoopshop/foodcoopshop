@@ -26,10 +26,10 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".Admin.initProductNameEditDialog('#products');" .
             Configure::read('app.jsNamespace') . ".Admin.initProductQuantityList('#products');" .
             Configure::read('app.jsNamespace') . ".Admin.initProductQuantityEditDialog('#products');" .
-            Configure::read('app.jsNamespace') . ".Admin.initProductCategoriesEditDialog('#products');" .
+            Configure::read('app.jsNamespace') . ".ModalProductCategoriesEdit.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initProductTaxEditDialog('#products');" .
             Configure::read('app.jsNamespace') . ".Admin.initChangeNewState();" .
-            Configure::read('app.jsNamespace') . ".Upload.initImageUpload('#products .add-image-button', foodcoopshop.Upload.saveProductImage, foodcoopshop.AppFeatherlight.closeLightbox);" .
+            Configure::read('app.jsNamespace') . ".Upload.initImageUpload('#products .add-image-button', foodcoopshop.Upload.saveProductImage);" .
             Configure::read('app.jsNamespace') . ".Admin.initAddProductAttribute('#products');" .
             Configure::read('app.jsNamespace') . ".Admin.initDeleteProductAttribute('#products');" .
             Configure::read('app.jsNamespace') . ".Admin.initSetDefaultAttribute('#products');" .
@@ -279,10 +279,12 @@ use Cake\Core\Configure;
     echo $this->Form->control('productAttributeId', ['type' => 'select', 'class' => 'hide', 'label' => '', 'options' => $attributesForDropdown]);
     
     echo '<div class="categories-checkboxes">';
+        echo '<input type="hidden" class="product-id" />';
         echo $this->Form->control('Products.CategoryProducts', [
             'label' => '',
             'multiple' => 'checkbox',
-            'options' => $categoriesForSelect
+            'options' => $categoriesForSelect,
+            'escape' => false,
         ]);
         echo '</div>';
         echo '<div class="tax-dropdown-wrapper">';

@@ -39,7 +39,8 @@ use Cake\Core\Configure;
     #categories-menu li.header,
     #manufacturers-menu li.header,
     h2.info,
-    #flashMessage.success {
+    #flashMessage.success,
+    .modal-header {
         background-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
     }
     

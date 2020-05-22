@@ -23,7 +23,7 @@ $this->element('addScript', [
         Configure::read('app.jsNamespace') . ".Helper.initMenu();" .
         Configure::read('app.jsNamespace') . ".Helper.initScrolltopButton();" .
         Configure::read('app.jsNamespace') . ".Mobile.autoOpenSidebarLeft();" .
-        Configure::read('app.jsNamespace') . ".Helper.initLogoutButton();"
+        Configure::read('app.jsNamespace') . ".ModalLogout.init();"
 ]);
 
 echo '<div id="home">';
