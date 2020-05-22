@@ -25,15 +25,15 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".Admin.initDeletePayment();"
     ]);
     ?>
-    
+
     <div class="filter-container">
         <h1><?php echo $title_for_layout; ?></h1>
         <div class="right">
-        	<?php echo $icons; ?>
+            <?php echo $icons; ?>
         </div>
     </div>
 
-	<p><b><?php echo __d('admin', 'Bank_account_data'); ?>: </b><?php echo $extraInfo; ?></p>
+    <p><b><?php echo __d('admin', 'Bank_account_data'); ?>: </b><?php echo $extraInfo; ?></p>
 
 <?php
 

@@ -21,7 +21,7 @@ $pdf->infoTextForFooter = __d('admin', 'Orders');
 
 $j = 1;
 foreach ($orderDetails as $od) {
-    
+
     $pdf->Ln(5);
     $pdf->writeHTML('<h2>' . $od[0]->customer->name . '</h2>', true, false, true, false, '');
     $pdf->writeHTML('<h3>'.__d('admin', 'Pickup_day') . ': ' . $od[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '</h3>', true, false, true, false, '');
@@ -56,16 +56,16 @@ foreach ($orderDetails as $od) {
         $pdf->table .= '<th style="font-weight:bold;background-color:#cecece" width="' . $widths[$i] . '">' . $headers[$i] . '</th>';
     }
     $pdf->table .= '</tr></thead>';
-        
+
     $sumPrice = 0;
     $sumDeposit = 0;
     $sumQuantity = 0;
     $usesQuantityInUnits = 0;
     $timebasedCurrencyOrderDetailInList = false;
     $i = 1;
-        
+
     foreach($od as $orderDetail) {
-        
+
         $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
 
         $quantityStyle = '';
@@ -97,12 +97,12 @@ foreach ($orderDetails as $od) {
 
         $pdf->table .= '<td style="' . $priceStyle . 'text-align: right"; width="' . $widths[3] . '">';
         $pdf->table .= $this->Number->formatAsCurrency($orderDetail->total_price_tax_incl);
-        
+
         if (!empty($orderDetail->timebased_currency_order_detail)) {
             $pdf->table .= ' *';
             $timebasedCurrencyOrderDetailInList = true;
         }
-        
+
         if (!empty($orderDetail->order_detail_unit)) {
             $pdf->table .= ' *';
             $usesQuantityInUnits++;
@@ -141,13 +141,13 @@ foreach ($orderDetails as $od) {
         }
 
         $i ++;
-        
+
     }
-    
+
     $pdf->renderTable();
 
     $pdf->writeHTML($this->TimebasedCurrency->getOrderInformationTextForPdf($timebasedCurrencyOrderDetailInList, true, false, true, false, ''));
-    
+
     if ($usesQuantityInUnits > 0) {
         $html = '<p>* '.__d('admin', 'The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly.').'</p>';
         $pdf->writeHTML($html, true, false, true, false, '');

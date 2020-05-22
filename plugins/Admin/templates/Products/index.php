@@ -16,7 +16,7 @@ use Cake\Core\Configure;
 
 ?>
 <div id="products" class="product-list">
-     
+
         <?php
         $this->element('addScript', [
         'script' =>
@@ -39,11 +39,11 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".Admin.initProductDeliveryRhythmEditDialog('#products');
         "
         ]);
-        
+
         $this->element('highlightRowAfterEdit', [
             'rowIdPrefix' => '#product-'
         ]);
-        
+
         if ($advancedStockManagementEnabled) {
             $this->element('addScript', [
                 'script' =>
@@ -51,7 +51,7 @@ use Cake\Core\Configure;
             ]);
         }
     ?>
-    
+
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php
@@ -89,7 +89,7 @@ use Cake\Core\Configure;
             ?>
             <?php echo $this->Form->control('isQuantityMinFilterSet', ['type'=>'checkbox', 'label' => __d('admin', 'amount') . ' < 3', 'checked' => $isQuantityMinFilterSet]);?>
             <?php echo $this->Form->control('isPriceZero', ['type'=>'checkbox', 'label' => __d('admin', 'price') . ' = 0', 'checked' => $isPriceZero]);?>
-            
+
             <div class="right">
                 <?php
                 // only show button if no manufacturer filter is applied
@@ -125,7 +125,7 @@ use Cake\Core\Configure;
             </div>
         <?php echo $this->Form->end(); ?>
     </div>
-    
+
     <?php
 
     if (!empty($manufacturer)) {
@@ -182,11 +182,11 @@ use Cake\Core\Configure;
         echo $this->element('rowMarker/rowMarker', [
             'show' => (!empty($product->product_attributes) || isset($product->product_attributes))
         ]);
-        
+
         echo $this->element('productList/data/id', [
             'product' => $product
         ]);
-        
+
         echo $this->element('productList/data/addAttributeButton', [
             'product' => $product
         ]);
@@ -194,7 +194,7 @@ use Cake\Core\Configure;
         echo $this->element('productList/data/image', [
             'product' => $product
         ]);
-        
+
         echo $this->element('productList/data/name', [
             'product' => $product
         ]);
@@ -203,20 +203,20 @@ use Cake\Core\Configure;
             'product' => $product,
             'manufacturerId' => $manufacturerId
         ]);
-        
+
         echo $this->element('productList/data/isStockProduct', [
             'product' => $product,
             'advancedStockManagementEnabled' => $advancedStockManagementEnabled
         ]);
-        
+
         echo $this->element('productList/data/amount', [
             'product' => $product
         ]);
-        
+
         echo $this->element('productList/data/price', [
             'product' => $product
         ]);
-        
+
         echo $this->element('productList/data/tax', [
             'product' => $product
         ]);
@@ -224,19 +224,19 @@ use Cake\Core\Configure;
         echo $this->element('productList/data/isNew', [
             'product' => $product
         ]);
-        
+
         echo $this->element('productList/data/deposit', [
             'product' => $product
         ]);
-        
+
         echo $this->element('productList/data/deliveryRhythm', [
             'product' => $product
         ]);
-        
+
         echo $this->element('productList/data/status', [
             'product' => $product
         ]);
-        
+
         echo $this->element('productList/data/preview', [
             'product' => $product
         ]);
@@ -258,7 +258,7 @@ use Cake\Core\Configure;
     echo '</tr>';
 
     echo '</table>';
-    
+
     echo '<div class="bottom-button-container">';
         echo $this->element('productList/button/deleteSelectedProducts');
         echo $this->element('productList/button/generateProductCardsOfSelectedProducts');
@@ -266,18 +266,18 @@ use Cake\Core\Configure;
             'products' => $products
         ]);
     echo '</div>';
-    
+
     ?>
-    
+
     <div class="sc"></div>
-    
+
 </div>
 
 <?php
-    
+
     // dropdowns and checkboxes for overlays are only rendered once (performance)
     echo $this->Form->control('productAttributeId', ['type' => 'select', 'class' => 'hide', 'label' => '', 'options' => $attributesForDropdown]);
-    
+
     echo '<div class="categories-checkboxes">';
         echo '<input type="hidden" class="product-id" />';
         echo $this->Form->control('Products.CategoryProducts', [
@@ -294,7 +294,7 @@ use Cake\Core\Configure;
             'options' => $taxesForDropdown,
         ]);
     echo '</div>';
-    
+
     echo '<div class="delivery-rhythm-dropdown-wrapper">';
         echo $this->Form->control('RhythmTypes', [
             'type' => 'select',
@@ -307,5 +307,5 @@ use Cake\Core\Configure;
             'options' => $this->Time->getSendOrderListsWeekdayOptions()
         ]);
     echo '</div>';
-    
+
 ?>

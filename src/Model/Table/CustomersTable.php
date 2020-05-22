@@ -164,7 +164,7 @@ class CustomersTable extends AppTable
         ]);
         return $validator;
     }
-    
+
     public function validationTermsOfUse(Validator $validator)
     {
         return $this->getValidationTermsOfUse($validator);
@@ -200,7 +200,7 @@ class CustomersTable extends AppTable
             'PaidCashlessOrderDetails.order_state IN (' . join(',', Configure::read('app.htmlHelper')->getOrderStatesCashless()). ')'
         ]);
     }
-    
+
     public function getPersonalTransactionCode($customerId): string
     {
         $customer = $this->find('all', [
@@ -213,7 +213,7 @@ class CustomersTable extends AppTable
         ])->first();
         return $customer->personalTransactionCode;
     }
-    
+
     public function getPersonalTransactionCodeField()
     {
         return 'UPPER(SUBSTRING(SHA1(CONCAT(Customers.id_customer, "' .  Security::getSalt() . '", "personal-transaction-code")), 1, 8))';
@@ -439,7 +439,7 @@ class CustomersTable extends AppTable
 
     public function getForDropdown($includeManufacturers = false, $index = 'id_customer', $includeOfflineCustomers = true, $conditions = [])
     {
-        
+
         $contain = [];
         if (! $includeManufacturers) {
             $this->dropManufacturersInNextFind();
@@ -452,7 +452,7 @@ class CustomersTable extends AppTable
             'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy(),
             'contain' => $contain
         ])->toArray();
-        
+
         if (! $includeManufacturers) {
             $validOrderDetails = $this->getAssociation('ValidOrderDetails');
             $i = 0;

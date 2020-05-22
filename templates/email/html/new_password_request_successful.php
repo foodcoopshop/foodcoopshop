@@ -17,25 +17,25 @@ use Cake\Core\Configure;
 ?>
 <?php echo $this->element('email/tableHead'); ?>
     <tbody>
-    
+
         <?php echo $this->element('email/greeting', ['data' => $customer]); ?>
-        
+
         <tr>
             <td>
-                
+
                 <p>
                     <?php echo __('Please_click_on_this_link_to_activate_your_new_password'); ?>:<br />
-	                <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getActivateNewPassword($activateNewPasswordCode); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getActivateNewPassword($activateNewPasswordCode); ?></a>
+                    <a href="<?php echo Configure::read('app.cakeServerName').$this->Slug->getActivateNewPassword($activateNewPasswordCode); ?>"><?php echo Configure::read('app.cakeServerName').$this->Slug->getActivateNewPassword($activateNewPasswordCode); ?></a>
                 </p>
 
                 <p>
                     <?php echo __('your_new_password_is:'); ?><br />
                     <b><?php echo $tmpNewPassword; ?></b>
                 </p>
-                
+
             </td>
-            
+
         </tr>
-        
+
     </tbody>
 <?php echo $this->element('email/tableFoot'); ?>

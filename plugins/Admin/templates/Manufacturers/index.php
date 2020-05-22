@@ -50,7 +50,7 @@ use Cake\Core\Configure;
             </div>
         <?php echo $this->Form->end(); ?>
     </div>
-    
+
 <?php
 
 echo '<table class="list">';
@@ -119,7 +119,7 @@ foreach ($manufacturers as $manufacturer) {
                 'escape' => false
             ]
         );
-        
+
         echo '<span class="name">';
         echo '<b>' . $manufacturer->name . '</b><br />';
         echo $manufacturer->address_manufacturer->city;
@@ -135,7 +135,7 @@ foreach ($manufacturers as $manufacturer) {
     echo '<td style="width:145px;">';
     $sumProductCount += $manufacturer->product_count;
     $productString = __d('admin', '{0,plural,=1{1_product} other{#_products}}', [$manufacturer->product_count]);
-    
+
     echo $this->Html->link(
         '<i class="fas fa-tag ok"></i> ' . str_replace(' ', '&nbsp;', $productString),
         $this->Slug->getProductAdmin($manufacturer->id_manufacturer),
@@ -145,7 +145,7 @@ foreach ($manufacturers as $manufacturer) {
             'escape' => false
         ]
     );
-    
+
     echo '</td>';
 
     echo '<td>';
@@ -219,7 +219,7 @@ foreach ($manufacturers as $manufacturer) {
     echo '</td>';
 
     echo '<td>';
-    
+
     echo $this->Html->link(
         '<i class="fas fa-cog ok"></i>',
         $this->Slug->getManufacturerEditOptions($manufacturer->id_manufacturer),
@@ -229,7 +229,7 @@ foreach ($manufacturers as $manufacturer) {
             'escape' => false
         ]
     );
-    
+
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
         echo '<td>';
             echo $manufacturer->variable_member_fee.'%';

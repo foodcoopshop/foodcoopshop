@@ -18,11 +18,11 @@ use App\Lib\Pdf\ListTcpdf;
 
 class GeneralTermsAndConditionsPdfWriter extends PdfWriter
 {
-    
+
     public function __construct()
     {
         $this->setPdfLibrary(new ListTcpdf());
     }
-    
+
 }
 

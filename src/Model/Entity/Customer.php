@@ -21,7 +21,7 @@ class Customer extends Entity
 {
 
     protected $_virtual = ['name'];
-    
+
     protected function _getName()
     {
         $virtualNameFields = $this->firstname . ' ' . $this->lastname;
@@ -30,5 +30,5 @@ class Customer extends Entity
         }
         return $virtualNameFields;
     }
-    
+
 }

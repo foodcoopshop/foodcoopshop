@@ -27,7 +27,7 @@ if ($groupBy == '') {
                 ]
             );
         }
-    echo '</td>';    
+    echo '</td>';
 }
 
 ?>

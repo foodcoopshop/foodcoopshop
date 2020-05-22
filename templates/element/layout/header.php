@@ -39,9 +39,9 @@ header('Pragma: no-cache');
     <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
     <link rel="manifest" href="/manifest.json">
     <link rel="mask-icon" href="/safari-pinned-tab.svg">
-    
+
     <?php echo $this->element('jsNamespace'); ?>
-    
+
     <?php
         echo $this->element('renderCss', ['configs' => ['frontend']]);
         if ($isMobile) {
@@ -50,7 +50,7 @@ header('Pragma: no-cache');
         echo $this->element('customFrontendColorThemeCss');
         echo $this->element('layout/customHeader');
    ?>
-    
+
 </head>
 
 <?php

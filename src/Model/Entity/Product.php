@@ -21,7 +21,7 @@ class Product extends Entity
 {
 
     protected $_virtual = ['next_delivery_day'];
-    
+
     protected $next_delivery_day;
 
     protected function _getNextDeliveryDay()
@@ -29,5 +29,5 @@ class Product extends Entity
         $productTable = TableRegistry::getTableLocator()->get('Products');
         return $productTable->calculatePickupDayRespectingDeliveryRhythm($this);
     }
-    
+
 }

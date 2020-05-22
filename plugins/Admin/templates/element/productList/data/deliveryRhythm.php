@@ -16,7 +16,7 @@
 echo '<td class="delivery-rhythm">';
 
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
-        
+
         if (!($product->manufacturer->stock_management_enabled && $product->is_stock_product)) {
             echo $this->Html->link(
                 '<i class="fas fa-pencil-alt ok"></i>',
@@ -28,30 +28,30 @@ echo '<td class="delivery-rhythm">';
                 ]
             );
         }
-        
+
         $elementsToRender = [];
-        
+
         if ($product->manufacturer->stock_management_enabled && $product->is_stock_product) {
             $elementsToRender[] = $product->delivery_rhythm_string;
             echo join(', ', $elementsToRender);
         } else {
             echo '<span class="delivery-rhythm-for-dialog">';
-                
+
                 echo '<span class="hide dropdown">'.$product->delivery_rhythm_count . '-' . $product->delivery_rhythm_type.'</span>';
-                
+
                 $deliveryDayElement = '<span class="first-delivery-day hide">';
                 if (!is_null($product->delivery_rhythm_first_delivery_day)) {
                     $deliveryDayElement .= $this->Time->formatToDateShort($product->delivery_rhythm_first_delivery_day);
                 }
                 $deliveryDayElement .= '</span>';
                 echo $deliveryDayElement;
-                
-                
+
+
                 $deliveryRhythmStringElement = '<span class="delivery-rhythm-string">' .
-                        $product->delivery_rhythm_string . 
+                        $product->delivery_rhythm_string .
                     '</span>';
                 $elementsToRender[] = $deliveryRhythmStringElement;
-                
+
                 $lastOrderWeekday = $this->Time->getNthWeekdayBeforeWeekday(1, $product->delivery_rhythm_send_order_list_weekday);
                 $sendOrderListWeekdayElement = '<span class="send-order-list-weekday hide">';
                     $sendOrderListWeekdayElement .= $lastOrderWeekday;
@@ -63,9 +63,9 @@ echo '<td class="delivery-rhythm">';
                         $elementsToRender[] = __d('admin', 'Last_order_weekday') . ': ' . $this->Time->getWeekdayName($lastOrderWeekday) . ' ' . __d('admin', 'midnight');
                     }
                 }
-                
+
                 if ($product->delivery_rhythm_type == 'individual') {
-                    
+
                     $sendOrderListDayElement = '';
                     $sendOrderListDayElement .= __d('admin', 'Order_possible_until') . ' ';
                     $sendOrderListDayElement .= '<span class="order-possible-until">';
@@ -74,18 +74,18 @@ echo '<td class="delivery-rhythm">';
                     }
                     $sendOrderListDayElement .= '</span>';
                     $elementsToRender[] = $sendOrderListDayElement;
-                    
+
                     if (!is_null($product->delivery_rhythm_send_order_list_day)) {
-                        $elementsToRender[] = __d('admin', 'Send_order_lists_day') . ' ' . 
-                            '<span class="send-order-list-day">' . 
+                        $elementsToRender[] = __d('admin', 'Send_order_lists_day') . ' ' .
+                            '<span class="send-order-list-day">' .
                                 $this->Time->formatToDateShort($product->delivery_rhythm_send_order_list_day) .
                         '</span>';
                     } else {
                         $elementsToRender[] = __d('admin', 'Order_list_is_not_sent');
                     }
-                    
+
                 }
-                
+
                 $deliveryDayElement = '';
                 if (!is_null($product->delivery_rhythm_first_delivery_day)) {
                     if ($product->delivery_rhythm_type != 'individual') {
@@ -98,13 +98,13 @@ echo '<td class="delivery-rhythm">';
                     }
                     $elementsToRender[] = $deliveryDayElement;
                 }
-                
+
                 echo join(', ', $elementsToRender);
-                
+
             echo '</span>';
         }
     }
-        
+
 echo '</td>';
 
 ?>

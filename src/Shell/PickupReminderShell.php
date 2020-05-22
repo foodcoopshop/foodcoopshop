@@ -23,21 +23,21 @@ class PickupReminderShell extends AppShell
 {
 
     public $cronjobRunDay;
-    
+
     public function main()
     {
 
         parent::main();
 
         $this->initHttpClient(); // for loggedUserId
-        
+
         // $this->cronjobRunDay can is set in unit test
         if (!isset($this->args[0])) {
             $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
         } else {
             $this->cronjobRunDay = $this->args[0];
         }
-        
+
         $this->startTimeLogging();
 
         $conditions = [
@@ -45,7 +45,7 @@ class PickupReminderShell extends AppShell
         ];
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
         $this->Customer->dropManufacturersInNextFind();
-        
+
         $customers = $this->Customer->find('all', [
             'conditions' => $conditions,
             'contain' => [
@@ -54,15 +54,15 @@ class PickupReminderShell extends AppShell
         ]);
         $customers = $this->Customer->sortByVirtualField($customers, 'name');
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        
+
         $nextPickupDay = Configure::read('app.timeHelper')->getDeliveryDay(strtotime($this->cronjobRunDay));
         $formattedPickupDay = Configure::read('app.timeHelper')->getDateFormattedWithWeekday($nextPickupDay);
         $diffOrderAndPickupInDays = 6;
-        
+
         $i = 0;
         $outString = '';
         foreach ($customers as $customer) {
-            
+
             $futureOrderDetails = $this->OrderDetail->find('all', [
                 'conditions' => [
                     'OrderDetails.id_customer' => $customer->id_customer,
@@ -76,7 +76,7 @@ class PickupReminderShell extends AppShell
                     'OrderDetails.product_name' => 'ASC'
                 ]
             ])->toArray();
-            
+
             if (empty($futureOrderDetails)) {
                 continue;
             }
@@ -106,8 +106,8 @@ class PickupReminderShell extends AppShell
 
         $this->out($outString);
         $this->out($this->getRuntime());
-        
+
         return true;
-        
+
     }
 }

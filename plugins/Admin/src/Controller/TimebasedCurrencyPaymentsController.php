@@ -468,7 +468,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
 
         $timebasedCurrencyOrderDetailsGroupedByMonth = $this->TimebasedCurrencyOrderDetail->getMonthlySum($manufacturerId, $customerId);
-        
+
         $payments = [];
         if (! empty($timebasedCurrencyOrderDetailsGroupedByMonth)) {
             foreach($timebasedCurrencyOrderDetailsGroupedByMonth as $timebasedCurrencyOrderDetail) {

@@ -27,17 +27,17 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
 
 ?>
   <tbody>
-        
+
         <?php if (!$selfServiceModeEnabled) { ?>
-    		<tr>
+            <tr>
                 <td colspan="<?php echo count($columns); ?>" style="padding-top:20px;padding-bottom:10px;">
-                	<?php
-                	   echo __('Pickup_day') . ': <b> ' . $this->MyTime->getDateFormattedWithWeekday(strtotime($pickupDay)).'</b>';
-                	?>
+                    <?php
+                       echo __('Pickup_day') . ': <b> ' . $this->MyTime->getDateFormattedWithWeekday(strtotime($pickupDay)).'</b>';
+                    ?>
                 </td>
             </tr>
         <?php } ?>
-        
+
         <tr>
             <?php
                 foreach ($columns as $column) {
@@ -45,14 +45,14 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
                 }
             ?>
     </tr>
-    
+
     <?php foreach ($cartProducts as $product) { ?>
         <?php
             if ($manufacturerId > 0 && $manufacturerId != $product['manufacturerId']) {
                 continue;
             }
-		?>
-		        
+        ?>
+
         <tr>
             <?php
             $amountStyle = '';
@@ -88,7 +88,7 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
                     }
                 ?>
             </td>
-            
+
             <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
                 <?php
                     if ($product['deposit'] > 0) {
@@ -96,7 +96,7 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
                     }
                 ?>
             </td>
-            
+
             <?php if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
                 <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
                     <?php
@@ -106,11 +106,11 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
                     ?>
                 </td>
             <?php } ?>
-            
-        </tr>           
-        
+
+        </tr>
+
     <?php } ?>
- 
+
      <tr>
         <td style="border:1px solid #d6d4d4;" colspan="3"></td>
         <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;"><?php echo $this->MyNumber->formatAsCurrency($productSum); ?></td>
@@ -122,7 +122,7 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
             }
             ?>
         </td>
-        
+
         <?php if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
             <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;">
                 <?php
@@ -130,9 +130,9 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
                 ?>
             </td>
         <?php } ?>
-        
+
     </tr>
-    
+
     <tr>
         <td style="background-color:#fbfbfb;border:1px solid #d6d4d4;" colspan="2"></td>
         <td align="right" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;"><?php echo __('Total'); ?></td>
@@ -145,5 +145,5 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
             <td style="background-color:#fbfbfb;border:1px solid #d6d4d4;"></td>
         <?php } ?>
     </tr>
-    
+
 </tbody>

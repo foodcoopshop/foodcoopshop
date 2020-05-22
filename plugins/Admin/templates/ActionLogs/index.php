@@ -41,9 +41,9 @@ use Cake\Core\Configure;
             <?php } ?>
             <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
             <div class="right">
-            	<?php
-            	   echo $this->element('printIcon');
-            	?>
+                <?php
+                   echo $this->element('printIcon');
+                ?>
             </div>
         <?php echo $this->Form->end(); ?>
     </div>

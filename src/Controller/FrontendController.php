@@ -45,7 +45,7 @@ class FrontendController extends AppController
             $product['gross_price'] = $grossPrice;
             $product['tax'] = $grossPrice - $product['price'];
             $product['is_new'] = $this->Product->isNew($product['created']);
-            
+
             if ($this->AppAuth->isInstantOrderMode() || $this->AppAuth->isSelfServiceModeByUrl()) {
                 $product['next_delivery_day'] = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
             } else {
@@ -73,7 +73,7 @@ class FrontendController extends AppController
                     $product['timebased_currency_seconds'] = $this->Manufacturer->getCartTimebasedCurrencySeconds($product['gross_price'], $product['timebased_currency_max_percentage']);
                     $product['timebased_currency_manufacturer_limit_reached'] = $this->Manufacturer->hasManufacturerReachedTimebasedCurrencyLimit($product['id_manufacturer']);
                 }
-                
+
             }
 
             $attributes = $this->ProductAttribute->find('all', [
@@ -152,7 +152,7 @@ class FrontendController extends AppController
     // is not called on ajax actions!
     public function beforeRender(EventInterface $event)
     {
-        
+
         parent::beforeRender($event);
 
         // when an instant order was placed, the pdfs that are rendered for the order confirmation email
@@ -217,7 +217,7 @@ class FrontendController extends AppController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        
+
         if (($this->name == 'Categories' && $this->getRequest()->getParam('action') == 'detail') || $this->name == 'Carts') {
             // do not allow but call isAuthorized
         } else {
@@ -239,7 +239,7 @@ class FrontendController extends AppController
 
             $shoppingLimitReached = !$this->AppAuth->isInstantOrderMode() && Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') != - 1 && $creditBalance < Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') * - 1;
             $this->set('shoppingLimitReached', $shoppingLimitReached);
-            
+
             $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
             $futureOrderDetails = $this->OrderDetail->getGroupedFutureOrdersByCustomerId($this->AppAuth->getUserId());
             $this->set('futureOrderDetails', $futureOrderDetails);

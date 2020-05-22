@@ -22,7 +22,7 @@ use Cake\Validation\Validator;
  */
 class CartsTable extends AppTable
 {
-    
+
     public const CART_TYPE_WEEKLY_RHYTHM = 1;
     public const CART_TYPE_INSTANT_ORDER = 2;
     public const CART_TYPE_SELF_SERVICE  = 3;
@@ -45,7 +45,7 @@ class CartsTable extends AppTable
         ]);
         $this->addBehavior('Timestamp');
     }
-    
+
     public function validationDefault(Validator $validator): Validator
     {
         $validator->equals('cancellation_terms_accepted', 1, __('Please_accept_the_information_about_right_of_withdrawal.'));
@@ -53,7 +53,7 @@ class CartsTable extends AppTable
         $validator->equals('promise_to_pickup_products', 1, __('Please_promise_to_pick_up_the_ordered_products.'));
         return $validator;
     }
-    
+
 
     public function getProductNameWithUnity($productName, $unity)
     {
@@ -99,7 +99,7 @@ class CartsTable extends AppTable
      */
     public function getCart($customerId, $cartType)
     {
-		
+
         $cart = $this->find('all', [
             'conditions' => [
                 'Carts.status' => APP_ON,
@@ -136,18 +136,18 @@ class CartsTable extends AppTable
                 'Products.Images'
             ]
         ])->toArray();
-        
+
         if (!empty($cartProducts)) {
             $cart->pickup_day_entities = $this->CartProducts->setPickupDays($cartProducts, $customerId, $cartType);
         }
-        
+
         $preparedCart = [
             'Cart' => $cart,
             'CartProducts' => []
         ];
 
         foreach ($cartProducts as &$cartProduct) {
-            
+
             $imageId = 0;
             if (!empty($cartProduct->product->image)) {
                 $imageId = $cartProduct->product->image->id_image;
@@ -177,24 +177,24 @@ class CartsTable extends AppTable
 
             $productData['nextDeliveryDayAsTimestamp'] = $nextDeliveryDay;
             $productData['nextDeliveryDay'] = Configure::read('app.timeHelper')->getDateFormattedWithWeekday($nextDeliveryDay);
-            
+
             $preparedCart['CartProducts'][] = $productData;
 
         }
-        
+
         $productName = [];
         $deliveryDay = [];
         foreach($preparedCart['CartProducts'] as $cartProduct) {
             $deliveryDay[] = $cartProduct['nextDeliveryDayAsTimestamp'];
             $productName[] = StringComponent::slugify($cartProduct['productName']);
         }
-        
+
         array_multisort(
             $deliveryDay, SORT_DESC, // !SIC - array is reversed later
             $productName, SORT_DESC, // !SIC - array is reversed later
             $preparedCart['CartProducts']
         );
-        
+
         // sum up deposits and products
         $preparedCart['ProductsWithUnitCount'] = $this->getProductsWithUnitCount($preparedCart['CartProducts']);
         $preparedCart['CartDepositSum'] = 0;
@@ -221,7 +221,7 @@ class CartsTable extends AppTable
         }
         return $preparedCart;
     }
-    
+
     public function getCartGroupedByPickupDay($cart)
     {
         $manufacturerName = [];
@@ -230,13 +230,13 @@ class CartsTable extends AppTable
             $manufacturerName[] = StringComponent::slugify($cartProduct['manufacturerName']);
             $productName[] = StringComponent::slugify($cartProduct['productName']);
         }
-        
+
         array_multisort(
             $manufacturerName, SORT_ASC,
             $productName, SORT_ASC,
             $cart['CartProducts']
         );
-        
+
         $preparedCartProducts = [];
         foreach($cart['CartProducts'] as $cartProduct) {
             $pickupDay = $cartProduct['pickupDay'];
@@ -251,7 +251,7 @@ class CartsTable extends AppTable
     private function addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece)
     {
         $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
-        
+
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && is_array($this->getLoggedUser()) && $this->getLoggedUser()['timebased_currency_enabled']) {
             if ($manufacturersTable->getOptionTimebasedCurrencyEnabled($cartProduct->product->manufacturer->timebased_currency_enabled)) {
                 $manufacturerLimitReached = $manufacturersTable->hasManufacturerReachedTimebasedCurrencyLimit($cartProduct->product->id_manufacturer);
@@ -295,7 +295,7 @@ class CartsTable extends AppTable
         $grossPrice = $grossPricePerPiece * $cartProduct->amount;
         $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $cartProduct->amount) * $cartProduct->amount;
         $orderedQuantityInUnits = isset($cartProduct->cart_product_unit) ? $cartProduct->cart_product_unit->ordered_quantity_in_units : null;
-        
+
         $productData = [
             'cartProductId' => $cartProduct->id_cart_product,
             'productId' => $cartProduct->id_product,
@@ -309,7 +309,7 @@ class CartsTable extends AppTable
             'pickupDay' => $cartProduct->pickup_day,
             'isStockProduct' => $cartProduct->product->is_stock_product
         ];
-        
+
         $deposit = 0;
         if (!empty($cartProduct->product->deposit_product->deposit)) {
             $deposit = $cartProduct->product->deposit_product->deposit * $cartProduct->amount;
@@ -321,19 +321,19 @@ class CartsTable extends AppTable
         $priceInclPerUnit = 0;
         $unity = $cartProduct->product->unity;
         $productData['unity'] = $unity;
-        
+
         if (!empty($cartProduct->product->unit_product) && $cartProduct->product->unit_product->price_per_unit_enabled) {
-            
+
             $unitName = $cartProduct->product->unit_product->name;
             $unitAmount = $cartProduct->product->unit_product->amount;
             $priceInclPerUnit = $cartProduct->product->unit_product->price_incl_per_unit;
-            
+
             $quantityInUnitsForPrice = $cartProduct->product->unit_product->quantity_in_units;
             if (!is_null($orderedQuantityInUnits)) {
                 $quantityInUnitsForPrice = $orderedQuantityInUnits;
                 $productData['orderedQuantityInUnits'] = $orderedQuantityInUnits; // for cart only
             }
-            
+
             $newPriceIncl = round($priceInclPerUnit * $quantityInUnitsForPrice / $unitAmount, 2);
             $netPricePerPiece = round($productsTable->getNetPrice($cartProduct->id_product, $newPriceIncl), 2);
             $price = $newPriceIncl * $cartProduct->amount;
@@ -361,15 +361,15 @@ class CartsTable extends AppTable
                 $productQuantityInUnits = $orderedQuantityInUnits;
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
-            
+
         }
         $productData['unity_with_unit'] = $unity;
         $productData['unitName'] = $unitName;
         $productData['unitAmount'] = $unitAmount;
         $productData['priceInclPerUnit'] = $priceInclPerUnit;
-        
+
         $productData = $this->addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece);
-        
+
         return $productData;
 
     }
@@ -415,28 +415,28 @@ class CartsTable extends AppTable
         $priceInclPerUnit = 0;
 
         if (!empty($cartProduct->product_attribute->unit_product_attribute) && $cartProduct->product_attribute->unit_product_attribute->price_per_unit_enabled) {
-            
+
             $unitName = $cartProduct->product_attribute->unit_product_attribute->name;
             if (!$cartProduct->product_attribute->product_attribute_combination->attribute->can_be_used_as_unit) {
                 $unityName = $cartProduct->product_attribute->product_attribute_combination->attribute->name;
             }
             $unitAmount = $cartProduct->product_attribute->unit_product_attribute->amount;
             $priceInclPerUnit = $cartProduct->product_attribute->unit_product_attribute->price_incl_per_unit;
-            
+
             $quantityInUnitsForPrice = $cartProduct->product_attribute->unit_product_attribute->quantity_in_units;
             if (!is_null($orderedQuantityInUnits)) {
                 $quantityInUnitsForPrice = $orderedQuantityInUnits;
                 $productData['orderedQuantityInUnits'] = $orderedQuantityInUnits; // for cart only
             }
-            
+
             $newPriceIncl = round($priceInclPerUnit * $quantityInUnitsForPrice / $unitAmount, 2);
             $netPricePerPiece = round($productsTable->getNetPrice($cartProduct->id_product, $newPriceIncl), 2);
             $price = $newPriceIncl * $cartProduct->amount;
-            
+
             if (!is_null($orderedQuantityInUnits)) {
                 $price = $newPriceIncl;
             }
-            
+
             $productData['price'] =  $price;
             $productData['priceExcl'] =  $netPricePerPiece * $cartProduct->amount;
             $productData['tax'] = ($newPriceIncl - $netPricePerPiece) * $cartProduct->amount;
@@ -449,14 +449,14 @@ class CartsTable extends AppTable
                 $cartProduct->amount
             );
             $productData['usesQuantityInUnits'] = true;
-            
+
             $productData['quantityInUnits'] = isset($cartProduct->product_attribute->unit_product_attribute->quantity_in_units) ? $cartProduct->product_attribute->unit_product_attribute->quantity_in_units : 0;
             $productQuantityInUnits = $cartProduct->product_attribute->unit_product_attribute->quantity_in_units * $cartProduct->amount;
             if (!is_null($orderedQuantityInUnits)) {
                 $productQuantityInUnits = $orderedQuantityInUnits;
             }
             $productData['productQuantityInUnits'] = $productQuantityInUnits;
-            
+
         } else {
             $unity = $cartProduct->product_attribute->product_attribute_combination->attribute->name;
             $unityName = $unity;
@@ -466,7 +466,7 @@ class CartsTable extends AppTable
         $productData['unitName'] = $unitName;
         $productData['unitAmount'] = $unitAmount;
         $productData['priceInclPerUnit'] = $priceInclPerUnit;
-        
+
         $productData = $this->addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece);
 
         return $productData;

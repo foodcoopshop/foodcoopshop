@@ -207,17 +207,17 @@ if ($appAuth->isManufacturer()) {
     'label' => __d('admin', 'VAT_number').' <span class="after small">'.__d('admin', 'if_it_is_available').'</span>',
     'escape' => false
     ]);
-    
+
     $fileUploadSrc = $this->Html->getManufacturerTermsOfUseSrc($manufacturer->id_manufacturer);
     if (!empty($manufacturer->tmp_general_terms_and_conditions) && $manufacturer->tmp_general_terms_and_conditions != '') {
         $fileUploadSrc = str_replace('\\', '/', $manufacturer->tmp_general_terms_and_conditions);
     }
     $fileUploadExists = $fileUploadSrc !== false;
-    
+
     echo '<div class="input fcs-upload">';
     echo '<label>'.__d('admin', 'General_terms_and_conditions');
     echo '</label>';
-    
+
     echo '<div style="float:right;">';
     echo $this->Html->link(
         '<span style="padding:8px;float:left;">' . ($fileUploadExists ? __d('admin', 'Change_general_terms_and_conditions') : __d('admin', 'Upload_general_terms_and_conditions')).'</span>',
@@ -233,7 +233,7 @@ if ($appAuth->isManufacturer()) {
     echo '</div>';
     echo $this->Form->hidden('Manufacturers.tmp_general_terms_and_conditions');
     echo '</div>';
-    
+
     if ($fileUploadExists) {
         echo $this->Form->control('Manufacturers.delete_general_terms_and_conditions', [
             'label' => __d('admin', 'Delete_general_terms_and_conditions?'). '<span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',

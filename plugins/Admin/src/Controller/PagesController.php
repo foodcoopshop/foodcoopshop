@@ -124,7 +124,7 @@ class PagesController extends AdminAppController
         if ($this->getRequest()->getData('Pages.id_parent') == '') {
             $this->request = $this->request->withData('Pages.id_parent', 0);
         }
-        
+
         $page = $this->Page->patchEntity($page, $this->getRequest()->getData());
         if ($page->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));

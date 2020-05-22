@@ -31,14 +31,14 @@ class MyHtmlHelperTest extends AppCakeTestCase
         $result = 'asdf.jpg';
         $this->assertEquals($result, $this->MyHtmlHelper->removeTimestampFromFile($filename));
     }
-    
+
     public function testRemoveTimestampFromFileNoTimestamp()
     {
         $filename = 'asdf.jpg';
         $result = 'asdf.jpg';
         $this->assertEquals($result, $this->MyHtmlHelper->removeTimestampFromFile($filename));
     }
-    
+
     public function testRemoveTimestampFromFileInvalidTimestamp()
     {
         $filename = 'asdf.jpg?adfs';

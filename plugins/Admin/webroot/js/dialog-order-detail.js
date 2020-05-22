@@ -45,5 +45,5 @@ foodcoopshop.DialogOrderDetail = {
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.admin.ChangeMember, dialogId, dialogHtml);
         return dialogHtml;
     }
-    
+
 };

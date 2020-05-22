@@ -20,8 +20,8 @@ foodcoopshop.Upload = {
             foodcoopshop.Modal.resetButtons(modalSelector);
         }
         return image;
-    }, 
-        
+    },
+
     saveBlogPostTmpImageInForm : function (modalSelector) {
         var image = foodcoopshop.Upload.checkForEmptyImage(modalSelector);
         if (image.length == 0) {
@@ -72,7 +72,7 @@ foodcoopshop.Upload = {
         button.find('span').text(foodcoopshop.LocalizedJs.upload.ChangeGeneralTermsAndConditions);
         foodcoopshop.Modal.destroy(modalSelector);
     },
-    
+
     saveCategoryTmpImageInForm : function (modalSelector) {
         var image = foodcoopshop.Upload.checkForEmptyImage(modalSelector);
         if (image.length == 0) {
@@ -144,7 +144,7 @@ foodcoopshop.Upload = {
     initFileUpload : function (button, saveMethod) {
         foodcoopshop.ModalUploadForm.init(button, saveMethod, 'file');
     },
-    
+
     initUploadButtonFile: function (modalSelector, fileUploadForm, objectId) {
 
         var ul = fileUploadForm.find('ul');
@@ -169,12 +169,12 @@ foodcoopshop.Upload = {
             },
 
             progress: foodcoopshop.Upload.fileUploadProgress,
-            
+
             done: function (e, data) {
 
                 fileUploadForm.find('ul li').remove();
                 foodcoopshop.Helper.removeFlashMessage();
-                
+
                 var result = data.result;
                 if (result.status) {
                     var container = fileUploadForm.find('.drop');
@@ -240,7 +240,7 @@ foodcoopshop.Upload = {
         // Automatically upload the file once it is added to the queue
         var jqXHR = data.submit();
     },
-    
+
     fileUploadProgress : function (e, data) {
 
         // Calculate the completion percentage of the upload
@@ -271,14 +271,14 @@ foodcoopshop.Upload = {
         }
 
         var ul = imageUploadForm.find('ul');
-        
+
         var button = imageUploadForm.find('.drop a.upload-button');
         button.off('click');
         button.on('click', function () {
             // Simulate a click on the file input button to show the file browser dialog
             $(this).parent().find('input').trigger('click');
         });
-        
+
 
         // Initialize the jQuery File Upload plugin
         imageUploadForm.fileupload({

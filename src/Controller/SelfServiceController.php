@@ -29,32 +29,32 @@ class SelfServiceController extends FrontendController
             $this->AppAuth->deny($this->getRequest()->getParam('action'));
         }
     }
-    
+
     public function index()
     {
-        
+
         $categoryId = Configure::read('app.categoryAllProducts');
         if (!empty($this->getRequest()->getQuery('categoryId'))) {
             $categoryId = h($this->getRequest()->getQuery('categoryId'));
         }
         $this->set('categoryId', $categoryId);
-        
+
         $keyword = '';
         if (!empty($this->getRequest()->getQuery('keyword'))) {
             $keyword = h(trim($this->getRequest()->getQuery('keyword')));
             $this->set('keyword', $keyword);
         }
-        
+
         $this->Category = TableRegistry::getTableLocator()->get('Categories');
         $this->set('categoriesForSelect', $this->Category->getForSelect(null, false));
-        
+
         $products = $this->Category->getProductsByCategoryId($this->AppAuth, $categoryId, false, $keyword, 0, false, true);
         $products = $this->prepareProductsForFrontend($products);
         $this->set('products', $products);
-        
+
         $this->viewBuilder()->setLayout('self_service');
         $this->set('title_for_layout', __('Self_service_for_stock_products'));
-        
+
         if (!empty($this->getRequest()->getQuery('keyword')) && count($products) == 1) {
             $hashedProductId = strtolower(substr($keyword, 0, 4));
             $attributeId = (int) substr($keyword, 4, 4);
@@ -69,29 +69,29 @@ class SelfServiceController extends FrontendController
                 return;
             }
         }
-        
+
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $cart = $this->AppAuth->getCart();
             $this->set('cart', $cart['Cart']);
         }
-        
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            
+
             if ($this->AppAuth->Cart->isCartEmpty()) {
                 $this->Flash->error(__('Your_shopping_bag_was_empty.'));
                 $this->redirect(Configure::read('app.slugHelper')->getSelfService());
                 return;
             }
-            
+
             $this->AppAuth->Cart->finish();
-            
+
             if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
                 $this->redirect(Configure::read('app.slugHelper')->getSelfService());
                 return;
             }
-            
+
         }
-        
+
     }
-    
+
 }

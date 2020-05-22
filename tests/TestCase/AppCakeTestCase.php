@@ -72,9 +72,9 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->resetTestDatabaseData();
         $this->resetLogs();
         $this->Configuration->loadConfigurations();
-        
+
     }
-    
+
     private function getLogFile($name)
     {
         return new File(ROOT . DS . 'logs' . DS . $name . '.log');
@@ -85,20 +85,20 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->getLogFile('debug')->write('');
         $this->getLogFile('error')->write('');
     }
-    
+
     public function tearDown(): void
     {
         parent::tearDown();
         $this->assertLogFilesForErrors();
     }
-    
+
     protected function assertLogFilesForErrors()
     {
         $log = $this->getLogFile('debug')->read(true, 'r');
         $log .= $this->getLogFile('error')->read(true, 'r');
         $this->assertDoesNotMatchRegularExpression('/(Warning|Notice)/', $log);
     }
-    
+
     protected function resetTestDatabaseData()
     {
         $this->dbConnection = ConnectionManager::get('test');
@@ -137,7 +137,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
     {
         $this->assertEquals(403, $this->httpClient->getStatusCode());
     }
-    
+
     protected function assertAccessDeniedWithRedirectToLoginForm()
     {
         $this->assertRegExpWithUnquotedString('Zugriff verweigert, bitte melde dich an.', $this->httpClient->getContent());
@@ -158,7 +158,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $response = $this->httpClient->getJsonDecodedContent();
         $this->assertEquals(1, $response->status, 'json status should be "1", msg: ' . $response->msg);
     }
-    
+
     /**
      * called with json request, Controlller::isAuthorized false redirects to home
      */
@@ -252,7 +252,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
             $preparedToAddresses[] = $email;
         }
         $this->assertEqualsCanonicalizing($preparedToAddresses, $expectedToEmails, 'email to_addresses wrong');
-        
+
         $preparedCcAddresses = [];
         foreach ($ccAddress as $email) {
             $preparedCcAddresses[] = $email;
@@ -354,7 +354,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
             $this->Slug->getCartFinish(), $data
         );
     }
-    
+
     protected function getCartById($cartId)
     {
         $cart = $this->Cart->find('all', [
@@ -393,7 +393,7 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         ]);
         return $this->httpClient->getJsonDecodedContent();
     }
-    
+
     protected function changeProductDeliveryRhythm($productId, $deliveryRhythmType, $deliveryRhythmFirstDeliveryDay = '', $deliveryRhythmOrderPossibleUntil = '', $deliveryRhythmSendOrderListWeekday = '', $deliveryRhythmSendOrderListDay = '')
     {
         $this->httpClient->ajaxPost('/admin/products/editDeliveryRhythm', [
@@ -474,12 +474,12 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->changeManufacturer(4, 'timebased_currency_enabled', 1);
         $this->changeManufacturer(4, 'timebased_currency_max_percentage', $reducedMaxPercentage);
     }
-    
+
     protected function getCorrectedLogoPathInHtmlForPdfs($html)
     {
         return preg_replace('/\{\{logoPath\}\}/', ROOT . DS . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg', $html);
     }
-    
+
     protected function prepareSendingOrderLists()
     {
         $folder = new Folder();

@@ -14,9 +14,9 @@
 foodcoopshop.ModalLogout = {
 
     init : function(redirect) {
-        
+
         var modalSelector = '#logout-form';
-        
+
         var buttons = [
             foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.yes, 'fa fa-check'),
             foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.no, null, true)
@@ -28,7 +28,7 @@ foodcoopshop.ModalLogout = {
             this.getHtml(),
             buttons
         );
-        
+
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             foodcoopshop.ModalLogout.getSuccessHandler(modalSelector);
         });
@@ -36,21 +36,21 @@ foodcoopshop.ModalLogout = {
         $('a.logout-button').on('click', function () {
             foodcoopshop.ModalLogout.getOpenHandler(modalSelector);
         });
-        
+
     },
-        
+
     getHtml : function() {
         return '<p>' + foodcoopshop.LocalizedJs.helper.logoutInfoText + '</p>';
     },
-    
+
     getSuccessHandler : function(redirect) {
         var redirectUrl = '/' + foodcoopshop.LocalizedJs.helper.routeLogout;
         if (redirect !== undefined) {
             redirectUrl += '?redirect=' + redirect;
         }
-        document.location.href = redirectUrl;        
+        document.location.href = redirectUrl;
     },
-    
+
     getOpenHandler : function(modalSelector) {
         $(modalSelector).modal();
     }

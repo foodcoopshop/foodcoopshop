@@ -33,7 +33,7 @@ class CartComponent extends Component
         'AppAuth',
         'RequestHandler'
     ];
-    
+
     public $cart = null;
 
     public function getProducts()
@@ -146,7 +146,7 @@ class CartComponent extends Component
         $cc->save($patchedEntity);
         return $patchedEntity;
     }
-    
+
     public function getUniqueManufacturers()
     {
         $manufactures = [];
@@ -173,7 +173,7 @@ class CartComponent extends Component
         }
         return false;
     }
-    
+
     public function isCartEmpty()
     {
         $isEmpty = false;
@@ -182,17 +182,17 @@ class CartComponent extends Component
         }
         return $isEmpty;
     }
-    
+
     public function finish()
     {
-        
+
         $cart = $this->AppAuth->getCart();
-        
+
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
         $this->Product = TableRegistry::getTableLocator()->get('Products');
-        
+
         // START check if no amount is 0
         $productWithAmount0Found = false;
         foreach ($this->getProducts() as $cartProduct) {
@@ -204,22 +204,22 @@ class CartComponent extends Component
                 $productWithAmount0Found = true;
             }
         }
-        
+
         if ($productWithAmount0Found) {
             $cart = $this->AppAuth->getCart();
             $this->AppAuth->setCart($cart);
         }
         // END check if no amount is 0
-        
+
         $cartErrors = [];
         $orderDetails2save = [];
         $products = [];
         $stockAvailable2saveData = [];
         $stockAvailable2saveConditions = [];
-        
+
         foreach ($this->getProducts() as $cartProduct) {
             $ids = $this->Product->getProductIdAndAttributeId($cartProduct['productId']);
-            
+
             $product = $this->Product->find('all', [
                 'conditions' => [
                     'Products.id_product' => $ids['productId']
@@ -233,7 +233,7 @@ class CartComponent extends Component
                 ]
             ])->first();
             $products[] = $product;
-            
+
             $stockAvailableQuantity = $product->stock_available->quantity;
             $stockAvailableAvailableQuantity = $stockAvailableQuantity;
             if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
@@ -245,20 +245,20 @@ class CartComponent extends Component
                 $message .= ' ' . __('Please_change_amount_or_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
-            
+
             $attribute = null;
             if ($ids['attributeId'] > 0) {
                 $attributeIdFound = false;
                 foreach ($product->product_attributes as $attribute) {
                     if ($attribute->id_product_attribute == $ids['attributeId']) {
-                        
+
                         $attributeIdFound = true;
                         $stockAvailableQuantity = $attribute->stock_available->quantity;
                         $stockAvailableAvailableQuantity = $stockAvailableQuantity;
                         if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
                             $stockAvailableAvailableQuantity = $attribute->stock_available->quantity - $attribute->stock_available->quantity_limit;
                         }
-                        
+
                         // stock available check for attribute
                         if ((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$attribute->stock_available->always_available) && $stockAvailableAvailableQuantity < $cartProduct['amount']) {
                             $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
@@ -280,19 +280,19 @@ class CartComponent extends Component
                     $cartErrors[$cartProduct['productId']][] = $message;
                 }
             }
-            
+
             if (! $product->active) {
                 $message = __('The_product_{0}_is_not_activated_any_more.', ['<b>' . $product->name . '</b>']);
                 $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
-            
+
             if (! $product->manufacturer->active || (!$this->AppAuth->isInstantOrderMode() && !$this->AppAuth->isSelfServiceModeByUrl() && $this->Product->deliveryBreakEnabled($product->manufacturer->no_delivery_days, $product->next_delivery_day))) {
                 $message = __('The_manufacturer_of_the_product_{0}_has_a_delivery_break_or_product_is_not_activated.', ['<b>' . $product->name . '</b>']);
                 $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
-            
+
             if (!$this->AppAuth->isInstantOrderMode()) {
                 if ( !($product->manufacturer->stock_management_enabled && $product->is_stock_product) && $product->delivery_rhythm_type == 'individual') {
                     if ($product->delivery_rhythm_order_possible_until->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')) < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
@@ -302,7 +302,7 @@ class CartComponent extends Component
                     }
                 }
             }
-            
+
             if (!$this->AppAuth->isInstantOrderMode() && !$this->AppAuth->isSelfServiceModeByUrl() && $this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $product->next_delivery_day)) {
                 $message = __('{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered.',
                     [
@@ -313,7 +313,7 @@ class CartComponent extends Component
                 $message .= ' ' . __('Please_delete_product_from_cart_to_place_order.');
                 $cartErrors[$cartProduct['productId']][] = $message;
             }
-            
+
             // prepare data for table order_detail
             $orderDetail2save = [
                 'product_id' => $ids['productId'],
@@ -331,21 +331,21 @@ class CartComponent extends Component
                 'product' => $product,
                 'cartProductId' => $cartProduct['cartProductId'],
             ];
-            
+
             if ($this->AppAuth->isInstantOrderMode() || $this->AppAuth->isSelfServiceModeByUrl()) {
                 $orderDetail2save['pickup_day'] = $cartProduct['pickupDay'];
             }
-            
+
             // prepare data for table order_detail_tax
             $unitPriceExcl = $this->Product->getNetPrice($ids['productId'], $cartProduct['price'] / $cartProduct['amount']);
             $unitTaxAmount = $this->Product->getUnitTax($cartProduct['price'], $unitPriceExcl, $cartProduct['amount']);
             $totalTaxAmount = $unitTaxAmount * $cartProduct['amount'];
-            
+
             $orderDetail2save['order_detail_tax'] = [
                 'unit_amount' => $unitTaxAmount,
                 'total_amount' => $totalTaxAmount
             ];
-            
+
             // prepare data for table order_detail_units
             if (isset($cartProduct['quantityInUnits'])) {
                 $orderDetail2save['order_detail_unit'] = [
@@ -356,14 +356,14 @@ class CartComponent extends Component
                     'product_quantity_in_units' => $cartProduct['productQuantityInUnits']
                 ];
             }
-            
+
             $orderDetails2save[] = $orderDetail2save;
-            
+
             $decreaseQuantity = ($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$product->stock_available->always_available;
             if (isset($attribute->stock_available)) {
                 $decreaseQuantity = ($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$attribute->stock_available->always_available;
             }
-            
+
             if ($decreaseQuantity) {
                 $newQuantity = $stockAvailableQuantity - $cartProduct['amount'];
                 $stockAvailable2saveData[] = [
@@ -375,9 +375,9 @@ class CartComponent extends Component
                 ];
             }
         }
-        
+
         $this->getController()->set('cartErrors', $cartErrors);
-        
+
         if ($this->AppAuth->isTimebasedCurrencyEnabledForCustomer()) {
             $validator = $this->Cart->getValidator('default');
             $validator->notEmptyString(
@@ -405,7 +405,7 @@ class CartComponent extends Component
             }
             $this->Cart->setValidator('default', $validator);
         }
-        
+
         $options = [];
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
             // save pickup day: primary key needs to be changed!
@@ -430,47 +430,47 @@ class CartComponent extends Component
             $this->getController()->getRequest()->getData(),
             $options
         );
-        
+
         $formErrors = false;
         if ($cart['Cart']->hasErrors()) {
             $formErrors = true;
         }
         $this->getController()->set('cart', $cart['Cart']); // to show error messages in form (from validation)
         $this->getController()->set('formErrors', $formErrors);
-        
+
         if (!empty($cartErrors) || !empty($formErrors)) {
             $this->getController()->Flash->error(__('Errors_occurred.'));
         } else {
-            
+
             $selectedTimebasedCurrencySeconds = 0;
             $selectedTimeAdaptionFactor = 0;
             if (!empty($this->getController()->getRequest()->getData('Carts.timebased_currency_seconds_sum_tmp')) && $this->getController()->getRequest()->getData('Carts.timebased_currency_seconds_sum_tmp') > 0) {
                 $selectedTimebasedCurrencySeconds = $this->getController()->getRequest()->getData('Carts.timebased_currency_seconds_sum_tmp');
                 $selectedTimeAdaptionFactor = $selectedTimebasedCurrencySeconds / $this->getTimebasedCurrencySecondsSum();
             }
-            
+
             if ($selectedTimeAdaptionFactor > 0) {
                 $cart = $this->Cart->adaptCartWithTimebasedCurrency($cart, $selectedTimeAdaptionFactor);
                 $this->AppAuth->setCart($cart);
             }
-            
+
             $this->saveOrderDetails($orderDetails2save);
             $this->saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions);
-            
+
             $manufacturersThatReceivedInstantOrderNotification = $this->sendInstantOrderNotificationToManufacturers($cart['CartProducts']);
             $this->sendStockAvailableLimitReachedEmailToManufacturer($cart['Cart']->id_cart);
-            
+
             if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
                 $this->Cart->PickupDayEntities->saveMany($cart['Cart']->pickup_day_entities);
             }
-            
+
             $cart = $this->AppAuth->getCart(); // to get attached order details
             $this->AppAuth->setCart($cart);
             $cart['Cart'] = $this->markAsSaved(); // modified timestamp is needed later on!
-            
+
             $cartType = $this->AppAuth->getCartType();
             $userIdForActionLog = $this->AppAuth->getUserId();
-            
+
             switch($cartType) {
                 case $this->Cart::CART_TYPE_WEEKLY_RHYTHM;
                     $actionLogType = 'customer_order_finished';
@@ -507,53 +507,53 @@ class CartComponent extends Component
                     $this->sendConfirmationEmailToCustomerSelfService($cart, $products);
                     break;
             }
-            
+
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
             $this->getController()->Flash->success($message);
 
         }
-        
+
         return $cart;
-    
+
     }
-    
+
     private function saveOrderDetails($orderDetails2save)
     {
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         foreach ($orderDetails2save as &$orderDetail) {
-            
+
             // timebased_currency: ORDER_DETAILS
             if ($this->isTimebasedCurrencyUsed()) {
-                
+
                 foreach($this->getProducts() as $cartProduct) {
                     if ($cartProduct['cartProductId'] == $orderDetail['cartProductId']) {
-                        
+
                         if (isset($cartProduct['isTimebasedCurrencyUsed'])) {
-                            
+
                             $orderDetail['timebased_currency_order_detail']['money_excl'] = $cartProduct['timebasedCurrencyMoneyExcl'];
                             $orderDetail['timebased_currency_order_detail']['money_incl'] = $cartProduct['timebasedCurrencyMoneyIncl'];
                             $orderDetail['timebased_currency_order_detail']['seconds'] = $cartProduct['timebasedCurrencySeconds'];
                             $orderDetail['timebased_currency_order_detail']['max_percentage'] = $orderDetail['product']->manufacturer->timebased_currency_max_percentage;
                             $orderDetail['timebased_currency_order_detail']['exchange_rate'] = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'));
-                            
+
                             // override prices from timebased_currency adapted cart
                             $orderDetail['total_price_tax_excl'] = $cartProduct['priceExcl'];
                             $orderDetail['total_price_tax_incl'] = $cartProduct['price'];
                         }
-                        
+
                         continue;
                     }
                 }
-                
+
             }
         }
-        
+
         $this->OrderDetail->saveMany(
             $this->OrderDetail->newEntities($orderDetails2save)
         );
     }
-    
+
     private function saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions)
     {
         $this->Product = TableRegistry::getTableLocator()->get('Products');
@@ -567,18 +567,18 @@ class CartComponent extends Component
             $i++;
         }
     }
-    
+
     /**
      * @param $cartProducts
      * @return array
      */
     private function sendInstantOrderNotificationToManufacturers($cartProducts)
     {
-        
+
         if (!$this->AppAuth->isInstantOrderMode()) {
             return [];
         }
-        
+
         $manufacturers = [];
         foreach ($cartProducts as $cartProduct) {
             if ($cartProduct['isStockProduct']) {
@@ -586,11 +586,11 @@ class CartComponent extends Component
             }
             $manufacturers[$cartProduct['manufacturerId']][] = $cartProduct;
         }
-        
+
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturersThatReceivedInstantOrderNotification = [];
         foreach ($manufacturers as $manufacturerId => $cartProducts) {
-            
+
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
                     'Manufacturers.id_manufacturer' => $manufacturerId
@@ -599,14 +599,14 @@ class CartComponent extends Component
                     'AddressManufacturers'
                 ]
             ])->first();
-            
+
             $depositSum = 0;
             $productSum = 0;
             foreach ($cartProducts as $cartProduct) {
                 $depositSum += $cartProduct['deposit'];
                 $productSum += $cartProduct['price'];
             }
-            
+
             $sendInstantOrderNotification = $this->Manufacturer->getOptionSendInstantOrderNotification($manufacturer->send_instant_order_notification);
             if ($sendInstantOrderNotification) {
                 $manufacturersThatReceivedInstantOrderNotification[] = $manufacturer->name;
@@ -627,10 +627,10 @@ class CartComponent extends Component
                 $email->send();
             }
         }
-        
+
         return $manufacturersThatReceivedInstantOrderNotification;
     }
-    
+
     private function sendStockAvailableLimitReachedEmailToManufacturer($cartId)
     {
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
@@ -646,7 +646,7 @@ class CartComponent extends Component
                 'CartProducts.OrderDetails'
             ]
         ])->first();
-        
+
         foreach($cart->cart_products as $cartProduct) {
             $stockAvailable = $cartProduct->product->stock_available;
             if (!empty($cartProduct->product_attribute)) {
@@ -655,9 +655,9 @@ class CartComponent extends Component
             if (is_null($stockAvailable->sold_out_limit)) {
                 continue;
             }
-            
+
             $stockAvailableLimitReached = $stockAvailable->quantity <= $stockAvailable->sold_out_limit;
-            
+
             // send email to manufacturer
             if ($stockAvailableLimitReached && $cartProduct->product->manufacturer->stock_management_enabled && $cartProduct->product->is_stock_product && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_manufacturer) {
                 $email = new AppMailer();
@@ -678,7 +678,7 @@ class CartComponent extends Component
                 ]);
                 $email->send();
             }
-            
+
             // send email to contact person
             if ($stockAvailableLimitReached && $cartProduct->product->manufacturer->stock_management_enabled && $cartProduct->product->is_stock_product && !empty($cartProduct->product->manufacturer->customer) && $cartProduct->product->manufacturer->send_product_sold_out_limit_reached_for_contact_person) {
                 $email = new AppMailer();
@@ -700,11 +700,11 @@ class CartComponent extends Component
                 ]);
                 $email->send();
             }
-            
+
         }
-        
+
     }
-    
+
     private function sendConfirmationEmailToCustomerSelfService($cart, $products)
     {
         $email = new AppMailer();
@@ -717,7 +717,7 @@ class CartComponent extends Component
         ]);
         $email->send();
     }
-    
+
     /**
      * does not send email to inactive users (superadmins can place shop orders for inactive users!)
      * @param array $cart
@@ -725,11 +725,11 @@ class CartComponent extends Component
      */
     private function sendConfirmationEmailToCustomer($cart, $products)
     {
-        
+
         if (!$this->AppAuth->user('active')) {
             return false;
         }
-        
+
         $email = new AppMailer();
         $email->viewBuilder()->setTemplate('order_successful');
         $email->setTo($this->AppAuth->getEmail())
@@ -739,7 +739,7 @@ class CartComponent extends Component
             'appAuth' => $this->AppAuth,
             'originalLoggedCustomer' => $this->getController()->getRequest()->getSession()->check('Auth.originalLoggedCustomer') ? $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer') : null
         ]);
-        
+
         if (Configure::read('app.rightOfWithdrawalEnabled')) {
             $email->addAttachments([__('Filename_Right-of-withdrawal-information-and-form').'.pdf' => ['data' => $this->generateRightOfWithdrawalInformationAndForm($cart, $products), 'mimetype' => 'application/pdf']]);
         }
@@ -763,13 +763,13 @@ class CartComponent extends Component
                     'mimetype' => 'application/pdf'
                 ];
             }
-            
+
             $email->addAttachments($generalTermsAndConditionsFiles);
         }
-        
+
         $email->send();
     }
-    
+
     /**
      * called from finish context
      * saves pdf as file
@@ -782,7 +782,7 @@ class CartComponent extends Component
         foreach ($products as $product) {
             $manufacturers[$product->manufacturer->id_manufacturer][] = $product;
         }
-        
+
         $pdfWriter = new InformationAboutRightOfWithdrawalPdfWriter();
         $pdfWriter->setData([
             'products' => $products,
@@ -792,7 +792,7 @@ class CartComponent extends Component
         ]);
         return $pdfWriter->writeAttachment();
     }
-    
+
     /**
      * called from finish context
      * saves pdf as file
@@ -802,7 +802,7 @@ class CartComponent extends Component
         $pdfWriter = new GeneralTermsAndConditionsPdfWriter();
         return $pdfWriter->writeAttachment();
     }
-    
+
     /**
      * called from finish context
      * saves pdf as file
@@ -810,7 +810,7 @@ class CartComponent extends Component
      */
     private function generateOrderConfirmation($cart)
     {
-        
+
         $manufacturers = [];
         $this->Cart = TableRegistry::getTableLocator()->get('Carts');
         $cart = $this->Cart->find('all', [
@@ -823,14 +823,14 @@ class CartComponent extends Component
                 'CartProducts.Products.Manufacturers.AddressManufacturers'
             ]
         ])->first();
-        
+
         foreach ($cart->cart_products as $cartProduct) {
             $manufacturers[$cartProduct->product->id_manufacturer] = [
                 'CartProducts' => $cart->cart_products,
                 'Manufacturer' => $cartProduct->product->manufacturer
             ];
         }
-        
+
         $pdfWriter = new OrderConfirmationPdfWriter();
         $pdfWriter->setData([
             'appAuth' => $this->AppAuth,
@@ -839,5 +839,5 @@ class CartComponent extends Component
         ]);
         return $pdfWriter->writeAttachment();
     }
-    
+
 }

@@ -26,10 +26,10 @@ class ToolsController extends AdminAppController
     public function doTmpFileUpload()
     {
         $this->RequestHandler->renderAs($this, 'json');
-        
+
         // check if uploaded file is pdf
         $upload = $this->getRequest()->getData('upload');
-        
+
         // non-pdf files will return false
         if (mime_content_type($upload->getStream()->getMetadata('uri')) != 'application/pdf') {
             $message = __d('admin', 'The_uploaded_file_needs_to_have_the_format:_{0}', ['PDF']);
@@ -40,13 +40,13 @@ class ToolsController extends AdminAppController
             $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
             return;
         }
-        
+
         $extension = strtolower(pathinfo($upload->getClientFilename(), PATHINFO_EXTENSION));
         $filename = StringComponent::createRandomString(10) . '.' . $extension;
         $filenameWithPath = Configure::read('app.tmpUploadFilesDir') . DS . $filename;
-        
+
         $upload->moveTo(WWW_ROOT . $filenameWithPath);
-        
+
         $this->set([
             'status' => 1,
             'text' => __d('admin', 'Filename_General-terms-and-conditions') . '.pdf',
@@ -54,14 +54,14 @@ class ToolsController extends AdminAppController
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'text', 'filename']);
     }
-    
+
     public function doTmpImageUpload()
     {
         $this->RequestHandler->renderAs($this, 'json');
 
         // check if uploaded file is image file
         $upload = $this->getRequest()->getData('upload');
-        
+
         // non-image files will return false
         if (mime_content_type($upload->getStream()->getMetadata('uri')) != 'image/jpeg') {
             $message = __d('admin', 'The_uploaded_file_needs_to_have_the_format:_{0}', ['JPG']);
@@ -80,7 +80,7 @@ class ToolsController extends AdminAppController
         $filename = StringComponent::createRandomString(10) . '.' . $extension;
         $filenameWithPath = Configure::read('app.tmpUploadImagesDir') . DS . $filename;
         $upload->moveTo(WWW_ROOT . $filenameWithPath);
-        
+
         Image::make(WWW_ROOT . $filenameWithPath)
             ->widen($this->getMaxTmpUploadFileSize())
             ->save(WWW_ROOT . $filenameWithPath);
@@ -135,7 +135,7 @@ class ToolsController extends AdminAppController
             ->save($uploadedFile);
 
         $rotatedImageSrc = $this->getRequest()->getData('filename') . '?' . StringComponent::createRandomString(3);
-        
+
         $this->set([
             'status' => 1,
             'rotatedImageSrc' => $rotatedImageSrc

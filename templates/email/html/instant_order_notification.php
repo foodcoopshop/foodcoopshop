@@ -15,7 +15,7 @@
 ?>
 <?php echo $this->element('email/tableHead'); ?>
     <tbody>
-    
+
         <tr>
             <td style="font-weight: bold; font-size: 18px; padding-bottom: 20px;">
                 <?php echo __('Hello'); ?> <?php echo $manufacturer->address_manufacturer->firstname; ?>,
@@ -28,7 +28,7 @@
                 <p><?php echo __('You_receive_this_message_because_the_delivery_day_of_this_order_was_automatically_set_to_today_{0}_and_therefore_it_does_not_appear_on_your_order_lists.', [$this->MyTime->getDateFormattedWithWeekday($this->MyTime->getCurrentDay())]); ?></p>
             </td>
         </tr>
-        
+
     </tbody>
 <?php echo $this->element('email/tableFoot'); ?>
 

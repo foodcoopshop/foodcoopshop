@@ -22,7 +22,7 @@ $this->element('addScript', [
     Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
     $('input.datepicker').datepicker();
     "
-]);    
+]);
 ?>
 
 <div class="filter-container">
@@ -157,7 +157,7 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
         'escape' => false
     ]);
 
-    
+
     if ($manufacturer->stock_management_enabled) {
         echo $this->Form->control('Manufacturers.send_product_sold_out_limit_reached_for_manufacturer', [
             'label' => __d('admin', 'Sold_out_limit_reached_notification_for_manufacturer?').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' . __d('admin', 'to_receive_a_notification_when_the_stock_limit_for_a_product_is_reached.').'</a></span>',

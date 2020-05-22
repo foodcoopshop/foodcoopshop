@@ -48,7 +48,7 @@ class AppController extends Controller
                 'finder' => 'auth' // CustomersTable::findAuth
             ]
         ];
-        
+
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
             $authenticate['BarCode'] = [
                 'userModel' => 'Customers',
@@ -58,7 +58,7 @@ class AppController extends Controller
                 'finder' => 'auth' // CustomersTable::findAuth
             ];
         }
-        
+
         $this->loadComponent('AppAuth', [
             'loginAction' => Configure::read('app.slugHelper')->getLogin(),
             'authError' => ACCESS_DENIED_MESSAGE,
@@ -68,7 +68,7 @@ class AppController extends Controller
             'authenticate' => $authenticate,
             'storage' => 'Session'
         ]);
-        
+
         $this->paginate = [
             'limit' => 300000,
             'maxLimit' => 300000

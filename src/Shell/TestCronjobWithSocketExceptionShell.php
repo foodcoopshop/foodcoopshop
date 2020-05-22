@@ -24,5 +24,5 @@ class TestCronjobWithSocketExceptionShell extends AppShell
     {
         throw new SocketException();
     }
-    
+
 }

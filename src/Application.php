@@ -32,7 +32,7 @@ use Cake\Routing\Middleware\RoutingMiddleware;
  */
 class Application extends BaseApplication
 {
-    
+
     /**
      * Load all the application configuration and bootstrap logic.
      *
@@ -45,26 +45,26 @@ class Application extends BaseApplication
         if (Configure::read('debug')) {
             $this->addPlugin('DebugKit', ['bootstrap' => true]);
         }
-        
+
         $this->addPlugin('Migrations');
         $this->addPlugin('AssetCompress', ['bootstrap' => true]);
-        
+
         $this->addPlugin('Admin', [
             'bootstrap' => false,
             'routes' => true,
             'autoload' => true
         ]);
-        
+
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
             $this->addPlugin('Network', [
                 'routes' => true,
                 'autoload' => true
             ]);
         }
-        
+
         // Load more plugins here
     }
-    
+
     /**
      * Setup the middleware queue your application will use.
      *
@@ -77,12 +77,12 @@ class Application extends BaseApplication
         // Catch any exceptions in the lower layers,
         // and make an error page/response
         ->add(new ErrorHandlerMiddleware(Configure::read('Error')))
-        
+
         // Handle plugin/theme assets like CakePHP normally does.
         ->add(new AssetMiddleware([
             'cacheTime' => Configure::read('Asset.cacheTime'),
         ]))
-        
+
         // Add routing middleware.
         // If you have a large number of routes connected, turning on routes
         // caching in production could improve performance. For that when
@@ -90,10 +90,10 @@ class Application extends BaseApplication
         // using it's second constructor argument:
         // `new RoutingMiddleware($this, '_cake_routes_')`
         ->add(new RoutingMiddleware($this));
-        
+
         return $middlewareQueue;
     }
-    
+
     /**
      * Bootrapping for CLI application.
      *
@@ -108,9 +108,9 @@ class Application extends BaseApplication
         } catch (MissingPluginException $e) {
             // Do not halt if the plugin is missing
         }
-        
+
         $this->addPlugin('Migrations');
-        
+
         // Load more plugins here
     }
 }

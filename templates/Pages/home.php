@@ -31,7 +31,7 @@ echo $this->element('blogPosts', [
 ]);
 
 if (!empty($newProducts)) {
-    
+
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".AppFeatherlight.addLightboxToCkeditorImages('.product-wrapper .toggle-content.description img');".
         Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForImages('.product-wrapper a.lightbox');".
@@ -41,14 +41,14 @@ if (!empty($newProducts)) {
         Configure::read('app.jsNamespace').".Cart.initAddToCartButton();".
         Configure::read('app.jsNamespace').".Cart.initRemoveFromCartLinks();"
     ]);
-    
+
     echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
-    
+
     $isFirstElement = empty($blogPosts) || $blogPosts->count() == 0;
     echo '<h1 style="float:left;' . (!$isFirstElement ? 'margin-top:20px;' : '') . '">';
         echo __('New_products');
     echo '</h2>';
-    
+
     foreach ($newProducts as $product) {
         echo $this->element('product/product', [
             'product' => $product,
@@ -57,7 +57,7 @@ if (!empty($newProducts)) {
             'showIsNewBadgeAsLink' => true
         ]);
     }
-    
+
 }
 
 if (Configure::read('appDb.FCS_FOODCOOPS_MAP_ENABLED')) {

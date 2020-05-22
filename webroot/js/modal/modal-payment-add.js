@@ -14,9 +14,9 @@
 foodcoopshop.ModalPaymentAdd = {
 
     initDepositInList: function() {
-        
+
         var button = '.add-payment-deposit-button';
-        
+
         $(button).each(function () {
 
             var buttonClass = button.replace(/\./, '');
@@ -24,28 +24,28 @@ foodcoopshop.ModalPaymentAdd = {
             var form = $('#' + buttonClass + '-form-' + $(this).data('objectId'));
             var heading = form.find('h3');
             form.find('h3').addClass('hide');
-            
+
             $(this).on('click', function () {
                 foodcoopshop.ModalPaymentAdd.initDeposit(heading, form);
             });
 
         });
-        
+
     },
-    
+
     initDepositSingle: function(button, form) {
-        
+
         var heading = form.find('h3');
         form.find('h3').addClass('hide');
 
         $(button).on('click', function () {
             foodcoopshop.ModalPaymentAdd.initDeposit(heading, form);
         });
-        
+
     },
-    
+
     initDeposit : function(heading, form) {
-        
+
         var modalSelector = '#payment-deposit-add';
 
         foodcoopshop.Modal.appendModalToDom(
@@ -53,54 +53,54 @@ foodcoopshop.ModalPaymentAdd = {
             heading.html(),
             ''
         );
-        
+
         $(modalSelector).on('hidden.bs.modal', function (e) {
             foodcoopshop.ModalPaymentAdd.getCloseHandler(modalSelector);
         });
-        
+
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             foodcoopshop.ModalPaymentAdd.getSuccessHandler(modalSelector);
         });
-        
-        foodcoopshop.ModalPaymentAdd.getOpenHandler(modalSelector, form);        
-        
+
+        foodcoopshop.ModalPaymentAdd.getOpenHandler(modalSelector, form);
+
     },
-        
+
     init : function() {
-        
+
         $('#add-payment-button-wrapper .btn-success').on('click', function () {
-            
+
             var form = $('.add-payment-form');
             var heading = form.find('h3');
             form.find('h3').addClass('hide');
-            
+
             var modalSelector = '#payment-product-add';
-            
+
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
                 heading.html(),
                 ''
             );
-            
+
             $(modalSelector).on('hidden.bs.modal', function (e) {
                 foodcoopshop.ModalPaymentAdd.getCloseHandler(modalSelector);
             });
-            
+
             foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
                 foodcoopshop.ModalPaymentAdd.getSuccessHandler(modalSelector);
             });
-            
+
             foodcoopshop.ModalPaymentAdd.getOpenHandler(modalSelector, form);
         });
-        
+
     },
-        
+
     getCloseHandler : function(modalSelector) {
         $(modalSelector).remove();
     },
-    
+
     getSuccessHandler : function(modalSelector) {
-        
+
         var amount = $(modalSelector + ' #payments-amount').val();
         var type = $(modalSelector + ' input[name="Payments[type]"]').val();
         var customerIdDomElement = $(modalSelector + ' input[name="Payments[customerId]"]');
@@ -170,9 +170,9 @@ foodcoopshop.ModalPaymentAdd = {
                 foodcoopshop.Modal.resetButtons(modalSelector);
             }
         });
-        
+
     },
-    
+
     getOpenHandler : function(modalSelector, form) {
         $(modalSelector).modal();
         $(modalSelector).addClass('add-payment-form');

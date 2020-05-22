@@ -19,7 +19,7 @@ $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();" .
         Configure::read('app.jsNamespace') . ".Helper.initCkeditor('payments-approval-comment');" .
-        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');" . 
+        Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();
         $('#payments-approval').on('change', function() {
             var emailCheckbox = $('#payments-send-email');

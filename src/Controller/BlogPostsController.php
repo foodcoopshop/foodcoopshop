@@ -78,7 +78,7 @@ class BlogPostsController extends FrontendController
         if ($correctSlug != $givenSlug) {
             $this->redirect(Configure::read('app.slugHelper')->getBlogPostDetail($blogPostId, $blogPost->title));
         }
-        
+
         $this->set('blogPost', $blogPost);
 
         // START find neighbors

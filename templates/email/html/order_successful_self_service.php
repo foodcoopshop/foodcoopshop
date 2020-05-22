@@ -24,9 +24,9 @@ use Cake\Core\Configure;
         </tr>
         <tr>
             <td>
-            	<?php
-            	   echo __('thank_you_for_your_purchase.');
-            	?>
+                <?php
+                   echo __('thank_you_for_your_purchase.');
+                ?>
             </td>
         </tr>
     </tbody>
@@ -44,17 +44,17 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
             'productAndDepositSum' => $cartProducts['CartDepositSum'] + $cartProducts['CartProductSum'],
             'selfServiceModeEnabled' => true
         ]);
-	echo $this->element('email/tableFoot');
+    echo $this->element('email/tableFoot');
 }
 ?>
 
 <?php echo $this->element('email/tableHead'); ?>
     <tbody>
-    
+
         <tr><td style="padding-top:20px;">
             <?php echo __('Including_vat'); ?> <?php echo $this->MyNumber->formatAsCurrency($appAuth->Cart->getTaxSum()); ?>
         </td></tr>
-        
+
         <tr><td>
             <?php
                 if ($this->MyHtml->paymentIsCashless()) {
@@ -64,12 +64,12 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
                 }
             ?>
         </td></tr>
-        
+
         <?php if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('app.manufacturerComponensationInfoText') != '') { ?>
             <tr><td style="padding-top:20px;"><b>
                 <?php echo Configure::read('app.manufacturerComponensationInfoText'); ?>
             </b></td></tr>
         <?php } ?>
-        
+
     </tbody>
 <?php echo $this->element('email/tableFoot'); ?>

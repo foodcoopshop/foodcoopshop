@@ -43,7 +43,7 @@ use Cake\Core\Configure;
     .modal-header {
         background-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
     }
-    
+
     h1,
     h2,
     a.blog-post-wrapper h3,
@@ -59,19 +59,19 @@ use Cake\Core\Configure;
     .featherlight-content h3 {
         color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
     }
-    
+
     .blog-wrapper .owl-nav button,
     body.blog_posts.detail #inner-content h2.further-news,
     body.customers.registration_successful #inner-content h2.further-news {
         color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
     }
-    
+
     .btn-success,
     .btn-success:active:hover,
     #flashMessage.success {
         border-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
     }
-    
+
     .btn-success:hover,
     .btn-success:focus,
     .btn-success:active,
@@ -85,12 +85,12 @@ use Cake\Core\Configure;
         background-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
     }
     .vertical.menu a {
-    	color: #333333;
+        color: #333333;
     }
     body.customers.login #self-service {
         box-shadow: inset 0 0 3em <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
     }
-    
+
     <?php if ($isMobile) { ?>
         @media only screen and (max-device-width: 768px) {
             #responsive-header a,

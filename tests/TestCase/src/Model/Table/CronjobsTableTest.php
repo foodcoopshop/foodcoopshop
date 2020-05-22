@@ -19,24 +19,24 @@ use Cake\ORM\TableRegistry;
 class CronjobsTableTest extends AppCakeTestCase
 {
     public $Cronjob;
-    
+
     public function setUp(): void
     {
         parent::setUp();
         $this->Cronjob = TableRegistry::getTableLocator()->get('Cronjobs');
     }
-    
+
     public function testRunSunday()
     {
         $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-21 23:00:00')->toUnixString();
         $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals(1, count($executedCronjobs));
-        
+
         // run again, no cronjobs called
         $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals(0, count($executedCronjobs));
     }
-    
+
     public function testRunMonday()
     {
         $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-22 23:00:00')->toUnixString();
@@ -45,7 +45,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals($executedCronjobs[0]['time_interval'], 'day');
         $this->assertEquals($executedCronjobs[1]['time_interval'], 'week');
     }
-    
+
     public function testPreviousCronjobLogError()
     {
         $time = '2018-10-22 23:00:00';
@@ -65,7 +65,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals($executedCronjobs[0]['time_interval'], 'day');
         $this->assertEquals($executedCronjobs[1]['time_interval'], 'week');
     }
-    
+
     public function testCronjobNotYetExecutedWithinTimeInterval()
     {
         $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-23 22:30:01')->toUnixString();
@@ -82,7 +82,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals(1, count($executedCronjobs));
         $this->assertEquals($executedCronjobs[0]['time_interval'], 'day');
     }
-    
+
     public function testCronjobAlreadyExecutedWithinTimeInterval()
     {
         $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-23 22:29:59')->toUnixString();
@@ -98,7 +98,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals(0, count($executedCronjobs));
     }
-    
+
     public function testCronjobWithInvalidParameterException()
     {
         $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-23 22:31:00')->toUnixString();
@@ -114,7 +114,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals(1, count($executedCronjobs));
         $this->assertEquals($executedCronjobs[0]['success'], 0);
     }
-    
+
     /**
      * SocketException are triggered when email could not be sent
      * set cronjob success to 1 to avoid that it is called again
@@ -134,7 +134,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals(1, count($executedCronjobs));
         $this->assertEquals($executedCronjobs[0]['success'], 1);
     }
-    
+
     public function testCronjobAlreadyExecutedOnCurrentDay()
     {
         $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-25 22:30:02')->toUnixString();
@@ -150,7 +150,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals(0, count($executedCronjobs));
     }
-    
+
     public function testRunMonthlyBeforeNotBeforeTime()
     {
         $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-11 07:29:00')->toUnixString();
@@ -165,7 +165,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals(0, count($executedCronjobs));
     }
-    
+
     public function testRunMonthlyAfterNotBeforeTime()
     {
         $this->Cronjob->cronjobRunDay = $this->Time->getTimeObjectUTC('2018-10-11 07:31:00')->toUnixString();
@@ -180,7 +180,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $executedCronjobs = $this->Cronjob->run();
         $this->assertEquals(1, count($executedCronjobs));
     }
-    
+
     public function testInvalidWeekday()
     {
         $this->Cronjob->save(
@@ -197,7 +197,7 @@ class CronjobsTableTest extends AppCakeTestCase
         $this->assertEquals(0, count($executedCronjobs));
         $this->assertEmpty(0, $this->CronjobLogs->find('all')->all());
     }
-    
+
     public function testInvalidDayOfMonth()
     {
         $this->Cronjob->save(

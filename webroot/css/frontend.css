@@ -122,7 +122,7 @@ body.categories.detail div.description-wrapper {
     z-index: 200;
 }
 #slider .owl-nav button {
-	position: absolute;
+    position: absolute;
     top: 45%;
     transform: translateY(-45%);
     color: #fff;
@@ -131,7 +131,7 @@ body.categories.detail div.description-wrapper {
     padding: 2px ! important;
 }
 #slider .owl-prev {
-	left: 20px;
+    left: 20px;
 }
 #slider .owl-next {
     right: 20px;
@@ -185,7 +185,7 @@ body.categories.detail div.description-wrapper {
 }
 #main-menu ul li a:hover,
 #main-menu ul li a.active {
-	opacity: 0.8;
+    opacity: 0.8;
 }
 #main-menu ul li a i {
     margin-right: 5px;
@@ -496,12 +496,12 @@ body.superadmin .product-wrapper .heading h4 {
     width: 100%;
 }
 .product-wrapper .line p {
-	margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 .product-wrapper label.attribute-button input {
-	margin-right: 3px;
-	margin-top: 3px;
-	float: left;
+    margin-right: 3px;
+    margin-top: 3px;
+    float: left;
 }
 .entity-wrapper .btn-success {
     width: 100%;
@@ -516,15 +516,15 @@ body.superadmin .product-wrapper .heading h4 {
     float: left;
 }
 .product-wrapper .price-asterisk {
-	margin-bottom: 0;
+    margin-bottom: 0;
 }
 .product-wrapper .price-asterisk {
-	margin-left: 5px;
+    margin-left: 5px;
 }
 .product-wrapper .additional-price-info {
-	float: left;
-	line-height: 17px;
-	color: #969696;
+    float: left;
+    line-height: 17px;
+    color: #969696;
 }
 .product-wrapper .additional-price-info .unit-amount {
     display: none;
@@ -535,14 +535,14 @@ body.superadmin .product-wrapper .heading h4 {
     line-height: 20px;
 }
 .product-wrapper .timebased-currency-product-info {
-	float: left;
-	margin-top: -5px;
-	margin-bottom: 5px;
+    float: left;
+    margin-top: -5px;
+    margin-bottom: 5px;
 }
 .tooltipster-content span.money,
 .tooltipster-content span.seconds {
-	float: right;
-	margin-left: 5px;
+    float: right;
+    margin-left: 5px;
 }
 .product-wrapper .amount-wrapper {
     line-height: 28px;
@@ -555,7 +555,7 @@ body.superadmin .product-wrapper .heading h4 {
     margin-right: 4px;
 }
 .product-wrapper .amount-switcher-minus .fas {
-	margin-right: 4px;
+    margin-right: 4px;
 }
 .product-wrapper .amount-switcher-plus .fas {
     margin-left: 4px;
@@ -724,27 +724,27 @@ body.manufacturers.detail .imprint {
     min-height: 140px;
 }
 #cart a.self-service {
-	color: #fff;
-	margin-left: 10px;
+    color: #fff;
+    margin-left: 10px;
 }
 #cart a.question {
-	color: #fff;
-	float: right;
+    color: #fff;
+    float: right;
 }
 #cart a.question i {
-	padding-right: 0;
+    padding-right: 0;
 }
 body.carts p.pickup-day-header {
-	margin-top: 15px;
+    margin-top: 15px;
     float: left;
 }
 #cart p.pickup-day-header {
-	margin-top: 5px;
-	padding: 0;
+    margin-top: 5px;
+    padding: 0;
     float: left;
 }
 #cart p.pickup-day-header:first-of-type {
-	margin-top: -5px;
+    margin-top: -5px;
 }
 #cart .instant-order-customer-info {
     color: #fff;
@@ -759,10 +759,10 @@ body.carts p.pickup-day-header {
 }
 body.carts.detail #load-last-order-details,
 #cart #load-last-order-details {
-	width: 100%;
-	border: none;
-	border-bottom: 1px solid #d6d4d4;
-	background-color: #fff;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #d6d4d4;
+    background-color: #fff;
 }
 .cart p.no-products {
     margin-bottom: 20px;
@@ -838,7 +838,7 @@ body.carts.detail #load-last-order-details,
     font-size: 13px;
 }
 .edit-shortcut-button {
-	padding: 0px 4px;
+    padding: 0px 4px;
 }
 .entity-wrapper .btn,
 #cart .btn-success {
@@ -857,7 +857,7 @@ body.carts.detail #load-last-order-details,
     color: #d6d4d4 ! important;
 }
 .cart .price-per-unit {
-	display: none;
+    display: none;
 }
 body.carts.detail .cart:not(#cart) span.product-name-wrapper {
     width: 210px;
@@ -907,7 +907,7 @@ body.carts.detail #CartsDetailForm {
     border-radius: 0;
     margin-top: 20px;
     padding-top: 20px;
-    border-top: 1px solid #d6d4d4;	
+    border-top: 1px solid #d6d4d4;
 }
 #CartsDetailForm  .input.checkbox .error-message,
 #CartsDetailForm  .input.select .error-message {
@@ -919,7 +919,7 @@ body.carts.detail #CartsDetailForm {
     line-height: 26px;
 }
 #CartsDetailForm  .input.select .error-message {
-	margin-left: 0 ! important;
+    margin-left: 0 ! important;
 }
 #CartsDetailForm .input.text .error-message {
     margin-left: 321px ! important;
@@ -946,11 +946,11 @@ body.carts.detail .cart:not(#cart) .featherlight-overlay,
     display: none;
 }
 #inner-content .prev-next-button {
-	float: left;
-	margin-bottom: 15px;
+    float: left;
+    margin-bottom: 15px;
 }
 #inner-content .next-button {
-	float: right;
+    float: right;
 }
 body.carts.detail .cart:not(#cart) span.amount .btn {
     color: #719f41;
@@ -1066,7 +1066,7 @@ body.carts.detail .cart:not(#cart) .btn-success.btn-order {
     margin-top: 10px;
 }
 #cart .future-orders {
-	padding-bottom: 5px;
+    padding-bottom: 5px;
 }
 .ui-front {
     z-index: 2000;
@@ -1090,7 +1090,7 @@ body.carts.detail .cart:not(#cart) .btn-success.btn-order {
     float: right;
 }
 #product-search a.btn {
-	margin-left: 1px;
+    margin-left: 1px;
 }
 .blog-wrapper {
     margin-bottom: 20px;
@@ -1189,7 +1189,7 @@ body.manufacturers.detail #inner-content {
 body.blog_posts a.edit-shortcut-button,
 body.pages.detail a.edit-shortcut-button,
 body.manufacturers.detail .manufacturer-infos a.edit-shortcut-button {
-	top: -3px;
+    top: -3px;
     right: 3px;
     position: absolute;
 }
@@ -1219,7 +1219,7 @@ body.manufacturers.detail .manufacturer-infos h2,
 body.categories.detail .description-wrapper h2 {
     color: #333;
     padding-top: 10px;
-	font-size: 18px;
+    font-size: 18px;
 }
 body.blog_posts.detail #inner-content .content h3,
 body.pages:not(.home) #inner-content h3,
@@ -1227,7 +1227,7 @@ body.manufacturers.detail .manufacturer-infos h3,
 body.categories.detail .description-wrapper h3 {
     color: #333;
     padding-top: 10px;
-	font-size: 16px;
+    font-size: 16px;
 }
 body.products.detail .product-wrapper {
     border-bottom: 1px solid #d6d4d4;
@@ -1252,7 +1252,7 @@ body.customers.registration_successful #inner-content h2.further-news {
     line-height: 23px;
 }
 #flashMessage li {
-	list-style-type: disc;
+    list-style-type: disc;
 }
 #info-box li {
     line-height: 19px;
@@ -1260,7 +1260,7 @@ body.customers.registration_successful #inner-content h2.further-news {
 }
 #info-box p:last-of-type,
 #global-no-delivery-day-box p:last-of-type {
-	padding-bottom: 5px;
+    padding-bottom: 5px;
 }
 body.blog_posts.detail p.neighbors {
     margin-top: 10px;

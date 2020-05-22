@@ -18,12 +18,12 @@ use App\Lib\Pdf\BarCodeTcpdf;
 
 class ProductCardsPdfWriter extends PdfWriter
 {
-    
+
     public function __construct()
     {
         $this->plugin = 'Admin';
         $this->setPdfLibrary(new BarCodeTcpdf());
     }
-    
+
 }
 

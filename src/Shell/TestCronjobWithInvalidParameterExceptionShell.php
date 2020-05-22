@@ -24,5 +24,5 @@ class TestCronjobWithInvalidParameterExceptionShell extends AppShell
     {
         throw new InvalidParameterException();
     }
-    
+
 }

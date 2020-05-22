@@ -86,28 +86,28 @@ class CartsController extends FrontendController
 
     public function finish()
     {
-        
+
         if (!$_SERVER['REQUEST_METHOD'] == 'POST') {
             $this->redirect('/');
             return;
         }
 
         $this->set('title_for_layout', __('Finish_cart'));
-        
+
         if ($this->AppAuth->Cart->isCartEmpty()) {
             $this->Flash->error(__('Your_cart_was_empty.'));
             $this->redirect(Configure::read('app.slugHelper')->getCartDetail());
             return;
         }
-        
+
         $cart = $this->AppAuth->Cart->finish();
-        
+
         if (empty($this->viewBuilder()->getVars()['cartErrors']) && empty($this->viewBuilder()->getVars()['formErrors'])) {
             $this->resetOriginalLoggedCustomer();
             $this->redirect(Configure::read('app.slugHelper')->getCartFinished($cart['Cart']->id_cart));
             return;
         }
-                
+
         $this->setAction('detail');
     }
 
@@ -122,7 +122,7 @@ class CartsController extends FrontendController
                 'Carts.id_customer' => $this->AppAuth->getUserId()
             ]
         ])->first();
-        
+
         if (empty($cart)) {
             throw new RecordNotFoundException('cart not found');
         }
@@ -305,7 +305,7 @@ class CartsController extends FrontendController
         $orderedQuantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat(
             $this->getRequest()->getData('orderedQuantityInUnits')
         );
-        
+
         $this->CartProduct = TableRegistry::getTableLocator()->get('CartProducts');
         $result = $this->CartProduct->add($this->AppAuth, $ids['productId'], $ids['attributeId'], $amount, $orderedQuantityInUnits);
 
@@ -322,7 +322,7 @@ class CartsController extends FrontendController
                 $result['callback'] = "foodcoopshop.SelfService.setFocusToSearchInputField();";
             }
         }
-        
+
         $this->set($result);
         $this->viewBuilder()->setOption('serialize', array_keys($result));
     }

@@ -26,15 +26,15 @@ $this->element('addScript', ['script' =>
 
 $i = 0;
 foreach($cart->pickup_day_entities as $pickupDay) {
-    
+
     $formattedPickupDay = $pickupDay->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
-    
+
     if (count($pickupDay->getErrors()) > 0 || !empty($pickupDay->comment)) {
         $this->element('addScript', ['script' =>
             "$('.toggle-link-" . $formattedPickupDay . "').trigger('click');"
         ]);
     }
-    
+
     $message =  __('Write_message_to_pick_up_team_for_{0}?',
         [$pickupDay->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'))]
     );

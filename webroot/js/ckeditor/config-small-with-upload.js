@@ -22,7 +22,7 @@ CKEDITOR.editorConfig = function ( config ) {
     config.extraPlugins = 'format,emoji';
 
     config.startupOutlineBlocks = false;
-    
+
     config.contentsCss = [
         '/node_modules/ckeditor4/contents.css',
         '/js/ckeditor/config-small-with-upload.css'

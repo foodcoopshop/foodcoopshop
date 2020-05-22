@@ -16,7 +16,7 @@ use Cake\Core\Configure;
 
 ?>
 <div id="lists-list">
-     
+
         <?php
         $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
@@ -25,7 +25,7 @@ use Cake\Core\Configure;
         "
         ]);
     ?>
-    
+
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php echo __d('admin', 'Pickup_day'); ?> <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'showDateTo' => false, 'nameFrom' => 'dateFrom']); ?>
@@ -36,7 +36,7 @@ use Cake\Core\Configure;
             </div>
         <?php echo $this->Form->end(); ?>
     </div>
-    
+
     <?php
     echo '<h2 class="info2">';
         if ($appAuth->isManufacturer()) {
@@ -104,7 +104,7 @@ use Cake\Core\Configure;
 
     echo '</table>';
     ?>
-    
+
     <div class="sc"></div>
 
 </div>

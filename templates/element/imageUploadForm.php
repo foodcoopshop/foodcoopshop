@@ -30,4 +30,4 @@
         <input type="file" name="upload"  accept="image/jpeg" />
     </div>
     <ul><!-- The file uploads will be shown here --></ul>
-</form> 
+</form>

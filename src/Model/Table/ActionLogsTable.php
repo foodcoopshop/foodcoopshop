@@ -205,7 +205,7 @@ class ActionLogsTable extends AppTable
                     'manufacturer'
                 ]
             ],
-            
+
             'orders_state_changed' => [
                 'name' => __('Action_Log_Order_status_changed')
             ],
@@ -257,7 +257,7 @@ class ActionLogsTable extends AppTable
                     'manufacturer'
                 ]
             ],
-            
+
             'payment_product_added' => [
                 'name' => __('Action_Log_Member_credit_upload_added')
             ],

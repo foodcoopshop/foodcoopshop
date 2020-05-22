@@ -20,7 +20,7 @@ if (!($pricePerUnitEnabled && $appAuth->isSelfServiceModeByUrl())) {
 ?>
 
 <div class="quantity-in-units-input-field-wrapper">
-	<span><?php echo __('Weight_in'); ?> <?php echo $unitName; ?>:</span>
-	<input type="text" />
+    <span><?php echo __('Weight_in'); ?> <?php echo $unitName; ?>:</span>
+    <input type="text" />
 </div>
 

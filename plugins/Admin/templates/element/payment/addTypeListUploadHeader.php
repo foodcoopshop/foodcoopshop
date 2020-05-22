@@ -23,11 +23,11 @@ $this->element('addScript', [
 <div class="filter-container">
 <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
-    	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_credit_system_with_csv_upload'))]); ?>
+        <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_credit_system_with_csv_upload'))]); ?>
     </div>
 </div>
 
 <p>
-	<b><?php echo __d('admin', 'Bank_account_data'); ?>: </b><?php echo Configure::read('appDb.FCS_BANK_ACCOUNT_DATA'); ?><br />
+    <b><?php echo __d('admin', 'Bank_account_data'); ?>: </b><?php echo Configure::read('appDb.FCS_BANK_ACCOUNT_DATA'); ?><br />
 </p>
 <?php echo $this->element('payment/personalTransactionCode', ['personalTransactionCode' => $personalTransactionCode]); ?>

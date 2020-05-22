@@ -40,15 +40,15 @@ if ($this->request->getSession()->read('highlightedProductId')) {
 ?>
 
 <div class="header">
-	<h2><?php echo __('Self_service_for_stock_products'); ?></h2>
-	<h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
-	<?php echo $this->element('productSearch', [
-	    'action' => __('route_self_service'),
-	    'placeholder' => __('Search:_name_id_or_barcode'),
-	    'resetSearchUrl' => $this->Slug->getSelfService(),
-	    'includeCategoriesDropdown' => true
-	]); ?>
-	<hr />
+    <h2><?php echo __('Self_service_for_stock_products'); ?></h2>
+    <h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
+    <?php echo $this->element('productSearch', [
+        'action' => __('route_self_service'),
+        'placeholder' => __('Search:_name_id_or_barcode'),
+        'resetSearchUrl' => $this->Slug->getSelfService(),
+        'includeCategoriesDropdown' => true
+    ]); ?>
+    <hr />
 </div>
 
 <div id="products">
@@ -87,10 +87,10 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         echo $this->element('cart/cancellationTermsCheckbox');
     ?>
     <button type="submit" class="btn btn-success btn-order">
-		<i class="fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
-	</button>
-	<?php echo $this->Form->end(); ?>
-	<?php if ($isMobile) { ?>
-		<a class="btn btn-outline-light continue-shopping" href="<?php echo Router::reverse($this->request, true); ?>";><?php echo __('Continue_shopping?')?></a>
-	<?php } ?>
+        <i class="fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
+    </button>
+    <?php echo $this->Form->end(); ?>
+    <?php if ($isMobile) { ?>
+        <a class="btn btn-outline-light continue-shopping" href="<?php echo Router::reverse($this->request, true); ?>";><?php echo __('Continue_shopping?')?></a>
+    <?php } ?>
 </div>

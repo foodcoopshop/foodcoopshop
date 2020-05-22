@@ -15,7 +15,7 @@
 
 echo '<td>';
 if ($product->active && (! empty($product->product_attributes) || isset($product->product_attributes))) {
-    
+
     echo $this->Html->link(
         '<i class="fas fa-arrow-right ok"></i>',
         $this->Slug->getProductDetail($product->id_product, $product->unchanged_name),
@@ -26,7 +26,7 @@ if ($product->active && (! empty($product->product_attributes) || isset($product
             'escape' => false
         ]
     );
-    
+
 }
 echo '</td>';
 

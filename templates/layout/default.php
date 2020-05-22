@@ -33,20 +33,20 @@ echo $this->element('layout/header');
         <?php echo $this->element('userMenu'); ?>
         <?php echo $this->element('mainMenu'); ?>
     </div>
-    
+
     <div id="content">
         <?php
             echo $this->Flash->render();
             echo $this->Flash->render('auth');
         ?>
-        <?php echo $this->element('slider', ['slides' => !empty($slides) ? $slides : []]); ?>         
+        <?php echo $this->element('slider', ['slides' => !empty($slides) ? $slides : []]); ?>
         <?php echo $this->element('sidebar'); ?>
         <div id="inner-content">
             <?php echo $this->fetch('content'); ?>
             <div class="sc"></div>
         </div>
     </div>
-    
+
     <div id="right">
         <div class="inner-right">
             <?php echo $this->element('globalNoDeliveryDayBox'); ?>
@@ -64,7 +64,7 @@ echo $this->element('layout/header');
             <?php echo $this->element('infoBox'); ?>
         </div>
     </div>
-    
+
     <div id="footer">
         <div class="inner-footer">
             <?php
@@ -72,7 +72,7 @@ echo $this->element('layout/header');
             ?>
         </div>
     </div>
-    
+
 </div>
 
 <?php echo $this->element('scrollToTopButton'); ?>

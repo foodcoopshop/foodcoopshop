@@ -61,13 +61,13 @@ class CustomersController extends AdminAppController
                 break;
         }
     }
-    
+
     public function ajaxGetCustomersForDropdown($includeManufacturers)
     {
         $this->RequestHandler->renderAs($this, 'json');
-        
+
         $includeManufacturers = (bool) $includeManufacturers;
-        
+
         $customers = $this->Customer->getForDropdown($includeManufacturers);
         $customersForDropdown = [];
         foreach ($customers as $key => $ps) {
@@ -77,14 +77,14 @@ class CustomersController extends AdminAppController
             }
             $customersForDropdown[] = '</optgroup>';
         }
-        
+
         $this->set([
             'status' => 1,
             'dropdownData' => join('', $customersForDropdown),
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'dropdownData']);
     }
-    
+
     public function generateMyMemberCard()
     {
         $customerId = $this->AppAuth->getUserId();
@@ -96,7 +96,7 @@ class CustomersController extends AdminAppController
         ]);
         die($pdfWriter->writeInline());
     }
-    
+
     public function generateMemberCards()
     {
         $customerIds = h($this->getRequest()->getQuery('customerIds'));
@@ -109,13 +109,13 @@ class CustomersController extends AdminAppController
         ]);
         die($pdfWriter->writeInline());
     }
-    
+
     private function prepareGenerateMemberCards($customerIds)
     {
         if (empty($customerIds)) {
             throw new InvalidParameterException('no customer id passed');
         }
-        
+
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');
         $this->Customer->dropManufacturersInNextFind();
         $customers = $this->Customer->find('all', [
@@ -143,7 +143,7 @@ class CustomersController extends AdminAppController
         $groupId = (int) $this->getRequest()->getData('groupId');
 
         $this->RequestHandler->renderAs($this, 'json');
-        
+
         if (! in_array($groupId, array_keys(Configure::read('app.htmlHelper')->getAuthDependentGroups($this->AppAuth->getGroupId())))) {
             $message = 'user group not allowed: ' . $groupId;
             $this->log($message);
@@ -287,14 +287,14 @@ class CustomersController extends AdminAppController
             }
 
             $errors = [];
-            
+
             if (Configure::read('app.applyOrdersNotYetBilledCheckOnDeletingCustomers')) {
                 $openOrderDetails = count($customer->active_order_details);
                 if ($openOrderDetails > 0) {
                     $errors[] = __d('admin', 'Amount_of_orders_where_the_invoice_has_not_been_sent_yet_to_the_manufacturer:'). ' '. $openOrderDetails . '.';
                 }
             }
-            
+
             if (Configure::read('app.htmlHelper')->paymentIsCashless()) {
                 $creditBalance = $this->Customer->getCreditBalance($customerId);
                 if ($creditBalance != 0) {
@@ -308,13 +308,13 @@ class CustomersController extends AdminAppController
                     'approval < ' => APP_ON,
                     'status' => APP_ON,
                     'type' => 'product',
-                    'DATE_FORMAT(date_add, \'%Y\') >= DATE_FORMAT(NOW(), \'%Y\') - 2' // check only last full 2 years (eg. payment of 02.02.2018 is checked on 12.11.2020) 
+                    'DATE_FORMAT(date_add, \'%Y\') >= DATE_FORMAT(NOW(), \'%Y\') - 2' // check only last full 2 years (eg. payment of 02.02.2018 is checked on 12.11.2020)
                 ]
             ])->count();
             if ($notApprovedPaymentsCount > 0) {
                 $errors[] = __d('admin', 'Amount_of_not_approved_payments_within_the_last_2_years:'). ' '. $notApprovedPaymentsCount . '.';
             }
-            
+
             $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
             $timebasedCurrencyCreditBalance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customerId);
             if ($timebasedCurrencyCreditBalance != 0) {
@@ -344,7 +344,7 @@ class CustomersController extends AdminAppController
         $this->ActionLog->removeCustomerNameFromAllActionLogs($customer->firstname . ' ' . $customer->lastname);
         $this->ActionLog->removeCustomerNameFromAllActionLogs($customer->lastname . ' ' . $customer->firstname);
         $this->ActionLog->removeCustomerEmailFromAllActionLogs($customer->email);
-        
+
         $this->deleteUploadedImage($customerId, Configure::read('app.htmlHelper')->getCustomerThumbsPath(), Configure::read('app.customerImageSizes'));
 
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
@@ -368,7 +368,7 @@ class CustomersController extends AdminAppController
             'redirectUrl' => $redirectUrl
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'redirectUrl']);
-        
+
     }
 
     public function profile()
@@ -452,15 +452,15 @@ class CustomersController extends AdminAppController
                     ]
                 ]
             );
-            
+
             if (!empty($this->getRequest()->getData('Customers.tmp_image'))) {
                 $this->saveUploadedImage($customer->id_customer, $this->getRequest()->getData('Customers.tmp_image'), Configure::read('app.htmlHelper')->getCustomerThumbsPath(), Configure::read('app.customerImageSizes'));
             }
-            
+
             if (!empty($this->getRequest()->getData('Customers.delete_image'))) {
                 $this->deleteUploadedImage($customer->id_customer, Configure::read('app.htmlHelper')->getCustomerThumbsPath(), Configure::read('app.customerImageSizes'));
             }
-            
+
             $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
             if ($isOwnProfile) {
                 $message = __d('admin', 'Your_profile_was_changed.');
@@ -487,7 +487,7 @@ class CustomersController extends AdminAppController
         $pdfWriter = new TermsOfUsePdfWriter();
         return $pdfWriter->writeAttachment();
     }
-    
+
     public function changeStatus($customerId, $status, $sendEmail)
     {
         if (! in_array($status, [
@@ -698,7 +698,7 @@ class CustomersController extends AdminAppController
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
 
         $this->Customer->dropManufacturersInNextFind();
-        
+
         $validOrderDetailsConditions = [];
         if ($dateFrom != '') {
             $validOrderDetailsConditions[] = 'DATE_FORMAT(ValidOrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom).'\'';
@@ -716,7 +716,7 @@ class CustomersController extends AdminAppController
                 ]
             ]
         ]);
-        
+
         $customers = $this->paginate($query, [
             'sortWhitelist' => [
                 'Customers.' . Configure::read('app.customerMainNamePart'), 'Customers.id_default_group', 'Customers.id_default_group', 'Customers.email', 'Customers.active', 'Customers.email_order_reminder', 'Customers.date_add', 'Customers.timebased_currency_enabled'
@@ -731,11 +731,11 @@ class CustomersController extends AdminAppController
         $emailAddresses = $query->all()->extract('email')->toArray();
         $emailAddresses = array_unique($emailAddresses);
         $this->set('emailAddresses', $emailAddresses);
-        
+
         $i = 0;
         $this->Payment = TableRegistry::getTableLocator()->get('Payments');
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        
+
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
             $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
         }
@@ -753,7 +753,7 @@ class CustomersController extends AdminAppController
             }
             $i ++;
         }
-        
+
         $this->set('customers', $customers);
 
         $this->set('title_for_layout', __d('admin', 'Members'));

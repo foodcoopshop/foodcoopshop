@@ -37,7 +37,7 @@ $this->element('addScript', [
         }
         ?>
         <div class="right">
-        	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_deposit'))]); ?>
+            <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_deposit'))]); ?>
         </div>
     <?php echo $this->Form->end(); ?>
 </div>
@@ -109,9 +109,9 @@ echo '<div class="add-payment-deposit-wrapper">';
                                 'escape' => false
                             ]
                         );
-                    	echo '<span style="float: right;">';
-                    	echo $this->Number->formatAsCurrency($deposit['returned']);
-                    	echo '</span>';
+                        echo '<span style="float: right;">';
+                        echo $this->Number->formatAsCurrency($deposit['returned']);
+                        echo '</span>';
                     }
                     echo '</td>';
             echo '</tr>';

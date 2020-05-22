@@ -34,11 +34,11 @@ class EmailOrderReminderShell extends AppShell
         } else {
             $this->cronjobRunDay = $this->args[0];
         }
-        
+
         if (! Configure::read('app.emailOrderReminderEnabled')) {
             return true;
         }
-        
+
         $nextDeliveryDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($this->cronjobRunDay));
         if (Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL') != '') {
             $this->Product = TableRegistry::getTableLocator()->get('Products');
@@ -106,8 +106,8 @@ class EmailOrderReminderShell extends AppShell
 
         $this->out($outString);
         $this->out($this->getRuntime());
-        
+
         return true;
-        
+
     }
 }

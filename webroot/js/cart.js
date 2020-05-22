@@ -14,13 +14,13 @@
 foodcoopshop.Cart = {
 
     orderButtons: '.cart .btn-success.btn-order, .responsive-cart',
-    
+
     cartButtonIcon : '',
-    
+
     getPickupDayHeaderSelector : function(pickupDay) {
         return '.cart p.pickup-day-header:contains("' + pickupDay + '")';
     },
-    
+
     addOrAppendProductToPickupDay : function(productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, orderedQuantityInUnits, unitName, unitAmount, priceInclPerUnit, pickupDay) {
         var pickupDayHeader = $(this.getPickupDayHeaderSelector(pickupDay));
         if (pickupDayHeader.length == 0) {
@@ -31,7 +31,7 @@ foodcoopshop.Cart = {
             foodcoopshop.Cart.getCartProductHtml(productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, orderedQuantityInUnits, unitName, unitAmount, priceInclPerUnit, pickupDay)
         );
     },
-    
+
     setCartButtonIcon : function(cartButtonIcon) {
         this.cartButtonIcon = cartButtonIcon;
     },
@@ -51,7 +51,7 @@ foodcoopshop.Cart = {
         var depositSum = 0;
         var taxSum = 0;
         var timebasedCurrencyHoursSum = 0;
-        
+
         for (var i = 0; i < cartProducts.length; i++) {
             var cp = cartProducts[i];
             var timebasedCurrencyHours = parseFloat(cp.timebasedCurrencySeconds / 3600);
@@ -111,13 +111,13 @@ foodcoopshop.Cart = {
             var forEachApproxRegExp = new RegExp(foodcoopshop.LocalizedJs.cart.forEach + ' ' + foodcoopshop.LocalizedJs.cart.approx);
             newUnityHtml = newUnityHtml.replace(forEachApproxRegExp, foodcoopshop.LocalizedJs.cart.approx);
         }
-        
+
         if (orderedQuantityInUnits > 0) {
             newUnityHtml = foodcoopshop.Helper.getStringAsFloat(oldUnity.html()) + orderedQuantityInUnits;
             newUnityHtml = newUnityHtml.toLocaleString();
             newUnityHtml += ' ' + unitName;
         }
-        
+
         if (newUnityHtml != oldUnity.html()) {
             oldUnity.html(newUnityHtml);
             foodcoopshop.Helper.applyBlinkEffect(oldUnity);
@@ -126,7 +126,7 @@ foodcoopshop.Cart = {
         // update price
         var oldPrice = productContainer.find('span.price');
         var tmpNewPrice = price;
-        
+
         if (orderedQuantityInUnits > 0) {
             tmpNewPrice = foodcoopshop.Cart.getPriceBasedOnPricePerUnit(
                 foodcoopshop.Helper.getCurrencyAsFloat(productContainer.find('span.price-incl-per-unit').html()),
@@ -134,7 +134,7 @@ foodcoopshop.Cart = {
                 foodcoopshop.Helper.getStringAsFloat(productContainer.find('span.unit-amount').html())
             );
         }
-        
+
         var newPrice = foodcoopshop.Helper.getCurrencyAsFloat(oldPrice.html()) + tmpNewPrice;
         oldPrice.html(foodcoopshop.Helper.formatFloatAsCurrency(newPrice));
         foodcoopshop.Helper.applyBlinkEffect(oldPrice);
@@ -168,7 +168,7 @@ foodcoopshop.Cart = {
             oldTimebasedCurrencyHours.html(foodcoopshop.TimebasedCurrency.formatFloatAsTimebasedCurrency(newTimebasedCurrencyHours));
         }
     },
-    
+
     getPriceBasedOnPricePerUnit : function(priceInclPerUnit, orderedQuantityInUnits, unitAmount) {
         return priceInclPerUnit * orderedQuantityInUnits / unitAmount;
     },
@@ -197,7 +197,7 @@ foodcoopshop.Cart = {
             var amount = parseInt(productWrapper.find('.entity-wrapper.active input[name="amount"]').val());
             var price = foodcoopshop.Helper.getCurrencyAsFloat(productWrapper.find('.entity-wrapper.active .price').html());
             price = price * amount;
-            
+
             var tax = foodcoopshop.Helper.getCurrencyAsFloat(productWrapper.find('.entity-wrapper.active .tax').html());
             var image = productWrapper.find('.first-column img');
             var deposit = 0;
@@ -224,19 +224,19 @@ foodcoopshop.Cart = {
             }
 
             var unitName = '';
-            var unitNameElement = productWrapper.find('.entity-wrapper.active .unit-name'); 
+            var unitNameElement = productWrapper.find('.entity-wrapper.active .unit-name');
             if (unitNameElement.length > 0) {
                 unitName = unitNameElement.html();
             }
 
             var unitAmount = 1;
-            var unitAmountElement = productWrapper.find('.entity-wrapper.active .unit-amount'); 
+            var unitAmountElement = productWrapper.find('.entity-wrapper.active .unit-amount');
             if (unitAmountElement.length > 0 && unitAmountElement.html() != '') {
                 unitAmount = foodcoopshop.Helper.getStringAsFloat(unitAmountElement.html());
             }
-            
+
             var priceInclPerUnit = '';
-            var priceInclPerUnitElement = productWrapper.find('.entity-wrapper.active .price-incl-per-unit'); 
+            var priceInclPerUnitElement = productWrapper.find('.entity-wrapper.active .price-incl-per-unit');
             if (priceInclPerUnitElement.length > 0) {
                 priceInclPerUnit = foodcoopshop.Helper.getCurrencyAsFloat(priceInclPerUnitElement.html());
             }
@@ -247,11 +247,11 @@ foodcoopshop.Cart = {
                 foodcoopshop.Helper.removeSpinnerFromButton($(this), foodcoopshop.Cart.cartButtonIcon);
                 productWrapper.find('.entity-wrapper.active .quantity-in-units-input-field-wrapper').addClass('error');
             }
-            
+
             if (orderedQuantityInUnits > 0) {
                 price = foodcoopshop.Cart.getPriceBasedOnPricePerUnit(priceInclPerUnit, orderedQuantityInUnits, unitAmount);
             }
-            
+
             var timebasedCurrencyElement = productWrapper.find('.entity-wrapper.active .timebasedCurrencySeconds');
             var timebasedCurrencyHours = 0;
             if (timebasedCurrencyElement.length > 0) {
@@ -362,7 +362,7 @@ foodcoopshop.Cart = {
             var tax = foodcoopshop.Helper.getCurrencyAsFloat(productContainer.find('.tax').html());
             var oldAmount = parseInt(productContainer.find('.amount span.value').html());
             var newTax = tax / oldAmount;
-            
+
             var timebasedCurrencyHoursContainer = productContainer.find('.timebasedCurrencySeconds');
             var newTimebasedCurrencyHours = 0;
             if (timebasedCurrencyHoursContainer.length > 0) {
@@ -566,7 +566,7 @@ foodcoopshop.Cart = {
             var button = $(this);
             foodcoopshop.Helper.disableButton(button);
             foodcoopshop.Helper.addSpinnerToButton(button, 'fa-times-circle');
-            
+
             foodcoopshop.Helper.ajaxCall(
                 '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxRemove/',
                 {

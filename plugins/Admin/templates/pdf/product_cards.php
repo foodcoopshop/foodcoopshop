@@ -27,7 +27,7 @@ foreach($products as $product) {
     }
     $pdf->table .= '<td style="width:240px;">'; // roughly 85,60mm x 53,98mm
     $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0">';
-    
+
     // START ROW logo and name block
     $pdf->table .= '<tr>';
     $pdf->table .= '<td>';
@@ -37,7 +37,7 @@ foreach($products as $product) {
     $pdf->table .= '</td>';
     $pdf->table .= '</tr>';
     // END ROW with logo and name block
-    
+
     // START ROW barcode and product image
     $pdf->table .= '<tr>';
     $pdf->table .= '<td style="width:120px;">';
@@ -51,7 +51,7 @@ foreach($products as $product) {
     $pdf->table .= '<td style="width:10px;"></td>'; //spacer between barcode and customer image
     // move user image to bottom
     $pdf->table .= '<td style="width:100px;" align="right">';
-    
+
     if ($product->image) {
         $srcProductImage = $this->Html->getProductImageSrc($product->image->id_image, 'home');
         $srcProductImage = $this->Html->removeTimestampFromFile($srcProductImage);
@@ -71,7 +71,7 @@ foreach($products as $product) {
     $pdf->table .= '</td>';
     $pdf->table .= '</tr>';
     // END ROW barcode and customer image
-    
+
     $pdf->table .= '</table>';
     $pdf->table .= '</td>';
     if (!$pairRecord || $i==count($products)-1) {

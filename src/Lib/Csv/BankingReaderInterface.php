@@ -19,7 +19,7 @@ interface BankingReaderInterface {
     public function checkStructureForRecord($record): bool;
 
     public function configureType(): void;
-    
+
     public function equalizeStructure(array $records): array;
 }
 

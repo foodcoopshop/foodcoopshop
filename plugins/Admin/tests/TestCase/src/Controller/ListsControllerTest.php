@@ -23,7 +23,7 @@ class ListsControllerTest extends AppCakeTestCase
 {
 
     public $commandRunner;
-    
+
     public function setUp(): void
     {
         parent::setUp();
@@ -33,17 +33,17 @@ class ListsControllerTest extends AppCakeTestCase
 
     /**
      * this method is not split up into separated test methods because
-     * generating the pdfs (commandRunner) for the test needs a lot of time 
+     * generating the pdfs (commandRunner) for the test needs a lot of time
      */
     public function testAccessOrderListPageAndDownloadableFile()
     {
         $this->commandRunner->run(['cake', 'send_order_lists', '2018-01-31']);
         $listPageUrl = $this->Slug->getOrderLists().'?dateFrom=02.02.2018';
-        
+
         $folder = new Folder(Configure::read('app.folder_order_lists').DS.'2018'.DS.'02');
         $objects = $folder->read();
         $orderListDownloadUrl = '/admin/lists/getOrderList?file=2018/02/'.$objects[1][0];
-        
+
         // check list page as manufacturer
         $this->loginAsMeatManufacturer();
         $this->httpClient->get($listPageUrl);
@@ -51,29 +51,29 @@ class ListsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('<td>Demo Fleisch-Hersteller</td>', $this->httpClient->getContent());
         $this->assertDoesNotMatchRegularExpressionWithUnquotedString('<td>Demo Gemüse-Hersteller</td>', $this->httpClient->getContent());
         $this->assertDoesNotMatchRegularExpressionWithUnquotedString('<td>Demo Milch-Hersteller</td>', $this->httpClient->getContent());
-        
+
         // check downloadable file as correct manufacturer
         $this->httpClient->get($orderListDownloadUrl);
         $this->assert200OkHeader();
-    
+
         // check downloadable file as wrong manufacturer
         $this->loginAsVegetableManufacturer();
         $this->httpClient->get($orderListDownloadUrl);
         $this->assert401UnauthorizedHeader();
-        
+
         // check downloadable file as admin
         $this->loginAsAdmin();
         $this->httpClient->get($orderListDownloadUrl);
         $this->assert200OkHeader();
-        
+
         // check list page as admin
         $this->httpClient->get($listPageUrl);
         $this->assertRegExpWithUnquotedString('<b>3</b> Datensätze', $this->httpClient->getContent());
         $this->assertRegExpWithUnquotedString('<td>Demo Fleisch-Hersteller</td>', $this->httpClient->getContent());
         $this->assertRegExpWithUnquotedString('<td>Demo Gemüse-Hersteller</td>', $this->httpClient->getContent());
         $this->assertRegExpWithUnquotedString('<td>Demo Milch-Hersteller</td>', $this->httpClient->getContent());
-        
+
     }
 
-    
+
 }

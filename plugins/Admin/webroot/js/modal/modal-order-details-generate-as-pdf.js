@@ -14,9 +14,9 @@
 foodcoopshop.ModalOrderDetailsGenerateAsPdf = {
 
     init : function() {
-        
+
         var modalSelector = '#order-details-generate-as-pdf';
-        
+
         var buttons = [
             foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.yes, 'fa fa-check'),
             foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.no, null, true)
@@ -28,7 +28,7 @@ foodcoopshop.ModalOrderDetailsGenerateAsPdf = {
             this.getHtml(),
             buttons
         );
-        
+
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             foodcoopshop.ModalOrderDetailsGenerateAsPdf.getSuccessHandler(modalSelector);
         });
@@ -36,19 +36,19 @@ foodcoopshop.ModalOrderDetailsGenerateAsPdf = {
         $('button.generate-order-details-as-pdf').on('click', function () {
             foodcoopshop.ModalOrderDetailsGenerateAsPdf.getOpenHandler(modalSelector);
         });
-        
+
     },
-        
+
     getHtml : function() {
         return '<p>' + foodcoopshop.LocalizedJs.admin.ReallyGenerateOrdersAsPdf + '</p>';
     },
-    
+
     getSuccessHandler : function(modalSelector) {
         var pickupDay = $('input[name="pickupDay[]"]').val(); // filter-dropdown!
         window.open('/admin/order-details/orderDetailsAsPdf.pdf?pickupDay=' + pickupDay);
         foodcoopshop.Modal.destroy(modalSelector);
     },
-    
+
     getOpenHandler : function(modalSelector) {
         $(modalSelector).modal();
     }

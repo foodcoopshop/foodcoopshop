@@ -1,5 +1,5 @@
 # FoodCoopShop loves contributing!
- 
+
 ## Found a bug?
 * Create an [issue](https://github.com/foodcoopshop/foodcoopshop/issues) on GitHub, if you have found a bug. Therefore you need to be registered at Github.
 

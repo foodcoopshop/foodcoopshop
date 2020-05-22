@@ -26,20 +26,20 @@ class GlobalTest extends AppCakeTestCase
     {
         $this->assertBic('RZOOAT2L510', true);
     }
-    
+
     public function testBicValid2()
     {
         $this->assertBic('RZOOAT2L380', true);
     }
-    
+
     public function testBicValid3()
     {
         $this->assertBic('RZOOAT2L', true);
     }
-    
+
     private function assertBic($iban, $expected)
     {
         $this->assertEquals($expected, (boolean) preg_match(BIC_REGEX, $iban));
     }
-    
+
 }

@@ -65,7 +65,7 @@ class OrderDetailsTable extends AppTable
         $validator = $this->getAllowOnlyOneWeekdayValidator($validator, 'pickup_day', __('The_pickup_day'));
         return $validator;
     }
-    
+
     public function getOrderDetailsForOrderListPreview($pickupDay)
     {
         $query = $this->find('all', [
@@ -78,7 +78,7 @@ class OrderDetailsTable extends AppTable
         ]);
         return $query;
     }
-    
+
     public function getOrderDetailsForSendingOrderLists($pickupDay, $cronjobRunDay)
     {
         $cronjobRunDayWeekday = date('w', strtotime($cronjobRunDay));
@@ -99,7 +99,7 @@ class OrderDetailsTable extends AppTable
         });
         return $query;
     }
-    
+
     /**
      * @param int $customerId
      * @return array
@@ -138,7 +138,7 @@ class OrderDetailsTable extends AppTable
         return $result;
 
     }
-    
+
     public function getGroupedFutureOrdersByCustomerId($customerId)
     {
         $query = $this->find('all', [
@@ -157,10 +157,10 @@ class OrderDetailsTable extends AppTable
         $query->group('OrderDetails.pickup_day');
         return $query->toArray();
     }
-    
+
     public function updateOrderState($dateFrom, $dateTo, $oldOrderStates, $newOrderState, $manufacturerId, $orderDetailIds = [])
     {
-        
+
         // update with condition on association does not work with ->update or ->updateAll
         $orderDetails = $this->find('all', [
             'conditions' => [
@@ -171,7 +171,7 @@ class OrderDetailsTable extends AppTable
                 'Products'
             ]
         ]);
-        
+
         if (!empty($orderDetailIds)) {
             $orderDetails->where(['OrderDetails.id_order_detail IN (' . join(', ', $orderDetailIds) . ')']);
         } else {
@@ -180,7 +180,7 @@ class OrderDetailsTable extends AppTable
                 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\''
             ]);
         }
-        
+
         foreach($orderDetails as $orderDetail) {
             $this->save(
                 $this->patchEntity(
@@ -191,7 +191,7 @@ class OrderDetailsTable extends AppTable
                 )
             );
         }
-            
+
     }
 
     public function getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $customerId)
@@ -310,7 +310,7 @@ class OrderDetailsTable extends AppTable
             return 0;
         }
     }
-    
+
     private function prepareSumProduct($customerId)
     {
         $conditions = [
@@ -320,10 +320,10 @@ class OrderDetailsTable extends AppTable
         $query = $this->find('all', [
             'conditions' => $conditions
         ]);
-        
+
         return $query;
     }
-    
+
     public function getCountByCustomerId($customerId)
     {
         $conditions = [
@@ -334,7 +334,7 @@ class OrderDetailsTable extends AppTable
         ]);
         return $query->count();
     }
-    
+
     public function getMonthlySumProductByCustomer($customerId)
     {
         $query = $this->prepareSumProduct($customerId);
@@ -348,7 +348,7 @@ class OrderDetailsTable extends AppTable
         ]);
         return $query->toArray();
     }
-    
+
     public function getMonthlySumProductByManufacturer($manufacturerId, $year)
     {
         $conditions = [];
@@ -361,7 +361,7 @@ class OrderDetailsTable extends AppTable
         if ($year != '') {
             $conditions[] = 'DATE_FORMAT(OrderDetails.pickup_day, \'%Y\') = ' . $year;
         }
-        
+
         $query = $this->find('all', [
             'conditions' => $conditions,
             'contain' => [
@@ -375,7 +375,7 @@ class OrderDetailsTable extends AppTable
         ]);
         return $query;
     }
-    
+
     public function getSumProduct($customerId)
     {
         $query = $this->prepareSumProduct($customerId);
@@ -384,7 +384,7 @@ class OrderDetailsTable extends AppTable
         );
         return $query->toArray()[0]['SumTotalPaid'];
     }
-    
+
     public function getSumDeposit($customerId)
     {
         $conditions = [
@@ -392,17 +392,17 @@ class OrderDetailsTable extends AppTable
             $this->getOrderStateCondition(Configure::read('app.htmlHelper')->getOrderStatesCashless()),
             'DATE_FORMAT(OrderDetails.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.depositPaymentCashlessStartDate') . '\''
         ];
-        
+
         $query = $this->find('all', [
             'conditions' => $conditions
         ]);
         $query->select(
             ['SumTotalDeposit' => $query->func()->sum('OrderDetails.deposit')]
         );
-        
+
         return $query->toArray()[0]['SumTotalDeposit'];
     }
-    
+
     public function getOrderStateCondition($orderStates)
     {
         if ($orderStates == '' || empty($orderStates) || empty($orderStates[0])) {
@@ -414,12 +414,12 @@ class OrderDetailsTable extends AppTable
         $condition = 'OrderDetails.order_state IN (' . join(', ', $orderStates) . ')';
         return $condition;
     }
-    
+
     public function getVariableMemberFeeReducedPrice($price, $variableMemberFee)
     {
         return $price * (100 - $variableMemberFee) / 100;
     }
-    
+
     public function prepareOrderDetailsGroupedByProduct($orderDetails)
     {
         $preparedOrderDetails = [];
@@ -436,7 +436,7 @@ class OrderDetailsTable extends AppTable
         }
         return $preparedOrderDetails;
     }
-    
+
     public function prepareOrderDetailsGroupedByManufacturer($orderDetails)
     {
         $preparedOrderDetails = [];
@@ -452,14 +452,14 @@ class OrderDetailsTable extends AppTable
             $preparedOrderDetails[$key]['name'] = $orderDetail->product->manufacturer->name;
             @$preparedOrderDetails[$key]['timebased_currency_order_detail_seconds_sum'] = $orderDetail->timebased_currency_order_detail_seconds_sum;
         }
-        
+
         foreach($preparedOrderDetails as &$pod) {
             $pod['reduced_price'] = $this->getVariableMemberFeeReducedPrice($pod['sum_price'], $pod['variable_member_fee']);
         }
-        
+
         return $preparedOrderDetails;
     }
-    
+
     /**
      * $param $orderDetails is already grouped!
      * @return array|boolean
@@ -492,7 +492,7 @@ class OrderDetailsTable extends AppTable
             $preparedOrderDetails[$key]['products_picked_up'] = $productsPickedUp;
             unset($preparedOrderDetails[$key]['products_picked_up_tmp']);
         }
-        
+
         foreach($preparedOrderDetails as &$orderDetail) {
             $orderDetail['order_detail_count'] = $this->getCountByCustomerId($orderDetail['customer_id']);
         }

@@ -26,7 +26,7 @@ use Cake\Utility\Hash;
         'rowIdPrefix' => '#attribute-'
         ]);
     ?>
-   
+
     <div class="filter-container">
         <h1><?php echo $title_for_layout; ?></h1>
         <div class="right">
@@ -133,5 +133,5 @@ echo '</tr>';
 
 echo '</table>';
 
-?>    
+?>
 </div>

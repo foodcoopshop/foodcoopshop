@@ -17,28 +17,28 @@ use Cake\Core\Configure;
 ?>
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
-    
+
     <?php echo $this->element('email/greeting', ['data' => $customer]); ?>
-    
+
     <tr>
         <td>
 
             <p>
-            	<?php
-                	echo __d('admin', 'The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}.', [
-                	    '<b>' . $oldOrderDetail->product_name . '</b>',
-                	    Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($oldOrderDetail->customer),
-                	    '<b>' . $newCustomer->name . '</b>'
-                	]);
-            	    echo $amountString;
-            	?>
+                <?php
+                    echo __d('admin', 'The_ordered_product_{0}_was_successfully_assigned_from_{1}_to_{2}.', [
+                        '<b>' . $oldOrderDetail->product_name . '</b>',
+                        Configure::read('app.htmlHelper')->getNameRespectingIsDeleted($oldOrderDetail->customer),
+                        '<b>' . $newCustomer->name . '</b>'
+                    ]);
+                    echo $amountString;
+                ?>
             </p>
 
             <p>
                 <?php echo __d('admin', 'Why_has_another_member_been_assigned?'); ?><br />
                 <b><?php echo '"' . $editCustomerReason . '"'; ?></b>
             </p>
-            
+
             <?php if ($this->MyHtml->paymentIsCashless()) { ?>
                 <p><?php echo __d('admin', 'PS:_Your_credit_has_been_adapted_automatically.'); ?></p>
             <?php } ?>

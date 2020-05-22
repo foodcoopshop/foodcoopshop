@@ -32,19 +32,19 @@ class AppHttpClient extends Client
     public $Slug;
 
     public $Customer;
-    
+
     public $loginEmail;
-    
+
     public $loginPassword;
-    
+
     private $response;
-    
+
     public $redirect = 0;
 
     public function __construct($config = [])
     {
         $parsedUrl = parse_url(Configure::read('app.cakeServerName'));
-        
+
         $config = array_merge($config, [
             'host' => $parsedUrl['host'],
             'scheme' => $parsedUrl['scheme'],
@@ -59,32 +59,32 @@ class AppHttpClient extends Client
 
         $this->adminPrefix = '/admin';
     }
-    
+
     public function followOneRedirectForNextRequest()
     {
         $this->redirect = 1;
     }
-    
+
     public function getContent()
     {
         return $this->response->getStringBody();
     }
-    
+
     public function getHeaders()
     {
         return $this->response->getHeaders();
     }
-    
+
     public function getStatusCode()
     {
         return $this->response->getStatusCode();
     }
-    
+
     public function getUrl()
     {
         return $this->response->getHeaderline('Location');
     }
-    
+
     public function get($url, $data = [], array $options = []): Response
     {
         $options = array_merge($options, [

@@ -128,7 +128,7 @@ form.fcs-form .bootstrap-select {
     min-height: 500px;
 }
 .vertical.menu {
-	width: 150px;
+    width: 150px;
 }
 .vertical.menu > li a img.logo {
     padding: 0;
@@ -195,12 +195,12 @@ i.always-available {
     margin-left: 5px;
 }
 tr.main-product span.name-for-dialog {
-	font-weight: 600;
+    font-weight: 600;
     line-height: 24px;
 }
 span.categories-for-dialog {
-	font-style: italic;
-	font-size: 11px;
+    font-style: italic;
+    font-size: 11px;
 }
 span.is-declaration-ok-wrapper,
 span.product-declaration-header {
@@ -214,12 +214,12 @@ td.amount i.always-available {
   color: #719f41;
 }
 td.is-stock-product i.fas.no-button {
-	margin-left: 5px;
+    margin-left: 5px;
 }
 span.is-declaration-ok-wrapper .fa-times,
 td.is-stock-product .fa-times,
 td.amount .fa-times {
-	color: #f3515c;
+    color: #f3515c;
 }
 
 .filter-container {
@@ -281,9 +281,9 @@ body.products.index .bootstrap-select {
   width: 172px ! important;
 }
 body.products.index td.status {
-	text-align: center;
-	padding-left: 10px;
-	width: 42px;
+    text-align: center;
+    padding-left: 10px;
+    width: 42px;
 }
 #filter-loader {
   position: fixed;
@@ -347,17 +347,17 @@ input.datepicker {
     text-align: center;
 }
 .ui-dialog-content li {
-	margin-left: 20px;
-	margin-top: 5px;
-	list-style: disc;
+    margin-left: 20px;
+    margin-top: 5px;
+    list-style: disc;
 }
 .ui-dialog-content .bootstrap-select .dropdown-menu li {
-	margin-left: 0;
-	margin-top: 0;
-	list-style: none;
+    margin-left: 0;
+    margin-top: 0;
+    list-style: none;
 }
 .ui-dialog-content .bootstrap-select .dropdown-toggle {
-	width: 307px;
+    width: 307px;
 }
 .warning {
     color: red;
@@ -416,14 +416,14 @@ body.order_details.index .add-payment-deposit-button-wrapper {
 }
 body.order_details.index td.date-short2,
 body.orders.index td.date-short2 {
-	width: 100px;
+    width: 100px;
 }
 body.order_details.index a.change-products-picked-up-button {
-	width: 64px;
-	text-align: left;
+    width: 64px;
+    text-align: left;
 }
 body.order_details.index .timebased-currency-object {
-	display: none;
+    display: none;
 }
 #product-name-edit-form div.textarea-wrapper a {
   color: red;
@@ -518,12 +518,12 @@ form div.error-message {
     margin-bottom: 10px;
 }
 .ui-dialog-content label {
-	font-weight: bold;
-	margin-bottom: 0;
+    font-weight: bold;
+    margin-bottom: 0;
 }
 .featherlight-inner .checkbox label {
     font-weight: normal;
-} 
+}
 .overlay-info {
     color: red;
     font-weight: bold;
@@ -553,7 +553,7 @@ body.payments.member_fee #add-payment-button-wrapper {
     margin-right: 3px;
 }
 body.order_details #add-instant-order-button-wrapper.bottom {
-	float: left;
+    float: left;
 }
 body.order_details #add-instant-order-button-wrapper div.select {
     display: none;
@@ -589,25 +589,25 @@ body.order_details.index td a.pickup-day-comment-edit-button {
     margin-left: 5px;
 }
 #timebasedCurrencyPaymentEditForm a.btn-arrow {
-	top: 5px;
+    top: 5px;
 }
 #timebasedCurrencyPaymentEditForm h3 {
-	margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 #timebasedCurrencyPaymentEditForm .textarea label {
-	vertical-align: top;
+    vertical-align: top;
 }
 #timebasedCurrencyPaymentEditForm select,
 #timebasedCurrencyPaymentEditForm textarea {
     width: 250px;
 }
 #blogPostEditForm .blog-post-image-wrapper {
-	float: left;
+    float: left;
 }
 #blogPostEditForm .blog-post-image-wrapper span {
-	float: left;
-	width: 400px;
-	margin-left: 10px;
+    float: left;
+    width: 400px;
+    margin-left: 10px;
 }
 .radio, .checkbox {
     margin-top: 0 ! important;
@@ -647,7 +647,7 @@ table.list td.amount > .has-separator:after {
 .ui-dialog {
     z-index: 2147483648; /* 1 more than featherlight */
 }
-.cke_dialog_container { 
+.cke_dialog_container {
     z-index: 2147483650 ! important; /* open upload from dialog - 2 more than .ui-dialog */
 }
 #manufacturer-options-edit-form h3 {
@@ -685,7 +685,7 @@ body.payments.product h2.personal-transaction-code {
     margin-top: 10px;
 }
 body.timebased_currency_payments table.list {
-	width: 850px;
+    width: 850px;
 }
 body.payments .bottom-button-container {
     float: left;
@@ -708,40 +708,40 @@ body.payments .bottom-button-container {
     width: 70px;
 }
 #product-price-edit-form input#dialogPriceUnitName {
-	text-align: left;
+    text-align: left;
 }
 
 #product-price-edit-form label.radio {
-	margin-left: 20px;
-	line-height: 21px;
-	position: static;
-	margin-top: 5px ! important;
-	float: left;
-	margin-bottom: 5px;
+    margin-left: 20px;
+    line-height: 21px;
+    position: static;
+    margin-top: 5px ! important;
+    float: left;
+    margin-bottom: 5px;
 }
 #product-is-stock-product-edit-form label.checkbox {
-	font-weight: normal;
-	clear: both;
-	margin-bottom: 10px;
-	width: 100%;
+    font-weight: normal;
+    clear: both;
+    margin-bottom: 10px;
+    width: 100%;
 }
 #product-price-edit-form label.radio input,
 #product-is-stock-product-edit-form label.checkbox input {
-	position: static;
-	float: left;
+    position: static;
+    float: left;
     width: 20px;
     height: 20px;
 }
 #product-price-edit-form label.radio input {
-	margin-right: 5px;
+    margin-right: 5px;
 }
 .ui-dialog.has-datepicker {
-	z-index: 2147483646 ! important;
+    z-index: 2147483646 ! important;
 }
 #product-is-stock-product-edit-form input,
 #product-delivery-rhythm-edit-form input,
 #product-quantity-edit-form input {
-	float: right ! important;
+    float: right ! important;
 }
 #product-price-edit-form label.radio input:focus {
     outline: none;
@@ -751,46 +751,46 @@ body.payments .bottom-button-container {
 #product-quantity-edit-form .field-wrapper,
 #product-delivery-rhythm-edit-form .field-wrapper,
 #order-detail-pickup-day-edit-form .field-wrapper {
-	width: 100%;
-	float: left;
-	margin-top: 5px;
+    width: 100%;
+    float: left;
+    margin-top: 5px;
 }
 #product-quantity-edit-form .field-wrapper,
 #product-delivery-rhythm-edit-form .field-wrapper {
-	margin-top: 10px;
+    margin-top: 10px;
 }
 #product-quantity-edit-form .field-wrapper label,
 #product-delivery-rhythm-edit-form .field-wrapper label:not(.checkbox) {
-	font-weight: normal;
-	margin-bottom: 10px;
-	margin-top: 3px;
+    font-weight: normal;
+    margin-bottom: 10px;
+    margin-top: 3px;
     width: 250px;
     float: left;
     margin-right: 5px;
 }
 #product-quantity-edit-form .field-wrapper label.checkbox {
-	width: 100%;
+    width: 100%;
 }
 #product-delivery-rhythm-edit-form .field-wrapper label:not(.checkbox) {
-	width: 110px;
-	clear: both;
+    width: 110px;
+    clear: both;
 }
 #product-delivery-rhythm-edit-form .field-wrapper select,
 #product-delivery-rhythm-edit-form .field-wrapper input {
-	width: 285px;
-	float: right;
-	margin-right: 0;
+    width: 285px;
+    float: right;
+    margin-right: 0;
 }
 #product-delivery-rhythm-edit-form .field-wrapper input[type="text"]:first-of-type {
-	margin-top: 3px;
+    margin-top: 3px;
 }
 #product-price-edit-form .deactivated {
     opacity: 0.3;
 }
 #product-price-edit-form select {
-	background-color: #fff;
-	width: 80px;
-	margin-left: 5px;
+    background-color: #fff;
+    width: 80px;
+    margin-left: 5px;
 }
 #order-detail-product-price-edit-form span.small {
     line-height: 16px;
@@ -799,7 +799,7 @@ body.payments .bottom-button-container {
 .btn:not(.dropdown-toggle):not(.btn-close),
 .btn.dropdown-toggle {
     padding: 3px 6px;
-	font-size: 13px;
+    font-size: 13px;
 }
 form.fcs-form {
     padding: 10px;
@@ -947,7 +947,7 @@ ul.nav-tabs > li > a {
 }
 ul.nav-tabs a:hover,
 ul.nav-tabs li.active a {
-	background-color: #fff;
+    background-color: #fff;
 }
 a.btn-arrow {
     display: inline-block;
@@ -995,7 +995,7 @@ body.manufacturers.index .manufacturer-details-wrapper {
 }
 body.customers.index td.name,
 body.manufacturers.index td.name {
-	position: relative;
+    position: relative;
     min-width: 260px; /* width does not work on mobile */
 }
 body.customers.index span.name,
@@ -1046,11 +1046,11 @@ body.reports.payment .payment-approval-comment {
     margin-right: 2px;
 }
 body.reports.payment form#csv-upload {
-	padding: 10px 0 5px 0;
+    padding: 10px 0 5px 0;
 }
 body.reports.payment form#csv-upload label {
-	margin-right: 10px;
-	font-weight: bold;
+    margin-right: 10px;
+    font-weight: bold;
 }
 body.reports.payment form#csv-records {
     padding-bottom: 40px;
@@ -1061,10 +1061,10 @@ body.reports.payment form#csv-records table.list {
     margin-bottom: 10px;
 }
 body.reports.payment form#csv-records select {
-	width: 250px;
+    width: 250px;
 }
 body.reports.payment form#csv-records .error-message {
-	margin-left: 0;
+    margin-left: 0;
 }
 body.reports.payment form#csv-records tr.not-selected {
     background-color: #EBEBEB;
@@ -1075,26 +1075,26 @@ body.reports.payment form#csv-records tr.not-selected .error-message {
 body.reports.payment form#csv-records tr.not-selected,
 body.reports.payment form#csv-records tr.not-selected span,
 body.reports.payment form#csv-records tr.not-selected select {
-	text-decoration: line-through;
+    text-decoration: line-through;
 }
 body.reports.payment form#csv-records .checkbox label {
-	margin-bottom: 0;
-	margin-top: 6px;
+    margin-bottom: 0;
+    margin-top: 6px;
 }
 body.reports.payment form#csv-records button {
-	float: right;
+    float: right;
 }
 body.payments.edit form {
-	width: 530px;
+    width: 530px;
 }
 body.payments.edit form p {
-	float: left;
-	clear: both;
-	margin-bottom: 0;
+    float: left;
+    clear: both;
+    margin-bottom: 0;
 }
 body.payments.edit form p span {
-	float: left;
-	margin-bottom: 5px;
+    float: left;
+    margin-bottom: 5px;
 }
 body.payments.edit .email-template-info {
     float: left;
@@ -1115,5 +1115,5 @@ i.fa-fw.far.fa-money-bill-alt {
     margin-right: 3px;
 }
 .cke_emoji-panel {
-	z-index: 10000000001 ! important;
+    z-index: 10000000001 ! important;
 }

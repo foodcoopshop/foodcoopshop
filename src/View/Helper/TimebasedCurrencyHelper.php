@@ -48,7 +48,7 @@ class TimebasedCurrencyHelper extends Helper
         }
         return $text;
     }
-    
+
     /**
      * @return string
      */

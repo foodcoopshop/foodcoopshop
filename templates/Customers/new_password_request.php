@@ -30,10 +30,10 @@ $this->element('addScript', ['script' =>
             ]
         );
     ?>
-    
+
     <p><?php echo __('Please_enter_your_email_address_and_click_on_send_button.'); ?></p>
-    
+
     <?php echo $this->Form->control('Customers.email', ['label' => __('Email')]); ?>
     <button type="submit" class="btn btn-success"><?php echo __('Send'); ?></button>
-    
+
 <?php echo $this->Form->end(); ?>

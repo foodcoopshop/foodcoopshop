@@ -14,21 +14,21 @@
 foodcoopshop.ModalCustomerStatusEdit = {
 
     init : function() {
-        
+
         var modalSelector = '#customer-status-edit-form';
-        
+
         $('.change-active-state').on('click', function () {
             foodcoopshop.ModalCustomerStatusEdit.getOpenHandler($(this), modalSelector);
         });
-        
+
     },
-    
+
     getSuccessHandler: function(customerId, newState, sendMail) {
         document.location.href = '/admin/customers/changeStatus/' + customerId + '/' + newState + '/' + sendMail;
     },
-    
+
     getOpenHandler : function(button, modalSelector) {
-        
+
         var customerId = button.attr('id').split('-');
         customerId = customerId[customerId.length - 1];
 
@@ -46,21 +46,21 @@ foodcoopshop.ModalCustomerStatusEdit = {
         }
 
         var dataRow = $('#change-active-state-' + customerId).closest('tr');
-        
+
         var buttons = [
             foodcoopshop.Modal.createButton(['btn-success'], yesButtonText, 'fa fa-check'),
             foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.no, null, true)
         ];
 
         var html = '<p>' + newStateText.replaceI18n(0, '<b>' + dataRow.find('td:nth-child(3) span.name a').text() + '</b>') + '</p>';
-        
+
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
             newStateTextShort,
             html,
             buttons
         );
-        
+
         $(modalSelector).modal();
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {

@@ -43,7 +43,7 @@ class CartProductsTable extends AppTable
         ]);
         $this->addBehavior('Timestamp');
     }
-    
+
     public function validateQuantityInUnitsForSelfServiceMode($appAuth, $object, $unitObject, $orderedQuantityInUnits, $initialProductId)
     {
         $result = true;
@@ -107,7 +107,7 @@ class CartProductsTable extends AppTable
                 'productId' => $initialProductId
             ];
         }
-        
+
         $result = $this->validateQuantityInUnitsForSelfServiceMode($appAuth, $product, 'unit_product', $orderedQuantityInUnits, $initialProductId);
         if ($result !== true) {
             return [
@@ -136,9 +136,9 @@ class CartProductsTable extends AppTable
             $attributeIdFound = false;
             foreach ($product->product_attributes as $attribute) {
                 if ($attribute->id_product_attribute == $attributeId) {
-                    
+
                     $attributeIdFound = true;
-                    
+
                     // stock available check for attribute
                     $availableQuantity = $attribute->stock_available->quantity;
                     if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
@@ -161,7 +161,7 @@ class CartProductsTable extends AppTable
                             'productId' => $initialProductId
                         ];
                     }
-                    
+
                     break;
                 }
             }
@@ -192,7 +192,7 @@ class CartProductsTable extends AppTable
                 'productId' => $initialProductId
             ];
         }
-        
+
         if (!$appAuth->isInstantOrderMode()) {
             if (!($product->manufacturer->stock_management_enabled && $product->is_stock_product) && $product->delivery_rhythm_type == 'individual') {
                 if ($product->delivery_rhythm_order_possible_until->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')) < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
@@ -205,7 +205,7 @@ class CartProductsTable extends AppTable
                 }
             }
         }
-        
+
         if (!$appAuth->isInstantOrderMode() && !$appAuth->isSelfServiceModeByReferer() && $this->Products->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $product->next_delivery_day)) {
             $message = __('{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered.',
                 [
@@ -230,7 +230,7 @@ class CartProductsTable extends AppTable
             'id_product_attribute' => $attributeId,
             'id_cart' => $cart['Cart']['id_cart']
         ];
-        
+
         $options = [];
         if ($orderedQuantityInUnits > 0) {
             if ($existingCartProduct && !is_null($existingCartProduct['orderedQuantityInUnits'])) {
@@ -245,7 +245,7 @@ class CartProductsTable extends AppTable
                 ]
             ];
         }
-        
+
         if ($existingCartProduct) {
             $oldEntity = $this->get($existingCartProduct['cartProductId']);
             $entity = $this->patchEntity($oldEntity, $cartProduct2save, $options);
@@ -257,19 +257,19 @@ class CartProductsTable extends AppTable
         return true;
 
     }
-    
+
     public function setPickupDays($cartProducts, $customerId, $cartType)
     {
         $pickupDayTable = TableRegistry::getTableLocator()->get('PickupDays');
         $cartTable = TableRegistry::getTableLocator()->get('Carts');
-        
+
         foreach($cartProducts as &$cartProduct) {
             $cartProduct->pickup_day = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
             if ($cartType == $cartTable::CART_TYPE_WEEKLY_RHYTHM) {
                 $cartProduct->pickup_day = $cartProduct->product->next_delivery_day;
             }
         }
-        
+
         $uniquePickupDays = $pickupDayTable->getUniquePickupDays($cartProducts);
         $pickupDays = $pickupDayTable->find('all', [
             'conditions' => [
@@ -280,14 +280,14 @@ class CartProductsTable extends AppTable
                 'PickupDays.pickup_day' => 'ASC'
             ]
         ]);
-        
+
         $existingPickupDays = [];
         foreach($pickupDays->all()->extract('pickup_day')->toArray() as $p) {
             $existingPickupDays[] = $p->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
         }
         $missingPickupDays = array_diff($uniquePickupDays, $existingPickupDays);
         $pickupDays = $pickupDays->toArray();
-        
+
         if (!empty($missingPickupDays)) {
             foreach($missingPickupDays as $missingPickupDay) {
                 $pickupDays[] = $pickupDayTable->newEntity([
@@ -333,20 +333,20 @@ class CartProductsTable extends AppTable
             'CartProducts.id_product_attribute' => $attributeId,
             'CartProducts.id_cart' => $cartId
         ];
-        
+
         // if product attribute was deleted after adding product to cart,
         // remove product without check for product_attribute_id so that the cart can be emptied!
         $cartProducts = $this->find('all', [
             'conditions' => $cartProduct2remove
         ])->first();
-        
+
         if (empty($cartProducts)) {
             unset($cartProduct2remove['CartProducts.id_product_attribute']);
         }
-        
+
         $result = $this->deleteAll($cartProduct2remove);
         $result |= $this->CartProductUnits->deleteAll(['id_cart_product' => $cartProducts->id_cart_product]);
-        
+
         return $result;
     }
 }

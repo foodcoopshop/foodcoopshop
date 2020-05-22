@@ -31,13 +31,13 @@ use Cake\Http\Exception\NotFoundException;
  */
 class CustomersController extends FrontendController
 {
-    
+
     public function profileImage()
     {
         if (!$this->AppAuth->user() || $this->AppAuth->isManufacturer() || empty($this->request->getParam('imageSrc'))) {
             throw new NotFoundException('image not found');
         }
-        
+
         // customer exists check (if customer was deleted and somehow files were not deleted)
         $customerId = explode('-', $this->request->getParam('imageSrc'));
         $customerId = $customerId[0];
@@ -50,7 +50,7 @@ class CustomersController extends FrontendController
         if (empty($customer)) {
             throw new NotFoundException('image not found');
         }
-        
+
         $this->RequestHandler->renderAs($this, 'jpg');
         $imagePath = Configure::read('app.customerImagesDir') . DS . $this->request->getParam('imageSrc') . '.jpg';
         if (!file_exists($imagePath)) {
@@ -125,30 +125,30 @@ class CustomersController extends FrontendController
             if ($customer->hasErrors()) {
                 $this->Flash->error(__('Errors_while_saving!'));
             } else {
-                
+
                 $originalPrimaryKey = $this->Customer->getPrimaryKey();
                 $this->Customer->setPrimaryKey('email');
                 $oldEntity = $this->Customer->get($this->getRequest()->getData('Customers.email'));
                 $activateNewPasswordCode = $oldEntity->activate_new_password_code;
                 $data2save = [];
-                
+
                 if ($activateNewPasswordCode == '') {
                     $activateNewPasswordCode = StringComponent::createRandomString(12);
                     $data2save['activate_new_password_code'] = $activateNewPasswordCode;
                 }
-                
+
                 // always generate new password as it's saved as hash and cannot be sent in clear text
                 $tmpNewPassword = StringComponent::createRandomString(12);
                 $ph = new DefaultPasswordHasher();
                 $data2save['tmp_new_passwd'] = $ph->hash($tmpNewPassword);
-                
+
                 $this->Customer->setPrimaryKey($originalPrimaryKey);
                 $patchedEntity = $this->Customer->patchEntity(
                     $oldEntity,
                     $data2save
                 );
                 $this->Customer->save($patchedEntity);
-                
+
                 // send email
                 $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('new_password_request_successful');
@@ -189,7 +189,7 @@ class CustomersController extends FrontendController
         if (empty($customer)) {
             $this->Flash->success(__('Your_new_password_was_already_activated_or_the_activation_code_was_not_valid.'));
         } else {
-        
+
             $patchedEntity = $this->Customer->patchEntity(
                 $customer,
                 [
@@ -202,7 +202,7 @@ class CustomersController extends FrontendController
             $this->AppAuth->setUser($patchedEntity);
             $this->Flash->success(__('Your_new_password_was_successfully_activated.'));
         }
-        
+
         $this->redirect('/');
     }
 
@@ -213,7 +213,7 @@ class CustomersController extends FrontendController
         $enableRegistrationForm = true;
         $enableBarCodeLogin = false;
         $enableAutoLogin = true;
-        
+
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')
             && ($this->AppAuth->isSelfServiceModeByUrl() || $this->AppAuth->isSelfServiceModeByReferer())
             ) {
@@ -226,9 +226,9 @@ class CustomersController extends FrontendController
         $this->set('enableRegistrationForm', $enableRegistrationForm);
         $this->set('enableBarCodeLogin', $enableBarCodeLogin);
         $this->set('enableAutoLogin', $enableAutoLogin);
-        
+
         $this->set('title_for_layout', $title);
-        
+
         /**
          * login start
          */
@@ -390,13 +390,13 @@ class CustomersController extends FrontendController
         $this->Flash->success(__('You_have_been_signed_out.'));
         $this->response = $this->response->withCookie((new Cookie('remember_me')));
         $this->destroyInstantOrderCustomer();
-        
+
         $this->AppAuth->logout();
         $redirectUrl = '/';
         if ($this->request->getQuery('redirect')) {
             $redirectUrl = $this->request->getQuery('redirect');
         }
         $this->redirect($redirectUrl);
-        
+
     }
 }

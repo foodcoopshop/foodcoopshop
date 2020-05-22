@@ -12,102 +12,102 @@
  * @link          https://www.foodcoopshop.com
  */
 @media only screen and (max-device-width: 768px) {
-	.self-service,
-	.self-service .header,
-	.self-service #products,
-	.self-service .product-wrapper .quantity-in-units-input-field-wrapper input {
-	   width: 100%;
-	}
-	body.customers.login #content.self-service {
-	   min-height: 100vh;
-	}
-	body.customers.login #responsive-header .responsive-cart {
-	    display: none;
-	}
-	.self-service #login-form form {
-	   padding: 0 2%;
-	}
-	body.self_services #content {
-	   border-right: none;
-	}
-	.self-service .product-wrapper {
-	   padding-left: 10px;
-	}
-	.self-service #login-form {
-	   padding-top: 0;
-	   text-align: center;
-	}
-	.self-service #login-form .input label {
-	   width: 95px;
-	}
-	.self-service .header h2 {
-	   margin-bottom: 0;
-	   margin-left: 10px;
-	   width: 95%;
-	}
-	.self-service .header hr {
-	   display: none;
-	}
-	.self-service #SelfServiceForm {
-	   border-left: none;
-	}
-	.self-service form div.error-message {
-	   width: 100% ! important;
-	}
-	.self-service {
-	   padding-right: 0;
-	   padding-bottom: 10px;
-	}
-	.self-service .footer {
-	   display: none;
-	}
-	.self-service .right-box {
-	   float: left;
+    .self-service,
+    .self-service .header,
+    .self-service #products,
+    .self-service .product-wrapper .quantity-in-units-input-field-wrapper input {
+       width: 100%;
+    }
+    body.customers.login #content.self-service {
+       min-height: 100vh;
+    }
+    body.customers.login #responsive-header .responsive-cart {
+        display: none;
+    }
+    .self-service #login-form form {
+       padding: 0 2%;
+    }
+    body.self_services #content {
+       border-right: none;
+    }
+    .self-service .product-wrapper {
+       padding-left: 10px;
+    }
+    .self-service #login-form {
+       padding-top: 0;
+       text-align: center;
+    }
+    .self-service #login-form .input label {
+       width: 95px;
+    }
+    .self-service .header h2 {
+       margin-bottom: 0;
+       margin-left: 10px;
+       width: 95%;
+    }
+    .self-service .header hr {
+       display: none;
+    }
+    .self-service #SelfServiceForm {
+       border-left: none;
+    }
+    .self-service form div.error-message {
+       width: 100% ! important;
+    }
+    .self-service {
+       padding-right: 0;
+       padding-bottom: 10px;
+    }
+    .self-service .footer {
+       display: none;
+    }
+    .self-service .right-box {
+       float: left;
        position: static;
        display: none;
        margin-top: 10px;
        padding-bottom: 20px;
-	}
-	.self-service .right-box .input.checkbox,
-	.self-service #cart {
-	   width: 94%;
+    }
+    .self-service .right-box .input.checkbox,
+    .self-service #cart {
+       width: 94%;
        margin-left: 3%;
        margin-right: 3%;
-	}
-	.self-service #cart {
-	   border: 1px solid #ccc;
-	   display: block ! important;
-	}
-	.self-service .continue-shopping {
-	    float: right;
-	    margin-top: 10px;
-	    margin-right: 5%;
-	}
-	.self-service #products {
-	   display: none;
+    }
+    .self-service #cart {
+       border: 1px solid #ccc;
+       display: block ! important;
+    }
+    .self-service .continue-shopping {
+        float: right;
+        margin-top: 10px;
+        margin-right: 5%;
+    }
+    .self-service #products {
+       display: none;
        margin-left: 0;
-	   margin-top: 0;
-	   margin-bottom: 0;
-	   padding-top: 0px;
-	}
-	body.self_services #responsive-header .shopping-limit-reached-info {
-	   width: 95%;
-	   margin-top: -7px;
-	}
-	.self-service .header {
-	   position: static;
-	}
-	body.self_services #responsive-header .left-wrapper {
-	   margin-top: 21px;
-	   margin-left: 2px;
-	   float: left;
-	}
+       margin-top: 0;
+       margin-bottom: 0;
+       padding-top: 0px;
+    }
+    body.self_services #responsive-header .shopping-limit-reached-info {
+       width: 95%;
+       margin-top: -7px;
+    }
+    .self-service .header {
+       position: static;
+    }
+    body.self_services #responsive-header .left-wrapper {
+       margin-top: 21px;
+       margin-left: 2px;
+       float: left;
+    }
     body.self_services #responsive-header .responsive-cart span.sum {
         margin-right: 5px;
     }
-	body.self_services #responsive-header .left-wrapper .user-name-wrapper {
-	   display: none;
-	}
+    body.self_services #responsive-header .left-wrapper .user-name-wrapper {
+       display: none;
+    }
     body.self_services #responsive-header .logo-wrapper {
        float: left;
     }
@@ -115,9 +115,9 @@
         float: right;
         margin-top: 11px;
     }
-	.self-service .product-wrapper div.second-column {
-	   width: 33% ! important;
-	}
+    .self-service .product-wrapper div.second-column {
+       width: 33% ! important;
+    }
     .self-service .product-wrapper div.third-column {
        width: 40% ! important;
     }

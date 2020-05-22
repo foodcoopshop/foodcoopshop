@@ -49,7 +49,7 @@ if ($product['is_new']) {
     echo '</div>';
 
     echo '<div class="second-column">';
-    
+
     echo '<div class="heading">';
         echo '<h4>';
         if ($showProductDetailLink) {
@@ -81,7 +81,7 @@ if ($product['description'] != '') {
     if (!($product['stock_management_enabled'] && $product['is_stock_product']) && $product['delivery_rhythm_type'] == 'individual' && !$this->Time->isDatabaseDateNotSet($product['delivery_rhythm_order_possible_until'])) {
         echo '<br />' . __('Order_possible_until') . ': ' . $this->Time->getDateFormattedWithWeekday(strtotime($product['delivery_rhythm_order_possible_until']));
     }
-    
+
     if (!$appAuth->isInstantOrderMode() && !($product['stock_management_enabled'] && $product['is_stock_product']) && $product['delivery_rhythm_type'] != 'individual' && $this->Time->getSendOrderListsWeekday() != $product['delivery_rhythm_send_order_list_weekday']) {
         echo '<span class="last-order-day">';
             echo __('Last_order_day') . ': <b>' . $this->Time->getWeekdayName(
@@ -89,7 +89,7 @@ if ($product['description'] != '') {
             ) . '</b> ' . __('midnight');
         echo '</span>';
     }
-    
+
     if (!$appAuth->isSelfServiceModeByUrl()) {
         echo '<br />'.__('Pickup_day').': ';
     }
@@ -120,7 +120,7 @@ if ($product['description'] != '') {
             }
         }
     }
-    
+
     echo '<br />'.__('Manufacturer').': ';
     if ($showManufacturerDetailLink) {
         echo $this->Html->link(
@@ -250,16 +250,16 @@ if ($product['description'] != '') {
                 'showInfoText' => $isStockProductOrderPossible,
                 'keyword' => $appAuth->isSelfServiceModeByUrl() ? $product['ProductIdentifier'] : null
             ]);
-            
+
             if ($showProductPrice) {
                 echo $pricePerUnitInfoText;
             }
-            
+
             echo $this->element('product/quantityInUnitsInputFieldForSelfService', [
                 'pricePerUnitEnabled' => $attribute['Units']['price_per_unit_enabled'],
                 'unitName' => $attribute['Units']['unit_name']
             ]);
-            
+
             echo '</div>';
         }
 
@@ -280,7 +280,7 @@ if ($product['description'] != '') {
                                $radioButtonLabel.'
                       </label>
                   </div>';
-                               
+
         }
     } else {
         // PRODUCT WITHOUT ATTRIBUTES
@@ -318,7 +318,7 @@ if ($product['description'] != '') {
                 echo '<div class="price hide">' . $this->Number->formatAsCurrency(0) . '</div>';
                 echo '<div class="tax hide">'. $this->Number->formatAsCurrency(0) . '</div>';
             }
-            
+
             echo $this->element('product/hiddenProductIdField', ['productId' => $product['id_product']]);
             echo $this->element('product/amountWrapper', [
                 'product' => $product,
@@ -344,7 +344,7 @@ if ($product['description'] != '') {
                 'showInfoText' => $isStockProductOrderPossible,
                 'keyword' => $appAuth->isSelfServiceModeByUrl() ? $product['ProductIdentifier'] : null
             ]);
-            
+
             if ($showProductPrice) {
                 echo $pricePerUnitInfoText;
             }
@@ -352,7 +352,7 @@ if ($product['description'] != '') {
                 'pricePerUnitEnabled' => $product['price_per_unit_enabled'],
                 'unitName' => $product['unit_name']
             ]);
-        
+
         echo '</div>';
 
         $unityStrings = [];

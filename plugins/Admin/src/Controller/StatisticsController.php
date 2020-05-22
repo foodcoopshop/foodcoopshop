@@ -69,7 +69,7 @@ class StatisticsController extends AdminAppController
             $year = h($this->getRequest()->getQuery('year'));
         }
         $this->set('year', $year);
-        
+
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $manufacturersForDropdown = [];
         if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
@@ -91,35 +91,35 @@ class StatisticsController extends AdminAppController
             // do not show any non-associated products that might be found in database
             $conditions[] = 'Manufacturers.id_manufacturer > 0';
         }
-        
+
         $manufacturers = $this->Manufacturer->find('all', [
-            'conditions' => $conditions 
+            'conditions' => $conditions
         ])->toArray();
         $this->set('manufacturers', $manufacturers);
-        
+
         $titleForLayout = __d('admin', 'Turnover_statistics');
         if ($manufacturerId != 'all') {
             $titleForLayout .=  ' ' . $manufacturers[0]->name;
         }
         $this->set('title_for_layout', $titleForLayout);
-        
+
         $this->set('years', Configure::read('app.timeHelper')->getAllYearsUntilThisYear(date('Y'), 2014));
-        
+
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $monthlySumProducts = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturerId, $year);
         if (empty($monthlySumProducts->toArray())) {
             $this->set('xAxisData', []);
             return;
         }
-        
+
         $monthsAndYear = Configure::read('app.timeHelper')->getAllMonthsUntilThisYear(date('Y'), 2014);
-        
+
         $monthsWithTurnoverMonthAndYear = $monthlySumProducts->extract('MonthAndYear')->toArray();
         $monthsWithTurnoverSumTotalPaid = $monthlySumProducts->extract('SumTotalPaid')->toArray();
-        
+
         $xAxisData = array_values($monthsAndYear);
         $yAxisData = [];
-        
+
         foreach($monthsAndYear as $monthKey => $monthString) {
             $foundIndex = array_search($monthKey, $monthsWithTurnoverMonthAndYear);
             if ($foundIndex !== false) {
@@ -128,7 +128,7 @@ class StatisticsController extends AdminAppController
                 $yAxisData[] = 0;
             }
         }
-        
+
         $xAxisDataWithYearSeparators = [];
         $yAxisDataWithYearSeparators = [];
         foreach($xAxisData as $i => $x) {
@@ -139,7 +139,7 @@ class StatisticsController extends AdminAppController
                 $yAxisDataWithYearSeparators[] = 0;
             }
         }
-        
+
         $firstIndexWithValue = 0;
         foreach($yAxisDataWithYearSeparators as $index => $y) {
             if ($y > 0) {
@@ -147,7 +147,7 @@ class StatisticsController extends AdminAppController
                 break;
             }
         }
-        
+
         $lastIndexWithValue = 0;
         $reversedYAxisDate = array_reverse($yAxisDataWithYearSeparators);
         foreach($reversedYAxisDate as $index => $y) {
@@ -156,15 +156,15 @@ class StatisticsController extends AdminAppController
                 break;
             }
         }
-        
+
         $xAxisDataWithYearSeparators = array_splice($xAxisDataWithYearSeparators, $firstIndexWithValue, $lastIndexWithValue * -1);
         $yAxisDataWithYearSeparators = array_splice($yAxisDataWithYearSeparators, $firstIndexWithValue, $lastIndexWithValue * -1);
-        
+
         $this->set('xAxisDataBarChart', $xAxisDataWithYearSeparators);
         $this->set('yAxisDataBarChart', $yAxisDataWithYearSeparators);
         $this->set('totalTurnover', array_sum($monthsWithTurnoverSumTotalPaid));
         $this->set('averageTurnover', array_sum($monthsWithTurnoverSumTotalPaid) / count($monthsWithTurnoverMonthAndYear));
-        
+
         // START prepare line chart
         if ($year == '') {
             $xAxisDataLineChart = [];
@@ -180,37 +180,37 @@ class StatisticsController extends AdminAppController
                 @$yAxisDataLineChart[$i-1] += $yAxisDataWithYearSeparators[$j];
                 $j++;
             }
-            
+
             $this->set('xAxisDataLineChart', $xAxisDataLineChart);
             $this->set('yAxisDataLineChart', $yAxisDataLineChart);
         }
         // END prepare line chart
-        
-        
+
+
         // START prepare pie chart
         if ($manufacturerId == 'all') {
             $data = [];
             foreach($manufacturers as $manufacturer) {
-                
+
                 $monthlySumProductsQuery = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturer->id_manufacturer, $year);
                 $monthlySumProducts = 0;
                 foreach($monthlySumProductsQuery as $monthlySum) {
                     $monthlySumProducts += $monthlySum->SumTotalPaid;
                 }
-                
+
                 if ($monthlySumProducts == 0) {
                     continue;
                 }
-                
+
                 $preparedData = [];
                 $preparedData['sum'] = $monthlySumProducts;
                 $preparedData['label'] = html_entity_decode($manufacturer->name);
                 $data[] = $preparedData;
-                
+
             }
-            
+
             arsort($data);
-            
+
             $labelsPieChart = [];
             $dataPieChart = [];
             $backgroundColorPieChart = [];
@@ -225,13 +225,13 @@ class StatisticsController extends AdminAppController
                 }
                 $backgroundColorPieChart[] = 'rgba(113,159,65,0.'.$opacity.')';
             }
-            
-            // start retrieving data for pie chart 
+
+            // start retrieving data for pie chart
             $this->set('labelsPieChart', $labelsPieChart);
             $this->set('dataPieChart', $dataPieChart);
             $this->set('backgroundColorPieChart', $backgroundColorPieChart);
         }
         // END prepare pie chart
-        
+
     }
 }

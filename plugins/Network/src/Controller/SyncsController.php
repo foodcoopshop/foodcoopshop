@@ -118,7 +118,7 @@ class SyncsController extends AppController
             'msg' => $message
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'product', 'msg']);
-        
+
     }
 
     public function products()
@@ -188,7 +188,7 @@ class SyncsController extends AppController
             'msg' => $message
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'syncProduct', 'msg']);
-        
+
     }
 
     public function productData()

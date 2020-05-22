@@ -14,7 +14,7 @@
 foodcoopshop.ModalProductCategoriesEdit = {
 
     init : function() {
-        
+
         var modalSelector = '#product-categories-edit-form';
 
         $('.product-categories-edit-button').on('click', function() {
@@ -23,27 +23,27 @@ foodcoopshop.ModalProductCategoriesEdit = {
                 '',
                 ''
             );
-            
+
             foodcoopshop.ModalProductCategoriesEdit.getOpenHandler($(this), modalSelector);
-            
+
             foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
                 foodcoopshop.ModalProductCategoriesEdit.getSuccessHandler(modalSelector);
             });
-            
+
             $(modalSelector).on('hidden.bs.modal', function (e) {
                 foodcoopshop.ModalProductCategoriesEdit.getCloseHandler(modalSelector);
             });
-            
+
         });
 
     },
-    
+
     getCloseHandler : function(modalSelector) {
         $(modalSelector).remove();
     },
 
     getSuccessHandler : function(modalSelector) {
-        
+
         var productId = $(modalSelector + ' .product-id').val();
         var selectedCategories = [];
         $(modalSelector + ' .categories-checkboxes input:checked').each(function () {
@@ -65,7 +65,7 @@ foodcoopshop.ModalProductCategoriesEdit = {
                     alert(data.msg);
                 }
             }
-        );        
+        );
     },
 
     syncHigherParentElements: function(element) {
@@ -77,7 +77,7 @@ foodcoopshop.ModalProductCategoriesEdit = {
             this.syncHigherParentElements(higherParentElement.closest('label'));
         }
     },
-    
+
     syncLowerParentElements: function(element) {
         var childrenIdsContainer = element.find('span.children-ids').first();
         if (childrenIdsContainer.length > 0) {
@@ -90,7 +90,7 @@ foodcoopshop.ModalProductCategoriesEdit = {
     },
 
     getOpenHandler : function(button, modalSelector) {
-        
+
         $(modalSelector).modal();
 
         var productId = button.data('objectId');
@@ -126,7 +126,7 @@ foodcoopshop.ModalProductCategoriesEdit = {
                 $(this).prop('checked', false);
             }
         });
-        
+
         $(modalSelector + ' .product-id').val(productId);
 
     }

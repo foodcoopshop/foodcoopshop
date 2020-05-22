@@ -20,12 +20,12 @@ use Cake\Core\Configure;
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="theme-color" content="<?php echo Configure::read('app.customFrontendColorTheme'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title>Error - <?php echo Configure::read('appDb.FCS_APP_NAME'); ?></title>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    
+
     <?php echo $this->element('jsNamespace'); ?>
-    
+
     <?php
         // do not use AssetCompressPlugin here (not loaded for errors!)
         echo $this->Html->css([
@@ -41,15 +41,15 @@ use Cake\Core\Configure;
             echo $this->Html->css(['mobile-error']);
         }
     ?>
-    
+
 </head>
 <body>
-    
+
     <div id="container">
-    
+
             <div id="content">
             <?php echo $this->Flash->render(); ?>
-            
+
             <div id="inner-content">
                 <?php
 
@@ -67,11 +67,11 @@ use Cake\Core\Configure;
                 <div class="sc"></div>
             </div>
         </div>
-        
+
     </div>
-    
+
     <div class="sc"></div>
-    
+
 <?php
 
     echo $this->element('localizedJavascript');

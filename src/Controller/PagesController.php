@@ -69,10 +69,10 @@ class PagesController extends FrontendController
             echo '<p>Please copy this <b>Security => salt</b> to your custom_config.php: '.hash('sha256', Security::randomBytes(64)).'</p>';
             $securityErrors++;
         }
-		if (Configure::read('app.cakeServerName') == '') {
-			echo '<p>Please copy <b>http://' . $_SERVER['HTTP_HOST'] . '</b> to custom_config.php</p>';
-			$securityErrors++;
-		}
+        if (Configure::read('app.cakeServerName') == '') {
+            echo '<p>Please copy <b>http://' . $_SERVER['HTTP_HOST'] . '</b> to custom_config.php</p>';
+            $securityErrors++;
+        }
         if ($securityErrors > 0) {
             die('<p><b>Security errors: '.$securityErrors.'</b></p>');
         }
@@ -90,7 +90,7 @@ class PagesController extends FrontendController
         $this->Slider = TableRegistry::getTableLocator()->get('Sliders');
         $sliders = $this->Slider->getForHome();
         $this->set('sliders', $sliders);
-        
+
         $newProducts = [];
         if (Configure::read('appDb.FCS_SHOW_NEW_PRODUCTS_ON_HOME') && (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user())) {
             $this->Category = TableRegistry::getTableLocator()->get('Categories');
@@ -98,7 +98,7 @@ class PagesController extends FrontendController
             $newProducts = $this->prepareProductsForFrontend($newProducts);
         }
         $this->set('newProducts', $newProducts);
-        
+
     }
 
     public function detail()

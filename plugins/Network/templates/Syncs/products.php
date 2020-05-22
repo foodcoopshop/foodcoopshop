@@ -27,7 +27,7 @@ use Cake\Core\Configure;
                 Configure::read('app.jsNamespace') . ".Admin.addLoaderToSyncProductDataButton($('.sync-button-wrapper a.btn-outline-light'));"
         ]);
     ?>
-    
+
     <div class="filter-container-not-fixed">
         <?php
            echo $this->element('syncLoginForm', ['syncDomains' => $syncDomains]);
@@ -42,9 +42,9 @@ use Cake\Core\Configure;
             <?php echo $this->element('headerIcons', ['helperLink' => $this->Network->getNetworkPluginDocs()]); ?>
         </div>
     </div>
-    
+
     <div class="sc"></div>
-    
+
     <?php
     echo $this->element('tabs', [
         'url' => $this->request->getUri()->getPath()

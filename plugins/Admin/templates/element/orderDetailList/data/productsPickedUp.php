@@ -31,7 +31,7 @@ if ($groupBy == 'customer' && count($pickupDay) == 1) {
                 'class' => 'change-products-picked-up-button btn btn-outline-light'
             ]
         );
-        
+
     echo '</td>';
 }
 

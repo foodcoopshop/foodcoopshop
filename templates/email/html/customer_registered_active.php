@@ -17,25 +17,25 @@ use Cake\Core\Configure;
 ?>
 <?php echo $this->element('email/tableHead'); ?>
     <tbody>
-    
+
         <?php echo $this->element('email/greeting', ['data' => $data]); ?>
-    
+
         <tr>
             <td>
-                
+
                 <p><?php echo __('Your_registration_at_{0}_has_just_been_successful!', [Configure::read('appDb.FCS_APP_NAME')])?></p>
-                
+
                 <?php
                 if (Configure::read('appDb.FCS_REGISTRATION_EMAIL_TEXT') != '') {
                     echo Configure::read('appDb.FCS_REGISTRATION_EMAIL_TEXT');
                 }
                 ?>
-                
+
                 <?php echo $this->element('email/profileLinks', ['data' => $data, 'newPassword' => $newPassword]); ?>
-                
+
             </td>
-            
+
         </tr>
-        
+
     </tbody>
 <?php echo $this->element('email/tableFoot'); ?>

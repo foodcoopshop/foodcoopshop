@@ -51,16 +51,16 @@ class ListsController extends AdminAppController
                 if (!preg_match('/'.__d('admin', '_Order_list_filename_').'('.__d('admin', 'product').'|Artikel)/', $name, $matches)) {
                     continue;
                 }
-                
+
                 $splittedFileName = $this->splitOrderDetailStringIntoParts($object->getFileName(), $matches[1]);
                 $deliveryDate = $splittedFileName['deliveryDate'];
                 $manufacturerId = $splittedFileName['manufacturerId'];
-                
+
                 // date check
                 if (! (strtotime($dateFrom) == strtotime($deliveryDate))) {
                     continue;
                 }
-                
+
                 if ($this->AppAuth->isManufacturer() && $manufacturerId != $this->AppAuth->getManufacturerId()) {
                     continue;
                 }
@@ -101,29 +101,29 @@ class ListsController extends AdminAppController
 
         $this->set('title_for_layout', __d('admin', 'Order_lists'));
     }
-    
+
     private function splitOrderDetailStringIntoParts($fileName, $ending)
     {
         $result = [];
         $result['deliveryDate'] = substr($fileName, 0, 10);
-        
+
         // remove date
         $manufacturerString = substr($fileName, 11);
-        
+
         // remove part after $positionOrderListsString (foodcoop name and file ending)
         $positionOrderListsString = strpos($manufacturerString, __d('admin', '_Order_list_filename_') . $ending);
         $manufacturerString = substr($manufacturerString, 0, $positionOrderListsString);
         $splittedManufacturerString = explode('_', $manufacturerString);
-        
+
         $result['manufacturerId'] = (int) end($splittedManufacturerString);
-        
+
         return $result;
     }
-    
+
     public function getOrderList()
     {
         $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder_order_lists')) . DS . h($this->getRequest()->getQuery('file'));
-        
+
         if ($this->AppAuth->isManufacturer()) {
             preg_match('/'.__d('admin', '_Order_list_filename_').'('.__d('admin', 'product').'|'.__d('admin', 'member').'|Artikel)/', h($this->getRequest()->getQuery('file')), $matches);
             if (!empty($matches[1])) {
@@ -134,10 +134,10 @@ class ListsController extends AdminAppController
                 }
             }
         }
-        
+
         $this->getFile($filenameWithPath);
     }
-    
+
     public function getInvoice()
     {
         $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder_invoices')) . DS . h($this->getRequest()->getQuery('file'));

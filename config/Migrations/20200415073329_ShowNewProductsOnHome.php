@@ -17,7 +17,7 @@ class ShowNewProductsOnHome extends AbstractMigration
                 $text = 'Show new products on home?';
                 break;
         }
-        
+
         $sql = "INSERT INTO `fcs_configuration` (
                   `id_configuration`, `active`, `name`, `text`, `value`, `type`, `position`, `locale`, `date_add`, `date_upd`
                )

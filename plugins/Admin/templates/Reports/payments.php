@@ -36,7 +36,7 @@ if ($paymentType == 'product') {
         <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameTo' => 'dateTo', 'nameFrom' => 'dateFrom']); ?>
         <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_members'), 'options' => []]); ?>
         <div class="right">
-        	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_infos_for_success'))]); ?>
+            <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_infos_for_success'))]); ?>
         </div>
     <?php echo $this->Form->end(); ?>
 </div>
@@ -158,7 +158,7 @@ foreach ($payments as $payment) {
             }
         echo '</td>';
     }
-    
+
     echo '<td style="text-align:right;">';
         echo $this->Number->formatAsCurrency($payment->amount);
     echo '</td>';

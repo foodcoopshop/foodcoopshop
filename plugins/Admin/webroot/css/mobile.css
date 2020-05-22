@@ -176,13 +176,13 @@ div.cke {
     float: left;
 }
 form.fcs-form .input .after.small {
-	width: 100%;
+    width: 100%;
 }
 .ui-dialog-content #flashMessage {
-	width: 96%;
-	left: 2%;
+    width: 96%;
+    left: 2%;
 }
 table.list th,
 table.list tr.fake-th td {
-	word-break: normal;
+    word-break: normal;
 }

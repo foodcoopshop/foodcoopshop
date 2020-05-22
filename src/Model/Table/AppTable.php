@@ -43,7 +43,7 @@ class AppTable extends Table
         }
         parent::initialize($config);
     }
-    
+
     public function getAllowOnlyOneWeekdayValidator(Validator $validator, $field, $fieldName)
     {
         $validator->add($field, 'allow-only-one-weekday', [
@@ -58,18 +58,18 @@ class AppTable extends Table
                 Configure::read('app.timeHelper')->getWeekdayName(Configure::read('app.timeHelper')->getDeliveryWeekday())
             ])
         ]);
-        return $validator;    
+        return $validator;
     }
 
     public function noDeliveryDaysOrdersExist ($value, $context) {
-        
+
         $manufacturerId = null;
         if (!empty($context['data']) && !empty($context['data']['id_manufacturer'])) {
             $manufacturerId = $context['data']['id_manufacturer'];
         }
-        
+
         $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
-        
+
         if (!is_null($manufacturerId)) {
             $productsAssociation = $orderDetailsTable->getAssociation('Products');
             $productsAssociation->setJoinType('INNER'); // necessary to apply condition
@@ -77,7 +77,7 @@ class AppTable extends Table
                 'Products.id_manufacturer' => $manufacturerId
             ]);
         }
-        
+
         $query = $orderDetailsTable->find('all', [
             'conditions' => [
                 'pickup_day IN' => $value
@@ -93,7 +93,7 @@ class AppTable extends Table
                 'pickup_day'
             ]
             );
-        
+
         $result = true;
         if (!empty($query->toArray())) {
             $pickupDaysInfo = [];
@@ -103,10 +103,10 @@ class AppTable extends Table
             }
             $result = __('The_following_delivery_day(s)_already_contain_orders:_{0}._To_save_the_delivery_break_either_cancel_them_or_change_the_pickup_day.', [join(', ', $pickupDaysInfo)]);
         }
-        
+
         return $result;
     }
-    
+
     public function getNumberRangeValidator(Validator $validator, $field, $min, $max, $additionalErrorMessageSuffix='', $showDefaultErrorMessage=true)
     {
         $message = __('Please_enter_a_number_between_{0}_and_{1}.', [
@@ -178,7 +178,7 @@ class AppTable extends Table
         }
         return false;
     }
-    
+
     public function getProductIdentifierField()
     {
         return 'SUBSTRING(SHA1(CONCAT(Products.id_product, "' .  Security::getSalt() . '", "product")), 1, 4)';
@@ -203,11 +203,11 @@ class AppTable extends Table
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
             $fields .= ", Manufacturers.timebased_currency_max_percentage, Manufacturers.timebased_currency_max_credit_balance";
         }
-        
+
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
             $fields .= ", " . $this->getProductIdentifierField() . " as ProductIdentifier";
         }
-        
+
         $fields .= " ";
         return $fields;
     }
@@ -238,14 +238,14 @@ class AppTable extends Table
         if (! $this->getLoggedUser()) {
             $conditions .= 'AND Manufacturers.is_private = :isPrivate ';
         }
-        
+
         if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
             $session = new AppSession();
             if ($session->check('Auth.instantOrderCustomer')) {
                 $conditions .= " AND (Manufacturers.stock_management_enabled = 1 AND Products.is_stock_product = 1) ";
             }
         }
-        
+
         return $conditions;
     }
 
@@ -256,7 +256,7 @@ class AppTable extends Table
     {
         return " ORDER BY Products.name ASC, Images.id_image DESC;";
     }
-    
+
     protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products)
     {
         if ($appAuth->isInstantOrderMode() || $appAuth->isSelfServiceModeByUrl()) {
@@ -278,17 +278,17 @@ class AppTable extends Table
                     ]
                 )
             );
-            
+
             // deactivates the product if manufacturer based delivery break is enabled
             if ($this->Product->deliveryBreakEnabled($product['no_delivery_days'], $deliveryDate)) {
                 $products[$i]['delivery_break_enabled'] = true;
             }
-            
+
             // deactivates the product if global delivery break is enabled
             if ($this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $deliveryDate)) {
                 $products[$i]['delivery_break_enabled'] = true;
             }
-            
+
             if ($product['delivery_rhythm_type'] == 'individual') {
                 // hides products when order_possible_until is reached
                 if ($product['delivery_rhythm_order_possible_until'] < Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {

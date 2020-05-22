@@ -68,14 +68,14 @@ class ActionLogsController extends AdminAppController
 
         if ($productId != '') {
             $conditions[] =
-                '((ActionLogs.object_id = ' . $productId . ' AND ActionLogs.object_type = "products") ' . 
-                ' OR ' . 
+                '((ActionLogs.object_id = ' . $productId . ' AND ActionLogs.object_type = "products") ' .
+                ' OR ' .
                 '(ActionLogs.object_type = "order_details"
                      AND ActionLogs.object_id IN (
                          SELECT id_order_detail
                          FROM fcs_order_detail od
                          WHERE od.product_id = ' . $productId .
-                     ') ' . 
+                     ') ' .
                  ')) ';
         }
 
@@ -89,7 +89,7 @@ class ActionLogsController extends AdminAppController
                      AND ActionLogs.object_id IN (
                          SELECT id_order_detail
                          FROM fcs_order_detail od
-             			 INNER JOIN fcs_product p ON p.id_product = od.product_id
+                          INNER JOIN fcs_product p ON p.id_product = od.product_id
                          WHERE p.id_manufacturer = ' . $this->AppAuth->getManufacturerId() .
                     ') '.
                 ') '.

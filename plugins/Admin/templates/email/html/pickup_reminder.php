@@ -16,21 +16,21 @@
 ?>
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
-    
+
     <?php echo $this->element('email/greeting', ['data' => $customer]); ?>
-        
+
     <tr>
         <td>
-        	<p><?php echo __d('admin', 'Please_do_not_forget_that_you_have_products_to_pick_up_on_{0}.', ['<b>' . $formattedPickupDay . '</b>']); ?></p>
+            <p><?php echo __d('admin', 'Please_do_not_forget_that_you_have_products_to_pick_up_on_{0}.', ['<b>' . $formattedPickupDay . '</b>']); ?></p>
             <ul style="padding-left:10px;">
-    			<?php
-    			     foreach($futureOrderDetails as $orderDetail) {
-    			         echo '<li>' .  $orderDetail->product_amount . 'x ' . $orderDetail->product_name . ', ' . $orderDetail->product->manufacturer->name . '</li>';
-    			     }
-    			?>
-			</ul>
-			<p><?php echo __d('admin', 'As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder.', [$diffOrderAndPickupInDays]); ?></p>
-			
+                <?php
+                     foreach($futureOrderDetails as $orderDetail) {
+                         echo '<li>' .  $orderDetail->product_amount . 'x ' . $orderDetail->product_name . ', ' . $orderDetail->product->manufacturer->name . '</li>';
+                     }
+                ?>
+            </ul>
+            <p><?php echo __d('admin', 'As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder.', [$diffOrderAndPickupInDays]); ?></p>
+
         </td>
     </tr>
 

@@ -54,7 +54,7 @@ return [
     ],
 
     'app' => [
-        
+
         'discourseSsoEnabled' => false,
 
         /**

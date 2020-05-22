@@ -36,14 +36,14 @@ class ApiControllerTest extends TestCase
 
     use IntegrationTestTrait;
     use StringCompareTrait;
-    
+
     public function setUp(): void
     {
         parent::setUp();
         $this->Network = new NetworkHelper(new View());
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
     }
-    
+
     protected function resetTestDatabaseData()
     {
         $this->dbConnection = ConnectionManager::get('test');
@@ -52,7 +52,7 @@ class ApiControllerTest extends TestCase
         $this->resetTestDatabaseData();
         $this->Configuration->loadConfigurations();
     }
-    
+
     public function testGetProductsLoggedOut()
     {
         $this->get('/api/getProducts.json');
@@ -70,7 +70,7 @@ class ApiControllerTest extends TestCase
         $this->get('/api/getProducts.json');
         $this->assertResponseCode(403);
     }
-    
+
     public function testGetProductsAsManufacturer()
     {
         $this->configRequest([

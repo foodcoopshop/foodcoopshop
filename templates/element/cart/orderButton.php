@@ -13,9 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 ?>
-        
+
 <p>
     <button type="submit" class="btn btn-success btn-order">
-    	<i class="fas fa-check"></i> <?php echo __('Order_button'); ?>
-	</button>
+        <i class="fas fa-check"></i> <?php echo __('Order_button'); ?>
+    </button>
 </p>

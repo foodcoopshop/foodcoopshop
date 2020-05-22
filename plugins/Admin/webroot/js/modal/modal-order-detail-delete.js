@@ -14,7 +14,7 @@
 foodcoopshop.ModalOrderDetailDelete = {
 
     initBulk : function() {
-        
+
         var button = $('#deleteSelectedProductsButton');
         foodcoopshop.Helper.disableButton(button);
 
@@ -23,9 +23,9 @@ foodcoopshop.ModalOrderDetailDelete = {
         });
 
         button.on('click', function () {
-            
+
             var orderDetailIds = foodcoopshop.Admin.getSelectedOrderDetailIds();
-            
+
             var infoText = '<p>';
             var textareaLabel = '';
             if (orderDetailIds.length == 1) {
@@ -45,33 +45,33 @@ foodcoopshop.ModalOrderDetailDelete = {
             infoText += '</ul>';
 
             var modalSelector = '#order-detail-delete';
-            
+
             var buttons = [
                 foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.admin.YesDoCancelButton, 'fa fa-check'),
                 foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
             ];
-            
+
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
                 foodcoopshop.LocalizedJs.admin.ProductCancellation,
                 '',
                 buttons
             );
-            
+
             $(modalSelector).on('hidden.bs.modal', function (e) {
                 foodcoopshop.ModalOrderDetailDelete.getCloseHandler(modalSelector);
             });
 
             foodcoopshop.ModalOrderDetailDelete.getOpenHandler($(this), modalSelector, orderDetailIds, infoText, textareaLabel);
-            
+
         });
-        
+
     },
-    
+
     init : function() {
-        
+
         $('.delete-order-detail').on('click', function() {
-            
+
             var orderDetailId = $(this).attr('id').split('-');
             orderDetailId = orderDetailId[orderDetailId.length - 1];
 
@@ -88,61 +88,61 @@ foodcoopshop.ModalOrderDetailDelete = {
             }
 
             var textareaLabel = foodcoopshop.LocalizedJs.admin.WhyIsProductCancelled;
-            
+
             var modalSelector = '#order-detail-delete';
-            
+
             var buttons = [
                 foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.admin.YesDoCancelButton, 'fa fa-check'),
                 foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
             ];
-            
+
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
                 foodcoopshop.LocalizedJs.admin.ProductCancellation,
                 '',
                 buttons
             );
-            
+
             $(modalSelector).on('hidden.bs.modal', function (e) {
                 foodcoopshop.ModalOrderDetailDelete.getCloseHandler(modalSelector);
             });
-            
+
             foodcoopshop.ModalOrderDetailDelete.getOpenHandler($(this), modalSelector, [orderDetailId], infoText, textareaLabel);
         });
 
     },
-    
+
     getCloseHandler : function(modalSelector) {
         $(modalSelector).remove();
     },
 
     getOpenHandler : function(button, modalSelector, orderDetailIds, infoText, textareaLabel) {
-        
+
         $(modalSelector).modal();
 
         var modalHtml = infoText;
-        
+
         if (!foodcoopshop.Helper.isManufacturer) {
             modalHtml += '<p class="overlay-info">' + foodcoopshop.LocalizedJs.admin.PleaseOnlyCancelIfOkForManufacturer + '</p>';
         }
-        
+
         modalHtml += '<div class="textarea-wrapper">';
         modalHtml += '<label for="dialogCancellationReason">' + textareaLabel +'</label>';
         modalHtml += '<textarea class="ckeditor" name="dialogCancellationReason" id="dialogCancellationReason"></textarea>';
         modalHtml += '</div>';
-        
+
         $(modalSelector + ' .modal-body').html(modalHtml);
-        
+
         foodcoopshop.Helper.initCkeditor('dialogCancellationReason', true);
-        
+
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             foodcoopshop.ModalOrderDetailDelete.getSuccessHandler(modalSelector, orderDetailIds);
         });
-        
+
     },
-    
+
     getSuccessHandler : function(modalSelector, orderDetailIds) {
-        
+
         var ckeditorData = CKEDITOR.instances['dialogCancellationReason'].getData().trim();
         if (ckeditorData == '') {
             foodcoopshop.Modal.appendFlashMessage(modalSelector, foodcoopshop.LocalizedJs.admin.CancellationReasonIsMandatory);
@@ -165,7 +165,7 @@ foodcoopshop.ModalOrderDetailDelete = {
                 }
             }
         );
-        
+
     }
-    
+
 };

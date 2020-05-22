@@ -17,9 +17,9 @@ use Cake\Core\Configure;
 ?>
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
-    
+
     <?php echo $this->element('email/greeting', ['data' => $orderDetail->customer]); ?>
-            
+
     <tr>
         <td>
 
@@ -41,7 +41,7 @@ use Cake\Core\Configure;
 
             <p><?php echo __d('admin', 'Sorry,_but_sometimes_our_manufacturers_cannot_deliver_the_ordered_products._You_receive_this_email_so_you_can_buy_the_products_elsewhere.'); ?></p>
             <p><?php echo __d('admin', 'Thanks_for_respecting_that!'); ?></p>
-                
+
                 <?php if ($this->MyHtml->paymentIsCashless()) { ?>
                     <p><?php echo __d('admin', 'PS:_Your_credit_has_been_adapted_automatically.'); ?></p>
                 <?php } ?>

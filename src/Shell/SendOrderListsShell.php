@@ -32,16 +32,16 @@ class SendOrderListsShell extends AppShell
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
         $this->Product = TableRegistry::getTableLocator()->get('Products');
-        
+
         $this->startTimeLogging();
-        
+
         // $this->cronjobRunDay can is set in unit test
         if (!isset($this->args[0])) {
             $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
         } else {
             $this->cronjobRunDay = $this->args[0];
         }
-        
+
         $pickupDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($this->cronjobRunDay));
         $formattedPickupDay = Configure::read('app.timeHelper')->formatToDateShort($pickupDay);
 
@@ -54,14 +54,14 @@ class SendOrderListsShell extends AppShell
 
         // 2) get all order details with pickup day in the given date range
         $orderDetails = $this->OrderDetail->getOrderDetailsForSendingOrderLists($pickupDay, $this->cronjobRunDay);
-        
+
         // 3) add up the order detail by manufacturer
         $manufacturerOrders = [];
         foreach ($orderDetails as $orderDetail) {
             @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_amount_sum'] += $orderDetail->product_amount;
             @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_price_sum'] += $orderDetail->total_price_tax_incl;
         }
-        
+
         // 4) merge the order detail count with the manufacturers array
         $i = 0;
         foreach ($manufacturers as $manufacturer) {
@@ -69,7 +69,7 @@ class SendOrderListsShell extends AppShell
             $manufacturer->order_detail_price_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_price_sum'];
             $i++;
         }
-        
+
         // 5) check if manufacturers have open order details and send email
         $this->initHttpClient();
         $this->httpClient->doFoodCoopShopLogin();
@@ -80,7 +80,7 @@ class SendOrderListsShell extends AppShell
                 $this->httpClient->get($url);
             }
         }
-        
+
         // prepare action log string is complicated because of
         // @see https://github.com/foodcoopshop/foodcoopshop/issues/408
         $tmpActionLogDatas = [];
@@ -111,7 +111,7 @@ class SendOrderListsShell extends AppShell
                 }
             }
         }
-        
+
         // reset quantity to default_quantity_after_sending_order_lists
         $productsToSave = [];
         foreach($orderDetails as $orderDetail) {
@@ -131,24 +131,24 @@ class SendOrderListsShell extends AppShell
         if (!empty($productsToSave)) {
             $this->Product->changeQuantity($productsToSave);
         }
-        
+
         $this->httpClient->doFoodCoopShopLogout();
-        
+
         $outString = '';
         if (count($actionLogDatas) > 0) {
             $outString .= join('<br />', $actionLogDatas) . '<br />';
         }
         $outString .= __('Sent_order_lists') . ': ' . count($actionLogDatas);
-        
+
         $this->stopTimeLogging();
-        
+
         $this->ActionLog->customSave('cronjob_send_order_lists', $this->httpClient->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
-        
+
         $this->out($outString);
-        
+
         $this->out($this->getRuntime());
-        
+
         return true;
-        
+
     }
 }

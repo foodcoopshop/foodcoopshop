@@ -15,7 +15,7 @@ foodcoopshop.SelfService = {
 
     autoLogoutTimer : 180,
     currentLogoutTimer : 0,
-        
+
     init : function() {
         foodcoopshop.ModalLogout.init(document.location.href);
         this.initWindowResize();
@@ -23,14 +23,14 @@ foodcoopshop.SelfService = {
         this.initSearchForm();
         this.initDepositPayment();
     },
-    
+
     initLoginForm : function() {
-        
-        var barcodeInputField = $('#barcode'); 
+
+        var barcodeInputField = $('#barcode');
         barcodeInputField.on('keyup focus', function (e) {
             $(this).prop('type', 'password'); // to avoid autocomplete
         });
-        
+
         var loginForm = $('#LoginForm');
         var formIsSubmitted = false;
         loginForm.on('submit', function(e) {
@@ -45,19 +45,19 @@ foodcoopshop.SelfService = {
                 foodcoopshop.SelfService.submitForm(loginForm, 'fa-sign-in-alt');
             }, 1000)
         );
-        
+
         barcodeInputField.focus();
-        
+
     },
-    
+
     initDepositPayment : function() {
         foodcoopshop.ModalPaymentAdd.initDepositSingle('.btn-add-deposit', $('#add-payment-deposit-form'));
     },
-    
+
     initSearchForm : function() {
-        
+
         var searchForm = $('#product-search');
-        
+
         var formIsSubmitted = false;
         searchForm.on('submit', function(e) {
             if (formIsSubmitted) {
@@ -65,7 +65,7 @@ foodcoopshop.SelfService = {
             }
             formIsSubmitted = true;
         });
-        
+
         if (!foodcoopshop.Helper.isMobile()) {
             foodcoopshop.Helper.initBootstrapSelect(searchForm);
         }
@@ -77,17 +77,17 @@ foodcoopshop.SelfService = {
                 foodcoopshop.SelfService.submitForm(searchForm, 'fa-search');
             }, 1000)
         );
-        
+
         searchForm.find('input[type="text"]').focus();
     },
-    
+
     submitForm : function(searchForm, icon) {
         var submitButton = searchForm.find('.btn[type="submit"]');
         foodcoopshop.Helper.addSpinnerToButton(submitButton, icon);
         foodcoopshop.Helper.disableButton(submitButton);
         searchForm.submit();
     },
-    
+
     initHighlightedProductId: function(productId) {
         var rowId = '#product-wrapper-' + productId;
         $.scrollTo(rowId, 1000, {
@@ -102,7 +102,7 @@ foodcoopshop.SelfService = {
         });
         $(rowId).find('.quantity-in-units-input-field-wrapper input').focus();
     },
-    
+
     initCartErrors: function (cartErrors) {
         cartErrors = $.parseJSON(cartErrors);
         for (var key in cartErrors) {
@@ -111,27 +111,27 @@ foodcoopshop.SelfService = {
             productContainer.after('<ul class="error-message ' + key + '"><li>' + cartErrors[key].join('</li><li>') + '</li></ul>');
         }
     },
-    
+
     initWindowResize: function () {
         $(window).on('resize', function () {
             foodcoopshop.SelfService.onWindowResize();
         });
         foodcoopshop.SelfService.onWindowResize();
     },
-    
+
     setFocusToSearchInputField : function() {
         $('#product-search input[name="keyword"]').focus();
     },
-    
+
     onWindowResize : function() {
-        $('.right-box').css('max-height', parseInt($(window).height()));        
+        $('.right-box').css('max-height', parseInt($(window).height()));
     },
-    
+
     initAutoLogout : function() {
-        
+
         this.resetTimer();
         this.renderTimer();
-        
+
         $(document).idle({
             startAtIdle : true,
             onActive: function(){
@@ -148,13 +148,13 @@ foodcoopshop.SelfService = {
             recurIdleCall : true,
             idle: 1000
         });
-        
+
     },
-    
+
     resetTimer : function() {
         this.currentLogoutTimer = this.autoLogoutTimer;
     },
-    
+
     renderTimer : function() {
         $('.auto-logout-timer').html(this.currentLogoutTimer);
     }

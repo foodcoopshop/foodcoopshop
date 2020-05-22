@@ -26,7 +26,7 @@ class PickupReminderShellTest extends AppCakeTestCase
 {
     public $EmailLog;
     public $commandRunner;
-    
+
     public function setUp(): void
     {
         parent::setUp();
@@ -49,7 +49,7 @@ class PickupReminderShellTest extends AppCakeTestCase
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
     }
-    
+
     public function testOneCustomerHasFutureOrdersForNextPickupDay()
     {
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
@@ -66,20 +66,20 @@ class PickupReminderShellTest extends AppCakeTestCase
         $this->commandRunner->run(['cake', 'pickup_reminder', '2018-03-10']);
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(1, count($emailLogs), 'amount of sent emails wrong');
-        
+
         $this->assertEmailLogs(
             $emailLogs[0],
             'Abhol-Erinnerung für Freitag, 16.03.2018',
             [
-    			'<li>1x Beuschl, Demo Fleisch-Hersteller</li>',
+                '<li>1x Beuschl, Demo Fleisch-Hersteller</li>',
             ],
             [
                 Configure::read('test.loginEmailSuperadmin')
             ]
         );
-        
+
     }
-    
+
     private function prepareOrderDetails()
     {
         $this->OrderDetail->save(
@@ -92,5 +92,5 @@ class PickupReminderShellTest extends AppCakeTestCase
             )
         );
     }
-    
+
 }
