@@ -34,7 +34,7 @@ if (!empty($newProducts)) {
 
     $this->element('addScript', ['script' =>
         Configure::read('app.jsNamespace').".AppFeatherlight.addLightboxToCkeditorImages('.product-wrapper .toggle-content.description img');".
-        Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForImages('.product-wrapper a.lightbox');".
+        Configure::read('app.jsNamespace').".ModalImage('.product-wrapper a.open-with-modal');".
         Configure::read('app.jsNamespace').".Helper.bindToggleLinks();".
         Configure::read('app.jsNamespace').".Helper.initAmountSwitcher();".
         Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".

@@ -16,7 +16,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
-    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForImages('.first-column a.lightbox');"
+    Configure::read('app.jsNamespace').".ModalImage.init('.first-column a.open-with-modal');"
 ]);
 ?>
 
@@ -37,7 +37,7 @@ foreach ($manufacturers as $manufacturer) {
             $srcLargeImage = $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'large');
             $largeImageExists = preg_match('/de-default/', $srcLargeImage);
     if (!$largeImageExists) {
-        echo '<a class="lightbox" href="'.$srcLargeImage.'">';
+        echo '<a class="open-with-modal" href="javascript:void(0);" data-modal-title="' . h($manufacturer->name) . '" data-modal-image="'.$srcLargeImage.'">';
     }
             echo '<img src="' . $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'medium'). '" />';
     if (!$largeImageExists) {

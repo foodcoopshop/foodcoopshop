@@ -19,9 +19,7 @@ use Cake\Core\Configure;
 
     <?php
         $this->element('addScript', ['script' =>
-            Configure::read('app.jsNamespace') . ".Admin.init();" .
-            Configure::read('app.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');
-            "
+            Configure::read('app.jsNamespace') . ".Admin.init();"
         ]);
         $this->element('highlightRowAfterEdit', [
             'rowIdPrefix' => '#category-'

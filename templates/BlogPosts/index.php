@@ -16,7 +16,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
-    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForImages();"
+    Configure::read('app.jsNamespace').".ModalImage.init('a.open-with-modal');"
 ]);
 ?>
 
@@ -35,7 +35,7 @@ foreach ($blogPosts as $blogPost) {
         $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost, 'single');
         $largeImageExists = preg_match('/(no-single-default|default-large)/', $srcLargeImage);
         if (!$largeImageExists) {
-            echo '<a data-featherlight="image" href="'.$srcLargeImage.'">';
+            echo '<a class="open-with-modal" href="javascript:void(0);" data-modal-title="' . h($blogPost->title) . '" data-modal-image="'.$srcLargeImage.'">';
         }
         echo '<img src="' . $this->Html->getBlogPostImageSrc($blogPost, 'home'). '" />';
         if (!$largeImageExists) {

@@ -23,7 +23,7 @@ use Cake\Core\Configure;
             $('input.datepicker').datepicker();".
             Configure::read('app.jsNamespace') . ".Admin.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initEmailToAllButton();" .
-            Configure::read('app.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');" .
+            Configure::read('app.jsNamespace') . ".ModalImage.init('a.open-with-modal');" .
             Configure::read('app.jsNamespace') . ".Helper.setCakeServerName('" .
             Configure::read('app.cakeServerName') . "');".
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.manufacturer-details-read-button');"
@@ -89,7 +89,7 @@ foreach ($manufacturers as $manufacturer) {
         $srcLargeImage = $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'large');
         $largeImageExists = preg_match('/de-default-large_default/', $srcLargeImage);
         if (! $largeImageExists) {
-            echo '<a class="lightbox" href="' . $srcLargeImage . '">';
+            echo '<a class="open-with-modal" href="javascript:void(0);" data-modal-title="' . h($manufacturer->name) . '" data-modal-image="' . $srcLargeImage . '">';
         }
         echo '<img width="50" src="' . $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'medium') . '" />';
         if (! $largeImageExists) {
