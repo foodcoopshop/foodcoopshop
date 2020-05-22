@@ -69,9 +69,9 @@ if (!empty($manufacturers)) {
         $k = 0;
 
         foreach ($manufacturerCartProducts as $cartProduct) {
-            
+
             $orderDetail = $cartProduct->order_detail;
-            
+
             $k++;
             $showSum = $k == count($manufacturerCartProducts);
 
@@ -85,7 +85,7 @@ if (!empty($manufacturers)) {
             $pdf->table .= '<td width="' . $widths[1] . '">' . $orderDetail->product_name . '</td>';
             $pdf->table .= '<td style="text-align:right;" width="' . $widths[2] . '">' . $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateShort')) . '</td>';
             $pdf->table .= '<td style="text-align:right;" width="' . $widths[3] . '">' . $this->MyNumber->formatAsCurrency($orderDetail->total_price_tax_incl) . '</td>';
-            
+
             $deposit = $orderDetail->deposit;
             if ($deposit > 0) {
                 $sumDeposit += $deposit;

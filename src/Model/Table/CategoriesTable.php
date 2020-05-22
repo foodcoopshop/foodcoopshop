@@ -53,9 +53,9 @@ class CategoriesTable extends AppTable
             }
         }
         return $childrenIds;
-        
+
     }
-    
+
     private function flattenNestedArrayWithChildren($array, $separator = '')
     {
         foreach ($array as $item) {
@@ -166,25 +166,25 @@ class CategoriesTable extends AppTable
         }
 
         if ($keyword != '') {
-            
+
             $params['keywordLike'] = '%' . $keyword . '%';
             $params['keyword'] = $keyword;
             $sql .= " AND (Products.name LIKE :keywordLike OR Products.description_short LIKE :keywordLike OR Products.id_product = :keyword ";
-            
+
             if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
                 $params['barcodeIdentifier'] = strtolower(substr($keyword, 0, 4));
                 $sql .= " OR " . $this->getProductIdentifierField() . " = :barcodeIdentifier";
             }
-                
+
             $sql .= ")";
-            
+
         }
 
         if ($productId > 0) {
             $params['productId'] = $productId;
             $sql .= " AND Products.id_product = :productId ";
         }
-        
+
         if ($getOnlyStockProducts) {
             $sql .= " AND (Products.is_stock_product = 1 AND Manufacturers.stock_management_enabled = 1) ";
         }
@@ -194,13 +194,13 @@ class CategoriesTable extends AppTable
         $statement->execute($params);
         $products = $statement->fetchAll('assoc');
         $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
-        
+
         if (! $countMode) {
             return $products;
         } else {
             return count($products);
         }
-        
+
     }
 
     /**

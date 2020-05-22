@@ -15,7 +15,7 @@
 use Cake\Core\Configure;
 
 ?>
-<h1>Terms of use for manufacturers</h1> 
+<h1>Terms of use for manufacturers</h1>
 
 <h2>Platform owner</h2>
 

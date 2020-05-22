@@ -40,7 +40,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $this->createPayment(0.5);
         $this->createPayment(3.2);
-        
+
         $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->get($this->Slug->getMyTimebasedCurrencyBalanceForCustomers());
         $this->assertRegExpWithUnquotedString('0,50 h', $this->httpClient->getContent());
@@ -69,7 +69,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         $comment = 'this is the comment';
         $hours = 0.25;
         $this->loginAsMeatManufacturer();
-        
+
         $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->post($this->Slug->getTimebasedCurrencyPaymentEdit(1), [
             'seconds' => $hours * 3600,

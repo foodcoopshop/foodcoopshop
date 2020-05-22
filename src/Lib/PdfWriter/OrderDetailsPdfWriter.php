@@ -18,7 +18,7 @@ use App\Lib\Pdf\ListTcpdf;
 
 class OrderDetailsPdfWriter extends PdfWriter
 {
-    
+
     public function __construct()
     {
         $this->plugin = 'Admin';

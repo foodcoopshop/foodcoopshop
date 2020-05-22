@@ -14,19 +14,19 @@
 foodcoopshop.ModalOrderDetailProductQuantityEdit = {
 
     init : function() {
-        
+
         var modalSelector = '#order-detail-product-quantity-edit-form';
-        
+
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
             foodcoopshop.LocalizedJs.admin.AdaptWeight,
             foodcoopshop.ModalOrderDetailProductQuantityEdit.getHtml()
         );
-        
+
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             foodcoopshop.ModalOrderDetailProductQuantityEdit.getSuccessHandler(modalSelector);
         });
-        
+
         $(modalSelector).on('hidden.bs.modal', function (e) {
             foodcoopshop.ModalOrderDetailProductQuantityEdit.getCloseHandler();
         });
@@ -36,7 +36,7 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
         });
 
     },
-    
+
     getHtml : function() {
         var html = '<label for="dialogOrderDetailProductQuantityQuantity"></label><br />';
             html += '<br /><span class="quantity-string">' + foodcoopshop.LocalizedJs.admin.DeliveredWeight + '</span>: <input type="number" min="0.01" step="0.01" name="dialogOrderDetailProductQuantityQuantity" id="dialogOrderDetailProductQuantityQuantity" value="" />';
@@ -55,16 +55,16 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
             html += '<br />';
         return html;
     },
-    
+
     getCloseHandler : function() {
         $('#dialogOrderDetailProductQuantityQuantity').val('');
         $('#dialogOrderDetailProductQuantityOrderDetailId').val('');
         $('#dialogOrderDetailProductQuantityDoNotChangePrice').prop('checked', false);
         $('#flashMessage').remove();
     },
-    
+
     getSuccessHandler : function(modalSelector) {
-        
+
         var productQuantity = $('#dialogOrderDetailProductQuantityQuantity').val();
         if (isNaN(parseFloat(productQuantity.replace(/,/, '.'))) || productQuantity < 0) {
             foodcoopshop.Modal.appendFlashMessage(modalSelector, foodcoopshop.LocalizedJs.admin.DeliveredWeightNeedsToBeGreaterThan0);
@@ -93,11 +93,11 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
                 }
             }
         );
-        
+
     },
-    
+
     getOpenHandler : function(button, modalSelector) {
-        
+
         var row = button.closest('tr');
         var orderDetailId = row.find('td:nth-child(2)').html();
         var unitName = row.find('td:nth-child(8) span.unit-name').html().trim();
@@ -138,12 +138,12 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
 
         var pricePerUnitBaseInfo = row.find('td:nth-child(8) span.price-per-unit-base-info').html();
         $(modalSelector + ' li.price-per-unit-base-info').html(foodcoopshop.LocalizedJs.admin.BasePrice + ': ' + pricePerUnitBaseInfo);
-        
+
         $(modalSelector).modal();
-        
+
         foodcoopshop.Helper.changeInputNumberToTextForEdge();
         $('#dialogOrderDetailProductQuantityQuantity').focus();
-        
+
     }
 
 };

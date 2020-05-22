@@ -100,7 +100,7 @@ class DepositsController extends AdminAppController
 
         $monthsAndYear = Configure::read('app.timeHelper')->getAllMonthsUntilThisYear(date('Y'), 2016);
         $monthsAndYear = array_reverse($monthsAndYear);
-        
+
         $deposits = [];
         $sumDepositsDelivered = 0;
         $sumDepositsReturned = 0;

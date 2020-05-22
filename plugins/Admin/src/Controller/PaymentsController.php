@@ -29,7 +29,7 @@ use App\Lib\Error\Exception\InvalidParameterException;
  */
 class PaymentsController extends AdminAppController
 {
-    
+
     public $customerId;
 
     public function isAuthorized($user)
@@ -222,7 +222,7 @@ class PaymentsController extends AdminAppController
 
         $this->loadComponent('Sanitize');
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
-        
+
         $amount = $this->getRequest()->getData('amount');
         $amount = Configure::read('app.numberHelper')->parseFloatRespectingLocale($amount);
 
@@ -396,7 +396,7 @@ class PaymentsController extends AdminAppController
             'paymentId' => $newPayment->id,
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'amount', 'paymentId']);
-        
+
     }
 
     public function changeState()
@@ -496,12 +496,12 @@ class PaymentsController extends AdminAppController
     {
         $this->customerId = $this->AppAuth->getUserId();
         $this->paymentType = 'product';
-        
+
         if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
             $personalTransactionCode = $this->Customer->getPersonalTransactionCode($this->customerId);
             $this->set('personalTransactionCode', $personalTransactionCode);
         }
-        
+
         $this->product();
         $this->render('product');
     }
@@ -548,12 +548,12 @@ class PaymentsController extends AdminAppController
 
         $this->preparePayments();
         $this->set('creditBalance', $this->Customer->getCreditBalance($this->getCustomerId()));
-        
+
         if ($this->AppAuth->isSuperadmin() && !Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
             $personalTransactionCode = $this->Customer->getPersonalTransactionCode($this->getCustomerId());
             $this->set('personalTransactionCode', $personalTransactionCode);
         }
-        
+
     }
 
     private function preparePayments()
@@ -603,7 +603,7 @@ class PaymentsController extends AdminAppController
         if ($this->paymentType == 'product') {
             $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
             $orderDetailsGroupedByMonth = $this->OrderDetail->getMonthlySumProductByCustomer($this->getCustomerId());
-            
+
             if (! empty($orderDetailsGroupedByMonth)) {
                 foreach ($orderDetailsGroupedByMonth as $orderDetail) {
                     $monthAndYear = explode('-', $orderDetail['MonthAndYear']);
@@ -620,7 +620,7 @@ class PaymentsController extends AdminAppController
                         'text' => Configure::read('app.htmlHelper')->link(
                             __d('admin', 'Orders') . ' ' . Configure::read('app.timeHelper')->getMonthName($monthAndYear[1]) . ' ' . $monthAndYear[0],
                             '/admin/order-details/?pickupDay[]=' . $frozenDateFrom->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
-                            '&pickupDay[]=' . $frozenDateTo->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . 
+                            '&pickupDay[]=' . $frozenDateTo->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) .
                             '&customerId=' . $this->getCustomerId(),
                             [
                                 'title' => __d('admin', 'Show_order')
@@ -631,7 +631,7 @@ class PaymentsController extends AdminAppController
                     ];
                 }
             }
-    
+
             $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
             $timebasedCurrencySum = $this->TimebasedCurrencyOrderDetail->getSum(null, $this->getCustomerId());
             $timebasedCurrencyOrderDetailInList = $timebasedCurrencySum > 0;

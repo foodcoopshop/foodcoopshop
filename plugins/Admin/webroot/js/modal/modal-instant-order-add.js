@@ -14,11 +14,11 @@
 foodcoopshop.ModalInstantOrderAdd = {
 
     init : function(button) {
-        
+
         $(button).on('click', function() {
-            
+
             var modalSelector = '#instant-order-add';
-            
+
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
                 '',
@@ -29,12 +29,12 @@ foodcoopshop.ModalInstantOrderAdd = {
             $(modalSelector).on('hidden.bs.modal', function (e) {
                 foodcoopshop.ModalInstantOrderAdd.getCloseHandler($(this));
             });
-            
+
             foodcoopshop.ModalInstantOrderAdd.getOpenHandler(button, modalSelector);
         });
 
     },
-    
+
     getCloseHandler : function(modal) {
         modal.find('.modal-title').text('');
         modal.find('.modal-body').text('');
@@ -47,15 +47,15 @@ foodcoopshop.ModalInstantOrderAdd = {
             }
         );
     },
-    
+
     onWindowResize: function(iframe) {
         iframe.css('height', $(window).height() - 120);
     },
-    
+
     getOpenHandler : function(button, modalSelector) {
-        
+
         $(modalSelector).modal();
-        
+
         // START DROPDOWN
         var customerDropdownId = 'customerDropdown';
         var header = $('<div class="message-container"><span class="start">' + foodcoopshop.LocalizedJs.admin.PlaceInstantOrderFor + ': <select id="' + customerDropdownId + '"><option value="0">' + foodcoopshop.LocalizedJs.admin.PleaseSelect + '</option></select></span></div>');
@@ -75,17 +75,17 @@ foodcoopshop.ModalInstantOrderAdd = {
             var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/order-details/initInstantOrder/' + $(customerDropdownSelector).val();
             $(modalSelector + ' iframe').attr('src', newSrc);
         });
-        
+
         $(customerDropdownSelector).show();
         $(customerDropdownSelector).removeClass('hide');
-        
+
         // START IFRAME
         var iframe = $('<iframe></iframe>');
         iframe.attr('src', foodcoopshop.Helper.cakeServerName + '/admin/order-details/iframeStartPage');
         iframe.css('width', '100%');
         iframe.css('border', 'none');
         $(modalSelector + ' .modal-body').append(iframe);
-        
+
         $(window).on('resize', function () {
             foodcoopshop.ModalInstantOrderAdd.onWindowResize(iframe);
         });
@@ -103,8 +103,8 @@ foodcoopshop.ModalInstantOrderAdd = {
                 );
             }
         });
-        
-        
+
+
     }
 
 };

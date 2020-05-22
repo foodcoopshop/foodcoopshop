@@ -42,12 +42,12 @@ body.syncs h2 {
   border-bottom: 0;
 }
 .nav-tabs {
-	margin-bottom: 10px;
-	margin-top: 8px ! important;
-	margin-left: -5px ! important;
+    margin-bottom: 10px;
+    margin-top: 8px ! important;
+    margin-left: -5px ! important;
 }
 .nav-tabs li.active {
-	font-weight: bold;
+    font-weight: bold;
 }
 form.sync-login-form {
   border: 1px solid #dfdfdf;
@@ -118,7 +118,7 @@ body.syncs.product div.product-list>b {
   margin-top: 5px;
 }
 div.product-list td {
-	line-height: 18px;
+    line-height: 18px;
 }
 body.syncs.product div.product-list>b, form.sync-login-form>b {
   margin-bottom: 5px;
@@ -224,8 +224,8 @@ body.syncs.product_data table.product-list td.deposit {
 }
 
 body.syncs.product_data table.product-list td.name .fas {
-	float: right;
-	margin-left: 5px;
+    float: right;
+    margin-left: 5px;
 }
 body.syncs.product_data table.product-list td.quantity,
 body.syncs.product_data table.product-list td.active,

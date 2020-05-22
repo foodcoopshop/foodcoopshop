@@ -21,18 +21,18 @@ abstract class AppTcpdf extends TCPDF
 {
 
     public $table = '';
-    
+
     public $logoPath = ROOT . DS . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg';
 
     public $textHelper;
-    
+
     private $html = '';
-    
+
     public function setTextHelper($textHelper)
     {
         $this->textHelper = $textHelper;
     }
-    
+
     public function writeHTML($html, $ln=true, $fill=false, $reseth=false, $cell=false, $align='')
     {
         // in generate_order_confirmation.ctp::88 $this->MyNumber->formatAsCurrency leads to empty output
@@ -41,7 +41,7 @@ abstract class AppTcpdf extends TCPDF
         $this->html .= $html;
         parent::writeHTML($html, $ln, $fill, $reseth, $cell, $align);
     }
-    
+
     public function getHtml()
     {
         return $this->html;
@@ -56,7 +56,7 @@ abstract class AppTcpdf extends TCPDF
         // reset table
         $this->table = '';
     }
-    
+
     public function __construct($orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false, $pdfa = false)
     {
         parent::__construct($orientation, $unit, $format, $unicode, $encoding, $diskcache, $pdfa);

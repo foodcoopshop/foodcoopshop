@@ -27,9 +27,9 @@ echo '<td class="right">';
             'script' => Configure::read('app.jsNamespace') . ".Admin.setOrderDetailTimebasedCurrencyData($('#timebased-currency-object-".$orderDetail->id_order_detail."'),'".json_encode($orderDetail->timebased_currency_order_detail)."');"
         ]);
     }
-    
+
     echo '<div class="table-cell-wrapper amount">';
-    
+
         if ($groupBy == '') {
             if ($orderDetail->product_amount > 1 && $editRecordAllowed) {
                 echo $this->Html->link(
@@ -51,9 +51,9 @@ echo '<td class="right">';
         } else {
             echo $this->Number->formatAsDecimal($orderDetail['sum_amount'], 0) . 'x';
         }
-    
+
     echo '</div>';
-    
+
 echo '</td>';
 
 ?>

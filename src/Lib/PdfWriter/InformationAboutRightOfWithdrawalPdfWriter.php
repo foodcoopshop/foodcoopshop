@@ -18,12 +18,12 @@ use App\Lib\Pdf\ListTcpdf;
 
 class InformationAboutRightOfWithdrawalPdfWriter extends PdfWriter
 {
-    
+
     public function __construct()
     {
         $this->setFilename(__('Filename_Information-about-right-of-withdrawal').'.pdf');
         $this->setPdfLibrary(new ListTcpdf());
     }
-    
+
 }
 

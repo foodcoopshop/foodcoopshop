@@ -14,19 +14,19 @@
 foodcoopshop.ModalPickupDayCommentEdit = {
 
     init : function() {
-        
+
         var modalSelector = '#pickup-day-comment-edit-form';
-        
+
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
             foodcoopshop.LocalizedJs.pickupDay.ChangePickupDayComment,
             foodcoopshop.ModalPickupDayCommentEdit.getHtml()
         );
-        
+
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             foodcoopshop.ModalPickupDayCommentEdit.getSuccessHandler(modalSelector);
         });
-        
+
         $(modalSelector).on('hidden.bs.modal', function (e) {
             foodcoopshop.ModalPickupDayCommentEdit.getCloseHandler();
         });
@@ -34,9 +34,9 @@ foodcoopshop.ModalPickupDayCommentEdit = {
         $('.pickup-day-comment-edit-button').on('click', function () {
             foodcoopshop.ModalPickupDayCommentEdit.getOpenHandler($(this), modalSelector);
         });
-        
+
     },
-        
+
     getHtml : function() {
         var html = '<label>' + foodcoopshop.LocalizedJs.admin.Member + ': <b></b></label>';
             html += '<div class="textarea-wrapper">';
@@ -45,7 +45,7 @@ foodcoopshop.ModalPickupDayCommentEdit = {
             html += '<input type="hidden" name="dialogCustomerId" id="dialogCustomerId" value="" />';
         return html;
     },
-    
+
     getCloseHandler : function() {
         $('#cke_dialogPickupDayComment').val('');
         $('#dialogCustomerId').val('');
@@ -56,7 +56,7 @@ foodcoopshop.ModalPickupDayCommentEdit = {
         foodcoopshop.Helper.ajaxCall(
             '/admin/order-details/editPickupDayComment/',
             {
-                customerId: $('#dialogCustomerId').val(),  
+                customerId: $('#dialogCustomerId').val(),
                 pickupDay: $('input[name="pickupDay[]"]').val(), // filter-dropdown!
                 pickupDayComment: CKEDITOR.instances['dialogPickupDayComment'].getData()
             },
@@ -70,11 +70,11 @@ foodcoopshop.ModalPickupDayCommentEdit = {
             }
         );
     },
-    
+
     getOpenHandler : function(button, modalSelector) {
-        
+
         foodcoopshop.Modal.removeTooltipster();
-        
+
         $(modalSelector).modal();
 
         foodcoopshop.Helper.initCkeditor('dialogPickupDayComment', true);
@@ -88,7 +88,7 @@ foodcoopshop.ModalPickupDayCommentEdit = {
         var customerName = button.closest('tr').find('td:nth-child(3)').text();
         $(modalSelector + ' #dialogCustomerId').val(customerId);
         $(modalSelector + ' label b').html(customerName);
-        
+
     }
 
 };

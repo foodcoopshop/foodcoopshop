@@ -18,7 +18,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->setExtensions(['json']);
     $builder->connect('/api/:action', ['plugin' => 'Network', 'controller' => 'Api']);
 });
-    
+
 $routes->scope('/network', function (RouteBuilder $builder) {
     $builder->setExtensions(['json']);
     $builder->connect('/:controller/:action/*', ['plugin' => 'Network']);

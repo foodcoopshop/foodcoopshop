@@ -26,23 +26,23 @@ class StockAvailablesTable extends AppTable
         parent::initialize($config);
         $this->setPrimaryKey('id_product');
     }
-    
+
     public function validationDefault(Validator $validator): Validator
     {
         $validator->numeric('quantity', __('The_quantity_needs_to_be_a_number.'));
         $validator = $this->getNumberRangeValidator($validator, 'quantity', -5000, 5000, __('Field:_Stock'));
-        
+
         $validator->numeric('quantity_limit', __('The_quantity_limit_needs_to_be_a_number.'));
         $validator = $this->getNumberRangeValidator($validator, 'quantity_limit', -5000, 0, __('Field:_Order_possible_until'));
-        
+
         $validator->numeric('sold_out_quantity', __('The_sold_out_quantity_needs_to_be_a_number.'));
         $validator = $this->getNumberRangeValidator($validator, 'sold_out_quantity', -5000, 5000, __('Field:_Notification_if_quantity_limit_reached'));
         $validator->allowEmptyString('sold_out_quantity');
-        
+
         $validator->numeric('default_quantity_after_sending_order_lists', __('The_default_quantity_after_sending_order_lists_needs_to_be_a_number.'));
         $validator = $this->getNumberRangeValidator($validator, 'default_quantity_after_sending_order_lists', 1, 5000, __('Field:_Default_quantity_after_sending_order_lists'));
         $validator->allowEmptyString('default_quantity_after_sending_order_lists');
-        
+
         return $validator;
     }
 
@@ -58,7 +58,7 @@ class StockAvailablesTable extends AppTable
                      FROM '.$this->getTable().'
                      WHERE id_product = :productId
                          AND id_product_attribute > 0
-                     GROUP BY id_product 
+                     GROUP BY id_product
                      ) sa2
                  SET sa1.quantity = sa2.quantitySum
                  WHERE sa1.id_product = ' . $productId . '

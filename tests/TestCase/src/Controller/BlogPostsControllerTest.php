@@ -83,7 +83,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $manufacturerId = null;
         $this->changeBlogPost($blogPostId, 0, $manufacturerId);
     }
-    
+
     public function testAddBlogPostWithEmoji()
     {
         $this->BlogPost->save(
@@ -94,7 +94,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
             ])
         );
     }
-    
+
     protected function changeBlogPost($blogPostId, $isPrivate = 0, $manufacturerId = 0, $active = 1)
     {
         $query = 'UPDATE ' . $this->BlogPost->getTable() . ' SET is_private = :isPrivate, id_manufacturer = :manufacturerId, active = :active WHERE id_blog_post = :blogPostId;';

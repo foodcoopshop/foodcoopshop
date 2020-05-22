@@ -29,17 +29,17 @@ class ProductsTableTest extends AppCakeTestCase
         parent::setUp();
         $this->Product = TableRegistry::getTableLocator()->get('Products');
     }
-    
+
     public function testChangeImageValidImageAndDeleteImage()
     {
-        
+
         // add image
         $productId = 346;
         $products = [
             [$productId => Configure::read('app.cakeServerName') . '/img/tests/test-image.jpg']
         ];
         $this->Product->changeImage($products);
-        
+
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
@@ -49,21 +49,21 @@ class ProductsTableTest extends AppCakeTestCase
             ]
         ])->first();
         $imageId = $product->image->id_image;
-        
+
         $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($imageId);
         $thumbsPath = Configure::read('app.htmlHelper')->getProductThumbsPath($imageIdAsPath);
-        
+
         foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
             $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . 'jpg';
             $this->assertTrue(file_exists($thumbsFileName), 'physical file not added');
         }
-        
+
         // delete image
         $products = [
             [$productId => 'no-image']
         ];
         $this->Product->changeImage($products);
-        
+
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
@@ -72,16 +72,16 @@ class ProductsTableTest extends AppCakeTestCase
                 'Images'
             ]
         ])->first();
-        
+
         $this->assertTrue(empty($product->image));
-        
+
         foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
             $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . 'jpg';
             $this->assertFalse(file_exists($thumbsFileName), 'physical file not deleted');
         }
-        
+
     }
-    
+
     public function testChangeImageInvalidImage()
     {
         $productId = 346;
@@ -89,16 +89,16 @@ class ProductsTableTest extends AppCakeTestCase
             [$productId => Configure::read('app.cakeServerName') . '/css/global.css']
         ];
         $exceptionThrown = false;
-        
+
         try {
             $this->Product->changeImage($products);
         } catch (InvalidParameterException $e) {
             $exceptionThrown = true;
         }
-        
+
         $this->assertSame(true, $exceptionThrown);
     }
-    
+
     public function testChangeImageNonExistingFile()
     {
         $productId = 346;
@@ -106,16 +106,16 @@ class ProductsTableTest extends AppCakeTestCase
             [$productId => Configure::read('app.cakeServerName') . '/img/tests/non-existing-file.jpg']
         ];
         $exceptionThrown = false;
-        
+
         try {
             $this->Product->changeImage($products);
         } catch (InvalidParameterException $e) {
             $exceptionThrown = true;
         }
-        
+
         $this->assertSame(true, $exceptionThrown);
     }
-    
+
     public function testCalculatePickupDayRespectingDeliveryRhythmWeekWithFirstDeliveryDay()
     {
         $data = [
@@ -132,7 +132,7 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
-    
+
     public function testCalculatePickupDayRespectingDeliveryRhythmWeekNoFirstDeliveryDay()
     {
         $data = [
@@ -148,7 +148,7 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
-    
+
     public function testCalculatePickupDayRespectingDeliveryRhythmWeekNormal()
     {
         $data = [
@@ -164,7 +164,7 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
-    
+
     public function testCalculatePickupDayRespectingDeliveryRhythmWeekWithSendOrderListDayOneDayBeforeDefault()
     {
         $data = [
@@ -181,7 +181,7 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
-    
+
     public function testCalculatePickupDayRespectingDeliveryRhythmWeekWithSendOrderListDayTwoDaysBeforeDefault()
     {
         $data = [
@@ -198,7 +198,7 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
-    
+
     public function testCalculatePickupDayRespectingDeliveryRhythm2WeekWithSendOrderListDayMonday()
     {
         $data = [
@@ -216,7 +216,7 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
-    
+
     public function testCalculatePickupDayRespectingDeliveryRhythm2WeekWithSendOrderListDayThursday()
     {
         $data = [
@@ -234,7 +234,7 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
-    
+
     public function testCalculatePickupDayRespectingDeliveryRhythm2WeekA()
     {
         $data = [
@@ -251,7 +251,7 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
-    
+
     public function testCalculatePickupDayRespectingDeliveryRhythm2WeekB()
     {
         $data = [
@@ -268,7 +268,7 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
-    
+
     public function testCalculatePickupDayRespectingDeliveryRhythm2WeekC()
     {
         $data = [
@@ -285,7 +285,7 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
-    
+
     public function testCalculatePickupDayRespectingDeliveryRhythm2WeekD()
     {
         $data = [
@@ -302,7 +302,7 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
-    
+
     public function testCalculatePickupDayRespectingDeliveryRhythm4Week()
     {
         $data = [
@@ -319,7 +319,7 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
-    
+
     public function testCalculatePickupDayRespectingDeliveryRhythm1MonthA()
     {
         $data = [
@@ -335,7 +335,7 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
-    
+
     public function testCalculatePickupDayRespectingDeliveryRhythm1MonthB()
     {
         $data = [
@@ -351,7 +351,7 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
-    
+
     public function testCalculatePickupDayRespectingDeliveryRhythm0MonthA()
     {
         $data = [
@@ -367,7 +367,7 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
-    
+
     public function testCalculatePickupDayRespectingDeliveryRhythm0MonthB()
     {
         $data = [
@@ -383,7 +383,7 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
-    
+
     public function testCalculatePickupDayRespectingDeliveryRhythmIndividual()
     {
         $data = [
@@ -400,7 +400,7 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
-    
+
     private function assertPickupDay($product, $currentDay, $expectedResult)
     {
         $result = $this->Product->calculatePickupDayRespectingDeliveryRhythm($product, $currentDay);
@@ -438,7 +438,7 @@ class ProductsTableTest extends AppCakeTestCase
             $this->assertEquals($test['result'], $result);
         }
     }
-    
+
     public function testGetProductIdAndAttributeId()
     {
         $tests = [
@@ -658,7 +658,7 @@ class ProductsTableTest extends AppCakeTestCase
         $success = $this->Product->changePrice($products);
         $this->assertTrue($success);
         $this->assertProductPrice($products);
-        
+
         // try to change prices, but include one invalid price
         $products = [
             [346 => ['gross_price' => '-1']], // invalid price
@@ -835,7 +835,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertProductStatus($products, APP_ON);
         $this->assertSame(true, $exceptionThrown);
     }
-    
+
     public function testChangeNameWithOneProductAndInvalidStringName()
     {
         $products = [
@@ -846,20 +846,20 @@ class ProductsTableTest extends AppCakeTestCase
                 'description_short' => 'Kurze Beschreibung'
             ]]
         ];
-        
+
         $exceptionThrown = false;
-        
+
         try {
             $this->Product->changeName($products);
         } catch (InvalidParameterException $e) {
             $exceptionThrown = true;
         }
-        
+
         $expectedResult = ['name' => 'Artischocke', 'unity' => 'Stück', 'description' => '', 'description_short' => ''];
         $this->assertProductName($products, $expectedResult);
         $this->assertSame(true, $exceptionThrown);
     }
-    
+
     public function testChangeNameForProductAttribute()
     {
         $products = [
@@ -869,23 +869,23 @@ class ProductsTableTest extends AppCakeTestCase
         $this->expectExceptionMessage('change name is not allowed for product attributes');
         $this->Product->changeName($products);
     }
-    
+
     public function testChangeNameWithMultipleProducts()
     {
-        
+
         $parameters = [
             'name' => 'test <b>name</b>', // no tags allowed
             'unity' => ' test unity ',    // trim and no tags allowed
             'description' => '    <p>test <br /><strong><em>description</em></strong></p>',
             'description_short' => '<p>test description<br /> <em>short</em></p>    '
         ];
-        
+
         $products = [
             [102 => $parameters],
             [346 => $parameters]
         ];
         $this->Product->changeName($products);
-        
+
         $expectedResults = [
             'name' => 'test name',
             'unity' => 'test unity',
@@ -894,11 +894,11 @@ class ProductsTableTest extends AppCakeTestCase
         ];
         $this->assertProductName($products, $expectedResults);
     }
-    
+
     /**
      * START helper methods
      */
-    
+
     private function assertProductName($products, $expectedResults)
     {
         foreach ($products as $product) {

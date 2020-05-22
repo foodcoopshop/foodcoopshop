@@ -21,16 +21,16 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.initLoginForm();"
 ]);
 ?>
-<div id="login-form" class="form">  
-    
+<div id="login-form" class="form">
+
     <?php
     $btnClass = 'btn-success';
     ?>
-  
+
   <h1><?php echo $title_for_layout; ?></h1>
-  
+
   <form id="LoginForm" method="post" accept-charset="utf-8" action="<?php echo $this->Slug->getLogin(urlencode($this->request->getQuery('redirect'))); ?>">
-        
+
         <?php
         if ($enableBarCodeLogin) {
             $this->element('addScript', ['script' =>
@@ -42,14 +42,14 @@ $this->element('addScript', ['script' =>
         echo $this->Form->control('email', ['label' => __('Email')]);
         echo $this->Form->control('passwd', ['label' => __('Password')]);
           if ($enableAutoLogin) {
-              
+
               $this->element('addScript', ['script' =>
                   Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('.remember-me-wrapper a');"
               ]);
               echo '<div id="privacy-policy" class="featherlight-overlay">';
                 echo $this->element('legal/'.I18n::getLocale().'/privacyPolicy');
               echo '</div>';
-              
+
               echo '<div class="remember-me-wrapper">';
               echo $this->Form->control('remember_me', [
                   'type' => 'checkbox',
@@ -59,17 +59,17 @@ $this->element('addScript', ['script' =>
               echo '</div>';
         }
         ?>
-        
+
         <div class="sc"></div>
         <?php
             echo '<a style="float:left;" target="_blank" href="' . $this->Slug->getNewPasswordRequest() . '">'.__('Forgot_password?').'</a>';
         ?>
-         
+
         <div class="sc"></div>
         <button type="submit" class="btn <?php echo $btnClass; ?>"><i class="fas fa-sign-in-alt"></i> <?php echo __('Sign_in'); ?></button>
-        
+
   </form>
-  
+
     <?php if (!$appAuth->user() && $enableRegistrationForm) { ?>
         <?php
             $this->element('addScript', ['script' =>
@@ -79,7 +79,7 @@ $this->element('addScript', ['script' =>
     <div class="sc"></div>
 
     <div class="registration-form-wrapper">
-	    <h1 class="h1-registration"><?php echo __('Create_account'); ?></h1>
+        <h1 class="h1-registration"><?php echo __('Create_account'); ?></h1>
             <?php
                 echo $this->Form->create(
                     $customer,
@@ -90,13 +90,13 @@ $this->element('addScript', ['script' =>
                     ]
                 );
                   echo $this->Form->control('Customers.address_customer.email', ['label' => __('Email'), 'id' => 'RegistraionFormEmail', 'required' => true]); // id: avoid duplicate id (login form has field "email" too)
-    
+
                   echo '<div class="detail-form">';
-    
+
                 if (Configure::read('appDb.FCS_REGISTRATION_INFO_TEXT') != '') {
                     echo '<p>'.Configure::read('appDb.FCS_REGISTRATION_INFO_TEXT').'</p>';
                 }
-    
+
                       echo $this->Form->control('Customers.firstname', [
                           'label' => __('Firstname'),
                           'required' => true, // required should not be necessary here
@@ -105,7 +105,7 @@ $this->element('addScript', ['script' =>
                           'label' => __('Lastname'),
                           'required' => true, // required should not be necessary here
                       ]);
-    
+
                       echo $this->Form->control('Customers.address_customer.address1', [
                           'label' => __('Street'),
                       ]);
@@ -113,17 +113,17 @@ $this->element('addScript', ['script' =>
                           'label' => __('Additional_address_information'),
                           'required' => false,
                       ]);
-    
+
                       echo $this->Form->control('Customers.address_customer.postcode', ['label' => __('Zip')]);
                       echo $this->Form->control('Customers.address_customer.city', ['label' => __('City')]);
-    
+
                       echo $this->Form->control('Customers.address_customer.phone_mobile', ['label' => __('Mobile')]);
                       echo $this->Form->control('Customers.address_customer.phone', ['label' => __('Phone')]);
-    
+
                       if (Configure::read('app.emailOrderReminderEnabled')) {
                           echo $this->Form->control('Customers.email_order_reminder', ['label' => __('Want_to_receive_reminder_emails?'), 'type' => 'checkbox']);
                       }
-    
+
                       if (Configure::read('app.termsOfUseEnabled')) {
                           echo '<div id="terms-of-use" class="featherlight-overlay">';
                             echo $this->element('legal/'.I18n::getLocale().'/termsOfUse');
@@ -136,16 +136,16 @@ $this->element('addScript', ['script' =>
                           ]);
                       }
                     ?>
-                  
+
                   <div class="sc"></div>
                   <br />
                   <button type="submit" class="btn btn-success"><i class="fas fa-user"></i> <?php echo __('Create_account'); ?></button>
-              
+
               </div>
             <?php echo $this->Form->end(); ?>
         </div> <?php // .registration-form-wrapper ?>
     <?php } ?>
-  
+
 </div>
 
 <div class="sc"></div>

@@ -28,10 +28,10 @@ use Cake\Core\Configure;
             'rowIdPrefix' => '#blogPost-'
         ]);
     ?>
-   
+
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
-        	<h1><?php echo $title_for_layout; ?></h1>
+            <h1><?php echo $title_for_layout; ?></h1>
             <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_members'), 'options' => []]); ?>
             <?php
             if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
@@ -57,7 +57,7 @@ use Cake\Core\Configure;
         </div>
         <?php echo $this->Form->end(); ?>
     </div>
-    
+
 <?php
 
 echo '<table class="list">';
@@ -191,5 +191,5 @@ echo '</tr>';
 
 echo '</table>';
 
-?>    
+?>
 </div>

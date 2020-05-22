@@ -28,7 +28,7 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
     public $productIdA = 346;
     public $productIdB = 340;
     public $productIdC = '60-10';
-    
+
     public $orderDetailIdA = 1;
     public $orderDetailIdB = 2;
     public $orderDetailIdC = 3;
@@ -66,7 +66,7 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
             )
         );
     }
-    
+
     protected function assertTimebasedCurrencyOrderDetail($changedOrderDetail, $moneyExcl, $moneyIncl, $seconds)
     {
         $this->assertEquals($changedOrderDetail->timebased_currency_order_detail->money_excl, $moneyExcl);
@@ -90,7 +90,7 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         ])->first();
         return $cart;
     }
-    
+
     protected function assertChangedStockAvailable($productIds, $expectedAmount)
     {
         $this->Product = TableRegistry::getTableLocator()->get('Products');
@@ -105,7 +105,7 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         $quantity = $changedStockAvailable->quantity;
         $this->assertEquals($expectedAmount, $quantity, 'amount was not corrected properly');
     }
-    
+
     protected function getOrderDetailsFromDatabase($orderDetailIds) {
         $orderDetails = $this->OrderDetail->find('all', [
             'conditions' => [

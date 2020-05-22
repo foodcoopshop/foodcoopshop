@@ -71,7 +71,7 @@ if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $appAuth->user()) {
         );
     }
     ?>
-    
+
 </div>
 
 <?php

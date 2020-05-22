@@ -27,20 +27,20 @@ if ($hideButton) {
         $availableQuantity = $stockAvailableQuantity - $stockAvailableQuantityLimit;
     }
     if (((($product['is_stock_product'] && $product['stock_management_enabled']) || !$stockAvailableAlwaysAvailable) && $availableQuantity <= 0)
-        || (isset($shoppingLimitReached) && $shoppingLimitReached) 
+        || (isset($shoppingLimitReached) && $shoppingLimitReached)
         || $deliveryBreakEnabled) {
         $this->element('addScript', ['script' =>
             Configure::read('app.jsNamespace') . ".Helper.disableButton($('#btn-cart-".$productId."'));"
         ]);
-        
+
         if ($deliveryBreakEnabled) {
             $cartButtonIcon = 'fa-times';
             $cartButtonLabel = __('Delivery_break') . '!';
         }
-        
+
     }
     ?>
-    
+
     <a id="btn-cart-<?php echo $productId; ?>" class="btn btn-success btn-cart" href="javascript:void(0);">
         <i class="fa fa-lg <?php echo $cartButtonIcon; ?>"></i> <?php echo $cartButtonLabel; ?>
     </a>

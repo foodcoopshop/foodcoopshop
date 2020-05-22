@@ -26,11 +26,11 @@ class ApiController extends Controller
 
     public function initialize(): void
     {
-        
+
         parent::initialize();
-        
+
         $this->loadComponent('RequestHandler');
-        
+
         $this->loadComponent('AppAuth', [
             'authError' => ACCESS_DENIED_MESSAGE,
             'authorize' => [
@@ -52,7 +52,7 @@ class ApiController extends Controller
         ]);
 
     }
-    
+
     public function beforeFilter(EventInterface $event)
     {
 
@@ -64,17 +64,17 @@ class ApiController extends Controller
                 list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', $ha);
             }
         }
-        
+
         $this->RequestHandler->renderAs($this, 'json');
 
         @header('Access-Control-Allow-Origin: *');
         @header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
         @header('Access-Control-Allow-Headers: Content-Type, Authorization');
-        
+
         if ($this->getRequest()->is('options')) {
             return $this->getResponse();
         }
-        
+
     }
 
     public function isAuthorized($user)
@@ -169,7 +169,7 @@ class ApiController extends Controller
                     ];
                 }
             }
-            
+
             if (isset($product['is_stock_product'])) {
                 if ($productIds['attributeId'] == 0) {
                     $products2saveForIsStockProduct[] = [
@@ -177,7 +177,7 @@ class ApiController extends Controller
                     ];
                 }
             }
-            
+
             if (isset($product['quantity'])) {
                 $product['quantity'] = [
                     'quantity' => $product['quantity']['stock_available_quantity'],
@@ -191,19 +191,19 @@ class ApiController extends Controller
                 ];
             }
             if (isset($product['price'])) {
-                
+
                 $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($this->AppAuth->manufacturer->variable_member_fee);
-                
+
                 if ($variableMemberFee > 0) {
-                    
+
                     $price = Configure::read('app.numberHelper')->getStringAsFloat($product['price']['gross_price']);
                     $product['price']['gross_price'] = $this->Manufacturer->increasePriceWithVariableMemberFee($price, $variableMemberFee);
-                    
+
                     if (isset($product['price']['unit_product_price_incl_per_unit'])) {
                         $pricePerUnit = Configure::read('app.numberHelper')->getStringAsFloat($product['price']['unit_product_price_incl_per_unit']);
                         $product['price']['unit_product_price_incl_per_unit'] = $this->Manufacturer->increasePriceWithVariableMemberFee($pricePerUnit, $variableMemberFee);
                     }
-                    
+
                 }
 
                 if (!isset($product['price']['unit_product_price_per_unit_enabled'])) {
@@ -213,24 +213,24 @@ class ApiController extends Controller
                     $product['price']['unit_product_amount'] = 0;
                     $product['price']['unit_product_quantity_in_units'] = 0;
                 }
-                
+
                 $products2saveForPrice[] = [
                     $product['remoteProductId'] => $product['price']
                 ];
             }
-            
+
             if (isset($product['deposit'])) {
                 $products2saveForDeposit[] = [
                     $product['remoteProductId'] => Configure::read('app.numberHelper')->getStringAsFloat($product['deposit'])
                 ];
             }
-            
+
             if (isset($product['delivery_rhythm'])) {
                 $products2saveForDeliveryRhythm[] = [
                     $product['remoteProductId'] => $product['delivery_rhythm']
                 ];
             }
-            
+
             if (isset($product['active'])) {
                 if ($productIds['attributeId'] == 0) {
                     $products2saveForStatus[] = [
@@ -253,7 +253,7 @@ class ApiController extends Controller
             empty($products2saveForStatus)) {
             $message = __d('network', 'No_fields_were_selected_for_synchronizing.');
         } else {
-            
+
             if (!empty($products2saveForImage)) {
                 $syncFieldsOk[] = __d('network', 'Image');
                 $updateStatus = $this->Product->changeImage($products2saveForImage);
@@ -262,7 +262,7 @@ class ApiController extends Controller
                     $productIds[] = key($p);
                 }
             }
-            
+
             if (!empty($products2saveForName)) {
                 $syncFieldsOk[] = __d('network', 'Name');
                 $updateStatus = $this->Product->changeName($products2saveForName);
@@ -289,7 +289,7 @@ class ApiController extends Controller
                     $syncFieldsError[] = $fieldName;
                 }
             }
-            
+
             if (!empty($products2saveForQuantity)) {
                 $syncFieldsOk[] = __d('network', 'Amount');
                 $updateStatus = $this->Product->changeQuantity($products2saveForQuantity);
@@ -334,7 +334,7 @@ class ApiController extends Controller
                     $productIds[] = key($p);
                 }
             }
-            
+
             if (!empty($products2saveForStatus)) {
                 $fieldName = __d('network', 'Status');
                 try {
@@ -384,7 +384,7 @@ class ApiController extends Controller
                 $this->ActionLog->customSave('product_remotely_changed', $this->AppAuth->getUserId(), 0, 'products', $actionLogMessage);
             }
         }
-        
+
         $this->set([
             'app' => [
                 'name' => $this->getInstallationName(),
@@ -394,7 +394,7 @@ class ApiController extends Controller
             'msg' => $message,
         ]);
         $this->viewBuilder()->setOption('serialize', ['app', 'status', 'msg']);
-        
+
     }
 
     private function getInstallationName()
@@ -413,7 +413,7 @@ class ApiController extends Controller
             $this->AppAuth->manufacturer->variable_member_fee
         );
         $preparedProducts = $this->Product->getProductsForBackend($this->AppAuth, '', $this->AppAuth->getManufacturerId(), 'all', '', 0, 0, true);
-        
+
         $this->set([
             'app' => [
                 'name' => $this->getInstallationName(),

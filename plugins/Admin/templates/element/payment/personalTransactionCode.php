@@ -16,7 +16,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', [
     'script' =>
-    Configure::read('app.jsNamespace') . ".Admin.initCopyPersonalTransactionCodeToClipboardButton('" . __d('admin', 'Your_code_has_been_copied_successfully_into_the_clipboard.') . "');" 
+    Configure::read('app.jsNamespace') . ".Admin.initCopyPersonalTransactionCodeToClipboardButton('" . __d('admin', 'Your_code_has_been_copied_successfully_into_the_clipboard.') . "');"
 ]);
 ?>
 

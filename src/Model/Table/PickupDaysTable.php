@@ -28,14 +28,14 @@ class PickupDaysTable extends AppTable
         ]);
         $this->setPrimaryKey(['customer_id']);
     }
-    
+
     public function validationDefault(Validator $validator): Validator
     {
         $validator->allowEmptyString('comment');
         $validator->maxLength('comment', 500, __('Please_enter_max_{0}_characters.', [500]));
         return $validator;
     }
-    
+
     public function getUniquePickupDays($cartProducts)
     {
         $uniquePickupDays = [];
@@ -44,7 +44,7 @@ class PickupDaysTable extends AppTable
         }
         return array_unique($uniquePickupDays);
     }
-    
+
     /**
      * @param array $conditions
      * @param array $data
@@ -53,25 +53,25 @@ class PickupDaysTable extends AppTable
     public function insertOrUpdate($conditions, $data)
     {
         $this->setPrimaryKey(['customer_id', 'pickup_day']);
-        
+
         $pickupDayEntity = $this->find('all', [
             'conditions' => [
                 $conditions
             ]
         ])->first();
-        
+
         if (empty($pickupDayEntity)) {
             $pickupDayEntity = $this->newEntity($conditions);
         }
-        
+
         $patchedEntity = $this->patchEntity(
             $pickupDayEntity,
             $data
         );
-        
+
         $result = $this->save($patchedEntity);
         return $result;
-        
+
     }
 
 }

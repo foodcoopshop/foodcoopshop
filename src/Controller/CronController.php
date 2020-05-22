@@ -20,26 +20,26 @@ use Cake\ORM\TableRegistry;
  */
 class CronController extends AppController
 {
-    
+
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
         $this->AppAuth->allow('index');
     }
-    
+
     public function index()
     {
-        
+
         $this->RequestHandler->renderAs($this, 'json');
-        
+
         $this->Cronjob = TableRegistry::getTableLocator()->get('Cronjobs');
-                
+
         $executedCronjobs = $this->Cronjob->run();
         $this->set([
             'executedCronjobs' => $executedCronjobs,
         ]);
         $this->viewBuilder()->setOption('serialize', ['executedCronjobs']);
-           
+
     }
 
 }

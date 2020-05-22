@@ -91,7 +91,7 @@ foodcoopshop.DialogProduct = {
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.StockProduct, dialogId, dialogHtml);
         return dialogHtml;
     },
-    
+
     getHtmlForProductQuantityEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogQuantityQuantity"></label>';
         dialogHtml += '<div class="field-wrapper">';
@@ -104,14 +104,14 @@ foodcoopshop.DialogProduct = {
         dialogHtml += '<input type="number" step="1" name="dialogQuantityQuantity" id="dialogQuantityQuantity" />';
         dialogHtml += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.DefaultQuantityAfterSendingOrderLists + '</label>';
         dialogHtml += '<input type="number" step="1" name="dialogQuantityDefaultQuantityAfterSendingOrderLists" id="dialogQuantityDefaultQuantityAfterSendingOrderLists" />';
-        dialogHtml += '<span style="float:left;" class="small">' + foodcoopshop.LocalizedJs.dialogProduct.DefaultQuantityAfterSendingOrderListsHelpText + '</span>'; 
+        dialogHtml += '<span style="float:left;" class="small">' + foodcoopshop.LocalizedJs.dialogProduct.DefaultQuantityAfterSendingOrderListsHelpText + '</span>';
         dialogHtml += '</div>';
         dialogHtml += '</div>';
         dialogHtml += '<input type="hidden" name="dialogQuantityProductId" id="dialogQuantityProductId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.ChangeAmount, dialogId, dialogHtml);
         return dialogHtml;
     },
-    
+
     getHtmlForProductQuantityIsStockProductEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogQuantityQuantity"></label>';
         dialogHtml += '<div class="field-wrapper">';
@@ -131,9 +131,9 @@ foodcoopshop.DialogProduct = {
         var dialogHtml = '<label for="dialogDeliveryRhythm"></label>';
         dialogHtml += '<div class="field-wrapper">';
         dialogHtml += '<label>' + foodcoopshop.LocalizedJs.dialogProduct.DeliveryRhythm + '</label>';
-            
+
         dialogHtml += '<select name="dialogDeliveryRhythmType" id="dialogDeliveryRhythmType" /></select>';
-            
+
         dialogHtml += '<label style="margin-top:10px;" class="dynamic-element individual">' + foodcoopshop.LocalizedJs.dialogProduct.OrderPossibleUntil + '</label>';
         dialogHtml += '<input style="margin-top:10px;" autocomplete="off" class="dynamic-element individual datepicker" type="text" name="dialogDeliveryRhythmOrderPossibleUntil" id="dialogDeliveryRhythmOrderPossibleUntil" /><br />';
 
@@ -152,7 +152,7 @@ foodcoopshop.DialogProduct = {
 
         dialogHtml += '<label class="dynamic-element default">' + foodcoopshop.LocalizedJs.dialogProduct.FirstDeliveryDay + '</label>';
         dialogHtml += '<label class="dynamic-element individual">' + foodcoopshop.LocalizedJs.dialogProduct.DeliveryDay + '</label>';
-            
+
         dialogHtml += '<input autocomplete="off" class="datepicker" type="text" name="dialogDeliveryRhythmFirstDeliveryDay" id="dialogDeliveryRhythmFirstDeliveryDay" /><br />';
         dialogHtml += '<div style="float:right;line-height:14px;"><span class="small">';
         if (productIds.length == 1) {
@@ -161,12 +161,12 @@ foodcoopshop.DialogProduct = {
             dialogHtml += foodcoopshop.LocalizedJs.dialogProduct.FirstDeliveryDayInfoMultipleProducts;
         }
         dialogHtml += '</span><br /></div>';
-            
+
         dialogHtml += '</div>';
         dialogHtml += '<p style="margin-top:10px;float:right;"><a target="_blank" href="' + foodcoopshop.LocalizedJs.dialogProduct.DocsUrlOrderHandling + '">' + foodcoopshop.LocalizedJs.dialogProduct.InfoPageForDeliveryRhythm + '</a></p>';
         dialogHtml += '<input type="hidden" name="dialogDeliveryRhythmProductId" id="dialogDeliveryRhythmProductId" value="" />';
         dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.DeliveryRhythm, dialogId, dialogHtml);
         return dialogHtml;
     }
-    
+
 };

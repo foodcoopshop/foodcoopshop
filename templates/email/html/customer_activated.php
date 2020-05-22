@@ -17,19 +17,19 @@ use Cake\Core\Configure;
 ?>
 <?php echo $this->element('email/tableHead'); ?>
     <tbody>
-    
+
         <?php echo $this->element('email/greeting', ['data' => $data]); ?>
-        
+
         <tr>
             <td>
-                
+
                 <p><?php echo __('Your_account_at_{0}_has_just_been_activated.', [Configure::read('appDb.FCS_APP_NAME')])?></p>
-                
+
                 <?php echo $this->element('email/profileLinks', ['data' => $data, 'newPassword' => $newPassword]); ?>
-                
+
             </td>
-            
+
         </tr>
-        
+
     </tbody>
 <?php echo $this->element('email/tableFoot'); ?>

@@ -27,7 +27,7 @@ use Cake\Core\Configure;
             'rowIdPrefix' => '#category-'
         ]);
     ?>
-   
+
     <div class="filter-container">
         <h1><?php echo $title_for_layout; ?></h1>
         <div class="right">
@@ -44,7 +44,7 @@ use Cake\Core\Configure;
 
     </div>
 
-    
+
 <?php
 
 echo '<table class="list">';
@@ -69,5 +69,5 @@ echo '</tr>';
 
 echo '</table>';
 
-?>    
+?>
 </div>

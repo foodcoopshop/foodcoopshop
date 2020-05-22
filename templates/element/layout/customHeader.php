@@ -13,6 +13,6 @@
  * @link          https://www.foodcoopshop.com
  */
 
-// eg. custom tracking scripts can be put here 
+// eg. custom tracking scripts can be put here
 
 ?>

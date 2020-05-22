@@ -28,7 +28,7 @@ abstract class BankingReader extends Reader implements BankingReaderInterface {
         parent::__construct($document);
         $this->configureType();
     }
-    
+
     protected function getCustomerByPersonalTransactionCode($content): ?Customer
     {
         $customerModel = TableRegistry::getTableLocator()->get('Customers');
@@ -38,10 +38,10 @@ abstract class BankingReader extends Reader implements BankingReaderInterface {
             ]
         ]);
         $personalTransactionCodes = $query->all()->extract('personalTransactionCode')->toArray();
-        
+
         $regex = '/' . join('|', $personalTransactionCodes) .  '/';
         preg_match_all($regex, $content, $matches);
-        
+
         $foundCustomer = null;
         if (!empty($matches[0][0])) {
             $foundCustomer = $customerModel->find('all', [
@@ -53,57 +53,57 @@ abstract class BankingReader extends Reader implements BankingReaderInterface {
         }
         return $foundCustomer;
     }
-    
+
     public function getPreparedRecords(): array
     {
         if (!$this->checkStructure()) {
             throw new \Exception('structure of csv is not valid');
         }
-        
+
         $records = $this->getRecords();
         $records = iterator_to_array($records);
         $records = $this->equalizeStructure($records);
-        
+
         $preparedRecords = [];
         foreach($records as $record) {
-            
+
             // never import negative transactions
             $amount = Configure::read('app.numberHelper')->getStringAsFloat($record['amount']);
             if ($amount <= 0) {
                 continue;
             }
-            
+
             $preparedRecord = [];
             $preparedRecord['content'] = h($record['content']);
             $preparedRecord['amount'] = $amount;
             $date = new FrozenTime($record['date']);
             $preparedRecord['date'] = $date->format(Configure::read('DateFormat.DatabaseWithTimeAndMicrosecondsAlt'));
-            
+
             $customer = $this->getCustomerByPersonalTransactionCode($preparedRecord['content']);
             $preparedRecord['original_id_customer'] = !is_null($customer) ? $customer->id_customer : '';
-            
+
             $preparedRecords[] = $preparedRecord;
-            
+
         }
-        
+
         $preparedRecords = Hash::sort($preparedRecords, '{n}.date', 'desc');
-        
+
         return $preparedRecords;
     }
-    
+
     public function checkStructure(): bool
     {
         $records = $this->getRecords();
         $records = iterator_to_array($records);
-        
+
         $structureIsOk = false;
         foreach($records as $record) {
             $structureIsOk |= $this->checkStructureForRecord($record);
         }
-        
+
         return $structureIsOk;
     }
-    
+
 }
 
 ?>

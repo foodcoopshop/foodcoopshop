@@ -27,7 +27,7 @@ echo '<td class="status">';
             ]
         );
     }
-    
+
     if ($product->active == '') {
         echo $this->Html->link(
             '<i class="fas fa-minus-circle not-ok"></i>',

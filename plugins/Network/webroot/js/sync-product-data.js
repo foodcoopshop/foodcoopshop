@@ -363,10 +363,10 @@ foodcoopshop.SyncProductData = {
             for (var product of response.products) {
 
                 if (product.id_product == $(this).data('remoteProductId')) {
-                    
+
                     var localProductRow = $(this).prevAll('.ok').first();
                     var localProductId = localProductRow.data('productId');
-                    
+
                     var localProduct = null;
                     for(var tmpLocalProduct of foodcoopshop.SyncProductData.products) {
                         if (tmpLocalProduct.id_product == localProductId) {
@@ -387,10 +387,10 @@ foodcoopshop.SyncProductData = {
                         var remoteProductImageHash = product.image && product.image.hash || '';
                         foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.image', remoteProductImageHash, localProductImageHash, $(this), localProductRow);
                     }
-                    
+
                     // name
                     var remoteProductName = foodcoopshop.SyncProduct.getProductNameWithUnity(product, isAttribute, hasAttributes);
-                    
+
                     if (!isAttribute) {
                         // check all name fields to set the field dirty or not
                         var localProductNameFields = '';
@@ -417,7 +417,7 @@ foodcoopshop.SyncProductData = {
                         $(this).find('td.is_stock_product').html(remoteProductIsStockProductString);
                         foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.is_stock_product', remoteProductIsStockProductString, localProductIsStockProductString, $(this), localProductRow);
                     }
-                    
+
                     // quantity
                     if (!hasAttributes) {
                         var remoteProductQuantityString = foodcoopshop.SyncProduct.getQuantityString(
@@ -440,25 +440,25 @@ foodcoopshop.SyncProductData = {
 
                     // price
                     if (!hasAttributes) {
-                        
+
                         var remotePriceAsString;
                         var localPriceAsString;
-                        
+
                         var localProductGrossPrice = parseFloat(localProduct.gross_price);
                         var remoteProductGrossPrice = parseFloat(product.gross_price);
-                        
+
                         if (product.unit && product.unit_product && product.unit_product.price_per_unit_enabled) {
                             remoteProductGrossPrice = product.unit_product.price_incl_per_unit;
                         }
                         if (localProduct.unit && localProduct.unit_product && localProduct.unit_product.price_per_unit_enabled) {
                             localProductGrossPrice = localProduct.unit_product.price_incl_per_unit;
                         }
-                        
+
                         // if remote manufacturer has variable member fee enabled, compare local price including the remote variable member fee
                         if (response.app.variableMemberFee > 0) {
                             localProductGrossPrice = foodcoopshop.SyncProductData.roundToTwo(localProductGrossPrice + (localProductGrossPrice * response.app.variableMemberFee / 100));
                         }
-                        
+
                         remotePriceAsString = foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(remoteProductGrossPrice));
                         if (product.unit && product.unit_product && product.unit_product.price_per_unit_enabled) {
                             remotePriceAsString = foodcoopshop.SyncProduct.getPricePerUnitBaseInfo(
@@ -468,7 +468,7 @@ foodcoopshop.SyncProductData = {
                                 product.unit_product.quantity_in_units
                             );
                         }
-                        
+
                         localPriceAsString = foodcoopshop.Helper.formatFloatAsCurrency(parseFloat(localProductGrossPrice));
                         if (localProduct.unit && localProduct.unit_product && localProduct.unit_product.price_per_unit_enabled) {
                             localPriceAsString = foodcoopshop.SyncProduct.getPricePerUnitBaseInfo(
@@ -478,7 +478,7 @@ foodcoopshop.SyncProductData = {
                                 localProduct.unit_product.quantity_in_units
                             );
                         }
-                        
+
                         var additionalInfo = '';
                         if (response.app.variableMemberFee > 0) {
                             additionalInfo += ' (' + response.app.variableMemberFee + '%)';
@@ -493,7 +493,7 @@ foodcoopshop.SyncProductData = {
                         $(this).find('td.deposit').html(remoteDeposit);
                         foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.deposit', product.deposit, localProduct.deposit, $(this), localProductRow);
                     }
-                    
+
                     // delivery_rhythm
                     if (!isAttribute) {
                         var remoteProductDeliveryRhythmString = foodcoopshop.SyncProduct.getDeliveryRhythmString(
@@ -519,7 +519,7 @@ foodcoopshop.SyncProductData = {
                         $(this).find('td.delivery_rhythm').html(remoteProductDeliveryRhythmString);
                         foodcoopshop.SyncProductData.doIsAttributeDirtyActions('td.delivery_rhythm', remoteProductDeliveryRhythmString, localProductDeliveryRhythmString, $(this), localProductRow);
                     }
-                    
+
                     // active
                     var remoteActive = (!isAttribute ? (product.active ? '<i class="fas fa-check ok"></i>' : '<i class="fas fa-times not-ok"></i>') : '');
                     $(this).find('td.active').html(remoteActive);
@@ -535,7 +535,7 @@ foodcoopshop.SyncProductData = {
                     }
 
                     continue;
-                    
+
                 }
             }
 
@@ -585,7 +585,7 @@ foodcoopshop.SyncProductData = {
     },
 
     bindSyncProductDataButton : function () {
-        
+
         foodcoopshop.Helper.disableButton(foodcoopshop.SyncProductData.syncProductsButton);
 
         foodcoopshop.SyncProductData.syncProductsButton.on('click', function () {
@@ -639,7 +639,7 @@ foodcoopshop.SyncProductData = {
                                             $(dataIndexKeys).each(function (index, dataI) {
                                                 var newIndex = dataIndexKeys[index];
                                                 newValue[newIndex] = foodcoopshop.Helper.resolveIndex(dataIndex[dataI], syncProduct);
-                                                
+
                                                 if ($.type(newValue[newIndex] == 'string')) {
                                                     // converting delivery_rhythm_first_delivery_day and delivery_rhythm_order_possible_until to 'YYYY-mm-dd'
                                                     var regex = new RegExp(/00:00:00+00:00/);
@@ -713,7 +713,7 @@ foodcoopshop.SyncProductData = {
             preparedString = preparedString.replace(/\{1\}/, checkedProductsCount + ' ' + (checkedProductsCount == 1 ? foodcoopshop.LocalizedJs.syncProductData.product : foodcoopshop.LocalizedJs.syncProductData.products));
             preparedString = preparedString.replace(/\{2\}/, checkedAttributesCount + ' ' + (checkedAttributesCount == 1 ? foodcoopshop.LocalizedJs.syncProductData.attribute : foodcoopshop.LocalizedJs.syncProductData.attributes));
             preparedString = preparedString.replace(/\{3\}/, '<p>' + domains2sync.join('<br />') + '</p>');
-            
+
             var htmlCode = '<p>' + preparedString + '</p>';
             htmlCode += '<b class="negative">' + foodcoopshop.LocalizedJs.syncProductData.ThisActionCannotBeUndone + '</b></p>';
             htmlCode += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
@@ -727,8 +727,8 @@ foodcoopshop.SyncProductData = {
                     $('.ui-dialog button').attr('disabled', 'disabled');
                     foodcoopshop.SyncBase.doApiCall('/api/updateProducts.json', 'POST', postData, foodcoopshop.SyncProductData.onProductDataUpdated);
                 }
-            };            
-            
+            };
+
             $('<div></div>').appendTo('body')
                 .html(htmlCode)
                 .dialog({

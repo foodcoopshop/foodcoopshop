@@ -184,7 +184,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
         ]);
         return $query->toArray();
     }
-    
+
     /**
      * @param int $manufacturerId
      * @param int $customerId

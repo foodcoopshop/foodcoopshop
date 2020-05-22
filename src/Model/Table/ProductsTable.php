@@ -67,7 +67,7 @@ class ProductsTable extends AppTable
         parent::__construct($config);
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
     }
-    
+
     public function validationDeliveryRhythm(Validator $validator)
     {
         $validator->add('delivery_rhythm_type', 'allowed-count-values', [
@@ -113,10 +113,10 @@ class ProductsTable extends AppTable
             },
             'message' => __('The_send_order_list_day_field_needs_to_be_between_order_possible_until_date_and_first_delivery_day.')
         ]);
-        
+
         return $validator;
     }
-    
+
     private function getLastOrFirstDayOfMonthValidator(Validator $validator, $field, $firstOrLast)
     {
         $checkedCountValue = 0;
@@ -144,31 +144,31 @@ class ProductsTable extends AppTable
         ]);
         return $validator;
     }
-    
+
     public function deliveryBreakEnabled($noDeliveryDaysAsString, $deliveryDate)
     {
         return $noDeliveryDaysAsString != '' && preg_match('`' . $deliveryDate . '`', $noDeliveryDaysAsString);
     }
-    
+
     public function calculatePickupDayRespectingDeliveryRhythm($product, $currentDay=null)
     {
-        
+
         if (is_null($currentDay)) {
             $currentDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
         }
-        
+
         $sendOrderListsWeekday = null;
         if (!is_null($product->delivery_rhythm_send_order_list_weekday)) {
             $sendOrderListsWeekday = $product->delivery_rhythm_send_order_list_weekday;
         }
-        
+
         $pickupDay = Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate($currentDay, $sendOrderListsWeekday);
-        
+
         // assure that $product->is_stock_product also contains check for $product->manufacturer->stock_management_enabled
         if ($product->is_stock_product) {
             return $pickupDay;
         }
-            
+
         if ($product->delivery_rhythm_type == 'week') {
             if (!is_null($product->delivery_rhythm_first_delivery_day)) {
                 $calculatedPickupDay = $product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
@@ -179,7 +179,7 @@ class ProductsTable extends AppTable
                 $pickupDay = $calculatedPickupDay;
             }
         }
-        
+
         if ($product->delivery_rhythm_type == 'month') {
             switch($product->delivery_rhythm_count) {
                 case '1':
@@ -197,13 +197,13 @@ class ProductsTable extends AppTable
                 $pickupDay = $nthDeliveryDayOfThisMonth;
             }
         }
-        
+
         if ($product->delivery_rhythm_type == 'individual') {
             $pickupDay = $product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
         }
-            
+
         return $pickupDay;
-        
+
     }
 
     /**
@@ -419,7 +419,7 @@ class ProductsTable extends AppTable
 
         $success = false;
         foreach ($products as $product) {
-            
+
             $productId = key($product);
             $price = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['gross_price']);
 
@@ -434,7 +434,7 @@ class ProductsTable extends AppTable
                 ], [
                     'id_product_attribute' => $ids['attributeId']
                 ]);
-                // if results are not the returned row count would be 0, so always set to true; 
+                // if results are not the returned row count would be 0, so always set to true;
                 $success |= true;
             } else {
                 $product2update = [
@@ -446,7 +446,7 @@ class ProductsTable extends AppTable
                 );
                 $success |= is_object($result);
             }
-            
+
             if (isset($product[$productId]['unit_product_price_per_unit_enabled'])) {
                 $this->Unit = TableRegistry::getTableLocator()->get('Units');
                 $priceInclPerUnit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['unit_product_price_incl_per_unit']);
@@ -482,7 +482,7 @@ class ProductsTable extends AppTable
      */
     public function changeQuantity($products)
     {
-        
+
         foreach ($products as $product) {
             $productId = key($product);
             $ids = $this->getProductIdAndAttributeId($productId);
@@ -510,7 +510,7 @@ class ProductsTable extends AppTable
             }
         }
     }
-    
+
     /**
      * @param array $products
      *  Array
@@ -524,9 +524,9 @@ class ProductsTable extends AppTable
      */
     public function changeDeliveryRhythm($products)
     {
-        
+
         $products2save = [];
-        
+
         foreach ($products as $product) {
             $productId = key($product);
             $ids = $this->getProductIdAndAttributeId($productId);
@@ -547,17 +547,17 @@ class ProductsTable extends AppTable
                 );
             }
         }
-        
+
         $success = false;
         if (!empty($products2save)) {
             $entities = $this->newEntities($products2save);
             $result = $this->saveMany($entities);
             $success = !empty($result);
         }
-        
+
         return $success;
     }
-    
+
     /**
      * @param array $products
      *  Array
@@ -571,7 +571,7 @@ class ProductsTable extends AppTable
      */
     public function changeIsStockProduct($products)
     {
-        
+
         $products2save = [];
         foreach ($products as $product) {
             $productId = key($product);
@@ -590,18 +590,18 @@ class ProductsTable extends AppTable
                 ];
             }
         }
-        
+
         $success = false;
         if (!empty($products2save)) {
             $entities = $this->newEntities($products2save);
             $result = $this->saveMany($entities);
             $success = !empty($result);
         }
-        
+
         return $success;
-        
+
     }
-    
+
     /**
      * @param array $products
      *  Array
@@ -622,9 +622,9 @@ class ProductsTable extends AppTable
      */
     public function changeName($products)
     {
-        
+
         $products2save = [];
-        
+
         foreach ($products as $product) {
             $productId = key($product);
             $name = $product[$productId];
@@ -649,14 +649,14 @@ class ProductsTable extends AppTable
                 $products2save[] = $tmpProduct2Save;
             }
         }
-        
+
         $success = false;
         if (!empty($products2save)) {
             $entities = $this->newEntities($products2save);
             $result = $this->saveMany($entities);
             $success = !empty($result);
         }
-        
+
         return $success;
     }
 
@@ -775,7 +775,7 @@ class ProductsTable extends AppTable
         ->select($this->Manufacturers)
         ->select($this->UnitProducts)
         ->select($this->StockAvailables);
-        
+
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
             $query->select(['bar_code' => $this->getProductIdentifierField()]);
         }
@@ -815,7 +815,7 @@ class ProductsTable extends AppTable
             }
 
             $product->gross_price = $this->getGrossPrice($product->id_product, $product->price);
-            
+
             $product->delivery_rhythm_string = Configure::read('app.htmlHelper')->getDeliveryRhythmString(
                 $product->is_stock_product && $product->manufacturer->stock_management_enabled,
                 $product->delivery_rhythm_type,
@@ -824,7 +824,7 @@ class ProductsTable extends AppTable
             $product->last_order_weekday = Configure::read('app.timeHelper')->getWeekdayName(
                 Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, $product->delivery_rhythm_send_order_list_weekday)
             );
-            
+
             $rowClass = [];
             if (! $product->active) {
                 $rowClass[] = 'deactivated';
@@ -835,7 +835,7 @@ class ProductsTable extends AppTable
             } else {
                 $product->deposit = 0;
             }
-            
+
             if (!empty($product->image)) {
                 $imageSrc = Configure::read('app.htmlHelper')->getProductImageSrc($product->image->id_image, 'home');
                 $imageFile = str_replace('//', '/', $_SERVER['DOCUMENT_ROOT'] . $imageSrc);
@@ -973,7 +973,7 @@ class ProductsTable extends AppTable
                         ],
                         'image' => null
                     ];
-                    
+
                     if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
                         $preparedProduct['bar_code'] = $product->bar_code . Configure::read('app.numberHelper')->addLeadingZerosToNumber($attribute->id_product_attribute, 4);
                         $preparedProduct['image'] = $product->image;
@@ -1059,7 +1059,7 @@ class ProductsTable extends AppTable
             $deletedCount = count($deletedProducts);
             $productsForDropdown[__('deleted') . '-' . $deletedCount] = $deletedProducts;
         }
-        
+
         return $productsForDropdown;
     }
 
@@ -1240,10 +1240,10 @@ class ProductsTable extends AppTable
 
         $this->StockAvailables->updateQuantityForMainProduct($productId);
     }
-    
+
     public function changeImage($products)
     {
-        
+
         foreach ($products as $product) {
             $productId = key($product);
             $imageFromRemoteServer = $product[$productId];
@@ -1260,20 +1260,20 @@ class ProductsTable extends AppTable
                 throw new InvalidParameterException('file is not not an image: ' . $imageFromRemoteServer);
             }
         }
-        
+
         $success = false;
         foreach ($products as $product) {
-            
+
             $productId = key($product);
             $ids = $this->getProductIdAndAttributeId($productId);
-            
+
             if ($ids['attributeId'] > 0) {
                 continue;
             }
-                
+
             $imageFromRemoteServer = $product[$productId];
             $imageFromRemoteServer = Configure::read('app.htmlHelper')->removeTimestampFromFile($imageFromRemoteServer);
-            
+
             $product = $this->find('all', [
                 'conditions' => [
                     'Products.id_product' => $ids['productId']
@@ -1282,7 +1282,7 @@ class ProductsTable extends AppTable
                     'Images'
                 ]
             ])->first();
-            
+
             if (empty($product->image)) {
                 // product does not yet have image => create the necessary record
                 $image = $this->Images->save(
@@ -1293,30 +1293,30 @@ class ProductsTable extends AppTable
             } else {
                 $image = $product->image;
             }
-            
+
             $imageIdAsPath = Configure::read('app.htmlHelper')->getProductImageIdAsPath($image->id_image);
             $thumbsPath = Configure::read('app.htmlHelper')->getProductThumbsPath($imageIdAsPath);
-            
+
             if ($imageFromRemoteServer != 'no-image') {
-                
+
                 // recursively create path
                 $dir = new Folder();
                 $dir->create($thumbsPath);
                 $dir->chmod($thumbsPath, 0755);
-                
+
                 foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
                     $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . 'jpg';
                     $remoteFileName = preg_replace('/-home_default/', $options['suffix'], $imageFromRemoteServer);
                     copy($remoteFileName, $thumbsFileName);
                 }
-                
+
             } else {
-            
+
                 // delete db records
                 $this->Images->deleteAll([
                     'Images.id_image' => $image->id_image
                 ]);
-                
+
                 // delete physical files
                 foreach (Configure::read('app.productImageSizes') as $thumbSize => $options) {
                     $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . 'jpg';
@@ -1324,10 +1324,10 @@ class ProductsTable extends AppTable
                         unlink($thumbsFileName);
                     }
                 }
-                
+
             }
         }
-        
+
         return $success;
     }
 
@@ -1335,9 +1335,9 @@ class ProductsTable extends AppTable
     {
 
         $defaultQuantity = 0;
-        
+
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-        
+
         // INSERT PRODUCT
         $newProduct = $this->save(
             $this->newEntity(

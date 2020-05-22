@@ -25,7 +25,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
     public $EmailLog;
     public $Order;
     public $commandRunner;
-    
+
     public function setUp(): void
     {
         parent::setUp();
@@ -34,7 +34,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
-    
+
     public function testContentOfInvoice()
     {
         $this->loginAsSuperadmin();
@@ -46,15 +46,15 @@ class SendInvoicesShellTest extends AppCakeTestCase
 
     public function testSendInvoicesWithVariableMemberFee()
     {
-        
+
         $this->prepareSendInvoices();
-        
+
         $this->changeConfiguration('FCS_USE_VARIABLE_MEMBER_FEE', 1);
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'variable_member_fee', 10);
-        
+
         $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11 10:20:30']);
-        
+
         $orderDetails = $this->OrderDetail->find('all')->toArray();
         foreach($orderDetails as $orderDetail) {
             $expectedOrderState = ORDER_STATE_BILLED_CASHLESS;
@@ -63,7 +63,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
             }
             $this->assertEquals($orderDetail->order_state, $expectedOrderState);
         }
-        
+
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(5, count($emailLogs), 'amount of sent emails wrong');
         $this->assertEmailLogs(
@@ -77,7 +77,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
                 Configure::read('test.loginEmailMeatManufacturer')
             ]
         );
-        
+
         $this->loginAsSuperadmin(); //should still be logged in as superadmin but is not...
         $this->httpClient->get($this->Slug->getActionLogsList() . '?dateFrom=11.03.2018&dateTo=11.03.2018');
         $content = $this->httpClient->getContent();
@@ -89,7 +89,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'invoiceWithVariableMemberFee.html');
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertRegExpWithUnquotedString($expectedResult, $this->httpClient->getContent());
-        
+
     }
 
     public function testSendInvoicesNoInvoicesSentIfCalledMultipleTimes()
@@ -98,12 +98,12 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $this->prepareSendInvoices();
         $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11 10:20:30']);
         $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11 10:20:30']); // sic! run again
-        
+
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        
+
         // no additional (would be 8) emails should be sent if called twice on same day
         $this->assertEquals(6, count($emailLogs), 'amount of sent emails wrong');
-        
+
         $this->assertEmailLogs(
             $emailLogs[4],
             'wurden verschickt',
@@ -114,9 +114,9 @@ class SendInvoicesShellTest extends AppCakeTestCase
                 Configure::read('test.loginEmailSuperadmin')
             ]
         );
-        
+
     }
-    
+
     private function prepareSendInvoices()
     {
         $this->loginAsSuperadmin();

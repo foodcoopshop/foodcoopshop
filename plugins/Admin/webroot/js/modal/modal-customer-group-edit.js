@@ -14,19 +14,19 @@
 foodcoopshop.ModalCustomerGroupEdit = {
 
     init : function() {
-        
+
         var modalSelector = '#customer-group-edit-form';
-        
+
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
             foodcoopshop.LocalizedJs.modalCustomer.ChangeGroup,
             foodcoopshop.ModalCustomerGroupEdit.getHtml()
         );
-        
+
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             foodcoopshop.ModalCustomerGroupEdit.getSuccessHandler(modalSelector);
         });
-        
+
         $(modalSelector).on('hidden.bs.modal', function (e) {
             foodcoopshop.ModalCustomerGroupEdit.getCloseHandler();
         });
@@ -36,21 +36,21 @@ foodcoopshop.ModalCustomerGroupEdit = {
         });
 
     },
-    
+
     getHtml : function() {
         var html = '<label for="dialogCustomerGroupEditText" id="dialogCustomerGroupEditText"></label><br />';
         html += '<select name="dialogCustomerGroupEditGroup" id="dialogCustomerGroupEditGroup" /></select>';
         html += '<input type="hidden" name="dialogCustomerGroupEditCustomerId" id="dialogCustomerGroupEditCustomerId" value="" />';
         return html;
     },
-    
+
     getCloseHandler : function() {
         $('#dialogCustomerGroupEditGroupId').val('');
         $('#dialogCustomerGroupEditCustomerId').val('');
     },
-    
+
     getSuccessHandler : function(modalSelector) {
-        
+
         if ($('#dialogCustomerGroupEditGroupId').val() == '' || $('#dialogCustomerGroupEditCustomerId').val() == '') {
             return false;
         }
@@ -72,7 +72,7 @@ foodcoopshop.ModalCustomerGroupEdit = {
             }
         );
     },
-    
+
     getOpenHandler : function(button, modalSelector) {
         var selectedGroupId = button.closest('tr').find('td:nth-child(4) span.group-for-dialog').html();
         var select = $(modalSelector + ' #dialogCustomerGroupEditGroup');

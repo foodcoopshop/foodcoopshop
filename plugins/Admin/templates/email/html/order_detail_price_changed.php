@@ -17,18 +17,18 @@ use Cake\Core\Configure;
 ?>
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
-    
+
     <?php echo $this->element('email/greeting', ['data' => $oldOrderDetail->customer]); ?>
-    
+
     <tr>
         <td>
 
             <p>
-            	<?php echo __d('admin', 'The_price_of_the_product_{0}_has_been_adapted.', ['<b>'.$oldOrderDetail->product_name.'</b>']); ?> <?php echo __d('admin', 'You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}.', [
-            	    $oldOrderDetail->product_amount,
-            	    $oldOrderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')),
-            	    '<b>'.$oldOrderDetail->product->manufacturer->name.'</b>'
-            	]); ?>
+                <?php echo __d('admin', 'The_price_of_the_product_{0}_has_been_adapted.', ['<b>'.$oldOrderDetail->product_name.'</b>']); ?> <?php echo __d('admin', 'You_have_ordered_{0}_units_of_it_on_{1}_at_manufacturer_{2}.', [
+                    $oldOrderDetail->product_amount,
+                    $oldOrderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')),
+                    '<b>'.$oldOrderDetail->product->manufacturer->name.'</b>'
+                ]); ?>
             </p>
 
             <ul style="padding-left: 10px;">
@@ -40,7 +40,7 @@ use Cake\Core\Configure;
                 <?php echo __d('admin', 'Why_has_the_price_been_adpated?'); ?><br />
                 <b><?php echo '"' . $editPriceReason . '"'; ?></b>
             </p>
-            
+
             <?php if ($this->MyHtml->paymentIsCashless()) { ?>
                 <p><?php echo __d('admin', 'PS:_Your_credit_has_been_adapted_automatically.'); ?></p>
             <?php } ?>

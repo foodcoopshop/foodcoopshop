@@ -48,7 +48,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), ' 24,88 ', 'product');
         $this->assertEquals(24.88, $jsonDecodedContent->amount);
     }
-    
+
     public function testAddPaymentParameterPriceNegative()
     {
         $this->loginAsCustomer();
@@ -206,7 +206,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $creditBalanceAfterAddAndDelete = $this->Customer->getCreditBalance(Configure::read('test.customerId'));
         $this->assertEquals($creditBalanceBeforeAddAndDelete, $creditBalanceAfterAddAndDelete);
     }
-    
+
     public function testCsvUploadCustomerNotFoundError()
     {
         $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
@@ -216,7 +216,7 @@ class PaymentsControllerTest extends AppCakeTestCase
             [
                 'upload' => fopen(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen.csv', 'r')
             ]
-            
+
         );
         $this->assertRegExpWithUnquotedString('name="Payments[0][id_customer]" class="select-member form-error"', $this->httpClient->getContent());
         $this->assertRegExpWithUnquotedString('Bitte wähle ein Mitglied aus.', $this->httpClient->getContent());
@@ -228,7 +228,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $newPaymentAmount = 200;
         $newPaymentContent = 'transaction text';
         $newPaymentDate = '2019-03-03 02:51:25.165000';
-        
+
         $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
         $this->loginAsSuperadmin();
         $this->httpClient->followOneRedirectForNextRequest();
@@ -248,7 +248,7 @@ class PaymentsControllerTest extends AppCakeTestCase
                  ]
             ]
         );
-        
+
         $this->assertRegExpWithUnquotedString('Ein Datensatz wurde erfolgreich importiert.', $this->httpClient->getContent());
         $payments = $this->Payment->find('all')->toArray();
         $newPayment = $payments[1];
@@ -262,7 +262,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals(APP_ON, $newPayment->approval);
         $this->assertEquals(Configure::read('test.superadminId'), $newPayment->created_by);
     }
-    
+
     private function addDepositToManufacturer($depositText, $ActionLogText)
     {
         $this->Customer = TableRegistry::getTableLocator()->get('Customers');

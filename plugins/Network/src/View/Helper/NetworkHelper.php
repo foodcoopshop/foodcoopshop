@@ -25,7 +25,7 @@ class NetworkHelper extends Helper
 {
 
     public $helpers = ['MyHtml'];
-    
+
     public function getTabs()
     {
         return [

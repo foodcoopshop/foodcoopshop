@@ -17,7 +17,7 @@
 use Cake\Core\Configure;
 
 if (!$appAuth->isInstantOrderMode()
-    && $appAuth->isTimebasedCurrencyEnabledForCustomer() 
+    && $appAuth->isTimebasedCurrencyEnabledForCustomer()
     && $appAuth->Cart->getTimebasedCurrencySecondsSum() > 0) {
     echo $this->Form->control('Carts.timebased_currency_seconds_sum_tmp', [
         'label' => __('How_much_of_it_do_i_want_to_pay_in_{0}?', [

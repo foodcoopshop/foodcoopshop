@@ -145,7 +145,7 @@ if (!$fullBaseUrl) {
     if (env('HTTPS')) {
         $s = 's';
     }
-    
+
     $httpHost = env('HTTP_HOST');
     if (isset($httpHost)) {
         $fullBaseUrl = 'http' . $s . '://' . $httpHost;
@@ -171,18 +171,18 @@ if (isset($_SERVER['HTTP_X_UNIT_TEST_MODE'])
     || (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]))) {
         Security::setSalt(Configure::read('Security.salt_for_unit_tests'));
     }
-    
+
 /*
  * Setup detectors for mobile and tablet.
  */
 ServerRequest::addDetector('mobile', function ($request) {
     $detector = new \Detection\MobileDetect();
-    
+
     return $detector->isMobile();
 });
 ServerRequest::addDetector('tablet', function ($request) {
     $detector = new \Detection\MobileDetect();
-    
+
     return $detector->isTablet();
 });
 
@@ -222,7 +222,7 @@ ServerRequest::addDetector('tablet', function ($request) {
 //Inflector::rules('irregular', ['red' => 'redlings']);
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
-        
+
 // foodcoopshop
 mb_internal_encoding('UTF-8');
 
@@ -244,5 +244,4 @@ Configure::load('localized_config', 'default');
 if (file_exists(CONFIG.DS.'localized_custom_config.php')) {
     Configure::load('localized_custom_config', 'default');
 }
-        
-        
+

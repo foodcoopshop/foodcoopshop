@@ -19,39 +19,39 @@ use Cake\View\ViewBuilder;
 
 abstract class PdfWriter
 {
-    
+
     protected $pdfLibrary;
     protected $data;
     protected $plugin = null;
     protected $filename = '';
-    
+
     public function setPdfLibrary($pdfLibrary): PdfWriter
     {
         $this->pdfLibrary = $pdfLibrary;
         return $this;
     }
-    
+
     public function setData($data): PdfWriter
     {
         $this->data = $data;
         return $this;
     }
-    
+
     public function getFilename(): string
     {
         return $this->filename;
     }
-    
+
     public function setFilename($filename): PdfWriter
     {
         $this->filename = $filename;
         return $this;
     }
-    
+
     public function getData() {
         return $this->data;
     }
-    
+
     private function getContent()
     {
         $this->data['pdf'] = $this->pdfLibrary;
@@ -64,18 +64,18 @@ abstract class PdfWriter
         $templateFile = DS . 'pdf' . DS . $templateFile;
         return $viewBuilder->setLayout('ajax')->build($this->getData())->render($templateFile);
     }
-    
+
     private function setContent()
     {
         $this->pdfLibrary->html = $this->getContent();
     }
-    
+
     public function writeInline()
     {
         $this->setContent();
         return $this->pdfLibrary->Output($this->getFilename(), 'I');
     }
-    
+
     public function writeAttachment()
     {
         $this->setContent();
@@ -88,7 +88,7 @@ abstract class PdfWriter
     public function writeFile()
     {
         $this->setContent();
-        
+
         // pdf saved on server
         if (file_exists($this->getFilename())) {
             unlink($this->getFilename());
@@ -98,14 +98,14 @@ abstract class PdfWriter
         $path = dirname($this->getFilename());
         $dir->create($path);
         $dir->chmod($path, 0755);
-        
+
         return $this->pdfLibrary->Output($this->getFilename(), 'F');
     }
-    
+
     public function writeHtml()
     {
         $this->setContent();
         return $this->pdfLibrary->getHtml();
     }
-    
+
 }

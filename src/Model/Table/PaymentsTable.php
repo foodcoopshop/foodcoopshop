@@ -52,7 +52,7 @@ class PaymentsTable extends AppTable
         $validator->greaterThanOrEqual('amount', 0.01, __('The_amount_(money)_needs_to_be_greater_than_0.'));
         return $validator;
     }
-    
+
     public function validationCsvImport(Validator $validator)
     {
         $validator = $this->validationAdd($validator);
@@ -62,7 +62,7 @@ class PaymentsTable extends AppTable
         $validator->numeric('id_customer', __('Please_select_a_customer.'));
         return $validator;
     }
-    
+
     public function isAlreadyImported(string $transactionText): bool
     {
         $alreadyImported = $this->find('all', [
@@ -123,7 +123,7 @@ class PaymentsTable extends AppTable
         $query->select(['sumManufacturerMoneyDeposit' => $query->func()->sum('Payments.amount')]);
         $query->group('Payments.text');
         $result = $query->toArray();
-        
+
         if (isset($result[0])) {
             return $result[0]['sumManufacturerMoneyDeposit'];
         }

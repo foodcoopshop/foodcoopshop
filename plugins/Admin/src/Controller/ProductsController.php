@@ -112,11 +112,11 @@ class ProductsController extends AdminAppController
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $this->Product = TableRegistry::getTableLocator()->get('Products');
     }
-    
+
     public function delete()
     {
         $this->RequestHandler->renderAs($this, 'json');
-        
+
         $productIds = $this->getRequest()->getData('productIds');
         $products = $this->Product->find('all', [
             'conditions' => [
@@ -130,7 +130,7 @@ class ProductsController extends AdminAppController
         foreach($products as $product) {
             $preparedProductsForActionLog[] = '<b>' . $product->name . '</b>: ID ' . $product->id_product . ',  ' . $product->manufacturer->name;
         }
-        
+
         try {
             // check if open order exist
             $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
@@ -150,7 +150,7 @@ class ProductsController extends AdminAppController
                 ]
             );
             $query->group('OrderDetails.product_id');
-            
+
             $errors = [];
             if ($query->count() > 0) {
                 foreach($query as $orderDetail) {
@@ -170,7 +170,7 @@ class ProductsController extends AdminAppController
         } catch (Exception $e) {
             $this->sendAjaxError($e);
         }
-    
+
         // 1) set field active to -1
         $this->Product->updateAll([
             'active' => APP_DEL,
@@ -178,7 +178,7 @@ class ProductsController extends AdminAppController
         ], [
             'id_product IN' => $productIds
         ]);
-        
+
         // 2) delete image
         foreach($productIds as $productId) {
             $this->Product->changeImage(
@@ -187,33 +187,33 @@ class ProductsController extends AdminAppController
                 ]
             );
         }
-        
+
         $message = __d('admin', '{0,plural,=1{1_product_was} other{#_products_were}}_deleted_successfully.', [
             count($productIds)
         ]);
         $this->Flash->success($message);
         $this->ActionLog->customSave('product_deleted', $this->AppAuth->getUserId(), 0, 'products', $message . '<br />' . join('<br />', $preparedProductsForActionLog));
-        
+
         $this->set([
             'status' => 1,
             'msg' => 'ok',
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
-        
+
     }
-    
+
     public function generateProductCards()
     {
         $productIds = h($this->getRequest()->getQuery('productIds'));
         $productIds = explode(',', $productIds);
-        
+
         if (empty($productIds)) {
             throw new InvalidParameterException('no product id passed');
         }
-        
+
         $this->Product = TableRegistry::getTableLocator()->get('Products');
         $products = $this->Product->getProductsForBackend($this->AppAuth, $productIds, 'all', 'all', '', 0, 0, true);
-        
+
         $preparedProducts = [];
         foreach($products as &$product) {
             if (!empty($product->product_attributes)) {
@@ -228,12 +228,12 @@ class ProductsController extends AdminAppController
                }
             }
             if (preg_match('/main-product/', $product->row_class)) {
-                $product->bar_code .= '0000'; 
+                $product->bar_code .= '0000';
             }
             $product->prepared_price = $price;
             $preparedProducts[] = $product;
         }
-        
+
         $pdfWriter = new ProductCardsPdfWriter();
         $pdfWriter->setFilename(__d('admin', 'Products').'.pdf');
         $pdfWriter->setData([
@@ -241,7 +241,7 @@ class ProductsController extends AdminAppController
         ]);
         die($pdfWriter->writeInline());
     }
-    
+
 
     public function ajaxGetProductsForDropdown($manufacturerId = 0)
     {
@@ -272,7 +272,7 @@ class ProductsController extends AdminAppController
     public function deleteImage($productId)
     {
         $this->RequestHandler->renderAs($this, 'json');
-        
+
         $productId = (int) $productId;
 
         if ($productId == 0 || $productId == '') {
@@ -295,7 +295,7 @@ class ProductsController extends AdminAppController
                 'Manufacturers'
             ]
         ])->first();
-        
+
         $this->Product->changeImage(
             [
                 [$productId => 'no-image']
@@ -489,30 +489,30 @@ class ProductsController extends AdminAppController
         $this->getRequest()->getSession()->write('highlightedRowId', $newProduct->id_product);
         $this->redirect($this->referer());
     }
-    
-    public function editDeliveryRhythm() 
+
+    public function editDeliveryRhythm()
     {
         $this->RequestHandler->renderAs($this, 'json');
-        
+
         $this->loadComponent('Sanitize');
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->trimRecursive($this->getRequest()->getData())));
         $this->setRequest($this->getRequest()->withParsedBody($this->Sanitize->stripTagsAndPurifyRecursive($this->getRequest()->getData())));
-        
+
         $productIds = $this->getRequest()->getData('productIds');
         $deliveryRhythmTypeCombined = $this->getRequest()->getData('deliveryRhythmType');
         $deliveryRhythmFirstDeliveryDay = $this->getRequest()->getData('deliveryRhythmFirstDeliveryDay');
         $deliveryRhythmOrderPossibleUntil = $this->getRequest()->getData('deliveryRhythmOrderPossibleUntil');
         $deliveryRhythmSendOrderListWeekday = $this->getRequest()->getData('deliveryRhythmSendOrderListWeekday');
         $deliveryRhythmSendOrderListDay = $this->getRequest()->getData('deliveryRhythmSendOrderListDay');
-        
+
         $splittedDeliveryRhythmType = explode('-', $deliveryRhythmTypeCombined);
-        
+
         $singleEditMode = false;
         if (count($productIds) == 1) {
             $singleEditMode = true;
             $productId = $productIds[0];
         }
-        
+
         if ($singleEditMode) {
             $oldProduct = $this->Product->find('all', [
                 'conditions' => [
@@ -523,15 +523,15 @@ class ProductsController extends AdminAppController
                 ]
             ])->first();
         }
-        
+
         $deliveryRhythmCount = $splittedDeliveryRhythmType[0];
         $deliveryRhythmType = $splittedDeliveryRhythmType[1];
-        
+
         $product2update = [
             'delivery_rhythm_count' => $deliveryRhythmCount,
             'delivery_rhythm_type' => $deliveryRhythmType
         ];
-        
+
         $isFirstDeliveryDayMandatory = in_array($deliveryRhythmTypeCombined, ['0-individual', '2-week', '4-week']);
         if ($deliveryRhythmFirstDeliveryDay != '' || $isFirstDeliveryDayMandatory) {
             $product2update['delivery_rhythm_first_delivery_day'] = Configure::read('app.timeHelper')->formatToDbFormatDate($deliveryRhythmFirstDeliveryDay);
@@ -539,39 +539,39 @@ class ProductsController extends AdminAppController
         if ($deliveryRhythmFirstDeliveryDay == '' && !$isFirstDeliveryDayMandatory) {
             $product2update['delivery_rhythm_first_delivery_day'] = '';
         }
-        
+
         $product2update['delivery_rhythm_order_possible_until'] = '';
         $product2update['delivery_rhythm_send_order_list_day'] = '';
         if ($deliveryRhythmSendOrderListWeekday == '') {
             $deliveryRhythmSendOrderListWeekday = Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, Configure::read('app.timeHelper')->getSendOrderListsWeekday());
         }
         $product2update['delivery_rhythm_send_order_list_weekday'] = Configure::read('app.timeHelper')->getNthWeekdayAfterWeekday(1, $deliveryRhythmSendOrderListWeekday);
-        
+
         if (in_array($deliveryRhythmTypeCombined, ['0-individual'])) {
             $product2update['delivery_rhythm_order_possible_until'] = Configure::read('app.timeHelper')->formatToDbFormatDate($deliveryRhythmOrderPossibleUntil);
             if ($deliveryRhythmSendOrderListDay != '') {
                 $product2update['delivery_rhythm_send_order_list_day'] = Configure::read('app.timeHelper')->formatToDbFormatDate($deliveryRhythmSendOrderListDay);
             }
         }
-        
+
         try {
-            
+
             $products2update = [];
             foreach($productIds as $productId) {
                 $products2update[] = [
                     $productId => $product2update
                 ];
             }
-            
+
             $this->Product->changeDeliveryRhythm($products2update);
-            
+
             $additionalMessages = [];
             if ($deliveryRhythmFirstDeliveryDay != '') {
                 if ($product2update['delivery_rhythm_order_possible_until'] != '') {
                     $additionalMessages[] = __d('admin', 'Order_possible_until') . ': <b>'. Configure::read('app.timeHelper')->formatToDateShort($deliveryRhythmOrderPossibleUntil) . '</b>';
                 }
             }
-            
+
             if ($deliveryRhythmType == 'individual') {
                 if ($product2update['delivery_rhythm_send_order_list_day'] != '') {
                     $additionalMessages[] = __d('admin', 'Send_order_lists_day') . ': <b>'. Configure::read('app.timeHelper')->formatToDateShort($deliveryRhythmSendOrderListDay) . '</b>';
@@ -585,7 +585,7 @@ class ProductsController extends AdminAppController
                         . '</b>';
                 }
             }
-            
+
             if ($deliveryRhythmFirstDeliveryDay != '') {
                 $deliveryDayMessage = '';
                 if ($deliveryRhythmType == 'individual') {
@@ -596,7 +596,7 @@ class ProductsController extends AdminAppController
                 $deliveryDayMessage .= ': <b>'. Configure::read('app.timeHelper')->formatToDateShort($deliveryRhythmFirstDeliveryDay) . '</b>';
                 $additionalMessages[] = $deliveryDayMessage;
             }
-            
+
             if ($singleEditMode) {
                 $messageString = __d('admin', 'The_delivery_rhythm_of_the_product_{0}_from_manufacturer_{1}_was_changed_successfully_to_{2}.', [
                     '<b>' . $oldProduct->name . '</b>',
@@ -622,19 +622,19 @@ class ProductsController extends AdminAppController
                 }
                 $this->ActionLog->customSave('product_delivery_rhythm_changed', $this->AppAuth->getUserId(), 0, 'products', $messageString . ' Ids: ' . join(', ', $productIds));
             }
-            
+
             $this->Flash->success($messageString);
-            
+
             $this->set([
                 'status' => 1,
                 'msg' => __d('admin', 'Saving_successful.'),
             ]);
             $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
-            
+
         } catch (InvalidParameterException $e) {
             $this->sendAjaxError($e);
         }
-        
+
     }
 
     public function editTax()
@@ -786,16 +786,16 @@ class ProductsController extends AdminAppController
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
     }
-    
+
     public function editIsStockProduct()
     {
         $this->RequestHandler->renderAs($this, 'json');
-        
+
         $originalProductId = $this->getRequest()->getData('productId');
-        
+
         $ids = $this->Product->getProductIdAndAttributeId($originalProductId);
         $productId = $ids['productId'];
-        
+
         $oldProduct = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
@@ -808,7 +808,7 @@ class ProductsController extends AdminAppController
                 'ProductAttributes.ProductAttributeCombinations.Attributes'
             ]
         ])->first();
-        
+
         try {
             $this->Product->changeIsStockProduct(
                 [
@@ -820,11 +820,11 @@ class ProductsController extends AdminAppController
         } catch (InvalidParameterException $e) {
             $this->sendAjaxError($e);
         }
-        
+
         $this->Flash->success(__d('admin', 'The_product_{0}_was_changed_successfully_to_a_stock_product.', ['<b>' . $oldProduct->name . '</b>']));
-        
+
         $this->getRequest()->getSession()->write('highlightedRowId', $productId);
-        
+
         $this->set([
             'status' => 1,
             'msg' => 'ok',
@@ -998,7 +998,7 @@ class ProductsController extends AdminAppController
         }
 
         $price = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('price'));
-        
+
         $this->Flash->success(__d('admin', 'The_price_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']));
         if (!empty($oldProduct->unit_product) && $oldProduct->unit_product->price_per_unit_enabled) {
             $oldPrice = Configure::read('app.pricePerUnitHelper')->getPricePerUnitBaseInfo($oldProduct->unit_product->price_incl_per_unit, $oldProduct->unit_product->name, $oldProduct->unit_product->amount);
@@ -1027,7 +1027,7 @@ class ProductsController extends AdminAppController
             'msg' => 'ok',
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
-        
+
     }
 
     public function editDeposit()
@@ -1247,7 +1247,7 @@ class ProductsController extends AdminAppController
             $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
             $this->set('variableMemberFee', $variableMemberFee);
         }
-        
+
         $advancedStockManagementEnabled = $manufacturerId == 'all' || (!empty($manufacturer) && $manufacturer->stock_management_enabled);
         $this->set('advancedStockManagementEnabled', $advancedStockManagementEnabled);
 
@@ -1315,7 +1315,7 @@ class ProductsController extends AdminAppController
         if ($status == 0) {
             $newCreated = 'DATE_ADD(NOW(), INTERVAL -'.((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1).' DAY)';
         }
-        
+
         $this->Product = TableRegistry::getTableLocator()->get('Products');
         // newCreated can't be set as param because of mysql function DATE_ADD
         $sql = "UPDATE " . $this->Product->getTable() . " p SET p.created = " . $newCreated . " WHERE p.id_product = :productId;";
@@ -1324,7 +1324,7 @@ class ProductsController extends AdminAppController
         ];
         $statement = $this->Product->getConnection()->prepare($sql);
         $statement->execute($params);
-        
+
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId

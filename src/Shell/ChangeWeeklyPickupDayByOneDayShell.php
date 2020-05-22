@@ -25,34 +25,34 @@ class ChangeWeeklyPickupDayByOneDayShell extends Shell
 
     public function main()
     {
-        
+
         if (empty($this->args)) {
             throw new InvalidParameterException('args not set');
         }
-        
+
         if (!in_array($this->args[0], ['increase', 'decrease'])) {
             throw new InvalidParameterException('args wrong');
         }
-        
+
         $this->Product = TableRegistry::getTableLocator()->get('Products');
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
-        
+
         $statement = $this->Product->getConnection()->prepare(
             "UPDATE fcs_configuration SET value = :newWeeklyPickupDay WHERE name = 'FCS_WEEKLY_PICKUP_DAY';"
         );
-        
+
         if ($this->args[0] == 'increase') {
             $newWeeklyPickupDay = Configure::read('app.timeHelper')->getNthWeekdayAfterWeekday(1, Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY'));
         }
         if ($this->args[0] == 'decrease') {
             $newWeeklyPickupDay = Configure::read('app.timeHelper')->getNthWeekdayBeforeWeekday(1, Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY'));
         }
-        
+
         $params = ['newWeeklyPickupDay' => $newWeeklyPickupDay];
         $statement->execute($params);
-        
+
         $this->Configuration->loadConfigurations();
-        
+
         $products = $this->Product->find('all');
         foreach($products as $product) {
             if ($this->args[0] == 'increase') {
@@ -70,10 +70,10 @@ class ChangeWeeklyPickupDayByOneDayShell extends Shell
             ];
             $statement->execute($params);
         }
-        
+
         $this->out('Changed FCS_WEEKLY_PICKUP_DAY to ' . Configure::read('app.timeHelper')->getWeekdayName($newWeeklyPickupDay) . '.');
-        
+
     }
-    
+
 }
 

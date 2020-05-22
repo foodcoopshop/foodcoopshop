@@ -15,7 +15,7 @@
 use Cake\Core\Configure;
 
 ?>
-<h1>Warunki użytkowania dla producentów</h1> 
+<h1>Warunki użytkowania dla producentów</h1>
 
 <h2>Właściciel platformy</h2>
 

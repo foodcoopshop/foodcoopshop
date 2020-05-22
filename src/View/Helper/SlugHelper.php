@@ -31,7 +31,7 @@ class SlugHelper extends Helper
         }
         return $url;
     }
-    
+
     public function getActionLogsList()
     {
         return $this->getAdminHome().'/action-logs';
@@ -46,7 +46,7 @@ class SlugHelper extends Helper
     {
         return $this->getAdminHome().'/lists/order-lists';
     }
-    
+
     public function getAcceptTermsOfUse()
     {
         return '/'.__('route_accept_terms_of_use');
@@ -91,7 +91,7 @@ class SlugHelper extends Helper
     {
         return $this->getAdminHome().'/statistics/myIndex';
     }
-    
+
     public function getStatistics($manufacturerId = '')
     {
         $url = '/admin/statistics';
@@ -100,8 +100,8 @@ class SlugHelper extends Helper
         }
         return $url;
     }
-    
-    
+
+
     public function getMyDepositList()
     {
         return '/admin/deposits/myIndex';

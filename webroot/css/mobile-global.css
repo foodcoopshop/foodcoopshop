@@ -41,7 +41,7 @@
     }
     .sb-left #product-search input {
         padding-left: 8px ! important;
-	    width: 100% ! important;
+        width: 100% ! important;
         padding-right: 14%;
     }
     .sb-left #product-search .btn-success {
@@ -91,16 +91,16 @@
         z-index: 100000 ! important;
         transform: inherit ! important;
     }
-	.ui-dialog-content #flashMessage,
-	.featherlight-content #flashMessage {
-	    left: 50% ! important;
-	}
-	.featherlight-content .add-payment-form,
-	.add-payment-form.featherlight-inner {
-	    min-width: 200px ! important;
-	    width: 98% ! important;
-	    max-width: 450px ! important;
-	}
+    .ui-dialog-content #flashMessage,
+    .featherlight-content #flashMessage {
+        left: 50% ! important;
+    }
+    .featherlight-content .add-payment-form,
+    .add-payment-form.featherlight-inner {
+        min-width: 200px ! important;
+        width: 98% ! important;
+        max-width: 450px ! important;
+    }
     .sb-left {
       -webkit-box-shadow: 5px 0 5px -2px #888;
       box-shadow: 5px 0 5px -2px #888;

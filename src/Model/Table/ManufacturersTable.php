@@ -71,43 +71,43 @@ class ManufacturersTable extends AppTable
             'provider' => 'table',
             'message' => __('At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space.')
         ]);
-        
+
         $validator->allowEmptyString('no_delivery_days');
         $validator->add('no_delivery_days', 'noDeliveryDaysOrdersExist', [
             'provider' => 'table',
             'rule' => 'noDeliveryDaysOrdersExist'
         ]);
-        
+
         $validator->numeric('timebased_currency_max_percentage', __('Decimals_are_not_allowed.'));
         $validator = $this->getNumberRangeValidator($validator, 'timebased_currency_max_percentage', 0, 100);
         $validator->numeric('timebased_currency_max_credit_balance', __('Decimals_are_not_allowed.'));
         $validator = $this->getNumberRangeValidator($validator, 'timebased_currency_max_credit_balance', 0, 400);
         return $validator;
     }
-    
+
     public function hasManufacturerReachedTimebasedCurrencyLimit($manufacturerId)
     {
         $manufacturer = $this->find('all', [
             'conditions' => ['id_manufacturer' => $manufacturerId]
         ])->first();
-        
+
         $timebasedCurrencyOrderDetailsTable = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
         $creditBalance = $timebasedCurrencyOrderDetailsTable->getCreditBalance($manufacturerId, null);
-        
+
         $activeLimit = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_MANUFACTURER') * 3600;
-        
+
         if ($manufacturer->timebased_currency_max_credit_balance > 0) {
             $activeLimit = $manufacturer->timebased_currency_max_credit_balance;
         }
-        
+
         if ($activeLimit > $creditBalance) {
             return false;
         }
-        
+
         return true;
-        
+
     }
-    
+
     public function getTimebasedCurrencyMoney($price, $percentage)
     {
         return $price * $percentage / 100;
@@ -428,13 +428,13 @@ class ManufacturersTable extends AppTable
         $statement->execute($params);
         $products = $statement->fetchAll('assoc');
         $products = $this->hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products);
-        
+
         if (! $countMode) {
             return $products;
         } else {
             return count($products);
         }
-        
+
     }
 
     public function getDataForInvoiceOrOrderList($manufacturerId, $order, $dateFrom, $dateTo, $orderState, $includeStockProductsInInvoices, $orderDetailIds = [])
@@ -447,14 +447,14 @@ class ManufacturersTable extends AppTable
                 $orderClause = Configure::read('app.htmlHelper')->getCustomerNameForSql() . ' ASC, od.product_name ASC';
                 break;
         }
-        
+
         // do not use params for $orderState, it will result in IN ('3,2,1') which is wrong
         $params = [
             'manufacturerId' => $manufacturerId
         ];
-        
+
         $includeStockProductCondition = '';
-        
+
         if (is_null($dateTo)) {
             // order list
             $orderDetailCondition = "AND od.id_order_detail IN (" . join(',', $orderDetailIds) . ")" ;
@@ -470,7 +470,7 @@ class ManufacturersTable extends AppTable
             }
             $orderDetailCondition = "";
         }
-        
+
         $orderStateCondition = "";
         if (!empty($orderState)) {
             $orderStateCondition = "AND od.order_state IN (" . join(',', $orderState) . ")";
@@ -515,7 +515,7 @@ class ManufacturersTable extends AppTable
             {$includeStockProductCondition}
             {$orderDetailCondition}
             ORDER BY {$orderClause}, DATE_FORMAT (od.created, '%d.%m.%Y, %H:%i') DESC;";
-        
+
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);
         $result = $statement->fetchAll('assoc');

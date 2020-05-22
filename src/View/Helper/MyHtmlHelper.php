@@ -32,30 +32,30 @@ class MyHtmlHelper extends HtmlHelper
         $this->helpers[] = 'MyTime';
         parent::__construct($View, $config);
     }
-    
+
     public function removeTimestampFromFile($file) {
         $file = explode('?', $file);
         return $file[0];
     }
-    
+
     public function privateImage($imageSrc)
     {
         return '/photos/' . $imageSrc;
     }
-    
+
     public function isStockProductOrderPossible($instantOrderMode, $isSelfServiceMode, $includeStockProductsInOrdersWithDeliveryRhythm, $stockManagementEnabled, $isStockProduct)
     {
         return (!$instantOrderMode && !$includeStockProductsInOrdersWithDeliveryRhythm && $stockManagementEnabled && $isStockProduct) && !$isSelfServiceMode;
     }
-    
+
     public function getDeliveryRhythmString($isStockProduct, $deliveryRhythmType, $deliveryRhythmCount)
     {
-        
+
         if ($isStockProduct) {
             $deliveryRhythmType = 'week';
             $deliveryRhythmCount = 1;
         }
-        
+
         if ($deliveryRhythmType == 'week') {
             if ($deliveryRhythmCount == 1) {
                 $deliveryRhythmString = __('weekly');
@@ -64,7 +64,7 @@ class MyHtmlHelper extends HtmlHelper
                 $deliveryRhythmString = __('every_{0}_week', [$this->MyNumber->ordinal($deliveryRhythmCount)]);
             }
         }
-        
+
         if ($deliveryRhythmType == 'month') {
             $deliveryDayAsWeekday = $this->MyTime->getWeekdayName($this->MyTime->getDeliveryWeekday());
             if ($deliveryRhythmCount > 0) {
@@ -78,14 +78,14 @@ class MyHtmlHelper extends HtmlHelper
                 ]);
             }
         }
-        
+
         if ($deliveryRhythmType == 'individual') {
             $deliveryRhythmString = __('bulk_order');
         }
-        
+
         return $deliveryRhythmString;
     }
-    
+
     public function getDeliveryRhythmTypesForDropdown()
     {
         return [
@@ -97,7 +97,7 @@ class MyHtmlHelper extends HtmlHelper
             '0-individual' => $this->getDeliveryRhythmString(false, 'individual', 0)
         ];
     }
-    
+
     public function getOrderStateFontawesomeIcon($orderState)
     {
         switch($orderState)
@@ -125,12 +125,12 @@ class MyHtmlHelper extends HtmlHelper
             //]]>
         </script>";
     }
-    
+
     public function getYesNo($value)
     {
         return $this->getYesNoArray()[$value];
     }
-    
+
     public function getYesNoArray()
     {
         return [
@@ -153,7 +153,7 @@ class MyHtmlHelper extends HtmlHelper
                 break;
         }
     }
-    
+
     public function getFontAwesomeIconForCurrencyName($currencySymbol)
     {
         $currencyIcon = 'fas fa-fw fa-'.strtolower(Configure::read('app.currencyName')).'-sign';
@@ -214,48 +214,48 @@ class MyHtmlHelper extends HtmlHelper
         if ($manufacturer->no_delivery_days == '') {
             return $result;
         }
-        
+
         $formattedAndCleanedDeliveryDays = $this->getFormattedAndCleanedDeliveryDays($manufacturer->no_delivery_days);
         if (empty($formattedAndCleanedDeliveryDays)) {
             return $result;
         }
-        
+
         $csvNoDeliveryDays = Text::toList($formattedAndCleanedDeliveryDays);
-        
+
         if (!$long) {
             return $csvNoDeliveryDays;
-        } 
-        
+        }
+
         $result = __('The_manufacturer_{0}_takes_a_break_on_{1}.', [
             '<b>' . $manufacturer->name . '</b>',
             '<b>' . $csvNoDeliveryDays . '</b>'
         ]);
-        
+
         return $result;
 
     }
-    
+
     public function getGlobalNoDeliveryDaysString()
     {
-        
+
         $result = '';
         if (Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL') == '') {
             return $result;
         }
-        
+
         $formattedAndCleanedDeliveryDays = $this->getFormattedAndCleanedDeliveryDays(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'));
         if (empty($formattedAndCleanedDeliveryDays)) {
             return $result;
         }
-        
+
         $result = __('{0}_takes_a_break_on_{1}.', [
             Configure::read('appDb.FCS_APP_NAME'),
             '<b>' . Text::toList($formattedAndCleanedDeliveryDays) . '</b>'
         ]);
-        
+
         return $result;
     }
-    
+
     public function getFormattedAndCleanedDeliveryDays($deliveryDays)
     {
         $explodedNoDeliveryDays = explode(',', $deliveryDays);
@@ -380,7 +380,7 @@ class MyHtmlHelper extends HtmlHelper
         }
         return $billedOrderState;
     }
-    
+
     public function paymentIsCashless()
     {
         return in_array('cashless', Configure::read('app.paymentMethods'));
@@ -555,7 +555,7 @@ class MyHtmlHelper extends HtmlHelper
     {
         return Configure::read('app.customerImagesDir');
     }
-    
+
     public function getCategoryThumbsPath()
     {
         return $this->getUploadImageDir() . DS . 'categories';
@@ -610,12 +610,12 @@ class MyHtmlHelper extends HtmlHelper
 
         return $this->prepareAsUrl($imageFilenameAndPath);
     }
-    
+
     public function getManufacturerTermsOfUseSrcTemplate($manufacturerId)
     {
         return Configure::read('app.uploadedFilesDir') . DS . 'manufacturers' . DS . $manufacturerId . DS . __('Filename_General-terms-and-conditions') . '.pdf';
     }
-    
+
     public function getManufacturerTermsOfUseSrc($manufacturerId)
     {
         $src = $this->getManufacturerTermsOfUseSrcTemplate($manufacturerId);
@@ -624,7 +624,7 @@ class MyHtmlHelper extends HtmlHelper
         }
         return false;
     }
-    
+
     public function getManufacturerImageSrc($manufacturerId, $size)
     {
         $thumbsPath = $this->getManufacturerThumbsPath();
@@ -644,14 +644,14 @@ class MyHtmlHelper extends HtmlHelper
     {
         $thumbsPath = $this->getCustomerThumbsPath();
         $urlPrefix = 'profile-images/customers/';
-        
+
         $imageFilename = $customerId . '-' . $size . '.jpg';
         if (! file_exists($thumbsPath . DS . $imageFilename)) {
             $imageFilenameAndPath = $urlPrefix . 'de-default-' . $size . '_default.jpg';
         } else {
             $imageFilenameAndPath = $urlPrefix . $imageFilename;
         }
-       
+
         $physicalFile = Configure::read('app.customerImagesDir') . DS . $imageFilename;
         if (file_exists($physicalFile)) {
             $imageFilenameAndPath .= '?' . filemtime($physicalFile);
@@ -659,7 +659,7 @@ class MyHtmlHelper extends HtmlHelper
 
         return $imageFilenameAndPath;
     }
-    
+
     public function getCategoryImageSrc($categoryId)
     {
         $thumbsPath = $this->getCategoryThumbsPath();
@@ -731,7 +731,7 @@ class MyHtmlHelper extends HtmlHelper
             0 => __('active_state_inactive')
         ];
     }
-    
+
     public function getActiveStates()
     {
         return [
@@ -745,7 +745,7 @@ class MyHtmlHelper extends HtmlHelper
     {
         return Configure::read('app.orderStates');
     }
-    
+
     public function getOrderStatesCashless()
     {
         return [

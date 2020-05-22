@@ -87,7 +87,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->httpClient->get($this->Slug->getProductDetail($productId, 'Demo Product'));
         $this->assert404NotFoundHeader();
     }
-    
+
     public function testProductDetailIndividualDeliveryRhythmOrderPossibleUntilOver()
     {
         $this->loginAsSuperadmin();
@@ -96,7 +96,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->httpClient->get($this->Slug->getProductDetail($productId, 'Demo Product'));
         $this->assert404NotFoundHeader();
     }
-    
+
     public function testProductDetailIndividualDeliveryRhythmOrderPossibleUntilNotOver()
     {
         $this->loginAsSuperadmin();
@@ -106,7 +106,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->httpClient->get($this->Slug->getProductDetail($productId, 'Demo Product'));
         $this->assert200OkHeader();
     }
-    
+
     public function testProductDetailDeliveryBreakActive()
     {
         $this->loginAsSuperadmin();
@@ -115,7 +115,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->changeManufacturerNoDeliveryDays($manufacturerId, Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
         $this->httpClient->get($this->Slug->getProductDetail($productId, 'Artischocke'));
         $this->assertRegExpWithUnquotedString('<i class="fa fa-lg fa-times"></i> Lieferpause!', $this->httpClient->getContent());
-        
+
     }
 
     protected function changeProductStatus($productId, $active)

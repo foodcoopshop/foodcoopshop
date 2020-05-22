@@ -34,7 +34,7 @@ use Cake\Core\Configure;
         }
 
     ?>
-   
+
     <div class="filter-container-not-fixed">
         <?php
         if (!empty($localSyncProducts)) {
@@ -61,12 +61,12 @@ use Cake\Core\Configure;
 
     </div>
     <div class="sc"></div>
-    
+
     <?php
     echo $this->element('tabs', [
         'url' => $this->request->getUri()->getPath()
     ]);
-    
+
     echo '<p>';
         if (!empty($emptyProductsString)) {
             echo $emptyProductsString;
@@ -78,11 +78,11 @@ use Cake\Core\Configure;
             echo '</p>';
         }
     ?>
-    
+
     <h2 class="info" id="everything-allright">
-    	<?php echo __d('network', 'Perfect!_You_can_lean_back_and_relax_as_all_products_are_synchronized.'); ?>
+        <?php echo __d('network', 'Perfect!_You_can_lean_back_and_relax_as_all_products_are_synchronized.'); ?>
     </h2>
-    
+
     <div class="product-list"></div>
-    
+
 </div>

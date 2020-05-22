@@ -23,9 +23,9 @@ use Cake\I18n\Time;
  */
 class CronjobsTable extends AppTable
 {
-    
+
     public $cronjobRunDay;
-    
+
     public function initialize(array $config): void
     {
         parent::initialize($config);
@@ -33,10 +33,10 @@ class CronjobsTable extends AppTable
             'foreignKey' => 'cronjob_id'
         ]);
     }
-    
+
     public function run()
     {
-        
+
         if (empty($this->cronjobRunDay)) {
             $this->cronjobRunDay = Configure::read('app.timeHelper')->getTimeObjectUTC(date(Configure::read('DateFormat.DatabaseWithTimeAlt')))->toUnixString();
         }
@@ -46,19 +46,19 @@ class CronjobsTable extends AppTable
                 'Cronjobs.active' => APP_ON
             ]
         ])->all();
-        
+
         $executedCronjobs = [];
-        
+
         foreach($cronjobs as $cronjob) {
-            
+
             if (!$this->executeCronjobRespectingTimeInterval($cronjob)) {
                 continue;
             }
-            
+
             $cronjobRunDayObject = new Time($this->cronjobRunDay);
             // to be able to use local time in fcs_cronjobs:time_interval, the current time needs to be adabped according to the local timezone
             $cronjobRunDayObject = $cronjobRunDayObject->modify(Configure::read('app.timeHelper')->getTimezoneDiffInSeconds($this->cronjobRunDay) . ' seconds');
-            
+
             $cronjobNotBeforeTimeWithCronjobRunDay = new Time($cronjob->not_before_time);
             $cronjobNotBeforeTimeWithCronjobRunDay->setDate(
                 $cronjobRunDayObject->year,
@@ -67,7 +67,7 @@ class CronjobsTable extends AppTable
             );
             $cronjobNotBeforeTimeWithCronjobRunDay->modify(Configure::read('app.timeHelper')->getTimezoneDiffInSeconds($cronjobNotBeforeTimeWithCronjobRunDay->getTimestamp()) . ' seconds');
             $cronjobNotBeforeTimeWithCronjobRunDay->setTimezone('UTC');
-            
+
             $cronjobLog = $this->CronjobLogs->find('all', [
                 'conditions' => [
                     'CronjobLogs.cronjob_id' => $cronjob->id,
@@ -77,32 +77,32 @@ class CronjobsTable extends AppTable
                     'CronjobLogs.created' => 'DESC'
                 ]
             ])->first();
-            
+
             $executeCronjob = true;
-            
+
             $timeIntervalObject = $cronjobNotBeforeTimeWithCronjobRunDay->copy()->modify('- 1' . $cronjob->time_interval);
             if (!(empty($cronjobLog) || $cronjobLog->success == APP_OFF || $cronjobLog->created->lt($timeIntervalObject))) {
                 $executeCronjob = false;
             }
-            
+
             if (!empty($cronjobLog) && $cronjobLog->success == APP_ON && $cronjobLog->created->gt($cronjobNotBeforeTimeWithCronjobRunDay)) {
                 $executeCronjob = false;
             }
-            
+
             if ($cronjobNotBeforeTimeWithCronjobRunDay->gt($cronjobRunDayObject)) {
                 $executeCronjob = false;
             }
-            
+
             if ($executeCronjob) {
                 $executedCronjobs[] = $this->executeCronjobAndSaveLog($cronjob, $cronjobRunDayObject);
             }
-            
+
         }
-        
+
         return $executedCronjobs;
-        
+
     }
-    
+
     private function executeCronjobAndSaveLog($cronjob, $cronjobRunDayObject)
     {
         $shellName = $cronjob->name . 'Shell';
@@ -120,7 +120,7 @@ class CronjobsTable extends AppTable
                 $success = 0;
             }
         }
-        
+
         $entity = $this->CronjobLogs->newEntity(
             [
                 'cronjob_id' => $cronjob->id,
@@ -129,25 +129,25 @@ class CronjobsTable extends AppTable
             ]
         );
         $this->CronjobLogs->save($entity);
-        
+
         return [
             'name' => $cronjob->name,
             'time_interval' => $cronjob->time_interval,
             'success' => $success
         ];
     }
-    
+
     private function executeCronjobRespectingTimeInterval($cronjob)
     {
-        
+
         $tmpLocale = I18n::getLocale();
         I18n::setLocale('en_US');
         $currentWeekday = Configure::read('app.timeHelper')->getWeekdayName(date('w', $this->cronjobRunDay));
         I18n::setLocale($tmpLocale);
-        
+
         $currentDayOfMonth = date('j', $this->cronjobRunDay);
         $result = false;
-        
+
         switch($cronjob->time_interval) {
             case 'day':
                 $result = true;
@@ -171,9 +171,9 @@ class CronjobsTable extends AppTable
                 }
                 break;
         }
-        
+
         return $result;
-        
+
     }
-    
+
 }

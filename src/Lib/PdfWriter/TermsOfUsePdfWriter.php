@@ -18,7 +18,7 @@ use App\Lib\Pdf\ListTcpdf;
 
 class TermsOfUsePdfWriter extends PdfWriter
 {
-    
+
     public function __construct()
     {
         $this->setPdfLibrary(new ListTcpdf());

@@ -17,7 +17,7 @@
     }
 }
 a {
-	color: #333;
+    color: #333;
 }
 a:not(.btn), a:not(.btn):visited, a:not(.btn):active,
 a:not([href]):not([tabindex]),a:not([href]):not([tabindex]):hover, a:not([href]):not([tabindex]):focus {
@@ -25,18 +25,18 @@ a:not([href]):not([tabindex]),a:not([href]):not([tabindex]):hover, a:not([href])
   text-decoration: none ! important;
 }
 .btn-success:active {
-	border-color: transparent;
+    border-color: transparent;
 }
 a:not(.btn):hover {
   color: #006400;
   text-decoration: none;
 }
 h4 {
-	font-size: 18px;
+    font-size: 18px;
 }
 button,
 :focus {
-	outline: none ! important;
+    outline: none ! important;
 }
 .btn:focus,
 .btn:active,
@@ -47,7 +47,7 @@ button,
 .btn-success:focus:active,
 .btn-danger:focus:active,
 .btn-warning:focus:active {
-	opacity: 1;
+    opacity: 1;
 }
 .btn-success:focus,
 .btn-success:active,
@@ -65,12 +65,12 @@ button,
     background-color: #719f41;
 }
 .btn-outline-light {
-	color: #333;
-  	background-color: #fff;
-  	border-color: #ccc;
+    color: #333;
+      background-color: #fff;
+      border-color: #ccc;
 }
 .btn-outline-light.disabled {
-	color: #333;
+    color: #333;
 }
 .btn-outline-light:hover,
 .btn-outline-light:active:focus {
@@ -87,7 +87,7 @@ button,
 }
 .btn-outline-light.disabled,
 .btn-outline-light:disabled {
-	background-color: #fff;
+    background-color: #fff;
 }
 
 .btn-danger:hover,
@@ -106,13 +106,13 @@ button,
 .btn-warning {
     background-color: #f0ad4e;
     border-color: #eea236;
-	color: #fff;
+    color: #fff;
 }
 .btn-warning:hover,
 .btn-warning:active {
-	color: #fff ! important;
-	background-color: #ec971f ! important;
-	border-color: #d58512 ! important;
+    color: #fff ! important;
+    background-color: #ec971f ! important;
+    border-color: #d58512 ! important;
 }
 .btn-success:hover,
 .btn-danger:hover,
@@ -121,7 +121,7 @@ button,
 }
 .sc { clear: both; height: 0px; font-size: 0px; background-color: transparent; }
 .hide {
-	display: none;
+    display: none;
 }
 h1 {
     font-size: 26px;
@@ -159,7 +159,7 @@ h2.warning {
     background-color: #f3515c;
 }
 h2.info2 {
-	background-color: orange;
+    background-color: orange;
 }
 #installation-logo {
     border-radius: 10px;
@@ -188,7 +188,7 @@ h2.info2 {
     font-size: 17px;
 }
 #flashMessage .closer .fa-times-circle:hover {
-	color: #ccc;
+    color: #ccc;
 }
 #flashMessage.error {
     color: #fff;
@@ -291,7 +291,7 @@ a.toggle-link.collapsed i:before {
     bottom: 20px;
 }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
-	font-family: 'Open Sans';
+    font-family: 'Open Sans';
 }
 .ui-dialog .ui-dialog-content {
     position: static;
@@ -519,12 +519,12 @@ i.gold {
 i.fa.ok,
 i.fas.ok,
 i.far.ok {
-	color: #719f41;
+    color: #719f41;
 }
 i.fa.not-ok,
 i.fas.not-ok,
 i.far.not-ok {
-	color: red;
+    color: red;
 }
 tr.selected td > i.fas,
 tr.selected td > i.far,
@@ -532,10 +532,10 @@ tr.selected td > span > i.fas,
 tr.selected td > span > i.far,
 tr.selected td > div > i.fas,
 tr.selected td > div > i.far {
-	color: #fff;
+    color: #fff;
 }
 .tooltipster-sidetip.tooltipster-light .tooltipster-box {
-	background: #fff ! important;
+    background: #fff ! important;
 }
 .tooltipster-sidetip.tooltipster-light .tooltipster-box img:not(.no-max-width) {
     max-width: 400px;

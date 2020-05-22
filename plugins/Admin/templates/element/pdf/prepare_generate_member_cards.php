@@ -29,7 +29,7 @@ foreach($customers as $customer) {
     }
     $pdf->table .= '<td style="width:240px;">'; // roughly 85,60mm x 53,98mm
     $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0">';
-        
+
         // START ROW logo and name block
         $pdf->table .= '<tr>';
             $pdf->table .= '<td style="width:80px;">';
@@ -52,7 +52,7 @@ foreach($customers as $customer) {
             $pdf->table .= '</td>';
         $pdf->table .= '</tr>';
         // END ROW with logo and name block
-        
+
         // START ROW barcode and customer image
         $pdf->table .= '<tr>';
             $pdf->table .= '<td style="width:120px;">';
@@ -80,7 +80,7 @@ foreach($customers as $customer) {
             $pdf->table .= '</td>';
         $pdf->table .= '</tr>';
         // END ROW barcode and customer image
-        
+
     $pdf->table .= '</table>';
     $pdf->table .= '</td>';
     if (!$pairRecord || $i==$customers->count()-1) {

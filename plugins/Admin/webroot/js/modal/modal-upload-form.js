@@ -14,15 +14,15 @@
 foodcoopshop.ModalUploadForm = {
 
     init : function(button, saveMethod, uploadType) {
-        
+
         $(button).each(function () {
-            
+
             var modalSelector = '#upload-form';
 
             $(this).on('click', function () {
-                
+
                 var objectId = $(this).data('objectId');
-                
+
                 var uploadForm = $('form#mini-upload-form-' + uploadType + '-' + objectId).clone();
                 var heading = uploadForm.find('.heading').html();
 
@@ -31,9 +31,9 @@ foodcoopshop.ModalUploadForm = {
                     heading,
                     ''
                 );
-                
+
                 foodcoopshop.ModalUploadForm.getOpenHandler($(this), modalSelector, uploadForm, uploadType);
-                
+
                 foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
                     saveMethod(modalSelector);
                 });
@@ -41,11 +41,11 @@ foodcoopshop.ModalUploadForm = {
                 $(modalSelector).on('hidden.bs.modal', function (e) {
                     foodcoopshop.ModalUploadForm.getCloseHandler(modalSelector);
                 });
-                
+
             });
-            
+
         });
-        
+
     },
 
     getCloseHandler : function(modalSelector) {
@@ -53,7 +53,7 @@ foodcoopshop.ModalUploadForm = {
     },
 
     getOpenHandler : function(button, modalSelector, html, uploadType) {
-        
+
         foodcoopshop.Modal.removeTooltipster();
 
         // avoid double id in dom

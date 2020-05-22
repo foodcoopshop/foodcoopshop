@@ -14,7 +14,7 @@
  */
 ?>
 <div class="logo-wrapper">
-	<a class="not-in-moblie-menu" href="<?php echo $this->Slug->getHome(); ?>" title="<?php echo __('Home'); ?>">
-		<img class="logo" src="/files/images/logo.jpg?<?php echo filemtime(WWW_ROOT.'files'.DS.'images'.DS.'logo.jpg')?>" />
-	</a>
+    <a class="not-in-moblie-menu" href="<?php echo $this->Slug->getHome(); ?>" title="<?php echo __('Home'); ?>">
+        <img class="logo" src="/files/images/logo.jpg?<?php echo filemtime(WWW_ROOT.'files'.DS.'images'.DS.'logo.jpg')?>" />
+    </a>
 </div>

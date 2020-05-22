@@ -17,31 +17,31 @@ use Cake\Core\Configure;
 ?>
 <?php echo $this->element('email/tableHead'); ?>
     <tbody>
-    
+
         <?php echo $this->element('email/greeting', ['data' => $data]); ?>
-    
+
         <tr>
             <td>
-                
+
                 <p><?php echo __('Your_registration_at_{0}_has_just_been_successful!', [Configure::read('appDb.FCS_APP_NAME')])?></p>
-                
+
                 <p>
                     <b><?php echo __('Your_accout_was_created_but_not_activated_which_means_you_cannot_login_yet!'); ?></b>
                 </p>
-                
+
                 <p>
                     <?php echo __('You_will_get_an_email_as_soon_as_we_activated_you.')?>
                 </p>
-                
+
                 <?php
                 if (Configure::read('appDb.FCS_REGISTRATION_EMAIL_TEXT') != '') {
                     echo Configure::read('appDb.FCS_REGISTRATION_EMAIL_TEXT');
                 }
                 ?>
-                
+
             </td>
-            
+
         </tr>
-        
+
     </tbody>
 <?php echo $this->element('email/tableFoot'); ?>

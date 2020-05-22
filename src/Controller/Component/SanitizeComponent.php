@@ -46,7 +46,7 @@ class SanitizeComponent extends Component
         $config->set('Attr.AllowedFrameTargets', ['_blank']);
         $config->set('Attr.EnableID', true); // enables anchors: <a name="xxx">Text</a>
         $purifier = new \HTMLPurifier($config);
-        
+
         array_walk_recursive($data, function (&$item, $key) use ($excludedFields, $purifier) {
             if (is_string($item)) {
                 if (!in_array($key, $excludedFields)) {

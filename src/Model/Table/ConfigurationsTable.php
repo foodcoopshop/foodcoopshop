@@ -25,7 +25,7 @@ class ConfigurationsTable extends AppTable
 
     public const CASHLESS_PAYMENT_ADD_TYPE_MANUAL = 'manual';
     public const CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD = 'list-upload';
-    
+
     public function initialize(array $config): void
     {
         $this->setTable('configuration');
@@ -82,7 +82,7 @@ class ConfigurationsTable extends AppTable
         ]);
         return $validator;
     }
-    
+
     public function validationFcsBackupEmailAddressBcc(Validator $validator)
     {
         $validator->allowEmptyString('value');
@@ -136,7 +136,7 @@ class ConfigurationsTable extends AppTable
     {
         return $this->getNumberRangeValidator($validator, 'value', 0, 1);
     }
-    
+
     public function validationFcsProductAvailabilityLow(Validator $validator)
     {
         $validator->numeric('value', __('Decimals_are_not_allowed.'));
@@ -154,7 +154,7 @@ class ConfigurationsTable extends AppTable
         $values = array_keys(Configure::read('app.configurationHelper')->getCashlessPaymentAddTypeOptions());
         return $validator->inList('value', $values, __('The_following_values_are_valid:') . ' ' . implode(', ', $values));
     }
-    
+
     public function validationFcsCustomerGroup(Validator $validator)
     {
         return $this->getNumberRangeValidator($validator, 'value', CUSTOMER_GROUP_MEMBER, CUSTOMER_GROUP_ADMIN);

@@ -22,11 +22,11 @@ class RaiffeisenBankingReader extends BankingReader {
     {
         $this->setDelimiter(';');
     }
-    
+
     public function checkStructureForRecord($record): bool
     {
         $result = false;
-        
+
         if (count($record) == 7 &&
             strlen($record[0]) == 10 &&
             strlen($record[2]) == 10 &&
@@ -37,33 +37,33 @@ class RaiffeisenBankingReader extends BankingReader {
             ) {
             $result = true;
         }
-        
+
         return $result;
     }
-    
+
     public function equalizeStructure(array $records): array
     {
-        
+
         $preparedRecords = [];
         foreach($records as $record){
-            
+
             // remove empty array elements
             $record = array_filter($record);
-            
+
             $record['content'] = $record[1];
-            
+
             $record['amount'] = $record[3];
-            
+
             // create a valid date format: 01.02.2019 02:51:14:563 replaces last : to . (microseconds)
             $record['date'] =  substr_replace($record[5], '.', 19, 1);
-            
+
             $preparedRecords[] = $record;
         }
-        
+
         return $preparedRecords;
     }
 
-    
+
 }
 
 ?>

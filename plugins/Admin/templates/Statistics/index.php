@@ -32,7 +32,7 @@ $this->element('addScript', [
             'default' => $manufacturerId != '' ? $manufacturerId : ''
             ]);
         }
-        
+
         echo $this->Form->control('year', [
             'type' => 'select',
             'label' => '',
@@ -40,10 +40,10 @@ $this->element('addScript', [
             'options' => $years,
             'default' => $year != '' ? $year : ''
         ]);
-        
+
         ?>
         <div class="right">
-        	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers'))]); ?>
+            <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers'))]); ?>
         </div>
     <?php echo $this->Form->end(); ?>
 </div>
@@ -89,9 +89,9 @@ if ($manufacturerId == 'all') {
 
 <canvas id="myBarChart" width="1000" height="500" style="margin-top:10px;"></canvas>
 <?php if ($year == '' && count($xAxisDataLineChart) > 1) { ?>
-	<canvas id="myLineChart" width="1000" height="500" style="margin-top:30px;"></canvas>
+    <canvas id="myLineChart" width="1000" height="500" style="margin-top:30px;"></canvas>
 <?php } ?>
 <?php if ($manufacturerId == 'all') { ?>
-	<canvas id="myPieChart" width="1000" height="500" style="margin-top:30px;margin-bottom:30px;"></canvas>
+    <canvas id="myPieChart" width="1000" height="500" style="margin-top:30px;margin-bottom:30px;"></canvas>
 <?php } ?>
 <div class="sc"></div>

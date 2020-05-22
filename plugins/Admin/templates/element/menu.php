@@ -166,7 +166,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             ]
         ];
     }
-    
+
     $menu[] = $manufacturerMenu;
 
     $menu[] = [
@@ -190,7 +190,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
     if (Configure::read('app.isBlogFeatureEnabled')) {
         $menu[] = $blogPostsMenuElement;
     }
-    
+
     $homepageAdministrationElement['children'][] = [
         'slug' => $this->Slug->getPagesListAdmin(),
         'name' => __d('admin', 'Pages'),
@@ -313,7 +313,7 @@ if ($appAuth->isManufacturer()) {
         $menu[] = $blogPostsMenuElement;
     }
     $menu[] = $actionLogsMenuElement;
-    
+
     $menu[] = [
         'slug' => $this->Slug->getMyStatistics(),
         'name' => __d('admin', 'Turnover_statistics'),

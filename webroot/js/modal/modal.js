@@ -21,18 +21,18 @@ foodcoopshop.Modal = {
             callback();
         });
     },
-    
+
     resetButtons: function(selector) {
         var successButton = $(selector + ' .modal-footer .btn-success');
         foodcoopshop.Helper.removeSpinnerFromButton(successButton, 'fa-check');
         foodcoopshop.Helper.enableButton(successButton);
     },
-    
+
     appendFlashMessage : function(selector, message) {
         foodcoopshop.Helper.showErrorMessage(message);
         $(selector + ' .modal-header').after($('#flashMessage'));
     },
-    
+
     /**
      * on mobile tooltipster is triggered on click - interferes with ckeditor
      */
@@ -55,13 +55,13 @@ foodcoopshop.Modal = {
     },
 
     appendModalToDom: function(elementId, title, body, buttons) {
-        
-        buttons = buttons || 
+
+        buttons = buttons ||
             [
                 this.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.save, 'fa fa-check'),
                 this.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.cancel, null, true)
             ];
-        
+
         var html = '<div id="' + elementId.replace(/#/, '') + '" class="modal" tabindex="-1" role="dialog">';
                 html += '<div class="modal-dialog" role="document">';
                     html += '<div class="modal-content">';
@@ -78,18 +78,18 @@ foodcoopshop.Modal = {
                 html += '</div>';
             html += '</div>';
         html += '</div>';
-        
+
         $('body').append(html);
-        
+
         this.makeDraggable(elementId);
     },
-    
+
     destroy : function(modalId, document) {
         $(modalId, document).remove();
         $('.modal-backdrop', document).remove();
         $('body', document).removeClass('modal-open');
     },
-    
+
     makeDraggable : function(elementId) {
         $(elementId + ' .modal-header').on('mousedown', function(mousedownEvt) {
             var $draggable = $(this);
@@ -111,7 +111,7 @@ foodcoopshop.Modal = {
                     'top': 0
                 });
             });
-        });        
+        });
     }
 
 };

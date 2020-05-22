@@ -14,19 +14,19 @@
 foodcoopshop.ModalCustomerCommentEdit = {
 
     init : function() {
-        
+
         var modalSelector = '#customer-comment-edit-form';
-        
+
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
             foodcoopshop.LocalizedJs.modalCustomer.ChangeMemberComment,
             foodcoopshop.ModalCustomerCommentEdit.getHtml()
         );
-        
+
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             foodcoopshop.ModalCustomerCommentEdit.getSuccessHandler(modalSelector);
         });
-        
+
         $(modalSelector).on('hidden.bs.modal', function (e) {
             foodcoopshop.ModalCustomerCommentEdit.getCloseHandler();
         });
@@ -34,9 +34,9 @@ foodcoopshop.ModalCustomerCommentEdit = {
         $('.customer-comment-edit-button').on('click', function () {
             foodcoopshop.ModalCustomerCommentEdit.getOpenHandler($(this), modalSelector);
         });
-        
+
     },
-        
+
     getHtml : function() {
         var html = '<label>' + foodcoopshop.LocalizedJs.admin.Member + ': <b></b></label>';
         html += '<div class="textarea-wrapper">';
@@ -45,14 +45,14 @@ foodcoopshop.ModalCustomerCommentEdit = {
         html += '<input type="hidden" name="dialogCustomerId" id="dialogCustomerId" value="" />';
         return html;
     },
-    
+
     getCloseHandler : function() {
         $('#cke_dialogCustomerComment').val('');
         $('#dialogCustomerId').val('');
     },
 
     getSuccessHandler : function() {
-        
+
         if ($('#dialogCustomerId').val() == '') {
             return false;
         }
@@ -73,11 +73,11 @@ foodcoopshop.ModalCustomerCommentEdit = {
             }
         );
     },
-    
+
     getOpenHandler : function(button, modalSelector) {
-        
+
         foodcoopshop.Modal.removeTooltipster();
-        
+
         $(modalSelector).modal();
 
         foodcoopshop.Helper.initCkeditor('dialogCustomerComment', true);
@@ -86,16 +86,16 @@ foodcoopshop.ModalCustomerCommentEdit = {
         if (text == foodcoopshop.LocalizedJs.admin.AddComment) {
             text = '';
         }
-        
+
         var customerId = button.closest('tr').find('td:nth-child(2)').html();
         var customerName = button.closest('tr').find('td.name').text();
-        
+
         CKEDITOR.instances['dialogCustomerComment'].setData(text);
         $(modalSelector + ' #dialogCustomerId').val(customerId);
-        
+
         $(modalSelector + ' #dialogCustomerId').val(customerId);
         $(modalSelector + ' label b').html(customerName);
-        
+
     }
 
 };

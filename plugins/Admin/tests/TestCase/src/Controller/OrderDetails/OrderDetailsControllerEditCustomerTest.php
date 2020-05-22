@@ -18,18 +18,18 @@ use Cake\Core\Configure;
 
 class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestCase
 {
-    
+
     public $newCustomerId = 88;
     public $editCustomerReason = 'The member forgot his product and I took it.';
     public $editCustomerAmount = 1;
- 
-    
+
+
     public function testEditOrderDetailCustomerAsManufacturer() {
         $this->loginAsVegetableManufacturer();
         $this->editOrderDetailCustomer($this->orderDetailIdA, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount);
         $this->assertNotPerfectlyImplementedAccessRestricted();
     }
-    
+
     public function testEditOrderDetailCustomerAsSuperadminNotParted() {
         $this->loginAsSuperadmin();
         $this->editOrderDetailCustomer($this->orderDetailIdA, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount);
@@ -55,7 +55,7 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
             $i++;
         }
     }
-    
+
     public function testEditOrderDetailCustomerAsSuperadminPartedIn2And5WithUnits()
     {
         $this->loginAsSuperadmin();
@@ -67,29 +67,29 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
         $cart = $this->getCartById($cartId);
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
-        
+
         $this->editOrderDetailCustomer($orderDetailId, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount);
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId, 5]);
-        
+
         $this->assertEquals(Configure::read('test.superadminId'), $changedOrderDetails[0]->id_customer);
         $this->assertEquals($this->newCustomerId, $changedOrderDetails[1]->id_customer);
-        
+
         $this->assertEquals($changedOrderDetails[0]->id_tax, $changedOrderDetails[1]->id_tax);
-        
+
         $this->assertEquals(5, $changedOrderDetails[0]->product_amount);
         $this->assertEquals(2, $changedOrderDetails[1]->product_amount);
-        
+
         $this->assertEquals(26.25, $changedOrderDetails[0]->total_price_tax_incl);
         $this->assertEquals(10.5, $changedOrderDetails[1]->total_price_tax_incl);
-        
+
         $this->assertEquals(23.85, $changedOrderDetails[0]->total_price_tax_excl);
         $this->assertEquals(9.54, $changedOrderDetails[1]->total_price_tax_excl);
-        
+
         $this->assertEquals(1750, $changedOrderDetails[0]->order_detail_unit->product_quantity_in_units);
         $this->assertEquals(500, $changedOrderDetails[1]->order_detail_unit->product_quantity_in_units);
-        
+
     }
-    
+
     public function testEditOrderDetailCustomerAsSuperadminPartedIn2And5()
     {
         $this->loginAsSuperadmin();
@@ -101,29 +101,29 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
         $cart = $this->getCartById($cartId);
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
-        
+
         $this->editOrderDetailCustomer($orderDetailId, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount);
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$orderDetailId, 5]);
-        
+
         $this->assertEquals(Configure::read('test.superadminId'), $changedOrderDetails[0]->id_customer);
         $this->assertEquals($this->newCustomerId, $changedOrderDetails[1]->id_customer);
-        
+
         $this->assertEquals($changedOrderDetails[0]->id_tax, $changedOrderDetails[1]->id_tax);
-        
+
         $this->assertEquals(5, $changedOrderDetails[0]->product_amount);
         $this->assertEquals(2, $changedOrderDetails[1]->product_amount);
-        
+
         $this->assertEquals(9.1, $changedOrderDetails[0]->total_price_tax_incl);
         $this->assertEquals(3.64, $changedOrderDetails[1]->total_price_tax_incl);
-        
+
         $this->assertEquals(8.25, $changedOrderDetails[0]->total_price_tax_excl);
         $this->assertEquals(3.30, $changedOrderDetails[1]->total_price_tax_excl);
-        
+
         $this->assertEquals(0.85, $changedOrderDetails[0]->order_detail_tax->total_amount);
         $this->assertEquals(0.34, $changedOrderDetails[1]->order_detail_tax->total_amount);
-        
+
     }
-    
+
     private function editOrderDetailCustomer($orderDetailId, $customerId, $editCustomerReason, $amount)
     {
         $this->httpClient->post(
@@ -136,5 +136,5 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
             ]
         );
     }
-    
+
 }

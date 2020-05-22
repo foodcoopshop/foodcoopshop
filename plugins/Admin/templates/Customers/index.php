@@ -28,17 +28,17 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".ModalCustomerCommentEdit.init();"
     ]);
     ?>
-    
+
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php echo $this->Form->control('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'default' => isset($active) ? $active : '']); ?>
             <?php echo __d('admin', 'Last_pickup_day'); ?> <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
             <div class="right">
-            	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_members'))]); ?>
+                <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_members'))]); ?>
             </div>
         <?php echo $this->Form->end(); ?>
     </div>
-    
+
 <?php
 
 echo '<table class="list">';
@@ -78,7 +78,7 @@ foreach ($customers as $customer) {
     echo $this->element('rowMarker/rowMarker', [
         'show' => true
     ]);
-    
+
     echo '<td class="hide">';
     echo $customer->id_customer;
     echo '</td>';
@@ -123,7 +123,7 @@ foreach ($customers as $customer) {
             }
             echo '<i class="'.$fontawesomeClass.' fa-address-card ok fa-lg customer-details-read-button" title="'.h($customerDetails).'"></i>';
         echo '</div>';
-    
+
     echo '</td>';
 
     echo '<td>';

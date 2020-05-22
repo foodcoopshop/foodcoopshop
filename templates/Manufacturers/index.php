@@ -59,7 +59,7 @@ foreach ($manufacturers as $manufacturer) {
                     echo '<h2 class="info">'.__('Delivery_break') . ': ' . $manufacturerNoDeliveryDaysString.'</h2>';
                 }
             }
-            
+
         echo '</div>';
 
         echo '<div class="third-column">';

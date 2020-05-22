@@ -26,7 +26,7 @@ class InvoicesTable extends AppTable
         $newInvoiceNumber = $this->formatInvoiceNumber($invoiceNumber);
         return $newInvoiceNumber;
     }
-    
+
     /**
      * turns eg 24 into 0024
      * @param int $invoiceNumber
@@ -35,5 +35,5 @@ class InvoicesTable extends AppTable
     {
         return str_pad($invoiceNumber, 4, '0', STR_PAD_LEFT);
     }
-    
+
 }

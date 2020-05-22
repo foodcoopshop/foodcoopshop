@@ -21,9 +21,9 @@ use Cake\ORM\TableRegistry;
 
 class SendInvoicesShell extends AppShell
 {
-    
+
     public $cronjobRunDay;
-    
+
     /**
      * sends invoices to manufacturers who have order details with pickup_day of last month
      */
@@ -43,10 +43,10 @@ class SendInvoicesShell extends AppShell
         } else {
             $this->cronjobRunDay = $this->args[0];
         }
-        
+
         $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfLastMonth($this->cronjobRunDay);
         $dateTo = Configure::read('app.timeHelper')->getLastDayOfLastMonth($this->cronjobRunDay);
-        
+
         // 1) get all manufacturers (not only active ones)
         $manufacturers = $this->Manufacturer->find('all', [
             'order' => [
@@ -72,7 +72,7 @@ class SendInvoicesShell extends AppShell
                 'Products'
             ]
         ]);
-        
+
         if (!Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES')) {
             $orderDetails->where(function ($exp, $query) {
                 return $exp->or_([
@@ -107,9 +107,9 @@ class SendInvoicesShell extends AppShell
 
         $tableData = '';
         $sumPrice = 0;
-        
+
         foreach ($manufacturers as $manufacturer) {
-            
+
             $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
             $invoiceNumber = $this->Manufacturer->Invoices->getNextInvoiceNumber($manufacturer->invoices);
             $invoiceLink = '/admin/lists/getInvoice?file=' . str_replace(
@@ -117,9 +117,9 @@ class SendInvoicesShell extends AppShell
                     $manufacturer->name, $manufacturer->id_manufacturer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $invoiceNumber
                 )
             );
-            
+
             if (!empty($manufacturer->current_order_count)) {
-                
+
                 $price = $manufacturer->order_detail_price_sum;
                 $sumPrice += $price;
                 $variableMemberFeeAsString = '';
@@ -149,14 +149,14 @@ class SendInvoicesShell extends AppShell
                     );
                 $tableData .= '</td>';
                 $tableData .= '</tr>';
-                
+
                 $url = $this->httpClient->adminPrefix . '/manufacturers/sendInvoice?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
                 $this->httpClient->get($url);
                 $i ++;
-                
+
             }
         }
-        
+
         if ($tableData != '') {
             $outString .= '<table class="list no-clone-last-row">';
             $outString .= '<tr>';
@@ -171,7 +171,7 @@ class SendInvoicesShell extends AppShell
             $outString .= '<tr><td colspan="4" align="right">'.__('Total_sum').'</td><td align="right"><b>'.Configure::read('app.numberHelper')->formatAsCurrency($sumPrice).'</b></td><td></td></tr>';
             $outString .= '</table>';
         }
-        
+
         $this->httpClient->doFoodCoopShopLogout();
 
         // START send email to accounting employee
@@ -199,8 +199,8 @@ class SendInvoicesShell extends AppShell
         $this->out($outString);
 
         $this->out($this->getRuntime());
-        
+
         return true;
-        
+
     }
 }

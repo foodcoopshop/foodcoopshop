@@ -31,7 +31,7 @@ $this->element('addScript', [
     <div class="filter-container">
         <h1><?php echo $title_for_layout; ?></h1>
         <div class="right">
-        	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_settings'))]); ?>
+            <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_settings'))]); ?>
         </div>
     </div>
 
@@ -71,7 +71,7 @@ $this->element('addScript', [
             if (! Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && $configuration->name == 'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED') {
                 continue;
             }
-            
+
             echo '<tr>';
 
                 echo '<td class="first">';
@@ -115,7 +115,7 @@ $this->element('addScript', [
             echo '</tr>';
         }
         ?>
-        
+
         <?php if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) { ?>
             <tr>
                 <td>
@@ -198,7 +198,7 @@ $this->element('addScript', [
                 echo '</td>';
 
                 echo '<td>';
-                
+
                     switch($configuration->name) {
                         case 'FCS_WEEKLY_PICKUP_DAY':
                             echo $this->MyTime->getWeekdayName($configuration->value);
@@ -210,13 +210,13 @@ $this->element('addScript', [
                             echo $configuration->value;
                             break;
                     }
-                
+
                 echo '</td>';
 
             echo '</tr>';
         }
         ?>
-        
+
         <tr>
             <td><?php echo __d('admin', 'Version_FoodCoopShop'); ?></td>
             <td><?php echo $versionFoodCoopShop; ?></td>
@@ -266,9 +266,9 @@ $this->element('addScript', [
 
         <?php if (Configure::read('app.isDepositPaymentCashless')) { ?>
             <tr>
-            	<td>app.depositPaymentCashlessStartDate</td>
-            	<td><?php echo date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(Configure::read('app.depositPaymentCashlessStartDate'))); ?></td>
-        	</tr>
+                <td>app.depositPaymentCashlessStartDate</td>
+                <td><?php echo date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(Configure::read('app.depositPaymentCashlessStartDate'))); ?></td>
+            </tr>
         <?php } ?>
 
         <tr>
@@ -280,12 +280,12 @@ $this->element('addScript', [
             <td>app.customerMainNamePart</td>
             <td><?php echo Configure::read('app.customerMainNamePart'); ?></td>
         </tr>
-        
+
         <tr>
             <td>app.isCustomerAllowedToModifyOwnOrders</td>
             <td><?php echo Configure::read('app.isCustomerAllowedToModifyOwnOrders') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
-        
+
         <tr>
             <td>app.showStatisticsForAdmins</td>
             <td><?php echo Configure::read('app.showStatisticsForAdmins') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>

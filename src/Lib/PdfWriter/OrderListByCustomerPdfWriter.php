@@ -18,12 +18,12 @@ use App\Lib\Pdf\ListTcpdf;
 
 class OrderListByCustomerPdfWriter extends PdfWriter
 {
-    
+
     public function __construct()
     {
         $this->plugin = 'Admin';
         $this->setPdfLibrary(new ListTcpdf());
     }
-    
+
 }
 

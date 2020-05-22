@@ -54,7 +54,7 @@ if ($isDeleteAllowedGlobally) {
         <?php echo $this->Form->end(); ?>
     <?php } ?>
     <div class="right">
-    	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_paying_with_time_module'))]); ?>
+        <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_paying_with_time_module'))]); ?>
     </div>
 </div>
 

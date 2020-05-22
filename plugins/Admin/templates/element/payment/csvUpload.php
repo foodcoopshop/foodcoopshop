@@ -34,7 +34,7 @@ if (empty($csvRecords)) {
 if (empty($csvPayments)) {
     return;
 }
-    
+
 echo $this->Form->create($csvPayments, [
     'id' => 'csv-records'
 ]);
@@ -57,9 +57,9 @@ echo '<th style="text-align:right;">' . __d('admin', 'Transaction_added_on'). '<
 
 $i = 0;
 foreach($csvPayments as $csvPayment) {
-    
+
     echo '<tr class="' . (!$csvPayment->selected ? ' not-selected' : '') . '">';
-    
+
     echo '<td style="text-align:center;">';
     echo $this->Form->control('Payments.'.$i.'.selected', [
         'type' => 'checkbox',
@@ -68,7 +68,7 @@ foreach($csvPayments as $csvPayment) {
         'checked' => $csvPayment->selected,
     ]);
     echo '</td>';
-    
+
     echo '<td>';
     echo $this->Form->hidden('Payments.'.$i.'.original_id_customer');
     if ($csvPayment->original_id_customer > 0) {
@@ -90,7 +90,7 @@ foreach($csvPayments as $csvPayment) {
         ]);
     }
     echo  '</td>';
-    
+
     echo '<td style="text-align:center;">';
     if ($csvPayment->already_imported) {
         echo '<span style="color:red;float:left;"">'.__d('admin', 'This_transaction_was_already_imported.') . '</span>';
@@ -99,22 +99,22 @@ foreach($csvPayments as $csvPayment) {
     echo $this->Form->hidden('Payments.'.$i.'.content', ['value' => $csvPayment->content]);
     echo $this->Form->hidden('Payments.'.$i.'.already_imported', ['value' => $csvPayment->already_imported]);
     echo '</td>';
-    
+
     echo '<td style="text-align:right;">';
     echo $this->Form->hidden('Payments.'.$i.'.amount');
     echo $this->Number->formatAsCurrency($csvPayment->amount);
     echo '</td>';
-    
+
     echo '<td style="text-align:right;">';
     echo $this->Form->hidden('Payments.'.$i.'.date');
     $date = new FrozenTime($csvPayment->date);
     echo $date->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort'));
     echo '</td>';
-    
+
     echo '</tr>';
-    
+
     $i++;
-    
+
 }
 
 echo '</table>';

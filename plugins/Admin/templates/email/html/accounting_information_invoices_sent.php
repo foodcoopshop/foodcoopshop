@@ -37,7 +37,7 @@ use Cake\Core\Configure;
                 <?php $link = Configure::read('app.cakeServerName') . $this->Slug->getActionLogsList() . '?types[]=cronjob_send_invoices&dateFrom='.$formattedCurrentDay.'&dateTo='.$formattedCurrentDay; ?>
                 <a href="<?php echo $link; ?>"><?php echo $link; ?></a>
             </p>
-            
+
             <?php if ($this->MyHtml->paymentIsCashless()) { ?>
                 <p>
                     <?php echo __d('admin', 'This_is_a_great_opportunity_to_check_the_credit_uploads_link_below.')?><br />

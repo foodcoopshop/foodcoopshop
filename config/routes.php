@@ -46,11 +46,11 @@ use Cake\Routing\RouteBuilder;
 $routes->setRouteClass(DashedRoute::class);
 
 $routes->scope('/', function (RouteBuilder $builder) {
-    
+
     $builder->setExtensions(['pdf', 'js']);
-    
+
     $builder->connect('/', ['controller' => 'Pages', 'action' => 'home']);
-    
+
     $builder->connect('/'.__('route_sign_in'), ['controller' => 'Customers', 'action' => 'login']);
     $builder->connect('/'.__('route_sign_out'), ['controller' => 'Customers', 'action' => 'logout']);
     $builder->connect('/'.__('route_registration'), ['controller' => 'Customers', 'action' => 'login']);
@@ -62,11 +62,11 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/'.__('route_privacy_policy'), ['controller' => 'Pages', 'action' => 'privacyPolicy']);
     $builder->connect('/'.__('route_list_of_allergens'), ['controller' => 'Pages', 'action' => 'listOfAllergens']);
     $builder->connect('/'.__('route_accept_terms_of_use'), ['controller' => 'Customers', 'action' => 'acceptUpdatedTermsOfUse']);
-    
+
     $builder->connect('/'.__('route_new_products'), ['controller' => 'Categories', 'action' => 'newProducts']);
     $builder->connect('/'.__('route_request_new_password'), ['controller' => 'Customers', 'action' => 'newPasswordRequest']);
     $builder->connect('/'.__('route_activate_new_password').'/*', ['controller' => 'Customers', 'action' => 'activateNewPassword']);
-    
+
     if (Configure::read('app.isBlogFeatureEnabled')) {
         $builder->connect('/'.__('route_news_list'), ['controller' => 'BlogPosts', 'action' => 'index']);
         $builder->connect('/'.__('route_news_detail').'/*', ['controller' => 'BlogPosts', 'action' => 'detail']);
@@ -82,20 +82,20 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/'.__('route_cart').'/'.__('route_cart_finish'), ['controller' => 'Carts', 'action' => 'finish']);
     $builder->connect('/'.__('route_cart').'/'.__('route_cart_finished').'/*', ['controller' => 'Carts', 'action' => 'orderSuccessful']);
     $builder->connect('/'.__('route_cart').'/:action/*', ['controller' => 'Carts']);
-    
+
     if (Configure::read('app.discourseSsoEnabled')) {
         $builder->connect('/discourse/sso', ['controller' => 'Pages', 'action' => 'discourseSso']);
     }
-    
+
     if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
         $builder->connect('/'.__('route_self_service'), ['controller' => 'SelfService']);
     }
-    
+
     $builder->connect('/js/localized-javascript', ['controller' => 'Localized', 'action' => 'renderAsJsFile'])->setExtensions(['js']);
-    
+
     // first folder must not exist physically!
     $builder->connect('/photos/profile-images/customers/:imageSrc', ['controller' => 'Customers', 'action' => 'profileImage'])->setExtensions(['jpg']);
-    
+
     /*
      * Connect catchall routes for all controllers.
      *
@@ -111,7 +111,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
      */
     $builder->fallbacks();
 });
-    
+
     /*
      * If you need a different set of middleware or none at all,
      * open new scope and define routes there.

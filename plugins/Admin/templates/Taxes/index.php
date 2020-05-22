@@ -25,7 +25,7 @@ use Cake\Core\Configure;
         'rowIdPrefix' => '#tax-'
         ]);
     ?>
-   
+
     <div class="filter-container">
         <h1><?php echo $title_for_layout; ?></h1>
         <div class="right">
@@ -41,7 +41,7 @@ use Cake\Core\Configure;
         </div>
 
     </div>
- 
+
 <?php
 
 echo '<table class="list">';
@@ -101,5 +101,5 @@ echo '</tr>';
 
 echo '</table>';
 
-?>    
+?>
 </div>

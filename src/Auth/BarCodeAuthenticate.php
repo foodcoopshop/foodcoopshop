@@ -31,12 +31,12 @@ class BarCodeAuthenticate extends BaseAuthenticate {
         }
         return $this->_findUser($identifier);
     }
-  
+
   public function getIdentifierField($table)
   {
       return 'SUBSTRING(SHA1(CONCAT(' . $table->aliasField('id_customer') .', "' .  Security::getSalt() . '", "customer")), 1, 6)';
   }
-  
+
   /**
    * Checks the fields to ensure they are supplied.
    *
@@ -52,43 +52,43 @@ class BarCodeAuthenticate extends BaseAuthenticate {
       }
       return true;
   }
-  
+
   protected function _query(string $username): Query
   {
       $config = $this->_config;
       $table = $this->getTableLocator()->get($config['userModel']);
-      
+
       $options = [
           'conditions' => [
               $this->getIdentifierField($table) . ' = "' . $username . '"'
           ]
       ];
-      
+
       if (!empty($config['scope'])) {
           $options['conditions'] = array_merge($options['conditions'], $config['scope']);
       }
       if (!empty($config['contain'])) {
           $options['contain'] = $config['contain'];
       }
-      
+
       $finder = $config['finder'];
       if (is_array($finder)) {
           $options += current($finder);
           $finder = key($finder);
       }
-      
+
       return $table->find($finder, $options);
   }
-  
+
   protected function _findUser($username, $password = null)
   {
       $result = $this->_query($username)->first();
-      
+
       if (empty($result)) {
           return false;
       }
-      
+
       return $result->toArray();
   }
-  
+
 }

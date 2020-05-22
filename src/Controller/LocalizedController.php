@@ -298,7 +298,7 @@ class LocalizedController extends Controller
                 'ChangeGeneralTermsAndConditions' => __('Change_general_terms_and_conditions'),
                 'PleaseUploadAnImage' => __('Please_upload_an_image.'),
             ],
-            
+
             'syncBase' => [
                 'UsernameOrPasswordWrongPleaseCheckThatThereAreNoSpecialCharactersInYourPassword' => __('Username_or_password_is_wrong._Please_check_that_there_are_no_special_characters_in_your_password.')
             ],
@@ -310,7 +310,7 @@ class LocalizedController extends Controller
                 'ThisProductIsAlwaysAvailable' => __('This_product_is_always_available.'),
                 'UpdateSoftwareNotification' => __('Please_update_FoodCoopShop.'),
             ],
-            
+
             'syncProductData' => [
                 'Image' => __('Image'),
                 'Name' => __('Name'),

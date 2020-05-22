@@ -18,11 +18,11 @@ use App\Lib\Pdf\ListTcpdf;
 
 class OrderConfirmationPdfWriter extends PdfWriter
 {
-    
+
     public function __construct()
     {
         $this->setPdfLibrary(new ListTcpdf());
     }
-    
+
 }
 

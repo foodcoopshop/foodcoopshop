@@ -28,7 +28,7 @@ class CustomersControllerTest extends AppCakeTestCase
         parent::setUp();
         $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
     }
-    
+
     private function setUpProfileImageTests()
     {
         $profileImageSrcFileAndPath = Configure::read('app.cakeServerName') . '/img/tests/test-image.jpg';
@@ -36,19 +36,19 @@ class CustomersControllerTest extends AppCakeTestCase
         copy($profileImageSrcFileAndPath, Configure::read('app.customerImagesDir') . '/' . $profileImageTargetFilename);
         return $profileImageTargetFilename;
     }
-    
+
     private function tearDownProfileImageTests($profileImageTargetFilename)
     {
         unlink(Configure::read('app.customerImagesDir') . '/' . $profileImageTargetFilename);
-        
+
     }
-    
+
     public function testMaxlengthAttributeExistsInRegistrationPage()
     {
         $this->httpClient->get($this->Slug->getLogin());
         $this->assertRegExpWithUnquotedString('maxlength="32"', $this->httpClient->getContent());
     }
-    
+
     public function testProfileImagePrivacyForGuests()
     {
         $profileImageTargetFilename = $this->setUpProfileImageTests();
@@ -57,7 +57,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assert404NotFoundHeader();
         $this->tearDownProfileImageTests($profileImageTargetFilename);
     }
-    
+
     public function testProfileImagePrivacyForManufacturers()
     {
         $profileImageTargetFilename = $this->setUpProfileImageTests();
@@ -67,7 +67,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assert404NotFoundHeader();
         $this->tearDownProfileImageTests($profileImageTargetFilename);
     }
-    
+
     public function testProfileImagePrivacyForSuperadmins()
     {
         $profileImageTargetFilename = $this->setUpProfileImageTests();
@@ -77,7 +77,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assert200OkHeader();
         $this->tearDownProfileImageTests($profileImageTargetFilename);
     }
-    
+
     public function testProfileImagePrivacyForDeletedMember()
     {
         $profileImageTargetFilename = $this->setUpProfileImageTests();
@@ -87,11 +87,11 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->httpClient->ajaxPost('/admin/customers/delete/' . Configure::read('test.customerId'), [
             'referer' => '/'
         ]);
-        
+
         $this->httpClient->get($imageSrc);
         $this->assert404NotFoundHeader();
     }
-    
+
     public function testNewPasswordRequestWithWrongEmail()
     {
         $this->doPostNewPasswordRequest('this-is-no-email-address');
@@ -116,7 +116,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->get($this->Slug->getActivateNewPassword('non-existing-code'));
         $this->assertRegExpWithUnquotedString('Dein neues Passwort wurde bereits aktiviert oder der Aktivierungscode war nicht gültig.', $this->httpClient->getContent());
-        
+
         $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->get($this->Slug->getActivateNewPassword($customer->activate_new_password_code));
         $this->assertRegExpWithUnquotedString('Dein neues Passwort wurde erfolgreich aktiviert und du bist bereits eingeloggt.', $this->httpClient->getContent());
@@ -124,7 +124,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEmailLogs($emailLogs[0], 'Neues Passwort für FoodCoop Test', ['Bitte klicke auf folgenden Link, um dein neues Passwort zu aktivieren'], [Configure::read('test.loginEmailCustomer')]);
         preg_match_all('/\<b\>(.*)\<\/b\>/', $emailLogs[0]->message, $matches);
-        
+
         // script would break if login does not work - no complaints means login works :-)
         $this->httpClient->loginEmail = Configure::read('test.loginEmailCustomer');
         $this->httpClient->loginPassword = $matches[1][0];
@@ -196,7 +196,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEmailLogs($emailLogs[0], 'Willkommen', ['war erfolgreich!', 'Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert.'], [$email]);
         $this->assertEmailLogs($emailLogs[1], 'Neue Registrierung: John Doe', ['Es gab gerade eine neue Registrierung: <b>John Doe</b>'], ['fcs-demo-superadmin@mailinator.com']);
-        
+
         // 5) register again with changed configuration
         $this->changeConfiguration('FCS_DEFAULT_NEW_MEMBER_ACTIVE', 1);
         $this->changeConfiguration('FCS_CUSTOMER_GROUP', 4);
@@ -264,10 +264,10 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertEquals($customerPhoneMobile, $customer->address_customer->phone_mobile, 'saving field phone_mobile failed');
         $this->assertEquals($customerPhone, $customer->address_customer->phone, 'saving field phone failed');
     }
-    
+
     public function testDeleteWithNotYetBilledOrdersAndNotEqualPayments()
     {
-        
+
         $this->loginAsSuperadmin();
         $this->httpClient->ajaxPost('/admin/customers/delete/' . Configure::read('test.superadminId'), [
             'referer' => '/'
@@ -281,10 +281,10 @@ class CustomersControllerTest extends AppCakeTestCase
         ])->first();
         $this->assertNotEmpty($customer);
     }
-    
+
     public function testDeleteWithNotApprovedPayments()
     {
-        
+
         $this->Payment = TableRegistry::getTableLocator()->get('Payments');
         $paymentId = 1;
         $this->Payment->save(
@@ -296,7 +296,7 @@ class CustomersControllerTest extends AppCakeTestCase
                 ]
             )
         );
-        
+
         $this->loginAsSuperadmin();
         $this->httpClient->ajaxPost('/admin/customers/delete/' . Configure::read('test.superadminId'), [
             'referer' => '/'
@@ -310,7 +310,7 @@ class CustomersControllerTest extends AppCakeTestCase
         ])->first();
         $this->assertNotEmpty($customer);
     }
-    
+
     public function testDeleteOk()
     {
         $this->loginAsSuperadmin();
@@ -324,7 +324,7 @@ class CustomersControllerTest extends AppCakeTestCase
         ])->first();
         $this->assertEmpty($customer);
     }
-    
+
     public function testAutoLogin()
     {
         // 1) login
@@ -334,7 +334,7 @@ class CustomersControllerTest extends AppCakeTestCase
             'passwd' => Configure::read('test.loginPassword'),
             'remember_me' => true
         ]);
-        
+
         // 2) cookie must exist
         $cookies = $this->httpClient->cookies();
         $this->assertTrue($cookies->has('remember_me'));
@@ -345,7 +345,7 @@ class CustomersControllerTest extends AppCakeTestCase
             ]
         ])->first();
         $autoLoginHash = $customer->auto_login_hash;
-        
+
         // 3) login again (simulate login on other device)
         $this->httpClient->post($this->Slug->getLogin(), [
             'email' => $userEmail,
@@ -357,13 +357,13 @@ class CustomersControllerTest extends AppCakeTestCase
                 'email' => $userEmail
             ]
         ])->first();
-        
+
         // 4) hash needs to be the same as after first login
         $this->assertEquals($autoLoginHash, $customer->auto_login_hash);
-        
+
         $cookieValue = json_decode($cookies->get('remember_me')->getValue());
         $this->assertEquals($customer->auto_login_hash, $cookieValue->auto_login_hash);
-        
+
         // 5) logout
         $this->httpClient->doFoodCoopShopLogout();
         $cookies = $this->httpClient->cookies();

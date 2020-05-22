@@ -15,7 +15,7 @@
 use Cake\Core\Configure;
 
 ?>
-<h1>Nutzungsbedingungen für Hersteller</h1> 
+<h1>Nutzungsbedingungen für Hersteller</h1>
 
 <h2>Betreiber der Plattform</h2>
 
@@ -53,7 +53,7 @@ use Cake\Core\Configure;
 
 <p>2.5. Der Vertrag über die Waren und Dienstleistungen kommt ausschließlich zwischen dem Nutzer und dem jeweiligen Hersteller zustande, der Betreiber vermittelt lediglich den Vertrag.</p>
 
-<p>2.6. Die auf der Website angegebenen Preise verstehen sich inklusive der gesetzlichen Steuer, jedoch exklusive der Verpackungs- und Versandkosten. Allfällige weitere Kosten (etwa Pfand) sind gesondert ausgewiesen.</p> 
+<p>2.6. Die auf der Website angegebenen Preise verstehen sich inklusive der gesetzlichen Steuer, jedoch exklusive der Verpackungs- und Versandkosten. Allfällige weitere Kosten (etwa Pfand) sind gesondert ausgewiesen.</p>
 
 <p>2.7. Der Betreiber hat das Recht, Produkte, die der Hersteller zum Verkauf anbietet, ohne Angabe von Gründen von der Plattform zu nehmen. Der Hersteller hat keinen Rechtsanspruch auf die Veröffentlichung von Waren und Dienstleistungen auf der Plattform.</p>
 
@@ -67,13 +67,13 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFeeFo
 
 <h2>3. Schadenersatz und Gewährleistung</h2>
 
-<p>3.1. Die Haftung des Betreibers ist ausgeschlossen. Für Schäden infolge schuldhafter Vertragsverletzung haftet der Betreiber bei eigenem Verschulden oder dem eines Erfüllungsgehilfen nur für Vorsatz oder grobe Fahrlässigkeit. Dies gilt nicht für Schäden an der Person.</p> 
+<p>3.1. Die Haftung des Betreibers ist ausgeschlossen. Für Schäden infolge schuldhafter Vertragsverletzung haftet der Betreiber bei eigenem Verschulden oder dem eines Erfüllungsgehilfen nur für Vorsatz oder grobe Fahrlässigkeit. Dies gilt nicht für Schäden an der Person.</p>
 
 <p>3.2. Der Hersteller verpflichtet sich, die ihn betreffenden Daten vollständig und wahrheitsgemäß auszufüllen und aktuell zu halten.</p>
 
 <p>3.3. Der Betreiber haftet nicht für Rechtstexte, die der Betreiber dem Hersteller zur Verfügung stellt. Die Zurverfügungstellung erfolgt unverbindlich.</p>
 
-<p>3.4. Der Hersteller verpflichtet sich, nur solche Inhalte auf die Plattform zu stellen, für die er die für die Veröffentlichung auf der Plattform <b>notwendigen Rechte</b> erworben hat. Der Hersteller haftet daher für die von ihm bereitgestellten Inhalte und wird den Betreiber schad- und klaglos halten. <b>Dies gilt vor allem für Bilder, die für das Hersteller-Profil oder die Produkte verwendet werden können.</b></p>  
+<p>3.4. Der Hersteller verpflichtet sich, nur solche Inhalte auf die Plattform zu stellen, für die er die für die Veröffentlichung auf der Plattform <b>notwendigen Rechte</b> erworben hat. Der Hersteller haftet daher für die von ihm bereitgestellten Inhalte und wird den Betreiber schad- und klaglos halten. <b>Dies gilt vor allem für Bilder, die für das Hersteller-Profil oder die Produkte verwendet werden können.</b></p>
 
 <h2>4. Schlussbestimmungen</h2>
 
@@ -81,6 +81,6 @@ if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFeeFo
 
 <p>4.2. Als Gerichtsstand wird das für den Betreiber sachlich und örtlich zuständige Gericht vereinbart.</p>
 
-<p>4.3. Für Rechtsstreitigkeiten aus diesem Vertrag gilt ausschließlich österreichisches Recht. Die Anwendung des UN-Kaufrechts, der Verweisungsnormen des IPRG und der VO (EG) Nr. 593/2008 des Europäischen Parlaments und des Rates vom 17. Juni 2008 über das auf vertragliche Schuldverhältnisse anzuwendende Recht (Rom I-Verordnung) ist ausgeschlossen.</p> 
+<p>4.3. Für Rechtsstreitigkeiten aus diesem Vertrag gilt ausschließlich österreichisches Recht. Die Anwendung des UN-Kaufrechts, der Verweisungsnormen des IPRG und der VO (EG) Nr. 593/2008 des Europäischen Parlaments und des Rates vom 17. Juni 2008 über das auf vertragliche Schuldverhältnisse anzuwendende Recht (Rom I-Verordnung) ist ausgeschlossen.</p>
 
 <p>4.4. Änderungen oder Ergänzungen dieser Nutzungsbedingungen bedürfen zu ihrer Wirksamkeit der Schriftform.</p>

@@ -14,19 +14,19 @@
 foodcoopshop.ModalOrderDetailProductPriceEdit = {
 
     init : function() {
-        
+
         var modalSelector = '#order-detail-product-price-edit-form';
-        
+
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
             foodcoopshop.LocalizedJs.admin.AdaptPrice,
             foodcoopshop.ModalOrderDetailProductPriceEdit.getHtml()
         );
-        
+
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
             foodcoopshop.ModalOrderDetailProductPriceEdit.getSuccessHandler(modalSelector);
         });
-        
+
         $(modalSelector).on('hidden.bs.modal', function (e) {
             foodcoopshop.ModalOrderDetailProductPriceEdit.getCloseHandler();
         });
@@ -36,7 +36,7 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
         });
 
     },
-    
+
     getHtml : function() {
         var html = '<label for="dialogOrderDetailProductPricePrice"></label><br />';
         html += '<input type="number" step="0.01" min="0.01" name="dialogOrderDetailProductPricePrice" id="dialogOrderDetailProductPricePrice" value="" />';
@@ -49,16 +49,16 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
         return html;
 
     },
-    
+
     getCloseHandler : function() {
         $('#dialogOrderDetailProductPrice').val('');
         $('#dialogOrderDetailProductPriceOrderDetailId').val('');
         foodcoopshop.Helper.destroyCkeditor('dialogEditPriceReason');
         $('#flashMessage').remove();
     },
-    
+
     getSuccessHandler : function(modalSelector) {
-        
+
         if ($('#dialogOrderDetailProductPriceOrderDetailId').val() == '') {
             return;
         }
@@ -98,8 +98,8 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
                     foodcoopshop.Modal.resetButtons(modalSelector);
                 }
             }
-        );        
-        
+        );
+
     },
 
     getOpenHandler : function(button, modalSelector) {
@@ -124,7 +124,7 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
 
         $(modalSelector + ' span.timebased-currency-wrapper').remove();
         var timebasedCurrencyObject = $('#timebased-currency-object-' + orderDetailId);
-        if (timebasedCurrencyObject.length > 0 
+        if (timebasedCurrencyObject.length > 0
            && $(modalSelector + ' #dialogOrderDetailProductPriceTimebasedCurrencyPrice').length == 0) {
             var timebasedCurrencyData = timebasedCurrencyObject.data('timebased-currency-object');
             var additionalDialogHtml = '<span class="timebased-currency-wrapper">';
@@ -146,10 +146,10 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
         } else {
             productPriceField.val(price);
         }
-        
+
         foodcoopshop.Helper.changeInputNumberToTextForEdge();
         $('#dialogOrderDetailProductQuantityPrice').focus();
-            
+
     }
 
 };

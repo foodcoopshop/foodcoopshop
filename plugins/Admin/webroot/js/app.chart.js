@@ -12,7 +12,7 @@
  * @link          https://www.foodcoopshop.com
  */
 foodcoopshop.AppChart = {
-    
+
     barChartOptions : {
         tension : 0.3,
         datasetStrokeWidth : 1,
@@ -26,7 +26,7 @@ foodcoopshop.AppChart = {
                     return foodcoopshop.Helper.formatFloatAsCurrency(value);
                 }
             }
-        },                
+        },
         legend: {
             display: false
         },
@@ -50,9 +50,9 @@ foodcoopshop.AppChart = {
                     }
                 }
             }]
-        }        
+        }
     },
-    
+
     pieChartOptions : {
         cutoutPercentage: 25,
         rotation: 10,
@@ -83,10 +83,10 @@ foodcoopshop.AppChart = {
                 fontColor: '#fff',
                 textShadow: true,
             }
-            
+
         ],
     },
-    
+
     lineChartOptions : {
         legend: {
             display: false
@@ -113,11 +113,11 @@ foodcoopshop.AppChart = {
                     }
                 }
             }]
-        }        
+        }
     },
-    
+
     initLineChart : function(xAxisData, yAxisData) {
-        
+
         var lineChartData = {
             labels: xAxisData,
             datasets: [{
@@ -139,9 +139,9 @@ foodcoopshop.AppChart = {
         });
 
     },
-        
+
     initBarChart : function(xAxisData, yAxisData) {
-        
+
         var barChartData = {
             labels: xAxisData,
             datasets: [{
@@ -158,11 +158,11 @@ foodcoopshop.AppChart = {
             data: barChartData,
             options: this.barChartOptions
         });
-        
+
     },
-    
+
     initPieChart : function(dataPieChart, labelsPieChart, backgroundColorPieChart) {
-        
+
         var pieChartData = {
             datasets: [{
                 data: dataPieChart,
@@ -180,8 +180,8 @@ foodcoopshop.AppChart = {
             type: 'pie',
             data: pieChartData,
             options: this.pieChartOptions
-        });            
-        
+        });
+
     }
-    
+
 };

@@ -23,7 +23,7 @@ use Cake\Utility\Inflector;
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="theme-color" content="#719f41">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
-    
+
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
@@ -33,7 +33,7 @@ use Cake\Utility\Inflector;
     <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('appDb.FCS_APP_NAME'); ?></title>
 
     <?php echo $this->element('jsNamespace'); ?>
-    
+
     <?php
     $cssConfigs = ['admin'];
     if ($this->plugin != 'Admin') {
@@ -45,14 +45,14 @@ use Cake\Utility\Inflector;
     }
     echo $this->element('layout/customHeader');
     ?>
-    
+
 </head>
 <body class="<?php echo Inflector::tableize($this->name); ?> <?php echo Inflector::singularize(Inflector::tableize($this->request->getParam('action'))); ?>">
 
     <div id="container">
-        
+
         <?php echo $this->element('Admin.menu'); ?>
-        
+
         <div id="content">
             <?php
                 echo $this->Flash->render();
@@ -61,11 +61,11 @@ use Cake\Utility\Inflector;
             ?>
         </div>
     </div>
-    
+
     <?php echo $this->element('scrollToTopButton'); ?>
-    
+
     <div class="sc"></div>
-    
+
 <?php
 $jsConfigs = ['admin'];
 if ($this->plugin != 'Admin') {

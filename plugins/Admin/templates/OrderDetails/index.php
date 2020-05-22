@@ -16,7 +16,7 @@ use Cake\Core\Configure;
 
 ?>
 <div id="order-details-list">
-    
+
     <?php
     $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace') . ".Helper.initDatepicker();
@@ -24,13 +24,13 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace').".Admin.init();" .
             Configure::read('app.jsNamespace').".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');" .
             Configure::read('app.jsNamespace').".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" .
-            Configure::read('app.jsNamespace') . ".ModalPaymentAdd.initDepositInList();" . 
+            Configure::read('app.jsNamespace') . ".ModalPaymentAdd.initDepositInList();" .
             Configure::read('app.jsNamespace').".Admin.selectMainMenuAdmin('".__d('admin', 'Orders')."');" .
             Configure::read('app.jsNamespace').".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");".
             Configure::read('app.jsNamespace').".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ");
         "
     ]);
-    
+
     if ($groupBy == '') {
         $this->element('addScript', [
             'script' =>
@@ -47,7 +47,7 @@ use Cake\Core\Configure;
             'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.timebased-currency-time-element');"
         ]);
     }
-    
+
     if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
         $this->element('addScript', [
             'script' =>
@@ -55,9 +55,9 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".ModalPickupDayCommentEdit.init();"
         ]);
     }
-    
+
     ?>
-    
+
     <div class="filter-container">
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php
@@ -69,7 +69,7 @@ use Cake\Core\Configure;
             <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer()) { ?>
                 <?php echo $this->Form->control('manufacturerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_manufacturers'), 'options' => $manufacturersForDropdown, 'default' => isset($manufacturerId) ? $manufacturerId: '']); ?>
             <?php } ?>
-            <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>    
+            <?php if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) { ?>
                 <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_members'), 'options' => []]); ?>
             <?php } ?>
             <?php if ($appAuth->isCustomer()) { ?>
@@ -78,8 +78,8 @@ use Cake\Core\Configure;
             <?php } ?>
             <?php echo $this->Form->control('groupBy', ['type'=>'select', 'label' =>'', 'empty' => __d('admin', 'Group_by...'), 'options' => $groupByForDropdown, 'default' => $groupBy]);?>
             <div class="right">
-        	<?php
-        	if (Configure::read('app.isDepositPaymentCashless') && $groupBy == '' && $customerId > 0 && count($orderDetails) > 0 && (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'))) {
+            <?php
+            if (Configure::read('app.isDepositPaymentCashless') && $groupBy == '' && $customerId > 0 && count($orderDetails) > 0 && (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'))) {
                 echo '<div class="add-payment-deposit-button-wrapper">';
                     echo $this->element('addDepositPaymentOverlay', [
                         'buttonText' => (!$isMobile ? __d('admin', 'Deposit_return') : ''),
@@ -126,13 +126,13 @@ echo '<tr class="sort">';
         $orderDetailTemplateElement = 'groupBy' . ucfirst($groupBy);
     }
     echo $this->element('orderDetailList/header/'.$orderDetailTemplateElement);
-    
+
 echo '</tr>';
 
 foreach ($orderDetails as $orderDetail) {
-    
+
     $editRecordAllowed = $groupBy == '' && (
-        in_array($orderDetail->order_state, [ORDER_STATE_ORDER_PLACED, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER])) 
+        in_array($orderDetail->order_state, [ORDER_STATE_ORDER_PLACED, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER]))
         && (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'));
 
     $rowClasses = [];
@@ -142,7 +142,7 @@ foreach ($orderDetails as $orderDetail) {
     if (isset($orderDetail['row_class'])) {
         $rowClasses = $orderDetail['row_class'];
     }
-    
+
     echo '<tr class="data ' . (!empty($rowClasses) ? implode(' ', $rowClasses) : '') . '">';
 
     echo $this->element('rowMarker/rowMarker', [
@@ -164,7 +164,7 @@ foreach ($orderDetails as $orderDetail) {
         'orderDetail' => $orderDetail,
         'groupBy' => $groupBy
     ]);
-    
+
     echo $this->element('orderDetailList/data/price', [
         'orderDetail' => $orderDetail,
         'editRecordAllowed' => $editRecordAllowed,
@@ -175,7 +175,7 @@ foreach ($orderDetails as $orderDetail) {
         'orderDetail' => $orderDetail,
         'groupBy' => $groupBy
     ]);
-    
+
     echo $this->element('orderDetailList/data/quantity', [
         'orderDetail' => $orderDetail,
         'editRecordAllowed' => $editRecordAllowed,
@@ -186,16 +186,16 @@ foreach ($orderDetails as $orderDetail) {
         'orderDetail' => $orderDetail,
         'groupBy' => $groupBy
     ]);
-    
+
     echo $this->element('orderDetailList/data/customer', [
         'editRecordAllowed' => $editRecordAllowed,
         'orderDetail' => $orderDetail
     ]);
-    
+
     echo $this->element('orderDetailList/data/pickupDay', [
         'orderDetail' => $orderDetail
     ]);
-    
+
     echo $this->element('orderDetailList/data/orderState', [
         'orderDetail' => $orderDetail,
         'editRecordAllowed' => $editRecordAllowed,
@@ -231,7 +231,7 @@ if ($groupBy == 'manufacturer') {
 if ($groupBy == 'customer') {
     $showAllOrderDetailsLink = '';
     if (!empty($orderDetails)) {
-        
+
         $showAllOrderDetailsLink = $this->Html->link(
             '<i class="fas fa-shopping-cart ok"></i>' . (!$isMobile ? ' ' . __d('admin', 'All_products') : ''),
             '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&productId=' . $productId. '&manufacturerId=' . $manufacturerId,
@@ -286,18 +286,18 @@ echo '<div class="bottom-button-container">';
             'emailAddresses' => $emailAddresses
         ]);
     }
-    
+
     if ($appAuth->isSuperadmin() && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && !Configure::read('appDb.FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED')) {
         echo $this->element('addInstantOrderButton', [
             'customers' => $customersForInstantOrderDropdown,
             'additionalClass' => 'bottom'
         ]);
     }
-    
+
     echo $this->element('orderDetailList/button/multiplePickupDays', [
         'pickupDay' => $pickupDay
     ]);
-    
+
     echo $this->element('orderDetailList/button/generateOrderDetailsAsPdf', [
         'pickupDay' => $pickupDay
     ]);
@@ -305,23 +305,23 @@ echo '<div class="bottom-button-container">';
     echo $this->element('orderDetailList/button/backToDepositAccount', [
         'deposit' => $deposit
     ]);
-    
+
     echo $this->element('orderDetailList/button/allProductsPickedUp', [
         'pickupDay' => $pickupDay
     ]);
-    
+
     echo $this->element('orderDetailList/button/changePickupDayOfSelectedOrderDetails', [
         'deposit' => $deposit,
         'orderDetails' => $orderDetails,
         'groupBy' => $groupBy
     ]);
-    
+
     echo $this->element('orderDetailList/button/deleteSelectedOrderDetails', [
         'deposit' => $deposit,
         'orderDetails' => $orderDetails,
         'groupBy' => $groupBy
     ]);
-    
+
 echo '</div>';
 echo '<div class="sc"></div>';
 

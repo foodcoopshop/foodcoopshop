@@ -88,7 +88,7 @@ class AppAuthComponent extends AuthComponent
         if (!empty($this->manufacturer)) {
             return;
         }
-        
+
         if (!empty($this->user())) {
             $mm = TableRegistry::getTableLocator()->get('Manufacturers');
             $this->manufacturer = $mm->find('all', [
@@ -189,7 +189,7 @@ class AppAuthComponent extends AuthComponent
         $c = TableRegistry::getTableLocator()->get('Customers');
         return $c->getCreditBalance($this->getUserId());
     }
-    
+
     public function isInstantOrderMode()
     {
         $session = new AppSession();
@@ -204,7 +204,7 @@ class AppAuthComponent extends AuthComponent
         }
         return $result;
     }
-    
+
     public function isSelfServiceModeByReferer()
     {
         $result = false;
@@ -221,7 +221,7 @@ class AppAuthComponent extends AuthComponent
         }
         return $result;
     }
-    
+
     public function getCartType()
     {
         $cart = TableRegistry::getTableLocator()->get('Carts');
@@ -234,7 +234,7 @@ class AppAuthComponent extends AuthComponent
         }
         return $cartType;
     }
-    
+
     public function setCart($cart)
     {
         $this->Cart->cart = $cart;
@@ -245,9 +245,9 @@ class AppAuthComponent extends AuthComponent
         if (! $this->user()) {
             return null;
         }
-        
+
         $cartType = $this->getCartType();
-        
+
         $cart = TableRegistry::getTableLocator()->get('Carts');
         return $cart->getCart($this->getUserId(), $cartType);
     }

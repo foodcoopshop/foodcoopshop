@@ -31,9 +31,9 @@ foodcoopshop.Helper = {
             this.showContent();
         }
     },
-    
+
     initMenuAutoHide : function() {
-        
+
         // scroll is still position
         var scroll = $(document).scrollTop();
         var headerHeight = $('#header').height();
@@ -41,7 +41,7 @@ foodcoopshop.Helper = {
         $(window).scroll(function() {
             // scrolled is new position just obtained
             var scrolled = $(document).scrollTop();
-                            
+
             // optionally emulate non-fixed positioning behaviour
             if (scrolled > headerHeight){
                 $('#header').addClass('off-canvas');
@@ -55,12 +55,12 @@ foodcoopshop.Helper = {
             } else {
                 //scrolling up
                 $('#header').addClass('fixed');
-            }               
-             
-            scroll = $(document).scrollTop();   
+            }
+
+            scroll = $(document).scrollTop();
         });
     },
-    
+
     /**
      * Returns a function, that, as long as it continues to be invoked, will not
      * be triggered. The function will be called after it stops being called for
@@ -82,21 +82,21 @@ foodcoopshop.Helper = {
             if (callNow) func.apply(context, args);
         };
     },
-    
+
     addPrevAndNextCategoryLinks : function() {
         this.addPrevAndNextLinks(
             '#categories-menu li a',
             '#inner-content h1'
         );
     },
-    
+
     addPrevAndNextManufacturerLinks : function() {
         this.addPrevAndNextLinks(
             '#manufacturers-menu li a',
             '#inner-content .manufacturer-infos'
         );
     },
-    
+
     addPrevAndNextLinks : function(menu, afterContainerTop) {
         menu = $(menu);
         var activeElementHref = document.location.pathname;
@@ -138,7 +138,7 @@ foodcoopshop.Helper = {
             }
         }
     },
-    
+
     initBootstrapSelect : function(container) {
         container.find('select').each(function () {
             var options = {
@@ -157,7 +157,7 @@ foodcoopshop.Helper = {
             $(this).selectpicker(options);
         });
     },
-    
+
     initAmountSwitcher : function() {
         $('.entity-wrapper a.amount-switcher').on('click', function() {
             var inputField = $(this).closest('.amount-wrapper').find('input[name="amount"]');
@@ -184,7 +184,7 @@ foodcoopshop.Helper = {
             inputField.val(result);
         });
     },
-    
+
     getUniqueHtmlValueOfDomElements: function(domElements, defaultValue) {
         var values = this.unique(
             $.map($(domElements),
@@ -197,7 +197,7 @@ foodcoopshop.Helper = {
         }
         return values;
     },
-    
+
     /**
      * $.unique does not work with strings
      */
@@ -263,7 +263,7 @@ foodcoopshop.Helper = {
         }
         return isMobile;
     },
-    
+
     isEdge : function() {
         var isEdge = false;
         if (navigator.userAgent.indexOf('Edge') >= 0) {
@@ -271,7 +271,7 @@ foodcoopshop.Helper = {
         }
         return isEdge;
     },
-    
+
     /**
      * as long as edge is the only major browser that does not support commas in input fields
      * with type="number", manually change the type to text
@@ -282,7 +282,7 @@ foodcoopshop.Helper = {
             numberInputs.each(function() {
                 $(this).get(0).type = 'text';
             });
-        }        
+        }
     },
 
     initLoginForm: function () {
@@ -384,10 +384,10 @@ foodcoopshop.Helper = {
     },
 
     initSlider: function () {
-        
+
         var container = $('#slider');
         container.addClass('owl-carousel');
-        
+
         var hasOnlyOneSlide = $('.owl-carousel .item').length == 1;
 
         container.owlCarousel({
@@ -422,7 +422,7 @@ foodcoopshop.Helper = {
                 $('#scroll-to-top').fadeOut();
             }
         });
-        
+
         $('#scroll-to-top a').on('click', function () {
             $('body,html').animate({
                 scrollTop: 0
@@ -437,7 +437,7 @@ foodcoopshop.Helper = {
             $(this).children('i').removeClass('far');
             $(this).children('i').addClass('fas');
         });
-        
+
         $('#scroll-to-top a').on('click', function () {
             $('body,html').animate({
                 scrollTop: 0
@@ -446,7 +446,7 @@ foodcoopshop.Helper = {
         });
 
     },
-    
+
     adaptionsForHorizontalScrolling : function() {
         $('#header').scrollToFixed({'offsetLeft': 2});
         $('.inner-right').scrollToFixed();
@@ -679,7 +679,7 @@ foodcoopshop.Helper = {
     initCkeditor: function (name, startupFocus) {
 
         startupFocus = startupFocus|| false;
-        
+
         if (!CKEDITOR.env.isCompatible) {
             return false;
         }
@@ -835,7 +835,7 @@ foodcoopshop.Helper = {
         foodcoopshop.Helper.showErrorMessage(message);
         element.prepend($('#flashMessage'));
     },
-    
+
     appendFlashMessageCloser: function () {
         $('#flashMessage').prepend('<a class="closer" title="' + foodcoopshop.LocalizedJs.helper.Close + '" href="javascript:void(0);"><i class="far fa-times-circle"></i></a>');
     },

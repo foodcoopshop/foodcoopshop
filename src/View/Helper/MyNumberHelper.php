@@ -38,14 +38,14 @@ class MyNumberHelper extends NumberHelper
     {
         $float = trim($string);
         $float = $this->parseFloatRespectingLocale($float);
-        
+
         if ($float === false) {
             return -1; // do not return false, because 0 is a valid return value!
         }
-        
+
         return $float;
     }
-    
+
     public function formatAsCurrency($amount)
     {
         $currency = self::currency($amount, 'USD');

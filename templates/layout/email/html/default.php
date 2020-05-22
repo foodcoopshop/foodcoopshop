@@ -24,7 +24,7 @@ use Cake\Core\Configure;
         <meta name="format-detection" content="telephone=no">
         <title><?php echo Configure::read('appDb.FCS_APP_NAME'); ?></title>
     </head>
-    
+
     <table width="742" cellpadding="0" border="0" cellspacing="0" style="color:#000;font-family:Arial;">
         <tbody>
             <tr>
@@ -45,7 +45,7 @@ use Cake\Core\Configure;
             </tr>
             <tr>
                 <td style="padding-top:20px;font-size:12px;">
-                	<?php echo __('This_email_was_created_automatically.'); ?>
+                    <?php echo __('This_email_was_created_automatically.'); ?>
                         <?php if (isset($showManufacturerUnsubscribeLink) && $showManufacturerUnsubscribeLink) { ?>
                            <?php echo __('You_can_unsubscribe_it_<a href="{0}">in_your_settings</a>.', [Configure::read('app.cakeServerName') . $this->Slug->getManufacturerMyOptions()]); ?>
                         <?php } ?><br /><br />
@@ -57,7 +57,7 @@ use Cake\Core\Configure;
                         echo '<a href="'.Configure::read('app.cakeServerName').'">'.preg_replace('/http(s)?\:\/\//', '', Configure::read('app.cakeServerName')).'</a>';
                     ?>
                     <?php if (isset($appAuth) && $appAuth->user()) { ?>
-                        <br /><br /><?php echo __('Signed_in'); ?>: 
+                        <br /><br /><?php echo __('Signed_in'); ?>:
                             <?php
                             if ($appAuth->isManufacturer()) {
                                 echo $appAuth->getManufacturerName();
@@ -77,5 +77,5 @@ use Cake\Core\Configure;
             </tr>
         </tbody>
     </table>
-    
+
 </html>

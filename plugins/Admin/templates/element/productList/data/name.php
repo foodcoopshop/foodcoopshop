@@ -26,7 +26,7 @@ echo '<td class="cell-name">';
             ]
         );
     }
-    
+
     if (! isset($product->product_attributes)) {
         echo '<span style="float:left;margin-right: 5px;">';
         echo $this->Html->link(
@@ -39,12 +39,12 @@ echo '<td class="cell-name">';
             ]
         );
         echo '</span>';
-        
+
         echo '<span style="float:left;">';
         if ($product->default_on == 1) {
             echo '<i class="fas fa-star gold" title="'.__d('admin', 'This_attribute_is_the_default_attribute.').'"></i>';
         } else {
-            
+
             echo $this->Html->link(
                 '<i class="fas fa-star gold fa-xs"></i>',
                 'javascript:void(0);',
@@ -57,15 +57,15 @@ echo '<td class="cell-name">';
         }
         echo '</span>';
     }
-    
+
     echo '<span class="name-for-dialog">';
         echo $product->name;
     echo '</span>';
-    
+
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
         echo '<span data-is-declaration-ok="'.$product->is_declaration_ok.'" class="is-declaration-ok-wrapper">' . ($product->is_declaration_ok ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>').'</span>';
     }
-    
+
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
         echo $this->Form->hidden('Products.selected_categories', [
             'value' => implode(',', $product->selected_categories),
@@ -93,11 +93,11 @@ echo '<td class="cell-name">';
             echo ' - <b>'.__d('admin', 'Category_"all_products"_is_missing!').'</b>';
         }
     }
-    
+
     echo '<span class="description-short-for-dialog">';
         echo $product->description_short;
     echo '</span>';
-    
+
     echo '<span class="description-for-dialog">';
         echo $product->description;
     echo '</span>';

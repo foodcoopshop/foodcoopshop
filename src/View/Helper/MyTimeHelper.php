@@ -31,7 +31,7 @@ class MyTimeHelper extends TimeHelper
         }
         return $years;
     }
-    
+
     public function getAllMonthsUntilThisYear($thisYear, $firstYear)
     {
         $monthsAndYear = $this->getAllMonthsForYear($thisYear);
@@ -50,27 +50,27 @@ class MyTimeHelper extends TimeHelper
         usort($array, function($a, $b) {
             return strtotime($a) - strtotime($b);
         });
-        return $array;    
+        return $array;
     }
-    
+
     public function getTimeObjectUTC($time)
     {
         $timeObject = new Time($time);
         $timeObject->setTimezone('UTC');
         return $timeObject;
     }
-    
+
     public function correctTimezone($timeObject)
     {
         return $timeObject->modify($this->getTimezoneDiffInSeconds($timeObject->toUnixString()) . ' seconds');
     }
-    
+
     public function getTimezoneDiffInSeconds($timestamp)
     {
         $timezoneDiff = date('Z', $timestamp);
         return $timezoneDiff;
     }
-    
+
     public function getI18Format($formatString)
     {
         return Configure::read('DateFormat.' . $formatString);
@@ -85,7 +85,7 @@ class MyTimeHelper extends TimeHelper
     {
         return date('Y', strtotime($dbDate));
     }
-    
+
     public function getCurrentDateTimeForDatabase()
     {
         return date($this->getI18Format('DatabaseWithTimeAlt'));
@@ -94,12 +94,12 @@ class MyTimeHelper extends TimeHelper
     {
         return date($this->getI18Format('DateWithTimeForFilename'));
     }
-    
+
     public function getCurrentDateForDatabase()
     {
         return date($this->getI18Format('DatabaseAlt'));
     }
-    
+
     public function getNthWeekdayBeforeWeekday($n, $weekday)
     {
         $beforeWeekday = $weekday - $n;
@@ -108,7 +108,7 @@ class MyTimeHelper extends TimeHelper
         }
         return $beforeWeekday;
     }
-    
+
     public function getNthWeekdayAfterWeekday($n, $weekday)
     {
         $beforeWeekday = $weekday + $n;
@@ -117,7 +117,7 @@ class MyTimeHelper extends TimeHelper
         }
         return $beforeWeekday;
     }
-    
+
     public function getSendOrderListsWeekday()
     {
         $sendOrderListsWeekday = Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY') - Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA');
@@ -133,12 +133,12 @@ class MyTimeHelper extends TimeHelper
         $deliveryDate = date($this->getI18Format('DatabaseAlt'), $deliveryDate);
         return $deliveryDate;
     }
-    
+
     public function getDateFormattedWithWeekday($date) {
         $date = $this->getWeekdayName($this->formatAsWeekday($date)) . ', ' . date($this->getI18Format('DateShortAlt'), $date);
         return $date;
     }
-    
+
     public function getDeliveryDateByCurrentDayFormattedWithWeekday()
     {
         $deliveryDate = self::getDeliveryDayByCurrentDay();
@@ -149,7 +149,7 @@ class MyTimeHelper extends TimeHelper
     {
         return self::getDeliveryDay($this->getCurrentDay());
     }
-    
+
     public function getNextDeliveryDays($maxDays=30) {
         $nextDeliveryDay = $this->getDeliveryDateByCurrentDayForDb();
         $nextDeliveryDays = [
@@ -163,7 +163,7 @@ class MyTimeHelper extends TimeHelper
         }
         return $nextDeliveryDays;
     }
-    
+
     public function getDbFormattedPickupDayByDbFormattedDate($date, $sendOrderListsWeekday = null, $deliveryRhythmType = null, $deliveryRhythmCount = null)
     {
         if (is_null($sendOrderListsWeekday)) {
@@ -192,21 +192,21 @@ class MyTimeHelper extends TimeHelper
         }
         $daysToAddToOrderPeriodLastDay = Configure::read('appDb.FCS_DEFAULT_SEND_ORDER_LISTS_DAY_DELTA') + 1;
         $deliveryDate = strtotime($this->getOrderPeriodLastDay($orderDay) . '+' . $daysToAddToOrderPeriodLastDay . ' days');
-        
+
         $weekdayDeliveryDate = $this->formatAsWeekday($deliveryDate);
         $weekdayStringDeliveryDate = strtolower(date('l', $deliveryDate));
-        
+
         $weekdayOrderDay = $this->formatAsWeekday($orderDay);
-        
+
         if (is_null($sendOrderListsWeekday)) {
             $sendOrderListsWeekday = $this->getSendOrderListsWeekday();
         }
-        
+
         if ($weekdayOrderDay >= $sendOrderListsWeekday && $weekdayOrderDay <= $weekdayDeliveryDate && $deliveryRhythmType != 'individual') {
             $preparedOrderDay = date($this->getI18Format('DateShortAlt'), $orderDay);
             $deliveryDate = strtotime($preparedOrderDay . '+ ' . $deliveryRhythmCount .  ' ' . $deliveryRhythmType . ' ' . $weekdayStringDeliveryDate);
         }
-        
+
         return $deliveryDate;
     }
 
@@ -239,13 +239,13 @@ class MyTimeHelper extends TimeHelper
     {
         return Configure::read('appDb.FCS_WEEKLY_PICKUP_DAY');
     }
-    
+
     public function getNextDeliveryDay($day)
     {
         $orderPeriodFirstDay = $this->getOrderPeriodFirstDay($day);
         return date($this->getI18Format('DatabaseAlt'), $this->getDeliveryDay(strtotime($orderPeriodFirstDay)));
     }
-    
+
     public function getFormattedNextDeliveryDay($day)
     {
         return date($this->getI18Format('DateShortAlt'), strtotime($this->getNextDeliveryDay($day)));
@@ -312,7 +312,7 @@ class MyTimeHelper extends TimeHelper
 
         return $date;
     }
-    
+
     public function getSendOrderListsWeekdayOptions()
     {
         $defaultSendOrderListsWeekday = $this->getSendOrderListsWeekday();
@@ -395,7 +395,7 @@ class MyTimeHelper extends TimeHelper
         }
         return $days;
     }
-    
+
     public function getFirstDayOfThisYear()
     {
         return date($this->getI18Format('DateShortAlt'), strtotime('first day of january'));
@@ -417,12 +417,12 @@ class MyTimeHelper extends TimeHelper
     {
         return date($this->getI18Format('DateShortAlt'), strtotime($date . ' first day of previous month'));
     }
-    
+
     public function getLastDayOfLastMonth($date)
     {
         return date($this->getI18Format('DateShortAlt'), strtotime($date . ' last day of previous month'));
     }
-    
+
     /**
      * considers windows and unix
      * @return boolean

@@ -74,7 +74,7 @@ return [
         'isDepositPaymentCashless' => true,
         'depositPaymentCashlessStartDate' => '2016-01-01',
         'depositForManufacturersStartDate' => '2016-01-01',
-        
+
         /**
          * not used since v2.4
          * sendOrderListsWeekday is replaced by the new database setting FCS_WEEKLY_PICKUP_DAY
@@ -89,14 +89,14 @@ return [
          * - lastname
          */
         'customerMainNamePart' => 'firstname',
-        
+
         'showManufacturerImprint' => true,
         'termsOfUseEnabled' => true,
         'generalTermsAndConditionsEnabled' => true,
         'rightOfWithdrawalEnabled' => true,
         'promiseToPickUpProductsCheckboxEnabled' => false,
         'showPaymentInfoText' => true,
-        
+
         /**
          * id of the category "all products"
          */
@@ -131,7 +131,7 @@ return [
         ],
         'tmpUploadImagesDir' => DS . 'tmp' . DS . 'images',
         'tmpUploadFilesDir' => DS . 'tmp' . DS . 'files',
-        
+
         'countryId' => 2, // austria: 2, germany: 1
 
         /**
@@ -139,7 +139,7 @@ return [
          * 'C:\\Programme\\xampp\\mysql\\bin\\mysqldump.exe'
          */
         'mysqlDumpCommand' => 'mysqldump',
-        
+
         /**
          * if you work on windows, change to e.g
          * 'C:\\Programme\\xampp\\mysql\\bin\\mysql.exe'
@@ -155,15 +155,15 @@ return [
 
         // allows to use another color theme for the frontend, can be any valid css color code
         'customFrontendColorTheme' => '#719f41',
-        
+
         'isBlogFeatureEnabled' => true,
-        
+
         'applyOrdersNotYetBilledCheckOnDeletingCustomers' => true,
-        
+
         'isCustomerAllowedToModifyOwnOrders' => true,
-        
+
         'showStatisticsForAdmins' => true,
-        
+
         'configurationHelper' => new App\View\Helper\ConfigurationHelper(new Cake\View\View()),
         'htmlHelper' => new App\View\Helper\MyHtmlHelper(new Cake\View\View()),
         'timeHelper' => new App\View\Helper\MyTimeHelper(new Cake\View\View()),

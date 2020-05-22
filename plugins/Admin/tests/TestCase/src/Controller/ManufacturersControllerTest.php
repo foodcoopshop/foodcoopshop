@@ -106,7 +106,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertEquals($manufacturer->short_description, '<i>Test Description</i>', 'tags must not be stripped');
         $this->assertEquals($manufacturer->firmenbuchnummer, 'number', 'tags must be stripped');
         $this->assertEquals($manufacturer->is_private, true);
-        
+
         $this->logout();
     }
 
@@ -196,11 +196,11 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $this->logout();
     }
-    
+
     public function testEditOptionsNoDeliveryDays()
     {
         $this->loginAsSuperadmin();
-        
+
         $manufacturerId = 15;
         $noDeliveryDays = date('Y-m-d', strtotime('friday next week'));
 
@@ -211,7 +211,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
         ];
         $statement = $this->dbConnection->prepare($query);
         $statement->execute($params);
-        
+
         $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),
@@ -223,9 +223,9 @@ class ManufacturersControllerTest extends AppCakeTestCase
             ]
         );
         $this->assertRegExpWithUnquotedString('Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: ' . Configure::read('app.timeHelper')->formatToDateShort($noDeliveryDays) . ' (1x)', $this->httpClient->getContent());
-        
+
         $noDeliveryDays = date('Y-m-d', strtotime($noDeliveryDays . ' + 2 week'));
-        
+
         $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->post(
             $this->Slug->getManufacturerEditOptions($manufacturerId),
@@ -244,17 +244,17 @@ class ManufacturersControllerTest extends AppCakeTestCase
                 'referer' => '/'
             ]
         );
-        
+
         $this->assertRegExpWithUnquotedString('wurden erfolgreich gespeichert.', $this->httpClient->getContent());
-        
+
         $manufacturerNew = $this->Manufacturer->find('all', [
             'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
             ]
         ])->first();
-        
+
         $this->assertEquals($noDeliveryDays, $manufacturerNew->no_delivery_days);
-        
+
         $this->logout();
     }
 

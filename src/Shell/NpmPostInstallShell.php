@@ -29,29 +29,29 @@ class NpmPostInstallShell extends AppShell
     public function main()
     {
         $this->vendorDir = WWW_ROOT . 'node_modules';
-        
+
         $this->fontawesomePath = $this->vendorDir . DS . '@fortawesome' . DS . 'fontawesome-free' . DS;
         $this->jqueryBackstretchPath = $this->vendorDir . DS . 'jquery-backstretch' . DS;
         $this->jqueryUiPath = $this->vendorDir . DS . 'components-jqueryui' . DS;
         $this->owlCarouselPath = $this->vendorDir . DS . 'owl.carousel' . DS;
         $this->tooltipsterPath = $this->vendorDir . DS . 'tooltipster' . DS;
-        
+
         $this->cleanOverheadFromDependencies();
         $this->copyAdaptedElfinderFiles();
         $this->copyJqueryUiImages();
         $this->copyFontawesomeFonts();
     }
-    
+
     private function cleanOverheadFromDependencies()
     {
-        
+
         $folder = new Folder();
-        
+
         $folder->delete($this->jqueryBackstretchPath . DS . 'examples');
         $folder->delete($this->jqueryBackstretchPath . DS . 'test');
-        
+
         $folder->delete($this->fontawesomePath . 'js');
-                
+
         $file = new File($this->fontawesomePath . 'css' . DS . 'all.min.css');
         $file->delete();
         $file = new File($this->fontawesomePath . 'css' . DS . 'fontawesome.css');
@@ -62,22 +62,22 @@ class NpmPostInstallShell extends AppShell
         $file->delete();
         $file = new File($this->fontawesomePath . 'css' . DS . 'v4-shims.min.css');
         $file->delete();
-        
+
         $activeThemeFolder = 'smoothness';
         $folder = new Folder($this->jqueryUiPath . 'themes' . DS . $activeThemeFolder);
         $folder->copy($this->jqueryUiPath . 'theme-backup');
         $folder->delete($this->jqueryUiPath . 'themes');
         $folder = new Folder($this->jqueryUiPath . 'theme-backup');
         $folder->move($this->jqueryUiPath . 'themes' . DS . $activeThemeFolder);
-        
+
         $folder->delete($this->owlCarouselPath . 'docs');
         $folder->delete($this->owlCarouselPath . 'docs_src');
         $folder->delete($this->owlCarouselPath . 'src');
         $folder->delete($this->owlCarouselPath . 'test');
-        
+
         $folder->delete($this->tooltipsterPath . 'demo');
         $folder->delete($this->tooltipsterPath . 'doc');
-        
+
     }
 
     private function copyFontawesomeFonts()

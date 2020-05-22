@@ -26,7 +26,7 @@
         <td>
 
             <p>
-            	<?php echo __d('admin', 'this_invoice_contains_all_products_that_have_been_delivered_in_{0}.', [$invoicePeriodMonthAndYear]); ?>
+                <?php echo __d('admin', 'this_invoice_contains_all_products_that_have_been_delivered_in_{0}.', [$invoicePeriodMonthAndYear]); ?>
             </p>
 
             <p><?php echo __d('admin', 'If_the_invoice_amount_should_differ_from_your_own_recordings_please_tell_us.'); ?></p>

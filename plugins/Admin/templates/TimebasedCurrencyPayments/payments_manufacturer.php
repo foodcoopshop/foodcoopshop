@@ -25,7 +25,7 @@ $this->element('addScript', ['script' =>
 <div class="filter-container">
     <h1><?php echo $title_for_layout; ?></h1>
     <div class="right">
-    	<?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_paying_with_time_module'))]); ?>
+        <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_paying_with_time_module'))]); ?>
     </div>
 </div>
 
@@ -51,7 +51,7 @@ echo '<table class="list">';
 
                 $details = $this->Html->getCustomerAddress($payment['customer']);
                 $details .= '<br />' . (empty($payment['customer']) ? '' : $payment['customer']->email);
-                
+
                 echo '<span style="float:left;margin-right:5px;margin-top:1px;">';
                     echo '<i class="fas fa-phone-square ok fa-lg customer-detail" title="'.h($details).'"></i>';
                 echo '</span>';
