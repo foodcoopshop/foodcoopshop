@@ -68,6 +68,13 @@ class ProductsTable extends AppTable
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
     }
 
+    public function validationName(Validator $validator)
+    {
+        $validator->notEmptyString('name', __('Please_enter_a_name.'));
+        $validator->minLength('name', 2, __('Please_enter_at_least_{0}_characters.', [2]));
+        return $validator;
+    }
+
     public function validationDeliveryRhythm(Validator $validator)
     {
         $validator->add('delivery_rhythm_type', 'allowed-count-values', [
@@ -1331,7 +1338,7 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    public function add($manufacturer)
+    public function add($manufacturer, $productName)
     {
 
         $defaultQuantity = 0;
@@ -1339,19 +1346,26 @@ class ProductsTable extends AppTable
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
 
         // INSERT PRODUCT
-        $newProduct = $this->save(
-            $this->newEntity(
-                [
-                    'id_manufacturer' => $manufacturer->id_manufacturer,
-                    'id_tax' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id),
-                    'name' => StringComponent::removeSpecialChars(__('New_product_of') . ' ' . $manufacturer->name),
-                    'delivery_rhythm_send_order_list_weekday' => Configure::read('app.timeHelper')->getSendOrderListsWeekday(),
-                    'description' => '',
-                    'description_short' => '',
-                    'unity' => ''
-                ]
-            )
+        $productEntity = $this->newEntity(
+            [
+                'id_manufacturer' => $manufacturer->id_manufacturer,
+                'id_tax' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id),
+                'name' => StringComponent::removeSpecialChars(strip_tags(trim($productName))),
+                'delivery_rhythm_send_order_list_weekday' => Configure::read('app.timeHelper')->getSendOrderListsWeekday(),
+                'description' => '',
+                'description_short' => '',
+                'unity' => ''
+            ],
+            [
+                'validate' => 'name'
+            ]
         );
+
+        if ($productEntity->hasErrors()) {
+            return $productEntity;
+        }
+
+        $newProduct = $this->save($productEntity);
         $newProductId = $newProduct->id_product;
 
         // INSERT CATEGORY_PRODUCTS
@@ -1380,6 +1394,6 @@ class ProductsTable extends AppTable
             ]
         ])->first();
 
-        return $newProduct;
+        return $productEntity;
     }
 }

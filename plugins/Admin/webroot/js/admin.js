@@ -1273,38 +1273,6 @@ foodcoopshop.Admin = {
         });
     },
 
-    initAddProduct: function (container) {
-
-        $(container).find('#add-product-button-wrapper a').on('click', function () {
-
-            var buttons = {};
-            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
-            buttons['yes'] = {
-                text: foodcoopshop.LocalizedJs.helper.yes,
-                click: function() {
-                    $('.ui-dialog .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-                    document.location.href = '/admin/products/add/' + $(container).find('#manufacturerid').val();
-                }
-            };
-
-            $('<div></div>').appendTo('body')
-                .html('<p>' + foodcoopshop.LocalizedJs.admin.ReallyAddNewProduct + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
-                .dialog({
-                    modal: true,
-                    title: foodcoopshop.LocalizedJs.admin.AddNewProduct,
-                    autoOpen: true,
-                    width: 400,
-                    resizable: false,
-                    buttons: buttons,
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
-                });
-        });
-
-    },
-
     initEmailToAllButton: function () {
         var clipboard = new ClipboardJS('.btn-clipboard');
         clipboard.on('success', function(e) {

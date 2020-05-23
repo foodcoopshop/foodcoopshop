@@ -460,8 +460,13 @@ class ProductsController extends AdminAppController
         $this->redirect($this->referer());
     }
 
-    public function add($manufacturerId)
+    public function add()
     {
+
+        $this->RequestHandler->renderAs($this, 'json');
+
+        $manufacturerId = $this->getRequest()->getData('manufacturerId');
+        $productName = $this->getRequest()->getData('productName');
 
         // if logged user is manufacturer, then get param manufacturer id is NOT used
         // but logged user id for security reasons
@@ -476,18 +481,32 @@ class ProductsController extends AdminAppController
             ]
         ])->first();
 
-        if (empty($manufacturer)) {
-            throw new RecordNotFoundException('manufacturer not existing');
+        try {
+            if (empty($manufacturer)) {
+                throw new RecordNotFoundException('manufacturer not existing');
+            }
+            $productEntity = $this->Product->add($manufacturer, $productName);
+            if ($productEntity->hasErrors()) {
+                throw new InvalidParameterException(join(' ', $this->Product->getAllValidationErrors($productEntity)));
+            }
+        } catch (\Exception $e) {
+            $this->sendAjaxError($e);
         }
 
-        $newProduct = $this->Product->add($manufacturer);
-
-        $messageString = __d('admin', 'A_new_product_was_created_for_{0}.', ['<b>' . $manufacturer->name . '</b>']);
+        $messageString = __d('admin', 'The_product_{0}_was_created_for_{1}.', [
+            '<b>' . $productName . '</b>',
+            '<b>' . $manufacturer->name . '</b>',
+        ]);
         $this->Flash->success($messageString);
-        $this->ActionLog->customSave('product_added', $this->AppAuth->getUserId(), $newProduct->id_product, 'products', $messageString);
+        $this->ActionLog->customSave('product_added', $this->AppAuth->getUserId(), $productEntity->id_product, 'products', $messageString);
 
-        $this->getRequest()->getSession()->write('highlightedRowId', $newProduct->id_product);
-        $this->redirect($this->referer());
+        $this->getRequest()->getSession()->write('highlightedRowId', $productEntity->id_product);
+
+        $this->set([
+            'status' => 1,
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status']);
+
     }
 
     public function editDeliveryRhythm()

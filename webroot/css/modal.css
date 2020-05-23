@@ -130,3 +130,6 @@ body.iframe_start_page {
 #modal-image .modal-dialog img {
     width: 100%;
 }
+#modal-product-add input[type="text"] {
+    width: 100%;
+}

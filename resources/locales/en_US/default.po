@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-18 10:35+0200\n"
-"PO-Revision-Date: 2020-05-18 10:36+0200\n"
+"POT-Creation-Date: 2020-05-23 21:54+0200\n"
+"PO-Revision-Date: 2020-05-23 21:57+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -768,9 +768,6 @@ msgstr "Please cancel all ordered products before cancelling the order."
 msgid "Add_new_product?"
 msgstr "Add new product?"
 
-msgid "Really_add_new_product?"
-msgstr "Do you really want to add a new product?"
-
 msgid "This_function_is_not_available_today."
 msgstr "This function is not available today."
 
@@ -887,6 +884,12 @@ msgstr "approximate delivery weight in {0} per unit"
 
 msgid "Name"
 msgstr "Name"
+
+msgid "Which_product_do_you_want_to_add_for_{0}?"
+msgstr "Which product do you want to add for {0}?"
+
+msgid "Which_product_do_you_want_to_add?"
+msgstr "Which product do you want to add?"
 
 msgid "Product_rename_info_text"
 msgstr "Important: Please do not rename products in other products. Create a new product instead!"
@@ -1440,9 +1443,6 @@ msgstr "The email address is already used by another member or manufacturer."
 msgid "Please_enter_your_street."
 msgstr "Please enter your street."
 
-msgid "Maximum_{0}_characters_please."
-msgstr "Maximum {0} characters please."
-
 msgid "Please_enter_your_city."
 msgstr "Please enter your city."
 
@@ -1667,9 +1667,6 @@ msgstr "The name of the product {0} needs to be at least {1} characters long."
 
 msgid "deleted"
 msgstr "deleted"
-
-msgid "New_product_of"
-msgstr "New product of"
 
 msgid "The_quantity_needs_to_be_a_number."
 msgstr "The quantity needs to be a number."
@@ -2429,6 +2426,15 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Really_add_new_product?"
+#~ msgstr "Do you really want to add a new product?"
+
+#~ msgid "Maximum_{0}_characters_please."
+#~ msgstr "Maximum {0} characters please."
+
+#~ msgid "New_product_of"
+#~ msgstr "New product of"
 
 #~ msgid "Do_not_cancel_button"
 #~ msgstr "Close"

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-05-15 22:53+0200\n"
-"PO-Revision-Date: 2020-05-06 10:45+0200\n"
+"POT-Creation-Date: 2020-05-23 21:54+0200\n"
+"PO-Revision-Date: 2020-05-23 21:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.3.1\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -420,8 +420,8 @@ msgstr "The attribute {0} of the product {1} from manufacturer {2} was successfu
 msgid "The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created."
 msgstr "The attribute {0} of the product {1} from manufacturer {2} was successfully created."
 
-msgid "A_new_product_was_created_for_{0}."
-msgstr "A new product was created for {0}."
+msgid "The_product_{0}_was_created_for_{1}."
+msgstr "The product {0} was created for {1}."
 
 msgid "Order_possible_until"
 msgstr "Order possible until"
@@ -618,9 +618,8 @@ msgstr "My {0}"
 msgid "My_credit_balance"
 msgstr "My credit balance"
 
-#, fuzzy
 msgid "The_uploaded_file_needs_to_have_the_format:_{0}"
-msgstr "The uploaded file is not valid."
+msgstr "The uploaded file needs to have toe format: {0}"
 
 msgid "Filename_General-terms-and-conditions"
 msgstr "General-terms-and-conditions"

@@ -95,7 +95,7 @@ use Cake\Core\Configure;
                 // only show button if no manufacturer filter is applied
                 if ($manufacturerId > 0) {
                     $this->element('addScript', [
-                        'script' => Configure::read('app.jsNamespace') . ".Admin.initAddProduct('body.products');"
+                        'script' => Configure::read('app.jsNamespace') . ".ModalProductAdd.init();"
                     ]);
                     echo '<div id="add-product-button-wrapper" class="add-button-wrapper">';
                     echo $this->Html->link('<i class="fas fa-plus-circle"></i> ' . __d('admin', 'Add_product'), 'javascript:void(0);', [

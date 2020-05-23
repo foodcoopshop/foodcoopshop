@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-18 10:35+0200\n"
+"POT-Creation-Date: 2020-05-23 21:54+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -767,9 +767,6 @@ msgstr ""
 msgid "Add_new_product?"
 msgstr ""
 
-msgid "Really_add_new_product?"
-msgstr ""
-
 msgid "This_function_is_not_available_today."
 msgstr ""
 
@@ -885,6 +882,12 @@ msgid "approximate_delivery_weight_in_{0}_per_unit"
 msgstr ""
 
 msgid "Name"
+msgstr ""
+
+msgid "Which_product_do_you_want_to_add_for_{0}?"
+msgstr ""
+
+msgid "Which_product_do_you_want_to_add?"
 msgstr ""
 
 msgid "Product_rename_info_text"
@@ -1439,9 +1442,6 @@ msgstr ""
 msgid "Please_enter_your_street."
 msgstr ""
 
-msgid "Maximum_{0}_characters_please."
-msgstr ""
-
 msgid "Please_enter_your_city."
 msgstr ""
 
@@ -1665,9 +1665,6 @@ msgid "The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long."
 msgstr ""
 
 msgid "deleted"
-msgstr ""
-
-msgid "New_product_of"
 msgstr ""
 
 msgid "The_quantity_needs_to_be_a_number."
