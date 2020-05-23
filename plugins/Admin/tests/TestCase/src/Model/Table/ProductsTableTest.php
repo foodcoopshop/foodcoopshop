@@ -497,7 +497,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertEquals($product->id_manufacturer, $manufacturerId);
         $this->assertEquals($product->active, APP_OFF);
         $this->assertEquals($product->category_products[0]->id_category, Configure::read('app.categoryAllProducts'));
-        $this->assertEquals($product->name, 'New product <b>test</b>');
+        $this->assertEquals($product->name, 'New product test');
         $this->assertEquals($product->id_tax, $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id));
         $this->assertEquals($product->stock_available->quantity, 0);
     }
