@@ -483,15 +483,9 @@ body.configurations.index td {
 form div.error-message {
     margin-left: 200px;
 }
-.featherlight-content h3 {
-    color: #009335;
-}
 .ui-dialog-content label {
     font-weight: bold;
     margin-bottom: 0;
-}
-.featherlight-inner .checkbox label {
-    font-weight: normal;
 }
 .overlay-info {
     color: red;
@@ -606,9 +600,6 @@ body.order_details.index .table-cell-wrapper.price {
 }
 table.list td.amount > .has-separator:after {
     content: ' / ';
-}
-.ui-dialog {
-    z-index: 2147483648; /* 1 more than featherlight */
 }
 .cke_dialog_container {
     z-index: 2147483650 ! important; /* open upload from dialog - 2 more than .ui-dialog */
@@ -881,9 +872,6 @@ form.fcs-form .input.fcs-upload .after.small {
     float: right;
     line-height: 28px;
     margin-left: 5px;
-}
-.featherlight-content .toggle-link {
-    margin-bottom: 10px;
 }
 div.date-field-wrapper {
     position: relative;

@@ -375,61 +375,6 @@ input[type="checkbox"] {
     width: 20px;
     height: 20px;
 }
-.featherlight-close-icon {
-    background: transparent ! important;
-    right: 7px ! important;
-    width: 60px ! important;
-    top: 3px ! important;
-}
-.featherlight-close-icon a {
-    padding: 6px 12px;
-    border-color: #fff ! important;
-    font-size: 21px ! important;
-    border-bottom-left-radius: 5px ! important;
-}
-.featherlight-content {
-    max-width: none ! important;
-    border: none ! important;
-    overflow: hidden ! important;
-    padding: 5px ! important;
-    border-radius: 5px ! important;
-}
-.featherlight-image {
-    width: auto ! important;
-    max-width: 800px ! important;
-}
-.featherlight-iframe .featherlight-content {
-    max-width: auto ! important;
-}
-.featherlight-loading .featherlight-close-icon {
-    display: none;
-}
-.featherlight-loading .featherlight-content {
-    min-height: auto ! important;
-    width: 90px;
-}
-.featherlight-loading .featherlight-inner {
-    padding: 20px;
-}
-.featherlight:last-of-type {
-    background: rgba(0, 0, 0, 0.65) ! important;
-}
-.featherlight .featherlight-inner.href {
-    max-width: 990px;
-    padding: 10px;
-    overflow-y: auto ! important;
-}
-.featherlight .featherlight-inner.href h2 {
-    font-size: 14px;
-    font-weight: bold;
-    margin-top: 10px;
-    float: left;
-    width: 100%;
-    letter-spacing: normal ! important;
-    border: none ! important;
-    padding-bottom: 0 ! important;
-}
-
 .toggle-link {
     margin-bottom: 5px;
     float: left;
@@ -599,53 +544,9 @@ tr.selected td > div > i.far {
     top: 7px;
     font-size: 15px;
 }
-.add-payment-form.featherlight-inner {
-    padding: 10px;
-}
-.add-payment-form.featherlight-inner {
-  max-width: 400px;
-}
-.featherlight-inner div.form-buttons {
-    margin-top: 10px;
-}
-.featherlight-inner label {
-    font-weight: bold;
-    margin-bottom: 0;
-}
-.featherlight-content {
-    min-height: 135px;
-}
-.featherlight-content button.cancel {
-    float: right;
-    margin-left: 14px;
-}
-.featherlight-content button[disabled="disabled"] {
-    opacity: 0.65;
-    cursor: not-allowed;
-}
-.featherlight-content button {
-    padding: 5px;
-}
-.featherlight-inner {
-    min-width: 350px ! important;
-    overflow-y: auto ! important;
-}
-.featherlight-content h3 {
-    margin: 0;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    font-size: 19px;
-    font-weight: bold;
-    width: 90%;
-    line-height: 22px;
-}
-.ui-dialog-content #flashMessage,
-.featherlight-content #flashMessage {
+.ui-dialog-content #flashMessage {
     position: absolute;
     top: 10px;
     width: 98%;
     left: 1% ! important;
-}
-.featherlight-content #flashMessage {
-    z-index: 10000;
 }

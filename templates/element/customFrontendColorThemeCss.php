@@ -55,8 +55,7 @@ use Cake\Core\Configure;
     a:not(.btn), a:not(.btn):visited, a:not(.btn):active,
     #footer i.fab, #footer i.far, #footer i.fas,
     a.btn.edit-shortcut-button,
-    a.btn.prev-button i, a.btn.next-button i,
-    .featherlight-content h3 {
+    a.btn.prev-button i, a.btn.next-button i {
         color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
     }
 
