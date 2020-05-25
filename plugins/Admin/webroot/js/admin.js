@@ -1227,37 +1227,6 @@ foodcoopshop.Admin = {
 
     },
 
-    editTaxFormAfterLoad : function (productId) {
-    },
-
-    initProductTaxEditDialog: function (container) {
-
-        var productName = $('#product-' + productId + ' span.name-for-dialog').html();
-        $('.featherlight-content label').html(foodcoopshop.LocalizedJs.admin.ChangeTaxRate + ': ' + productName);
-        var selectedTaxId = $('#tax-id-' + productId).val();
-        $('.featherlight-content #taxes-id-tax').val(selectedTaxId);
-
-
-        var button = $(container).find('.product-tax-edit-button');
-
-        $(button).on('click', function () {
-
-            var objectId = $(this).data('objectId');
-            var formHtml = $('.tax-dropdown-wrapper');
-
-            $.featherlight(
-                foodcoopshop.AppFeatherlight.initLightboxForForms(
-                    foodcoopshop.Admin.editTaxFormSave,
-                    foodcoopshop.Admin.editTaxFormAfterLoad,
-                    foodcoopshop.AppFeatherlight.closeAndReloadLightbox,
-                    formHtml,
-                    objectId
-                )
-            );
-        });
-
-    },
-
     triggerFilter : function () {
         $('#filter-loader').remove();
         $('#content').css('opacity', '.3');
