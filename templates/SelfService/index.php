@@ -17,6 +17,7 @@ use Cake\Routing\Router;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".SelfService.init();".
+    Configure::read('app.jsNamespace').".ModalImage.addLightboxToWysiwygEditorImages('.product-wrapper .toggle-content.description img');".
     Configure::read('app.jsNamespace').".ModalImage.init('.product-wrapper a.open-with-modal');".
     Configure::read('app.jsNamespace').".Helper.bindToggleLinks();".
     Configure::read('app.jsNamespace').".Helper.initProductAttributesButtons();".

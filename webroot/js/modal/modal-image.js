@@ -27,6 +27,12 @@ foodcoopshop.ModalImage = {
         foodcoopshop.Modal.destroy(modalSelector);
     },
 
+    addLightboxToWysiwygEditorImages: function(selector) {
+        $(selector).each(function () {
+            $(this).wrap('<a class="open-with-modal" href="javascript:void(0);" data-modal-image="' + $(this).attr('src') + '"></a>');
+        });
+    },
+
     getOpenHandler : function(modalSelector, button) {
 
         foodcoopshop.Modal.appendModalToDom(

@@ -16,6 +16,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
+    Configure::read('app.jsNamespace').".ModalImage.addLightboxToWysiwygEditorImages('.product-wrapper .toggle-content.description img');".
     Configure::read('app.jsNamespace').".ModalImage.init('.product-wrapper a.open-with-modal');".
     Configure::read('app.jsNamespace').".Helper.bindToggleLinks(true);".
     Configure::read('app.jsNamespace').".Helper.selectMainMenuFrontend('".__('Products')."');".

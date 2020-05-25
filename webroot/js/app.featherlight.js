@@ -60,12 +60,6 @@ foodcoopshop.AppFeatherlight = {
         $(container).featherlight(configuration);
     },
 
-    addLightboxToCkeditorImages : function (selector) {
-        $(selector).each(function () {
-            $(this).wrap('<a class="open-with-modal" href="javascript:void(0);" data-modal-image="' + $(this).attr('src') + '"></a>');
-        });
-    },
-
     setMaxHeightInner : function () {
         $('.featherlight-inner').css('max-height', $('.featherlight-content').height());
     },
