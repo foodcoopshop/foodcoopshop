@@ -13,25 +13,6 @@
  */
 foodcoopshop.DialogProduct = {
 
-    getHtmlForProductNameEdit : function(dialogId) {
-        var dialogHtml = '<label for="dialogName">' + foodcoopshop.LocalizedJs.dialogProduct.Name + '</label><br />';
-        dialogHtml += '<input type="text" name="dialogName" id="dialogName" value="" /><span class="overlay-info product-description-rename-info">' + foodcoopshop.LocalizedJs.dialogProduct.ProductRenameInfoText + '</span><br />';
-        dialogHtml += '<label id="labelUnity" for="dialogUnity">' + foodcoopshop.LocalizedJs.dialogProduct.Unit + ' <span>' + foodcoopshop.LocalizedJs.dialogProduct.UnitDescriptionExample + '<br />' + foodcoopshop.LocalizedJs.admin.EnterApproximateWeightInPriceDialog + '</span></label><br />';
-        dialogHtml += '<input type="text" name="dialogUnity" id="dialogUnity" value="" /><br />';
-        dialogHtml += '<div class="textarea-wrapper">';
-        dialogHtml += '<label for="dialogDescriptionShort" class="label-description-short">' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionShort + '</label><br />';
-        dialogHtml += '<textarea class="ckeditor" name="dialogDescriptionShort" id="dialogDescriptionShort"></textarea>';
-        dialogHtml += '</div>';
-        dialogHtml += '<div class="textarea-wrapper">';
-        dialogHtml += '<label for="dialogDescription">' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionLong + '</label><br />';
-        dialogHtml += '<label class="is-declaration-ok"><input type="checkbox" name="dialogIsDeclarationOk" id="dialogIsDeclarationOk" />' + foodcoopshop.LocalizedJs.dialogProduct.ProductDeclarationOK + '</label><a href="' + foodcoopshop.LocalizedJs.dialogProduct.DocsUrlProductDeclaration + '" target="_blank"><i class="fas fa-arrow-circle-right"></i> ' + foodcoopshop.LocalizedJs.dialogProduct.Help + '</a><br />';
-        dialogHtml += '<textarea class="ckeditor" name="dialogDescription" id="dialogDescription"></textarea>';
-        dialogHtml += '</div>';
-        dialogHtml += '<input type="hidden" name="dialogProductId" id="dialogProductId" value="" />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.dialogProduct.ChangeNameAndDescription, dialogId, dialogHtml);
-        return dialogHtml;
-    },
-
     getHtmlForProductPriceEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogPricePrice"></label><br />';
         dialogHtml += '<label class="radio">';

@@ -160,20 +160,6 @@ form.fcs-form .bootstrap-select {
     right: 20px;
     top: 10px;
 }
-#product-name-edit-form input[type="text"],
-#product-price-edit-form input[type="text"],
-#product-deposit-edit-form input[type="text"],
-#product-name-edit-form textarea {
-    width: 300px;
-    margin-bottom: 10px;
-}
-#product-name-edit-form label.is-declaration-ok {
-  line-height: 24px;
-}
-#product-name-edit-form label.is-declaration-ok input {
-  float: left;
-  margin-right: 5px;
-}
 span.name-for-dialog,
 span.quantity-for-dialog,
 span.product-amount-for-dialog,
@@ -529,12 +515,6 @@ form div.error-message {
 #labelUnity span {
     font-weight: normal;
     font-size: 12px;
-}
-.product-description-rename-info {
-    position: absolute;
-    right: 30px;
-    top: 70px;
-    width: 300px;
 }
 #add-payment-button-wrapper,
 #add-timebased-currency-payment-button-wrapper {

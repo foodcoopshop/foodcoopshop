@@ -24,19 +24,22 @@ foodcoopshop.ModalProductAdd = {
     },
 
     getHtml : function() {
-        var label = '';
+        var infoText = '';
         if (!foodcoopshop.Helper.isManufacturer) {
             var manufacturerName = $('#manufacturerid').find('option:selected').text();
-            label = foodcoopshop.LocalizedJs.dialogProduct.Manufacturer + ': <b>' + manufacturerName + '</b>';
+            infoText = foodcoopshop.LocalizedJs.dialogProduct.Manufacturer + ': <b>' + manufacturerName + '</b>';
         }
-        var html = '<label for="dialogProductAdd">' + label + '</label>';
-            html += '<br />' + foodcoopshop.LocalizedJs.dialogProduct.Name + '</span> <input type="text" id="dialogProductAddName" value="" />';
+        var html = '<p>' + infoText + '</p>';
+            html += '<label for="dialogProductAdd"><b>' + foodcoopshop.LocalizedJs.dialogProduct.Name + '</b></label><br />';
+            html += '<input type="text" id="dialogProductAddName" value="" />';
+            html += '<hr />';
             html += '<div class="textarea-wrapper">';
-            html += '<label for="dialogProductAddDescriptionShort" class="label-description-short">' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionShort + '</label><br />';
+            html += '<label for="dialogProductAddDescriptionShort" class="label-description-short"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionShort + '</b></label><br />';
             html += '<textarea class="ckeditor" name="dialogProductAddDescriptionShort" id="dialogProductAddDescriptionShort"></textarea>';
+            html += '<hr />';
             html += '</div>';
             html += '<div class="textarea-wrapper">';
-            html += '<label for="dialogProductAddDescription">' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionLong + '</label><br />';
+            html += '<label for="dialogProductAddDescription"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionLong + '</b></label><br />';
             html += '<textarea class="ckeditor" name="dialogProductAddDescription" id="dialogProductAddDescription"></textarea>';
             html += '</div>';
             html += '<br />';
@@ -86,10 +89,10 @@ foodcoopshop.ModalProductAdd = {
         });
 
         var productName = button.closest('tr').find('span.product-name').val();
-        foodcoopshop.Helper.initCkeditor('dialogProductAddDescriptionShort', true);
-        foodcoopshop.Helper.initCkeditor('dialogProductAddDescription', true);
-        $('#dialogProductAddName').val(productName);
+        foodcoopshop.Helper.initCkeditor('dialogProductAddDescriptionShort');
+        foodcoopshop.Helper.initCkeditor('dialogProductAddDescription');
         $(modalSelector).modal();
+        $('#dialogProductAddName').focus();
     }
 
 };
