@@ -649,8 +649,8 @@ class ProductsTable extends AppTable
                 $tmpProduct2Save = [
                     'id_product' => $ids['productId'],
                     'name' => StringComponent::removeSpecialChars(strip_tags(trim($name['name']))),
-                    'description_short' => StringComponent::prepareWysiwigEditorHtml($name['description_short'], self::ALLOWED_TAGS_DESCRIPTION_SHORT),
-                    'description' => StringComponent::prepareWysiwigEditorHtml($name['description'], self::ALLOWED_TAGS_DESCRIPTION),
+                    'description_short' => StringComponent::prepareWysiwygEditorHtml($name['description_short'], self::ALLOWED_TAGS_DESCRIPTION_SHORT),
+                    'description' => StringComponent::prepareWysiwygEditorHtml($name['description'], self::ALLOWED_TAGS_DESCRIPTION),
                     'unity' => StringComponent::removeSpecialChars(strip_tags(trim($name['unity'])))
                 ];
                 if (isset($name['is_declaration_ok'])) {
@@ -1354,8 +1354,8 @@ class ProductsTable extends AppTable
                 'id_tax' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id),
                 'name' => StringComponent::removeSpecialChars(strip_tags(trim($productName))),
                 'delivery_rhythm_send_order_list_weekday' => Configure::read('app.timeHelper')->getSendOrderListsWeekday(),
-                'description_short' => StringComponent::prepareWysiwigEditorHtml($descriptionShort, self::ALLOWED_TAGS_DESCRIPTION_SHORT),
-                'description' => StringComponent::prepareWysiwigEditorHtml($description, self::ALLOWED_TAGS_DESCRIPTION),
+                'description_short' => StringComponent::prepareWysiwygEditorHtml($descriptionShort, self::ALLOWED_TAGS_DESCRIPTION_SHORT),
+                'description' => StringComponent::prepareWysiwygEditorHtml($description, self::ALLOWED_TAGS_DESCRIPTION),
                 'unity' => ''
             ],
             [
