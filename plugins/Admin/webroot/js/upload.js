@@ -260,7 +260,7 @@ foodcoopshop.Upload = {
         // bind delete button
         if (imageUploadForm.find('a.img-delete').length == 0) {
             if (imageUploadForm.find('img.existingImage').length == 1) {
-                $('<a title="' + foodcoopshop.LocalizedJs.upload.delete + '" class="modify-icon img-delete" href="javascript:void(0);"><i class="fas fa-times-circle not-ok fa-lg"></i></a>').appendTo(imageUploadForm.find('.drop'));
+                $('<a title="' + foodcoopshop.LocalizedJs.upload.delete + '" class="modify-icon img-delete" href="javascript:void(0);"><i class="fa fa-trash-alt not-ok fa-lg"></i></a>').appendTo(imageUploadForm.find('.drop'));
                 imageUploadForm.find('a.img-delete').on('click', function (e) {
                     var result = confirm(foodcoopshop.LocalizedJs.upload.ReallyDeleteImage);
                     if (result) {
