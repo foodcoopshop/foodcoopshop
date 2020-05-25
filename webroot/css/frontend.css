@@ -940,11 +940,6 @@ body.carts.detail #CartsDetailForm {
   margin-left: 0;
   width: 100%;
 }
-body.carts.detail .cart:not(#cart) .featherlight-overlay,
-#RegistrationForm .featherlight-overlay,
-#LoginForm .featherlight-overlay {
-    display: none;
-}
 #inner-content .prev-next-button {
     float: left;
     margin-bottom: 15px;

@@ -507,9 +507,6 @@ pre {
     float: left;
     width: 100%;
 }
-#AcceptTermsOfUseForm .featherlight-overlay {
-    display: none;
-}
 .vertical.menu a.active i.gold,
 .vertical.menu a:hover i.gold,
 a.btn.btn-success:hover i.gold,

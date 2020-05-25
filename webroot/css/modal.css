@@ -54,7 +54,8 @@
     padding: 0;
 }
 #instant-order-add .modal-footer,
-#modal-image .modal-footer {
+#modal-image .modal-footer,
+#modal-text .modal-footer {
     display: none;
 }
 #instant-order-add .bootstrap-select {
@@ -126,6 +127,15 @@ body.iframe_start_page {
     color:red;
     float:left;
     margin-bottom:5px;
+}
+#modal-text .modal-dialog {
+    max-width: 800px;
+}
+#modal-text h2 {
+    font-size: 20px;
+}
+#modal-text h3 {
+    font-size: 16px;
 }
 #modal-image .modal-dialog {
     max-width: 600px;

@@ -16,7 +16,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
-    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('.cart .input.checkbox label a.open-with-featherlight');".
+    Configure::read('app.jsNamespace').".ModalText.init('.cart .input.checkbox label a.open-with-modal');".
     Configure::read('app.jsNamespace').".Cart.initCartFinish();"
 ]);
 if (!$appAuth->termsOfUseAccepted()) {

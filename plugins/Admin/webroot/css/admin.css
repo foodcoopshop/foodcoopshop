@@ -769,14 +769,12 @@ form.fcs-form {
 }
 h2 {
     font-size: 20px;
-    letter-spacing: 2px;
     border-bottom: 1px solid #dfdfdf;
     padding-bottom: 5px;
 }
 h2 span {
     font-size: 12px;
     color: #333;
-    letter-spacing: normal;
 }
 h2.info {
     background-color: #719f41;
