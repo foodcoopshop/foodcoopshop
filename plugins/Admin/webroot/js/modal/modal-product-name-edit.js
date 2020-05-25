@@ -93,6 +93,8 @@ foodcoopshop.ModalProductNameEdit = {
             foodcoopshop.ModalProductNameEdit.getCloseHandler(modalSelector);
         });
 
+        foodcoopshop.Modal.removeTooltipster();
+
         $(modalSelector).modal();
 
         foodcoopshop.Helper.initCkeditor('dialogDescriptionShort');
