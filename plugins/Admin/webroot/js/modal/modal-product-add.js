@@ -30,19 +30,19 @@ foodcoopshop.ModalProductAdd = {
             infoText = foodcoopshop.LocalizedJs.dialogProduct.Manufacturer + ': <b>' + manufacturerName + '</b>';
         }
         var html = '<p>' + infoText + '</p>';
-            html += '<label for="dialogProductAdd"><b>' + foodcoopshop.LocalizedJs.dialogProduct.Name + '</b></label><br />';
-            html += '<input type="text" id="dialogProductAddName" value="" />';
-            html += '<hr />';
-            html += '<div class="textarea-wrapper">';
-            html += '<label for="dialogProductAddDescriptionShort" class="label-description-short"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionShort + '</b></label><br />';
-            html += '<textarea class="ckeditor" name="dialogProductAddDescriptionShort" id="dialogProductAddDescriptionShort"></textarea>';
-            html += '<hr />';
-            html += '</div>';
-            html += '<div class="textarea-wrapper">';
-            html += '<label for="dialogProductAddDescription"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionLong + '</b></label><br />';
-            html += '<textarea class="ckeditor" name="dialogProductAddDescription" id="dialogProductAddDescription"></textarea>';
-            html += '</div>';
-            html += '<br />';
+        html += '<label for="dialogProductAdd"><b>' + foodcoopshop.LocalizedJs.dialogProduct.Name + '</b></label><br />';
+        html += '<input type="text" id="dialogProductAddName" value="" />';
+        html += '<hr />';
+        html += '<div class="textarea-wrapper">';
+        html += '<label for="dialogProductAddDescriptionShort" class="label-description-short"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionShort + '</b></label><br />';
+        html += '<textarea class="ckeditor" name="dialogProductAddDescriptionShort" id="dialogProductAddDescriptionShort"></textarea>';
+        html += '<hr />';
+        html += '</div>';
+        html += '<div class="textarea-wrapper">';
+        html += '<label for="dialogProductAddDescription"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionLong + '</b></label><br />';
+        html += '<textarea class="ckeditor" name="dialogProductAddDescription" id="dialogProductAddDescription"></textarea>';
+        html += '</div>';
+        html += '<br />';
         return html;
     },
 

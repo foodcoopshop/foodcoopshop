@@ -116,7 +116,7 @@ foodcoopshop.ModalProductCategoriesEdit = {
         $(modalSelector + ' .categories-checkboxes label').each(function() {
             $(this).attr('for', $(this).attr('for') + '-' + productId);
             $(this).find('input').attr('id', $(this).find('input').attr('id') + '-' + productId);
-        })
+        });
 
         var selectedCategories = $('#selected-categories-' + productId).val().split(',');
         $(modalSelector + ' .categories-checkboxes input[type="checkbox"]').each(function () {

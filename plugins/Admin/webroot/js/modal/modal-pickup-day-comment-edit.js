@@ -39,10 +39,10 @@ foodcoopshop.ModalPickupDayCommentEdit = {
 
     getHtml : function() {
         var html = '<label>' + foodcoopshop.LocalizedJs.admin.Member + ': <b></b></label>';
-            html += '<div class="textarea-wrapper">';
-                html += '<textarea class="ckeditor" name="dialogPickupDayComment" id="dialogPickupDayComment"></textarea>';
-            html += '</div>';
-            html += '<input type="hidden" name="dialogCustomerId" id="dialogCustomerId" value="" />';
+        html += '<div class="textarea-wrapper">';
+        html += '<textarea class="ckeditor" name="dialogPickupDayComment" id="dialogPickupDayComment"></textarea>';
+        html += '</div>';
+        html += '<input type="hidden" name="dialogCustomerId" id="dialogCustomerId" value="" />';
         return html;
     },
 
