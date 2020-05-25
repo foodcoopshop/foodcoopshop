@@ -28,7 +28,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" .
             Configure::read('app.jsNamespace') . ".Admin.initProductQuantityEditDialog('#products');" .
             Configure::read('app.jsNamespace') . ".ModalProductCategoriesEdit.init();" .
-            Configure::read('app.jsNamespace') . ".Admin.initProductTaxEditDialog('#products');" .
+            Configure::read('app.jsNamespace') . ".ModalProductTaxEdit.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initChangeNewState();" .
             Configure::read('app.jsNamespace') . ".Upload.initImageUpload('#products .add-image-button', foodcoopshop.Upload.saveProductImage);" .
             Configure::read('app.jsNamespace') . ".Admin.initAddProductAttribute('#products');" .
@@ -289,6 +289,7 @@ use Cake\Core\Configure;
         ]);
         echo '</div>';
         echo '<div class="tax-dropdown-wrapper">';
+        echo '<input type="hidden" class="product-id" />';
         echo $this->Form->control('Taxes.id_tax', [
             'type' => 'select',
             'label' => '',

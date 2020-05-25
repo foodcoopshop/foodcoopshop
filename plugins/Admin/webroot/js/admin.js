@@ -1228,13 +1228,15 @@ foodcoopshop.Admin = {
     },
 
     editTaxFormAfterLoad : function (productId) {
+    },
+
+    initProductTaxEditDialog: function (container) {
+
         var productName = $('#product-' + productId + ' span.name-for-dialog').html();
         $('.featherlight-content label').html(foodcoopshop.LocalizedJs.admin.ChangeTaxRate + ': ' + productName);
         var selectedTaxId = $('#tax-id-' + productId).val();
         $('.featherlight-content #taxes-id-tax').val(selectedTaxId);
-    },
 
-    initProductTaxEditDialog: function (container) {
 
         var button = $(container).find('.product-tax-edit-button');
 
@@ -1253,27 +1255,6 @@ foodcoopshop.Admin = {
                 )
             );
         });
-
-    },
-
-    editTaxFormSave: function (productId) {
-
-        foodcoopshop.Helper.ajaxCall(
-            '/admin/products/editTax/',
-            {
-                productId: productId,
-                taxId: $('.featherlight-content #taxes-id-tax').val()
-            },
-            {
-                onOk: function (data) {
-                    document.location.reload();
-                },
-                onError: function (data) {
-                    document.location.reload();
-                    alert(data.msg);
-                }
-            }
-        );
 
     },
 

@@ -61,8 +61,8 @@ foodcoopshop.ModalProductCategoriesEdit = {
                     document.location.reload();
                 },
                 onError: function (data) {
-                    document.location.reload();
-                    alert(data.msg);
+                    foodcoopshop.Modal.appendFlashMessage(modalSelector, data.msg);
+                    foodcoopshop.Modal.resetButtons(modalSelector);
                 }
             }
         );
