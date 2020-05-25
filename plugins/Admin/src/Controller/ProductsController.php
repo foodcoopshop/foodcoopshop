@@ -2,6 +2,7 @@
 
 namespace Admin\Controller;
 
+use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Lib\PdfWriter\ProductCardsPdfWriter;
 use Cake\Datasource\Exception\RecordNotFoundException;
@@ -467,6 +468,9 @@ class ProductsController extends AdminAppController
 
         $manufacturerId = $this->getRequest()->getData('manufacturerId');
         $productName = $this->getRequest()->getData('productName');
+        $descriptionShort = $this->getRequest()->getData('descriptionShort');
+        $description = $this->getRequest()->getData('description');
+
 
         // if logged user is manufacturer, then get param manufacturer id is NOT used
         // but logged user id for security reasons
@@ -485,7 +489,7 @@ class ProductsController extends AdminAppController
             if (empty($manufacturer)) {
                 throw new RecordNotFoundException('manufacturer not existing');
             }
-            $productEntity = $this->Product->add($manufacturer, $productName);
+            $productEntity = $this->Product->add($manufacturer, $productName, $descriptionShort, $description);
             if ($productEntity->hasErrors()) {
                 throw new InvalidParameterException(join(' ', $this->Product->getAllValidationErrors($productEntity)));
             }

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-23 21:54+0200\n"
+"POT-Creation-Date: 2020-05-25 10:12+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -884,12 +884,6 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-msgid "Which_product_do_you_want_to_add_for_{0}?"
-msgstr ""
-
-msgid "Which_product_do_you_want_to_add?"
-msgstr ""
-
 msgid "Product_rename_info_text"
 msgstr ""
 
@@ -939,6 +933,9 @@ msgid "Orders_possible_until_amount_of"
 msgstr ""
 
 msgid "zero_or_smaller_zero"
+msgstr ""
+
+msgid "Manufacturer"
 msgstr ""
 
 msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
@@ -1080,9 +1077,6 @@ msgid "attribute"
 msgstr ""
 
 msgid "attributes"
-msgstr ""
-
-msgid "Manufacturer"
 msgstr ""
 
 msgid "Terms_of_use"

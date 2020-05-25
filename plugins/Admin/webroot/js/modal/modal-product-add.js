@@ -17,20 +17,6 @@ foodcoopshop.ModalProductAdd = {
 
         var modalSelector = '#modal-product-add';
 
-        foodcoopshop.Modal.appendModalToDom(
-            modalSelector,
-            foodcoopshop.LocalizedJs.admin.AddNewProduct,
-            foodcoopshop.ModalProductAdd.getHtml()
-        );
-
-        foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-            foodcoopshop.ModalProductAdd.getSuccessHandler(modalSelector);
-        });
-
-        $(modalSelector).on('hidden.bs.modal', function (e) {
-            foodcoopshop.ModalProductAdd.getCloseHandler();
-        });
-
         $('#add-product-button-wrapper a').on('click', function () {
             foodcoopshop.ModalProductAdd.getOpenHandler($(this), modalSelector);
         });
@@ -38,19 +24,27 @@ foodcoopshop.ModalProductAdd = {
     },
 
     getHtml : function() {
-        var label = foodcoopshop.LocalizedJs.dialogProduct.WhichProductDoYouWantToAdd;
+        var label = '';
         if (!foodcoopshop.Helper.isManufacturer) {
             var manufacturerName = $('#manufacturerid').find('option:selected').text();
-            label = foodcoopshop.LocalizedJs.dialogProduct.WhichProductDoYouWantToAddFor0.replace(/\{0\}/, '<b>' + manufacturerName + '</b>');
+            label = foodcoopshop.LocalizedJs.dialogProduct.Manufacturer + ': <b>' + manufacturerName + '</b>';
         }
         var html = '<label for="dialogProductAdd">' + label + '</label>';
             html += '<br />' + foodcoopshop.LocalizedJs.dialogProduct.Name + '</span> <input type="text" id="dialogProductAddName" value="" />';
+            html += '<div class="textarea-wrapper">';
+            html += '<label for="dialogProductAddDescriptionShort" class="label-description-short">' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionShort + '</label><br />';
+            html += '<textarea class="ckeditor" name="dialogProductAddDescriptionShort" id="dialogProductAddDescriptionShort"></textarea>';
+            html += '</div>';
+            html += '<div class="textarea-wrapper">';
+            html += '<label for="dialogProductAddDescription">' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionLong + '</label><br />';
+            html += '<textarea class="ckeditor" name="dialogProductAddDescription" id="dialogProductAddDescription"></textarea>';
+            html += '</div>';
             html += '<br />';
         return html;
     },
 
-    getCloseHandler : function() {
-        $('#dialogProductAddName').val('');
+    getCloseHandler : function(modalSelector) {
+        $(modalSelector).remove();
     },
 
     getSuccessHandler : function(modalSelector) {
@@ -59,7 +53,9 @@ foodcoopshop.ModalProductAdd = {
             '/admin/products/add/',
             {
                 manufacturerId: $('#manufacturerid').val(),
-                productName: $('#dialogProductAddName').val()
+                productName: $('#dialogProductAddName').val(),
+                descriptionShort: CKEDITOR.instances['dialogProductAddDescriptionShort'].getData().trim(),
+                description: CKEDITOR.instances['dialogProductAddDescription'].getData().trim()
             },
             {
                 onOk: function (data) {
@@ -74,7 +70,24 @@ foodcoopshop.ModalProductAdd = {
     },
 
     getOpenHandler : function(button, modalSelector) {
+
+        foodcoopshop.Modal.appendModalToDom(
+            modalSelector,
+            foodcoopshop.LocalizedJs.admin.AddNewProduct,
+            foodcoopshop.ModalProductAdd.getHtml()
+        );
+
+        foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
+            foodcoopshop.ModalProductAdd.getSuccessHandler(modalSelector);
+        });
+
+        $(modalSelector).on('hidden.bs.modal', function (e) {
+            foodcoopshop.ModalProductAdd.getCloseHandler(modalSelector);
+        });
+
         var productName = button.closest('tr').find('span.product-name').val();
+        foodcoopshop.Helper.initCkeditor('dialogProductAddDescriptionShort', true);
+        foodcoopshop.Helper.initCkeditor('dialogProductAddDescription', true);
         $('#dialogProductAddName').val(productName);
         $(modalSelector).modal();
     }

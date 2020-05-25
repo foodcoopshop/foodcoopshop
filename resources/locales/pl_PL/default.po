@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-23 21:54+0200\n"
+"POT-Creation-Date: 2020-05-25 10:12+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1188,14 +1188,6 @@ msgstr "Wpisz przybliżoną wagę w formatce ceny."
 msgid "Name"
 msgstr ""
 
-# Please enter how much you want to pay in {0}.
-#, fuzzy
-msgid "Which_product_do_you_want_to_add_for_{0}?"
-msgstr "Wprowadź, ile chcesz zapłacić w {0}."
-
-msgid "Which_product_do_you_want_to_add?"
-msgstr ""
-
 # Important: Please do not rename products in other products. Create a new product instead!
 msgid "Product_rename_info_text"
 msgstr "Ważne: Nie zmieniaj nazw produktów na nazwy innych produktów. W takim przypadku należy dodać nowy produkt!"
@@ -1263,6 +1255,10 @@ msgstr "Zamówienia możliwe do ilości"
 # 0 or smaller than 0
 msgid "zero_or_smaller_zero"
 msgstr "0 lub mniej niż 0"
+
+# Manufacturer
+msgid "Manufacturer"
+msgstr "Producent"
 
 # For manufacturers and contact persons. Can be changed in the manufacturer settings.
 msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
@@ -1451,10 +1447,6 @@ msgstr "atrybut"
 # attributes
 msgid "attributes"
 msgstr "atrybuty"
-
-# Manufacturer
-msgid "Manufacturer"
-msgstr "Producent"
 
 # Terms of use
 msgid "Terms_of_use"
@@ -3250,6 +3242,11 @@ msgstr "złożone w dniu"
 # The prices include the VAT.
 msgid "Prices_are_including_vat."
 msgstr "Ceny zawierają podatek VAT."
+
+# Please enter how much you want to pay in {0}.
+#, fuzzy
+#~ msgid "Which_product_do_you_want_to_add_for_{0}?"
+#~ msgstr "Wprowadź, ile chcesz zapłacić w {0}."
 
 # Do you really want to add a new product?
 #~ msgid "Really_add_new_product?"

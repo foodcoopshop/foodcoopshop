@@ -27,6 +27,9 @@ use Cake\I18n\I18n;
 class ProductsTable extends AppTable
 {
 
+    public const ALLOWED_TAGS_DESCRIPTION_SHORT = '<p><b><strong><i><em><br>';
+    public const ALLOWED_TAGS_DESCRIPTION       = '<p><b><strong><i><em><br><img>';
+
     public function initialize(array $config): void
     {
         $this->setTable('product');
@@ -646,8 +649,8 @@ class ProductsTable extends AppTable
                 $tmpProduct2Save = [
                     'id_product' => $ids['productId'],
                     'name' => StringComponent::removeSpecialChars(strip_tags(trim($name['name']))),
-                    'description' => strip_tags(htmlspecialchars_decode(trim($name['description'])), '<p><b><strong><i><em><br><img>'),
-                    'description_short' => strip_tags(htmlspecialchars_decode(trim($name['description_short'])), '<p><b><strong><i><em><br>'),
+                    'description_short' => StringComponent::prepareWysiwigEditorHtml($name['description_short'], self::ALLOWED_TAGS_DESCRIPTION_SHORT),
+                    'description' => StringComponent::prepareWysiwigEditorHtml($name['description'], self::ALLOWED_TAGS_DESCRIPTION),
                     'unity' => StringComponent::removeSpecialChars(strip_tags(trim($name['unity'])))
                 ];
                 if (isset($name['is_declaration_ok'])) {
@@ -1338,9 +1341,8 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    public function add($manufacturer, $productName)
+    public function add($manufacturer, $productName, $descriptionShort, $description)
     {
-
         $defaultQuantity = 0;
 
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
@@ -1352,8 +1354,8 @@ class ProductsTable extends AppTable
                 'id_tax' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id),
                 'name' => StringComponent::removeSpecialChars(strip_tags(trim($productName))),
                 'delivery_rhythm_send_order_list_weekday' => Configure::read('app.timeHelper')->getSendOrderListsWeekday(),
-                'description' => '',
-                'description_short' => '',
+                'description_short' => StringComponent::prepareWysiwigEditorHtml($descriptionShort, self::ALLOWED_TAGS_DESCRIPTION_SHORT),
+                'description' => StringComponent::prepareWysiwigEditorHtml($description, self::ALLOWED_TAGS_DESCRIPTION),
                 'unity' => ''
             ],
             [
