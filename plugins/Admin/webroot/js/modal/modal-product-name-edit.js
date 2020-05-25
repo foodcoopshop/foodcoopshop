@@ -42,7 +42,7 @@ foodcoopshop.ModalProductNameEdit = {
                 html += '<label for="dialogDescription"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionLong + '</b></label><br />';
                 html += '<div class="declaration-wrapper">';
                     html += '<label class="is-declaration-ok"><input type="checkbox" name="dialogIsDeclarationOk" id="dialogIsDeclarationOk" />' + foodcoopshop.LocalizedJs.dialogProduct.ProductDeclarationOK + '</label><a href="' + foodcoopshop.LocalizedJs.dialogProduct.DocsUrlProductDeclaration + '" target="_blank"><i class="fas fa-arrow-circle-right"></i> ' + foodcoopshop.LocalizedJs.dialogProduct.Help + '</a><br />';
-                    html += '<textarea class="ckeditor" name="dialogDescription" id="dialogDescription"></textarea>';
+                    html += '<textarea class="ckeditor hide" name="dialogDescription" id="dialogDescription"></textarea>';
                 html += '</div>';
             html += '</div>';
             html += '<input type="hidden" name="dialogProductId" id="dialogProductId" value="" />';
