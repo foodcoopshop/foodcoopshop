@@ -19,7 +19,7 @@ $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();" .
         Configure::read('app.jsNamespace') . ".Admin.initForm();" .
-        Configure::read('app.jsNamespace') . ".Admin.bindDeleteCustomerButton(".$customer->id_customer.");".
+        Configure::read('app.jsNamespace') . ".ModalCustomerDelete.init(".$customer->id_customer.");".
         Configure::read('app.jsNamespace') . ".Upload.initImageUpload('body.customers .add-image-button', foodcoopshop.Upload.saveCustomerTmpImageInForm);
     "
 ]);
