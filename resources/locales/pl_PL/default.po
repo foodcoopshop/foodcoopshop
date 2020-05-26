@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-26 14:02+0200\n"
+"POT-Creation-Date: 2020-05-26 14:33+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1278,6 +1278,11 @@ msgstr "Harmonogram dostaw produktów magazynowanych jest zawsze tygodniowy i ni
 
 # Delivery rhythm
 msgid "Delivery_rhythm"
+msgstr "Harmonogram dostaw"
+
+# Delivery rhythm
+#, fuzzy
+msgid "Change_delivery_rhythm"
 msgstr "Harmonogram dostaw"
 
 # First delivery day

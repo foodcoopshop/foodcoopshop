@@ -703,18 +703,15 @@ body.payments .bottom-button-container {
 #product-price-edit-form .price-per-unit-wrapper,
 #product-price-edit-form .price-wrapper,
 #product-quantity-edit-form .field-wrapper,
-#product-delivery-rhythm-edit-form .field-wrapper,
 #order-detail-pickup-day-edit-form .field-wrapper {
     width: 100%;
     float: left;
     margin-top: 5px;
 }
-#product-quantity-edit-form .field-wrapper,
-#product-delivery-rhythm-edit-form .field-wrapper {
+#product-quantity-edit-form .field-wrapper {
     margin-top: 10px;
 }
-#product-quantity-edit-form .field-wrapper label,
-#product-delivery-rhythm-edit-form .field-wrapper label:not(.checkbox) {
+#product-quantity-edit-form .field-wrapper label {
     font-weight: normal;
     margin-bottom: 10px;
     margin-top: 3px;
@@ -724,19 +721,6 @@ body.payments .bottom-button-container {
 }
 #product-quantity-edit-form .field-wrapper label.checkbox {
     width: 100%;
-}
-#product-delivery-rhythm-edit-form .field-wrapper label:not(.checkbox) {
-    width: 110px;
-    clear: both;
-}
-#product-delivery-rhythm-edit-form .field-wrapper select,
-#product-delivery-rhythm-edit-form .field-wrapper input {
-    width: 285px;
-    float: right;
-    margin-right: 0;
-}
-#product-delivery-rhythm-edit-form .field-wrapper input[type="text"]:first-of-type {
-    margin-top: 3px;
 }
 #product-price-edit-form .deactivated {
     opacity: 0.3;

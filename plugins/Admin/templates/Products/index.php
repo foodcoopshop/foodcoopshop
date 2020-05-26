@@ -37,7 +37,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".Admin.initProductPriceEditDialog('#products');" .
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.add-image-button, .product-name-edit-button');".
             Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId > 0 ? $manufacturerId : '0') . ");".
-            Configure::read('app.jsNamespace') . ".Admin.initProductDeliveryRhythmEditDialog('#products');
+            Configure::read('app.jsNamespace') . ".ModalProductDeliveryRhythmEdit.init();
         "
         ]);
 

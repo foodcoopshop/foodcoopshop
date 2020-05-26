@@ -273,6 +273,7 @@ class LocalizedController extends Controller
                 'IsProductStockProduct' => __('Is_product_a_stock_product?'),
                 'TheDeliveryRhythmOfStockProductsIsAlwaysWeekly' => __('The_delivery_rhythm_of_stock_products_is_always_weekly.'),
                 'DeliveryRhythm' => __('Delivery_rhythm'),
+                'ChangeDeliveryRhythm' => __('Change_delivery_rhythm'),
                 'FirstDeliveryDay' => __('First_delivery_day'),
                 'DeliveryDay' => __('Delivery_day'),
                 'FirstDeliveryDayInfoOneProduct' => __('First_delivery_day_info_(one_product).'),

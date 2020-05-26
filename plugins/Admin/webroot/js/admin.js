@@ -401,145 +401,6 @@ foodcoopshop.Admin = {
         });
     },
 
-    openEditDeliveryRhythmDialog : function(productIds, infoText, selectedDeliveryRhythmType, selectedFirstDeliveryDay, selectedOrderPossibleUntil, selectedSendOrderListWeekday, selectedSendOrderListDay) {
-
-        var buttons = {};
-        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
-        buttons['save'] = {
-            text: foodcoopshop.LocalizedJs.helper.save,
-            click: function() {
-
-                if (productIds.length == 0) {
-                    return false;
-                }
-
-                $('#product-delivery-rhythm-edit-form .ajax-loader').show();
-                $('.ui-dialog button').attr('disabled', 'disabled');
-
-                var data = {
-                    productIds: productIds,
-                    deliveryRhythmType: $('#dialogDeliveryRhythmType').val(),
-                    deliveryRhythmFirstDeliveryDay: $('#dialogDeliveryRhythmFirstDeliveryDay').val(),
-                    deliveryRhythmOrderPossibleUntil: $('#dialogDeliveryRhythmOrderPossibleUntil').val(),
-                    deliveryRhythmSendOrderListWeekday: $('#dialogDeliveryRhythmSendOrderListWeekday').val(),
-                    deliveryRhythmSendOrderListDay: $('#dialogDeliveryRhythmSendOrderListDay').val()
-                };
-
-                foodcoopshop.Helper.ajaxCall(
-                    '/admin/products/editDeliveryRhythm/',
-                    data,
-                    {
-                        onOk: function (data) {
-                            document.location.reload();
-                        },
-                        onError: function (data) {
-                            var form = $('#product-delivery-rhythm-edit-form form');
-                            form.find('.ajax-loader').hide();
-                            foodcoopshop.Helper.appendFlashMessageToDialog(form, data.msg);
-                        }
-                    }
-                );
-
-            }
-        };
-
-        var dialogOptions = {
-            autoOpen: false,
-            height: 470,
-            width: 490,
-            modal: true,
-            buttons: buttons
-        };
-
-        $('#product-delivery-rhythm-edit-form').remove();
-        var dialogId = 'product-delivery-rhythm-edit-form';
-        var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductDeliveryRhythmEdit(dialogId, productIds);
-        $('body').append(dialogHtml);
-        var dialog = $('#' + dialogId).dialog(dialogOptions);
-        dialog.dialog('open');
-        $('#' + dialogId + ' label[for="dialogDeliveryRhythm"]').html(infoText);
-
-        var select = $('#' + dialogId + ' #dialogDeliveryRhythmType');
-        select.find('option').remove();
-        select.append($('#rhythmtypes').html());
-        select.on('change', function() {
-            var elementToShow = 'default';
-            if ($(this).val().match('individual')) {
-                elementToShow = 'individual';
-            }
-            $('#' + dialogId + ' .dynamic-element').hide();
-            $('#' + dialogId + ' .dynamic-element.' + elementToShow).show();
-        });
-        select.val(selectedDeliveryRhythmType);
-        select.trigger('change');
-
-        var select2 = $('#' + dialogId + ' #dialogDeliveryRhythmSendOrderListWeekday');
-        select2.find('option').remove();
-        select2.append($('#weekdays').html());
-        select2.val(selectedSendOrderListWeekday);
-        select2.trigger('change');
-
-        foodcoopshop.Helper.initDatepicker();
-
-        var firstDeliveryDayInput = $('#' + dialogId + ' #dialogDeliveryRhythmFirstDeliveryDay');
-        firstDeliveryDayInput.val(selectedFirstDeliveryDay);
-        foodcoopshop.Admin.addDatepickerInDialog(firstDeliveryDayInput);
-
-        var orderPossibleUntilInput = $('#' + dialogId + ' #dialogDeliveryRhythmOrderPossibleUntil');
-        orderPossibleUntilInput.val(selectedOrderPossibleUntil);
-        foodcoopshop.Admin.addDatepickerInDialog(orderPossibleUntilInput);
-
-        var sendOrderListDayInput = $('#' + dialogId + ' #dialogDeliveryRhythmSendOrderListDay');
-        sendOrderListDayInput.val(selectedSendOrderListDay);
-        foodcoopshop.Admin.addDatepickerInDialog(sendOrderListDayInput);
-
-    },
-
-    initProductDeliveryRhythmEditDialog: function (container) {
-        $('.product-delivery-rhythm-edit-button').on('click', function () {
-            var row = $(this).closest('tr');
-            var productId = row.find('td.cell-id').html();
-            var infoText = foodcoopshop.Admin.getProductNameForDialog(row);
-            var selectedDeliveryRhythmType = row.find('td span.delivery-rhythm-for-dialog span.dropdown').html();
-            var selectedFirstDeliveryDay = row.find('td span.delivery-rhythm-for-dialog span.first-delivery-day').html();
-            var selectedOrderPossibleUntil = '';
-            var selectedOrderPossibleUntilDataElement = row.find('td span.delivery-rhythm-for-dialog span.order-possible-until');
-            if (selectedOrderPossibleUntilDataElement && selectedOrderPossibleUntilDataElement.length > 0) {
-                selectedOrderPossibleUntil = selectedOrderPossibleUntilDataElement.html();
-            }
-            var selectedSendOrderListWeekday = row.find('td span.delivery-rhythm-for-dialog span.send-order-list-weekday').html();
-            var selectedSendOrderListDay = '';
-            var selectedSendOrderListDayDataElement = row.find('td span.delivery-rhythm-for-dialog span.send-order-list-day');
-            if (selectedSendOrderListDayDataElement && selectedSendOrderListDayDataElement.length > 0) {
-                selectedSendOrderListDay = selectedSendOrderListDayDataElement.html();
-            }
-            foodcoopshop.Admin.openEditDeliveryRhythmDialog([productId], infoText, selectedDeliveryRhythmType, selectedFirstDeliveryDay, selectedOrderPossibleUntil, selectedSendOrderListWeekday, selectedSendOrderListDay);
-        });
-    },
-
-    initEditDeliveryRhythmForSelectedProducts : function() {
-
-        var button = $('#editDeliveryRhythmForSelectedProducts');
-        foodcoopshop.Helper.disableButton(button);
-
-        $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
-            foodcoopshop.Admin.updateObjectSelectionActionButton(button);
-        });
-
-        button.on('click', function () {
-            var productIds = foodcoopshop.Admin.getSelectedProductIds();
-            var nonStockProductIds = [];
-            for(var i=0; i < productIds.length; i++) {
-                var isStockProductElement = $('tr#product-' + productIds[i] + ' td.is-stock-product');
-                if (!(isStockProductElement.length == 1 && isStockProductElement.find('i.fa-check').length == 1)) {
-                    nonStockProductIds.push(productIds[i]);
-                }
-            }
-            foodcoopshop.Admin.openBulkEditDeliveryRhythmDialog(nonStockProductIds);
-        });
-
-    },
-
     initDeleteSelectedProducts : function() {
 
         var button = $('#deleteSelectedProducts');
@@ -620,24 +481,6 @@ foodcoopshop.Admin = {
                     $(this).remove();
                 }
             });
-    },
-
-    openBulkEditDeliveryRhythmDialog : function(productIds) {
-        var infoText = '';
-        if (productIds.length == 1) {
-            infoText = foodcoopshop.LocalizedJs.admin.YouSelectedOneProduct;
-        } else {
-            infoText = foodcoopshop.LocalizedJs.admin.YouSelected0Products.replace(/\{0\}/, '<b>' + productIds.length + '</b>');
-        }
-        infoText += '<br />';
-
-        var selectedDeliveryRhythmType = foodcoopshop.Helper.getUniqueHtmlValueOfDomElements('tr.selected .delivery-rhythm-for-dialog .dropdown', '1-week');
-        var selectedFirstDeliveryDay = foodcoopshop.Helper.getUniqueHtmlValueOfDomElements('tr.selected .delivery-rhythm-for-dialog .first-delivery-day', '');
-        var selectedOrderPossibleUntil = foodcoopshop.Helper.getUniqueHtmlValueOfDomElements('tr.selected .delivery-rhythm-for-dialog .order-possible-until', '');
-        var selectedSendOrderListWeekday = foodcoopshop.Helper.getUniqueHtmlValueOfDomElements('tr.selected .delivery-rhythm-for-dialog .send-order-list-weekday', '');
-        var selectedSendOrderListDay = foodcoopshop.Helper.getUniqueHtmlValueOfDomElements('tr.selected .delivery-rhythm-for-dialog .send-order-list-day', '');
-
-        foodcoopshop.Admin.openEditDeliveryRhythmDialog(productIds, infoText, selectedDeliveryRhythmType, selectedFirstDeliveryDay, selectedOrderPossibleUntil, selectedSendOrderListWeekday, selectedSendOrderListDay);
     },
 
     initProductIsStockProductEditDialog: function (container) {
@@ -921,21 +764,6 @@ foodcoopshop.Admin = {
         datepickerInput.val($('.filter-container input[name="pickupDay[]"').val());
         foodcoopshop.Admin.addDatepickerInDialog(datepickerInput);
 
-    },
-
-    addDatepickerInDialog : function(inputField) {
-        inputField.datepicker({
-            beforeShow: function(input, inst) {
-                $('.ui-dialog').addClass('has-datepicker');
-            },
-            onClose: function(input, inst) {
-                $('.ui-dialog').removeClass('has-datepicker');
-                // if datepicker is closed without selecting a date, it's focused and another click does not trigger to open calendar again
-                $(this).off('click').on('click', function() {
-                    inputField.datepicker('show');
-                });
-            }
-        });
     },
 
     initChangeNewState: function () {

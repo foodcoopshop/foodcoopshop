@@ -167,3 +167,30 @@ body.iframe_start_page {
 .modal .field-description {
     color: #969696;
 }
+.modal .field-wrapper {
+    width: 100%;
+    float: left;
+    margin-top: 10px;
+}
+.modal .field-wrapper label:not(.checkbox) {
+    font-weight: normal;
+    margin-bottom: 10px;
+    margin-top: 3px;
+    float: left;
+    margin-right: 5px;
+    width: 110px;
+    clear: both;
+}
+.modal .field-wrapper select,
+.modal .field-wrapper input {
+    width: 285px;
+    float: right;
+    margin-right: 0;
+    margin-bottom: 5px;
+}
+.modal .field-wrapper input[type="text"]:first-of-type {
+    margin-top: 3px;
+}
+.modal .field-wrapper input.datepicker {
+    text-align: right;
+}
