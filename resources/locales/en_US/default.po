@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-25 10:12+0200\n"
-"PO-Revision-Date: 2020-05-25 10:12+0200\n"
+"POT-Creation-Date: 2020-05-26 14:02+0200\n"
+"PO-Revision-Date: 2020-05-26 14:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1629,6 +1629,9 @@ msgstr "Please enter a correct date."
 msgid "Please_select_a_customer."
 msgstr "Please select a member."
 
+msgid "The_name_of_the_product_needs_to_be_at_least_{0}_characters_long."
+msgstr "The name of the product needs to be at least {0} characters long."
+
 msgid "The_delivery_ryhthm_is_not_valid."
 msgstr "The delivery rhythm is not valid."
 
@@ -1655,9 +1658,6 @@ msgstr "The first delivery day needs to be a last {0} of the month."
 
 msgid "The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month."
 msgstr "The first delivery day needs to be a first {0} of the month."
-
-msgid "The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long."
-msgstr "The name of the product {0} needs to be at least {1} characters long."
 
 msgid "deleted"
 msgstr "deleted"

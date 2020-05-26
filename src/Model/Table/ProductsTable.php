@@ -74,7 +74,7 @@ class ProductsTable extends AppTable
     public function validationName(Validator $validator)
     {
         $validator->notEmptyString('name', __('Please_enter_a_name.'));
-        $validator->minLength('name', 2, __('Please_enter_at_least_{0}_characters.', [2]));
+        $validator->minLength('name', 2, __('The_name_of_the_product_needs_to_be_at_least_{0}_characters_long.', [2]));
         return $validator;
     }
 
@@ -643,8 +643,17 @@ class ProductsTable extends AppTable
                 throw new InvalidParameterException('change name is not allowed for product attributes');
             }
             $newName = StringComponent::removeSpecialChars(strip_tags(trim($name['name'])));
-            if (strlen($newName) < 2) {
-                throw new InvalidParameterException(__('The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long.', ['<b>'.$newName.'</b>', 2]));
+
+            $productEntity = $this->newEntity(
+                [
+                    'name' => $newName
+                ],
+                [
+                    'validate' => 'name'
+                ]
+            );
+            if ($productEntity->hasErrors()) {
+                throw new InvalidParameterException(join(' ', $this->getAllValidationErrors($productEntity)));
             } else {
                 $tmpProduct2Save = [
                     'id_product' => $ids['productId'],
