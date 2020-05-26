@@ -175,3 +175,7 @@ table.list th,
 table.list tr.fake-th td {
     word-break: normal;
 }
+.modal .field-wrapper select,
+.modal .field-wrapper input {
+    width: 100%;
+}
