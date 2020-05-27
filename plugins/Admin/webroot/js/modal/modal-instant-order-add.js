@@ -27,7 +27,7 @@ foodcoopshop.ModalInstantOrderAdd = {
             );
 
             $(modalSelector).on('hidden.bs.modal', function (e) {
-                foodcoopshop.ModalInstantOrderAdd.getCloseHandler($(this));
+                foodcoopshop.ModalInstantOrderAdd.getCloseHandler(modalSelector);
             });
 
             foodcoopshop.ModalInstantOrderAdd.getOpenHandler(button, modalSelector);
@@ -35,9 +35,8 @@ foodcoopshop.ModalInstantOrderAdd = {
 
     },
 
-    getCloseHandler : function(modal) {
-        modal.find('.modal-title').text('');
-        modal.find('.modal-body').text('');
+    getCloseHandler : function(modalSelector) {
+        foodcoopshop.Modal.destroy(modalSelector);
         foodcoopshop.Helper.ajaxCall(
             '/carts/ajaxDeleteInstantOrderCustomer',
             {},
