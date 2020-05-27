@@ -26,7 +26,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".ModalProductNameEdit.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initProductQuantityList('#products');" .
             Configure::read('app.jsNamespace') . ".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" .
-            Configure::read('app.jsNamespace') . ".Admin.initProductQuantityEditDialog('#products');" .
+            Configure::read('app.jsNamespace') . ".ModalProductQuantityEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductCategoriesEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductTaxEdit.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initChangeNewState();" .

@@ -170,19 +170,22 @@ body.iframe_start_page {
 .modal .field-wrapper {
     width: 100%;
     float: left;
+}
+.modal .field-wrapper:first-of-type {
     margin-top: 10px;
 }
 .modal .field-wrapper label:not(.checkbox) {
     font-weight: normal;
     margin-bottom: 10px;
-    margin-top: 3px;
+    margin-top: 5px;
     float: left;
     margin-right: 5px;
     width: 110px;
     clear: both;
 }
 .modal .field-wrapper select,
-.modal .field-wrapper input {
+.modal .field-wrapper input[type="text"],
+.modal .field-wrapper input[type="number"] {
     width: 285px;
     float: right;
     margin-right: 0;
@@ -191,6 +194,20 @@ body.iframe_start_page {
 .modal .field-wrapper input[type="text"]:first-of-type {
     margin-top: 3px;
 }
-.modal .field-wrapper input.datepicker {
+.modal .field-wrapper input.datepicker,
+.modal .field-wrapper input[type="number"] {
     text-align: right;
+}
+.modal .field-wrapper label.checkbox {
+    width: 100%;
+}
+.modal .checkbox input[type="checkbox"] {
+    float: right;
+}
+
+#modal-product-quantity-edit input[type="number"] {
+    width: 20%;
+}
+#modal-product-quantity-edit .field-wrapper label:not(.checkbox) {
+    width: 75%;
 }

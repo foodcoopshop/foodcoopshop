@@ -75,7 +75,7 @@ foodcoopshop.ModalProductTaxEdit = {
 
         var productName = $('#product-' + productId + ' span.name-for-dialog').html();
         $(modalSelector + ' .modal-body').prepend(
-            '<p>' + productName + '</p>'
+            '<p><b>' + productName + '</b></p>'
         );
 
         // make id unique and preselect

@@ -176,6 +176,8 @@ table.list tr.fake-th td {
     word-break: normal;
 }
 .modal .field-wrapper select,
-.modal .field-wrapper input {
+.modal .field-wrapper input[type="text"],
+.modal .field-wrapper input[type="number"],
+.modal .field-wrapper label:not(.checkbox) {
     width: 100%;
 }
