@@ -21,8 +21,7 @@ use Cake\Core\Configure;
         $this->element('addScript', ['script' =>
             Configure::read('app.jsNamespace') . ".Admin.init();" .
             Configure::read('app.jsNamespace').".ModalImage.init('a.open-with-modal');" .
-            Configure::read('app.jsNamespace').".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ");
-            "
+            Configure::read('app.jsNamespace').".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 1, 1);"
         ]);
         $this->element('highlightRowAfterEdit', [
             'rowIdPrefix' => '#blogPost-'

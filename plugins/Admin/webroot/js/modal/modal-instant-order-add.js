@@ -71,7 +71,7 @@ foodcoopshop.ModalInstantOrderAdd = {
 
         // always preselect user if there is a dropdown called #customerId (for call from order detail)
         var customerId = $('#customerid').val();
-        foodcoopshop.Admin.initCustomerDropdown(customerId, false, customerDropdownSelector, function () {
+        foodcoopshop.Admin.initCustomerDropdown(customerId, 0, 0, customerDropdownSelector, function () {
             var newSrc = foodcoopshop.Helper.cakeServerName + '/admin/order-details/initInstantOrder/' + $(customerDropdownSelector).val();
             $(modalSelector + ' iframe').attr('src', newSrc);
         });

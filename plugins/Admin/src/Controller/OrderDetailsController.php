@@ -464,7 +464,7 @@ class OrderDetailsController extends AdminAppController
             if ($this->AppAuth->isCustomer()) {
                 $filter = ['Customers.id_customer' => $this->AppAuth->getUserId()];
             }
-            $customersForInstantOrderDropdown = $this->OrderDetail->Customers->getForDropdown(false, 'id_customer', $this->AppAuth->isSuperadmin(), $filter);
+            $customersForInstantOrderDropdown = $this->OrderDetail->Customers->getForDropdown(false, $this->AppAuth->isSuperadmin(), $filter);
             $this->set('customersForInstantOrderDropdown', $customersForInstantOrderDropdown);
         }
 

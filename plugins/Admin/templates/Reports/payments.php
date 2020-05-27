@@ -21,7 +21,7 @@ $this->element('addScript', [
         Configure::read('app.jsNamespace') . ".Admin.init();".
         Configure::read('app.jsNamespace') . ".Helper.initTooltip('.payment-approval-comment');".
         Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');".
-        Configure::read('app.jsNamespace') . ".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ");"
+        Configure::read('app.jsNamespace') . ".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 0, 1);"
 ]);
 if ($paymentType == 'product') {
     $this->element('highlightRowAfterEdit', [
