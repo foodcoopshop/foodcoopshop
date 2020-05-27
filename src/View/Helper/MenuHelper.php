@@ -103,7 +103,6 @@ class MenuHelper extends Helper
         }
         if ($slug != '/' && preg_match('`' . preg_quote($slug) . '`', $_SERVER['REQUEST_URI'])) {
             $applyActiveClass = true;
-
             // START hack: sometimes two menu items are selected, because of same url
             if ((   $name == __('Members')  && preg_match('/(profile|changePassword)/', $_SERVER['REQUEST_URI']))
                 || ($name == __('News') && preg_match('/'.__('route_manufacturer_list').'/', $_SERVER['REQUEST_URI']))

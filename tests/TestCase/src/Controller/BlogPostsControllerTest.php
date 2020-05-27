@@ -50,7 +50,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $blogPostId = 2;
         $this->changeBlogPost($blogPostId, 1);
         $this->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
-        $this->assertRedirectContains('/anmelden?redirect=%2Faktuelles%2F2-Demo-Blog-Artikel');
+        $this->Slug->getLogin($blogPostId, 'Demo Blog Artikel');
         $this->assertFlashMessage('Zugriff verweigert, bitte melde dich an.');
     }
 
