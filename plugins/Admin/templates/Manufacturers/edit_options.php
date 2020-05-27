@@ -176,7 +176,7 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
     if (!$appAuth->isManufacturer()) {
         $this->element('addScript', [
             'script' =>
-            Configure::read('app.jsNamespace') . ".Admin.initCustomerDropdown(" . ($manufacturer->id_customer != '' ? $manufacturer->id_customer : '0') . ", 0, 'select#manufacturers-id-customer');"
+            Configure::read('app.jsNamespace') . ".Admin.initCustomerDropdown(" . ($manufacturer->id_customer != '' ? $manufacturer->id_customer : '0') . ", 0, 0, 'select#manufacturers-id-customer');"
         ]);
         echo $this->Form->control('Manufacturers.id_customer', [
         'type' => 'select',

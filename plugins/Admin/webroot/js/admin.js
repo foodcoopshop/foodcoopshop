@@ -1475,7 +1475,7 @@ foodcoopshop.Admin = {
             size: 7,
             title: foodcoopshop.LocalizedJs.admin.PleaseSelectNewMember
         });
-        foodcoopshop.Admin.initCustomerDropdown(0, false, customerDropdownSelector);
+        foodcoopshop.Admin.initCustomerDropdown(0, 0, 0, customerDropdownSelector);
 
         var buttons = {};
         buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
@@ -1853,27 +1853,26 @@ foodcoopshop.Admin = {
         );
     },
 
-    initCustomerDropdown: function (selectedCustomerId, includeManufacturers, selector, onChange) {
+    initCustomerDropdown: function (selectedCustomerId, includeManufacturers, includeOfflineCustomers, selector, onChange) {
 
         selector = selector || 'select#customerid';
-        includeManufacturers = includeManufacturers || 0;
         var customerDropdown = $(selector).closest('.bootstrap-select').find('.dropdown-toggle');
 
         if (selectedCustomerId > 0) {
-            this.populateDropdownWithCustomers(customerDropdown, selectedCustomerId, includeManufacturers, selector, onChange);
+            this.populateDropdownWithCustomers(customerDropdown, selectedCustomerId, includeManufacturers, includeOfflineCustomers, selector, onChange);
         }
 
         customerDropdown.on('click', function () {
             if ($(selector + ' optgroup').length == 0) {
-                foodcoopshop.Admin.populateDropdownWithCustomers($(this), selectedCustomerId, includeManufacturers, selector, onChange);
+                foodcoopshop.Admin.populateDropdownWithCustomers($(this), selectedCustomerId, includeManufacturers, includeOfflineCustomers, selector, onChange);
             }
         });
 
     },
 
-    populateDropdownWithCustomers : function(customerDropdown, selectedCustomerId, includeManufacturers, selector, onChange) {
+    populateDropdownWithCustomers : function(customerDropdown, selectedCustomerId, includeManufacturers, includeOfflineCustomers, selector, onChange) {
         this.populateDropdownWithData(
-            '/admin/customers/ajaxGetCustomersForDropdown/' + includeManufacturers,
+            '/admin/customers/ajaxGetCustomersForDropdown/' + includeManufacturers + '/' + includeOfflineCustomers,
             selector,
             customerDropdown,
             selectedCustomerId,

@@ -36,9 +36,6 @@ use Cake\Core\Configure;
                 <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_users'), 'options' => []]); ?>
                 <?php echo $this->Form->control('productId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_products'), 'options' => []]); ?>
             <?php } ?>
-            <?php if ($appAuth->isCustomer()) { ?>
-                <?php echo $this->Form->control('type', ['class' => 'hide', 'label' => '', 'value' => isset($type) ? $type : '']); ?>
-            <?php } ?>
             <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
             <div class="right">
                 <?php

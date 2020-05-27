@@ -62,13 +62,22 @@ class CustomersController extends AdminAppController
         }
     }
 
-    public function ajaxGetCustomersForDropdown($includeManufacturers)
+    public function ajaxGetCustomersForDropdown($includeManufacturers, $includeOfflineCustomers = true)
     {
         $this->RequestHandler->renderAs($this, 'json');
 
         $includeManufacturers = (bool) $includeManufacturers;
+        $includeOfflineCustomers = (bool) $includeOfflineCustomers;
 
-        $customers = $this->Customer->getForDropdown($includeManufacturers);
+        $conditions = [];
+        if ($this->AppAuth->isCustomer()) {
+            $conditions = ['Customers.id_customer' => $this->AppAuth->getUserId()];
+        }
+
+        if ($this->AppAuth->isSuperadmin()) {
+            $includeOfflineCustomers = true;
+        }
+        $customers = $this->Customer->getForDropdown($includeManufacturers, $includeOfflineCustomers, $conditions);
         $customersForDropdown = [];
         foreach ($customers as $key => $ps) {
             $customersForDropdown[] = '<optgroup label="' . $key . '">';

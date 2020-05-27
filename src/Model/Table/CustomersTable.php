@@ -437,7 +437,7 @@ class CustomersTable extends AppTable
         return round($paymentProductSum - $paybackProductSum + $paymentDepositSum - $productSum - $depositSum, 2);
     }
 
-    public function getForDropdown($includeManufacturers = false, $index = 'id_customer', $includeOfflineCustomers = true, $conditions = [])
+    public function getForDropdown($includeManufacturers = false, $includeOfflineCustomers = true, $conditions = [])
     {
 
         $contain = [];
@@ -447,6 +447,7 @@ class CustomersTable extends AppTable
         }
 
         $conditions = array_merge($conditions, $this->getConditionToExcludeHostingUser());
+
         $customers = $this->find('all', [
             'conditions' => $conditions,
             'order' => Configure::read('app.htmlHelper')->getCustomerOrderBy(),
@@ -479,9 +480,9 @@ class CustomersTable extends AppTable
                 if ($manufacturer) {
                     $decodedManufacturerName = html_entity_decode($manufacturer->name);
                     if ($manufacturer->active) {
-                        $onlineManufacturers[$customer->$index] = $decodedManufacturerName;
+                        $onlineManufacturers[$customer->id_customer] = $decodedManufacturerName;
                     } else {
-                        $offlineManufacturers[$customer->$index] = $decodedManufacturerName;
+                        $offlineManufacturers[$customer->id_customer] = $decodedManufacturerName;
                     }
                     $manufacturerIncluded = true;
                 }
@@ -489,16 +490,16 @@ class CustomersTable extends AppTable
 
             if (! $manufacturerIncluded) {
                 if ($customer->active == 0) {
-                    $offlineCustomers[$customer->$index] = $userNameForDropdown;
+                    $offlineCustomers[$customer->id_customer] = $userNameForDropdown;
                 } else {
                     if (! $includeManufacturers) {
                         if ($customer->validOrderDetailCount == 0) {
-                            $notYetOrderedCustomers[$customer->$index] = $userNameForDropdown;
+                            $notYetOrderedCustomers[$customer->id_customer] = $userNameForDropdown;
                         } else {
-                            $onlineCustomers[$customer->$index] = $userNameForDropdown;
+                            $onlineCustomers[$customer->id_customer] = $userNameForDropdown;
                         }
                     } else {
-                        $onlineCustomers[$customer->$index] = $userNameForDropdown;
+                        $onlineCustomers[$customer->id_customer] = $userNameForDropdown;
                     }
                 }
             }
