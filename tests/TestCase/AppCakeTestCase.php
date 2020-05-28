@@ -145,6 +145,10 @@ abstract class AppCakeTestCase extends TestCase
         $this->assertRegExpWithUnquotedString('Zugriff verweigert, bitte melde dich an.', $this->httpClient->getContent());
     }
 
+    protected function assertAccessDeniedFlashMessage() {
+        $this->assertFlashMessage('Zugriff verweigert, bitte melde dich an.');
+    }
+
     protected function assert404NotFoundHeader()
     {
         $this->assertEquals(404, $this->httpClient->getStatusCode());
