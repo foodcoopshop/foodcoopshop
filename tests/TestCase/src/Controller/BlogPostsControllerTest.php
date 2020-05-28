@@ -48,8 +48,9 @@ class BlogPostsControllerTest extends AppCakeTestCase
     {
         $blogPostId = 2;
         $this->changeBlogPost($blogPostId, 1);
-        $this->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
-        $this->assertRedirectContains($this->Slug->getLogin('%2Faktuelles%2F'.$blogPostId.'-Demo-Blog-Artikel'));
+        $requestUrl = $this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel');
+        $this->get($requestUrl);
+        $this->assertRedirectContains($this->Slug->getLogin($requestUrl));
         $this->assertFlashMessage('Zugriff verweigert, bitte melde dich an.');
     }
 
@@ -75,8 +76,9 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $manufacturerId = 15;
         $this->changeBlogPost($blogPostId, 0, $manufacturerId);
         $this->changeManufacturer($manufacturerId, 'is_private', 1);
-        $this->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
-        $this->assertRedirectContains($this->Slug->getLogin('%2Faktuelles%2F'.$blogPostId.'-Demo-Blog-Artikel'));
+        $requestUrl = $this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel');
+        $this->get($requestUrl);
+        $this->assertRedirectContains($this->Slug->getLogin($requestUrl));
         $this->assertFlashMessage('Zugriff verweigert, bitte melde dich an.');
     }
 

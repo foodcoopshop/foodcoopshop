@@ -179,7 +179,7 @@ class SlugHelper extends Helper
     {
         $url = '/'.__('route_sign_in');
         if ($redirect != '') {
-            $url .= '?redirect=' . $redirect;
+            $url .= '?redirect=' . urlencode($redirect);
         }
         return $url;
     }
