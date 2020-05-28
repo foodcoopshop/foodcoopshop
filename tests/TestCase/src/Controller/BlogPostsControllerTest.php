@@ -32,8 +32,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
 
     public function testBlogPostDetailOnlinePublicLoggedOut()
     {
-        $_SERVER['REQUEST_URI'] = $this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel');
-        $this->get($_SERVER['REQUEST_URI']);
+        $this->get($this->Slug->getBlogPostDetail(2, 'Demo Blog Artikel'));
         $this->assertResponseCode(200);
     }
 
@@ -50,7 +49,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $blogPostId = 2;
         $this->changeBlogPost($blogPostId, 1);
         $this->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
-        $this->Slug->getLogin($blogPostId, 'Demo Blog Artikel');
+        $this->assertRedirectContains($this->Slug->getLogin('%2Faktuelles%2F'.$blogPostId.'-Demo-Blog-Artikel'));
         $this->assertFlashMessage('Zugriff verweigert, bitte melde dich an.');
     }
 
@@ -78,7 +77,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $this->changeBlogPost($blogPostId, 0, $manufacturerId);
         $this->changeManufacturer($manufacturerId, 'is_private', 1);
         $this->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
-        $this->assertRedirectContains('/anmelden?redirect=%2Faktuelles%2F2-Demo-Blog-Artikel');
+        $this->assertRedirectContains($this->Slug->getLogin('%2Faktuelles%2F'.$blogPostId.'-Demo-Blog-Artikel'));
         $this->assertFlashMessage('Zugriff verweigert, bitte melde dich an.');
     }
 
