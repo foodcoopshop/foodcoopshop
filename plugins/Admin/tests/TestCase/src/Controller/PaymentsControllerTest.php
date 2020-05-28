@@ -37,21 +37,21 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testAddPaymentParameterPriceOk()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '65,03', 'product');
         $this->assertEquals(65.03, $jsonDecodedContent->amount);
     }
 
     public function testAddPaymentParameterPriceWithWhitespaceOk()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), ' 24,88 ', 'product');
         $this->assertEquals(24.88, $jsonDecodedContent->amount);
     }
 
     public function testAddPaymentParameterPriceNegative()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '-10', 'product');
         $this->assertEquals(0, $jsonDecodedContent->status);
         $this->assertRegExpWithUnquotedString('Der Betrag muss größer als 0 sein', $jsonDecodedContent->msg);
@@ -59,7 +59,7 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testAddPaymentParameterPriceAlmostZero()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '0,003', 'product');
         $this->assertEquals(0, $jsonDecodedContent->status);
         $this->assertRegExpWithUnquotedString('Der Betrag muss größer als 0 sein', $jsonDecodedContent->msg);
@@ -67,7 +67,7 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testAddPaymentParameterPriceZero()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '0', 'product');
         $this->assertEquals(0, $jsonDecodedContent->status);
         $this->assertRegExpWithUnquotedString('Der Betrag muss größer als 0 sein', $jsonDecodedContent->msg);
@@ -75,7 +75,7 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testAddPaymentParameterPriceWrongNumber()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '10,--', 'product');
         $this->assertEquals(0, $jsonDecodedContent->status);
         $this->assertRegExpWithUnquotedString('Bitte gib eine korrekte Zahl ein', $jsonDecodedContent->msg);
@@ -83,7 +83,7 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testAddPaymentWithInvalidType()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.customerId'), '10', 'invalid_type');
         $this->assertEquals(0, $jsonDecodedContent->status);
         $this->assertRegExpWithUnquotedString('payment type not correct: invalid_type', $jsonDecodedContent->msg);
@@ -91,7 +91,7 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testAddPaymentAsCustomerForAnotherUser()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $jsonDecodedContent = $this->addPayment(Configure::read('test.superadminId'), 10, 'product');
         $this->assertEquals(0, $jsonDecodedContent->status);
         $this->assertRegExpWithUnquotedString('user without superadmin privileges tried to insert payment for another user: ', $jsonDecodedContent->msg);
@@ -99,7 +99,7 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testAddProductPaymentForOneself()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $this->addPaymentAndAssertIncreasedCreditBalance(
             Configure::read('test.customerId'),
             '10,5',
@@ -175,7 +175,7 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testDeletePaymentWithApprovalOk()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $this->addPayment(Configure::read('test.customerId'), '10.5', 'product');
         $addResponse = $this->httpClient->getJsonDecodedContent();
 
@@ -198,7 +198,7 @@ class PaymentsControllerTest extends AppCakeTestCase
     {
         $creditBalanceBeforeAddAndDelete = $this->Customer->getCreditBalance(Configure::read('test.customerId'));
 
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $this->addPayment(Configure::read('test.customerId'), '10,5', 'product');
         $response = $this->httpClient->getJsonDecodedContent();
         $this->deletePayment($response->paymentId);

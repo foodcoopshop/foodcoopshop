@@ -13,6 +13,7 @@ use Cake\Filesystem\File;
 use Cake\ORM\TableRegistry;
 use Cake\View\View;
 use Network\View\Helper\NetworkHelper;
+use Cake\TestSuite\TestCase;
 
 require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 
@@ -29,7 +30,8 @@ require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
+abstract class AppCakeTestCase extends TestCase
+
 {
 
     protected $dbConnection;
@@ -445,8 +447,22 @@ abstract class AppCakeTestCase extends \PHPUnit\Framework\TestCase
         $this->httpClient->loginEmail = Configure::read('test.loginEmailAdmin');
         $this->httpClient->doFoodCoopShopLogin();
     }
-
     protected function loginAsCustomer()
+    {
+        //login without httpClient
+        $this->session([
+            'Auth' => [
+                'User' => [
+                    'id_customer' => Configure::read('test.customerId'),
+                    'email' => Configure::read('test.loginEmailCustomer'),
+                ]
+            ]
+        ]);
+    }
+
+    //login with httpClient
+    //ToDo delete when no tests use httpClient anymore
+    protected function loginAsCustomerWithHttpClient()
     {
         $this->httpClient->loginEmail = Configure::read('test.loginEmailCustomer');
         $this->httpClient->doFoodCoopShopLogin();
