@@ -147,7 +147,7 @@ foodcoopshop.ModalProductPriceEdit = {
             $(modalSelector + ' #dialogPriceUnitName').val(unitData.name);
             $(modalSelector + ' #dialogPriceUnitName').trigger('change');
             $(modalSelector + ' #dialogPriceUnitAmount').val(unitData.amount);
-            $(modalSelector + ' #dialogPriceQuantityInUnits').val(unitData.quantity_in_units);
+            $(modalSelector + ' #dialogPriceQuantityInUnits').val(parseFloat(unitData.quantity_in_units));
         }
         if (radio === undefined) {
             radio = $(radioMainSelector + '.price');
