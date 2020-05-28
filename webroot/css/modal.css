@@ -217,3 +217,45 @@ body.iframe_start_page {
 #modal-product-quantity-edit .field-wrapper label:not(.checkbox) {
     width: 75%;
 }
+#modal-product-price-edit .deactivated {
+    opacity: 0.3;
+}
+#modal-product-price-edit select {
+    width: 60px;
+    margin-left: 5px;
+}
+#modal-product-price-edit input[type="number"] {
+    width: 70px;
+    margin-right: 5px;
+    margin-top: 5px;
+    text-align: right;
+}
+#modal-product-price-edit label.radio input:focus {
+    outline: none;
+}
+#modal-product-price-edit label.radio input {
+    position: static;
+    float: left;
+    width: 20px;
+    height: 20px;
+}
+#modal-product-price-edit label.radio input {
+    margin-right: 5px;
+}
+#modal-product-price-edit input#dialogPriceUnitName {
+    text-align: left;
+}
+#modal-product-price-edit label.radio {
+    line-height: 20px;
+    position: static;
+    margin-top: 5px ! important;
+    float: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+#modal-product-price-edit .price-per-unit-wrapper,
+#modal-product-price-edit .price-wrapper {
+    width: 100%;
+    float: left;
+    margin-top: 5px;
+}
