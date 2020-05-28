@@ -20,7 +20,7 @@ foodcoopshop.ModalProductCategoriesEdit = {
         $('.product-categories-edit-button').on('click', function() {
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                '',
+                foodcoopshop.LocalizedJs.admin.ChangeCategories,
                 ''
             );
 
@@ -99,8 +99,8 @@ foodcoopshop.ModalProductCategoriesEdit = {
         $(modalSelector + ' .modal-body').append(formHtml);
 
         var productName = $('#product-' + productId + ' span.name-for-dialog').html();
-        $(modalSelector + ' .modal-title').html(
-            foodcoopshop.LocalizedJs.admin.ChangeCategories + ': ' + productName
+        $(modalSelector + ' .modal-body').prepend(
+            '<b>' + productName + '</b>'
         );
 
         $(modalSelector + ' .categories-checkboxes input[type="checkbox"]').on('click', function() {

@@ -25,12 +25,12 @@ foodcoopshop.ModalProductNameEdit = {
 
     getHtml : function() {
         var html = '<label for="dialogName"><b>' + foodcoopshop.LocalizedJs.dialogProduct.Name + '</b></label><br />';
-        html += '<input type="text" name="dialogName" id="dialogName" value="" /><span class="field-description">' + foodcoopshop.LocalizedJs.dialogProduct.ProductRenameInfoText + '</span><br />';
+        html += '<input type="text" name="dialogName" id="dialogName" value="" /><span class="small" style="float:left;">' + foodcoopshop.LocalizedJs.dialogProduct.ProductRenameInfoText + '</span><br />';
         html += '<hr />';
         html += '<div class="dialog-unity-wrapper">';
-        html += '<label id="dialogLabelUnity" for="dialogUnity"><b>' + foodcoopshop.LocalizedJs.dialogProduct.Unit + '</b> <span>' + foodcoopshop.LocalizedJs.dialogProduct.UnitDescriptionExample + '</span></label><br />';
+        html += '<label id="dialogLabelUnity" for="dialogUnity"><b>' + foodcoopshop.LocalizedJs.dialogProduct.Unit + '</b> <span class="small">' + foodcoopshop.LocalizedJs.dialogProduct.UnitDescriptionExample + '</span></label><br />';
         html += '<input type="text" name="dialogUnity" id="dialogUnity" value="" /><br />';
-        html += '<span class="field-description">' + foodcoopshop.LocalizedJs.admin.EnterApproximateWeightInPriceDialog + '</span>';
+        html += '<span class="small">' + foodcoopshop.LocalizedJs.admin.EnterApproximateWeightInPriceDialog + '</span>';
         html += '<hr />';
         html += '</div>';
         html += '<div class="textarea-wrapper">';

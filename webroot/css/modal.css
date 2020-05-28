@@ -167,8 +167,9 @@ body.iframe_start_page {
 #modal-product-name-edit .declaration-wrapper a {
     float: right;
 }
-.modal .field-description {
+.modal .small {
     color: #969696;
+    line-height: 16px;
 }
 .modal .field-wrapper {
     width: 100%;
