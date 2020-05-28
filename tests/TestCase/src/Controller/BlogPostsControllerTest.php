@@ -51,7 +51,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $requestUrl = $this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel');
         $this->get($requestUrl);
         $this->assertRedirectContains($this->Slug->getLogin($requestUrl));
-        $this->assertFlashMessage('Zugriff verweigert, bitte melde dich an.');
+        $this->assertAccessDeniedFlashMessage();
     }
 
     public function testBlogPostDetailOnlinePrivateLoggedIn()
@@ -79,7 +79,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $requestUrl = $this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel');
         $this->get($requestUrl);
         $this->assertRedirectContains($this->Slug->getLogin($requestUrl));
-        $this->assertFlashMessage('Zugriff verweigert, bitte melde dich an.');
+        $this->assertAccessDeniedFlashMessage();
     }
 
     public function testBlogPostDetailChangeNullManufacturer()
