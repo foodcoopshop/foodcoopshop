@@ -8,6 +8,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 ### Herzlichen Dank an alle beteiligten Personen
 * [AndreasEgger](https://github.com/AndreasEgger)
 * [mrothauer](https://github.com/mrothauer)
+* [swoichha](https://github.com/swoichha)
 
 ### Neue Funktionen
 - Automatischer Kontoabgleich für das Guthaben-System (CSV-Upload). [Zur Online-Doku](https://foodcoopshop.github.io/de/guthaben-system-mit-automatischem-kontoabgleich). [I#463](https://github.com/foodcoopshop/foodcoopshop/issues/463) / [PR#474](https://github.com/foodcoopshop/foodcoopshop/pull/474) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
@@ -28,6 +29,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Bestelllisten sind ab und zu nicht über die Fallback-Konfiguration versendet worden. [I#495](https://github.com/foodcoopshop/foodcoopshop/issues/495) / [PR#496](https://github.com/foodcoopshop/foodcoopshop/pull/496) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Der neue PDF-Writer kann nun PDFs unabhängig von Controllern erzeugen (als Attachment, Inline oder File). [I#412](https://github.com/foodcoopshop/foodcoopshop/issues/412) / [PR#508](https://github.com/foodcoopshop/foodcoopshop/pull/508) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Bei der Validierung der E-Mail-Adressen wird jetzt auch der MX-Eintrag überprüft. Das vermeidet das Eintragen von ungültigen E-Mail-Adressen, die zwar syntaktisch korrekt sind, bei denen sich aber beim Domainnamen ein Tippfehler eingeschlichen hat. [I#465](https://github.com/foodcoopshop/foodcoopshop/issues/465) / [PR#516](https://github.com/foodcoopshop/foodcoopshop/pull/516) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- BlogPostControllerTest now works without HttpClient and uses IntegrationTestTrait. [I#404](https://github.com/foodcoopshop/foodcoopshop/issues/404) / [PR#529](https://github.com/foodcoopshop/foodcoopshop/pull/529) <a href="https://github.com/swoichha"><img src="https://github.com/swoichha.png" width="20"></a>
 
 
 ## v3.0.2 / 2020-03-26 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.0.1...v3.0.2)

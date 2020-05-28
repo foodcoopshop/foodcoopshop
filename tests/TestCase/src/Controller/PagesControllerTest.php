@@ -187,7 +187,7 @@ class PagesControllerTest extends AppCakeTestCase
 
     public function testPageDetailOnlinePrivateLoggedIn()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $pageId = 3;
         $this->changePage($pageId, 1);
         $this->httpClient->followOneRedirectForNextRequest();

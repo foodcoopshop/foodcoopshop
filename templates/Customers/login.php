@@ -29,7 +29,7 @@ $this->element('addScript', ['script' =>
 
   <h1><?php echo $title_for_layout; ?></h1>
 
-  <form id="LoginForm" method="post" accept-charset="utf-8" action="<?php echo $this->Slug->getLogin(urlencode($this->request->getQuery('redirect'))); ?>">
+  <form id="LoginForm" method="post" accept-charset="utf-8" action="<?php echo $this->Slug->getLogin($this->request->getQuery('redirect')); ?>">
 
         <?php
         if ($enableBarCodeLogin) {

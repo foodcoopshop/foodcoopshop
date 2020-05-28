@@ -63,7 +63,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddWrongProductId1()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $response = $this->addProductToCart(8787, 2);
         $this->assertRegExpWithUnquotedString('Das Produkt mit der ID 8787 ist nicht vorhanden.', $response->msg);
         $this->assertJsonError();
@@ -71,7 +71,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddWrongProductId2()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $response = $this->addProductToCart('test', 2);
         $this->assertRegExpWithUnquotedString('Das Produkt mit der ID test ist nicht vorhanden.', $response->msg);
         $this->assertJsonError();
@@ -79,7 +79,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddWrongAmount()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $response = $this->addProductToCart($this->productId1, 251);
         $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>251</b> ist nicht gültig.', $response->msg);
         $this->assertJsonError();
@@ -87,7 +87,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddAmountNotAvailableAnyMore()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $response = $this->addProductToCart($this->productId1, 98);
         $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>98</b> des Produktes <b>Artischocke</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 97', $response->msg);
         $this->assertJsonError();
@@ -150,7 +150,7 @@ class CartsControllerTest extends AppCakeTestCase
             'always_available' => 1,
             'quantity' => $originalQuantity,
         ]]]);
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $response = $this->addProductToCart($this->productId1, 50);
         $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>50</b> des Produktes <b>Artischocke</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 2', $response->msg);
     }
@@ -164,7 +164,7 @@ class CartsControllerTest extends AppCakeTestCase
             'always_available' => 1,
             'quantity' => $originalQuantity,
         ]]]);
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $response = $this->addProductToCart($this->productId2, 50);
         $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>50</b> der Variante <b>0,5l</b> des Produktes <b>Milch</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 2', $response->msg);
     }
@@ -179,7 +179,7 @@ class CartsControllerTest extends AppCakeTestCase
             'quantity' => 0,
             'quantity_limit' => -5,
         ]]]);
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $response = $this->addProductToCart($this->productId2, 1);
         $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>1</b> der Variante <b>0,5l</b> des Produktes <b>Milch</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 0', $response->msg);
     }
@@ -210,7 +210,7 @@ class CartsControllerTest extends AppCakeTestCase
             'always_available' => 1,
             'quantity' => $originalQuantity,
         ]]]);
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $this->addProductToCart($productId, 50);
         $this->assertJsonOk();
         $this->finishCart();
@@ -220,7 +220,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testRemoveProduct()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $response = $this->addProductToCart($this->productId1, 2);
         $this->assertJsonOk();
         $response = $this->removeProduct($this->productId1);
@@ -234,7 +234,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testRemoveProductIfProductAttributeWasDeletedAndOtherProductAttributesExistAfterAddingToCart()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $this->addProductToCart($this->productId2, 1);
         $query = 'UPDATE ' . $this->Product->getTable().' SET active = 0 WHERE id_product = 60';
         $this->dbConnection->execute($query);
@@ -444,14 +444,14 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testProductsWithAllowedNegativeStock() {
         $this->changeManufacturer(5, 'stock_management_enabled', true);
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $this->addProductToCart(349, 8);
         $this->assertJsonOk();
     }
 
     public function testProductsWithAllowedNegativeStockButTooHighAmount() {
         $this->changeManufacturer(5, 'stock_management_enabled', true);
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $response = $this->addProductToCart(349, 11);
         $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>11</b> des Produktes <b>Lagerprodukt</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 10', $response->msg);
         $this->assertJsonError();
@@ -713,7 +713,7 @@ class CartsControllerTest extends AppCakeTestCase
     {
 
         // add a product to the "normal" cart (CART_TYPE_WEEKLY_RHYTHM)
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $this->addProductToCart($this->productId1, 5);
         $this->logout();
 
@@ -803,7 +803,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testFinishEmptyCart()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $this->addProductToCart($this->productId1, 1);
         $this->removeProduct($this->productId1);
         $this->httpClient->followOneRedirectForNextRequest();
@@ -818,7 +818,7 @@ class CartsControllerTest extends AppCakeTestCase
      */
     public function testOrderIfAmountOfOneProductIsNull()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $this->addProductToCart($this->productId1, 1);
         $this->addProductToCart($this->productId1, -1);
         $this->addProductToCart($this->productId2, 1);

@@ -55,7 +55,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
 
     public function testManufacturerDetailOnlinePrivateLoggedIn()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $manufacturerId = 4;
         $this->changeManufacturer($manufacturerId, 'is_private', 1);
         $this->httpClient->followOneRedirectForNextRequest();

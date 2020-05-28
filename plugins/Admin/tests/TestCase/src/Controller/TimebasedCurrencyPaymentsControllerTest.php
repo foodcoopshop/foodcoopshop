@@ -37,7 +37,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
 
     public function testAddPaymentAsCustomer()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $this->createPayment(0.5);
         $this->createPayment(3.2);
 
@@ -51,7 +51,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
     public function testEditPaymentAsWrongManufacturer()
     {
 
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $this->createPayment(0.5);
 
         $this->loginAsVegetableManufacturer();
@@ -63,7 +63,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
     public function testEditPaymentAsCorrectManufacturer()
     {
 
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $this->createPayment(0.5);
 
         $comment = 'this is the comment';
@@ -97,7 +97,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
 
     public function testUrlsAsCustomer()
     {
-        $this->loginAsCustomer();
+        $this->loginAsCustomerWithHttpClient();
         $testUrls = [
             $this->Slug->getTimebasedCurrencyPaymentAdd(Configure::read('test.customerId')),
             $this->Slug->getMyTimebasedCurrencyBalanceForCustomers(Configure::read('test.customerId'))
