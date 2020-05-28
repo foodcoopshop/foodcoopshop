@@ -58,8 +58,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         $blogPostId = 2;
         $this->changeBlogPost($blogPostId, 1);
-        $_SERVER['REQUEST_URI'] = $this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel');
-        $this->get($_SERVER['REQUEST_URI']);
+        $this->get($this->Slug->getBlogPostDetail($blogPostId, 'Demo Blog Artikel'));
         $this->assertResponseCode(200);
     }
 
