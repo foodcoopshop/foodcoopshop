@@ -107,6 +107,10 @@ foodcoopshop.Upload = {
         if (image.length == 0) {
             return;
         }
+        if (image.hasClass('existingImage')) {
+            foodcoopshop.Modal.destroy(modalSelector);
+            return;
+        }
         var filename = foodcoopshop.Helper.cutRandomStringOffImageSrc(image.attr('src'));
 
         foodcoopshop.Helper.ajaxCall(
