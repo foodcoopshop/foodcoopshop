@@ -33,7 +33,7 @@ echo '<div class="product-wrapper" id="product-wrapper-' . $product['id_product'
 if (!$largeImageExists) {
     echo '<a class="lightbox" href="'.$srcLargeImage.'">';
 }
-echo '<img src="' . $this->Html->getProductImageSrc($product['id_image'], 'home'). '" />';
+echo '<img class="lazyload" data-src="' . $this->Html->getProductImageSrc($product['id_image'], 'home'). '" />';
 if (!$largeImageExists) {
     echo '</a>';
 }

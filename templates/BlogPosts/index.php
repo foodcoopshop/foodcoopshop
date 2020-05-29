@@ -37,7 +37,7 @@ foreach ($blogPosts as $blogPost) {
         if (!$largeImageExists) {
             echo '<a data-featherlight="image" href="'.$srcLargeImage.'">';
         }
-        echo '<img src="' . $this->Html->getBlogPostImageSrc($blogPost, 'home'). '" />';
+        echo '<img class="lazyload" data-src="' . $this->Html->getBlogPostImageSrc($blogPost, 'home'). '" />';
         if (!$largeImageExists) {
             echo '</a>';
         }
