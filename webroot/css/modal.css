@@ -208,7 +208,8 @@ body.iframe_start_page {
 .modal .checkbox input[type="checkbox"] {
     float: right;
 }
-#product-categories-edit-form input[type="checkbox"] {
+#product-categories-edit-form input[type="checkbox"],
+#order-detail-product-quantity-edit-form input[type="checkbox"] {
     float: left;
 }
 #modal-product-quantity-edit input[type="number"] {
