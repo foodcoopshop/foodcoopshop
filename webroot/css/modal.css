@@ -131,7 +131,8 @@ body.iframe_start_page {
     float:left;
     margin-bottom:5px;
 }
-#modal-text .modal-dialog {
+#modal-text .modal-dialog,
+#modal-image .modal-dialog {
     max-width: 800px;
 }
 #modal-text h2 {
@@ -139,9 +140,6 @@ body.iframe_start_page {
 }
 #modal-text h3 {
     font-size: 16px;
-}
-#modal-image .modal-dialog {
-    max-width: 600px;
 }
 #modal-image .modal-dialog img {
     width: 100%;
