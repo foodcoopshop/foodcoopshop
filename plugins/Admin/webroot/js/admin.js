@@ -1085,6 +1085,21 @@ foodcoopshop.Admin = {
         });
     },
 
+    addDatepickerInDialog : function(inputField) {
+        inputField.datepicker({
+            beforeShow: function(input, inst) {
+                $('.ui-dialog').addClass('has-datepicker');
+            },
+            onClose: function(input, inst) {
+                $('.ui-dialog').removeClass('has-datepicker');
+                // if datepicker is closed without selecting a date, it's focused and another click does not trigger to open calendar again
+                $(this).off('click').on('click', function() {
+                    inputField.datepicker('show');
+                });
+            }
+        });
+    },
+
     initDeletePayment: function () {
 
         $('.delete-payment-button').on('click',function () {
