@@ -33,7 +33,7 @@ echo '<div class="product-wrapper" id="product-wrapper-' . $product['id_product'
 if (!$largeImageExists) {
     echo '<a class="open-with-modal" href=javascript:void(0); data-modal-title="' . h($product['name']) . '" data-modal-image="'.$srcLargeImage.'">';
 }
-echo '<img src="' . $this->Html->getProductImageSrc($product['id_image'], 'home'). '" />';
+echo '<img class="lazyload" data-src="' . $this->Html->getProductImageSrc($product['id_image'], 'home'). '" />';
 if (!$largeImageExists) {
     echo '</a>';
 }

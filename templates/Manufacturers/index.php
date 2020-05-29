@@ -39,7 +39,7 @@ foreach ($manufacturers as $manufacturer) {
     if (!$largeImageExists) {
         echo '<a class="open-with-modal" href="javascript:void(0);" data-modal-title="' . h($manufacturer->name) . '" data-modal-image="'.$srcLargeImage.'">';
     }
-            echo '<img src="' . $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'medium'). '" />';
+            echo '<img class="lazyload" data-src="' . $this->Html->getManufacturerImageSrc($manufacturer->id_manufacturer, 'medium'). '" />';
     if (!$largeImageExists) {
         echo '</a>';
     }
