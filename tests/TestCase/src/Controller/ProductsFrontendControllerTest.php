@@ -50,26 +50,23 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
 
     public function testProductDetailOnlineManufacturerPublicLoggedOut()
     {
-        $this->get($this->Slug->getProductDetail(60, 'Demo Product'));
-        $this->get($this->_response->getHeader('Location')[0]);
-        $this->assertDoesNotMatchRegularExpressionWithUnquotedString('0,62 €', $this->_getBodyAsString()); // price must not be shown
+        $this->get($this->Slug->getProductDetail(60, 'Milch'));
+        $this->assertResponseNotContains('0,62 €'); // price must not be shown
         $this->assertResponseCode(200);
     }
 
     public function testProductDetailOnlineManufacturerPublicLoggedOutShowProductPriceEnabled()
     {
         $this->changeConfiguration('FCS_SHOW_PRODUCT_PRICE_FOR_GUESTS', 1);
-        $this->get($this->Slug->getProductDetail(60, 'Demo Product'));
-        $this->get($this->_response->getHeader('Location')[0]);
-        $this->assertRegExpWithUnquotedString('<div class="price">0,62 €</div><div class="deposit">+ <b>0,50 €</b> Pfand</div><div class="tax">0,07 €</div>', $this->_getBodyAsString());
+        $this->get($this->Slug->getProductDetail(60, 'Milch'));
+        $this->assertResponseContains('<div class="price">0,62 €</div><div class="deposit">+ <b>0,50 €</b> Pfand</div><div class="tax">0,07 €</div>');
         $this->assertResponseCode(200);
     }
 
     public function testProductDetailOnlineManufacturerPublicLoggedIn()
     {
         $this->loginAsCustomerWithHttpClient();
-        $this->get($this->Slug->getProductDetail(60, 'Demo Product'));
-        $this->get($this->_response->getHeader('Location')[0]);
+        $this->get($this->Slug->getProductDetail(60, 'Milch'));
         $this->assertResponseCode(200);
     }
 
@@ -103,8 +100,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 346;
         $this->changeProductDeliveryRhythm($productId, '0-individual', date('Y-m-d', strtotime('next friday')), date('Y-m-d'));
-        $this->get($this->Slug->getProductDetail($productId, 'Demo Product'));
-        $this->get($this->_response->getHeader('Location')[0]);
+        $this->get($this->Slug->getProductDetail($productId, 'Artischocke'));
         $this->assertResponseCode(200);
     }
 
@@ -115,7 +111,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         $manufacturerId = 5;
         $this->changeManufacturerNoDeliveryDays($manufacturerId, Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
         $this->get($this->Slug->getProductDetail($productId, 'Artischocke'));
-        $this->assertRegExpWithUnquotedString('<i class="fa fa-lg fa-times"></i> Lieferpause!', $this->_getBodyAsString());
+        $this->assertResponseContains('<i class="fa fa-lg fa-times"></i> Lieferpause!');
 
     }
 

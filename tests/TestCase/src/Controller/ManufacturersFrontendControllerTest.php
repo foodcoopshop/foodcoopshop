@@ -33,8 +33,7 @@ class ManufacturersFrontendControllerTest extends AppCakeTestCase
 
        public function testManufacturerDetailOnlinePublicLoggedOut()
     {
-        $this->get($this->Slug->getManufacturerDetail(4, 'Demo Manufacturer'));
-        $this->get($this->_response->getHeader('Location')[0]);
+        $this->get($this->Slug->getManufacturerDetail(4, 'Demo Fleisch Hersteller'));
         $this->assertResponseCode(200);
     }
 
