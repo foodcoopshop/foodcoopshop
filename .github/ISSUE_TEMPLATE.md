@@ -20,5 +20,5 @@ EXPLAIN WHAT IS TO BE EXPECTED, HERE.
 Bevor du das Issue erstellst, überprüfe bitte, ob es bereits ein ähnliches gibt.
 Before you open an issue, please check if a similar issue already exists or has been closed before.
 
-Du kannst dem Projekt zu mehr Sichtbarkeit verhelfen, in dem du ihm einen Stern gibst. Danke!
-You can make the project more visible by starring it. Thank you!
+Du kannst dem Projekt zu mehr Sichtbarkeit verhelfen, in dem du ihm einen Stern ⭐ gibst. Danke!
+You help making the project more visible by starring ⭐ it. Thank you!
