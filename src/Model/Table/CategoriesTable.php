@@ -56,25 +56,28 @@ class CategoriesTable extends AppTable
 
     }
 
-    private function flattenNestedArrayWithChildren($array, $separator = '')
+    private function flattenNestedArrayWithChildren($array, $separator = '', $renderParentIdAndChildrenIdContainers)
     {
         foreach ($array as $item) {
             $statusString = '';
             if (! $item->active) {
                 $statusString = ' ('.__('offline').')';
             }
+
             $parentIdString = '';
-            if ($item->id_parent > 0) {
-                $parentIdString = '<span class="parent-id hide">' . $item->id_parent . '</span>';
-            }
             $childrenIdsString = '';
-            $childrenIds = $this->getChildrenIds($item);
-            if (count($childrenIds) > 0) {
-                $childrenIdsString = '<span class="children-ids hide">' . join(',', $childrenIds) . '</span>';
+            if ($renderParentIdAndChildrenIdContainers) {
+                if ($item->id_parent > 0) {
+                    $parentIdString = '<span class="parent-id hide">' . $item->id_parent . '</span>';
+                }
+                $childrenIds = $this->getChildrenIds($item);
+                if (count($childrenIds) > 0) {
+                    $childrenIdsString = '<span class="children-ids hide">' . join(',', $childrenIds) . '</span>';
+                }
             }
             $this->flattenedArray[$item->id_category] = $separator . $item->name . $statusString . $parentIdString . $childrenIdsString;
             if (! empty($item['children'])) {
-                $this->flattenNestedArrayWithChildren($item->children, str_repeat('-', $this->getLevel($item) + 1) . ' ');
+                $this->flattenNestedArrayWithChildren($item->children, str_repeat('-', $this->getLevel($item) + 1) . ' ', $renderParentIdAndChildrenIdContainers);
             }
         }
 
@@ -112,7 +115,7 @@ class CategoriesTable extends AppTable
         return $categories;
     }
 
-    public function getForSelect($excludeCategoryId = null, $showOfflineCategories=true)
+    public function getForSelect($excludeCategoryId=null, $showOfflineCategories=true, $renderParentIdAndChildrenIdContainers=false)
     {
         $conditions = [];
         if ($excludeCategoryId) {
@@ -122,7 +125,7 @@ class CategoriesTable extends AppTable
             $conditions['Categories.active'] = true;
         }
         $categories = $this->getThreaded($conditions);
-        $flattenedCategories = $this->flattenNestedArrayWithChildren($categories);
+        $flattenedCategories = $this->flattenNestedArrayWithChildren($categories, '', $renderParentIdAndChildrenIdContainers);
         $flattenedCategories = array_map(function($category) {
             return html_entity_decode($category);
         }, $flattenedCategories);
