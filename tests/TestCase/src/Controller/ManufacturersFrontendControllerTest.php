@@ -14,7 +14,6 @@
  * @link          https://www.foodcoopshop.com
  */
 use App\Test\TestCase\AppCakeTestCase;
-use Cake\Core\Configure;
 use Cake\TestSuite\IntegrationTestTrait;
 
 class ManufacturersFrontendControllerTest extends AppCakeTestCase
