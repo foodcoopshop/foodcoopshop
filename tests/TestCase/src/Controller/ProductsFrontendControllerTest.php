@@ -41,7 +41,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
 
     public function testProductDetailOfflineManufacturerPublicLoggedIn()
     {
-        $this->loginAsCustomerWithHttpClient();
+        $this->loginAsCustomer();
         $productId = 60;
         $this->changeProductStatus($productId, 0);
         $this->get($this->Slug->getProductDetail($productId, 'Demo Product'));
@@ -65,7 +65,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
 
     public function testProductDetailOnlineManufacturerPublicLoggedIn()
     {
-        $this->loginAsCustomerWithHttpClient();
+        $this->loginAsCustomer();
         $this->get($this->Slug->getProductDetail(60, 'Milch'));
         $this->assertResponseCode(200);
     }
