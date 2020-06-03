@@ -20,7 +20,7 @@ if ($appAuth->isInstantOrderMode() || $appAuth->isSelfServiceModeByUrl()) {
 $globalNoDeliveryDaysString = $this->Html->getGlobalNoDeliveryDaysString();
 if ($globalNoDeliveryDaysString != '') {
     echo '<div id="global-no-delivery-day-box" class="box">';
-        echo '<h3>' . __('Attention_order_break!') . '</h3>';
+        echo '<h3>' . __('Attention_delivery_break!') . '</h3>';
         echo '<p>' . $globalNoDeliveryDaysString . '</p>';
     echo '</div>';
 }

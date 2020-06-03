@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-26 14:33+0200\n"
+"POT-Creation-Date: 2020-06-03 10:55+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2935,8 +2935,10 @@ msgstr "Konto bankowe (kredyt)"
 msgid "Bank_account_member_fee"
 msgstr "Konto bankowe (opłata członkowska)"
 
-msgid "Attention_order_break!"
-msgstr ""
+# Delivery break
+#, fuzzy
+msgid "Attention_delivery_break!"
+msgstr "Przerwa w dostawach"
 
 # Help?
 msgid "Help?"
