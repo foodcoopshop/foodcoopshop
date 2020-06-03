@@ -20,11 +20,11 @@ if (!Configure::read('app.generalTermsAndConditionsEnabled')) {
     return false;
 }
 
-echo '<div id="general-terms-and-conditions" class="featherlight-overlay">';
+echo '<div id="general-terms-and-conditions" class="hide">';
     echo $this->element('legal/'.I18n::getLocale().'/generalTermsAndConditions');
 echo '</div>';
 
-$initialGeneralTermsAndConditionLink = '<a href="#general-terms-and-conditions" class="open-with-featherlight">'.__('general_terms_and_conditions').'</a>';
+$initialGeneralTermsAndConditionLink = '<a href="javascript:void(0);" class="open-with-modal" data-element-selector="#general-terms-and-conditions">'.__('general_terms_and_conditions').'</a>';
 $generalTermsAndConditionsLinks = [$initialGeneralTermsAndConditionLink];
 $customGeneralTermsAndConditionsLinks = [];
 

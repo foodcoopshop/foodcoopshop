@@ -120,21 +120,10 @@ body.pages.home .filter-container,
 body.pages.home #content {
     background: transparent;
 }
-.ui-dialog,
-.featherlight-content .mini-upload-form,
-.categories-checkboxes.featherlight-inner,
-.tax-dropdown-wrapper.featherlight-inner,
-.featherlight iframe {
+.ui-dialog {
     min-width: 200px ! important;
     width: 98% ! important;
     max-width: 450px ! important;
-}
-.featherlight-content .message-container {
-    line-height: 25px;
-}
-.featherlight-content .mini-upload-form {
-    padding-left: 0 ! important;
-    padding-right: 0 ! important;
 }
 .product-attributes-dropdown {
     width: 100%;
@@ -185,4 +174,13 @@ form.fcs-form .input .after.small {
 table.list th,
 table.list tr.fake-th td {
     word-break: normal;
+}
+.modal .field-wrapper select,
+.modal .field-wrapper input[type="text"],
+.modal .field-wrapper input[type="number"],
+.modal .field-wrapper label:not(.checkbox) {
+    width: 100%;
+}
+select {
+    background-color: #fff;
 }

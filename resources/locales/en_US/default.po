@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-18 10:35+0200\n"
-"PO-Revision-Date: 2020-05-18 10:36+0200\n"
+"POT-Creation-Date: 2020-05-26 14:33+0200\n"
+"PO-Revision-Date: 2020-05-26 14:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -768,9 +768,6 @@ msgstr "Please cancel all ordered products before cancelling the order."
 msgid "Add_new_product?"
 msgstr "Add new product?"
 
-msgid "Really_add_new_product?"
-msgstr "Do you really want to add a new product?"
-
 msgid "This_function_is_not_available_today."
 msgstr "This function is not available today."
 
@@ -939,6 +936,9 @@ msgstr "Order possible until amount of"
 msgid "zero_or_smaller_zero"
 msgstr "0 or smaller than 0"
 
+msgid "Manufacturer"
+msgstr "Manufacturer"
+
 msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
 msgstr "For manufacturers and contact persons. Can be changed in the manufacturer settings."
 
@@ -953,6 +953,9 @@ msgstr "The delivery rhythm of stock products is always \"weekly\" and can't be 
 
 msgid "Delivery_rhythm"
 msgstr "Delivery rhythm"
+
+msgid "Change_delivery_rhythm"
+msgstr "Change delivery rhythm"
 
 msgid "First_delivery_day"
 msgstr "First delivery day"
@@ -1079,9 +1082,6 @@ msgstr "attribute"
 
 msgid "attributes"
 msgstr "attributes"
-
-msgid "Manufacturer"
-msgstr "Manufacturer"
 
 msgid "Terms_of_use"
 msgstr "Terms of use"
@@ -1440,9 +1440,6 @@ msgstr "The email address is already used by another member or manufacturer."
 msgid "Please_enter_your_street."
 msgstr "Please enter your street."
 
-msgid "Maximum_{0}_characters_please."
-msgstr "Maximum {0} characters please."
-
 msgid "Please_enter_your_city."
 msgstr "Please enter your city."
 
@@ -1635,6 +1632,9 @@ msgstr "Please enter a correct date."
 msgid "Please_select_a_customer."
 msgstr "Please select a member."
 
+msgid "The_name_of_the_product_needs_to_be_at_least_{0}_characters_long."
+msgstr "The name of the product needs to be at least {0} characters long."
+
 msgid "The_delivery_ryhthm_is_not_valid."
 msgstr "The delivery rhythm is not valid."
 
@@ -1662,14 +1662,8 @@ msgstr "The first delivery day needs to be a last {0} of the month."
 msgid "The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month."
 msgstr "The first delivery day needs to be a first {0} of the month."
 
-msgid "The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long."
-msgstr "The name of the product {0} needs to be at least {1} characters long."
-
 msgid "deleted"
 msgstr "deleted"
-
-msgid "New_product_of"
-msgstr "New product of"
 
 msgid "The_quantity_needs_to_be_a_number."
 msgstr "The quantity needs to be a number."
@@ -2429,6 +2423,21 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Which_product_do_you_want_to_add_for_{0}?"
+#~ msgstr "Which product do you want to add for {0}?"
+
+#~ msgid "Which_product_do_you_want_to_add?"
+#~ msgstr "Which product do you want to add?"
+
+#~ msgid "Really_add_new_product?"
+#~ msgstr "Do you really want to add a new product?"
+
+#~ msgid "Maximum_{0}_characters_please."
+#~ msgstr "Maximum {0} characters please."
+
+#~ msgid "New_product_of"
+#~ msgstr "New product of"
 
 #~ msgid "Do_not_cancel_button"
 #~ msgstr "Close"

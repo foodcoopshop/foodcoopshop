@@ -17,7 +17,7 @@ use Cake\I18n\I18n;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
-    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('#RegistrationForm .input.checkbox label a');".
+    Configure::read('app.jsNamespace').".ModalText.init('#RegistrationForm .input.checkbox label a');".
     Configure::read('app.jsNamespace').".Helper.initLoginForm();"
 ]);
 ?>
@@ -44,16 +44,16 @@ $this->element('addScript', ['script' =>
           if ($enableAutoLogin) {
 
               $this->element('addScript', ['script' =>
-                  Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('.remember-me-wrapper a');"
+                  Configure::read('app.jsNamespace').".ModalText.init('.remember-me-wrapper a');"
               ]);
-              echo '<div id="privacy-policy" class="featherlight-overlay">';
+              echo '<div id="privacy-policy" class="hide">';
                 echo $this->element('legal/'.I18n::getLocale().'/privacyPolicy');
               echo '</div>';
 
               echo '<div class="remember-me-wrapper">';
               echo $this->Form->control('remember_me', [
                   'type' => 'checkbox',
-                  'label' => __('Stay_signed_in').'<br /><small>'.__('and').' <a href="#privacy-policy" class="open-with-featherlight">'.__('accept_cookie').'</a></small>',
+                  'label' => __('Stay_signed_in').'<br /><small>'.__('and').' <a data-element-selector="#privacy-policy" href="javascript:void(0);" class="open-with-modal">'.__('accept_cookie').'</a></small>',
                   'escape' => false
               ]);
               echo '</div>';
@@ -125,10 +125,10 @@ $this->element('addScript', ['script' =>
                       }
 
                       if (Configure::read('app.termsOfUseEnabled')) {
-                          echo '<div id="terms-of-use" class="featherlight-overlay">';
+                          echo '<div id="terms-of-use" class="hide">';
                             echo $this->element('legal/'.I18n::getLocale().'/termsOfUse');
                           echo '</div>';
-                          $termsOfUseLink = '<a href="#terms-of-use">'.__('terms_of_use').'</a>';
+                          $termsOfUseLink = '<a href="javascript:void(0);" data-element-selector="#terms-of-use">'.__('terms_of_use').'</a>';
                           echo $this->Form->control('Customers.terms_of_use_accepted_date_checkbox', [
                               'label' => __('I_accept_the_{0}', [$termsOfUseLink]),
                               'type' => 'checkbox',

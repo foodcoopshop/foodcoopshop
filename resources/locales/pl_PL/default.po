@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-18 10:35+0200\n"
+"POT-Creation-Date: 2020-05-26 14:33+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1034,10 +1034,6 @@ msgstr "Anuluj wszystkie zamówione produkty przed anulowaniem zamówienia."
 msgid "Add_new_product?"
 msgstr "Dodać nowy produkt?"
 
-# Do you really want to add a new product?
-msgid "Really_add_new_product?"
-msgstr "Na pewno chcesz dodać nowy produkt?"
-
 # This function is not available today.
 msgid "This_function_is_not_available_today."
 msgstr "Ta funkcja nie jest dziś dostępna."
@@ -1260,6 +1256,10 @@ msgstr "Zamówienia możliwe do ilości"
 msgid "zero_or_smaller_zero"
 msgstr "0 lub mniej niż 0"
 
+# Manufacturer
+msgid "Manufacturer"
+msgstr "Producent"
+
 # For manufacturers and contact persons. Can be changed in the manufacturer settings.
 msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
 msgstr "Dla producentów i osób kontaktowych. Może zostać zmienione w ustawieniach producenta."
@@ -1278,6 +1278,11 @@ msgstr "Harmonogram dostaw produktów magazynowanych jest zawsze tygodniowy i ni
 
 # Delivery rhythm
 msgid "Delivery_rhythm"
+msgstr "Harmonogram dostaw"
+
+# Delivery rhythm
+#, fuzzy
+msgid "Change_delivery_rhythm"
 msgstr "Harmonogram dostaw"
 
 # First delivery day
@@ -1447,10 +1452,6 @@ msgstr "atrybut"
 # attributes
 msgid "attributes"
 msgstr "atrybuty"
-
-# Manufacturer
-msgid "Manufacturer"
-msgstr "Producent"
 
 # Terms of use
 msgid "Terms_of_use"
@@ -1937,9 +1938,6 @@ msgstr "Adres mailowy został już użyty przez innego członka lub producenta."
 msgid "Please_enter_your_street."
 msgstr "Podaj ulicę."
 
-msgid "Maximum_{0}_characters_please."
-msgstr ""
-
 # Please enter your city.
 msgid "Please_enter_your_city."
 msgstr "Podaj miasto."
@@ -2199,6 +2197,11 @@ msgstr "Podaj poprawny numer."
 msgid "Please_select_a_customer."
 msgstr "Wprowadź liczbę."
 
+# The name of the product {0} needs to be at least {1} characters long.
+#, fuzzy
+msgid "The_name_of_the_product_needs_to_be_at_least_{0}_characters_long."
+msgstr "Nazwa produktu {0} musi mieć conajmniej {1} znaków."
+
 # The delivery rhythm is not valid.
 msgid "The_delivery_ryhthm_is_not_valid."
 msgstr "Harmonogram dostaw jest nieprawidłowy."
@@ -2235,18 +2238,10 @@ msgstr "Pierwszym dniem dostaw musi być ostatni {0} w miesiącu."
 msgid "The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month."
 msgstr "Pierwszym dniem dostaw musi być pierwszy {0} w miesiącu."
 
-# The name of the product {0} needs to be at least {1} characters long.
-msgid "The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long."
-msgstr "Nazwa produktu {0} musi mieć conajmniej {1} znaków."
-
 # delete
 #, fuzzy
 msgid "deleted"
 msgstr "usuń"
-
-# New product of
-msgid "New_product_of"
-msgstr "Nowy produkt od"
 
 # The quantity needs to be a number.
 msgid "The_quantity_needs_to_be_a_number."
@@ -3253,6 +3248,19 @@ msgstr "złożone w dniu"
 # The prices include the VAT.
 msgid "Prices_are_including_vat."
 msgstr "Ceny zawierają podatek VAT."
+
+# Please enter how much you want to pay in {0}.
+#, fuzzy
+#~ msgid "Which_product_do_you_want_to_add_for_{0}?"
+#~ msgstr "Wprowadź, ile chcesz zapłacić w {0}."
+
+# Do you really want to add a new product?
+#~ msgid "Really_add_new_product?"
+#~ msgstr "Na pewno chcesz dodać nowy produkt?"
+
+# New product of
+#~ msgid "New_product_of"
+#~ msgstr "Nowy produkt od"
 
 # Close
 #~ msgid "Do_not_cancel_button"

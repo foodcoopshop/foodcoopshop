@@ -21,18 +21,18 @@ if (!$appAuth->user() || $appAuth->termsOfUseAccepted()) {
 }
 
 $this->element('addScript', ['script' =>
-    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForHref('.accept-updated-terms-of-use-form a.terms-of-use-overlay');"
+    Configure::read('app.jsNamespace').".ModalText.init('.accept-updated-terms-of-use-form a.terms-of-use-overlay');"
 ]);
 ?>
 <div class="accept-updated-terms-of-use-form">
     <h2><?php echo __('Hello'); ?> <?php echo $appAuth->getUserFirstname(); ?>,</h2>
     <?php
-        $termsOfUseTermsLink = '<a class="terms-of-use-overlay" href="#terms-of-use">'.__('terms_and_conditions').'</a>';
+        $termsOfUseTermsLink = '<a class="terms-of-use-overlay" href="javascript:void(0);" data-element-selector="#terms-of-use">'.__('terms_and_conditions').'</a>';
     ?>
     <p><?php echo __('if_you_want_to_continue_to_use_this_platform_please_read_and_accept_the_{0}.', ['<b>' . $termsOfUseTermsLink . '</b>']); ?></p>
     <form action="<?php echo $this->Slug->getAcceptTermsOfUse(); ?>" id="AcceptTermsOfUseForm" method="post" accept-charset="utf-8">
         <?php
-            echo '<div id="terms-of-use" class="featherlight-overlay">';
+            echo '<div id="terms-of-use" class="hide">';
         if ($appAuth->isManufacturer()) {
             echo $this->element('legal/'.I18n::getLocale().'/termsOfUseForManufacturers');
         } else {

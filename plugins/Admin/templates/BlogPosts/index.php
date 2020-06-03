@@ -20,9 +20,8 @@ use Cake\Core\Configure;
         <?php
         $this->element('addScript', ['script' =>
             Configure::read('app.jsNamespace') . ".Admin.init();" .
-            Configure::read('app.jsNamespace') . ".AppFeatherlight.initLightboxForImages('a.lightbox');".
-            Configure::read('app.jsNamespace').".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 1, 1);
-            "
+            Configure::read('app.jsNamespace').".ModalImage.init('a.open-with-modal');" .
+            Configure::read('app.jsNamespace').".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 1, 1);"
         ]);
         $this->element('highlightRowAfterEdit', [
             'rowIdPrefix' => '#blogPost-'
@@ -99,7 +98,7 @@ foreach ($blogPosts as $blogPost) {
     $largeImageExists = ! preg_match('/no-single-default/', $srcLargeImage);
 
     if ($largeImageExists) {
-        echo '<a class="lightbox" href="' . $srcLargeImage . '">';
+        echo '<a class="open-with-modal" href="javascript:void(0);" data-modal-title="' . h($blogPost->title) . '" data-modal-image="' . $srcLargeImage . '">';
     }
     echo '<img width="90" src="' . $srcSmallImage . '" />';
     if ($largeImageExists) {

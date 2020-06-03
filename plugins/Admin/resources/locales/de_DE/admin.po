@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-05-15 22:53+0200\n"
-"PO-Revision-Date: 2020-05-15 22:55+0200\n"
+"POT-Creation-Date: 2020-05-23 21:54+0200\n"
+"PO-Revision-Date: 2020-05-23 21:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -420,8 +420,8 @@ msgstr "Die Variante {0} des Produktes {1} vom Hersteller {2} wurde erfolgreich 
 msgid "The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created."
 msgstr "Die Variante {0} für das Produkt {1} vom Hersteller {2} wurde erfolgreich erstellt."
 
-msgid "A_new_product_was_created_for_{0}."
-msgstr "Ein neues Produkt für {0} wurde erfolgreich erstellt."
+msgid "The_product_{0}_was_created_for_{1}."
+msgstr "Das Produkt {0} wurde erfolgreich für {1} erstellt."
 
 msgid "Order_possible_until"
 msgstr "Bestellbar bis"

@@ -68,7 +68,7 @@ foodcoopshop.Cart = {
         foodcoopshop.Cart.initRemoveFromCartLinks(); // bind click event
         $('.cart p.products').show();
 
-        foodcoopshop.AppFeatherlight.initLightboxForImages('.cart .products a.image');
+        foodcoopshop.ModalImage.init('.cart .products a.image');
         foodcoopshop.Helper.onWindowResize();
 
     },
@@ -430,7 +430,7 @@ foodcoopshop.Cart = {
     getCartProductHtml: function (productId, amount, price, productName, unity, manufacturerLink, image, deposit, tax, timebasedCurrencyHours, orderedQuantityInUnits, unitName, unitAmount, priceInclPerUnit, pickupDay) {
         var imgHtml = '<span class="image">' + image + '</span>';
         if (!$(image).attr('src').match(/de-default-home/)) {
-            imgHtml = '<a href="'  + $(image).attr('src').replace(/-home_/, '-thickbox_') +  '" class="image">' + image + '</a>';
+            imgHtml = '<a href="javascript:void(0);" data-modal-title="' + productName + '" data-modal-image="'  + $(image).attr('src').replace(/-home_/, '-thickbox_') +  '" class="image">' + image + '</a>';
         }
         var unityHtml = '<span class="unity">';
         if (orderedQuantityInUnits) {

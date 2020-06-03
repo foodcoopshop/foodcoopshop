@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-05-18 10:35+0200\n"
-"PO-Revision-Date: 2020-05-18 10:35+0200\n"
+"POT-Creation-Date: 2020-05-26 14:33+0200\n"
+"PO-Revision-Date: 2020-05-26 14:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -768,9 +768,6 @@ msgstr "Bevor du die Bestellung stornieren kannst, storniere bitte alle bestellt
 msgid "Add_new_product?"
 msgstr "Neues Produkt erstellen?"
 
-msgid "Really_add_new_product?"
-msgstr "Möchtest du wirklich ein neues Produkt erstellen?"
-
 msgid "This_function_is_not_available_today."
 msgstr "Diese Funktion steht heute nicht zur Verfügung."
 
@@ -939,6 +936,9 @@ msgstr "Bestellbar bis zu einer Anzahl von"
 msgid "zero_or_smaller_zero"
 msgstr "0 oder kleiner als 0"
 
+msgid "Manufacturer"
+msgstr "Hersteller"
+
 msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
 msgstr "An Hersteller bzw. Ansprechperson, kann in den Hersteller-Einstellungen geändert werden."
 
@@ -953,6 +953,9 @@ msgstr "Der Lieferrhythmus von Lagerprodukten ist immer \"wöchentlich\" und kan
 
 msgid "Delivery_rhythm"
 msgstr "Lieferrhythmus"
+
+msgid "Change_delivery_rhythm"
+msgstr "Lieferrhythmus ändern"
 
 msgid "First_delivery_day"
 msgstr "Erster Liefertag"
@@ -1079,9 +1082,6 @@ msgstr "Variante"
 
 msgid "attributes"
 msgstr "Varianten"
-
-msgid "Manufacturer"
-msgstr "Hersteller"
 
 msgid "Terms_of_use"
 msgstr "Nutzungsbedingungen"
@@ -1440,9 +1440,6 @@ msgstr "Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-
 msgid "Please_enter_your_street."
 msgstr "Bitte gib deine Straße an."
 
-msgid "Maximum_{0}_characters_please."
-msgstr "Maximal {0} Zeichen bitte."
-
 msgid "Please_enter_your_city."
 msgstr "Bitte gib deinen Ort an."
 
@@ -1635,6 +1632,9 @@ msgstr "Bitte gib eine korrektes Datum ein."
 msgid "Please_select_a_customer."
 msgstr "Bitte wähle ein Mitglied aus."
 
+msgid "The_name_of_the_product_needs_to_be_at_least_{0}_characters_long."
+msgstr "Der Name des Produktes muss aus mindestens {0} Zeichen bestehen."
+
 msgid "The_delivery_ryhthm_is_not_valid."
 msgstr "Der Lieferrhythmus ist nicht gültig."
 
@@ -1662,14 +1662,8 @@ msgstr "Der erste Liefertag muss ein letzter {0} im Monat sein."
 msgid "The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month."
 msgstr "Der erste Liefertag muss ein erster {0} im Monat sein."
 
-msgid "The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long."
-msgstr "Der Name des Produktes {0} muss aus mindestens {1} Zeichen bestehen."
-
 msgid "deleted"
 msgstr "gelöscht"
-
-msgid "New_product_of"
-msgstr "Neues Produkt von"
 
 msgid "The_quantity_needs_to_be_a_number."
 msgstr "Der Lagerstand muss eine Zahl sein."
@@ -2429,6 +2423,21 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Which_product_do_you_want_to_add_for_{0}?"
+#~ msgstr "Welches Produkt möchtest du für {0} neu erstellen?"
+
+#~ msgid "Which_product_do_you_want_to_add?"
+#~ msgstr "Welches Produkt möchtest du neu erstellen?"
+
+#~ msgid "Really_add_new_product?"
+#~ msgstr "Möchtest du wirklich ein neues Produkt erstellen?"
+
+#~ msgid "Maximum_{0}_characters_please."
+#~ msgstr "Maximal {0} Zeichen bitte."
+
+#~ msgid "New_product_of"
+#~ msgstr "Neues Produkt von"
 
 #~ msgid "Do_not_cancel_button"
 #~ msgstr "Abbrechen"

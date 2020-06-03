@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-05-15 22:53+0200\n"
+"POT-Creation-Date: 2020-05-23 21:54+0200\n"
 "PO-Revision-Date: 2020-03-19 21:01+0100\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -440,7 +440,8 @@ msgstr "Atrybut {0} produktu {1} od producenta {2} został pomyślnie usunięty.
 msgid "The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created."
 msgstr "Atrybut {0} produktu {1} od producenta {2} został pomyślnie utworzony."
 
-msgid "A_new_product_was_created_for_{0}."
+#, fuzzy
+msgid "The_product_{0}_was_created_for_{1}."
 msgstr "A new product was created for {0}."
 
 msgid "Order_possible_until"

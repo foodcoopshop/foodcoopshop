@@ -25,52 +25,6 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
 
-    bindDeleteCustomerButton : function(customerId) {
-
-        var buttons = {};
-        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
-        buttons['yes'] = {
-            text: foodcoopshop.LocalizedJs.helper.yes,
-            click: function() {
-                $('#delete-customer-dialog .ajax-loader').show();
-                $('.ui-dialog button').attr('disabled', 'disabled');
-                foodcoopshop.Helper.ajaxCall(
-                    '/admin/customers/delete/' + customerId,
-                    {
-                        referer: $('input[name="referer"]').val()
-                    },
-                    {
-                        onOk: function (data) {
-                            document.location.href = data.redirectUrl;
-                        },
-                        onError: function (data) {
-                            var form = $('#delete-customer-dialog');
-                            form.find('.ajax-loader').hide();
-                            var message = '<p><b>' + foodcoopshop.LocalizedJs.admin.ErrorsOccurredWhileMemberWasDeleted + ':</b> </p>';
-                            foodcoopshop.Helper.appendFlashMessageToDialog(form, message + data.msg);
-                        }
-                    });
-            }
-        };
-
-        $('.delete-customer-button').on('click', function() {
-            $('<div id="delete-customer-dialog"></div>').appendTo('body')
-                .html('<p style="margin-top: 10px;">' + foodcoopshop.LocalizedJs.admin.ReallyDeleteMember + '</p><p>' + foodcoopshop.LocalizedJs.admin.BeCarefulNoWayBack + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
-                .dialog({
-                    modal: true,
-                    title: foodcoopshop.LocalizedJs.admin.DeleteMember,
-                    autoOpen: true,
-                    width: 500,
-                    height: 300,
-                    resizable: false,
-                    buttons: buttons,
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
-                });
-        });
-    },
-
     addWrappersAndLoaderToDialogHtml : function(title, dialogId, dialogHtml) {
         var html = '<div id="' + dialogId + '" class="dialog" title="' + title + '">';
         html += '<form onkeypress="return event.keyCode != 13;">';
@@ -286,139 +240,6 @@ foodcoopshop.Admin = {
 
     },
 
-    initProductPriceEditDialog: function (container) {
-
-        var dialogId = 'product-price-edit-form';
-        var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductPriceEdit(dialogId);
-        $(container).append(dialogHtml);
-
-        foodcoopshop.Helper.changeInputNumberToTextForEdge();
-
-        var buttons = {};
-        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
-        buttons['save'] = {
-            text: foodcoopshop.LocalizedJs.helper.save,
-            click: function() {
-                var pricePerUnitEnabled = $('input[name="dialogPricePricePerUnitEnabled"]:checked').val() == 'price-per-unit' ? 1 : 0;
-
-                var priceInclPerUnit = $('#dialogPricePriceInclPerUnit').val();
-                var quantityInUnits = $('#dialogPriceQuantityInUnits').val();
-
-                if ($('#dialogPriceProductId').val() == '') {
-                    return false;
-                }
-
-                $('#product-price-edit-form .ajax-loader').show();
-                $('.ui-dialog button').attr('disabled', 'disabled');
-
-                foodcoopshop.Helper.ajaxCall(
-                    '/admin/products/editPrice/',
-                    {
-                        productId: $('#dialogPriceProductId').val(),
-                        price: $('#dialogPricePrice').val(),
-                        priceInclPerUnit: priceInclPerUnit,
-                        pricePerUnitEnabled: pricePerUnitEnabled,
-                        priceUnitName: $('#dialogPriceUnitName').val(),
-                        priceUnitAmount: $('#dialogPriceUnitAmount').val(),
-                        priceQuantityInUnits : quantityInUnits
-                    },
-                    {
-                        onOk: function (data) {
-                            document.location.reload();
-                        },
-                        onError: function (data) {
-                            var form = $('#product-price-edit-form form');
-                            form.find('.ajax-loader').hide();
-                            foodcoopshop.Helper.appendFlashMessageToDialog(form, data.msg);
-                        }
-                    }
-                );
-            }
-        };
-
-        var dialog = $('#' + dialogId).dialog({
-
-            autoOpen: false,
-            height: 350,
-            width: 550,
-            modal: true,
-
-            close: function () {
-                $('#dialogPricePrice').val('');
-                $('#dialogPriceProductId').val('');
-                $('input[name="dialogPricePricePerUnitEnabled"]').prop('checked', false);
-                $('div.price-per-unit-wrapper').addClass('deactivated');
-                $('div.price-wrapper').removeClass('deactivated');
-                $('#dialogPricePriceInclPerUnit').val('');
-                $('#dialogPriceUnitName').val('');
-                $('#dialogPriceUnitAmount').val('');
-                $('#dialogPriceQuantityInUnits').val('');
-            },
-
-            buttons: buttons
-        });
-
-        $('#' + dialogId + ' input[name="dialogPricePricePerUnitEnabled"]').on('change', function() {
-            var priceAsUnitWrapper = $('#' + dialogId + ' .price-per-unit-wrapper');
-            var priceWrapper = $('#' + dialogId + ' .price-wrapper');
-            if ($(this).val() == 'price-per-unit') {
-                priceAsUnitWrapper.removeClass('deactivated');
-                priceWrapper.addClass('deactivated');
-            } else {
-                priceAsUnitWrapper.addClass('deactivated');
-                priceWrapper.removeClass('deactivated');
-            }
-        });
-
-        $('.product-price-edit-button').on('click', function () {
-
-            var row = $(this).closest('tr');
-            var productId = row.find('td.cell-id').html();
-
-            var radioMainSelector = '#' + dialogId + ' input[name="dialogPricePricePerUnitEnabled"]';
-            var radio;
-            var unitData = {};
-            var unitObject = $('#product-unit-object-' + productId);
-            if (unitObject.length > 0) {
-                unitData = unitObject.data('product-unit-object');
-                if (unitData.price_per_unit_enabled === 1) {
-                    radio = $(radioMainSelector + '.price-per-unit');
-                }
-                $('#' + dialogId + ' #dialogPricePriceInclPerUnit').val(unitData.price_incl_per_unit);
-                $('#' + dialogId + ' #dialogPriceUnitName').val(unitData.name);
-                $('#' + dialogId + ' #dialogPriceUnitName').trigger('change');
-                $('#' + dialogId + ' #dialogPriceUnitAmount').val(unitData.amount);
-                $('#' + dialogId + ' #dialogPriceQuantityInUnits').val(unitData.quantity_in_units);
-            }
-            if (radio === undefined) {
-                radio = $(radioMainSelector + '.price');
-            }
-            radio.prop('checked', true);
-            radio.trigger('change');
-
-            var price = foodcoopshop.Helper.getCurrencyAsFloat(row.find('span.price-for-dialog').html());
-            $('#' + dialogId + ' #dialogPricePrice').val(price);
-            $('#' + dialogId + ' #dialogPriceProductId').val(productId);
-            var label = foodcoopshop.Admin.getProductNameForDialog(row);
-            $('#' + dialogId + ' label[for="dialogPricePrice"]').html(label);
-            dialog.dialog('open');
-        });
-
-        $('#dialogPriceUnitName').on('change', function() {
-            var stepValue = '0.001';
-            var minValue = '0.001';
-            if ($(this).val() == 'g') {
-                stepValue = 1;
-                minValue = 1;
-            }
-            var quantityInUnitsField = $('#' + dialogId + ' #dialogPriceQuantityInUnits');
-            quantityInUnitsField.attr('step', stepValue);
-            quantityInUnitsField.attr('min', minValue);
-            $('#' + dialogId + ' span.unit-name-placeholder').html($(this).val());
-        }).trigger('change');
-
-    },
-
     getProductNameForDialog : function(row) {
         var label = row.find('span.name-for-dialog').html();
         // show name of main product
@@ -428,124 +249,10 @@ foodcoopshop.Admin = {
         return label;
     },
 
-    createProductNameEditDialog: function (container) {
-
-        var dialogId = 'product-name-edit-form';
-        var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductNameEdit(dialogId);
-        $(container).append(dialogHtml);
-
-        var buttons = {};
-        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
-        buttons['save'] = {
-            text: foodcoopshop.LocalizedJs.helper.save,
-            click: function() {
-                if ($('#dialogName').val() == '' || $('#dialogProductId').val() == '') {
-                    return false;
-                }
-
-                $('#product-name-edit-form .ajax-loader').show();
-                $('.ui-dialog button').attr('disabled', 'disabled');
-
-                foodcoopshop.Helper.ajaxCall(
-                    '/admin/products/editName/',
-                    {
-                        productId: $('#dialogProductId').val(),
-                        name: $('#dialogName').val(),
-                        unity: $('#dialogUnity').val(),
-                        descriptionShort: CKEDITOR.instances['dialogDescriptionShort'].getData(),
-                        description: CKEDITOR.instances['dialogDescription'].getData(),
-                        isDeclarationOk: $('#dialogIsDeclarationOk:checked').length > 0 ? 1 : 0
-                    },
-                    {
-                        onOk: function (data) {
-                            document.location.reload();
-                        },
-                        onError: function (data) {
-                            dialog.dialog('close');
-                            $('#product-name-edit-form .ajax-loader').hide();
-                            foodcoopshop.Helper.showErrorMessage(data.msg);
-                        }
-                    }
-                );
-            }
-        };
-
-        var dialog = $('#' + dialogId).dialog({
-            autoOpen: false,
-            height: 660,
-            width: 795,
-            modal: true,
-            close: function () {
-                $('#dialogName').val('');
-                $('#dialogUnity').val('');
-                $('#cke_dialogDescriptionShort').val('');
-                $('#cke_dialogDescription').val('');
-                $('#dialogIsDeclarationOk').prop('checked', false);
-                $('#dialogProductId').val('');
-            },
-            buttons: buttons
-        });
-
-        return dialog;
-
-    },
-
     decodeEntities : function (encodedString) {
         var textArea = document.createElement('textarea');
         textArea.innerHTML = encodedString;
         return textArea.value;
-    },
-
-    initProductNameEditDialog: function (container) {
-
-        $('.product-name-edit-button').on('click', function () {
-
-            var dialogId = 'product-name-edit-form';
-            foodcoopshop.Helper.destroyCkeditor('dialogDescription');
-            foodcoopshop.Helper.destroyCkeditor('dialogDescriptionShort');
-            $('#' + dialogId).remove();
-
-            var dialog = foodcoopshop.Admin.createProductNameEditDialog(container);
-
-            foodcoopshop.Helper.initCkeditor('dialogDescriptionShort');
-            var row = $(this).closest('tr');
-            var nameCell = row.find('td.cell-name');
-            $('#' + dialogId + ' #dialogName').val(foodcoopshop.Admin.decodeEntities(nameCell.find('span.name-for-dialog .product-name').html()));
-            $('#' + dialogId + ' #dialogIsDeclarationOk').prop('checked', row.find('span.is-declaration-ok-wrapper').data('is-declaration-ok'));
-            var unityElement = nameCell.find('span.unity-for-dialog');
-            var unity = '';
-            if (unityElement.length > 0) {
-                unity = foodcoopshop.Admin.decodeEntities(unityElement.html());
-            }
-            $('#' + dialogId + ' #dialogUnity').val(unity);
-            CKEDITOR.instances['dialogDescriptionShort'].setData(nameCell.find('span.description-short-for-dialog').html());
-            $('#' + dialogId + ' #dialogProductId').val(row.find('td.cell-id').html());
-
-            var manufacturerId = row.data('manufacturerId');
-            foodcoopshop.Helper.ajaxCall(
-                '/admin/manufacturers/setElFinderUploadPath/' + manufacturerId,
-                {},
-                {
-                    onOk: function (data) {
-                        foodcoopshop.Helper.initCkeditorSmallWithUpload('dialogDescription');
-                        CKEDITOR.instances['dialogDescription'].setData(nameCell.find('span.description-for-dialog').html());
-                    },
-                    onError: function (data) {
-                        foodcoopshop.Helper.showErrorMessage(data.msg);
-                    }
-                }
-            );
-
-            // hide unity field if product has attributes
-            if ($(this).closest('tr').next().hasClass('sub-row')) {
-                $('#' + dialogId + ' #dialogUnity').hide();
-                $('#' + dialogId + ' #labelUnity').html(foodcoopshop.LocalizedJs.admin.Weight + '<br />' + '<span>' + foodcoopshop.LocalizedJs.admin.EnterApproximateWeightInPriceDialog + '</span>');
-            }
-
-            dialog.dialog('open');
-
-        });
-
     },
 
     initHighlightedRowId: function (rowId) {
@@ -559,145 +266,6 @@ foodcoopshop.Admin = {
         $(rowId).one('mouseover', function () {
             $(this).removeAttr('style');
         });
-    },
-
-    openEditDeliveryRhythmDialog : function(productIds, infoText, selectedDeliveryRhythmType, selectedFirstDeliveryDay, selectedOrderPossibleUntil, selectedSendOrderListWeekday, selectedSendOrderListDay) {
-
-        var buttons = {};
-        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
-        buttons['save'] = {
-            text: foodcoopshop.LocalizedJs.helper.save,
-            click: function() {
-
-                if (productIds.length == 0) {
-                    return false;
-                }
-
-                $('#product-delivery-rhythm-edit-form .ajax-loader').show();
-                $('.ui-dialog button').attr('disabled', 'disabled');
-
-                var data = {
-                    productIds: productIds,
-                    deliveryRhythmType: $('#dialogDeliveryRhythmType').val(),
-                    deliveryRhythmFirstDeliveryDay: $('#dialogDeliveryRhythmFirstDeliveryDay').val(),
-                    deliveryRhythmOrderPossibleUntil: $('#dialogDeliveryRhythmOrderPossibleUntil').val(),
-                    deliveryRhythmSendOrderListWeekday: $('#dialogDeliveryRhythmSendOrderListWeekday').val(),
-                    deliveryRhythmSendOrderListDay: $('#dialogDeliveryRhythmSendOrderListDay').val()
-                };
-
-                foodcoopshop.Helper.ajaxCall(
-                    '/admin/products/editDeliveryRhythm/',
-                    data,
-                    {
-                        onOk: function (data) {
-                            document.location.reload();
-                        },
-                        onError: function (data) {
-                            var form = $('#product-delivery-rhythm-edit-form form');
-                            form.find('.ajax-loader').hide();
-                            foodcoopshop.Helper.appendFlashMessageToDialog(form, data.msg);
-                        }
-                    }
-                );
-
-            }
-        };
-
-        var dialogOptions = {
-            autoOpen: false,
-            height: 470,
-            width: 490,
-            modal: true,
-            buttons: buttons
-        };
-
-        $('#product-delivery-rhythm-edit-form').remove();
-        var dialogId = 'product-delivery-rhythm-edit-form';
-        var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductDeliveryRhythmEdit(dialogId, productIds);
-        $('body').append(dialogHtml);
-        var dialog = $('#' + dialogId).dialog(dialogOptions);
-        dialog.dialog('open');
-        $('#' + dialogId + ' label[for="dialogDeliveryRhythm"]').html(infoText);
-
-        var select = $('#' + dialogId + ' #dialogDeliveryRhythmType');
-        select.find('option').remove();
-        select.append($('#rhythmtypes').html());
-        select.on('change', function() {
-            var elementToShow = 'default';
-            if ($(this).val().match('individual')) {
-                elementToShow = 'individual';
-            }
-            $('#' + dialogId + ' .dynamic-element').hide();
-            $('#' + dialogId + ' .dynamic-element.' + elementToShow).show();
-        });
-        select.val(selectedDeliveryRhythmType);
-        select.trigger('change');
-
-        var select2 = $('#' + dialogId + ' #dialogDeliveryRhythmSendOrderListWeekday');
-        select2.find('option').remove();
-        select2.append($('#weekdays').html());
-        select2.val(selectedSendOrderListWeekday);
-        select2.trigger('change');
-
-        foodcoopshop.Helper.initDatepicker();
-
-        var firstDeliveryDayInput = $('#' + dialogId + ' #dialogDeliveryRhythmFirstDeliveryDay');
-        firstDeliveryDayInput.val(selectedFirstDeliveryDay);
-        foodcoopshop.Admin.addDatepickerInDialog(firstDeliveryDayInput);
-
-        var orderPossibleUntilInput = $('#' + dialogId + ' #dialogDeliveryRhythmOrderPossibleUntil');
-        orderPossibleUntilInput.val(selectedOrderPossibleUntil);
-        foodcoopshop.Admin.addDatepickerInDialog(orderPossibleUntilInput);
-
-        var sendOrderListDayInput = $('#' + dialogId + ' #dialogDeliveryRhythmSendOrderListDay');
-        sendOrderListDayInput.val(selectedSendOrderListDay);
-        foodcoopshop.Admin.addDatepickerInDialog(sendOrderListDayInput);
-
-    },
-
-    initProductDeliveryRhythmEditDialog: function (container) {
-        $('.product-delivery-rhythm-edit-button').on('click', function () {
-            var row = $(this).closest('tr');
-            var productId = row.find('td.cell-id').html();
-            var infoText = foodcoopshop.Admin.getProductNameForDialog(row);
-            var selectedDeliveryRhythmType = row.find('td span.delivery-rhythm-for-dialog span.dropdown').html();
-            var selectedFirstDeliveryDay = row.find('td span.delivery-rhythm-for-dialog span.first-delivery-day').html();
-            var selectedOrderPossibleUntil = '';
-            var selectedOrderPossibleUntilDataElement = row.find('td span.delivery-rhythm-for-dialog span.order-possible-until');
-            if (selectedOrderPossibleUntilDataElement && selectedOrderPossibleUntilDataElement.length > 0) {
-                selectedOrderPossibleUntil = selectedOrderPossibleUntilDataElement.html();
-            }
-            var selectedSendOrderListWeekday = row.find('td span.delivery-rhythm-for-dialog span.send-order-list-weekday').html();
-            var selectedSendOrderListDay = '';
-            var selectedSendOrderListDayDataElement = row.find('td span.delivery-rhythm-for-dialog span.send-order-list-day');
-            if (selectedSendOrderListDayDataElement && selectedSendOrderListDayDataElement.length > 0) {
-                selectedSendOrderListDay = selectedSendOrderListDayDataElement.html();
-            }
-            foodcoopshop.Admin.openEditDeliveryRhythmDialog([productId], infoText, selectedDeliveryRhythmType, selectedFirstDeliveryDay, selectedOrderPossibleUntil, selectedSendOrderListWeekday, selectedSendOrderListDay);
-        });
-    },
-
-    initEditDeliveryRhythmForSelectedProducts : function() {
-
-        var button = $('#editDeliveryRhythmForSelectedProducts');
-        foodcoopshop.Helper.disableButton(button);
-
-        $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
-            foodcoopshop.Admin.updateObjectSelectionActionButton(button);
-        });
-
-        button.on('click', function () {
-            var productIds = foodcoopshop.Admin.getSelectedProductIds();
-            var nonStockProductIds = [];
-            for(var i=0; i < productIds.length; i++) {
-                var isStockProductElement = $('tr#product-' + productIds[i] + ' td.is-stock-product');
-                if (!(isStockProductElement.length == 1 && isStockProductElement.find('i.fa-check').length == 1)) {
-                    nonStockProductIds.push(productIds[i]);
-                }
-            }
-            foodcoopshop.Admin.openBulkEditDeliveryRhythmDialog(nonStockProductIds);
-        });
-
     },
 
     initDeleteSelectedProducts : function() {
@@ -782,24 +350,6 @@ foodcoopshop.Admin = {
             });
     },
 
-    openBulkEditDeliveryRhythmDialog : function(productIds) {
-        var infoText = '';
-        if (productIds.length == 1) {
-            infoText = foodcoopshop.LocalizedJs.admin.YouSelectedOneProduct;
-        } else {
-            infoText = foodcoopshop.LocalizedJs.admin.YouSelected0Products.replace(/\{0\}/, '<b>' + productIds.length + '</b>');
-        }
-        infoText += '<br />';
-
-        var selectedDeliveryRhythmType = foodcoopshop.Helper.getUniqueHtmlValueOfDomElements('tr.selected .delivery-rhythm-for-dialog .dropdown', '1-week');
-        var selectedFirstDeliveryDay = foodcoopshop.Helper.getUniqueHtmlValueOfDomElements('tr.selected .delivery-rhythm-for-dialog .first-delivery-day', '');
-        var selectedOrderPossibleUntil = foodcoopshop.Helper.getUniqueHtmlValueOfDomElements('tr.selected .delivery-rhythm-for-dialog .order-possible-until', '');
-        var selectedSendOrderListWeekday = foodcoopshop.Helper.getUniqueHtmlValueOfDomElements('tr.selected .delivery-rhythm-for-dialog .send-order-list-weekday', '');
-        var selectedSendOrderListDay = foodcoopshop.Helper.getUniqueHtmlValueOfDomElements('tr.selected .delivery-rhythm-for-dialog .send-order-list-day', '');
-
-        foodcoopshop.Admin.openEditDeliveryRhythmDialog(productIds, infoText, selectedDeliveryRhythmType, selectedFirstDeliveryDay, selectedOrderPossibleUntil, selectedSendOrderListWeekday, selectedSendOrderListDay);
-    },
-
     initProductIsStockProductEditDialog: function (container) {
 
         $('.product-is-stock-product-edit-button').on('click', function () {
@@ -867,115 +417,17 @@ foodcoopshop.Admin = {
 
     },
 
-    initProductQuantityEditDialog: function (container) {
-
-        $('.product-quantity-edit-button').on('click', function () {
-
-            var row = $(this).closest('tr');
-
-            var dialogId = 'product-quantity-edit-form';
-            var dialogHtml = '';
-            if (foodcoopshop.Admin.isAdvancedStockManagementEnabled(row)) {
-                dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductQuantityIsStockProductEdit(dialogId);
+    bindToggleQuantityQuantityByModalSelector : function(modalSelector) {
+        var modal = $(modalSelector);
+        modal.find('#dialogQuantityAlwaysAvailable').on('change', function() {
+            var quantityWrapper = modal.find('.quantity-wrapper');
+            var dialogQuantityElement = modal.find('#dialogQuantityAlwaysAvailable');
+            if (dialogQuantityElement.prop('checked')) {
+                quantityWrapper.hide();
             } else {
-                dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductQuantityEdit(dialogId);
+                quantityWrapper.show();
             }
-            $(container).append(dialogHtml);
-
-            var buttons = {};
-            buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
-            buttons['save'] = {
-                text: foodcoopshop.LocalizedJs.helper.save,
-                click: function() {
-                    if ($('#dialogQuantityProductId').val() == '') {
-                        alert('no product id set');
-                        return false;
-                    }
-
-                    $('#product-quantity-edit-form .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-
-                    var data = {
-                        productId: $('#dialogQuantityProductId').val(),
-                        quantity: $('#dialogQuantityQuantity').val(),
-                        alwaysAvailable: $('#dialogQuantityAlwaysAvailable:checked').length > 0 ? 1 : 0,
-                        defaultQuantityAfterSendingOrderLists: $('#dialogQuantityDefaultQuantityAfterSendingOrderLists').val() == '' ? null : $('#dialogQuantityDefaultQuantityAfterSendingOrderLists').val(),
-                    };
-
-                    if (foodcoopshop.Admin.isAdvancedStockManagementEnabled(row)) {
-                        data.quantityLimit = $('#dialogQuantityQuantityLimit').val();
-                        data.soldOutLimit = $('#dialogQuantitySoldOutLimit').val();
-                    }
-
-                    foodcoopshop.Helper.ajaxCall(
-                        '/admin/products/editQuantity/',
-                        data,
-                        {
-                            onOk: function (data) {
-                                document.location.reload();
-                            },
-                            onError: function (data) {
-                                var form = $('#product-quantity-edit-form form');
-                                form.find('.ajax-loader').hide();
-                                foodcoopshop.Helper.appendFlashMessageToDialog(form, data.msg);
-                            }
-                        }
-                    );
-
-                }
-            };
-
-            var dialogOptions = {
-                autoOpen: false,
-                height: 350,
-                width: 390,
-                modal: true,
-                close: function () {
-                    $('#dialogQuantityQuantity').val('');
-                    $('#dialogQuantityQuantityLimit').val('');
-                    $('#dialogQuantitySoldOutLimit').val('');
-                    $('#dialogQuantityAlwaysAvailable').val('');
-                    $('#dialogQuantityDefaultQuantityAfterSendingOrderLists').val('');
-                    $('#dialogQuantityProductId').val('');
-                },
-                buttons: buttons
-            };
-
-            if (foodcoopshop.Admin.isAdvancedStockManagementEnabled(row)) {
-                if (row.find('i.quantity-limit-for-dialog').length > 0) {
-                    $('#' + dialogId + ' #dialogQuantityQuantityLimit').val(row.find('i.quantity-limit-for-dialog').html().replace(/\./, ''));
-                } else {
-                    $('#' + dialogId + ' #dialogQuantityQuantityLimit').val(0);
-                }
-                if (row.find('i.sold-out-limit-for-dialog').length > 0) {
-                    if (row.find('i.sold-out-limit-for-dialog').html().match('fa-times')) {
-                        $('#' + dialogId + ' #dialogQuantitySoldOutLimit').val('');
-                    } else {
-                        $('#' + dialogId + ' #dialogQuantitySoldOutLimit').val(row.find('i.sold-out-limit-for-dialog').html().replace(/\./, ''));
-                    }
-                } else {
-                    $('#' + dialogId + ' #dialogQuantitySoldOutLimit').val(0);
-                }
-                dialogOptions.height = 390;
-            }
-
-            foodcoopshop.Admin.bindToggleQuantityQuantity(dialogId);
-
-            $('#' + dialogId + ' #dialogQuantityQuantity').val(row.find('span.quantity-for-dialog').html().replace(/\./, ''));
-            if (row.find('.amount').html().match('fa-infinity')) {
-                $('#' + dialogId + ' #dialogQuantityAlwaysAvailable').trigger('click');
-            }
-            $('#' + dialogId + ' #dialogQuantityDefaultQuantityAfterSendingOrderLists').val(row.find('span.default-quantity-after-sending-order-lists-for-dialog').html());
-            $('#' + dialogId + ' #dialogQuantityProductId').val(row.find('td.cell-id').html());
-            var label = foodcoopshop.Admin.getProductNameForDialog(row);
-            $('#' + dialogId + ' label[for="dialogQuantityQuantity"]').html(label);
-
-
-            var dialog = $('#' + dialogId).dialog(dialogOptions);
-            dialog.dialog('open');
-
         });
-
     },
 
     bindToggleQuantityQuantity : function(dialogId) {
@@ -1081,21 +533,6 @@ foodcoopshop.Admin = {
         datepickerInput.val($('.filter-container input[name="pickupDay[]"').val());
         foodcoopshop.Admin.addDatepickerInDialog(datepickerInput);
 
-    },
-
-    addDatepickerInDialog : function(inputField) {
-        inputField.datepicker({
-            beforeShow: function(input, inst) {
-                $('.ui-dialog').addClass('has-datepicker');
-            },
-            onClose: function(input, inst) {
-                $('.ui-dialog').removeClass('has-datepicker');
-                // if datepicker is closed without selecting a date, it's focused and another click does not trigger to open calendar again
-                $(this).off('click').on('click', function() {
-                    inputField.datepicker('show');
-                });
-            }
-        });
     },
 
     initChangeNewState: function () {
@@ -1273,38 +710,6 @@ foodcoopshop.Admin = {
         });
     },
 
-    initAddProduct: function (container) {
-
-        $(container).find('#add-product-button-wrapper a').on('click', function () {
-
-            var buttons = {};
-            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
-            buttons['yes'] = {
-                text: foodcoopshop.LocalizedJs.helper.yes,
-                click: function() {
-                    $('.ui-dialog .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-                    document.location.href = '/admin/products/add/' + $(container).find('#manufacturerid').val();
-                }
-            };
-
-            $('<div></div>').appendTo('body')
-                .html('<p>' + foodcoopshop.LocalizedJs.admin.ReallyAddNewProduct + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
-                .dialog({
-                    modal: true,
-                    title: foodcoopshop.LocalizedJs.admin.AddNewProduct,
-                    autoOpen: true,
-                    width: 400,
-                    resizable: false,
-                    buttons: buttons,
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
-                });
-        });
-
-    },
-
     initEmailToAllButton: function () {
         var clipboard = new ClipboardJS('.btn-clipboard');
         clipboard.on('success', function(e) {
@@ -1370,56 +775,6 @@ foodcoopshop.Admin = {
                 $(this).addClass('long');
             }
         });
-
-    },
-
-    editTaxFormAfterLoad : function (productId) {
-        var productName = $('#product-' + productId + ' span.name-for-dialog').html();
-        $('.featherlight-content label').html(foodcoopshop.LocalizedJs.admin.ChangeTaxRate + ': ' + productName);
-        var selectedTaxId = $('#tax-id-' + productId).val();
-        $('.featherlight-content #taxes-id-tax').val(selectedTaxId);
-    },
-
-    initProductTaxEditDialog: function (container) {
-
-        var button = $(container).find('.product-tax-edit-button');
-
-        $(button).on('click', function () {
-
-            var objectId = $(this).data('objectId');
-            var formHtml = $('.tax-dropdown-wrapper');
-
-            $.featherlight(
-                foodcoopshop.AppFeatherlight.initLightboxForForms(
-                    foodcoopshop.Admin.editTaxFormSave,
-                    foodcoopshop.Admin.editTaxFormAfterLoad,
-                    foodcoopshop.AppFeatherlight.closeAndReloadLightbox,
-                    formHtml,
-                    objectId
-                )
-            );
-        });
-
-    },
-
-    editTaxFormSave: function (productId) {
-
-        foodcoopshop.Helper.ajaxCall(
-            '/admin/products/editTax/',
-            {
-                productId: productId,
-                taxId: $('.featherlight-content #taxes-id-tax').val()
-            },
-            {
-                onOk: function (data) {
-                    document.location.reload();
-                },
-                onError: function (data) {
-                    document.location.reload();
-                    alert(data.msg);
-                }
-            }
-        );
 
     },
 
@@ -1727,6 +1082,21 @@ foodcoopshop.Admin = {
                         $(this).remove();
                     }
                 });
+        });
+    },
+
+    addDatepickerInDialog : function(inputField) {
+        inputField.datepicker({
+            beforeShow: function(input, inst) {
+                $('.ui-dialog').addClass('has-datepicker');
+            },
+            onClose: function(input, inst) {
+                $('.ui-dialog').removeClass('has-datepicker');
+                // if datepicker is closed without selecting a date, it's focused and another click does not trigger to open calendar again
+                $(this).off('click').on('click', function() {
+                    inputField.datepicker('show');
+                });
+            }
         });
     },
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-15 22:53+0200\n"
+"POT-Creation-Date: 2020-05-23 21:54+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -419,7 +419,7 @@ msgstr ""
 msgid "The_attribute_{0}_for_the_product_{1}_from_manufacturer_{2}_was_successfully_created."
 msgstr ""
 
-msgid "A_new_product_was_created_for_{0}."
+msgid "The_product_{0}_was_created_for_{1}."
 msgstr ""
 
 msgid "Order_possible_until"

@@ -36,7 +36,7 @@ echo '<div class="blog-wrapper"'.$style.'>';
 foreach ($blogPosts as $blogPost) {
     echo '<a class="blog-post-wrapper transistion" href="'.$this->Slug->getBlogPostDetail($blogPost->id_blog_post, $blogPost->title).'">';
     echo '<span class="img-wrapper">';
-        echo '<img class="blog-post-image" src="' . $this->Html->getBlogPostImageSrc($blogPost, 'home'). '" />';
+        echo '<img class="blog-post-image lazyload" data-src="' . $this->Html->getBlogPostImageSrc($blogPost, 'home'). '" />';
     echo '</span>';
     echo '<h3>'.$blogPost->title.'</h3>';
     echo '<span class="desc">'.$blogPost->short_description.'</span>';

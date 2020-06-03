@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-05-18 10:35+0200\n"
+"POT-Creation-Date: 2020-05-26 14:33+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -767,9 +767,6 @@ msgstr ""
 msgid "Add_new_product?"
 msgstr ""
 
-msgid "Really_add_new_product?"
-msgstr ""
-
 msgid "This_function_is_not_available_today."
 msgstr ""
 
@@ -938,6 +935,9 @@ msgstr ""
 msgid "zero_or_smaller_zero"
 msgstr ""
 
+msgid "Manufacturer"
+msgstr ""
+
 msgid "For_manufacturers_and_contact_persons._Can_be_changed_in_manufacturer_settings."
 msgstr ""
 
@@ -951,6 +951,9 @@ msgid "The_delivery_rhythm_of_stock_products_is_always_weekly."
 msgstr ""
 
 msgid "Delivery_rhythm"
+msgstr ""
+
+msgid "Change_delivery_rhythm"
 msgstr ""
 
 msgid "First_delivery_day"
@@ -1077,9 +1080,6 @@ msgid "attribute"
 msgstr ""
 
 msgid "attributes"
-msgstr ""
-
-msgid "Manufacturer"
 msgstr ""
 
 msgid "Terms_of_use"
@@ -1439,9 +1439,6 @@ msgstr ""
 msgid "Please_enter_your_street."
 msgstr ""
 
-msgid "Maximum_{0}_characters_please."
-msgstr ""
-
 msgid "Please_enter_your_city."
 msgstr ""
 
@@ -1634,6 +1631,9 @@ msgstr ""
 msgid "Please_select_a_customer."
 msgstr ""
 
+msgid "The_name_of_the_product_needs_to_be_at_least_{0}_characters_long."
+msgstr ""
+
 msgid "The_delivery_ryhthm_is_not_valid."
 msgstr ""
 
@@ -1661,13 +1661,7 @@ msgstr ""
 msgid "The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month."
 msgstr ""
 
-msgid "The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long."
-msgstr ""
-
 msgid "deleted"
-msgstr ""
-
-msgid "New_product_of"
 msgstr ""
 
 msgid "The_quantity_needs_to_be_a_number."

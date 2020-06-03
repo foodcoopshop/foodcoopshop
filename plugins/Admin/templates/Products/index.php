@@ -23,20 +23,21 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".Admin.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initProductChangeActiveState();" .
             Configure::read('app.jsNamespace') . ".Admin.initProductDepositEditDialog('#products');" .
-            Configure::read('app.jsNamespace') . ".Admin.initProductNameEditDialog('#products');" .
+            Configure::read('app.jsNamespace') . ".ModalProductNameEdit.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initProductQuantityList('#products');" .
-            Configure::read('app.jsNamespace') . ".Admin.initProductQuantityEditDialog('#products');" .
+            Configure::read('app.jsNamespace') . ".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" .
+            Configure::read('app.jsNamespace') . ".ModalProductQuantityEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductCategoriesEdit.init();" .
-            Configure::read('app.jsNamespace') . ".Admin.initProductTaxEditDialog('#products');" .
+            Configure::read('app.jsNamespace') . ".ModalProductTaxEdit.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initChangeNewState();" .
             Configure::read('app.jsNamespace') . ".Upload.initImageUpload('#products .add-image-button', foodcoopshop.Upload.saveProductImage);" .
             Configure::read('app.jsNamespace') . ".Admin.initAddProductAttribute('#products');" .
             Configure::read('app.jsNamespace') . ".Admin.initDeleteProductAttribute('#products');" .
             Configure::read('app.jsNamespace') . ".Admin.initSetDefaultAttribute('#products');" .
-            Configure::read('app.jsNamespace') . ".Admin.initProductPriceEditDialog('#products');" .
+            Configure::read('app.jsNamespace') . ".ModalProductPriceEdit.init();" .
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.add-image-button, .product-name-edit-button');".
             Configure::read('app.jsNamespace') . ".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId > 0 ? $manufacturerId : '0') . ");".
-            Configure::read('app.jsNamespace') . ".Admin.initProductDeliveryRhythmEditDialog('#products');
+            Configure::read('app.jsNamespace') . ".ModalProductDeliveryRhythmEdit.init();
         "
         ]);
 
@@ -95,7 +96,7 @@ use Cake\Core\Configure;
                 // only show button if no manufacturer filter is applied
                 if ($manufacturerId > 0) {
                     $this->element('addScript', [
-                        'script' => Configure::read('app.jsNamespace') . ".Admin.initAddProduct('body.products');"
+                        'script' => Configure::read('app.jsNamespace') . ".ModalProductAdd.init();"
                     ]);
                     echo '<div id="add-product-button-wrapper" class="add-button-wrapper">';
                     echo $this->Html->link('<i class="fas fa-plus-circle"></i> ' . __d('admin', 'Add_product'), 'javascript:void(0);', [
@@ -288,6 +289,7 @@ use Cake\Core\Configure;
         ]);
         echo '</div>';
         echo '<div class="tax-dropdown-wrapper">';
+        echo '<input type="hidden" class="product-id" />';
         echo $this->Form->control('Taxes.id_tax', [
             'type' => 'select',
             'label' => '',

@@ -160,23 +160,6 @@ form.fcs-form .bootstrap-select {
     right: 20px;
     top: 10px;
 }
-#product-name-edit-form input[type="text"],
-#product-price-edit-form input[type="text"],
-#product-deposit-edit-form input[type="text"],
-#product-name-edit-form textarea {
-    width: 300px;
-    margin-bottom: 10px;
-}
-#product-name-edit-form label.is-declaration-ok {
-  line-height: 24px;
-}
-#product-name-edit-form label.is-declaration-ok input {
-  float: left;
-  margin-right: 5px;
-}
-.label-description-short {
-  margin-top: 29px;
-}
 span.name-for-dialog,
 span.quantity-for-dialog,
 span.product-amount-for-dialog,
@@ -500,29 +483,9 @@ body.configurations.index td {
 form div.error-message {
     margin-left: 200px;
 }
-.featherlight-content h3 {
-    color: #009335;
-}
-.categories-checkboxes.featherlight-inner,
-.tax-dropdown-wrapper.featherlight-inner {
-    padding: 10px;
-}
-.categories-checkboxes.featherlight-inner {
-  max-width: 400px;
-}
-.tax-dropdown-wrapper.featherlight-inner label {
-    width: 100%;
-}
-.categories-checkboxes.featherlight-inner .input.select,
-.tax-dropdown-wrapper.featherlight-inner .input.select {
-    margin-bottom: 10px;
-}
 .ui-dialog-content label {
     font-weight: bold;
     margin-bottom: 0;
-}
-.featherlight-inner .checkbox label {
-    font-weight: normal;
 }
 .overlay-info {
     color: red;
@@ -532,12 +495,6 @@ form div.error-message {
 #labelUnity span {
     font-weight: normal;
     font-size: 12px;
-}
-.product-description-rename-info {
-    position: absolute;
-    right: 30px;
-    top: 70px;
-    width: 300px;
 }
 #add-payment-button-wrapper,
 #add-timebased-currency-payment-button-wrapper {
@@ -644,9 +601,6 @@ body.order_details.index .table-cell-wrapper.price {
 table.list td.amount > .has-separator:after {
     content: ' / ';
 }
-.ui-dialog {
-    z-index: 2147483648; /* 1 more than featherlight */
-}
 .cke_dialog_container {
     z-index: 2147483650 ! important; /* open upload from dialog - 2 more than .ui-dialog */
 }
@@ -695,29 +649,11 @@ body.payments .bottom-button-container {
 #customer-group-edit-form {
     margin-top: 10px;
 }
-#product-price-edit-form input[type="text"],
-#product-price-edit-form input[type="number"],
-#product-price-edit-form input[type="text"],
-#product-deposit-edit-form input[type="text"],
-#product-quantity-edit-form input[type="number"],
-#product-delivery-rhythm-edit-form input[type="text"],
-#product-delivery-rhythm-edit-form select {
+#product-deposit-edit-form input[type="text"] {
     margin-bottom: 5px;
     margin-right: 5px;
     text-align: right;
     width: 70px;
-}
-#product-price-edit-form input#dialogPriceUnitName {
-    text-align: left;
-}
-
-#product-price-edit-form label.radio {
-    margin-left: 20px;
-    line-height: 21px;
-    position: static;
-    margin-top: 5px ! important;
-    float: left;
-    margin-bottom: 5px;
 }
 #product-is-stock-product-edit-form label.checkbox {
     font-weight: normal;
@@ -725,76 +661,22 @@ body.payments .bottom-button-container {
     margin-bottom: 10px;
     width: 100%;
 }
-#product-price-edit-form label.radio input,
 #product-is-stock-product-edit-form label.checkbox input {
     position: static;
     float: left;
     width: 20px;
     height: 20px;
 }
-#product-price-edit-form label.radio input {
-    margin-right: 5px;
-}
 .ui-dialog.has-datepicker {
     z-index: 2147483646 ! important;
 }
-#product-is-stock-product-edit-form input,
-#product-delivery-rhythm-edit-form input,
-#product-quantity-edit-form input {
+#product-is-stock-product-edit-form input {
     float: right ! important;
 }
-#product-price-edit-form label.radio input:focus {
-    outline: none;
-}
-#product-price-edit-form .price-per-unit-wrapper,
-#product-price-edit-form .price-wrapper,
-#product-quantity-edit-form .field-wrapper,
-#product-delivery-rhythm-edit-form .field-wrapper,
 #order-detail-pickup-day-edit-form .field-wrapper {
     width: 100%;
     float: left;
     margin-top: 5px;
-}
-#product-quantity-edit-form .field-wrapper,
-#product-delivery-rhythm-edit-form .field-wrapper {
-    margin-top: 10px;
-}
-#product-quantity-edit-form .field-wrapper label,
-#product-delivery-rhythm-edit-form .field-wrapper label:not(.checkbox) {
-    font-weight: normal;
-    margin-bottom: 10px;
-    margin-top: 3px;
-    width: 250px;
-    float: left;
-    margin-right: 5px;
-}
-#product-quantity-edit-form .field-wrapper label.checkbox {
-    width: 100%;
-}
-#product-delivery-rhythm-edit-form .field-wrapper label:not(.checkbox) {
-    width: 110px;
-    clear: both;
-}
-#product-delivery-rhythm-edit-form .field-wrapper select,
-#product-delivery-rhythm-edit-form .field-wrapper input {
-    width: 285px;
-    float: right;
-    margin-right: 0;
-}
-#product-delivery-rhythm-edit-form .field-wrapper input[type="text"]:first-of-type {
-    margin-top: 3px;
-}
-#product-price-edit-form .deactivated {
-    opacity: 0.3;
-}
-#product-price-edit-form select {
-    background-color: #fff;
-    width: 80px;
-    margin-left: 5px;
-}
-#order-detail-product-price-edit-form span.small {
-    line-height: 16px;
-    margin-left: 5px;
 }
 .btn:not(.dropdown-toggle):not(.btn-close),
 .btn.dropdown-toggle {
@@ -806,14 +688,12 @@ form.fcs-form {
 }
 h2 {
     font-size: 20px;
-    letter-spacing: 2px;
     border-bottom: 1px solid #dfdfdf;
     padding-bottom: 5px;
 }
 h2 span {
     font-size: 12px;
     color: #333;
-    letter-spacing: normal;
 }
 h2.info {
     background-color: #719f41;
@@ -920,14 +800,6 @@ form.fcs-form .input.fcs-upload .after.small {
     float: right;
     line-height: 28px;
     margin-left: 5px;
-}
-.featherlight-content #PaymentText {
-    width: 100%;
-    height: 150px;
-    margin-bottom: 10px;
-}
-.featherlight-content .toggle-link {
-    margin-bottom: 10px;
 }
 div.date-field-wrapper {
     position: relative;

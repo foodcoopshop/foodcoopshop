@@ -16,7 +16,7 @@ use Cake\Core\Configure;
 
 $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();".
-    Configure::read('app.jsNamespace').".AppFeatherlight.initLightboxForImages('.blog_posts.detail .img-wrapper a');"
+    Configure::read('app.jsNamespace').".ModalImage.init('.blog_posts.detail .img-wrapper a');"
 ]);
 ?>
 
@@ -27,7 +27,7 @@ $this->element('addScript', ['script' =>
         $srcLargeImage = $this->Html->getBlogPostImageSrc($blogPost, 'single');
         $largeImageExists = preg_match('/(no-single-default|default-large)/', $srcLargeImage);
 if (!$largeImageExists) {
-    echo '<a href="'.$srcLargeImage.'">';
+    echo '<a href="javascript:void(0);" data-modal-title="' . h($blogPost->title) . '" data-modal-image="'.$srcLargeImage.'">';
     echo '<img class="blog-post-image" src="' . $this->Html->getBlogPostImageSrc($blogPost, 'single'). '" />';
     echo '</a>';
 }

@@ -14,6 +14,9 @@
 .modal {
     z-index: 100000;
 }
+.modal-title {
+    line-height: 1.3;
+}
 .modal-header {
     background-color: #719f41;
     color: #fff;
@@ -53,7 +56,9 @@
 #instant-order-add .modal-body {
     padding: 0;
 }
-#instant-order-add .modal-footer {
+#instant-order-add .modal-footer,
+#modal-image .modal-footer,
+#modal-text .modal-footer {
     display: none;
 }
 #instant-order-add .bootstrap-select {
@@ -83,14 +88,17 @@ body.iframe_start_page {
     margin-top: 0 ! important;
     border: none;
 }
-.modal .categories-checkboxes {
+.modal .categories-checkboxes,
+.modal .tax-dropdown-wrapper {
     display: block;
 }
-#customer-comment-edit-form .cke,
-#pickup-day-comment-edit-form .cke,
-#order-detail-delete .cke,
-#order-detail-product-price-edit-form .cke {
+.modal .cke {
     width: 100% ! important;
+}
+#modal-product-add .textarea-wrapper,
+#modal-product-name-edit .textarea-wrapper {
+    width: 100%;
+    float: left;
 }
 .modal.add-payment-form label {
     display: block;
@@ -122,4 +130,131 @@ body.iframe_start_page {
     color:red;
     float:left;
     margin-bottom:5px;
+}
+#modal-text .modal-dialog,
+#modal-image .modal-dialog {
+    max-width: 800px;
+}
+#modal-text h2 {
+    font-size: 20px;
+}
+#modal-text h3 {
+    font-size: 16px;
+}
+#modal-image .modal-dialog img {
+    width: 100%;
+}
+#modal-product-add input[type="text"],
+#modal-product-name-edit input[type="text"] {
+    width: 100%;
+    margin-bottom: 5px;
+}
+.modal hr {
+    float: left;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#modal-product-name-edit .declaration-wrapper .is-declaration-ok {
+  line-height: 20px;
+}
+#modal-product-name-edit .declaration-wrapper label.is-declaration-ok input {
+  float: left;
+  margin-right: 5px;
+}
+#modal-product-name-edit .declaration-wrapper a {
+    float: right;
+}
+.modal .small {
+    color: #969696;
+    line-height: 16px;
+}
+.modal .field-wrapper {
+    width: 100%;
+    float: left;
+}
+.modal .field-wrapper:first-of-type {
+    margin-top: 10px;
+}
+.modal .field-wrapper label:not(.checkbox) {
+    font-weight: normal;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    float: left;
+    margin-right: 5px;
+    width: 110px;
+    clear: both;
+}
+.modal .field-wrapper select,
+.modal .field-wrapper input[type="text"],
+.modal .field-wrapper input[type="number"] {
+    width: 285px;
+    float: right;
+    margin-right: 0;
+    margin-bottom: 5px;
+}
+.modal .field-wrapper input[type="text"]:first-of-type {
+    margin-top: 3px;
+}
+.modal .field-wrapper input.datepicker,
+.modal .field-wrapper input[type="number"] {
+    text-align: right;
+}
+.modal .field-wrapper label.checkbox {
+    width: 100%;
+}
+.modal .checkbox input[type="checkbox"] {
+    float: right;
+}
+#product-categories-edit-form input[type="checkbox"],
+#order-detail-product-quantity-edit-form input[type="checkbox"] {
+    float: left;
+}
+#modal-product-quantity-edit input[type="number"] {
+    width: 20%;
+}
+#modal-product-quantity-edit .field-wrapper label:not(.checkbox) {
+    width: 75%;
+}
+#modal-product-price-edit .deactivated {
+    opacity: 0.3;
+}
+#modal-product-price-edit select {
+    width: 60px;
+    margin-left: 5px;
+}
+#modal-product-price-edit input[type="number"] {
+    width: 70px;
+    margin-right: 5px;
+    margin-top: 5px;
+    text-align: right;
+}
+#modal-product-price-edit label.radio input:focus {
+    outline: none;
+}
+#modal-product-price-edit label.radio input {
+    position: static;
+    float: left;
+    width: 20px;
+    height: 20px;
+}
+#modal-product-price-edit label.radio input {
+    margin-right: 5px;
+}
+#modal-product-price-edit input#dialogPriceUnitName {
+    text-align: left;
+}
+#modal-product-price-edit label.radio {
+    line-height: 20px;
+    position: static;
+    margin-top: 5px ! important;
+    float: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+#modal-product-price-edit .price-per-unit-wrapper,
+#modal-product-price-edit .price-wrapper {
+    width: 100%;
+    float: left;
+    margin-top: 5px;
 }

@@ -63,20 +63,20 @@ foodcoopshop.Modal = {
             ];
 
         var html = '<div id="' + elementId.replace(/#/, '') + '" class="modal" tabindex="-1" role="dialog">';
-                html += '<div class="modal-dialog" role="document">';
-                    html += '<div class="modal-content">';
-                        html += '<div class="modal-header">';
-                            html += '<h5 class="modal-title">' + title + '</h5>';
-                            html += '<button type="button" class="close" data-dismiss="modal" aria-label="' + foodcoopshop.LocalizedJs.helper.Close + '">';
-                                html += '<span aria-hidden="true">&times;</span>';
-                            html += '</button>';
-                            html += '</div>';
-                        html += '<div class="modal-body">' + body + '</div>';
-                    html += '<div class="modal-footer">';
-                        html += buttons.join('');
-                    html += '</div>';
-                html += '</div>';
-            html += '</div>';
+        html += '<div class="modal-dialog" role="document">';
+        html += '<div class="modal-content">';
+        html += '<div class="modal-header">';
+        html += '<h5 class="modal-title">' + title + '</h5>';
+        html += '<button type="button" class="close" data-dismiss="modal" aria-label="' + foodcoopshop.LocalizedJs.helper.Close + '">';
+        html += '<span aria-hidden="true">&times;</span>';
+        html += '</button>';
+        html += '</div>';
+        html += '<div class="modal-body">' + body + '</div>';
+        html += '<div class="modal-footer">';
+        html += buttons.join('');
+        html += '</div>';
+        html += '</div>';
+        html += '</div>';
         html += '</div>';
 
         $('body').append(html);

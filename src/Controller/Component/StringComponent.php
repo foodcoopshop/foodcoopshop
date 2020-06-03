@@ -54,6 +54,11 @@ class StringComponent extends Component
         return preg_replace('/[<>;=#{}]/u', '', $string);
     }
 
+    public static function prepareWysiwygEditorHtml($string, $allowedTags): string
+    {
+        return strip_tags(htmlspecialchars_decode(trim($string)), $allowedTags);
+    }
+
     /**
      * @param string $string
      * @return string

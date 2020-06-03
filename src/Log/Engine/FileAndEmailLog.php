@@ -63,6 +63,8 @@ class FileAndEmailLog extends FileLog
             '{"phone_mobile":{"_empty":',
             '{"promise_to_pickup_products":{"equals":',
             '{"id_customer":{"_required":',
+            '{"id_customer":{"numeric":',
+            '{"name":{"_empty":"Bitte gib einen Namen ein."',
         ];
         $ignoredExceptionsRegex = '/('.join('|', $ignoredPatterns).')/';
         if (preg_match($ignoredExceptionsRegex, $message)) {

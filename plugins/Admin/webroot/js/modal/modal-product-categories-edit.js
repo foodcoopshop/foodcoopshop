@@ -20,7 +20,7 @@ foodcoopshop.ModalProductCategoriesEdit = {
         $('.product-categories-edit-button').on('click', function() {
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
-                '',
+                foodcoopshop.LocalizedJs.admin.ChangeCategories,
                 ''
             );
 
@@ -61,8 +61,8 @@ foodcoopshop.ModalProductCategoriesEdit = {
                     document.location.reload();
                 },
                 onError: function (data) {
-                    document.location.reload();
-                    alert(data.msg);
+                    foodcoopshop.Modal.appendFlashMessage(modalSelector, data.msg);
+                    foodcoopshop.Modal.resetButtons(modalSelector);
                 }
             }
         );
@@ -99,8 +99,8 @@ foodcoopshop.ModalProductCategoriesEdit = {
         $(modalSelector + ' .modal-body').append(formHtml);
 
         var productName = $('#product-' + productId + ' span.name-for-dialog').html();
-        $(modalSelector + ' .modal-title').html(
-            foodcoopshop.LocalizedJs.admin.ChangeCategories + ': ' + productName
+        $(modalSelector + ' .modal-body').prepend(
+            '<b>' + productName + '</b>'
         );
 
         $(modalSelector + ' .categories-checkboxes input[type="checkbox"]').on('click', function() {
@@ -116,7 +116,7 @@ foodcoopshop.ModalProductCategoriesEdit = {
         $(modalSelector + ' .categories-checkboxes label').each(function() {
             $(this).attr('for', $(this).attr('for') + '-' + productId);
             $(this).find('input').attr('id', $(this).find('input').attr('id') + '-' + productId);
-        })
+        });
 
         var selectedCategories = $('#selected-categories-' + productId).val().split(',');
         $(modalSelector + ' .categories-checkboxes input[type="checkbox"]').each(function () {

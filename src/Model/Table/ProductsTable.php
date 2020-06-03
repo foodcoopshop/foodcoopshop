@@ -27,6 +27,9 @@ use Cake\I18n\I18n;
 class ProductsTable extends AppTable
 {
 
+    public const ALLOWED_TAGS_DESCRIPTION_SHORT = '<p><b><strong><i><em><br>';
+    public const ALLOWED_TAGS_DESCRIPTION       = '<p><b><strong><i><em><br><img>';
+
     public function initialize(array $config): void
     {
         $this->setTable('product');
@@ -66,6 +69,13 @@ class ProductsTable extends AppTable
     {
         parent::__construct($config);
         $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
+    }
+
+    public function validationName(Validator $validator)
+    {
+        $validator->notEmptyString('name', __('Please_enter_a_name.'));
+        $validator->minLength('name', 2, __('The_name_of_the_product_needs_to_be_at_least_{0}_characters_long.', [2]));
+        return $validator;
     }
 
     public function validationDeliveryRhythm(Validator $validator)
@@ -633,14 +643,23 @@ class ProductsTable extends AppTable
                 throw new InvalidParameterException('change name is not allowed for product attributes');
             }
             $newName = StringComponent::removeSpecialChars(strip_tags(trim($name['name'])));
-            if (strlen($newName) < 2) {
-                throw new InvalidParameterException(__('The_name_of_the_product_{0}_needs_to_be_at_least_{1}_characters_long.', ['<b>'.$newName.'</b>', 2]));
+
+            $productEntity = $this->newEntity(
+                [
+                    'name' => $newName
+                ],
+                [
+                    'validate' => 'name'
+                ]
+            );
+            if ($productEntity->hasErrors()) {
+                throw new InvalidParameterException(join(' ', $this->getAllValidationErrors($productEntity)));
             } else {
                 $tmpProduct2Save = [
                     'id_product' => $ids['productId'],
                     'name' => StringComponent::removeSpecialChars(strip_tags(trim($name['name']))),
-                    'description' => strip_tags(htmlspecialchars_decode(trim($name['description'])), '<p><b><strong><i><em><br><img>'),
-                    'description_short' => strip_tags(htmlspecialchars_decode(trim($name['description_short'])), '<p><b><strong><i><em><br>'),
+                    'description_short' => StringComponent::prepareWysiwygEditorHtml($name['description_short'], self::ALLOWED_TAGS_DESCRIPTION_SHORT),
+                    'description' => StringComponent::prepareWysiwygEditorHtml($name['description'], self::ALLOWED_TAGS_DESCRIPTION),
                     'unity' => StringComponent::removeSpecialChars(strip_tags(trim($name['unity'])))
                 ];
                 if (isset($name['is_declaration_ok'])) {
@@ -1331,27 +1350,33 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    public function add($manufacturer)
+    public function add($manufacturer, $productName, $descriptionShort, $description)
     {
-
         $defaultQuantity = 0;
 
         $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
 
         // INSERT PRODUCT
-        $newProduct = $this->save(
-            $this->newEntity(
-                [
-                    'id_manufacturer' => $manufacturer->id_manufacturer,
-                    'id_tax' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id),
-                    'name' => StringComponent::removeSpecialChars(__('New_product_of') . ' ' . $manufacturer->name),
-                    'delivery_rhythm_send_order_list_weekday' => Configure::read('app.timeHelper')->getSendOrderListsWeekday(),
-                    'description' => '',
-                    'description_short' => '',
-                    'unity' => ''
-                ]
-            )
+        $productEntity = $this->newEntity(
+            [
+                'id_manufacturer' => $manufacturer->id_manufacturer,
+                'id_tax' => $this->Manufacturer->getOptionDefaultTaxId($manufacturer->default_tax_id),
+                'name' => StringComponent::removeSpecialChars(strip_tags(trim($productName))),
+                'delivery_rhythm_send_order_list_weekday' => Configure::read('app.timeHelper')->getSendOrderListsWeekday(),
+                'description_short' => StringComponent::prepareWysiwygEditorHtml($descriptionShort, self::ALLOWED_TAGS_DESCRIPTION_SHORT),
+                'description' => StringComponent::prepareWysiwygEditorHtml($description, self::ALLOWED_TAGS_DESCRIPTION),
+                'unity' => ''
+            ],
+            [
+                'validate' => 'name'
+            ]
         );
+
+        if ($productEntity->hasErrors()) {
+            return $productEntity;
+        }
+
+        $newProduct = $this->save($productEntity);
         $newProductId = $newProduct->id_product;
 
         // INSERT CATEGORY_PRODUCTS
@@ -1380,6 +1405,6 @@ class ProductsTable extends AppTable
             ]
         ])->first();
 
-        return $newProduct;
+        return $productEntity;
     }
 }
