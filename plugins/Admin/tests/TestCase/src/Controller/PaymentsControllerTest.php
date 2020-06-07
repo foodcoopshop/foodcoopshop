@@ -214,7 +214,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->httpClient->post(
             Configure::read('app.slugHelper')->getReport('product'),
             [
-                'upload' => fopen(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen.csv', 'r')
+                'upload' => fopen(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen-v2.csv', 'r')
             ]
 
         );
