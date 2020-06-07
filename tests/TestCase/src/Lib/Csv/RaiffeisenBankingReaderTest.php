@@ -18,20 +18,20 @@ use Cake\Core\Configure;
 
 class RaiffeisenBankingReaderTest extends AppCakeTestCase
 {
-    
+
     public function setUp(): void
     {
         parent::setUp();
     }
-    
+
     public function tearDown(): void
     {
         $this->assertLogFilesForErrors();
     }
-    
-    public function testRead()
+
+    public function testReadV1()
     {
-        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen.csv');
+        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen-v1.csv');
         $records = $reader->getPreparedRecords($reader->getRecords());
         foreach($records as $record) {
             $this->assertEquals(4, count($record));
@@ -41,20 +41,26 @@ class RaiffeisenBankingReaderTest extends AppCakeTestCase
         $this->assertEquals(100, $records[2]['amount']);
         $this->assertEquals(Configure::read('test.adminId'), $records[2]['original_id_customer']);
         $this->assertEquals(Configure::read('test.superadminId'), $records[1]['original_id_customer']);
-        
+
         $this->assertEquals(3, count($records));
     }
-    
-    public function testCheckStructureOk()
+
+    public function testCheckStructureV1Ok()
     {
-        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen.csv');
+        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen-v1.csv');
         $this->assertTrue($reader->checkStructure());
     }
-    
-    public function testCheckStructureNotOk()
+
+    public function testCheckStructureV1NotOk()
     {
-        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen-wrong-structure.csv');
+        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen-wrong-structure-v1.csv');
         $this->assertFalse($reader->checkStructure());
+    }
+
+    public function testCheckStructureV2Ok()
+    {
+        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen-v2.csv');
+        $this->assertTrue($reader->checkStructure());
     }
 
 }

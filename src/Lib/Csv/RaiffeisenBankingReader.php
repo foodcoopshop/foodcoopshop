@@ -25,15 +25,16 @@ class RaiffeisenBankingReader extends BankingReader {
 
     public function checkStructureForRecord($record): bool
     {
+
         $result = false;
 
-        if (count($record) == 7 &&
+        if (in_array(count($record), [6,7]) &&
             strlen($record[0]) == 10 &&
             strlen($record[2]) == 10 &&
             is_numeric(Configure::read('app.numberHelper')->getStringAsFloat($record[3])) &&
             $record[4] == 'EUR' &&
             strlen($record[5]) == 23 &&
-            empty($record[6])
+            (empty($record[6]) || !isset($record[6]))
             ) {
             $result = true;
         }
