@@ -6,5 +6,5 @@ parameters:
         - src
         - plugins/Admin/src
         - plugins/Network/src
-    autoload_files:
+    bootstrapFiles:
         - tests/bootstrap.php
