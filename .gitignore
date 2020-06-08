@@ -44,3 +44,4 @@ nbproject/*
 /webroot/node_modules
 /.buildpath
 /.phpunit.result.cache
+/vendor

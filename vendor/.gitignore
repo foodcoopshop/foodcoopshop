@@ -1,7 +1,0 @@
-*
-!.gitignore
-!/foodcoopshop
-!/foodcoopshop/*
-!/bin
-/bin/*
-!/bin/db_dump_*
