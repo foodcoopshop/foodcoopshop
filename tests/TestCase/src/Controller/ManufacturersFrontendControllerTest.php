@@ -15,10 +15,12 @@
  */
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\TestSuite\IntegrationTestTrait;
+use App\Test\TestCase\LoginTrait;
 
 class ManufacturersFrontendControllerTest extends AppCakeTestCase
 {
     use IntegrationTestTrait;
+    use LoginTrait;
 
     private $manufacturerId = 5;
     private $today;

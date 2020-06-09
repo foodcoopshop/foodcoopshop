@@ -2,6 +2,8 @@
 
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\ORM\TableRegistry;
+use Cake\TestSuite\IntegrationTestTrait;
+use App\Test\TestCase\LoginTrait;
 
 /**
  * PagesControllerTest
@@ -20,6 +22,8 @@ use Cake\ORM\TableRegistry;
  */
 class PagesControllerTest extends AppCakeTestCase
 {
+    use IntegrationTestTrait;
+    use LoginTrait;
 
     public $Page;
 
@@ -197,6 +201,18 @@ class PagesControllerTest extends AppCakeTestCase
         $pageId = 30;
         $this->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
         $this->assertResponseCode(404);
+    }
+
+    /**
+     * array $testPages
+     * @return void
+     */
+    protected function assertPagesFor404($testPages)
+    {
+        foreach ($testPages as $url) {
+            $this->get($url);
+            $this->assertResponseCode(404);
+        }
     }
 
     protected function changePage($pageId, $isPrivate = 0, $active = 1)

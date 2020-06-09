@@ -14,7 +14,6 @@ use Cake\ORM\TableRegistry;
 use Cake\View\View;
 use Network\View\Helper\NetworkHelper;
 use Cake\TestSuite\TestCase;
-use Cake\TestSuite\IntegrationTestTrait;
 
 require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 
@@ -32,9 +31,7 @@ require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
  * @link          https://www.foodcoopshop.com
  */
 abstract class AppCakeTestCase extends TestCase
-
 {
-    use IntegrationTestTrait;
 
     protected $dbConnection;
 
@@ -200,18 +197,6 @@ abstract class AppCakeTestCase extends TestCase
     protected function assertUrl($url, $expectedUrl, $msg = '')
     {
         $this->assertEquals($url, $expectedUrl, $msg);
-    }
-
-    /**
-     * array $testPages
-     * @return void
-     */
-    protected function assertPagesFor404($testPages)
-    {
-        foreach ($testPages as $url) {
-            $this->get($url);
-            $this->assertResponseCode(404);
-        }
     }
 
     /**
