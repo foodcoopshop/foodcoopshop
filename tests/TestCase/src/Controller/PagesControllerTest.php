@@ -110,7 +110,7 @@ class PagesControllerTest extends AppCakeTestCase
 
         $this->assertPagesForErrors($testUrls);
 
-        $this->httpClient->doFoodCoopShopLogout();
+        $this->get($this->Slug->getLogout());
     }
 
     /**
@@ -132,7 +132,7 @@ class PagesControllerTest extends AppCakeTestCase
 
         $this->assertPagesForErrors($testUrls);
 
-        $this->httpClient->doFoodCoopShopLogout();
+        $this->get($this->Slug->getLogout());
     }
 
 
@@ -158,48 +158,45 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getCategoryDetail(4234, 'not valid category name')
         ];
         $this->assertPagesFor404($testUrls);
-        $this->httpClient->doFoodCoopShopLogout();
+        $this->get($this->Slug->getLogout());
     }
 
     public function testPageDetailOnlinePublicLoggedOut()
     {
-        $this->httpClient->followOneRedirectForNextRequest();
-        $this->httpClient->get($this->Slug->getPageDetail(3, 'Demo Page'));
-        $this->assert200OkHeader();
+        $this->get($this->Slug->getPageDetail(3, 'Page'));
+        $this->assertResponseCode(200);
     }
 
     public function testPageDetailOfflinePublicLoggedOut()
     {
         $pageId = 3;
         $this->changePage($pageId, 0, 0);
-        $this->httpClient->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
-        $this->assert404NotFoundHeader();
+        $this->get($this->Slug->getPageDetail($pageId, 'Page'));
+        $this->assertResponseCode(404);
     }
 
     public function testPageDetailOnlinePrivateLoggedOut()
     {
         $pageId = 3;
         $this->changePage($pageId, 1);
-        $this->httpClient->followOneRedirectForNextRequest();
-        $this->httpClient->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
-        $this->assertAccessDeniedWithRedirectToLoginForm();
+        $this->get($this->Slug->getPageDetail($pageId, 'Page'));
+        $this->assertAccessDeniedFlashMessage();
     }
 
     public function testPageDetailOnlinePrivateLoggedIn()
     {
-        $this->loginAsCustomerWithHttpClient();
+        $this->loginAsCustomer();
         $pageId = 3;
         $this->changePage($pageId, 1);
-        $this->httpClient->followOneRedirectForNextRequest();
-        $this->httpClient->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
-        $this->assert200OkHeader();
+        $this->get($this->Slug->getPageDetail($pageId, 'Page'));
+        $this->assertResponseCode(200);
     }
 
     public function testPageDetailNonExistingLoggedOut()
     {
         $pageId = 30;
-        $this->httpClient->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
-        $this->assert404NotFoundHeader();
+        $this->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
+        $this->assertResponseCode(404);
     }
 
     protected function changePage($pageId, $isPrivate = 0, $active = 1)

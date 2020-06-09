@@ -14,6 +14,7 @@ use Cake\ORM\TableRegistry;
 use Cake\View\View;
 use Network\View\Helper\NetworkHelper;
 use Cake\TestSuite\TestCase;
+use Cake\TestSuite\IntegrationTestTrait;
 
 require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 
@@ -33,6 +34,7 @@ require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
 abstract class AppCakeTestCase extends TestCase
 
 {
+    use IntegrationTestTrait;
 
     protected $dbConnection;
 
@@ -207,8 +209,8 @@ abstract class AppCakeTestCase extends TestCase
     protected function assertPagesFor404($testPages)
     {
         foreach ($testPages as $url) {
-            $this->httpClient->get($url);
-            $this->assertEquals(404, $this->httpClient->getStatusCode());
+            $this->get($url);
+            $this->assertResponseCode(404);
         }
     }
 
@@ -450,18 +452,6 @@ abstract class AppCakeTestCase extends TestCase
     {
         $this->httpClient->loginEmail = Configure::read('test.loginEmailAdmin');
         $this->httpClient->doFoodCoopShopLogin();
-    }
-    protected function loginAsCustomer()
-    {
-        //login without httpClient
-        $this->session([
-            'Auth' => [
-                'User' => [
-                    'id_customer' => Configure::read('test.customerId'),
-                    'email' => Configure::read('test.loginEmailCustomer'),
-                ]
-            ]
-        ]);
     }
 
     //login with httpClient
