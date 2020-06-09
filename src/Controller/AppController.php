@@ -186,6 +186,7 @@ class AppController extends Controller
     protected function sendAjaxError($error)
     {
         if ($this->getRequest()->is('json')) {
+            $this->viewBuilder()->setLayout('ajax');
             $this->getResponse()->withStatus(500);
             $response = [
                 'status' => APP_OFF,

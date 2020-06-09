@@ -114,7 +114,7 @@ class PagesControllerTest extends AppCakeTestCase
 
         $this->assertPagesForErrors($testUrls);
 
-        $this->get($this->Slug->getLogout());
+        $this->logout();
     }
 
     /**
@@ -136,7 +136,7 @@ class PagesControllerTest extends AppCakeTestCase
 
         $this->assertPagesForErrors($testUrls);
 
-        $this->get($this->Slug->getLogout());
+        $this->logout();
     }
 
 
@@ -162,7 +162,7 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getCategoryDetail(4234, 'not valid category name')
         ];
         $this->assertPagesFor404($testUrls);
-        $this->get($this->Slug->getLogout());
+        $this->logout();
     }
 
     public function testPageDetailOnlinePublicLoggedOut()
