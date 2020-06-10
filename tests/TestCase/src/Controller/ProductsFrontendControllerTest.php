@@ -17,7 +17,7 @@ use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
-use App\Test\TestCase\LoginTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 
 class ProductsFrontendControllerTest extends AppCakeTestCase
 {
