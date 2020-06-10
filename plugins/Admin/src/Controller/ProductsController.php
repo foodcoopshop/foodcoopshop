@@ -907,7 +907,7 @@ class ProductsController extends AdminAppController
                 ]
             );
         } catch (InvalidParameterException $e) {
-            $this->sendAjaxError($e);            return;
+            $this->sendAjaxError($e);
         }
 
         $this->Flash->success(__d('admin', 'The_amount_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']));
