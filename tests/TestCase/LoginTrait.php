@@ -38,7 +38,7 @@ trait LoginTrait
         return $this->login(
             Configure::read('test.superadminId'),
             Configure::read('test.loginEmailSuperadmin'),
-            Configure::read('test.superAdminDefaultGroup')
+            CUSTOMER_GROUP_SUPERADMIN
         );
     }
 
@@ -47,7 +47,7 @@ trait LoginTrait
         return $this->login(
             Configure::read('test.adminId'),
             Configure::read('test.loginEmailAdmin'),
-            Configure::read('test.adminDefaultGroup')
+            CUSTOMER_GROUP_ADMIN
         );
     }
 
@@ -56,7 +56,7 @@ trait LoginTrait
         return $this->login(
             Configure::read('test.customerId'),
             Configure::read('test.loginEmailCustomer'),
-            Configure::read('test.customerDefaultGroup')
+            CUSTOMER_GROUP_MEMBER
         );
     }
 
@@ -65,7 +65,7 @@ trait LoginTrait
         return $this->login(
             Configure::read('test.meatManufacturerId'),
             Configure::read('test.loginEmailMeatManufacturer'),
-            Configure::read('test.manufacturerDefaultGroup')
+            CUSTOMER_GROUP_MEMBER
         );
     }
 
@@ -74,7 +74,7 @@ trait LoginTrait
         return $this->login(
             Configure::read('test.loginEmailVegetableManufacturer'),
             Configure::read('test.loginEmailVegetableManufacturer'),
-            Configure::read('test.manufacturerDefaultGroup')
+            CUSTOMER_GROUP_MEMBER
         );
     }
 

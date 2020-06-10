@@ -31,9 +31,4 @@ Configure::write('test.meatManufacturerId', 91);
 Configure::write('test.loginEmailMilkManufacturer', 'fcs-demo-milch-hersteller@mailinator.com');
 Configure::write('test.meatMilkManufacturerId', 90);
 
-Configure::write('test.superAdminDefaultGroup', 5);
-Configure::write('test.adminDefaultGroup', 4);
-Configure::write('test.manufacturerDefaultGroup', 4);
-Configure::write('test.customerDefaultGroup', 3);
-
 Configure::write('test.loginPassword', 'foodcoopshop');
