@@ -344,6 +344,7 @@ class CustomersController extends AdminAppController
             }
         } catch (Exception $e) {
             $this->sendAjaxError($e);
+            return;
         }
 
         $this->Customer->deleteAll(['id_customer' => $customerId]);

@@ -236,6 +236,7 @@ class PaymentsController extends AdminAppController
             }
         } catch (InvalidParameterException $e) {
             $this->sendAjaxError($e);
+            return;
         }
 
         $text = '';
