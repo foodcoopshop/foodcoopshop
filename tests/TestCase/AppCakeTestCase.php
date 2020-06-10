@@ -373,6 +373,8 @@ abstract class AppCakeTestCase extends TestCase
         return $this->httpClient->getJsonDecodedContent();
     }
 
+    // TODO as soon as this method is refactured to not use httpClient any more (#404)
+    // remember that it's already available in ProductsFrontendController - avoid cuplicate code!
     protected function changeProductDeliveryRhythm($productId, $deliveryRhythmType, $deliveryRhythmFirstDeliveryDay = '', $deliveryRhythmOrderPossibleUntil = '', $deliveryRhythmSendOrderListWeekday = '', $deliveryRhythmSendOrderListDay = '')
     {
         $this->httpClient->ajaxPost('/admin/products/editDeliveryRhythm', [
