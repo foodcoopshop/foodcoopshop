@@ -85,6 +85,8 @@ abstract class AppCakeTestCase extends TestCase
     {
         $this->getLogFile('debug')->write('');
         $this->getLogFile('error')->write('');
+        $this->getLogFile('cli-debug')->write('');
+        $this->getLogFile('cli-error')->write('');
     }
 
     public function tearDown(): void
@@ -97,6 +99,8 @@ abstract class AppCakeTestCase extends TestCase
     {
         $log = $this->getLogFile('debug')->read(true, 'r');
         $log .= $this->getLogFile('error')->read(true, 'r');
+        $log .= $this->getLogFile('cli-debug')->read(true, 'r');
+        $log .= $this->getLogFile('cli-error')->read(true, 'r');
         $this->assertDoesNotMatchRegularExpression('/(Warning|Notice)/', $log);
     }
 
