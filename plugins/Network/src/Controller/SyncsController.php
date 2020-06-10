@@ -74,7 +74,6 @@ class SyncsController extends AppController
             }
         } catch (InvalidParameterException $e) {
             $this->sendAjaxError($e);
-            return;
         }
 
         return $syncDomain;
