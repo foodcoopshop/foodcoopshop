@@ -3,6 +3,7 @@
 namespace App\Test\TestCase\Traits;
 
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -20,62 +21,49 @@ use Cake\Core\Configure;
 trait LoginTrait
 {
 
-    protected function login($userId, $email, $default_group)
+    protected function login($userId)
     {
+
+        $customerTable = TableRegistry::getTableLocator()->get('Customers');
+        $loggedUser = $customerTable->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $userId
+            ],
+            'contain' => [
+                'AddressCustomers',
+            ]
+        ])->first()->toArray();
+
         $this->session([
             'Auth' => [
-                'User' => [
-                    'id_customer' => $userId,
-                    'email' => $email,
-                    'id_default_group' => $default_group,
-                ]
+                'User' => $loggedUser
             ]
         ]);
     }
 
     protected function loginAsSuperadmin()
     {
-        return $this->login(
-            Configure::read('test.superadminId'),
-            Configure::read('test.loginEmailSuperadmin'),
-            CUSTOMER_GROUP_SUPERADMIN
-        );
+        return $this->login(Configure::read('test.superadminId'));
     }
 
     protected function loginAsAdmin()
     {
-        return $this->login(
-            Configure::read('test.adminId'),
-            Configure::read('test.loginEmailAdmin'),
-            CUSTOMER_GROUP_ADMIN
-        );
+        return $this->login(Configure::read('test.adminId'));
     }
 
     protected function loginAsCustomer()
     {
-        return $this->login(
-            Configure::read('test.customerId'),
-            Configure::read('test.loginEmailCustomer'),
-            CUSTOMER_GROUP_MEMBER
-        );
+        return $this->login(Configure::read('test.customerId'));
     }
 
     protected function loginAsMeatManufacturer()
     {
-        return $this->login(
-            Configure::read('test.meatManufacturerId'),
-            Configure::read('test.loginEmailMeatManufacturer'),
-            CUSTOMER_GROUP_MEMBER
-        );
+        return $this->login(Configure::read('test.meatManufacturerId'));
     }
 
     protected function loginAsVegetableManufacturer()
     {
-        return $this->login(
-            Configure::read('test.loginEmailVegetableManufacturer'),
-            Configure::read('test.loginEmailVegetableManufacturer'),
-            CUSTOMER_GROUP_MEMBER
-        );
+        return $this->login(Configure::read('test.loginEmailVegetableManufacturer'));
     }
 
     protected function logout()
