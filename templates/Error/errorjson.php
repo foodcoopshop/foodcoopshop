@@ -13,3 +13,4 @@
  * @link          https://www.foodcoopshop.com
  */
 echo json_encode($response);
+exit;
