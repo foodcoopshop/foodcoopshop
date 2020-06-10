@@ -1,13 +1,12 @@
 <?php
 
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
-use App\Test\TestCase\Traits\LoginTrait;
 
 /**
- * PagesControllerTest
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -24,6 +23,7 @@ class PagesControllerTest extends AppCakeTestCase
 {
     use IntegrationTestTrait;
     use LoginTrait;
+    use AssertPagesForErrorsTrait;
 
     public $Page;
 

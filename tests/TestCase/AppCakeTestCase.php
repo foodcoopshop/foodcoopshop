@@ -200,20 +200,6 @@ abstract class AppCakeTestCase extends TestCase
     }
 
     /**
-     * array $testPages
-     * asserts html for errors or missing elements that need to occur
-     * @return void
-     */
-    protected function assertPagesForErrors($testPages)
-    {
-        foreach ($testPages as $url) {
-            $this->httpClient->get($url);
-            $html = $this->httpClient->getContent();
-            $this->assertDoesNotMatchRegularExpression('/class="cake-stack-trace"|class="cake-error"|\bFatal error\b|exception \'[^\']+\' with message|\<strong\>(Error|Exception)\s*:\s*\<\/strong\>|Parse error|Not Found|\/app\/views\/errors\/|error in your SQL syntax|ERROR!|^\<\/body\>/', $html);
-        }
-    }
-
-    /**
      *
      * @param array $emailLog
      * @param string $expectedSubjectPattern

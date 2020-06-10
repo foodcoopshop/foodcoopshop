@@ -13,11 +13,16 @@
  * @link          https://www.foodcoopshop.com
  */
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use Cake\Core\Configure;
+use Cake\TestSuite\IntegrationTestTrait;
 use Cake\ORM\TableRegistry;
 
 class SelfServiceControllerTest extends AppCakeTestCase
 {
+
+    use AssertPagesForErrorsTrait;
+    use IntegrationTestTrait;
 
     public function testBarCodeLoginAsSuperadminIfNotEnabled()
     {
