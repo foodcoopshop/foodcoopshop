@@ -63,7 +63,7 @@ trait LoginTrait
 
     protected function loginAsVegetableManufacturer()
     {
-        return $this->login(Configure::read('test.loginEmailVegetableManufacturer'));
+        return $this->login(Configure::read('test.vegetableManufacturerId'));
     }
 
     protected function logout()
