@@ -1,11 +1,12 @@
 <?php
 
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 use Cake\ORM\TableRegistry;
+use Cake\TestSuite\IntegrationTestTrait;
 
 /**
- * PagesControllerTest
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -20,6 +21,9 @@ use Cake\ORM\TableRegistry;
  */
 class PagesControllerTest extends AppCakeTestCase
 {
+    use IntegrationTestTrait;
+    use LoginTrait;
+    use AssertPagesForErrorsTrait;
 
     public $Page;
 
@@ -110,7 +114,7 @@ class PagesControllerTest extends AppCakeTestCase
 
         $this->assertPagesForErrors($testUrls);
 
-        $this->httpClient->doFoodCoopShopLogout();
+        $this->logout();
     }
 
     /**
@@ -132,7 +136,7 @@ class PagesControllerTest extends AppCakeTestCase
 
         $this->assertPagesForErrors($testUrls);
 
-        $this->httpClient->doFoodCoopShopLogout();
+        $this->logout();
     }
 
 
@@ -158,48 +162,57 @@ class PagesControllerTest extends AppCakeTestCase
             $this->Slug->getCategoryDetail(4234, 'not valid category name')
         ];
         $this->assertPagesFor404($testUrls);
-        $this->httpClient->doFoodCoopShopLogout();
+        $this->logout();
     }
 
     public function testPageDetailOnlinePublicLoggedOut()
     {
-        $this->httpClient->followOneRedirectForNextRequest();
-        $this->httpClient->get($this->Slug->getPageDetail(3, 'Demo Page'));
-        $this->assert200OkHeader();
+        $this->get($this->Slug->getPageDetail(3, 'Page'));
+        $this->assertResponseCode(200);
     }
 
     public function testPageDetailOfflinePublicLoggedOut()
     {
         $pageId = 3;
         $this->changePage($pageId, 0, 0);
-        $this->httpClient->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
-        $this->assert404NotFoundHeader();
+        $this->get($this->Slug->getPageDetail($pageId, 'Page'));
+        $this->assertResponseCode(404);
     }
 
     public function testPageDetailOnlinePrivateLoggedOut()
     {
         $pageId = 3;
         $this->changePage($pageId, 1);
-        $this->httpClient->followOneRedirectForNextRequest();
-        $this->httpClient->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
-        $this->assertAccessDeniedWithRedirectToLoginForm();
+        $this->get($this->Slug->getPageDetail($pageId, 'Page'));
+        $this->assertAccessDeniedFlashMessage();
     }
 
     public function testPageDetailOnlinePrivateLoggedIn()
     {
-        $this->loginAsCustomerWithHttpClient();
+        $this->loginAsCustomer();
         $pageId = 3;
         $this->changePage($pageId, 1);
-        $this->httpClient->followOneRedirectForNextRequest();
-        $this->httpClient->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
-        $this->assert200OkHeader();
+        $this->get($this->Slug->getPageDetail($pageId, 'Page'));
+        $this->assertResponseCode(200);
     }
 
     public function testPageDetailNonExistingLoggedOut()
     {
         $pageId = 30;
-        $this->httpClient->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
-        $this->assert404NotFoundHeader();
+        $this->get($this->Slug->getPageDetail($pageId, 'Demo Page'));
+        $this->assertResponseCode(404);
+    }
+
+    /**
+     * array $testPages
+     * @return void
+     */
+    protected function assertPagesFor404($testPages)
+    {
+        foreach ($testPages as $url) {
+            $this->get($url);
+            $this->assertResponseCode(404);
+        }
     }
 
     protected function changePage($pageId, $isPrivate = 0, $active = 1)

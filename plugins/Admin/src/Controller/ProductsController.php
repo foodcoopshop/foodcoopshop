@@ -471,7 +471,6 @@ class ProductsController extends AdminAppController
         $descriptionShort = $this->getRequest()->getData('descriptionShort');
         $description = $this->getRequest()->getData('description');
 
-
         // if logged user is manufacturer, then get param manufacturer id is NOT used
         // but logged user id for security reasons
         if ($this->AppAuth->isManufacturer()) {

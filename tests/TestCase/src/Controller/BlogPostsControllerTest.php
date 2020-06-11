@@ -16,11 +16,13 @@
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 
 class BlogPostsControllerTest extends AppCakeTestCase
 {
 
     use IntegrationTestTrait;
+    use LoginTrait;
 
     public $BlogPost;
 

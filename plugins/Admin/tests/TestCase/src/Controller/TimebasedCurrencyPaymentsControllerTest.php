@@ -13,11 +13,16 @@
  * @link          https://www.foodcoopshop.com
  */
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\TestSuite\IntegrationTestTrait;
 
 class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
 {
+
+    use AssertPagesForErrorsTrait;
+    use IntegrationTestTrait;
 
     public $EmailLog;
 

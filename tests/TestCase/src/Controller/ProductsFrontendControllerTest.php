@@ -17,10 +17,12 @@ use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 
 class ProductsFrontendControllerTest extends AppCakeTestCase
 {
     use IntegrationTestTrait;
+    use LoginTrait;
 
     public $Product;
 
@@ -124,5 +126,24 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
         ];
         $statement = $this->dbConnection->prepare($query);
         $statement->execute($params);
+    }
+
+    protected function changeProductDeliveryRhythm($productId, $deliveryRhythmType, $deliveryRhythmFirstDeliveryDay = '', $deliveryRhythmOrderPossibleUntil = '', $deliveryRhythmSendOrderListWeekday = '', $deliveryRhythmSendOrderListDay = '')
+    {
+        $this->configRequest([
+            'headers' => [
+                'Accept' => 'application/json',
+            ]
+        ]);
+
+        $this->post('/admin/products/editDeliveryRhythm', [
+            'productIds' => [$productId],
+            'deliveryRhythmType' => $deliveryRhythmType,
+            'deliveryRhythmFirstDeliveryDay' => $deliveryRhythmFirstDeliveryDay,
+            'deliveryRhythmOrderPossibleUntil' => $deliveryRhythmOrderPossibleUntil,
+            'deliveryRhythmSendOrderListWeekday' => $deliveryRhythmSendOrderListWeekday,
+            'deliveryRhythmSendOrderListDay' => $deliveryRhythmSendOrderListDay,
+        ]);
+        return json_decode($this->_getBodyAsString());
     }
 }

@@ -31,7 +31,6 @@ require_once ROOT . DS . 'tests' . DS . 'config' . DS . 'test.config.php';
  * @link          https://www.foodcoopshop.com
  */
 abstract class AppCakeTestCase extends TestCase
-
 {
 
     protected $dbConnection;
@@ -86,6 +85,8 @@ abstract class AppCakeTestCase extends TestCase
     {
         $this->getLogFile('debug')->write('');
         $this->getLogFile('error')->write('');
+        $this->getLogFile('cli-debug')->write('');
+        $this->getLogFile('cli-error')->write('');
     }
 
     public function tearDown(): void
@@ -98,6 +99,8 @@ abstract class AppCakeTestCase extends TestCase
     {
         $log = $this->getLogFile('debug')->read(true, 'r');
         $log .= $this->getLogFile('error')->read(true, 'r');
+        $log .= $this->getLogFile('cli-debug')->read(true, 'r');
+        $log .= $this->getLogFile('cli-error')->read(true, 'r');
         $this->assertDoesNotMatchRegularExpression('/(Warning|Notice)/', $log);
     }
 
@@ -198,32 +201,6 @@ abstract class AppCakeTestCase extends TestCase
     protected function assertUrl($url, $expectedUrl, $msg = '')
     {
         $this->assertEquals($url, $expectedUrl, $msg);
-    }
-
-    /**
-     * array $testPages
-     * @return void
-     */
-    protected function assertPagesFor404($testPages)
-    {
-        foreach ($testPages as $url) {
-            $this->httpClient->get($url);
-            $this->assertEquals(404, $this->httpClient->getStatusCode());
-        }
-    }
-
-    /**
-     * array $testPages
-     * asserts html for errors or missing elements that need to occur
-     * @return void
-     */
-    protected function assertPagesForErrors($testPages)
-    {
-        foreach ($testPages as $url) {
-            $this->httpClient->get($url);
-            $html = $this->httpClient->getContent();
-            $this->assertDoesNotMatchRegularExpression('/class="cake-stack-trace"|class="cake-error"|\bFatal error\b|exception \'[^\']+\' with message|\<strong\>(Error|Exception)\s*:\s*\<\/strong\>|Parse error|Not Found|\/app\/views\/errors\/|error in your SQL syntax|ERROR!|^\<\/body\>/', $html);
-        }
     }
 
     /**
@@ -400,6 +377,8 @@ abstract class AppCakeTestCase extends TestCase
         return $this->httpClient->getJsonDecodedContent();
     }
 
+    // TODO as soon as this method is refactured to not use httpClient any more (#404)
+    // remember that it's already available in ProductsFrontendController - avoid cuplicate code!
     protected function changeProductDeliveryRhythm($productId, $deliveryRhythmType, $deliveryRhythmFirstDeliveryDay = '', $deliveryRhythmOrderPossibleUntil = '', $deliveryRhythmSendOrderListWeekday = '', $deliveryRhythmSendOrderListDay = '')
     {
         $this->httpClient->ajaxPost('/admin/products/editDeliveryRhythm', [
@@ -450,18 +429,6 @@ abstract class AppCakeTestCase extends TestCase
     {
         $this->httpClient->loginEmail = Configure::read('test.loginEmailAdmin');
         $this->httpClient->doFoodCoopShopLogin();
-    }
-    protected function loginAsCustomer()
-    {
-        //login without httpClient
-        $this->session([
-            'Auth' => [
-                'User' => [
-                    'id_customer' => Configure::read('test.customerId'),
-                    'email' => Configure::read('test.loginEmailCustomer'),
-                ]
-            ]
-        ]);
     }
 
     //login with httpClient

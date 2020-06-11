@@ -13,9 +13,14 @@
  * @link          https://www.foodcoopshop.com
  */
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
+use Cake\TestSuite\IntegrationTestTrait;
 
 class ConfigurationsControllerTest extends AppCakeTestCase
 {
+
+    use AssertPagesForErrorsTrait;
+    use IntegrationTestTrait;
 
     /**
      * needs to login as superadmin and logs user out automatically
