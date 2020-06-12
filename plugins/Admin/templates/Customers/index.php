@@ -46,7 +46,7 @@ echo '<tr class="sort">';
 echo $this->element('rowMarker/rowMarkerAll', [
     'enabled' => true
 ]);
-echo '<th class="hide">ID</th>';
+echo '<th>' . $this->Paginator->sort('Customers.id_customer', 'ID') . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Name')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.id_default_group', __d('admin', 'Group')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.email', __d('admin', 'Email')) . '</th>';
@@ -79,7 +79,7 @@ foreach ($customers as $customer) {
         'show' => true
     ]);
 
-    echo '<td class="hide">';
+    echo '<td style="text-align:right;">';
     echo $customer->id_customer;
     echo '</td>';
 
