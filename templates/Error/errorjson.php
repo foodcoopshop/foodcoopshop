@@ -12,5 +12,13 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+
+use App\Lib\Filter\OutputFilter;
+use Cake\Core\Configure;
+
+if (Configure::check('app.outputStringReplacements')) {
+    $response['msg'] = OutputFilter::replace($response['msg'], Configure::read('app.outputStringReplacements'));
+}
+
 echo json_encode($response);
 exit;

@@ -8,6 +8,7 @@ use Cake\Utility\Text;
 use Cake\View\View;
 use Cake\View\Helper\HtmlHelper;
 use App\Controller\Component\StringComponent;
+use App\Lib\Filter\OutputFilter;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -705,6 +706,9 @@ class MyHtmlHelper extends HtmlHelper
     {
         $url = Configure::read('app.folder_order_lists') . DS . date('Y', strtotime($deliveryDay)) . DS . date('m', strtotime($deliveryDay)) . DS;
         $url .= $deliveryDay . '_' . StringComponent::slugify($manufacturerName) . '_' . $manufacturerId . __('_Order_list_filename_') . $groupTypeLabel . '_' . StringComponent::slugify(Configure::read('appDb.FCS_APP_NAME')) . '-' . $currentDate . '.pdf';
+        if (Configure::check('app.outputStringReplacements')) {
+            $url = OutputFilter::replace($url, Configure::read('app.outputStringReplacements'));
+        }
         return $url;
     }
 

@@ -208,6 +208,40 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertEmailLogs($emailLogs[3], 'Neue Registrierung: John Doe', ['Es gab gerade eine neue Registrierung: <b>John Doe</b>'], ['fcs-demo-superadmin@mailinator.com']);
     }
 
+    /**
+     * add this to your custom_config before running the test (can't be changed on the fly!)
+     * Configure::write('app.outputStringReplacements', [
+     *     'Mitgliedskonto' => 'Kundenkonto'
+     * ]);
+     */
+    /*
+     public function testRegistrationWithOutputStringReplacements()
+     {
+         $data = [
+             'Customers' => [
+             'firstname' => 'John',
+             'lastname' => 'Doe',
+             'email_order_reminder' => 1,
+             'terms_of_use_accepted_date_checkbox' => 1,
+             'address_customer' => [
+                 'email' => 'new-foodcoopshop-member-1@mailinator.com',
+                 'address1' => 'ABCD',
+                 'address2' => 'teaef',
+                 'postcode' => '4444',
+                 'city' => 'City',
+                 'phone_mobile' => '+436989898',
+                 'phone' => ''
+             ]
+        ],
+            'antiSpam' => 4,
+        ];
+
+        $this->addCustomer($data);
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEmailLogs($emailLogs[0], '', ['Kundenkonto'], ['new-foodcoopshop-member-1@mailinator.com']);
+    }
+    */
+
     private function saveAndCheckValidCustomer($data, $email)
     {
 
