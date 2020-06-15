@@ -1310,7 +1310,7 @@ foodcoopshop.Admin = {
     initCopyPersonalTransactionCodeToClipboardButton: function (successMessage) {
         var clipboard = new ClipboardJS('.btn-clipboard');
         clipboard.on('success', function(e) {
-            alert(successMessage);
+            foodcoopshop.Helper.showSuccessMessage(successMessage);
         });
     },
 
