@@ -40,4 +40,30 @@ class OutputFilter
         return $text;
 
     }
+
+    public static function getMemberVsClientConfig($locale): array
+    {
+        if ($locale != 'de_DE') {
+            return [];
+        }
+        return [
+            'uf welches Mitglied' => '$1uf welchen Kunden',
+            'uf das Mitglied' => '$1uf den Kunden',
+            'uf ein anderes Mitglied' => '$1uf einen anderen Kunden',
+            'ein anderes Mitglied aus' => 'einen anderen Kunden aus',
+            'wähle das neue Mitglied' => 'wähle den neuen Kunden',
+            'das neue Mitglied' => 'der neue Kunde',
+            'ein neues Mitglied' => 'einen neuen Kunden',
+            's Mitgliedskontos' => 's Kundenkontos',
+            'Mitgliedskonto' => 'Kundenkonto',
+            'M\\\\u00f6chtest du das Mitglied' => 'Möchtest du den Kunden',
+            'Das Mitglied' => 'Der Kunde',
+            'das Mitglied' => 'der Kunde',
+            's Mitglied' => 'r Kunde',
+            'Mitglieder' => 'Kunden',
+            'Mitglieds' => 'Kunden',
+            'Mitglied' => 'Kunde',
+        ];
+    }
+
 }
