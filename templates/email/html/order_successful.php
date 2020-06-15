@@ -80,15 +80,18 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
             </b></td></tr>
         <?php } ?>
 
-        <tr><td><p>
-            <?php
-                echo __(
-                    'Pickup_place:_{0}', [
-                        str_replace('<br />', ', ', $this->MyHtml->getAddressFromAddressConfiguration())
-                    ]
-                );
-            ?>
-        </p></td></tr>
+
+        <?php if (Configure::read('app.showPickupPlaceInfo')) { ?>
+            <tr><td><p>
+                <?php
+                    echo __(
+                        'Pickup_place:_{0}', [
+                            str_replace('<br />', ', ', $this->MyHtml->getAddressFromAddressConfiguration())
+                        ]
+                    );
+                ?>
+            </p></td></tr>
+        <?php } ?>
 
         <?php if (Configure::read('app.generalTermsAndConditionsEnabled') && Configure::read('app.rightOfWithdrawalEnabled')) { ?>
             <tr><td style="font-size:12px;">
