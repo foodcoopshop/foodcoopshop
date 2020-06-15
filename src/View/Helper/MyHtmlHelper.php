@@ -8,7 +8,7 @@ use Cake\Utility\Text;
 use Cake\View\View;
 use Cake\View\Helper\HtmlHelper;
 use App\Controller\Component\StringComponent;
-use App\Lib\Filter\OutputFilter;
+use App\Lib\OutputFilter\OutputFilter;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop

@@ -14,7 +14,7 @@
  */
 namespace App\Lib\Pdf;
 
-use App\Lib\Filter\OutputFilter;
+use App\Lib\OutputFilter\OutputFilter;
 use Cake\Core\Configure;
 use TCPDF;
 

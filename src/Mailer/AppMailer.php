@@ -2,7 +2,7 @@
 
 namespace App\Mailer;
 
-use App\Lib\Filter\OutputFilter;
+use App\Lib\OutputFilter\OutputFilter;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Log\Log;

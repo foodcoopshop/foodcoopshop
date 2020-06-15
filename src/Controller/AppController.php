@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Lib\Filter\OutputFilter;
+use App\Lib\OutputFilter\OutputFilter;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;

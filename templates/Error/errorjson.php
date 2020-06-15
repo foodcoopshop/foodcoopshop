@@ -13,7 +13,7 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Lib\Filter\OutputFilter;
+use App\Lib\OutputFilter\OutputFilter;
 use Cake\Core\Configure;
 
 if (Configure::check('app.outputStringReplacements')) {
