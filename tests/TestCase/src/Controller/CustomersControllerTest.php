@@ -4,6 +4,7 @@ use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\ORM\TableRegistry;
+use Cake\TestSuite\IntegrationTestTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,6 +23,7 @@ class CustomersControllerTest extends AppCakeTestCase
 {
 
     public $EmailLog;
+    use IntegrationTestTrait;
 
     public function setUp(): void
     {
@@ -206,6 +208,15 @@ class CustomersControllerTest extends AppCakeTestCase
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEmailLogs($emailLogs[2], 'Willkommen', ['war erfolgreich!', 'Zum Bestellen kannst du dich hier einloggen:'], [$email]);
         $this->assertEmailLogs($emailLogs[3], 'Neue Registrierung: John Doe', ['Es gab gerade eine neue Registrierung: <b>John Doe</b>'], ['fcs-demo-superadmin@mailinator.com']);
+    }
+
+    public function testLoginPageWithOutputStringReplacements()
+    {
+        Configure::write('app.outputStringReplacements',
+           include(APP . 'Lib' . DS . 'OutputFilter' . DS . 'config' . DS . 'de_DE' . DS . 'memberClientConfig.php'),
+        );
+        $this->get($this->Slug->getLogin());
+        $this->assertResponseContains('Kundenkonto erstellen');
     }
 
     private function saveAndCheckValidCustomer($data, $email)

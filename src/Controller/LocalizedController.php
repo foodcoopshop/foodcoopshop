@@ -15,8 +15,10 @@
 
 namespace App\Controller;
 
+use App\Lib\OutputFilter\OutputFilter;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
+use Cake\Event\EventInterface;
 
 class LocalizedController extends Controller
 {
@@ -342,6 +344,15 @@ class LocalizedController extends Controller
         $this->response = $this->response->withType('application/javascript');
         $this->viewBuilder()->setLayout('ajax');
         $this->set('localizedJs', $this->getStrings());
+    }
+
+    public function afterFilter(EventInterface $event)
+    {
+        parent::afterFilter($event);
+        if (Configure::check('app.outputStringReplacements')) {
+            $newOutput = OutputFilter::replace($this->response->getBody(), Configure::read('app.outputStringReplacements'));
+            $this->response = $this->response->withStringBody($newOutput);
+        }
     }
 
 }

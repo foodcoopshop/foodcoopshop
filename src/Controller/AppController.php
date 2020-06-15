@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Lib\OutputFilter\OutputFilter;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
@@ -146,6 +147,15 @@ class AppController extends Controller
         }
 
         parent::beforeFilter($event);
+    }
+
+    public function afterFilter(EventInterface $event)
+    {
+        parent::afterFilter($event);
+        if (Configure::check('app.outputStringReplacements')) {
+            $newOutput = OutputFilter::replace($this->response->getBody(), Configure::read('app.outputStringReplacements'));
+            $this->response = $this->response->withStringBody($newOutput);
+        }
     }
 
     /**

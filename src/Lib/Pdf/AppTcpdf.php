@@ -14,6 +14,7 @@
  */
 namespace App\Lib\Pdf;
 
+use App\Lib\OutputFilter\OutputFilter;
 use Cake\Core\Configure;
 use TCPDF;
 
@@ -35,6 +36,11 @@ abstract class AppTcpdf extends TCPDF
 
     public function writeHTML($html, $ln=true, $fill=false, $reseth=false, $cell=false, $align='')
     {
+
+        if (Configure::check('app.outputStringReplacements')) {
+            $html = OutputFilter::replace($html, Configure::read('app.outputStringReplacements'));
+        }
+
         // in generate_order_confirmation.ctp::88 $this->MyNumber->formatAsCurrency leads to empty output
         // but in all other pdfs it works. this workaround helps
         $html = preg_replace('/€/', '&euro;', $html);
