@@ -30,7 +30,7 @@ foodcoopshop.ModalLogout = {
         );
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-            foodcoopshop.ModalLogout.getSuccessHandler(modalSelector);
+            foodcoopshop.ModalLogout.getSuccessHandler(redirect);
         });
 
         $('a.logout-button').on('click', function () {
