@@ -187,9 +187,12 @@ class FrontendController extends AppController
         }
         $this->set('categoriesForMenu', $categoriesForMenu);
 
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-        $manufacturersForMenu = $this->Manufacturer->getForMenu($this->AppAuth);
-        $this->set('manufacturersForMenu', $manufacturersForMenu);
+        $manufacturersForMenu = [];
+        if (Configure::read('app.showManufacturerListAndDetailPage')) {
+            $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+            $manufacturersForMenu = $this->Manufacturer->getForMenu($this->AppAuth);
+            $this->set('manufacturersForMenu', $manufacturersForMenu);
+        }
 
         $this->Page = TableRegistry::getTableLocator()->get('Pages');
         $conditions = [];

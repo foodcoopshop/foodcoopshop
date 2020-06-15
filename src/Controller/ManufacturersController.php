@@ -6,6 +6,7 @@ use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -30,6 +31,11 @@ class ManufacturersController extends FrontendController
     {
 
         parent::beforeFilter($event);
+
+        if (!Configure::read('app.showManufacturerListAndDetailPage')) {
+            throw new NotFoundException();
+        }
+
         switch ($this->getRequest()->getParam('action')) {
             case 'detail':
                 $manufacturerId = (int) $this->getRequest()->getParam('pass')[0];

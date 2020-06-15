@@ -27,7 +27,9 @@ $this->element('addScript', ['script' =>
 <ul>
 
     <li><?php echo __('The_order_confirmation_was_sent_by_email_to_{0}.', ['<b>'.$appAuth->getEmail().'</b>']); ?></li>
-    <li><?php echo __('Please_pick_up_the_ordered_products_at:_{0}', ['<b>'.str_replace('<br />', ', ', $this->Html->getAddressFromAddressConfiguration()).'</b>']); ?></li>
+    <?php if (Configure::read('app.showPickupPlaceInfo')) { ?>
+        <li><?php echo __('Please_pick_up_the_ordered_products_at:_{0}', ['<b>'.str_replace('<br />', ', ', $this->Html->getAddressFromAddressConfiguration()).'</b>']); ?></li>
+    <?php } ?>
 
     <?php if ($this->Html->paymentIsCashless()) { ?>
         <li><a class="btn btn-success" href="<?php echo $this->Slug->getMyCreditBalance(); ?>"><?php echo __('Increase_credit'); ?></a></li>

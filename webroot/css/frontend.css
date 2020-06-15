@@ -978,7 +978,10 @@ body.carts.detail .cart:not(#cart) p.deposit-sum-wrapper span.sum {
 body.carts.detail .cart:not(#cart) p.tax-sum-wrapper {
     margin-top: 20px;
 }
-body.carts.detail .cart:not(#cart) span.manufacturer-link {
+body.carts.detail .cart .manufacturer-link {
+    display: none;
+}
+body.carts.detail .cart.showManufacturerListAndDetailPage .manufacturer-link {
     display: inline;
     width: 150px;
 }

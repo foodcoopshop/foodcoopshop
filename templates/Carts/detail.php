@@ -28,7 +28,13 @@ if (!$appAuth->termsOfUseAccepted()) {
 
 <h1><?php echo $title_for_layout; ?></h1>
 
-<div class="cart">
+<?php
+$classes = ['cart'];
+if (Configure::read('app.showManufacturerListAndDetailPage')) {
+    $classes[] = 'showManufacturerListAndDetailPage';
+}
+?>
+<div class="<?php echo join(' ', $classes); ?>">
 
     <p class="no-products"><?php echo __('Your_cart_is_empty'); ?>.</p>
     <p class="products"></p>
@@ -68,7 +74,11 @@ if (!$appAuth->termsOfUseAccepted()) {
             </p>
         <?php } ?>
 
-        <?php echo $this->element('cart/pickupPlaceInfoText'); ?>
+        <?php
+            if (Configure::read('app.showPickupPlaceInfo')) {
+               echo $this->element('cart/pickupPlaceInfoText');
+            }
+        ?>
 
         <?php
             echo $this->element('cart/generalTermsAndConditionsCheckbox');

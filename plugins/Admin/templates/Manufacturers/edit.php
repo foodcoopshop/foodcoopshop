@@ -103,85 +103,87 @@ if ($appAuth->isManufacturer()) {
 
     echo '<div class="sc"></div>';
 
-    echo '<h2>' . __d('admin', 'Profile');
-    if ($this->request->getRequestTarget() != $this->Slug->getManufacturerAdd()) {
-        echo ' <span>' . $this->Html->link(__d('admin', 'To_manufacturer_profile'), $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name), [
-        'target' => '_blank'
-        ]) . '</span>';
-    }
-    echo '</h2>';
+    if (Configure::read('app.showManufacturerListAndDetailPage')) {
+        echo '<h2>' . __d('admin', 'Profile');
+        if ($this->request->getRequestTarget() != $this->Slug->getManufacturerAdd()) {
+            echo ' <span>' . $this->Html->link(__d('admin', 'To_manufacturer_profile'), $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name), [
+            'target' => '_blank'
+            ]) . '</span>';
+        }
+        echo '</h2>';
 
-    $imageSrc = $this->Html->getManufacturerImageSrc($idForUpload, 'large');
-    if (!empty($manufacturer->tmp_image) && $manufacturer->tmp_image != '') {
-        $imageSrc = str_replace('\\', '/', $manufacturer->tmp_image);
-    }
-    $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
-    echo '<div class="input">';
-    echo '<label>'.__d('admin', 'Logo');
-    if ($imageExists) {
-        echo '<br /><span class="small">'.__d('admin', 'Click_on_logo_to_change_it.').'</span>';
-    }
-    echo '</label>';
-    echo '<div style="float:right;">';
-    echo $this->Html->link(
-        $imageExists ? $this->Html->image($imageSrc) : '<i class="fas fa-plus-square"></i>',
-        'javascript:void(0);',
-        [
-            'class' => 'btn btn-outline-light add-image-button ' . ($imageExists ? 'uploaded' : ''),
-            'title' => __d('admin', 'Upload_new_logo_or_change_it'),
-            'data-object-id' => $idForUpload,
-            'escape' => false
-        ]
-    );
-    echo '</div>';
-    echo $this->Form->hidden('Manufacturers.tmp_image');
-    echo '</div>';
-
-    echo $this->Form->control('Manufacturers.delete_image', [
-    'label' => __d('admin', 'Delete_logo?'). '<span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
-    'type' => 'checkbox',
-    'escape' => false
-    ]);
-
-    if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
-        echo '<div style="margin-top:10px;"></div>';
-        echo $this->Form->control('Manufacturers.short_description', [
-        'class' => 'ckeditor',
-        'type' => 'textarea',
-        'label' => __d('admin', 'Short_description').'<br /><br /><span class="small">'.__d('admin', 'Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer.').'</span>',
-        'escape' => false
-        ]);
-    }
-
-    $label = __d('admin', 'Long_description');
-    if (!$isEditMode) {
-        echo '<div class="input text">';
-        echo '<label>' . $label . '</label>';
-        echo '<p>'.__d('admin', 'To_save_long_description_press_save_and_then_edit_manufacturer.').'</p>';
+        $imageSrc = $this->Html->getManufacturerImageSrc($idForUpload, 'large');
+        if (!empty($manufacturer->tmp_image) && $manufacturer->tmp_image != '') {
+            $imageSrc = str_replace('\\', '/', $manufacturer->tmp_image);
+        }
+        $imageExists = ! preg_match('/de-default-large_default/', $imageSrc);
+        echo '<div class="input">';
+        echo '<label>'.__d('admin', 'Logo');
+        if ($imageExists) {
+            echo '<br /><span class="small">'.__d('admin', 'Click_on_logo_to_change_it.').'</span>';
+        }
+        echo '</label>';
+        echo '<div style="float:right;">';
+        echo $this->Html->link(
+            $imageExists ? $this->Html->image($imageSrc) : '<i class="fas fa-plus-square"></i>',
+            'javascript:void(0);',
+            [
+                'class' => 'btn btn-outline-light add-image-button ' . ($imageExists ? 'uploaded' : ''),
+                'title' => __d('admin', 'Upload_new_logo_or_change_it'),
+                'data-object-id' => $idForUpload,
+                'escape' => false
+            ]
+        );
         echo '</div>';
-    } else {
-        echo $this->Form->control('Manufacturers.description', [
-        'class' => 'ckeditor',
-        'type' => 'textarea',
-            'label' => $label . '<br /><br /><span class="small">'.__d('admin', 'Will_be_shown_on_the_manufacturer_profile.').'<br /><br /><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_wysiwyg_editor')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
+        echo $this->Form->hidden('Manufacturers.tmp_image');
+        echo '</div>';
+
+        echo $this->Form->control('Manufacturers.delete_image', [
+        'label' => __d('admin', 'Delete_logo?'). '<span class="after small">'.__d('admin', 'Check_and_do_not_forget_to_click_save_button.').'</span>',
+        'type' => 'checkbox',
         'escape' => false
         ]);
-    }
-    echo '<div class="sc"></div>';
 
-    echo '<h2>'.__d('admin', 'Bank_account_data').' <span>'.__d('admin', 'are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds.').'</span></h2>';
-    echo $this->Form->control('Manufacturers.bank_name', [
-    'label' => __d('admin', 'Bank')
-    ]);
-    echo $this->Form->control('Manufacturers.iban', [
-    'label' => __d('admin', 'IBAN'),
-    'maxLength' => ''
-    ]);
-    echo $this->Form->control('Manufacturers.bic', [
-    'label' => __d('admin', 'BIC'),
-    'maxLength' => ''
-    ]);
-    echo '<div class="sc"></div>';
+        if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
+            echo '<div style="margin-top:10px;"></div>';
+            echo $this->Form->control('Manufacturers.short_description', [
+            'class' => 'ckeditor',
+            'type' => 'textarea',
+            'label' => __d('admin', 'Short_description').'<br /><br /><span class="small">'.__d('admin', 'Will_be_shown_on_manufacturers_overview_page_and_cannot_be_changed_by_the_manufacturer.').'</span>',
+            'escape' => false
+            ]);
+        }
+
+        $label = __d('admin', 'Long_description');
+        if (!$isEditMode) {
+            echo '<div class="input text">';
+            echo '<label>' . $label . '</label>';
+            echo '<p>'.__d('admin', 'To_save_long_description_press_save_and_then_edit_manufacturer.').'</p>';
+            echo '</div>';
+        } else {
+            echo $this->Form->control('Manufacturers.description', [
+            'class' => 'ckeditor',
+            'type' => 'textarea',
+                'label' => $label . '<br /><br /><span class="small">'.__d('admin', 'Will_be_shown_on_the_manufacturer_profile.').'<br /><br /><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_wysiwyg_editor')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_WYSIWYG_editor?').'</a></span>',
+            'escape' => false
+            ]);
+        }
+        echo '<div class="sc"></div>';
+
+        echo '<h2>'.__d('admin', 'Bank_account_data').' <span>'.__d('admin', 'are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds.').'</span></h2>';
+        echo $this->Form->control('Manufacturers.bank_name', [
+        'label' => __d('admin', 'Bank')
+        ]);
+        echo $this->Form->control('Manufacturers.iban', [
+        'label' => __d('admin', 'IBAN'),
+        'maxLength' => ''
+        ]);
+        echo $this->Form->control('Manufacturers.bic', [
+        'label' => __d('admin', 'BIC'),
+        'maxLength' => ''
+        ]);
+        echo '<div class="sc"></div>';
+    }
 
     echo '<h2>'.__d('admin', 'Company_data').' <span>'.__d('admin', 'for_your_imprint_and_your_invoices_the_imprint_is_on_your_manufacturer_profile_bottom_right.').'</span></h2>';
     echo $this->Form->control('Manufacturers.address_manufacturer.firstname', [
@@ -278,12 +280,14 @@ if ($appAuth->isManufacturer()) {
 <div class="sc"></div>
 
 <?php
-echo $this->element('imageUploadForm', [
-    'id' => $idForUpload,
-    'action' => '/admin/tools/doTmpImageUpload/',
-    'imageExists' => $imageExists,
-    'existingImageSrc' => $imageSrc
-]);
+if (Configure::read('app.showManufacturerListAndDetailPage')) {
+    echo $this->element('imageUploadForm', [
+        'id' => $idForUpload,
+        'action' => '/admin/tools/doTmpImageUpload/',
+        'imageExists' => $imageExists,
+        'existingImageSrc' => $imageSrc
+    ]);
+}
 echo $this->element('fileUploadForm', [
     'id' => $idForUpload,
     'action' => '/admin/tools/doTmpFileUpload/',

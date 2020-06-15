@@ -121,17 +121,19 @@ if ($product['description'] != '') {
         }
     }
 
-    echo '<br />'.__('Manufacturer').': ';
-    if ($showManufacturerDetailLink) {
-        echo $this->Html->link(
-            $product['ManufacturersName'],
-            $this->Slug->getManufacturerDetail($product['id_manufacturer'], $product['ManufacturersName']),
-            [
-                'escape' => false
-            ]
-        );
-    } else {
-        echo $product['ManufacturersName'];
+    if (Configure::read('app.showManufacturerListAndDetailPage')) {
+        echo '<br />'.__('Manufacturer').': ';
+        if ($showManufacturerDetailLink) {
+            echo $this->Html->link(
+                $product['ManufacturersName'],
+                $this->Slug->getManufacturerDetail($product['id_manufacturer'], $product['ManufacturersName']),
+                [
+                    'escape' => false
+                ]
+            );
+        } else {
+            echo $product['ManufacturersName'];
+        }
     }
     if ($appAuth->isSuperadmin() || ($appAuth->isManufacturer() && $product['id_manufacturer'] == $appAuth->getManufacturerId())) {
         echo $this->Html->link(

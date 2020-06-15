@@ -24,12 +24,12 @@ use Cake\Core\Configure;
         </tr>
         <tr>
             <td>
-            	<?php
-            	   echo __('thank_you_for_your_order_from_{0}.', [
-            	       $cart['Cart']->modified->i18nFormat(
-            	           Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'))
-            	   ]);
-            	?>
+                <?php
+                   echo __('thank_you_for_your_order_from_{0}.', [
+                       $cart['Cart']->modified->i18nFormat(
+                           Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'))
+                   ]);
+                ?>
             </td>
         </tr>
     </tbody>
@@ -47,23 +47,23 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
             'productAndDepositSum' => $cartProducts['CartDepositSum'] + $cartProducts['CartProductSum'],
             'selfServiceModeEnabled' => false
         ]);
-	echo $this->element('email/tableFoot');
+    echo $this->element('email/tableFoot');
 }
 ?>
 
 <?php echo $this->element('email/tableHead'); ?>
     <tbody>
-    
+
         <?php if ($appAuth->Cart->getProductsWithUnitCount() > 0) { ?>
             <tr><td style="padding-top:20px;">
-            	* <?php echo __('The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly.'); ?>
+                * <?php echo __('The_delivered_weight_will_eventually_be_adapted_which_means_the_price_can_change_slightly.'); ?>
             </td></tr>
         <?php } ?>
-        
+
         <tr><td style="padding-top:20px;">
             <?php echo __('Including_vat'); ?> <?php echo $this->MyNumber->formatAsCurrency($appAuth->Cart->getTaxSum()); ?>
         </td></tr>
-        
+
         <tr><td>
             <?php
                 if ($this->MyHtml->paymentIsCashless()) {
@@ -73,28 +73,30 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
                 }
             ?>
         </td></tr>
-        
+
         <?php if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('app.manufacturerComponensationInfoText') != '') { ?>
             <tr><td style="padding-top:20px;"><b>
                 <?php echo Configure::read('app.manufacturerComponensationInfoText'); ?>
             </b></td></tr>
         <?php } ?>
 
-        <tr><td><p>
-            <?php
-                echo __(
-                    'Pickup_place:_{0}', [
-                        str_replace('<br />', ', ', $this->MyHtml->getAddressFromAddressConfiguration())
-                    ]
-                );
-            ?>
-        </p></td></tr>
-        
+        <?php if (Configure::read('app.showPickupPlaceInfo')) { ?>
+            <tr><td><p>
+                <?php
+                    echo __(
+                        'Pickup_place:_{0}', [
+                            str_replace('<br />', ', ', $this->MyHtml->getAddressFromAddressConfiguration())
+                        ]
+                    );
+                ?>
+            </p></td></tr>
+        <?php } ?>
+
         <?php if (Configure::read('app.generalTermsAndConditionsEnabled') && Configure::read('app.rightOfWithdrawalEnabled')) { ?>
             <tr><td style="font-size:12px;">
-            	<?php echo __('You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation.'); ?>
+                <?php echo __('You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation.'); ?>
             </td></tr>
         <?php } ?>
-        
+
     </tbody>
 <?php echo $this->element('email/tableFoot'); ?>
