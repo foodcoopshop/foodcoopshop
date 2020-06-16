@@ -73,7 +73,7 @@ foodcoopshop.SyncProduct = {
         return foodcoopshop.Helper.formatFloatAsCurrency(priceInclPerUnit) + ' / ' + (unitAmount > 1 ? unitAmount + ' ' : '') + unitName + ' - ' + foodcoopshop.LocalizedJs.cart.approx + ' ' + unitQuantityInUnits + ' ' + unitName;
     },
 
-    getIsStockProductString(isStockProduct) {
+    getIsStockProductString: function(isStockProduct) {
         var result = '<i class="fas fa-times not-ok"></i>';
         if (isStockProduct) {
             result = '<i class="fas fa-check ok"></i>';
