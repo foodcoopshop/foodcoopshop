@@ -37,9 +37,6 @@
     body.customers.registration_successful #inner-content h2 {
         padding-bottom: 5px ! important;
     }
-    a.blog-post-wrapper {
-       width: 48% ! important;
-    }
     .blog-wrapper.swiper-container {
         position: relative;
     }

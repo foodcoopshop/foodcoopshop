@@ -232,22 +232,26 @@ foodcoopshop.Helper = {
         $(selector).append('<a href="javascript:void(0);" class="swiper-button-prev"></a>');
         $(selector).append('<a href="javascript:void(0);" class="swiper-button-next"></a>');
 
+        $(selector).append('<div class="swiper-wrapper"></div>');
+        $(selector).find('.swiper-wrapper').append($(selector).find('.blog-post-wrapper'));
+
         var mySwiper = new Swiper(selector, {
             loop: false,
             speed: 300,
-            centeredSlides: false,
+            centeredSlides: true,
             slidesPerView: 2,
-//            initialSlide: 0,
             spaceBetween: 5,
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev'
             },
-//            768: {
-//                initialSlide: 2,
-//                slidesPerView: 3,
-//                centeredSlides: true
-//            }
+            breakpoints: {
+                768: {
+                    speed: 1000,
+                    centeredSlides: false,
+                    slidesPerView: 1
+                }
+            }
         });
 
     },
