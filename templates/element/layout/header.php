@@ -48,6 +48,7 @@ if (! defined('PHPUNIT_COMPOSER_INSTALL') && ! defined('__PHPUNIT_PHAR__')) {
 
     <?php
         echo $this->element('renderCss', ['configs' => ['frontend']]);
+        echo $this->Html->css(['/node_modules/swiper/css/swiper.min']);
         if ($isMobile) {
             echo $this->Html->css(['/node_modules/slidebars/dist/slidebars', 'mobile-global', 'mobile-frontend', 'mobile-self-service', 'mobile-frontend-custom']);
         }

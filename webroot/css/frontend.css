@@ -1260,12 +1260,12 @@ body.blog_posts.detail p.neighbors a {
 }
 .swiper-button-prev:after,
 .swiper-button-next:after {
-    font-family: "Font Awesome 5 Free";
-    font-size: 3em;
+    font-family: "Font Awesome 5 Free" ! important;
+    font-size: 3em ! important;
 }
 .swiper-button-next:after {
-    content: "\f35a";
+    content: "\f35a" ! important;
 }
 .swiper-button-prev:after {
-    content: "\f359";
+    content: "\f359" ! important;
 }
