@@ -126,6 +126,12 @@ body.categories.detail div.description-wrapper {
     text-shadow: 2px 2px 5px #d6d4d4;
     color: #fff;
 }
+#slider .swiper-button-next {
+    right: 20px ! important;
+}
+#slider .swiper-button-prev {
+    left: 20px ! important;
+}
 .vertical.menu {
     float: left;
     margin-bottom: 10px;
@@ -1243,4 +1249,19 @@ body.blog_posts.detail p.neighbors {
 }
 body.blog_posts.detail p.neighbors a {
     width: 265px;
+}
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+    opacity: .8;
+}
+.swiper-button-prev:after,
+.swiper-button-next:after {
+    font-family: "Font Awesome 5 Free";
+    font-size: 3em;
+}
+.swiper-button-next:after {
+    content: "\f35a";
+}
+.swiper-button-prev:after {
+    content: "\f359";
 }
