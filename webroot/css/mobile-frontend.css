@@ -42,10 +42,12 @@
     }
     .blog-wrapper .swiper-button-prev {
         left: 7px ! important;
+        top: 130px ! important;
     }
     .blog-wrapper .swiper-button-next {
         right: 7px ! important;
         left: auto ! important;
+        top: 130px ! important;
     }
     body.blog_posts.detail .blog-wrapper,
     body.pages.home .blog-post-wrapper {

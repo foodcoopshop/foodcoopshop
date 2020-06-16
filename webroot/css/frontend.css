@@ -1191,9 +1191,11 @@ body.categories.detail .blog-wrapper {
 }
 .blog-wrapper .swiper-button-prev {
     left: 220px;
+    top: 335px;
 }
 .blog-wrapper .swiper-button-next {
     left: 865px;
+    top: 335px;
 }
 body.blog_posts.detail #inner-content .content h2,
 body.pages:not(.home) #inner-content h2,
