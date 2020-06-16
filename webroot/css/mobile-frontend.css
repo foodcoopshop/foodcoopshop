@@ -49,6 +49,10 @@
         left: auto ! important;
         top: 130px ! important;
     }
+    body.pages.home #slider .swiper-button-next,
+    body.pages.home #slider .swiper-button-prev {
+        display: none;
+    }
     body.blog_posts.detail .blog-wrapper,
     body.pages.home .blog-post-wrapper {
         width: 24% ! important;
