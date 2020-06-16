@@ -226,34 +226,30 @@ foodcoopshop.Helper = {
 
     initBlogPostCarousel: function () {
 
-        var container = $('.blog-wrapper');
-        container.addClass('owl-carousel');
+        var selector = '.blog-wrapper';
+        $(selector).addClass('swiper-container');
 
-        container.owlCarousel({
-            responsiveClass: true,
-            nav: true,
-            navText: [
-                '<i class="far fa-arrow-alt-circle-left fa-3x"></i>',
-                '<i class="far fa-arrow-alt-circle-right fa-3x"></i>'
-            ],
-            responsive: {
-                320: {
-                    items: 2,
-                    center: false
-                },
-                480: {
-                    items: 3,
-                    center: false
-                },
-                640: {
-                    items: 4,
-                    center: false
-                },
-                768: {
-                    items: 3
-                }
-            }
+        $(selector).append('<a href="javascript:void(0);" class="swiper-button-prev"></a>');
+        $(selector).append('<a href="javascript:void(0);" class="swiper-button-next"></a>');
+
+        var mySwiper = new Swiper(selector, {
+            loop: false,
+            speed: 300,
+            centeredSlides: false,
+            slidesPerView: 2,
+//            initialSlide: 0,
+            spaceBetween: 5,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev'
+            },
+//            768: {
+//                initialSlide: 2,
+//                slidesPerView: 3,
+//                centeredSlides: true
+//            }
         });
+
     },
 
     isMobile: function () {
