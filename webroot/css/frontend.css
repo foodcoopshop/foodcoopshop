@@ -1250,10 +1250,13 @@ body.blog_posts.detail p.neighbors {
 body.blog_posts.detail p.neighbors a {
     width: 265px;
 }
+.swiper-button-prev,
+.swiper-button-next {
+    width: 3em;
+}
 .swiper-button-prev:hover,
 .swiper-button-next:hover {
     opacity: .8;
-    width: 3em;
 }
 .swiper-button-prev:after,
 .swiper-button-next:after {
