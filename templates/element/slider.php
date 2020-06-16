@@ -20,8 +20,10 @@ if (!empty($sliders)) {
         Configure::read('app.jsNamespace').".Helper.initSlider();"
     ]);
     echo '<div id="slider">';
+        echo '<div class="swiper-wrapper">';
         foreach ($sliders as $slider) {
-            echo '<img class="item" width="908" src="'.$this->Html->getSliderImageSrc($slider->image).'" />';
+            echo '<img class="swiper-slide" width="908" src="'.$this->Html->getSliderImageSrc($slider->image).'" />';
         }
+        echo '</div>';
     echo '</div>';
 }

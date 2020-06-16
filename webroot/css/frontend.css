@@ -121,20 +121,10 @@ body.categories.detail div.description-wrapper {
     margin-bottom: -5px;
     z-index: 200;
 }
-#slider .owl-nav button {
-    position: absolute;
-    top: 45%;
-    transform: translateY(-45%);
-    color: #fff;
+#slider .swiper-button-next,
+#slider .swiper-button-prev {
     text-shadow: 2px 2px 5px #d6d4d4;
-    border-radius: 20px;
-    padding: 2px ! important;
-}
-#slider .owl-prev {
-    left: 20px;
-}
-#slider .owl-next {
-    right: 20px;
+    color: #fff;
 }
 .vertical.menu {
     float: left;

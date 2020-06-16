@@ -385,30 +385,28 @@ foodcoopshop.Helper = {
 
     initSlider: function () {
 
-        var container = $('#slider');
-        container.addClass('owl-carousel');
+        var selector = '#slider'
+        var hasOnlyOneSlide = $(selector).find('.swiper-slide').length == 1;
+        if (hasOnlyOneSlide) {
+            return;
+        }
 
-        var hasOnlyOneSlide = $('.owl-carousel .item').length == 1;
+        $(selector).append('<a href="javascript:void(0);" class="swiper-button-prev"></a>');
+        $(selector).append('<a href="javascript:void(0);" class="swiper-button-next"></a>');
 
-        container.owlCarousel({
-            autoplay: hasOnlyOneSlide ? false : true,
+        var mySwiper = new Swiper(selector, {
+            loop: true,
             autoHeight: true,
-            autoplayTimeout: 7000,
-            autoplayHoverPause: true,
-            smartSpeed: 1500,
-            loop: hasOnlyOneSlide ? false : true,
-            nav: false,
-            items: 1,
-            navText: [
-                '<i class="far fa-arrow-alt-circle-left fa-3x"></i>',
-                '<i class="far fa-arrow-alt-circle-right fa-3x"></i>'
-            ],
-            responsive : {
-                768: {
-                    nav: true
-                }
+            speed: 1500,
+            autoplay: {
+                delay: 7000
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev'
             }
         });
+
     },
 
     initScrolltopButton: function () {
