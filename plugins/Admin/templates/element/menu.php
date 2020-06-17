@@ -328,7 +328,7 @@ $menu[] = $this->Menu->getAuthMenuElement($appAuth);
 
 $footerHtml = '';
 if ($appAuth->isManufacturer() && !empty($appAuth->manufacturer->customer) && !empty($appAuth->manufacturer->customer->address_customer)) {
-    $footerHtml = '<b>'.__d('admin', 'Contact_person').'</b><br />' . $appAuth->manufacturer->customer->name . ', ' . $appAuth->manufacturer->customer->email. ', ' . $appAuth->manufacturer->customer->address_customer->phone_mobile;
+    $footerHtml = '<b>'.__d('admin', 'Contact_person').'</b><br />' . $appAuth->manufacturer->customer->name . ', ' . $appAuth->manufacturer->customer->email. ', <a href="tel:' . $appAuth->manufacturer->customer->address_customer->phone_mobile . '">' . $appAuth->manufacturer->customer->address_customer->phone_mobile . '</a>';
 }
 
 echo $this->Menu->render($menu, [

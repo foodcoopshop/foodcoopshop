@@ -281,10 +281,10 @@ class MyHtmlHelper extends HtmlHelper
         $details .= '<br />' . $customer->address_customer->postcode . ' ' . $customer->address_customer->city;
 
         if ($customer->address_customer->phone_mobile != '') {
-            $details .= '<br />Tel.: ' . $customer->address_customer->phone_mobile;
+            $details .= '<br />Tel.: <a href="tel:'.$customer->address_customer->phone_mobile.'">' . $customer->address_customer->phone_mobile . '</a>';
         }
         if ($customer->address_customer->phone != '') {
-            $details .= '<br />Tel.: ' . $customer->address_customer->phone;
+            $details .= '<br />Tel.: <a href="tel:'.$customer->address_customer->phone.'">' . $customer->address_customer->phone . '</a>';
         }
         return $details;
     }
@@ -310,10 +310,18 @@ class MyHtmlHelper extends HtmlHelper
             $imprintLines[] = @$manufacturer->address_manufacturer->postcode . ' ' . @$manufacturer->address_manufacturer->city;
         }
         if ($manufacturer->address_manufacturer->phone_mobile != '') {
-            $imprintLines[] = __('Mobile') . ': ' . $manufacturer->address_manufacturer->phone_mobile;
+            if ($outputType == 'html') {
+                $imprintLines[] = __('Mobile') . ': <a href="tel:' . $manufacturer->address_manufacturer->phone_mobile . '">' . $manufacturer->address_manufacturer->phone_mobile . '</a>';
+            } else {
+                $imprintLines[] = __('Mobile') . ': ' . $manufacturer->address_manufacturer->phone_mobile;
+            }
         }
         if ($manufacturer->address_manufacturer->phone != '') {
-            $imprintLines[] = __('Phone') . ': ' . $manufacturer->address_manufacturer->phone;
+            if ($outputType == 'html') {
+                $imprintLines[] = __('Mobile') . ': <a href="tel:' . $manufacturer->address_manufacturer->phone . '">' . $manufacturer->address_manufacturer->phone . '</a>';
+            } else {
+                $imprintLines[] = __('Mobile') . ': ' . $manufacturer->address_manufacturer->phone;
+            }
         }
         $imprintLines[] = __('Email') . ': ' . ($outputType == 'html' ? StringComponent::hideEmail($manufacturer->address_manufacturer->email) : $manufacturer->address_manufacturer->email);
 
