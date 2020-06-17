@@ -25,7 +25,7 @@
     body.customers.new_password_request form,
     #login-form .input,
     body.customers.new_password_request .input,
-    .blog-wrapper.owl-carousel,
+    .blog-wrapper.swiper-container,
     a.blog-post-wrapper img,
     #RegistrationForm .detail-form,
     #RegistrationForm .input.checkbox label,
@@ -37,14 +37,9 @@
     body.customers.registration_successful #inner-content h2 {
         padding-bottom: 5px ! important;
     }
-    a.blog-post-wrapper {
-       width: 95% ! important;
-    }
-    .blog-wrapper .owl-prev {
-        left: 0 ! important;
-    }
-    .blog-wrapper .owl-next {
-        right: 7px ! important;
+    body.pages.home #slider .swiper-button-next,
+    body.pages.home #slider .swiper-button-prev {
+        display: none;
     }
     body.blog_posts.detail .blog-wrapper,
     body.pages.home .blog-post-wrapper {

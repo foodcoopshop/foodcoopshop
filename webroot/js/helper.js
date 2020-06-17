@@ -226,34 +226,38 @@ foodcoopshop.Helper = {
 
     initBlogPostCarousel: function () {
 
-        var container = $('.blog-wrapper');
-        container.addClass('owl-carousel');
+        var selector = '.blog-wrapper';
+        $(selector).addClass('swiper-container');
 
-        container.owlCarousel({
-            responsiveClass: true,
-            nav: true,
-            navText: [
-                '<i class="far fa-arrow-alt-circle-left fa-3x"></i>',
-                '<i class="far fa-arrow-alt-circle-right fa-3x"></i>'
-            ],
-            responsive: {
-                320: {
-                    items: 2,
-                    center: false
-                },
-                480: {
-                    items: 3,
-                    center: false
-                },
-                640: {
-                    items: 4,
-                    center: false
-                },
+        var slides = $(selector).find('.blog-post-wrapper');
+        if (slides.length > 4) {
+            $(selector).append('<a href="javascript:void(0);" class="swiper-button-prev"></a>');
+            $(selector).append('<a href="javascript:void(0);" class="swiper-button-next"></a>');
+        }
+        $(selector).append('<div class="swiper-wrapper"></div>');
+        $(selector).find('.swiper-wrapper').append(slides);
+
+        var mySwiper = new Swiper(selector, {
+            loop: false,
+            speed: 300,
+            centeredSlides: true,
+            slidesPerView: 2,
+            spaceBetween: 5,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev'
+            },
+            breakpoints: {
                 768: {
-                    items: 3
+                    speed: 1000,
+                    centeredSlides: true,
+                    slidesPerView: 1,
+                    initialSlide: 0,
+                    spaceBetween: 7
                 }
             }
         });
+
     },
 
     isMobile: function () {
@@ -385,30 +389,28 @@ foodcoopshop.Helper = {
 
     initSlider: function () {
 
-        var container = $('#slider');
-        container.addClass('owl-carousel');
+        var selector = '#slider'
+        var hasOnlyOneSlide = $(selector).find('.swiper-slide').length == 1;
+        if (hasOnlyOneSlide) {
+            return;
+        }
 
-        var hasOnlyOneSlide = $('.owl-carousel .item').length == 1;
+        $(selector).append('<a href="javascript:void(0);" class="swiper-button-prev"></a>');
+        $(selector).append('<a href="javascript:void(0);" class="swiper-button-next"></a>');
 
-        container.owlCarousel({
-            autoplay: hasOnlyOneSlide ? false : true,
+        var mySwiper = new Swiper(selector, {
+            loop: true,
             autoHeight: true,
-            autoplayTimeout: 7000,
-            autoplayHoverPause: true,
-            smartSpeed: 1500,
-            loop: hasOnlyOneSlide ? false : true,
-            nav: false,
-            items: 1,
-            navText: [
-                '<i class="far fa-arrow-alt-circle-left fa-3x"></i>',
-                '<i class="far fa-arrow-alt-circle-right fa-3x"></i>'
-            ],
-            responsive : {
-                768: {
-                    nav: true
-                }
+            speed: 1500,
+            autoplay: {
+                delay: 7000
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev'
             }
         });
+
     },
 
     initScrolltopButton: function () {

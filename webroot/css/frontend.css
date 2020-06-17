@@ -121,20 +121,16 @@ body.categories.detail div.description-wrapper {
     margin-bottom: -5px;
     z-index: 200;
 }
-#slider .owl-nav button {
-    position: absolute;
-    top: 45%;
-    transform: translateY(-45%);
-    color: #fff;
+#slider .swiper-button-next,
+#slider .swiper-button-prev {
     text-shadow: 2px 2px 5px #d6d4d4;
-    border-radius: 20px;
-    padding: 2px ! important;
+    color: #fff;
 }
-#slider .owl-prev {
-    left: 20px;
+#slider .swiper-button-next {
+    right: 20px ! important;
 }
-#slider .owl-next {
-    right: 20px;
+#slider .swiper-button-prev {
+    left: 20px ! important;
 }
 .vertical.menu {
     float: left;
@@ -1148,25 +1144,6 @@ a.blog-post-wrapper:hover h3 {
 a.blog-post-wrapper:hover .img-wrapper {
     border-color: #fff;
 }
-.blog-wrapper .owl-nav button {
-    color: #719f41 ! important;
-    position: absolute;
-    top: 100px;
-    outline: none ! important;
-}
-.owl-nav button:hover {
-    opacity: 0.8;
-}
-.blog-wrapper .owl-prev.disabled i,
-.blog-wrapper .owl-next.disabled i {
-    opacity: 0.3;
-}
-.blog-wrapper .owl-prev {
-    left: -65px;
-}
-.blog-wrapper .owl-next {
-    right: -65px;
-}
 body.blog_posts.detail #inner-content > .img-wrapper img {
     text-align: center;
     float: left;
@@ -1205,11 +1182,6 @@ body.blog_posts.detail .blog-wrapper {
 }
 body.categories.detail .blog-wrapper {
     height: 270px;
-}
-.blog-wrapper.owl-carousel {
-    width: 540px;
-    margin-left: auto;
-    margin-right: auto;
 }
 body.blog_posts.detail #inner-content .content h2,
 body.pages:not(.home) #inner-content h2,
@@ -1265,4 +1237,23 @@ body.blog_posts.detail p.neighbors {
 }
 body.blog_posts.detail p.neighbors a {
     width: 265px;
+}
+.swiper-button-prev,
+.swiper-button-next {
+    width: 3em;
+}
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+    opacity: .8;
+}
+.swiper-button-prev:after,
+.swiper-button-next:after {
+    font-family: "Font Awesome 5 Free" ! important;
+    font-size: 3em ! important;
+}
+.swiper-button-next:after {
+    content: "\f35a" ! important;
+}
+.swiper-button-prev:after {
+    content: "\f359" ! important;
 }
