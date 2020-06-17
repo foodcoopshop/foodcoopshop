@@ -718,7 +718,7 @@ foodcoopshop.Admin = {
             if (emailAddressesCount == 1) {
                 response = foodcoopshop.LocalizedJs.admin.OneEmailAddressSuccessfullyCopiedToClipboard;
             }
-            alert(response);
+            foodcoopshop.Helper.showSuccessMessage(response);
         });
     },
 
