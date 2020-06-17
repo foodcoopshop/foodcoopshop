@@ -248,8 +248,10 @@ foodcoopshop.Helper = {
             breakpoints: {
                 768: {
                     speed: 1000,
-                    centeredSlides: false,
-                    slidesPerView: 1
+                    centeredSlides: true,
+                    slidesPerView: 1,
+                    initialSlide: 0,
+                    spaceBetween: 7
                 }
             }
         });

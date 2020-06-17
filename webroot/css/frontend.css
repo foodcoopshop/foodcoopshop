@@ -1183,20 +1183,6 @@ body.blog_posts.detail .blog-wrapper {
 body.categories.detail .blog-wrapper {
     height: 270px;
 }
-.blog-wrapper.swiper-container {
-    width: 532px;
-    margin-left: auto;
-    margin-right: auto;
-    position: static;
-}
-.blog-wrapper .swiper-button-prev {
-    left: 220px;
-    top: 335px;
-}
-.blog-wrapper .swiper-button-next {
-    left: 865px;
-    top: 335px;
-}
 body.blog_posts.detail #inner-content .content h2,
 body.pages:not(.home) #inner-content h2,
 body.manufacturers.detail .manufacturer-infos h2,

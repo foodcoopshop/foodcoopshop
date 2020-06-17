@@ -37,18 +37,6 @@
     body.customers.registration_successful #inner-content h2 {
         padding-bottom: 5px ! important;
     }
-    .blog-wrapper.swiper-container {
-        position: relative;
-    }
-    .blog-wrapper .swiper-button-prev {
-        left: 7px ! important;
-        top: 130px ! important;
-    }
-    .blog-wrapper .swiper-button-next {
-        right: 7px ! important;
-        left: auto ! important;
-        top: 130px ! important;
-    }
     body.pages.home #slider .swiper-button-next,
     body.pages.home #slider .swiper-button-prev {
         display: none;
