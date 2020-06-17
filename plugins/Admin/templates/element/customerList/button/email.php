@@ -15,8 +15,8 @@
 use Cake\Core\Configure;
 
 $this->element('addScript', [
-    'script' => Configure::read('app.jsNamespace').".Admin.initEmailToAllButton();"
+    'script' => Configure::read('app.jsNamespace').".Admin.initCopySelectedCustomerEmailsToClipboard();"
 ]);
-echo '<button data-clipboard-text="'.join(',', $emailAddresses).'" class="btn-clipboard btn btn-outline-light"><i class="far fa-envelope"></i> '.__d('admin', 'Copy_all_email_addresses').'</button>';
+echo '<button class="btn-clipboard btn btn-outline-light"><i class="far fa-envelope"></i> '.__d('admin', 'Copy_email_addresses_of_selected_customers').'</button>';
 
 ?>

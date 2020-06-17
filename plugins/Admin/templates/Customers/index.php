@@ -72,7 +72,7 @@ $sumTimebasedCurrency = null;
 foreach ($customers as $customer) {
     $i ++;
 
-    echo '<tr class="data">';
+    echo '<tr class="data" data-customer-id="'.$customer->id_customer.'">';
 
     echo $this->element('rowMarker/rowMarker', [
         'show' => true
@@ -292,7 +292,7 @@ echo '</table>';
 echo '<div class="sc"></div>';
 
 echo '<div class="bottom-button-container">';
-    echo $this->element('customerList/button/email', ['emailAddresses' => $emailAddresses]);
+    echo $this->element('customerList/button/email');
     echo $this->element('customerList/button/generateMemberCardsOfSelectedCustomers');
 echo '</div>';
 echo '<div class="sc"></div>';

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-05-23 21:54+0200\n"
-"PO-Revision-Date: 2020-05-29 22:49+0200\n"
+"POT-Creation-Date: 2020-06-17 12:05+0200\n"
+"PO-Revision-Date: 2020-06-17 12:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1634,6 +1634,9 @@ msgstr "Instant order for today"
 
 msgid "chose_member..."
 msgstr "chose member..."
+
+msgid "Copy_email_addresses_of_selected_customers"
+msgstr "Copy e-mail adresses of selected customers"
 
 msgid "Generate_member_cards"
 msgstr "Generate member cards"

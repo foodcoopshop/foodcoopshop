@@ -710,6 +710,42 @@ foodcoopshop.Admin = {
         });
     },
 
+    initCopySelectedCustomerEmailsToClipboard: function() {
+
+        var btnSelector = '.btn-clipboard';
+        var button = $(btnSelector);
+
+        foodcoopshop.Helper.disableButton(button);
+        $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
+            foodcoopshop.Admin.updateObjectSelectionActionButton(button);
+        });
+
+        var clipboard = new ClipboardJS(
+            btnSelector,
+            {
+                text: function(trigger) {
+                    var customerIds = foodcoopshop.Admin.getSelectedCustomerIds();
+                    var emails = [];
+                    for(var i=0; i < customerIds.length; i++) {
+                        var email = $('tr.data[data-customer-id="'+customerIds[i]+'"]').find('span.email').html();
+                        emails.push(email);
+                    }
+                    return emails.join(',');
+                }
+            }
+        );
+
+        clipboard.on('success', function(e) {
+            var emailAddressesCount = e.text.split(',').length;
+            var response = foodcoopshop.LocalizedJs.admin.EmailAddressesSuccessfullyCopiedToClipboard.replaceI18n(0, emailAddressesCount);
+            if (emailAddressesCount == 1) {
+                response = foodcoopshop.LocalizedJs.admin.OneEmailAddressSuccessfullyCopiedToClipboard;
+            }
+            foodcoopshop.Helper.showSuccessMessage(response);
+        });
+
+    },
+
     initEmailToAllButton: function () {
         var clipboard = new ClipboardJS('.btn-clipboard');
         clipboard.on('success', function(e) {

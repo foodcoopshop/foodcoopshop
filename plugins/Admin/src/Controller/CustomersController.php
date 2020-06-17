@@ -735,12 +735,6 @@ class CustomersController extends AdminAppController
             ]
         ])->toArray();
 
-        // extract all email addresses for button
-        $emailAddresses = [];
-        $emailAddresses = $query->all()->extract('email')->toArray();
-        $emailAddresses = array_unique($emailAddresses);
-        $this->set('emailAddresses', $emailAddresses);
-
         $i = 0;
         $this->Payment = TableRegistry::getTableLocator()->get('Payments');
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
