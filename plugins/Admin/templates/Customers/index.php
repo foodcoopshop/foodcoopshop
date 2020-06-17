@@ -284,7 +284,7 @@ if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
 if (Configure::read('app.emailOrderReminderEnabled')) {
     echo '<td><b>' . $sumEmailReminders . '</b></td>';
 }
-echo '<td colspan="3"></td>';
+echo '<td colspan="4"></td>';
 echo '</tr>';
 
 echo '</table>';
