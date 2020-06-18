@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-06-17 12:05+0200\n"
+"POT-Creation-Date: 2020-06-18 09:11+0200\n"
 "PO-Revision-Date: 2020-03-19 21:01+0100\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1747,6 +1747,10 @@ msgstr "Kliknij aby anulować produkt"
 #, fuzzy
 msgid "Click_to_change_member"
 msgstr "Kliknij aby zmienić cenę"
+
+#, fuzzy
+msgid "Add_product_feedback"
+msgstr "Dodaj produkt"
 
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Pokaż wszystkie produkty zamówione od {0}"

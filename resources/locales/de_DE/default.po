@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-06-03 10:55+0200\n"
-"PO-Revision-Date: 2020-06-03 10:57+0200\n"
+"POT-Creation-Date: 2020-06-18 09:40+0200\n"
+"PO-Revision-Date: 2020-06-18 09:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -842,6 +842,12 @@ msgstr "alle"
 
 msgid "No_stock_products_selected."
 msgstr "Es wurden keine Lagerprodukte ausgewählt."
+
+msgid "Add_product_feedback"
+msgstr "Feedback zum Produkt schreiben"
+
+msgid "Add_product_feedback_explanation_text_{0}."
+msgstr "Dein Feedback wird dem Hersteller {0} nach dem Speichern automatisch per E-Mail geschickt, es ist dann <b>nicht mehr änderbar</b>. Der Hersteller erhält deine E-Mail-Adresse, damit er dir ggfs. zurückschreiben kann."
 
 msgid "Were_the_products_picked_up?"
 msgstr "Wurden die Produkte abgeholt?"
@@ -1818,9 +1824,6 @@ msgstr "{0} hat am {1} Lieferpause."
 msgid "Mobile"
 msgstr "Handy"
 
-msgid "Phone"
-msgstr "Telefon"
-
 msgid "Email"
 msgstr "E-Mail"
 
@@ -2030,6 +2033,9 @@ msgstr "PLZ"
 
 msgid "City"
 msgstr "Ort"
+
+msgid "Phone"
+msgstr "Telefon"
 
 msgid "Want_to_receive_reminder_emails?"
 msgstr "Ich möchte wöchentlich per E-Mail ans Bestellen erinnert werden?"

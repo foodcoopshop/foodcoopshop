@@ -35,6 +35,7 @@ use Cake\Core\Configure;
         $this->element('addScript', [
             'script' =>
             Configure::read('app.jsNamespace').".ModalOrderDetailDelete.init();" .
+            Configure::read('app.jsNamespace').".ModalOrderDetailFeedbackAdd.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailProductPriceEdit.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailProductQuantityEdit.init();" .
             Configure::read('app.jsNamespace').".Helper.initTooltip('.product-feedback-button');" .

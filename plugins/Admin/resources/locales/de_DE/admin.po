@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-06-17 12:05+0200\n"
-"PO-Revision-Date: 2020-06-17 12:07+0200\n"
+"POT-Creation-Date: 2020-06-18 09:11+0200\n"
+"PO-Revision-Date: 2020-06-18 09:12+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1694,6 +1694,9 @@ msgstr "Zum Stornieren des Produktes anklicken"
 
 msgid "Click_to_change_member"
 msgstr "Zum Umbuchen auf ein anderes Mitglied anklicken"
+
+msgid "Add_product_feedback"
+msgstr "Gib dem Hersteller Feedback zum Produkt"
 
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Alle bestellten Produkte von {0} anzeigen"
