@@ -15,24 +15,26 @@ foodcoopshop.ModalOrderDetailFeedbackAdd = {
 
     init : function() {
 
-        var modalSelector = '#modal-order-detail-feedback-add';
-
-        foodcoopshop.Modal.appendModalToDom(
-            modalSelector,
-            foodcoopshop.LocalizedJs.admin.AddProductFeedback,
-            foodcoopshop.ModalOrderDetailFeedbackAdd.getHtml()
-        );
-
-        foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-            foodcoopshop.ModalOrderDetailFeedbackAdd.getSuccessHandler(modalSelector);
-        });
-
-        $(modalSelector).on('hidden.bs.modal', function (e) {
-            foodcoopshop.ModalOrderDetailFeedbackAdd.getCloseHandler(modalSelector);
-        });
-
         $('a.product-feedback-button').on('click', function () {
+
+            var modalSelector = '#modal-order-detail-feedback-add';
+
+            foodcoopshop.Modal.appendModalToDom(
+                modalSelector,
+                foodcoopshop.LocalizedJs.admin.AddProductFeedback,
+                foodcoopshop.ModalOrderDetailFeedbackAdd.getHtml()
+            );
+
+            foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
+                foodcoopshop.ModalOrderDetailFeedbackAdd.getSuccessHandler(modalSelector);
+            });
+
+            $(modalSelector).on('hidden.bs.modal', function (e) {
+                foodcoopshop.ModalOrderDetailFeedbackAdd.getCloseHandler(modalSelector);
+            });
+
             foodcoopshop.ModalOrderDetailFeedbackAdd.getOpenHandler($(this), modalSelector);
+
         });
 
     },
