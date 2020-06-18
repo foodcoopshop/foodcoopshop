@@ -110,7 +110,7 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
         $(modalSelector + ' #dialogOrderDetailProductQuantityOrderDetailId').val(orderDetailId);
 
         var amount = row.find('td:nth-child(3) .product-amount-for-dialog').html();
-        var label = row.find('td:nth-child(4) a.name-for-dialog').html();
+        var label = '<b>' + row.find('td:nth-child(4) a.name-for-dialog').text() + '</b>';
         label += ' <span style="font-weight:normal;">(';
         var quantityString = $(modalSelector + ' span.quantity-string');
         var newHtml = '';
