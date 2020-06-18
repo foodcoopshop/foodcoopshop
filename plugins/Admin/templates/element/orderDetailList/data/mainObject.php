@@ -39,16 +39,18 @@ if ($groupBy == '' || $groupBy == 'product') {
             $icon = 'fas fa-comment-dots';
             echo '<i class="' . $icon . ' ok product-feedback-button" title="'.h($productFeedback).'"></i>';
         } else {
-            echo $this->Html->link(
-                '<i class="' . $icon . ' ok"></i>',
-                'javascript:void(0);',
-                [
-                    'class' => join(' ', $buttonClasses),
-                    'title' => h($productFeedback),
-                    'originalTitle' => h($productFeedback),
-                    'escape' => false
-                ]
-            );
+            if (!$appAuth->isManufacturer()) {
+                echo $this->Html->link(
+                    '<i class="' . $icon . ' ok"></i>',
+                    'javascript:void(0);',
+                    [
+                        'class' => join(' ', $buttonClasses),
+                        'title' => h($productFeedback),
+                        'originalTitle' => h($productFeedback),
+                        'escape' => false
+                    ]
+                );
+            }
         }
 
         echo $this->MyHtml->link(
