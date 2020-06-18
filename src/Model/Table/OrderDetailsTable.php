@@ -34,6 +34,9 @@ class OrderDetailsTable extends AppTable
         $this->hasOne('OrderDetailTaxes', [
             'foreignKey' => 'id_order_detail'
         ]);
+        $this->hasOne('OrderDetailFeedbacks', [
+            'foreignKey' => 'id_order_detail'
+        ]);
         $this->belongsTo('PickupDayEntities', [
             'className' => 'PickupDays', // field has same name and would clash
             'foreignKey' => [
@@ -526,7 +529,8 @@ class OrderDetailsTable extends AppTable
             'Customers',
             'Products.Manufacturers.AddressManufacturers',
             'TimebasedCurrencyOrderDetails',
-            'OrderDetailUnits'
+            'OrderDetailUnits',
+            'OrderDetailFeedbacks',
         ];
 
         if ($customerId != '') {
