@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-06-18 09:40+0200\n"
+"POT-Creation-Date: 2020-06-18 10:56+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1611,6 +1611,9 @@ msgid "Delivery_break"
 msgstr ""
 
 msgid "online"
+msgstr ""
+
+msgid "Please_enter_your_feedback."
 msgstr ""
 
 msgid "The_pickup_day_is_not_valid."

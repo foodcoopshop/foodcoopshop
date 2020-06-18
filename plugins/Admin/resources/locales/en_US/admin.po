@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-06-18 09:11+0200\n"
-"PO-Revision-Date: 2020-06-18 09:12+0200\n"
+"POT-Creation-Date: 2020-06-18 10:59+0200\n"
+"PO-Revision-Date: 2020-06-18 11:01+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -317,6 +317,9 @@ msgstr "The pickup day of your order was changed to"
 
 msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified."
 msgstr "The pickup day of {0,plural,=1{one product} other{# products}} was successfully changed to {1} and {2,plural,=1{one member was} other{# members were}} got an email."
+
+msgid "The_feedback_was_saved_successfully_and_sent_to_{0}."
+msgstr "Thanks for your feedback! It was successfully saved and sent to {0}."
 
 msgid "The_pickup_day_comment_of_{0}_was_changed:"
 msgstr "The pickup day comment {0} was changed:"
