@@ -2,6 +2,8 @@
 
 namespace App\Model\Table;
 
+use Cake\Validation\Validator;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -23,5 +25,13 @@ class OrderDetailFeedbacksTable extends AppTable
         parent::initialize($config);
         $this->setPrimaryKey('id_order_detail');
     }
+
+    public function validationDefault(Validator $validator): Validator
+    {
+        $validator->notEmptyString('text', __('Please_enter_your_feedback.'));
+        $validator->minLength('text', 5, __('Please_enter_at_least_{0}_characters.', [5]));
+        return $validator;
+    }
+
 
 }

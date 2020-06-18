@@ -1110,6 +1110,64 @@ class OrderDetailsController extends AdminAppController
 
     }
 
+    public function addFeedback()
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+
+        $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
+        $orderDetailFeedback = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('orderDetailFeedback')), '<strong><b>'));
+
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $orderDetail = $this->OrderDetail->find('all', [
+            'conditions' => [
+                'OrderDetails.id_order_detail' => $orderDetailId
+            ],
+            'contain' => [
+                'Customers',
+                'Products.Manufacturers',
+                'OrderDetailFeedbacks'
+            ]
+        ])->first();
+
+        try {
+            if (empty($orderDetail)) {
+                throw new InvalidParameterException('orderDetail not found: ' . $orderDetailId);
+            }
+            if (!empty($orderDetail->order_detail_feedback)) {
+                throw new InvalidParameterException('orderDetail already has a feedback: ' . $orderDetailId);
+            }
+
+            $entity = $this->OrderDetail->OrderDetailFeedbacks->newEntity(
+                [
+                    'customer_id' => $this->AppAuth->getUserId(),
+                    'id_order_detail' => $orderDetailId,
+                    'text' => $orderDetailFeedback,
+                ]
+            );
+            if ($entity->hasErrors()) {
+                throw new InvalidParameterException(join(' ', $this->OrderDetail->OrderDetailFeedbacks->getAllValidationErrors($entity)));
+            }
+
+        } catch (InvalidParameterException $e) {
+            $this->sendAjaxError($e);
+        }
+
+        $result = $this->OrderDetail->OrderDetailFeedbacks->save($entity);
+
+        $this->Flash->success(__d('admin', 'The_feedback_was_saved_successfully_and_sent_to_{0}.', ['<b>' . $orderDetail->product->manufacturer->name . '</b>']));
+
+//         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+//         $this->ActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', __d('admin', 'The_pickup_day_comment_of_{0}_was_changed:', [$customer->name]) . ' <div class="changed">' . $pickupDayComment . ' </div>');
+
+        $this->set([
+            'result' => $result,
+            'status' => !empty($result),
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['result', 'status', 'msg']);
+
+    }
+
     public function editPickupDayComment()
     {
         $this->RequestHandler->renderAs($this, 'json');

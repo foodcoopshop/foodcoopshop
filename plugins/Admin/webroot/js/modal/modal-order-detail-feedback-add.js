@@ -53,14 +53,14 @@ foodcoopshop.ModalOrderDetailFeedbackAdd = {
         $(modalSelector).remove();
     },
 
-    getSuccessHandler : function() {
+    getSuccessHandler : function(modalSelector) {
 
         if ($('#dialogOrderDetailId').val() == '') {
             return false;
         }
 
         foodcoopshop.Helper.ajaxCall(
-            '/admin/order_details/addFeedback/',
+            '/admin/order-details/addFeedback/',
             {
                 orderDetailId: $('#dialogOrderDetailId').val(),
                 orderDetailFeedback: CKEDITOR.instances['dialogOrderDetailFeedback'].getData()
@@ -70,7 +70,8 @@ foodcoopshop.ModalOrderDetailFeedbackAdd = {
                     document.location.reload();
                 },
                 onError: function (data) {
-                    console.log(data);
+                    foodcoopshop.Modal.appendFlashMessage(modalSelector, data.msg);
+                    foodcoopshop.Modal.resetButtons(modalSelector);
                 }
             }
         );
