@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-06-18 10:59+0200\n"
+"POT-Creation-Date: 2020-06-18 11:43+0200\n"
 "PO-Revision-Date: 2020-03-19 21:01+0100\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -330,6 +330,9 @@ msgstr "Dzień odbioru twojego zamówienia został zmieniony na"
 
 msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified."
 msgstr "The pickup day of {0,plural,=1{one product} other{# products}} was successfully changed to {1} and {2,plural,=1{one member was} other{# members were}} got an email."
+
+msgid "{0}_has_written_a_feedback_to_product_{1}."
+msgstr ""
 
 #, fuzzy
 msgid "The_feedback_was_saved_successfully_and_sent_to_{0}."
@@ -1991,6 +1994,12 @@ msgstr "Przepraszamy, lecz czasem nasi producenci nie są w stanie dostarczyć z
 msgid "Thanks_for_respecting_that!"
 msgstr ""
 
+msgid "Feedback"
+msgstr ""
+
+msgid "If_you_want_to_answer_please_write_an_email_to_{0}_and_do_not_reply_to_this_email!"
+msgstr ""
+
 msgid "New_pickup_day"
 msgstr "Nowy dzień odbioru"
 
@@ -2143,6 +2152,14 @@ msgstr "Wagi dostarczonych produktów mogą ulec zmianie, więc cena również m
 #, fuzzy
 msgid "Product_ID"
 msgstr "Produkt"
+
+#, fuzzy
+#~ msgid "Feedback_to_product"
+#~ msgstr "products"
+
+#, fuzzy
+#~ msgid "Delivery_date"
+#~ msgstr "Dzień dostawy"
 
 #~ msgid "Invoice_for_the_order_period_{0}_to_{1}"
 #~ msgstr "Faktura za zamówienia za okres od {0} do {1}"

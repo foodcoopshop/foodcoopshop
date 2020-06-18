@@ -1124,7 +1124,7 @@ class OrderDetailsController extends AdminAppController
             ],
             'contain' => [
                 'Customers',
-                'Products.Manufacturers',
+                'Products.Manufacturers.AddressManufacturers',
                 'OrderDetailFeedbacks'
             ]
         ])->first();
@@ -1153,6 +1153,22 @@ class OrderDetailsController extends AdminAppController
         }
 
         $result = $this->OrderDetail->OrderDetailFeedbacks->save($entity);
+
+        $email = new AppMailer();
+        $email->viewBuilder()->setTemplate('Admin.order_detail_feedback_add');
+        $email->setTo($orderDetail->product->manufacturer->address_manufacturer->email)
+            ->setSubject(__d('admin', '{0}_has_written_a_feedback_to_product_{1}.', [
+                $orderDetail->customer->name,
+                '"' . $orderDetail->product_name . '"',
+            ])
+        )
+        ->setViewVars([
+            'orderDetail' => $orderDetail,
+            'appAuth' => $this->AppAuth,
+            'orderDetailFeedback' => $orderDetailFeedback,
+        ]);
+
+        $email->send();
 
         $this->Flash->success(__d('admin', 'The_feedback_was_saved_successfully_and_sent_to_{0}.', ['<b>' . $orderDetail->product->manufacturer->name . '</b>']));
 

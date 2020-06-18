@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-06-18 10:59+0200\n"
-"PO-Revision-Date: 2020-06-18 11:01+0200\n"
+"POT-Creation-Date: 2020-06-18 11:43+0200\n"
+"PO-Revision-Date: 2020-06-18 11:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -317,6 +317,9 @@ msgstr "Der Abholtag deiner Bestellung wurde geändert auf"
 
 msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified."
 msgstr "Der Abholtag von {0,plural,=1{einem Produkt} other{# Produkten}} wurde erfolgreich auf {1} geändert und {2,plural,=1{ein Mitglied wurde} other{# Mitglieder wurden}} darüber per E-Mail informiert."
+
+msgid "{0}_has_written_a_feedback_to_product_{1}."
+msgstr "{0} hat ein Feedback zum Produkt {1} verfasst."
 
 msgid "The_feedback_was_saved_successfully_and_sent_to_{0}."
 msgstr "Danke für dein Feedback! Es wurde erfolgreich gespeichert und an {0} verschickt."
@@ -1923,6 +1926,12 @@ msgstr "Unsere Produzenten können leider ab und zu die bestellte Ware nicht lie
 msgid "Thanks_for_respecting_that!"
 msgstr "Vielen Dank für dein Verständnis!"
 
+msgid "Feedback"
+msgstr "Feedback"
+
+msgid "If_you_want_to_answer_please_write_an_email_to_{0}_and_do_not_reply_to_this_email!"
+msgstr "Zum Antworten schreibe bitte eine E-Mail an {0} und <b>antworte nicht auf diese E-Mail</b>!"
+
 msgid "New_pickup_day"
 msgstr "Neuer Abholtag "
 
@@ -2069,6 +2078,14 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#, fuzzy
+#~ msgid "Feedback_to_product"
+#~ msgstr "produkte"
+
+#, fuzzy
+#~ msgid "Delivery_date"
+#~ msgstr "Liefertag"
 
 #~ msgid "Quantity"
 #~ msgstr "Verfügbare Menge"
