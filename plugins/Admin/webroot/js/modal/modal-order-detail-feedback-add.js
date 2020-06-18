@@ -41,7 +41,7 @@ foodcoopshop.ModalOrderDetailFeedbackAdd = {
 
     getHtml : function() {
         var html = '<label></label>';
-        html += '<p class="add-product-feedback-explanation-text"></p>';
+        html += '<p class="small add-product-feedback-explanation-text"></p>';
         html += '<div class="textarea-wrapper">';
         html += '<textarea class="ckeditor" name="dialogOrderDetailFeedback" id="dialogOrderDetailFeedback"></textarea>';
         html += '</div>';
