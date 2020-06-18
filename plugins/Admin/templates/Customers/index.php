@@ -262,8 +262,8 @@ foreach ($customers as $customer) {
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light customer-comment-edit-button' . ($customer->address_customer->comment == '' ? ' btn-disabled' : ''),
-                'title' => $commentText,
-                'originalTitle' => $commentText,
+                'title' => h($commentText),
+                'originalTitle' => h($commentText),
                 'escape' => false
             ]
         );
