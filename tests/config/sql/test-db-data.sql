@@ -30,6 +30,7 @@ TRUNCATE TABLE `fcs_images`;
 TRUNCATE TABLE `fcs_invoices`;
 TRUNCATE TABLE `fcs_manufacturer`;
 TRUNCATE TABLE `fcs_order_detail`;
+TRUNCATE TABLE `fcs_order_detail_feedbacks`;
 TRUNCATE TABLE `fcs_order_detail_tax`;
 TRUNCATE TABLE `fcs_order_detail_units`;
 TRUNCATE TABLE `fcs_pages`;
@@ -224,6 +225,9 @@ INSERT INTO `fcs_order_detail` VALUES
 (3,60,10,'Milch : 0,5l',1,0.620000,0.550000,3,0.50,92,3,3,'2018-02-02','2018-02-01 09:17:14','2018-07-27 17:08:52');
 /*!40000 ALTER TABLE `fcs_order_detail` ENABLE KEYS */;
 
+/*!40000 ALTER TABLE `fcs_order_detail_feedbacks` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_order_detail_feedbacks` ENABLE KEYS */;
+
 /*!40000 ALTER TABLE `fcs_order_detail_tax` DISABLE KEYS */;
 INSERT INTO `fcs_order_detail_tax` VALUES
 (1,0.170000,0.170000),
@@ -355,7 +359,8 @@ INSERT INTO `fcs_units` VALUES
 INSERT INTO `phinxlog` VALUES
 (20200404145856,'RemoveV2Migrations','2020-04-04 15:01:16','2020-04-04 15:01:16',0),
 (20200415073329,'ShowNewProductsOnHome','2020-04-15 07:42:06','2020-04-15 07:42:06',0),
-(20200501192722,'EnableCashlessPaymentAddTypeConfiguration','2020-05-01 19:30:21','2020-05-01 19:30:21',0);
+(20200501192722,'EnableCashlessPaymentAddTypeConfiguration','2020-05-01 19:30:21','2020-05-01 19:30:21',0),
+(20200618063024,'AddProductFeedback','2020-06-18 07:57:36','2020-06-18 07:57:36',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
