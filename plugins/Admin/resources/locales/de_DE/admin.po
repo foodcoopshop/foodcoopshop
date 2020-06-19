@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-06-18 11:43+0200\n"
+"POT-Creation-Date: 2020-06-19 08:39+0200\n"
 "PO-Revision-Date: 2020-06-18 11:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1926,6 +1926,9 @@ msgstr "Unsere Produzenten können leider ab und zu die bestellte Ware nicht lie
 msgid "Thanks_for_respecting_that!"
 msgstr "Vielen Dank für dein Verständnis!"
 
+msgid "Hello"
+msgstr "Hallo"
+
 msgid "Feedback"
 msgstr "Feedback"
 
@@ -1985,9 +1988,6 @@ msgstr "bitte vergiss nicht, dass am {0} folgende Produkte zum Abholen bereit si
 
 msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
 msgstr "Du bekommst diese E-Mail, weil deine Bestellung länger als {0} Tage her ist."
-
-msgid "Hello"
-msgstr "Hallo"
 
 msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
 msgstr "in dieser Rechnung sind alle Produkte enthalten, die im {0} geliefert wurden."

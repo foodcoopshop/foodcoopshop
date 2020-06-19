@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-06-18 10:56+0200\n"
+"POT-Creation-Date: 2020-06-19 08:39+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1251,6 +1251,9 @@ msgid "Action_Log_Ordered_product_cancelled"
 msgstr ""
 
 msgid "Action_Log_Ordered_product_pickup_day_changed"
+msgstr ""
+
+msgid "Action_Log_Ordered_product_feedback_added"
 msgstr ""
 
 msgid "Action_Log_Member_credit_upload_added"

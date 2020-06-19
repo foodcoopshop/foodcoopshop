@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-06-18 10:56+0200\n"
+"POT-Creation-Date: 2020-06-19 08:39+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1690,6 +1690,11 @@ msgstr "Zamówiony produkt: Anulowano"
 # Ordered product: Pickup day changed
 msgid "Action_Log_Ordered_product_pickup_day_changed"
 msgstr "Zamówiony produkt: Zmieniono dzień odbioru"
+
+# Ordered product: Cancelled
+#, fuzzy
+msgid "Action_Log_Ordered_product_feedback_added"
+msgstr "Zamówiony produkt: Anulowano"
 
 # Member: Credit uploaded
 msgid "Action_Log_Member_credit_upload_added"

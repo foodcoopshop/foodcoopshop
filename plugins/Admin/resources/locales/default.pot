@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-06-18 11:43+0200\n"
+"POT-Creation-Date: 2020-06-19 08:39+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1925,6 +1925,9 @@ msgstr ""
 msgid "Thanks_for_respecting_that!"
 msgstr ""
 
+msgid "Hello"
+msgstr ""
+
 msgid "Feedback"
 msgstr ""
 
@@ -1983,9 +1986,6 @@ msgid "Please_do_not_forget_that_you_have_products_to_pick_up_on_{0}."
 msgstr ""
 
 msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
-msgstr ""
-
-msgid "Hello"
 msgstr ""
 
 msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
