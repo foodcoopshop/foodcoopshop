@@ -8,6 +8,7 @@ use App\Lib\PdfWriter\OrderDetailsPdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Http\Exception\ForbiddenException;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use App\Model\Table\OrderDetailsTable;
@@ -33,6 +34,26 @@ class OrderDetailsController extends AdminAppController
         switch ($this->getRequest()->getParam('action')) {
             case 'changeTaxOfInvoicedOrderDetail';
                 return $this->AppAuth->isSuperadmin();
+                break;
+            case 'addFeedback';
+                if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
+                    return true;
+                }
+                if ($this->AppAuth->isCustomer()) {
+                    $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+                    $orderDetail = $this->OrderDetail->find('all', [
+                        'conditions' => [
+                            'OrderDetails.id_order_detail' => $this->getRequest()->getData('orderDetailId')
+                        ]
+                    ])->first();
+                    if (!empty($orderDetail)) {
+                        if ($orderDetail->id_customer == $this->AppAuth->getUserId()) {
+                            return true;
+                        }
+                    }
+                }
+                $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
+                return false;
                 break;
             case 'delete':
             case 'editProductPrice':

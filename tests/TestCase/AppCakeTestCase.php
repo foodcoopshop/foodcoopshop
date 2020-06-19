@@ -143,7 +143,7 @@ abstract class AppCakeTestCase extends TestCase
         $this->assertEquals(403, $this->httpClient->getStatusCode());
     }
 
-    protected function assertAccessDeniedWithRedirectToLoginForm()
+    protected function assertAccessDeniedMessage()
     {
         $this->assertRegExpWithUnquotedString('Zugriff verweigert, bitte melde dich an.', $this->httpClient->getContent());
     }
@@ -169,7 +169,7 @@ abstract class AppCakeTestCase extends TestCase
     }
 
     /**
-     * called with json request, Controlller::isAuthorized false redirects to home
+     * called with json request, Controller::isAuthorized false redirects to home
      */
     protected function assertNotPerfectlyImplementedAccessRestricted()
     {
