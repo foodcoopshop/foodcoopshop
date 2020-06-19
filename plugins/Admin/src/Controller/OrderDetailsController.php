@@ -1193,8 +1193,12 @@ class OrderDetailsController extends AdminAppController
 
         $this->Flash->success(__d('admin', 'The_feedback_was_saved_successfully_and_sent_to_{0}.', ['<b>' . $orderDetail->product->manufacturer->name . '</b>']));
 
-//         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-//         $this->ActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', __d('admin', 'The_pickup_day_comment_of_{0}_was_changed:', [$customer->name]) . ' <div class="changed">' . $pickupDayComment . ' </div>');
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $actionLogMessage = __d('admin', '{0}_has_written_a_feedback_to_product_{1}.', [
+            '<b>' . $orderDetail->customer->name . '/<b>',
+            '<b>' . $orderDetail->product_name . '</b>',
+        ]);
+        $this->ActionLog->customSave('order_detail_feedback_added', $this->AppAuth->getUserId(), $orderDetail->id_customer, 'order_detail', $actionLogMessage . ' <div class="changed">' . $orderDetailFeedback . ' </div>');
 
         $this->set([
             'result' => $result,
