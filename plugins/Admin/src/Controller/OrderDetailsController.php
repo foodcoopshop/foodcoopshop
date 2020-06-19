@@ -1195,7 +1195,7 @@ class OrderDetailsController extends AdminAppController
 
         $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
         $actionLogMessage = __d('admin', '{0}_has_written_a_feedback_to_product_{1}.', [
-            '<b>' . $orderDetail->customer->name . '</<b>',
+            '<b>' . $orderDetail->customer->name . '</b>',
             '<b>' . $orderDetail->product_name . '</b>',
         ]);
         $this->ActionLog->customSave('order_detail_feedback_added', $this->AppAuth->getUserId(), $orderDetail->id_order_detail, 'order_details', $actionLogMessage . ' <div class="changed">' . $orderDetailFeedback . ' </div>');
