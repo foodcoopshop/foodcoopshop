@@ -20,7 +20,7 @@ use Cake\ORM\TableRegistry;
 class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCase
 {
 
-    public $orderDetailFeedback = 'Product tasted great! Thank you!';
+    public $orderDetailFeedback = 'Product tasted <i>great</i>! <b>Thank you</b>!<img src="/test.jpg"></img>';
     public $orderDetailId = 1;
 
     public function testAddFeedbackWithWrongOrderDetailId()
