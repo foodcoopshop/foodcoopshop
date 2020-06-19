@@ -1136,7 +1136,7 @@ class OrderDetailsController extends AdminAppController
         $this->RequestHandler->renderAs($this, 'json');
 
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
-        $orderDetailFeedback = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('orderDetailFeedback')), '<strong><b>'));
+        $orderDetailFeedback = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('orderDetailFeedback')), '<strong><b><i><img>'));
 
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
         $orderDetail = $this->OrderDetail->find('all', [
