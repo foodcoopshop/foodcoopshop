@@ -79,6 +79,8 @@ foodcoopshop.ModalOrderDetailFeedbackAdd = {
 
     getOpenHandler : function(button, modalSelector) {
 
+        foodcoopshop.Modal.removeTooltipster();
+
         $(modalSelector).modal();
 
         var row = button.closest('tr');
