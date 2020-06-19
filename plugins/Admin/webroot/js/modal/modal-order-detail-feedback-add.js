@@ -81,13 +81,25 @@ foodcoopshop.ModalOrderDetailFeedbackAdd = {
 
         $(modalSelector).modal();
 
-        foodcoopshop.Helper.initCkeditor('dialogOrderDetailFeedback', true);
-
         var row = button.closest('tr');
         var orderDetailId = row.find('td:nth-child(2)').html();
         var productName = row.find('.name-for-dialog').text();
         var customerName = row.find('.customer-name-for-dialog').text();
         var manufacturerName = row.find('td:nth-child(5) a').text();
+
+        foodcoopshop.Helper.ajaxCall(
+            '/admin/order-details/setElFinderUploadPath/' + orderDetailId,
+            {},
+            {
+                onOk: function (data) {
+                    foodcoopshop.Helper.initCkeditorSmallWithUpload('dialogOrderDetailFeedback', true);
+                },
+                onError: function (data) {
+                    foodcoopshop.Modal.appendFlashMessage(modalSelector, data.msg);
+                    foodcoopshop.Modal.resetButtons(modalSelector);
+                }
+            }
+        );
 
         $(modalSelector + ' #dialogOrderDetailId').val(orderDetailId);
         $(modalSelector + ' label').html('<b>' + productName + '</b>' + ' (' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + customerName + ')');

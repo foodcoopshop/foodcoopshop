@@ -1504,4 +1504,22 @@ class OrderDetailsController extends AdminAppController
 
         return $newQuantity;
     }
+
+    public function setElFinderUploadPath($orderDetailId)
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+
+        $_SESSION['ELFINDER'] = [
+            'uploadUrl' => Configure::read('app.cakeServerName') . "/files/kcfinder/order_details/" . $orderDetailId,
+            'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/order_details/" . $orderDetailId
+        ];
+
+        $this->set([
+            'status' => true,
+            'msg' => 'OK',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+
+    }
+
 }
