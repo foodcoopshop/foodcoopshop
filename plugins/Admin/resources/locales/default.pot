@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-06-17 12:05+0200\n"
+"POT-Creation-Date: 2020-06-19 08:39+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -315,6 +315,12 @@ msgid "The_pickup_day_of_your_order_was_changed_to"
 msgstr ""
 
 msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified."
+msgstr ""
+
+msgid "{0}_has_written_a_feedback_to_product_{1}."
+msgstr ""
+
+msgid "The_feedback_was_saved_successfully_and_sent_to_{0}."
 msgstr ""
 
 msgid "The_pickup_day_comment_of_{0}_was_changed:"
@@ -1694,6 +1700,9 @@ msgstr ""
 msgid "Click_to_change_member"
 msgstr ""
 
+msgid "Add_product_feedback"
+msgstr ""
+
 msgid "Show_all_ordered_products_from_{0}"
 msgstr ""
 
@@ -1916,6 +1925,15 @@ msgstr ""
 msgid "Thanks_for_respecting_that!"
 msgstr ""
 
+msgid "Hello"
+msgstr ""
+
+msgid "Feedback"
+msgstr ""
+
+msgid "If_you_want_to_answer_please_write_an_email_to_{0}_and_do_not_reply_to_this_email!"
+msgstr ""
+
 msgid "New_pickup_day"
 msgstr ""
 
@@ -1968,9 +1986,6 @@ msgid "Please_do_not_forget_that_you_have_products_to_pick_up_on_{0}."
 msgstr ""
 
 msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
-msgstr ""
-
-msgid "Hello"
 msgstr ""
 
 msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."

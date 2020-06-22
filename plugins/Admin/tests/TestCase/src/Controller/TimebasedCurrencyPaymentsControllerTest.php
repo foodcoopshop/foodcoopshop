@@ -62,7 +62,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         $this->loginAsVegetableManufacturer();
         $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->get($this->Slug->getTimebasedCurrencyPaymentEdit(1));
-        $this->assertAccessDeniedWithRedirectToLoginForm();
+        $this->assertAccessDeniedMessage();
     }
 
     public function testEditPaymentAsCorrectManufacturer()

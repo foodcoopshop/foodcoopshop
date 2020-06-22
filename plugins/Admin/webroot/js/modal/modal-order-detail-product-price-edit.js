@@ -113,7 +113,7 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
         var productPriceField = $(modalSelector + ' #dialogOrderDetailProductPricePrice');
 
         $(modalSelector + ' #dialogOrderDetailProductPriceOrderDetailId').val(orderDetailId);
-        $(modalSelector + ' label[for="dialogOrderDetailProductPricePrice"]').html(row.find('td:nth-child(4) a.name-for-dialog').html() + ' <span style="font-weight:normal;">(' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td:nth-child(9) span.customer-name-for-dialog').html() + ')');
+        $(modalSelector + ' label[for="dialogOrderDetailProductPricePrice"]').html('<b>' + row.find('td:nth-child(4) a.name-for-dialog').text() + '</b> <span style="font-weight:normal;">(' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td:nth-child(9) span.customer-name-for-dialog').text() + ')');
 
         var productTimebasedCurrencyPriceField;
 

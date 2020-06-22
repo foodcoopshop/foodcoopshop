@@ -397,6 +397,13 @@ body.order_details.index .add-payment-deposit-button-wrapper {
   float: left;
   margin-right: 3px;
 }
+body.order_details.index .product-feedback-button {
+    margin-right: 3px;
+}
+body.order_details.index i.product-feedback-button {
+    margin-left: 5px;
+    margin-right: 8px;
+}
 body.order_details.index td.date-short2,
 body.orders.index td.date-short2 {
     width: 100px;

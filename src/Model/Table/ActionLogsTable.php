@@ -257,6 +257,12 @@ class ActionLogsTable extends AppTable
                     'manufacturer'
                 ]
             ],
+            'order_detail_feedback_added' => [
+                'name' => __('Action_Log_Ordered_product_feedback_added'),
+                'access' => [
+                    'manufacturer'
+                ]
+            ],
 
             'payment_product_added' => [
                 'name' => __('Action_Log_Member_credit_upload_added')

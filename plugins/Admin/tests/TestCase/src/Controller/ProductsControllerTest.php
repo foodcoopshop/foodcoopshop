@@ -57,7 +57,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $productId = 1000;
         $this->changeProductPrice($productId, '0,15');
         // as long as isAuthorized does not return json on ajax requests...
-        $this->assertAccessDeniedWithRedirectToLoginForm();
+        $this->assertAccessDeniedMessage();
     }
 
     public function testEditPriceOfMeatManufactuerProductAsVegatableManufacturer()
@@ -66,7 +66,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $productId = 102;
         $this->changeProductPrice($productId, '0,15');
         // as long as isAuthorized does not return json on ajax requests...
-        $this->assertAccessDeniedWithRedirectToLoginForm();
+        $this->assertAccessDeniedMessage();
     }
 
     public function testEditPriceOfProductAsSuperadminToZero()

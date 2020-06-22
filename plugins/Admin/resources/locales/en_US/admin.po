@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-06-17 12:05+0200\n"
-"PO-Revision-Date: 2020-06-17 12:06+0200\n"
+"POT-Creation-Date: 2020-06-19 08:39+0200\n"
+"PO-Revision-Date: 2020-06-18 11:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -317,6 +317,12 @@ msgstr "The pickup day of your order was changed to"
 
 msgid "The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified."
 msgstr "The pickup day of {0,plural,=1{one product} other{# products}} was successfully changed to {1} and {2,plural,=1{one member was} other{# members were}} got an email."
+
+msgid "{0}_has_written_a_feedback_to_product_{1}."
+msgstr "{0} has written a feedback to product {1}."
+
+msgid "The_feedback_was_saved_successfully_and_sent_to_{0}."
+msgstr "Thanks for your feedback! It was successfully saved and sent to {0}."
 
 msgid "The_pickup_day_comment_of_{0}_was_changed:"
 msgstr "The pickup day comment {0} was changed:"
@@ -1695,6 +1701,9 @@ msgstr "Click to cancel product"
 msgid "Click_to_change_member"
 msgstr "Click to change member"
 
+msgid "Add_product_feedback"
+msgstr "Give the manufacturer feedback for the product"
+
 msgid "Show_all_ordered_products_from_{0}"
 msgstr "Show all ordered products from {0}"
 
@@ -1917,6 +1926,15 @@ msgstr "Sorry, but sometimes our manufacturers are not able to deliver the order
 msgid "Thanks_for_respecting_that!"
 msgstr "Thanks for respecting that!"
 
+msgid "Hello"
+msgstr "Hello"
+
+msgid "Feedback"
+msgstr "Feedback"
+
+msgid "If_you_want_to_answer_please_write_an_email_to_{0}_and_do_not_reply_to_this_email!"
+msgstr "If you want to answer, please write an email to {0} and <b>do not reply to this email</b>!"
+
 msgid "New_pickup_day"
 msgstr "New pickup day"
 
@@ -1970,9 +1988,6 @@ msgstr "Please do not forget that you have products to pick up on {0}."
 
 msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
 msgstr "As you placed your order earlier than {0} days ago, you get this reminder."
-
-msgid "Hello"
-msgstr "Hello"
 
 msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
 msgstr "this invoice contains all products that have been delivered in {0}."
@@ -2063,6 +2078,14 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#, fuzzy
+#~ msgid "Feedback_to_product"
+#~ msgstr "products"
+
+#, fuzzy
+#~ msgid "Delivery_date"
+#~ msgstr "Delivery day"
 
 #~ msgid "Quantity"
 #~ msgstr "Available quantity"

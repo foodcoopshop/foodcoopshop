@@ -30,6 +30,7 @@ TRUNCATE TABLE `fcs_images`;
 TRUNCATE TABLE `fcs_invoices`;
 TRUNCATE TABLE `fcs_manufacturer`;
 TRUNCATE TABLE `fcs_order_detail`;
+TRUNCATE TABLE `fcs_order_detail_feedbacks`;
 TRUNCATE TABLE `fcs_order_detail_tax`;
 TRUNCATE TABLE `fcs_order_detail_units`;
 TRUNCATE TABLE `fcs_pages`;
@@ -126,7 +127,8 @@ INSERT INTO `fcs_configuration` VALUES
 (585,1,'FCS_APP_ADDITIONAL_DATA','Additional food-coop infos','','textarea',8,'pl_PL','2019-08-03 20:07:12','2019-08-03 20:07:12'),
 (586,1,'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED','Run self-service mode in test mode?<br /><div class=\"small\">Does not add links to main menu and to stock products.</div>','0','boolean',310,'pl_PL','2019-12-09 13:46:37','2019-12-09 13:46:37'),
 (587,1,'FCS_CASHLESS_PAYMENT_ADD_TYPE','Type of adding the payments<br /><div class=\"small\">How do the payment addings get into FoodCoopShop?</div>','manual','dropdown',145,'pl_PL','2020-02-11 10:13:06','2020-02-11 10:13:06'),
-(588,1,'FCS_SHOW_NEW_PRODUCTS_ON_HOME','Show new products on home?','1','boolean',22,'pl_PL','2020-04-15 09:42:02','2020-04-15 09:42:02');
+(588,1,'FCS_SHOW_NEW_PRODUCTS_ON_HOME','Show new products on home?','1','boolean',22,'pl_PL','2020-04-15 09:42:02','2020-04-15 09:42:02'),
+(589,1,'FCS_FEEDBACK_TO_PRODUCTS_ENABLED','Are members allowed to write feedback to products?','1','boolean',320,'pl_PL','2020-06-19 09:02:55','2020-06-19 09:02:55');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -162,6 +164,9 @@ INSERT INTO `fcs_cronjobs` VALUES
 
 /*!40000 ALTER TABLE `fcs_order_detail` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_order_detail` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_order_detail_feedbacks` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_order_detail_feedbacks` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_order_detail_tax` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_order_detail_tax` ENABLE KEYS */;
@@ -221,7 +226,8 @@ INSERT INTO `fcs_tax` VALUES
 INSERT INTO `phinxlog` VALUES
 (20200404145856,'RemoveV2Migrations','2020-04-04 15:01:12','2020-04-04 15:01:12',0),
 (20200415073329,'ShowNewProductsOnHome','2020-04-15 07:42:02','2020-04-15 07:42:02',0),
-(20200501192722,'EnableCashlessPaymentAddTypeConfiguration','2020-05-01 19:30:17','2020-05-01 19:30:17',0);
+(20200501192722,'EnableCashlessPaymentAddTypeConfiguration','2020-05-01 19:30:17','2020-05-01 19:30:17',0),
+(20200618063024,'AddProductFeedback','2020-06-19 07:02:54','2020-06-19 07:02:55',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

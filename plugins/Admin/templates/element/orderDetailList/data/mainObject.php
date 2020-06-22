@@ -26,6 +26,35 @@ if ($groupBy != '') {
 if ($groupBy == '' || $groupBy == 'product') {
     echo '<td>';
     if ($groupBy == '') {
+
+        if (Configure::read('appDb.FCS_FEEDBACK_TO_PRODUCTS_ENABLED')) {
+            $productFeedback = __d('admin', 'Add_product_feedback');
+            $buttonClasses = [
+                'btn',
+                'btn-outline-light',
+                'product-feedback-button',
+            ];
+            $icon = 'far fa-comment-dots';
+            if (!empty($orderDetail->order_detail_feedback)) {
+                $productFeedback = $orderDetail->order_detail_feedback->text;
+                $icon = 'fas fa-comment-dots';
+                echo '<i class="' . $icon . ' ok product-feedback-button" title="'.h($productFeedback).'"></i>';
+            } else {
+                if (!$appAuth->isManufacturer()) {
+                    echo $this->Html->link(
+                        '<i class="' . $icon . ' ok"></i>',
+                        'javascript:void(0);',
+                        [
+                            'class' => join(' ', $buttonClasses),
+                            'title' => h($productFeedback),
+                            'originalTitle' => h($productFeedback),
+                            'escape' => false
+                        ]
+                    );
+                }
+            }
+        }
+
         echo $this->MyHtml->link(
             $orderDetail->product_name,
             '/admin/order-details/index/?pickupDay[]=' . join(',', $pickupDay) . '&productId=' . $orderDetail->product_id,
@@ -34,9 +63,11 @@ if ($groupBy == '' || $groupBy == 'product') {
             ]
         );
     }
+
     if ($groupBy == 'product') {
         echo $groupByObjectLink;
     }
+
     echo '</td>';
 }
 
@@ -61,8 +92,8 @@ if ($groupBy == 'customer') {
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light pickup-day-comment-edit-button' . (empty($orderDetail['comment']) ? ' btn-disabled' : ''),
-                'title' => $commentText,
-                'originalTitle' => $commentText,
+                'title' => h($commentText),
+                'originalTitle' => h($commentText),
                 'escape' => false
             ]
         );

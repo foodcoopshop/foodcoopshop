@@ -8,6 +8,7 @@ use App\Lib\PdfWriter\OrderDetailsPdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Http\Exception\ForbiddenException;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use App\Model\Table\OrderDetailsTable;
@@ -33,6 +34,26 @@ class OrderDetailsController extends AdminAppController
         switch ($this->getRequest()->getParam('action')) {
             case 'changeTaxOfInvoicedOrderDetail';
                 return $this->AppAuth->isSuperadmin();
+                break;
+            case 'addFeedback';
+                if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
+                    return true;
+                }
+                if ($this->AppAuth->isCustomer()) {
+                    $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+                    $orderDetail = $this->OrderDetail->find('all', [
+                        'conditions' => [
+                            'OrderDetails.id_order_detail' => $this->getRequest()->getData('orderDetailId')
+                        ]
+                    ])->first();
+                    if (!empty($orderDetail)) {
+                        if ($orderDetail->id_customer == $this->AppAuth->getUserId()) {
+                            return true;
+                        }
+                    }
+                }
+                $this->sendAjaxError(new ForbiddenException(ACCESS_DENIED_MESSAGE));
+                return false;
                 break;
             case 'delete':
             case 'editProductPrice':
@@ -1110,6 +1131,84 @@ class OrderDetailsController extends AdminAppController
 
     }
 
+    public function addFeedback()
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+
+        $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
+        $orderDetailFeedback = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('orderDetailFeedback')), '<strong><b><i><img>'));
+
+        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $orderDetail = $this->OrderDetail->find('all', [
+            'conditions' => [
+                'OrderDetails.id_order_detail' => $orderDetailId
+            ],
+            'contain' => [
+                'Customers',
+                'Products.Manufacturers.AddressManufacturers',
+                'OrderDetailFeedbacks'
+            ]
+        ])->first();
+
+        try {
+            if (empty($orderDetail)) {
+                throw new InvalidParameterException('orderDetail not found: ' . $orderDetailId);
+            }
+            if (!empty($orderDetail->order_detail_feedback)) {
+                throw new InvalidParameterException('orderDetail already has a feedback: ' . $orderDetailId);
+            }
+
+            $entity = $this->OrderDetail->OrderDetailFeedbacks->newEntity(
+                [
+                    'customer_id' => $this->AppAuth->getUserId(),
+                    'id_order_detail' => $orderDetailId,
+                    'text' => $orderDetailFeedback,
+                ]
+            );
+            if ($entity->hasErrors()) {
+                throw new InvalidParameterException(join(' ', $this->OrderDetail->OrderDetailFeedbacks->getAllValidationErrors($entity)));
+            }
+
+        } catch (InvalidParameterException $e) {
+            $this->sendAjaxError($e);
+        }
+
+        $result = $this->OrderDetail->OrderDetailFeedbacks->save($entity);
+
+        $email = new AppMailer();
+        $email->viewBuilder()->setTemplate('Admin.order_detail_feedback_add');
+        $email->setTo($orderDetail->product->manufacturer->address_manufacturer->email)
+            ->setSubject(__d('admin', '{0}_has_written_a_feedback_to_product_{1}.', [
+                $orderDetail->customer->name,
+                '"' . $orderDetail->product_name . '"',
+            ])
+        )
+        ->setViewVars([
+            'orderDetail' => $orderDetail,
+            'appAuth' => $this->AppAuth,
+            'orderDetailFeedback' => $orderDetailFeedback,
+        ]);
+
+        $email->send();
+
+        $this->Flash->success(__d('admin', 'The_feedback_was_saved_successfully_and_sent_to_{0}.', ['<b>' . $orderDetail->product->manufacturer->name . '</b>']));
+
+        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $actionLogMessage = __d('admin', '{0}_has_written_a_feedback_to_product_{1}.', [
+            '<b>' . $orderDetail->customer->name . '</b>',
+            '<b>' . $orderDetail->product_name . '</b>',
+        ]);
+        $this->ActionLog->customSave('order_detail_feedback_added', $this->AppAuth->getUserId(), $orderDetail->id_order_detail, 'order_details', $actionLogMessage . ' <div class="changed">' . $orderDetailFeedback . ' </div>');
+
+        $this->set([
+            'result' => $result,
+            'status' => !empty($result),
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['result', 'status', 'msg']);
+
+    }
+
     public function editPickupDayComment()
     {
         $this->RequestHandler->renderAs($this, 'json');
@@ -1405,4 +1504,22 @@ class OrderDetailsController extends AdminAppController
 
         return $newQuantity;
     }
+
+    public function setElFinderUploadPath($orderDetailId)
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+
+        $_SESSION['ELFINDER'] = [
+            'uploadUrl' => Configure::read('app.cakeServerName') . "/files/kcfinder/order_details/" . $orderDetailId,
+            'uploadPath' => $_SERVER['DOCUMENT_ROOT'] . "/files/kcfinder/order_details/" . $orderDetailId
+        ];
+
+        $this->set([
+            'status' => true,
+            'msg' => 'OK',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+
+    }
+
 }

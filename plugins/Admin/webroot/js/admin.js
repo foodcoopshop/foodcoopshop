@@ -927,7 +927,7 @@ foodcoopshop.Admin = {
             $('#' + dialogId + ' #dialogOrderDetailEditCustomerOrderDetailId').val(orderDetailId);
             $('#' + dialogId + ' #dialogOrderDetailEditCustomerId').selectpicker('val', '');
 
-            var infoText = foodcoopshop.LocalizedJs.admin.ToWhichMemberShouldTheOrderedProduct0Of1BeAssignedTo.replace(/\{0\}/, '<b>' + row.find('td:nth-child(4) a.name-for-dialog').html() + '</b>');
+            var infoText = foodcoopshop.LocalizedJs.admin.ToWhichMemberShouldTheOrderedProduct0Of1BeAssignedTo.replace(/\{0\}/, '<b>' + row.find('td:nth-child(4) a.name-for-dialog').text() + '</b>');
             infoText = infoText.replace(/\{1\}/, '<b>' + row.find('td:nth-child(9) span.customer-name-for-dialog').html() + '</b>');
             $('#' + dialogId + ' label[for="dialogOrderDetailEditCustomerId"]').html('<span style="font-weight:normal;">' + infoText + '</span>');
 
@@ -1041,7 +1041,7 @@ foodcoopshop.Admin = {
             }
             $('#' + dialogId + ' #dialogOrderDetailProductAmountOrderDetailId').val($(this).closest('tr').find('td:nth-child(2)').html());
             var infoTextForEditProductAmount = '<span style="font-weight:normal"><br />' + foodcoopshop.LocalizedJs.admin.DecreaseAmountExplainationText + '<br /><br /></span>';
-            infoTextForEditProductAmount += $(this).closest('tr').find('td:nth-child(4) a.name-for-dialog').html();
+            infoTextForEditProductAmount += $(this).closest('tr').find('td:nth-child(4) a.name-for-dialog').text();
             infoTextForEditProductAmount += ' <span style="font-weight:normal;">(' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ';
             infoTextForEditProductAmount += $(this).closest('tr').find('td:nth-child(9) span.customer-name-for-dialog').html() + ')<br />' + foodcoopshop.LocalizedJs.admin.NewAmount + ':';
             $('#' + dialogId + ' label[for="dialogOrderDetailProductAmount"]').html(infoTextForEditProductAmount);

@@ -231,7 +231,9 @@ class LocalizedController extends Controller
                 'AmountThatShouldBeChangedToMember' => __('Amount_that_should_be_changed_to_member?'),
                 'PleaseSelect' => __('Please_select...'),
                 'all' => __('all'),
-                'NoStockProductsSelected' => __('No_stock_products_selected.')
+                'NoStockProductsSelected' => __('No_stock_products_selected.'),
+                'AddProductFeedback' => __('Add_product_feedback'),
+                'AddProductFeedbackExplanationText0' => __('Add_product_feedback_explanation_text_{0}.'),
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),

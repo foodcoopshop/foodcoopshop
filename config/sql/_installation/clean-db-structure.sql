@@ -331,6 +331,16 @@ CREATE TABLE `fcs_order_detail` (
   KEY `product_name` (`product_name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fcs_order_detail_feedbacks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fcs_order_detail_feedbacks` (
+  `id_order_detail` int(10) unsigned NOT NULL DEFAULT '0',
+  `text` text NOT NULL,
+  `customer_id` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_order_detail`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_order_detail_tax`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;

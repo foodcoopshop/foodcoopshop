@@ -2,7 +2,6 @@
 
 namespace Admin\Controller;
 
-use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Lib\PdfWriter\ProductCardsPdfWriter;
 use Cake\Datasource\Exception\RecordNotFoundException;

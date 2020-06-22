@@ -30,6 +30,7 @@ TRUNCATE TABLE `fcs_images`;
 TRUNCATE TABLE `fcs_invoices`;
 TRUNCATE TABLE `fcs_manufacturer`;
 TRUNCATE TABLE `fcs_order_detail`;
+TRUNCATE TABLE `fcs_order_detail_feedbacks`;
 TRUNCATE TABLE `fcs_order_detail_tax`;
 TRUNCATE TABLE `fcs_order_detail_units`;
 TRUNCATE TABLE `fcs_pages`;
@@ -166,7 +167,8 @@ INSERT INTO `fcs_configuration` VALUES
 (585,1,'FCS_APP_ADDITIONAL_DATA','Zusätzliche Infos zur Foodcoop<br /><div class=\"small\">Z.B. ZVR-Zahl</div>','','textarea',8,'de_DE','2019-08-03 20:07:17','2019-08-03 20:07:17'),
 (586,1,'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED','Selbstbedienungs-Modus im Test-Modus ausführen?<br /><div class=\"small\">Keine Verlinkung im Haupt-Menü und bei Lagerprodukten.</div>','1','boolean',310,'de_DE','2019-12-09 13:46:41','2019-12-09 13:46:41'),
 (587,1,'FCS_CASHLESS_PAYMENT_ADD_TYPE','Art der Eintragung der Guthaben-Aufladungen<br /><div class=\"small\">Wie gelangen die Guthaben-Aufladungen vom Bankkonto in den FoodCoopShop?</div>','manual','dropdown',145,'de_DE','2020-02-11 10:13:10','2020-02-11 10:13:10'),
-(588,1,'FCS_SHOW_NEW_PRODUCTS_ON_HOME','Neue Produkte auch auf der Startseite anzeigen?','1','boolean',22,'de_DE','2020-04-15 09:42:06','2020-04-15 09:42:06');
+(588,1,'FCS_SHOW_NEW_PRODUCTS_ON_HOME','Neue Produkte auch auf der Startseite anzeigen?','1','boolean',22,'de_DE','2020-04-15 09:42:06','2020-04-15 09:42:06'),
+(589,1,'FCS_FEEDBACK_TO_PRODUCTS_ENABLED','Feedback-Funktion für Produkte aktiviert?<br /><div class=\"small\">Mitglieder können Feedback zu bestellten Produkte verfassen.</div>','1','boolean',320,'de_DE','2020-06-19 09:03:00','2020-06-19 09:03:00');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -223,6 +225,9 @@ INSERT INTO `fcs_order_detail` VALUES
 (2,340,0,'Beuschl',1,4.540000,4.540000,0,0.00,92,2,3,'2018-02-02','2018-02-01 09:17:14','2018-07-27 17:08:52'),
 (3,60,10,'Milch : 0,5l',1,0.620000,0.550000,3,0.50,92,3,3,'2018-02-02','2018-02-01 09:17:14','2018-07-27 17:08:52');
 /*!40000 ALTER TABLE `fcs_order_detail` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `fcs_order_detail_feedbacks` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_order_detail_feedbacks` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_order_detail_tax` DISABLE KEYS */;
 INSERT INTO `fcs_order_detail_tax` VALUES
@@ -355,7 +360,8 @@ INSERT INTO `fcs_units` VALUES
 INSERT INTO `phinxlog` VALUES
 (20200404145856,'RemoveV2Migrations','2020-04-04 15:01:16','2020-04-04 15:01:16',0),
 (20200415073329,'ShowNewProductsOnHome','2020-04-15 07:42:06','2020-04-15 07:42:06',0),
-(20200501192722,'EnableCashlessPaymentAddTypeConfiguration','2020-05-01 19:30:21','2020-05-01 19:30:21',0);
+(20200501192722,'EnableCashlessPaymentAddTypeConfiguration','2020-05-01 19:30:21','2020-05-01 19:30:21',0),
+(20200618063024,'AddProductFeedback','2020-06-19 07:02:59','2020-06-19 07:03:00',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

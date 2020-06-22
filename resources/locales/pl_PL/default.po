@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-06-03 10:55+0200\n"
+"POT-Creation-Date: 2020-06-19 08:39+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1134,6 +1134,16 @@ msgstr ""
 msgid "No_stock_products_selected."
 msgstr "Nie wybrano danych produktu."
 
+# Add new product?
+#, fuzzy
+msgid "Add_product_feedback"
+msgstr "Dodać nowy produkt?"
+
+# Add new product?
+#, fuzzy
+msgid "Add_product_feedback_explanation_text_{0}."
+msgstr "Dodać nowy produkt?"
+
 # Were the products picked up?
 msgid "Were_the_products_picked_up?"
 msgstr "Czy produkty zostały odebrane?"
@@ -1681,6 +1691,11 @@ msgstr "Zamówiony produkt: Anulowano"
 msgid "Action_Log_Ordered_product_pickup_day_changed"
 msgstr "Zamówiony produkt: Zmieniono dzień odbioru"
 
+# Ordered product: Cancelled
+#, fuzzy
+msgid "Action_Log_Ordered_product_feedback_added"
+msgstr "Zamówiony produkt: Anulowano"
+
 # Member: Credit uploaded
 msgid "Action_Log_Member_credit_upload_added"
 msgstr "Członek: Przesłano kredyt"
@@ -2162,6 +2177,11 @@ msgstr "Przerwa w dostawach"
 msgid "online"
 msgstr "online"
 
+# Please enter your street.
+#, fuzzy
+msgid "Please_enter_your_feedback."
+msgstr "Podaj ulicę."
+
 # The pickup day is not valid.
 msgid "The_pickup_day_is_not_valid."
 msgstr "Dzień odbioru jest nieprawidłowy."
@@ -2445,10 +2465,6 @@ msgstr "{0} musi być {1}."
 msgid "Mobile"
 msgstr "Numer telefonu (kom)"
 
-# Phone
-msgid "Phone"
-msgstr "Numer telefonu"
-
 # E-mail
 msgid "Email"
 msgstr "E-mail"
@@ -2724,6 +2740,10 @@ msgstr "Kod pocztowy"
 # City
 msgid "City"
 msgstr "Miasto"
+
+# Phone
+msgid "Phone"
+msgstr "Numer telefonu"
 
 # Do you want to receive an order reminder e-mail every week?
 msgid "Want_to_receive_reminder_emails?"

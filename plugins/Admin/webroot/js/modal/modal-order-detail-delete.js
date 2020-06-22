@@ -78,13 +78,13 @@ foodcoopshop.ModalOrderDetailDelete = {
             var dataRow = $('#delete-order-detail-' + orderDetailId).closest('tr');
             var infoText = '';
 
-            var customerName = dataRow.find('td:nth-child(4) a').html();
+            var productName = dataRow.find('td:nth-child(4) a.name-for-dialog').text();
             var manufacturerName = dataRow.find('td:nth-child(5) a').html();
 
             if (foodcoopshop.Helper.isManufacturer) {
-                infoText = '<p>' + foodcoopshop.LocalizedJs.admin.DoYouReallyWantToCancelProduct0.replace(/\{0\}/, '<b>' + customerName + '</b>') + '</p>';
+                infoText = '<p>' + foodcoopshop.LocalizedJs.admin.DoYouReallyWantToCancelProduct0.replace(/\{0\}/, '<b>' + productName + '</b>') + '</p>';
             } else {
-                infoText = '<p>' + foodcoopshop.LocalizedJs.admin.DoYouReallyWantToCancelProduct0From1.replace(/\{0\}/, '<b>' + customerName + '</b>').replace(/\{1\}/, '<b>' + manufacturerName + '</b>') + '</p>';
+                infoText = '<p>' + foodcoopshop.LocalizedJs.admin.DoYouReallyWantToCancelProduct0From1.replace(/\{0\}/, '<b>' + productName + '</b>').replace(/\{1\}/, '<b>' + manufacturerName + '</b>') + '</p>';
             }
 
             var textareaLabel = foodcoopshop.LocalizedJs.admin.WhyIsProductCancelled;
