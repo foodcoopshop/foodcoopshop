@@ -6,15 +6,15 @@
 
 <p align="center">
   <a href="https://www.foodcoopshop.com/download">
-    <img src="https://img.shields.io/packagist/v/foodcoopshop/foodcoopshop.svg?label=stable"
+    <img src="https://img.shields.io/packagist/v/foodcoopshop/foodcoopshop.svg?label=stable&style=flat-square"
          alt="Latest stable version">
   </a>
   <a href="https://travis-ci.org/foodcoopshop/foodcoopshop">
-    <img src="https://travis-ci.org/foodcoopshop/foodcoopshop.svg"
+    <img src="https://img.shields.io/travis/com/foodcoopshop/foodcoopshop/develop.svg?style=flat-square"
          alt="Build status">
   </a>
   <a href="LICENSE">
-    <img src="https://img.shields.io/github/license/foodcoopshop/foodcoopshop"
+    <img src="https://img.shields.io/github/license/foodcoopshop/foodcoopshop?style=flat-square"
          alt="Software license">
   </a>
 </p>
