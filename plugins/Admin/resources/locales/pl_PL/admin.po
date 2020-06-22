@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-06-19 08:39+0200\n"
+"POT-Creation-Date: 2020-06-22 10:33+0200\n"
 "PO-Revision-Date: 2020-03-19 21:01+0100\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1938,6 +1938,13 @@ msgstr ""
 #, fuzzy
 msgid "Here_you_find_the_link_to_add_the_credit:"
 msgstr "Znajdziesz tu przegląd do wykonywania przelewów pieniężnych"
+
+#, fuzzy
+msgid "Please_soon_transfer_new_credit_to_our_bank_account_and_do_not_forget_to_add_your_personal_transaction_code_{0}."
+msgstr "Podaj kwotę, która została wpłacona na nasze konto bankowe."
+
+msgid "Transactions_were_checked_until_{0}."
+msgstr ""
 
 msgid "{0}_is_the_last_day_to_order._You_can_do_that_until_{0}_midnight."
 msgstr "{0} jest ostatnim dniem zamówień. Można zamawiać do {0}, do północy."

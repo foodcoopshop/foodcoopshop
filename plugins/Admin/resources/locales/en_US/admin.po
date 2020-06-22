@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-06-19 08:39+0200\n"
-"PO-Revision-Date: 2020-06-18 11:46+0200\n"
+"POT-Creation-Date: 2020-06-22 10:33+0200\n"
+"PO-Revision-Date: 2020-06-22 10:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1874,6 +1874,12 @@ msgstr "Do not forget to add it to our credit system after the bank transfer."
 
 msgid "Here_you_find_the_link_to_add_the_credit:"
 msgstr "Here you find the link to add credit:"
+
+msgid "Please_soon_transfer_new_credit_to_our_bank_account_and_do_not_forget_to_add_your_personal_transaction_code_{0}."
+msgstr "Pleas soon transfer new credit to our bank account and do not forget to add your personal transaction code: {0}"
+
+msgid "Transactions_were_checked_until_{0}."
+msgstr "Transactions were checked until {0}."
 
 msgid "{0}_is_the_last_day_to_order._You_can_do_that_until_{0}_midnight."
 msgstr "{0} is the last day to order. You can do that until {0} midnight."

@@ -17,6 +17,7 @@ namespace App\Shell;
 
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
+use Cake\ORM\TableRegistry;
 
 class CheckCreditBalanceShell extends AppShell
 {
@@ -48,8 +49,33 @@ class CheckCreditBalanceShell extends AppShell
         $deltaSum = 0;
         $outString = '';
 
+        $lastCsvUploadDate = null;
+        if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
+            $paymentTable = TableRegistry::getTableLocator()->get('Payments');
+            $payment = $paymentTable->find('all', [
+                'fields' => [
+                    'Payments.date_add',
+                ],
+                'conditions' => [
+                    'Payments.type' => 'product',
+                    'Payments.date_transaction_add IS NOT NULL',
+
+                ],
+                'order' => [
+                    'Payments.date_add' => 'DESC',
+                ]
+            ])->first();
+            if (!empty($payment)) {
+                $lastCsvUploadDate = $payment->date_add;
+            }
+        }
+
         foreach ($customers as $customer) {
             $delta = $this->Customer->getCreditBalance($customer->id_customer);
+            $personalTransactionCode = null;
+            if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
+                $personalTransactionCode = $this->Customer->getPersonalTransactionCode($customer->id_customer);
+            }
 
             if ($delta < 0) {
                 $i ++;
@@ -62,7 +88,9 @@ class CheckCreditBalanceShell extends AppShell
                     ->setSubject(__('Your_credit_is_used_up'))
                     ->setViewVars([
                     'customer' => $customer,
-                    'delta' => $delta
+                    'delta' => $delta,
+                    'lastCsvUploadDate' => $lastCsvUploadDate,
+                    'personalTransactionCode' => $personalTransactionCode,
                     ])
                     ->send();
             }

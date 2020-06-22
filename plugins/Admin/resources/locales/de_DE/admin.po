@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-06-19 08:39+0200\n"
-"PO-Revision-Date: 2020-06-18 11:45+0200\n"
+"POT-Creation-Date: 2020-06-22 10:33+0200\n"
+"PO-Revision-Date: 2020-06-22 10:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1874,6 +1874,12 @@ msgstr "Vergiss bitte nicht, diesen Betrag <b>in unser Guthaben-System einzutrag
 
 msgid "Here_you_find_the_link_to_add_the_credit:"
 msgstr "Hier der Link zum Eintragen:"
+
+msgid "Please_soon_transfer_new_credit_to_our_bank_account_and_do_not_forget_to_add_your_personal_transaction_code_{0}."
+msgstr "Bitte überweise bald wieder ein neues Guthaben auf unser Konto und vergiss nicht, deinen persönlichen Überweisungscode anzugeben: {0}"
+
+msgid "Transactions_were_checked_until_{0}."
+msgstr "Es wurden alle Überweisungen bis zum {0} berücksichtigt."
 
 msgid "{0}_is_the_last_day_to_order._You_can_do_that_until_{0}_midnight."
 msgstr "{0} ist schon wieder der letzte Bestelltag. Bis {0} Mitternacht hast du noch Zeit."
