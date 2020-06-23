@@ -168,10 +168,11 @@ foodcoopshop.Admin = {
 
         // change color of row on click of checkbox
         table.find('input.row-marker[type="checkbox"]').on('click', function () {
-            if ($(this).parent().parent().hasClass('selected')) {
-                $(this).parent().parent().removeClass('selected');
+            var row = $(this).closest('tr');
+            if (row.hasClass('selected')) {
+                row.removeClass('selected');
             } else {
-                $(this).parent().parent().addClass('selected');
+                row.addClass('selected');
             }
         });
 
