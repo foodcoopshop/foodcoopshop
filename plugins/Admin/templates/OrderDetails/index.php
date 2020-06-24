@@ -24,7 +24,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace').".Admin.init();" .
             Configure::read('app.jsNamespace').".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');" .
             Configure::read('app.jsNamespace').".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" .
-            Configure::read('app.jsNamespace') . ".ModalPaymentAdd.initDepositInList();" .
+            Configure::read('app.jsNamespace').".ModalPaymentAdd.initDepositInList();" .
             Configure::read('app.jsNamespace').".Admin.selectMainMenuAdmin('".__d('admin', 'Orders')."');" .
             Configure::read('app.jsNamespace').".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");".
             Configure::read('app.jsNamespace').".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 0, 1);
@@ -34,12 +34,12 @@ use Cake\Core\Configure;
     if ($groupBy == '') {
         $this->element('addScript', [
             'script' =>
+            Configure::read('app.jsNamespace').".Helper.initTooltip('.product-feedback-button');" .
             Configure::read('app.jsNamespace').".ModalOrderDetailDelete.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailFeedbackAdd.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailProductPriceEdit.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailProductQuantityEdit.init();" .
-            Configure::read('app.jsNamespace').".Helper.initTooltip('.product-feedback-button');" .
-            Configure::read('app.jsNamespace').".Admin.initOrderDetailCustomerEditDialog('#order-details-list');" .
+            Configure::read('app.jsNamespace').".ModalOrderDetailProductCustomerEdit.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailProductAmountEdit.init();"
         ]);
     }

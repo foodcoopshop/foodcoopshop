@@ -88,6 +88,9 @@ body.iframe_start_page {
     margin-top: 0 ! important;
     border: none;
 }
+#order-detail-customer-edit-form .bootstrap-select {
+    width: 100% ! important;
+}
 .modal .categories-checkboxes,
 .modal .tax-dropdown-wrapper {
     display: block;
