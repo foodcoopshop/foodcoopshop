@@ -20,18 +20,6 @@ foodcoopshop.DialogOrderDetail = {
         return dialogHtml;
     },
 
-    getHtmlForOrderDetailProductAmountEdit : function(dialogId) {
-        var dialogHtml = '<label for="dialogOrderDetailProductAmount"></label><br />';
-        dialogHtml += '<select name="dialogOrderDetailProductAmountAmount" id="dialogOrderDetailProductAmountAmount" /></select>';
-        dialogHtml += '<div class="textarea-wrapper">';
-        dialogHtml += '<label for="dialogEditAmountReason">' + foodcoopshop.LocalizedJs.admin.WhyIsAmountDecreased + '</label>';
-        dialogHtml += '<textarea class="ckeditor" name="dialogEditAmountReason" id="dialogEditAmountReason"></textarea>';
-        dialogHtml += '</div>';
-        dialogHtml += '<input type="hidden" name="dialogOrderDetailProductAmountOrderDetailId" id="dialogOrderDetailProductAmountOrderDetailId" value="" />';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(foodcoopshop.LocalizedJs.admin.DecreaseAmount, dialogId, dialogHtml);
-        return dialogHtml;
-    },
-
     getHtmlForOrderDetailCustomerEdit : function(dialogId) {
         var dialogHtml = '<label for="dialogOrderDetailEditCustomerId" style="margin-bottom:10px;"></label><br />';
         dialogHtml += '<select id="dialogOrderDetailEditCustomerId">' + $('#customerid').html() + '</select>';
