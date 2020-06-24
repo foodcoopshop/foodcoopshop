@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-06-19 08:39+0200\n"
-"PO-Revision-Date: 2020-06-19 08:39+0200\n"
+"POT-Creation-Date: 2020-06-24 11:14+0200\n"
+"PO-Revision-Date: 2020-06-24 11:17+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -537,9 +537,6 @@ msgstr "Anzahl vermindern"
 msgid "Stock"
 msgstr "Lagerstand"
 
-msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
-msgstr "Die Anzahl kann nur vermindert werden. Um die Anzahl zu erhöhen, bitte das Produkt nachbuchen."
-
 msgid "New_amount"
 msgstr "Neue Anzahl"
 
@@ -557,9 +554,6 @@ msgstr "Um das Gewicht anzupassen, ändere bitte den Wert \"Gewicht\" zwei Spalt
 
 msgid "Why_is_price_adapted_(mandatory_field)?"
 msgstr "Warum wird der Preis angepasst (Pflichtfeld)?"
-
-msgid "Please_enter_a_price."
-msgstr "Bitte gib einen Preis ein."
 
 msgid "Original_price_without_reduction_of_price_in_time"
 msgstr "Original-Preis ohne Abzug von Betrag in Zeit"
@@ -626,9 +620,6 @@ msgstr "Du hast {0} Produkte ausgewählt"
 
 msgid "Adapt_amount_reason_is_mandatory."
 msgstr "Bitte gib an, warum die Anzahl vermindert wird."
-
-msgid "Delivered_weight_needs_to_be_greater_than_0."
-msgstr "Das Liefergewicht muss größer als 0 sein."
 
 msgid "Adapt_price_reason_is_mandatory."
 msgstr "Bitte gib an, warum der Preis angepasst wird."
@@ -2435,6 +2426,15 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
+#~ msgstr "Die Anzahl kann nur vermindert werden. Um die Anzahl zu erhöhen, bitte das Produkt nachbuchen."
+
+#~ msgid "Please_enter_a_price."
+#~ msgstr "Bitte gib einen Preis ein."
+
+#~ msgid "Delivered_weight_needs_to_be_greater_than_0."
+#~ msgstr "Das Liefergewicht muss größer als 0 sein."
 
 #~ msgid "Which_product_do_you_want_to_add_for_{0}?"
 #~ msgstr "Welches Produkt möchtest du für {0} neu erstellen?"

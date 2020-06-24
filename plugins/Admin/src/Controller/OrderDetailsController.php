@@ -743,8 +743,10 @@ class OrderDetailsController extends AdminAppController
         $productQuantity = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productQuantity);
 
         if (! is_numeric($orderDetailId) || !$productQuantity || $productQuantity < 0) {
-            $message = 'input format wrong';
-            $this->log($message);
+            $message = __d('admin', 'The_delivered_quantity_is_not_valid.');
+            if (! is_numeric($orderDetailId)) {
+                $message = 'input format wrong';
+            }
             $this->set([
                 'status' => 0,
                 'msg' => $message,
@@ -842,8 +844,10 @@ class OrderDetailsController extends AdminAppController
         $editAmountReason = strip_tags(html_entity_decode($this->getRequest()->getData('editAmountReason')));
 
         if (! is_numeric($orderDetailId) || ! is_numeric($productAmount) || $productAmount < 1) {
-            $message = 'input format wrong';
-            $this->log($message);
+            $message = __d('admin', 'The_amount_is_not_valid.');
+            if (! is_numeric($orderDetailId)) {
+                $message = 'input format wrong';
+            }
             $this->set([
                 'status' => 0,
                 'msg' => $message,
@@ -948,8 +952,10 @@ class OrderDetailsController extends AdminAppController
         $productPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productPrice);
 
         if (! is_numeric($orderDetailId) || !$productPrice || $productPrice < 0) {
-            $message = 'input format wrong';
-            $this->log($message);
+            $message = __d('admin', 'The_price_is_not_valid.');
+            if (! is_numeric($orderDetailId)) {
+                $message = 'input format wrong';
+            }
             $this->set([
                 'status' => 0,
                 'msg' => $message,

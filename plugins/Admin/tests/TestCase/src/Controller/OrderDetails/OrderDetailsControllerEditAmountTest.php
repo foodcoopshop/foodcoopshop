@@ -22,6 +22,15 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
     public $newAmount = 1;
     public $editAmountReason = 'One product was not delivered.';
 
+
+    public function testEditOrderDetailAmountNotValid()
+    {
+        $this->loginAsSuperadmin();
+        $this->mockCart = $this->generateAndGetCart(1, 2);
+        $this->editOrderDetailAmount($this->mockCart->cart_products[1]->order_detail->id_order_detail, -1, $this->editAmountReason);
+        $this->assertEquals($this->httpClient->getJsonDecodedContent()->msg, 'Die Anzahl ist nicht gültig.');
+    }
+
     public function testEditOrderDetailAmountAsManufacturer()
     {
         $this->loginAsSuperadmin();

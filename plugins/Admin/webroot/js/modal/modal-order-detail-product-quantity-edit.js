@@ -66,12 +66,6 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
     getSuccessHandler : function(modalSelector) {
 
         var productQuantity = $('#dialogOrderDetailProductQuantityQuantity').val();
-        if (isNaN(parseFloat(productQuantity.replace(/,/, '.'))) || productQuantity < 0) {
-            foodcoopshop.Modal.appendFlashMessage(modalSelector, foodcoopshop.LocalizedJs.admin.DeliveredWeightNeedsToBeGreaterThan0);
-            foodcoopshop.Modal.resetButtons(modalSelector);
-            return false;
-        }
-
         if ($('#dialogOrderDetailProductQuantityOrderDetailId').val() == '') {
             return false;
         }
