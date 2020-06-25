@@ -97,21 +97,6 @@ foodcoopshop.Admin = {
         return customerIds;
     },
 
-    initChangePickupDayOfSelectedProductsButton : function () {
-        var button = $('#changePickupDayOfSelectedProductsButton');
-        foodcoopshop.Helper.disableButton(button);
-
-        $('table.list').find('input.row-marker[type="checkbox"]').on('click', function () {
-            foodcoopshop.Admin.updateObjectSelectionActionButton(button);
-        });
-
-        button.on('click', function () {
-            var orderDetailIds = foodcoopshop.Admin.getSelectedOrderDetailIds();
-            foodcoopshop.Admin.openBulkChangePickupDayDialog(orderDetailIds);
-        });
-
-    },
-
     updateObjectSelectionActionButton : function (button) {
         foodcoopshop.Helper.disableButton(button);
         if ($('table.list').find('input.row-marker[type="checkbox"]:checked').length > 0) {
@@ -458,82 +443,6 @@ foodcoopshop.Admin = {
             row = row.prevAll('.main-product').first();
         }
         return row.find('td.is-stock-product').length > 0 && row.find('td.is-stock-product').html().match('fa-check');
-    },
-
-    openBulkChangePickupDayDialog : function(orderDetailIds) {
-
-        $('#cke_dialogChangePickupDayReason').val('');
-        var dialogId = 'order-detail-pickup-day-edit-form';
-
-        var dialogHtml = '';
-        dialogHtml += '<div class="field-wrapper">';
-        dialogHtml += '<label>' + foodcoopshop.LocalizedJs.admin.NewPickupDay + '</label>';
-        dialogHtml += '<input style="margin-left:10px;" autocomplete="off" class="datepicker" type="text" name="dialogChangePickupDay" id="dialogChangePickupDay" /><br />';
-        dialogHtml += '</div>';
-        dialogHtml += '<p style="margin-top:10px;float:left;">' + foodcoopshop.LocalizedJs.admin.ChangePickupDayInvoicesInfoText + '</p>';
-        dialogHtml += '<div style="margin-top:10px;float:left;" class="textarea-wrapper">';
-        dialogHtml += '<label for="dialogChangePickupDayReason">' + foodcoopshop.LocalizedJs.admin.WhyIsPickupDayChanged +'</label>';
-        dialogHtml += '<textarea class="ckeditor" name="dialogChangePickupDayReason" id="dialogChangePickupDayReason"></textarea>';
-        dialogHtml += '</div>';
-        dialogHtml = foodcoopshop.Admin.addWrappersAndLoaderToDialogHtml(
-            foodcoopshop.LocalizedJs.admin.ChangePickupDay + ': ' + orderDetailIds.length + ' ' + (
-                orderDetailIds.length == 1 ? foodcoopshop.LocalizedJs.admin.product : foodcoopshop.LocalizedJs.admin.products
-            ) , dialogId, dialogHtml
-        );
-        $('body').append(dialogHtml);
-
-        var buttons = {};
-        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
-        buttons['save'] = {
-            text: foodcoopshop.LocalizedJs.helper.save,
-            click: function() {
-                var ckeditorData = CKEDITOR.instances['dialogChangePickupDayReason'].getData().trim();
-                $('.ui-dialog .ajax-loader').show();
-                $('.ui-dialog button').attr('disabled', 'disabled');
-                foodcoopshop.Helper.ajaxCall(
-                    '/admin/order-details/editPickupDay',
-                    {
-                        orderDetailIds: orderDetailIds,
-                        pickupDay: $('#dialogChangePickupDay').val(),
-                        changePickupDayReason: ckeditorData
-                    },
-                    {
-                        onOk: function (data) {
-                            document.location.reload();
-                        },
-                        onError: function (data) {
-                            var form = $('#order-detail-pickup-day-edit-form form');
-                            form.find('.ajax-loader').hide();
-                            foodcoopshop.Helper.appendFlashMessageToDialog(form, data.msg);
-                        }
-                    }
-                );
-            }
-        };
-
-        var dialog = $('#' + dialogId).dialog({
-            modal: true,
-            autoOpen: true,
-            width: 400,
-            open: function () {
-                foodcoopshop.Helper.initCkeditor('dialogChangePickupDayReason');
-                $('#dialogChangePickupDay').blur();
-            },
-            resizable: false,
-            buttons: buttons,
-            close: function (event, ui) {
-                $('#' + dialogId).remove(); // ckeditor was always empty if opened more than once
-                foodcoopshop.Helper.destroyCkeditor('dialogChangePickupDayReason');
-            }
-        });
-
-        dialog.dialog('open');
-
-        foodcoopshop.Helper.initDatepicker();
-        var datepickerInput = $('#dialogChangePickupDay');
-        datepickerInput.val($('.filter-container input[name="pickupDay[]"').val());
-        foodcoopshop.Admin.addDatepickerInDialog(datepickerInput);
-
     },
 
     initChangeNewState: function () {
