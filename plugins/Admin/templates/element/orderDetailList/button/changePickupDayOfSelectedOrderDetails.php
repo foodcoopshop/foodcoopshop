@@ -18,7 +18,7 @@ if ($deposit == '' && $groupBy == '' && count($orderDetails) > 0 && (!$appAuth->
     $this->element('addScript', [
         'script' => Configure::read('app.jsNamespace').".ModalOrderDetailPickupDayEdit.init();"
     ]);
-    echo '<a id="changePickupDayOfSelectedProductsButton" class="btn btn-outline-light" href="javascript:void(0);"><i class="fas fa-calendar"></i> ' . __d('admin', 'Change_pickup_day') . '</a>';
+    echo '<a id="changePickupDayOfSelectedProductsButton" class="btn btn-outline-light" href="javascript:void(0);"><i class="far fa-calendar-alt"></i> ' . __d('admin', 'Change_pickup_day') . '</a>';
 }
 
 ?>
