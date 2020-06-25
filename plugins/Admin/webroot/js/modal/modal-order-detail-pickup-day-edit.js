@@ -39,7 +39,7 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
     initPickedUpForAllCustomers: function() {
         $('.change-products-picked-up-all-customers-button').on('click', function () {
             var customerIds = [];
-            $(container).find('table.list tr.data').each(function() {
+            $('table.list tr.data').each(function() {
                 customerIds.push($(this).find('td:nth-child(2)').html());
             });
             var title = foodcoopshop.LocalizedJs.pickupDay.AllProductsPickedUp;
