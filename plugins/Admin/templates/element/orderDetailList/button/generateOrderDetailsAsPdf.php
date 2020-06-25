@@ -17,8 +17,8 @@ use Cake\Core\Configure;
 
 if (count($pickupDay) == 1 && $groupBy == 'customer' && ($appAuth->isSuperadmin() || $appAuth->isAdmin())) {
     $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".PickupDay.initChangeProductsPickedUpForAllCustomers('#order-details-list');" .
-        Configure::read('app.jsNamespace') . ".ModalOrderDetailsGenerateAsPdf.init();"
+        Configure::read('app.jsNamespace').".ModalOrderDetailPickupDayEdit.initPickedUpForAllCustomers();" .
+        Configure::read('app.jsNamespace').".ModalOrderDetailsGenerateAsPdf.init();"
     ]);
     echo '<button class="btn btn-outline-light generate-order-details-as-pdf"><i class="far fa-file-pdf"></i> '.__d('admin', 'Generate_orders_as_pdf').'</button>';
 }
