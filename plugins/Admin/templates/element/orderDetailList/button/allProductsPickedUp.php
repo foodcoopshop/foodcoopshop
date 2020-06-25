@@ -17,14 +17,14 @@ use Cake\Core\Configure;
 
 if (count($pickupDay) == 1 && $groupBy == 'customer' && ($appAuth->isSuperadmin() || $appAuth->isAdmin() || $appAuth->isCustomer())) {
     $this->element('addScript', [ 'script' =>
-        Configure::read('app.jsNamespace').".ModalOrderDetailPickupDayEdit.initPickedUpGroupedByCustomer();"
+        Configure::read('app.jsNamespace').".ModalOrderDetailAllProductsPickedUp.initPickedUpGroupedByCustomer();"
     ]);
     echo '<button class="change-products-picked-up-all-customers-button btn btn-outline-light"><i class="far fa-check-square"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';
 }
 
 if (count($pickupDay) == 1 && $groupBy == '' && $customerId > 0 && $manufacturerId == '' && $productId == '') {
     $this->element('addScript', [ 'script' =>
-        Configure::read('app.jsNamespace').".ModalOrderDetailPickupDayEdit.initNotGroupedBy();"
+        Configure::read('app.jsNamespace').".ModalOrderDetailAllProductsPickedUp.initNotGroupedBy();"
     ]);
     echo '<button class="change-products-picked-up-button btn btn-outline-light"><i class="far fa-check-square"></i> ' . __d('admin', 'All_products_picked_up?') . '</button>';
 }

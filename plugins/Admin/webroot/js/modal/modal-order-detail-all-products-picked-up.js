@@ -11,8 +11,7 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-foodcoopshop.ModalOrderDetailPickupDayEdit = {
-
+foodcoopshop.ModalOrderDetailAllProductsPickedUp = {
 
     initNotGroupedBy: function() {
         $('.change-products-picked-up-button').on('click', function () {
@@ -23,7 +22,7 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
             var customerIds = [selectedCustomer.val()];
             var customerName = selectedCustomer.text();
             var title = foodcoopshop.LocalizedJs.pickupDay.WereTheProductsPickedUp;
-            foodcoopshop.ModalOrderDetailPickupDayEdit.getOpenHandler(title, customerIds, customerName);
+            foodcoopshop.ModalOrderDetailAllProductsPickedUp.getOpenHandler(title, customerIds, customerName);
         });
     },
 
@@ -32,7 +31,7 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
             var customerIds = [$(this).closest('tr').find('td:nth-child(2)').html()];
             var customerName = $(this).closest('tr').find('td:nth-child(3)').text();
             var title = foodcoopshop.LocalizedJs.pickupDay.WereTheProductsPickedUp;
-            foodcoopshop.ModalOrderDetailPickupDayEdit.getOpenHandler(title, customerIds, customerName);
+            foodcoopshop.ModalOrderDetailAllProductsPickedUp.getOpenHandler(title, customerIds, customerName);
         });
     },
 
@@ -43,7 +42,7 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
                 customerIds.push($(this).find('td:nth-child(2)').html());
             });
             var title = foodcoopshop.LocalizedJs.pickupDay.AllProductsPickedUp;
-            foodcoopshop.ModalOrderDetailPickupDayEdit.getOpenHandler(title, customerIds, '');
+            foodcoopshop.ModalOrderDetailAllProductsPickedUp.getOpenHandler(title, customerIds, '');
         });
     },
 
@@ -70,21 +69,21 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
             title,
-            foodcoopshop.ModalOrderDetailPickupDayEdit.getHtml(),
+            foodcoopshop.ModalOrderDetailAllProductsPickedUp.getHtml(),
             buttons
         );
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-            foodcoopshop.ModalOrderDetailPickupDayEdit.getSuccessHandler(modalSelector, 1);
+            foodcoopshop.ModalOrderDetailAllProductsPickedUp.getSuccessHandler(modalSelector, 1);
         });
 
         $(modalSelector + ' .no-button').on('click', function() {
             foodcoopshop.Helper.disableButton($(this));
-            foodcoopshop.ModalOrderDetailPickupDayEdit.getSuccessHandler(modalSelector, 0);
+            foodcoopshop.ModalOrderDetailAllProductsPickedUp.getSuccessHandler(modalSelector, 0);
         });
 
         $(modalSelector).on('hidden.bs.modal', function (e) {
-            foodcoopshop.ModalOrderDetailPickupDayEdit.getCloseHandler(modalSelector);
+            foodcoopshop.ModalOrderDetailAllProductsPickedUp.getCloseHandler(modalSelector);
         });
 
         $(modalSelector + ' #customerId').val(customerIds.join(','));
