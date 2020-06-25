@@ -18,7 +18,7 @@ foodcoopshop.ModalProductAdd = {
         var modalSelector = '#modal-product-add';
 
         $('#add-product-button-wrapper a').on('click', function () {
-            foodcoopshop.ModalProductAdd.getOpenHandler($(this), modalSelector);
+            foodcoopshop.ModalProductAdd.getOpenHandler(modalSelector);
         });
 
     },
@@ -72,7 +72,7 @@ foodcoopshop.ModalProductAdd = {
         );
     },
 
-    getOpenHandler : function(button, modalSelector) {
+    getOpenHandler : function(modalSelector) {
 
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
@@ -88,7 +88,6 @@ foodcoopshop.ModalProductAdd = {
             foodcoopshop.ModalProductAdd.getCloseHandler(modalSelector);
         });
 
-        var productName = button.closest('tr').find('span.product-name').val();
         foodcoopshop.Helper.initCkeditor('dialogProductAddDescriptionShort');
         foodcoopshop.Helper.initCkeditor('dialogProductAddDescription');
         $(modalSelector).modal();
