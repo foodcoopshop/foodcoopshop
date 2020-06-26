@@ -14,13 +14,13 @@
     "install": "bash ../bin/cake npm_post_install"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.13.0",
+    "@fortawesome/fontawesome-free": "^5.13.1",
     "blueimp-file-upload": "^10.30.1",
     "bootstrap": "^4.5.0",
     "bootstrap-select": "^1.13.17",
     "chart.js": "^2.9.3",
     "chart.piecelabel.js": "^0.15.0",
-    "ckeditor4": "^4.14.0",
+    "ckeditor4": "^4.14.1",
     "clipboard": "^2.0.6",
     "components-jqueryui": "~1.12",
     "jquery": "^3.5.1",
@@ -32,7 +32,7 @@
     "popper.js": "^1.16.1",
     "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
-    "swiper": "^5.4.3",
+    "swiper": "^5.4.5",
     "tooltipster": "^4.2.8"
   },
   "devDependencies": {
