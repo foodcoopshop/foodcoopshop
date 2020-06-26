@@ -181,6 +181,10 @@ table.list tr.fake-th td {
 .modal .field-wrapper label:not(.checkbox) {
     width: 100%;
 }
+#instant-order-add .bootstrap-select {
+    margin-top: 5px;
+}
+
 select {
     background-color: #fff;
 }
