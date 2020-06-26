@@ -48,7 +48,8 @@ foodcoopshop.ModalInstantOrderAdd = {
     },
 
     onWindowResize: function(iframe) {
-        iframe.css('height', $(window).height() - 120);
+        var height = $(window).height() - 141;
+        iframe.css('height', height);
     },
 
     getOpenHandler : function(button, modalSelector) {
@@ -103,6 +104,7 @@ foodcoopshop.ModalInstantOrderAdd = {
             }
         });
 
+        $(modalSelector).modal('handleUpdate');
 
     }
 
