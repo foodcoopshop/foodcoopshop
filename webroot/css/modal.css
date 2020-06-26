@@ -63,6 +63,10 @@
 }
 #instant-order-add .bootstrap-select {
     width: 300px ! important;
+    margin-top: -5px;
+}
+#instant-order-add .modal-header .start {
+    line-height: 35px;
 }
 #instant-order-add .bootstrap-select div.filter-option-inner-inner i.fas {
     top: 10px;
