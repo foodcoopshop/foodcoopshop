@@ -468,6 +468,11 @@ i.fas.not-ok,
 i.far.not-ok {
     color: red;
 }
+i.fa.neutral,
+i.fas.neutral,
+i.far.neutral {
+    color: #969696;
+}
 tr.selected td > i.fas,
 tr.selected td > i.far,
 tr.selected td > span > i.fas,

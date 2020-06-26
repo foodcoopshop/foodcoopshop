@@ -708,47 +708,20 @@ foodcoopshop.SyncProductData = {
                 return;
             }
 
-            var preparedString = foodcoopshop.LocalizedJs.syncProductData.SynchronizeDialogInfoText;
-            preparedString = preparedString.replace(/\{0\}/, '<b>' + checkedAttributeLabels.join(', ') + '</b>');
-            preparedString = preparedString.replace(/\{1\}/, checkedProductsCount + ' ' + (checkedProductsCount == 1 ? foodcoopshop.LocalizedJs.syncProductData.product : foodcoopshop.LocalizedJs.syncProductData.products));
-            preparedString = preparedString.replace(/\{2\}/, checkedAttributesCount + ' ' + (checkedAttributesCount == 1 ? foodcoopshop.LocalizedJs.syncProductData.attribute : foodcoopshop.LocalizedJs.syncProductData.attributes));
-            preparedString = preparedString.replace(/\{3\}/, '<p>' + domains2sync.join('<br />') + '</p>');
-
-            var htmlCode = '<p>' + preparedString + '</p>';
-            htmlCode += '<b class="negative">' + foodcoopshop.LocalizedJs.syncProductData.ThisActionCannotBeUndone + '</b></p>';
-            htmlCode += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-
-            var buttons = {};
-            buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
-            buttons['yes'] = {
-                text: foodcoopshop.LocalizedJs.helper.yes,
-                click: function() {
-                    $('.ui-dialog .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-                    foodcoopshop.SyncBase.doApiCall('/api/updateProducts.json', 'POST', postData, foodcoopshop.SyncProductData.onProductDataUpdated);
-                }
-            };
-
-            $('<div></div>').appendTo('body')
-                .html(htmlCode)
-                .dialog({
-                    modal: true,
-                    title: foodcoopshop.LocalizedJs.syncProductData.ReallySynchronize,
-                    autoOpen: true,
-                    width: 450,
-                    resizable: false,
-                    buttons: buttons,
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
-                });
+            foodcoopshop.ModalSyncProductData.init(
+                postData,
+                checkedAttributeLabels,
+                checkedProductsCount,
+                checkedAttributesCount,
+                domains2sync
+            );
 
         });
 
     },
 
     onProductDataUpdated : function (response) {
-        $('.ui-dialog-content').dialog('close');
+        foodcoopshop.Modal.destroy('#modal-sync-product-data');
         var flashMessage = '<b>' + response.app.name + '</b>: ' + response.msg;
         foodcoopshop.Helper.showOrAppendSuccessMessage(flashMessage);
         foodcoopshop.SyncProductData.tmpFlashMessage = flashMessage;

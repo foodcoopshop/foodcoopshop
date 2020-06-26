@@ -21,7 +21,7 @@ if ($groupBy == 'customer' && count($pickupDay) == 1) {
             $iconClass = 'fa-home ok';
         } else {
             $buttonText = __d('admin', 'No');
-            $iconClass = 'fa-exclamation-triangle not-ok';
+            $iconClass = 'fa-exclamation-triangle neutral';
         }
         echo $this->Html->link(
             '<i class="fas fa-fw ' . $iconClass . '"></i> ' . $buttonText,

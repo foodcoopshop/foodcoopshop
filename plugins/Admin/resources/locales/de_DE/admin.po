@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-06-22 10:33+0200\n"
-"PO-Revision-Date: 2020-06-22 10:34+0200\n"
+"POT-Creation-Date: 2020-06-24 11:14+0200\n"
+"PO-Revision-Date: 2020-06-24 11:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -282,6 +282,9 @@ msgstr "Auf ein anderes Mitglied umgebucht"
 msgid "An_email_was_sent_to_{0}_and_{1}."
 msgstr "Eine E-Mail wurde an {0} und {1} verschickt."
 
+msgid "The_delivered_quantity_is_not_valid."
+msgstr "Das gelieferte Gewicht ist nicht gültig."
+
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
 msgstr "Das Gewicht des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich von {2} auf {3} angepasst."
 
@@ -302,6 +305,9 @@ msgstr "Bestellte Anzahl angepasst"
 
 msgid "The_stock_was_increased_to_{0}."
 msgstr "Der Lagerstand wurde auf {0} erhöht."
+
+msgid "The_price_is_not_valid."
+msgstr "Der Preis ist nicht gültig."
 
 msgid "The_price_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
 msgstr "Der Preis des bestellten Produktes {0} (Anzahl: {1}) wurde erfolgreich von {2} auf {3} angepasst."

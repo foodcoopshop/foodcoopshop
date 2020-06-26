@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-06-19 08:39+0200\n"
-"PO-Revision-Date: 2020-06-19 08:39+0200\n"
+"POT-Creation-Date: 2020-06-26 09:31+0200\n"
+"PO-Revision-Date: 2020-06-26 09:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -537,9 +537,6 @@ msgstr "Decrease amount"
 msgid "Stock"
 msgstr "Stock"
 
-msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
-msgstr "The amount can only be decreased. To increase, please order product again."
-
 msgid "New_amount"
 msgstr "New amount"
 
@@ -557,9 +554,6 @@ msgstr "To adapt the weight, please change the value \"weight\" two columns to t
 
 msgid "Why_is_price_adapted_(mandatory_field)?"
 msgstr "Why is the price adapted (mandatory)?"
-
-msgid "Please_enter_a_price."
-msgstr "Please enter a price."
 
 msgid "Original_price_without_reduction_of_price_in_time"
 msgstr "Original price without the reduction of price in time"
@@ -626,9 +620,6 @@ msgstr "You selected {0} products"
 
 msgid "Adapt_amount_reason_is_mandatory."
 msgstr "Please tell us, why you want to decrease the amount."
-
-msgid "Delivered_weight_needs_to_be_greater_than_0."
-msgstr "The delivered weight needs to be greater than 0."
 
 msgid "Adapt_price_reason_is_mandatory."
 msgstr "Please tell us, why you want to adapt the price."
@@ -724,6 +715,9 @@ msgid "Date"
 msgstr "Date"
 
 msgid "Amount"
+msgstr "Amount"
+
+msgid "Amount_(Money)"
 msgstr "Amount"
 
 msgid "Please_chose_at_least_one_month."
@@ -2435,6 +2429,15 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
+#~ msgstr "The amount can only be decreased. To increase, please order product again."
+
+#~ msgid "Please_enter_a_price."
+#~ msgstr "Please enter a price."
+
+#~ msgid "Delivered_weight_needs_to_be_greater_than_0."
+#~ msgstr "The delivered weight needs to be greater than 0."
 
 #~ msgid "Which_product_do_you_want_to_add_for_{0}?"
 #~ msgstr "Which product do you want to add for {0}?"

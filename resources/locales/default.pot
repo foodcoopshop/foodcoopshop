@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-06-19 08:39+0200\n"
+"POT-Creation-Date: 2020-06-26 09:31+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -536,9 +536,6 @@ msgstr ""
 msgid "Stock"
 msgstr ""
 
-msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
-msgstr ""
-
 msgid "New_amount"
 msgstr ""
 
@@ -555,9 +552,6 @@ msgid "Explaination_text_apdapt_price_form_apapt_weight."
 msgstr ""
 
 msgid "Why_is_price_adapted_(mandatory_field)?"
-msgstr ""
-
-msgid "Please_enter_a_price."
 msgstr ""
 
 msgid "Original_price_without_reduction_of_price_in_time"
@@ -624,9 +618,6 @@ msgid "You_selected_{0}_products"
 msgstr ""
 
 msgid "Adapt_amount_reason_is_mandatory."
-msgstr ""
-
-msgid "Delivered_weight_needs_to_be_greater_than_0."
 msgstr ""
 
 msgid "Adapt_price_reason_is_mandatory."
@@ -723,6 +714,9 @@ msgid "Date"
 msgstr ""
 
 msgid "Amount"
+msgstr ""
+
+msgid "Amount_(Money)"
 msgstr ""
 
 msgid "Please_chose_at_least_one_month."

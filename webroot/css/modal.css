@@ -63,6 +63,10 @@
 }
 #instant-order-add .bootstrap-select {
     width: 300px ! important;
+    margin-top: -5px;
+}
+#instant-order-add .modal-header .start {
+    line-height: 35px;
 }
 #instant-order-add .bootstrap-select div.filter-option-inner-inner i.fas {
     top: 10px;
@@ -87,6 +91,10 @@ body.iframe_start_page {
     margin-left: 0;
     margin-top: 0 ! important;
     border: none;
+}
+#order-detail-customer-edit-form .bootstrap-select,
+#modal-product-attribute-add .bootstrap-select {
+    width: 100% ! important;
 }
 .modal .categories-checkboxes,
 .modal .tax-dropdown-wrapper {

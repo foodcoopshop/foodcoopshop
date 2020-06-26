@@ -78,7 +78,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
             [
                 'orderDetailIds' => $orderDetailIds,
                 'pickupDay' => $pickupDay,
-                'changePickupDayReason' => $reason
+                'editPickupDayReason' => $reason
             ]
         );
         return $this->httpClient->getJsonDecodedContent();
