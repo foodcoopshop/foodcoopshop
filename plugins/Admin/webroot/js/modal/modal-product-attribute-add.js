@@ -27,7 +27,7 @@ foodcoopshop.ModalProductAttributeAdd = {
             var productAttributesDropdown = $('#productattributeid').clone(true);
 
             if (productAttributesDropdown.find('option').length == 0) {
-                alert(foodcoopshop.LocalizedJs.admin.ThisFunctionCanOnlyBeUsedIfAttributesExist);
+                foodcoopshop.Modal.appendFlashMessage(modalSelector, foodcoopshop.LocalizedJs.admin.ThisFunctionCanOnlyBeUsedIfAttributesExist);
                 return;
             }
 
