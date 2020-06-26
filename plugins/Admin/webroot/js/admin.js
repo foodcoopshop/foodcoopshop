@@ -529,56 +529,6 @@ foodcoopshop.Admin = {
 
     },
 
-    initAddProductAttribute: function (container) {
-
-        $(container).find('.add-product-attribute-button').on('click', function () {
-
-            var dataRow = $(this).closest('tr');
-            var productId = dataRow.attr('id').replace(/product-/, '').split('-');
-            productId = productId[productId.length - 1];
-
-            var htmlCode = '<p>' + foodcoopshop.LocalizedJs.admin.PleaseChoseTheNewAttributeForProduct0.replaceI18n(0, '<b> ' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>') + '</p>';
-            var productAttributesDropdown = $('#productattributeid').clone(true);
-
-            if (productAttributesDropdown.find('option').length == 0) {
-                alert(foodcoopshop.LocalizedJs.admin.ThisFunctionCanOnlyBeUsedIfAttributesExist);
-                return;
-            }
-
-            productAttributesDropdown.show();
-            productAttributesDropdown.removeClass('hide');
-            htmlCode += '<select class="product-attributes-dropdown">' + productAttributesDropdown.html() + '</select>';
-
-            htmlCode += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-
-            var buttons = {};
-            buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
-            buttons['save'] = {
-                text: foodcoopshop.LocalizedJs.helper.save,
-                click: function() {
-                    $('.ui-dialog .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-                    document.location.href = '/admin/products/addProductAttribute/' + productId + '/' + $('.product-attributes-dropdown').val();
-                }
-            };
-
-            $('<div></div>').appendTo('body')
-                .html(htmlCode)
-                .dialog({
-                    modal: true,
-                    title: foodcoopshop.LocalizedJs.admin.AddNewAttributeForProduct,
-                    autoOpen: true,
-                    width: 450,
-                    resizable: false,
-                    buttons: buttons,
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
-                });
-        });
-
-    },
-
     initSetDefaultAttribute: function (container) {
         $(container).find('.set-as-default-attribute-button').on('click', function () {
 
