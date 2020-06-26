@@ -18,7 +18,7 @@ $this->element('addScript', [
     'script' =>
         Configure::read('app.jsNamespace') . ".Admin.init();".
         Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Manufacturers')."', '".__d('admin', 'Deposit_account')."');".
-        Configure::read('app.jsNamespace') . ".Admin.initDeletePayment();"
+        Configure::read('app.jsNamespace') . ".ModalPaymentDelete.init();"
 ]);
 ?>
 

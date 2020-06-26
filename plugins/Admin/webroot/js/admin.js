@@ -848,64 +848,6 @@ foodcoopshop.Admin = {
         });
     },
 
-    initDeletePayment: function () {
-
-        $('.delete-payment-button').on('click',function () {
-
-            var dataRow = $(this).closest('tr');
-
-            var dialogHtml = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyDeletePayment + '<br />';
-            dialogHtml += foodcoopshop.LocalizedJs.admin.Date + ': <b>' + dataRow.find('td:nth-child(2)').html() + '</b> <br />';
-            dialogHtml += foodcoopshop.LocalizedJs.admin.Amount + ': <b>' + dataRow.find('td:nth-child(4)').html();
-            if (dataRow.find('td:nth-child(6)').length > 0) {
-                dialogHtml += dataRow.find('td:nth-child(6)').html();
-            }
-            dialogHtml += '</b>';
-            dialogHtml += '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-
-            var buttons = {};
-            buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
-            buttons['yes'] = {
-                text: foodcoopshop.LocalizedJs.helper.yes,
-                click: function() {
-                    $('.ui-dialog .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-                    var paymentId = dataRow.find('td:nth-child(1)').html();
-                    foodcoopshop.Helper.ajaxCall(
-                        '/admin/payments/changeState/',
-                        {
-                            paymentId: paymentId
-                        },
-                        {
-                            onOk: function (data) {
-                                document.location.reload();
-                            },
-                            onError: function (data) {
-                                alert(data.msg);
-                            }
-                        }
-                    );
-                }
-            };
-
-            $('<div></div>')
-                .appendTo('body')
-                .html(dialogHtml)
-                .dialog({
-                    modal: true,
-                    title: foodcoopshop.LocalizedJs.admin.DeletePayment,
-                    autoOpen: true,
-                    width: 400,
-                    resizable: false,
-                    buttons: buttons,
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
-                });
-        });
-
-    },
-
     initGenerateMemberCardsOfSelectedCustomersButton : function() {
         var button = $('#generateMemberCardsOfSelectedCustomersButton');
         foodcoopshop.Helper.disableButton(button);

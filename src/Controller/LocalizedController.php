@@ -190,6 +190,7 @@ class LocalizedController extends Controller
                 'ReallyDeletePayment' => __('Really_delete_payment?'),
                 'Date' => __('Date'),
                 'Amount' => __('Amount'),
+                'AmountMoney' => __('Amount_(Money)'),
                 'PleaseChoseAtLeastOneMonth' => __('Please_chose_at_least_one_month.'),
                 'DeleteMember' => __('Delete_member?'),
                 'ReallyDeleteMember' => __('Really_delete_member?'),

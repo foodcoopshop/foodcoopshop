@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-06-24 11:14+0200\n"
-"PO-Revision-Date: 2020-06-24 21:02+0200\n"
+"POT-Creation-Date: 2020-06-26 09:31+0200\n"
+"PO-Revision-Date: 2020-06-26 09:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -716,6 +716,9 @@ msgstr "Datum"
 
 msgid "Amount"
 msgstr "Anzahl"
+
+msgid "Amount_(Money)"
+msgstr "Betrag"
 
 msgid "Please_chose_at_least_one_month."
 msgstr "Bitte wähle zumindest einen Monat aus."
