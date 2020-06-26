@@ -28,7 +28,7 @@ foodcoopshop.ModalPaymentDelete = {
             var dataRow = $(this).closest('tr');
 
             foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-                foodcoopshop.ModalPaymentDelete.getSuccessHandler(dataRow);
+                foodcoopshop.ModalPaymentDelete.getSuccessHandler(modalSelector, dataRow);
             });
 
             $(modalSelector).on('hidden.bs.modal', function (e) {
@@ -44,7 +44,7 @@ foodcoopshop.ModalPaymentDelete = {
         $(modalSelector).remove();
     },
 
-    getSuccessHandler : function(dataRow) {
+    getSuccessHandler : function(modalSelector, dataRow) {
 
         var paymentId = dataRow.find('td:nth-child(1)').text();
 
