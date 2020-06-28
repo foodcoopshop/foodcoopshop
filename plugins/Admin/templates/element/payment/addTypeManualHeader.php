@@ -22,7 +22,7 @@ use Cake\Core\Configure;
         'script' =>
             Configure::read('app.jsNamespace') . ".Admin.init();" .
             Configure::read('app.jsNamespace') . ".ModalPaymentAdd.init();" .
-            Configure::read('app.jsNamespace') . ".Admin.initDeletePayment();"
+            Configure::read('app.jsNamespace') . ".ModalPaymentDelete.init();"
     ]);
     ?>
 

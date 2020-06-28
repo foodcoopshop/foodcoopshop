@@ -22,6 +22,12 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
     public $newPrice = '3,53';
     public $editPriceReason = 'Product was smaller than expected.';
 
+    public function testEditOrderDetailPriceNotValid()
+    {
+        $this->loginAsVegetableManufacturer();
+        $this->editOrderDetailPrice($this->orderDetailIdA, -1, $this->editPriceReason);
+        $this->assertEquals($this->httpClient->getJsonDecodedContent()->msg, 'Der Preis ist nicht gültig.');
+    }
 
     public function testEditOrderDetailPriceAsManufacturer()
     {

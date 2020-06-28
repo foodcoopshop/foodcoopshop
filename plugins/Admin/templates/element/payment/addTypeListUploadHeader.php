@@ -17,7 +17,7 @@ use Cake\Core\Configure;
 $this->element('addScript', [
     'script' =>
     Configure::read('app.jsNamespace') . ".Admin.init();" .
-    Configure::read('app.jsNamespace') . ".Admin.initDeletePayment();"
+    Configure::read('app.jsNamespace') . ".ModalPaymentDelete.init();"
 ]);
 ?>
 <div class="filter-container">

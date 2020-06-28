@@ -63,12 +63,6 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
             return;
         }
 
-        if ($('#dialogOrderDetailProductPricePrice').val() == '' || $('#dialogOrderDetailProductPricePrice').val() == 0) {
-            foodcoopshop.Modal.appendFlashMessage(modalSelector, foodcoopshop.LocalizedJs.admin.PleaseEnterAPrice);
-            foodcoopshop.Modal.resetButtons(modalSelector);
-            return;
-        }
-
         var ckeditorData = CKEDITOR.instances['dialogEditPriceReason'].getData().trim();
         if (ckeditorData == '') {
             foodcoopshop.Modal.appendFlashMessage(modalSelector, foodcoopshop.LocalizedJs.admin.AdaptPriceReasonIsMandatory);

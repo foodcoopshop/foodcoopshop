@@ -19,6 +19,15 @@ use Cake\Core\Configure;
 class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestCase
 {
 
+    public function testEditOrderDetailQuantityNotValid()
+    {
+        $this->loginAsSuperadmin();
+        $cart = $this->preparePricePerUnitOrder();
+        $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
+        $this->editOrderDetailQuantity($orderDetailId, -1, 'reason');
+        $this->assertEquals($this->httpClient->getJsonDecodedContent()->msg, 'Das gelieferte Gewicht ist nicht gültig.');
+    }
+
     public function testEditOrderDetailQuantityAsSuperadminDifferentQuantity()
     {
         $this->loginAsSuperadmin();

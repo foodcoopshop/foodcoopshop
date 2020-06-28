@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-06-19 08:39+0200\n"
+"POT-Creation-Date: 2020-06-26 09:31+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -714,10 +714,6 @@ msgstr "Zmniejsz ilość"
 msgid "Stock"
 msgstr "Stan magazynowy"
 
-# The amount can only be decreased. To increase, please order product again.
-msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
-msgstr "Ilość może zostać jedynie zmniejszona. Aby zwiększyć musisz zamówić produkt ponownie."
-
 # New amount
 msgid "New_amount"
 msgstr "Nowa ilość"
@@ -741,11 +737,6 @@ msgstr "Aby zmodyfikować wagę, zmień wartość w kolumnie \"waga\" po prawo. 
 # Why is the price adapted (mandatory)?
 msgid "Why_is_price_adapted_(mandatory_field)?"
 msgstr "Powód modyfikacji ceny (pole obowiązkowe)?"
-
-# Please enter a title.
-#, fuzzy
-msgid "Please_enter_a_price."
-msgstr "Podaj tytuł."
 
 # Original price without the reduction of price in time
 msgid "Original_price_without_reduction_of_price_in_time"
@@ -840,10 +831,6 @@ msgstr "Wybrano {0} produktów"
 # Please tell us, why you want to decrease the amount.
 msgid "Adapt_amount_reason_is_mandatory."
 msgstr "Dlaczego chcesz zmniejszyć ilość?"
-
-# The delivered weight needs to be greater than 0.
-msgid "Delivered_weight_needs_to_be_greater_than_0."
-msgstr "Dostarczona waga musi być większa niż 0."
 
 # Please tell us, why you want to adapt the price.
 msgid "Adapt_price_reason_is_mandatory."
@@ -970,6 +957,11 @@ msgstr "Data"
 
 # Amount
 msgid "Amount"
+msgstr "Kwota"
+
+# Amount
+#, fuzzy
+msgid "Amount_(Money)"
 msgstr "Kwota"
 
 # Please chose at least one month.
@@ -3270,6 +3262,19 @@ msgstr "złożone w dniu"
 # The prices include the VAT.
 msgid "Prices_are_including_vat."
 msgstr "Ceny zawierają podatek VAT."
+
+# The amount can only be decreased. To increase, please order product again.
+#~ msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
+#~ msgstr "Ilość może zostać jedynie zmniejszona. Aby zwiększyć musisz zamówić produkt ponownie."
+
+# Please enter a title.
+#, fuzzy
+#~ msgid "Please_enter_a_price."
+#~ msgstr "Podaj tytuł."
+
+# The delivered weight needs to be greater than 0.
+#~ msgid "Delivered_weight_needs_to_be_greater_than_0."
+#~ msgstr "Dostarczona waga musi być większa niż 0."
 
 # Please enter how much you want to pay in {0}.
 #, fuzzy

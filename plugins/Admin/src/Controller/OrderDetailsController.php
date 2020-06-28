@@ -743,8 +743,10 @@ class OrderDetailsController extends AdminAppController
         $productQuantity = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productQuantity);
 
         if (! is_numeric($orderDetailId) || !$productQuantity || $productQuantity < 0) {
-            $message = 'input format wrong';
-            $this->log($message);
+            $message = __d('admin', 'The_delivered_quantity_is_not_valid.');
+            if (! is_numeric($orderDetailId)) {
+                $message = 'input format wrong';
+            }
             $this->set([
                 'status' => 0,
                 'msg' => $message,
@@ -842,8 +844,10 @@ class OrderDetailsController extends AdminAppController
         $editAmountReason = strip_tags(html_entity_decode($this->getRequest()->getData('editAmountReason')));
 
         if (! is_numeric($orderDetailId) || ! is_numeric($productAmount) || $productAmount < 1) {
-            $message = 'input format wrong';
-            $this->log($message);
+            $message = __d('admin', 'The_amount_is_not_valid.');
+            if (! is_numeric($orderDetailId)) {
+                $message = 'input format wrong';
+            }
             $this->set([
                 'status' => 0,
                 'msg' => $message,
@@ -948,8 +952,10 @@ class OrderDetailsController extends AdminAppController
         $productPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($productPrice);
 
         if (! is_numeric($orderDetailId) || !$productPrice || $productPrice < 0) {
-            $message = 'input format wrong';
-            $this->log($message);
+            $message = __d('admin', 'The_price_is_not_valid.');
+            if (! is_numeric($orderDetailId)) {
+                $message = 'input format wrong';
+            }
             $this->set([
                 'status' => 0,
                 'msg' => $message,
@@ -1034,14 +1040,14 @@ class OrderDetailsController extends AdminAppController
         $orderDetailIds = $this->getRequest()->getData('orderDetailIds');
         $pickupDay = $this->getRequest()->getData('pickupDay');
         $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
-        $changePickupDayReason = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('changePickupDayReason')), '<strong><b>'));
+        $editPickupDayReason = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('editPickupDayReason')), '<strong><b>'));
 
         try {
             if (empty($orderDetailIds)) {
                 throw new InvalidParameterException('error - no order detail id passed');
             }
             $errorMessages = [];
-            if ($changePickupDayReason == '') {
+            if ($editPickupDayReason == '') {
                 $errorMessages[] = __d('admin', 'Please_enter_why_pickup_day_is_changed.');
             }
 
@@ -1102,15 +1108,15 @@ class OrderDetailsController extends AdminAppController
                     'appAuth' => $this->AppAuth,
                     'oldPickupDay' => $oldPickupDay,
                     'newPickupDay' => $newPickupDay,
-                    'changePickupDayReason' => $changePickupDayReason
+                    'editPickupDayReason' => $editPickupDayReason
                 ]);
                 $email->send();
             }
 
             $message = __d('admin', 'The_pickup_day_of_{0,plural,=1{1_product} other{#_products}}_was_changed_successfully_to_{1}_and_{2,plural,=1{1_customer} other{#_customers}}_were_notified.', [count($orderDetailIds), '<b>'.$newPickupDay.'</b>', count($customers)]);
 
-            if ($changePickupDayReason != '') {
-                $message .= ' ' . __d('admin', 'Reason') . ': <b>"' . $changePickupDayReason . '"</b>';
+            if ($editPickupDayReason != '') {
+                $message .= ' ' . __d('admin', 'Reason') . ': <b>"' . $editPickupDayReason . '"</b>';
             }
 
             $this->Flash->success($message);

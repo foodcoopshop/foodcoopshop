@@ -62,7 +62,7 @@ if ($appAuth->Cart->getProducts() !== null) {
             if (!empty($lastOrderDetails)) {
                 $lastOrderDetails['remove-all-products-from-cart'] = __('Empty_cart').'...';
                 $this->element('addScript', ['script' =>
-                    Configure::read('app.jsNamespace') . ".Cart.initLoadLastOrderDetailsDropdown();"
+                    Configure::read('app.jsNamespace') . ".ModalLoadLastOrderDetails.init();"
                 ]);
                 echo $this->Form->control('load-last-order-details', [
                     'label' => '',

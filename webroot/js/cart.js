@@ -591,51 +591,6 @@ foodcoopshop.Cart = {
 
         });
 
-    },
-
-    initLoadLastOrderDetailsDropdown : function() {
-        $('#load-last-order-details').on('change', function() {
-            var selectedValue = $(this).val();
-            if (selectedValue != '') {
-                var title = '';
-                var dialogHtml = '';
-                var redirectUrl = '';
-                if (selectedValue == 'remove-all-products-from-cart') {
-                    title = foodcoopshop.LocalizedJs.cart.emptyCart + '?';
-                    dialogHtml = '<p>' + foodcoopshop.LocalizedJs.cart.reallyEmptyCart + '</p>';
-                    redirectUrl = '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/emptyCart/';
-                } else {
-                    title = foodcoopshop.LocalizedJs.cart.loadPastOrder;
-                    dialogHtml = foodcoopshop.LocalizedJs.cart.loadPastOrderDescriptionHtml;
-                    redirectUrl = '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/addOrderToCart?deliveryDate=' + selectedValue;
-                }
-                dialogHtml += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-
-                var buttons = {};
-                buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
-                buttons['yes'] = {
-                    text: foodcoopshop.LocalizedJs.helper.yes,
-                    click: function() {
-                        $('.ui-dialog .ajax-loader').show();
-                        $('.ui-dialog button').attr('disabled', 'disabled');
-                        document.location.href = redirectUrl;
-                    }
-                };
-                $('<div></div>').appendTo('body')
-                    .html(dialogHtml)
-                    .dialog({
-                        modal: true,
-                        title: title,
-                        autoOpen: true,
-                        width: 400,
-                        resizable: false,
-                        buttons: buttons,
-                        close: function (event, ui) {
-                            $(this).remove();
-                        }
-                    });
-            }
-        });
     }
 
 };

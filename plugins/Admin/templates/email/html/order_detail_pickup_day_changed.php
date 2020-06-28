@@ -29,7 +29,7 @@
 
             <p>
                 <?php echo __d('admin', 'Why_was_the_pickup_day_changed?'); ?><br />
-                <b><?php echo '"' . $changePickupDayReason . '"'; ?></b>
+                <b><?php echo '"' . $editPickupDayReason . '"'; ?></b>
             </p>
 
 
