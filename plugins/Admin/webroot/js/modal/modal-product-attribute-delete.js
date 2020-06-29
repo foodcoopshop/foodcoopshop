@@ -24,7 +24,6 @@ foodcoopshop.ModalProductAttributeDelete = {
             var productId = splittedProductId[0];
             var productAttributeId = splittedProductId[1];
 
-            var dataRow = $(this).closest('tr');
             var html = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyDeleteAttribute0.replaceI18n(0, '<b>' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>');
 
             foodcoopshop.Modal.appendModalToDom(
