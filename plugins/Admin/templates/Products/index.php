@@ -32,7 +32,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".Admin.initChangeNewState();" .
             Configure::read('app.jsNamespace') . ".Upload.initImageUpload('#products .add-image-button', foodcoopshop.Upload.saveProductImage);" .
             Configure::read('app.jsNamespace') . ".ModalProductAttributeAdd.init();" .
-            Configure::read('app.jsNamespace') . ".Admin.initDeleteProductAttribute('#products');" .
+            Configure::read('app.jsNamespace') . ".ModalProductAttributeDelete.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initSetDefaultAttribute('#products');" .
             Configure::read('app.jsNamespace') . ".ModalProductPriceEdit.init();" .
             Configure::read('app.jsNamespace') . ".Helper.initTooltip('.add-image-button, .product-name-edit-button');".

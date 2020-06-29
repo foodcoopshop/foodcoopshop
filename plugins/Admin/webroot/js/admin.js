@@ -489,46 +489,6 @@ foodcoopshop.Admin = {
         });
     },
 
-    initDeleteProductAttribute: function (container) {
-
-        $(container).find('.delete-product-attribute-button').on('click', function () {
-
-            var splittedProductId = $(this).closest('tr').attr('id').replace(/product-/, '').split('-');
-            var productId = splittedProductId[0];
-            var productAttributeId = splittedProductId[1];
-
-            var dataRow = $(this).closest('tr');
-            var htmlCode = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyDeleteAttribute0.replaceI18n(0, '<b>' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>');
-            htmlCode += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-
-            var buttons = {};
-            buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
-            buttons['yes'] = {
-                text: foodcoopshop.LocalizedJs.helper.yes,
-                click: function() {
-                    $('.ui-dialog .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-                    document.location.href = '/admin/products/deleteProductAttribute/' + productId + '/' + productAttributeId;
-                }
-            };
-
-            $('<div></div>').appendTo('body')
-                .html(htmlCode)
-                .dialog({
-                    modal: true,
-                    title: foodcoopshop.LocalizedJs.admin.DeleteAttribute,
-                    autoOpen: true,
-                    width: 450,
-                    resizable: false,
-                    buttons: buttons,
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
-                });
-        });
-
-    },
-
     initSetDefaultAttribute: function (container) {
         $(container).find('.set-as-default-attribute-button').on('click', function () {
 
