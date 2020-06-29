@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-06-26 09:31+0200\n"
-"PO-Revision-Date: 2020-06-26 09:31+0200\n"
+"POT-Creation-Date: 2020-06-29 21:40+0200\n"
+"PO-Revision-Date: 2020-06-29 21:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -911,6 +911,9 @@ msgstr "Hilfe"
 
 msgid "Change_name_and_description"
 msgstr "Name und Beschreibung ändern"
+
+msgid "Enter_deposit"
+msgstr "Pfand eintragen"
 
 msgid "Deposit"
 msgstr "Pfand"

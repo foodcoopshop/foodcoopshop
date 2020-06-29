@@ -163,69 +163,6 @@ foodcoopshop.Admin = {
 
     },
 
-    initProductDepositEditDialog: function (container) {
-
-        var dialogId = 'product-deposit-edit-form';
-        var dialogHtml = foodcoopshop.DialogProduct.getHtmlForProductDepositEdit(dialogId);
-        $(container).append(dialogHtml);
-
-        foodcoopshop.Helper.changeInputNumberToTextForEdge();
-
-        var buttons = {};
-        buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
-        buttons['save'] = {
-            text: foodcoopshop.LocalizedJs.helper.save,
-            click: function() {
-                if ($('#dialogDepositDeposit').val() == '' || $('#dialogDepositProductId').val() == '') {
-                    return false;
-                }
-
-                $('#product-deposit-edit-form .ajax-loader').show();
-                $('.ui-dialog button').attr('disabled', 'disabled');
-
-                foodcoopshop.Helper.ajaxCall(
-                    '/admin/products/editDeposit/',
-                    {
-                        productId: $('#dialogDepositProductId').val(),
-                        deposit: $('#dialogDepositDeposit').val(),
-                    },
-                    {
-                        onOk: function (data) {
-                            document.location.reload();
-                        },
-                        onError: function (data) {
-                            var form = $('#product-deposit-edit-form form');
-                            form.find('.ajax-loader').hide();
-                            foodcoopshop.Helper.appendFlashMessageToDialog(form, data.msg);
-                        }
-                    }
-                );
-            }
-        };
-
-        var dialog = $('#' + dialogId).dialog({
-            autoOpen: false,
-            height: 200,
-            width: 350,
-            modal: true,
-            close: function () {
-                $('#dialogDepositDeposit').val('');
-                $('#dialogDepositProductId').val('');
-            },
-            buttons: buttons
-        });
-
-        $('.product-deposit-edit-button').on('click', function () {
-            var row = $(this).closest('tr');
-            $('#' + dialogId + ' #dialogDepositDeposit').val(row.find('span.deposit-for-dialog').html());
-            $('#' + dialogId + ' #dialogDepositProductId').val(row.find('td.cell-id').html());
-            var label = foodcoopshop.Admin.getProductNameForDialog(row);
-            $('#' + dialogId + ' label[for="dialogDepositDeposit"]').html(label);
-            dialog.dialog('open');
-        });
-
-    },
-
     getProductNameForDialog : function(row) {
         var label = row.find('span.name-for-dialog').html();
         // show name of main product

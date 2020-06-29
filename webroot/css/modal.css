@@ -231,7 +231,8 @@ body.iframe_start_page {
     width: 60px;
     margin-left: 5px;
 }
-#modal-product-price-edit input[type="number"] {
+#modal-product-price-edit input[type="number"],
+#modal-product-deposit-edit input[type="number"] {
     width: 70px;
     margin-right: 5px;
     margin-top: 5px;
