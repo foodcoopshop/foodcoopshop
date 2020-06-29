@@ -48,7 +48,7 @@ use Cake\Core\Configure;
         if ($advancedStockManagementEnabled) {
             $this->element('addScript', [
                 'script' =>
-                    Configure::read('app.jsNamespace') . ".Admin.initProductIsStockProductEditDialog('#products');"
+                    Configure::read('app.jsNamespace') . ".ModalProductIsStockProductEdit.init();"
             ]);
         }
     ?>
