@@ -489,47 +489,6 @@ foodcoopshop.Admin = {
         });
     },
 
-    initSetDefaultAttribute: function (container) {
-        $(container).find('.set-as-default-attribute-button').on('click', function () {
-
-            var row = $(this).closest('tr');
-
-            var productIdString = row.attr('id').replace(/product-/, '').split('-');
-            var productId = productIdString[0];
-            var attributeId = productIdString[1];
-
-            var label = foodcoopshop.Admin.getProductNameForDialog(row);
-            var htmlCode = foodcoopshop.LocalizedJs.admin.ChangingDefaultAttributeInfoText0Html.replaceI18n(0, '<b>' + label + '</b>');
-            htmlCode += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-
-            var buttons = {};
-            buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
-            buttons['save'] = {
-                text: foodcoopshop.LocalizedJs.helper.save,
-                click: function() {
-                    $('.ui-dialog .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-                    document.location.href = '/admin/products/changeDefaultAttributeId/' + productId + '/' + attributeId;
-                }
-            };
-
-            $('<div></div>').appendTo('body')
-                .html(htmlCode)
-                .dialog({
-                    modal: true,
-                    title: foodcoopshop.LocalizedJs.admin.ChangeDefaultAttribute,
-                    autoOpen: true,
-                    width: 450,
-                    resizable: false,
-                    buttons: buttons,
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
-                });
-
-        });
-    },
-
     initCopySelectedCustomerEmailsToClipboard: function() {
 
         var btnSelector = '.btn-clipboard';

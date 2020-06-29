@@ -1285,12 +1285,12 @@ class ProductsController extends AdminAppController
         }
     }
 
-    public function changeDefaultAttributeId($productId, $productAttributeId)
+    public function setDefaultAttributeId($productId, $productAttributeId)
     {
         $productId = (int) $productId;
         $productAttributeId = (int) $productAttributeId;
 
-        $this->Product->changeDefaultAttributeId($productId, $productAttributeId);
+        $this->Product->setDefaultAttributeId($productId, $productAttributeId);
 
         $product = $this->Product->find('all', [
             'conditions' => [

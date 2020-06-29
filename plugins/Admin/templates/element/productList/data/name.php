@@ -46,10 +46,10 @@ echo '<td class="cell-name">';
         } else {
 
             echo $this->Html->link(
-                '<i class="fas fa-star gold fa-xs"></i>',
+                '<i class="fas fa-star fa-xs neutral"></i>',
                 'javascript:void(0);',
                 [
-                    'class' => 'btn btn-outline-light set-as-default-attribute-button',
+                    'class' => 'btn btn-outline-light set-default-attribute-button',
                     'title' => __d('admin', 'Define_as_new_default_attribute'),
                     'escape' => false
                 ]
