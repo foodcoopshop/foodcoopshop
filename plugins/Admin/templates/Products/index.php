@@ -21,7 +21,7 @@ use Cake\Core\Configure;
         $this->element('addScript', [
         'script' =>
             Configure::read('app.jsNamespace') . ".Admin.init();" .
-            Configure::read('app.jsNamespace') . ".Admin.initProductChangeActiveState();" .
+            Configure::read('app.jsNamespace') . ".ModalProductStatusEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductDepositEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductNameEdit.init();" .
             Configure::read('app.jsNamespace') . ".Admin.initProductQuantityList('#products');" .

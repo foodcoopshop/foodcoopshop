@@ -527,51 +527,6 @@ foodcoopshop.Admin = {
         $('#menu').css('min-height', marginTop + $('#content').height() + 4);
     },
 
-    initProductChangeActiveState: function () {
-
-        $('.change-active-state').on('click', function () {
-
-            var productId = $(this).attr('id').split('-');
-            productId = productId[productId.length - 1];
-
-            var newState = 1;
-            var newStateText = foodcoopshop.LocalizedJs.admin.ActivateProduct;
-            var reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyActivateProduct0;
-            if ($(this).hasClass('set-state-to-inactive')) {
-                newState = 0;
-                newStateText = foodcoopshop.LocalizedJs.admin.DeactivateProduct;
-                reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyDeactivateProduct0;
-            }
-
-            var buttons = {};
-            buttons['no'] = foodcoopshop.Helper.getJqueryUiNoButton();
-            buttons['yes'] = {
-                text: foodcoopshop.LocalizedJs.helper.yes,
-                click: function() {
-                    $('.ui-dialog .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-                    document.location.href = '/admin/products/changeStatus/' + productId + '/' + newState;
-                }
-            };
-
-            var dataRow = $('#change-active-state-' + productId).closest('tr');
-            $('<div></div>')
-                .appendTo('body')
-                .html('<p>' + reallyNewStateText.replaceI18n(0, '<b>' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>') + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
-                .dialog({
-                    modal: true,
-                    title: newStateText,
-                    autoOpen: true,
-                    width: 400,
-                    resizable: false,
-                    buttons: buttons,
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
-                });
-        });
-    },
-
     addDatepickerInDialog : function(inputField) {
         inputField.datepicker({
             beforeShow: function(input, inst) {
