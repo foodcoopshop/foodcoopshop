@@ -267,3 +267,8 @@ body.iframe_start_page {
     float: left;
     margin-top: 5px;
 }
+.modal li {
+    margin-left: 20px;
+    margin-top: 5px;
+    list-style: disc;
+}

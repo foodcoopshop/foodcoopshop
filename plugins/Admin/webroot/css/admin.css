@@ -326,19 +326,6 @@ input.datepicker {
     width: 110px;
     text-align: center;
 }
-.ui-dialog-content li {
-    margin-left: 20px;
-    margin-top: 5px;
-    list-style: disc;
-}
-.ui-dialog-content .bootstrap-select .dropdown-menu li {
-    margin-left: 0;
-    margin-top: 0;
-    list-style: none;
-}
-.ui-dialog-content .bootstrap-select .dropdown-toggle {
-    width: 307px;
-}
 .warning {
     color: red;
 }

@@ -156,8 +156,8 @@ class ProductsController extends AdminAppController
                 foreach($query as $orderDetail) {
                     $errors[] = __d('admin', 'The_product_{0}_has_{1,plural,=1{1_open_order} other{#_open_orders}}.',
                         [
-                            $orderDetail->productName,
-                            $orderDetail->orderDetailsCount
+                            '<b>' . $orderDetail->productName . '</b>',
+                            $orderDetail->orderDetailsCount,
                         ]
                     );
                 }
