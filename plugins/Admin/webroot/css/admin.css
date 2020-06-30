@@ -359,23 +359,8 @@ div.cke {
     margin-bottom: 10px;
     float: right;
 }
-#cke_configurations-value,
-#cke_dialogCancellationReason,
-#cke_dialogEditPriceReason,
-#cke_dialogEditQuantityReason,
-#cke_dialogEditAmountReason,
-#cke_dialogChangePickupDayReason,
-#cke_dialogEditCustomerReason {
+#cke_configurations-value {
     float: left;
-}
-#product-name-edit-form div.textarea-wrapper {
-    float: left;
-    width: 310px;
-    margin-right: 5px;
-}
-#product-name-edit-form div.textarea-wrapper:last-of-type {
-    width: 415px;
-    margin-right: 0;
 }
 body.order_details.index .add-payment-deposit-button-wrapper {
   float: left;
@@ -398,18 +383,6 @@ body.order_details.index a.change-products-picked-up-button {
 }
 body.order_details.index .timebased-currency-object {
     display: none;
-}
-#product-name-edit-form div.textarea-wrapper a {
-  color: red;
-  font-weight: bold;
-  float: right;
-}
-#product-name-edit-form div.textarea-wrapper a:hover  {
-  color: #333;
-}
-#order-detail-product-amount-edit-form div.textarea-wrapper {
-    float: left;
-    margin-top: 10px;
 }
 .product-attributes-dropdown {
     width: 400px;

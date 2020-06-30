@@ -150,7 +150,7 @@ foodcoopshop.ModalProductQuantityEdit = {
             }
         }
 
-        foodcoopshop.Admin.bindToggleQuantityQuantityByModalSelector(modalSelector);
+        foodcoopshop.Admin.bindToggleQuantityQuantity(modalSelector);
 
         $(modalSelector + ' #dialogQuantityQuantity').val(row.find('span.quantity-for-dialog').html().replace(/\./, ''));
         if (row.find('.amount').html().match('fa-infinity')) {

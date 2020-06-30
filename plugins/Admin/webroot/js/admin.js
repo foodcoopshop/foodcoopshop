@@ -25,16 +25,6 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
 
-    addWrappersAndLoaderToDialogHtml : function(title, dialogId, dialogHtml) {
-        var html = '<div id="' + dialogId + '" class="dialog" title="' + title + '">';
-        html += '<form onkeypress="return event.keyCode != 13;">';
-        html += dialogHtml;
-        html += '<img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />';
-        html += '</form>';
-        html += '</div>';
-        return html;
-    },
-
     disableSelectpickerItems : function (selector, ids) {
         $(selector).find('option').each(function () {
             var currentId = parseInt($(this).val());
@@ -191,24 +181,11 @@ foodcoopshop.Admin = {
         });
     },
 
-    bindToggleQuantityQuantityByModalSelector : function(modalSelector) {
+    bindToggleQuantityQuantity : function(modalSelector) {
         var modal = $(modalSelector);
         modal.find('#dialogQuantityAlwaysAvailable').on('change', function() {
             var quantityWrapper = modal.find('.quantity-wrapper');
             var dialogQuantityElement = modal.find('#dialogQuantityAlwaysAvailable');
-            if (dialogQuantityElement.prop('checked')) {
-                quantityWrapper.hide();
-            } else {
-                quantityWrapper.show();
-            }
-        });
-    },
-
-    bindToggleQuantityQuantity : function(dialogId) {
-        var dialog = $('#' + dialogId);
-        dialog.find('#dialogQuantityAlwaysAvailable').on('change', function() {
-            var quantityWrapper = dialog.find('.quantity-wrapper');
-            var dialogQuantityElement = dialog.find('#dialogQuantityAlwaysAvailable');
             if (dialogQuantityElement.prop('checked')) {
                 quantityWrapper.hide();
             } else {
@@ -399,21 +376,6 @@ foodcoopshop.Admin = {
         var marginTop = $('.filter-container').outerHeight();
         $('#content').css('margin-top', marginTop);
         $('#menu').css('min-height', marginTop + $('#content').height() + 4);
-    },
-
-    addDatepickerInDialog : function(inputField) {
-        inputField.datepicker({
-            beforeShow: function(input, inst) {
-                $('.ui-dialog').addClass('has-datepicker');
-            },
-            onClose: function(input, inst) {
-                $('.ui-dialog').removeClass('has-datepicker');
-                // if datepicker is closed without selecting a date, it's focused and another click does not trigger to open calendar again
-                $(this).off('click').on('click', function() {
-                    inputField.datepicker('show');
-                });
-            }
-        });
     },
 
     initGenerateMemberCardsOfSelectedCustomersButton : function() {

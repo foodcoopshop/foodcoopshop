@@ -274,44 +274,8 @@ a.toggle-link.collapsed i:before {
 .vertical.menu a.deactivated {
     opacity: 0.5;
 }
-.dialog {
-    display: none;
-}
-.dialog input {
-    width: 200px;
-}
-.dialog .ajax-loader,
-.ui-dialog .ajax-loader {
-    position: absolute;
-    left: 15px;
-    bottom: 0px;
-    display: none;
-}
-.ui-dialog .ajax-loader {
-    bottom: 20px;
-}
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
     font-family: 'Open Sans';
-}
-.ui-dialog .ui-dialog-content {
-    position: static;
-}
-.ui-dialog-buttonset {
-    width: 100%;
-}
-.ui-dialog-buttonset button.left-button {
-    float: left;
-}
-.ui-dialog-buttonset button.left-button:first-child {
-    margin-left: 50px;
-}
-.ui-dialog-buttonset button {
-    float: right;
-}
-.ui-widget-overlay {
-  background: #000 ! important;
-  opacity: .65 ! important;
-  z-index: 100001;
 }
 #scroll-to-top {
   position: fixed;
