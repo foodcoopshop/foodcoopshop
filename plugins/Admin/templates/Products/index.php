@@ -29,7 +29,7 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace') . ".ModalProductQuantityEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductCategoriesEdit.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductTaxEdit.init();" .
-            Configure::read('app.jsNamespace') . ".Admin.initChangeNewState();" .
+            Configure::read('app.jsNamespace') . ".ModalProductStatusNewEdit.init();" .
             Configure::read('app.jsNamespace') . ".Upload.initImageUpload('#products .add-image-button', foodcoopshop.Upload.saveProductImage);" .
             Configure::read('app.jsNamespace') . ".ModalProductAttributeAdd.init();" .
             Configure::read('app.jsNamespace') . ".ModalProductAttributeDelete.init();" .

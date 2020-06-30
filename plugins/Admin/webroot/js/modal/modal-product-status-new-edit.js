@@ -11,42 +11,42 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-foodcoopshop.ModalProductStatusEdit = {
+foodcoopshop.ModalProductStatusNewEdit = {
 
     init : function() {
 
-        var modalSelector = '#modal-product-status-edit';
+        var modalSelector = '#modal-product-status-new-edit';
 
-        $('.product-status-edit').on('click', function () {
+        $('.product-new-status-edit').on('click', function () {
 
             var productId = $(this).attr('id').split('-');
             productId = productId[productId.length - 1];
 
             var newState = 1;
-            var newStateText = foodcoopshop.LocalizedJs.admin.ActivateProduct;
-            var reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyActivateProduct0;
-            if ($(this).hasClass('set-status-to-inactive')) {
+            var newStateText = foodcoopshop.LocalizedJs.admin.ShowProductAsNew;
+            var reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyShowProduct0AsNew;
+            if ($(this).hasClass('product-new-status-edit-inactive')) {
                 newState = 0;
-                newStateText = foodcoopshop.LocalizedJs.admin.DeactivateProduct;
-                reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyDeactivateProduct0;
+                newStateText = foodcoopshop.LocalizedJs.admin.DoNotShowProductAsNew;
+                reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyDoNotShowProduct0AsNew;
             }
 
-            var dataRow = $('#product-status-edit-' + productId).closest('tr');
+            var dataRow = $(this).closest('tr');
 
             foodcoopshop.Modal.appendModalToDom(
                 modalSelector,
                 newStateText,
-                '<p>' + reallyNewStateText.replaceI18n(0, '<b>' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>')
+                '<p>' + reallyNewStateText.replaceI18n(0,  '<b>' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>')
             );
 
             foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-                foodcoopshop.ModalProductStatusEdit.getSuccessHandler(productId, newState);
+                foodcoopshop.ModalProductStatusNewEdit.getSuccessHandler(productId, newState);
             });
 
             $(modalSelector).on('hidden.bs.modal', function (e) {
-                foodcoopshop.ModalProductStatusEdit.getCloseHandler(modalSelector);
+                foodcoopshop.ModalProductStatusNewEdit.getCloseHandler(modalSelector);
             });
-            foodcoopshop.ModalProductStatusEdit.getOpenHandler(modalSelector);
+            foodcoopshop.ModalProductStatusNewEdit.getOpenHandler(modalSelector);
         });
 
     },
@@ -56,7 +56,7 @@ foodcoopshop.ModalProductStatusEdit = {
     },
 
     getSuccessHandler : function(productId, newState) {
-        document.location.href = '/admin/products/changeStatus/' + productId + '/' + newState;
+        document.location.href = '/admin/products/changeNewStatus/' + productId + '/' + newState;
     },
 
     getOpenHandler : function(modalSelector) {

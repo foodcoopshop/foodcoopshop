@@ -315,50 +315,6 @@ foodcoopshop.Admin = {
         return row.find('td.is-stock-product').length > 0 && row.find('td.is-stock-product').html().match('fa-check');
     },
 
-    initChangeNewState: function () {
-
-        $('.change-new-state').on('click', function () {
-
-            var productId = $(this).attr('id').split('-');
-            productId = productId[productId.length - 1];
-
-            var newState = 1;
-            var newStateText = foodcoopshop.LocalizedJs.admin.ShowProductAsNew;
-            var reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyShowProduct0AsNew;
-            if ($(this).hasClass('change-new-state-inactive')) {
-                newState = 0;
-                newStateText = foodcoopshop.LocalizedJs.admin.DoNotShowProductAsNew;
-                reallyNewStateText = foodcoopshop.LocalizedJs.admin.ReallyDoNotShowProduct0AsNew;
-            }
-
-            var buttons = {};
-            buttons['cancel'] = foodcoopshop.Helper.getJqueryUiCancelButton();
-            buttons['save'] = {
-                text: foodcoopshop.LocalizedJs.helper.save,
-                click: function() {
-                    $('.ui-dialog .ajax-loader').show();
-                    $('.ui-dialog button').attr('disabled', 'disabled');
-                    document.location.href = '/admin/products/changeNewStatus/' + productId + '/' + newState;
-                }
-            };
-
-            var dataRow = $(this).closest('tr');
-            $('<div></div>').appendTo('body')
-                .html('<p>' + reallyNewStateText.replaceI18n(0,  '<b>' + dataRow.find('td.cell-name span.name-for-dialog').html() + '</b>') + '</p><img class="ajax-loader" src="/img/ajax-loader.gif" height="32" width="32" />')
-                .dialog({
-                    modal: true,
-                    title: newStateText,
-                    autoOpen: true,
-                    width: 400,
-                    resizable: false,
-                    buttons: buttons,
-                    close: function (event, ui) {
-                        $(this).remove();
-                    }
-                });
-        });
-    },
-
     initCopySelectedCustomerEmailsToClipboard: function() {
 
         var btnSelector = '.btn-clipboard';
