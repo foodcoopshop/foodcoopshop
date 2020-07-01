@@ -84,7 +84,11 @@ foodcoopshop.Modal = {
         this.makeDraggable(elementId);
     },
 
-    removeFromParentDocument : function(modalId, parentDocument) {
+    /**
+     * necessary for removing modals from parent document (instant order)
+     * sometimes (upload.js) native function "remove" does not work
+     */
+    destroy : function(modalId, parentDocument) {
         $(modalId, parentDocument).remove();
         $('.modal-backdrop', parentDocument).remove();
         $('body', parentDocument).removeClass('modal-open');

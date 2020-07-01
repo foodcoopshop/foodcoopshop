@@ -49,7 +49,7 @@ foodcoopshop.ModalInstantOrderCancel = {
             {},
             {
                 onOk: function (data) {
-                    foodcoopshop.Modal.removeFromParentDocument('#instant-order-add', window.parent.document);
+                    foodcoopshop.Modal.destroy('#instant-order-add', window.parent.document);
                     document.location.reload();
                 },
                 onError: function (data) {
