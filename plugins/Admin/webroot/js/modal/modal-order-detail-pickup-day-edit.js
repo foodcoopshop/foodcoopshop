@@ -76,7 +76,7 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
             {
                 orderDetailIds: orderDetailIds,
                 pickupDay: $('#dialogChangePickupDay').val(),
-                changePickupDayReason: CKEDITOR.instances['dialogEditPickupDayReason'].getData().trim()
+                editPickupDayReason: CKEDITOR.instances['dialogEditPickupDayReason'].getData().trim()
             },
             {
                 onOk: function (data) {
