@@ -57,8 +57,7 @@
     padding: 0;
 }
 #instant-order-add .modal-footer,
-#modal-image .modal-footer,
-#modal-text .modal-footer {
+#modal-image .modal-footer {
     display: none;
 }
 #instant-order-add .bootstrap-select {
