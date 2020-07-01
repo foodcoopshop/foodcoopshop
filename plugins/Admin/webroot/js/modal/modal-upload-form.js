@@ -49,7 +49,7 @@ foodcoopshop.ModalUploadForm = {
     },
 
     getCloseHandler : function(modalSelector) {
-        foodcoopshop.Modal.destroy(modalSelector);
+        $(modalSelector).remove();
     },
 
     getOpenHandler : function(button, modalSelector, html, uploadType) {

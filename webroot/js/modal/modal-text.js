@@ -24,7 +24,7 @@ foodcoopshop.ModalText = {
     },
 
     getCloseHandler : function(modalSelector) {
-        foodcoopshop.Modal.destroy(modalSelector);
+        $(modalSelector).remove();
     },
 
     getOpenHandler : function(modalSelector, button) {
