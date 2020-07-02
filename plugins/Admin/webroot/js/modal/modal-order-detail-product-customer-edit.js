@@ -84,6 +84,8 @@ foodcoopshop.ModalOrderDetailProductCustomerEdit = {
         foodcoopshop.Helper.initCkeditor('dialogEditCustomerReason', true);
 
         var customerDropdownSelector = '#dialogOrderDetailEditCustomerId';
+        $(customerDropdownSelector).find('option[value=""]').remove();
+
         $(customerDropdownSelector).selectpicker({
             liveSearch: true,
             size: 7,
@@ -93,9 +95,7 @@ foodcoopshop.ModalOrderDetailProductCustomerEdit = {
 
         var row = button.closest('tr');
         var orderDetailId = row.find('td:nth-child(2)').html();
-        var customerId = row.find('td:nth-child(9) span.customer-id-for-dialog').html();
         $(modalSelector + ' #dialogOrderDetailEditCustomerOrderDetailId').val(orderDetailId);
-        $(modalSelector + ' #dialogOrderDetailEditCustomerId').selectpicker('val', '');
 
         var infoText = foodcoopshop.LocalizedJs.admin.ToWhichMemberShouldTheOrderedProduct0Of1BeAssignedTo.replace(/\{0\}/, '<b>' + row.find('td:nth-child(4) a.name-for-dialog').text() + '</b>');
         infoText = infoText.replace(/\{1\}/, '<b>' + row.find('td:nth-child(9) span.customer-name-for-dialog').html() + '</b>');
@@ -128,7 +128,6 @@ foodcoopshop.ModalOrderDetailProductCustomerEdit = {
             selectLabel.show();
             select.val('');
         }
-
 
         $(modalSelector).modal();
 

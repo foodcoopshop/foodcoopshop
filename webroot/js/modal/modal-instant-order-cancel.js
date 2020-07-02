@@ -30,7 +30,7 @@ foodcoopshop.ModalInstantOrderCancel = {
         );
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-            foodcoopshop.ModalInstantOrderCancel.getSuccessHandler(modalSelector);
+            foodcoopshop.ModalInstantOrderCancel.getSuccessHandler();
         });
 
         $('#cart .instant-order-customer-info a.btn').on('click', function () {
@@ -43,7 +43,7 @@ foodcoopshop.ModalInstantOrderCancel = {
         return '<p>' + foodcoopshop.LocalizedJs.helper.ReallyCancelInstantOrder + '</p>';
     },
 
-    getSuccessHandler : function(modalSelector) {
+    getSuccessHandler : function() {
         foodcoopshop.Helper.ajaxCall(
             '/' + foodcoopshop.LocalizedJs.cart.routeCart + '/ajaxDeleteInstantOrderCustomer',
             {},

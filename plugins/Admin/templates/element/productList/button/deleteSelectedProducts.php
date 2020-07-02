@@ -16,7 +16,7 @@ use Cake\Core\Configure;
 
 if (!empty($products)) {
     $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace').".Admin.initDeleteSelectedProducts();"
+        'script' => Configure::read('app.jsNamespace').".ModalProductDelete.init();"
     ]);
     echo '<a id="deleteSelectedProducts" class="btn btn-danger" href="javascript:void(0);"><i class="far fa-trash-alt"></i> ' . __d('admin', 'Delete_selected_products') . '</a>';
 }

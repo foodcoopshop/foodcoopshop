@@ -156,8 +156,8 @@ class ProductsController extends AdminAppController
                 foreach($query as $orderDetail) {
                     $errors[] = __d('admin', 'The_product_{0}_has_{1,plural,=1{1_open_order} other{#_open_orders}}.',
                         [
-                            $orderDetail->productName,
-                            $orderDetail->orderDetailsCount
+                            '<b>' . $orderDetail->productName . '</b>',
+                            $orderDetail->orderDetailsCount,
                         ]
                     );
                 }
@@ -1285,12 +1285,12 @@ class ProductsController extends AdminAppController
         }
     }
 
-    public function changeDefaultAttributeId($productId, $productAttributeId)
+    public function setDefaultAttributeId($productId, $productAttributeId)
     {
         $productId = (int) $productId;
         $productAttributeId = (int) $productAttributeId;
 
-        $this->Product->changeDefaultAttributeId($productId, $productAttributeId);
+        $this->Product->setDefaultAttributeId($productId, $productAttributeId);
 
         $product = $this->Product->find('all', [
             'conditions' => [

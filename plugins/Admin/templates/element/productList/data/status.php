@@ -20,8 +20,8 @@ echo '<td class="status">';
             '<i class="fas fa-check-circle ok"></i>',
             'javascript:void(0);',
             [
-                'class' => 'btn btn-outline-light set-state-to-inactive change-active-state',
-                'id' => 'change-active-state-' . $product->id_product,
+                'class' => 'btn btn-outline-light set-status-to-inactive product-status-edit',
+                'id' => 'product-status-edit-' . $product->id_product,
                 'title' => __d('admin', 'deactivate'),
                 'escape' => false
             ]
@@ -33,8 +33,8 @@ echo '<td class="status">';
             '<i class="fas fa-minus-circle not-ok"></i>',
             'javascript:void(0);',
             [
-                'class' => 'btn btn-outline-light set-state-to-active change-active-state',
-                'id' => 'change-active-state-' . $product->id_product,
+                'class' => 'btn btn-outline-light set-status-to-active product-status-edit',
+                'id' => 'product-status-edit-' . $product->id_product,
                 'title' => __d('admin', 'activate'),
                 'escape' => false
             ]

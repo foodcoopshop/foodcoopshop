@@ -1199,7 +1199,7 @@ class ProductsTable extends AppTable
         return 'Products.price = 0';
     }
 
-    public function changeDefaultAttributeId($productId, $productAttributeId)
+    public function setDefaultAttributeId($productId, $productAttributeId)
     {
         $productAttributes = $this->ProductAttributes->find('all', [
             'conditions' => [

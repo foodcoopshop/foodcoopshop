@@ -66,7 +66,7 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
     },
 
     getCloseHandler : function(modalSelector) {
-        foodcoopshop.Modal.destroy(modalSelector)
+        $(modalSelector).remove();
     },
 
     getSuccessHandler : function(modalSelector, orderDetailIds) {

@@ -18,7 +18,7 @@ foodcoopshop.ModalCustomerDelete = {
         var modalSelector = '#modal-customer-delete';
 
         $('.delete-customer-button').on('click', function() {
-            foodcoopshop.ModalCustomerDelete.getOpenHandler($(this), modalSelector, customerId);
+            foodcoopshop.ModalCustomerDelete.getOpenHandler(modalSelector, customerId);
         });
 
     },
@@ -47,7 +47,7 @@ foodcoopshop.ModalCustomerDelete = {
         );
     },
 
-    getOpenHandler : function(button, modalSelector, customerId) {
+    getOpenHandler : function(modalSelector, customerId) {
 
         var buttons = [
             foodcoopshop.Modal.createButton(['btn-success'], foodcoopshop.LocalizedJs.helper.yes, 'fa fa-check'),

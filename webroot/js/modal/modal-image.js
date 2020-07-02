@@ -24,7 +24,7 @@ foodcoopshop.ModalImage = {
     },
 
     getCloseHandler : function(modalSelector) {
-        foodcoopshop.Modal.destroy(modalSelector);
+        $(modalSelector).remove();
     },
 
     addLightboxToWysiwygEditorImages: function(selector) {

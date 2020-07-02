@@ -57,8 +57,7 @@
     padding: 0;
 }
 #instant-order-add .modal-footer,
-#modal-image .modal-footer,
-#modal-text .modal-footer {
+#modal-image .modal-footer {
     display: none;
 }
 #instant-order-add .bootstrap-select {
@@ -231,7 +230,8 @@ body.iframe_start_page {
     width: 60px;
     margin-left: 5px;
 }
-#modal-product-price-edit input[type="number"] {
+#modal-product-price-edit input[type="number"],
+#modal-product-deposit-edit input[type="number"] {
     width: 70px;
     margin-right: 5px;
     margin-top: 5px;
@@ -265,4 +265,9 @@ body.iframe_start_page {
     width: 100%;
     float: left;
     margin-top: 5px;
+}
+.modal-body > ul li {
+    margin-left: 20px;
+    margin-top: 5px;
+    list-style: disc;
 }

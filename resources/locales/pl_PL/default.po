@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-06-26 09:31+0200\n"
+"POT-Creation-Date: 2020-06-29 21:40+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1225,6 +1225,11 @@ msgstr "Pomoc"
 # Change name and description
 msgid "Change_name_and_description"
 msgstr "Zmień nazwę i opis"
+
+# deposit
+#, fuzzy
+msgid "Enter_deposit"
+msgstr "kaucja"
 
 # Deposit
 msgid "Deposit"

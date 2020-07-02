@@ -29,7 +29,7 @@ $this->element('highlightRowAfterEdit', [
 $colspan = 5;
 if ($isDeleteAllowedGlobally) {
     $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace').".TimebasedCurrency.initDeletePayment();"
+        Configure::read('app.jsNamespace').".ModalTimebasedCurrencyPaymentDelete.init();"
     ]);
 }
 ?>

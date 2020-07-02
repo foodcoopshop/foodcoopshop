@@ -261,6 +261,7 @@ class LocalizedController extends Controller
                 'DocsUrlProductDeclaration' => Configure::read('app.htmlHelper')->getDocsUrl(__('docs_route_product_declaration')),
                 'Help' => __('Help'),
                 'ChangeNameAndDescription' => __('Change_name_and_description'),
+                'EnterDeposit' => __('Enter_deposit'),
                 'Deposit' => __('Deposit'),
                 'EnterZeroForDelete' => __('Enter_zero_for_delete'),
                 'IsProductAStockProduct' => __('Is_the_product_a_stock_product?'),

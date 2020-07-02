@@ -24,7 +24,7 @@ foodcoopshop.ModalText = {
     },
 
     getCloseHandler : function(modalSelector) {
-        foodcoopshop.Modal.destroy(modalSelector);
+        $(modalSelector).remove();
     },
 
     getOpenHandler : function(modalSelector, button) {
@@ -33,7 +33,7 @@ foodcoopshop.ModalText = {
             modalSelector,
             '',
             '',
-            []
+            [foodcoopshop.Modal.createButton(['btn-outline-light'], foodcoopshop.LocalizedJs.helper.Close, null, true)]
         );
 
 

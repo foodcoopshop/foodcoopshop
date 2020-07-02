@@ -113,9 +113,6 @@ a.btn-outline-light.help {
   padding-left: 5px;
   padding-right: 5px;
 }
-.dropdown-menu > .active > a > span,
-.dropdown-menu > .active > a:hover > span {
-}
 form.fcs-form .bootstrap-select {
     width: 250px ! important;
 }
@@ -329,19 +326,6 @@ input.datepicker {
     width: 110px;
     text-align: center;
 }
-.ui-dialog-content li {
-    margin-left: 20px;
-    margin-top: 5px;
-    list-style: disc;
-}
-.ui-dialog-content .bootstrap-select .dropdown-menu li {
-    margin-left: 0;
-    margin-top: 0;
-    list-style: none;
-}
-.ui-dialog-content .bootstrap-select .dropdown-toggle {
-    width: 307px;
-}
 .warning {
     color: red;
 }
@@ -375,23 +359,8 @@ div.cke {
     margin-bottom: 10px;
     float: right;
 }
-#cke_configurations-value,
-#cke_dialogCancellationReason,
-#cke_dialogEditPriceReason,
-#cke_dialogEditQuantityReason,
-#cke_dialogEditAmountReason,
-#cke_dialogChangePickupDayReason,
-#cke_dialogEditCustomerReason {
+#cke_configurations-value {
     float: left;
-}
-#product-name-edit-form div.textarea-wrapper {
-    float: left;
-    width: 310px;
-    margin-right: 5px;
-}
-#product-name-edit-form div.textarea-wrapper:last-of-type {
-    width: 415px;
-    margin-right: 0;
 }
 body.order_details.index .add-payment-deposit-button-wrapper {
   float: left;
@@ -414,18 +383,6 @@ body.order_details.index a.change-products-picked-up-button {
 }
 body.order_details.index .timebased-currency-object {
     display: none;
-}
-#product-name-edit-form div.textarea-wrapper a {
-  color: red;
-  font-weight: bold;
-  float: right;
-}
-#product-name-edit-form div.textarea-wrapper a:hover  {
-  color: #333;
-}
-#order-detail-product-amount-edit-form div.textarea-wrapper {
-    float: left;
-    margin-top: 10px;
 }
 .product-attributes-dropdown {
     width: 400px;

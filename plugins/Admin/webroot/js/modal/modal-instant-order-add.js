@@ -36,7 +36,7 @@ foodcoopshop.ModalInstantOrderAdd = {
     },
 
     getCloseHandler : function(modalSelector) {
-        foodcoopshop.Modal.destroy(modalSelector);
+        $(modalSelector).remove();
         foodcoopshop.Helper.ajaxCall(
             '/carts/ajaxDeleteInstantOrderCustomer',
             {},
