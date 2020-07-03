@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-06-29 21:40+0200\n"
-"PO-Revision-Date: 2020-06-29 21:41+0200\n"
+"POT-Creation-Date: 2020-07-03 11:35+0200\n"
+"PO-Revision-Date: 2020-07-03 11:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1517,6 +1517,9 @@ msgstr "Please accept the general terms and conditions."
 
 msgid "Please_promise_to_pick_up_the_ordered_products."
 msgstr "Please promise to pick up the ordered products."
+
+msgid "Please_select_a_pickup_day."
+msgstr "Please select a pickup day."
 
 msgid "offline"
 msgstr "offline"

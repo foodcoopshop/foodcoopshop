@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-06-29 21:40+0200\n"
+"POT-Creation-Date: 2020-07-03 11:35+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2045,6 +2045,11 @@ msgstr "Zaakceptuj regulamin."
 # Please promise to pick up the ordered products.
 msgid "Please_promise_to_pick_up_the_ordered_products."
 msgstr "Zobowiąż się do odbioru zamawianych produktów."
+
+# Please enter a number.
+#, fuzzy
+msgid "Please_select_a_pickup_day."
+msgstr "Wprowadź liczbę."
 
 # offline
 msgid "offline"

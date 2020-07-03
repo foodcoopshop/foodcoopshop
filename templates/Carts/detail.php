@@ -75,6 +75,10 @@ if (Configure::read('app.showManufacturerListAndDetailPage')) {
         <?php } ?>
 
         <?php
+           echo $this->element('cart/selectPickupDay');
+        ?>
+
+        <?php
             if (Configure::read('app.showPickupPlaceInfo')) {
                echo $this->element('cart/pickupPlaceInfoText');
             }

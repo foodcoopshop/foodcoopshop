@@ -332,8 +332,8 @@ class CartComponent extends Component
                 'cartProductId' => $cartProduct['cartProductId'],
             ];
 
-            if ($this->AppAuth->isInstantOrderMode() || $this->AppAuth->isSelfServiceModeByUrl()) {
-                $orderDetail2save['pickup_day'] = $cartProduct['pickupDay'];
+            if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+                $orderDetail2save['pickup_day'] = $this->getController()->getRequest()->getData('Carts.pickup_day');
             }
 
             // prepare data for table order_detail_tax
@@ -407,6 +407,7 @@ class CartComponent extends Component
         }
 
         $options = [];
+
         if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
             // save pickup day: primary key needs to be changed!
             $this->Cart->PickupDayEntities->setPrimaryKey(['customer_id', 'pickup_day']);
@@ -425,6 +426,11 @@ class CartComponent extends Component
                 $this->getController()->setRequest($this->getController()->getRequest()->withData('Carts.pickup_day_entities', $fixedPickupDayRequest));
             }
         }
+
+        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+            $options['validate'] = 'customerCanSelectPickupDay';
+        }
+
         $cart['Cart'] = $this->Cart->patchEntity(
             $cart['Cart'],
             $this->getController()->getRequest()->getData(),

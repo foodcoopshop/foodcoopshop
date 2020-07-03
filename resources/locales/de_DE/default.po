@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-06-29 21:40+0200\n"
-"PO-Revision-Date: 2020-06-29 21:41+0200\n"
+"POT-Creation-Date: 2020-07-03 11:35+0200\n"
+"PO-Revision-Date: 2020-07-03 11:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1517,6 +1517,9 @@ msgstr "Bitte akzeptiere die AGB."
 
 msgid "Please_promise_to_pick_up_the_ordered_products."
 msgstr "Bitte verspreche, die bestellten Produkte abzuholen und bei der Abholung bar zu bezahlen."
+
+msgid "Please_select_a_pickup_day."
+msgstr "Bitte wähle einen Abholtag aus."
 
 msgid "offline"
 msgstr "offline"

@@ -368,6 +368,34 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeStockAvailable($this->productId2, 20); // reset to old stock available
     }
 
+    public function testFinishWithPickupDayValidation()
+    {
+        $this->changeConfiguration('FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY', 1);
+        $this->loginAsSuperadmin();
+        $this->fillCart();
+        $this->checkCartStatus();
+        $this->finishCart(1, 1, '');
+        $this->assertRegExpWithUnquotedString('Bitte wähle einen Abholtag aus.', $this->httpClient->getContent());
+        $this->finishCart(1, 1, '', null, '');
+        $this->assertRegExpWithUnquotedString('Bitte wähle einen Abholtag aus.', $this->httpClient->getContent());
+    }
+
+    public function testFinishWithCorrectPickupDay()
+    {
+        $pickupDay = '2020-01-01';
+        $this->changeConfiguration('FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY', 1);
+        $this->loginAsSuperadmin();
+        $this->fillCart();
+        $this->checkCartStatus();
+        $this->finishCart(1, 1, '', null, $pickupDay);
+
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
+        $this->checkCartStatusAfterFinish();
+
+        $cart = $this->getCartById($cartId);
+        $this->checkOrderDetails($cart->cart_products[2]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.3, 3.64, 0.17, 0.34, 2, $pickupDay);
+    }
+
     public function testFinishCartCheckboxesValidation()
     {
         $this->loginAsSuperadmin();

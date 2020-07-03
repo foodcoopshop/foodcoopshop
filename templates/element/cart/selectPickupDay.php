@@ -1,3 +1,4 @@
+<?php
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -11,16 +12,22 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
- #cart p.pickup-day-header:not(:first-of-type) {
-    margin-top: 0 ! important;
+use Cake\Core\Configure;
+
+if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+    return;
 }
-.pickup-day-header span.label {
-    display: none;
-}
-.select-pickup-day-wrapper {
-    margin-bottom: 10px;
-}
-.select-pickup-day-wrapper #carts-pickup-day {
-    width: 250px;
-    margin-left: 5px;
-}
+
+echo '<div class="select-pickup-day-wrapper">';
+
+    echo $this->Form->control('Carts.pickup_day', [
+        'type' => 'select',
+        'label' => __('Pickup_day').' <span class="after small"></span>',
+        'options' => Configure::read('app.timeHelper')->getNextDeliveryDays(),
+        'empty' => __('Please_select...'),
+        'escape' => false,
+    ]);
+
+echo '</div>';
+
+?>

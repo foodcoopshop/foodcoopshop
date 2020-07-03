@@ -54,6 +54,13 @@ class CartsTable extends AppTable
         return $validator;
     }
 
+    public function validationCustomerCanSelectPickupDay(Validator $validator): Validator
+    {
+        $validator = $this->validationDefault($validator);
+        $validator->requirePresence('pickup_day', true, __('Please_select_a_pickup_day.'));
+        $validator->notEmptyDate('pickup_day', __('Please_select_a_pickup_day.'));
+        return $validator;
+    }
 
     public function getProductNameWithUnity($productName, $unity)
     {

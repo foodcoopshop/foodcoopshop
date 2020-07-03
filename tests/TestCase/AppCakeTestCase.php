@@ -312,7 +312,7 @@ abstract class AppCakeTestCase extends TestCase
         return $this->httpClient->getJsonDecodedContent();
     }
 
-    protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '', $timebaseCurrencyTimeSum = null)
+    protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '', $timebaseCurrencyTimeSum = null, $pickupDay = null)
     {
         $data = [
             'Carts' => [
@@ -331,6 +331,10 @@ abstract class AppCakeTestCase extends TestCase
 
         if ($timebaseCurrencyTimeSum !== null) {
             $data['Carts']['timebased_currency_seconds_sum_tmp'] = $timebaseCurrencyTimeSum;
+        }
+
+        if ($pickupDay !== null) {
+            $data['Carts']['pickup_day'] = $pickupDay;
         }
 
         $this->httpClient->post(
