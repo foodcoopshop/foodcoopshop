@@ -730,6 +730,9 @@ body.manufacturers.detail .imprint {
 #cart a.question i {
     padding-right: 0;
 }
+p.pickup-day-header {
+    width: 100%;
+}
 body.carts p.pickup-day-header {
     margin-top: 15px;
     float: left;

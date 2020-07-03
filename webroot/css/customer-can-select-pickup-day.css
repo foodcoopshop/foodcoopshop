@@ -1,0 +1,7 @@
+#cart p.pickup-day-header:not(:first-of-type) {
+    margin-top: 0 ! important;
+}
+
+.pickup-day-header span.label {
+    display: none;
+}
