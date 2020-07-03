@@ -17,6 +17,6 @@ return [
     'der Foodcoop' => 'des Geschäfts',
     'zur Foodcoop' => 'zum Geschäft',
     'die Foodcoop' => 'das Geschäft',
-    'Lieferpause für alle Hersteller?' => 'Lieferpause für das Geschäft?',
+    'Lieferpause für alle Hersteller' => 'Lieferpause für das Geschäft',
     'für die gesamte Foodcoop' => 'für das Geschäft',
 ];
