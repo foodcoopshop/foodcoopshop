@@ -14,16 +14,11 @@
  */
 
 return [
-    'der Foodcoop' => 'des Hofladens',
-    'zur Foodcoop' => 'zum Hofladen',
-    'die Foodcoop' => 'der Hofladen',
-    'für die gesamte Foodcoop' => 'für den gesamten Hofladen',
     'Version FoodCoopShop' => 'Version Hofladen-Online',
     'in den FoodCoopShop' => 'in Hofladen-Online',
     'foodcoopshop.com' => 'hofladen-online.at',
     'FoodCoopShop' => 'Hofladen-Online',
     'Foodcoop Software' => 'Software für Direktvermarkter',
-    'Lieferpause für alle Hersteller?' => 'Lieferpause für den gesamten Hofladen?',
     '<h2>Betreiber der Plattform</h2>' => '<h2>Betreiber der Plattform (= Hersteller)</h2>',
     'im Folgenden kurz: Betreiber' => 'im Folgenden kurz: Betreiber bzw. Hersteller',
     'Der Betreiber stellt dem Nutzer eine Plattform unentgeltlich zur Verfügung, auf der Hersteller Waren und Dienstleistungen präsentieren. Diese dargebotenen Waren und Dienstleistungen sind eine unverbindliche Aufforderung des jeweils genannten Herstellers an den Nutzer, ein verbindliches Anbot für die angebotenen Waren und Dienstleistungen zu legen. Durch die Bestellung legt der Nutzer ein solches verbindliches Anbot an den jeweils genannten Hersteller.' => 'Der Betreiber stellt dem Nutzer eine Plattform unentgeltlich zur Verfügung, auf der Waren und Dienstleistungen präsentiert werden. Diese dargebotenen Waren und Dienstleistungen sind eine unverbindliche Aufforderung an den Nutzer, ein verbindliches Anbot für die angebotenen Waren und Dienstleistungen zu legen. Durch die Bestellung legt der Nutzer ein solches verbindliches Anbot an den Hersteller.',
