@@ -810,7 +810,7 @@ foodcoopshop.Helper = {
                 changeYear: true,
                 changeMonth: true,
                 duration: 'fast',
-                yearRange: '2014:2020'
+                yearRange: '2014:2025'
             };
             $.datepicker.setDefaults($.datepicker.regional);
         });
