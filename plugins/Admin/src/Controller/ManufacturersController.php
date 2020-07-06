@@ -605,7 +605,7 @@ class ManufacturersController extends AdminAppController
         $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
-        $noDeliveryBreakOptions = Configure::read('app.timeHelper')->getNextDeliveryDays();
+        $noDeliveryBreakOptions = Configure::read('app.timeHelper')->getNextWeeklyDeliveryDays();
         $this->set('noDeliveryBreakOptions', $noDeliveryBreakOptions);
 
         // set default data if manufacturer options are null
