@@ -259,7 +259,8 @@ class AppTable extends Table
 
     protected function hideProductsWithActivatedDeliveryRhythmOrDeliveryBreak($appAuth, $products)
     {
-        if ($appAuth->isInstantOrderMode() || $appAuth->isSelfServiceModeByUrl()) {
+
+        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') || $appAuth->isInstantOrderMode() || $appAuth->isSelfServiceModeByUrl()) {
             return $products;
         }
         $this->Product = TableRegistry::getTableLocator()->get('Products');
