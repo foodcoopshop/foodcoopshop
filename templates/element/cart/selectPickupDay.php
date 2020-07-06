@@ -26,11 +26,16 @@ echo '<div class="select-pickup-day-wrapper">';
         $formattedToDatabaseDeliveryDays[] = $this->Time->formatToDbFormatDate($f);
     }
 
-    $preparedDeliveryDays = $this->Time->getNextDailyDeliveryDays(14);
+    $preparedDeliveryDays = $this->Time->getNextDailyDeliveryDays(15);
+    $i = 0;
     foreach($preparedDeliveryDays as $k => $v) {
         if (in_array($k, $formattedToDatabaseDeliveryDays)) {
             $preparedDeliveryDays[$k] = $v . ' (' . __('Delivery_break') . ')';
         }
+        if ($i== 0) {
+            unset($preparedDeliveryDays[$k]); // remove today
+        }
+        $i++;
     }
 
     echo $this->Form->control('Carts.pickup_day', [
