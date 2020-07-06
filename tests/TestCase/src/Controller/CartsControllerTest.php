@@ -380,20 +380,25 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Bitte wähle einen Abholtag aus.', $this->httpClient->getContent());
     }
 
-    public function testCustomerCanSelectPickupDayFinishWithCorrectPickupDay()
+    public function testCustomerCanSelectPickupDayFinishWithCorrectPickupDayAndComment()
     {
         $pickupDay = '2020-01-01';
         $this->changeConfiguration('FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY', 1);
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
-        $this->finishCart(1, 1, '', null, $pickupDay);
+        $this->finishCart(1, 1, 'this is the comment', null, $pickupDay);
 
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
         $this->checkCartStatusAfterFinish();
 
         $cart = $this->getCartById($cartId);
         $this->checkOrderDetails($cart->cart_products[2]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.3, 3.64, 0.17, 0.34, 2, $pickupDay);
+
+        $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
+        $pickupDayEntity = $this->PickupDay->find('all')->toArray();
+        $this->assertEquals(1, count($pickupDayEntity));
+        $this->assertEquals($pickupDay, $pickupDayEntity[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')));
 
 //         $emailLogs = $this->EmailLog->find('all')->toArray();
 //         $this->assertEmailLogs(

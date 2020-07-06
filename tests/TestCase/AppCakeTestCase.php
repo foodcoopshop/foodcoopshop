@@ -317,15 +317,15 @@ abstract class AppCakeTestCase extends TestCase
         $data = [
             'Carts' => [
                 'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
-                'cancellation_terms_accepted' => $cancellation_terms_accepted
+                'cancellation_terms_accepted' => $cancellation_terms_accepted,
             ],
         ];
 
         if ($comment != '') {
             $data['Carts']['pickup_day_entities'][0] = [
                 'customer_id' => $this->httpClient->getLoggedUserId(),
-                'pickup_day' => Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb(),
-                'comment' => $comment
+                'pickup_day' => !is_null($pickupDay) ? $pickupDay : Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb(),
+                'comment' => $comment,
             ];
         }
 
@@ -351,7 +351,7 @@ abstract class AppCakeTestCase extends TestCase
             'contain' => [
                 'CartProducts.OrderDetails.OrderDetailTaxes',
                 'CartProducts.OrderDetails.OrderDetailUnits',
-                'CartProducts.OrderDetails.TimebasedCurrencyOrderDetails'
+                'CartProducts.OrderDetails.TimebasedCurrencyOrderDetails',
             ]
         ])->first();
         return $cart;

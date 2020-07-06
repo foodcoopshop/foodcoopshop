@@ -140,7 +140,7 @@ class CartsTable extends AppTable
                 'ProductAttributes.ProductAttributeCombinations.Attributes',
                 'ProductAttributes.DepositProductAttributes',
                 'ProductAttributes.UnitProductAttributes',
-                'Products.Images'
+                'Products.Images',
             ]
         ])->toArray();
 
