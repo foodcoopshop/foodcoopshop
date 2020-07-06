@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-07-06 11:01+0200\n"
+"POT-Creation-Date: 2020-07-06 15:50+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2148,6 +2148,9 @@ msgid "Please_pay_when_picking_up_products."
 msgstr ""
 
 msgid "Write_message_to_pick_up_team_for_{0}?"
+msgstr ""
+
+msgid "Write_message_to_your_order."
 msgstr ""
 
 msgid "Placeholder_message_pickup_day_comment."

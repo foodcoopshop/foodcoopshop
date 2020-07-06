@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-07-06 11:01+0200\n"
+"POT-Creation-Date: 2020-07-06 15:50+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2885,6 +2885,11 @@ msgstr "Zapłać przy odbiorze produktów."
 
 # Want to write a message to the pick up team on {0}?
 msgid "Write_message_to_pick_up_team_for_{0}?"
+msgstr "Chcesz napisać wiadomość do ekipy odbierającej na {0}?"
+
+# Want to write a message to the pick up team on {0}?
+#, fuzzy
+msgid "Write_message_to_your_order."
 msgstr "Chcesz napisać wiadomość do ekipy odbierającej na {0}?"
 
 # Your message will be shown next to your order in the admin panel. Manufacturers cannot not this message.
