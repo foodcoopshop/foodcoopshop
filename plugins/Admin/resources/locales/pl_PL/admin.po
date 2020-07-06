@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-07-06 11:01+0200\n"
+"POT-Creation-Date: 2020-07-06 11:36+0200\n"
 "PO-Revision-Date: 2020-03-19 21:01+0100\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1863,6 +1863,10 @@ msgstr "jeśli dostępne"
 msgid "No_email_notifications_are_sent_for_this_product."
 msgstr "Powiadomienia nigdy nie będą wysyłane dla tego produktu jeśli ilość magazynowa jest zbyt niska."
 
+#, fuzzy
+msgid "Member_choses_pickup_day."
+msgstr "Zmień dzień odbioru"
+
 msgid "change_delivery_rhythm"
 msgstr "zmieńharmonogram dostaw"
 
@@ -2164,10 +2168,6 @@ msgstr "Wagi dostarczonych produktów mogą ulec zmianie, więc cena również m
 #, fuzzy
 msgid "Product_ID"
 msgstr "Produkt"
-
-#, fuzzy
-#~ msgid "Member_choses_pickup_day."
-#~ msgstr "Zmień dzień odbioru"
 
 #, fuzzy
 #~ msgid "Feedback_to_product"

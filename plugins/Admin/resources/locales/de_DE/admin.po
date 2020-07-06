@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-07-06 11:01+0200\n"
-"PO-Revision-Date: 2020-07-06 11:01+0200\n"
+"POT-Creation-Date: 2020-07-06 11:36+0200\n"
+"PO-Revision-Date: 2020-07-06 11:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1800,6 +1800,9 @@ msgstr "Dieses Produkt ist immer verfügbar."
 msgid "No_email_notifications_are_sent_for_this_product."
 msgstr "Für dieses Produkt werden niemals Benachrichtigungen bezüglich Lagerstand verschickt."
 
+msgid "Member_choses_pickup_day."
+msgstr "Mitglied wählt Abholtag aus."
+
 msgid "change_delivery_rhythm"
 msgstr "Lieferrhythmus ändern"
 
@@ -2090,9 +2093,6 @@ msgstr "Produkt-Nr."
 
 #~ msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
 #~ msgstr "Du kannst den Lieferrhythmus von mehreren Produkten gleichzeitig ändern, indem du sie links auswählst und auf den Button ganz unten klickst."
-
-#~ msgid "Member_choses_pickup_day."
-#~ msgstr "Mitglied wählt Abholtag aus."
 
 #, fuzzy
 #~ msgid "Feedback_to_product"
