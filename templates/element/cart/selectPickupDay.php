@@ -18,6 +18,12 @@ if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
     return;
 }
 
+$this->element('addScript', ['script' => "
+    $('#carts-pickup-day').on('change', function() {
+        $('input[name=\"Carts[pickup_day_entities][0][pickup_day]\"]').val($(this).val());
+    });
+"]);
+
 echo '<div class="select-pickup-day-wrapper">';
 
     $formattedAndCleanedDeliveryDays = $this->Html->getFormattedAndCleanedDeliveryDays(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'));
