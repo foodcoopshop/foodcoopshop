@@ -229,7 +229,7 @@ class CartsTable extends AppTable
         return $preparedCart;
     }
 
-    public function getCartGroupedByPickupDay($cart)
+    public function getCartGroupedByPickupDay($cart, $customerSelectedPickupDay=null)
     {
         $manufacturerName = [];
         $productName = [];
@@ -247,6 +247,9 @@ class CartsTable extends AppTable
         $preparedCartProducts = [];
         foreach($cart['CartProducts'] as $cartProduct) {
             $pickupDay = $cartProduct['pickupDay'];
+            if (!is_null($customerSelectedPickupDay)) {
+                $pickupDay = $customerSelectedPickupDay;
+            }
             @$preparedCartProducts[$pickupDay]['CartDepositSum'] += $cartProduct['deposit'];
             @$preparedCartProducts[$pickupDay]['CartProductSum'] += $cartProduct['price'];
             @$preparedCartProducts[$pickupDay]['Products'][] = $cartProduct;

@@ -408,7 +408,7 @@ class CartsControllerTest extends AppCakeTestCase
             $emailLogs[0],
             'Bestellbestätigung',
             [
-//                 'Abholtag: <b> Mittwoch, 01.01.2020</b>',
+                'Abholtag: <b> Mittwoch, 01.01.2020</b>',
 //                 'Kommentar: "<b>'.$comment.'</b>"',
             ],
             [

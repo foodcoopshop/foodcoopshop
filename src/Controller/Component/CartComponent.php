@@ -332,8 +332,10 @@ class CartComponent extends Component
                 'cartProductId' => $cartProduct['cartProductId'],
             ];
 
+            $customerSelectedPickupDay = null;
             if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-                $orderDetail2save['pickup_day'] = $this->getController()->getRequest()->getData('Carts.pickup_day');
+                $customerSelectedPickupDay = h($this->getController()->getRequest()->getData('Carts.pickup_day'));
+                $orderDetail2save['pickup_day'] = $customerSelectedPickupDay;
             }
 
             // prepare data for table order_detail_tax
@@ -482,7 +484,8 @@ class CartComponent extends Component
                     $actionLogType = 'customer_order_finished';
                     $message = __('Your_order_has_been_placed_succesfully.');
                     $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
-                    $this->sendConfirmationEmailToCustomer($cart, $products);
+                    $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart, $customerSelectedPickupDay);
+                    $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products);
                     break;
                 case $this->Cart::CART_TYPE_INSTANT_ORDER;
                     $actionLogType = 'instant_order_added';
@@ -501,7 +504,8 @@ class CartComponent extends Component
                     }
                     $message .= '<br />' . __('Pickup_day') . ': <b>' . Configure::read('app.timeHelper')->getDateFormattedWithWeekday(Configure::read('app.timeHelper')->getCurrentDay()).'</b>';
                     $messageForActionLog = $message;
-                    $this->sendConfirmationEmailToCustomer($cart, $products);
+                    $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart);
+                    $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products);
                     break;
                 case $this->Cart::CART_TYPE_SELF_SERVICE;
                     $actionLogType = 'self_service_order_added';
@@ -726,10 +730,8 @@ class CartComponent extends Component
 
     /**
      * does not send email to inactive users (superadmins can place instant orders for inactive users!)
-     * @param array $cart
-     * @param array $products
      */
-    private function sendConfirmationEmailToCustomer($cart, $products)
+    private function sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products)
     {
 
         if (!$this->AppAuth->user('active')) {
@@ -741,7 +743,7 @@ class CartComponent extends Component
         $email->setTo($this->AppAuth->getEmail())
         ->setSubject(__('Order_confirmation'))
         ->setViewVars([
-            'cart' => $this->Cart->getCartGroupedByPickupDay($cart),
+            'cart' => $cartGroupedByPickupDay,
             'appAuth' => $this->AppAuth,
             'originalLoggedCustomer' => $this->getController()->getRequest()->getSession()->check('Auth.originalLoggedCustomer') ? $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer') : null
         ]);
