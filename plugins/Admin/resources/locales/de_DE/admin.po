@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-06-24 11:14+0200\n"
-"PO-Revision-Date: 2020-06-24 11:15+0200\n"
+"POT-Creation-Date: 2020-07-06 10:57+0200\n"
+"PO-Revision-Date: 2020-07-06 10:57+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1802,6 +1802,9 @@ msgstr "Dieses Produkt ist immer verfügbar."
 
 msgid "No_email_notifications_are_sent_for_this_product."
 msgstr "Für dieses Produkt werden niemals Benachrichtigungen bezüglich Lagerstand verschickt."
+
+msgid "Member_choses_pickup_day."
+msgstr "Mitglied wählt Abholtag aus."
 
 msgid "change_delivery_rhythm"
 msgstr "Lieferrhythmus ändern"
