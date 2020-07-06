@@ -468,8 +468,10 @@ class CartComponent extends Component
             $manufacturersThatReceivedInstantOrderNotification = $this->sendInstantOrderNotificationToManufacturers($cart['CartProducts']);
             $this->sendStockAvailableLimitReachedEmailToManufacturer($cart['Cart']->id_cart);
 
+            $pickupDayEntities = null;
             if (Configure::read('appDb.FCS_ORDER_COMMENT_ENABLED')) {
-                $this->Cart->PickupDayEntities->saveMany($cart['Cart']->pickup_day_entities);
+                $pickupDayEntities = $cart['Cart']->pickup_day_entities;
+                $this->Cart->PickupDayEntities->saveMany($pickupDayEntities);
             }
 
             $cart = $this->AppAuth->getCart(); // to get attached order details
@@ -485,7 +487,7 @@ class CartComponent extends Component
                     $message = __('Your_order_has_been_placed_succesfully.');
                     $messageForActionLog = __('{0}_has_placed_a_new_order_({1}).', [$this->AppAuth->getUsername(), Configure::read('app.numberHelper')->formatAsCurrency($this->getProductSum())]);
                     $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart, $customerSelectedPickupDay);
-                    $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products);
+                    $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, $pickupDayEntities);
                     break;
                 case $this->Cart::CART_TYPE_INSTANT_ORDER;
                     $actionLogType = 'instant_order_added';
@@ -731,7 +733,7 @@ class CartComponent extends Component
     /**
      * does not send email to inactive users (superadmins can place instant orders for inactive users!)
      */
-    private function sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products)
+    private function sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, $pickupDayEntities)
     {
 
         if (!$this->AppAuth->user('active')) {
@@ -744,6 +746,7 @@ class CartComponent extends Component
         ->setSubject(__('Order_confirmation'))
         ->setViewVars([
             'cart' => $cartGroupedByPickupDay,
+            'pickupDayEntities' => $pickupDayEntities,
             'appAuth' => $this->AppAuth,
             'originalLoggedCustomer' => $this->getController()->getRequest()->getSession()->check('Auth.originalLoggedCustomer') ? $this->getController()->getRequest()->getSession()->read('Auth.originalLoggedCustomer') : null
         ]);

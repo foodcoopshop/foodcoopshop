@@ -41,6 +41,7 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
         echo $this->element('email/orderedProductsTable', [
             'manufacturerId' => null,
             'pickupDay' => $pickupDay,
+            'pickupDayEntities' => $pickupDayEntities,
             'cartProducts' => $cartProducts['Products'],
             'depositSum' => $cartProducts['CartDepositSum'],
             'productSum' => $cartProducts['CartProductSum'],

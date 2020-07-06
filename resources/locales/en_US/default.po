@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-07-06 17:13+0200\n"
-"PO-Revision-Date: 2020-07-06 17:13+0200\n"
+"POT-Creation-Date: 2020-07-06 21:47+0200\n"
+"PO-Revision-Date: 2020-07-06 21:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2168,6 +2168,9 @@ msgstr "No order possible"
 
 msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
 msgstr "How much of it do I want to pay in {0}?"
+
+msgid "Comment"
+msgstr "Comment"
 
 msgid "Total"
 msgstr "Total"

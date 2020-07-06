@@ -409,7 +409,7 @@ class CartsControllerTest extends AppCakeTestCase
             'Bestellbestätigung',
             [
                 'Abholtag: <b> Mittwoch, 01.01.2020</b>',
-//                 'Kommentar: "<b>'.$comment.'</b>"',
+                'Kommentar: "<b>' . $comment . '</b>"',
             ],
             [
                 Configure::read('test.loginEmailSuperadmin')

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-07-06 17:13+0200\n"
+"POT-Creation-Date: 2020-07-06 21:47+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2913,6 +2913,11 @@ msgstr "Zamówienia możliwe do"
 #, fuzzy
 msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
 msgstr "Wprowadź, ile chcesz zapłacić w {0}."
+
+# Add comment
+#, fuzzy
+msgid "Comment"
+msgstr "Dodaj komentarz"
 
 # Total
 msgid "Total"
