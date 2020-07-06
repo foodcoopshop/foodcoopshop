@@ -725,7 +725,7 @@ class CartComponent extends Component
     }
 
     /**
-     * does not send email to inactive users (superadmins can place shop orders for inactive users!)
+     * does not send email to inactive users (superadmins can place instant orders for inactive users!)
      * @param array $cart
      * @param array $products
      */
