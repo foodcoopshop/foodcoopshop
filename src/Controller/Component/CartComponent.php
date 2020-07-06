@@ -507,7 +507,7 @@ class CartComponent extends Component
                     $message .= '<br />' . __('Pickup_day') . ': <b>' . Configure::read('app.timeHelper')->getDateFormattedWithWeekday(Configure::read('app.timeHelper')->getCurrentDay()).'</b>';
                     $messageForActionLog = $message;
                     $cartGroupedByPickupDay = $this->Cart->getCartGroupedByPickupDay($cart);
-                    $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products);
+                    $this->sendConfirmationEmailToCustomer($cart, $cartGroupedByPickupDay, $products, []);
                     break;
                 case $this->Cart::CART_TYPE_SELF_SERVICE;
                     $actionLogType = 'self_service_order_added';
