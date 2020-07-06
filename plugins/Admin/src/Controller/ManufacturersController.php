@@ -605,8 +605,10 @@ class ManufacturersController extends AdminAppController
         $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
-        $noDeliveryBreakOptions = Configure::read('app.timeHelper')->getNextWeeklyDeliveryDays();
-        $this->set('noDeliveryBreakOptions', $noDeliveryBreakOptions);
+        if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+            $noDeliveryBreakOptions = Configure::read('app.timeHelper')->getNextWeeklyDeliveryDays();
+            $this->set('noDeliveryBreakOptions', $noDeliveryBreakOptions);
+        }
 
         // set default data if manufacturer options are null
         if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && is_null($manufacturer->variable_member_fee)) {
@@ -719,7 +721,7 @@ class ManufacturersController extends AdminAppController
                 }
             }
 
-            if ($this->getRequest()->getData('Manufacturers.no_delivery_days')) {
+            if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') && $this->getRequest()->getData('Manufacturers.no_delivery_days')) {
                 $this->setRequest($this->getRequest()->withData('Manufacturers.no_delivery_days', implode(',', $this->getRequest()->getData('Manufacturers.no_delivery_days'))));
             }
 
