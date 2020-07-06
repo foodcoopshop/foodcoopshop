@@ -27,7 +27,6 @@ return [
     'Der jeweilige Hersteller' => 'Der Hersteller',
     '<p>4.3 Die E-Mailadresse des jeweiligen Herstellers ergibt sich aus dessen Impressum.</p>' => '',
     '_FOODCOOPSHOP_' => '_HOFLADEN_ONLINE_',
-    'FCS_' => 'HOF_',
     'href="https://foodcoopshop.github.io/(.*)"' => 'href="https://www.hofladen-online.at/hilfe" data-url="/$1"',
     'https://foodcoopshop.github.io/de/produkte"' => 'https://www.hofladen-online.at/hilfe"',
     'https://foodcoopshop.github.io/de/netzwerk-modul"' => 'https://www.hofladen-online.at/hilfe"',
