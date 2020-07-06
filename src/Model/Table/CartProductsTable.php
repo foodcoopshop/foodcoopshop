@@ -265,15 +265,9 @@ class CartProductsTable extends AppTable
         $cartTable = TableRegistry::getTableLocator()->get('Carts');
 
         foreach($cartProducts as &$cartProduct) {
-            if (!empty($cartProducts->order_detail)) {
-                // if cart was already saved, take the pickup_day from saved order details
-                $cartProduct->pickup_day = $cartProduct->order_detail->pickup_day;
-            } else {
-                // else calculate pickup_day
-                $cartProduct->pickup_day = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
-                if ($cartType == $cartTable::CART_TYPE_WEEKLY_RHYTHM) {
-                    $cartProduct->pickup_day = $cartProduct->product->next_delivery_day;
-                }
+            $cartProduct->pickup_day = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+            if ($cartType == $cartTable::CART_TYPE_WEEKLY_RHYTHM) {
+                $cartProduct->pickup_day = $cartProduct->product->next_delivery_day;
             }
         }
 
