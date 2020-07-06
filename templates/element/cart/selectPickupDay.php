@@ -36,7 +36,7 @@ echo '<div class="select-pickup-day-wrapper">';
     $i = 0;
     foreach($preparedDeliveryDays as $k => $v) {
         if (in_array($k, $formattedToDatabaseDeliveryDays)) {
-            $preparedDeliveryDays[$k] = $v . ' (' . __('Delivery_break') . ')';
+            $preparedDeliveryDays[$k] = $v . ' (' . __('No_order_possible') . ')';
         }
         if ($i== 0) {
             unset($preparedDeliveryDays[$k]); // remove today

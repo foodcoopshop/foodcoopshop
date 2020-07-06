@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-07-06 15:50+0200\n"
-"PO-Revision-Date: 2020-07-06 15:50+0200\n"
+"POT-Creation-Date: 2020-07-06 17:13+0200\n"
+"PO-Revision-Date: 2020-07-06 17:13+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -2162,6 +2162,9 @@ msgstr "Abholort: {0}"
 
 msgid "I_promise_to_pick_up_the_products_on_the_selected_pickup_day_and_to_pay_in_cash_in_the_shop."
 msgstr "Ich verspreche die Produkte am gebuchten Abholtag abzuholen und zahle den Betrag bar an der Kassa im Laden."
+
+msgid "No_order_possible"
+msgstr "Keine Bestellung möglich"
 
 msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
 msgstr "Wieviel davon möchtest du in {0} bezahlen?"

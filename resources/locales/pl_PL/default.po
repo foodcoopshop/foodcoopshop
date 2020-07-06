@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-07-06 15:50+0200\n"
+"POT-Creation-Date: 2020-07-06 17:13+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2903,6 +2903,11 @@ msgstr "Miejsce odbioru: {0}"
 # I promise to pick up the products on the selected pickup day and I will pay in cash in the shop.
 msgid "I_promise_to_pick_up_the_products_on_the_selected_pickup_day_and_to_pay_in_cash_in_the_shop."
 msgstr "Zobowiązuję się do odbioru produktów w wyznaczonym dniu odbioru i do opłacenia zamówienia gotówką."
+
+# Order possible until
+#, fuzzy
+msgid "No_order_possible"
+msgstr "Zamówienia możliwe do"
 
 # Please enter how much you want to pay in {0}.
 #, fuzzy
