@@ -129,8 +129,7 @@ INSERT INTO `fcs_configuration` VALUES
 (587,1,'FCS_CASHLESS_PAYMENT_ADD_TYPE','Type of adding the payments<br /><div class=\"small\">How do the payment addings get into FoodCoopShop?</div>','manual','dropdown',145,'en_US','2020-02-11 10:13:01','2020-02-11 10:13:01'),
 (588,1,'FCS_SHOW_NEW_PRODUCTS_ON_HOME','Show new products on home?','1','boolean',22,'en_US','2020-04-15 09:41:58','2020-04-15 09:41:58'),
 (589,1,'FCS_FEEDBACK_TO_PRODUCTS_ENABLED','Are members allowed to write feedback to products?','1','boolean',320,'en_US','2020-06-19 09:02:50','2020-06-19 09:02:50'),
-(590,1,'FCS_MAIN_DELIVERY_RHYTHM','Main delivery rhythm<br /><div class=\"small\">Weekly or daily.</div>','weekly','readonly',58,'en_US','2020-07-03 09:32:09','2020-07-03 09:32:09'),
-(591,1,'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY','Pickup day can be selected by member on order confirmation.','0','readonly',59,'en_US','2020-07-03 09:32:09','2020-07-03 09:32:09');
+(590,1,'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY','Pickup day can be selected by member on order confirmation.','0','readonly',59,'en_US','2020-07-06 10:34:39','2020-07-06 10:34:39');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -230,8 +229,7 @@ INSERT INTO `phinxlog` VALUES
 (20200415073329,'ShowNewProductsOnHome','2020-04-15 07:41:58','2020-04-15 07:41:58',0),
 (20200501192722,'EnableCashlessPaymentAddTypeConfiguration','2020-05-01 19:30:13','2020-05-01 19:30:13',0),
 (20200618063024,'AddProductFeedback','2020-06-19 07:02:50','2020-06-19 07:02:50',0),
-(20200703072222,'AddDeliveryRhythmDaily','2020-07-03 07:32:09','2020-07-03 07:32:09',0),
-(20200703072605,'CustomerCanSelectPickupDay','2020-07-03 07:32:09','2020-07-03 07:32:09',0);
+(20200703072605,'CustomerCanSelectPickupDay','2020-07-06 08:34:39','2020-07-06 08:34:39',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

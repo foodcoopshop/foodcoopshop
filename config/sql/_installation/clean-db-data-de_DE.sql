@@ -129,8 +129,7 @@ INSERT INTO `fcs_configuration` VALUES
 (587,1,'FCS_CASHLESS_PAYMENT_ADD_TYPE','Art der Eintragung der Guthaben-Aufladungen<br /><div class=\"small\">Wie gelangen die Guthaben-Aufladungen vom Bankkonto in den FoodCoopShop?</div>','manual','dropdown',145,'de_DE','2020-02-11 10:12:57','2020-02-11 10:12:57'),
 (588,1,'FCS_SHOW_NEW_PRODUCTS_ON_HOME','Neue Produkte auch auf der Startseite anzeigen?','1','boolean',22,'de_DE','2020-04-15 09:41:54','2020-04-15 09:41:54'),
 (589,1,'FCS_FEEDBACK_TO_PRODUCTS_ENABLED','Feedback-Funktion für Produkte aktiviert?<br /><div class=\"small\">Mitglieder können Feedback zu bestellten Produkte verfassen.</div>','1','boolean',320,'de_DE','2020-06-19 09:02:46','2020-06-19 09:02:46'),
-(590,1,'FCS_MAIN_DELIVERY_RHYTHM','Haupt-Lieferrhythmus<br /><div class=\"small\">Wöchentlich oder täglich.</div>','weekly','readonly',58,'de_DE','2020-07-03 09:32:05','2020-07-03 09:32:05'),
-(591,1,'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY','Mitglied kann Abholtag beim Bestellen selbst auswählen.','0','readonly',59,'de_DE','2020-07-03 09:32:05','2020-07-03 09:32:05');
+(590,1,'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY','Mitglied kann Abholtag beim Bestellen selbst auswählen.','0','readonly',59,'de_DE','2020-07-06 10:34:35','2020-07-06 10:34:35');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -230,8 +229,7 @@ INSERT INTO `phinxlog` VALUES
 (20200415073329,'ShowNewProductsOnHome','2020-04-15 07:41:54','2020-04-15 07:41:54',0),
 (20200501192722,'EnableCashlessPaymentAddTypeConfiguration','2020-05-01 19:30:09','2020-05-01 19:30:09',0),
 (20200618063024,'AddProductFeedback','2020-06-19 07:02:46','2020-06-19 07:02:46',0),
-(20200703072222,'AddDeliveryRhythmDaily','2020-07-03 07:32:05','2020-07-03 07:32:05',0),
-(20200703072605,'CustomerCanSelectPickupDay','2020-07-03 07:32:05','2020-07-03 07:32:05',0);
+(20200703072605,'CustomerCanSelectPickupDay','2020-07-06 08:34:35','2020-07-06 08:34:35',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
