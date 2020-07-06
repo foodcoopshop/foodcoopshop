@@ -190,8 +190,12 @@ foodcoopshop.ModalProductDeliveryRhythmEdit = {
         }
         html += '</span><br /></div>';
 
+        html += '<div style="float:left;line-height:14px;margin-top:10px;"><span class="small">';
+        html += foodcoopshop.LocalizedJs.admin.ChangeDeliveryRhythmForMultipleProductsTip;
+        html += '</span><br /></div>';
+
         html += '</div>';
-        html += '<p style="margin-top:10px;float:right;"><a target="_blank" href="' + foodcoopshop.LocalizedJs.dialogProduct.DocsUrlOrderHandling + '">' + foodcoopshop.LocalizedJs.dialogProduct.InfoPageForDeliveryRhythm + '</a></p>';
+        html += '<p style="margin-top:10px;float:right;margin-bottom:0;"><a target="_blank" href="' + foodcoopshop.LocalizedJs.dialogProduct.DocsUrlOrderHandling + '">' + foodcoopshop.LocalizedJs.dialogProduct.InfoPageForDeliveryRhythm + '</a></p>';
         html += '<input type="hidden" name="dialogDeliveryRhythmProductId" id="dialogDeliveryRhythmProductId" value="" />';
         return html;
     },

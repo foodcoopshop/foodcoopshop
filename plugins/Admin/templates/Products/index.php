@@ -142,10 +142,6 @@ use Cake\Core\Configure;
 
     if (empty($products) && $manufacturerId == '') {
         echo '<h2 class="info">'.__d('admin', 'Please_chose_a_manufacturer.').'</h2>';
-    } else {
-        echo '<h2 class="info2">';
-            echo __d('admin', 'Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button.');
-        echo '</h2>';
     }
 
     echo '<table class="list no-clone-last-row">';
