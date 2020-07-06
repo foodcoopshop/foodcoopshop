@@ -129,14 +129,16 @@ use Cake\Core\Configure;
 
     <?php
 
-    if (!empty($manufacturer)) {
-        $globalNoDeliveryDaysString = $this->Html->getGlobalNoDeliveryDaysString();
-        if ($globalNoDeliveryDaysString != '') {
-            echo '<h2 class="info">' . $globalNoDeliveryDaysString . '</h2>';
-        }
-        $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true);
-        if ($manufacturerNoDeliveryDaysString != '') {
-            echo '<h2 class="info">'.$manufacturerNoDeliveryDaysString.'</h2>';
+    if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+        if (!empty($manufacturer)) {
+            $globalNoDeliveryDaysString = $this->Html->getGlobalNoDeliveryDaysString();
+            if ($globalNoDeliveryDaysString != '') {
+                echo '<h2 class="info">' . $globalNoDeliveryDaysString . '</h2>';
+            }
+            $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true);
+            if ($manufacturerNoDeliveryDaysString != '') {
+                echo '<h2 class="info">'.$manufacturerNoDeliveryDaysString.'</h2>';
+            }
         }
     }
 
