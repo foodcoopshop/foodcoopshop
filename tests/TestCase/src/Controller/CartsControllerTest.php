@@ -382,12 +382,15 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testCustomerCanSelectPickupDayFinishWithCorrectPickupDayAndComment()
     {
+
         $pickupDay = '2020-01-01';
+        $comment = 'this is the comment';
+
         $this->changeConfiguration('FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY', 1);
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
-        $this->finishCart(1, 1, 'this is the comment', null, $pickupDay);
+        $this->finishCart(1, 1, $comment, null, $pickupDay);
 
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
         $this->checkCartStatusAfterFinish();
@@ -400,17 +403,18 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals(1, count($pickupDayEntity));
         $this->assertEquals($pickupDay, $pickupDayEntity[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')));
 
-//         $emailLogs = $this->EmailLog->find('all')->toArray();
-//         $this->assertEmailLogs(
-//             $emailLogs[0],
-//             'Bestellbestätigung',
-//             [
-//                 'Abholtag: <b> Mittwoch, 01.01.2020</b>'
-//             ],
-//             [
-//                 Configure::read('test.loginEmailSuperadmin')
-//             ]
-//         );
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEmailLogs(
+            $emailLogs[0],
+            'Bestellbestätigung',
+            [
+//                 'Abholtag: <b> Mittwoch, 01.01.2020</b>',
+//                 'Kommentar: "<b>'.$comment.'</b>"',
+            ],
+            [
+                Configure::read('test.loginEmailSuperadmin')
+            ]
+        );
 
     }
 
