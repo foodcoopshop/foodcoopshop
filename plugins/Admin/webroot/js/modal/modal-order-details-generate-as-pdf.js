@@ -46,7 +46,7 @@ foodcoopshop.ModalOrderDetailsGenerateAsPdf = {
     getSuccessHandler : function(modalSelector) {
         var pickupDay = $('input[name="pickupDay[]"]').val(); // filter-dropdown!
         window.open('/admin/order-details/orderDetailsAsPdf.pdf?pickupDay=' + pickupDay);
-        $(modalSelector).remove();
+        foodcoopshop.Modal.destroy(modalSelector);
     },
 
     getOpenHandler : function(modalSelector) {
