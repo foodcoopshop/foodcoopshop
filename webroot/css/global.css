@@ -34,6 +34,9 @@ a:not(.btn):hover {
 h4 {
     font-size: 18px;
 }
+select {
+    background-color: #fff;
+}
 button,
 :focus {
     outline: none ! important;

@@ -761,7 +761,6 @@ body.carts.detail #load-last-order-details,
     width: 100%;
     border: none;
     border-bottom: 1px solid #d6d4d4;
-    background-color: #fff;
 }
 .cart p.no-products {
     margin-bottom: 20px;
