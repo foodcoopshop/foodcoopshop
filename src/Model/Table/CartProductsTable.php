@@ -260,7 +260,6 @@ class CartProductsTable extends AppTable
 
     public function setPickupDays($cartProducts, $customerId, $cartType)
     {
-
         $pickupDayTable = TableRegistry::getTableLocator()->get('PickupDays');
         $cartTable = TableRegistry::getTableLocator()->get('Carts');
 
