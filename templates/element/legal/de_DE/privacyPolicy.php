@@ -92,7 +92,7 @@ Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
 <p>Es ist eine Kontaktaufnahme über die auf der Webseite bereitgestellten E-Mail-Adressen möglich. In diesem Fall werden die mit der E-Mail übermittelten personenbezogenen Daten des Nutzers gespeichert.</p>
 <p>Es erfolgt in diesem Zusammenhang keine Weitergabe der Daten an Dritte. Die Daten werden ausschließlich für die Verarbeitung der Konversation verwendet.</p>
 <p><b>3.2.2 Rechtsgrundlage für die Datenverarbeitung</b></p>
-<p>Rechtsgrundlage für die Verarbeitung der Daten, die im Zuge einer Übersendung einer E-Mail übermittelt werden, ist Art. 6 Abs. 1 lit. f DSGVO. Zielt der E-Mail-Kontakt auf den Abschluss eines Vertrages bzw. einer Mitgliedschaft ab, so ist eine zusätzliche Rechtsgrundlage für die Verarbeitung Art. 6 Abs. 1 lit. b DSGVO.</p>
+<p>Rechtsgrundlage für die Verarbeitung der Daten, die im Zuge einer Übersendung einer E-Mail übermittelt werden, ist Art. 6 Abs. 1 lit. f DSGVO. Zielt der E-Mail-Kontakt auf den Abschluss eines Vertrages, so ist eine zusätzliche Rechtsgrundlage für die Verarbeitung Art. 6 Abs. 1 lit. b DSGVO.</p>
 <p><b>3.2.3 Zweck der Datenverarbeitung</b></p>
 <p>Die Verarbeitung der personenbezogenen Daten aus der übermittelten E-Mail dient uns allein zur Bearbeitung der Kontaktaufnahme.</p>
 <p>In diesem Zweck liegt auch unser berechtigtes Interesse an der Datenverarbeitung nach Art. 6 Abs. 1 lit. f DSGVO.</p>
@@ -140,7 +140,7 @@ Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
 
 <h3>3.4 Verwaltung der Benutzer (Mitglieder) und der Bestellungen</h3>
 <p><b>3.4.1 Beschreibung und Umfang der Datenverarbeitung</b></p>
-<p>Zur Erfüllung des Vereinszwecks (Abwicklung von Sammelbestellungen) ist es notwendig, die Vereinsmitglieder als Benutzer in der Software anzulegen, damit diese dann ihre jeweiligen Bestellungen zusammenstellen und absenden können.</p>
+<p>Zur Erfüllung des Vereinszwecks (Abwicklung von Sammelbestellungen) ist es notwendig, die Mitglieder als Benutzer in der Software anzulegen, damit diese dann ihre jeweiligen Bestellungen zusammenstellen und absenden können.</p>
 <p>Folgende Daten werden hierbei verarbeitet:</p>
 <ul>
   <li>Persönliche Daten (Vorname, Nachname)</li>
@@ -155,13 +155,13 @@ Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
 <p><b>3.4.2 Rechtsgrundlage für die Datenverarbeitung</b></p>
 <p>Rechtsgrundlage für die Verarbeitung der Daten im Zuge der Verwaltung der Bestellungen ist Art. 6 Abs. 1 lit. b DSGVO.</p>
 <p><b>3.4.3 Zweck der Datenverarbeitung</b></p>
-<p>Die Verarbeitung der personenbezogenen Daten dient uns zur Administration der Benutzer (Vereinsmitglieder) und der Hersteller, zur Erfüllung des Vereinszwecks (insbesondere die Abwicklung von Sammelbestellungen) und zur dafür notwendigen Kommunikation.</p>
+<p>Die Verarbeitung der personenbezogenen Daten dient uns zur Administration der Benutzer (Mitglieder) und der Hersteller, zur Erfüllung des Vereinszwecks (insbesondere die Abwicklung von Sammelbestellungen) und zur dafür notwendigen Kommunikation.</p>
 <p><b>3.4.4 Dauer der Speicherung</b></p>
-<p>Die personenbezogene Verarbeitung erfolgt für die Dauer der Mitgliedschaft plus 40 Monate nach Vertragsbeendigung (Beendigung der Mitgliedschaft).</p>
+<p>Die personenbezogene Verarbeitung erfolgt für die Dauer der Registrierung plus 40 Monate nach Vertragsbeendigung.</p>
 <p>Nach Ablauf dieser Frist wird jedenfalls der Personenbezug gelöscht.</p>
 <p>Danach erfolgt eine personenbezogene Datenverarbeitung von Finanzdaten noch bis zum Ende der gesetzlichen Aufbewahrungspflicht (derzeit grundsätzlich 7 Jahre).</p>
 <p><b>3.4.5 Widerspruchs- und Beseitigungsmöglichkeit</b></p>
-<p>Die Verarbeitung der Daten zur Verwaltung der Mitglieder und der Bestellungen ist für die Vertragserfüllung (Vereinsmitgliedschaft) zwingend erforderlich. Es besteht folglich seitens des Nutzers keine Widerspruchsmöglichkeit außer der Beendigung der Vereinsmitgliedschaft.</p>
-<p>Mitglieder können ihr Benutzerprofil der eingesetzten Software eigenständig löschen. Der Link dazu befindet sich nach dem Login unter dem Menüpunkt "Meine Daten".</p>
+<p>Die Verarbeitung der Daten zur Verwaltung der Mitglieder und der Bestellungen ist für die Vertragserfüllung zwingend erforderlich. Es besteht folglich seitens des Nutzers keine Widerspruchsmöglichkeit außer der Beendigung des Vertragsverhältnisses.</p>
+<p>Mitglieder können ihr Benutzerprofil der eingesetzten Software nicht eigenständig löschen, die Löschung muss bei einem Administrator angefragt werden.</p>
 <p>Daten, die für eine etwaige weiteregehende Vertragserfüllung notwendig sind, werden dabei jedoch nicht gelöscht.</p>
 <p>Daten, für welche eine gesetzliche Aufbewahrungsfrist gilt, werden dabei für die Dauer dieser Frist jedoch nicht gelöscht.</p>
