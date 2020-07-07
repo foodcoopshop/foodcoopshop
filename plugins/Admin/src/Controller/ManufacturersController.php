@@ -464,7 +464,11 @@ class ManufacturersController extends AdminAppController
         ])->first();
 
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->getOrderDetailsForSendingOrderLists($pickupDayDbFormat, $cronjobRunDay);
+        $orderDetails = $this->OrderDetail->getOrderDetailsForSendingOrderLists(
+            $pickupDayDbFormat,
+            $cronjobRunDay,
+            Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY'),
+        );
         $orderDetails->where(['Products.id_manufacturer' => $manufacturerId]);
 
         if ($orderDetails->count() == 0) {

@@ -322,6 +322,45 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString($expectedResult, $this->httpClient->getContent());
     }
 
+    public function testSendOrderListWithCustomerCanSelectPickupDay()
+    {
+
+        $this->changeConfiguration('FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY', 1);
+
+        $this->loginAsSuperadmin();
+
+        $orderDetailId = 1;
+
+        $this->OrderDetail->save(
+            $this->OrderDetail->patchEntity(
+                $this->OrderDetail->get($orderDetailId),
+                [
+                    'pickup_day' => '2020-08-05',
+                ]
+            )
+        );
+
+        $cronjobRunDay = '2020-08-05';
+        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+
+        $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(1, count($emailLogs), 'amount of sent emails wrong');
+        $this->assertEmailLogs(
+            $emailLogs[0],
+            'Bestellungen für den 05.08.2020',
+            [
+                'im Anhang findest du zwei Bestelllisten',
+                'Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test-',
+                'Content-Type: application/pdf'
+            ],
+            [
+                Configure::read('test.loginEmailVegetableManufacturer')
+            ]
+        );
+    }
+
     private function assertOrderDetailState($orderDetailId, $expectedOrderState)
     {
         $newOrderDetail = $this->OrderDetail->find('all', [

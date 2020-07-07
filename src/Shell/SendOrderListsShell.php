@@ -42,7 +42,11 @@ class SendOrderListsShell extends AppShell
             $this->cronjobRunDay = $this->args[0];
         }
 
-        $pickupDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($this->cronjobRunDay));
+        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+            $pickupDay = $this->cronjobRunDay;
+        } else {
+            $pickupDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($this->cronjobRunDay));
+        }
         $formattedPickupDay = Configure::read('app.timeHelper')->formatToDateShort($pickupDay);
 
         // 1) get all manufacturers (not only active ones)
@@ -53,7 +57,11 @@ class SendOrderListsShell extends AppShell
         ])->toArray();
 
         // 2) get all order details with pickup day in the given date range
-        $orderDetails = $this->OrderDetail->getOrderDetailsForSendingOrderLists($pickupDay, $this->cronjobRunDay);
+        $orderDetails = $this->OrderDetail->getOrderDetailsForSendingOrderLists(
+            $pickupDay,
+            $this->cronjobRunDay,
+            Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY'),
+        );
 
         // 3) add up the order detail by manufacturer
         $manufacturerOrders = [];
