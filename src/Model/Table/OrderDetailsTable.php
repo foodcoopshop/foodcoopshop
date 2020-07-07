@@ -65,7 +65,6 @@ class OrderDetailsTable extends AppTable
     public function validationPickupDay(Validator $validator)
     {
         $validator->notEquals('pickup_day', '1970-01-01', __('The_pickup_day_is_not_valid.'));
-        $validator = $this->getAllowOnlyOneWeekdayValidator($validator, 'pickup_day', __('The_pickup_day'));
         return $validator;
     }
 
