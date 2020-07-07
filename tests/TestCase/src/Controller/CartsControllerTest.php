@@ -480,6 +480,7 @@ class CartsControllerTest extends AppCakeTestCase
             [
                 'Artischocke : Stück',
                 'Hallo Demo Superadmin,',
+                'Kommentar: "<b>' . $pickupDayComment . '</b>"',
                 'Content-Disposition: attachment; filename="Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular.pdf"',
                 'Content-Disposition: attachment; filename="Bestelluebersicht.pdf"',
                 'Content-Disposition: attachment; filename="Allgemeine-Geschaeftsbedingungen.pdf"'
