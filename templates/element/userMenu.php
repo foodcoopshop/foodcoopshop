@@ -21,6 +21,9 @@ $adminName = __('Admin_area');
 $profileSlug = $this->Slug->getCustomerProfile();
 $class = ['btn btn-success'];
 $userName = $appAuth->user('firstname') . ' ' . $appAuth->user('lastname');
+if (Configure::read('app.customerMainNamePart') == 'lastname') {
+    $userName = $appAuth->user('lastname') . ' ' . $appAuth->user('firstname');
+}
 if ($appAuth->isManufacturer()) {
     $profileSlug = $this->Slug->getManufacturerProfile();
     $adminName = __('Manufacturer_area');
