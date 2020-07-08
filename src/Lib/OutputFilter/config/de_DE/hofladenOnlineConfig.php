@@ -25,6 +25,7 @@ return [
     'Der Vertrag über die Waren und Dienstleistungen kommt ausschließlich zwischen dem Nutzer und dem jeweiligen Hersteller zustande (Direktverkauf).' => 'Der Vertrag über die Waren und Dienstleistungen kommt zwischen dem Nutzer und dem Hersteller zustande (Direktverkauf).',
     'mit dem jeweiligen Hersteller' => 'mit dem Hersteller',
     'Der jeweilige Hersteller' => 'Der Hersteller',
+    'Unsere Produzenten können leider ab und zu' => 'Wir können leider ab und zu',
     '<p>4.3 Die E-Mailadresse des jeweiligen Herstellers ergibt sich aus dessen Impressum.</p>' => '',
     '_FOODCOOPSHOP_' => '_HOFLADEN_ONLINE_',
     'href="https://foodcoopshop.github.io/(.*)"' => 'href="https://www.hofladen-online.at/hilfe" data-url="/$1"',
