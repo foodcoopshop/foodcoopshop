@@ -39,12 +39,14 @@ use Cake\Core\Configure;
             <?php echo $this->Form->control('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStatesOnOff(), 'default' => isset($active) ? $active : '']); ?>
             <div class="right">
                 <?php
-                echo '<div id="add-manufacturer-button-wrapper" class="add-button-wrapper">';
-                echo $this->Html->link('<i class="fas fa-plus-circle"></i> ' . __d('admin', 'Add_manufacturer'), $this->Slug->getManufacturerAdd(), [
-                    'class' => 'btn btn-outline-light',
-                    'escape' => false
-                ]);
-                echo '</div>';
+                if (Configure::read('app.showManufacturerListAndDetailPage') || count($manufacturers) == 0) {
+                    echo '<div id="add-manufacturer-button-wrapper" class="add-button-wrapper">';
+                    echo $this->Html->link('<i class="fas fa-plus-circle"></i> ' . __d('admin', 'Add_manufacturer'), $this->Slug->getManufacturerAdd(), [
+                        'class' => 'btn btn-outline-light',
+                        'escape' => false
+                    ]);
+                    echo '</div>';
+                }
                 echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers'))]);
                 ?>
             </div>
