@@ -203,11 +203,29 @@ class ManufacturersControllerTest extends AppCakeTestCase
 
         $manufacturerId = 15;
         $noDeliveryDays = date('Y-m-d', strtotime('friday next week'));
+        $noDeliveryDayA = date('Y-m-d', strtotime($noDeliveryDays . ' + 10 day'));
+        $noDeliveryDayB = date('Y-m-d', strtotime($noDeliveryDays . ' + 11 day'));
 
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay;';
+        $this->Product = TableRegistry::getTableLocator()->get('Products');
+
+        $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN(1);';
         $params = [
-            'pickupDay' => $noDeliveryDays,
+            'pickupDay' => $noDeliveryDayA,
+        ];
+        $statement = $this->dbConnection->prepare($query);
+        $statement->execute($params);
+
+        $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN (2,3);';
+        $params = [
+            'pickupDay' => $noDeliveryDayB,
+        ];
+        $statement = $this->dbConnection->prepare($query);
+        $statement->execute($params);
+
+        $query = 'UPDATE ' . $this->Product->getTable().' SET id_manufacturer = :manufacturerId;';
+        $params = [
+            'manufacturerId' => $manufacturerId,
         ];
         $statement = $this->dbConnection->prepare($query);
         $statement->execute($params);
@@ -217,14 +235,16 @@ class ManufacturersControllerTest extends AppCakeTestCase
             $this->Slug->getManufacturerEditOptions($manufacturerId),
             [
                 'Manufacturers' => [
-                    'no_delivery_days' => [$noDeliveryDays]
+                    'no_delivery_days' => [$noDeliveryDayA, $noDeliveryDayB]
                 ],
                 'referer' => '/'
             ]
         );
-        $this->assertRegExpWithUnquotedString('Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: ' . Configure::read('app.timeHelper')->formatToDateShort($noDeliveryDays) . ' (1x)', $this->httpClient->getContent());
-
-        $noDeliveryDays = date('Y-m-d', strtotime($noDeliveryDays . ' + 2 week'));
+        $this->assertRegExpWithUnquotedString(
+            'Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: '
+            . Configure::read('app.timeHelper')->formatToDateShort($noDeliveryDayA) . ' (1x), '
+            . Configure::read('app.timeHelper')->formatToDateShort($noDeliveryDayB) . ' (2x)',
+        $this->httpClient->getContent());
 
         $this->httpClient->followOneRedirectForNextRequest();
         $this->httpClient->post(
