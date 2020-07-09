@@ -389,7 +389,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function testCustomerCanSelectPickupDayFinishWithCorrectPickupDayAndComment()
     {
 
-        $pickupDay = '2020-01-01';
+        $pickupDay = $this->Time->getTomorrowForDatabase();
         $comment = 'this is the comment';
 
         $this->changeConfiguration('FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY', 1);
@@ -414,7 +414,7 @@ class CartsControllerTest extends AppCakeTestCase
             $emailLogs[0],
             'Bestellbestätigung',
             [
-                'Abholtag: <b> Mittwoch, 01.01.2020</b>',
+                'Abholtag: <b> ' . $this->Time->getDateFormattedWithWeekday(strtotime($pickupDay)) . '</b>',
                 'Kommentar: "<b>' . $comment . '</b>"',
             ],
             [
