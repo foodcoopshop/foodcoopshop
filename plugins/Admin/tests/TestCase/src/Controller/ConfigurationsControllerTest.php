@@ -105,7 +105,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
 
     public function testConfigurationEditFormFcsGlobalDeliveryBreak()
     {
-        $this->changeConfigurationEditForm('FCS_NO_DELIVERY_DAYS_GLOBAL', ['2018-02-02']);
+        $this->changeConfigurationEditForm('FCS_NO_DELIVERY_DAYS_GLOBAL', ['2018-02-02','2018-02-09']);
         $this->assertRegExpWithUnquotedString('Für die folgenden Liefertag(e) sind bereits Bestellungen vorhanden: 02.02.2018 (3x).', $this->httpClient->getContent());
     }
 

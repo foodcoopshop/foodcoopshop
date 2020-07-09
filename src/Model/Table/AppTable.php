@@ -78,6 +78,10 @@ class AppTable extends Table
             ]);
         }
 
+        if (is_string($value)) {
+            $value = explode(',', $value);
+        }
+
         $query = $orderDetailsTable->find('all', [
             'conditions' => [
                 'pickup_day IN' => $value
@@ -92,7 +96,7 @@ class AppTable extends Table
                 'PickupDayCount' => $query->func()->count('OrderDetails.pickup_day'),
                 'pickup_day'
             ]
-            );
+        );
 
         $result = true;
         if (!empty($query->toArray())) {
