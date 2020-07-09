@@ -269,6 +269,11 @@ class MyHtmlHelper extends HtmlHelper
         return $formattedAndCleanedDeliveryDays;
     }
 
+    public function getGlobalNoDeliveryDaysAsArray()
+    {
+        return explode(',', Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'));
+    }
+
     public function getCustomerAddress($customer)
     {
         if (empty($customer->address_customer)) {

@@ -156,10 +156,15 @@ class MyTimeHelper extends TimeHelper
         return $this->getWeekdayFormatedDaysList($nextDeliveryDay, $maxDays, 7);
     }
 
-    public function getNextDailyDeliveryDays($maxDays=365)
+    public function getNextDailyDeliveryDays()
     {
-        $nextDeliveryDay = $this->getCurrentDateForDatabase();
+        $maxDays = 14;
+        $nextDeliveryDay = $this->getTomorrowForDatabase();
         return $this->getWeekdayFormatedDaysList($nextDeliveryDay, $maxDays, 1);
+    }
+
+    public function getTomorrowForDatabase() {
+        return date(Configure::read('DateFormat.DatabaseAlt'), strtotime($this->getCurrentDateForDatabase() . ' +1 days'));
     }
 
     private function getWeekdayFormatedDaysList($nextDeliveryDay, $maxDays, $factor)

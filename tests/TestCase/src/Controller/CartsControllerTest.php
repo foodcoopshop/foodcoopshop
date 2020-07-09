@@ -371,6 +371,8 @@ class CartsControllerTest extends AppCakeTestCase
     public function testCustomerCanSelectPickupDayFinishWithPickupDayValidation()
     {
         $this->changeConfiguration('FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY', 1);
+        $tomorrow = $this->Time->getTomorrowForDatabase();
+        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', $tomorrow);
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
@@ -378,6 +380,10 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Bitte wähle einen Abholtag aus.', $this->httpClient->getContent());
         $this->finishCart(1, 1, '', null, '');
         $this->assertRegExpWithUnquotedString('Bitte wähle einen Abholtag aus.', $this->httpClient->getContent());
+        $this->finishCart(1, 1, '', null, '2020-01-01'); // do not allow past pickup days
+        $this->assertRegExpWithUnquotedString('Der Abholtag ist nicht gültig.', $this->httpClient->getContent());
+        $this->finishCart(1, 1, '', null, $tomorrow); // pickup day has value of FCS_NO_DELIVERY_DAYS_GLOBAL
+        $this->assertRegExpWithUnquotedString('Der Abholtag ist nicht gültig.', $this->httpClient->getContent());
     }
 
     public function testCustomerCanSelectPickupDayFinishWithCorrectPickupDayAndComment()

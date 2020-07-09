@@ -59,6 +59,22 @@ class CartsTable extends AppTable
         $validator = $this->validationDefault($validator);
         $validator->requirePresence('pickup_day', true, __('Please_select_a_pickup_day.'));
         $validator->notEmptyDate('pickup_day', __('Please_select_a_pickup_day.'));
+        $validator = $this->getAllowOnlyDefinedPickupDaysValidator($validator, 'pickup_day');
+        return $validator;
+    }
+
+    public function getAllowOnlyDefinedPickupDaysValidator(Validator $validator, $field)
+    {
+        $validator->add($field, 'allow-only-defined-pickup-days', [
+            'rule' => function ($value, $context) {
+            if (!in_array($value, array_keys(Configure::read('app.timeHelper')->getNextDailyDeliveryDays()))
+                || in_array($value, Configure::read('app.htmlHelper')->getGlobalNoDeliveryDaysAsArray())) {
+                    return false;
+                }
+                return true;
+            },
+            'message' => __('The_pickup_day_is_not_valid.'),
+        ]);
         return $validator;
     }
 

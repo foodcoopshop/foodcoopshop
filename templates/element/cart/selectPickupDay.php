@@ -26,20 +26,13 @@ $this->element('addScript', ['script' => "
 
 echo '<div class="select-pickup-day-wrapper">';
 
-    $formattedAndCleanedDeliveryDays = $this->Html->getFormattedAndCleanedDeliveryDays(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'));
-    $formattedToDatabaseDeliveryDays = [];
-    foreach($formattedAndCleanedDeliveryDays as $f) {
-        $formattedToDatabaseDeliveryDays[] = $this->Time->formatToDbFormatDate($f);
-    }
+    $preparedDeliveryDays = $this->Time->getNextDailyDeliveryDays();
+    $formattedToDatabaseDeliveryDays = $this->Html->getGlobalNoDeliveryDaysAsArray();
 
-    $preparedDeliveryDays = $this->Time->getNextDailyDeliveryDays(15);
     $i = 0;
     foreach($preparedDeliveryDays as $k => $v) {
         if (in_array($k, $formattedToDatabaseDeliveryDays)) {
             $preparedDeliveryDays[$k] = $v . ' (' . __('No_order_possible') . ')';
-        }
-        if ($i== 0) {
-            unset($preparedDeliveryDays[$k]); // remove today
         }
         $i++;
     }
