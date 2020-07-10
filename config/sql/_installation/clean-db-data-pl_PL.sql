@@ -209,9 +209,9 @@ INSERT INTO `fcs_sliders` VALUES
 
 /*!40000 ALTER TABLE `fcs_tax` DISABLE KEYS */;
 INSERT INTO `fcs_tax` VALUES
-(1,20.000,1,0),
-(2,10.000,1,0),
-(3,13.000,1,0);
+(1,5.000,1,0),
+(2,8.000,1,0),
+(3,23.000,1,0);
 /*!40000 ALTER TABLE `fcs_tax` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_timebased_currency_order_detail` DISABLE KEYS */;
