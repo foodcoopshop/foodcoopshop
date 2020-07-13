@@ -74,7 +74,7 @@ class CartsController extends FrontendController
             $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
             $cart = $this->AppAuth->getCart();
 
-            if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+            if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') && $cart['Cart']->pickup_day_entities) {
                 $cart['Cart']->pickup_day_entities[0]->comment = '';
             }
 
