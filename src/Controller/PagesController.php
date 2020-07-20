@@ -6,7 +6,6 @@ use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 use Cake\Utility\Security;
 use Cviebrock\DiscoursePHP\SSOHelper as SSOHelper;
 
@@ -35,7 +34,7 @@ class PagesController extends FrontendController
         switch ($this->getRequest()->getParam('action')) {
             case 'detail':
                 $pageId = (int) $this->getRequest()->getParam('pass')[0];
-                $this->Page = TableRegistry::getTableLocator()->get('Pages');
+                $this->Page = $this->getTableLocator()->get('Pages');
                 $page = $this->Page->find('all', [
                     'conditions' => [
                         'Pages.id_page' => $pageId,
@@ -81,19 +80,19 @@ class PagesController extends FrontendController
          * END: security keys check
          */
 
-        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
+        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findFeatured($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
         $this->set('title_for_layout', __('Welcome'));
 
-        $this->Slider = TableRegistry::getTableLocator()->get('Sliders');
+        $this->Slider = $this->getTableLocator()->get('Sliders');
         $sliders = $this->Slider->getForHome();
         $this->set('sliders', $sliders);
 
         $newProducts = [];
         if (Configure::read('appDb.FCS_SHOW_NEW_PRODUCTS_ON_HOME') && (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user())) {
-            $this->Category = TableRegistry::getTableLocator()->get('Categories');
+            $this->Category = $this->getTableLocator()->get('Categories');
             $newProducts = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), true);
             $newProducts = $this->prepareProductsForFrontend($newProducts);
         }
@@ -110,7 +109,7 @@ class PagesController extends FrontendController
             'Pages.active' => APP_ON
         ];
 
-        $this->Page = TableRegistry::getTableLocator()->get('Pages');
+        $this->Page = $this->getTableLocator()->get('Pages');
         $page = $this->Page->find('all', [
             'conditions' => $conditions,
             'contain' => [

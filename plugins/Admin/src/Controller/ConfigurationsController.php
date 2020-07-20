@@ -6,7 +6,6 @@ use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\NotFoundException;
-use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 
 /**
@@ -42,7 +41,7 @@ class ConfigurationsController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
+        $this->Configuration = $this->getTableLocator()->get('Configurations');
         $configuration = $this->Configuration->find('all', [
             'conditions' => [
                 'Configurations.id_configuration' => $configurationId
@@ -102,7 +101,7 @@ class ConfigurationsController extends AdminAppController
             $this->set('configuration', $configuration);
         } else {
             $configuration = $this->Configuration->save($configuration);
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             $this->Flash->success(__d('admin', 'The_setting_has_been_changed_successfully.'));
             $this->ActionLog->customSave('configuration_changed', $this->AppAuth->getUserId(), $configuration->id_configuration, 'configurations', __d('admin', 'The_setting_{0}_has_been_changed_to_{1}.', ['"' . $configuration->name . '"', '<i>"' . $configuration->value . '"</i>']));
             $this->redirect($this->getRequest()->getData('referer'));
@@ -113,7 +112,7 @@ class ConfigurationsController extends AdminAppController
 
     public function previewEmail($configurationName)
     {
-        $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
+        $this->Configuration = $this->getTableLocator()->get('Configurations');
         $this->Configuration->getConfigurations();
         $email = new AppMailer();
         $email
@@ -149,9 +148,9 @@ class ConfigurationsController extends AdminAppController
     public function index()
     {
         $this->viewBuilder()->setHelpers(['Configuration']);
-        $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
+        $this->Configuration = $this->getTableLocator()->get('Configurations');
         $this->set('configurations', $this->Configuration->getConfigurations(['type != "hidden"']));
-        $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
+        $this->Tax = $this->getTableLocator()->get('Taxes');
         $defaultTax = $this->Tax->find('all', [
             'conditions' => [
                 'Taxes.id_tax' => Configure::read('app.defaultTaxId')
@@ -161,7 +160,7 @@ class ConfigurationsController extends AdminAppController
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
             $this->viewBuilder()->setHelpers(['Network.Network']);
-            $this->SyncDomain = TableRegistry::getTableLocator()->get('Network.SyncDomains');
+            $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
             $syncDomains = $this->SyncDomain->getSyncDomains(APP_OFF);
             $this->set('syncDomains', $syncDomains);
         }

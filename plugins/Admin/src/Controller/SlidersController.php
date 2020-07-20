@@ -4,7 +4,6 @@ namespace Admin\Controller;
 
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
-use Cake\ORM\TableRegistry;
 
 /**
  * SlidersController
@@ -26,7 +25,7 @@ class SlidersController extends AdminAppController
 
     public function add()
     {
-        $this->Slider = TableRegistry::getTableLocator()->get('Sliders');
+        $this->Slider = $this->getTableLocator()->get('Sliders');
         $slider = $this->Slider->newEntity(
             [
                 'active' => APP_ON,
@@ -48,7 +47,7 @@ class SlidersController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $this->Slider = TableRegistry::getTableLocator()->get('Sliders');
+        $this->Slider = $this->getTableLocator()->get('Sliders');
         $slider = $this->Slider->find('all', [
             'conditions' => [
                 'Sliders.id_slider' => $sliderId
@@ -103,7 +102,7 @@ class SlidersController extends AdminAppController
                 $this->deleteUploadedImage($slider->id_slider, Configure::read('app.htmlHelper')->getSliderThumbsPath(), Configure::read('app.sliderImageSizes'));
             }
 
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('Sliders.delete_slider'))) {
                 $slider = $this->Slider->patchEntity($slider, ['active' => APP_DEL]);
                 $this->Slider->save($slider);
@@ -127,7 +126,7 @@ class SlidersController extends AdminAppController
             'Sliders.active > ' . APP_DEL
         ];
 
-        $this->Slider = TableRegistry::getTableLocator()->get('Sliders');
+        $this->Slider = $this->getTableLocator()->get('Sliders');
         $query = $this->Slider->find('all', [
             'conditions' => $conditions
         ]);

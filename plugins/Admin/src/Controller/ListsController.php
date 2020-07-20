@@ -4,7 +4,6 @@ namespace Admin\Controller;
 
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
-use Cake\ORM\TableRegistry;
 use Cake\Http\Exception\UnauthorizedException;
 
 /**
@@ -31,7 +30,7 @@ class ListsController extends AdminAppController
     public function orderLists()
     {
 
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $path = realpath(Configure::read('app.folder_order_lists'));
         $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
 

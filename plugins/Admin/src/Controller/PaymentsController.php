@@ -8,7 +8,6 @@ use Cake\Event\EventInterface;
 use Cake\I18n\FrozenDate;
 use Cake\I18n\Time;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use App\Lib\Error\Exception\InvalidParameterException;
 
@@ -66,9 +65,9 @@ class PaymentsController extends AdminAppController
 
     public function beforeFilter(EventInterface $event)
     {
-        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Payment = $this->getTableLocator()->get('Payments');
+        $this->Customer = $this->getTableLocator()->get('Customers');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         parent::beforeFilter($event);
     }
 
@@ -155,7 +154,7 @@ class PaymentsController extends AdminAppController
             );
             $payment = $this->Payment->save($payment);
 
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             switch ($payment->approval) {
                 case -1:
                     $actionLogType = 'payment_product_approval_not_ok';
@@ -363,7 +362,7 @@ class PaymentsController extends AdminAppController
             )
         );
 
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $message .= ' ' . __d('admin', 'was_added_successfully:_{0}', ['<b>' . Configure::read('app.numberHelper')->formatAsCurrency($amount).'</b>']);
 
         if ($type == 'member_fee') {
@@ -438,7 +437,7 @@ class PaymentsController extends AdminAppController
             )
         );
 
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
 
         $actionLogType = $payment->type;
         if ($payment->type == 'deposit') {
@@ -601,7 +600,7 @@ class PaymentsController extends AdminAppController
         }
 
         if ($this->paymentType == 'product') {
-            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+            $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
             $orderDetailsGroupedByMonth = $this->OrderDetail->getMonthlySumProductByCustomer($this->getCustomerId());
 
             if (! empty($orderDetailsGroupedByMonth)) {
@@ -632,7 +631,7 @@ class PaymentsController extends AdminAppController
                 }
             }
 
-            $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
+            $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
             $timebasedCurrencySum = $this->TimebasedCurrencyOrderDetail->getSum(null, $this->getCustomerId());
             $timebasedCurrencyOrderDetailInList = $timebasedCurrencySum > 0;
             $this->set('timebasedCurrencyOrderDetailInList', $timebasedCurrencyOrderDetailInList);

@@ -3,7 +3,6 @@ namespace Admin\Controller;
 
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
-use Cake\ORM\TableRegistry;
 use Cake\Datasource\Exception\RecordNotFoundException;
 
 /**
@@ -37,7 +36,7 @@ class BlogPostsController extends AdminAppController
                 }
                 // manufacturer owner check
                 if ($this->AppAuth->isManufacturer()) {
-                    $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
+                    $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
                     $blogPost = $this->BlogPost->find('all', [
                         'conditions' => [
                             'BlogPosts.id_blog_post' => $this->getRequest()->getParam('pass')[0]
@@ -59,7 +58,7 @@ class BlogPostsController extends AdminAppController
 
     public function add()
     {
-        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
+        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
         $blogPost = $this->BlogPost->newEntity(
             [
                 'active' => APP_ON,
@@ -82,7 +81,7 @@ class BlogPostsController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
+        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
         $blogPost = $this->BlogPost->find('all', [
             'conditions' => [
                 'BlogPosts.id_blog_post' => $blogPostId
@@ -106,7 +105,7 @@ class BlogPostsController extends AdminAppController
         $this->setFormReferer();
         $this->set('isEditMode', $isEditMode);
 
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
 
         $_SESSION['ELFINDER'] = [
@@ -157,7 +156,7 @@ class BlogPostsController extends AdminAppController
                 $this->deleteUploadedImage($blogPost->id_blog_post, Configure::read('app.htmlHelper')->getBlogPostThumbsPath(), Configure::read('app.blogPostImageSizes'));
             }
 
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('BlogPosts.delete_blog_post'))) {
                 $blogPost = $this->BlogPost->patchEntity($blogPost, ['active' => APP_DEL]);
                 $this->BlogPost->save($blogPost);
@@ -205,7 +204,7 @@ class BlogPostsController extends AdminAppController
 
         $conditions[] = 'BlogPosts.active > ' . APP_DEL;
 
-        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
+        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
         $query = $this->BlogPost->find('all', [
             'conditions' => $conditions,
             'contain' => [
@@ -235,9 +234,9 @@ class BlogPostsController extends AdminAppController
 
         $this->set('title_for_layout', __d('admin', 'Blog_posts'));
 
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
 
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
     }
 }

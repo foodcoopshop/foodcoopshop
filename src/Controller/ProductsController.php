@@ -6,7 +6,6 @@ use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -28,7 +27,7 @@ class ProductsController extends FrontendController
     {
         parent::beforeFilter($event);
 
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product = $this->getTableLocator()->get('Products');
         $productId = (int) $this->getRequest()->getParam('pass')[0];
 
         $product = $this->Product->find('all', [
@@ -55,11 +54,11 @@ class ProductsController extends FrontendController
     {
         $productId = (int) $this->getRequest()->getParam('pass')[0];
 
-        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
+        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
-        $this->Category = TableRegistry::getTableLocator()->get('Categories');
+        $this->Category = $this->getTableLocator()->get('Categories');
         $product = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', $productId);
         $product = $this->prepareProductsForFrontend($product);
 

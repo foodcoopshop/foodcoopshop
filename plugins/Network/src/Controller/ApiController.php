@@ -6,7 +6,6 @@ use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
-use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -85,7 +84,7 @@ class ApiController extends Controller
     private function getProductDetailLinks($productsData)
     {
         $productDetailLinks = [];
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product = $this->getTableLocator()->get('Products');
         foreach ($productsData as $originalProduct) {
             $productIds = $this->Product->getProductIdAndAttributeId($originalProduct['remoteProductId']);
             $product = $this->Product->find('all', [
@@ -119,9 +118,9 @@ class ApiController extends Controller
             throw new InvalidParameterException('Keine Produkte vorhanden.');
         }
 
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+        $this->Product = $this->getTableLocator()->get('Products');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
 
         $products2saveForImage = [];
         $products2saveForName = [];
@@ -406,8 +405,8 @@ class ApiController extends Controller
     public function getProducts()
     {
 
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Product = $this->getTableLocator()->get('Products');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
 
         $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee(
             $this->AppAuth->manufacturer->variable_member_fee

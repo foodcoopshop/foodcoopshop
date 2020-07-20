@@ -7,7 +7,6 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
-use Cake\ORM\TableRegistry;
 
 /**
  * ManufacturersController
@@ -39,7 +38,7 @@ class ManufacturersController extends FrontendController
         switch ($this->getRequest()->getParam('action')) {
             case 'detail':
                 $manufacturerId = (int) $this->getRequest()->getParam('pass')[0];
-                $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+                $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
                 $manufacturer = $this->Manufacturer->find('all', [
                     'conditions' => [
                         'Manufacturers.id_manufacturer' => $manufacturerId,
@@ -63,7 +62,7 @@ class ManufacturersController extends FrontendController
             $conditions['Manufacturers.is_private'] = APP_OFF;
         }
 
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $manufacturers = $this->Manufacturer->find('all', [
             'conditions' => $conditions,
             'order' => [
@@ -97,7 +96,7 @@ class ManufacturersController extends FrontendController
             'Manufacturers.active' => APP_ON
         ];
 
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => $conditions,
             'contain' => [
@@ -123,7 +122,7 @@ class ManufacturersController extends FrontendController
             $manufacturer['Products'] = $this->prepareProductsForFrontend($products);
         }
 
-        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
+        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth, null, $manufacturerId);
         $this->set('blogPosts', $blogPosts);
 

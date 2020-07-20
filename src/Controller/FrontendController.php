@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
-use Cake\ORM\TableRegistry;
 use Cake\I18n\FrozenDate;
 
 /**
@@ -36,9 +35,9 @@ class FrontendController extends AppController
      */
     protected function prepareProductsForFrontend($products)
     {
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-        $this->ProductAttribute = TableRegistry::getTableLocator()->get('ProductAttributes');
+        $this->Product = $this->getTableLocator()->get('Products');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $this->ProductAttribute = $this->getTableLocator()->get('ProductAttributes');
 
         foreach ($products as &$product) {
             $grossPrice = $this->Product->getGrossPrice($product['id_product'], $product['price']);
@@ -166,7 +165,7 @@ class FrontendController extends AppController
 
         $categoriesForMenu = [];
         if (Configure::read('appDb.FCS_SHOW_PRODUCTS_FOR_GUESTS') || $this->AppAuth->user()) {
-            $this->Category = TableRegistry::getTableLocator()->get('Categories');
+            $this->Category = $this->getTableLocator()->get('Categories');
             $allProductsCount = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), false, '', 0, true);
             $newProductsCount = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), true, '', 0, true);
             $categoriesForMenu = $this->Category->getForMenu($this->AppAuth);
@@ -189,12 +188,12 @@ class FrontendController extends AppController
 
         $manufacturersForMenu = [];
         if (Configure::read('app.showManufacturerListAndDetailPage')) {
-            $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+            $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
             $manufacturersForMenu = $this->Manufacturer->getForMenu($this->AppAuth);
             $this->set('manufacturersForMenu', $manufacturersForMenu);
         }
 
-        $this->Page = TableRegistry::getTableLocator()->get('Pages');
+        $this->Page = $this->getTableLocator()->get('Pages');
         $conditions = [];
         $conditions['Pages.active'] = APP_ON;
         $conditions[] = 'Pages.position > 0';
@@ -243,7 +242,7 @@ class FrontendController extends AppController
             $shoppingLimitReached = !$this->AppAuth->isInstantOrderMode() && Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') != - 1 && $creditBalance < Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') * - 1;
             $this->set('shoppingLimitReached', $shoppingLimitReached);
 
-            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+            $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
             $futureOrderDetails = $this->OrderDetail->getGroupedFutureOrdersByCustomerId($this->AppAuth->getUserId());
             $this->set('futureOrderDetails', $futureOrderDetails);
         }

@@ -6,7 +6,6 @@ use App\Controller\AppController;
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
-use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -30,8 +29,8 @@ class SyncsController extends AppController
             return false;
         }
 
-        $this->SyncDomain = TableRegistry::getTableLocator()->get('Network.SyncDomains');
-        $this->SyncManufacturer = TableRegistry::getTableLocator()->get('Network.SyncManufacturers');
+        $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
+        $this->SyncManufacturer = $this->getTableLocator()->get('Network.SyncManufacturers');
         $isAllowedToUseAsMasterFoodcoop = $this->SyncManufacturer->isAllowedToUseAsMasterFoodcoop($this->AppAuth);
         $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->manufacturer->enabled_sync_domains);
         return $isAllowedToUseAsMasterFoodcoop && count($syncDomains) > 0;
@@ -41,13 +40,13 @@ class SyncsController extends AppController
     {
         parent::beforeFilter($event);
 
-        $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
+        $this->Configuration = $this->getTableLocator()->get('Configurations');
         $this->viewBuilder()->setLayout('Admin.default');
         $this->viewBuilder()->setHelpers(['Network.Network']);
 
-        $this->SyncDomain = TableRegistry::getTableLocator()->get('Network.SyncDomains');
-        $this->SyncProduct = TableRegistry::getTableLocator()->get('Network.SyncProducts');
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
+        $this->SyncProduct = $this->getTableLocator()->get('Network.SyncProducts');
+        $this->Product = $this->getTableLocator()->get('Products');
     }
 
     /**
@@ -197,7 +196,7 @@ class SyncsController extends AppController
         $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->manufacturer->enabled_sync_domains);
         $this->set('syncDomains', $syncDomains);
 
-        $this->SyncProduct = TableRegistry::getTableLocator()->get('Network.SyncProducts');
+        $this->SyncProduct = $this->getTableLocator()->get('Network.SyncProducts');
         $syncProducts = $this->SyncProduct->findAllSyncProducts($this->AppAuth->getManufacturerId());
         $preparedSyncProducts = [];
         foreach ($syncProducts as $syncProduct) {
@@ -255,7 +254,7 @@ class SyncsController extends AppController
      */
     private function getLocalSyncProducts($syncDomains)
     {
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product = $this->getTableLocator()->get('Products');
         $products = $this->Product->getProductsForBackend($this->AppAuth, '', $this->AppAuth->getManufacturerId(), 'all', '', 0, 0, true);
 
         $indexes2Remove = [

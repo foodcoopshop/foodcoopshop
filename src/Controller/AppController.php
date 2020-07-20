@@ -7,7 +7,6 @@ use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Http\Cookie\Cookie;
-use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -89,7 +88,7 @@ class AppController extends Controller
     private function validateAuthentication()
     {
         if ($this->AppAuth->user()) {
-            $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+            $this->Customer = $this->getTableLocator()->get('Customers');
             $query = $this->Customer->find('all', [
                 'conditions' => [
                     'Customers.email' => $this->AppAuth->getEmail()
@@ -120,7 +119,7 @@ class AppController extends Controller
         if (empty($this->AppAuth->user()) && !empty($rememberMeCookie)) {
             $value = json_decode($rememberMeCookie);
             if (isset($value->auto_login_hash)) {
-                $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+                $this->Customer = $this->getTableLocator()->get('Customers');
                 $customer = $this->Customer->find('all', [
                     'conditions' => [
                         'Customers.auto_login_hash' => $value->auto_login_hash
@@ -136,7 +135,7 @@ class AppController extends Controller
         }
 
         if ($this->AppAuth->isManufacturer()) {
-            $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+            $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
                     'Manufacturers.id_manufacturer' => $this->AppAuth->getManufacturerId()
@@ -164,7 +163,7 @@ class AppController extends Controller
      */
     protected function renewAuthSession()
     {
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $this->AppAuth->getUserId()

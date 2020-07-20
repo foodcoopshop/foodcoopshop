@@ -9,7 +9,6 @@ use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\ForbiddenException;
-use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use App\Model\Table\OrderDetailsTable;
 
@@ -40,7 +39,7 @@ class OrderDetailsController extends AdminAppController
                     return true;
                 }
                 if ($this->AppAuth->isCustomer()) {
-                    $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+                    $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
                     $orderDetail = $this->OrderDetail->find('all', [
                         'conditions' => [
                             'OrderDetails.id_order_detail' => $this->getRequest()->getData('orderDetailId')
@@ -94,7 +93,7 @@ class OrderDetailsController extends AdminAppController
     private function checkOrderDetailIdAccess($orderDetailId)
     {
         if ($this->AppAuth->isCustomer() || $this->AppAuth->isManufacturer()) {
-            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+            $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
             $orderDetail = $this->OrderDetail->find('all', [
                 'conditions' => [
                     'OrderDetails.id_order_detail' => $orderDetailId
@@ -161,7 +160,7 @@ class OrderDetailsController extends AdminAppController
     {
 
         $this->RequestHandler->renderAs($this, 'json');
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $oldOrderDetail = $this->OrderDetail->find('all', [
             'conditions' => [
                 'OrderDetails.id_order_detail' => $orderDetailId
@@ -200,7 +199,7 @@ class OrderDetailsController extends AdminAppController
             throw new RecordNotFoundException('customerId not passed');
         }
 
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $instantOrderCustomer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
@@ -227,7 +226,7 @@ class OrderDetailsController extends AdminAppController
 
         $pickupDay = [$this->getRequest()->getQuery('pickupDay')];
 
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, '', '', '', $pickupDay, '', '');
         $contain = $odParams['contain'];
         $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
@@ -339,7 +338,7 @@ class OrderDetailsController extends AdminAppController
 
         $this->set('groupBy', $groupBy);
 
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, $manufacturerId, $productId, $customerId, $pickupDay, $orderDetailId, $deposit);
 
         $contain = $odParams['contain'];
@@ -426,7 +425,7 @@ class OrderDetailsController extends AdminAppController
             ]
         ])->toArray();
 
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $orderDetails = $this->prepareGroupedOrderDetails($orderDetails, $groupBy, $pickupDay);
         $this->set('orderDetails', $orderDetails);
 
@@ -574,7 +573,7 @@ class OrderDetailsController extends AdminAppController
         $editCustomerReason = strip_tags(html_entity_decode($this->getRequest()->getData('editCustomerReason')));
         $amount = (int) $this->getRequest()->getData('amount');
 
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $oldOrderDetail = $this->OrderDetail->find('all', [
             'conditions' => [
                 'OrderDetails.id_order_detail' => $orderDetailId
@@ -587,7 +586,7 @@ class OrderDetailsController extends AdminAppController
             ]
         ])->first();
 
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $newCustomer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
@@ -725,7 +724,7 @@ class OrderDetailsController extends AdminAppController
             '<b>' . $newCustomer->name . '</b>'
         ]);
 
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_detail_customer_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
         $this->Flash->success($message);
 
@@ -759,7 +758,7 @@ class OrderDetailsController extends AdminAppController
             return;
         }
 
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $oldOrderDetail = $this->OrderDetail->find('all', [
             'conditions' => [
                 'OrderDetails.id_order_detail' => $orderDetailId
@@ -808,7 +807,7 @@ class OrderDetailsController extends AdminAppController
 
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
-            $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+            $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
             $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
 
             if (! $this->AppAuth->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
@@ -826,7 +825,7 @@ class OrderDetailsController extends AdminAppController
         }
 
         if ($quantityWasChanged) {
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave('order_detail_product_quantity_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
             $this->Flash->success($message);
         }
@@ -860,7 +859,7 @@ class OrderDetailsController extends AdminAppController
             return;
         }
 
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $oldOrderDetail = $this->OrderDetail->find('all', [
             'conditions' => [
                 'OrderDetails.id_order_detail' => $orderDetailId
@@ -908,7 +907,7 @@ class OrderDetailsController extends AdminAppController
 
         $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $sendOrderedProductAmountChangedNotification = $this->Manufacturer->getOptionSendOrderedProductAmountChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_amount_changed_notification);
 
         if (! $this->AppAuth->isManufacturer() && $oldOrderDetail->order_state == ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER && $sendOrderedProductAmountChangedNotification) {
@@ -933,7 +932,7 @@ class OrderDetailsController extends AdminAppController
             ]);
         }
 
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_detail_product_amount_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
 
         $this->Flash->success($message);
@@ -968,7 +967,7 @@ class OrderDetailsController extends AdminAppController
             return;
         }
 
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $oldOrderDetail = $this->OrderDetail->find('all', [
             'conditions' => [
                 'OrderDetails.id_order_detail' => $orderDetailId
@@ -1008,7 +1007,7 @@ class OrderDetailsController extends AdminAppController
 
         $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $oldOrderDetail->customer->name . '</b>']);
 
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $sendOrderedProductPriceChangedNotification = $this->Manufacturer->getOptionSendOrderedProductPriceChangedNotification($oldOrderDetail->product->manufacturer->send_ordered_product_price_changed_notification);
         if (! $this->AppAuth->isManufacturer() && $oldOrderDetail->total_price_tax_incl > 0.00 && $sendOrderedProductPriceChangedNotification) {
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}_and_the_manufacturer_{1}.', [
@@ -1026,7 +1025,7 @@ class OrderDetailsController extends AdminAppController
             $message .= ' '.__d('admin', 'Reason').': <b>"' . $editPriceReason . '"</b>';
         }
 
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_detail_product_price_changed', $this->AppAuth->getUserId(), $orderDetailId, 'order_details', $message);
         $this->Flash->success($message);
 
@@ -1055,7 +1054,7 @@ class OrderDetailsController extends AdminAppController
                 $errorMessages[] = __d('admin', 'Please_enter_why_pickup_day_is_changed.');
             }
 
-            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+            $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
             $orderDetails = $this->OrderDetail->find('all', [
                 'conditions' => [
                     'OrderDetails.id_order_detail IN' => $orderDetailIds
@@ -1125,7 +1124,7 @@ class OrderDetailsController extends AdminAppController
 
             $this->Flash->success($message);
 
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave('order_detail_pickup_day_changed', $this->AppAuth->getUserId(), 0, 'order_details', $message . ' Ids: ' . join(', ', $orderDetailIds));
 
             $this->set([
@@ -1148,7 +1147,7 @@ class OrderDetailsController extends AdminAppController
         $orderDetailId = (int) $this->getRequest()->getData('orderDetailId');
         $orderDetailFeedback = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('orderDetailFeedback')), '<strong><b><i><img>'));
 
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $orderDetail = $this->OrderDetail->find('all', [
             'conditions' => [
                 'OrderDetails.id_order_detail' => $orderDetailId
@@ -1203,7 +1202,7 @@ class OrderDetailsController extends AdminAppController
 
         $this->Flash->success(__d('admin', 'The_feedback_was_saved_successfully_and_sent_to_{0}.', ['<b>' . $orderDetail->product->manufacturer->name . '</b>']));
 
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $actionLogMessage = __d('admin', '{0}_has_written_a_feedback_to_product_{1}.', [
             '<b>' . $orderDetail->customer->name . '</b>',
             '<b>' . $orderDetail->product_name . '</b>',
@@ -1228,14 +1227,14 @@ class OrderDetailsController extends AdminAppController
         $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
         $pickupDayComment = htmlspecialchars_decode(strip_tags(trim($this->getRequest()->getData('pickupDayComment')), '<strong><b>'));
 
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'id_customer' => $customerId
             ]
         ])->first();
 
-        $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
+        $this->PickupDay = $this->getTableLocator()->get('PickupDays');
         $result = $this->PickupDay->insertOrUpdate(
             [
                 'customer_id' => $customerId,
@@ -1248,7 +1247,7 @@ class OrderDetailsController extends AdminAppController
 
         $this->Flash->success(__d('admin', 'The_comment_was_changed_successfully.'));
 
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('order_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', __d('admin', 'The_pickup_day_comment_of_{0}_was_changed:', [$customer->name]) . ' <div class="changed">' . $pickupDayComment . ' </div>');
 
         $this->set([
@@ -1269,7 +1268,7 @@ class OrderDetailsController extends AdminAppController
         $pickupDay = $this->getRequest()->getData('pickupDay');
         $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
 
-        $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
+        $this->PickupDay = $this->getTableLocator()->get('PickupDays');
         $this->PickupDay->setPrimaryKey(['customer_id', 'pickup_day']);
 
         foreach($customerIds as $customerId) {
@@ -1324,7 +1323,7 @@ class OrderDetailsController extends AdminAppController
             return;
         }
 
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $flashMessage = '';
         foreach ($orderDetailIds as $orderDetailId) {
             $orderDetail = $this->OrderDetail->find('all', [
@@ -1367,7 +1366,7 @@ class OrderDetailsController extends AdminAppController
 
             $emailMessage = ' ' . __d('admin', 'An_email_was_sent_to_{0}.', ['<b>' . $orderDetail->customer->name . '</b>']);
 
-            $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+            $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
             $sendOrderedProductDeletedNotification = $this->Manufacturer->getOptionSendOrderedProductDeletedNotification($orderDetail->product->manufacturer->send_ordered_product_deleted_notification);
 
             if (! $this->AppAuth->isManufacturer() && $orderDetail->order_state == ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER && $sendOrderedProductDeletedNotification) {
@@ -1392,7 +1391,7 @@ class OrderDetailsController extends AdminAppController
                 ]);
             }
 
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave('order_detail_cancelled', $this->AppAuth->getUserId(), $orderDetail->product_id, 'products', $message);
         }
 
@@ -1427,7 +1426,7 @@ class OrderDetailsController extends AdminAppController
     private function changeOrderDetailPriceDepositTax($oldOrderDetail, $productPrice, $productAmount)
     {
 
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
 
         $unitPriceExcl = $this->OrderDetail->Products->getNetPrice($oldOrderDetail->product_id, $productPrice / $productAmount);
         $unitTaxAmount = $this->OrderDetail->Products->getUnitTax($productPrice, $unitPriceExcl, $productAmount);
@@ -1477,7 +1476,7 @@ class OrderDetailsController extends AdminAppController
     private function changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $newPrice, $amount)
     {
         if (!empty($object->timebased_currency_order_detail)) {
-            $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
+            $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
             $this->TimebasedCurrencyOrderDetail->changePrice($object, $newPrice, $amount);
         }
     }
@@ -1499,7 +1498,7 @@ class OrderDetailsController extends AdminAppController
         }
 
         // do the acutal updates for increasing quantity
-        $this->StockAvailable = TableRegistry::getTableLocator()->get('StockAvailables');
+        $this->StockAvailable = $this->getTableLocator()->get('StockAvailables');
         $originalPrimaryKey = $this->StockAvailable->getPrimaryKey();
         $this->StockAvailable->setPrimaryKey('id_stock_available');
         $newQuantity = $quantity + $orderDetailAmountBeforeAmountChange - $orderDetail->product_amount;
