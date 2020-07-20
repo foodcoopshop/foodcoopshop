@@ -10,7 +10,7 @@ use Cake\Controller\Component;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\Log\Log;
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\FactoryLocator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -137,7 +137,7 @@ class CartComponent extends Component
         if ($this->cart === null) {
             return false;
         }
-        $cc = TableRegistry::getTableLocator()->get('Carts');
+        $cc = FactoryLocator::get('Table')->get('Carts');
         $patchedEntity = $cc->patchEntity(
             $cc->get($this->getCartId()), [
                 'status' => APP_OFF
@@ -188,10 +188,10 @@ class CartComponent extends Component
 
         $cart = $this->AppAuth->getCart();
 
-        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Cart = FactoryLocator::get('Table')->get('Carts');
+        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
+        $this->PickupDay = FactoryLocator::get('Table')->get('PickupDays');
+        $this->Product = FactoryLocator::get('Table')->get('Products');
 
         // START check if no amount is 0
         $productWithAmount0Found = false;
@@ -199,7 +199,7 @@ class CartComponent extends Component
             $ids = $this->Product->getProductIdAndAttributeId($cartProduct['productId']);
             if ($cartProduct['amount'] == 0) {
                 Log::error('amount of cart productId ' . $ids['productId'] . ' (attributeId : ' . $ids['attributeId'] . ') was 0 and therefore removed from cart');
-                $cartProductTable = TableRegistry::getTableLocator()->get('CartProducts');
+                $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
                 $cartProductTable->remove($ids['productId'], $ids['attributeId'], $this->getCartId());
                 $productWithAmount0Found = true;
             }
@@ -261,7 +261,7 @@ class CartComponent extends Component
 
                         // stock available check for attribute
                         if ((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$attribute->stock_available->always_available) && $stockAvailableAvailableQuantity < $cartProduct['amount']) {
-                            $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
+                            $this->Attribute = FactoryLocator::get('Table')->get('Attributes');
                             $attribute = $this->Attribute->find('all', [
                                 'conditions' => [
                                     'Attributes.id_attribute' => $attribute->product_attribute_combination->id_attribute
@@ -390,7 +390,7 @@ class CartComponent extends Component
                 __('Please_enter_a_number.')
                 );
             $maxValue = $this->getTimebasedCurrencySecondsSumRoundedUp();
-            $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
+            $this->TimebasedCurrencyOrderDetail = FactoryLocator::get('Table')->get('TimebasedCurrencyOrderDetails');
             $customerCreditBalance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $this->AppAuth->getUserId());
             $maxValueForCustomers = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_CUSTOMER') * 3600 + $customerCreditBalance;
             if ($maxValueForCustomers <= $maxValue) {
@@ -520,7 +520,7 @@ class CartComponent extends Component
                     break;
             }
 
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog = FactoryLocator::get('Table')->get('ActionLogs');
             $this->ActionLog->customSave($actionLogType, $userIdForActionLog, $cart['Cart']->id_cart, 'carts', $messageForActionLog);
             $this->getController()->Flash->success($message);
 
@@ -532,7 +532,7 @@ class CartComponent extends Component
 
     private function saveOrderDetails($orderDetails2save)
     {
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
         foreach ($orderDetails2save as &$orderDetail) {
 
             // timebased_currency: ORDER_DETAILS
@@ -568,7 +568,7 @@ class CartComponent extends Component
 
     private function saveStockAvailable($stockAvailable2saveData, $stockAvailable2saveConditions)
     {
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product = FactoryLocator::get('Table')->get('Products');
         $i = 0;
         foreach ($stockAvailable2saveData as &$data) {
             $this->Product->StockAvailables->updateAll(
@@ -599,7 +599,7 @@ class CartComponent extends Component
             $manufacturers[$cartProduct['manufacturerId']][] = $cartProduct;
         }
 
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
         $manufacturersThatReceivedInstantOrderNotification = [];
         foreach ($manufacturers as $manufacturerId => $cartProducts) {
 
@@ -645,7 +645,7 @@ class CartComponent extends Component
 
     private function sendStockAvailableLimitReachedEmailToManufacturer($cartId)
     {
-        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
+        $this->Cart = FactoryLocator::get('Table')->get('Carts');
         $cart = $this->Cart->find('all', [
             'conditions' => [
                 'Carts.id_cart' => $cartId
@@ -823,7 +823,7 @@ class CartComponent extends Component
     {
 
         $manufacturers = [];
-        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
+        $this->Cart = FactoryLocator::get('Table')->get('Carts');
         $cart = $this->Cart->find('all', [
             'conditions' => [
                 'Carts.id_cart' => $cart['Cart']->id_cart,

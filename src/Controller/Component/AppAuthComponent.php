@@ -6,7 +6,7 @@ use App\Network\AppSession;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\FactoryLocator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -78,7 +78,7 @@ class AppAuthComponent extends AuthComponent
 
     public function getLastOrderDetailsForDropdown()
     {
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
         $dropdownData = $this->OrderDetail->getLastOrderDetailsForDropdown($this->getUserId());
         return $dropdownData;
     }
@@ -90,7 +90,7 @@ class AppAuthComponent extends AuthComponent
         }
 
         if (!empty($this->user())) {
-            $mm = TableRegistry::getTableLocator()->get('Manufacturers');
+            $mm = FactoryLocator::get('Table')->get('Manufacturers');
             $this->manufacturer = $mm->find('all', [
                 'conditions' => [
                     'AddressManufacturers.email' => $this->user('email'),
@@ -186,7 +186,7 @@ class AppAuthComponent extends AuthComponent
 
     public function getCreditBalance()
     {
-        $c = TableRegistry::getTableLocator()->get('Customers');
+        $c = FactoryLocator::get('Table')->get('Customers');
         return $c->getCreditBalance($this->getUserId());
     }
 
@@ -224,7 +224,7 @@ class AppAuthComponent extends AuthComponent
 
     public function getCartType()
     {
-        $cart = TableRegistry::getTableLocator()->get('Carts');
+        $cart = FactoryLocator::get('Table')->get('Carts');
         $cartType = $cart::CART_TYPE_WEEKLY_RHYTHM;
         if ($this->isInstantOrderMode()) {
             $cartType = $cart::CART_TYPE_INSTANT_ORDER;
@@ -248,7 +248,7 @@ class AppAuthComponent extends AuthComponent
 
         $cartType = $this->getCartType();
 
-        $cart = TableRegistry::getTableLocator()->get('Carts');
+        $cart = FactoryLocator::get('Table')->get('Carts');
         return $cart->getCart($this->getUserId(), $cartType);
     }
 
