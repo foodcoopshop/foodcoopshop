@@ -5,9 +5,9 @@ namespace App\Mailer;
 use App\Lib\OutputFilter\OutputFilter;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
+use Cake\Datasource\FactoryLocator;
 use Cake\Log\Log;
 use Cake\Mailer\Mailer;
-use Cake\ORM\TableRegistry;
 use Cake\Mailer\TransportFactory;
 
 /**
@@ -43,7 +43,7 @@ class AppMailer extends Mailer
      */
     public function logEmailInDatabase($email)
     {
-        $emailLogModel = TableRegistry::getTableLocator()->get('EmailLogs');
+        $emailLogModel = FactoryLocator::get('Table')->get('EmailLogs');
         $email2save = [
             'from_address' => json_encode($this->getFrom()),
             'to_address' => json_encode($this->getTo()),

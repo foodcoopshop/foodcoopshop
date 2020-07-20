@@ -14,9 +14,9 @@
  */
 
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\FactoryLocator;
 
-$categoryTable = TableRegistry::getTableLocator()->get('Categories');
+$categoryTable = FactoryLocator::get('Table')->get('Categories');
 
 foreach ($categories as $category) {
     $level = $categoryTable->getLevel($category);

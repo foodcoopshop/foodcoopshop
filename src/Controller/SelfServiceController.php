@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
-use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -45,7 +44,7 @@ class SelfServiceController extends FrontendController
             $this->set('keyword', $keyword);
         }
 
-        $this->Category = TableRegistry::getTableLocator()->get('Categories');
+        $this->Category = $this->getTableLocator()->get('Categories');
         $this->set('categoriesForSelect', $this->Category->getForSelect(null, false));
 
         $products = $this->Category->getProductsByCategoryId($this->AppAuth, $categoryId, false, $keyword, 0, false, true);
@@ -59,7 +58,7 @@ class SelfServiceController extends FrontendController
             $hashedProductId = strtolower(substr($keyword, 0, 4));
             $attributeId = (int) substr($keyword, 4, 4);
             if ($hashedProductId == $products[0]['ProductIdentifier']) {
-                $this->CartProduct = TableRegistry::getTableLocator()->get('CartProducts');
+                $this->CartProduct = $this->getTableLocator()->get('CartProducts');
                 $result = $this->CartProduct->add($this->AppAuth, $products[0]['id_product'], $attributeId, 1);
                 if (!empty($result['msg'])) {
                     $this->Flash->error($result['msg']);

@@ -3,7 +3,6 @@
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\I18n\FrozenDate;
 use Cake\I18n\FrozenTime;
-use Cake\ORM\TableRegistry;
 use Cake\Core\Configure;
 use App\Application;
 use Cake\Console\CommandRunner;
@@ -30,7 +29,7 @@ class PickupReminderShellTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
+        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
         $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
@@ -43,7 +42,7 @@ class PickupReminderShellTest extends AppCakeTestCase
 
     public function testOneCustomerHasFutureOrdersLaterThanNextPickupDay()
     {
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->prepareOrderDetails();
         $this->commandRunner->run(['cake', 'pickup_reminder', '2018-03-10']);
         $emailLogs = $this->EmailLog->find('all')->toArray();
@@ -52,7 +51,7 @@ class PickupReminderShellTest extends AppCakeTestCase
 
     public function testOneCustomerHasFutureOrdersForNextPickupDay()
     {
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->prepareOrderDetails();
         $this->OrderDetail->save(
             $this->OrderDetail->patchEntity(

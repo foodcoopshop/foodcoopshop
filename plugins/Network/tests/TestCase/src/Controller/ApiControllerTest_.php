@@ -26,7 +26,6 @@ use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\View\View;
 use Network\View\Helper\NetworkHelper;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\StringCompareTrait;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
@@ -41,7 +40,7 @@ class ApiControllerTest extends TestCase
     {
         parent::setUp();
         $this->Network = new NetworkHelper(new View());
-        $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
+        $this->Configuration = $this->get('Configurations');
     }
 
     protected function resetTestDatabaseData()

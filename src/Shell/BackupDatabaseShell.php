@@ -19,7 +19,6 @@ use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\I18n\Number;
-use Cake\ORM\TableRegistry;
 
 class BackupDatabaseShell extends AppShell
 {
@@ -31,7 +30,7 @@ class BackupDatabaseShell extends AppShell
         ini_set('max_execution_time', 300);
         ini_set('memory_limit', '256M');
 
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
 
         $this->startTimeLogging();
 

@@ -11,7 +11,6 @@ use Cake\Core\Configure;
 use Cake\Http\Cookie\Cookie;
 use Cake\I18n\Date;
 use Cake\Log\Log;
-use Cake\ORM\TableRegistry;
 use Cake\Utility\Security;
 use DateTime;
 use Cake\Http\Exception\NotFoundException;
@@ -41,7 +40,7 @@ class CustomersController extends FrontendController
         // customer exists check (if customer was deleted and somehow files were not deleted)
         $customerId = explode('-', $this->request->getParam('imageSrc'));
         $customerId = $customerId[0];
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
@@ -74,7 +73,7 @@ class CustomersController extends FrontendController
 
         $this->set('title_for_layout', __('Accept_terms_of_use'));
 
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $patchedEntity = $this->Customer->patchEntity(
             $this->Customer->get($this->AppAuth->getUserId()),
             [
@@ -105,7 +104,7 @@ class CustomersController extends FrontendController
             'title_for_layout' => __('Request_new_password')
         ]);
 
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $customer = $this->Customer->newEntity([]);
 
         if (!empty($this->getRequest()->getData())) {
@@ -179,7 +178,7 @@ class CustomersController extends FrontendController
             throw new RecordNotFoundException('activate new password code not passed');
         }
 
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.activate_new_password_code' => $activateNewPasswordCode
@@ -208,7 +207,7 @@ class CustomersController extends FrontendController
 
     public function login()
     {
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $title = __('Sign_in');
         $enableRegistrationForm = true;
         $enableBarCodeLogin = false;
@@ -328,7 +327,7 @@ class CustomersController extends FrontendController
                     );
 
                     // write action log
-                    $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+                    $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
                     $message = __('Member_{0}_created_an_account.', [$this->getRequest()->getData('Customers.firstname') . ' ' . $this->getRequest()->getData('Customers.lastname')]);
 
                     $this->ActionLog->customSave('customer_registered', $newCustomer->id_customer, $newCustomer->id_customer, 'customers', $message);
@@ -380,7 +379,7 @@ class CustomersController extends FrontendController
     {
         $this->set('title_for_layout', __('Account_created_successfully'));
 
-        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
+        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
     }

@@ -16,7 +16,6 @@ namespace App\Shell;
 
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
-use Cake\ORM\TableRegistry;
 
 class SendOrderListsShell extends AppShell
 {
@@ -28,10 +27,10 @@ class SendOrderListsShell extends AppShell
     {
         parent::main();
 
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $this->Product = $this->getTableLocator()->get('Products');
 
         $this->startTimeLogging();
 

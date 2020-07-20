@@ -3,7 +3,6 @@
 use App\Application;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 use App\Test\TestCase\AppCakeTestCase;
 
 /**
@@ -30,10 +29,10 @@ class SendOrderListsShellTest extends AppCakeTestCase
     {
         parent::setUp();
         $this->prepareSendingOrderLists();
-        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
-        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
+        $this->Cart = $this->getTableLocator()->get('Carts');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->Product = $this->getTableLocator()->get('Products');
         $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
@@ -144,7 +143,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->assertEquals(1, count($emailLogs), 'amount of sent emails wrong');
 
         // 3) assert action log
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $actionLogs = $this->ActionLog->find('all', [
             'conditions' => [
                 'type' => 'cronjob_send_order_lists'
@@ -242,7 +241,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         );
 
         // 2) assert action log
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $actionLog = $this->ActionLog->find('all', [
             'conditions' => [
                 'type' => 'cronjob_send_order_lists'
@@ -283,7 +282,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
             'default_quantity_after_sending_order_lists' => $defaultQuantity,
             'quantity' => 10,
         ];
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product = $this->getTableLocator()->get('Products');
         $this->Product->changeQuantity([
             [$productId1 => $newProductData],
             [$productId2 => $newProductData]

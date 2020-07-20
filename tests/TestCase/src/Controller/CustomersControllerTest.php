@@ -3,7 +3,6 @@
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 
 /**
@@ -28,7 +27,7 @@ class CustomersControllerTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
+        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
     }
 
     private function setUpProfileImageTests()
@@ -296,7 +295,7 @@ class CustomersControllerTest extends AppCakeTestCase
     public function testDeleteWithNotApprovedPayments()
     {
 
-        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
+        $this->Payment = $this->getTableLocator()->get('Payments');
         $paymentId = 1;
         $this->Payment->save(
             $this->Payment->patchEntity(
@@ -349,7 +348,7 @@ class CustomersControllerTest extends AppCakeTestCase
         // 2) cookie must exist
         $cookies = $this->httpClient->cookies();
         $this->assertTrue($cookies->has('remember_me'));
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'email' => $userEmail

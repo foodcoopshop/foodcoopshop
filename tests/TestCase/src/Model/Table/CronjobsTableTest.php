@@ -1,7 +1,6 @@
 <?php
 
 use App\Test\TestCase\AppCakeTestCase;
-use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,7 +22,7 @@ class CronjobsTableTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->Cronjob = TableRegistry::getTableLocator()->get('Cronjobs');
+        $this->Cronjob = $this->getTableLocator()->get('Cronjobs');
     }
 
     public function testRunSunday()

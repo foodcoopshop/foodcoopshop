@@ -11,7 +11,6 @@ use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\NotFoundException;
-use Cake\ORM\TableRegistry;
 use Cake\Http\Exception\ForbiddenException;
 
 /**
@@ -125,7 +124,7 @@ class CustomersController extends AdminAppController
             throw new InvalidParameterException('no customer id passed');
         }
 
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Customer->dropManufacturersInNextFind();
         $customers = $this->Customer->find('all', [
             'fields' => [
@@ -164,7 +163,7 @@ class CustomersController extends AdminAppController
             return;
         }
 
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $oldCustomer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
@@ -197,7 +196,7 @@ class CustomersController extends AdminAppController
             '<b>' . Configure::read('app.htmlHelper')->getGroupName($groupId) . '</b>'
         ]);
         $this->Flash->success($messageString);
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('customer_group_changed', $this->AppAuth->getUserId(), $customerId, 'customers', $messageString);
 
         $this->set([
@@ -210,7 +209,7 @@ class CustomersController extends AdminAppController
     {
         $this->set('title_for_layout', __d('admin', 'Change_password'));
 
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $this->AppAuth->getUserId()
@@ -256,7 +255,7 @@ class CustomersController extends AdminAppController
                 $actionLogModel = 'customers';
             }
 
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $actionLogId, $actionLogModel, $message);
             $this->Flash->success(__d('admin', 'Your_new_password_has_been_saved_successfully.'));
             $this->redirect($this->referer());
@@ -276,8 +275,8 @@ class CustomersController extends AdminAppController
             throw new ForbiddenException('deleting user ' . $customerId . 'denied');
         }
 
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
-        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
+        $this->Customer = $this->getTableLocator()->get('Customers');
+        $this->Payment = $this->getTableLocator()->get('Payments');
 
         try {
 
@@ -324,7 +323,7 @@ class CustomersController extends AdminAppController
                 $errors[] = __d('admin', 'Amount_of_not_approved_payments_within_the_last_2_years:'). ' '. $notApprovedPaymentsCount . '.';
             }
 
-            $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
+            $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
             $timebasedCurrencyCreditBalance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customerId);
             if ($timebasedCurrencyCreditBalance != 0) {
                 $errors[] = __d('admin', 'The_credit_of_the_paying_with_time_account_is:') . ' ' . Configure::read('app.timebasedCurrencyHelper')->formatSecondsToTimebasedCurrency($timebasedCurrencyCreditBalance).'. ' . __d('admin', 'It_needs_to_be_zero.');
@@ -349,14 +348,14 @@ class CustomersController extends AdminAppController
         $this->Customer->deleteAll(['id_customer' => $customerId]);
         $this->Customer->AddressCustomers->deleteAll(['id_customer' => $customerId]);
 
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->ActionLog->removeCustomerNameFromAllActionLogs($customer->firstname . ' ' . $customer->lastname);
         $this->ActionLog->removeCustomerNameFromAllActionLogs($customer->lastname . ' ' . $customer->firstname);
         $this->ActionLog->removeCustomerEmailFromAllActionLogs($customer->email);
 
         $this->deleteUploadedImage($customerId, Configure::read('app.htmlHelper')->getCustomerThumbsPath(), Configure::read('app.customerImageSizes'));
 
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         if ($isOwnProfile) {
             $message = __d('admin', 'Your_account_has_been_deleted_successfully.');
             $redirectUrl = Configure::read('app.slugHelper')->getHome();
@@ -407,7 +406,7 @@ class CustomersController extends AdminAppController
         $isOwnProfile = $this->AppAuth->getUserId() == $customerId;
         $this->set('isOwnProfile', $isOwnProfile);
 
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
@@ -417,7 +416,7 @@ class CustomersController extends AdminAppController
             ]
         ])->first();
 
-        $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
+        $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
         $timebasedCurrencyCreditBalance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customerId) * -1;
         $this->set('timebasedCurrencyCreditBalance', $timebasedCurrencyCreditBalance);
         $this->set('timebasedCurrencyDisableOptionAllowed', $timebasedCurrencyCreditBalance >= 0);
@@ -470,7 +469,7 @@ class CustomersController extends AdminAppController
                 $this->deleteUploadedImage($customer->id_customer, Configure::read('app.htmlHelper')->getCustomerThumbsPath(), Configure::read('app.customerImageSizes'));
             }
 
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             if ($isOwnProfile) {
                 $message = __d('admin', 'Your_profile_was_changed.');
             } else {
@@ -506,7 +505,7 @@ class CustomersController extends AdminAppController
             throw new RecordNotFoundException('status needs to be 0 or 1');
         }
 
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
@@ -555,7 +554,7 @@ class CustomersController extends AdminAppController
 
         $this->Flash->success($message);
 
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $customerId, 'customer', $message);
 
         $this->redirect($this->referer());
@@ -568,7 +567,7 @@ class CustomersController extends AdminAppController
         $customerId = $this->getRequest()->getData('customerId');
         $customerComment = htmlspecialchars_decode($this->getRequest()->getData('customerComment'));
 
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $oldCustomer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId
@@ -589,7 +588,7 @@ class CustomersController extends AdminAppController
 
         $this->Flash->success(__d('admin', 'The_comment_was_changed_successfully.'));
 
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->ActionLog->customSave('customer_comment_changed', $this->AppAuth->getUserId(), $customerId, 'customers', __d('admin', 'The_comment_of_the_member_{0}_was_changed:', ['<b>' . $oldCustomer->name . '</b>']) . ' <div class="changed">' . $customerComment . ' </div>');
 
         $this->set([
@@ -613,7 +612,7 @@ class CustomersController extends AdminAppController
         }
         $this->set('dateTo', $dateTo);
 
-        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
+        $this->Payment = $this->getTableLocator()->get('Payments');
 
         $paymentProductDelta = $this->Customer->getProductBalanceForCustomers(APP_ON);
         $paymentDepositDelta = $this->Customer->getDepositBalanceForCustomers(APP_ON);
@@ -702,7 +701,7 @@ class CustomersController extends AdminAppController
             ];
         }
 
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
 
         $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
 
@@ -727,7 +726,7 @@ class CustomersController extends AdminAppController
         ]);
 
         $customers = $this->paginate($query, [
-            'sortWhitelist' => [
+            'sortableFields' => [
                 'Customers.' . Configure::read('app.customerMainNamePart'), 'Customers.id_default_group', 'Customers.id_customer', 'Customers.email', 'Customers.active', 'Customers.email_order_reminder', 'Customers.date_add', 'Customers.timebased_currency_enabled'
             ],
             'order' => [
@@ -736,11 +735,11 @@ class CustomersController extends AdminAppController
         ])->toArray();
 
         $i = 0;
-        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->Payment = $this->getTableLocator()->get('Payments');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
 
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-            $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
+            $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
         }
 
         foreach ($customers as $customer) {

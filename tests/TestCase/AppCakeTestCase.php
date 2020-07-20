@@ -10,7 +10,6 @@ use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Filesystem\Folder;
 use Cake\Filesystem\File;
-use Cake\ORM\TableRegistry;
 use Cake\View\View;
 use Network\View\Helper\NetworkHelper;
 use Cake\TestSuite\TestCase;
@@ -66,9 +65,9 @@ abstract class AppCakeTestCase extends TestCase
         $this->Time = new MyTimeHelper($View);
         $this->Network = new NetworkHelper($View);
         $this->PricePerUnit = new PricePerUnitHelper($View);
-        $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Configuration = $this->getTableLocator()->get('Configurations');
+        $this->Customer = $this->getTableLocator()->get('Customers');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
 
         $this->resetTestDatabaseData();
         $this->resetLogs();

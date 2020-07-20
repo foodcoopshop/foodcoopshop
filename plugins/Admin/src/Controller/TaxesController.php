@@ -4,7 +4,6 @@ namespace Admin\Controller;
 
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
-use Cake\ORM\TableRegistry;
 
 /**
  * TaxesController
@@ -31,7 +30,7 @@ class TaxesController extends AdminAppController
 
     public function add()
     {
-        $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
+        $this->Tax = $this->getTableLocator()->get('Taxes');
         $tax = $this->Tax->newEntity(
             [
                 'rate' => 0,
@@ -53,7 +52,7 @@ class TaxesController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
+        $this->Tax = $this->getTableLocator()->get('Taxes');
         $tax = $this->Tax->find('all', [
             'conditions' => [
                 'Taxes.id_tax' => $taxId
@@ -98,7 +97,7 @@ class TaxesController extends AdminAppController
                 $actionLogType = 'tax_changed';
             }
 
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             $message = __d('admin', 'The_tax_rate_{0}_has_been_{1}.', ['<b>' . Configure::read('app.numberHelper')->formatAsPercent($tax->rate) . '</b>', $messageSuffix]);
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $tax->id_tax, 'taxes', $message);
             $this->Flash->success($message);
@@ -116,12 +115,12 @@ class TaxesController extends AdminAppController
             'Taxes.active > ' . APP_DEL
         ];
 
-        $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
+        $this->Tax = $this->getTableLocator()->get('Taxes');
         $query = $this->Tax->find('all', [
             'conditions' => $conditions
         ]);
         $taxes = $this->paginate($query, [
-            'sortWhitelist' => [
+            'sortableFields' => [
                 'Taxes.rate', 'Taxes.position'
             ],
             'order' => [

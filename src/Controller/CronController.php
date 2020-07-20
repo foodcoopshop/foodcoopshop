@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use Cake\Event\EventInterface;
-use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -32,7 +31,7 @@ class CronController extends AppController
 
         $this->RequestHandler->renderAs($this, 'json');
 
-        $this->Cronjob = TableRegistry::getTableLocator()->get('Cronjobs');
+        $this->Cronjob = $this->getTableLocator()->get('Cronjobs');
 
         $executedCronjobs = $this->Cronjob->run();
         $this->set([

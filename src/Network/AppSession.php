@@ -25,7 +25,7 @@ class AppSession extends Session
      * {@inheritDoc}
      * @see \Cake\Http\Session::read()
      */
-    public function read($name = null)
+    public function read(?string $name = null, $default = null)
     {
 
         if (!isset($_SESSION)) {
@@ -33,9 +33,9 @@ class AppSession extends Session
         }
 
         if ($name === null) {
-            return isset($_SESSION) ? $_SESSION : [];
+            return $_SESSION ?: [];
         }
 
-        return Hash::get($_SESSION, $name);
+        return Hash::get($_SESSION, $name, $default);
     }
 }

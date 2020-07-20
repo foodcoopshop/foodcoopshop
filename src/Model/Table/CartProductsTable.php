@@ -3,7 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\FactoryLocator;
 use App\Lib\Error\Exception\InvalidParameterException;
 
 /**
@@ -260,8 +260,8 @@ class CartProductsTable extends AppTable
 
     public function setPickupDays($cartProducts, $customerId, $cartType)
     {
-        $pickupDayTable = TableRegistry::getTableLocator()->get('PickupDays');
-        $cartTable = TableRegistry::getTableLocator()->get('Carts');
+        $pickupDayTable = FactoryLocator::get('Table')->get('PickupDays');
+        $cartTable = FactoryLocator::get('Table')->get('Carts');
 
         foreach($cartProducts as &$cartProduct) {
             $cartProduct->pickup_day = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
@@ -306,7 +306,7 @@ class CartProductsTable extends AppTable
             throw new InvalidParameterException('wrong cartId: ' . $cartId);
         }
         // deleteAll cannot check associations
-        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
+        $this->Cart = FactoryLocator::get('Table')->get('Carts');
         $cart = $this->Cart->find('all', [
             'conditions' => [
                 'Carts.id_cart' => $cartId,

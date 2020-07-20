@@ -5,7 +5,6 @@ namespace App\Shell;
 use Cake\Console\Shell;
 use Cake\Core\Configure;
 use App\Network\AppHttpClient;
-use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -31,8 +30,8 @@ class AppShell extends Shell
 
     public function main()
     {
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->Customer = $this->getTableLocator()->get('Customers');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         error_reporting(0); // disable all error messages
     }
 

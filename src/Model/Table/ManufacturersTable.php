@@ -3,7 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
 
 /**
@@ -91,7 +91,7 @@ class ManufacturersTable extends AppTable
             'conditions' => ['id_manufacturer' => $manufacturerId]
         ])->first();
 
-        $timebasedCurrencyOrderDetailsTable = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
+        $timebasedCurrencyOrderDetailsTable = FactoryLocator::get('Table')->get('TimebasedCurrencyOrderDetails');
         $creditBalance = $timebasedCurrencyOrderDetailsTable->getCreditBalance($manufacturerId, null);
 
         $activeLimit = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_MAX_CREDIT_BALANCE_MANUFACTURER') * 3600;
@@ -259,7 +259,7 @@ class ManufacturersTable extends AppTable
      */
     public function getCustomerRecord($email)
     {
-        $cm = TableRegistry::getTableLocator()->get('Customers');
+        $cm = FactoryLocator::get('Table')->get('Customers');
 
         if (empty($email)) {
             return [];

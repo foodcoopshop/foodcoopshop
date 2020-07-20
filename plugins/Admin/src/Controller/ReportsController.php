@@ -5,7 +5,6 @@ namespace Admin\Controller;
 use App\Lib\Csv\RaiffeisenBankingReader;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
-use Cake\ORM\TableRegistry;
 use Cake\ORM\Exception\PersistenceFailedException;
 
 /**
@@ -42,7 +41,7 @@ class ReportsController extends AdminAppController
     private function handleCsvUpload()
     {
 
-        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
+        $this->Payment = $this->getTableLocator()->get('Payments');
 
         $csvPayments = [];
         $csvRecords = [];
@@ -121,7 +120,7 @@ class ReportsController extends AdminAppController
                         if ($success) {
                             $message = __d('admin', '{0,plural,=1{1_record_was} other{#_records_were}_successfully_imported.', [count($csvPayments)]);
                             $this->Flash->success($message);
-                            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+                            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
                             $this->ActionLog->customSave('payment_product_csv_imported', $this->AppAuth->getUserId(), 0, 'payments', $message);
                             $this->redirect($this->referer());
                         }
@@ -177,7 +176,7 @@ class ReportsController extends AdminAppController
         // exluce "empty_glasses" deposit payments for manufacturers
         $conditions[] = "((Payments.id_manufacturer > 0 && Payments.text = 'money') || Payments.id_manufacturer = 0)";
 
-        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
+        $this->Payment = $this->getTableLocator()->get('Payments');
         $query = $this->Payment->find('all', [
             'conditions' => $conditions,
             'contain' => [

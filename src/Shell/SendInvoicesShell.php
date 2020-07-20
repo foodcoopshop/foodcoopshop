@@ -17,7 +17,6 @@ namespace App\Shell;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\I18n\Time;
-use Cake\ORM\TableRegistry;
 
 class SendInvoicesShell extends AppShell
 {
@@ -31,9 +30,9 @@ class SendInvoicesShell extends AppShell
     {
         parent::main();
 
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
 
         $this->startTimeLogging();
 
@@ -75,7 +74,7 @@ class SendInvoicesShell extends AppShell
 
         if (!Configure::read('appDb.FCS_INCLUDE_STOCK_PRODUCTS_IN_INVOICES')) {
             $orderDetails->where(function ($exp, $query) {
-                return $exp->or_([
+                return $exp->or([
                     'Products.is_stock_product' => 0, // do not use "false" here!
                     'Manufacturers.stock_management_enabled' => 0 // do not use "false" here!
                 ]);

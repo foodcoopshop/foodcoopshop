@@ -7,7 +7,6 @@ use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Exception\Exception;
 use Cake\Event\EventInterface;
-use Cake\ORM\TableRegistry;
 use Cake\Http\Exception\ForbiddenException;
 
 /**
@@ -71,7 +70,7 @@ class CartsController extends FrontendController
 
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
-            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+            $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
             $cart = $this->AppAuth->getCart();
 
             if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') && $cart['Cart']->pickup_day_entities) {
@@ -123,7 +122,7 @@ class CartsController extends FrontendController
     {
         $cartId = (int) $this->getRequest()->getParam('pass')[0];
 
-        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
+        $this->Cart = $this->getTableLocator()->get('Carts');
         $cart = $this->Cart->find('all', [
             'conditions' => [
                 'Carts.id_cart' => $cartId,
@@ -136,7 +135,7 @@ class CartsController extends FrontendController
         }
         $this->set('cart', $cart);
 
-        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
+        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
@@ -184,7 +183,7 @@ class CartsController extends FrontendController
 
         $this->doManufacturerCheck($initialProductId);
 
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product = $this->getTableLocator()->get('Products');
         $ids = $this->Product->getProductIdAndAttributeId($initialProductId);
 
         $cart = $this->AppAuth->getCart();
@@ -202,7 +201,7 @@ class CartsController extends FrontendController
             return;
         }
 
-        $cartProductTable = TableRegistry::getTableLocator()->get('CartProducts');
+        $cartProductTable = $this->getTableLocator()->get('CartProducts');
         $cartProductTable->remove($ids['productId'], $ids['attributeId'], $cart['Cart']['id_cart']);
 
         // ajax calls do not call beforeRender
@@ -225,7 +224,7 @@ class CartsController extends FrontendController
 
     private function doEmptyCart()
     {
-        $this->CartProduct = TableRegistry::getTableLocator()->get('CartProducts');
+        $this->CartProduct = $this->getTableLocator()->get('CartProducts');
         $this->CartProduct->removeAll($this->AppAuth->Cart->getCartId(), $this->AppAuth->getUserId());
         $this->AppAuth->setCart($this->AppAuth->getCart());
     }
@@ -241,14 +240,14 @@ class CartsController extends FrontendController
     {
 
         $this->doEmptyCart();
-        $this->CartProduct = TableRegistry::getTableLocator()->get('CartProducts');
+        $this->CartProduct = $this->getTableLocator()->get('CartProducts');
 
         $formattedDeliveryDate = strtotime($deliveryDate);
 
         $dateFrom = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(Configure::read('app.timeHelper')->getOrderPeriodFirstDay($formattedDeliveryDate)));
         $dateTo = strtotime(Configure::read('app.timeHelper')->formatToDbFormatDate(Configure::read('app.timeHelper')->getOrderPeriodLastDay($formattedDeliveryDate)));
 
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->getOrderDetailQueryForPeriodAndCustomerId($dateFrom, $dateTo, $this->AppAuth->getUserId());
 
         $errorMessages = [];
@@ -287,7 +286,7 @@ class CartsController extends FrontendController
 
     public function addLastOrderToCart()
     {
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->getLastOrderDetailsForDropdown($this->AppAuth->getUserId());
         if (empty($orderDetails)) {
             $message = __('There_are_no_orders_available.');
@@ -307,14 +306,14 @@ class CartsController extends FrontendController
         $initialProductId = $this->getRequest()->getData('productId');
 
         $this->doManufacturerCheck($initialProductId);
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product = $this->getTableLocator()->get('Products');
         $ids = $this->Product->getProductIdAndAttributeId($initialProductId);
         $amount = (int) $this->getRequest()->getData('amount');
         $orderedQuantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat(
             $this->getRequest()->getData('orderedQuantityInUnits')
         );
 
-        $this->CartProduct = TableRegistry::getTableLocator()->get('CartProducts');
+        $this->CartProduct = $this->getTableLocator()->get('CartProducts');
         $result = $this->CartProduct->add($this->AppAuth, $ids['productId'], $ids['attributeId'], $amount, $orderedQuantityInUnits);
 
         // ajax calls do not call beforeRender

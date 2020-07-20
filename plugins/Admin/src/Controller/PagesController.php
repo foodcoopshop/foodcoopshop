@@ -5,7 +5,6 @@ namespace Admin\Controller;
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
-use Cake\ORM\TableRegistry;
 
 /**
  * PagesController
@@ -45,7 +44,7 @@ class PagesController extends AdminAppController
 
     public function add()
     {
-        $this->Page = TableRegistry::getTableLocator()->get('Pages');
+        $this->Page = $this->getTableLocator()->get('Pages');
         $page = $this->Page->newEntity(
             [
                 'active' => APP_ON,
@@ -71,7 +70,7 @@ class PagesController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $this->Page = TableRegistry::getTableLocator()->get('Pages');
+        $this->Page = $this->getTableLocator()->get('Pages');
         $page = $this->Page->find('all', [
             'conditions' => [
                 'Pages.id_page' => $pageId
@@ -141,7 +140,7 @@ class PagesController extends AdminAppController
                 $actionLogType = 'page_changed';
             }
 
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('Pages.delete_page'))) {
                 $page = $this->Page->patchEntity($page, ['active' => APP_DEL]);
                 $this->Page->save($page);
@@ -174,7 +173,7 @@ class PagesController extends AdminAppController
 
         $conditions[] = 'Pages.active > ' . APP_DEL;
 
-        $this->Page = TableRegistry::getTableLocator()->get('Pages');
+        $this->Page = $this->getTableLocator()->get('Pages');
         $totalPagesCount = $this->Page->find('all', [
             'conditions' => $conditions
         ])->count();
@@ -185,7 +184,7 @@ class PagesController extends AdminAppController
 
         $this->set('title_for_layout', __d('admin', 'Pages'));
 
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
         $this->set('customersForDropdown', $this->Customer->getForDropdown());
     }
 }

@@ -6,7 +6,6 @@ use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
-use Cake\ORM\TableRegistry;
 
 /**
  * BlogPostsController
@@ -34,7 +33,7 @@ class BlogPostsController extends FrontendController
         switch ($this->getRequest()->getParam('action')) {
             case 'detail':
                 $blogPostId = (int) $this->getRequest()->getParam('pass')[0];
-                $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
+                $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
                 $blogPost = $this->BlogPost->find('all', [
                     'conditions' => [
                         'BlogPosts.id_blog_post' => $blogPostId,
@@ -106,7 +105,7 @@ class BlogPostsController extends FrontendController
 
         if (!empty($this->getRequest()->getParam('manufacturerSlug'))) {
             $manufacturerId = (int) $this->getRequest()->getParam('manufacturerSlug');
-            $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+            $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
                     'Manufacturers.id_manufacturer' => $manufacturerId,
@@ -125,7 +124,7 @@ class BlogPostsController extends FrontendController
             $conditions[] = '(Manufacturers.is_private IS NULL OR Manufacturers.is_private = ' . APP_OFF.')';
         }
 
-        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
+        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->find('all', [
             'conditions' => $conditions,
             'order' => [

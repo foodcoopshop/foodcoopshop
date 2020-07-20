@@ -13,7 +13,6 @@ use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\Http\Exception\NotFoundException;
 use Cake\I18n\Time;
-use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\I18n\FrozenDate;
 
@@ -58,7 +57,7 @@ class ManufacturersController extends AdminAppController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
     }
 
     public function profile()
@@ -163,7 +162,7 @@ class ManufacturersController extends AdminAppController
                 $actionLogType = 'manufacturer_changed';
             }
 
-            $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+            $this->Customer = $this->getTableLocator()->get('Customers');
             $customerData = [
                 'email' => $this->getRequest()->getData('Manufacturers.address_manufacturer.email'),
                 'firstname' => $this->getRequest()->getData('Manufacturers.address_manufacturer.firstname'),
@@ -193,7 +192,7 @@ class ManufacturersController extends AdminAppController
                 $this->deleteUploadedGeneralTermsAndConditions($manufacturer->id_manufacturer);
             }
 
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             $message = __d('admin', 'The_manufacturer_{0}_has_been_{1}.', ['<b>' . $manufacturer->name . '</b>', $messageSuffix]);
             $this->ActionLog->customSave($actionLogType, $this->AppAuth->getUserId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
             $this->Flash->success($message);
@@ -312,7 +311,7 @@ class ManufacturersController extends AdminAppController
         ->select($this->Manufacturer->AddressManufacturers);
 
         $manufacturers = $this->paginate($query, [
-            'sortWhitelist' => [
+            'sortableFields' => [
                 'Manufacturers.name', 'Manufacturers.stock_management_enabled', 'Manufacturers.no_delivery_days', 'Manufacturers.is_private', 'Customers.' . Configure::read('app.customerMainNamePart'), 'Manufacturers.timebased_currency_enabled'
             ],
             'order' => [
@@ -326,12 +325,12 @@ class ManufacturersController extends AdminAppController
         $emailAddresses = array_unique($emailAddresses);
         $this->set('emailAddresses', $emailAddresses);
 
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
-        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->Product = $this->getTableLocator()->get('Products');
+        $this->Payment = $this->getTableLocator()->get('Payments');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
 
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
-            $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
+            $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
         }
 
         foreach ($manufacturers as $manufacturer) {
@@ -421,7 +420,7 @@ class ManufacturersController extends AdminAppController
 
             $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
 
-            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+            $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
             $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, Configure::read('app.htmlHelper')->getOrderStateBilled(), $manufacturerId);
 
             $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
@@ -474,7 +473,7 @@ class ManufacturersController extends AdminAppController
             ]
         ])->first();
 
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->getOrderDetailsForSendingOrderLists(
             $pickupDayDbFormat,
             $cronjobRunDay,
@@ -550,7 +549,7 @@ class ManufacturersController extends AdminAppController
                 $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
                 $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
 
-                $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+                $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
                 $orderDetailIds = Hash::extract($customerResults, '{n}.OrderDetailId');
                 $this->OrderDetail->updateOrderState(null, null, $validOrderStates, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturerId, $orderDetailIds);
 
@@ -617,7 +616,7 @@ class ManufacturersController extends AdminAppController
         }
         $this->set('title_for_layout', $manufacturer->name . ': ' . __d('admin', 'Edit_settings'));
 
-        $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
+        $this->Tax = $this->getTableLocator()->get('Taxes');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
         if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
@@ -654,13 +653,13 @@ class ManufacturersController extends AdminAppController
         $manufacturer->timebased_currency_max_credit_balance /= 3600;
 
         if (!$this->AppAuth->isManufacturer()) {
-            $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+            $this->Customer = $this->getTableLocator()->get('Customers');
         }
 
         $this->setFormReferer();
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED')) {
-            $this->SyncDomain = TableRegistry::getTableLocator()->get('Network.SyncDomains');
+            $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
             $this->viewBuilder()->setHelpers(['Network.Network']);
             $this->set('syncDomainsForDropdown', $this->SyncDomain->getForDropdown());
             $isAllowedEditManufacturerOptionsDropdown = $this->SyncDomain->isAllowedEditManufacturerOptionsDropdown($this->AppAuth);
@@ -767,7 +766,7 @@ class ManufacturersController extends AdminAppController
 
             $this->Flash->success($message);
 
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             $this->ActionLog->customSave('manufacturer_options_changed', $this->AppAuth->getUserId(), $manufacturer->id_manufacturer, 'manufacturers', $message);
 
             $this->redirect($this->getRequest()->getData('referer'));
@@ -784,7 +783,7 @@ class ManufacturersController extends AdminAppController
             die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }
 
-        $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
+        $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
         $results = $this->TimebasedCurrencyOrderDetail->addTimebasedCurrencyDataToInvoiceData($results);
 
         $this->set('results_' . $groupType, $results);
@@ -928,7 +927,7 @@ class ManufacturersController extends AdminAppController
         $pickupDay = h($this->getRequest()->getQuery('pickupDay'));
         $pickupDayDbFormat = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
 
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->getOrderDetailsForOrderListPreview($pickupDayDbFormat);
         $orderDetails->where(['Products.id_manufacturer' => $manufacturerId]);
         $orderDetailIds = $orderDetails->all()->extract('id_order_detail')->toArray();

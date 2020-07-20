@@ -2,7 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\FactoryLocator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,7 +26,7 @@ class Product extends Entity
 
     protected function _getNextDeliveryDay()
     {
-        $productTable = TableRegistry::getTableLocator()->get('Products');
+        $productTable = FactoryLocator::get('Table')->get('Products');
         return $productTable->calculatePickupDayRespectingDeliveryRhythm($this);
     }
 

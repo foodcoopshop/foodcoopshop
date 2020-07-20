@@ -10,7 +10,6 @@ use Cake\Filesystem\Folder;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Http\Exception\ForbiddenException;
-use Cake\ORM\TableRegistry;
 use Intervention\Image\ImageManagerStatic as Image;
 use Cake\I18n\FrozenTime;
 
@@ -109,8 +108,8 @@ class ProductsController extends AdminAppController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+        $this->Product = $this->getTableLocator()->get('Products');
     }
 
     public function delete()
@@ -133,7 +132,7 @@ class ProductsController extends AdminAppController
 
         try {
             // check if open order exist
-            $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+            $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
             $query = $this->OrderDetail->find('all', [
                 'conditions' => [
                     'OrderDetails.product_id IN' => $productIds,
@@ -211,7 +210,7 @@ class ProductsController extends AdminAppController
             throw new InvalidParameterException('no product id passed');
         }
 
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product = $this->getTableLocator()->get('Products');
         $products = $this->Product->getProductsForBackend($this->AppAuth, $productIds, 'all', 'all', '', 0, 0, true);
 
         $preparedProducts = [];
@@ -476,7 +475,7 @@ class ProductsController extends AdminAppController
             $manufacturerId = $this->AppAuth->getManufacturerId();
         }
 
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId
@@ -713,7 +712,7 @@ class ProductsController extends AdminAppController
                 );
             }
 
-            $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
+            $this->Tax = $this->getTableLocator()->get('Taxes');
             $tax = $this->Tax->find('all', [
                 'conditions' => [
                     'Taxes.id_tax' => $taxId
@@ -771,12 +770,12 @@ class ProductsController extends AdminAppController
             ]
         ])->first();
 
-        $this->CategoryProduct = TableRegistry::getTableLocator()->get('CategoryProducts');
+        $this->CategoryProduct = $this->getTableLocator()->get('CategoryProducts');
         $this->CategoryProduct->deleteAll([
             'id_product' => $productId
         ]);
 
-        $this->Category = TableRegistry::getTableLocator()->get('Categories');
+        $this->Category = $this->getTableLocator()->get('Categories');
         $selectedCategoryNames = [];
         foreach ($selectedCategories as $selectedCategory) {
             // only add if entry of passed id exists in category table
@@ -1245,15 +1244,15 @@ class ProductsController extends AdminAppController
         }
         $this->set('products', $preparedProducts);
 
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
-        $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $this->Attribute = $this->getTableLocator()->get('Attributes');
         $this->set('attributesForDropdown', $this->Attribute->getForDropdown());
-        $this->Category = TableRegistry::getTableLocator()->get('Categories');
+        $this->Category = $this->getTableLocator()->get('Categories');
         $this->set('categoriesForSelect', $this->Category->getForSelect(null, true, true));
         $manufacturersForDropdown = ['all' => __d('admin', 'All_manufacturers')];
         $manufacturersForDropdown = array_merge($manufacturersForDropdown, $this->Product->Manufacturers->getForDropdown());
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
-        $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
+        $this->Tax = $this->getTableLocator()->get('Taxes');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
         if ($manufacturerId > 0) {
@@ -1275,8 +1274,8 @@ class ProductsController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Products'));
 
         if (Configure::read('appDb.FCS_NETWORK_PLUGIN_ENABLED') && $this->AppAuth->isManufacturer()) {
-            $this->SyncManufacturer = TableRegistry::getTableLocator()->get('Network.SyncManufacturers');
-            $this->SyncDomain = TableRegistry::getTableLocator()->get('Network.SyncDomains');
+            $this->SyncManufacturer = $this->getTableLocator()->get('Network.SyncManufacturers');
+            $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
             $this->viewBuilder()->setHelpers(['Network.Network']);
             $isAllowedToUseAsMasterFoodcoop = $this->SyncManufacturer->isAllowedToUseAsMasterFoodcoop($this->AppAuth);
             $syncDomains = $this->SyncDomain->getActiveManufacturerSyncDomains($this->AppAuth->manufacturer->enabled_sync_domains);
@@ -1337,7 +1336,7 @@ class ProductsController extends AdminAppController
             $newCreated = 'DATE_ADD(NOW(), INTERVAL -'.((int) Configure::read('appDb.FCS_DAYS_SHOW_PRODUCT_AS_NEW') + 1).' DAY)';
         }
 
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product = $this->getTableLocator()->get('Products');
         // newCreated can't be set as param because of mysql function DATE_ADD
         $sql = "UPDATE " . $this->Product->getTable() . " p SET p.created = " . $newCreated . " WHERE p.id_product = :productId;";
         $params = [

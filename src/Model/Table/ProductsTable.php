@@ -6,7 +6,7 @@ use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\FactoryLocator;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 use Cake\I18n\I18n;
@@ -68,7 +68,7 @@ class ProductsTable extends AppTable
     public function __construct(array $config = [])
     {
         parent::__construct($config);
-        $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
+        $this->Configuration = FactoryLocator::get('Table')->get('Configurations');
     }
 
     public function validationName(Validator $validator)
@@ -458,7 +458,7 @@ class ProductsTable extends AppTable
             }
 
             if (isset($product[$productId]['unit_product_price_per_unit_enabled'])) {
-                $this->Unit = TableRegistry::getTableLocator()->get('Units');
+                $this->Unit = FactoryLocator::get('Table')->get('Units');
                 $priceInclPerUnit = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['unit_product_price_incl_per_unit']);
                 $quantityInUnits = Configure::read('app.numberHelper')->getStringAsFloat($product[$productId]['unit_product_quantity_in_units']);
                 $this->Unit->saveUnits(
@@ -801,7 +801,7 @@ class ProductsTable extends AppTable
 
         if ($controller) {
             $query = $controller->paginate($query, [
-                'sortWhitelist' => [
+                'sortableFields' => [
                     'Images.id_image', 'Products.name', 'Products.is_declaration_ok', 'Taxes.rate', 'Products.active', 'Manufacturers.name', 'Products.is_stock_product'
                 ],
                 'order' => $order
@@ -1354,7 +1354,7 @@ class ProductsTable extends AppTable
     {
         $defaultQuantity = 0;
 
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
 
         // INSERT PRODUCT
         $productEntity = $this->newEntity(

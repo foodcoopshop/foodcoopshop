@@ -2,7 +2,6 @@
 namespace Admin\Controller;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -73,7 +72,7 @@ class DepositsController extends AdminAppController
     {
         $manufacturerId = $this->getManufacturerId();
 
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $this->set('manufacturersForDropdown', $this->Manufacturer->getForDropdown());
         $this->set('manufacturerId', $manufacturerId);
 
@@ -89,8 +88,8 @@ class DepositsController extends AdminAppController
         ])->first();
         $this->set('manufacturer', $manufacturer);
 
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->Payment = $this->getTableLocator()->get('Payments');
 
         $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
         $this->set('orderStates', $orderStates);
@@ -159,7 +158,7 @@ class DepositsController extends AdminAppController
 
         $manufacturerId = $this->getManufacturerId();
 
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $this->set('manufacturerId', $manufacturerId);
 
         $manufacturer = $this->Manufacturer->find('all', [
@@ -169,7 +168,7 @@ class DepositsController extends AdminAppController
         ])->first();
         $this->set('manufacturer', $manufacturer);
 
-        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
+        $this->Payment = $this->getTableLocator()->get('Payments');
         $payments = $this->Payment->getManufacturerDepositsByMonth($manufacturerId, $monthAndYear);
 
         $this->set('payments', $payments);

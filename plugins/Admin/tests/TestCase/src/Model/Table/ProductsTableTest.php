@@ -3,7 +3,6 @@
 use App\Lib\Error\Exception\InvalidParameterException;
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 use Cake\I18n\FrozenDate;
 
 /**
@@ -27,7 +26,7 @@ class ProductsTableTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product = $this->getTableLocator()->get('Products');
     }
 
     public function testChangeImageValidImageAndDeleteImage()

@@ -4,7 +4,7 @@ namespace App\Model\Table;
 
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
 
 /**
@@ -139,7 +139,7 @@ class CartsTable extends AppTable
             $cart = $this->save($this->newEntity($cart2save));
         }
 
-        $cartProductsTable = TableRegistry::getTableLocator()->get('CartProducts');
+        $cartProductsTable = FactoryLocator::get('Table')->get('CartProducts');
         $cartProducts = $cartProductsTable->find('all', [
             'conditions' => [
                 'CartProducts.id_cart' => $cart['id_cart']
@@ -276,7 +276,7 @@ class CartsTable extends AppTable
 
     private function addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece)
     {
-        $manufacturersTable = TableRegistry::getTableLocator()->get('Manufacturers');
+        $manufacturersTable = FactoryLocator::get('Table')->get('Manufacturers');
 
         if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && is_array($this->getLoggedUser()) && $this->getLoggedUser()['timebased_currency_enabled']) {
             if ($manufacturersTable->getOptionTimebasedCurrencyEnabled($cartProduct->product->manufacturer->timebased_currency_enabled)) {
@@ -314,7 +314,7 @@ class CartsTable extends AppTable
     private function prepareMainProduct($cartProduct)
     {
 
-        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $productsTable = FactoryLocator::get('Table')->get('Products');
 
         $netPricePerPiece = $cartProduct->product->price;
         $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $netPricePerPiece);
@@ -407,7 +407,7 @@ class CartsTable extends AppTable
     private function prepareProductAttribute($cartProduct)
     {
 
-        $productsTable = TableRegistry::getTableLocator()->get('Products');
+        $productsTable = FactoryLocator::get('Table')->get('Products');
 
         $netPricePerPiece = $cartProduct->product_attribute->price;
         $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $netPricePerPiece);

@@ -3,7 +3,6 @@
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use App\Test\TestCase\Traits\LoginTrait;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 
 /**
@@ -30,7 +29,7 @@ class PagesControllerTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->Page = TableRegistry::getTableLocator()->get('Pages');
+        $this->Page = $this->getTableLocator()->get('Pages');
     }
 
     public function testAllPublicUrls()

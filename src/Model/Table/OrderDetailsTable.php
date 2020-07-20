@@ -3,7 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
 
 /**
@@ -97,7 +97,7 @@ class OrderDetailsTable extends AppTable
         } else {
             $cronjobRunDayWeekday = date('w', strtotime($cronjobRunDay));
             $query->where(function ($exp, $query) use ($cronjobRunDayWeekday, $cronjobRunDay, $pickupDay) {
-                return $exp->or_([
+                return $exp->or([
                     '(Products.delivery_rhythm_type <> "individual" AND Products.delivery_rhythm_send_order_list_weekday = ' . $cronjobRunDayWeekday . ')
                       AND OrderDetails.pickup_day = "' . $pickupDay . '"',
                     '(Products.delivery_rhythm_type = "individual" AND Products.delivery_rhythm_send_order_list_day = "' . $cronjobRunDay . '" AND OrderDetails.pickup_day = Products.delivery_rhythm_first_delivery_day)'
@@ -448,7 +448,7 @@ class OrderDetailsTable extends AppTable
     public function prepareOrderDetailsGroupedByManufacturer($orderDetails)
     {
         $preparedOrderDetails = [];
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
         foreach ($orderDetails as $orderDetail) {
             $key = $orderDetail->product->id_manufacturer;
             $preparedOrderDetails[$key]['sum_price'] = $orderDetail->sum_price;

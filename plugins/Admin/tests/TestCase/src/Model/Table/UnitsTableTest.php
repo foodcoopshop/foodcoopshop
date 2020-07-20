@@ -1,7 +1,6 @@
 <?php
 
 use App\Test\TestCase\AppCakeTestCase;
-use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -33,7 +32,7 @@ class UnitsTableTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->Unit = TableRegistry::getTableLocator()->get('Units');
+        $this->Unit = $this->getTableLocator()->get('Units');
     }
 
     public function testSaveProductWithInvalidPriceString()

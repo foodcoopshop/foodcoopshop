@@ -3,7 +3,6 @@ namespace Admin\Controller;
 
 use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
-use Cake\ORM\TableRegistry;
 
 /**
  * CategoriesController
@@ -31,7 +30,7 @@ class CategoriesController extends AdminAppController
 
     public function add()
     {
-        $this->Category = TableRegistry::getTableLocator()->get('Categories');
+        $this->Category = $this->getTableLocator()->get('Categories');
         $category = $this->Category->newEntity(
             ['active' => APP_ON],
             ['validate' => false]
@@ -53,7 +52,7 @@ class CategoriesController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $this->Category = TableRegistry::getTableLocator()->get('Categories');
+        $this->Category = $this->getTableLocator()->get('Categories');
         $category = $this->Category->find('all', [
             'conditions' => [
                 'Categories.id_category' => $categoryId
@@ -119,7 +118,7 @@ class CategoriesController extends AdminAppController
                 $this->deleteUploadedImage($category->id_category, Configure::read('app.htmlHelper')->getCategoryThumbsPath(), Configure::read('app.categoryImageSizes'));
             }
 
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('Categories.delete_category'))) {
                 $this->Category->delete($category);
                 $actionLogType = 'category_deleted';
@@ -139,7 +138,7 @@ class CategoriesController extends AdminAppController
     public function index()
     {
         $conditions = [];
-        $this->Category = TableRegistry::getTableLocator()->get('Categories');
+        $this->Category = $this->getTableLocator()->get('Categories');
         $conditions[] = $this->Category->getExcludeCondition();
         $conditions[] = 'Categories.active > ' . APP_DEL;
 

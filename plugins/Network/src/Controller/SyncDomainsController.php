@@ -5,7 +5,6 @@ namespace Network\Controller;
 use App\Controller\AppController;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\NotFoundException;
-use Cake\ORM\TableRegistry;
 
 /**
  * SyncsController
@@ -35,7 +34,7 @@ class SyncDomainsController extends AppController
         parent::beforeFilter($event);
         $this->viewBuilder()->setLayout('Admin.default');
         $this->viewBuilder()->setHelpers(['Network.Network']);
-        $this->SyncDomain = TableRegistry::getTableLocator()->get('Network.SyncDomains');
+        $this->SyncDomain = $this->getTableLocator()->get('Network.SyncDomains');
     }
 
     public function add()
@@ -104,7 +103,7 @@ class SyncDomainsController extends AppController
                 $actionLogType = 'remote_foodcoop_changed';
             }
 
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('SyncDomains.delete_sync_domain'))) {
                 $this->SyncDomain->delete($syncDomain);
                 $messageSuffix = __d('network', 'deleted');

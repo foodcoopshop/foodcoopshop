@@ -2,7 +2,7 @@
 
 namespace App\Model\Table;
 
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
 
 /**

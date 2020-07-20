@@ -3,7 +3,7 @@
 namespace Network\Model\Table;
 
 use App\Model\Table\AppTable;
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
 
 /**
@@ -74,7 +74,7 @@ class SyncDomainsTable extends AppTable
         }
 
         if ($appAuth->isManufacturer()) {
-            $manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+            $manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
             $isAllowed = $manufacturer->getOptionVariableMemberFee(
                 $appAuth->manufacturer->variable_member_fee
             ) == 0;

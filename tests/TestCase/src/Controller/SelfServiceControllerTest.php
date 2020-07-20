@@ -16,7 +16,6 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\IntegrationTestTrait;
-use Cake\ORM\TableRegistry;
 
 class SelfServiceControllerTest extends AppCakeTestCase
 {
@@ -85,7 +84,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->addProductToSelfServiceCart(351, 1, '0,5');
         $this->removeProductFromSelfServiceCart(351);
         $this->assertJsonOk();
-        $this->CartProductUnit = TableRegistry::getTableLocator()->get('CartProductUnits');
+        $this->CartProductUnit = $this->getTableLocator()->get('CartProductUnits');
         $cartProductUnits = $this->CartProductUnit->find('all')->toArray();
         $this->assertEmpty($cartProductUnits);
     }
@@ -97,7 +96,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->addProductToSelfServiceCart(346, 1, 0);
         $this->finishSelfServiceCart(1, 1);
 
-        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
+        $this->Cart = $this->getTableLocator()->get('Carts');
         $cart = $this->Cart->find('all', [
             'order' => [
                 'Carts.id_cart' => 'DESC'
@@ -113,7 +112,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
             $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         }
 
-        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
+        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(1, count($emailLogs));
 
@@ -137,7 +136,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->addProductToSelfServiceCart(351, 1, '0,5');
         $this->finishSelfServiceCart(1, 1);
 
-        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
+        $this->Cart = $this->getTableLocator()->get('Carts');
         $cart = $this->Cart->find('all', [
             'order' => [
                 'Carts.id_cart' => 'DESC'
@@ -153,7 +152,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
             $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         }
 
-        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
+        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEquals(1, count($emailLogs));
 
@@ -179,7 +178,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->doBarCodeLogin();
         $this->addProductToSelfServiceCart('350-15', 1, '1,5');
         $this->finishSelfServiceCart(1, 1);
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $actionLogs = $this->ActionLog->find('all', [])->toArray();
         $this->assertRegExpWithUnquotedString('Demo Superadmin hat eine neue Bestellung getätigt (15,00 €).', $actionLogs[0]->text);
     }

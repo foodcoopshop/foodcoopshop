@@ -1,7 +1,6 @@
 <?php
 namespace Admin\Controller;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 
 /**
 * FoodCoopShop - The open source software for your foodcoop
@@ -70,7 +69,7 @@ class StatisticsController extends AdminAppController
         }
         $this->set('year', $year);
 
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $manufacturersForDropdown = [];
         if ($this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin()) {
             $manufacturersForDropdown = ['all' => __d('admin', 'All_manufacturers')];
@@ -105,7 +104,7 @@ class StatisticsController extends AdminAppController
 
         $this->set('years', Configure::read('app.timeHelper')->getAllYearsUntilThisYear(date('Y'), 2014));
 
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $monthlySumProducts = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturerId, $year);
         if (empty($monthlySumProducts->toArray())) {
             $this->set('xAxisData', []);

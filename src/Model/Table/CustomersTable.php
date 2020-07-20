@@ -5,7 +5,7 @@ namespace App\Model\Table;
 use Cake\Auth\DefaultPasswordHasher;
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\FactoryLocator;
 use Cake\Utility\Security;
 use Cake\Validation\Validator;
 
@@ -140,7 +140,7 @@ class CustomersTable extends AppTable
         $validator->email('email', true, __('The_email_address_is_not_valid.'));
         $validator->add('email', 'exists', [
             'rule' => function ($value, $context) {
-                $ct = TableRegistry::getTableLocator()->get('Customers');
+                $ct = FactoryLocator::get('Table')->get('Customers');
                 return $ct->exists([
                     'email' => $value
                 ]);
@@ -149,7 +149,7 @@ class CustomersTable extends AppTable
         ]);
         $validator->add('email', 'account_inactive', [
             'rule' => function ($value, $context) {
-                $ct = TableRegistry::getTableLocator()->get('Customers');
+                $ct = FactoryLocator::get('Table')->get('Customers');
                 $record  = $ct->find('all', [
                     'conditions' => [
                         'email' => $value
@@ -239,7 +239,7 @@ class CustomersTable extends AppTable
      */
     public function getManufacturerRecord($customer)
     {
-        $mm = TableRegistry::getTableLocator()->get('Manufacturers');
+        $mm = FactoryLocator::get('Table')->get('Manufacturers');
         $manufacturer = $mm->find('all', [
             'conditions' => [
                 'AddressManufacturers.email' => $customer->email
@@ -302,7 +302,7 @@ class CustomersTable extends AppTable
     {
 
         $productBalanceSum = 0;
-        $orderDetailTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
 
         $query = $orderDetailTable->find('all', [
             'contain' => [
@@ -328,8 +328,8 @@ class CustomersTable extends AppTable
     private function getProductBalanceSumForCustomerIds($customerIds)
     {
 
-        $paymentTable = TableRegistry::getTableLocator()->get('Payments');
-        $orderDetailTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $paymentTable = FactoryLocator::get('Table')->get('Payments');
+        $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
 
         $productBalanceSum = 0;
         foreach($customerIds as $customerId) {
@@ -347,7 +347,7 @@ class CustomersTable extends AppTable
     public function getDepositBalanceForDeletedCustomers()
     {
 
-        $paymentTable = TableRegistry::getTableLocator()->get('Payments');
+        $paymentTable = FactoryLocator::get('Table')->get('Payments');
 
         $query = $paymentTable->find('all', [
             'contain' => [
@@ -409,8 +409,8 @@ class CustomersTable extends AppTable
     private function getDepositBalanceSumForCustomerIds($customerIds)
     {
 
-        $paymentTable = TableRegistry::getTableLocator()->get('Payments');
-        $orderDetailTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $paymentTable = FactoryLocator::get('Table')->get('Payments');
+        $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
 
         $depositBalanceSum = 0;
         foreach($customerIds as $customerId) {
@@ -424,8 +424,8 @@ class CustomersTable extends AppTable
 
     public function getCreditBalance($customerId)
     {
-        $orderDetailTable = TableRegistry::getTableLocator()->get('OrderDetails');
-        $payment = TableRegistry::getTableLocator()->get('Payments');
+        $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $payment = FactoryLocator::get('Table')->get('Payments');
         $paymentProductSum = $payment->getSum($customerId, 'product');
         $paybackProductSum = $payment->getSum($customerId, 'payback');
         $paymentDepositSum = $payment->getSum($customerId, 'deposit');

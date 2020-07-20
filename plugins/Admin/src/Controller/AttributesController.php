@@ -2,7 +2,6 @@
 namespace Admin\Controller;
 
 use Cake\Http\Exception\NotFoundException;
-use Cake\ORM\TableRegistry;
 
 /**
  * AttributesController
@@ -30,7 +29,7 @@ class AttributesController extends AdminAppController
 
     public function add()
     {
-        $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
+        $this->Attribute = $this->getTableLocator()->get('Attributes');
         $attribute = $this->Attribute->newEntity(
             ['active' => APP_ON],
             ['validate' => false]
@@ -49,14 +48,14 @@ class AttributesController extends AdminAppController
             throw new NotFoundException;
         }
 
-        $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
+        $this->Attribute = $this->getTableLocator()->get('Attributes');
         $attribute = $this->Attribute->find('all', [
             'conditions' => [
                 'Attributes.id_attribute' => $attributeId
             ]
         ])->first();
 
-        $this->ProductAttributeCombination = TableRegistry::getTableLocator()->get('ProductAttributeCombinations');
+        $this->ProductAttributeCombination = $this->getTableLocator()->get('ProductAttributeCombinations');
         $combinationCounts = $this->ProductAttributeCombination->getCombinationCounts($attributeId);
         $attribute->has_combined_products = count($combinationCounts['online']) + count($combinationCounts['offline']) > 0;
 
@@ -97,7 +96,7 @@ class AttributesController extends AdminAppController
                 $actionLogType = 'attribute_changed';
             }
 
-            $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+            $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             if (!empty($this->getRequest()->getData('Attributes.delete_attribute'))) {
                 $this->Attribute->delete($attribute);
                 $messageSuffix = __d('admin', 'deleted');
@@ -120,12 +119,12 @@ class AttributesController extends AdminAppController
             'Attributes.active > ' . APP_DEL
         ];
 
-        $this->Attribute = TableRegistry::getTableLocator()->get('Attributes');
+        $this->Attribute = $this->getTableLocator()->get('Attributes');
         $query = $this->Attribute->find('all', [
             'conditions' => $conditions
         ]);
         $attributes = $this->paginate($query, [
-            'sortWhitelist' => [
+            'sortableFields' => [
                 'Attributes.name', 'Attributes.modified', 'Attributes.can_be_used_as_unit'
             ],
             'order' => [
@@ -133,7 +132,7 @@ class AttributesController extends AdminAppController
             ]
         ])->toArray();
 
-        $this->ProductAttributeCombination = TableRegistry::getTableLocator()->get('ProductAttributeCombinations');
+        $this->ProductAttributeCombination = $this->getTableLocator()->get('ProductAttributeCombinations');
         foreach ($attributes as $attribute) {
             $attribute->combination_product = $this->ProductAttributeCombination->getCombinationCounts($attribute->id_attribute);
         }

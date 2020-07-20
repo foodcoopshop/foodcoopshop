@@ -3,7 +3,6 @@
 namespace App\Test\TestCase\Traits;
 
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,7 +23,7 @@ trait LoginTrait
     protected function login($userId)
     {
 
-        $customerTable = TableRegistry::getTableLocator()->get('Customers');
+        $customerTable = $this->getTableLocator()->get('Customers');
         $loggedUser = $customerTable->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $userId

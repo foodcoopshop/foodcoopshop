@@ -6,7 +6,6 @@ use App\Controller\Component\StringComponent;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
-use Cake\ORM\TableRegistry;
 
 /**
  * CategoriesController
@@ -38,11 +37,11 @@ class CategoriesController extends FrontendController
 
     public function newProducts()
     {
-        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
+        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
-        $this->Category = TableRegistry::getTableLocator()->get('Categories');
+        $this->Category = $this->getTableLocator()->get('Categories');
         $products = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), true);
         $products = $this->prepareProductsForFrontend($products);
         $this->set('products', $products);
@@ -65,11 +64,11 @@ class CategoriesController extends FrontendController
 
         $this->set('keyword', $keyword);
 
-        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
+        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
-        $this->Category = TableRegistry::getTableLocator()->get('Categories');
+        $this->Category = $this->getTableLocator()->get('Categories');
         $products = $this->Category->getProductsByCategoryId($this->AppAuth, Configure::read('app.categoryAllProducts'), false, $keyword);
         $products = $this->prepareProductsForFrontend($products);
         $this->set('products', $products);
@@ -83,7 +82,7 @@ class CategoriesController extends FrontendController
     {
         $categoryId = (int) $this->getRequest()->getParam('pass')[0];
 
-        $this->Category = TableRegistry::getTableLocator()->get('Categories');
+        $this->Category = $this->getTableLocator()->get('Categories');
         $category = $this->Category->find('all', [
             'conditions' => [
                 'Categories.id_category' => $categoryId,
@@ -101,7 +100,7 @@ class CategoriesController extends FrontendController
             $this->redirect(Configure::read('app.slugHelper')->getCategoryDetail($categoryId, $category->name));
         }
 
-        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
+        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
         $blogPosts = $this->BlogPost->findBlogPosts($this->AppAuth);
         $this->set('blogPosts', $blogPosts);
 
