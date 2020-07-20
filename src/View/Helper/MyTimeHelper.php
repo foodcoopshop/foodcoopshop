@@ -156,9 +156,8 @@ class MyTimeHelper extends TimeHelper
         return $this->getWeekdayFormatedDaysList($nextDeliveryDay, $maxDays, 7);
     }
 
-    public function getNextDailyDeliveryDays()
+    public function getNextDailyDeliveryDays($maxDays)
     {
-        $maxDays = 14;
         $nextDeliveryDay = $this->getTomorrowForDatabase();
         return $this->getWeekdayFormatedDaysList($nextDeliveryDay, $maxDays, 1);
     }

@@ -26,7 +26,7 @@ $this->element('addScript', ['script' => "
 
 echo '<div class="select-pickup-day-wrapper">';
 
-    $preparedDeliveryDays = $this->Time->getNextDailyDeliveryDays();
+    $preparedDeliveryDays = $this->Time->getNextDailyDeliveryDays(14);
     $formattedToDatabaseDeliveryDays = $this->Html->getGlobalNoDeliveryDaysAsArray();
 
     $i = 0;

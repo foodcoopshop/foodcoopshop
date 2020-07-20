@@ -47,7 +47,7 @@ class ConfigurationHelper extends Helper
                 break;
             case 'FCS_NO_DELIVERY_DAYS_GLOBAL':
                 if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-                    $values = Configure::read('app.timeHelper')->getNextDailyDeliveryDays();
+                    $values = Configure::read('app.timeHelper')->getNextDailyDeliveryDays(365);
                 } else {
                     $values = Configure::read('app.timeHelper')->getNextWeeklyDeliveryDays();
                 }
