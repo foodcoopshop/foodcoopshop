@@ -242,7 +242,7 @@ foodcoopshop.Mobile = {
         if (noGlobalDeliveryBreakElement.length > 0) {
             noGlobalDeliveryBreakHtml = noGlobalDeliveryBreakElement.html();
         }
-        var infoBoxHtml = '<div id="right-info-box-text" hide">' + noGlobalDeliveryBreakHtml + $('#info-box').html() + '</div>';
+        var infoBoxHtml = '<div id="right-info-box-text" class="hide">' + noGlobalDeliveryBreakHtml + $('#info-box').html() + '</div>';
         infoBoxHtml = infoBoxHtml.replace(/h3/g, 'h1');
         $('#container').append(infoBoxHtml);
 
