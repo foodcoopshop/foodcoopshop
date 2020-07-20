@@ -14,7 +14,6 @@
  * @link          https://www.foodcoopshop.com
  */
 use App\Test\TestCase\AppCakeTestCase;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 
@@ -29,7 +28,7 @@ class BlogPostsControllerTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->BlogPost = TableRegistry::getTableLocator()->get('BlogPosts');
+        $this->BlogPost = $this->getTableLocator()->get('BlogPosts');
     }
 
     public function testBlogPostDetailOnlinePublicLoggedOut()

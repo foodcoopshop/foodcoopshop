@@ -15,7 +15,6 @@
 
 use App\Test\TestCase\OrderDetailsControllerTestCase;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 
 class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCase
 {
@@ -69,7 +68,7 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
 
     public function testAddFeedbackAsCustomerOk()
     {
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->OrderDetail->save(
             $this->OrderDetail->patchEntity(
                 $this->OrderDetail->get($this->orderDetailId),

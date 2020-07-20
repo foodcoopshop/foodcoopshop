@@ -15,7 +15,6 @@
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
-use Cake\ORM\TableRegistry;
 
 class CartsControllerTest extends AppCakeTestCase
 {
@@ -40,10 +39,10 @@ class CartsControllerTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
-        $this->StockAvailable = TableRegistry::getTableLocator()->get('StockAvailables');
-        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
+        $this->Cart = $this->getTableLocator()->get('Carts');
+        $this->Product = $this->getTableLocator()->get('Products');
+        $this->StockAvailable = $this->getTableLocator()->get('StockAvailables');
+        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
     }
 
     public function testAddLoggedOut()
@@ -404,7 +403,7 @@ class CartsControllerTest extends AppCakeTestCase
         $cart = $this->getCartById($cartId);
         $this->checkOrderDetails($cart->cart_products[2]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.3, 3.64, 0.17, 0.34, 2, $pickupDay);
 
-        $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
+        $this->PickupDay = $this->getTableLocator()->get('PickupDays');
         $pickupDayEntity = $this->PickupDay->find('all')->toArray();
         $this->assertEquals(1, count($pickupDayEntity));
         $this->assertEquals($pickupDay, $pickupDayEntity[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')));
@@ -816,7 +815,7 @@ class CartsControllerTest extends AppCakeTestCase
             ]
         );
 
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $actionLogs = $this->ActionLog->find('all', [])->toArray();
         $this->assertEquals('carts', $actionLogs[0]->object_type);
         $this->assertEquals($cart->id_cart, $actionLogs[0]->object_id);
@@ -830,7 +829,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->httpClient->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
         $this->addProductToCart($this->productId1, 1);
         $this->finishCart(1, 1);
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $actionLogs = $this->ActionLog->find('all', [])->toArray();
         $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung (1,82 €) für <b>Demo Mitglied</b> wurde erfolgreich getätigt.', $actionLogs[0]->text);
     }
@@ -853,7 +852,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->httpClient->get($this->Slug->getOrderDetailsList().'/initInstantOrder/' . Configure::read('test.customerId'));
         $this->addProductToCart($this->productId1, 1);
         $this->finishCart(1, 1);
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $actionLogs = $this->ActionLog->find('all', [])->toArray();
         $this->assertRegExpWithUnquotedString('Die Sofort-Bestellung (1,82 €) für <b>Demo Mitglied</b> wurde erfolgreich getätigt.', $actionLogs[0]->text);
     }

@@ -2,7 +2,6 @@
 
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,8 +25,8 @@ class CartProductsTableTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->CartProduct = TableRegistry::getTableLocator()->get('CartProducts');
-        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
+        $this->CartProduct = $this->getTableLocator()->get('CartProducts');
+        $this->Cart = $this->getTableLocator()->get('Carts');
     }
 
     public function testRemoveAllWithWrongCartId()

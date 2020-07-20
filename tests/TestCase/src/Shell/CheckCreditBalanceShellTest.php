@@ -3,7 +3,6 @@
 use App\Model\Table\ConfigurationsTable;
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\I18n\FrozenTime;
-use Cake\ORM\TableRegistry;
 use App\Application;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
@@ -30,7 +29,7 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
+        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
         $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
@@ -73,7 +72,7 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
 
         $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
 
-        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
+        $this->Payment = $this->getTableLocator()->get('Payments');
         $this->Payment->save(
             $this->Payment->patchEntity(
                 $this->Payment->get(1),

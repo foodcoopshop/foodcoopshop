@@ -15,7 +15,6 @@
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 
 class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
@@ -31,7 +30,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         parent::setUp();
         $reducedMaxPercentage = 15;
         $this->prepareTimebasedCurrencyConfiguration($reducedMaxPercentage);
-        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
+        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
     }
 
     public function testAddPaymentLoggedOut()

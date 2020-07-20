@@ -4,7 +4,6 @@ use App\Model\Table\ConfigurationsTable;
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
-use Cake\ORM\TableRegistry;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,8 +24,8 @@ class PaymentsControllerTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-        $this->Payment = TableRegistry::getTableLocator()->get('Payments');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+        $this->Payment = $this->getTableLocator()->get('Payments');
     }
 
     public function testAddPaymentLoggedOut()
@@ -265,7 +264,7 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     private function addDepositToManufacturer($depositText, $ActionLogText)
     {
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
 
         $this->loginAsSuperadmin();
         $amountToAdd = 10;

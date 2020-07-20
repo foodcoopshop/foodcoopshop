@@ -15,7 +15,6 @@
 
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 use App\Application;
 use Cake\Console\CommandRunner;
 
@@ -27,7 +26,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
+        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
         $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
@@ -60,7 +59,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
     public function testActiveOrderDetail()
     {
         $pickupDay = '2019-11-08';
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
 
         $this->OrderDetail->save(
             $this->OrderDetail->patchEntity(

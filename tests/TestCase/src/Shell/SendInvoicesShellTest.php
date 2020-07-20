@@ -2,7 +2,6 @@
 
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 use App\Application;
 use Cake\Console\CommandRunner;
 
@@ -29,9 +28,9 @@ class SendInvoicesShellTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
-        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
+        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
+        $this->Cart = $this->getTableLocator()->get('Carts');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 

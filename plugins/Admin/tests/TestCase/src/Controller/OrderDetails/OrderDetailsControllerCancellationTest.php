@@ -15,7 +15,6 @@
 
 use App\Test\TestCase\OrderDetailsControllerTestCase;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 
 class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestCase
 {
@@ -89,7 +88,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     public function testCancellationStockAvailableAlwaysAvailableAsSuperadminAttribute()
     {
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product = $this->getTableLocator()->get('Products');
         $this->Product->changeQuantity([[$this->productIdC => [
             'always_available' => 1,
             'quantity' => 10,
@@ -101,7 +100,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     public function testCancellationStockAvailableAlwaysAvailableAsSuperadminProduct()
     {
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product = $this->getTableLocator()->get('Products');
         $this->Product->changeQuantity([[$this->productIdA => [
             'always_available' => 1,
             'quantity' => 10,
@@ -118,7 +117,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->deleteAndAssertRemoveFromDatabase([$orderDetailId]);
 
         // assert if record TimebasedCurrencyOrderDetail was removed
-        $this->TimebasedCurrencyOrderDetail = TableRegistry::getTableLocator()->get('TimebasedCurrencyOrderDetails');
+        $this->TimebasedCurrencyOrderDetail = $this->getTableLocator()->get('TimebasedCurrencyOrderDetails');
         $timebasedCurrencyOrderDetail = $this->TimebasedCurrencyOrderDetail->find('all', [
             'conditions' => [
                 'TimebasedCurrencyOrderDetails.id_order_detail' => $orderDetailId

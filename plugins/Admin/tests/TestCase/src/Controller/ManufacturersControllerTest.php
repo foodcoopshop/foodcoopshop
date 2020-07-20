@@ -14,7 +14,6 @@
  */
 use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 
 class ManufacturersControllerTest extends AppCakeTestCase
 {
@@ -24,7 +23,7 @@ class ManufacturersControllerTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
     }
 
     public function testAdd()
@@ -206,8 +205,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $noDeliveryDayA = date('Y-m-d', strtotime($noDeliveryDays . ' + 10 day'));
         $noDeliveryDayB = date('Y-m-d', strtotime($noDeliveryDays . ' + 11 day'));
 
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->Product = $this->getTableLocator()->get('Products');
 
         $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN(1);';
         $params = [

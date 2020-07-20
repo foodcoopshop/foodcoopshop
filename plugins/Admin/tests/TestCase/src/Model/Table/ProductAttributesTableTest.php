@@ -1,7 +1,6 @@
 <?php
 
 use App\Test\TestCase\AppCakeTestCase;
-use Cake\ORM\TableRegistry;
 
 /**
  * ProductTest
@@ -26,8 +25,8 @@ class ProductAttributesTableTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
-        $this->ProductAttribute = TableRegistry::getTableLocator()->get('ProductAttributes');
+        $this->Product = $this->getTableLocator()->get('Products');
+        $this->ProductAttribute = $this->getTableLocator()->get('ProductAttributes');
     }
 
     public function testAddProductAttribute()
