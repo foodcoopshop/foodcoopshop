@@ -262,15 +262,26 @@ class ManufacturersController extends AdminAppController
 
     }
 
+    private function getDefaultDate() {
+        $defaultDate = '';
+        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+            $defaultDate = Configure::read('app.timeHelper')->formatToDateShort(Configure::read('app.timeHelper')->getCurrentDateForDatabase());
+        } else {
+            $defaultDate = Configure::read('app.timeHelper')->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+        }
+        return $defaultDate;
+    }
+
     public function index()
     {
-        $dateFrom = Configure::read('app.timeHelper')->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+
+        $dateFrom = $this->getDefaultDate();
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
             $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         }
         $this->set('dateFrom', $dateFrom);
 
-        $dateTo = Configure::read('app.timeHelper')->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+        $dateTo = $this->getDefaultDate();
         if (! empty($this->getRequest()->getQuery('dateTo'))) {
             $dateTo = h($this->getRequest()->getQuery('dateTo'));
         }
