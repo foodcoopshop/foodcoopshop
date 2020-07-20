@@ -20,7 +20,6 @@ namespace App\Shell;
 
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 
 class EmailOrderReminderShell extends AppShell
 {
@@ -41,7 +40,7 @@ class EmailOrderReminderShell extends AppShell
 
         $nextDeliveryDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($this->cronjobRunDay));
         if (Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL') != '') {
-            $this->Product = TableRegistry::getTableLocator()->get('Products');
+            $this->Product = $this->getTableLocator()->get('Products');
             if ($this->Product->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $nextDeliveryDay)) {
                 return true;
             }

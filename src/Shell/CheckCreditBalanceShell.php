@@ -17,7 +17,6 @@ namespace App\Shell;
 
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 
 class CheckCreditBalanceShell extends AppShell
 {
@@ -51,7 +50,7 @@ class CheckCreditBalanceShell extends AppShell
 
         $lastCsvUploadDate = null;
         if (!Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) {
-            $paymentTable = TableRegistry::getTableLocator()->get('Payments');
+            $paymentTable = $this->getTableLocator()->get('Payments');
             $payment = $paymentTable->find('all', [
                 'fields' => [
                     'Payments.date_add',

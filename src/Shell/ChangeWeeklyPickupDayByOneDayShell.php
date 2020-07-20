@@ -17,7 +17,6 @@ namespace App\Shell;
 
 use Cake\Console\Shell;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 use App\Lib\Error\Exception\InvalidParameterException;
 
 class ChangeWeeklyPickupDayByOneDayShell extends Shell
@@ -34,8 +33,8 @@ class ChangeWeeklyPickupDayByOneDayShell extends Shell
             throw new InvalidParameterException('args wrong');
         }
 
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
-        $this->Configuration = TableRegistry::getTableLocator()->get('Configurations');
+        $this->Product = $this->getTableLocator()->get('Products');
+        $this->Configuration = $this->getTableLocator()->get('Configurations');
 
         $statement = $this->Product->getConnection()->prepare(
             "UPDATE fcs_configuration SET value = :newWeeklyPickupDay WHERE name = 'FCS_WEEKLY_PICKUP_DAY';"

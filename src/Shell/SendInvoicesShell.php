@@ -17,7 +17,6 @@ namespace App\Shell;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\I18n\Time;
-use Cake\ORM\TableRegistry;
 
 class SendInvoicesShell extends AppShell
 {
@@ -31,9 +30,9 @@ class SendInvoicesShell extends AppShell
     {
         parent::main();
 
-        $this->ActionLog = TableRegistry::getTableLocator()->get('ActionLogs');
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
 
         $this->startTimeLogging();
 
