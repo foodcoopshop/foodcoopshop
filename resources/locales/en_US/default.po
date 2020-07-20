@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-07-06 21:47+0200\n"
-"PO-Revision-Date: 2020-07-06 21:48+0200\n"
+"POT-Creation-Date: 2020-07-20 20:48+0200\n"
+"PO-Revision-Date: 2020-07-20 20:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1524,6 +1524,9 @@ msgstr "Please promise to pick up the ordered products."
 msgid "Please_select_a_pickup_day."
 msgstr "Please select a pickup day."
 
+msgid "The_pickup_day_is_not_valid."
+msgstr "The pickup day is not valid."
+
 msgid "offline"
 msgstr "offline"
 
@@ -1622,12 +1625,6 @@ msgstr "online"
 
 msgid "Please_enter_your_feedback."
 msgstr "Please enter your feedback."
-
-msgid "The_pickup_day_is_not_valid."
-msgstr "The pickup day is not valid."
-
-msgid "The_pickup_day"
-msgstr "The pickup day"
 
 msgid "{0,plural,=1{1_product} other{#_products}}"
 msgstr "{0,plural,=1{1 product} other{# products}}"
@@ -1917,8 +1914,8 @@ msgstr "midnight"
 msgid "default_value"
 msgstr "default value"
 
-msgid "price_will_be_eventually_adapted."
-msgstr "price will be eventually adapted."
+msgid "price_will_be_adapted."
+msgstr "price will be adapted."
 
 msgid "route_news"
 msgstr "news"
@@ -2447,6 +2444,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "The_pickup_day"
+#~ msgstr "The pickup day"
 
 #~ msgid "The_amount_can_only_be_decreased_to_increase_plaese_order_product_again."
 #~ msgstr "The amount can only be decreased. To increase, please order product again."
