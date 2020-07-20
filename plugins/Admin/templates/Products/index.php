@@ -84,7 +84,7 @@ use Cake\Core\Configure;
                 'label' => '',
                 'multiple' => true,
                 'empty' => __d('admin', 'chose_category...'),
-                'options' => $categoriesForSelect,
+                'options' => $categoriesForDropdown,
                 'default' => isset($categoryId) ? $categoryId : ''
             ]);
             ?>
@@ -282,7 +282,7 @@ use Cake\Core\Configure;
         echo $this->Form->control('Products.CategoryProducts', [
             'label' => '',
             'multiple' => 'checkbox',
-            'options' => $categoriesForSelect,
+            'options' => $categoriesForCheckboxes,
             'escape' => false,
         ]);
         echo '</div>';

@@ -1248,7 +1248,8 @@ class ProductsController extends AdminAppController
         $this->Attribute = $this->getTableLocator()->get('Attributes');
         $this->set('attributesForDropdown', $this->Attribute->getForDropdown());
         $this->Category = $this->getTableLocator()->get('Categories');
-        $this->set('categoriesForSelect', $this->Category->getForSelect(null, true, true));
+        $this->set('categoriesForDropdown', $this->Category->getForSelect(null, true));
+        $this->set('categoriesForCheckboxes', $this->Category->getForSelect(null, true, true));
         $manufacturersForDropdown = ['all' => __d('admin', 'All_manufacturers')];
         $manufacturersForDropdown = array_merge($manufacturersForDropdown, $this->Product->Manufacturers->getForDropdown());
         $this->set('manufacturersForDropdown', $manufacturersForDropdown);
