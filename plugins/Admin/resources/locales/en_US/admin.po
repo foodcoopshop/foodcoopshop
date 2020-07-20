@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-06-24 11:14+0200\n"
-"PO-Revision-Date: 2020-06-24 11:17+0200\n"
+"POT-Creation-Date: 2020-07-06 11:36+0200\n"
+"PO-Revision-Date: 2020-07-06 11:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1545,9 +1545,6 @@ msgstr "Add product"
 msgid "Synchronize_products"
 msgstr "Synchronize products"
 
-msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
-msgstr "Tip: You can change the delivery rhythm for multiple products by selecting them. Then click the bottom button."
-
 msgid "Name_and_categories"
 msgstr "Name and categories"
 
@@ -1802,6 +1799,9 @@ msgstr "This product is always available."
 
 msgid "No_email_notifications_are_sent_for_this_product."
 msgstr "Notifications are never sent for this product if the stock is low."
+
+msgid "Member_choses_pickup_day."
+msgstr "Member choses pickup day."
 
 msgid "change_delivery_rhythm"
 msgstr "change delivery rhythm"
@@ -2090,6 +2090,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
+#~ msgstr "Tip: You can change the delivery rhythm for multiple products by selecting them. Then click the bottom button."
 
 #, fuzzy
 #~ msgid "Feedback_to_product"

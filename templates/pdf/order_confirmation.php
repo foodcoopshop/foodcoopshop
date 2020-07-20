@@ -55,7 +55,6 @@ if (!empty($manufacturers)) {
 
         $sumPrice = 0;
         $sumDeposit = 0;
-        $sumQuantity = 0;
         $sumOrderDetailTax = 0;
 
         $manufacturerCartProducts = [];
@@ -96,8 +95,6 @@ if (!empty($manufacturers)) {
             $pdf->table .= '<td style="text-align: right;" width="' . $widths[4] . '">' . $deposit . '</td>';
 
             $sumPrice += $orderDetail->total_price_tax_incl;
-            $sumQuantity += $orderDetail->product_amount;
-
             $sumOrderDetailTax += $orderDetail->order_detail_tax->total_amount;
 
             $pdf->table .= '</tr>';

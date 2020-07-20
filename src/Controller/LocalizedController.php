@@ -232,6 +232,7 @@ class LocalizedController extends Controller
                 'NoStockProductsSelected' => __('No_stock_products_selected.'),
                 'AddProductFeedback' => __('Add_product_feedback'),
                 'AddProductFeedbackExplanationText0' => __('Add_product_feedback_explanation_text_{0}.'),
+                'ChangeDeliveryRhythmForMultipleProductsTip' => __('Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button.'),
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),

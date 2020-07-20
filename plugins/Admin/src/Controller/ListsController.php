@@ -35,7 +35,12 @@ class ListsController extends AdminAppController
         $path = realpath(Configure::read('app.folder_order_lists'));
         $objects = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::SELF_FIRST);
 
-        $dateFrom = Configure::read('app.timeHelper')->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+            $dateFrom = Configure::read('app.timeHelper')->formatToDateShort(Configure::read('app.timeHelper')->getCurrentDateForDatabase());
+        } else {
+            $dateFrom = Configure::read('app.timeHelper')->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+        }
+
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
             $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         }

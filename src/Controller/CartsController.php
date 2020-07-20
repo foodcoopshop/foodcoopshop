@@ -68,10 +68,18 @@ class CartsController extends FrontendController
     public function detail()
     {
         $this->set('title_for_layout', __('Your_cart'));
+
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+
             $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
             $cart = $this->AppAuth->getCart();
+
+            if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') && $cart['Cart']->pickup_day_entities) {
+                $cart['Cart']->pickup_day_entities[0]->comment = '';
+            }
+
             $this->set('cart', $cart['Cart']);
+
         }
     }
 

@@ -52,6 +52,9 @@ if (! defined('PHPUNIT_COMPOSER_INSTALL') && ! defined('__PHPUNIT_PHAR__')) {
         if ($isMobile) {
             echo $this->Html->css(['/node_modules/slidebars/dist/slidebars', 'mobile-global', 'mobile-frontend', 'mobile-self-service', 'mobile-frontend-custom']);
         }
+        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+            echo $this->Html->css(['customer-can-select-pickup-day']);
+        }
         echo $this->element('customFrontendColorThemeCss');
         echo $this->element('layout/customHeader');
    ?>

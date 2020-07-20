@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-06-29 21:40+0200\n"
+"POT-Creation-Date: 2020-07-06 21:47+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1136,6 +1136,9 @@ msgstr "Dodać nowy produkt?"
 msgid "Add_product_feedback_explanation_text_{0}."
 msgstr "Dodać nowy produkt?"
 
+msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
+msgstr ""
+
 # Were the products picked up?
 msgid "Were_the_products_picked_up?"
 msgstr "Czy produkty zostały odebrane?"
@@ -2046,6 +2049,11 @@ msgstr "Zaakceptuj regulamin."
 msgid "Please_promise_to_pick_up_the_ordered_products."
 msgstr "Zobowiąż się do odbioru zamawianych produktów."
 
+# Please enter a number.
+#, fuzzy
+msgid "Please_select_a_pickup_day."
+msgstr "Wprowadź liczbę."
+
 # offline
 msgid "offline"
 msgstr "offline"
@@ -2879,6 +2887,11 @@ msgstr "Zapłać przy odbiorze produktów."
 msgid "Write_message_to_pick_up_team_for_{0}?"
 msgstr "Chcesz napisać wiadomość do ekipy odbierającej na {0}?"
 
+# Want to write a message to the pick up team on {0}?
+#, fuzzy
+msgid "Write_message_to_your_order."
+msgstr "Chcesz napisać wiadomość do ekipy odbierającej na {0}?"
+
 # Your message will be shown next to your order in the admin panel. Manufacturers cannot not this message.
 msgid "Placeholder_message_pickup_day_comment."
 msgstr "Twoja wiadomość będzie widoczna obok twojego zamówienia w panelu administracyjnym. Producenci jej nie zobaczą."
@@ -2891,10 +2904,20 @@ msgstr "Miejsce odbioru: {0}"
 msgid "I_promise_to_pick_up_the_products_on_the_selected_pickup_day_and_to_pay_in_cash_in_the_shop."
 msgstr "Zobowiązuję się do odbioru produktów w wyznaczonym dniu odbioru i do opłacenia zamówienia gotówką."
 
+# Order possible until
+#, fuzzy
+msgid "No_order_possible"
+msgstr "Zamówienia możliwe do"
+
 # Please enter how much you want to pay in {0}.
 #, fuzzy
 msgid "How_much_of_it_do_i_want_to_pay_in_{0}?"
 msgstr "Wprowadź, ile chcesz zapłacić w {0}."
+
+# Add comment
+#, fuzzy
+msgid "Comment"
+msgstr "Dodaj komentarz"
 
 # Total
 msgid "Total"

@@ -140,7 +140,7 @@ Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
 
 <h3>3.4 Verwaltung der Benutzer (Mitglieder) und der Bestellungen</h3>
 <p><b>3.4.1 Beschreibung und Umfang der Datenverarbeitung</b></p>
-<p>Zur Erfüllung des Vereinszwecks (Abwicklung von Sammelbestellungen) ist es notwendig, die Mitglieder als Benutzer in der Software anzulegen, damit diese dann ihre jeweiligen Bestellungen zusammenstellen und absenden können.</p>
+<p>Zur Abwicklung der Bestellungen ist es notwendig, die Mitglieder als Benutzer in der Software anzulegen, damit diese dann ihre jeweiligen Bestellungen zusammenstellen und absenden können.</p>
 <p>Folgende Daten werden hierbei verarbeitet:</p>
 <ul>
   <li>Persönliche Daten (Vorname, Nachname)</li>
@@ -155,7 +155,7 @@ Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
 <p><b>3.4.2 Rechtsgrundlage für die Datenverarbeitung</b></p>
 <p>Rechtsgrundlage für die Verarbeitung der Daten im Zuge der Verwaltung der Bestellungen ist Art. 6 Abs. 1 lit. b DSGVO.</p>
 <p><b>3.4.3 Zweck der Datenverarbeitung</b></p>
-<p>Die Verarbeitung der personenbezogenen Daten dient uns zur Administration der Benutzer (Mitglieder) und der Hersteller, zur Erfüllung des Vereinszwecks (insbesondere die Abwicklung von Sammelbestellungen) und zur dafür notwendigen Kommunikation.</p>
+<p>Die Verarbeitung der personenbezogenen Daten dient uns zur Administration der Benutzer (Mitglieder), der Hersteller und zur Abwicklung der Bestellungen und zur dafür notwendigen Kommunikation.</p>
 <p><b>3.4.4 Dauer der Speicherung</b></p>
 <p>Die personenbezogene Verarbeitung erfolgt für die Dauer der Registrierung plus 40 Monate nach Vertragsbeendigung.</p>
 <p>Nach Ablauf dieser Frist wird jedenfalls der Personenbezug gelöscht.</p>

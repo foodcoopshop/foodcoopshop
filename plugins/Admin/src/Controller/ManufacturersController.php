@@ -262,15 +262,26 @@ class ManufacturersController extends AdminAppController
 
     }
 
+    private function getDefaultDate() {
+        $defaultDate = '';
+        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+            $defaultDate = Configure::read('app.timeHelper')->formatToDateShort(Configure::read('app.timeHelper')->getCurrentDateForDatabase());
+        } else {
+            $defaultDate = Configure::read('app.timeHelper')->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+        }
+        return $defaultDate;
+    }
+
     public function index()
     {
-        $dateFrom = Configure::read('app.timeHelper')->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+
+        $dateFrom = $this->getDefaultDate();
         if (! empty($this->getRequest()->getQuery('dateFrom'))) {
             $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         }
         $this->set('dateFrom', $dateFrom);
 
-        $dateTo = Configure::read('app.timeHelper')->getFormattedNextDeliveryDay(Configure::read('app.timeHelper')->getCurrentDay());
+        $dateTo = $this->getDefaultDate();
         if (! empty($this->getRequest()->getQuery('dateTo'))) {
             $dateTo = h($this->getRequest()->getQuery('dateTo'));
         }
@@ -464,7 +475,11 @@ class ManufacturersController extends AdminAppController
         ])->first();
 
         $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->getOrderDetailsForSendingOrderLists($pickupDayDbFormat, $cronjobRunDay);
+        $orderDetails = $this->OrderDetail->getOrderDetailsForSendingOrderLists(
+            $pickupDayDbFormat,
+            $cronjobRunDay,
+            Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY'),
+        );
         $orderDetails->where(['Products.id_manufacturer' => $manufacturerId]);
 
         if ($orderDetails->count() == 0) {
@@ -605,8 +620,10 @@ class ManufacturersController extends AdminAppController
         $this->Tax = TableRegistry::getTableLocator()->get('Taxes');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
-        $noDeliveryBreakOptions = Configure::read('app.timeHelper')->getNextDeliveryDays();
-        $this->set('noDeliveryBreakOptions', $noDeliveryBreakOptions);
+        if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+            $noDeliveryBreakOptions = Configure::read('app.timeHelper')->getNextWeeklyDeliveryDays();
+            $this->set('noDeliveryBreakOptions', $noDeliveryBreakOptions);
+        }
 
         // set default data if manufacturer options are null
         if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && is_null($manufacturer->variable_member_fee)) {
@@ -719,7 +736,7 @@ class ManufacturersController extends AdminAppController
                 }
             }
 
-            if ($this->getRequest()->getData('Manufacturers.no_delivery_days')) {
+            if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') && $this->getRequest()->getData('Manufacturers.no_delivery_days')) {
                 $this->setRequest($this->getRequest()->withData('Manufacturers.no_delivery_days', implode(',', $this->getRequest()->getData('Manufacturers.no_delivery_days'))));
             }
 

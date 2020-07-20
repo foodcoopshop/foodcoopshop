@@ -64,19 +64,20 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
         'escape' => false
     ]);
 
-    $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#manufacturers-no-delivery-days');"
-    ]);
-    echo $this->Form->control('Manufacturers.no_delivery_days', [
-        'type' => 'select',
-        'multiple' => true,
-        'data-val' => $manufacturer->no_delivery_days,
-        'label' => __d('admin', 'Delivery_break').' <span class="after small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_function_delivery_break?').'</a></span>',
-        'options' => $noDeliveryBreakOptions,
-        'escape' => false
-    ]);
-    echo '<div class="sc"></div>';
-
+    if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+        $this->element('addScript', ['script' =>
+            Configure::read('app.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#manufacturers-no-delivery-days');"
+        ]);
+        echo $this->Form->control('Manufacturers.no_delivery_days', [
+            'type' => 'select',
+            'multiple' => true,
+            'data-val' => $manufacturer->no_delivery_days,
+            'label' => __d('admin', 'Delivery_break').' <span class="after small"><a href="'.$this->Html->getDocsUrl(__d('admin', 'docs_route_manufacturers')).'" target="_blank">'.__d('admin', 'How_do_I_use_the_function_delivery_break?').'</a></span>',
+            'options' => $noDeliveryBreakOptions,
+            'escape' => false
+        ]);
+        echo '<div class="sc"></div>';
+    }
 
     echo $this->Form->control('Manufacturers.is_private', [
         'label' => __d('admin', 'Only_for_members').'? <span class="after small">'.__d('admin', 'Manufacturer_profile_and_products_are_only_visible_for_signed_in_members.').'</span>',

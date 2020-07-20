@@ -368,6 +368,62 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeStockAvailable($this->productId2, 20); // reset to old stock available
     }
 
+    public function testCustomerCanSelectPickupDayFinishWithPickupDayValidation()
+    {
+        $this->changeConfiguration('FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY', 1);
+        $tomorrow = $this->Time->getTomorrowForDatabase();
+        $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', $tomorrow);
+        $this->loginAsSuperadmin();
+        $this->fillCart();
+        $this->checkCartStatus();
+        $this->finishCart(1, 1, '');
+        $this->assertRegExpWithUnquotedString('Bitte wähle einen Abholtag aus.', $this->httpClient->getContent());
+        $this->finishCart(1, 1, '', null, '');
+        $this->assertRegExpWithUnquotedString('Bitte wähle einen Abholtag aus.', $this->httpClient->getContent());
+        $this->finishCart(1, 1, '', null, '2020-01-01'); // do not allow past pickup days
+        $this->assertRegExpWithUnquotedString('Der Abholtag ist nicht gültig.', $this->httpClient->getContent());
+        $this->finishCart(1, 1, '', null, $tomorrow); // pickup day has value of FCS_NO_DELIVERY_DAYS_GLOBAL
+        $this->assertRegExpWithUnquotedString('Der Abholtag ist nicht gültig.', $this->httpClient->getContent());
+    }
+
+    public function testCustomerCanSelectPickupDayFinishWithCorrectPickupDayAndComment()
+    {
+
+        $pickupDay = $this->Time->getTomorrowForDatabase();
+        $comment = 'this is the comment';
+
+        $this->changeConfiguration('FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY', 1);
+        $this->loginAsSuperadmin();
+        $this->fillCart();
+        $this->checkCartStatus();
+        $this->finishCart(1, 1, $comment, null, $pickupDay);
+
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
+        $this->checkCartStatusAfterFinish();
+
+        $cart = $this->getCartById($cartId);
+        $this->checkOrderDetails($cart->cart_products[2]->order_detail, 'Artischocke : Stück', 2, 0, 1, 3.3, 3.64, 0.17, 0.34, 2, $pickupDay);
+
+        $this->PickupDay = TableRegistry::getTableLocator()->get('PickupDays');
+        $pickupDayEntity = $this->PickupDay->find('all')->toArray();
+        $this->assertEquals(1, count($pickupDayEntity));
+        $this->assertEquals($pickupDay, $pickupDayEntity[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')));
+
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEmailLogs(
+            $emailLogs[0],
+            'Bestellbestätigung',
+            [
+                'Abholtag: <b> ' . $this->Time->getDateFormattedWithWeekday(strtotime($pickupDay)) . '</b>',
+                'Kommentar: "<b>' . $comment . '</b>"',
+            ],
+            [
+                Configure::read('test.loginEmailSuperadmin')
+            ]
+        );
+
+    }
+
     public function testFinishCartCheckboxesValidation()
     {
         $this->loginAsSuperadmin();
@@ -430,6 +486,7 @@ class CartsControllerTest extends AppCakeTestCase
             [
                 'Artischocke : Stück',
                 'Hallo Demo Superadmin,',
+                'Kommentar: "<b>' . $pickupDayComment . '</b>"',
                 'Content-Disposition: attachment; filename="Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular.pdf"',
                 'Content-Disposition: attachment; filename="Bestelluebersicht.pdf"',
                 'Content-Disposition: attachment; filename="Allgemeine-Geschaeftsbedingungen.pdf"'

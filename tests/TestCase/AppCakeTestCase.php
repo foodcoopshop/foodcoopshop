@@ -312,25 +312,29 @@ abstract class AppCakeTestCase extends TestCase
         return $this->httpClient->getJsonDecodedContent();
     }
 
-    protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '', $timebaseCurrencyTimeSum = null)
+    protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '', $timebaseCurrencyTimeSum = null, $pickupDay = null)
     {
         $data = [
             'Carts' => [
                 'general_terms_and_conditions_accepted' => $general_terms_and_conditions_accepted,
-                'cancellation_terms_accepted' => $cancellation_terms_accepted
+                'cancellation_terms_accepted' => $cancellation_terms_accepted,
             ],
         ];
 
         if ($comment != '') {
             $data['Carts']['pickup_day_entities'][0] = [
                 'customer_id' => $this->httpClient->getLoggedUserId(),
-                'pickup_day' => Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb(),
-                'comment' => $comment
+                'pickup_day' => !is_null($pickupDay) ? $pickupDay : Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb(),
+                'comment' => $comment,
             ];
         }
 
         if ($timebaseCurrencyTimeSum !== null) {
             $data['Carts']['timebased_currency_seconds_sum_tmp'] = $timebaseCurrencyTimeSum;
+        }
+
+        if ($pickupDay !== null) {
+            $data['Carts']['pickup_day'] = $pickupDay;
         }
 
         $this->httpClient->post(
@@ -347,7 +351,7 @@ abstract class AppCakeTestCase extends TestCase
             'contain' => [
                 'CartProducts.OrderDetails.OrderDetailTaxes',
                 'CartProducts.OrderDetails.OrderDetailUnits',
-                'CartProducts.OrderDetails.TimebasedCurrencyOrderDetails'
+                'CartProducts.OrderDetails.TimebasedCurrencyOrderDetails',
             ]
         ])->first();
         return $cart;

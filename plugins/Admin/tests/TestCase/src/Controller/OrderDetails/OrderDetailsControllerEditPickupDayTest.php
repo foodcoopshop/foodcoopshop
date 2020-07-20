@@ -43,14 +43,6 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->assertJsonError();
     }
 
-    public function testEditPickupDayAsSuperadminWrongWeekday()
-    {
-        $this->loginAsSuperadmin();
-        $response = $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-01-01', 'bla');
-        $this->assertRegExpWithUnquotedString('Der Abholtag muss ein Freitag sein.', $response->msg);
-        $this->assertJsonError();
-    }
-
     public function testEditPickupDayAsSuperadminOk()
     {
         $this->loginAsSuperadmin();

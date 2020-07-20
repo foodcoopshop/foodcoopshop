@@ -13,7 +13,15 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 echo '<td class="delivery-rhythm">';
+
+    if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+        echo __d('admin', 'Member_choses_pickup_day.');
+        echo '</td>';
+        return;
+    }
 
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
 

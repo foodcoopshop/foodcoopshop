@@ -34,6 +34,18 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
                     <?php
                        echo __('Pickup_day') . ': <b> ' . $this->MyTime->getDateFormattedWithWeekday(strtotime($pickupDay)).'</b>';
                     ?>
+                    <?php
+                        if (!empty($pickupDayEntities)) {
+                            foreach($pickupDayEntities as $pickupDayEntity) {
+                                if ($pickupDayEntity->comment != ''
+                                    && $pickupDayEntity->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')) == $pickupDay) {
+                                    echo '<br />';
+                                    echo __('Comment') . ': "<b>' . $pickupDayEntity->comment . '</b>"';
+                                    break;
+                                }
+                            }
+                        }
+                    ?>
                 </td>
             </tr>
         <?php } ?>

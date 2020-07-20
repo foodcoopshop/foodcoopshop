@@ -13,6 +13,12 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
+if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+    return;
+}
+
 if ($appAuth->isInstantOrderMode() || $appAuth->isSelfServiceModeByUrl()) {
     return;
 }

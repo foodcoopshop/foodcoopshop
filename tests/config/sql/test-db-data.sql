@@ -168,7 +168,8 @@ INSERT INTO `fcs_configuration` VALUES
 (586,1,'FCS_SELF_SERVICE_MODE_TEST_MODE_ENABLED','Selbstbedienungs-Modus im Test-Modus ausführen?<br /><div class=\"small\">Keine Verlinkung im Haupt-Menü und bei Lagerprodukten.</div>','1','boolean',310,'de_DE','2019-12-09 13:46:41','2019-12-09 13:46:41'),
 (587,1,'FCS_CASHLESS_PAYMENT_ADD_TYPE','Art der Eintragung der Guthaben-Aufladungen<br /><div class=\"small\">Wie gelangen die Guthaben-Aufladungen vom Bankkonto in den FoodCoopShop?</div>','manual','dropdown',145,'de_DE','2020-02-11 10:13:10','2020-02-11 10:13:10'),
 (588,1,'FCS_SHOW_NEW_PRODUCTS_ON_HOME','Neue Produkte auch auf der Startseite anzeigen?','1','boolean',22,'de_DE','2020-04-15 09:42:06','2020-04-15 09:42:06'),
-(589,1,'FCS_FEEDBACK_TO_PRODUCTS_ENABLED','Feedback-Funktion für Produkte aktiviert?<br /><div class=\"small\">Mitglieder können Feedback zu bestellten Produkte verfassen.</div>','1','boolean',320,'de_DE','2020-06-19 09:03:00','2020-06-19 09:03:00');
+(589,1,'FCS_FEEDBACK_TO_PRODUCTS_ENABLED','Feedback-Funktion für Produkte aktiviert?<br /><div class=\"small\">Mitglieder können Feedback zu bestellten Produkte verfassen.</div>','1','boolean',320,'de_DE','2020-06-19 09:03:00','2020-06-19 09:03:00'),
+(590,1,'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY','Mitglied kann Abholtag beim Bestellen selbst auswählen.','0','readonly',59,'de_DE','2020-07-06 10:34:48','2020-07-06 10:34:48');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -361,7 +362,8 @@ INSERT INTO `phinxlog` VALUES
 (20200404145856,'RemoveV2Migrations','2020-04-04 15:01:16','2020-04-04 15:01:16',0),
 (20200415073329,'ShowNewProductsOnHome','2020-04-15 07:42:06','2020-04-15 07:42:06',0),
 (20200501192722,'EnableCashlessPaymentAddTypeConfiguration','2020-05-01 19:30:21','2020-05-01 19:30:21',0),
-(20200618063024,'AddProductFeedback','2020-06-19 07:02:59','2020-06-19 07:03:00',0);
+(20200618063024,'AddProductFeedback','2020-06-19 07:02:59','2020-06-19 07:03:00',0),
+(20200703072605,'CustomerCanSelectPickupDay','2020-07-06 08:34:48','2020-07-06 08:34:48',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

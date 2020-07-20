@@ -95,7 +95,7 @@ echo $this->Form->control('BlogPosts.delete_image', [
     'escape' => false
 ]);
 
-if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
+if (Configure::read('app.showManufacturerListAndDetailPage') && ($appAuth->isSuperadmin() || $appAuth->isAdmin())) {
     echo $this->Form->control('BlogPosts.id_manufacturer', [
         'type' => 'select',
         'label' => __d('admin', 'Manufacturer'),

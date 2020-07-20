@@ -129,23 +129,21 @@ use Cake\Core\Configure;
 
     <?php
 
-    if (!empty($manufacturer)) {
-        $globalNoDeliveryDaysString = $this->Html->getGlobalNoDeliveryDaysString();
-        if ($globalNoDeliveryDaysString != '') {
-            echo '<h2 class="info">' . $globalNoDeliveryDaysString . '</h2>';
-        }
-        $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true);
-        if ($manufacturerNoDeliveryDaysString != '') {
-            echo '<h2 class="info">'.$manufacturerNoDeliveryDaysString.'</h2>';
+    if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+        if (!empty($manufacturer)) {
+            $globalNoDeliveryDaysString = $this->Html->getGlobalNoDeliveryDaysString();
+            if ($globalNoDeliveryDaysString != '') {
+                echo '<h2 class="info">' . $globalNoDeliveryDaysString . '</h2>';
+            }
+            $manufacturerNoDeliveryDaysString = $this->Html->getManufacturerNoDeliveryDaysString($manufacturer, true);
+            if ($manufacturerNoDeliveryDaysString != '') {
+                echo '<h2 class="info">'.$manufacturerNoDeliveryDaysString.'</h2>';
+            }
         }
     }
 
     if (empty($products) && $manufacturerId == '') {
         echo '<h2 class="info">'.__d('admin', 'Please_chose_a_manufacturer.').'</h2>';
-    } else {
-        echo '<h2 class="info2">';
-            echo __d('admin', 'Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button.');
-        echo '</h2>';
     }
 
     echo '<table class="list no-clone-last-row">';

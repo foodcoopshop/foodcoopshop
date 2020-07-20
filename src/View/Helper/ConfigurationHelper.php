@@ -46,7 +46,12 @@ class ConfigurationHelper extends Helper
                 return array_slice(Configure::read('app.htmlHelper')->getGroups(), 0, 2, true); // true: preserveKeys
                 break;
             case 'FCS_NO_DELIVERY_DAYS_GLOBAL':
-                return Configure::read('app.timeHelper')->getNextDeliveryDays();
+                if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+                    $values = Configure::read('app.timeHelper')->getNextDailyDeliveryDays();
+                } else {
+                    $values = Configure::read('app.timeHelper')->getNextWeeklyDeliveryDays();
+                }
+                return $values;
                 break;
             case 'FCS_CASHLESS_PAYMENT_ADD_TYPE':
                 return $this->getCashlessPaymentAddTypeOptions();

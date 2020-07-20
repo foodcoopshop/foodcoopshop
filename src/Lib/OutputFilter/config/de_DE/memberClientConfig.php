@@ -14,6 +14,7 @@
  */
 
 return [
+    'Ist nur für andere Mitglieder in der Mitglieder-Liste sichtbar\.' => '',
     'uf welches Mitglied' => 'uf welchen Kunden',
     'uf das Mitglied' => 'uf den Kunden',
     'uf ein anderes Mitglied' => 'uf einen anderen Kunden',

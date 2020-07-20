@@ -150,14 +150,31 @@ class MyTimeHelper extends TimeHelper
         return self::getDeliveryDay($this->getCurrentDay());
     }
 
-    public function getNextDeliveryDays($maxDays=30) {
+    public function getNextWeeklyDeliveryDays($maxDays=30)
+    {
         $nextDeliveryDay = $this->getDeliveryDateByCurrentDayForDb();
+        return $this->getWeekdayFormatedDaysList($nextDeliveryDay, $maxDays, 7);
+    }
+
+    public function getNextDailyDeliveryDays()
+    {
+        $maxDays = 14;
+        $nextDeliveryDay = $this->getTomorrowForDatabase();
+        return $this->getWeekdayFormatedDaysList($nextDeliveryDay, $maxDays, 1);
+    }
+
+    public function getTomorrowForDatabase() {
+        return date(Configure::read('DateFormat.DatabaseAlt'), strtotime($this->getCurrentDateForDatabase() . ' +1 days'));
+    }
+
+    private function getWeekdayFormatedDaysList($nextDeliveryDay, $maxDays, $factor)
+    {
         $nextDeliveryDays = [
             $nextDeliveryDay => $this->getDateFormattedWithWeekday(strtotime($nextDeliveryDay))
         ];
         $count = 1;
         while($count < $maxDays) {
-            $nextCalculatedDeliveryDay = date(Configure::read('DateFormat.DatabaseAlt'), strtotime($nextDeliveryDay . ' + ' . $count * 7 . ' day'));
+            $nextCalculatedDeliveryDay = date(Configure::read('DateFormat.DatabaseAlt'), strtotime($nextDeliveryDay . ' + ' . $count * $factor . ' day'));
             $nextDeliveryDays[$nextCalculatedDeliveryDay] = $this->getDateFormattedWithWeekday(strtotime($nextCalculatedDeliveryDay));
             $count++;
         }

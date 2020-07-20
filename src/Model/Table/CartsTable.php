@@ -54,6 +54,29 @@ class CartsTable extends AppTable
         return $validator;
     }
 
+    public function validationCustomerCanSelectPickupDay(Validator $validator): Validator
+    {
+        $validator = $this->validationDefault($validator);
+        $validator->requirePresence('pickup_day', true, __('Please_select_a_pickup_day.'));
+        $validator->notEmptyDate('pickup_day', __('Please_select_a_pickup_day.'));
+        $validator = $this->getAllowOnlyDefinedPickupDaysValidator($validator, 'pickup_day');
+        return $validator;
+    }
+
+    public function getAllowOnlyDefinedPickupDaysValidator(Validator $validator, $field)
+    {
+        $validator->add($field, 'allow-only-defined-pickup-days', [
+            'rule' => function ($value, $context) {
+            if (!in_array($value, array_keys(Configure::read('app.timeHelper')->getNextDailyDeliveryDays()))
+                || in_array($value, Configure::read('app.htmlHelper')->getGlobalNoDeliveryDaysAsArray())) {
+                    return false;
+                }
+                return true;
+            },
+            'message' => __('The_pickup_day_is_not_valid.'),
+        ]);
+        return $validator;
+    }
 
     public function getProductNameWithUnity($productName, $unity)
     {
@@ -133,7 +156,7 @@ class CartsTable extends AppTable
                 'ProductAttributes.ProductAttributeCombinations.Attributes',
                 'ProductAttributes.DepositProductAttributes',
                 'ProductAttributes.UnitProductAttributes',
-                'Products.Images'
+                'Products.Images',
             ]
         ])->toArray();
 
@@ -222,7 +245,7 @@ class CartsTable extends AppTable
         return $preparedCart;
     }
 
-    public function getCartGroupedByPickupDay($cart)
+    public function getCartGroupedByPickupDay($cart, $customerSelectedPickupDay=null)
     {
         $manufacturerName = [];
         $productName = [];
@@ -240,6 +263,9 @@ class CartsTable extends AppTable
         $preparedCartProducts = [];
         foreach($cart['CartProducts'] as $cartProduct) {
             $pickupDay = $cartProduct['pickupDay'];
+            if (!is_null($customerSelectedPickupDay)) {
+                $pickupDay = $customerSelectedPickupDay;
+            }
             @$preparedCartProducts[$pickupDay]['CartDepositSum'] += $cartProduct['deposit'];
             @$preparedCartProducts[$pickupDay]['CartProductSum'] += $cartProduct['price'];
             @$preparedCartProducts[$pickupDay]['Products'][] = $cartProduct;

@@ -46,7 +46,7 @@ class FrontendController extends AppController
             $product['tax'] = $grossPrice - $product['price'];
             $product['is_new'] = $this->Product->isNew($product['created']);
 
-            if ($this->AppAuth->isInstantOrderMode() || $this->AppAuth->isSelfServiceModeByUrl()) {
+            if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') || $this->AppAuth->isInstantOrderMode() || $this->AppAuth->isSelfServiceModeByUrl()) {
                 $product['next_delivery_day'] = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
             } else {
                 $product['next_delivery_day'] = $this->Product->calculatePickupDayRespectingDeliveryRhythm(
