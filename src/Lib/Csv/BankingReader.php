@@ -15,7 +15,7 @@
 namespace App\Lib\Csv;
 
 use App\Model\Entity\Customer;
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\FactoryLocator;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 use Cake\Utility\Hash;
@@ -31,7 +31,7 @@ abstract class BankingReader extends Reader implements BankingReaderInterface {
 
     protected function getCustomerByPersonalTransactionCode($content): ?Customer
     {
-        $customerModel = TableRegistry::getTableLocator()->get('Customers');
+        $customerModel = FactoryLocator::get('Table')->get('Customers');
         $query = $customerModel->find('all', [
             'fields' => [
                 'personalTransactionCode' => $customerModel->getPersonalTransactionCodeField(),

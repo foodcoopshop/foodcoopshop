@@ -14,7 +14,7 @@
  */
 
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\FactoryLocator;
 
 $pdf->setTextHelper($this->Text);
 $pdf->SetLeftMargin(12);
@@ -71,7 +71,7 @@ $pdf->renderTable();
 
 if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0 && $sumTimebasedCurrencyPriceIncl == 0) {
 
-    $m = TableRegistry::getTableLocator()->get('Manufacturers');
+    $m = FactoryLocator::get('Table')->get('Manufacturers');
     $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceIncl, $variableMemberFee);
     $newSumPriceIncl = $m->decreasePriceWithVariableMemberFee($sumPriceIncl, $variableMemberFee);
     $firstColumnWidth = 365;
@@ -145,7 +145,7 @@ if ($sumTimebasedCurrencyPriceIncl > 0) {
         $html .= '</tr>';
 
         if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && $variableMemberFee > 0) {
-            $m = TableRegistry::getTableLocator()->get('Manufacturers');
+            $m = FactoryLocator::get('Table')->get('Manufacturers');
             $compensatedPrice = $m->getVariableMemberFeeAsFloat($sumPriceForTimebasedCurrency, $variableMemberFee);
             $sumPriceForTimebasedCurrencyDecreasedWithVariableMemberFee = $m->decreasePriceWithVariableMemberFee($sumPriceForTimebasedCurrency, $variableMemberFee);
 

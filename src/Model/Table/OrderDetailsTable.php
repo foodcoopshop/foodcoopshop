@@ -3,7 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
 
 /**
@@ -448,7 +448,7 @@ class OrderDetailsTable extends AppTable
     public function prepareOrderDetailsGroupedByManufacturer($orderDetails)
     {
         $preparedOrderDetails = [];
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Manufacturer = FactoryLocator::get('Table')->get('Manufacturers');
         foreach ($orderDetails as $orderDetail) {
             $key = $orderDetail->product->id_manufacturer;
             $preparedOrderDetails[$key]['sum_price'] = $orderDetail->sum_price;

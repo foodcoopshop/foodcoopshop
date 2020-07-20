@@ -35,6 +35,7 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
 use Cake\Datasource\ConnectionManager;
+use Cake\Datasource\FactoryLocator;
 use Cake\Error\ConsoleErrorHandler;
 use Cake\Error\ErrorHandler;
 use Cake\Http\ServerRequest;
@@ -42,7 +43,6 @@ use Cake\I18n\I18n;
 use Cake\Log\Log;
 use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
-use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\Utility\Security;
 
@@ -226,7 +226,7 @@ ServerRequest::addDetector('tablet', function ($request) {
 // foodcoopshop
 mb_internal_encoding('UTF-8');
 
-TableRegistry::getTableLocator()->get('Configurations')->loadConfigurations();
+FactoryLocator::get('Table')->get('Configurations')->loadConfigurations();
 if (in_array(Configure::read('appDb.FCS_DEFAULT_LOCALE'), Configure::read('app.implementedLocales'))) {
     ini_set('intl.default_locale', Configure::read('appDb.FCS_DEFAULT_LOCALE'));
     locale_set_default(Configure::read('appDb.FCS_DEFAULT_LOCALE'));

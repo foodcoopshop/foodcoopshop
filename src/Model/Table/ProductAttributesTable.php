@@ -2,7 +2,7 @@
 
 namespace App\Model\Table;
 
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\FactoryLocator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -66,7 +66,7 @@ class ProductAttributesTable extends AppTable
         $this->getConnection()->query('INSERT INTO '.$this->tablePrefix.'product_attribute_combination (id_attribute, id_product_attribute) VALUES(' . $attributeId . ', ' . $productAttributeId . ')');
 
         // set price of product back to 0 => if not, the price of the attribute is added to the price of the product
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product = FactoryLocator::get('Table')->get('Products');
         $this->Product->save(
             $this->Product->patchEntity(
                 $this->Product->get($productId),
@@ -80,7 +80,7 @@ class ProductAttributesTable extends AppTable
         // with custom sql
         $this->getConnection()->query('INSERT INTO '.$this->tablePrefix.'stock_available (id_product, id_product_attribute, quantity) VALUES(' . $productId . ', ' . $productAttributeId . ', ' . $defaultQuantity . ')');
 
-        $this->StockAvailable = TableRegistry::getTableLocator()->get('StockAvailables');
+        $this->StockAvailable = FactoryLocator::get('Table')->get('StockAvailables');
         $this->StockAvailable->updateQuantityForMainProduct($productId);
     }
 }

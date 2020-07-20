@@ -8,7 +8,7 @@ use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Marshaller;
 use Cake\ORM\Table;
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\FactoryLocator;
 use Cake\Utility\Hash;
 use Cake\Utility\Security;
 use Cake\Validation\Validation;
@@ -68,7 +68,7 @@ class AppTable extends Table
             $manufacturerId = $context['data']['id_manufacturer'];
         }
 
-        $orderDetailsTable = TableRegistry::getTableLocator()->get('OrderDetails');
+        $orderDetailsTable = FactoryLocator::get('Table')->get('OrderDetails');
 
         if (!is_null($manufacturerId)) {
             $productsAssociation = $orderDetailsTable->getAssociation('Products');
@@ -267,7 +267,7 @@ class AppTable extends Table
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') || $appAuth->isInstantOrderMode() || $appAuth->isSelfServiceModeByUrl()) {
             return $products;
         }
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product = FactoryLocator::get('Table')->get('Products');
         $i = -1;
         foreach($products as $product) {
             $i++;

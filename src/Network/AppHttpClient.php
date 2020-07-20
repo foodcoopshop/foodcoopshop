@@ -6,7 +6,7 @@ use App\View\Helper\SlugHelper;
 use Cake\Core\Configure;
 use Cake\Http\Client;
 use Cake\Http\Client\Response;
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\FactoryLocator;
 use Cake\View\View;
 
 /**
@@ -55,7 +55,7 @@ class AppHttpClient extends Client
 
         $View = new View();
         $this->Slug = new SlugHelper($View);
-        $this->Customer = TableRegistry::getTableLocator()->get('Customers');
+        $this->Customer = FactoryLocator::get('Table')->get('Customers');
 
         $this->adminPrefix = '/admin';
     }

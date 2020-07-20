@@ -3,7 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
+use Cake\Datasource\FactoryLocator;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -38,7 +38,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
     public function changePrice($orderDetail, $price, $amount)
     {
 
-        $manufacturerTable = TableRegistry::getTableLocator()->get('Manufacturers');
+        $manufacturerTable = FactoryLocator::get('Table')->get('Manufacturers');
 
         $maxPercentage = $orderDetail->timebased_currency_order_detail->max_percentage;
         $grossProductPricePerUnit = $price / (100 - $maxPercentage) * 100 / $amount;
@@ -86,7 +86,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
     {
         $timebasedCurrencyAwareResults = [];
 
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product = FactoryLocator::get('Table')->get('Products');
 
         foreach($results as $result) {
             $timebasedCurrencyAwareResult = $result;
@@ -169,7 +169,7 @@ class TimebasedCurrencyOrderDetailsTable extends AppTable
      */
     public function getCreditBalance($manufacturerId = null, $customerId = null)
     {
-        $timebasedCurrencyPayment = TableRegistry::getTableLocator()->get('TimebasedCurrencyPayments');
+        $timebasedCurrencyPayment = FactoryLocator::get('Table')->get('TimebasedCurrencyPayments');
         $creditBalance = $this->getSum($manufacturerId, $customerId) - $timebasedCurrencyPayment->getSum($manufacturerId, $customerId);
         return $creditBalance;
     }
