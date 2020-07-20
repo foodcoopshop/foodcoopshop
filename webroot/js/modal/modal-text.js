@@ -44,7 +44,7 @@ foodcoopshop.ModalText = {
         });
 
         var elementSelector = button.data('element-selector');
-        var heading = $(elementSelector).find('h1');
+        var heading = $(elementSelector).find('h1').first();
         $(modalSelector + ' .modal-title').html(heading.html());
         heading.hide();
         $(modalSelector + ' .modal-body').append($(elementSelector).html());

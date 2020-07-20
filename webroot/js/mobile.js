@@ -41,14 +41,6 @@ foodcoopshop.Mobile = {
         });
     },
 
-    bindToggleRight: function (controller) {
-        $('.sb-toggle-right').on('click', function (event) {
-            event.preventDefault();
-            event.stopPropagation();
-            controller.toggle('sb-right');
-        });
-    },
-
     bindCloseSlidebarsOnCanvasClick : function (controller) {
         $(controller.events).on('opened', function (event, id) {
             $('html').on('click', function () {
@@ -244,10 +236,24 @@ foodcoopshop.Mobile = {
 
         $('#' + headerId).append(this.getResponsiveMenuButton());
 
+        // START info box as modal
+        var noGlobalDeliveryBreakHtml = '';
+        var noGlobalDeliveryBreakElement = $('#global-no-delivery-day-box');
+        if (noGlobalDeliveryBreakElement.length > 0) {
+            noGlobalDeliveryBreakHtml = noGlobalDeliveryBreakElement.html();
+        }
+        var infoBoxHtml = '<div id="right-info-box-text" hide">' + noGlobalDeliveryBreakHtml + $('#info-box').html() + '</div>';
+        infoBoxHtml = infoBoxHtml.replace(/h3/g, 'h1');
+        $('#container').append(infoBoxHtml);
+
         var infoButton = $('<a/>');
-        infoButton.addClass('sb-toggle-right');
+        infoButton.addClass('open-with-modal');
+        infoButton.attr('href', 'javscript:void(0);');
+        infoButton.data('element-selector', '#right-info-box-text');
         infoButton.html('<i class="fas fa-info-circle fa-2x"></i>');
         $('#' + headerId).append(infoButton);
+        foodcoopshop.ModalText.init('#' + headerId + ' a.open-with-modal');
+        // END info box as modal
 
         var cartButton = $('#cart .inner .btn-success');
         cartButton.addClass('responsive-cart');
@@ -273,15 +279,6 @@ foodcoopshop.Mobile = {
         });
         $('#cart .btn-success').html('<i class="fas fa-shopping-cart"></i>');
 
-        // add info box to right side bar
-        $('#container').after(this.getSlidebarMenu('right')).attr('canvas', '');
-        var noGlobalDeliveryBreakHtml = '';
-        var noGlobalDeliveryBreakElement = $('#global-no-delivery-day-box');
-        if (noGlobalDeliveryBreakElement.length > 0) {
-            noGlobalDeliveryBreakHtml = noGlobalDeliveryBreakElement.html();
-        }
-        $('.sb-right').html('<div class="inner">' + noGlobalDeliveryBreakHtml + $('#info-box').html() + '</div>');
-
         // add special infos to cart page
         var cartPage = $('body.carts.detail #inner-content h1:first');
         cartPage.after($('#cart p.instant-order-customer-info'));
@@ -300,7 +297,6 @@ foodcoopshop.Mobile = {
         controller.init();
 
         this.bindToggleLeft(controller);
-        this.bindToggleRight(controller);
         this.bindCloseSlidebarsOnCanvasClick(controller);
         this.fixContentScrolling();
 
