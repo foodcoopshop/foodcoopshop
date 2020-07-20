@@ -131,7 +131,7 @@ class ActionLogsController extends AdminAppController
             ]
         ]);
         $actionLogs = $this->paginate($query, [
-            'sortWhitelist' => [
+            'sortableFields' => [
                 'ActionLogs.type', 'ActionLogs.date', 'ActionLogs.text', 'Customers.' . Configure::read('app.customerMainNamePart')
             ],
             'order' => [

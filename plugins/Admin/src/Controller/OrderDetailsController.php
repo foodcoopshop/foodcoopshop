@@ -408,7 +408,7 @@ class OrderDetailsController extends AdminAppController
         }
 
         $orderDetails = $this->paginate($query, [
-            'sortWhitelist' => [
+            'sortableFields' => [
                 'OrderDetails.product_amount',
                 'OrderDetails.product_name',
                 'OrderDetails.total_price_tax_incl',

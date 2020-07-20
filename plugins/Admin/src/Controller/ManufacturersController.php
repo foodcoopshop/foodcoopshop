@@ -311,7 +311,7 @@ class ManufacturersController extends AdminAppController
         ->select($this->Manufacturer->AddressManufacturers);
 
         $manufacturers = $this->paginate($query, [
-            'sortWhitelist' => [
+            'sortableFields' => [
                 'Manufacturers.name', 'Manufacturers.stock_management_enabled', 'Manufacturers.no_delivery_days', 'Manufacturers.is_private', 'Customers.' . Configure::read('app.customerMainNamePart'), 'Manufacturers.timebased_currency_enabled'
             ],
             'order' => [

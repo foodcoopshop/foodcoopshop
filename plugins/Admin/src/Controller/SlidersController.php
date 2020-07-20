@@ -131,7 +131,7 @@ class SlidersController extends AdminAppController
             'conditions' => $conditions
         ]);
         $sliders = $this->paginate($query, [
-            'sortWhitelist' => [
+            'sortableFields' => [
                 'Sliders.position', 'Sliders.active'
             ],
             'order' => [

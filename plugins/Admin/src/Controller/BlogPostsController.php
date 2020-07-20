@@ -213,7 +213,7 @@ class BlogPostsController extends AdminAppController
             ]
         ]);
         $blogPosts = $this->paginate($query, [
-            'sortWhitelist' => [
+            'sortableFields' => [
                 'BlogPosts.is_featured', 'BlogPosts.is_private', 'BlogPosts.title', 'BlogPosts.short_description', 'Customers.' . Configure::read('app.customerMainNamePart'), 'Manufacturers.name', 'BlogPosts.modified', 'BlogPosts.active'
             ],
             'order' => [

@@ -120,7 +120,7 @@ class TaxesController extends AdminAppController
             'conditions' => $conditions
         ]);
         $taxes = $this->paginate($query, [
-            'sortWhitelist' => [
+            'sortableFields' => [
                 'Taxes.rate', 'Taxes.position'
             ],
             'order' => [

@@ -801,7 +801,7 @@ class ProductsTable extends AppTable
 
         if ($controller) {
             $query = $controller->paginate($query, [
-                'sortWhitelist' => [
+                'sortableFields' => [
                     'Images.id_image', 'Products.name', 'Products.is_declaration_ok', 'Taxes.rate', 'Products.active', 'Manufacturers.name', 'Products.is_stock_product'
                 ],
                 'order' => $order
