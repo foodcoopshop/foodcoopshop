@@ -33,7 +33,7 @@ use Cake\Core\Configure;
             <h1><?php echo $title_for_layout; ?></h1>
             <?php echo $this->Form->control('customerId', ['type' => 'select', 'label' => '', 'empty' => __d('admin', 'all_members'), 'options' => []]); ?>
             <?php
-            if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
+            if (Configure::read('app.showManufacturerListAndDetailPage') && ($appAuth->isSuperadmin() || $appAuth->isAdmin())) {
                 echo $this->Form->control('manufacturerId', [
                     'type' => 'select',
                     'label' => '',
@@ -69,7 +69,9 @@ echo '<th>' . $this->Paginator->sort('BlogPosts.is_private', __d('admin', 'Only_
 echo '<th>' . $this->Paginator->sort('BlogPosts.title', __d('admin', 'Title')) . '</th>';
 echo '<th>' . $this->Paginator->sort('BlogPosts.short_description', __d('admin', 'Short_description')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Modified_by')) . '</th>';
-echo '<th>' . $this->Paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer')) . '</th>';
+if (Configure::read('app.showManufacturerListAndDetailPage')) {
+    echo '<th>' . $this->Paginator->sort('Manufacturers.name', __d('admin', 'Manufacturer')) . '</th>';
+}
 echo '<th>' . $this->Paginator->sort('BlogPosts.modified', __d('admin', 'Modified_on')) . '</th>';
 echo '<th>' . $this->Paginator->sort('BlogPosts.active', __d('admin', 'Active')) . '</th>';
 echo '<th></th>';
@@ -148,11 +150,13 @@ foreach ($blogPosts as $blogPost) {
     }
     echo '</td>';
 
-    echo '<td>';
-    if (! empty($blogPost->manufacturer)) {
-        echo $blogPost->manufacturer->name;
+    if (Configure::read('app.showManufacturerListAndDetailPage')) {
+        echo '<td>';
+        if (! empty($blogPost->manufacturer)) {
+            echo $blogPost->manufacturer->name;
+        }
+        echo '</td>';
     }
-    echo '</td>';
 
     echo '<td>';
     echo $blogPost->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
