@@ -16,7 +16,6 @@
 namespace App\Test\TestCase;
 
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 
 abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
 {
@@ -36,10 +35,10 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->Cart = TableRegistry::getTableLocator()->get('Carts');
-        $this->OrderDetail = TableRegistry::getTableLocator()->get('OrderDetails');
-        $this->EmailLog = TableRegistry::getTableLocator()->get('EmailLogs');
-        $this->Manufacturer = TableRegistry::getTableLocator()->get('Manufacturers');
+        $this->Cart = $this->getTableLocator()->get('Carts');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
     }
 
     protected function prepareTimebasedCurrencyCart()
@@ -93,9 +92,9 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
 
     protected function assertChangedStockAvailable($productIds, $expectedAmount)
     {
-        $this->Product = TableRegistry::getTableLocator()->get('Products');
+        $this->Product = $this->getTableLocator()->get('Products');
         $ids = $this->Product->getProductIdAndAttributeId($productIds);
-        $this->StockAvailable = TableRegistry::getTableLocator()->get('StockAvailables');
+        $this->StockAvailable = $this->getTableLocator()->get('StockAvailables');
         $changedStockAvailable = $this->StockAvailable->find('all', [
             'conditions' => [
                 'StockAvailables.id_product' => $ids['productId'],
