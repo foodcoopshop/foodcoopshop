@@ -4,7 +4,6 @@ namespace Admin\Controller;
 use App\Controller\Component\StringComponent;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
-use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Utility\Inflector;
 
