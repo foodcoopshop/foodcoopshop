@@ -1128,6 +1128,7 @@ a.blog-post-wrapper h3 {
     padding-top: 10px;
     border-top: 1px solid #d6d4d4;
     margin-top: 0;
+    word-break: break-word;
 }
 a.blog-post-wrapper span {
     float: left;
