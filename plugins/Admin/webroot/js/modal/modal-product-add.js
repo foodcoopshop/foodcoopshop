@@ -30,19 +30,28 @@ foodcoopshop.ModalProductAdd = {
             infoText = foodcoopshop.LocalizedJs.dialogProduct.Manufacturer + ': <b>' + manufacturerName + '</b>';
         }
         var html = '<p>' + infoText + '</p>';
-        html += '<label for="dialogProductAdd"><b>' + foodcoopshop.LocalizedJs.dialogProduct.Name + '</b></label><br />';
-        html += '<input type="text" id="dialogProductAddName" value="" />';
+        html += '<label for="dialogName"><b>' + foodcoopshop.LocalizedJs.dialogProduct.Name + '</b></label><br />';
+        html += '<input type="text" name="dialogName" id="dialogName" value="" /><span class="small" style="float:left;">' + foodcoopshop.LocalizedJs.dialogProduct.ProductRenameInfoText + '</span><br />';
         html += '<hr />';
-        html += '<div class="textarea-wrapper">';
-        html += '<label for="dialogProductAddDescriptionShort" class="label-description-short"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionShort + '</b></label><br />';
-        html += '<textarea class="ckeditor" name="dialogProductAddDescriptionShort" id="dialogProductAddDescriptionShort"></textarea>';
+        html += '<div class="dialog-unity-wrapper">';
+        html += '<label id="dialogLabelUnity" for="dialogUnity"><b>' + foodcoopshop.LocalizedJs.dialogProduct.Unit + '</b> <span class="small">' + foodcoopshop.LocalizedJs.dialogProduct.UnitDescriptionExample + '</span></label><br />';
+        html += '<input type="text" name="dialogUnity" id="dialogUnity" value="" /><br />';
+        html += '<span class="small">' + foodcoopshop.LocalizedJs.admin.EnterApproximateWeightInPriceDialog + '</span>';
         html += '<hr />';
         html += '</div>';
         html += '<div class="textarea-wrapper">';
-        html += '<label for="dialogProductAddDescription"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionLong + '</b></label><br />';
-        html += '<textarea class="ckeditor" name="dialogProductAddDescription" id="dialogProductAddDescription"></textarea>';
+        html += '<label for="dialogDescriptionShort" class="label-description-short"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionShort + '</b></label><br />';
+        html += '<textarea class="ckeditor" name="dialogDescriptionShort" id="dialogDescriptionShort"></textarea>';
+        html += '<hr />';
         html += '</div>';
-        html += '<br />';
+        html += '<div class="textarea-wrapper">';
+        html += '<label for="dialogDescription"><b>' + foodcoopshop.LocalizedJs.dialogProduct.DescriptionLong + '</b></label><br />';
+        html += '<div class="declaration-wrapper">';
+        html += '<label class="is-declaration-ok"><input type="checkbox" name="dialogIsDeclarationOk" id="dialogIsDeclarationOk" />' + foodcoopshop.LocalizedJs.dialogProduct.ProductDeclarationOK + '</label><a href="' + foodcoopshop.LocalizedJs.dialogProduct.DocsUrlProductDeclaration + '" target="_blank"><i class="fas fa-arrow-circle-right"></i> ' + foodcoopshop.LocalizedJs.dialogProduct.Help + '</a><br />';
+        html += '<textarea class="ckeditor hide" name="dialogDescription" id="dialogDescription"></textarea>';
+        html += '</div>';
+        html += '</div>';
+        html += '<input type="hidden" name="dialogProductId" id="dialogProductId" value="" />';
         return html;
     },
 
@@ -56,9 +65,11 @@ foodcoopshop.ModalProductAdd = {
             '/admin/products/add/',
             {
                 manufacturerId: $('#manufacturerid').val(),
-                productName: $('#dialogProductAddName').val(),
-                descriptionShort: CKEDITOR.instances['dialogProductAddDescriptionShort'].getData().trim(),
-                description: CKEDITOR.instances['dialogProductAddDescription'].getData().trim()
+                name: $('#dialogName').val(),
+                unity: $('#dialogUnity').val(),
+                descriptionShort: CKEDITOR.instances['dialogDescriptionShort'].getData().trim(),
+                description: CKEDITOR.instances['dialogDescription'].getData().trim(),
+                isDeclarationOk: $('#dialogIsDeclarationOk:checked').length > 0 ? 1 : 0
             },
             {
                 onOk: function (data) {
@@ -88,10 +99,22 @@ foodcoopshop.ModalProductAdd = {
             foodcoopshop.ModalProductAdd.getCloseHandler(modalSelector);
         });
 
-        foodcoopshop.Helper.initCkeditor('dialogProductAddDescriptionShort');
-        foodcoopshop.Helper.initCkeditor('dialogProductAddDescription');
+        foodcoopshop.Helper.initCkeditor('dialogDescriptionShort');
+        foodcoopshop.Helper.ajaxCall(
+            '/admin/manufacturers/setElFinderUploadPath/' + $('#manufacturerid').val(),
+            {},
+            {
+                onOk: function (data) {
+                    foodcoopshop.Helper.initCkeditorSmallWithUpload('dialogDescription');
+                },
+                onError: function (data) {
+                    foodcoopshop.Modal.appendFlashMessage(modalSelector, data.msg);
+                    foodcoopshop.Modal.resetButtons(modalSelector);
+                }
+            }
+        );
         $(modalSelector).modal();
-        $('#dialogProductAddName').focus();
+        $('#dialogName').focus();
     }
 
 };

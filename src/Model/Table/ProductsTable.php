@@ -1350,7 +1350,7 @@ class ProductsTable extends AppTable
         return $success;
     }
 
-    public function add($manufacturer, $productName, $descriptionShort, $description)
+    public function add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk)
     {
         $defaultQuantity = 0;
 
@@ -1365,7 +1365,8 @@ class ProductsTable extends AppTable
                 'delivery_rhythm_send_order_list_weekday' => Configure::read('app.timeHelper')->getSendOrderListsWeekday(),
                 'description_short' => StringComponent::prepareWysiwygEditorHtml($descriptionShort, self::ALLOWED_TAGS_DESCRIPTION_SHORT),
                 'description' => StringComponent::prepareWysiwygEditorHtml($description, self::ALLOWED_TAGS_DESCRIPTION),
-                'unity' => ''
+                'unity' => StringComponent::removeSpecialChars(strip_tags(trim($unity))),
+                'is_declaration_ok' => $isDeclarationOk,
             ],
             [
                 'validate' => 'name'

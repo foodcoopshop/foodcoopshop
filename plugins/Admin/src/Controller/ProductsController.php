@@ -465,9 +465,11 @@ class ProductsController extends AdminAppController
         $this->RequestHandler->renderAs($this, 'json');
 
         $manufacturerId = $this->getRequest()->getData('manufacturerId');
-        $productName = $this->getRequest()->getData('productName');
+        $productName = $this->getRequest()->getData('name');
         $descriptionShort = $this->getRequest()->getData('descriptionShort');
         $description = $this->getRequest()->getData('description');
+        $unity = $this->getRequest()->getData('unity');
+        $isDeclarationOk = $this->getRequest()->getData('isDeclarationOk');
 
         // if logged user is manufacturer, then get param manufacturer id is NOT used
         // but logged user id for security reasons
@@ -486,7 +488,7 @@ class ProductsController extends AdminAppController
             if (empty($manufacturer)) {
                 throw new RecordNotFoundException('manufacturer not existing');
             }
-            $productEntity = $this->Product->add($manufacturer, $productName, $descriptionShort, $description);
+            $productEntity = $this->Product->add($manufacturer, $productName, $descriptionShort, $description, $unity, $isDeclarationOk);
             if ($productEntity->hasErrors()) {
                 throw new InvalidParameterException(join(' ', $this->Product->getAllValidationErrors($productEntity)));
             }

@@ -162,14 +162,14 @@ body.iframe_start_page {
     margin-top: 10px;
     margin-bottom: 10px;
 }
-#modal-product-name-edit .declaration-wrapper .is-declaration-ok {
+.modal .declaration-wrapper .is-declaration-ok {
   line-height: 20px;
 }
-#modal-product-name-edit .declaration-wrapper label.is-declaration-ok input {
+.modal .declaration-wrapper label.is-declaration-ok input {
   float: left;
   margin-right: 5px;
 }
-#modal-product-name-edit .declaration-wrapper a {
+.modal .declaration-wrapper a {
     float: right;
 }
 .modal .small {
