@@ -29,7 +29,7 @@ foreach($cart->pickup_day_entities as $pickupDay) {
 
     $formattedPickupDay = $pickupDay->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
 
-    if (count($pickupDay->getErrors()) > 0 || !empty($pickupDay->comment)) {
+    if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') || count($pickupDay->getErrors()) > 0 || !empty($pickupDay->comment)) {
         $this->element('addScript', ['script' =>
             "$('.toggle-link-" . $formattedPickupDay . "').trigger('click');"
         ]);
