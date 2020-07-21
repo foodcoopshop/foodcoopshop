@@ -2,7 +2,7 @@
 
 namespace App\Model\Table;
 
-use Cake\Datasource\FactoryLocator;
+use Cake\I18n\FrozenTime;
 use Cake\Validation\Validator;
 
 /**
@@ -63,11 +63,12 @@ class PaymentsTable extends AppTable
         return $validator;
     }
 
-    public function isAlreadyImported(string $transactionText): bool
+    public function isAlreadyImported(string $transactionText, string $date): bool
     {
         $alreadyImported = $this->find('all', [
             'conditions' => [
                 'transaction_text' => $transactionText,
+                'date_transaction_add' => new FrozenTime($date),
                 'status' => APP_ON,
             ]
         ])->count() > 0;

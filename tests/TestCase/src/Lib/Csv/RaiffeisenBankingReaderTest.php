@@ -30,7 +30,7 @@ class RaiffeisenBankingReaderTest extends AppCakeTestCase
     }
 
     /**
-     * @deprecated This mehotd will be removed in v3.2.
+     * @deprecated This method will be removed in v3.2.
      */
     public function testReadV1()
     {
@@ -65,7 +65,7 @@ class RaiffeisenBankingReaderTest extends AppCakeTestCase
     }
 
     /**
-     * @deprecated This mehotd will be removed in v3.2.
+     * @deprecated This method will be removed in v3.2.
      */
     public function testCheckStructureV1Ok()
     {

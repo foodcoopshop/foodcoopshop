@@ -58,7 +58,7 @@ class ReportsController extends AdminAppController
             }
 
             foreach($csvRecords as &$csvRecord) {
-                $csvRecord['already_imported'] = $this->Payment->isAlreadyImported($csvRecord['content']);
+                $csvRecord['already_imported'] = $this->Payment->isAlreadyImported($csvRecord['content'], $csvRecord['date']);
             }
 
         }
