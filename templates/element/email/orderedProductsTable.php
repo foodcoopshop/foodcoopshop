@@ -14,13 +14,18 @@
  */
 use Cake\Core\Configure;
 
+$priceColspan = 2;
 $columns = [
     __('Amount'),
     __('Product'),
-    __('Manufacturer'),
-    __('Price'),
-    __('Deposit')
 ];
+if (Configure::read('app.showManufacturerListAndDetailPage')) {
+    $columns[] = __('Manufacturer');
+    $priceColspan++;
+}
+$columns[] = __('Price');
+$columns[] = __('Deposit');
+
 if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) {
     $columns[] = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME');
 }
@@ -89,9 +94,13 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
                 }
                 ?>
             </td>
-            <td valign="middle" style="border:1px solid #d6d4d4;">
-                <?php echo $product['manufacturerName']; ?>
-            </td>
+
+            <?php if (Configure::read('app.showManufacturerListAndDetailPage')) { ?>
+                <td valign="middle" style="border:1px solid #d6d4d4;">
+                    <?php echo $product['manufacturerName']; ?>
+                </td>
+            <?php } ?>
+
             <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
                 <?php echo $this->MyNumber->formatAsCurrency($product['price']); ?>
                 <?php
@@ -124,7 +133,7 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
     <?php } ?>
 
      <tr>
-        <td style="border:1px solid #d6d4d4;" colspan="3"></td>
+        <td style="border:1px solid #d6d4d4;" colspan="<?php echo $priceColspan; ?>"></td>
         <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;"><?php echo $this->MyNumber->formatAsCurrency($productSum); ?></td>
 
         <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;">
