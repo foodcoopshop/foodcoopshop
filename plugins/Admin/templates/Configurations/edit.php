@@ -91,10 +91,15 @@ switch ($configuration->type) {
         $this->element('addScript', ['script' =>
             Configure::read('app.jsNamespace') . ".Admin.setSelectPickerMultipleDropdowns('#configurations-value');"
         ]);
+        // keep all checkmarks if one day does not validate
+        $value = $configuration->value;
+        if ($configuration->getInvalidField('value') != '') {
+            $value = $configuration->getInvalidField('value');
+        }
         echo $this->Form->control('Configurations.value', [
             'type' => 'select',
             'multiple' => true,
-            'data-val' => $configuration->value,
+            'data-val' => $value,
             'label' => $label,
             'options' => $this->Configuration->getConfigurationDropdownOptions($configuration->name),
             'escape' => false
