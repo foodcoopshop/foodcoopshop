@@ -25,26 +25,34 @@ use Cake\Http\Exception\ForbiddenException;
 class CartsController extends FrontendController
 {
 
+    /**
+     * allowing ajaxActions is ok as they are separately checked in ajaxIsAuthorized
+     */
     public function beforeFilter(EventInterface $event)
     {
-
         parent::beforeFilter($event);
-        if ($this->getRequest()->is('json')) {
-            try {
-                if (empty($this->AppAuth->user())) {
-                    throw new ForbiddenException(__('For_placing_an_order_<a href="{0}">you_need_to_sign_in_or_register</a>.', [
-                        Configure::read('app.slugHelper')->getLogin()
-                    ]));
-                }
-                if ($this->AppAuth->isManufacturer()) {
-                    throw new ForbiddenException(__('No_access_for_manufacturers.'));
-                }
-            } catch (Exception $e) {
-                return $this->sendAjaxError($e);
-            }
-        }
+        $this->AppAuth->allow([
+            'generateRightOfWithdrawalInformationPdf',
+            'ajaxAdd',
+            'ajaxRemove',
+            'ajaxDeleteInstantOrderCustomer',
+            'ajaxGetTimebasedCurrencyHoursDropdown',
+        ]);
+    }
 
-        $this->AppAuth->allow('generateRightOfWithdrawalInformationPdf');
+    /**
+     * ajax methods need to be checked separately due to individual error message handling
+     */
+    private function ajaxIsAuthorized()
+    {
+        if (empty($this->AppAuth->user())) {
+            throw new ForbiddenException(__('For_placing_an_order_<a href="{0}">you_need_to_sign_in_or_register</a>.', [
+                Configure::read('app.slugHelper')->getLogin()
+            ]));
+        }
+        if ($this->AppAuth->isManufacturer()) {
+            throw new ForbiddenException(__('No_access_for_manufacturers.'));
+        }
     }
 
     public function isAuthorized($user)
@@ -54,6 +62,12 @@ class CartsController extends FrontendController
 
     public function ajaxGetTimebasedCurrencyHoursDropdown($maxSeconds)
     {
+        try {
+            $this->ajaxIsAuthorized();
+        } catch(ForbiddenException $e) {
+            return $this->sendAjaxError($e);
+        }
+
         $this->RequestHandler->renderAs($this, 'json');
         $maxSeconds = (int) $maxSeconds;
         $options = Configure::read('app.timebasedCurrencyHelper')->getTimebasedCurrencyHoursDropdown($maxSeconds, Configure::read('appDb.FCS_TIMEBASED_CURRENCY_EXCHANGE_RATE'));
@@ -147,6 +161,12 @@ class CartsController extends FrontendController
 
     public function ajaxDeleteInstantOrderCustomer()
     {
+        try {
+            $this->ajaxIsAuthorized();
+        } catch(ForbiddenException $e) {
+            return $this->sendAjaxError($e);
+        }
+
         $this->RequestHandler->renderAs($this, 'json');
 
         // ajax calls do not call beforeRender
@@ -177,6 +197,12 @@ class CartsController extends FrontendController
 
     public function ajaxRemove()
     {
+        try {
+            $this->ajaxIsAuthorized();
+        } catch(ForbiddenException $e) {
+            return $this->sendAjaxError($e);
+        }
+
         $this->RequestHandler->renderAs($this, 'json');
 
         $initialProductId = $this->getRequest()->getData('productId');
@@ -301,6 +327,12 @@ class CartsController extends FrontendController
 
     public function ajaxAdd()
     {
+        try {
+            $this->ajaxIsAuthorized();
+        } catch(ForbiddenException $e) {
+            return $this->sendAjaxError($e);
+        }
+
         $this->RequestHandler->renderAs($this, 'json');
 
         $initialProductId = $this->getRequest()->getData('productId');
