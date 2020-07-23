@@ -73,7 +73,7 @@ class SyncsControllerTest extends AppCakeTestCase
 
         $this->assertFalse((boolean) $response->status);
         $this->assertRegExpWithUnquotedString($domain, $response->msg);
-        $this->assert200OkHeader();
+        $this->assertEquals(500, $this->httpClient->getStatusCode());
     }
 
     public function testSaveProductAssociationForProductThatIsNotOwnedByLoggedInManufacturer()
@@ -88,7 +88,7 @@ class SyncsControllerTest extends AppCakeTestCase
 
         $this->assertFalse((boolean) $response->status);
         $this->assertRegExpWithUnquotedString('product ' . $productId . ' is not associated with manufacturer ' . $manufacturerId, $response->msg);
-        $this->assert200OkHeader();
+        $this->assertEquals(500, $this->httpClient->getStatusCode());
     }
 
     public function testCorrectSaveProductAssociation()

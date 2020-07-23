@@ -64,15 +64,11 @@ class SyncsController extends AppController
 
         $localProductIds = $this->Product->getProductIdAndAttributeId($product['localProductId']);
 
-        try {
-            if (empty($syncDomain)) {
-                throw new InvalidParameterException('the domain ' . $product['domain'] . ' was not found.');
-            }
-            if (!$this->Product->isOwner($localProductIds['productId'], $this->AppAuth->getManufacturerId())) {
-                throw new InvalidParameterException('product ' . $localProductIds['productId'] . ' is not associated with manufacturer ' . $this->AppAuth->getManufacturerId());
-            }
-        } catch (InvalidParameterException $e) {
-            return $this->sendAjaxError($e);
+        if (empty($syncDomain)) {
+            throw new InvalidParameterException('the domain ' . $product['domain'] . ' was not found.');
+        }
+        if (!$this->Product->isOwner($localProductIds['productId'], $this->AppAuth->getManufacturerId())) {
+            throw new InvalidParameterException('product ' . $localProductIds['productId'] . ' is not associated with manufacturer ' . $this->AppAuth->getManufacturerId());
         }
 
         return $syncDomain;
@@ -85,7 +81,11 @@ class SyncsController extends AppController
 
         $product = $this->getRequest()->getData('product');
 
-        $syncDomain = $this->doModifyProductChecks($product);
+        try {
+            $syncDomain = $this->doModifyProductChecks($product);
+        } catch (InvalidParameterException $e) {
+            return $this->sendAjaxError($e);
+        }
 
         $localProductIds = $this->Product->getProductIdAndAttributeId($product['localProductId']);
         $remoteProductIds = $this->Product->getProductIdAndAttributeId($product['remoteProductId']);
@@ -161,7 +161,11 @@ class SyncsController extends AppController
 
         $product = $this->getRequest()->getData('product');
 
-        $syncDomain = $this->doModifyProductChecks($product);
+        try {
+            $syncDomain = $this->doModifyProductChecks($product);
+        } catch (InvalidParameterException $e) {
+            return $this->sendAjaxError($e);
+        }
 
         $localProductIds = $this->Product->getProductIdAndAttributeId($product['localProductId']);
         $remoteProductIds = $this->Product->getProductIdAndAttributeId($product['remoteProductId']);
