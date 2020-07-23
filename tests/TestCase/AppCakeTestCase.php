@@ -121,7 +121,18 @@ abstract class AppCakeTestCase extends TestCase
         $this->httpClient->loginPassword = Configure::read('test.loginPassword');
     }
 
+    protected function getJsonDecodedContent()
+    {
+        return json_decode($this->_getBodyAsString());
+    }
+
     protected function assertJsonError()
+    {
+        $response = $this->getJsonDecodedContent();
+        $this->assertEquals(0, $response->status);
+    }
+
+    protected function assertJsonErrorForHttpClient()
     {
         $response = $this->httpClient->getJsonDecodedContent();
         $this->assertEquals(0, $response->status, 'json status should be "0"');
@@ -161,10 +172,16 @@ abstract class AppCakeTestCase extends TestCase
         $this->assertRegExpWithUnquotedString($this->httpClient->baseUrl . $this->Slug->getLogin(), $this->httpClient->getUrl(), 'redirect to login page failed');
     }
 
-    protected function assertJsonOk()
+    protected function assertJsonOkForHttpClient()
     {
         $response = $this->httpClient->getJsonDecodedContent();
         $this->assertEquals(1, $response->status, 'json status should be "1", msg: ' . $response->msg);
+    }
+
+    protected function assertJsonOk()
+    {
+        $response = $this->getJsonDecodedContent();
+        $this->assertEquals(1, $response->status);
     }
 
     /**

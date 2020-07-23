@@ -14,10 +14,17 @@
  */
 
 use App\Test\TestCase\OrderDetailsControllerTestCase;
+use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\EmailTrait;
 
 class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCase
 {
+
+    use EmailTrait;
+    use LoginTrait;
+    use IntegrationTestTrait;
 
     public $orderDetailFeedback = 'Product tasted <i>great</i>! <b>Thank you</b>!<img src="/test.jpg"></img>';
     public $orderDetailId = 1;
@@ -25,8 +32,9 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
     public function testAddFeedbackWithWrongOrderDetailId()
     {
         $this->loginAsSuperadmin();
-        $response = $this->addFeedbackToOrderDetail(0, '');
-        $this->assertRegExpWithUnquotedString('orderDetail not found', $response->msg);
+        $this->addFeedbackToOrderDetail(0, '');
+        $this->assertResponseCode(500);
+        $this->assertResponseContains('orderDetail not found');
         $this->assertJsonError();
     }
 
@@ -42,28 +50,28 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
     {
         $this->loginAsSuperadmin();
         $this->addFeedbackToOrderDetail($this->orderDetailId, $this->orderDetailFeedback);
-
-        $expectedToEmails = [Configure::read('test.loginEmailVegetableManufacturer')];
-        $expectedCcEmails = [];
-
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs($emailLogs[0], 'Demo Superadmin hat ein Feedback zum Produkt "Artischocke : Stück" verfasst.', [$this->orderDetailFeedback], $expectedToEmails, $expectedCcEmails);
-
         $this->assertJsonOk();
+        $this->assertMailCount(1);
+        $mailIndex = 0;
+        $this->assertMailSentToAt($mailIndex, Configure::read('test.loginEmailVegetableManufacturer'));
+        $this->assertMailContainsHtmlAt($mailIndex, $this->orderDetailFeedback);
+        //TODO test subject with EmailTrait
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals($emailLogs[0]->subject, 'Demo Superadmin hat ein Feedback zum Produkt "Artischocke : Stück" verfasst.');
     }
 
     public function testAddFeedbackAsCustomerForbidden()
     {
-        $this->loginAsCustomerWithHttpClient();
+        $this->loginAsCustomer();
         $this->addFeedbackToOrderDetail($this->orderDetailId, $this->orderDetailFeedback);
-        $this->assertAccessDeniedMessage();
+        $this->assertAccessDeniedFlashMessage();
     }
 
     public function testAddFeedbackAsManufacturerForbidden()
     {
         $this->loginAsVegetableManufacturer();
         $this->addFeedbackToOrderDetail($this->orderDetailId, $this->orderDetailFeedback);
-        $this->assertAccessDeniedMessage();
+        $this->assertAccessDeniedFlashMessage();
     }
 
     public function testAddFeedbackAsCustomerOk()
@@ -78,25 +86,35 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
             )
         );
 
-        $this->loginAsCustomerWithHttpClient();
+        $this->loginAsCustomer();
         $this->addFeedbackToOrderDetail($this->orderDetailId, $this->orderDetailFeedback);
-        $expectedToEmails = [Configure::read('test.loginEmailVegetableManufacturer')];
-        $expectedCcEmails = [];
+        $this->assertJsonOk();
 
+        $this->assertMailCount(1);
+        $mailIndex = 0;
+        $this->assertMailSentToAt($mailIndex, Configure::read('test.loginEmailVegetableManufacturer'));
+        $this->assertMailContainsHtmlAt($mailIndex, $this->orderDetailFeedback);
+        //TODO test subject with EmailTrait
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs($emailLogs[0], 'Demo Mitglied hat ein Feedback zum Produkt "Artischocke : Stück" verfasst.', [$this->orderDetailFeedback], $expectedToEmails, $expectedCcEmails);
+        $this->assertEquals($emailLogs[0]->subject, 'Demo Mitglied hat ein Feedback zum Produkt "Artischocke : Stück" verfasst.');
     }
 
     private function addFeedbackToOrderDetail($orderDetailId, $orderDetailFeedback)
     {
-        $this->httpClient->ajaxPost(
+        $this->configRequest([
+            'headers' => [
+                'X_REQUESTED_WITH' => 'XMLHttpRequest',
+                'ACCEPT' => 'application/json',
+            ],
+        ]);
+        $this->post(
             '/admin/order-details/addFeedback/',
             [
                 'orderDetailId' => $orderDetailId,
                 'orderDetailFeedback' => $orderDetailFeedback,
             ]
         );
-        return $this->httpClient->getJsonDecodedContent();
+        return $this->getJsonDecodedContent();
     }
 
 

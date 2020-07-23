@@ -72,7 +72,7 @@ class SyncsController extends AppController
                 throw new InvalidParameterException('product ' . $localProductIds['productId'] . ' is not associated with manufacturer ' . $this->AppAuth->getManufacturerId());
             }
         } catch (InvalidParameterException $e) {
-            $this->sendAjaxError($e);
+            return $this->sendAjaxError($e);
         }
 
         return $syncDomain;

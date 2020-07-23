@@ -54,7 +54,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $response = $this->httpClient->getJsonDecodedContent();
         $expectedErrorMessage = 'Bitte trage das entnommene Gewicht ein.';
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
-        $this->assertJsonError();
+        $this->assertJsonErrorForHttpClient();
     }
 
     public function testSelfServiceAddAttributePricePerUnitWrong()
@@ -65,7 +65,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $response = $this->httpClient->getJsonDecodedContent();
         $expectedErrorMessage = 'Bitte trage das entnommene Gewicht ein.';
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
-        $this->assertJsonError();
+        $this->assertJsonErrorForHttpClient();
     }
 
     public function testSelfServiceOrderWithoutCheckboxes() {
@@ -83,7 +83,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->doBarCodeLogin();
         $this->addProductToSelfServiceCart(351, 1, '0,5');
         $this->removeProductFromSelfServiceCart(351);
-        $this->assertJsonOk();
+        $this->assertJsonOkForHttpClient();
         $this->CartProductUnit = $this->getTableLocator()->get('CartProductUnits');
         $cartProductUnits = $this->CartProductUnit->find('all')->toArray();
         $this->assertEmpty($cartProductUnits);

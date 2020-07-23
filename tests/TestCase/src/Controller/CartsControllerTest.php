@@ -49,7 +49,7 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->addProductToCart($this->productId1, 2);
         $this->assertRegExpWithUnquotedString('Zum Bestellen <a href="/anmelden">bitte zuerst anmelden oder neu registrieren</a>.', $this->httpClient->getJsonDecodedContent()->msg);
-        $this->assertJsonError();
+        $this->assertJsonErrorForHttpClient();
     }
 
     public function testAddAsManufacturer()
@@ -57,7 +57,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsVegetableManufacturer();
         $this->addProductToCart($this->productId1, 2);
         $this->assertRegExpWithUnquotedString('Herstellern steht diese Funktion leider nicht zur Verfügung.', $this->httpClient->getJsonDecodedContent()->msg);
-        $this->assertJsonError();
+        $this->assertJsonErrorForHttpClient();
     }
 
     public function testAddWrongProductId1()
@@ -65,7 +65,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsCustomerWithHttpClient();
         $response = $this->addProductToCart(8787, 2);
         $this->assertRegExpWithUnquotedString('Das Produkt mit der ID 8787 ist nicht vorhanden.', $response->msg);
-        $this->assertJsonError();
+        $this->assertJsonErrorForHttpClient();
     }
 
     public function testAddWrongProductId2()
@@ -73,7 +73,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsCustomerWithHttpClient();
         $response = $this->addProductToCart('test', 2);
         $this->assertRegExpWithUnquotedString('Das Produkt mit der ID test ist nicht vorhanden.', $response->msg);
-        $this->assertJsonError();
+        $this->assertJsonErrorForHttpClient();
     }
 
     public function testAddWrongAmount()
@@ -81,7 +81,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsCustomerWithHttpClient();
         $response = $this->addProductToCart($this->productId1, 251);
         $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>251</b> ist nicht gültig.', $response->msg);
-        $this->assertJsonError();
+        $this->assertJsonErrorForHttpClient();
     }
 
     public function testAddAmountNotAvailableAnyMore()
@@ -89,7 +89,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsCustomerWithHttpClient();
         $response = $this->addProductToCart($this->productId1, 98);
         $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>98</b> des Produktes <b>Artischocke</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 97', $response->msg);
-        $this->assertJsonError();
+        $this->assertJsonErrorForHttpClient();
     }
 
     public function testAddProductDeliveryRhythmIndividualOrderNotPossibleAnyMore()
@@ -98,7 +98,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeProductDeliveryRhythm($this->productId1, '0-individual', '2018-12-14', '2018-07-12');
         $response = $this->addProductToCart($this->productId1, 1);
         $this->assertRegExpWithUnquotedString('Das Produkt <b>Artischocke</b> kann nicht mehr bestellt werden.', $response->msg);
-        $this->assertJsonError();
+        $this->assertJsonErrorForHttpClient();
     }
 
     public function testAddProductDeliveryRhythmIndividualOrderPossible()
@@ -106,7 +106,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->changeProductDeliveryRhythm($this->productId1, '0-individual', '2035-12-14', '2035-07-12');
         $this->addProductToCart($this->productId1, 1);
-        $this->assertJsonOk();
+        $this->assertJsonOkForHttpClient();
     }
 
     public function testOrderAlwaysAvailableWithNotEnoughQuantityForProductAttribute()
@@ -211,7 +211,7 @@ class CartsControllerTest extends AppCakeTestCase
         ]]]);
         $this->loginAsCustomerWithHttpClient();
         $this->addProductToCart($productId, 50);
-        $this->assertJsonOk();
+        $this->assertJsonOkForHttpClient();
         $this->finishCart();
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
         $this->assertTrue(is_int($cartId), 'cart not finished correctly');
@@ -221,14 +221,14 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $this->loginAsCustomerWithHttpClient();
         $response = $this->addProductToCart($this->productId1, 2);
-        $this->assertJsonOk();
+        $this->assertJsonOkForHttpClient();
         $response = $this->removeProduct($this->productId1);
         $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId(), $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
         $this->assertEquals([], $cart['CartProducts'], 'cart must be empty');
-        $this->assertJsonOk();
+        $this->assertJsonOkForHttpClient();
         $response = $this->removeProduct($this->productId1);
         $this->assertRegExpWithUnquotedString('Produkt 346 war nicht in Warenkorb vorhanden.', $response->msg);
-        $this->assertJsonError();
+        $this->assertJsonErrorForHttpClient();
     }
 
     public function testRemoveProductIfProductAttributeWasDeletedAndOtherProductAttributesExistAfterAddingToCart()
@@ -242,7 +242,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->removeProduct($this->productId2);
         $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId(), $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
         $this->assertEquals([], $cart['CartProducts'], 'cart must be empty');
-        $this->assertJsonOk();
+        $this->assertJsonOkForHttpClient();
     }
 
     public function testProductPlacedInCart()
@@ -251,7 +251,7 @@ class CartsControllerTest extends AppCakeTestCase
 
         $amount1 = 2;
         $this->addProductToCart($this->productId1, $amount1);
-        $this->assertJsonOk();
+        $this->assertJsonOkForHttpClient();
 
         // check if product was placed in cart
         $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId(), $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
@@ -264,7 +264,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $amount2 = 3;
         $this->addProductToCart($this->productId2, $amount2);
-        $this->assertJsonOk();
+        $this->assertJsonOkForHttpClient();
         $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId(), $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
         $this->assertEquals($this->productId2, $cart['CartProducts'][0]['productId'], 'product id not found in cart');
         $this->assertEquals($amount2, $cart['CartProducts'][0]['amount'], 'amount not found in cart or amount wrong');
@@ -502,7 +502,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeManufacturer(5, 'stock_management_enabled', true);
         $this->loginAsCustomerWithHttpClient();
         $this->addProductToCart(349, 8);
-        $this->assertJsonOk();
+        $this->assertJsonOkForHttpClient();
     }
 
     public function testProductsWithAllowedNegativeStockButTooHighAmount() {
@@ -510,7 +510,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsCustomerWithHttpClient();
         $response = $this->addProductToCart(349, 11);
         $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>11</b> des Produktes <b>Lagerprodukt</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 10', $response->msg);
-        $this->assertJsonError();
+        $this->assertJsonErrorForHttpClient();
     }
 
     private function placeOrderWithStockProducts() {
@@ -926,7 +926,7 @@ class CartsControllerTest extends AppCakeTestCase
         $response = $this->httpClient->getJsonDecodedContent();
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
         $this->assertEquals($productId, $response->productId);
-        $this->assertJsonError();
+        $this->assertJsonErrorForHttpClient();
         $cart = $this->Cart->getCart($this->httpClient->getLoggedUserId(), $this->Cart::CART_TYPE_WEEKLY_RHYTHM);
         $this->assertEquals($expectedAmount, $cart['CartProducts'][$productIndex]['amount'], 'amount not found in cart or wrong');
     }

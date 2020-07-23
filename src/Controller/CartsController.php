@@ -40,7 +40,7 @@ class CartsController extends FrontendController
                     throw new ForbiddenException(__('No_access_for_manufacturers.'));
                 }
             } catch (Exception $e) {
-                $this->sendAjaxError($e);
+                return $this->sendAjaxError($e);
             }
         }
 
