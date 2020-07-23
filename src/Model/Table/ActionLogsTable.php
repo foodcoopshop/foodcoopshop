@@ -22,17 +22,17 @@ class ActionLogsTable extends AppTable
 {
     /*
      * Supported structure:
-     * {type_id} => array(
+     * {type_id} => [
      *     'name' => 'text to show in German language',
-     *     'access' => array(
+     *     'access' => [
      *         'manufacturer', // uncertain how that works
-     *     ),
-     *     'class' => array(  // classification of log entry
+     *     ],
+     *     'class' => [  // classification of log entry
      *         'info',  // for info only, default
      *         'warn',  // warning, something should be taken care of
      *         'fail',  // failure while doing something, must be taken care of
-     *     ),
-     * ),
+     *     ],
+     * ],
      */
     public $types;
 

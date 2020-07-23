@@ -206,7 +206,7 @@ class AppController extends Controller
     }
 
     /**
-     * needs to be implemented if $this->AppAuth->authorize = array('Controller') is used
+     * needs to be implemented if $this->AppAuth->authorize = ['Controller'] is used
      */
     public function isAuthorized($user)
     {

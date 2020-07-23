@@ -27,12 +27,12 @@ class SyncDomainsTable extends AppTable
     public function validationDefault(Validator $validator): Validator
     {
         $validator->add('domain', 'hostname', [
-            'rule' => array('custom', HOSTNAME_REGEX),
+            'rule' => ['custom', HOSTNAME_REGEX],
             'message' => __d('network', 'The_domain_may_only_consist_of_https://_and_the_hostname_(no_trailing_slash).')
         ]);
         $validator->notEmptyString('domain', 'Bitte gib eine Domain ein, sie muss mit https:// beginnen.');
         $validator->add('domain', 'https', [
-            'rule' => array('custom', HTTPS_REGEX),
+            'rule' => ['custom', HTTPS_REGEX],
             'message' => __d('network', 'The_domain_needs_to_start_with_https://.')
         ]);
         $validator->add('domain', 'unique', [

@@ -175,9 +175,9 @@ class PagesController extends FrontendController
 
         $userId = $user['id_customer'];
         $userEmail = $user['email'];
-        $extraParameters = array(
+        $extraParameters = [
             'name' => $user['name']
-        );
+        ];
 
         $nonce = $sso->getNonce($payload);
         $return_sso_url = $sso->getReturnSSOURL($payload);
