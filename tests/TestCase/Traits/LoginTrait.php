@@ -69,4 +69,12 @@ trait LoginTrait
     {
         $this->get($this->Slug->getLogout());
     }
+
+    protected function getLoggedUserId()
+    {
+        if (empty($this->_session)) {
+            return 0;
+        }
+        return $this->_session['Auth']['User']['id_customer'];
+    }
 }

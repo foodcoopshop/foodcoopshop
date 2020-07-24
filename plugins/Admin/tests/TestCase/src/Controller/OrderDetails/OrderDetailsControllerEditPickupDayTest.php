@@ -24,7 +24,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->loginAsSuperadmin();
         $response = $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-01-01', '');
         $this->assertRegExpWithUnquotedString('Bitte gib an, warum der Abholtag geändert wird.', $response->msg);
-        $this->assertJsonErrorForHttpClient();
+        $this->assertJsonError();
     }
 
     public function testEditPickupDayAsSuperadminNoOrderDetailIds()
@@ -32,7 +32,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->loginAsSuperadmin();
         $response = $this->editPickupDayOfOrderDetails([], '2018-01-01', 'asdf');
         $this->assertRegExpWithUnquotedString('error - no order detail id passed', $response->msg);
-        $this->assertJsonErrorForHttpClient();
+        $this->assertJsonError();
     }
 
     public function testEditPickupDayAsSuperadminWrongOrderDetailIds()
@@ -40,7 +40,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->loginAsSuperadmin();
         $response = $this->editPickupDayOfOrderDetails([200,40], '2018-01-01', 'asdf');
         $this->assertRegExpWithUnquotedString('error - order details wrong', $response->msg);
-        $this->assertJsonErrorForHttpClient();
+        $this->assertJsonError();
     }
 
     public function testEditPickupDayAsSuperadminOk()
@@ -48,7 +48,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->loginAsSuperadmin();
         $reason = 'this is the reason';
         $this->editPickupDayOfOrderDetails([$this->orderDetailIdA, $this->orderDetailIdB], '2018-09-07', $reason);
-        $this->assertJsonOkForHttpClient();
+        $this->assertJsonOk();
 
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEmailLogs(
@@ -65,7 +65,13 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
 
     private function editPickupDayOfOrderDetails($orderDetailIds, $pickupDay, $reason)
     {
-        $this->httpClient->ajaxPost(
+        $this->configRequest([
+            'headers' => [
+                'X_REQUESTED_WITH' => 'XMLHttpRequest',
+                'ACCEPT' => 'application/json',
+            ],
+        ]);
+        $this->post(
             '/admin/order-details/editPickupDay/',
             [
                 'orderDetailIds' => $orderDetailIds,
@@ -73,7 +79,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
                 'editPickupDayReason' => $reason
             ]
         );
-        return $this->httpClient->getJsonDecodedContent();
+        return $this->getJsonDecodedContent();
     }
 
 }

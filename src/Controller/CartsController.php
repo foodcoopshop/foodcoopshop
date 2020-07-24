@@ -81,7 +81,7 @@ class CartsController extends FrontendController
     {
         $this->set('title_for_layout', __('Your_cart'));
 
-        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+        if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'GET') {
 
             $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
             $cart = $this->AppAuth->getCart();
@@ -107,7 +107,7 @@ class CartsController extends FrontendController
     public function finish()
     {
 
-        if (!$_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (!$this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'POST') {
             $this->redirect('/');
             return;
         }

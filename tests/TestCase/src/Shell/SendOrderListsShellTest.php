@@ -51,7 +51,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
         $this->addProductToCart($productId, 1);
         $this->finishCart();
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeader('Location')[0]);
         $cart = $this->getCartById($cartId);
 
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
@@ -174,7 +174,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->addProductToCart(344, 1); //knoblauch
         $this->addProductToCart(163, 1); //mangold
         $this->finishCart();
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeader('Location')[0]);
         $cart = $this->getCartById($cartId);
 
         $orderDetailIdWeeklyA = $cart->cart_products[0]->order_detail->id_order_detail;

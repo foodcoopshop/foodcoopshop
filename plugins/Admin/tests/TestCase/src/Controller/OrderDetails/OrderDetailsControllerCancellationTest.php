@@ -14,17 +14,10 @@
  */
 
 use App\Test\TestCase\OrderDetailsControllerTestCase;
-use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
-use Cake\TestSuite\IntegrationTestTrait;
-use Cake\TestSuite\EmailTrait;
 
 class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestCase
 {
-
-    use EmailTrait;
-    use LoginTrait;
-    use IntegrationTestTrait;
 
     public $cancellationReason = 'Product was not fresh any more.';
 
@@ -119,7 +112,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     public function testCancellationWithTimebasedCurrency()
     {
-        $this->markTestSkipped('httpClient needs to be removed from addProductToCart()');
+        $this->markTestSkipped('not yet working');
         $cart = $this->prepareTimebasedCurrencyCart();
         $orderDetailId = $cart->cart_products[1]->order_detail->id_order_detail;
         $this->deleteAndAssertRemoveFromDatabase([$orderDetailId]);

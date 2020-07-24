@@ -189,7 +189,7 @@ abstract class AppCakeTestCase extends TestCase
      */
     protected function assertNotPerfectlyImplementedAccessRestricted()
     {
-        $this->assertEquals(Configure::read('app.cakeServerName') . '/', $this->httpClient->getUrl());
+        $this->assertEquals('http://localhost/', $this->_response->getHeader('Location')[0]);
     }
 
     /**
@@ -321,11 +321,17 @@ abstract class AppCakeTestCase extends TestCase
      */
     protected function addProductToCart($productId, $amount)
     {
-        $this->httpClient->ajaxPost('/warenkorb/ajaxAdd/', [
+        $this->configRequest([
+            'headers' => [
+                'X_REQUESTED_WITH' => 'XMLHttpRequest',
+                'ACCEPT' => 'application/json',
+            ],
+        ]);
+        $this->post('/warenkorb/ajaxAdd/', [
             'productId' => $productId,
             'amount' => $amount
         ]);
-        return $this->httpClient->getJsonDecodedContent();
+        return $this->getJsonDecodedContent();
     }
 
     protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '', $timebaseCurrencyTimeSum = null, $pickupDay = null)
@@ -339,7 +345,7 @@ abstract class AppCakeTestCase extends TestCase
 
         if ($comment != '') {
             $data['Carts']['pickup_day_entities'][0] = [
-                'customer_id' => $this->httpClient->getLoggedUserId(),
+                'customer_id' => $this->getLoggedUserId(),
                 'pickup_day' => !is_null($pickupDay) ? $pickupDay : Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb(),
                 'comment' => $comment,
             ];
@@ -353,8 +359,9 @@ abstract class AppCakeTestCase extends TestCase
             $data['Carts']['pickup_day'] = $pickupDay;
         }
 
-        $this->httpClient->post(
-            $this->Slug->getCartFinish(), $data
+        $this->post(
+            $this->Slug->getCartFinish(),
+            $data,
         );
     }
 
@@ -385,7 +392,13 @@ abstract class AppCakeTestCase extends TestCase
      */
     protected function changeProductPrice($productId, $price, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0)
     {
-        $this->httpClient->ajaxPost('/admin/products/editPrice', [
+        $this->configRequest([
+            'headers' => [
+                'X_REQUESTED_WITH' => 'XMLHttpRequest',
+                'ACCEPT' => 'application/json',
+            ],
+        ]);
+        $this->post('/admin/products/editPrice', [
             'productId' => $productId,
             'price' => $price,
             'pricePerUnitEnabled' => $pricePerUnitEnabled,
@@ -394,14 +407,19 @@ abstract class AppCakeTestCase extends TestCase
             'priceUnitAmount' => $priceUnitAmount,
             'priceQuantityInUnits' => $priceQuantityInUnits
         ]);
-        return $this->httpClient->getJsonDecodedContent();
+        return $this->getJsonDecodedContent();
     }
 
-    // TODO as soon as this method is refactured to not use httpClient any more (#404)
-    // remember that it's already available in ProductsFrontendController - avoid cuplicate code!
+    // remember that it's already available in ProductsFrontendControllerTest - avoid duplicate code!
     protected function changeProductDeliveryRhythm($productId, $deliveryRhythmType, $deliveryRhythmFirstDeliveryDay = '', $deliveryRhythmOrderPossibleUntil = '', $deliveryRhythmSendOrderListWeekday = '', $deliveryRhythmSendOrderListDay = '')
     {
-        $this->httpClient->ajaxPost('/admin/products/editDeliveryRhythm', [
+        $this->configRequest([
+            'headers' => [
+                'X_REQUESTED_WITH' => 'XMLHttpRequest',
+                'ACCEPT' => 'application/json',
+            ],
+        ]);
+        $this->post('/admin/products/editDeliveryRhythm', [
             'productIds' => [$productId],
             'deliveryRhythmType' => $deliveryRhythmType,
             'deliveryRhythmFirstDeliveryDay' => $deliveryRhythmFirstDeliveryDay,
@@ -409,7 +427,7 @@ abstract class AppCakeTestCase extends TestCase
             'deliveryRhythmSendOrderListWeekday' => $deliveryRhythmSendOrderListWeekday,
             'deliveryRhythmSendOrderListDay' => $deliveryRhythmSendOrderListDay,
         ]);
-        return $this->httpClient->getJsonDecodedContent();
+        return $this->getJsonDecodedContent();
     }
 
     protected function changeManufacturer($manufacturerId, $field, $value)

@@ -14,17 +14,10 @@
  */
 
 use App\Test\TestCase\OrderDetailsControllerTestCase;
-use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
-use Cake\TestSuite\IntegrationTestTrait;
-use Cake\TestSuite\EmailTrait;
 
 class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCase
 {
-
-    use EmailTrait;
-    use LoginTrait;
-    use IntegrationTestTrait;
 
     public $orderDetailFeedback = 'Product tasted <i>great</i>! <b>Thank you</b>!<img src="/test.jpg"></img>';
     public $orderDetailId = 1;
