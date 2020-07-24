@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Lib\PdfWriter\InformationAboutRightOfWithdrawalPdfWriter;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Core\Exception\Exception;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
 
