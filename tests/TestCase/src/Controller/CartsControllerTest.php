@@ -881,12 +881,11 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testFinishEmptyCart()
     {
-        $this->markTestSkipped('not yet working');
         $this->loginAsCustomer();
         $this->addProductToCart($this->productId1, 1);
         $this->removeProduct($this->productId1);
         $this->finishCart();
-        $this->assertResponseContains('Dein Warenkorb war leer');
+        $this->assertRedirectContains(Configure::read('app.slugHelper')->getCartDetail());
     }
 
     /**
