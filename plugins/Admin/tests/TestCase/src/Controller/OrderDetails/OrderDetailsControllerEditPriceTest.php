@@ -60,7 +60,6 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
 
     public function testEditOrderDetailPriceWithTimebasedCurrency()
     {
-        $this->markTestSkipped('not yet working');
         $cart = $this->prepareTimebasedCurrencyCart();
         $orderDetailId = $cart->cart_products[1]->order_detail->id_order_detail;
         $this->editOrderDetailPrice($orderDetailId, $this->newPrice, $this->editPriceReason);

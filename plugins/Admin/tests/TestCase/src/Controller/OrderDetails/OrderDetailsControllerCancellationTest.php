@@ -112,7 +112,6 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     public function testCancellationWithTimebasedCurrency()
     {
-        $this->markTestSkipped('not yet working');
         $cart = $this->prepareTimebasedCurrencyCart();
         $orderDetailId = $cart->cart_products[1]->order_detail->id_order_detail;
         $this->deleteAndAssertRemoveFromDatabase([$orderDetailId]);

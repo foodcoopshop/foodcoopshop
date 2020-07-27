@@ -20,7 +20,7 @@ use Cake\Core\Configure;
 trait LoginTrait
 {
 
-    protected function login($userId)
+    public function login($userId)
     {
 
         $customerTable = $this->getTableLocator()->get('Customers');
@@ -40,41 +40,50 @@ trait LoginTrait
         ]);
     }
 
-    protected function loginAsSuperadmin()
+    public function loginAsSuperadmin()
     {
         return $this->login(Configure::read('test.superadminId'));
     }
 
-    protected function loginAsAdmin()
+    public function loginAsAdmin()
     {
         return $this->login(Configure::read('test.adminId'));
     }
 
-    protected function loginAsCustomer()
+    public function loginAsCustomer()
     {
         return $this->login(Configure::read('test.customerId'));
     }
 
-    protected function loginAsMeatManufacturer()
+    public function loginAsMeatManufacturer()
     {
         return $this->login(Configure::read('test.meatManufacturerId'));
     }
 
-    protected function loginAsVegetableManufacturer()
+    public function loginAsVegetableManufacturer()
     {
         return $this->login(Configure::read('test.vegetableManufacturerId'));
     }
 
-    protected function logout()
+    public function logout()
     {
         $this->get($this->Slug->getLogout());
     }
 
-    protected function getLoggedUserId()
+    public function getUserId()
+    {
+        $loggedUser = $this->user();
+        if (empty($loggedUser)) {
+            return [];
+        }
+        return $loggedUser['id_customer'];
+    }
+
+    public function user()
     {
         if (empty($this->_session)) {
-            return 0;
+            return [];
         }
-        return $this->_session['Auth']['User']['id_customer'];
+        return $this->_session['Auth']['User'];
     }
 }
