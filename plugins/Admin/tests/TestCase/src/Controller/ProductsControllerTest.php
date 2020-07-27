@@ -13,10 +13,17 @@
  * @link          https://www.foodcoopshop.com
  */
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\EmailTrait;
 
 class ProductsControllerTest extends AppCakeTestCase
 {
+
+    use EmailTrait;
+    use LoginTrait;
+    use IntegrationTestTrait;
 
     public $Product;
 
@@ -239,40 +246,52 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $response = $this->changeProductDeliveryRhythm(346, '1-week', '', '', 15);
         $this->assertRegExpWithUnquotedString('Bitte gib eine Zahl zwischen 0 und 6 an.', $response->msg);
-        $this->assertJsonErrorForHttpClient();
+        $this->assertJsonError();
     }
 
-    public function testDeleteProduct()
+    public function testDeleteProductOk()
+    {
+        $this->loginAsSuperadmin();
+        $productId = 102;
+        $product = $this->deleteProduct($productId);
+        $this->assertJsonOk();
+        $this->assertEquals($product->active, APP_DEL);
+        $this->get($this->Slug->getProductDetail($productId, 'Demo Product'));
+        $this->assertResponseCode(404);
+    }
+
+    public function testDeleteProductWithOpenOrder()
     {
         $this->loginAsSuperadmin();
         $productId = 346;
-        $this->httpClient->post('/admin/products/delete', [
-            'productIds' => [$productId]
-        ]);
-        $this->assertJsonOkForHttpClient();
-        $product = $this->Product->find('all', [
-            'conditions' => [
-                'Products.id_product' => $productId
-            ]
-        ])->first();
-        $this->assertEquals($product->active, APP_DEL);
-        $this->httpClient->get($this->Slug->getProductDetail($productId, 'Demo Product'));
-        $this->assert404NotFoundHeader();
+        $product = $this->deleteProduct($productId);
+        $this->assertEquals($product->active, APP_ON);
     }
 
     public function testDeleteProductAccessLoggedOut()
     {
-        $this->httpClient->post('/admin/products/delete', [
-            'productIds' => [346]
-        ]);
-        $this->assertRedirectToLoginPage();
+        $this->deleteProduct(364);
+        $this->assertResponseCode(403);
     }
 
     public function testDeleteProductAccessLoggedInAsWrongManufacturer()
     {
         $productId = 346;
         $this->loginAsMeatManufacturer();
-        $this->httpClient->post('/admin/products/delete', [
+        $product = $this->deleteProduct($productId);
+        // active must not be changed!
+        $this->assertEquals($product->active, APP_ON);
+    }
+
+    private function deleteProduct($productId)
+    {
+        $this->configRequest([
+            'headers' => [
+                'X_REQUESTED_WITH' => 'XMLHttpRequest',
+                'ACCEPT' => 'application/json',
+            ],
+        ]);
+        $this->post('/admin/products/delete', [
             'productIds' => [$productId]
         ]);
         $product = $this->Product->find('all', [
@@ -280,8 +299,7 @@ class ProductsControllerTest extends AppCakeTestCase
                 'Products.id_product' => $productId
             ]
         ])->first();
-        // active must not be changed!
-        $this->assertEquals($product->active, APP_ON);
+        return $product;
     }
 
     /**
