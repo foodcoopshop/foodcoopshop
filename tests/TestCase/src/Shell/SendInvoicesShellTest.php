@@ -19,8 +19,17 @@ use Cake\Console\CommandRunner;
  * @link          https://www.foodcoopshop.com
  */
 
+use App\Test\TestCase\Traits\LoginTrait;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\EmailTrait;
+
 class SendInvoicesShellTest extends AppCakeTestCase
 {
+
+    use EmailTrait;
+    use LoginTrait;
+    use IntegrationTestTrait;
+
     public $EmailLog;
     public $Order;
     public $commandRunner;
@@ -36,16 +45,18 @@ class SendInvoicesShellTest extends AppCakeTestCase
 
     public function testContentOfInvoice()
     {
+        $this->markTestSkipped('output needs to be removed');
         $this->loginAsSuperadmin();
-        $this->httpClient->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
+        $this->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'invoice.html');
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertRegExpWithUnquotedString($expectedResult, $this->httpClient->getContent());
+        $this->assertResponseContains($expectedResult);
     }
 
     public function testSendInvoicesWithVariableMemberFee()
     {
 
+        $this->markTestSkipped('output needs to be removed');
         $this->prepareSendInvoices();
 
         $this->changeConfiguration('FCS_USE_VARIABLE_MEMBER_FEE', 1);
@@ -78,16 +89,15 @@ class SendInvoicesShellTest extends AppCakeTestCase
         );
 
         $this->loginAsSuperadmin(); //should still be logged in as superadmin but is not...
-        $this->httpClient->get($this->Slug->getActionLogsList() . '?dateFrom=11.03.2018&dateTo=11.03.2018');
-        $content = $this->httpClient->getContent();
-        $this->assertRegExpWithUnquotedString('4,09 €</b> (10%)', $content);
-        $this->assertRegExpWithUnquotedString('0,62 €</b>', $content);
-        $this->assertRegExpWithUnquotedString('11.03.2018 10:20:30', $content);
+        $this->get($this->Slug->getActionLogsList() . '?dateFrom=11.03.2018&dateTo=11.03.2018');
+        $this->assertResponseContains('4,09 €</b> (10%)');
+        $this->assertResponseContains('0,62 €</b>');
+        $this->assertResponseContains('11.03.2018 10:20:30');
 
-        $this->httpClient->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
+        $this->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'invoiceWithVariableMemberFee.html');
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertRegExpWithUnquotedString($expectedResult, $this->httpClient->getContent());
+        $this->assertResponseContains($expectedResult);
 
     }
 

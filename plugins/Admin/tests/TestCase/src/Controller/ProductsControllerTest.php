@@ -38,7 +38,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 60;
         $status = APP_OFF;
-        $this->httpClient->get('/admin/products/changeStatus/' . $productId . '/' . $status);
+        $this->get('/admin/products/changeStatus/' . $productId . '/' . $status);
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
@@ -52,9 +52,9 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $price = 'invalid-price';
         $this->changeProductPrice(346, $price);
-        $response = $this->httpClient->getJsonDecodedContent();
+        $response = $this->getJsonDecodedContent();
         $this->assertRegExpWithUnquotedString('input format not correct: ' . $price, $response->msg);
-        $this->assertJsonErrorForHttpClient();
+        $this->assertJsonError();
     }
 
     public function testEditPriceOfNonExistingProductAsSuperadmin()
@@ -62,8 +62,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 1000;
         $this->changeProductPrice($productId, '0,15');
-        // as long as isAuthorized does not return json on ajax requests...
-        $this->assertAccessDeniedMessage();
+        $this->assertAccessDeniedFlashMessage();
     }
 
     public function testEditPriceOfMeatManufactuerProductAsVegatableManufacturer()
@@ -71,8 +70,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsVegetableManufacturer();
         $productId = 102;
         $this->changeProductPrice($productId, '0,15');
-        // as long as isAuthorized does not return json on ajax requests...
-        $this->assertAccessDeniedMessage();
+        $this->assertAccessDeniedFlashMessage();
     }
 
     public function testEditPriceOfProductAsSuperadminToZero()
@@ -121,7 +119,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $response = $this->changeProductDeliveryRhythm(346, '3-week');
         $this->assertRegExpWithUnquotedString('Der Lieferrhythmus ist nicht gültig.', $response->msg);
-        $this->assertJsonErrorForHttpClient();
+        $this->assertJsonError();
     }
 
     public function testEditDeliveryRhythmInvalidDeliveryRhythmB()
@@ -129,7 +127,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $response = $this->changeProductDeliveryRhythm(346, '0-week', '31.08.2018');
         $this->assertRegExpWithUnquotedString('Der Lieferrhythmus ist nicht gültig.', $response->msg);
-        $this->assertJsonErrorForHttpClient();
+        $this->assertJsonError();
     }
 
     public function testEditDeliveryRhythmInvalidFirstDeliveryDay()
@@ -137,14 +135,14 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $response = $this->changeProductDeliveryRhythm(346, '1-week', '30.08.2018');
         $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein Freitag sein.', $response->msg);
-        $this->assertJsonErrorForHttpClient();
+        $this->assertJsonError();
     }
 
     public function testEditDeliveryRhythmOk1Week()
     {
         $this->loginAsSuperadmin();
         $this->changeProductDeliveryRhythm(346, '1-week');
-        $this->assertJsonOkForHttpClient();
+        $this->assertJsonOk();
     }
 
     public function testEditDeliveryRhythmInvalid2WeekWithoutDate()
@@ -153,14 +151,14 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $response = $this->changeProductDeliveryRhythm($productId, '2-week');
         $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein Freitag sein.', $response->msg);
-        $this->assertJsonErrorForHttpClient();
+        $this->assertJsonError();
     }
 
     public function testEditDeliveryRhythmOkFirstOfMonth()
     {
         $this->loginAsSuperadmin();
         $this->changeProductDeliveryRhythm(346, '1-month', '03.08.2018');
-        $this->assertJsonOkForHttpClient();
+        $this->assertJsonOk();
     }
 
     public function testEditDeliveryRhythmInvalidFirstOfMonth()
@@ -168,14 +166,14 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $response = $this->changeProductDeliveryRhythm(346, '1-month', '10.08.2018');
         $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein erster Freitag im Monat sein.', $response->msg);
-        $this->assertJsonErrorForHttpClient();
+        $this->assertJsonError();
     }
 
     public function testEditDeliveryRhythmOkLastOfMonth()
     {
         $this->loginAsSuperadmin();
         $this->changeProductDeliveryRhythm(346, '0-month', '31.08.2018');
-        $this->assertJsonOkForHttpClient();
+        $this->assertJsonOk();
     }
 
     public function testEditDeliveryRhythmInvalidLastOfMonth()
@@ -183,7 +181,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $response = $this->changeProductDeliveryRhythm(346, '0-month', '10.08.2018');
         $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein letzter Freitag im Monat sein.', $response->msg);
-        $this->assertJsonErrorForHttpClient();
+        $this->assertJsonError();
     }
 
     public function testEditDeliveryRhythmInvalidIndividualWithoutDeliveryDay()
@@ -191,7 +189,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $response = $this->changeProductDeliveryRhythm(346, '0-individual');
         $this->assertRegExpWithUnquotedString('Der erste Liefertag ist nicht gültig.', $response->msg);
-        $this->assertJsonErrorForHttpClient();
+        $this->assertJsonError();
     }
 
     public function testEditDeliveryRhythmInvalidIndividualWithEmptyOrderPossibleUntil()
@@ -199,7 +197,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $response = $this->changeProductDeliveryRhythm(346, '0-individual', '2018-08-31', '');
         $this->assertRegExpWithUnquotedString('Das Bestellbar-bis-Datum ist nicht gültig.', $response->msg);
-        $this->assertJsonErrorForHttpClient();
+        $this->assertJsonError();
     }
 
     public function testEditDeliveryRhythmInvalidIndividualWithWrongOrderPossibleUntil()
@@ -207,14 +205,14 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $response = $this->changeProductDeliveryRhythm(346, '0-individual', '2018-08-31', '2018-09-30');
         $this->assertRegExpWithUnquotedString('Das Bestellbar-bis-Datum muss kleiner als der Liefertag sein.', $response->msg);
-        $this->assertJsonErrorForHttpClient();
+        $this->assertJsonError();
     }
 
     public function testEditDeliveryRhythmOkIndividual()
     {
         $this->loginAsSuperadmin();
         $this->changeProductDeliveryRhythm(346, '0-individual', '2018-08-31', '2018-08-28');
-        $this->assertJsonOkForHttpClient();
+        $this->assertJsonOk();
     }
 
     public function testEditDeliveryRhythmIndividualInvalidSendOrderListDay()
@@ -222,7 +220,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $response = $this->changeProductDeliveryRhythm(346, '0-individual', '2018-08-31', '2018-08-28', 2, '2019-01-01');
         $this->assertRegExpWithUnquotedString('Das Datum für den Bestellisten-Versand muss zwischen Bestellbar-bis-Datum und dem Liefertag liegen.', $response->msg);
-        $this->assertJsonErrorForHttpClient();
+        $this->assertJsonError();
     }
 
     public function testEditDeliveryRhythmOkWithDatabaseAsserts()
@@ -230,7 +228,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $productId = 346;
         $this->loginAsSuperadmin();
         $this->changeProductDeliveryRhythm($productId, '1-month', '03.08.2018');
-        $this->assertJsonOkForHttpClient();
+        $this->assertJsonOk();
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
@@ -310,8 +308,8 @@ class ProductsControllerTest extends AppCakeTestCase
         $price = Configure::read('app.numberHelper')->parseFloatRespectingLocale($price);
         $expectedNetPrice = Configure::read('app.numberHelper')->parseFloatRespectingLocale($expectedNetPrice);
         $this->changeProductPrice($productId, $price, $pricePerUnitEnabled, $priceInclPerUnit, $priceUnitName, $priceUnitAmount, $priceQuantityInUnits);
-        $this->assertJsonOkForHttpClient();
+        $this->assertJsonOk();
         $netPrice = $this->Product->getNetPrice($productId, $price);
-        $this->assertEquals(floatval($expectedNetPrice), $netPrice, 'editing price failed');
+        $this->assertEquals(floatval($expectedNetPrice), $netPrice);
     }
 }
