@@ -138,6 +138,12 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
 
     private function editOrderDetailAmount($orderDetailId, $productAmount, $editAmountReason)
     {
+        $this->configRequest([
+            'headers' => [
+                'X_REQUESTED_WITH' => 'XMLHttpRequest',
+                'ACCEPT' => 'application/json',
+            ],
+        ]);
         $this->post(
             '/admin/order-details/editProductAmount/',
             [

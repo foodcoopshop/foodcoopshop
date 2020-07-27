@@ -118,6 +118,12 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
 
     private function editOrderDetailQuantity($orderDetailId, $productQuantity, $doNotChangePrice)
     {
+        $this->configRequest([
+            'headers' => [
+                'X_REQUESTED_WITH' => 'XMLHttpRequest',
+                'ACCEPT' => 'application/json',
+            ],
+        ]);
         $this->post(
             '/admin/order-details/editProductQuantity/',
             [
