@@ -119,7 +119,7 @@ class ConfigurationsControllerTest extends AppCakeTestCase
     {
         $this->logout();
         foreach ($this->getTestUrlsForShowProductForGuests() as $url) {
-            $this->httpClient->get($url);
+            $this->get($url);
             $this->assertRedirectToLoginPage();
         }
     }
