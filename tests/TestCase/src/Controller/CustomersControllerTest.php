@@ -127,7 +127,7 @@ class CustomersControllerTest extends AppCakeTestCase
         ])->first();
 
         $this->get($this->Slug->getActivateNewPassword('non-existing-code'));
-                $this->assertFlashMessage('Dein neues Passwort wurde bereits aktiviert oder der Aktivierungscode war nicht gültig.');
+        $this->assertFlashMessage('Dein neues Passwort wurde bereits aktiviert oder der Aktivierungscode war nicht gültig.');
 
         $this->get($this->Slug->getActivateNewPassword($customer->activate_new_password_code));
         $this->assertFlashMessage('Dein neues Passwort wurde erfolgreich aktiviert und du bist bereits eingeloggt.');
