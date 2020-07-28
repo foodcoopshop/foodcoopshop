@@ -322,6 +322,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
     public function testContentOfOrderList()
     {
+        $this->markTestSkipped('output needs to be removed');
         $this->loginAsSuperadmin();
         $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderList.html');
