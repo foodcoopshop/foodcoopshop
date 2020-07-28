@@ -14,6 +14,7 @@
  */
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\TestSuite\IntegrationTestTrait;
 
@@ -22,11 +23,13 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     use AssertPagesForErrorsTrait;
     use IntegrationTestTrait;
+    use LoginTrait;
 
     public function testBarCodeLoginAsSuperadminIfNotEnabled()
     {
+        $this->enableRetainFlashMessages();
         $this->doBarCodeLogin();
-        $this->assertRegExpWithUnquotedString(__('Signing_in_failed_account_inactive_or_password_wrong?'), $this->httpClient->getContent());
+        $this->assertFlashMessage(__('Signing_in_failed_account_inactive_or_password_wrong?'));
     }
 
     public function testPageSelfService()
@@ -43,47 +46,47 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->doBarCodeLogin();
-        $this->assertDoesNotMatchRegularExpressionWithUnquotedString(__('Signing_in_failed_account_inactive_or_password_wrong?'), $this->httpClient->getContent());
+        $this->assertEquals($_SESSION['Auth']['User']['id_customer'], Configure::read('test.superadminId'));
     }
 
     public function testSelfServiceAddProductPricePerUnitWrong()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-        $this->doBarCodeLogin();
+        $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(351, 1);
-        $response = $this->httpClient->getJsonDecodedContent();
+        $response = $this->getJsonDecodedContent();
         $expectedErrorMessage = 'Bitte trage das entnommene Gewicht ein.';
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
-        $this->assertJsonErrorForHttpClient();
+        $this->assertJsonError();
     }
 
     public function testSelfServiceAddAttributePricePerUnitWrong()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-        $this->doBarCodeLogin();
+        $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart('350-15', 1, 'bla bla');
-        $response = $this->httpClient->getJsonDecodedContent();
+        $response = $this->getJsonDecodedContent();
         $expectedErrorMessage = 'Bitte trage das entnommene Gewicht ein.';
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
-        $this->assertJsonErrorForHttpClient();
+        $this->assertJsonError();
     }
 
     public function testSelfServiceOrderWithoutCheckboxes() {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-        $this->doBarCodeLogin();
+        $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(349, 1);
         $this->finishSelfServiceCart(0, 0);
-        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die AGB.', $this->httpClient->getContent());
-        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.', $this->httpClient->getContent());
+        $this->assertResponseContains('Bitte akzeptiere die AGB.');
+        $this->assertResponseContains('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
     }
 
     public function testSelfServiceRemoveProductWithPricePerUnit()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-        $this->doBarCodeLogin();
+        $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(351, 1, '0,5');
         $this->removeProductFromSelfServiceCart(351);
-        $this->assertJsonOkForHttpClient();
+        $this->assertJsonOk();
         $this->CartProductUnit = $this->getTableLocator()->get('CartProductUnits');
         $cartProductUnits = $this->CartProductUnit->find('all')->toArray();
         $this->assertEmpty($cartProductUnits);
@@ -92,7 +95,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSelfServiceOrderWithoutPricePerUnit()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-        $this->doBarCodeLogin();
+        $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(346, 1, 0);
         $this->finishSelfServiceCart(1, 1);
 
@@ -131,7 +134,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     public function testSelfServiceOrderWithPricePerUnit()
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
-        $this->doBarCodeLogin();
+        $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart('350-15', 1, '1,5');
         $this->addProductToSelfServiceCart(351, 1, '0,5');
         $this->finishSelfServiceCart(1, 1);
@@ -175,7 +178,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     {
         $this->changeConfiguration('FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED', 1);
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb());
-        $this->doBarCodeLogin();
+        $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart('350-15', 1, '1,5');
         $this->finishSelfServiceCart(1, 1);
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
@@ -185,39 +188,39 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
     private function addProductToSelfServiceCart($productId, $amount, $orderedQuantityInUnits = -1)
     {
-        $this->httpClient->ajaxPost(
+        $this->getSelfServicePostOptions();
+        $this->post(
             '/warenkorb/ajaxAdd/',
             [
                 'productId' => $productId,
                 'amount' => $amount,
                 'orderedQuantityInUnits' => $orderedQuantityInUnits
             ],
-            $this->getSelfServicePostOptions()
         );
-        return $this->httpClient->getJsonDecodedContent();
+        return $this->getJsonDecodedContent();
     }
 
     private function removeProductFromSelfServiceCart($productId)
     {
-        $this->httpClient->ajaxPost(
+        $this->getSelfServicePostOptions();
+        $this->post(
             '/warenkorb/ajaxRemove/',
             [
                 'productId' => $productId
             ],
-            $this->getSelfServicePostOptions()
-            );
-        return $this->httpClient->getJsonDecodedContent();
+        );
+        return $this->getJsonDecodedContent();
     }
 
     private function getSelfServicePostOptions()
     {
-        return [
+        $this->configRequest([
             'headers' => [
-                'X-Requested-With' => 'XMLHttpRequest',
-                'REFERER' => Configure::read('app.cakeServerName') . '/' . __('route_self_service')
+                'X_REQUESTED_WITH' => 'XMLHttpRequest',
+                'ACCEPT' => 'application/json',
+                'REFERER' => Configure::read('app.cakeServerName') . '/' . __('route_self_service'),
             ],
-            'type' => 'json'
-        ];
+        ]);
     }
 
     private function finishSelfServiceCart($general_terms_and_conditions_accepted, $cancellation_terms_accepted)
@@ -228,22 +231,20 @@ class SelfServiceControllerTest extends AppCakeTestCase
                 'cancellation_terms_accepted' => $cancellation_terms_accepted
             ],
         ];
-        $this->httpClient->post(
+        $this->configRequest([
+            'headers' => [
+                'REFERER' => Configure::read('app.cakeServerName') . '/' . __('route_self_service'),
+            ],
+        ]);
+        $this->post(
             $this->Slug->getSelfService(),
             $data,
-            [
-                'headers' => [
-                    'REFERER' => Configure::read('app.cakeServerName') . '/' . __('route_self_service')
-                ]
-            ]
         );
     }
 
     private function doBarCodeLogin()
     {
-        $this->httpClient->loginEmail = Configure::read('test.loginEmailSuperadmin');
-        $this->httpClient->followOneRedirectForNextRequest();
-        $this->httpClient->post($this->Slug->getLogin(), [
+        $this->post($this->Slug->getLogin(), [
             'barCode' => Configure::read('test.superadminBarCode')
         ]);
     }
