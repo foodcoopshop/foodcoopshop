@@ -26,8 +26,6 @@ class ConfigurationsControllerTest extends AppCakeTestCase
 
     /**
      * needs to login as superadmin and logs user out automatically
-     * eventually create a new httpClient instance for this method
-     *
      * @param string $configKey
      * @param string $newValue
      */
