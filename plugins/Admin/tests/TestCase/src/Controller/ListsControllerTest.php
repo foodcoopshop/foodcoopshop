@@ -49,7 +49,6 @@ class ListsControllerTest extends AppCakeTestCase
         $folder = new Folder(Configure::read('app.folder_order_lists').DS.'2018'.DS.'02');
         $objects = $folder->read();
         $orderListDownloadUrl = '/admin/lists/getOrderList?file=2018/02/'.$objects[1][0];
-        pr($orderListDownloadUrl);
 
         // check list page as manufacturer
         $this->loginAsMeatManufacturer();
