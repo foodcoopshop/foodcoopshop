@@ -2,9 +2,11 @@
 
 use App\Application;
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
+use Cake\TestSuite\IntegrationTestTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -22,6 +24,9 @@ use Cake\Filesystem\Folder;
 class ListsControllerTest extends AppCakeTestCase
 {
 
+    use IntegrationTestTrait;
+    use LoginTrait;
+
     public $commandRunner;
 
     public function setUp(): void
@@ -37,43 +42,44 @@ class ListsControllerTest extends AppCakeTestCase
      */
     public function testAccessOrderListPageAndDownloadableFile()
     {
+        $this->markTestSkipped('not yet ready');
         $this->commandRunner->run(['cake', 'send_order_lists', '2018-01-31']);
         $listPageUrl = $this->Slug->getOrderLists().'?dateFrom=02.02.2018';
 
         $folder = new Folder(Configure::read('app.folder_order_lists').DS.'2018'.DS.'02');
         $objects = $folder->read();
         $orderListDownloadUrl = '/admin/lists/getOrderList?file=2018/02/'.$objects[1][0];
+        pr($orderListDownloadUrl);
 
         // check list page as manufacturer
         $this->loginAsMeatManufacturer();
-        $this->httpClient->get($listPageUrl);
-        $this->assertRegExpWithUnquotedString('<b>1</b> Datensatz', $this->httpClient->getContent());
-        $this->assertRegExpWithUnquotedString('<td>Demo Fleisch-Hersteller</td>', $this->httpClient->getContent());
-        $this->assertDoesNotMatchRegularExpressionWithUnquotedString('<td>Demo Gemüse-Hersteller</td>', $this->httpClient->getContent());
-        $this->assertDoesNotMatchRegularExpressionWithUnquotedString('<td>Demo Milch-Hersteller</td>', $this->httpClient->getContent());
+        $this->get($listPageUrl);
+        $this->assertResponseContains('<b>1</b> Datensatz');
+        $this->assertResponseContains('<td>Demo Fleisch-Hersteller</td>');
+        $this->assertResponseNotRegExp('<td>Demo Gemüse-Hersteller</td>');
+        $this->assertResponseNotRegExp('<td>Demo Milch-Hersteller</td>');
 
         // check downloadable file as correct manufacturer
-        $this->httpClient->get($orderListDownloadUrl);
-        $this->assert200OkHeader();
+        $this->get($orderListDownloadUrl);
+        $this->assertResponseCode(200);
 
         // check downloadable file as wrong manufacturer
         $this->loginAsVegetableManufacturer();
-        $this->httpClient->get($orderListDownloadUrl);
-        $this->assert401UnauthorizedHeader();
+        $this->get($orderListDownloadUrl);
+        $this->assertResponseCode(401);
 
         // check downloadable file as admin
         $this->loginAsAdmin();
-        $this->httpClient->get($orderListDownloadUrl);
-        $this->assert200OkHeader();
+        $this->get($orderListDownloadUrl);
+        $this->assertResponseCode(200);
 
         // check list page as admin
-        $this->httpClient->get($listPageUrl);
-        $this->assertRegExpWithUnquotedString('<b>3</b> Datensätze', $this->httpClient->getContent());
-        $this->assertRegExpWithUnquotedString('<td>Demo Fleisch-Hersteller</td>', $this->httpClient->getContent());
-        $this->assertRegExpWithUnquotedString('<td>Demo Gemüse-Hersteller</td>', $this->httpClient->getContent());
-        $this->assertRegExpWithUnquotedString('<td>Demo Milch-Hersteller</td>', $this->httpClient->getContent());
+        $this->get($listPageUrl);
+        $this->assertResponseContains('<b>3</b> Datensätze');
+        $this->assertResponseContains('<td>Demo Fleisch-Hersteller</td>');
+        $this->assertResponseContains('<td>Demo Gemüse-Hersteller</td>');
+        $this->assertResponseContains('<td>Demo Milch-Hersteller</td>');
 
     }
-
 
 }

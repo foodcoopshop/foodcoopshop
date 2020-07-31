@@ -139,13 +139,13 @@ class ListsController extends AdminAppController
             }
         }
 
-        $this->getFile($filenameWithPath);
+        return $this->getFile($filenameWithPath);
     }
 
     public function getInvoice()
     {
         $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder_invoices')) . DS . h($this->getRequest()->getQuery('file'));
-        $this->getFile($filenameWithPath);
+        return $this->getFile($filenameWithPath);
     }
 
     /**
@@ -153,10 +153,22 @@ class ListsController extends AdminAppController
      */
     private function getFile($filenameWithPath)
     {
+
+        $this->disableAutoRender();
+
         $explodedString = explode('\\', $filenameWithPath);
-        header('Content-Type: application/pdf');
-        header('Content-Disposition: inline; filename="' . $explodedString[count($explodedString) - 1] . '"');
-        readfile(ROOT . $filenameWithPath);
-        exit; // $this->autoRender = false; is not enough!
+        $filenameWithoutPath = explode('/', $explodedString[3]);
+        $filenameWithoutPath = $filenameWithoutPath[count($filenameWithoutPath) - 1];
+
+        $this->response = $this->response->withType('pdf');
+        $this->response = $this->response->withFile(
+            $explodedString[count($explodedString) - 1],
+            [
+                'download' => true,
+                'name' => $filenameWithoutPath,
+            ]
+        );
+
+        return;
     }
 }
