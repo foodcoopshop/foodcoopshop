@@ -56,7 +56,7 @@ use Cake\Core\Configure;
     }
     echo '</p>';
 
-        echo '<div class="product-list local" data-sync-domain="'.'http' . (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 's' : ''). '://'.$_SERVER['SERVER_NAME'].'"></div>';
+    echo '<div class="product-list local" data-sync-domain="' . 'http' . (!empty($this->getRequest()->getEnv('HTTPS')) && $this->getRequest()->getEnv('HTTPS') === 'on' ? 's' : ''). '://'.$this->getRequest()->getEnv('SERVER_NAME').'"></div>';
     foreach ($syncDomains as $syncDomain) {
         echo '<div class="product-list remote" data-sync-domain="'.$syncDomain->domain.'"></div>';
     }
