@@ -283,13 +283,7 @@ class ProductsControllerTest extends AppCakeTestCase
 
     private function deleteProduct($productId)
     {
-        $this->configRequest([
-            'headers' => [
-                'X_REQUESTED_WITH' => 'XMLHttpRequest',
-                'ACCEPT' => 'application/json',
-            ],
-        ]);
-        $this->post('/admin/products/delete', [
+        $this->ajaxPost('/admin/products/delete', [
             'productIds' => [$productId]
         ]);
         $product = $this->Product->find('all', [

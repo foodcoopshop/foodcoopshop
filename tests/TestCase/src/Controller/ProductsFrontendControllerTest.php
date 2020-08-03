@@ -128,13 +128,7 @@ class ProductsFrontendControllerTest extends AppCakeTestCase
 
     protected function changeProductDeliveryRhythm($productId, $deliveryRhythmType, $deliveryRhythmFirstDeliveryDay = '', $deliveryRhythmOrderPossibleUntil = '', $deliveryRhythmSendOrderListWeekday = '', $deliveryRhythmSendOrderListDay = '')
     {
-        $this->configRequest([
-            'headers' => [
-                'Accept' => 'application/json',
-            ]
-        ]);
-
-        $this->post('/admin/products/editDeliveryRhythm', [
+        $this->ajaxPost('/admin/products/editDeliveryRhythm', [
             'productIds' => [$productId],
             'deliveryRhythmType' => $deliveryRhythmType,
             'deliveryRhythmFirstDeliveryDay' => $deliveryRhythmFirstDeliveryDay,

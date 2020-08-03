@@ -91,13 +91,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $imageSrc = '/photos/profile-images/customers/' . $profileImageTargetFilename;
 
         $this->loginAsSuperadmin();
-        $this->configRequest([
-            'headers' => [
-                'X_REQUESTED_WITH' => 'XMLHttpRequest',
-                'ACCEPT' => 'application/json',
-            ],
-        ]);
-        $this->post('/admin/customers/delete/' . Configure::read('test.customerId'), [
+        $this->ajaxPost('/admin/customers/delete/' . Configure::read('test.customerId'), [
             'referer' => '/'
         ]);
 
@@ -285,13 +279,7 @@ class CustomersControllerTest extends AppCakeTestCase
     {
 
         $this->loginAsSuperadmin();
-        $this->configRequest([
-            'headers' => [
-                'X_REQUESTED_WITH' => 'XMLHttpRequest',
-                'ACCEPT' => 'application/json',
-            ],
-        ]);
-        $this->post('/admin/customers/delete/' . Configure::read('test.superadminId'), [
+        $this->ajaxPost('/admin/customers/delete/' . Configure::read('test.superadminId'), [
             'referer' => '/'
         ]);
         $response = $this->getJsonDecodedContent();
@@ -320,13 +308,7 @@ class CustomersControllerTest extends AppCakeTestCase
         );
 
         $this->loginAsSuperadmin();
-        $this->configRequest([
-            'headers' => [
-                'X_REQUESTED_WITH' => 'XMLHttpRequest',
-                'ACCEPT' => 'application/json',
-            ],
-        ]);
-        $this->post('/admin/customers/delete/' . Configure::read('test.superadminId'), [
+        $this->ajaxPost('/admin/customers/delete/' . Configure::read('test.superadminId'), [
             'referer' => '/'
         ]);
         $response = $this->getJsonDecodedContent();
@@ -342,13 +324,7 @@ class CustomersControllerTest extends AppCakeTestCase
     public function testDeleteOk()
     {
         $this->loginAsSuperadmin();
-        $this->configRequest([
-            'headers' => [
-                'X_REQUESTED_WITH' => 'XMLHttpRequest',
-                'ACCEPT' => 'application/json',
-            ],
-        ]);
-        $this->post('/admin/customers/delete/' . Configure::read('test.customerId'), [
+        $this->ajaxPost('/admin/customers/delete/' . Configure::read('test.customerId'), [
             'referer' => '/'
         ]);
         $customer = $this->Customer->find('all', [

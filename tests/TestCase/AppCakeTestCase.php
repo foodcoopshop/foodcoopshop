@@ -267,13 +267,7 @@ abstract class AppCakeTestCase extends TestCase
      */
     protected function addProductToCart($productId, $amount)
     {
-        $this->configRequest([
-            'headers' => [
-                'X_REQUESTED_WITH' => 'XMLHttpRequest',
-                'ACCEPT' => 'application/json',
-            ],
-        ]);
-        $this->post('/warenkorb/ajaxAdd/', [
+        $this->ajaxPost('/warenkorb/ajaxAdd/', [
             'productId' => $productId,
             'amount' => $amount
         ]);
@@ -338,13 +332,7 @@ abstract class AppCakeTestCase extends TestCase
      */
     protected function changeProductPrice($productId, $price, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0)
     {
-        $this->configRequest([
-            'headers' => [
-                'X_REQUESTED_WITH' => 'XMLHttpRequest',
-                'ACCEPT' => 'application/json',
-            ],
-        ]);
-        $this->post('/admin/products/editPrice', [
+        $this->ajaxPost('/admin/products/editPrice', [
             'productId' => $productId,
             'price' => $price,
             'pricePerUnitEnabled' => $pricePerUnitEnabled,

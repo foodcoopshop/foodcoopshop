@@ -134,13 +134,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
      */
     private function addPayment($customerId, $seconds, $manufacturerId, $text = '')
     {
-        $this->configRequest([
-            'headers' => [
-                'X_REQUESTED_WITH' => 'XMLHttpRequest',
-                'ACCEPT' => 'application/json',
-            ],
-        ]);
-        $this->post($this->Slug->getTimebasedCurrencyPaymentAdd($customerId), [
+        $this->ajaxPost($this->Slug->getTimebasedCurrencyPaymentAdd($customerId), [
             'seconds' => $seconds,
             'id_manufacturer' => $manufacturerId,
             'text' => $text

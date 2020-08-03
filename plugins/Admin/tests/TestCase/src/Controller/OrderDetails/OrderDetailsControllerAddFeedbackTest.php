@@ -94,13 +94,7 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
 
     private function addFeedbackToOrderDetail($orderDetailId, $orderDetailFeedback)
     {
-        $this->configRequest([
-            'headers' => [
-                'X_REQUESTED_WITH' => 'XMLHttpRequest',
-                'ACCEPT' => 'application/json',
-            ],
-        ]);
-        $this->post(
+        $this->ajaxPost(
             '/admin/order-details/addFeedback/',
             [
                 'orderDetailId' => $orderDetailId,

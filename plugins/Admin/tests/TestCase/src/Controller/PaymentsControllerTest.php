@@ -321,13 +321,7 @@ class PaymentsControllerTest extends AppCakeTestCase
      */
     private function deletePayment($paymentId)
     {
-        $this->configRequest([
-            'headers' => [
-                'X_REQUESTED_WITH' => 'XMLHttpRequest',
-                'ACCEPT' => 'application/json',
-            ],
-        ]);
-        $this->post('/admin/payments/changeState', [
+        $this->ajaxPost('/admin/payments/changeState', [
             'paymentId' => $paymentId
         ]);
         return $this->getJsonDecodedContent();
@@ -343,13 +337,7 @@ class PaymentsControllerTest extends AppCakeTestCase
      */
     private function addPayment($customerId, $amount, $type, $manufacturerId = 0, $text = '')
     {
-        $this->configRequest([
-            'headers' => [
-                'X_REQUESTED_WITH' => 'XMLHttpRequest',
-                'ACCEPT' => 'application/json',
-            ],
-        ]);
-        $this->post('/admin/payments/add', [
+        $this->ajaxPost('/admin/payments/add', [
             'customerId' => $customerId,
             'amount' => $amount,
             'type' => $type,

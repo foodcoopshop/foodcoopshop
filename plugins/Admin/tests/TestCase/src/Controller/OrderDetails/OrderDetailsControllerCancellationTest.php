@@ -154,13 +154,7 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     private function deleteOrderDetail($orderDetailIds, $cancellationReason)
     {
-        $this->configRequest([
-            'headers' => [
-                'X_REQUESTED_WITH' => 'XMLHttpRequest',
-                'ACCEPT' => 'application/json',
-            ],
-        ]);
-        $this->post(
+        $this->ajaxPost(
             '/admin/order-details/delete/',
             [
                 'orderDetailIds' => $orderDetailIds,

@@ -134,13 +134,7 @@ class SyncsControllerTest extends AppCakeTestCase
      */
     private function deleteProductRelation($localProductId, $remoteProductId, $productName)
     {
-        $this->configRequest([
-            'headers' => [
-                'X_REQUESTED_WITH' => 'XMLHttpRequest',
-                'ACCEPT' => 'application/json',
-            ],
-        ]);
-        $this->post($this->Network->getDeleteProductRelation(), [
+        $this->ajaxPost($this->Network->getDeleteProductRelation(), [
             'product' =>
                 [
                     'localProductId' => $localProductId,
@@ -158,13 +152,7 @@ class SyncsControllerTest extends AppCakeTestCase
      */
     private function saveProductRelation($localProductId, $remoteProductId, $productName, $domain)
     {
-        $this->configRequest([
-            'headers' => [
-                'X_REQUESTED_WITH' => 'XMLHttpRequest',
-                'ACCEPT' => 'application/json',
-            ],
-        ]);
-        $this->post($this->Network->getSaveProductRelation(), [
+        $this->ajaxPost($this->Network->getSaveProductRelation(), [
             'product' =>
                 [
                     'localProductId' => $localProductId,
