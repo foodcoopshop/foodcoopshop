@@ -70,6 +70,28 @@ trait LoginTrait
         $this->get($this->Slug->getLogout());
     }
 
+    public function loginAsSuperadminAddInstantOrderCustomerToSession($session)
+    {
+
+        $customerTable = $this->getTableLocator()->get('Customers');
+        $loggedUser = $customerTable->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => Configure::read('test.superadminId')
+            ],
+            'contain' => [
+                'AddressCustomers',
+            ]
+        ])->first()->toArray();
+
+        $this->session([
+            'Auth' => [
+                'User' => $loggedUser,
+                'instantOrderCustomer' => $session['Auth']['instantOrderCustomer'],
+            ]
+        ]);
+
+    }
+
     public function getUserId()
     {
         $loggedUser = $this->user();
