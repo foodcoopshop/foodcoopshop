@@ -33,36 +33,41 @@ trait LoginTrait
             ]
         ])->first()->toArray();
 
-        $this->session([
+        return [
             'Auth' => [
                 'User' => $loggedUser
             ]
-        ]);
+        ];
     }
 
     public function loginAsSuperadmin()
     {
-        return $this->login(Configure::read('test.superadminId'));
+        $sessionData =  $this->login(Configure::read('test.superadminId'));
+        $this->session($sessionData);
     }
 
     public function loginAsAdmin()
     {
-        return $this->login(Configure::read('test.adminId'));
+        $sessionData = $this->login(Configure::read('test.adminId'));
+        $this->session($sessionData);
     }
 
     public function loginAsCustomer()
     {
-        return $this->login(Configure::read('test.customerId'));
+        $sessionData = $this->login(Configure::read('test.customerId'));
+        $this->session($sessionData);
     }
 
     public function loginAsMeatManufacturer()
     {
-        return $this->login(Configure::read('test.meatManufacturerId'));
+        $sessionData = $this->login(Configure::read('test.meatManufacturerId'));
+        $this->session($sessionData);
     }
 
     public function loginAsVegetableManufacturer()
     {
-        return $this->login(Configure::read('test.vegetableManufacturerId'));
+        $sessionData = $this->login(Configure::read('test.vegetableManufacturerId'));
+        $this->session($sessionData);
     }
 
     public function logout()
@@ -72,24 +77,9 @@ trait LoginTrait
 
     public function loginAsSuperadminAddInstantOrderCustomerToSession($session)
     {
-
-        $customerTable = $this->getTableLocator()->get('Customers');
-        $loggedUser = $customerTable->find('all', [
-            'conditions' => [
-                'Customers.id_customer' => Configure::read('test.superadminId')
-            ],
-            'contain' => [
-                'AddressCustomers',
-            ]
-        ])->first()->toArray();
-
-        $this->session([
-            'Auth' => [
-                'User' => $loggedUser,
-                'instantOrderCustomer' => $session['Auth']['instantOrderCustomer'],
-            ]
-        ]);
-
+        $sessionData =  $this->login(Configure::read('test.superadminId'));
+        $sessionData['Auth']['instantOrderCustomer'] = $session['Auth']['instantOrderCustomer'];
+        $this->session($sessionData);
     }
 
     public function getUserId()
