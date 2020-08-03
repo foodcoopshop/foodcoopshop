@@ -335,7 +335,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertEmpty($customer);
     }
 
-    public function testAutoLogin()
+    public function testLoginAndAutoLogin()
     {
         // 1) login
         $userEmail = Configure::read('test.loginEmailSuperadmin');
@@ -344,6 +344,12 @@ class CustomersControllerTest extends AppCakeTestCase
             'passwd' => Configure::read('test.loginPassword'),
             'remember_me' => true
         ]);
+
+        $this->assertSession(Configure::read('test.superadminId'), 'Auth.User.id_customer');
+        $this->assertSession(Configure::read('test.loginEmailSuperadmin'), 'Auth.User.email');
+        $this->assertSession(true, 'Auth.User.active');
+        $this->assertSession(null, 'Auth.User.auto_login_hash');
+        $this->assertSession(Configure::read('test.loginEmailSuperadmin'), 'Auth.User.address_customer.email');
 
         // 2) cookie must exist
         $cookie = $this->_response->getCookie('remember_me');
@@ -370,6 +376,7 @@ class CustomersControllerTest extends AppCakeTestCase
 
         // 4) hash needs to be the same as after first login
         $this->assertEquals($autoLoginHash, $customer->auto_login_hash);
+        $this->assertSession($autoLoginHash, 'Auth.User.auto_login_hash');
 
         $cookieValue = json_decode($cookie['value']);
         $this->assertEquals($customer->auto_login_hash, $cookieValue->auto_login_hash);
