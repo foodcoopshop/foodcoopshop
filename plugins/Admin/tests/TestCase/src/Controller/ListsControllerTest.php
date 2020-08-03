@@ -42,13 +42,13 @@ class ListsControllerTest extends AppCakeTestCase
      */
     public function testAccessOrderListPageAndDownloadableFile()
     {
-        $this->markTestSkipped('not yet ready');
         $this->commandRunner->run(['cake', 'send_order_lists', '2018-01-31']);
         $listPageUrl = $this->Slug->getOrderLists().'?dateFrom=02.02.2018';
 
         $folder = new Folder(Configure::read('app.folder_order_lists').DS.'2018'.DS.'02');
         $objects = $folder->read();
-        $orderListDownloadUrl = '/admin/lists/getOrderList?file=2018/02/'.$objects[1][0];
+        $downloadFileName = $objects[1][0];
+        $orderListDownloadUrl = '/admin/lists/getOrderList?file=2018/02/'.$downloadFileName;
 
         // check list page as manufacturer
         $this->loginAsMeatManufacturer();
@@ -60,17 +60,21 @@ class ListsControllerTest extends AppCakeTestCase
 
         // check downloadable file as correct manufacturer
         $this->get($orderListDownloadUrl);
-        $this->assertResponseCode(200);
-
+        $this->assertResponseOk();
+        $this->assertContentType('pdf');
+        
         // check downloadable file as wrong manufacturer
         $this->loginAsVegetableManufacturer();
+        Configure::write('Error.log', false);
         $this->get($orderListDownloadUrl);
+        Configure::write('Error.log', true);
         $this->assertResponseCode(401);
 
         // check downloadable file as admin
         $this->loginAsAdmin();
         $this->get($orderListDownloadUrl);
-        $this->assertResponseCode(200);
+        $this->assertResponseOk();
+        $this->assertContentType('pdf');
 
         // check list page as admin
         $this->get($listPageUrl);
