@@ -254,8 +254,6 @@ class ProductsControllerTest extends AppCakeTestCase
         $product = $this->deleteProduct($productId);
         $this->assertJsonOk();
         $this->assertEquals($product->active, APP_DEL);
-        $this->get($this->Slug->getProductDetail($productId, 'Demo Product'));
-        $this->assertResponseCode(404);
     }
 
     public function testDeleteProductWithOpenOrder()
