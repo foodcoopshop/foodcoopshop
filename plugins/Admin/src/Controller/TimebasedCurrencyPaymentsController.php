@@ -95,7 +95,6 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
 
         if (empty($payment)) {
             $message = 'payment id ('.$paymentId.') not correct or already approved (approval: 1)';
-            $this->log($message);
             $this->set([
                 'status' => 0,
                 'msg' => $message,

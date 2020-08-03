@@ -210,7 +210,6 @@ class PaymentsController extends AdminAppController
             'member_fee_flexible'
         ])) {
             $message = 'payment type not correct: ' . $type;
-            $this->log($message);
             $this->set([
                 'status' => 0,
                 'msg' => $message,
@@ -325,7 +324,6 @@ class PaymentsController extends AdminAppController
             // security check
             if (!$this->AppAuth->isSuperadmin() && $this->AppAuth->getUserId() != $customerId) {
                 $msg = 'user without superadmin privileges tried to insert payment for another user: ' . $customerId;
-                $this->log($msg);
                 $this->set([
                     'status' => 0,
                     'msg' => $msg,
@@ -417,7 +415,6 @@ class PaymentsController extends AdminAppController
 
         if (empty($payment)) {
             $message = 'payment id ('.$paymentId.') not correct or already approved (approval: 1)';
-            $this->log($message);
             $this->set([
                 'status' => 0,
                 'msg' => $message,
