@@ -199,7 +199,6 @@ class ProductsController extends AdminAppController
         ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
 
-
     }
 
     public function generateProductCards()
