@@ -1,8 +1,6 @@
 <?php
 
 /**
- * SyncControllerTest
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
@@ -19,15 +17,15 @@
 namespace Network\Test\TestCase;
 
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 use Cake\View\View;
 use Network\View\Helper\NetworkHelper;
-use Cake\TestSuite\IntegrationTestTrait;
-use App\Test\TestCase\Traits\LoginTrait;
 
 class SyncDomainsControllerTest extends AppCakeTestCase
 {
 
-    use IntegrationTestTrait;
+    use AppIntegrationTestTrait;
     use LoginTrait;
 
     public function setUp(): void

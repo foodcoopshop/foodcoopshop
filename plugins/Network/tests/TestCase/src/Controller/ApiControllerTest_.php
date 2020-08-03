@@ -22,18 +22,18 @@
 
 namespace Network\Test\TestCase;
 
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\View\View;
-use Network\View\Helper\NetworkHelper;
 use Cake\TestSuite\StringCompareTrait;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
+use Network\View\Helper\NetworkHelper;
 
 class ApiControllerTest extends TestCase
 {
 
-    use IntegrationTestTrait;
+    use AppIntegrationTestTrait;
     use StringCompareTrait;
 
     public function setUp(): void

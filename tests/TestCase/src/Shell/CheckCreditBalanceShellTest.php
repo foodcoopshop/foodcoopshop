@@ -1,13 +1,13 @@
 <?php
 
+use App\Application;
 use App\Model\Table\ConfigurationsTable;
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\I18n\FrozenTime;
-use App\Application;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\EmailTrait;
 
 
@@ -28,9 +28,9 @@ use Cake\TestSuite\EmailTrait;
 class CheckCreditBalanceShellTest extends AppCakeTestCase
 {
 
+    use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
-    use IntegrationTestTrait;
 
     public $EmailLog;
     public $commandRunner;

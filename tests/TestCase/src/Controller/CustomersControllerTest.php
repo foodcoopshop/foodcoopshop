@@ -1,11 +1,11 @@
 <?php
 
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
-use Cake\TestSuite\IntegrationTestTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,8 +23,8 @@ use Cake\TestSuite\IntegrationTestTrait;
 class CustomersControllerTest extends AppCakeTestCase
 {
 
+    use AppIntegrationTestTrait;
     use EmailTrait;
-    use IntegrationTestTrait;
     use LoginTrait;
 
     public $EmailLog;

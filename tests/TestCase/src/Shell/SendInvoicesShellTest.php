@@ -1,10 +1,4 @@
 <?php
-
-use App\Test\TestCase\AppCakeTestCase;
-use Cake\Core\Configure;
-use App\Application;
-use Cake\Console\CommandRunner;
-
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -19,16 +13,20 @@ use Cake\Console\CommandRunner;
  * @link          https://www.foodcoopshop.com
  */
 
+use App\Application;
+use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
-use Cake\TestSuite\IntegrationTestTrait;
+use Cake\Core\Configure;
+use Cake\Console\CommandRunner;
 use Cake\TestSuite\EmailTrait;
 
 class SendInvoicesShellTest extends AppCakeTestCase
 {
 
+    use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
-    use IntegrationTestTrait;
 
     public $EmailLog;
     public $Order;

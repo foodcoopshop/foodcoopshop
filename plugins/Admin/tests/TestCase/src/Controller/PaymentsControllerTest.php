@@ -2,10 +2,10 @@
 
 use App\Model\Table\ConfigurationsTable;
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
-use Cake\TestSuite\IntegrationTestTrait;
-use App\Test\TestCase\Traits\LoginTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,7 +23,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 class PaymentsControllerTest extends AppCakeTestCase
 {
 
-    use IntegrationTestTrait;
+    use AppIntegrationTestTrait;
     use LoginTrait;
 
     public function setUp(): void

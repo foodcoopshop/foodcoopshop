@@ -13,16 +13,16 @@
  * @link          https://www.foodcoopshop.com
  */
 
-use App\Test\TestCase\AppCakeTestCase;
-use Cake\Core\Configure;
 use App\Application;
-use Cake\Console\CommandRunner;
-use Cake\TestSuite\IntegrationTestTrait;
+use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
+use Cake\Console\CommandRunner;
+use Cake\Core\Configure;
 
 class EmailOrderReminderShellTest extends AppCakeTestCase
 {
-    use IntegrationTestTrait;
+    use AppIntegrationTestTrait;
     use LoginTrait;
 
     public $EmailLog;

@@ -359,13 +359,7 @@ abstract class AppCakeTestCase extends TestCase
     // remember that it's already available in ProductsFrontendControllerTest - avoid duplicate code!
     protected function changeProductDeliveryRhythm($productId, $deliveryRhythmType, $deliveryRhythmFirstDeliveryDay = '', $deliveryRhythmOrderPossibleUntil = '', $deliveryRhythmSendOrderListWeekday = '', $deliveryRhythmSendOrderListDay = '')
     {
-        $this->configRequest([
-            'headers' => [
-                'X_REQUESTED_WITH' => 'XMLHttpRequest',
-                'ACCEPT' => 'application/json',
-            ],
-        ]);
-        $this->post('/admin/products/editDeliveryRhythm', [
+        $this->ajaxPost('/admin/products/editDeliveryRhythm', [
             'productIds' => [$productId],
             'deliveryRhythmType' => $deliveryRhythmType,
             'deliveryRhythmFirstDeliveryDay' => $deliveryRhythmFirstDeliveryDay,

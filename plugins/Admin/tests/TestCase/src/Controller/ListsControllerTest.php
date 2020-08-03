@@ -2,11 +2,11 @@
 
 use App\Application;
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
-use Cake\TestSuite\IntegrationTestTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -24,7 +24,7 @@ use Cake\TestSuite\IntegrationTestTrait;
 class ListsControllerTest extends AppCakeTestCase
 {
 
-    use IntegrationTestTrait;
+    use AppIntegrationTestTrait;
     use LoginTrait;
 
     public $commandRunner;

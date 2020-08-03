@@ -13,18 +13,18 @@
  * @link          https://www.foodcoopshop.com
  */
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\EmailTrait;
 
 class CartsControllerTest extends AppCakeTestCase
 {
 
+    use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
-    use IntegrationTestTrait;
 
     // artischocke, 0,5 deposit, manufacturerId 5
     public $productId1 = '346';
@@ -548,23 +548,11 @@ class CartsControllerTest extends AppCakeTestCase
     public function testFinishOrderStockNotificationsIsStockProductDisabled() {
 
         $this->loginAsSuperadmin();
-        $this->configRequest([
-            'headers' => [
-                'X_REQUESTED_WITH' => 'XMLHttpRequest',
-                'ACCEPT' => 'application/json',
-            ],
-        ]);
-        $this->post('/admin/products/editIsStockProduct', [
+        $this->ajaxPost('/admin/products/editIsStockProduct', [
             'productId' => 350,
             'isStockProduct' => 0
         ]);
-        $this->configRequest([
-            'headers' => [
-                'X_REQUESTED_WITH' => 'XMLHttpRequest',
-                'ACCEPT' => 'application/json',
-            ],
-        ]);
-        $this->post('/admin/products/editIsStockProduct', [
+        $this->ajaxPost('/admin/products/editIsStockProduct', [
             'productId' => 349,
             'isStockProduct' => 0
         ]);
@@ -1022,13 +1010,7 @@ class CartsControllerTest extends AppCakeTestCase
      */
     private function removeProduct($productId)
     {
-        $this->configRequest([
-            'headers' => [
-                'X_REQUESTED_WITH' => 'XMLHttpRequest',
-                'ACCEPT' => 'application/json',
-            ],
-        ]);
-        $this->post('/warenkorb/ajaxRemove', [
+        $this->ajaxPost('/warenkorb/ajaxRemove', [
             'productId' => $productId
         ]);
         return $this->getJsonDecodedContent();

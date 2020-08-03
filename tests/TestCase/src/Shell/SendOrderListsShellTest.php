@@ -2,10 +2,10 @@
 
 use App\Application;
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\EmailTrait;
 
 /**
@@ -25,9 +25,9 @@ use Cake\TestSuite\EmailTrait;
 class SendOrderListsShellTest extends AppCakeTestCase
 {
 
+    use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
-    use IntegrationTestTrait;
 
     public $EmailLog;
     public $Order;

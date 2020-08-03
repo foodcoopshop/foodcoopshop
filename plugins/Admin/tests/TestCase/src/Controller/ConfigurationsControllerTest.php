@@ -13,15 +13,15 @@
  * @link          https://www.foodcoopshop.com
  */
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use App\Test\TestCase\Traits\LoginTrait;
-use Cake\TestSuite\IntegrationTestTrait;
 
 class ConfigurationsControllerTest extends AppCakeTestCase
 {
 
     use AssertPagesForErrorsTrait;
-    use IntegrationTestTrait;
+    use AppIntegrationTestTrait;
     use LoginTrait;
 
     /**
