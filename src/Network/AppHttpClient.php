@@ -95,29 +95,6 @@ class AppHttpClient extends Client
         return $this->response;
     }
 
-    /**
-     * posts as ajax
-     * @param string $url
-     * @param array $parameters
-     */
-    public function ajaxPost($url, $data = [], array $options = []): Response
-    {
-        if (empty($options)) {
-            $options = [
-                'headers' => [
-                    'X-Requested-With' => 'XMLHttpRequest'
-                ],
-                'type' => 'json',
-            ];
-        }
-        $this->response = parent::post(
-            $url,
-            $data,
-            $options
-        );
-        return $this->response;
-    }
-
     public function post($url, $data = [], array $options = []): Response
     {
         $options = array_merge($options, [
