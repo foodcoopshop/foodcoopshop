@@ -43,7 +43,6 @@ class SendInvoicesShellTest extends AppCakeTestCase
 
     public function testContentOfInvoice()
     {
-        $this->markTestSkipped('output needs to be removed');
         $this->loginAsSuperadmin();
         $this->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'invoice.html');
@@ -54,7 +53,6 @@ class SendInvoicesShellTest extends AppCakeTestCase
     public function testSendInvoicesWithVariableMemberFee()
     {
 
-        $this->markTestSkipped('output needs to be removed');
         $this->prepareSendInvoices();
 
         $this->changeConfiguration('FCS_USE_VARIABLE_MEMBER_FEE', 1);
