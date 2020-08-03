@@ -6,6 +6,7 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
+use Laminas\Diactoros\UploadedFile;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -213,16 +214,21 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     public function testCsvUploadCustomerNotFoundError()
     {
-        $this->markTestSkipped('file upload not yet working');
         $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
         $this->loginAsSuperadmin();
+        $uploadFile = TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen-v2.csv';
         $this->post(
             Configure::read('app.slugHelper')->getReport('product'),
             [
-                'upload' => fopen(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen-v2.csv', 'r')
+                'upload' => new UploadedFile(
+                    $uploadFile,
+                    filesize($uploadFile),
+                    UPLOAD_ERR_OK,
+                ),
             ]
 
         );
+        $this->assertResponseContains('Upload erfolgreich.');
         $this->assertResponseContains('name="Payments[0][id_customer]" class="select-member form-error"');
         $this->assertResponseContains('Bitte wähle ein Mitglied aus.');
     }
