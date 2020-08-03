@@ -17,9 +17,14 @@ use App\Test\TestCase\AppCakeTestCase;
 use Cake\Core\Configure;
 use App\Application;
 use Cake\Console\CommandRunner;
+use Cake\TestSuite\IntegrationTestTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 
 class EmailOrderReminderShellTest extends AppCakeTestCase
 {
+    use IntegrationTestTrait;
+    use LoginTrait;
+
     public $EmailLog;
     public $commandRunner;
 

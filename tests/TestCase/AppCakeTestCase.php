@@ -5,7 +5,6 @@ use App\View\Helper\MyHtmlHelper;
 use App\View\Helper\MyTimeHelper;
 use App\View\Helper\PricePerUnitHelper;
 use App\View\Helper\SlugHelper;
-use App\Network\AppHttpClient;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Filesystem\Folder;
@@ -48,16 +47,12 @@ abstract class AppCakeTestCase extends TestCase
 
     public $Manufacturer;
 
-    public $httpClient;
-
     /**
      * called before every test method
      */
     public function setUp(): void
     {
         parent::setUp();
-
-        $this->initHttpClient();
 
         $View = new View();
         $this->Slug = new SlugHelper($View);
@@ -110,17 +105,6 @@ abstract class AppCakeTestCase extends TestCase
         $this->dbConnection->query(file_get_contents($this->testDumpDir . 'test-db-data.sql'));
     }
 
-    public function initHttpClient()
-    {
-        $this->httpClient = new AppHttpClient([
-            'headers' => [
-                'x-unit-test-mode' => true
-            ]
-        ]);
-        $this->httpClient->loginEmail = Configure::read('test.loginEmailSuperadmin');
-        $this->httpClient->loginPassword = Configure::read('test.loginPassword');
-    }
-
     protected function getJsonDecodedContent()
     {
         return json_decode($this->_getBodyAsString());
@@ -132,50 +116,13 @@ abstract class AppCakeTestCase extends TestCase
         $this->assertEquals(0, $response->status);
     }
 
-    protected function assertJsonErrorForHttpClient()
-    {
-        $response = $this->httpClient->getJsonDecodedContent();
-        $this->assertEquals(0, $response->status, 'json status should be "0"');
-    }
-
-    protected function assert200OkHeader()
-    {
-        $this->assertEquals(200, $this->httpClient->getStatusCode());
-    }
-
-    protected function assert401UnauthorizedHeader()
-    {
-        $this->assertEquals(401, $this->httpClient->getStatusCode());
-    }
-
-    protected function assert403ForbiddenHeader()
-    {
-        $this->assertEquals(403, $this->httpClient->getStatusCode());
-    }
-
-    protected function assertAccessDeniedMessage()
-    {
-        $this->assertRegExpWithUnquotedString('Zugriff verweigert, bitte melde dich an.', $this->httpClient->getContent());
-    }
-
     protected function assertAccessDeniedFlashMessage() {
         $this->assertFlashMessage('Zugriff verweigert, bitte melde dich an.');
-    }
-
-    protected function assert404NotFoundHeader()
-    {
-        $this->assertEquals(404, $this->httpClient->getStatusCode());
     }
 
     protected function assertRedirectToLoginPage()
     {
         $this->assertRegExpWithUnquotedString('http://localhost' .  $this->Slug->getLogin(), $this->_response->getHeader('Location')[0]);
-    }
-
-    protected function assertJsonOkForHttpClient()
-    {
-        $response = $this->httpClient->getJsonDecodedContent();
-        $this->assertEquals(1, $response->status, 'json status should be "1", msg: ' . $response->msg);
     }
 
     protected function assertJsonOk()
@@ -279,7 +226,6 @@ abstract class AppCakeTestCase extends TestCase
 
     /**
      * needs to login as superadmin and logs user out automatically
-     * eventually create a new httpClient instance for this method
      *
      * @param string $configKey
      * @param string $newValue
@@ -450,43 +396,6 @@ abstract class AppCakeTestCase extends TestCase
         ];
         $statement = $this->dbConnection->prepare($query);
         return $statement->execute($params);
-    }
-
-    protected function logout()
-    {
-        $this->httpClient->doFoodCoopShopLogout();
-    }
-
-    protected function loginAsSuperadmin()
-    {
-        $this->httpClient->loginEmail = Configure::read('test.loginEmailSuperadmin');
-        $this->httpClient->doFoodCoopShopLogin();
-    }
-
-    protected function loginAsAdmin()
-    {
-        $this->httpClient->loginEmail = Configure::read('test.loginEmailAdmin');
-        $this->httpClient->doFoodCoopShopLogin();
-    }
-
-    //login with httpClient
-    //ToDo delete when no tests use httpClient anymore
-    protected function loginAsCustomerWithHttpClient()
-    {
-        $this->httpClient->loginEmail = Configure::read('test.loginEmailCustomer');
-        $this->httpClient->doFoodCoopShopLogin();
-    }
-
-    protected function loginAsMeatManufacturer()
-    {
-        $this->httpClient->loginEmail = Configure::read('test.loginEmailMeatManufacturer');
-        $this->httpClient->doFoodCoopShopLogin();
-    }
-
-    protected function loginAsVegetableManufacturer()
-    {
-        $this->httpClient->loginEmail = Configure::read('test.loginEmailVegetableManufacturer');
-        $this->httpClient->doFoodCoopShopLogin();
     }
 
     protected function prepareTimebasedCurrencyConfiguration($reducedMaxPercentage)
