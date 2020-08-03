@@ -23,7 +23,7 @@ class AppMarshaller extends Marshaller
      * {@inheritDoc}
      * @see \Cake\ORM\Marshaller::_validate()
      */
-    protected function _validate($data, $options, $isNew): array
+    protected function _validate(array $data, array $options, bool $isNew): array
     {
         $errors = parent::_validate($data, $options, $isNew);
         if (!empty($errors)) {
