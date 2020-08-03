@@ -122,7 +122,7 @@ abstract class AppCakeTestCase extends TestCase
 
     protected function assertRedirectToLoginPage()
     {
-        $this->assertRegExpWithUnquotedString('http://localhost' .  $this->Slug->getLogin(), $this->_response->getHeader('Location')[0]);
+        $this->assertRegExpWithUnquotedString('http://localhost' .  $this->Slug->getLogin(), $this->_response->getHeaderLine('Location'));
     }
 
     protected function assertJsonOk()
@@ -136,7 +136,7 @@ abstract class AppCakeTestCase extends TestCase
      */
     protected function assertNotPerfectlyImplementedAccessRestricted()
     {
-        $this->assertEquals('http://localhost/', $this->_response->getHeader('Location')[0]);
+        $this->assertEquals('http://localhost/', $this->_response->getHeaderLine('Location'));
     }
 
     /**

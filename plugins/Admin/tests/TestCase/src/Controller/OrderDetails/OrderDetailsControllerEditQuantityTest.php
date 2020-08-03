@@ -111,7 +111,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->addProductToCart($productIdA, 1); // addProductToCart needs to be called twice!
 
         $this->finishCart(1, 1);
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeader('Location')[0]);
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
         return $cart;
     }

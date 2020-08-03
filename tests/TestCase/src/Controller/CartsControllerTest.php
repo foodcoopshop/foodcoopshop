@@ -220,7 +220,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($productId, 50);
         $this->assertJsonOk();
         $this->finishCart();
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeader('Location')[0]);
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $this->assertTrue(is_int($cartId), 'cart not finished correctly');
     }
 
@@ -404,7 +404,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->checkCartStatus();
         $this->finishCart(1, 1, $comment, null, $pickupDay);
 
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeader('Location')[0]);
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $this->checkCartStatusAfterFinish();
 
         $cart = $this->getCartById($cartId);
@@ -461,7 +461,7 @@ class CartsControllerTest extends AppCakeTestCase
         $pickupDayComment = 'this is a valid pickup day comment';
         $this->finishCart(1, 1, $pickupDayComment);
 
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeader('Location')[0]);
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $this->checkCartStatusAfterFinish();
 
         $cart = $this->getCartById($cartId);
@@ -694,7 +694,7 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->finishCart(1, 1, '', '1200');
 
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeader('Location')[0]);
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $this->checkCartStatusAfterFinish();
 
         $cart = $this->getCartById($cartId);
@@ -750,7 +750,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($productIdB, 3);
 
         $this->finishCart(1, 1);
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeader('Location')[0]);
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
 
         $this->checkCartStatusAfterFinish();
         $cart = $this->getCartById($cartId);
@@ -808,7 +808,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart(349, 1); // stock product - no notification!
 
         $this->finishCart(1, 1);
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeader('Location')[0]);
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
 
         // product that was added as CART_TYPE_WEEKLY_RHYTHM must not be included in CART_TYPE_INSTANT_ORDER cart
@@ -903,7 +903,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId1, -1);
         $this->addProductToCart($this->productId2, 1);
         $this->finishCart();
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeader('Location')[0]);
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $this->assertTrue(is_int($cartId), 'cart not finished correctly');
 
         $this->checkCartStatusAfterFinish();
