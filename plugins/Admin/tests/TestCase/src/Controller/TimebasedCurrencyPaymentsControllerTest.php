@@ -67,7 +67,6 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
     public function testEditPaymentAsCorrectManufacturer()
     {
 
-        $this->markTestSkipped('response code not correct');
         $this->loginAsCustomer();
         $this->createPayment(0.5);
 
@@ -81,7 +80,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
             'approval' => APP_DEL,
             'referer' => '/'
         ]);
-        $this->assertResponseCode(200);
+        $this->assertFlashMessage('Die Zeiteintragung für den ' . date('d.m.Y') . ' <b>(0,25 h)</b> von Demo Mitglied wurde geändert und eine E-Mail an Demo Mitglied verschickt.');
 
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEmailLogs(
