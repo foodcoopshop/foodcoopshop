@@ -164,7 +164,6 @@ class ListsController extends AdminAppController
         $this->response = $this->response->withFile(
             $filenameWithPath,
             [
-                'download' => true,
                 'name' => $filenameWithoutPath,
             ]
         );
