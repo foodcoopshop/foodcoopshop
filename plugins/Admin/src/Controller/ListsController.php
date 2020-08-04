@@ -156,8 +156,10 @@ class ListsController extends AdminAppController
 
         $this->disableAutoRender();
 
+        $filenameWithPath = str_replace(DS.DS, '/', $filenameWithPath);
         $filenameWithPath = str_replace(DS, '/', $filenameWithPath);
         $explodedString = explode('/', $filenameWithPath);
+
         $filenameWithoutPath = $explodedString[count($explodedString) - 1 ];
 
         $this->response = $this->response->withType('pdf');
