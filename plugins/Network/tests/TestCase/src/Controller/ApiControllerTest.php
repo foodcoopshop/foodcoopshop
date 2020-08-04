@@ -13,13 +13,6 @@
  * @link          https://www.foodcoopshop.com
  */
 
-
-/**
- * still fails on travis
- * https://travis-ci.com/foodcoopshop/foodcoopshop/jobs/283746006
- * @TODO rename filename to ApiControllerTest.php
- */
-
 namespace Network\Test\TestCase;
 
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
