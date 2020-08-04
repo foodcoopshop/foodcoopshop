@@ -144,7 +144,7 @@ class ListsController extends AdminAppController
 
     public function getInvoice()
     {
-        $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder_invoices')) . DS . h($this->getRequest()->getQuery('file'));
+        $filenameWithPath = Configure::read('app.folder_invoices') . DS . h($this->getRequest()->getQuery('file'));
         return $this->getFile($filenameWithPath);
     }
 
