@@ -15,35 +15,16 @@
 
 namespace Network\Test\TestCase;
 
+use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use Cake\Core\Configure;
-use Cake\Datasource\ConnectionManager;
-use Cake\View\View;
 use Cake\TestSuite\StringCompareTrait;
-use Cake\TestSuite\TestCase;
-use Network\View\Helper\NetworkHelper;
 
-class ApiControllerTest extends TestCase
+class ApiControllerTest extends AppCakeTestCase
 {
 
     use AppIntegrationTestTrait;
     use StringCompareTrait;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->Network = new NetworkHelper(new View());
-        $this->Configuration = $this->get('Configurations');
-    }
-
-    protected function resetTestDatabaseData()
-    {
-        $this->dbConnection = ConnectionManager::get('test');
-        $this->testDumpDir = TESTS . 'config' . DS . 'sql' . DS;
-        $this->dbConnection->query(file_get_contents($this->testDumpDir . 'test-db-data.sql'));
-        $this->resetTestDatabaseData();
-        $this->Configuration->loadConfigurations();
-    }
 
     public function testGetProductsLoggedOut()
     {
