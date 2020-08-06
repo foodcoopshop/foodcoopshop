@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-07-06 11:36+0200\n"
-"PO-Revision-Date: 2020-07-06 11:37+0200\n"
+"POT-Creation-Date: 2020-08-06 12:09+0200\n"
+"PO-Revision-Date: 2020-08-06 12:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4\n"
 
 msgid "Activities"
 msgstr "Aktivitäten"
@@ -554,6 +554,9 @@ msgstr "Das Produkt {0} vom Hersteller {1} wurde aktiviert."
 
 msgid "The_uploaded_file_is_not_valid."
 msgstr "Die hochgeladene Datei ist nicht gültig."
+
+msgid "Your_transaction_({0})_was_added_to_the_credit_system."
+msgstr "Deine Überweisung ({0}) wurde ins Guthaben-System übernommen."
 
 msgid "No_records_were_imported."
 msgstr "Es wurden keine Überweisungen importiert."
@@ -1886,6 +1889,12 @@ msgstr "Bitte überweise bald wieder ein neues Guthaben auf unser Konto und verg
 
 msgid "Transactions_were_checked_until_{0}."
 msgstr "Es wurden alle Überweisungen bis zum {0} berücksichtigt."
+
+msgid "Amount_(Money)"
+msgstr "Betrag"
+
+msgid "Date_when_payment_was_received_on_bank_account"
+msgstr "Datum des Zahlungseinganges am Bankkonto"
 
 msgid "{0}_is_the_last_day_to_order._You_can_do_that_until_{0}_midnight."
 msgstr "{0} ist schon wieder der letzte Bestelltag. Bis {0} Mitternacht hast du noch Zeit."

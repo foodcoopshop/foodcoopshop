@@ -260,6 +260,12 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals(APP_ON, $newPayment->status);
         $this->assertEquals(APP_ON, $newPayment->approval);
         $this->assertEquals(Configure::read('test.superadminId'), $newPayment->created_by);
+
+        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
+        $emailLogs = $this->EmailLog->find('all')->toArray();
+        $this->assertEquals(1, count($emailLogs));
+        $this->assertEquals($emailLogs[0]->subject, 'Deine Überweisung (200,00 €) wurde ins Guthaben-System übernommen.');
+
     }
 
     private function addDepositToManufacturer($depositText, $ActionLogText)

@@ -3,6 +3,7 @@
 namespace Admin\Controller;
 
 use App\Lib\Csv\RaiffeisenBankingReader;
+use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Exception\PersistenceFailedException;
@@ -107,6 +108,24 @@ class ReportsController extends AdminAppController
                         foreach($csvPayments as $csvPayment) {
                             if ($csvPayment->isDirty('selected') && $csvPayment->getOriginal('selected') == 0) {
                                 unset($csvPayments[$i]);
+                            } else {
+                                $customer = $this->Payment->Customers->find('all', [
+                                    'conditions' => [
+                                        'id_customer' => $csvPayment->id_customer,
+                                    ]
+                                ])->first();
+                                $email = new AppMailer();
+                                $email->viewBuilder()->setTemplate('Admin.credit_csv_upload_successful');
+                                $email->setTo($customer->email)
+                                ->setSubject(__d('admin', 'Your_transaction_({0})_was_added_to_the_credit_system.', [
+                                    Configure::read('app.numberHelper')->formatAsCurrency($csvPayment->amount),
+                                ]))
+                                ->setViewVars([
+                                    'customer' => $customer,
+                                    'csvPayment' => $csvPayment,
+                                    'appAuth' => $this->AppAuth,
+                                ]);
+                                $email->send();
                             }
                             $i++;
                         }

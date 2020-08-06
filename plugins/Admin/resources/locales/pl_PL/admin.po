@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-07-06 11:36+0200\n"
+"POT-Creation-Date: 2020-08-06 12:09+0200\n"
 "PO-Revision-Date: 2020-03-19 21:01+0100\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -580,6 +580,9 @@ msgid "The_product_{0}_from_manufacturer_{1}_was_activated."
 msgstr "Produkt {0} od producenta {1} został aktywowany."
 
 msgid "The_uploaded_file_is_not_valid."
+msgstr ""
+
+msgid "Your_transaction_({0})_was_added_to_the_credit_system."
 msgstr ""
 
 msgid "No_records_were_imported."
@@ -1953,6 +1956,13 @@ msgid "Please_soon_transfer_new_credit_to_our_bank_account_and_do_not_forget_to_
 msgstr "Podaj kwotę, która została wpłacona na nasze konto bankowe."
 
 msgid "Transactions_were_checked_until_{0}."
+msgstr ""
+
+#, fuzzy
+msgid "Amount_(Money)"
+msgstr "Kwota"
+
+msgid "Date_when_payment_was_received_on_bank_account"
 msgstr ""
 
 msgid "{0}_is_the_last_day_to_order._You_can_do_that_until_{0}_midnight."
