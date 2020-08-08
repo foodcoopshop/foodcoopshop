@@ -25,7 +25,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $cart = $this->preparePricePerUnitOrder();
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
         $this->editOrderDetailQuantity($orderDetailId, -1, 'reason');
-        $this->assertEquals($this->httpClient->getJsonDecodedContent()->msg, 'Das gelieferte Gewicht ist nicht gültig.');
+        $this->assertEquals($this->getJsonDecodedContent()->msg, 'Das gelieferte Gewicht ist nicht gültig.');
     }
 
     public function testEditOrderDetailQuantityAsSuperadminDifferentQuantity()
@@ -111,14 +111,14 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->addProductToCart($productIdA, 1); // addProductToCart needs to be called twice!
 
         $this->finishCart(1, 1);
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
         return $cart;
     }
 
     private function editOrderDetailQuantity($orderDetailId, $productQuantity, $doNotChangePrice)
     {
-        $this->httpClient->post(
+        $this->ajaxPost(
             '/admin/order-details/editProductQuantity/',
             [
                 'orderDetailId' => $orderDetailId,

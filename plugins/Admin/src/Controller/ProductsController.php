@@ -167,7 +167,7 @@ class ProductsController extends AdminAppController
                 throw new Exception($errorString);
             }
         } catch (Exception $e) {
-            $this->sendAjaxError($e);
+            return $this->sendAjaxError($e);
         }
 
         // 1) set field active to -1
@@ -493,7 +493,7 @@ class ProductsController extends AdminAppController
                 throw new InvalidParameterException(join(' ', $this->Product->getAllValidationErrors($productEntity)));
             }
         } catch (\Exception $e) {
-            $this->sendAjaxError($e);
+            return $this->sendAjaxError($e);
         }
 
         $messageString = __d('admin', 'The_product_{0}_was_created_for_{1}.', [
@@ -654,7 +654,7 @@ class ProductsController extends AdminAppController
             $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
 
         } catch (InvalidParameterException $e) {
-            $this->sendAjaxError($e);
+            return $this->sendAjaxError($e);
         }
 
     }
@@ -840,7 +840,7 @@ class ProductsController extends AdminAppController
                 ]
             );
         } catch (InvalidParameterException $e) {
-            $this->sendAjaxError($e);
+            return $this->sendAjaxError($e);
         }
 
         $this->Flash->success(__d('admin', 'The_product_{0}_was_changed_successfully_to_a_stock_product.', ['<b>' . $oldProduct->name . '</b>']));
@@ -907,7 +907,7 @@ class ProductsController extends AdminAppController
                 ]
             );
         } catch (InvalidParameterException $e) {
-            $this->sendAjaxError($e);
+            return $this->sendAjaxError($e);
         }
 
         $this->Flash->success(__d('admin', 'The_amount_of_the_product_{0}_was_changed_successfully.', ['<b>' . $oldProduct->name . '</b>']));
@@ -1016,7 +1016,7 @@ class ProductsController extends AdminAppController
                 ]
             );
         } catch (InvalidParameterException $e) {
-            $this->sendAjaxError($e);
+            return $this->sendAjaxError($e);
         }
 
         $price = Configure::read('app.numberHelper')->getStringAsFloat($this->getRequest()->getData('price'));
@@ -1079,7 +1079,7 @@ class ProductsController extends AdminAppController
                 ]
             );
         } catch (InvalidParameterException $e) {
-            $this->sendAjaxError($e);
+            return $this->sendAjaxError($e);
         }
 
         $depositEntity = $oldProduct->deposit_product;
@@ -1149,7 +1149,7 @@ class ProductsController extends AdminAppController
                 ]
             );
         } catch (InvalidParameterException $e) {
-            $this->sendAjaxError($e);
+            return $this->sendAjaxError($e);
         }
 
         $this->Flash->success(__d('admin', 'The_product_was_changed_successfully.'));

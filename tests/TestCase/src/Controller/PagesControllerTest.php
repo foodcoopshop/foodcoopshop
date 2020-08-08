@@ -1,9 +1,9 @@
 <?php
 
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use App\Test\TestCase\Traits\LoginTrait;
-use Cake\TestSuite\IntegrationTestTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -20,9 +20,10 @@ use Cake\TestSuite\IntegrationTestTrait;
  */
 class PagesControllerTest extends AppCakeTestCase
 {
-    use IntegrationTestTrait;
-    use LoginTrait;
+
     use AssertPagesForErrorsTrait;
+    use AppIntegrationTestTrait;
+    use LoginTrait;
 
     public $Page;
 

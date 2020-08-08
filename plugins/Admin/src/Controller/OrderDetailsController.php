@@ -1135,7 +1135,7 @@ class OrderDetailsController extends AdminAppController
             $this->viewBuilder()->setOption('serialize', ['result', 'status', 'msg']);
 
         } catch (InvalidParameterException $e) {
-            $this->sendAjaxError($e);
+            return $this->sendAjaxError($e);
         }
 
     }
@@ -1179,7 +1179,7 @@ class OrderDetailsController extends AdminAppController
             }
 
         } catch (InvalidParameterException $e) {
-            $this->sendAjaxError($e);
+            return $this->sendAjaxError($e);
         }
 
         $result = $this->OrderDetail->OrderDetailFeedbacks->save($entity);

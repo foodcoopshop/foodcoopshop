@@ -188,14 +188,14 @@ class AppController extends Controller
      * try {
      *      $this->foo->bar();
      *  } catch (Exception $e) {
-     *      $this->sendAjaxError($e);
+     *      return $this->sendAjaxError($e);
      *  }
      * @param $error
      */
     protected function sendAjaxError($error)
     {
         if ($this->getRequest()->is('json')) {
-            $this->getResponse()->withStatus(500);
+            $this->setResponse($this->getResponse()->withStatus(500));
             $response = [
                 'status' => APP_OFF,
                 'msg' => $error->getMessage()

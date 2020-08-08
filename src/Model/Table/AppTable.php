@@ -2,7 +2,6 @@
 
 namespace App\Model\Table;
 
-use App\Network\AppSession;
 use App\ORM\AppMarshaller;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
@@ -171,18 +170,6 @@ class AppTable extends Table
         return true;
     }
 
-    /**
-     * @return boolean | array
-     */
-    protected function getLoggedUser()
-    {
-        $session = new AppSession();
-        if ($session->read('Auth.User.id_customer') !== null) {
-            return $session->read('Auth.User');
-        }
-        return false;
-    }
-
     public function getProductIdentifierField()
     {
         return 'SUBSTRING(SHA1(CONCAT(Products.id_product, "' .  Security::getSalt() . '", "product")), 1, 4)';
@@ -231,7 +218,7 @@ class AppTable extends Table
     /**
      * @return string
      */
-    protected function getConditionsForProductListQuery()
+    protected function getConditionsForProductListQuery($appAuth)
     {
         $conditions = "WHERE 1
                     AND StockAvailables.id_product_attribute = 0
@@ -239,13 +226,12 @@ class AppTable extends Table
                     AND Products.active = :active
                     AND Manufacturers.active = :active ";
 
-        if (! $this->getLoggedUser()) {
+        if (empty($appAuth->user())) {
             $conditions .= 'AND Manufacturers.is_private = :isPrivate ';
         }
 
         if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
-            $session = new AppSession();
-            if ($session->check('Auth.instantOrderCustomer')) {
+            if ($appAuth->isInstantOrderMode()) {
                 $conditions .= " AND (Manufacturers.stock_management_enabled = 1 AND Products.is_stock_product = 1) ";
             }
         }

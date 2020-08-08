@@ -13,48 +13,24 @@
  * @link          https://www.foodcoopshop.com
  */
 
-
-/**
- * still fails on travis
- * https://travis-ci.com/foodcoopshop/foodcoopshop/jobs/283746006
- * @TODO rename filename to ApiControllerTest.php
- */
-
 namespace Network\Test\TestCase;
 
+use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use Cake\Core\Configure;
-use Cake\Datasource\ConnectionManager;
-use Cake\View\View;
-use Network\View\Helper\NetworkHelper;
 use Cake\TestSuite\StringCompareTrait;
-use Cake\TestSuite\IntegrationTestTrait;
-use Cake\TestSuite\TestCase;
 
-class ApiControllerTest extends TestCase
+class ApiControllerTest extends AppCakeTestCase
 {
 
-    use IntegrationTestTrait;
+    use AppIntegrationTestTrait;
     use StringCompareTrait;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->Network = new NetworkHelper(new View());
-        $this->Configuration = $this->get('Configurations');
-    }
-
-    protected function resetTestDatabaseData()
-    {
-        $this->dbConnection = ConnectionManager::get('test');
-        $this->testDumpDir = TESTS . 'config' . DS . 'sql' . DS;
-        $this->dbConnection->query(file_get_contents($this->testDumpDir . 'test-db-data.sql'));
-        $this->resetTestDatabaseData();
-        $this->Configuration->loadConfigurations();
-    }
 
     public function testGetProductsLoggedOut()
     {
+        Configure::write('Error.log', false);
         $this->get('/api/getProducts.json');
+        Configure::write('Error.log', true);
         $this->assertResponseCode(401);
     }
 
@@ -66,7 +42,9 @@ class ApiControllerTest extends TestCase
                 'PHP_AUTH_PW' => Configure::read('test.loginPassword'),
             ]
         ]);
+        Configure::write('Error.log', false);
         $this->get('/api/getProducts.json');
+        Configure::write('Error.log', true);
         $this->assertResponseCode(403);
     }
 

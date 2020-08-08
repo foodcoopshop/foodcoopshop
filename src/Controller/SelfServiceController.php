@@ -69,12 +69,12 @@ class SelfServiceController extends FrontendController
             }
         }
 
-        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+        if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'GET') {
             $cart = $this->AppAuth->getCart();
             $this->set('cart', $cart['Cart']);
         }
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($this->getRequest()->getEnv('ORIGINAL_REQUEST_METHOD') == 'POST') {
 
             if ($this->AppAuth->Cart->isCartEmpty()) {
                 $this->Flash->error(__('Your_shopping_bag_was_empty.'));

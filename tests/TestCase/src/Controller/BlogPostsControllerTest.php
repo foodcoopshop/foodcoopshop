@@ -13,14 +13,14 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\AppCakeTestCase;
-use Cake\TestSuite\IntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 
 class BlogPostsControllerTest extends AppCakeTestCase
 {
 
-    use IntegrationTestTrait;
+    use AppIntegrationTestTrait;
     use LoginTrait;
 
     public $BlogPost;

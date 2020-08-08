@@ -12,5 +12,4 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-header("Content-type: image/jpeg");
 echo $this->fetch('content');

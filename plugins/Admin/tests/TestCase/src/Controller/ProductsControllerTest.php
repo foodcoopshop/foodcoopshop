@@ -13,10 +13,17 @@
  * @link          https://www.foodcoopshop.com
  */
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
+use Cake\TestSuite\EmailTrait;
 
 class ProductsControllerTest extends AppCakeTestCase
 {
+
+    use AppIntegrationTestTrait;
+    use EmailTrait;
+    use LoginTrait;
 
     public $Product;
 
@@ -31,7 +38,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 60;
         $status = APP_OFF;
-        $this->httpClient->get('/admin/products/changeStatus/' . $productId . '/' . $status);
+        $this->get('/admin/products/changeStatus/' . $productId . '/' . $status);
         $product = $this->Product->find('all', [
             'conditions' => [
                 'Products.id_product' => $productId
@@ -45,7 +52,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $price = 'invalid-price';
         $this->changeProductPrice(346, $price);
-        $response = $this->httpClient->getJsonDecodedContent();
+        $response = $this->getJsonDecodedContent();
         $this->assertRegExpWithUnquotedString('input format not correct: ' . $price, $response->msg);
         $this->assertJsonError();
     }
@@ -55,8 +62,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $productId = 1000;
         $this->changeProductPrice($productId, '0,15');
-        // as long as isAuthorized does not return json on ajax requests...
-        $this->assertAccessDeniedMessage();
+        $this->assertAccessDeniedFlashMessage();
     }
 
     public function testEditPriceOfMeatManufactuerProductAsVegatableManufacturer()
@@ -64,8 +70,7 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->loginAsVegetableManufacturer();
         $productId = 102;
         $this->changeProductPrice($productId, '0,15');
-        // as long as isAuthorized does not return json on ajax requests...
-        $this->assertAccessDeniedMessage();
+        $this->assertAccessDeniedFlashMessage();
     }
 
     public function testEditPriceOfProductAsSuperadminToZero()
@@ -242,37 +247,41 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
-    public function testDeleteProduct()
+    public function testDeleteProductOk()
+    {
+        $this->loginAsSuperadmin();
+        $productId = 102;
+        $product = $this->deleteProduct($productId);
+        $this->assertJsonOk();
+        $this->assertEquals($product->active, APP_DEL);
+    }
+
+    public function testDeleteProductWithOpenOrder()
     {
         $this->loginAsSuperadmin();
         $productId = 346;
-        $this->httpClient->post('/admin/products/delete', [
-            'productIds' => [$productId]
-        ]);
-        $this->assertJsonOk();
-        $product = $this->Product->find('all', [
-            'conditions' => [
-                'Products.id_product' => $productId
-            ]
-        ])->first();
-        $this->assertEquals($product->active, APP_DEL);
-        $this->httpClient->get($this->Slug->getProductDetail($productId, 'Demo Product'));
-        $this->assert404NotFoundHeader();
+        $product = $this->deleteProduct($productId);
+        $this->assertEquals($product->active, APP_ON);
     }
 
     public function testDeleteProductAccessLoggedOut()
     {
-        $this->httpClient->post('/admin/products/delete', [
-            'productIds' => [346]
-        ]);
-        $this->assertRedirectToLoginPage();
+        $this->deleteProduct(364);
+        $this->assertResponseCode(403);
     }
 
     public function testDeleteProductAccessLoggedInAsWrongManufacturer()
     {
         $productId = 346;
         $this->loginAsMeatManufacturer();
-        $this->httpClient->post('/admin/products/delete', [
+        $product = $this->deleteProduct($productId);
+        // active must not be changed!
+        $this->assertEquals($product->active, APP_ON);
+    }
+
+    private function deleteProduct($productId)
+    {
+        $this->ajaxPost('/admin/products/delete', [
             'productIds' => [$productId]
         ]);
         $product = $this->Product->find('all', [
@@ -280,8 +289,7 @@ class ProductsControllerTest extends AppCakeTestCase
                 'Products.id_product' => $productId
             ]
         ])->first();
-        // active must not be changed!
-        $this->assertEquals($product->active, APP_ON);
+        return $product;
     }
 
     /**
@@ -294,6 +302,6 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->changeProductPrice($productId, $price, $pricePerUnitEnabled, $priceInclPerUnit, $priceUnitName, $priceUnitAmount, $priceQuantityInUnits);
         $this->assertJsonOk();
         $netPrice = $this->Product->getNetPrice($productId, $price);
-        $this->assertEquals(floatval($expectedNetPrice), $netPrice, 'editing price failed');
+        $this->assertEquals(floatval($expectedNetPrice), $netPrice);
     }
 }

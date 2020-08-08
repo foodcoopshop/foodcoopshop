@@ -20,7 +20,7 @@ use Cake\Core\Configure;
 trait LoginTrait
 {
 
-    protected function login($userId)
+    public function login($userId)
     {
 
         $customerTable = $this->getTableLocator()->get('Customers');
@@ -33,40 +33,69 @@ trait LoginTrait
             ]
         ])->first()->toArray();
 
-        $this->session([
+        return [
             'Auth' => [
                 'User' => $loggedUser
             ]
-        ]);
+        ];
     }
 
-    protected function loginAsSuperadmin()
+    public function loginAsSuperadmin()
     {
-        return $this->login(Configure::read('test.superadminId'));
+        $sessionData =  $this->login(Configure::read('test.superadminId'));
+        $this->session($sessionData);
     }
 
-    protected function loginAsAdmin()
+    public function loginAsAdmin()
     {
-        return $this->login(Configure::read('test.adminId'));
+        $sessionData = $this->login(Configure::read('test.adminId'));
+        $this->session($sessionData);
     }
 
-    protected function loginAsCustomer()
+    public function loginAsCustomer()
     {
-        return $this->login(Configure::read('test.customerId'));
+        $sessionData = $this->login(Configure::read('test.customerId'));
+        $this->session($sessionData);
     }
 
-    protected function loginAsMeatManufacturer()
+    public function loginAsMeatManufacturer()
     {
-        return $this->login(Configure::read('test.meatManufacturerId'));
+        $sessionData = $this->login(Configure::read('test.meatManufacturerId'));
+        $this->session($sessionData);
     }
 
-    protected function loginAsVegetableManufacturer()
+    public function loginAsVegetableManufacturer()
     {
-        return $this->login(Configure::read('test.vegetableManufacturerId'));
+        $sessionData = $this->login(Configure::read('test.vegetableManufacturerId'));
+        $this->session($sessionData);
     }
 
-    protected function logout()
+    public function logout()
     {
         $this->get($this->Slug->getLogout());
+    }
+
+    public function loginAsSuperadminAddInstantOrderCustomerToSession($session)
+    {
+        $sessionData =  $this->login(Configure::read('test.superadminId'));
+        $sessionData['Auth']['instantOrderCustomer'] = $session['Auth']['instantOrderCustomer'];
+        $this->session($sessionData);
+    }
+
+    public function getUserId()
+    {
+        $loggedUser = $this->user();
+        if (empty($loggedUser)) {
+            return [];
+        }
+        return $loggedUser['id_customer'];
+    }
+
+    public function user()
+    {
+        if (empty($this->_session)) {
+            return [];
+        }
+        return $this->_session['Auth']['User'];
     }
 }

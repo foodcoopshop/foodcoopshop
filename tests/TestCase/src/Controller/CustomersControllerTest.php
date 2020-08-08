@@ -1,9 +1,11 @@
 <?php
 
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
-use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\EmailTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -21,8 +23,11 @@ use Cake\TestSuite\IntegrationTestTrait;
 class CustomersControllerTest extends AppCakeTestCase
 {
 
+    use AppIntegrationTestTrait;
+    use EmailTrait;
+    use LoginTrait;
+
     public $EmailLog;
-    use IntegrationTestTrait;
 
     public function setUp(): void
     {
@@ -46,16 +51,16 @@ class CustomersControllerTest extends AppCakeTestCase
 
     public function testMaxlengthAttributeExistsInRegistrationPage()
     {
-        $this->httpClient->get($this->Slug->getLogin());
-        $this->assertRegExpWithUnquotedString('maxlength="32"', $this->httpClient->getContent());
+        $this->get($this->Slug->getLogin());
+        $this->assertResponseContains('maxlength="32"');
     }
 
     public function testProfileImagePrivacyForGuests()
     {
         $profileImageTargetFilename = $this->setUpProfileImageTests();
         $imageSrc = '/photos/profile-images/customers/' . $profileImageTargetFilename;
-        $this->httpClient->get($imageSrc);
-        $this->assert404NotFoundHeader();
+        $this->get($imageSrc);
+        $this->assertResponseCode(404);
         $this->tearDownProfileImageTests($profileImageTargetFilename);
     }
 
@@ -64,8 +69,8 @@ class CustomersControllerTest extends AppCakeTestCase
         $profileImageTargetFilename = $this->setUpProfileImageTests();
         $imageSrc = '/photos/profile-images/customers/' . $profileImageTargetFilename;
         $this->loginAsMeatManufacturer();
-        $this->httpClient->get($imageSrc);
-        $this->assert404NotFoundHeader();
+        $this->get($imageSrc);
+        $this->assertResponseCode(404);
         $this->tearDownProfileImageTests($profileImageTargetFilename);
     }
 
@@ -74,8 +79,9 @@ class CustomersControllerTest extends AppCakeTestCase
         $profileImageTargetFilename = $this->setUpProfileImageTests();
         $imageSrc = '/photos/profile-images/customers/' . $profileImageTargetFilename;
         $this->loginAsSuperadmin();
-        $this->httpClient->get($imageSrc);
-        $this->assert200OkHeader();
+        $this->get($imageSrc);
+        $this->assertResponseOk();
+        $this->assertContentType('image/jpeg');
         $this->tearDownProfileImageTests($profileImageTargetFilename);
     }
 
@@ -85,57 +91,55 @@ class CustomersControllerTest extends AppCakeTestCase
         $imageSrc = '/photos/profile-images/customers/' . $profileImageTargetFilename;
 
         $this->loginAsSuperadmin();
-        $this->httpClient->ajaxPost('/admin/customers/delete/' . Configure::read('test.customerId'), [
+        $this->ajaxPost('/admin/customers/delete/' . Configure::read('test.customerId'), [
             'referer' => '/'
         ]);
 
-        $this->httpClient->get($imageSrc);
-        $this->assert404NotFoundHeader();
+        $this->get($imageSrc);
+        $this->assertResponseCode(404);
     }
 
     public function testNewPasswordRequestWithWrongEmail()
     {
         $this->doPostNewPasswordRequest('this-is-no-email-address');
-        $this->assertRegExpWithUnquotedString('Die E-Mail-Adresse ist nicht gültig.', $this->httpClient->getContent());
+        $this->assertResponseContains('Die E-Mail-Adresse ist nicht gültig.');
     }
 
     public function testNewPasswordRequestWithNonExistingEmail()
     {
         $this->doPostNewPasswordRequest('test@test-fcs-test.at');
-        $this->assertRegExpWithUnquotedString('Wir haben diese E-Mail-Adresse nicht gefunden.', $this->httpClient->getContent());
+        $this->assertResponseContains('Wir haben diese E-Mail-Adresse nicht gefunden.');
     }
 
     public function testNewPasswordRequestWithValidEmail()
     {
         $this->doPostNewPasswordRequest(Configure::read('test.loginEmailCustomer'));
-        $this->assertRegExpWithUnquotedString('Wir haben dir per E-Mail ein neues Passwort zugeschickt, es muss aber noch aktiviert werden.', $this->httpClient->getContent());
+        $this->assertFlashMessage('Wir haben dir per E-Mail ein neues Passwort zugeschickt, es muss aber noch aktiviert werden.');
 
         $customer = $this->Customer->find('all', [
             'email' => Configure::read('test.loginEmailCustomer')
         ])->first();
 
-        $this->httpClient->followOneRedirectForNextRequest();
-        $this->httpClient->get($this->Slug->getActivateNewPassword('non-existing-code'));
-        $this->assertRegExpWithUnquotedString('Dein neues Passwort wurde bereits aktiviert oder der Aktivierungscode war nicht gültig.', $this->httpClient->getContent());
+        $this->get($this->Slug->getActivateNewPassword('non-existing-code'));
+        $this->assertFlashMessage('Dein neues Passwort wurde bereits aktiviert oder der Aktivierungscode war nicht gültig.');
 
-        $this->httpClient->followOneRedirectForNextRequest();
-        $this->httpClient->get($this->Slug->getActivateNewPassword($customer->activate_new_password_code));
-        $this->assertRegExpWithUnquotedString('Dein neues Passwort wurde erfolgreich aktiviert und du bist bereits eingeloggt.', $this->httpClient->getContent());
+        $this->get($this->Slug->getActivateNewPassword($customer->activate_new_password_code));
+        $this->assertFlashMessage('Dein neues Passwort wurde erfolgreich aktiviert und du bist bereits eingeloggt.');
 
         $emailLogs = $this->EmailLog->find('all')->toArray();
         $this->assertEmailLogs($emailLogs[0], 'Neues Passwort für FoodCoop Test', ['Bitte klicke auf folgenden Link, um dein neues Passwort zu aktivieren'], [Configure::read('test.loginEmailCustomer')]);
         preg_match_all('/\<b\>(.*)\<\/b\>/', $emailLogs[0]->message, $matches);
 
-        // script would break if login does not work - no complaints means login works :-)
-        $this->httpClient->loginEmail = Configure::read('test.loginEmailCustomer');
-        $this->httpClient->loginPassword = $matches[1][0];
-        $this->httpClient->doFoodCoopShopLogin();
+        $this->post($this->Slug->getLogin(), [
+            'email' => Configure::read('test.loginEmailCustomer'),
+            'passwd' => $matches[1][0],
+        ]);
+        $this->assertResponseCode(302); // if password is wrong, response code is 200
     }
 
     private function doPostNewPasswordRequest($email)
     {
-        $this->httpClient->followOneRedirectForNextRequest();
-        $this->httpClient->post($this->Slug->getNewPasswordRequest(), [
+        $this->post($this->Slug->getNewPasswordRequest(), [
             'Customers' => [
                 'email' => $email
             ]
@@ -163,32 +167,30 @@ class CustomersControllerTest extends AppCakeTestCase
         ];
 
         // 1) check for spam protection
-        $response = $this->addCustomer($data);
-        $this->assertRegExpWithUnquotedString('S-p-a-m-!', $response);
+        $this->addCustomer($data);
+        $this->assertFlashMessage('S-p-a-m-!');
 
         // 2) check for missing required fields
         $data['antiSpam'] = 4;
-        $response = $this->addCustomer($data);
-        $this->checkForMainErrorMessage($response);
-        $this->assertRegExpWithUnquotedString('Bitte gib deine E-Mail-Adresse an.', $response);
-        $this->assertRegExpWithUnquotedString('Bitte gib deinen Vornamen an.', $response);
-        $this->assertRegExpWithUnquotedString('Bitte gib deinen Nachnamen an.', $response);
-        $this->assertRegExpWithUnquotedString('Bitte gib deine Straße an.', $response);
-        $this->assertRegExpWithUnquotedString('Bitte gib deinen Ort an.', $response);
-        $this->assertRegExpWithUnquotedString('Bitte gib deine Handynummer an.', $response);
+        $this->addCustomer($data);
+        $this->assertResponseContains('Bitte gib deine E-Mail-Adresse an.');
+        $this->assertResponseContains('Bitte gib deinen Vornamen an.');
+        $this->assertResponseContains('Bitte gib deinen Nachnamen an.');
+        $this->assertResponseContains('Bitte gib deine Straße an.');
+        $this->assertResponseContains('Bitte gib deinen Ort an.');
+        $this->assertResponseContains('Bitte gib deine Handynummer an.');
 
         // 3) check for wrong data
         $data['Customers']['address_customer']['email'] = 'fcs-demo-mitglied@mailinator.com';
         $data['Customers']['address_customer']['postcode'] = 'ABCDEF';
         $data['Customers']['address_customer']['phone_mobile'] = 'adsfkjasfasfdasfajaaa';
         $data['Customers']['address_customer']['phone'] = '897++asdf+d';
-        $response = $this->addCustomer($data);
-        $this->checkForMainErrorMessage($response);
-        $this->assertRegExpWithUnquotedString('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.', $response);
-        $this->assertRegExpWithUnquotedString('Die PLZ ist nicht gültig.', $response);
-        $this->assertRegExpWithUnquotedString('Die Handynummer ist nicht gültig.', $response);
-        $this->assertRegExpWithUnquotedString('Die Telefonnummer ist nicht gültig.', $response);
-        $this->assertRegExpWithUnquotedString('Bitte akzeptiere die Nutzungsbedingungen.', $response);
+        $this->addCustomer($data);
+        $this->assertResponseContains('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.');
+        $this->assertResponseContains('Die PLZ ist nicht gültig.');
+        $this->assertResponseContains('Die Handynummer ist nicht gültig.');
+        $this->assertResponseContains('Die Telefonnummer ist nicht gültig.');
+        $this->assertResponseContains('Bitte akzeptiere die Nutzungsbedingungen.');
 
         // 4) save user and check record
         $email = 'new-foodcoopshop-member-1@mailinator.com';
@@ -242,9 +244,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $data['Customers']['address_customer']['phone_mobile'] = $customerPhoneMobile;
         $data['Customers']['address_customer']['phone'] = $customerPhone;
 
-        $response = $this->addCustomer($data);
-        $this->assertRegExpWithUnquotedString('Deine Registrierung war erfolgreich.', $response);
-
+        $this->addCustomer($data);
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.email' => $customerAddressEmail
@@ -279,10 +279,10 @@ class CustomersControllerTest extends AppCakeTestCase
     {
 
         $this->loginAsSuperadmin();
-        $this->httpClient->ajaxPost('/admin/customers/delete/' . Configure::read('test.superadminId'), [
+        $this->ajaxPost('/admin/customers/delete/' . Configure::read('test.superadminId'), [
             'referer' => '/'
         ]);
-        $response = $this->httpClient->getJsonDecodedContent();
+        $response = $this->getJsonDecodedContent();
         $this->assertRegExpWithUnquotedString('<ul><li>Anzahl der Bestellungen, die noch nicht mit dem Hersteller verrechnet wurden: 3.</li><li>Das Guthaben beträgt 92,02 €. Es muss 0 betragen.</li>', $response->msg);
         $customer = $this->Customer->find('all', [
             'conditions' => [
@@ -308,10 +308,10 @@ class CustomersControllerTest extends AppCakeTestCase
         );
 
         $this->loginAsSuperadmin();
-        $this->httpClient->ajaxPost('/admin/customers/delete/' . Configure::read('test.superadminId'), [
+        $this->ajaxPost('/admin/customers/delete/' . Configure::read('test.superadminId'), [
             'referer' => '/'
         ]);
-        $response = $this->httpClient->getJsonDecodedContent();
+        $response = $this->getJsonDecodedContent();
         $this->assertRegExpWithUnquotedString('<li>Anzahl der nicht bestätigten Guthaben-Aufladungen in den letzten 2 Jahren: 1.</li>', $response->msg);
         $customer = $this->Customer->find('all', [
             'conditions' => [
@@ -324,7 +324,7 @@ class CustomersControllerTest extends AppCakeTestCase
     public function testDeleteOk()
     {
         $this->loginAsSuperadmin();
-        $this->httpClient->ajaxPost('/admin/customers/delete/' . Configure::read('test.customerId'), [
+        $this->ajaxPost('/admin/customers/delete/' . Configure::read('test.customerId'), [
             'referer' => '/'
         ]);
         $customer = $this->Customer->find('all', [
@@ -335,19 +335,25 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->assertEmpty($customer);
     }
 
-    public function testAutoLogin()
+    public function testLoginAndAutoLogin()
     {
         // 1) login
         $userEmail = Configure::read('test.loginEmailSuperadmin');
-        $this->httpClient->post($this->Slug->getLogin(), [
+        $this->post($this->Slug->getLogin(), [
             'email' => $userEmail,
             'passwd' => Configure::read('test.loginPassword'),
             'remember_me' => true
         ]);
 
+        $this->assertSession(Configure::read('test.superadminId'), 'Auth.User.id_customer');
+        $this->assertSession(Configure::read('test.loginEmailSuperadmin'), 'Auth.User.email');
+        $this->assertSession(true, 'Auth.User.active');
+        $this->assertSession(null, 'Auth.User.auto_login_hash');
+        $this->assertSession(Configure::read('test.loginEmailSuperadmin'), 'Auth.User.address_customer.email');
+
         // 2) cookie must exist
-        $cookies = $this->httpClient->cookies();
-        $this->assertTrue($cookies->has('remember_me'));
+        $cookie = $this->_response->getCookie('remember_me');
+        $this->assertNotEmpty($cookie);
         $this->Customer = $this->getTableLocator()->get('Customers');
         $customer = $this->Customer->find('all', [
             'conditions' => [
@@ -357,7 +363,7 @@ class CustomersControllerTest extends AppCakeTestCase
         $autoLoginHash = $customer->auto_login_hash;
 
         // 3) login again (simulate login on other device)
-        $this->httpClient->post($this->Slug->getLogin(), [
+        $this->post($this->Slug->getLogin(), [
             'email' => $userEmail,
             'passwd' => Configure::read('test.loginPassword'),
             'remember_me' => true
@@ -370,19 +376,14 @@ class CustomersControllerTest extends AppCakeTestCase
 
         // 4) hash needs to be the same as after first login
         $this->assertEquals($autoLoginHash, $customer->auto_login_hash);
+        $this->assertSession($autoLoginHash, 'Auth.User.auto_login_hash');
 
-        $cookieValue = json_decode($cookies->get('remember_me')->getValue());
+        $cookieValue = json_decode($cookie['value']);
         $this->assertEquals($customer->auto_login_hash, $cookieValue->auto_login_hash);
 
         // 5) logout
-        $this->httpClient->doFoodCoopShopLogout();
-        $cookies = $this->httpClient->cookies();
-        $this->assertFalse($cookies->has('remember_me'));
-    }
-
-    private function checkForMainErrorMessage($response)
-    {
-        $this->assertRegExpWithUnquotedString(__('Errors_while_saving!'), $response);
+        $this->logout();
+        $this->assertCookieNotSet('remember_me');
     }
 
     /**
@@ -391,8 +392,7 @@ class CustomersControllerTest extends AppCakeTestCase
      */
     private function addCustomer($data)
     {
-        $this->httpClient->followOneRedirectForNextRequest();
-        $this->httpClient->post($this->Slug->getRegistration(), $data);
-        return $this->httpClient->getContent();
+        $this->post($this->Slug->getRegistration(), $data);
+        return $this->_response;
     }
 }

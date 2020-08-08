@@ -1,11 +1,15 @@
 <?php
 
+use App\Application;
 use App\Model\Table\ConfigurationsTable;
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 use Cake\I18n\FrozenTime;
-use App\Application;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
+use Cake\TestSuite\EmailTrait;
+
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,6 +27,11 @@ use Cake\Core\Configure;
 
 class CheckCreditBalanceShellTest extends AppCakeTestCase
 {
+
+    use AppIntegrationTestTrait;
+    use EmailTrait;
+    use LoginTrait;
+
     public $EmailLog;
     public $commandRunner;
 
@@ -42,7 +51,7 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
 
     public function testEmailSentWithIsCashlessPaymentTypeManual() {
 
-        $this->loginAsCustomerWithHttpClient();
+        $this->loginAsCustomer();
         $this->addProductToCart(346, 20);
         $this->finishCart();
         $this->logout();
@@ -65,7 +74,7 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
 
     public function testEmailSentWithIsCashlessPaymentTypeListUpload() {
 
-        $this->loginAsCustomerWithHttpClient();
+        $this->loginAsCustomer();
         $this->addProductToCart(346, 20);
         $this->finishCart();
         $this->logout();
