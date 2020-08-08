@@ -5,7 +5,6 @@ use App\View\Helper\MyHtmlHelper;
 use App\View\Helper\MyTimeHelper;
 use App\View\Helper\PricePerUnitHelper;
 use App\View\Helper\SlugHelper;
-use App\Network\AppHttpClient;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Filesystem\Folder;
@@ -48,16 +47,12 @@ abstract class AppCakeTestCase extends TestCase
 
     public $Manufacturer;
 
-    public $httpClient;
-
     /**
      * called before every test method
      */
     public function setUp(): void
     {
         parent::setUp();
-
-        $this->initHttpClient();
 
         $View = new View();
         $this->Slug = new SlugHelper($View);
@@ -110,61 +105,30 @@ abstract class AppCakeTestCase extends TestCase
         $this->dbConnection->query(file_get_contents($this->testDumpDir . 'test-db-data.sql'));
     }
 
-    public function initHttpClient()
+    protected function getJsonDecodedContent()
     {
-        $this->httpClient = new AppHttpClient([
-            'headers' => [
-                'x-unit-test-mode' => true
-            ]
-        ]);
-        $this->httpClient->loginEmail = Configure::read('test.loginEmailSuperadmin');
-        $this->httpClient->loginPassword = Configure::read('test.loginPassword');
+        return json_decode($this->_getBodyAsString());
     }
 
     protected function assertJsonError()
     {
-        $response = $this->httpClient->getJsonDecodedContent();
-        $this->assertEquals(0, $response->status, 'json status should be "0"');
-    }
-
-    protected function assert200OkHeader()
-    {
-        $this->assertEquals(200, $this->httpClient->getStatusCode());
-    }
-
-    protected function assert401UnauthorizedHeader()
-    {
-        $this->assertEquals(401, $this->httpClient->getStatusCode());
-    }
-
-    protected function assert403ForbiddenHeader()
-    {
-        $this->assertEquals(403, $this->httpClient->getStatusCode());
-    }
-
-    protected function assertAccessDeniedMessage()
-    {
-        $this->assertRegExpWithUnquotedString('Zugriff verweigert, bitte melde dich an.', $this->httpClient->getContent());
+        $response = $this->getJsonDecodedContent();
+        $this->assertEquals(0, $response->status);
     }
 
     protected function assertAccessDeniedFlashMessage() {
         $this->assertFlashMessage('Zugriff verweigert, bitte melde dich an.');
     }
 
-    protected function assert404NotFoundHeader()
-    {
-        $this->assertEquals(404, $this->httpClient->getStatusCode());
-    }
-
     protected function assertRedirectToLoginPage()
     {
-        $this->assertRegExpWithUnquotedString($this->httpClient->baseUrl . $this->Slug->getLogin(), $this->httpClient->getUrl(), 'redirect to login page failed');
+        $this->assertRegExpWithUnquotedString('http://localhost' .  $this->Slug->getLogin(), $this->_response->getHeaderLine('Location'));
     }
 
     protected function assertJsonOk()
     {
-        $response = $this->httpClient->getJsonDecodedContent();
-        $this->assertEquals(1, $response->status, 'json status should be "1", msg: ' . $response->msg);
+        $response = $this->getJsonDecodedContent();
+        $this->assertEquals(1, $response->status);
     }
 
     /**
@@ -172,7 +136,7 @@ abstract class AppCakeTestCase extends TestCase
      */
     protected function assertNotPerfectlyImplementedAccessRestricted()
     {
-        $this->assertEquals(Configure::read('app.cakeServerName') . '/', $this->httpClient->getUrl());
+        $this->assertEquals('http://localhost/', $this->_response->getHeaderLine('Location'));
     }
 
     /**
@@ -262,7 +226,6 @@ abstract class AppCakeTestCase extends TestCase
 
     /**
      * needs to login as superadmin and logs user out automatically
-     * eventually create a new httpClient instance for this method
      *
      * @param string $configKey
      * @param string $newValue
@@ -304,11 +267,11 @@ abstract class AppCakeTestCase extends TestCase
      */
     protected function addProductToCart($productId, $amount)
     {
-        $this->httpClient->ajaxPost('/warenkorb/ajaxAdd/', [
+        $this->ajaxPost('/warenkorb/ajaxAdd/', [
             'productId' => $productId,
             'amount' => $amount
         ]);
-        return $this->httpClient->getJsonDecodedContent();
+        return $this->getJsonDecodedContent();
     }
 
     protected function finishCart($general_terms_and_conditions_accepted = 1, $cancellation_terms_accepted = 1, $comment = '', $timebaseCurrencyTimeSum = null, $pickupDay = null)
@@ -322,7 +285,7 @@ abstract class AppCakeTestCase extends TestCase
 
         if ($comment != '') {
             $data['Carts']['pickup_day_entities'][0] = [
-                'customer_id' => $this->httpClient->getLoggedUserId(),
+                'customer_id' => $this->getUserId(),
                 'pickup_day' => !is_null($pickupDay) ? $pickupDay : Configure::read('app.timeHelper')->getDeliveryDateByCurrentDayForDb(),
                 'comment' => $comment,
             ];
@@ -336,8 +299,9 @@ abstract class AppCakeTestCase extends TestCase
             $data['Carts']['pickup_day'] = $pickupDay;
         }
 
-        $this->httpClient->post(
-            $this->Slug->getCartFinish(), $data
+        $this->post(
+            $this->Slug->getCartFinish(),
+            $data,
         );
     }
 
@@ -368,7 +332,7 @@ abstract class AppCakeTestCase extends TestCase
      */
     protected function changeProductPrice($productId, $price, $pricePerUnitEnabled = false, $priceInclPerUnit = 0, $priceUnitName = '', $priceUnitAmount = 0, $priceQuantityInUnits = 0)
     {
-        $this->httpClient->ajaxPost('/admin/products/editPrice', [
+        $this->ajaxPost('/admin/products/editPrice', [
             'productId' => $productId,
             'price' => $price,
             'pricePerUnitEnabled' => $pricePerUnitEnabled,
@@ -377,14 +341,13 @@ abstract class AppCakeTestCase extends TestCase
             'priceUnitAmount' => $priceUnitAmount,
             'priceQuantityInUnits' => $priceQuantityInUnits
         ]);
-        return $this->httpClient->getJsonDecodedContent();
+        return $this->getJsonDecodedContent();
     }
 
-    // TODO as soon as this method is refactured to not use httpClient any more (#404)
-    // remember that it's already available in ProductsFrontendController - avoid cuplicate code!
+    // remember that it's already available in ProductsFrontendControllerTest - avoid duplicate code!
     protected function changeProductDeliveryRhythm($productId, $deliveryRhythmType, $deliveryRhythmFirstDeliveryDay = '', $deliveryRhythmOrderPossibleUntil = '', $deliveryRhythmSendOrderListWeekday = '', $deliveryRhythmSendOrderListDay = '')
     {
-        $this->httpClient->ajaxPost('/admin/products/editDeliveryRhythm', [
+        $this->ajaxPost('/admin/products/editDeliveryRhythm', [
             'productIds' => [$productId],
             'deliveryRhythmType' => $deliveryRhythmType,
             'deliveryRhythmFirstDeliveryDay' => $deliveryRhythmFirstDeliveryDay,
@@ -392,7 +355,7 @@ abstract class AppCakeTestCase extends TestCase
             'deliveryRhythmSendOrderListWeekday' => $deliveryRhythmSendOrderListWeekday,
             'deliveryRhythmSendOrderListDay' => $deliveryRhythmSendOrderListDay,
         ]);
-        return $this->httpClient->getJsonDecodedContent();
+        return $this->getJsonDecodedContent();
     }
 
     protected function changeManufacturer($manufacturerId, $field, $value)
@@ -415,43 +378,6 @@ abstract class AppCakeTestCase extends TestCase
         ];
         $statement = $this->dbConnection->prepare($query);
         return $statement->execute($params);
-    }
-
-    protected function logout()
-    {
-        $this->httpClient->doFoodCoopShopLogout();
-    }
-
-    protected function loginAsSuperadmin()
-    {
-        $this->httpClient->loginEmail = Configure::read('test.loginEmailSuperadmin');
-        $this->httpClient->doFoodCoopShopLogin();
-    }
-
-    protected function loginAsAdmin()
-    {
-        $this->httpClient->loginEmail = Configure::read('test.loginEmailAdmin');
-        $this->httpClient->doFoodCoopShopLogin();
-    }
-
-    //login with httpClient
-    //ToDo delete when no tests use httpClient anymore
-    protected function loginAsCustomerWithHttpClient()
-    {
-        $this->httpClient->loginEmail = Configure::read('test.loginEmailCustomer');
-        $this->httpClient->doFoodCoopShopLogin();
-    }
-
-    protected function loginAsMeatManufacturer()
-    {
-        $this->httpClient->loginEmail = Configure::read('test.loginEmailMeatManufacturer');
-        $this->httpClient->doFoodCoopShopLogin();
-    }
-
-    protected function loginAsVegetableManufacturer()
-    {
-        $this->httpClient->loginEmail = Configure::read('test.loginEmailVegetableManufacturer');
-        $this->httpClient->doFoodCoopShopLogin();
     }
 
     protected function prepareTimebasedCurrencyConfiguration($reducedMaxPercentage)

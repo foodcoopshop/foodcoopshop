@@ -83,7 +83,7 @@ class ListsController extends AdminAppController
                     ]
                 ])->first();
 
-                $productListLink = '/admin/lists/getOrderList?file=' . str_replace(Configure::read('app.folder_order_lists').'/', '', $name);
+                $productListLink = '/admin/lists/getOrderList?file=' . str_replace(Configure::read('app.folder_order_lists') . DS, '', $name);
                 $productListLink = str_replace(DS, '/', $productListLink);
                 $customerListLink = preg_replace(
                     '/' . str_replace(' ', '_', __d('admin', 'Order_list')) . '_' . $matches[1] . '/',
@@ -126,7 +126,7 @@ class ListsController extends AdminAppController
 
     public function getOrderList()
     {
-        $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder_order_lists')) . DS . h($this->getRequest()->getQuery('file'));
+        $filenameWithPath = Configure::read('app.folder_order_lists') . DS . h($this->getRequest()->getQuery('file'));
 
         if ($this->AppAuth->isManufacturer()) {
             preg_match('/'.__d('admin', '_Order_list_filename_').'('.__d('admin', 'product').'|'.__d('admin', 'member').'|Artikel)/', h($this->getRequest()->getQuery('file')), $matches);
@@ -139,13 +139,13 @@ class ListsController extends AdminAppController
             }
         }
 
-        $this->getFile($filenameWithPath);
+        return $this->getFile($filenameWithPath);
     }
 
     public function getInvoice()
     {
-        $filenameWithPath = str_replace(ROOT, '', Configure::read('app.folder_invoices')) . DS . h($this->getRequest()->getQuery('file'));
-        $this->getFile($filenameWithPath);
+        $filenameWithPath = Configure::read('app.folder_invoices') . DS . h($this->getRequest()->getQuery('file'));
+        return $this->getFile($filenameWithPath);
     }
 
     /**
@@ -153,10 +153,23 @@ class ListsController extends AdminAppController
      */
     private function getFile($filenameWithPath)
     {
-        $explodedString = explode('\\', $filenameWithPath);
-        header('Content-Type: application/pdf');
-        header('Content-Disposition: inline; filename="' . $explodedString[count($explodedString) - 1] . '"');
-        readfile(ROOT . $filenameWithPath);
-        exit; // $this->autoRender = false; is not enough!
+
+        $this->disableAutoRender();
+
+        $filenameWithPath = str_replace(DS.DS, '/', $filenameWithPath);
+        $filenameWithPath = str_replace(DS, '/', $filenameWithPath);
+        $explodedString = explode('/', $filenameWithPath);
+
+        $filenameWithoutPath = $explodedString[count($explodedString) - 1 ];
+
+        $this->response = $this->response->withType('pdf');
+        $this->response = $this->response->withFile(
+            $filenameWithPath,
+            [
+                'name' => $filenameWithoutPath,
+            ]
+        );
+
+        return;
     }
 }

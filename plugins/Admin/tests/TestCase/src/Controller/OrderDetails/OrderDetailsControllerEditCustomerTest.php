@@ -64,7 +64,7 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         $this->editCustomerAmount = 2;
         $this->addProductToCart($productId, $amount);
         $this->finishCart();
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
 
@@ -98,7 +98,7 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         $this->editCustomerAmount = 2;
         $this->addProductToCart($productId, $amount);
         $this->finishCart();
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
 
@@ -126,7 +126,7 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
 
     private function editOrderDetailCustomer($orderDetailId, $customerId, $editCustomerReason, $amount)
     {
-        $this->httpClient->post(
+        $this->post(
             '/admin/order-details/editCustomer/',
             [
                 'orderDetailId' => $orderDetailId,

@@ -23,10 +23,10 @@ class AppMarshaller extends Marshaller
      * {@inheritDoc}
      * @see \Cake\ORM\Marshaller::_validate()
      */
-    protected function _validate($data, $options, $isNew): array
+    protected function _validate(array $data, array $options, bool $isNew): array
     {
         $errors = parent::_validate($data, $options, $isNew);
-        if (!empty($errors)) {
+        if (!empty($errors) && !(php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]))) {
             Log::write('error', json_encode($errors));
         }
         return $errors;

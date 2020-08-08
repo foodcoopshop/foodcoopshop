@@ -412,7 +412,7 @@ class ManufacturersTable extends AppTable
         $sql .= $this->getFieldsForProductListQuery();
         $sql .= "FROM ".$this->tablePrefix."product Products ";
         $sql .= $this->getJoinsForProductListQuery();
-        $sql .= $this->getConditionsForProductListQuery();
+        $sql .= $this->getConditionsForProductListQuery($appAuth);
         $sql .= "AND Manufacturers.id_manufacturer = :manufacturerId";
         $sql .= $this->getOrdersForProductListQuery();
 
@@ -420,7 +420,7 @@ class ManufacturersTable extends AppTable
             'manufacturerId' => $manufacturerId,
             'active' => APP_ON
         ];
-        if (! $this->getLoggedUser()) {
+        if (empty($appAuth->user())) {
             $params['isPrivate'] = APP_OFF;
         }
 

@@ -15,10 +15,17 @@
 
 namespace App\Test\TestCase;
 
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
+use Cake\TestSuite\EmailTrait;
 
 abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
 {
+
+    use AppIntegrationTestTrait;
+    use EmailTrait;
+    use LoginTrait;
 
     public $Manufacturer;
 
@@ -49,7 +56,7 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         $this->addProductToCart(344, 1); // addProductToCart needs to be called twice!
         $this->addProductToCart(346, 2);
         $this->finishCart(1, 1, '', '352');
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
         return $cart;
     }
@@ -127,7 +134,7 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         $this->addProductToCart($this->productIdA, $productAAmount);
         $this->addProductToCart($this->productIdB, $productBAmount);
         $this->finishCart();
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
         return $cart;
     }

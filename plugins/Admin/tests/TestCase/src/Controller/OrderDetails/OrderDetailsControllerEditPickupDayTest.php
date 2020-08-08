@@ -65,7 +65,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
 
     private function editPickupDayOfOrderDetails($orderDetailIds, $pickupDay, $reason)
     {
-        $this->httpClient->ajaxPost(
+        $this->ajaxPost(
             '/admin/order-details/editPickupDay/',
             [
                 'orderDetailIds' => $orderDetailIds,
@@ -73,7 +73,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
                 'editPickupDayReason' => $reason
             ]
         );
-        return $this->httpClient->getJsonDecodedContent();
+        return $this->getJsonDecodedContent();
     }
 
 }

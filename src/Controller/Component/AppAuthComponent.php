@@ -2,7 +2,6 @@
 
 namespace App\Controller\Component;
 
-use App\Network\AppSession;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
@@ -192,8 +191,7 @@ class AppAuthComponent extends AuthComponent
 
     public function isInstantOrderMode()
     {
-        $session = new AppSession();
-        return $session->check('Auth.instantOrderCustomer');
+        return $this->getController()->getRequest()->getSession()->read('Auth.instantOrderCustomer');
     }
 
     public function isSelfServiceModeByUrl()
@@ -249,7 +247,7 @@ class AppAuthComponent extends AuthComponent
         $cartType = $this->getCartType();
 
         $cart = FactoryLocator::get('Table')->get('Carts');
-        return $cart->getCart($this->getUserId(), $cartType);
+        return $cart->getCart($this, $cartType);
     }
 
     public function isTimebasedCurrencyEnabledForManufacturer()

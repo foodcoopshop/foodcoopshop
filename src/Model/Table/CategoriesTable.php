@@ -141,7 +141,7 @@ class CategoriesTable extends AppTable
         $params = [
             'active' => APP_ON
         ];
-        if (! $this->getLoggedUser()) {
+        if (empty($appAuth->user())) {
             $params['isPrivate'] = APP_OFF;
         }
 
@@ -155,7 +155,7 @@ class CategoriesTable extends AppTable
         }
 
         $sql .= $this->getJoinsForProductListQuery();
-        $sql .= $this->getConditionsForProductListQuery();
+        $sql .= $this->getConditionsForProductListQuery($appAuth);
 
         if (! $filterByNewProducts) {
             $params['categoryId'] = $categoryId;

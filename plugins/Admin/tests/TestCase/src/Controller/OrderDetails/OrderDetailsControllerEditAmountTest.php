@@ -28,7 +28,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->loginAsSuperadmin();
         $this->mockCart = $this->generateAndGetCart(1, 2);
         $this->editOrderDetailAmount($this->mockCart->cart_products[1]->order_detail->id_order_detail, -1, $this->editAmountReason);
-        $this->assertEquals($this->httpClient->getJsonDecodedContent()->msg, 'Die Anzahl ist nicht gültig.');
+        $this->assertEquals($this->getJsonDecodedContent()->msg, 'Die Anzahl ist nicht gültig.');
     }
 
     public function testEditOrderDetailAmountAsManufacturer()
@@ -137,7 +137,7 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
 
     private function editOrderDetailAmount($orderDetailId, $productAmount, $editAmountReason)
     {
-        $this->httpClient->post(
+        $this->ajaxPost(
             '/admin/order-details/editProductAmount/',
             [
                 'orderDetailId' => $orderDetailId,

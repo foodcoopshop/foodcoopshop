@@ -26,7 +26,7 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
     {
         $this->loginAsVegetableManufacturer();
         $this->editOrderDetailPrice($this->orderDetailIdA, -1, $this->editPriceReason);
-        $this->assertEquals($this->httpClient->getJsonDecodedContent()->msg, 'Der Preis ist nicht gültig.');
+        $this->assertEquals($this->getJsonDecodedContent()->msg, 'Der Preis ist nicht gültig.');
     }
 
     public function testEditOrderDetailPriceAsManufacturer()
@@ -109,7 +109,7 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
 
     private function editOrderDetailPrice($orderDetailId, $productPrice, $editPriceReason)
     {
-        $this->httpClient->post(
+        $this->post(
             '/admin/order-details/editProductPrice/',
             [
                 'orderDetailId' => $orderDetailId,

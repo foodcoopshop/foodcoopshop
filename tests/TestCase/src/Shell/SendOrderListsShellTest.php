@@ -1,9 +1,12 @@
 <?php
 
 use App\Application;
+use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
+use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
-use App\Test\TestCase\AppCakeTestCase;
+use Cake\TestSuite\EmailTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -21,6 +24,11 @@ use App\Test\TestCase\AppCakeTestCase;
 
 class SendOrderListsShellTest extends AppCakeTestCase
 {
+
+    use AppIntegrationTestTrait;
+    use EmailTrait;
+    use LoginTrait;
+
     public $EmailLog;
     public $Order;
     public $commandRunner;
@@ -51,7 +59,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
         $this->addProductToCart($productId, 1);
         $this->finishCart();
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
 
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
@@ -174,7 +182,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->addProductToCart(344, 1); //knoblauch
         $this->addProductToCart(163, 1); //mangold
         $this->finishCart();
-        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->httpClient->getUrl());
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
 
         $orderDetailIdWeeklyA = $cart->cart_products[0]->order_detail->id_order_detail;
@@ -315,10 +323,10 @@ class SendOrderListsShellTest extends AppCakeTestCase
     public function testContentOfOrderList()
     {
         $this->loginAsSuperadmin();
-        $this->httpClient->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
+        $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderList.html');
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertRegExpWithUnquotedString($expectedResult, $this->httpClient->getContent());
+        $this->assertResponseContains($expectedResult);
     }
 
     public function testSendOrderListWithCustomerCanSelectPickupDay()

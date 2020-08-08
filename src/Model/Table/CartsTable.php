@@ -120,8 +120,10 @@ class CartsTable extends AppTable
      * @param int $customerId
      * @return array
      */
-    public function getCart($customerId, $cartType)
+    public function getCart($appAuth, $cartType)
     {
+
+        $customerId = $appAuth->getUserId();
 
         $cart = $this->find('all', [
             'conditions' => [
@@ -177,9 +179,9 @@ class CartsTable extends AppTable
             }
 
             if (!empty($cartProduct->product_attribute->product_attribute_combination)) {
-                $productData = $this->prepareProductAttribute($cartProduct);
+                $productData = $this->prepareProductAttribute($appAuth, $cartProduct);
             } else {
-                $productData = $this->prepareMainProduct($cartProduct);
+                $productData = $this->prepareMainProduct($appAuth, $cartProduct);
             }
 
             $productImage = Configure::read('app.htmlHelper')->image(Configure::read('app.htmlHelper')->getProductImageSrc($imageId, 'home'));
@@ -274,11 +276,10 @@ class CartsTable extends AppTable
         return $cart;
     }
 
-    private function addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece)
+    private function addTimebasedCurrencyProductData($appAuth, $productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece)
     {
         $manufacturersTable = FactoryLocator::get('Table')->get('Manufacturers');
-
-        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && is_array($this->getLoggedUser()) && $this->getLoggedUser()['timebased_currency_enabled']) {
+        if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED') && !empty($appAuth->user()) && $appAuth->user('timebased_currency_enabled')) {
             if ($manufacturersTable->getOptionTimebasedCurrencyEnabled($cartProduct->product->manufacturer->timebased_currency_enabled)) {
                 $manufacturerLimitReached = $manufacturersTable->hasManufacturerReachedTimebasedCurrencyLimit($cartProduct->product->id_manufacturer);
                 if (!$manufacturerLimitReached) {
@@ -311,7 +312,7 @@ class CartsTable extends AppTable
      * @param CartProductsTable $cartProduct
      * @return array
      */
-    private function prepareMainProduct($cartProduct)
+    private function prepareMainProduct($appAuth, $cartProduct)
     {
 
         $productsTable = FactoryLocator::get('Table')->get('Products');
@@ -394,7 +395,7 @@ class CartsTable extends AppTable
         $productData['unitAmount'] = $unitAmount;
         $productData['priceInclPerUnit'] = $priceInclPerUnit;
 
-        $productData = $this->addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece);
+        $productData = $this->addTimebasedCurrencyProductData($appAuth, $productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece);
 
         return $productData;
 
@@ -404,7 +405,7 @@ class CartsTable extends AppTable
      * @param CartProductsTable $cartProduct
      * @return array
      */
-    private function prepareProductAttribute($cartProduct)
+    private function prepareProductAttribute($appAuth, $cartProduct)
     {
 
         $productsTable = FactoryLocator::get('Table')->get('Products');
@@ -493,7 +494,7 @@ class CartsTable extends AppTable
         $productData['unitAmount'] = $unitAmount;
         $productData['priceInclPerUnit'] = $priceInclPerUnit;
 
-        $productData = $this->addTimebasedCurrencyProductData($productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece);
+        $productData = $this->addTimebasedCurrencyProductData($appAuth, $productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece);
 
         return $productData;
 

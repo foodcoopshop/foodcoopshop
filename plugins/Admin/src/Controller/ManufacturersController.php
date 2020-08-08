@@ -858,7 +858,7 @@ class ManufacturersController extends AdminAppController
         ]);
 
         if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
-            die($pdfWriter->writeHtml());
+            return $this->response->withStringBody($pdfWriter->writeHtml());
         }
 
         die($pdfWriter->writeInline());
@@ -892,7 +892,7 @@ class ManufacturersController extends AdminAppController
         ]);
 
         if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
-            die($pdfWriter->writeHtml());
+            return $this->response->withStringBody($pdfWriter->writeHtml());
         }
 
         die($pdfWriter->writeInline());
@@ -915,7 +915,7 @@ class ManufacturersController extends AdminAppController
         ]);
 
         if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
-            die($pdfWriter->writeHtml());
+            return $this->response->withStringBody($pdfWriter->writeHtml());
         }
 
         die($pdfWriter->writeInline());

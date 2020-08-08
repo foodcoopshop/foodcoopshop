@@ -30,7 +30,6 @@ before_script:
   - composer install --optimize-autoloader
   - cp ./config/travis/* ./config/
   - npm --prefix ./webroot install ./webroot
-  - bash ./bin/cake asset_compress build
   # Apache Install, runs as www-data:www-data
   - sudo apt-get install apache2 libapache2-mod-fastcgi
   # enable php-fpm, runs as travis:travis

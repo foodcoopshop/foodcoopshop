@@ -95,7 +95,6 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
 
         if (empty($payment)) {
             $message = 'payment id ('.$paymentId.') not correct or already approved (approval: 1)';
-            $this->log($message);
             $this->set([
                 'status' => 0,
                 'msg' => $message,
@@ -199,7 +198,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
             $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
             $message = 'Die Zeiteintragung ';
             if ($payment->working_day) {
-                $message .= ' für den ' . $payment->working_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' ';
+                $message .= 'für den ' . $payment->working_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . ' ';
             }
             $message .= '<b>(' . Configure::read('app.timebasedCurrencyHelper')->formatSecondsToTimebasedCurrency($payment->seconds) . ')</b>';
 

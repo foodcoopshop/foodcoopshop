@@ -135,13 +135,26 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
 
     private function assertOrderDetailDeletedEmails($emailLogIndex, $expectedToEmails, $expectedCcEmails)
     {
+        //TODO test subject with EmailTrait
         $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs($emailLogs[$emailLogIndex], 'Produkt storniert: Artischocke : Stück', [$this->cancellationReason, '1,82', 'Demo Gemüse-Hersteller'], $expectedToEmails, $expectedCcEmails);
+        $this->assertEquals($emailLogs[$emailLogIndex]->subject, 'Produkt storniert: Artischocke : Stück');
+
+        foreach($expectedToEmails as $expectedToEmail) {
+            $this->assertMailSentToAt($emailLogIndex, $expectedToEmail);
+        }
+        foreach($expectedCcEmails as $expectedCcEmail) {
+            $this->assertMailSentWithAt($emailLogIndex, $expectedCcEmail, 'cc');
+        }
+
+        $this->assertMailContainsHtmlAt($emailLogIndex, $this->cancellationReason);
+        $this->assertMailContainsHtmlAt($emailLogIndex, '1,82');
+        $this->assertMailContainsHtmlAt($emailLogIndex, 'Demo Gemüse-Hersteller');
+
     }
 
     private function deleteOrderDetail($orderDetailIds, $cancellationReason)
     {
-        $this->httpClient->post(
+        $this->ajaxPost(
             '/admin/order-details/delete/',
             [
                 'orderDetailIds' => $orderDetailIds,
