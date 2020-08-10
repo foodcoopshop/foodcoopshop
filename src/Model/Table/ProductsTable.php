@@ -286,8 +286,8 @@ class ProductsTable extends AppTable
                 throw new InvalidParameterException('change status is not allowed for product attributes');
             }
             $status = $product[$ids['productId']];
-            $whitelist = [APP_OFF, APP_ON];
-            if (!in_array($status, $whitelist, true)) { // last param for type check
+            $allowed = [APP_OFF, APP_ON];
+            if (!in_array($status, $allowed, true)) { // last param for type check
                 throw new InvalidParameterException('Products.active for product ' .$ids['productId'] . ' needs to be ' .APP_OFF . ' or ' . APP_ON.'; was: ' . $status);
             } else {
                 $products2save[] = [
@@ -590,8 +590,8 @@ class ProductsTable extends AppTable
                 throw new InvalidParameterException('change is_stock_product is not allowed for product attributes');
             }
             $isStockProduct = (int) $product[$ids['productId']];
-            $whitelist = [APP_OFF, APP_ON];
-            if (!in_array($isStockProduct, $whitelist, true)) { // last param for type check
+            $allowed = [APP_OFF, APP_ON];
+            if (!in_array($isStockProduct, $allowed, true)) { // last param for type check
                 throw new InvalidParameterException('Products.is_stock_product for product ' .$ids['productId'] . ' needs to be ' .APP_OFF . ' or ' . APP_ON.'; was: ' . $isStockProduct);
             } else {
                 $products2save[] = [

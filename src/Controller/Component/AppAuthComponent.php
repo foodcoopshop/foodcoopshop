@@ -207,14 +207,14 @@ class AppAuthComponent extends AuthComponent
     {
         $result = false;
         $serverParams = $this->getController()->getRequest()->getServerParams();
-        $requestUriWhitelist = [
+        $requestUriAllowed = [
             '/' . __('route_cart') . '/ajaxAdd/',
             '/' . __('route_cart') . '/ajaxRemove/'
         ];
         if (isset($serverParams['HTTP_REFERER'])) {
             $result = preg_match('`' . preg_quote(Configure::read('app.cakeServerName')) . '/' . __('route_self_service') . '`', $serverParams['HTTP_REFERER']);
         }
-        if (!in_array($serverParams['REQUEST_URI'], $requestUriWhitelist)) {
+        if (!in_array($serverParams['REQUEST_URI'], $requestUriAllowed)) {
             $result = false;
         }
         return $result;
