@@ -30,7 +30,9 @@ use Cake\Core\Configure;
             <ul style="padding-left: 10px;">
                 <li><?php echo __d('admin', 'Price'); ?>: <b><?php echo $this->MyNumber->formatAsCurrency($orderDetail->total_price_tax_incl); ?></b></li>
                 <li><?php echo __d('admin', 'Amount'); ?>: <b><?php echo $orderDetail->product_amount; ?></b></li>
-                <li><?php echo __d('admin', 'Manufacturer'); ?>: <b><?php echo $orderDetail->product->manufacturer->name; ?></b></li>
+                <?php if (Configure::read('app.showManufacturerListAndDetailPage')) { ?>
+                    <li><?php echo __d('admin', 'Manufacturer'); ?>: <b><?php echo $orderDetail->product->manufacturer->name; ?></b></li>
+                <?php } ?>
                 <li><?php echo __d('admin', 'Order_date'); ?>: <b><?php echo $orderDetail->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')); ?></b></li>
             </ul>
 
