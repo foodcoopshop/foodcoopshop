@@ -5,8 +5,6 @@ namespace App\Controller;
 use Cake\Event\EventInterface;
 
 /**
- * FrontendController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
