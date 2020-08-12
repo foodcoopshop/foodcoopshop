@@ -48,10 +48,13 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertEquals(0.55, $changedOrderDetails[0]->order_detail_tax->unit_amount);
         $this->assertEquals(1.10, $changedOrderDetails[0]->order_detail_tax->total_amount);
 
-        $expectedToEmails = [Configure::read('test.loginEmailSuperadmin')];
-        $expectedCcEmails = [Configure::read('test.loginEmailMeatManufacturer')];
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs($emailLogs[1], 'Gewicht angepasst für "Forelle : Stück": 800,584 g', ['800,584 g', 'Demo Superadmin', 'Der Basis-Preis beträgt 1,50 € / 100 g'], $expectedToEmails, $expectedCcEmails);
+        $this->assertMailSentWithAt(1, 'Gewicht angepasst für "Forelle : Stück": 800,584 g', 'originalSubject');
+        $this->assertMailContainsHtmlAt(1, '800,584 g');
+        $this->assertMailContainsHtmlAt(1, 'Demo Superadmin');
+        $this->assertMailContainsHtmlAt(1, 'Der Basis-Preis beträgt 1,50 € / 100 g');
+
+        $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
+        $this->assertMailSentWithAt(1, Configure::read('test.loginEmailMeatManufacturer'), 'cc');
     }
 
     public function testEditOrderDetailQuantityAsSuperadminSameQuantity()
@@ -74,8 +77,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertEquals(0.48, $changedOrderDetails[0]->order_detail_tax->unit_amount);
         $this->assertEquals(0.96, $changedOrderDetails[0]->order_detail_tax->total_amount);
 
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(1, count($emailLogs));
+        $this->assertMailCount(1);
     }
 
     public function testEditOrderDetailQuantityAsSuperadminDoNotChangePrice()
@@ -98,9 +100,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertEquals($changedOrderDetails[0]->order_detail_tax->unit_amount, $changedOrderDetails[0]->order_detail_tax->unit_amount);
         $this->assertEquals($changedOrderDetails[0]->order_detail_tax->total_amount, $changedOrderDetails[0]->order_detail_tax->total_amount);
 
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(1, count($emailLogs));
-
+        $this->assertMailCount(1);
     }
 
     private function preparePricePerUnitOrder()

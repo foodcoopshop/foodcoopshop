@@ -103,8 +103,18 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
 
     private function assertOrderDetailProductPriceChangedEmails($emailLogIndex, $expectedToEmails, $expectedCcEmails)
     {
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs($emailLogs[$emailLogIndex], 'Preis angepasst: Artischocke', [$this->editPriceReason, $this->newPrice, 'Demo Gemüse-Hersteller'], $expectedToEmails, $expectedCcEmails);
+        $this->assertMailSentWithAt($emailLogIndex, 'Preis angepasst: Artischocke : Stück', 'originalSubject');
+        $this->assertMailContainsHtmlAt($emailLogIndex, 'Der Preis des Produktes <b>Artischocke : Stück</b> wurde erfolgreich angepasst.');
+        $this->assertMailContainsHtmlAt($emailLogIndex, $this->editPriceReason);
+        $this->assertMailContainsHtmlAt($emailLogIndex, $this->newPrice);
+        $this->assertMailContainsHtmlAt($emailLogIndex, 'Demo Gemüse-Hersteller');
+
+        foreach($expectedToEmails as $expectedToEmail) {
+            $this->assertMailSentToAt($emailLogIndex, $expectedToEmail);
+        }
+        foreach($expectedCcEmails as $expectedCcEmail) {
+            $this->assertMailSentWithAt($emailLogIndex, $expectedCcEmail, 'cc');
+        }
     }
 
     private function editOrderDetailPrice($orderDetailId, $productPrice, $editPriceReason)

@@ -23,7 +23,6 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
     public $editCustomerReason = 'The member forgot his product and I took it.';
     public $editCustomerAmount = 1;
 
-
     public function testEditOrderDetailCustomerAsManufacturer() {
         $this->loginAsVegetableManufacturer();
         $this->editOrderDetailCustomer($this->orderDetailIdA, $this->newCustomerId, $this->editCustomerReason, $this->editCustomerAmount);
@@ -36,22 +35,16 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
         $changedOrderDetails = $this->getOrderDetailsFromDatabase([$this->orderDetailIdA]);
         $this->assertEquals($this->newCustomerId, $changedOrderDetails[0]->id_customer);
         $this->assertEquals($this->editCustomerAmount, $changedOrderDetails[0]->product_amount);
-        $emailLogs = $this->EmailLog->find('all')->toArray();
         $recipients = [
             Configure::read('test.loginEmailAdmin'),
             Configure::read('test.loginEmailSuperadmin')
         ];
         $i = 0;
         foreach($recipients as $recipient) {
-            $this->assertEmailLogs(
-                $emailLogs[$i],
-                'Auf ein anderes Mitglied umgebucht: Artischocke : Stück',
-                [
-                    'Das bestellte Produkt <b>Artischocke : Stück</b> wurde erfolgreich von Demo Superadmin auf das Mitglied <b>Demo Admin</b> umgebucht.',
-                    $this->editCustomerReason
-                ],
-                [$recipient]
-                );
+            $this->assertMailContainsHtmlAt($i, 'Das bestellte Produkt <b>Artischocke : Stück</b> wurde erfolgreich von Demo Superadmin auf das Mitglied <b>Demo Admin</b> umgebucht.');
+            $this->assertMailContainsHtmlAt($i, $this->editCustomerReason);
+            $this->assertMailSentToAt($i, $recipient);
+            $this->assertMailSentWithAt($i, 'Auf ein anderes Mitglied umgebucht: Artischocke : Stück', 'originalSubject');
             $i++;
         }
     }
