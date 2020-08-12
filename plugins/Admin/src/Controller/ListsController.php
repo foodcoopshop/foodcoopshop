@@ -165,7 +165,6 @@ class ListsController extends AdminAppController
         $this->response = $this->response->withType('pdf');
         $this->response = $this->response->withFile(
             $filenameWithPath,
-
         );
         $this->response = $this->response->withHeader('Content-Disposition', 'inline; filename="' . $filenameWithoutPath . '"');
 
