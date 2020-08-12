@@ -41,15 +41,12 @@ class CartsControllerTest extends AppCakeTestCase
 
     public $StockAvailable;
 
-    public $EmailLog;
-
     public function setUp(): void
     {
         parent::setUp();
         $this->Cart = $this->getTableLocator()->get('Carts');
         $this->Product = $this->getTableLocator()->get('Products');
         $this->StockAvailable = $this->getTableLocator()->get('StockAvailables');
-        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
     }
 
     public function testAddLoggedOut()
@@ -148,7 +145,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($originalQuantity, $product->stock_available->quantity);
     }
 
-    public function testOrderAlwaysAvailableWithNotEnoughQuantityForEnabledStockProduct() {
+    public function testOrderAlwaysAvailableWithNotEnoughQuantityForEnabledStockProduct()
+    {
         $originalQuantity = 2;
         $this->changeManufacturer(5, 'stock_management_enabled', 1);
         $this->Product->changeIsStockProduct([[$this->productId1 => true]]);
@@ -161,7 +159,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString('Die gewünschte Anzahl <b>50</b> des Produktes <b>Artischocke</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 2', $response->msg);
     }
 
-    public function testOrderAlwaysAvailableWithNotEnoughQuantityForEnabledStockProductAttributes() {
+    public function testOrderAlwaysAvailableWithNotEnoughQuantityForEnabledStockProductAttributes()
+    {
         $originalQuantity = 2;
         $this->changeManufacturer(15, 'stock_management_enabled', 1);
         $productId = $this->Product->getProductIdAndAttributeId($this->productId2)['productId'];
@@ -415,19 +414,10 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals(1, count($pickupDayEntity));
         $this->assertEquals($pickupDay, $pickupDayEntity[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')));
 
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs(
-            $emailLogs[0],
-            'Bestellbestätigung',
-            [
-                'Abholtag: <b> ' . $this->Time->getDateFormattedWithWeekday(strtotime($pickupDay)) . '</b>',
-                'Kommentar: "<b>' . $comment . '</b>"',
-            ],
-            [
-                Configure::read('test.loginEmailSuperadmin')
-            ]
-        );
-
+        $this->assertMailSentWithAt(0, 'Bestellbestätigung', 'originalSubject');
+        $this->assertMailContainsHtmlAt(0, 'Abholtag: <b> ' . $this->Time->getDateFormattedWithWeekday(strtotime($pickupDay)) . '</b>');
+        $this->assertMailContainsHtmlAt(0, 'Kommentar: "<b>' . $comment . '</b>"');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
     }
 
     public function testFinishCartCheckboxesValidation()
@@ -485,35 +475,27 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($cart['Cart']['id_cart'], 3, 'cake cart id wrong');
         $this->assertEquals([], $cart['CartProducts'], 'cake cart products not empty');
 
-        // check email to customer
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs(
-            $emailLogs[0],
-            'Bestellbestätigung',
-            [
-                'Artischocke : Stück',
-                'Hallo Demo Superadmin,',
-                'Kommentar: "<b>' . $pickupDayComment . '</b>"',
-                'Content-Disposition: attachment; filename="Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular.pdf"',
-                'Content-Disposition: attachment; filename="Bestelluebersicht.pdf"',
-                'Content-Disposition: attachment; filename="Allgemeine-Geschaeftsbedingungen.pdf"'
-            ],
-            [
-                Configure::read('test.loginEmailSuperadmin')
-            ]
-        );
+        $this->assertMailSentWithAt(0, 'Bestellbestätigung', 'originalSubject');
+        $this->assertMailContainsHtmlAt(0, 'Hallo Demo Superadmin,');
+        $this->assertMailContainsHtmlAt(0, 'Kommentar: "<b>' . $pickupDayComment . '</b>"');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
+        $this->assertMailContainsAttachment('Informationen-ueber-Ruecktrittsrecht-und-Ruecktrittsformular.pdf');
+        $this->assertMailContainsAttachment('Bestelluebersicht.pdf');
+        $this->assertMailContainsAttachment('Allgemeine-Geschaeftsbedingungen.pdf');
 
         $this->logout();
     }
 
-    public function testProductsWithAllowedNegativeStock() {
+    public function testProductsWithAllowedNegativeStock()
+    {
         $this->changeManufacturer(5, 'stock_management_enabled', true);
         $this->loginAsCustomer();
         $this->addProductToCart(349, 8);
         $this->assertJsonOk();
     }
 
-    public function testProductsWithAllowedNegativeStockButTooHighAmount() {
+    public function testProductsWithAllowedNegativeStockButTooHighAmount()
+    {
         $this->changeManufacturer(5, 'stock_management_enabled', true);
         $this->loginAsCustomer();
         $response = $this->addProductToCart(349, 11);
@@ -521,7 +503,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
-    private function placeOrderWithStockProducts() {
+    private function placeOrderWithStockProducts()
+    {
         $stockProductId = 349;
         $stockProductAttributeId = '350-13';
         $this->addProductToCart($stockProductId, 6);
@@ -529,7 +512,8 @@ class CartsControllerTest extends AppCakeTestCase
         $this->finishCart(1, 1);
     }
 
-    public function testFinishOrderWithMultiplePickupDays() {
+    public function testFinishOrderWithMultiplePickupDays()
+    {
 
         $this->loginAsSuperadmin();
         $productIdA = 346;
@@ -541,11 +525,11 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($productIdC, 1);
         $this->finishCart(1, 1);
 
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(1, count($emailLogs));
+        $this->assertMailCount(1);
     }
 
-    public function testFinishOrderStockNotificationsIsStockProductDisabled() {
+    public function testFinishOrderStockNotificationsIsStockProductDisabled()
+    {
 
         $this->loginAsSuperadmin();
         $this->ajaxPost('/admin/products/editIsStockProduct', [
@@ -558,20 +542,18 @@ class CartsControllerTest extends AppCakeTestCase
         ]);
         $this->placeOrderWithStockProducts();
 
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(1, count($emailLogs));
+        $this->assertMailCount(1);
     }
 
-    public function testFinishOrderStockNotificationsStockManagementDisabled() {
-
+    public function testFinishOrderStockNotificationsStockManagementDisabled()
+    {
         $this->loginAsSuperadmin();
         $this->placeOrderWithStockProducts();
-
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(1, count($emailLogs));
+        $this->assertMailCount(1);
     }
 
-    public function testFinishOrderStockNotificationsDisabled() {
+    public function testFinishOrderStockNotificationsDisabled()
+    {
 
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'send_product_sold_out_limit_reached_for_manufacturer', 0);
@@ -580,8 +562,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->placeOrderWithStockProducts();
 
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(1, count($emailLogs));
+        $this->assertMailCount(1);
     }
 
     public function testFinishOrderStockNotificationsEnabled()
@@ -593,53 +574,23 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->placeOrderWithStockProducts();
 
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-
         // check email to manufacturer
-        $this->assertEmailLogs(
-            $emailLogs[0],
-            'Lagerstand für Produkt "Lagerprodukt mit Varianten : 0,5 kg": 0',
-            [
-                'Lagerstand: <b>0</b>',
-                'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>'
-            ],
-            [
-                Configure::read('test.loginEmailVegetableManufacturer')
-            ]
-        );
+        $this->assertMailSentWithAt(0, 'Lagerstand für Produkt "Lagerprodukt mit Varianten : 0,5 kg": 0', 'originalSubject');
+        $this->assertMailContainsHtmlAt(0, 'Lagerstand: <b>0</b>');
+        $this->assertMailContainsHtmlAt(0, 'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailVegetableManufacturer'));
 
         // check email to contact person
-        $this->assertEmailLogs(
-            $emailLogs[1],
-            '',
-            [],
-            [
-                Configure::read('test.loginEmailAdmin')
-            ]
-        );
+        $this->assertMailSentToAt(1, Configure::read('test.loginEmailAdmin'));
 
         // check email to manufacturer
-        $this->assertEmailLogs(
-            $emailLogs[2],
-            'Lagerstand für Produkt "Lagerprodukt": -1',
-            [
-                'Lagerstand: <b>-1</b>',
-                'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>'
-            ],
-            [
-                Configure::read('test.loginEmailVegetableManufacturer')
-            ]
-        );
+        $this->assertMailSentWithAt(2, 'Lagerstand für Produkt "Lagerprodukt": -1', 'originalSubject');
+        $this->assertMailContainsHtmlAt(2, 'Lagerstand: <b>-1</b>');
+        $this->assertMailContainsHtmlAt(2, 'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>');
+        $this->assertMailSentToAt(2, Configure::read('test.loginEmailVegetableManufacturer'));
 
         // check email to contact person
-        $this->assertEmailLogs(
-            $emailLogs[3],
-            '',
-            [],
-            [
-                Configure::read('test.loginEmailAdmin')
-            ]
-        );
+        $this->assertMailSentToAt(3, Configure::read('test.loginEmailAdmin'));
 
         $this->logout();
     }
@@ -808,21 +759,12 @@ class CartsControllerTest extends AppCakeTestCase
             $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getCurrentDateForDatabase(), 'order_detail pickup_day not correct');
         }
 
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(2, count($emailLogs));
-
-        $this->assertEmailLogs(
-            $emailLogs[0],
-            'Benachrichtigung über Sofort-Bestellung',
-            [
-                'Milch : 0,5l',
-                'Hallo Demo,',
-                '1,86'
-            ],
-            [
-                Configure::read('test.loginEmailMilkManufacturer')
-            ]
-        );
+        $this->assertMailCount(2);
+        $this->assertMailSentWithAt(0, 'Benachrichtigung über Sofort-Bestellung', 'originalSubject');
+        $this->assertMailContainsHtmlAt(0, 'Milch : 0,5l');
+        $this->assertMailContainsHtmlAt(0, 'Hallo Demo,');
+        $this->assertMailContainsHtmlAt(0, '1,86');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailMilkManufacturer'));
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $actionLogs = $this->ActionLog->find('all', [])->toArray();
