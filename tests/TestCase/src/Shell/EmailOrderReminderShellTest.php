@@ -19,49 +19,60 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
+use Cake\TestSuite\EmailTrait;
 
 class EmailOrderReminderShellTest extends AppCakeTestCase
 {
     use AppIntegrationTestTrait;
+    use EmailTrait;
     use LoginTrait;
 
-    public $EmailLog;
     public $commandRunner;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
         $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
     public function testNoActiveOrder()
     {
         $this->commandRunner->run(['cake', 'email_order_reminder']);
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(3, count($emailLogs), 'amount of sent emails wrong');
-        $this->assertEmailLogs($emailLogs[0], 'Bestell-Erinnerung', ['Hallo Demo Admin,', 'ist schon wieder der letzte Bestelltag'], [Configure::read('test.loginEmailAdmin')]);
-        $this->assertEmailLogs($emailLogs[1], 'Bestell-Erinnerung', ['Hallo Demo Mitglied,', 'ist schon wieder der letzte Bestelltag'], [Configure::read('test.loginEmailCustomer')]);
-        $this->assertEmailLogs($emailLogs[2], 'Bestell-Erinnerung', ['Hallo Demo Superadmin,', 'ist schon wieder der letzte Bestelltag'], [Configure::read('test.loginEmailSuperadmin')]);
+
+        $this->assertMailCount(3);
+
+        $this->assertMailSentWithAt(0, 'Bestell-Erinnerung FoodCoop Test', 'originalSubject');
+        $this->assertMailContainsHtmlAt(0, 'Hallo Demo Admin,');
+        $this->assertMailContainsHtmlAt(0, 'ist schon wieder der letzte Bestelltag');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailAdmin'));
+
+        $this->assertMailSentWithAt(1, 'Bestell-Erinnerung FoodCoop Test', 'originalSubject');
+        $this->assertMailContainsHtmlAt(1, 'Hallo Demo Mitglied,');
+        $this->assertMailContainsHtmlAt(1, 'ist schon wieder der letzte Bestelltag');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailCustomer'));
+
+        $this->assertMailSentWithAt(2, 'Bestell-Erinnerung FoodCoop Test', 'originalSubject');
+        $this->assertMailContainsHtmlAt(2, 'Hallo Demo Superadmin,');
+        $this->assertMailContainsHtmlAt(2, 'ist schon wieder der letzte Bestelltag');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
+
     }
 
     public function testGlobalDeliveryBreakEnabledAndNextDeliveryDay()
     {
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', '2019-11-01');
         $this->commandRunner->run(['cake', 'email_order_reminder', '2019-10-27']);
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(0, count($emailLogs));
+        $this->assertMailCount(0);
     }
 
     public function testGlobalDeliveryBreakEnabledAndNotNextDeliveryDay()
     {
         $this->changeConfiguration('FCS_NO_DELIVERY_DAYS_GLOBAL', '2019-11-08');
         $this->commandRunner->run(['cake', 'email_order_reminder', '2019-10-27']);
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(3, count($emailLogs));
+        $this->assertMailCount(3);
     }
 
-    public function testActiveOrderDetail()
+    public function testActiveOrder()
     {
         $pickupDay = '2019-11-08';
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
@@ -75,9 +86,9 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
             )
         );
         $this->commandRunner->run(['cake', 'email_order_reminder', '2019-11-05']);
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(2, count($emailLogs), 'superadmin has open order and got reminder email');
-        $this->assertEmailLogs($emailLogs[0], '', ['heute'], ['fcs-demo-admin@mailinator.com']);
+        $this->assertMailCount(2);
+        $this->assertMailContainsHtmlAt(0, 'heute');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailAdmin'));
     }
 
     public function testIfServiceNotSubscribed()
@@ -85,8 +96,7 @@ class EmailOrderReminderShellTest extends AppCakeTestCase
         $query = 'UPDATE '.$this->Customer->getTable().' SET email_order_reminder = 0;';
         $this->dbConnection->query($query);
         $this->commandRunner->run(['cake', 'email_order_reminder']);
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
+        $this->assertMailCount(0);
     }
 
     public function tearDown(): void

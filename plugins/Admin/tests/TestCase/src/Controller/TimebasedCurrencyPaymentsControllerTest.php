@@ -17,6 +17,7 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
+use Cake\TestSuite\EmailTrait;
 
 class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
 {
@@ -24,15 +25,13 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use AssertPagesForErrorsTrait;
     use LoginTrait;
-
-    public $EmailLog;
+    use EmailTrait;
 
     public function setUp(): void
     {
         parent::setUp();
         $reducedMaxPercentage = 15;
         $this->prepareTimebasedCurrencyConfiguration($reducedMaxPercentage);
-        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
     }
 
     public function testAddPaymentLoggedOut()
@@ -74,27 +73,20 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
         $hours = 0.25;
         $this->loginAsMeatManufacturer();
 
+        $date = time();
         $this->post($this->Slug->getTimebasedCurrencyPaymentEdit(1), [
             'seconds' => $hours * 3600,
             'approval_comment' => $comment,
             'approval' => APP_DEL,
             'referer' => '/'
         ]);
-        $this->assertFlashMessage('Die Zeiteintragung für den ' . date('d.m.Y') . ' <b>(0,25 h)</b> von Demo Mitglied wurde geändert und eine E-Mail an Demo Mitglied verschickt.');
+        $this->assertFlashMessage('Die Zeiteintragung für den ' . date('d.m.Y', $date) . ' <b>(0,25 h)</b> von Demo Mitglied wurde geändert und eine E-Mail an Demo Mitglied verschickt.');
 
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs(
-            $emailLogs[0],
-            'Wichtige Informationen zu deiner Zeit-Eintragung vom',
-            [
-                'Hallo Demo Mitglied,',
-                'Die eingetragene Zeit wurde von <b>0,50 h</b> auf <b>0,25 h</b> angepasst.',
-                'Deine Zeit-Aufladung wurde als "da stimmt was nicht..." markiert.',
-            ],
-            [
-                Configure::read('test.loginEmailCustomer')
-            ]
-        );
+        $this->assertMailSentWithAt(0, 'Wichtige Informationen zu deiner Zeit-Eintragung vom ' . date('d.m.Y H:i', $date), 'originalSubject');
+        $this->assertMailContainsHtmlAt(0, 'Hallo Demo Mitglied,');
+        $this->assertMailContainsHtmlAt(0, 'Die eingetragene Zeit wurde von <b>0,50 h</b> auf <b>0,25 h</b> angepasst.');
+        $this->assertMailContainsHtmlAt(0, 'Deine Zeit-Aufladung wurde als "da stimmt was nicht..." markiert.');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailCustomer'));
 
     }
 
