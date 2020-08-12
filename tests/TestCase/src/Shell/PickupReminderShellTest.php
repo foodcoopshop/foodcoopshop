@@ -6,6 +6,7 @@ use Cake\I18n\FrozenTime;
 use Cake\Core\Configure;
 use App\Application;
 use Cake\Console\CommandRunner;
+use Cake\TestSuite\EmailTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,21 +24,20 @@ use Cake\Console\CommandRunner;
 
 class PickupReminderShellTest extends AppCakeTestCase
 {
-    public $EmailLog;
+    use EmailTrait;
+
     public $commandRunner;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
         $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
     public function testCustomersDoNotHaveFutureOrders()
     {
         $this->commandRunner->run(['cake', 'pickup_reminder']);
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
+        $this->assertMailCount(0);
     }
 
     public function testOneCustomerHasFutureOrdersLaterThanNextPickupDay()
@@ -45,8 +45,7 @@ class PickupReminderShellTest extends AppCakeTestCase
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->prepareOrderDetails();
         $this->commandRunner->run(['cake', 'pickup_reminder', '2018-03-10']);
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
+        $this->assertMailCount(0);
     }
 
     public function testOneCustomerHasFutureOrdersForNextPickupDay()
@@ -63,19 +62,11 @@ class PickupReminderShellTest extends AppCakeTestCase
             )
         );
         $this->commandRunner->run(['cake', 'pickup_reminder', '2018-03-10']);
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(1, count($emailLogs), 'amount of sent emails wrong');
 
-        $this->assertEmailLogs(
-            $emailLogs[0],
-            'Abhol-Erinnerung für Freitag, 16.03.2018',
-            [
-                '<li>1x Beuschl, Demo Fleisch-Hersteller</li>',
-            ],
-            [
-                Configure::read('test.loginEmailSuperadmin')
-            ]
-        );
+        $this->assertMailCount(1);
+        $this->assertMailSentWithAt(0, 'Abhol-Erinnerung für Freitag, 16.03.2018', 'originalSubject');
+        $this->assertMailContainsHtmlAt(0, '<li>1x Beuschl, Demo Fleisch-Hersteller</li>');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
 
     }
 

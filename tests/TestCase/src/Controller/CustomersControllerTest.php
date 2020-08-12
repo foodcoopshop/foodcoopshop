@@ -6,7 +6,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
-
+use Cake\TestSuite\TestEmailTransport;
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -26,14 +26,6 @@ class CustomersControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
-
-    public $EmailLog;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
-    }
 
     private function setUpProfileImageTests()
     {
@@ -126,9 +118,11 @@ class CustomersControllerTest extends AppCakeTestCase
         $this->get($this->Slug->getActivateNewPassword($customer->activate_new_password_code));
         $this->assertFlashMessage('Dein neues Passwort wurde erfolgreich aktiviert und du bist bereits eingeloggt.');
 
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs($emailLogs[0], 'Neues Passwort für FoodCoop Test', ['Bitte klicke auf folgenden Link, um dein neues Passwort zu aktivieren'], [Configure::read('test.loginEmailCustomer')]);
-        preg_match_all('/\<b\>(.*)\<\/b\>/', $emailLogs[0]->message, $matches);
+        $this->assertMailSentWithAt(0, 'Neues Passwort für FoodCoop Test', 'originalSubject');
+        $this->assertMailContainsHtmlAt(0, 'Bitte klicke auf folgenden Link, um dein neues Passwort zu aktivieren');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailCustomer'));
+
+        preg_match_all('/\<b\>(.*)\<\/b\>/', TestEmailTransport::getMessages()[0]->getBodyHtml(), $matches);
 
         $this->post($this->Slug->getLogin(), [
             'email' => Configure::read('test.loginEmailCustomer'),
@@ -196,9 +190,15 @@ class CustomersControllerTest extends AppCakeTestCase
         $email = 'new-foodcoopshop-member-1@mailinator.com';
         $this->changeConfiguration('FCS_DEFAULT_NEW_MEMBER_ACTIVE', 0);
         $this->saveAndCheckValidCustomer($data, $email);
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs($emailLogs[0], 'Willkommen', ['war erfolgreich!', 'Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert.'], [$email]);
-        $this->assertEmailLogs($emailLogs[1], 'Neue Registrierung: John Doe', ['Es gab gerade eine neue Registrierung: <b>John Doe</b>'], ['fcs-demo-superadmin@mailinator.com']);
+
+        $this->assertMailSentWithAt(0, 'Willkommen', 'originalSubject');
+        $this->assertMailContainsHtmlAt(0, 'war erfolgreich!');
+        $this->assertMailContainsHtmlAt(0, 'Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert.');
+        $this->assertMailSentToAt(0, $email);
+
+        $this->assertMailSentWithAt(1, 'Neue Registrierung: John Doe', 'originalSubject');
+        $this->assertMailContainsHtmlAt(1, 'Es gab gerade eine neue Registrierung: <b>John Doe</b>');
+        $this->assertMailSentToAt(1, 'fcs-demo-superadmin@mailinator.com');
 
         // 5) register again with changed configuration
         $this->changeConfiguration('FCS_DEFAULT_NEW_MEMBER_ACTIVE', 1);
@@ -206,9 +206,15 @@ class CustomersControllerTest extends AppCakeTestCase
         $email = 'new-foodcoopshop-member-2@mailinator.com';
         $this->saveAndCheckValidCustomer($data, $email);
 
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEmailLogs($emailLogs[2], 'Willkommen', ['war erfolgreich!', 'Zum Bestellen kannst du dich hier einloggen:'], [$email]);
-        $this->assertEmailLogs($emailLogs[3], 'Neue Registrierung: John Doe', ['Es gab gerade eine neue Registrierung: <b>John Doe</b>'], ['fcs-demo-superadmin@mailinator.com']);
+        $this->assertMailSentWithAt(2, 'Willkommen', 'originalSubject');
+        $this->assertMailContainsHtmlAt(2, 'war erfolgreich!');
+        $this->assertMailContainsHtmlAt(2, 'Zum Bestellen kannst du dich hier einloggen:');
+        $this->assertMailSentToAt(2, $email);
+
+        $this->assertMailSentWithAt(3, 'Neue Registrierung: John Doe', 'originalSubject');
+        $this->assertMailContainsHtmlAt(3, 'Es gab gerade eine neue Registrierung: <b>John Doe</b>');
+        $this->assertMailSentToAt(3, 'fcs-demo-superadmin@mailinator.com');
+
     }
 
     public function testLoginPageWithOutputStringReplacements()

@@ -17,6 +17,7 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\AssertPagesForErrorsTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
+use Cake\TestSuite\EmailTrait;
 
 class SelfServiceControllerTest extends AppCakeTestCase
 {
@@ -24,6 +25,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use AssertPagesForErrorsTrait;
     use LoginTrait;
+    use EmailTrait;
 
     public function testBarCodeLoginAsSuperadminIfNotEnabled()
     {
@@ -115,20 +117,12 @@ class SelfServiceControllerTest extends AppCakeTestCase
             $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         }
 
-        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(1, count($emailLogs));
+        $this->assertMailCount(1);
 
-        $this->assertEmailLogs(
-            $emailLogs[0],
-            'Dein Einkauf',
-            [
-                'Artischocke'
-            ],
-            [
-                Configure::read('test.loginEmailSuperadmin')
-            ]
-        );
+        $this->assertMailSentWithAt(0, 'Dein Einkauf' , 'originalSubject');
+        $this->assertMailContainsHtmlAt(0, 'Artischocke');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
+
     }
 
     public function testSelfServiceOrderWithPricePerUnit()
@@ -155,23 +149,14 @@ class SelfServiceControllerTest extends AppCakeTestCase
             $this->assertEquals($orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')), Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         }
 
-        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(1, count($emailLogs));
+        $this->assertMailCount(1);
+        $this->assertMailSentWithAt(0, 'Dein Einkauf' , 'originalSubject');
+        $this->assertMailContainsHtmlAt(0, 'Lagerprodukt mit Varianten : 1,5 kg');
+        $this->assertMailContainsHtmlAt(0, 'Lagerprodukt 2 : 0,5 kg');
+        $this->assertMailContainsHtmlAt(0, '15,00 €');
+        $this->assertMailContainsHtmlAt(0, '5,00 €');
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
 
-        $this->assertEmailLogs(
-            $emailLogs[0],
-            'Dein Einkauf',
-            [
-                'Lagerprodukt mit Varianten : 1,5 kg',
-                'Lagerprodukt 2 : 0,5 kg',
-                '15,00 €',
-                '5,00 €'
-            ],
-            [
-                Configure::read('test.loginEmailSuperadmin')
-            ]
-        );
     }
 
     public function testSelfServideOrderWithDeliveryBreak()
