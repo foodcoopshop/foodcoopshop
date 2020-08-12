@@ -35,10 +35,10 @@ The software can be used with any modern web browser, tablet or smartphone. It's
 
 ## Links
 * [Crowdfunding for new features](https://www.foodcoopshop.com/crowdfunding-weiterentwicklung)
-* Official homepage: [https://www.foodcoopshop.com](https://www.foodcoopshop.com/)
+* [Official homepage](https://www.foodcoopshop.com/)
 * Demo version in [German](https://demo-de.foodcoopshop.com), [English](https://demo-en.foodcoopshop.com) and [Polish](https://demo-pl.foodcoopshop.com)
-* Software documentation: [https://foodcoopshop.github.io](https://foodcoopshop.github.io)
-* [Facebook](https://facebook.com/FoodCoopShop) / [Twitter](https://twitter.com/FoodCoopShop) / [List of users](https://foodcoopshop.github.io/en/foodcoops) / [Map of users](http://umap.openstreetmap.fr/en/map/verbreitung-foodcoopshop_211165)
+* [Software documentation](https://foodcoopshop.github.io)
+* [Facebook](https://facebook.com/FoodCoopShop) / [List of users](https://foodcoopshop.github.io/en/foodcoops) / [Map of users](http://umap.openstreetmap.fr/en/map/verbreitung-foodcoopshop_211165)
 
 ## Legal information
 * Before installing please read the legal information in [German](https://foodcoopshop.github.io/de/rechtliches) or [English](https://foodcoopshop.github.io/en/legal-information).
