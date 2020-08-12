@@ -26,7 +26,7 @@ class BarCodeTcpdf extends AppTcpdf
         'border' => true,
         'hpadding' => 'auto',
         'vpadding' => 'auto',
-        'fgcolor' => array(0,0,0),
+        'fgcolor' => [0,0,0],
         'bgcolor' => false,
         'text' => true,
         'font' => 'helvetica',

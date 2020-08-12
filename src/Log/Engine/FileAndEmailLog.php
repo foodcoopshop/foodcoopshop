@@ -85,10 +85,10 @@ class FileAndEmailLog extends FileLog
             $email->setTo(Configure::read('app.debugEmail'))
             ->viewBuilder()->setTemplate('debug');
             $email->setSubject($subject)
-            ->setViewVars(array(
+            ->setViewVars([
                 'message' => $message,
                 'loggedUser' => $loggedUser
-            ))
+            ])
             ->send();
         } catch (SocketException $e) {
             return false;

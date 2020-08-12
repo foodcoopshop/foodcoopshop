@@ -55,7 +55,7 @@ class ManufacturersTable extends AppTable
         ]);
         $validator->allowEmptyString('bic');
         $validator->add('bic', 'validFormat', [
-            'rule' => array('custom', BIC_REGEX),
+            'rule' => ['custom', BIC_REGEX],
             'message' => __('Please_enter_a_valid_BIC.')
         ]);
         $validator->allowEmptyString('homepage');
