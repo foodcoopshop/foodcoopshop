@@ -352,99 +352,6 @@ class ManufacturersController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Manufacturers'));
     }
 
-    public function sendInvoice()
-    {
-
-        $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
-        $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
-        $dateTo = h($this->getRequest()->getQuery('dateTo'));
-
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ],
-            'contain' => [
-                'Invoices',
-                'AddressManufacturers'
-            ]
-        ])->first();
-
-        $validOrderStates = [
-            ORDER_STATE_ORDER_PLACED,
-            ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER
-        ];
-
-        // generate and save PDF - should be done here because count of results will be checked
-        $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, $validOrderStates);
-
-        // no orders in current period => do not send pdf but send information email
-        if (count($productResults) == 0) {
-            // orders exist => send pdf and email
-        } else {
-            // generate and save invoice number
-            $newInvoiceNumber = $this->Manufacturer->Invoices->getNextInvoiceNumber($manufacturer->invoices);
-            $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, $validOrderStates);
-            $invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink($manufacturer->name, $manufacturerId, date('Y-m-d'), $newInvoiceNumber);
-
-            $pdfWriter = new InvoicePdfWriter();
-            $pdfWriter->setFilename($invoicePdfFile);
-            $pdfWriter->setData([
-                'productResults' => $productResults,
-                'customerResults' => $customerResults,
-                'newInvoiceNumber' => $newInvoiceNumber,
-                'period' => Configure::read('app.timeHelper')->getLastMonthNameAndYear(),
-                'invoiceDate' => date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt')),
-                'dateFrom' => $dateFrom,
-                'dateTo' => $dateTo,
-                'manufacturer' => $manufacturer,
-                'sumPriceIncl' => $this->viewBuilder()->getVars()['sumPriceIncl'],
-                'sumPriceExcl' => $this->viewBuilder()->getVars()['sumPriceExcl'],
-                'sumTax' => $this->viewBuilder()->getVars()['sumTax'],
-                'sumAmount' => $this->viewBuilder()->getVars()['sumAmount'],
-                'sumTimebasedCurrencyPriceIncl' => $this->viewBuilder()->getVars()['sumTimebasedCurrencyPriceIncl'],
-                'variableMemberFee' => $this->viewBuilder()->getVars()['variableMemberFee'],
-            ]);
-            $pdfWriter->writeFile();
-
-            $this->Flash->success(__d('admin', 'Invoice_for_manufacturer_{0}_successfully_sent_to_{1}.', ['<b>' . $manufacturer->name . '</b>', $manufacturer->address_manufacturer->email]));
-
-            $invoice2save = [
-                'id_manufacturer' => $manufacturerId,
-                'send_date' => Time::now(),
-                'invoice_number' => (int) $newInvoiceNumber,
-                'user_id' => $this->AppAuth->getUserId()
-            ];
-            $this->Manufacturer->Invoices->save(
-                $this->Manufacturer->Invoices->newEntity($invoice2save)
-            );
-
-            $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
-
-            $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-            $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, Configure::read('app.htmlHelper')->getOrderStateBilled(), $manufacturerId);
-
-            $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
-            if ($sendEmail) {
-                $email = new AppMailer();
-                $email->viewBuilder()->setTemplate('Admin.send_invoice');
-                $email->setTo($manufacturer->address_manufacturer->email)
-                    ->setAttachments([
-                        $invoicePdfFile
-                    ])
-                    ->setSubject(__d('admin', 'Invoice_number_abbreviataion_{0}_{1}', [$newInvoiceNumber, $invoicePeriodMonthAndYear]))
-                    ->setViewVars([
-                    'manufacturer' => $manufacturer,
-                    'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
-                    'appAuth' => $this->AppAuth,
-                    'showManufacturerUnsubscribeLink' => true
-                ]);
-                $email->send();
-            }
-        }
-
-        $this->redirect($this->referer());
-    }
-
     private function getOptionVariableMemberFee($manufacturerId)
     {
         $manufacturer = $this->Manufacturer->find('all', [
@@ -824,38 +731,23 @@ class ManufacturersController extends AdminAppController
         $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
         $dateTo = h($this->getRequest()->getQuery('dateTo'));
 
-        $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $dateFrom, $dateTo, []);
-        if (empty($customerResults)) {
-            // do not throw exception because no debug mails wanted
-            die(__d('admin', 'No_orders_within_the_given_time_range.'));
-        }
-        $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $dateFrom, $dateTo, []);
+        $manufacturer = $this->Manufacturer->find('all', [
+            'conditions' => [
+                'Manufacturers.id_manufacturer' => $manufacturerId
+            ],
+        ])->first();
+
         $newInvoiceNumber = 'xxx';
 
         $pdfWriter = new InvoicePdfWriter();
+        $pdfWriter->prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, []);
 
-        $invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink($productResults[0]['ManufacturerName'], $productResults[0]['ManufacturerId'], date('Y-m-d'), $newInvoiceNumber);
+        $invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink($manufacturer->name, $manufacturerId, date('Y-m-d'), $newInvoiceNumber);
         $invoicePdfFile = explode(DS, $invoicePdfFile);
         $invoicePdfFile = end($invoicePdfFile);
         $invoicePdfFile = substr($invoicePdfFile, 11);
         $invoicePdfFile = $this->request->getQuery('dateFrom'). '-' . $this->request->getQuery('dateTo') . '-' . $invoicePdfFile;
         $pdfWriter->setFilename($invoicePdfFile);
-
-        $pdfWriter->setData([
-            'productResults' => $productResults,
-            'customerResults' => $customerResults,
-            'newInvoiceNumber' => $newInvoiceNumber,
-            'period' => '',
-            'invoiceDate' => 'xxx',
-            'dateFrom' => $dateFrom,
-            'dateTo' => $dateTo,
-            'sumPriceIncl' => $this->viewBuilder()->getVars()['sumPriceIncl'],
-            'sumPriceExcl' => $this->viewBuilder()->getVars()['sumPriceExcl'],
-            'sumTax' => $this->viewBuilder()->getVars()['sumTax'],
-            'sumAmount' => $this->viewBuilder()->getVars()['sumAmount'],
-            'sumTimebasedCurrencyPriceIncl' => $this->viewBuilder()->getVars()['sumTimebasedCurrencyPriceIncl'],
-            'variableMemberFee' => $this->viewBuilder()->getVars()['variableMemberFee'],
-        ]);
 
         if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
             return $this->response->withStringBody($pdfWriter->writeHtml());

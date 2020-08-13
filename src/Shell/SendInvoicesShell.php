@@ -14,6 +14,7 @@
  */
 namespace App\Shell;
 
+use App\Lib\PdfWriter\InvoicePdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\I18n\Time;
@@ -52,7 +53,8 @@ class SendInvoicesShell extends AppShell
                 'Manufacturers.name' => 'ASC'
             ],
             'contain' => [
-                'Invoices'
+                'Invoices',
+                'AddressManufacturers',
             ]
         ])->toArray();
 
@@ -149,8 +151,50 @@ class SendInvoicesShell extends AppShell
                 $tableData .= '</td>';
                 $tableData .= '</tr>';
 
-                $url = $this->httpClient->adminPrefix . '/manufacturers/sendInvoice?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
-                $this->httpClient->get($url);
+                $newInvoiceNumber = $this->Manufacturer->Invoices->getNextInvoiceNumber($manufacturer->invoices);
+                $validOrderStates = [
+                    ORDER_STATE_ORDER_PLACED,
+                    ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
+                ];
+                $invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink($manufacturer->name, $manufacturer->id_manufacturer, date('Y-m-d'), $newInvoiceNumber);
+
+                $pdfWriter = new InvoicePdfWriter();
+                $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $dateFrom, $dateTo, $newInvoiceNumber, $validOrderStates);
+                $pdfWriter->setFilename($invoicePdfFile);
+                $pdfWriter->writeFile();
+
+                $invoice2save = [
+                    'id_manufacturer' => $manufacturer->id_manufacturer,
+                    'send_date' => Time::now(),
+                    'invoice_number' => (int) $newInvoiceNumber,
+                    'user_id' => $this->httpClient->getLoggedUserId(),
+                ];
+                $this->Manufacturer->Invoices->save(
+                    $this->Manufacturer->Invoices->newEntity($invoice2save)
+                );
+
+                $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
+
+                $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, Configure::read('app.htmlHelper')->getOrderStateBilled(), $manufacturer->id_manufacturer);
+
+                $sendEmail = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
+                if ($sendEmail) {
+                    $email = new AppMailer();
+                    $email->viewBuilder()->setTemplate('Admin.send_invoice');
+                    $email->setTo($manufacturer->address_manufacturer->email)
+                    ->setAttachments([
+                        $invoicePdfFile
+                    ])
+                    ->setSubject(__('Invoice_number_abbreviataion_{0}_{1}', [$newInvoiceNumber, $invoicePeriodMonthAndYear]))
+                    ->setViewVars([
+                        'manufacturer' => $manufacturer,
+                        'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
+                        'appAuth' => $this->AppAuth,
+                        'showManufacturerUnsubscribeLink' => true
+                    ]);
+                    $email->send();
+                }
+
                 $i ++;
 
             }
