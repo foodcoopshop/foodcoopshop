@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-07-20 20:48+0200\n"
+"POT-Creation-Date: 2020-08-13 11:25+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1764,6 +1764,9 @@ msgid "yes"
 msgstr ""
 
 msgid "no"
+msgstr ""
+
+msgid "Invoice_number_abbreviataion_{0}_{1}"
 msgstr ""
 
 msgid "Invoice_number_abbreviation"
