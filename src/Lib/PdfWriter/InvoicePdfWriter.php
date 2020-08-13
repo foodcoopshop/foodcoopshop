@@ -22,6 +22,7 @@ class InvoicePdfWriter extends PdfWriter
 {
 
     public $Manufacturer;
+    public $TimebasedCurrencyOrderDetail;
 
     public function __construct()
     {
