@@ -12,7 +12,6 @@ use Cake\Event\EventInterface;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\Http\Exception\NotFoundException;
-use Cake\I18n\Time;
 use Cake\Utility\Hash;
 use Cake\I18n\FrozenDate;
 
@@ -742,16 +741,16 @@ class ManufacturersController extends AdminAppController
         $pdfWriter = new InvoicePdfWriter();
         $pdfWriter->prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, []);
 
+        if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
+            return $this->response->withStringBody($pdfWriter->writeHtml());
+        }
+
         $invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink($manufacturer->name, $manufacturerId, date('Y-m-d'), $newInvoiceNumber);
         $invoicePdfFile = explode(DS, $invoicePdfFile);
         $invoicePdfFile = end($invoicePdfFile);
         $invoicePdfFile = substr($invoicePdfFile, 11);
         $invoicePdfFile = $this->request->getQuery('dateFrom'). '-' . $this->request->getQuery('dateTo') . '-' . $invoicePdfFile;
         $pdfWriter->setFilename($invoicePdfFile);
-
-        if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
-            return $this->response->withStringBody($pdfWriter->writeHtml());
-        }
 
         die($pdfWriter->writeInline());
     }
