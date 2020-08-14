@@ -96,7 +96,8 @@ class AppAuthComponent extends AuthComponent
                     'AddressManufacturers.id_manufacturer > ' . APP_OFF
                 ],
                 'contain' => [
-                    'AddressManufacturers'
+                    'AddressManufacturers',
+                    'Customers.AddressCustomers',
                 ]
             ])->first();
         }
