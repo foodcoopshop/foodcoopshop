@@ -35,7 +35,6 @@ class SendInvoicesShellTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
         $this->Cart = $this->getTableLocator()->get('Carts');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
@@ -70,19 +69,10 @@ class SendInvoicesShellTest extends AppCakeTestCase
             $this->assertEquals($orderDetail->order_state, $expectedOrderState);
         }
 
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(5, count($emailLogs), 'amount of sent emails wrong');
-        $this->assertEmailLogs(
-            $emailLogs[1],
-            'Rechnung Nr. 0001',
-            [
-                'Demo-Fleisch-Hersteller_4_Rechnung_0001_FoodCoop-Test.pdf',
-                'Content-Type: application/pdf',
-            ],
-            [
-                Configure::read('test.loginEmailMeatManufacturer')
-            ]
-        );
+        $this->assertMailCount(5);
+        $this->assertMailSentWithAt(1, 'Rechnung Nr. 0001, ' . Configure::read('app.timeHelper')->getLastMonthNameAndYear(), 'originalSubject');
+        $this->assertMailContainsAttachment(date('Y-m-d') . '_Demo-Gemuese-Hersteller_5_Rechnung_0001_FoodCoop-Test.pdf');
+        $this->assertMailSentToAt(1, Configure::read('test.loginEmailMeatManufacturer'));
 
         $this->loginAsSuperadmin(); //should still be logged in as superadmin but is not...
         $this->get($this->Slug->getActionLogsList() . '?dateFrom=11.03.2018&dateTo=11.03.2018');
@@ -104,21 +94,11 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11 10:20:30']);
         $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11 10:20:30']); // sic! run again
 
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-
         // no additional (would be 8) emails should be sent if called twice on same day
-        $this->assertEquals(6, count($emailLogs), 'amount of sent emails wrong');
-
-        $this->assertEmailLogs(
-            $emailLogs[4],
-            'wurden verschickt',
-            [
-                'dateFrom=11.03.2018'
-            ],
-            [
-                Configure::read('test.loginEmailSuperadmin')
-            ]
-        );
+        $this->assertMailCount(6);
+        $this->assertMailSentWithAt(4, 'Rechnungen für '.$this->Time->getLastMonthNameAndYear().' wurden verschickt', 'originalSubject');
+        $this->assertMailContainsAt(4, 'dateFrom=11.03.2018');
+        $this->assertMailSentToAt(4, Configure::read('test.loginEmailSuperadmin'));
 
     }
 
