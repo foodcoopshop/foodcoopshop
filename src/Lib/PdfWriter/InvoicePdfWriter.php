@@ -80,7 +80,7 @@ class InvoicePdfWriter extends PdfWriter
             'sumTax' => $sumTax,
             'sumAmount' => $sumAmount,
             'sumTimebasedCurrencyPriceIncl' => $sumTimebasedCurrencyPriceIncl,
-            'variableMemberFee' => $this->Manufacturer->getOptionVariableMemberFee($manufacturerId),
+            'variableMemberFee' => $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee),
         ]);
 
     }
