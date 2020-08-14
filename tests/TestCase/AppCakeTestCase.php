@@ -391,9 +391,12 @@ abstract class AppCakeTestCase extends TestCase
         $this->changeManufacturer(4, 'timebased_currency_max_percentage', $reducedMaxPercentage);
     }
 
-    protected function getCorrectedLogoPathInHtmlForPdfs($html)
+    protected function correctInvoiceHtml($html)
     {
-        return preg_replace('/\{\{logoPath\}\}/', ROOT . DS . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg', $html);
+        $html = preg_replace('/\{\{period\}\}/', $this->Time->getLastMonthNameAndYear(), $html);
+        $html = preg_replace('/\{\{invoiceDate\}\}/', date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt')), $html);
+        $html = preg_replace('/\{\{logoPath\}\}/', ROOT . DS . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg', $html);
+        return $html;
     }
 
     protected function prepareSendingOrderLists()
