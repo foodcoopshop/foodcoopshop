@@ -4,8 +4,6 @@ namespace Admin\Controller;
 use Cake\Http\Exception\NotFoundException;
 
 /**
- * AttributesController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License

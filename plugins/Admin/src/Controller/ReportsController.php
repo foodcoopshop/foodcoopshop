@@ -9,8 +9,6 @@ use Cake\I18n\FrozenTime;
 use Cake\ORM\Exception\PersistenceFailedException;
 
 /**
- * ReportsController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License

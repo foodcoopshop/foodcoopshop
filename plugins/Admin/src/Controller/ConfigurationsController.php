@@ -8,8 +8,6 @@ use Cake\Http\Exception\NotFoundException;
 use Cake\Utility\Inflector;
 
 /**
- * ConfigurationsController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License

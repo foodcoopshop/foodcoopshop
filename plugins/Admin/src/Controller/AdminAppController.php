@@ -6,8 +6,6 @@ use App\Controller\AppController;
 use Intervention\Image\ImageManagerStatic as Image;
 
 /**
- * AdminAppController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
