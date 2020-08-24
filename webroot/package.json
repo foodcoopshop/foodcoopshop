@@ -16,7 +16,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",
     "blueimp-file-upload": "^10.31.0",
-    "bootstrap": "^4.5.0",
+    "bootstrap": "^4.5.2",
     "bootstrap-select": "^1.13.18",
     "chart.js": "^2.9.3",
     "chart.piecelabel.js": "^0.15.0",
@@ -32,7 +32,7 @@
     "popper.js": "^1.16.1",
     "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
-    "swiper": "6.0.4",
+    "swiper": "6.1.2",
     "tooltipster": "^4.2.8"
   },
   "devDependencies": {
