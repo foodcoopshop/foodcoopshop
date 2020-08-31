@@ -17,11 +17,6 @@ env:
   - DB=mysql
   
 before_script:
-  # email mock
-  - sudo apt-get install -y -qq postfix  
-  - sudo service postfix stop
-  - smtp-sink -d "%d.%H.%M.%S" localhost:2500 1000 &
-  - echo 'sendmail_path = "/usr/sbin/sendmail -t -i "' > $(php --ini|grep -m 1 "ini files in:"|cut -d ":" -f 2)/sendmail.ini
   # start build
   - mysql --version
   - mysql -e 'CREATE DATABASE foodcoopshop_test;'
