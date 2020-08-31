@@ -6,14 +6,11 @@ use App\Controller\Component\StringComponent;
 use App\Lib\PdfWriter\InvoicePdfWriter;
 use App\Lib\PdfWriter\OrderListByProductPdfWriter;
 use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
-use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\Http\Exception\NotFoundException;
-use Cake\Utility\Hash;
-use Cake\I18n\FrozenDate;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -359,140 +356,6 @@ class ManufacturersController extends AdminAppController
             ]
         ])->first();
         return $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee);
-    }
-
-    public function sendOrderList()
-    {
-
-        $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
-        $pickupDay = h($this->getRequest()->getQuery('pickupDay'));
-        $cronjobRunDay = h($this->getRequest()->getQuery('cronjobRunDay'));
-        $pickupDayDbFormat = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
-
-        $manufacturer = $this->Manufacturer->find('all', [
-            'conditions' => [
-                'Manufacturers.id_manufacturer' => $manufacturerId
-            ],
-            'contain' => [
-                'AddressManufacturers',
-                'Customers.AddressCustomers'
-            ]
-        ])->first();
-
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $orderDetails = $this->OrderDetail->getOrderDetailsForSendingOrderLists(
-            $pickupDayDbFormat,
-            $cronjobRunDay,
-            Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY'),
-        );
-        $orderDetails->where(['Products.id_manufacturer' => $manufacturerId]);
-
-        if ($orderDetails->count() == 0) {
-            // do not throw exception because no debug mails wanted
-            die(__d('admin', 'No_orders_within_the_given_time_range.'));
-        }
-
-        $validOrderStates = [ORDER_STATE_ORDER_PLACED];
-
-        // it can happen, that - with one request - orders with different pickup days are sent
-        // => multiple order lists need to be sent then!
-        // @see https://github.com/foodcoopshop/foodcoopshop/issues/408
-        $groupedOrderDetails = [];
-        foreach($orderDetails as $orderDetail) {
-            @$groupedOrderDetails[$orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'))][] = $orderDetail;
-        }
-        foreach($groupedOrderDetails as $pickupDayDbFormat => $orderDetails) {
-
-            $pickupDayFormated = new FrozenDate($pickupDayDbFormat);
-            $pickupDayFormated = $pickupDayFormated->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
-            $orderDetailIds = Hash::extract($orderDetails, '{n}.id_order_detail');
-
-            // generate and save PDF - should be done here because count of results will be checked
-            $productResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'product', $pickupDayDbFormat, null, [], $orderDetailIds);
-
-            // no orders in current period => do not send pdf but send information email
-            if (count($productResults) == 0) {
-                // orders exist => send pdf and email
-            } else {
-
-                $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();
-                $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, $pickupDayDbFormat, __d('admin', 'product'), $currentDateForOrderLists);
-
-                $pdfWriter = new OrderListByProductPdfWriter();
-                $pdfWriter->setFilename($productPdfFile);
-                $pdfWriter->setData([
-                    'productResults' => $productResults,
-                    'manufacturer' => $manufacturer,
-                    'currentDateForOrderLists' => $currentDateForOrderLists,
-                    'sumPriceIncl' => $this->viewBuilder()->getVars()['sumPriceIncl'],
-                    'sumPriceExcl' => $this->viewBuilder()->getVars()['sumPriceExcl'],
-                    'sumTax' => $this->viewBuilder()->getVars()['sumTax'],
-                    'sumAmount' => $this->viewBuilder()->getVars()['sumAmount'],
-                    'sumTimebasedCurrencyPriceIncl' => $this->viewBuilder()->getVars()['sumTimebasedCurrencyPriceIncl'],
-                    'variableMemberFee' => $this->viewBuilder()->getVars()['variableMemberFee'],
-                ]);
-                $pdfWriter->writeFile();
-
-                // generate order list by customer
-                $customerResults = $this->prepareInvoiceOrOrderList($manufacturerId, 'customer', $pickupDayDbFormat, null, [], $orderDetailIds);
-                $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink($manufacturer->name, $manufacturerId, $pickupDayDbFormat, __d('admin', 'member'), $currentDateForOrderLists);
-
-                $pdfWriter = new OrderListByCustomerPdfWriter();
-                $pdfWriter->setFilename($customerPdfFile);
-                $pdfWriter->setData([
-                    'customerResults' => $customerResults,
-                    'manufacturer' => $manufacturer,
-                    'currentDateForOrderLists' => $currentDateForOrderLists,
-                    'sumPriceIncl' => $this->viewBuilder()->getVars()['sumPriceIncl'],
-                    'sumPriceExcl' => $this->viewBuilder()->getVars()['sumPriceExcl'],
-                    'sumTax' => $this->viewBuilder()->getVars()['sumTax'],
-                    'sumAmount' => $this->viewBuilder()->getVars()['sumAmount'],
-                    'sumTimebasedCurrencyPriceIncl' => $this->viewBuilder()->getVars()['sumTimebasedCurrencyPriceIncl'],
-                    'variableMemberFee' => $this->viewBuilder()->getVars()['variableMemberFee'],
-                ]);
-                $pdfWriter->writeFile();
-
-                $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
-                $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
-
-                $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-                $orderDetailIds = Hash::extract($customerResults, '{n}.OrderDetailId');
-                $this->OrderDetail->updateOrderState(null, null, $validOrderStates, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturerId, $orderDetailIds);
-
-                if ($sendEmail) {
-                    $email = new AppMailer();
-                    $email->viewBuilder()->setTemplate('Admin.send_order_list');
-                    $email->setTo($manufacturer->address_manufacturer->email)
-                    ->setAttachments([
-                        $productPdfFile,
-                        $customerPdfFile
-                    ])
-                    ->setSubject(__d('admin', 'Order_lists_for_the_day') . ' ' . $pickupDayFormated)
-                    ->setViewVars([
-                        'manufacturer' => $manufacturer,
-                        'appAuth' => $this->AppAuth,
-                        'showManufacturerUnsubscribeLink' => true
-                    ]);
-                    if (!empty($ccRecipients)) {
-                        $email->setCc($ccRecipients);
-                    }
-                    $email->send();
-                }
-            }
-
-        }
-
-        $flashMessage = __d('admin', '{0,plural,=1{1_Order_list} other{#_Order_lists}}_successfully_generated_for_manufacturer_{1}.', [
-            count($groupedOrderDetails),
-            '<b>'.$manufacturer->name.'</b>'
-        ]);
-
-        if ($sendEmail) {
-            $flashMessage .= ' ' . __d('admin', 'Email_sent_to:{0}', [$manufacturer->address_manufacturer->email]);
-        }
-
-        $this->Flash->success($flashMessage);
-        $this->redirect($this->referer());
     }
 
     public function myOptions()

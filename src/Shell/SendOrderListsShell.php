@@ -16,13 +16,14 @@ namespace App\Shell;
 
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
+use Cake\Utility\Hash;
+use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
+use App\Lib\PdfWriter\OrderListByProductPdfWriter;
+use App\Mailer\AppMailer;
 
 class SendOrderListsShell extends AppShell
 {
-    /**
-     * sends order lists to manufacturers who have current orders
-     * does not check the field Manufacturers.active! (can be theoretically offline when this cronjob runs)
-     */
+
     public function main()
     {
         parent::main();
@@ -46,17 +47,20 @@ class SendOrderListsShell extends AppShell
         } else {
             $pickupDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($this->cronjobRunDay));
         }
-        $formattedPickupDay = Configure::read('app.timeHelper')->formatToDateShort($pickupDay);
 
         // 1) get all manufacturers (not only active ones)
         $manufacturers = $this->Manufacturer->find('all', [
             'order' => [
                 'Manufacturers.name' => 'ASC'
-            ]
+            ],
+            'contain' => [
+                'AddressManufacturers',
+                'Customers.AddressCustomers'
+            ],
         ])->toArray();
 
         // 2) get all order details with pickup day in the given date range
-        $orderDetails = $this->OrderDetail->getOrderDetailsForSendingOrderLists(
+        $allOrderDetails = $this->OrderDetail->getOrderDetailsForSendingOrderLists(
             $pickupDay,
             $this->cronjobRunDay,
             Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY'),
@@ -64,7 +68,8 @@ class SendOrderListsShell extends AppShell
 
         // 3) add up the order detail by manufacturer
         $manufacturerOrders = [];
-        foreach ($orderDetails as $orderDetail) {
+        foreach ($allOrderDetails as $orderDetail) {
+            @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_details'][] = $orderDetail;
             @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_amount_sum'] += $orderDetail->product_amount;
             @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_price_sum'] += $orderDetail->total_price_tax_incl;
         }
@@ -72,26 +77,91 @@ class SendOrderListsShell extends AppShell
         // 4) merge the order detail count with the manufacturers array
         $i = 0;
         foreach ($manufacturers as $manufacturer) {
+            $manufacturer->order_details = $manufacturerOrders[$manufacturer->id_manufacturer]['order_details'];
             $manufacturer->order_detail_amount_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_amount_sum'];
             $manufacturer->order_detail_price_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_price_sum'];
             $i++;
         }
 
-        // 5) check if manufacturers have open order details and send email
-        $this->initHttpClient();
-        $this->httpClient->doFoodCoopShopLogin();
         foreach ($manufacturers as $manufacturer) {
-            $sendOrderList = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
-            if (!empty($manufacturer->order_detail_amount_sum) && $sendOrderList) {
-                $url = $this->httpClient->adminPrefix . '/manufacturers/sendOrderList?manufacturerId=' . $manufacturer->id_manufacturer . '&pickupDay=' . $formattedPickupDay . '&cronjobRunDay=' . $this->cronjobRunDay;
-                $this->httpClient->get($url);
+
+            // it's possible, that - within one request - orders with different pickup days are available
+            // => multiple order lists need to be sent then!
+            // @see https://github.com/foodcoopshop/foodcoopshop/issues/408
+            $groupedOrderDetails = [];
+            foreach($manufacturer['order_details'] as $orderDetail) {
+                @$groupedOrderDetails[$orderDetail->pickup_day->i18nFormat(
+                    Configure::read('app.timeHelper')->getI18Format('Database')
+                )][] = $orderDetail;
             }
+            foreach($groupedOrderDetails as $pickupDayDbFormat => $orderDetails) {
+
+                // avoid generating empty order lists
+                if (empty($orderDetails)) {
+                    continue;
+                }
+
+                $pickupDayFormated = new FrozenDate($pickupDayDbFormat);
+                $pickupDayFormated = $pickupDayFormated->i18nFormat(
+                    Configure::read('app.timeHelper')->getI18Format('DateLong2')
+                );
+                $orderDetailIds = Hash::extract($orderDetails, '{n}.id_order_detail');
+
+                $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();
+
+                // START generate PDF grouped by PRODUCT
+                $pdfWriter = new OrderListByProductPdfWriter();
+                $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
+                    $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __d('admin', 'product'), $currentDateForOrderLists
+                );
+                $pdfWriter->setFilename($productPdfFile);
+                $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds);
+                $pdfWriter->writeFile();
+                // END generate PDF grouped by PRODUCT
+
+                // START generate PDF grouped by CUSTOMER
+                $pdfWriter = new OrderListByCustomerPdfWriter();
+                $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
+                    $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __d('admin', 'member'), $currentDateForOrderLists
+                );
+                $pdfWriter->setFilename($customerPdfFile);
+                $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds);
+                $pdfWriter->writeFile();
+                // END generate PDF grouped by CUSTOMER
+
+                $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
+                $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
+
+                if ($sendEmail) {
+                    $email = new AppMailer();
+                    $email->viewBuilder()->setTemplate('Admin.send_order_list');
+                    $email->setTo($manufacturer->address_manufacturer->email)
+                    ->setAttachments([
+                        $productPdfFile,
+                        $customerPdfFile,
+                    ])
+                    ->setSubject(__d('admin', 'Order_lists_for_the_day') . ' ' . $pickupDayFormated)
+                    ->setViewVars([
+                        'manufacturer' => $manufacturer,
+                        'appAuth' => $this->AppAuth,
+                        'showManufacturerUnsubscribeLink' => true,
+                    ]);
+                    if (!empty($ccRecipients)) {
+                        $email->setCc($ccRecipients);
+                    }
+                    $email->send();
+                }
+
+                $this->OrderDetail->updateOrderState(null, null, [ORDER_STATE_ORDER_PLACED], ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturer->id_manufacturer, $orderDetailIds);
+
+            }
+
         }
 
         // prepare action log string is complicated because of
         // @see https://github.com/foodcoopshop/foodcoopshop/issues/408
         $tmpActionLogDatas = [];
-        foreach($orderDetails as $orderDetail) {
+        foreach($allOrderDetails as $orderDetail) {
             $orderDetailPickupDay = $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
             $manufacturerId = $orderDetail->product->id_manufacturer;
             @$tmpActionLogDatas[$manufacturerId][$orderDetailPickupDay]['order_detail_amount_sum'] += $orderDetail->product_amount;
@@ -121,7 +191,7 @@ class SendOrderListsShell extends AppShell
 
         // reset quantity to default_quantity_after_sending_order_lists
         $productsToSave = [];
-        foreach($orderDetails as $orderDetail) {
+        foreach($allOrderDetails as $orderDetail) {
             $compositeProductId = $this->Product->getCompositeProductIdAndAttributeId($orderDetail->product_id, $orderDetail->product_attribute_id);
             $stockAvailableObject = $orderDetail->product->stock_available;
             if (!empty($orderDetail->product_attribute)) {
@@ -139,8 +209,6 @@ class SendOrderListsShell extends AppShell
             $this->Product->changeQuantity($productsToSave);
         }
 
-        $this->httpClient->doFoodCoopShopLogout();
-
         $outString = '';
         if (count($actionLogDatas) > 0) {
             $outString .= join('<br />', $actionLogDatas) . '<br />';
@@ -149,7 +217,7 @@ class SendOrderListsShell extends AppShell
 
         $this->stopTimeLogging();
 
-        $this->ActionLog->customSave('cronjob_send_order_lists', $this->httpClient->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
+        $this->ActionLog->customSave('cronjob_send_order_lists', 0, 0, '', $outString . '<br />' . $this->getRuntime());
 
         $this->out($outString);
 
