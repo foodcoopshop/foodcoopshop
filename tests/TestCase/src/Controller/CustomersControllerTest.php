@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestEmailTransport;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -29,7 +30,7 @@ class CustomersControllerTest extends AppCakeTestCase
 
     private function setUpProfileImageTests()
     {
-        $profileImageSrcFileAndPath = Configure::read('app.cakeServerName') . '/img/tests/test-image.jpg';
+        $profileImageSrcFileAndPath = WWW_ROOT . '/img/tests/test-image.jpg';
         $profileImageTargetFilename = Configure::read('test.customerId') . '-small.jpg';
         copy($profileImageSrcFileAndPath, Configure::read('app.customerImagesDir') . '/' . $profileImageTargetFilename);
         return $profileImageTargetFilename;
