@@ -36,27 +36,6 @@ class AppMailer extends Mailer
     }
 
     /**
-     * method needs to be called *before* send-method to be able to work with travis-ci
-     * travis-ci uses an email mock
-     * @param string|array $content
-     * @return mixed|boolean|array
-     */
-    public function logEmailInDatabase($email)
-    {
-        $emailLogModel = FactoryLocator::get('Table')->get('EmailLogs');
-        $email2save = [
-            'from_address' => json_encode($this->getFrom()),
-            'to_address' => json_encode($this->getTo()),
-            'cc_address' => json_encode($this->getCc()),
-            'bcc_address' => json_encode($this->getBcc()),
-            'subject' => $this->getOriginalSubject(),
-            'headers' => json_encode($this->getHeaders()),
-            'message' => $email['message']
-        ];
-        return $emailLogModel->save($emailLogModel->newEntity($email2save));
-    }
-
-    /**
      * uses fallback transport config if default email transport config is wrong (e.g. password changed party)
      * @see credentials.php
      */
@@ -74,12 +53,7 @@ class AppMailer extends Mailer
             }
 
             // do not use parent:send() here because $replaced body would not be sent
-            $email = $this->getTransport()->send($this->getMessage());
-            if (Configure::read('appDb.FCS_EMAIL_LOG_ENABLED')) {
-                $this->logEmailInDatabase($email);
-            }
-
-            return $email;
+            return $this->getTransport()->send($this->getMessage());
 
         } catch (Exception $e) {
             if (Configure::check('app.EmailTransport.fallback')) {

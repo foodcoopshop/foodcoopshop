@@ -20,7 +20,6 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\Console\CommandRunner;
 use Cake\TestSuite\EmailTrait;
-use Cake\TestSuite\TestEmailTransport;
 
 class SendInvoicesShellTest extends AppCakeTestCase
 {
@@ -29,7 +28,6 @@ class SendInvoicesShellTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
 
-    public $EmailLog;
     public $Order;
     public $commandRunner;
 

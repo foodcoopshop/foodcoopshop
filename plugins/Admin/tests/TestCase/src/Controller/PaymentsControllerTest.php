@@ -7,6 +7,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 use Laminas\Diactoros\UploadedFile;
+use Cake\TestSuite\EmailTrait;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -26,6 +27,7 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     use AppIntegrationTestTrait;
     use LoginTrait;
+    use EmailTrait;
 
     public function setUp(): void
     {
@@ -272,10 +274,8 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals(APP_ON, $newPayment->approval);
         $this->assertEquals(Configure::read('test.superadminId'), $newPayment->created_by);
 
-        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(1, count($emailLogs));
-        $this->assertEquals($emailLogs[0]->subject, 'Deine Überweisung (200,00 €) wurde ins Guthaben-System übernommen.');
+        $this->assertMailCount(1);
+        $this->assertMailSentWithAt('Deine Überweisung (200,00 €) wurde ins Guthaben-System übernommen.', 'originalSubject');
 
     }
 

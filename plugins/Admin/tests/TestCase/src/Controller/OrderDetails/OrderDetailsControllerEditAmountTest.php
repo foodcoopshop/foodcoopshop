@@ -124,16 +124,16 @@ class OrderDetailsControllerEditAmountTest extends OrderDetailsControllerTestCas
         $this->assertChangedStockAvailable($this->productIdA, 96);
     }
 
-    private function assertOrderDetailProductAmountChangedEmails($emailLogIndex, $expectedToEmail, $expectedCcEmail = null)
+    private function assertOrderDetailProductAmountChangedEmails($emailIndex, $expectedToEmail, $expectedCcEmail = null)
     {
-        $this->assertMailSentWithAt($emailLogIndex, 'Bestellte Anzahl angepasst: Artischocke : Stück', 'originalSubject');
-        $this->assertMailContainsHtmlAt($emailLogIndex, 'Die Anzahl des Produktes <b>Artischocke : Stück</b> wurde angepasst');
-        $this->assertMailContainsHtmlAt($emailLogIndex, $this->editAmountReason);
-        $this->assertMailContainsHtmlAt($emailLogIndex, 'Neue Anzahl: <b>' . $this->newAmount . '</b>');
-        $this->assertMailContainsHtmlAt($emailLogIndex, 'Demo Gemüse-Hersteller');
-        $this->assertMailSentToAt($emailLogIndex, $expectedToEmail);
+        $this->assertMailSentWithAt($emailIndex, 'Bestellte Anzahl angepasst: Artischocke : Stück', 'originalSubject');
+        $this->assertMailContainsHtmlAt($emailIndex, 'Die Anzahl des Produktes <b>Artischocke : Stück</b> wurde angepasst');
+        $this->assertMailContainsHtmlAt($emailIndex, $this->editAmountReason);
+        $this->assertMailContainsHtmlAt($emailIndex, 'Neue Anzahl: <b>' . $this->newAmount . '</b>');
+        $this->assertMailContainsHtmlAt($emailIndex, 'Demo Gemüse-Hersteller');
+        $this->assertMailSentToAt($emailIndex, $expectedToEmail);
         if ($expectedCcEmail !== null) {
-            $this->assertMailSentWithAt($emailLogIndex, $expectedCcEmail, 'cc');
+            $this->assertMailSentWithAt($emailIndex, $expectedCcEmail, 'cc');
         }
     }
 

@@ -101,19 +101,19 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         $this->assertOrderDetailProductPriceChangedEmails(1, $expectedToEmails, $expectedCcEmails);
     }
 
-    private function assertOrderDetailProductPriceChangedEmails($emailLogIndex, $expectedToEmails, $expectedCcEmails)
+    private function assertOrderDetailProductPriceChangedEmails($emailIndex, $expectedToEmails, $expectedCcEmails)
     {
-        $this->assertMailSentWithAt($emailLogIndex, 'Preis angepasst: Artischocke : Stück', 'originalSubject');
-        $this->assertMailContainsHtmlAt($emailLogIndex, 'Der Preis des Produktes <b>Artischocke : Stück</b> wurde erfolgreich angepasst.');
-        $this->assertMailContainsHtmlAt($emailLogIndex, $this->editPriceReason);
-        $this->assertMailContainsHtmlAt($emailLogIndex, $this->newPrice);
-        $this->assertMailContainsHtmlAt($emailLogIndex, 'Demo Gemüse-Hersteller');
+        $this->assertMailSentWithAt($emailIndex, 'Preis angepasst: Artischocke : Stück', 'originalSubject');
+        $this->assertMailContainsHtmlAt($emailIndex, 'Der Preis des Produktes <b>Artischocke : Stück</b> wurde erfolgreich angepasst.');
+        $this->assertMailContainsHtmlAt($emailIndex, $this->editPriceReason);
+        $this->assertMailContainsHtmlAt($emailIndex, $this->newPrice);
+        $this->assertMailContainsHtmlAt($emailIndex, 'Demo Gemüse-Hersteller');
 
         foreach($expectedToEmails as $expectedToEmail) {
-            $this->assertMailSentToAt($emailLogIndex, $expectedToEmail);
+            $this->assertMailSentToAt($emailIndex, $expectedToEmail);
         }
         foreach($expectedCcEmails as $expectedCcEmail) {
-            $this->assertMailSentWithAt($emailLogIndex, $expectedCcEmail, 'cc');
+            $this->assertMailSentWithAt($emailIndex, $expectedCcEmail, 'cc');
         }
     }
 
