@@ -16,6 +16,7 @@ before_install:
 
 before_script:
   - phpenv config-rm xdebug.ini
+  - echo "allow_url_fopen = true" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - php --version
   - composer install --optimize-autoloader
   - cp ./config/travis/* ./config/
