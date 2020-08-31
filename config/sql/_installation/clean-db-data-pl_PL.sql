@@ -101,7 +101,6 @@ INSERT INTO `fcs_configuration` VALUES
 (557,1,'FCS_APP_ADDRESS','Adres kooperatywy <br /> <div class = \"small\"> Używany w stopce strony głównej, mailach, polityce prywatności i warunkach użytkowania.</div>','','textarea',6,'pl_PL','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (558,1,'FCS_APP_EMAIL','Adres e-mail kooperatywy <br /> <div class = \"small\"> </div>','','text',7,'pl_PL','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (559,1,'FCS_PLATFORM_OWNER','Operator platformy <br /> <div class = \"small\"> Aby zapoznać się z polityką prywatności i warunkami użytkowania, dodaj również adres. Można pozostawić puste, jeśli sama kooperatywa jest operatorem. </div>','','textarea',9,'pl_PL','2017-01-12 00:00:00','2017-01-12 00:00:00'),
-(563,1,'FCS_EMAIL_LOG_ENABLED','Czy wszystkie wysłane wiadomości e-mail powinny być przechowywane w bazie danych? <br /> <div class = \"small\"> Do debugowania i testów jednostkowych. </div>','0','readonly',30,'pl_PL','2017-07-05 00:00:00','2017-07-05 00:00:00'),
 (564,1,'FCS_ORDER_COMMENT_ENABLED','Pokaż pole komentarza podczas składania zamówienia? <br /> <div class = \"small\"> Widoczne w obszarze administracyjnym w obszarze \"Zamówienia\". </div>','1','boolean',13,'pl_PL','2017-07-09 00:00:00','2017-07-09 00:00:00'),
 (565,1,'FCS_USE_VARIABLE_MEMBER_FEE','Użyj zmiennej opłaty członkowskiej? <br /> <div class = \"small\"> Zmniejsz zmienną opłatę członkowską na fakturach producenta? Tym samym, ceny muszą być zwiększone. </div>','0','readonly',40,'pl_PL','2017-08-02 00:00:00','2017-08-02 00:00:00'),
 (566,1,'FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE','Wartość domyślna dla zmiennej opłaty członkowskiej <br /> <div class = \"small\"> Procent można zmienić w ustawieniach producenta. </div>','0','readonly',50,'pl_PL','2017-08-02 00:00:00','2017-08-02 00:00:00'),
@@ -226,7 +225,7 @@ INSERT INTO `phinxlog` VALUES
 (20200501192722,'EnableCashlessPaymentAddTypeConfiguration','2020-05-01 19:30:17','2020-05-01 19:30:17',0),
 (20200618063024,'AddProductFeedback','2020-06-19 07:02:54','2020-06-19 07:02:55',0),
 (20200703072605,'CustomerCanSelectPickupDay','2020-07-06 08:34:44','2020-07-06 08:34:44',0),
-(20200831142250,'RemoveEmailLogTable','2020-08-31 14:24:40','2020-08-31 14:24:40',0);
+(20200831142250,'RemoveEmailLogTable','2020-08-31 15:10:29','2020-08-31 15:10:29',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
