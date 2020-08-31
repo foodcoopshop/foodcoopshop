@@ -21,6 +21,8 @@ use Cake\Datasource\FactoryLocator;
 class OrderListByProductPdfWriter extends PdfWriter
 {
 
+    public $Manufacturer;
+
     public function __construct()
     {
         $this->plugin = 'Admin';
