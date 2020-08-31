@@ -164,7 +164,6 @@ foodcoopshop.Mobile = {
         controller.init();
 
         this.bindToggleLeft(controller);
-        this.bindToggleRight(controller);
         this.bindCloseSlidebarsOnCanvasClick(controller);
         this.fixContentScrolling();
 
