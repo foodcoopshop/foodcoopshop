@@ -590,13 +590,13 @@ class ManufacturersController extends AdminAppController
     {
 
         $pdfWriter = new OrderListByProductPdfWriter();
-        $this->getOrderList('product', $pdfWriter);
+        return $this->getOrderList('product', $pdfWriter);
     }
 
     public function getOrderListByCustomer()
     {
         $pdfWriter = new OrderListByCustomerPdfWriter();
-        $this->getOrderList('customer', $pdfWriter);
+        return $this->getOrderList('customer', $pdfWriter);
     }
 
     protected function getOrderList($type, $pdfWriter)
