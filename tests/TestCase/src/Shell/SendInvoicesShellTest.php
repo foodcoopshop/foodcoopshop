@@ -20,6 +20,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\Console\CommandRunner;
 use Cake\TestSuite\EmailTrait;
+use Cake\TestSuite\TestEmailTransport;
 
 class SendInvoicesShellTest extends AppCakeTestCase
 {
@@ -71,7 +72,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
 
         $this->assertMailCount(5);
         $this->assertMailSentWithAt(1, 'Rechnung Nr. 0001, ' . Configure::read('app.timeHelper')->getLastMonthNameAndYear(), 'originalSubject');
-        $this->assertMailContainsAttachment(date('Y-m-d') . '_Demo-Gemuese-Hersteller_5_Rechnung_0001_FoodCoop-Test.pdf');
+        $this->assertMailContainsAttachment('2018-03-11_Demo-Gemuese-Hersteller_5_Rechnung_0001_FoodCoop-Test.pdf');
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailMeatManufacturer'));
 
         $this->loginAsSuperadmin(); //should still be logged in as superadmin but is not...
