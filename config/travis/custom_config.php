@@ -56,7 +56,7 @@ return [
         /**
          * your host's name, eg. http://www.yourfoodcoop.com
          */
-        'cakeServerName' => 'http://www.foodcoopshop.test',
+        'cakeServerName' => 'http://localhost',
 
         /**
          * whether to apply a member fee to the members account balance
