@@ -48,8 +48,6 @@ class EmailOrderReminderShell extends AppShell
 
         parent::main();
 
-        $this->initHttpClient(); // for loggedUserId
-
         $this->startTimeLogging();
 
         $conditions = [
@@ -101,7 +99,7 @@ class EmailOrderReminderShell extends AppShell
 
         $this->stopTimeLogging();
 
-        $this->ActionLog->customSave('cronjob_email_order_reminder', $this->httpClient->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
+        $this->ActionLog->customSave('cronjob_email_order_reminder', 0, 0, '', $outString . '<br />' . $this->getRuntime());
 
         $this->out($outString);
         $this->out($this->getRuntime());
