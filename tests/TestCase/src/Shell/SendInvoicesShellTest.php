@@ -56,8 +56,10 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $this->prepareSendInvoices();
 
         $this->changeConfiguration('FCS_USE_VARIABLE_MEMBER_FEE', 1);
-        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
-        $this->changeManufacturer($manufacturerId, 'variable_member_fee', 10);
+        $meatManufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
+        $this->changeManufacturer($meatManufacturerId, 'variable_member_fee', 10);
+        $milkManufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.milkManufacturerId'));
+        $this->changeManufacturer($milkManufacturerId, 'send_invoice', 0);
 
         $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11 10:20:30']);
 
@@ -70,7 +72,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
             $this->assertEquals($orderDetail->order_state, $expectedOrderState);
         }
 
-        $this->assertMailCount(5);
+        $this->assertMailCount(4);
         $this->assertMailSentWithAt(1, 'Rechnung Nr. 0001, ' . Configure::read('app.timeHelper')->getLastMonthNameAndYear(), 'originalSubject');
         $this->assertMailContainsAttachment('2018-03-11_Demo-Gemuese-Hersteller_5_Rechnung_0001_FoodCoop-Test.pdf');
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailMeatManufacturer'));
@@ -80,6 +82,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $this->assertResponseContains('4,09 €</b> (10%)');
         $this->assertResponseContains('0,62 €</b>');
         $this->assertResponseContains('11.03.2018 10:20:30');
+        $this->assertResponseContains('<td>nein</td>');
 
         $this->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'invoiceWithVariableMemberFee.html');
