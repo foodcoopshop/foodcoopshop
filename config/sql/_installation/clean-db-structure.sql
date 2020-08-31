@@ -223,21 +223,6 @@ CREATE TABLE `fcs_deposits` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `fcs_email_logs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fcs_email_logs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `from_address` mediumtext,
-  `to_address` mediumtext,
-  `cc_address` mediumtext,
-  `bcc_address` mediumtext,
-  `subject` mediumtext,
-  `headers` mediumtext,
-  `message` longtext,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_images`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
