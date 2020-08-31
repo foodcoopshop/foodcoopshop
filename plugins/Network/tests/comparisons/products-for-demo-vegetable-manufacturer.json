@@ -1,7 +1,7 @@
 {
     "app": {
         "name": "FoodCoop Test",
-        "domain": "http:\/\/www.foodcoopshop.test",
+        "domain": "http:\/\/localhost",
         "variableMemberFee": 0
     },
     "loggedUser": {
