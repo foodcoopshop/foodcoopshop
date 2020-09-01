@@ -22,6 +22,8 @@ use App\Lib\Error\Exception\InvalidParameterException;
 abstract class OrderListPdfWriter extends PdfWriter
 {
 
+    use SetSumTrait;
+
     public $Manufacturer;
 
     public function __construct()
@@ -62,30 +64,11 @@ abstract class OrderListPdfWriter extends PdfWriter
             $orderDetailIds,
         );
 
-        // calculate sum of price
-        $sumPriceIncl = 0;
-        $sumPriceExcl = 0;
-        $sumTax = 0;
-        $sumAmount = 0;
-        $sumTimebasedCurrencyPriceIncl = 0;
-        foreach ($results as $result) {
-            $sumPriceIncl += $result['OrderDetailPriceIncl'];
-            $sumPriceExcl += $result['OrderDetailPriceExcl'];
-            $sumTax += $result['OrderDetailTaxAmount'];
-            $sumAmount += $result['OrderDetailAmount'];
-            if (isset($result['OrderDetailTimebasedCurrencyPriceInclAmount'])) {
-                $sumTimebasedCurrencyPriceIncl += $result['OrderDetailTimebasedCurrencyPriceInclAmount'];
-            }
-        }
+        $this->setSums($results);
 
         $preparedResults = [
             'manufacturer' => $manufacturer,
             'currentDateForOrderLists' => Configure::read('app.timeHelper')->getCurrentDateTimeForFilename(),
-            'sumPriceIncl' => $sumPriceIncl,
-            'sumPriceExcl' => $sumPriceExcl,
-            'sumTax' => $sumTax,
-            'sumAmount' => $sumAmount,
-            'sumTimebasedCurrencyPriceIncl' => $sumTimebasedCurrencyPriceIncl,
             'variableMemberFee' => $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee),
         ];
 

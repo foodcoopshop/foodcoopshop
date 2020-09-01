@@ -21,7 +21,7 @@ abstract class PdfWriter
 {
 
     protected $pdfLibrary;
-    protected $data;
+    protected $data = [];
     protected $plugin = null;
     protected $filename = '';
 
@@ -33,7 +33,7 @@ abstract class PdfWriter
 
     public function setData($data): PdfWriter
     {
-        $this->data = $data;
+        $this->data = array_merge($this->data, $data);
         return $this;
     }
 

@@ -21,6 +21,8 @@ use Cake\Datasource\FactoryLocator;
 class InvoicePdfWriter extends PdfWriter
 {
 
+    use SetSumTrait;
+
     public $Manufacturer;
     public $TimebasedCurrencyOrderDetail;
 
@@ -50,21 +52,7 @@ class InvoicePdfWriter extends PdfWriter
         $productResults = $this->TimebasedCurrencyOrderDetail->addTimebasedCurrencyDataToInvoiceData($productResults);
         $customerResults = $this->TimebasedCurrencyOrderDetail->addTimebasedCurrencyDataToInvoiceData($customerResults);
 
-        // calculate sum of price
-        $sumPriceIncl = 0;
-        $sumPriceExcl = 0;
-        $sumTax = 0;
-        $sumAmount = 0;
-        $sumTimebasedCurrencyPriceIncl = 0;
-        foreach ($productResults as $result) {
-            $sumPriceIncl += $result['OrderDetailPriceIncl'];
-            $sumPriceExcl += $result['OrderDetailPriceExcl'];
-            $sumTax += $result['OrderDetailTaxAmount'];
-            $sumAmount += $result['OrderDetailAmount'];
-            if (isset($result['OrderDetailTimebasedCurrencyPriceInclAmount'])) {
-                $sumTimebasedCurrencyPriceIncl += $result['OrderDetailTimebasedCurrencyPriceInclAmount'];
-            }
-        }
+        $this->setSums($productResults);
 
         $this->setData([
             'productResults' => $productResults,
@@ -75,11 +63,6 @@ class InvoicePdfWriter extends PdfWriter
             'dateFrom' => date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(str_replace('/', '-', $dateFrom))),
             'dateTo' => date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(str_replace('/', '-', $dateTo))),
             'manufacturer' => $manufacturer,
-            'sumPriceIncl' => $sumPriceIncl,
-            'sumPriceExcl' => $sumPriceExcl,
-            'sumTax' => $sumTax,
-            'sumAmount' => $sumAmount,
-            'sumTimebasedCurrencyPriceIncl' => $sumTimebasedCurrencyPriceIncl,
             'variableMemberFee' => $this->Manufacturer->getOptionVariableMemberFee($manufacturer->variable_member_fee),
         ]);
 
