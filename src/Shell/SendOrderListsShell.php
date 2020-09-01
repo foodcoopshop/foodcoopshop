@@ -28,10 +28,8 @@ class SendOrderListsShell extends AppShell
     {
         parent::main();
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $this->Product = $this->getTableLocator()->get('Products');
 
         $this->startTimeLogging();
 
@@ -158,10 +156,40 @@ class SendOrderListsShell extends AppShell
 
         }
 
-        // prepare action log string is complicated because of
-        // @see https://github.com/foodcoopshop/foodcoopshop/issues/408
+
+        $actionLogDatas = $this->writeActionLog($allOrderDetails, $manufacturers, $pickupDay);
+
+        $this->resetQuantityToDefaultQuantity($allOrderDetails);
+
+        $outString = '';
+        if (count($actionLogDatas) > 0) {
+            $outString .= join('<br />', $actionLogDatas) . '<br />';
+        }
+        $outString .= __('Sent_order_lists') . ': ' . count($actionLogDatas);
+
+        $this->stopTimeLogging();
+
+        $this->ActionLog->customSave('cronjob_send_order_lists', 0, 0, '', $outString . '<br />' . $this->getRuntime());
+
+        $this->out($outString);
+
+        $this->out($this->getRuntime());
+
+        return true;
+
+    }
+
+    /**
+     * prepare action log string is complicated because of
+     * @see https://github.com/foodcoopshop/foodcoopshop/issues/408
+     */
+    protected function writeActionLog($orderDetails, $manufacturers, $pickupDay): array
+    {
+
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+
         $tmpActionLogDatas = [];
-        foreach($allOrderDetails as $orderDetail) {
+        foreach($orderDetails as $orderDetail) {
             $orderDetailPickupDay = $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
             $manufacturerId = $orderDetail->product->id_manufacturer;
             @$tmpActionLogDatas[$manufacturerId][$orderDetailPickupDay]['order_detail_amount_sum'] += $orderDetail->product_amount;
@@ -189,9 +217,20 @@ class SendOrderListsShell extends AppShell
             }
         }
 
-        // reset quantity to default_quantity_after_sending_order_lists
+        return $actionLogDatas;
+
+    }
+
+    /**
+     * reset quantity to default_quantity_after_sending_order_lists
+     */
+    protected function resetQuantityToDefaultQuantity($orderDetails)
+    {
+
+        $this->Product = $this->getTableLocator()->get('Products');
+
         $productsToSave = [];
-        foreach($allOrderDetails as $orderDetail) {
+        foreach($orderDetails as $orderDetail) {
             $compositeProductId = $this->Product->getCompositeProductIdAndAttributeId($orderDetail->product_id, $orderDetail->product_attribute_id);
             $stockAvailableObject = $orderDetail->product->stock_available;
             if (!empty($orderDetail->product_attribute)) {
@@ -209,21 +248,6 @@ class SendOrderListsShell extends AppShell
             $this->Product->changeQuantity($productsToSave);
         }
 
-        $outString = '';
-        if (count($actionLogDatas) > 0) {
-            $outString .= join('<br />', $actionLogDatas) . '<br />';
-        }
-        $outString .= __('Sent_order_lists') . ': ' . count($actionLogDatas);
-
-        $this->stopTimeLogging();
-
-        $this->ActionLog->customSave('cronjob_send_order_lists', 0, 0, '', $outString . '<br />' . $this->getRuntime());
-
-        $this->out($outString);
-
-        $this->out($this->getRuntime());
-
-        return true;
-
     }
+
 }
