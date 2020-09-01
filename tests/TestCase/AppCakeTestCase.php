@@ -350,14 +350,6 @@ abstract class AppCakeTestCase extends TestCase
         return preg_replace('/\{\{logoPath\}\}/', ROOT . DS . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg', $html);
     }
 
-    protected function correctInvoiceHtml($html)
-    {
-        $html = $this->getCorrectedLogoPathInHtmlForPdfs($html);
-        $html = preg_replace('/\{\{period\}\}/', $this->Time->getLastMonthNameAndYear(), $html);
-        $html = preg_replace('/\{\{invoiceDate\}\}/', date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt')), $html);
-        return $html;
-    }
-
     protected function prepareSendingOrderLists()
     {
         $folder = new Folder();
