@@ -559,7 +559,7 @@ class ManufacturersController extends AdminAppController
         $newInvoiceNumber = 'xxx';
 
         $pdfWriter = new InvoicePdfWriter();
-        $pdfWriter->prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, []);
+        $pdfWriter->prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, [], '', 'xxx');
 
         if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
             return $this->response->withStringBody($pdfWriter->writeHtml());

@@ -149,8 +149,11 @@ class SendInvoicesShell extends AppShell
                     ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
                 ];
 
+                $invoiceDate = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'));
+                $invoicePeriod = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
+
                 $pdfWriter = new InvoicePdfWriter();
-                $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $dateFrom, $dateTo, $invoiceNumber, $validOrderStates);
+                $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $dateFrom, $dateTo, $invoiceNumber, $validOrderStates, $invoicePeriod, $invoiceDate);
                 $pdfWriter->setFilename($invoicePdfFile);
                 $pdfWriter->writeFile();
 

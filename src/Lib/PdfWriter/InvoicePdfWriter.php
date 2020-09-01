@@ -34,7 +34,7 @@ class InvoicePdfWriter extends PdfWriter
         $this->TimebasedCurrencyOrderDetail = FactoryLocator::get('Table')->get('TimebasedCurrencyOrderDetails');
     }
 
-    public function prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, $validOrderStates)
+    public function prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, $validOrderStates, $period, $invoiceDate)
     {
 
         $manufacturer = $this->Manufacturer->find('all', [
@@ -58,8 +58,8 @@ class InvoicePdfWriter extends PdfWriter
             'productResults' => $productResults,
             'customerResults' => $customerResults,
             'newInvoiceNumber' => $newInvoiceNumber,
-            'period' => Configure::read('app.timeHelper')->getLastMonthNameAndYear(),
-            'invoiceDate' => date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt')),
+            'period' => $period,
+            'invoiceDate' => $invoiceDate,
             'dateFrom' => date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(str_replace('/', '-', $dateFrom))),
             'dateTo' => date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(str_replace('/', '-', $dateTo))),
             'manufacturer' => $manufacturer,
