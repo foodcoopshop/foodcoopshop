@@ -89,7 +89,7 @@ foreach ($blogPosts as $blogPost) {
                 echo '<a href="'.$this->Slug->getManufacturerBlogList($blogPost->manufacturer->id_manufacturer, $blogPost->manufacturer->name).'">' . __('Go_to_blog_from') . ' ' . $blogPost->manufacturer->name.'</a>';
             }
         } else {
-            echo ' ' . __('of_{0}', [$blogPost['Manufacturers']['name']]);
+            echo ' ' . __('of_{0}', [$blogPost->manufacturer->name]);
         }
     }
             echo '</div>';
