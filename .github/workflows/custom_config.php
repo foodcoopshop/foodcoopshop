@@ -36,14 +36,16 @@ return [
         'default' => [
             'host' => '127.0.0.1',
             'username' => 'root',
-            'password' => '',
+            'password' => 'password',
             'database' => 'foodcoopshop_test',
+            'port' => '8888',
         ],
         'test' => [
             'host' => '127.0.0.1',
             'username' => 'root',
-            'password' => '',
+            'password' => 'password',
             'database' => 'foodcoopshop_test',
+            'port' => '8888',
         ]
     ],
 

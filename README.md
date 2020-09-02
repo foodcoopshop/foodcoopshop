@@ -13,6 +13,10 @@
     <img src="https://img.shields.io/travis/com/foodcoopshop/foodcoopshop/develop.svg?style=flat-square"
          alt="Build status">
   </a>
+  <a href="https://github.com/foodcoopshop/foodcoopshop/actions">
+    <img src="https://img.shields.io/github/workflow/status/foodcoopshop/foodcoopshop/FoodCoopShop%20CI/develop?style=flat-square"
+        alt="Build status">
+  </a>
   <a href="LICENSE">
     <img src="https://img.shields.io/github/license/foodcoopshop/foodcoopshop?style=flat-square"
          alt="Software license">
