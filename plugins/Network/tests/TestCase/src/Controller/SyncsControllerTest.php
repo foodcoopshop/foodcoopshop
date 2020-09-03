@@ -34,6 +34,11 @@ class SyncsControllerTest extends AppCakeTestCase
         $this->correctSyncDomain();
     }
 
+    protected function correctSyncDomain()
+    {
+        $this->dbConnection->query("UPDATE fcs_sync_domains SET domain = REPLACE(domain, '{{serverName}}', '" . Configure::read('app.cakeServerName') . "');");
+    }
+
     public function testDenyAccessIfVariableMemberFeeEnabled()
     {
         $this->loginAsMeatManufacturer();
