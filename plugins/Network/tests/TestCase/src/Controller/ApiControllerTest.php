@@ -59,10 +59,19 @@ class ApiControllerTest extends AppCakeTestCase
         $this->get('/api/getProducts.json');
         $this->assertResponseOk();
         $this->_compareBasePath = ROOT . DS . 'plugins' . DS . 'Network' . DS . 'tests' . DS . 'comparisons' . DS;
+
         $preparedResponse = str_replace(
-            Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate(date('Y-m-d')),
-            '2020-01-17',
-        $this->_response);
+            [
+                Configure::read('app.timeHelper')->getDbFormattedPickupDayByDbFormattedDate(date('Y-m-d')),
+                json_encode(Configure::read('app.cakeServerName')),
+            ],
+            [
+                '2020-01-17',
+                '"{{serverName}}"',
+            ],
+            $this->_response
+        );
+
         $this->assertSameAsFile('products-for-demo-vegetable-manufacturer.json', $preparedResponse);
     }
 

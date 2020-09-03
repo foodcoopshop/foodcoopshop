@@ -105,6 +105,11 @@ abstract class AppCakeTestCase extends TestCase
         $this->dbConnection->query(file_get_contents($this->testDumpDir . 'test-db-data.sql'));
     }
 
+    protected function correctSyncDomain()
+    {
+        $this->dbConnection->query("UPDATE fcs_sync_domains SET domain = REPLACE(domain, '{{serverName}}', '" . Configure::read('app.cakeServerName') . "');");
+    }
+
     protected function getJsonDecodedContent()
     {
         return json_decode($this->_getBodyAsString());

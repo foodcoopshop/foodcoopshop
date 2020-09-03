@@ -31,6 +31,7 @@ class SyncsControllerTest extends AppCakeTestCase
     {
         parent::setUp();
         $this->Network = new NetworkHelper(new View());
+        $this->correctSyncDomain();
     }
 
     public function testDenyAccessIfVariableMemberFeeEnabled()
