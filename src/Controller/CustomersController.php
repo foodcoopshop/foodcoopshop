@@ -245,7 +245,9 @@ class CustomersController extends FrontendController
                     $this->Flash->error(__('Signing_in_failed_account_inactive_or_password_wrong?'));
                 }
 
-                if (!empty($this->getRequest()->getData('remember_me')) && $this->getRequest()->getData('remember_me') && !is_null($customer['id_customer'])) {
+                if (!empty($this->getRequest()->getData('remember_me')) &&
+                    $this->getRequest()->getData('remember_me') &&
+                    !empty($customer)) {
                     $customer = $this->Customer->get($customer['id_customer']);
                     if ($customer->auto_login_hash == '') {
                         $customer->auto_login_hash = Security::hash(rand());
