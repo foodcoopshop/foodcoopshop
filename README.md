@@ -9,10 +9,6 @@
     <img src="https://img.shields.io/packagist/v/foodcoopshop/foodcoopshop.svg?label=stable&style=flat-square"
          alt="Latest stable version">
   </a>
-  <a href="https://travis-ci.org/foodcoopshop/foodcoopshop">
-    <img src="https://img.shields.io/travis/com/foodcoopshop/foodcoopshop/develop.svg?style=flat-square"
-         alt="Build status">
-  </a>
   <a href="https://github.com/foodcoopshop/foodcoopshop/actions">
     <img src="https://img.shields.io/github/workflow/status/foodcoopshop/foodcoopshop/FoodCoopShop%20CI/develop?style=flat-square"
         alt="Build status">
