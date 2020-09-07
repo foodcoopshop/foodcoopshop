@@ -56,7 +56,7 @@ class CategoriesTable extends AppTable
 
     }
 
-    private function flattenNestedArrayWithChildren($array, $separator = '', $renderParentIdAndChildrenIdContainers)
+    private function flattenNestedArrayWithChildren($array, $renderParentIdAndChildrenIdContainers. $separator = '')
     {
         foreach ($array as $item) {
             $statusString = '';
@@ -77,7 +77,7 @@ class CategoriesTable extends AppTable
             }
             $this->flattenedArray[$item->id_category] = $separator . $item->name . $statusString . $parentIdString . $childrenIdsString;
             if (! empty($item['children'])) {
-                $this->flattenNestedArrayWithChildren($item->children, str_repeat('-', $this->getLevel($item) + 1) . ' ', $renderParentIdAndChildrenIdContainers);
+                $this->flattenNestedArrayWithChildren($item->children, $renderParentIdAndChildrenIdContainers, str_repeat('-', $this->getLevel($item) + 1) . ' ');
             }
         }
 
@@ -125,7 +125,7 @@ class CategoriesTable extends AppTable
             $conditions['Categories.active'] = true;
         }
         $categories = $this->getThreaded($conditions);
-        $flattenedCategories = $this->flattenNestedArrayWithChildren($categories, '', $renderParentIdAndChildrenIdContainers);
+        $flattenedCategories = $this->flattenNestedArrayWithChildren($categories, $renderParentIdAndChildrenIdContainers, '');
         $flattenedCategories = array_map(function($category) {
             return html_entity_decode($category);
         }, $flattenedCategories);
