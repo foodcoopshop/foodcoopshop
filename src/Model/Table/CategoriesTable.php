@@ -56,7 +56,7 @@ class CategoriesTable extends AppTable
 
     }
 
-    private function flattenNestedArrayWithChildren($array, $renderParentIdAndChildrenIdContainers. $separator = '')
+    private function flattenNestedArrayWithChildren($array, $renderParentIdAndChildrenIdContainers, $separator = '')
     {
         foreach ($array as $item) {
             $statusString = '';
