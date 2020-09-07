@@ -3,7 +3,7 @@
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
 
-## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.0.2...develop)
+## v3.1.0 / 2020-09-07 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.0.2...v3.1.0)
 
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/AndreasEgger.png" width="20"> [AndreasEgger](https://github.com/AndreasEgger)
