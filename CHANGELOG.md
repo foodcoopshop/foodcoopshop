@@ -7,6 +7,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Bugfixes / Optimierungen
 - Bestelllisten- und Rechnungsversand benötigen nun keinen HttpClient mehr. EmailTrait wird in allen Tests verwendet und EmailLogs wurde entfernt. [I#410](https://github.com/foodcoopshop/foodcoopshop/issues/410) / [PR#553](https://github.com/foodcoopshop/foodcoopshop/pull/553) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- CI-Umstellung von Travis auf Github Actions [PR#556](https://github.com/foodcoopshop/foodcoopshop/pull/556) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 
 

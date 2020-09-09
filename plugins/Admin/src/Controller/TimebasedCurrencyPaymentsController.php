@@ -458,7 +458,7 @@ class TimebasedCurrencyPaymentsController extends AdminAppController
      * @param int $manufacturerId
      * @param int $customerId
      */
-    private function paymentListCustomer($manufacturerId = null, $customerId)
+    private function paymentListCustomer($manufacturerId, $customerId)
     {
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
