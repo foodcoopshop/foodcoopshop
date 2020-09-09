@@ -6,7 +6,9 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
+use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
+use Cake\TestSuite\TestEmailTransport;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -29,7 +31,6 @@ class SendOrderListsShellTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
 
-    public $EmailLog;
     public $Order;
     public $commandRunner;
 
@@ -37,7 +38,6 @@ class SendOrderListsShellTest extends AppCakeTestCase
     {
         parent::setUp();
         $this->prepareSendingOrderLists();
-        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
         $this->Cart = $this->getTableLocator()->get('Carts');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->Product = $this->getTableLocator()->get('Products');
@@ -48,8 +48,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
     {
         $this->OrderDetail->deleteAll([]);
         $this->commandRunner->run(['cake', 'send_order_lists']);
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
+        $this->assertMailCount(0);
     }
 
     public function testSendOrderListsIfOneOrderAvailable()
@@ -65,12 +64,13 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
 
         $cronjobRunDay = '2019-02-27';
+        $pickupDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($cronjobRunDay));
 
         $this->OrderDetail->save(
             $this->OrderDetail->patchEntity(
                 $this->OrderDetail->get($orderDetailId),
                 [
-                    'pickup_day' => Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($cronjobRunDay)),
+                    'pickup_day' => $pickupDay,
                 ]
             )
         );
@@ -79,25 +79,28 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
 
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(2, count($emailLogs), 'amount of sent emails wrong');
-        $this->assertEmailLogs(
-            $emailLogs[1],
-            'Bestellungen für den',
-            [
-                'im Anhang findest du zwei Bestelllisten',
-                'Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test-',
-                'Content-Type: application/pdf'
-            ],
-            [
-                Configure::read('test.loginEmailVegetableManufacturer')
-            ]
+        $this->assertMailCount(2);
+
+        $pickupDayFormated = new FrozenDate($pickupDay);
+        $pickupDayFormated = $pickupDayFormated->i18nFormat(
+            Configure::read('app.timeHelper')->getI18Format('DateLong2')
         );
+
+        $this->assertMailSentWithAt(1, 'Bestellungen für den ' . $pickupDayFormated, 'originalSubject');
+        $this->assertMailContainsAt(1, 'im Anhang findest du zwei Bestelllisten');
+
+        $pickupDayFormated = new FrozenDate($pickupDay);
+        $pickupDayFormated = $pickupDayFormated->i18nFormat(
+            Configure::read('app.timeHelper')->getI18Format('DateLong2')
+        );
+        $this->assertEquals(2, count(TestEmailTransport::getMessages()[1]->getAttachments()));
+        $this->assertMailSentToAt(1, Configure::read('test.loginEmailVegetableManufacturer'));
     }
 
     public function testSendOrderListsIfMoreOrdersAvailable()
     {
         $cronjobRunDay = '2018-01-31';
+        $pickupDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($cronjobRunDay));
 
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
 
@@ -105,20 +108,18 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->assertOrderDetailState(2, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
         $this->assertOrderDetailState(3, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
 
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(3, count($emailLogs), 'amount of sent emails wrong');
-        $this->assertEmailLogs(
-            $emailLogs[1],
-            'Bestellungen für den',
-            [
-                'im Anhang findest du zwei Bestelllisten',
-                'Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test-',
-                'Content-Type: application/pdf'
-            ],
-            [
-                Configure::read('test.loginEmailVegetableManufacturer')
-            ]
+        $this->assertMailCount(3);
+
+        $pickupDayFormated = new FrozenDate($pickupDay);
+        $pickupDayFormated = $pickupDayFormated->i18nFormat(
+            Configure::read('app.timeHelper')->getI18Format('DateLong2')
         );
+
+        $this->assertMailSentWithAt(1, 'Bestellungen für den ' . $pickupDayFormated, 'originalSubject');
+        $this->assertMailContainsAt(1, 'im Anhang findest du zwei Bestelllisten');
+
+        $this->assertEquals(2, count(TestEmailTransport::getMessages()[1]->getAttachments()));
+        $this->assertMailSentToAt(1, Configure::read('test.loginEmailVegetableManufacturer'));
     }
 
     public function testSendOrderListsWithIndividualSendOrderListWeekday()
@@ -130,8 +131,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         // 1) run cronjob and assert no changings
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_PLACED);
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
+        $this->assertMailCount(0);
 
         // 2) change product send_order_list_weekday and run cronjob again
         $this->Product->save(
@@ -147,8 +147,8 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
         $this->assertOrderDetailState(2, ORDER_STATE_ORDER_PLACED);
         $this->assertOrderDetailState(3, ORDER_STATE_ORDER_PLACED);
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(1, count($emailLogs), 'amount of sent emails wrong');
+
+        $this->assertMailCount(1);
 
         // 3) assert action log
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
@@ -211,42 +211,17 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->assertOrderDetailState($orderDetailIdWeeklyA, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
         $this->assertOrderDetailState($orderDetailIdWeeklyB, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
 
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(3, count($emailLogs), 'amount of sent emails wrong');
+        $this->assertMailCount(3);
 
-        // sometimes the records change in database and tests "fail"
-        $emailLogA = $emailLogs[1];
-        $emailLogB = $emailLogs[2];
-        if ($emailLogs[1]->subject == 'Bestellungen für den 04.10.2019') {
-            $emailLogA = $emailLogs[2];
-            $emailLogB = $emailLogs[1];
-        }
+        $this->assertMailSentWithAt(1, 'Bestellungen für den 04.10.2019', 'originalSubject');
+        $this->assertMailContainsAt(1, 'im Anhang findest du zwei Bestelllisten');
+        $this->assertEquals(2, count(TestEmailTransport::getMessages()[1]->getAttachments()));
+        $this->assertMailSentToAt(1, Configure::read('test.loginEmailVegetableManufacturer'));
 
-        $this->assertEmailLogs(
-            $emailLogA,
-            'Bestellungen für den 11.10.2019',
-            [
-                'im Anhang findest du zwei Bestelllisten',
-                '2019-10-11_Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test-',
-                'Content-Type: application/pdf'
-            ],
-            [
-                Configure::read('test.loginEmailVegetableManufacturer')
-            ]
-        );
-
-        $this->assertEmailLogs(
-            $emailLogB,
-            'Bestellungen für den 04.10.2019',
-            [
-                'im Anhang findest du zwei Bestelllisten',
-                '2019-10-04_Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test-',
-                'Content-Type: application/pdf'
-            ],
-            [
-                Configure::read('test.loginEmailVegetableManufacturer')
-            ]
-        );
+        $this->assertMailSentWithAt(2, 'Bestellungen für den 11.10.2019', 'originalSubject');
+        $this->assertMailContainsAt(2, 'im Anhang findest du zwei Bestelllisten');
+        $this->assertEquals(2, count(TestEmailTransport::getMessages()[2]->getAttachments()));
+        $this->assertMailSentToAt(2, Configure::read('test.loginEmailVegetableManufacturer'));
 
         // 2) assert action log
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
@@ -259,8 +234,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
         // 3) run cronjob again - no additional emails must be sent
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(3, count($emailLogs));
+        $this->assertMailCount(3);
 
     }
 
@@ -276,8 +250,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         // run cronjob and assert no changings
         $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_PLACED);
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(0, count($emailLogs), 'amount of sent emails wrong');
+        $this->assertMailCount(0);
     }
 
     public function testSendOrderListAndResetQuantity()
@@ -352,20 +325,12 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
 
-        $emailLogs = $this->EmailLog->find('all')->toArray();
-        $this->assertEquals(1, count($emailLogs), 'amount of sent emails wrong');
-        $this->assertEmailLogs(
-            $emailLogs[0],
-            'Bestellungen für den 05.08.2020',
-            [
-                'im Anhang findest du zwei Bestelllisten',
-                'Demo-Gemuese-Hersteller_5_Bestellliste_Produkt_FoodCoop-Test-',
-                'Content-Type: application/pdf'
-            ],
-            [
-                Configure::read('test.loginEmailVegetableManufacturer')
-            ]
-        );
+        $this->assertMailCount(1);
+        $this->assertMailSentWithAt(0, 'Bestellungen für den 05.08.2020', 'originalSubject');
+        $this->assertMailContainsAt(0, 'im Anhang findest du zwei Bestelllisten');
+        $this->assertEquals(2, count(TestEmailTransport::getMessages()[0]->getAttachments()));
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailVegetableManufacturer'));
+
     }
 
     private function assertOrderDetailState($orderDetailId, $expectedOrderState)

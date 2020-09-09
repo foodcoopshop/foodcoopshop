@@ -34,8 +34,6 @@ class BackupDatabaseShell extends AppShell
 
         $this->startTimeLogging();
 
-        $this->initHttpClient(); // for loggedUserId
-
         $dbConfig = ConnectionManager::getConfig('default');
 
         $backupdir = ROOT . DS . 'files_private' . DS . 'db-backups';
@@ -79,7 +77,7 @@ class BackupDatabaseShell extends AppShell
 
         $this->stopTimeLogging();
 
-        $this->ActionLog->customSave('cronjob_backup_database', $this->httpClient->getLoggedUserId(), 0, '', $message . '<br />' . $this->getRuntime());
+        $this->ActionLog->customSave('cronjob_backup_database', 0, 0, '', $message . '<br />' . $this->getRuntime());
         $this->out($this->getRuntime());
 
         return true;

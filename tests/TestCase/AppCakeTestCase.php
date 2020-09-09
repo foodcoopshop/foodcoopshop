@@ -166,52 +166,6 @@ abstract class AppCakeTestCase extends TestCase
         $this->assertEquals($url, $expectedUrl, $msg);
     }
 
-    /**
-     *
-     * @param array $emailLog
-     * @param string $expectedSubjectPattern
-     * @param array $expectedMessagePatterns
-     * @param array $expectedToEmails
-     * @param array $expectedCcEmails
-     * @param array $expectedBccEmails
-     */
-    protected function assertEmailLogs($emailLog, $expectedSubjectPattern = '', $expectedMessagePatterns = [], $expectedToEmails = [], $expectedCcEmails = [], $expectedBccEmails = [])
-    {
-        $fromAddress = json_decode($emailLog->from_address);
-        $toAddress = json_decode($emailLog->to_address);
-        $ccAddress = json_decode($emailLog->cc_address);
-        $bccAddress = json_decode($emailLog->bcc_address);
-
-        $this->assertNotEmpty($fromAddress, 'email from_address must not be empty');
-
-        if ($expectedSubjectPattern != '') {
-            $this->assertRegExpWithUnquotedString($expectedSubjectPattern, $emailLog->subject, 'email subject wrong');
-        }
-        if (!empty($expectedMessagePatterns)) {
-            foreach ($expectedMessagePatterns as $expectedMessagePattern) {
-                $this->assertRegExpWithUnquotedString($expectedMessagePattern, $emailLog->message, 'email message wrong');
-            }
-        }
-
-        $preparedToAddresses = [];
-        foreach ($toAddress as $email) {
-            $preparedToAddresses[] = $email;
-        }
-        $this->assertEqualsCanonicalizing($preparedToAddresses, $expectedToEmails, 'email to_addresses wrong');
-
-        $preparedCcAddresses = [];
-        foreach ($ccAddress as $email) {
-            $preparedCcAddresses[] = $email;
-        }
-        $this->assertEqualsCanonicalizing($preparedCcAddresses, $expectedCcEmails, 'email cc_addresses wrong');
-
-        $preparedBccAddresses = [];
-        foreach ($bccAddress as $email) {
-            $preparedBccAddresses[] = $email;
-        }
-        $this->assertEqualsCanonicalizing($preparedBccAddresses, $expectedBccEmails, 'email bcc_addresses wrong');
-    }
-
     protected function changeReadOnlyConfiguration($configKey, $value)
     {
         $query = 'UPDATE ' . $this->Configuration->getTable() . ' SET value = :value WHERE name = :configKey';

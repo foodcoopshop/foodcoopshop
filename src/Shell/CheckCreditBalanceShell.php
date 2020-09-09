@@ -29,8 +29,6 @@ class CheckCreditBalanceShell extends AppShell
             return;
         }
 
-        $this->initHttpClient(); // for loggedUserId
-
         $this->startTimeLogging();
 
         $this->Customer->dropManufacturersInNextFind();
@@ -100,7 +98,7 @@ class CheckCreditBalanceShell extends AppShell
 
         $this->stopTimeLogging();
 
-        $this->ActionLog->customSave('cronjob_check_credit_balance', $this->httpClient->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
+        $this->ActionLog->customSave('cronjob_check_credit_balance', 0, 0, '', $outString . '<br />' . $this->getRuntime());
 
         $this->out($outString);
         $this->out($this->getRuntime());

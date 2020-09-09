@@ -14,16 +14,7 @@
  */
 namespace App\Lib\PdfWriter;
 
-use App\Lib\Pdf\ListTcpdf;
-
-class OrderListByProductPdfWriter extends PdfWriter
+class OrderListByProductPdfWriter extends OrderListPdfWriter
 {
 
-    public function __construct()
-    {
-        $this->plugin = 'Admin';
-        $this->setPdfLibrary(new ListTcpdf());
-    }
-
 }
-

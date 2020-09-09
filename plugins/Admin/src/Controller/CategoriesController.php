@@ -5,8 +5,6 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 
 /**
- * CategoriesController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License

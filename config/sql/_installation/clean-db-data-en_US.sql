@@ -25,7 +25,6 @@ TRUNCATE TABLE `fcs_cronjob_logs`;
 TRUNCATE TABLE `fcs_cronjobs`;
 TRUNCATE TABLE `fcs_customer`;
 TRUNCATE TABLE `fcs_deposits`;
-TRUNCATE TABLE `fcs_email_logs`;
 TRUNCATE TABLE `fcs_images`;
 TRUNCATE TABLE `fcs_invoices`;
 TRUNCATE TABLE `fcs_manufacturer`;
@@ -102,7 +101,6 @@ INSERT INTO `fcs_configuration` VALUES
 (557,1,'FCS_APP_ADDRESS','Adress of the food-coop<br /><div class=\"small\">Used in footer of homepage and e-mails, privacy policy and terms of use.</div>','','textarea',6,'en_US','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (558,1,'FCS_APP_EMAIL','E-mail adress of the food-coop<br /><div class=\"small\"></div>','','text',7,'en_US','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (559,1,'FCS_PLATFORM_OWNER','Operator of the platform<br /><div class=\"small\">For privacy policy and terms of use, please also add adrress. Can be left empty if the food-coop itself is operator.</div>','','textarea',9,'en_US','2017-01-12 00:00:00','2017-01-12 00:00:00'),
-(563,1,'FCS_EMAIL_LOG_ENABLED','Should all sent e-mails be stored in the database?<br /><div class=\"small\">For debugging and unit tests.</div>','0','readonly',30,'en_US','2017-07-05 00:00:00','2017-07-05 00:00:00'),
 (564,1,'FCS_ORDER_COMMENT_ENABLED','Show comment field when placing an order?<br /><div class=\"small\">Shown in admin area under \"Orders\".</div>','1','boolean',13,'en_US','2017-07-09 00:00:00','2017-07-09 00:00:00'),
 (565,1,'FCS_USE_VARIABLE_MEMBER_FEE','Use variable member fee?<br /><div class=\"small\">Reduce the variable member fee in the manufacturer\'s invoices? Therefore the prices need to be increased.</div>','0','readonly',40,'en_US','2017-08-02 00:00:00','2017-08-02 00:00:00'),
 (566,1,'FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE','Default value for variable member fee<br /><div class=\"small\">The percentage can be changed in the manufacturer\'s settings.</div>','0','readonly',50,'en_US','2017-08-02 00:00:00','2017-08-02 00:00:00'),
@@ -150,9 +148,6 @@ INSERT INTO `fcs_cronjobs` VALUES
 
 /*!40000 ALTER TABLE `fcs_deposits` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_deposits` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_email_logs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_email_logs` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_images` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_images` ENABLE KEYS */;
@@ -229,7 +224,8 @@ INSERT INTO `phinxlog` VALUES
 (20200415073329,'ShowNewProductsOnHome','2020-04-15 07:41:58','2020-04-15 07:41:58',0),
 (20200501192722,'EnableCashlessPaymentAddTypeConfiguration','2020-05-01 19:30:13','2020-05-01 19:30:13',0),
 (20200618063024,'AddProductFeedback','2020-06-19 07:02:50','2020-06-19 07:02:50',0),
-(20200703072605,'CustomerCanSelectPickupDay','2020-07-06 08:34:39','2020-07-06 08:34:39',0);
+(20200703072605,'CustomerCanSelectPickupDay','2020-07-06 08:34:39','2020-07-06 08:34:39',0),
+(20200831142250,'RemoveEmailLogTable','2020-08-31 15:10:25','2020-08-31 15:10:25',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

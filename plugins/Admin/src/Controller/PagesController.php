@@ -7,8 +7,6 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 
 /**
- * PagesController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License

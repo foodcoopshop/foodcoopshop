@@ -14,6 +14,7 @@
  */
 namespace App\Shell;
 
+use App\Lib\PdfWriter\InvoicePdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\I18n\Time;
@@ -23,9 +24,6 @@ class SendInvoicesShell extends AppShell
 
     public $cronjobRunDay;
 
-    /**
-     * sends invoices to manufacturers who have order details with pickup_day of last month
-     */
     public function main()
     {
         parent::main();
@@ -52,7 +50,8 @@ class SendInvoicesShell extends AppShell
                 'Manufacturers.name' => 'ASC'
             ],
             'contain' => [
-                'Invoices'
+                'Invoices',
+                'AddressManufacturers',
             ]
         ])->toArray();
 
@@ -101,9 +100,6 @@ class SendInvoicesShell extends AppShell
         $i = 0;
         $outString = $dateFrom . ' ' . __('to_(time_context)') . ' ' . $dateTo . '<br />';
 
-        $this->initHttpClient();
-        $this->httpClient->doFoodCoopShopLogin();
-
         $tableData = '';
         $sumPrice = 0;
 
@@ -111,11 +107,10 @@ class SendInvoicesShell extends AppShell
 
             $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
             $invoiceNumber = $this->Manufacturer->Invoices->getNextInvoiceNumber($manufacturer->invoices);
-            $invoiceLink = '/admin/lists/getInvoice?file=' . str_replace(
-                Configure::read('app.folder_invoices'), '', Configure::read('app.htmlHelper')->getInvoiceLink(
-                    $manufacturer->name, $manufacturer->id_manufacturer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $invoiceNumber
-                )
+            $invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink(
+                $manufacturer->name, $manufacturer->id_manufacturer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $invoiceNumber
             );
+            $invoiceLink = '/admin/lists/getInvoice?file=' . str_replace(Configure::read('app.folder_invoices'), '', $invoicePdfFile);
 
             if (!empty($manufacturer->current_order_count)) {
 
@@ -149,8 +144,50 @@ class SendInvoicesShell extends AppShell
                 $tableData .= '</td>';
                 $tableData .= '</tr>';
 
-                $url = $this->httpClient->adminPrefix . '/manufacturers/sendInvoice?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo;
-                $this->httpClient->get($url);
+                $validOrderStates = [
+                    ORDER_STATE_ORDER_PLACED,
+                    ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
+                ];
+
+                $invoiceDate = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'));
+                $invoicePeriod = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
+
+                $pdfWriter = new InvoicePdfWriter();
+                $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $dateFrom, $dateTo, $invoiceNumber, $validOrderStates, $invoicePeriod, $invoiceDate);
+                $pdfWriter->setFilename($invoicePdfFile);
+                $pdfWriter->writeFile();
+
+                $invoice2save = [
+                    'id_manufacturer' => $manufacturer->id_manufacturer,
+                    'send_date' => Time::now(),
+                    'invoice_number' => (int) $invoiceNumber,
+                    'user_id' => 0,
+                ];
+                $this->Manufacturer->Invoices->save(
+                    $this->Manufacturer->Invoices->newEntity($invoice2save)
+                );
+
+                $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
+
+                $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, Configure::read('app.htmlHelper')->getOrderStateBilled(), $manufacturer->id_manufacturer);
+
+                if ($sendInvoice) {
+                    $email = new AppMailer();
+                    $email->viewBuilder()->setTemplate('Admin.send_invoice');
+                    $email->setTo($manufacturer->address_manufacturer->email)
+                    ->setAttachments([
+                        $invoicePdfFile
+                    ])
+                    ->setSubject(__('Invoice_number_abbreviataion_{0}_{1}', [$invoiceNumber, $invoicePeriodMonthAndYear]))
+                    ->setViewVars([
+                        'manufacturer' => $manufacturer,
+                        'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
+                        'appAuth' => $this->AppAuth,
+                        'showManufacturerUnsubscribeLink' => true
+                    ]);
+                    $email->send();
+                }
+
                 $i ++;
 
             }
@@ -170,8 +207,6 @@ class SendInvoicesShell extends AppShell
             $outString .= '<tr><td colspan="4" align="right">'.__('Total_sum').'</td><td align="right"><b>'.Configure::read('app.numberHelper')->formatAsCurrency($sumPrice).'</b></td><td></td></tr>';
             $outString .= '</table>';
         }
-
-        $this->httpClient->doFoodCoopShopLogout();
 
         // START send email to accounting employee
         $accountingEmail = Configure::read('appDb.FCS_ACCOUNTING_EMAIL');
@@ -193,7 +228,7 @@ class SendInvoicesShell extends AppShell
 
         $this->stopTimeLogging();
 
-        $this->ActionLog->customSave('cronjob_send_invoices', $this->httpClient->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime(), new Time($this->cronjobRunDay));
+        $this->ActionLog->customSave('cronjob_send_invoices', 0, 0, '', $outString . '<br />' . $this->getRuntime(), new Time($this->cronjobRunDay));
 
         $this->out($outString);
 

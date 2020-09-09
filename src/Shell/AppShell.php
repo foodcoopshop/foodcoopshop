@@ -4,7 +4,6 @@ namespace App\Shell;
 
 use Cake\Console\Shell;
 use Cake\Core\Configure;
-use App\Network\AppHttpClient;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -25,8 +24,6 @@ class AppShell extends Shell
     public $timeStart;
 
     public $timeEnd;
-
-    public $httpClient;
 
     public function main()
     {
@@ -51,23 +48,6 @@ class AppShell extends Shell
         return __('Runtime') . ': ' . Configure::read('app.numberHelper')->formatAsDecimal($time) . ' ' . __('seconds');
     }
 
-    public function initHttpClient()
-    {
-        if ($this->isCalledFromUnitTest()) {
-            $this->httpClient = new AppHttpClient([
-                'headers' => [
-                    'x-unit-test-mode' => true
-                ]
-            ]);
-            $this->httpClient->loginEmail = Configure::read('test.loginEmailSuperadmin');
-            $this->httpClient->loginPassword = Configure::read('test.loginPassword');
-        } else {
-            $this->httpClient = new AppHttpClient();
-            $this->httpClient->loginEmail = Configure::read('app.adminEmail');
-            $this->httpClient->loginPassword = Configure::read('app.adminPassword');
-        }
-    }
-
     public function out($message, int $newlines = 1, int $level = Shell::NORMAL): ?int
     {
         if ($this->isCalledFromUnitTest()) {
@@ -79,7 +59,6 @@ class AppShell extends Shell
 
     private function isCalledFromUnitTest()
     {
-        return isset($_SERVER['HTTP_X_UNIT_TEST_MODE'])
-            || (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]));
+        return php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0]);
     }
 }

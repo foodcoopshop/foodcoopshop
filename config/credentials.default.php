@@ -21,12 +21,6 @@ return [
     'app' => [
 
         /**
-         * the cronjobs for sending order lists and invoices need the credentials to a valid superadmin account
-         */
-        'adminEmail' => 'mail@example.com',
-        'adminPassword' => 'my-password',
-
-        /**
          * set to true if you want to receive debug emails when exceptions are triggered
          */
         'emailErrorLoggingEnabled' => false,

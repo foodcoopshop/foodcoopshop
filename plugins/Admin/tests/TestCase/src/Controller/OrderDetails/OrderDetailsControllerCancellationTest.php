@@ -133,20 +133,20 @@ class OrderDetailsControllerCancellationTest extends OrderDetailsControllerTestC
         $this->assertEmpty($orderDetails, 'order detail was not deleted properly');
     }
 
-    private function assertOrderDetailDeletedEmails($emailLogIndex, $expectedToEmails, $expectedCcEmails)
+    private function assertOrderDetailDeletedEmails($emailIndex, $expectedToEmails, $expectedCcEmails)
     {
-        $this->assertMailSentWithAt($emailLogIndex, 'Produkt storniert: Artischocke : Stück', 'originalSubject');
+        $this->assertMailSentWithAt($emailIndex, 'Produkt storniert: Artischocke : Stück', 'originalSubject');
 
         foreach($expectedToEmails as $expectedToEmail) {
-            $this->assertMailSentToAt($emailLogIndex, $expectedToEmail);
+            $this->assertMailSentToAt($emailIndex, $expectedToEmail);
         }
         foreach($expectedCcEmails as $expectedCcEmail) {
-            $this->assertMailSentWithAt($emailLogIndex, $expectedCcEmail, 'cc');
+            $this->assertMailSentWithAt($emailIndex, $expectedCcEmail, 'cc');
         }
 
-        $this->assertMailContainsHtmlAt($emailLogIndex, $this->cancellationReason);
-        $this->assertMailContainsHtmlAt($emailLogIndex, '1,82');
-        $this->assertMailContainsHtmlAt($emailLogIndex, 'Demo Gemüse-Hersteller');
+        $this->assertMailContainsHtmlAt($emailIndex, $this->cancellationReason);
+        $this->assertMailContainsHtmlAt($emailIndex, '1,82');
+        $this->assertMailContainsHtmlAt($emailIndex, 'Demo Gemüse-Hersteller');
 
     }
 

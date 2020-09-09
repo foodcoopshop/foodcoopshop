@@ -29,8 +29,6 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
 
     public $Manufacturer;
 
-    public $EmailLog;
-
     public $productIdA = 346;
     public $productIdB = 340;
     public $productIdC = '60-10';
@@ -44,7 +42,6 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         parent::setUp();
         $this->Cart = $this->getTableLocator()->get('Carts');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
     }
 

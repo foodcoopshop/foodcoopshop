@@ -36,7 +36,6 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->EmailLog = $this->getTableLocator()->get('EmailLogs');
         $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 

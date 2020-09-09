@@ -28,8 +28,6 @@ class PickupReminderShell extends AppShell
 
         parent::main();
 
-        $this->initHttpClient(); // for loggedUserId
-
         // $this->cronjobRunDay can is set in unit test
         if (!isset($this->args[0])) {
             $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
@@ -101,7 +99,7 @@ class PickupReminderShell extends AppShell
 
         $this->stopTimeLogging();
 
-        $this->ActionLog->customSave('cronjob_pickup_reminder', $this->httpClient->getLoggedUserId(), 0, '', $outString . '<br />' . $this->getRuntime());
+        $this->ActionLog->customSave('cronjob_pickup_reminder', 0, 0, '', $outString . '<br />' . $this->getRuntime());
 
         $this->out($outString);
         $this->out($this->getRuntime());

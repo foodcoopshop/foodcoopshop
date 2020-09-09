@@ -59,7 +59,9 @@ echo '</tr>';
 
 $i = 0;
 foreach ($actionLogs as $actionLog) {
+
     $i ++;
+    $name = null;
 
     $actionType = $actionLogModel->types[$actionLog->type];
     $actionClass = empty($actionType['class']) ? [] : $actionType['class'];

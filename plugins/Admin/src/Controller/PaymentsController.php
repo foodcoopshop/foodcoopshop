@@ -12,8 +12,6 @@ use Cake\Utility\Hash;
 use App\Lib\Error\Exception\InvalidParameterException;
 
 /**
- * PaymentsController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License

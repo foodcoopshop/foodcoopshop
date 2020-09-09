@@ -25,7 +25,6 @@ TRUNCATE TABLE `fcs_cronjob_logs`;
 TRUNCATE TABLE `fcs_cronjobs`;
 TRUNCATE TABLE `fcs_customer`;
 TRUNCATE TABLE `fcs_deposits`;
-TRUNCATE TABLE `fcs_email_logs`;
 TRUNCATE TABLE `fcs_images`;
 TRUNCATE TABLE `fcs_invoices`;
 TRUNCATE TABLE `fcs_manufacturer`;
@@ -102,7 +101,6 @@ INSERT INTO `fcs_configuration` VALUES
 (557,1,'FCS_APP_ADDRESS','Adresse der Foodcoop<br /><div class=\"small\">Wird im Footer von Homepage und E-Mails, Datenschutzerklärung, Nutzungsbedingungen usw. verwendet.</div>','','textarea',6,'de_DE','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (558,1,'FCS_APP_EMAIL','E-Mail-Adresse der Foodcoop<br /><div class=\"small\"></div>','','text',7,'de_DE','2017-01-12 00:00:00','2017-01-12 00:00:00'),
 (559,1,'FCS_PLATFORM_OWNER','Betreiber der Plattform<br /><div class=\"small\">Für Datenschutzerklärung und Nutzungsbedingungen, bitte auch Adresse angeben. Kann leer gelassen werden, wenn die Foodcoop selbst die Plattform betreibt.</div>','','textarea',9,'de_DE','2017-01-12 00:00:00','2017-01-12 00:00:00'),
-(563,1,'FCS_EMAIL_LOG_ENABLED','Sollen alle ausgehenden E-Mails in der Datenbank gespeichert werden?<br /><div class=\"small\">Für Debugging gedacht.</div>','0','readonly',30,'de_DE','2017-07-05 00:00:00','2017-07-05 00:00:00'),
 (564,1,'FCS_ORDER_COMMENT_ENABLED','Kommentarfeld bei Bestell-Abschluss anzeigen?<br /><div class=\"small\">Wird im Admin-Bereich unter \"Bestellungen\" angezeigt.</div>','1','boolean',13,'de_DE','2017-07-09 00:00:00','2017-07-09 00:00:00'),
 (565,1,'FCS_USE_VARIABLE_MEMBER_FEE','Variablen Mitgliedsbeitrag verwenden?<br /><div class=\"small\">Den variablen Mitgliedsbeitrag bei den Hersteller-Rechnungen abziehen? Die Produkt-Preise müssen entsprechend höher eingegeben werden.</div>','0','readonly',40,'de_DE','2017-08-02 00:00:00','2017-08-02 00:00:00'),
 (566,1,'FCS_DEFAULT_VARIABLE_MEMBER_FEE_PERCENTAGE','Standardwert für variablen Mitgliedsbeitrag<br /><div class=\"small\">Der Prozentsatz kann in den Hersteller-Einstellungen auch individuell angepasst werden.</div>','0','readonly',50,'de_DE','2017-08-02 00:00:00','2017-08-02 00:00:00'),
@@ -150,9 +148,6 @@ INSERT INTO `fcs_cronjobs` VALUES
 
 /*!40000 ALTER TABLE `fcs_deposits` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_deposits` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_email_logs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_email_logs` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_images` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_images` ENABLE KEYS */;
@@ -229,7 +224,8 @@ INSERT INTO `phinxlog` VALUES
 (20200415073329,'ShowNewProductsOnHome','2020-04-15 07:41:54','2020-04-15 07:41:54',0),
 (20200501192722,'EnableCashlessPaymentAddTypeConfiguration','2020-05-01 19:30:09','2020-05-01 19:30:09',0),
 (20200618063024,'AddProductFeedback','2020-06-19 07:02:46','2020-06-19 07:02:46',0),
-(20200703072605,'CustomerCanSelectPickupDay','2020-07-06 08:34:35','2020-07-06 08:34:35',0);
+(20200703072605,'CustomerCanSelectPickupDay','2020-07-06 08:34:35','2020-07-06 08:34:35',0),
+(20200831142250,'RemoveEmailLogTable','2020-08-31 15:10:21','2020-08-31 15:10:21',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

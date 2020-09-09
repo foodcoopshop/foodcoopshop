@@ -5,8 +5,6 @@ use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 
 /**
- * ActionLogsController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
