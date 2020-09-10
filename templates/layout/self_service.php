@@ -23,6 +23,9 @@ if ($isMobile) {
     } else {
         $js = Configure::read('app.jsNamespace').".Mobile.hideSelfServiceCart();";
     }
+    if ($appAuth->user('use_barcode_scan_app')) {
+        $js .= Configure::read('app.jsNamespace').".SelfService.initMobileBarcodeScanning();";
+    }
     $this->element('addScript', ['script' => $js]);
 }
 

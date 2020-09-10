@@ -26,6 +26,35 @@ foodcoopshop.SelfService = {
         this.initDepositPayment();
     },
 
+    initMobileBarcodeScanning : function() {
+        Quagga.init({
+            inputStream : {
+              name : "Live",
+              type : "LiveStream",
+              target: document.querySelector('#video')
+            },
+            decoder : {
+              readers : ["code_39_reader"]
+            },
+          }, function(err) {
+              if (err) {
+                  console.log(err);
+                  return;
+              }
+              Quagga.start();
+
+          });
+
+            Quagga.onDetected(function(result) {
+                var code = result.codeResult.code;
+                $('#video').remove();
+                var redirectUrl = '/selbstbedienung?keyword=' + code;
+                console.log(redirectUrl);
+                return;
+            });
+
+    },
+
     initLoginForm : function() {
 
         var barcodeInputField = $('#barcode');
