@@ -52,7 +52,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
 </div>
 
 <?php if ($isMobile && $appAuth->user('use_barcode_scan_app')) { ?>
-    <div id="camera"></div>
+    <div id="camera" style="height:200px;"></div>
 <?php } ?>
 
 <div id="products">

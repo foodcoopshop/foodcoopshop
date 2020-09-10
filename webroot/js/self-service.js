@@ -29,12 +29,16 @@ foodcoopshop.SelfService = {
     initMobileBarcodeScanning : function() {
         Quagga.init({
             inputStream : {
-              name : "Live",
-              type : "LiveStream",
-              target: document.querySelector('#camera')
+                name : "Live",
+                type : "LiveStream",
+                target: document.querySelector('#camera'),
+                constraints: {
+                    width: window.innerWidth,
+                    height: 200
+                }
             },
             decoder : {
-              readers : ["code_39_reader"]
+                readers : ["code_39_reader"]
             },
           }, function(err) {
               if (err) {
