@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-09-10 11:35+0200\n"
+"POT-Creation-Date: 2020-08-06 12:09+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -209,6 +209,24 @@ msgstr ""
 msgid "Manufacturers"
 msgstr ""
 
+msgid "Invoice_for_manufacturer_{0}_successfully_sent_to_{1}."
+msgstr ""
+
+msgid "Invoice_number_abbreviataion_{0}_{1}"
+msgstr ""
+
+msgid "No_orders_within_the_given_time_range."
+msgstr ""
+
+msgid "Order_lists_for_the_day"
+msgstr ""
+
+msgid "{0,plural,=1{1_Order_list} other{#_Order_lists}}_successfully_generated_for_manufacturer_{1}."
+msgstr ""
+
+msgid "Email_sent_to:{0}"
+msgstr ""
+
 msgid "Edit_settings"
 msgstr ""
 
@@ -216,9 +234,6 @@ msgid "The_settings_of_manufacturer_{0}_have_been_changed."
 msgstr ""
 
 msgid "Your_settings_have_been_changed."
-msgstr ""
-
-msgid "No_orders_within_the_given_time_range."
 msgstr ""
 
 msgid "No_member_found_with_id_{0}."
@@ -959,13 +974,7 @@ msgstr ""
 msgid "How_do_I_use_the_paying_with_time_module?"
 msgstr ""
 
-msgid "Self_service_for_stock_products"
-msgstr ""
-
 msgid "Generate_my_member_card"
-msgstr ""
-
-msgid "Mobile_barcode_scanning_with_scan_app?"
 msgstr ""
 
 msgid "Delete_member_irrevocably?"
