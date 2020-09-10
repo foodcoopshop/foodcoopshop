@@ -137,7 +137,16 @@ foodcoopshop.Mobile = {
 
         $('#' + headerId).append($('.footer .right-wrapper .btn-add-deposit'));
         $('.footer .left-wrapper').remove();
-        $('#' + headerId).append($('<div />').addClass('left-wrapper'));
+        var cameraButtonContainer = $('<div />').addClass('left-wrapper');
+        var cameraButton = $('<a/>').addClass('btn').addClass('btn-success');
+        cameraButton.html('Barcode scannen');
+        cameraButton.on('click', function() {
+            $('#camera').animate({
+                height: 'toggle'
+            }, 500);
+        });
+        cameraButtonContainer.append(cameraButton);
+        $('#' + headerId).append(cameraButtonContainer);
 
         var cartButtonHtml = '<a href="javascript:void(0);" class="responsive-cart"><span class="sum">' + foodcoopshop.Helper.formatFloatAsCurrency(0) + '</span><i class="fas fa-shopping-bag fa-2x"></i></a>';
         $('#' + headerId).append(cartButtonHtml);
