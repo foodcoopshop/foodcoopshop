@@ -91,6 +91,6 @@ if ($this->request->getSession()->read('highlightedProductId')) {
     </button>
     <?php echo $this->Form->end(); ?>
     <?php if ($isMobile) { ?>
-        <a class="btn btn-outline-light continue-shopping" href="<?php echo Router::reverse($this->request, true); ?>";><?php echo __('Continue_shopping?')?></a>
+        <a class="btn btn-outline-light continue-shopping" href="<?php echo Router::reverse($this->request, true); ?>"><?php echo __('Continue_shopping?')?></a>
     <?php } ?>
 </div>
