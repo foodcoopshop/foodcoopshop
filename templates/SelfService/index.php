@@ -51,10 +51,6 @@ if ($this->request->getSession()->read('highlightedProductId')) {
     <hr />
 </div>
 
-<?php if ($isMobile && $appAuth->user('use_barcode_scan_app')) { ?>
-    <div id="camera" style="height:200px;display:none;"></div>
-<?php } ?>
-
 <div id="products">
     <?php
     foreach ($products as $product) {

@@ -26,7 +26,17 @@ foodcoopshop.SelfService = {
         this.initDepositPayment();
     },
 
+    isMobileBarcodeScanningSupported : function() {
+        return navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function';
+    },
+
     initMobileBarcodeScanning : function() {
+
+        if (!foodcoopshop.SelfService.isMobileBarcodeScanningSupported()) {
+            return;
+        }
+
+        $('#content .header').after($('<div />').attr('id', 'camera').height(200).hide());
 
         Quagga.init({
             inputStream : {

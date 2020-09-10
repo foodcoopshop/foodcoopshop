@@ -137,16 +137,23 @@ foodcoopshop.Mobile = {
 
         $('#' + headerId).append($('.footer .right-wrapper .btn-add-deposit'));
         $('.footer .left-wrapper').remove();
-        var cameraButtonContainer = $('<div />').addClass('left-wrapper');
-        var cameraButton = $('<a/>').addClass('btn').addClass('btn-success');
-        cameraButton.html('<i class="fas fa-camera"></i> Barcode scannen');
-        cameraButton.on('click', function() {
-            $('#camera').animate({
-                height: 'toggle'
-            }, 500);
-        });
-        cameraButtonContainer.append(cameraButton);
-        $('#' + headerId).append(cameraButtonContainer);
+
+        if (foodcoopshop.SelfService.isMobileBarcodeScanningSupported()) {
+            var cameraButtonContainer = $('<div />').addClass('left-wrapper');
+            var cameraButton = $('<a/>').addClass('btn').addClass('btn-success');
+            cameraButton.html('<i class="fas fa-camera"></i> Barcode scannen');
+            cameraButton.one('click', foodcoopshop.SelfService.initMobileBarcodeScanning);
+            cameraButton.on('click', function() {
+                $('#camera').animate({
+                    height: 'toggle'
+                }, 500);
+                $('body,html').animate({
+                    scrollTop: 0
+                }, 400);
+            });
+            cameraButtonContainer.append(cameraButton);
+            $('#' + headerId).append(cameraButtonContainer);
+        }
 
         var cartButtonHtml = '<a href="javascript:void(0);" class="responsive-cart"><span class="sum">' + foodcoopshop.Helper.formatFloatAsCurrency(0) + '</span><i class="fas fa-shopping-bag fa-2x"></i></a>';
         $('#' + headerId).append(cartButtonHtml);
