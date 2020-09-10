@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-08-06 12:09+0200\n"
-"PO-Revision-Date: 2020-08-13 11:22+0200\n"
+"POT-Creation-Date: 2020-09-10 12:06+0200\n"
+"PO-Revision-Date: 2020-09-10 12:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4\n"
+"X-Generator: Poedit 2.4.1\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -210,24 +210,6 @@ msgstr "The manufacturer {0} has been {1}."
 msgid "Manufacturers"
 msgstr "Manufacturers"
 
-msgid "Invoice_for_manufacturer_{0}_successfully_sent_to_{1}."
-msgstr "Invoice for manufacturer {0} successfully sent to {1}."
-
-msgid "Invoice_number_abbreviataion_{0}_{1}"
-msgstr "Invoice nº {0}, {1}"
-
-msgid "No_orders_within_the_given_time_range."
-msgstr "No orders within the given time range"
-
-msgid "Order_lists_for_the_day"
-msgstr "Order lists for"
-
-msgid "{0,plural,=1{1_Order_list} other{#_Order_lists}}_successfully_generated_for_manufacturer_{1}."
-msgstr "{0,plural,=1{1 Order list} other{# Order lists}} successfully generated for manufacturer {1}."
-
-msgid "Email_sent_to:{0}"
-msgstr "An email was sent to {0}."
-
 msgid "Edit_settings"
 msgstr "Edit settings"
 
@@ -236,6 +218,9 @@ msgstr "The settings of manufacturer {0} have been changed."
 
 msgid "Your_settings_have_been_changed."
 msgstr "Your settings have been changed."
+
+msgid "No_orders_within_the_given_time_range."
+msgstr "No orders within the given time range"
 
 msgid "No_member_found_with_id_{0}."
 msgstr "No member found with id {0}."
@@ -2099,6 +2084,21 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Invoice_for_manufacturer_{0}_successfully_sent_to_{1}."
+#~ msgstr "Invoice for manufacturer {0} successfully sent to {1}."
+
+#~ msgid "Invoice_number_abbreviataion_{0}_{1}"
+#~ msgstr "Invoice nº {0}, {1}"
+
+#~ msgid "Order_lists_for_the_day"
+#~ msgstr "Order lists for"
+
+#~ msgid "{0,plural,=1{1_Order_list} other{#_Order_lists}}_successfully_generated_for_manufacturer_{1}."
+#~ msgstr "{0,plural,=1{1 Order list} other{# Order lists}} successfully generated for manufacturer {1}."
+
+#~ msgid "Email_sent_to:{0}"
+#~ msgstr "An email was sent to {0}."
 
 #~ msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
 #~ msgstr "Tip: You can change the delivery rhythm for multiple products by selecting them. Then click the bottom button."
