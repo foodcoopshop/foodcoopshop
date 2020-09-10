@@ -31,7 +31,7 @@ foodcoopshop.SelfService = {
             inputStream : {
               name : "Live",
               type : "LiveStream",
-              target: document.querySelector('#video')
+              target: document.querySelector('#camera')
             },
             decoder : {
               readers : ["code_39_reader"]
@@ -46,11 +46,10 @@ foodcoopshop.SelfService = {
           });
 
             Quagga.onDetected(function(result) {
-                var code = result.codeResult.code;
-                $('#video').remove();
-                var redirectUrl = '/selbstbedienung?keyword=' + code;
-                console.log(redirectUrl);
-                return;
+                Quagga.stop();
+                $('#camera').hide();
+                var redirectUrl = '/selbstbedienung?keyword=' + result.codeResult.code;
+                document.location.href = redirectUrl;
             });
 
     },
