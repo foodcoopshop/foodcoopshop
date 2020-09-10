@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-08-13 11:25+0200\n"
-"PO-Revision-Date: 2020-08-13 11:28+0200\n"
+"POT-Creation-Date: 2020-09-10 12:07+0200\n"
+"PO-Revision-Date: 2020-09-10 12:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1784,6 +1784,13 @@ msgstr "Rechnungen für {0} wurden verschickt"
 
 msgid "Generated_invoices"
 msgstr "Generierte Rechnungen"
+
+#, fuzzy
+msgid "member"
+msgstr "Mitglied"
+
+msgid "Order_lists_for_the_day"
+msgstr "Bestellungen für den"
 
 msgid "Sent_order_lists"
 msgstr "Verschickte Bestelllisten"

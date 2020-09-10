@@ -110,7 +110,7 @@ class SendOrderListsShell extends AppShell
                 // START generate PDF grouped by PRODUCT
                 $pdfWriter = new OrderListByProductPdfWriter();
                 $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
-                    $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __d('admin', 'product'), $currentDateForOrderLists
+                    $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __('product'), $currentDateForOrderLists
                 );
                 $pdfWriter->setFilename($productPdfFile);
                 $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds);
@@ -120,7 +120,7 @@ class SendOrderListsShell extends AppShell
                 // START generate PDF grouped by CUSTOMER
                 $pdfWriter = new OrderListByCustomerPdfWriter();
                 $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
-                    $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __d('admin', 'member'), $currentDateForOrderLists
+                    $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __('member'), $currentDateForOrderLists
                 );
                 $pdfWriter->setFilename($customerPdfFile);
                 $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds);
@@ -138,7 +138,7 @@ class SendOrderListsShell extends AppShell
                         $productPdfFile,
                         $customerPdfFile,
                     ])
-                    ->setSubject(__d('admin', 'Order_lists_for_the_day') . ' ' . $pickupDayFormated)
+                    ->setSubject(__('Order_lists_for_the_day') . ' ' . $pickupDayFormated)
                     ->setViewVars([
                         'manufacturer' => $manufacturer,
                         'appAuth' => $this->AppAuth,
