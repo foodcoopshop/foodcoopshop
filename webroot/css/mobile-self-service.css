@@ -102,6 +102,12 @@
        margin-left: 2px;
        float: left;
     }
+    body.self_services canvas,
+    body.self_services video {
+        width: 100% ! important;
+        max-width: 100% ! important;
+        clear: both;
+    }
     body.self_services #responsive-header .responsive-cart span.sum {
         margin-right: 5px;
     }

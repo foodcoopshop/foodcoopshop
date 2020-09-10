@@ -27,15 +27,12 @@ foodcoopshop.SelfService = {
     },
 
     initMobileBarcodeScanning : function() {
+
         Quagga.init({
             inputStream : {
                 name : "Live",
                 type : "LiveStream",
-                target: document.querySelector('#camera'),
-                constraints: {
-                    width: window.innerWidth,
-                    height: 200
-                }
+                target: document.querySelector('#camera')
             },
             decoder : {
                 readers : ["code_39_reader"]
@@ -49,12 +46,13 @@ foodcoopshop.SelfService = {
 
           });
 
-            Quagga.onDetected(function(result) {
-                Quagga.stop();
-                $('#camera').hide();
-                var redirectUrl = '/selbstbedienung?keyword=' + result.codeResult.code;
-                document.location.href = redirectUrl;
-            });
+          Quagga.onDetected(function(result) {
+              Quagga.stop();
+              $('#camera').hide();
+              foodcoopshop.Helper.addSpinnerToButton($('#responsive-header .left-wrapper .btn-success'), 'fa-camera');
+              var redirectUrl = '/selbstbedienung?keyword=' + result.codeResult.code;
+              document.location.href = redirectUrl;
+          });
 
     },
 

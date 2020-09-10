@@ -139,7 +139,7 @@ foodcoopshop.Mobile = {
         $('.footer .left-wrapper').remove();
         var cameraButtonContainer = $('<div />').addClass('left-wrapper');
         var cameraButton = $('<a/>').addClass('btn').addClass('btn-success');
-        cameraButton.html('Barcode scannen');
+        cameraButton.html('<i class="fas fa-camera"></i> Barcode scannen');
         cameraButton.on('click', function() {
             $('#camera').animate({
                 height: 'toggle'
