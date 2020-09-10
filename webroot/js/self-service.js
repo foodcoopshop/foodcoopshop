@@ -19,7 +19,9 @@ foodcoopshop.SelfService = {
     init : function() {
         foodcoopshop.ModalLogout.init(document.location.href);
         this.initWindowResize();
-        this.initAutoLogout();
+        if (!foodcoopshop.Helper.isMobile()) {
+            this.initAutoLogout();
+        }
         this.initSearchForm();
         this.initDepositPayment();
     },

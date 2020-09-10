@@ -105,9 +105,6 @@
     body.self_services #responsive-header .responsive-cart span.sum {
         margin-right: 5px;
     }
-    body.self_services #responsive-header .left-wrapper .user-name-wrapper {
-       display: none;
-    }
     body.self_services #responsive-header .logo-wrapper {
        float: left;
     }
