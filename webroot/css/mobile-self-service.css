@@ -29,6 +29,7 @@
     }
     body.self_services #content {
        border-right: none;
+       display: none;
     }
     .self-service .product-wrapper {
        padding-left: 10px;

@@ -184,7 +184,7 @@ foodcoopshop.Mobile = {
         this.bindCloseSlidebarsOnCanvasClick(controller);
         this.fixContentScrolling();
 
-        foodcoopshop.Helper.showContent();
+        $('#content').show();
 
     },
 
