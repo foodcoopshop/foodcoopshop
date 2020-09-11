@@ -103,6 +103,9 @@
        margin-left: 2px;
        float: left;
     }
+    body.customers.login #responsive-header .left-wrapper {
+        display: none;
+    }
     body.self_services canvas,
     body.self_services video {
         width: 100% ! important;
