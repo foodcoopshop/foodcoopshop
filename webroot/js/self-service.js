@@ -49,17 +49,12 @@ foodcoopshop.SelfService = {
                 height: 'toggle'
             }, 400);
 
-
             $('body,html').animate({
                 scrollTop: 0
             }, 400);
         });
 
-        button.trigger('click');
-
     },
-
-
 
     initMobileBarcodeScanning : function() {
 
@@ -72,9 +67,8 @@ foodcoopshop.SelfService = {
             onQuaggaLoad = $(this)[0].onQuaggaLoad;
         }
 
-        if ($('#camera').length == 0) {
-            $('#content .header').after($('<div />').attr('id', 'camera').height(200).hide());
-        }
+        $('#camera').remove();
+        $('#content .header').after($('<div />').attr('id', 'camera').height(200).hide());
 
         Quagga.init({
             inputStream : {
@@ -97,12 +91,16 @@ foodcoopshop.SelfService = {
                 onQuaggaLoad();
               }
 
+              $('#camera').animate({
+                  height: 'toggle'
+              }, 400);
+
           });
 
           Quagga.offDetected();
           Quagga.onDetected(function(result) {
               Quagga.stop();
-              $('#camera').hide();
+              $('#camera').remove();
               var button = $('.btn-toggle-camera');
               foodcoopshop.Helper.addSpinnerToButton(button, 'fa-camera');
               foodcoopshop.Helper.disableButton(button);
