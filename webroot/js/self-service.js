@@ -30,13 +30,51 @@ foodcoopshop.SelfService = {
         return navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function';
     },
 
+    bindCameraButtonToggle : function() {
+
+        var button = $('.btn-toggle-camera');
+
+        button.on('click', function() {
+
+            var elementToToggle = $('#camera');
+            var toggleMode = elementToToggle.css('display');
+
+            if (toggleMode == 'none') {
+                foodcoopshop.SelfService.initMobileBarcodeScanning();
+            } else {
+                Quagga.stop();
+            }
+
+            elementToToggle.animate({
+                height: 'toggle'
+            }, 400);
+
+
+            $('body,html').animate({
+                scrollTop: 0
+            }, 400);
+        });
+
+        button.trigger('click');
+
+    },
+
+
+
     initMobileBarcodeScanning : function() {
 
         if (!foodcoopshop.SelfService.isMobileBarcodeScanningSupported()) {
             return;
         }
 
-        $('#content .header').after($('<div />').attr('id', 'camera').height(200).hide());
+        var onQuaggaLoad = null;
+        if ($(this)[0].onQuaggaLoad) {
+            onQuaggaLoad = $(this)[0].onQuaggaLoad;
+        }
+
+        if ($('#camera').length == 0) {
+            $('#content .header').after($('<div />').attr('id', 'camera').height(200).hide());
+        }
 
         Quagga.init({
             inputStream : {
@@ -52,14 +90,22 @@ foodcoopshop.SelfService = {
                   console.log(err);
                   return;
               }
+
               Quagga.start();
+
+              if (onQuaggaLoad) {
+                onQuaggaLoad();
+              }
 
           });
 
+          Quagga.offDetected();
           Quagga.onDetected(function(result) {
               Quagga.stop();
               $('#camera').hide();
-              foodcoopshop.Helper.addSpinnerToButton($('#responsive-header .left-wrapper .btn-success'), 'fa-camera');
+              var button = $('.btn-toggle-camera');
+              foodcoopshop.Helper.addSpinnerToButton(button, 'fa-camera');
+              foodcoopshop.Helper.disableButton(button);
               var redirectUrl = '/selbstbedienung?keyword=' + result.codeResult.code;
               document.location.href = redirectUrl;
           });

@@ -139,18 +139,18 @@ foodcoopshop.Mobile = {
         $('.footer .left-wrapper').remove();
 
         if (foodcoopshop.SelfService.isMobileBarcodeScanningSupported()) {
+
             var cameraButtonContainer = $('<div />').addClass('left-wrapper');
-            var cameraButton = $('<a/>').addClass('btn').addClass('btn-success');
+            var cameraButton = $('<a/>').addClass('btn').addClass('btn-success').addClass('btn-toggle-camera');
             cameraButton.html('<i class="fas fa-camera"></i> Barcode scannen');
-            cameraButton.one('click', foodcoopshop.SelfService.initMobileBarcodeScanning);
-            cameraButton.on('click', function() {
-                $('#camera').animate({
-                    height: 'toggle'
-                }, 500);
-                $('body,html').animate({
-                    scrollTop: 0
-                }, 400);
-            });
+            cameraButton.one('click',
+                foodcoopshop.SelfService.initMobileBarcodeScanning.bind(
+                    {
+                        onQuaggaLoad: foodcoopshop.SelfService.bindCameraButtonToggle
+                    }
+                )
+            );
+
             cameraButtonContainer.append(cameraButton);
             $('#' + headerId).append(cameraButtonContainer);
         }
@@ -187,6 +187,7 @@ foodcoopshop.Mobile = {
         foodcoopshop.Helper.showContent();
 
     },
+
 
     initMenusFrontend: function () {
 
