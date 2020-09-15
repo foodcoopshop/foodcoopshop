@@ -104,7 +104,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         <i class="fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
     </button>
     <?php echo $this->Form->end(); ?>
-    <?php if ($isMobile) { ?>
+    <?php if ($isMobile && !$appAuth->user('use_camera_for_barcode_scanning')) { ?>
         <a class="btn btn-outline-light continue-shopping" href="<?php echo Router::reverse($this->request, true); ?>"><?php echo __('Continue_shopping?')?></a>
     <?php } ?>
 </div>
