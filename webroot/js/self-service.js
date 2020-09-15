@@ -76,6 +76,7 @@ foodcoopshop.SelfService = {
                 type : "LiveStream",
                 target: document.querySelector('#camera')
             },
+            numOfWorkers: navigator.hardwareConcurrency,
             decoder : {
                 readers : ["code_39_reader"]
             },
