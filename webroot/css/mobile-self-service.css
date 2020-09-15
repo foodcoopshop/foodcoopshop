@@ -114,6 +114,7 @@
         padding-left: 10%;
         display: none;
         margin-bottom: 5px;
+        clear: both;
     }
     body.self_services video,
     body.self_services canvas {
