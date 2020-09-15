@@ -29,10 +29,15 @@ $this->element('addScript', ['script' =>
 ]);
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 
+if ($isMobile && $appAuth->user('use_camera_for_barcode_scanning')) {
+    $this->element('addScript', [
+        'script' => Configure::read('app.jsNamespace') . ".SelfService.initMobileBarcodeScanningWithCamera();"
+    ]);
+}
+
 if ($this->request->getSession()->read('highlightedProductId')) {
     $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".SelfService.initHighlightedProductId('" . $this->request->getSession()->read('highlightedProductId') . "');
-        "
+        'script' => Configure::read('app.jsNamespace') . ".SelfService.initHighlightedProductId('" . $this->request->getSession()->read('highlightedProductId') . "');"
     ]);
     $this->request->getSession()->delete('highlightedProductId');
 }
@@ -41,7 +46,9 @@ if ($this->request->getSession()->read('highlightedProductId')) {
 
 <div class="header">
     <h2><?php echo __('Self_service_mode'); ?></h2>
-    <h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
+    <?php if (!$isMobile) { ?>
+        <h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
+    <?php } ?>
     <?php echo $this->element('productSearch', [
         'action' => __('route_self_service'),
         'placeholder' => __('Search:_name_id_or_barcode'),

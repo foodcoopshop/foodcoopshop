@@ -26,55 +26,35 @@ foodcoopshop.SelfService = {
         this.initDepositPayment();
     },
 
+    initMobileBarcodeScanningWithCamera : function() {
+
+        if (!this.isMobileBarcodeScanningSupported) {
+            alert('mobile_barcode_scanning_not_supported');
+            return;
+        }
+
+        foodcoopshop.SelfService.initMobileBarcodeScanning();
+
+    },
+
     isMobileBarcodeScanningSupported : function() {
         return navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function';
     },
 
-    bindCameraButtonToggle : function() {
-
-        var button = $('.btn-toggle-camera');
-
-        button.on('click', function() {
-
-            var elementToToggle = $('#camera');
-            var toggleMode = elementToToggle.css('display');
-
-            if (toggleMode == 'none') {
-                foodcoopshop.SelfService.initMobileBarcodeScanning();
-            } else {
-                Quagga.stop();
-            }
-
-            elementToToggle.animate({
-                height: 'toggle'
-            }, 400);
-
-            $('body,html').animate({
-                scrollTop: 0
-            }, 400);
-        });
-
-    },
-
     initMobileBarcodeScanning : function() {
 
-        if (!foodcoopshop.SelfService.isMobileBarcodeScanningSupported()) {
-            return;
-        }
+        foodcoopshop.Mobile.showSelfServiceCart();
 
-        var onQuaggaLoad = null;
-        if ($(this)[0].onQuaggaLoad) {
-            onQuaggaLoad = $(this)[0].onQuaggaLoad;
-        }
-
-        $('#camera').remove();
-        $('#content .header').after($('<div />').attr('id', 'camera').height(200).hide());
+        $('#content .header').after($('<div />').attr('id', 'camera').height(141).hide());
 
         Quagga.init({
             inputStream : {
                 name : "Live",
                 type : "LiveStream",
-                target: document.querySelector('#camera')
+                target: document.querySelector('#camera'),
+                constraints: {
+                    height: 250
+                }
             },
             numOfWorkers: navigator.hardwareConcurrency,
             decoder : {
@@ -88,10 +68,6 @@ foodcoopshop.SelfService = {
 
               Quagga.start();
 
-              if (onQuaggaLoad) {
-                onQuaggaLoad();
-              }
-
               $('#camera').animate({
                   height: 'toggle'
               }, 400);
@@ -102,9 +78,6 @@ foodcoopshop.SelfService = {
           Quagga.onDetected(function(result) {
               Quagga.stop();
               $('#camera').remove();
-              var button = $('.btn-toggle-camera');
-              foodcoopshop.Helper.addSpinnerToButton(button, 'fa-camera');
-              foodcoopshop.Helper.disableButton(button);
               var redirectUrl = '/selbstbedienung?keyword=' + result.codeResult.code;
               document.location.href = redirectUrl;
           });
