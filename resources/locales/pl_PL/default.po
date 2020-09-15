@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-09-10 12:07+0200\n"
+"POT-Creation-Date: 2020-09-15 09:21+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1475,10 +1475,10 @@ msgstr "Polityka prywatności"
 msgid "List_of_allergens"
 msgstr "Lista alergenów"
 
-# Is the product a stock product?
+# search
 #, fuzzy
-msgid "Self_service_for_stock_products"
-msgstr "Czy ten produkt jest magazynowany?"
+msgid "Self_service_mode"
+msgstr "search"
 
 # Your cart was empty.
 #, fuzzy
@@ -3302,6 +3302,11 @@ msgstr "złożone w dniu"
 # The prices include the VAT.
 msgid "Prices_are_including_vat."
 msgstr "Ceny zawierają podatek VAT."
+
+# Is the product a stock product?
+#, fuzzy
+#~ msgid "Self_service_for_stock_products"
+#~ msgstr "Czy ten produkt jest magazynowany?"
 
 # The pickup day
 #~ msgid "The_pickup_day"

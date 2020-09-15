@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-09-15 09:12+0200\n"
+"POT-Creation-Date: 2020-09-15 09:21+0200\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -995,7 +995,7 @@ msgid "How_do_I_use_the_paying_with_time_module?"
 msgstr "Jak używać modułu płacenia czasem?"
 
 #, fuzzy
-msgid "Self_service_for_stock_products"
+msgid "Self_service_mode"
 msgstr "Czy jest produktem magazynowanym"
 
 #, fuzzy

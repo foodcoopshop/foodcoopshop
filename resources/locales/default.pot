@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-09-10 12:07+0200\n"
+"POT-Creation-Date: 2020-09-15 09:21+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1097,7 +1097,7 @@ msgstr ""
 msgid "List_of_allergens"
 msgstr ""
 
-msgid "Self_service_for_stock_products"
+msgid "Self_service_mode"
 msgstr ""
 
 msgid "Your_shopping_bag_was_empty."

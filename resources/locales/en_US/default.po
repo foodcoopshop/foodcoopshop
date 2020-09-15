@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-09-10 12:07+0200\n"
-"PO-Revision-Date: 2020-09-10 12:10+0200\n"
+"POT-Creation-Date: 2020-09-15 09:21+0200\n"
+"PO-Revision-Date: 2020-09-15 09:22+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1098,8 +1098,8 @@ msgstr "Privacy policy"
 msgid "List_of_allergens"
 msgstr "List of allergens"
 
-msgid "Self_service_for_stock_products"
-msgstr "Self-service for stock products"
+msgid "Self_service_mode"
+msgstr "Self-service mode"
 
 msgid "Your_shopping_bag_was_empty."
 msgstr "Your shopping bag was empty."
@@ -2453,6 +2453,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Self_service_for_stock_products"
+#~ msgstr "Self-service for stock products"
 
 #~ msgid "The_pickup_day"
 #~ msgstr "The pickup day"

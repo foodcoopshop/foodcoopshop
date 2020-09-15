@@ -40,7 +40,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
 ?>
 
 <div class="header">
-    <h2><?php echo __('Self_service_for_stock_products'); ?></h2>
+    <h2><?php echo __('Self_service_mode'); ?></h2>
     <h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
     <?php echo $this->element('productSearch', [
         'action' => __('route_self_service'),

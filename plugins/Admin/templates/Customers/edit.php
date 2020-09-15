@@ -143,7 +143,7 @@ if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
 
 if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
     echo '<div class="sc"></div>';
-    echo '<h2 style="margin-top:20px;">' . __d('admin', 'Self_service_for_stock_products') . '</h2>';
+    echo '<h2 style="margin-top:20px;">' . __d('admin', 'Self_service_mode') . '</h2>';
     if ($isOwnProfile) {
         echo '<a target="_blank" class="generate-my-member-card-button btn btn-outline-light" href="/admin/customers/generateMyMemberCard.pdf"><i class="far fa-address-card"></i> ' . __d('admin', 'Generate_my_member_card') . '</a>';
     }

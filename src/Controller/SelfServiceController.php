@@ -52,7 +52,7 @@ class SelfServiceController extends FrontendController
         $this->set('products', $products);
 
         $this->viewBuilder()->setLayout('self_service');
-        $this->set('title_for_layout', __('Self_service_for_stock_products'));
+        $this->set('title_for_layout', __('Self_service_mode'));
 
         if (!empty($this->getRequest()->getQuery('keyword')) && count($products) == 1) {
             $hashedProductId = strtolower(substr($keyword, 0, 4));
