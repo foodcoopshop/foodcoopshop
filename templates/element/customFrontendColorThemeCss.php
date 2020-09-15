@@ -95,7 +95,7 @@ use Cake\Core\Configure;
     <?php if ($isMobile) { ?>
         @media only screen and (max-device-width: 768px) {
             #responsive-header a,
-            body.self_services #responsive-header i,
+            body.self_services #responsive-header i.fa-circle-notch,
             :not(button)> i.fas:not(.fa-star):not(.fa-circle-notch):not(.fa-tags):not(.fa-shopping-bag):not(.fa-minus-circle):not(.fa-plus-circle) {
                 color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
             }
