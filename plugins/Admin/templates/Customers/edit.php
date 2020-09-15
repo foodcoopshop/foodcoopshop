@@ -147,8 +147,8 @@ if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
     if ($isOwnProfile) {
         echo '<a target="_blank" class="generate-my-member-card-button btn btn-outline-light" href="/admin/customers/generateMyMemberCard.pdf"><i class="far fa-address-card"></i> ' . __d('admin', 'Generate_my_member_card') . '</a>';
     }
-    echo $this->Form->control('Customers.use_barcode_scan_app', [
-        'label' => __d('admin', 'Mobile_barcode_scanning_with_scan_app?').'<span class="after small">Android >= 7 / IPhone: "Scan to Web" / BerryWing<br /> Android < 7: "Barcode Scanner" / ZXing Team'.'</span>',
+    echo $this->Form->control('Customers.use_camera_for_barcode_scanning', [
+        'label' => __d('admin', 'I_want_to_use_my_smartphones_camera_for_barcode_scanning.'),
         'type' => 'checkbox',
         'escape' => false
     ]);

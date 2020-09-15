@@ -360,7 +360,7 @@ INSERT INTO `phinxlog` VALUES
 (20200618063024,'AddProductFeedback','2020-06-19 07:02:59','2020-06-19 07:03:00',0),
 (20200703072605,'CustomerCanSelectPickupDay','2020-07-06 08:34:48','2020-07-06 08:34:48',0),
 (20200831142250,'RemoveEmailLogTable','2020-08-31 15:10:33','2020-08-31 15:10:33',0),
-(20200910091755,'AddMemberSettingUseScanAppForMobileBarcodeScanning','2020-09-10 09:21:04','2020-09-10 09:21:04',0);
+(20200910091755,'AddMemberSettingUseCameraForMobileBarcodeScanning','2020-09-10 09:21:04','2020-09-10 09:21:04',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
