@@ -17,6 +17,7 @@ use Cake\Core\Configure;
 
 echo $this->element('layout/header');
 
+$js = '';
 if ($isMobile) {
     if (!empty($_POST)) {
         $js = Configure::read('app.jsNamespace').".Mobile.showSelfServiceCart();";
@@ -29,7 +30,9 @@ if ($isMobile && $appAuth->user('use_camera_for_barcode_scanning')) {
     $js = Configure::read('app.jsNamespace').".Mobile.showSelfServiceCart();";
 }
 
-$this->element('addScript', ['script' => $js]);
+if ($js != '') {
+    $this->element('addScript', ['script' => $js]);
+}
 
 ?>
 
