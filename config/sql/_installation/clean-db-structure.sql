@@ -206,6 +206,7 @@ CREATE TABLE `fcs_customer` (
   `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_upd` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `timebased_currency_enabled` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `use_barcode_scan_app` tinyint(3) unsigned DEFAULT '0',
   PRIMARY KEY (`id_customer`),
   KEY `customer_email` (`email`),
   KEY `customer_login` (`email`,`passwd`),
