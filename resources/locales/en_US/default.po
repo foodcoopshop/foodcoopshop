@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-09-15 09:21+0200\n"
-"PO-Revision-Date: 2020-09-15 09:22+0200\n"
+"POT-Creation-Date: 2020-09-15 10:27+0200\n"
+"PO-Revision-Date: 2020-09-15 10:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1100,6 +1100,9 @@ msgstr "List of allergens"
 
 msgid "Self_service_mode"
 msgstr "Self-service mode"
+
+msgid "The_product_{0}_was_added_to_your_cart."
+msgstr "The product {0} was added to your cart."
 
 msgid "Your_shopping_bag_was_empty."
 msgstr "Your shopping bag was empty."

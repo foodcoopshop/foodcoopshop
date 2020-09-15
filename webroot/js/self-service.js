@@ -33,16 +33,6 @@ foodcoopshop.SelfService = {
             return;
         }
 
-        foodcoopshop.SelfService.initMobileBarcodeScanning();
-
-    },
-
-    isMobileBarcodeScanningSupported : function() {
-        return navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function';
-    },
-
-    initMobileBarcodeScanning : function() {
-
         foodcoopshop.Mobile.showSelfServiceCart();
 
         $('#content .header').after($('<div />').attr('id', 'camera').height(141).hide());
@@ -82,6 +72,10 @@ foodcoopshop.SelfService = {
               document.location.href = redirectUrl;
           });
 
+    },
+
+    isMobileBarcodeScanningSupported : function() {
+        return navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function';
     },
 
     initLoginForm : function() {

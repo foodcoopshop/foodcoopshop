@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-09-15 09:21+0200\n"
+"POT-Creation-Date: 2020-09-15 10:27+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1479,6 +1479,11 @@ msgstr "Lista alergenów"
 #, fuzzy
 msgid "Self_service_mode"
 msgstr "search"
+
+# The product {0} is not activated any more.
+#, fuzzy
+msgid "The_product_{0}_was_added_to_your_cart."
+msgstr "Produkt {0} nie jest już aktywny."
 
 # Your cart was empty.
 #, fuzzy

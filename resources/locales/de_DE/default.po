@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-09-15 09:21+0200\n"
-"PO-Revision-Date: 2020-09-15 09:22+0200\n"
+"POT-Creation-Date: 2020-09-15 10:27+0200\n"
+"PO-Revision-Date: 2020-09-15 10:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1100,6 +1100,9 @@ msgstr "Allergenliste"
 
 msgid "Self_service_mode"
 msgstr "Selbstbedienungs-Modus"
+
+msgid "The_product_{0}_was_added_to_your_cart."
+msgstr "Das Produkt {0} wurde in deine Einkaufstasche gelegt."
 
 msgid "Your_shopping_bag_was_empty."
 msgstr "Deine Einkaufstasche war leer."
