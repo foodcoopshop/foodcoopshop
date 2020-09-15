@@ -5,7 +5,6 @@ namespace App\Mailer;
 use App\Lib\OutputFilter\OutputFilter;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
-use Cake\Datasource\FactoryLocator;
 use Cake\Log\Log;
 use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
