@@ -64,6 +64,7 @@ foodcoopshop.SelfService = {
           });
           Quagga.offDetected();
           Quagga.onDetected(function(result) {
+              Quagga.stop();
               foodcoopshop.SelfService.hideLoader();
               foodcoopshop.SelfService.showLoader();
               var redirectUrl = '/selbstbedienung?keyword=' + result.codeResult.code;
