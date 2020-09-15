@@ -108,28 +108,27 @@
         display: none;
     }
     body.self_services #camera {
-        height: 141px;
-        margin-bottom: 5px;
+        width: 90%;
+        height: auto;
+        overflow: hidden;
+        padding-left: 10%;
         display: none;
-        position: relative;
+        margin-bottom: 5px;
     }
-    body.self_services #camera i {
-        font-size: 50px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-top: -25px;
-        margin-left: -25px;
-        color: #fff;
-        text-shadow: 2px 2px 5px #d6d4d4;
-    }
+    body.self_services video,
     body.self_services canvas {
-        height: 0;
+        max-width: 100%;
+        width: 100%;
     }
-    body.self_services video {
-        width: 100% ! important;
-        max-width: 100% ! important;
-        clear: both;
+    body.self_services canvas.drawing,
+    body.self_services canvas.drawingBuffer {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    body.self_services #responsive-header i.fa-circle-notch {
+        margin-top: 12px;
+        margin-left: 5px;
     }
     body.self_services #responsive-header .responsive-cart span.sum {
         margin-right: 5px;

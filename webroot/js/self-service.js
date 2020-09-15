@@ -42,9 +42,6 @@ foodcoopshop.SelfService = {
                 name : "Live",
                 type : "LiveStream",
                 target: document.querySelector('#camera'),
-                constraints: {
-                    height: 250
-                }
             },
             numOfWorkers: navigator.hardwareConcurrency,
             decoder : {
@@ -63,11 +60,10 @@ foodcoopshop.SelfService = {
               }, 150);
 
           });
-
           Quagga.offDetected();
           Quagga.onDetected(function(result) {
-              $('#camera i').remove();
-              $('#camera').append($('<i />').addClass('fa fa-circle-notch fa-spin'));
+              $('#responsive-header i.fa-circle-notch').remove();
+              $('#responsive-header .sb-toggle-left').after($('<i />').addClass('fa fa-circle-notch fa-spin fa-2x'));
               var redirectUrl = '/selbstbedienung?keyword=' + result.codeResult.code;
               document.location.href = redirectUrl;
           });
