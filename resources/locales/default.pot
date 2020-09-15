@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-09-15 10:27+0200\n"
+"POT-Creation-Date: 2020-09-15 10:44+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1502,7 +1502,7 @@ msgstr ""
 msgid "Please_enter_max_{0}_characters."
 msgstr ""
 
-msgid "Please_provide_a_valid_ordered_quantity_in_units."
+msgid "Please_provide_a_valid_ordered_quantity_in_units_and_click_on_the_add_button."
 msgstr ""
 
 msgid "The_desired_amount_{0}_is_not_valid."

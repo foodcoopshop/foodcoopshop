@@ -49,7 +49,7 @@ class CartProductsTable extends AppTable
         $result = true;
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($appAuth->isSelfServiceModeByReferer() || $appAuth->isSelfServiceModeByUrl())) {
             if ($object->{$unitObject} && $object->{$unitObject}->price_per_unit_enabled && $orderedQuantityInUnits < 0 /* !sic < 0 see getStringAsFloat */) {
-                $result = __('Please_provide_a_valid_ordered_quantity_in_units.');
+                $result = __('Please_provide_a_valid_ordered_quantity_in_units_and_click_on_the_add_button.');
             }
         }
         return $result;
@@ -104,15 +104,6 @@ class CartProductsTable extends AppTable
             return [
                 'status' => 0,
                 'msg' => $message,
-                'productId' => $initialProductId
-            ];
-        }
-
-        $result = $this->validateQuantityInUnitsForSelfServiceMode($appAuth, $product, 'unit_product', $orderedQuantityInUnits, $initialProductId);
-        if ($result !== true) {
-            return [
-                'status' => 0,
-                'msg' => $result,
                 'productId' => $initialProductId
             ];
         }
@@ -216,6 +207,15 @@ class CartProductsTable extends AppTable
             return [
                 'status' => 0,
                 'msg' => $message,
+                'productId' => $initialProductId
+            ];
+        }
+
+        $result = $this->validateQuantityInUnitsForSelfServiceMode($appAuth, $product, 'unit_product', $orderedQuantityInUnits, $initialProductId);
+        if ($result !== true) {
+            return [
+                'status' => 0,
+                'msg' => $result,
                 'productId' => $initialProductId
             ];
         }

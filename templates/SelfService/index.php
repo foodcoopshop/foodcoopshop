@@ -36,9 +36,16 @@ if ($isMobile && $appAuth->user('use_camera_for_barcode_scanning')) {
 }
 
 if ($this->request->getSession()->read('highlightedProductId')) {
-    $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".SelfService.initHighlightedProductId('" . $this->request->getSession()->read('highlightedProductId') . "');"
-    ]);
+
+    if ($isMobile && $appAuth->user('use_camera_for_barcode_scanning')) {
+        $this->element('addScript', [
+            'script' => Configure::read('app.jsNamespace') . ".SelfService.initHighlightedProductIdForMobileBarcodeScanning('" . $this->request->getSession()->read('highlightedProductId') . "');"
+        ]);
+    } else {
+        $this->element('addScript', [
+            'script' => Configure::read('app.jsNamespace') . ".SelfService.initHighlightedProductId('" . $this->request->getSession()->read('highlightedProductId') . "');"
+        ]);
+    }
     $this->request->getSession()->delete('highlightedProductId');
 }
 

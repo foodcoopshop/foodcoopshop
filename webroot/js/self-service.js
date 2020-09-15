@@ -35,7 +35,7 @@ foodcoopshop.SelfService = {
 
         foodcoopshop.Mobile.showSelfServiceCart();
 
-        $('#content .header').after($('<div />').attr('id', 'camera').height(141).hide());
+        $('#content .header').after($('<div />').attr('id', 'camera'));
 
         Quagga.init({
             inputStream : {
@@ -60,14 +60,14 @@ foodcoopshop.SelfService = {
 
               $('#camera').animate({
                   height: 'toggle'
-              }, 400);
+              }, 150);
 
           });
 
           Quagga.offDetected();
           Quagga.onDetected(function(result) {
-              Quagga.stop();
-              $('#camera').remove();
+              $('#camera i').remove();
+              $('#camera').append($('<i />').addClass('fa fa-circle-notch fa-spin'));
               var redirectUrl = '/selbstbedienung?keyword=' + result.codeResult.code;
               document.location.href = redirectUrl;
           });
@@ -140,6 +140,14 @@ foodcoopshop.SelfService = {
         foodcoopshop.Helper.addSpinnerToButton(submitButton, icon);
         foodcoopshop.Helper.disableButton(submitButton);
         searchForm.submit();
+    },
+
+    initHighlightedProductIdForMobileBarcodeScanning: function(productId) {
+        $('#products').show();
+        $('.product-wrapper').hide();
+        var rowId = '#product-wrapper-' + productId;
+        $(rowId).show();
+        this.initHighlightedProductId(productId);
     },
 
     initHighlightedProductId: function(productId) {

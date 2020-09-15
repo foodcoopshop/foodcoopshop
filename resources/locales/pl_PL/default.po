@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-09-15 10:27+0200\n"
+"POT-Creation-Date: 2020-09-15 10:44+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2027,7 +2027,7 @@ msgstr "Wprowadź najwyżej {0} znaków."
 
 # Please provide a value.
 #, fuzzy
-msgid "Please_provide_a_valid_ordered_quantity_in_units."
+msgid "Please_provide_a_valid_ordered_quantity_in_units_and_click_on_the_add_button."
 msgstr "Podaj wartość."
 
 # The desired amount {0} is not valid.
