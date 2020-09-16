@@ -122,6 +122,34 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailVegetableManufacturer'));
     }
 
+    public function testSendOrderListsWithSendOrderListFalse()
+    {
+        $cronjobRunDay = '2018-01-31';
+        $pickupDay = Configure::read('app.timeHelper')->getNextDeliveryDay(strtotime($cronjobRunDay));
+
+        $this->changeManufacturer(4, 'send_order_list', 0);
+
+        $this->commandRunner->run(['cake', 'send_order_lists', $cronjobRunDay]);
+
+        $this->assertOrderDetailState(1, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+        $this->assertOrderDetailState(2, ORDER_STATE_ORDER_PLACED);
+        $this->assertOrderDetailState(3, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
+
+        $this->assertMailCount(2);
+
+        $pickupDayFormated = new FrozenDate($pickupDay);
+        $pickupDayFormated = $pickupDayFormated->i18nFormat(
+            Configure::read('app.timeHelper')->getI18Format('DateLong2')
+            );
+
+        $this->assertMailSentWithAt(1, 'Bestellungen für den ' . $pickupDayFormated, 'originalSubject');
+        $this->assertMailContainsAt(1, 'im Anhang findest du zwei Bestelllisten');
+
+        $this->assertEquals(2, count(TestEmailTransport::getMessages()[1]->getAttachments()));
+        $this->assertMailSentToAt(0, Configure::read('test.loginEmailVegetableManufacturer'));
+
+    }
+
     public function testSendOrderListsWithIndividualSendOrderListWeekday()
     {
         $cronjobRunDay = '2018-01-30';

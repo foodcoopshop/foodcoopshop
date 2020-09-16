@@ -131,6 +131,7 @@ class SendOrderListsShell extends AppShell
                 $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
 
                 if ($sendEmail) {
+
                     $email = new AppMailer();
                     $email->viewBuilder()->setTemplate('Admin.send_order_list');
                     $email->setTo($manufacturer->address_manufacturer->email)
@@ -148,9 +149,10 @@ class SendOrderListsShell extends AppShell
                         $email->setCc($ccRecipients);
                     }
                     $email->send();
-                }
 
-                $this->OrderDetail->updateOrderState(null, null, [ORDER_STATE_ORDER_PLACED], ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturer->id_manufacturer, $orderDetailIds);
+                    $this->OrderDetail->updateOrderState(null, null, [ORDER_STATE_ORDER_PLACED], ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturer->id_manufacturer, $orderDetailIds);
+
+                }
 
             }
 
