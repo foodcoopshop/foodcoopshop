@@ -23,7 +23,7 @@ return [
         'maxworkers' => 1,
         'defaultworkerretries' => 2,
         'workermaxruntime' => 60 * 10,
-        'sleeptime' => 10,
+        'sleeptime' => 20,
         'connection' => $connection,
     ],
 ];
