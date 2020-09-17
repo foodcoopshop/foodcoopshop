@@ -14,7 +14,11 @@
  */
 
 $connection = 'default';
+$workermaxruntime = 60 * 10;
+$sleeptime = 20;
 if (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0])) {
+    $workermaxruntime = 2;
+    $sleeptime = 0;
     $connection = 'test';
 }
 
@@ -22,8 +26,8 @@ return [
     'Queue' => [
         'maxworkers' => 1,
         'defaultworkerretries' => 2,
-        'workermaxruntime' => 60 * 10,
-        'sleeptime' => 20,
+        'workermaxruntime' => $workermaxruntime,
+        'sleeptime' => $sleeptime,
         'connection' => $connection,
     ],
 ];
