@@ -79,6 +79,7 @@ class QueueGenerateAndSendOrderListTask extends QueueTask implements QueueTaskIn
         if ($sendEmail) {
 
             $email = new AppMailer();
+            $email->fallbackEnabled = false;
             $email->viewBuilder()->setTemplate('Admin.send_order_list');
             $email->setTo($manufacturer->address_manufacturer->email)
             ->setAttachments([

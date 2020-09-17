@@ -25,6 +25,8 @@ use Cake\Mailer\TransportFactory;
 class AppMailer extends Mailer
 {
 
+    public $fallbackEnabled = true;
+
     public function __construct($addBccBackupAddress = true)
     {
         parent::__construct(null);
@@ -55,7 +57,7 @@ class AppMailer extends Mailer
             return $this->getTransport()->send($this->getMessage());
 
         } catch (Exception $e) {
-            if (Configure::check('app.EmailTransport.fallback')) {
+            if ($this->fallbackEnabled && Configure::check('app.EmailTransport.fallback')) {
                 // only try to reconfigure callback config once
                 if (is_null(TransportFactory::getConfig('fallback'))) {
                     TransportFactory::setConfig('fallback', Configure::read('app.EmailTransport.fallback'));
