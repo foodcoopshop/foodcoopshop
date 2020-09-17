@@ -21,8 +21,9 @@ if (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $
 return [
     'Queue' => [
         'maxworkers' => 1,
-        'workermaxruntime' => 20,
-        'sleeptime' => 5,
+        'defaultworkerretries' => 2,
+        'workermaxruntime' => 60 * 10,
+        'sleeptime' => 10,
         'connection' => $connection,
     ],
 ];

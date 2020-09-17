@@ -17,9 +17,6 @@ namespace App\Shell;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\Utility\Hash;
-use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
-use App\Lib\PdfWriter\OrderListByProductPdfWriter;
-use App\Mailer\AppMailer;
 
 class SendOrderListsShell extends AppShell
 {
@@ -30,6 +27,7 @@ class SendOrderListsShell extends AppShell
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
 
         $this->startTimeLogging();
 
@@ -105,59 +103,16 @@ class SendOrderListsShell extends AppShell
                 );
                 $orderDetailIds = Hash::extract($orderDetails, '{n}.id_order_detail');
 
-                $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();
-
-                // START generate PDF grouped by PRODUCT
-                $pdfWriter = new OrderListByProductPdfWriter();
-                $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
-                    $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __('product'), $currentDateForOrderLists
-                );
-                $pdfWriter->setFilename($productPdfFile);
-                $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds);
-                $pdfWriter->writeFile();
-                // END generate PDF grouped by PRODUCT
-
-                // START generate PDF grouped by CUSTOMER
-                $pdfWriter = new OrderListByCustomerPdfWriter();
-                $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
-                    $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __('member'), $currentDateForOrderLists
-                );
-                $pdfWriter->setFilename($customerPdfFile);
-                $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds);
-                $pdfWriter->writeFile();
-                // END generate PDF grouped by CUSTOMER
-
-                $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
-                $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
-
-                if ($sendEmail) {
-
-                    $email = new AppMailer();
-                    $email->viewBuilder()->setTemplate('Admin.send_order_list');
-                    $email->setTo($manufacturer->address_manufacturer->email)
-                    ->setAttachments([
-                        $productPdfFile,
-                        $customerPdfFile,
-                    ])
-                    ->setSubject(__('Order_lists_for_the_day') . ' ' . $pickupDayFormated)
-                    ->setViewVars([
-                        'manufacturer' => $manufacturer,
-                        'appAuth' => $this->AppAuth,
-                        'showManufacturerUnsubscribeLink' => true,
-                    ]);
-                    if (!empty($ccRecipients)) {
-                        $email->setCc($ccRecipients);
-                    }
-                    $email->send();
-
-                    $this->OrderDetail->updateOrderState(null, null, [ORDER_STATE_ORDER_PLACED], ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturer->id_manufacturer, $orderDetailIds);
-
-                }
+                $this->QueuedJobs->createJob('GenerateAndSendOrderList', [
+                    'pickupDayDbFormat' => $pickupDayDbFormat,
+                    'pickupDayFormated' => $pickupDayFormated,
+                    'orderDetailIds' => $orderDetailIds,
+                    'manufactuerId' => $manufacturer->id_manufacturer,
+                ]);
 
             }
 
         }
-
 
         $actionLogDatas = $this->writeActionLog($allOrderDetails, $manufacturers, $pickupDay);
 
