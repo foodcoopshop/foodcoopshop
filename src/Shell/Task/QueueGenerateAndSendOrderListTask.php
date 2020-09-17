@@ -36,7 +36,6 @@ class QueueGenerateAndSendOrderListTask extends QueueTask implements QueueTaskIn
         $pickupDayFormated = $data['pickupDayFormated'];
         $manufacturerId = $data['manufacturerId'];
         $orderDetailIds = $data['orderDetailIds'];
-        $appAuth = $data['appAuth'];
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $manufacturer = $this->Manufacturer->find('all', [
@@ -96,6 +95,7 @@ class QueueGenerateAndSendOrderListTask extends QueueTask implements QueueTaskIn
             }
             $email->send();
 
+            $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
             $this->OrderDetail->updateOrderState(null, null, [ORDER_STATE_ORDER_PLACED], ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturer->id_manufacturer, $orderDetailIds);
 
         }
