@@ -36,6 +36,7 @@ class QueueGenerateAndSendOrderListTask extends QueueTask implements QueueTaskIn
         $pickupDayFormated = $data['pickupDayFormated'];
         $manufacturerId = $data['manufacturerId'];
         $orderDetailIds = $data['orderDetailIds'];
+        $appAuth = $data['appAuth'];
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $manufacturer = $this->Manufacturer->find('all', [
@@ -88,7 +89,6 @@ class QueueGenerateAndSendOrderListTask extends QueueTask implements QueueTaskIn
             ->setSubject(__('Order_lists_for_the_day') . ' ' . $pickupDayFormated)
             ->setViewVars([
                 'manufacturer' => $manufacturer,
-                'appAuth' => $this->AppAuth,
                 'showManufacturerUnsubscribeLink' => true,
             ]);
             if (!empty($ccRecipients)) {
