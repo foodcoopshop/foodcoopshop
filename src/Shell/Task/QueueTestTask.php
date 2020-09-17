@@ -1,4 +1,9 @@
 <?php
+namespace App\Shell\Task;
+
+use Queue\Shell\Task\QueueTask;
+use Queue\Shell\Task\QueueTaskInterface;
+
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -13,18 +18,18 @@
  * @link          https://www.foodcoopshop.com
  */
 
-$connection = 'default';
-if (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0])) {
-    $connection = 'test';
+class QueueTestTask extends QueueTask implements QueueTaskInterface {
+
+
+    public $timeout = 30;
+
+    public $retries = 3;
+
+    public function run(array $data, $jobId) : void
+    {
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+        $this->ActionLog->customSave('blog_post_added', 0, 1, 'blog_posts', 'This the name: ' . $data['name']);
+    }
+
 }
-
-return [
-    'Queue' => [
-        'maxworkers' => 1,
-        'workermaxruntime' => 20,
-        'sleeptime' => 5,
-        'connection' => $connection,
-    ],
-];
-
 ?>

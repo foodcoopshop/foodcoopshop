@@ -98,6 +98,11 @@ class PagesController extends FrontendController
         }
         $this->set('newProducts', $newProducts);
 
+        $queueJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
+        $queueJobs->createJob('Test', [
+            'name' => 'John Doe',
+        ]);
+
     }
 
     public function detail()
