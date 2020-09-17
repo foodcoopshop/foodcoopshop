@@ -148,7 +148,11 @@ class SendOrderListsShell extends AppShell
                     if (!empty($ccRecipients)) {
                         $email->setCc($ccRecipients);
                     }
-                    $email->send();
+
+                    $this->loadModel('Queue.QueuedJobs')->createJob(
+                        'Email',
+                        ['settings' => $email]
+                    );
 
                     $this->OrderDetail->updateOrderState(null, null, [ORDER_STATE_ORDER_PLACED], ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturer->id_manufacturer, $orderDetailIds);
 

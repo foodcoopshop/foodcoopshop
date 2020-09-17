@@ -48,6 +48,7 @@ class Application extends BaseApplication
 
         $this->addPlugin('Migrations');
         $this->addPlugin('AssetCompress', ['bootstrap' => true]);
+        $this->addPlugin('Queue', ['bootstrap' => true]);
 
         $this->addPlugin('Admin', [
             'bootstrap' => false,
@@ -110,6 +111,7 @@ class Application extends BaseApplication
         }
 
         $this->addPlugin('Migrations');
+        $this->addPlugin('Queue', ['bootstrap' => true]);
 
         // Load more plugins here
     }
