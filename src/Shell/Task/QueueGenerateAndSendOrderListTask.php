@@ -37,6 +37,7 @@ class QueueGenerateAndSendOrderListTask extends QueueTask implements QueueTaskIn
         $manufacturerId = $data['manufacturerId'];
         $orderDetailIds = $data['orderDetailIds'];
 
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $manufacturer = $this->Manufacturer->find('all', [
             'conditions' => [
                 'Manufacturers.id_manufacturer' => $manufacturerId,

@@ -107,7 +107,7 @@ class SendOrderListsShell extends AppShell
                     'pickupDayDbFormat' => $pickupDayDbFormat,
                     'pickupDayFormated' => $pickupDayFormated,
                     'orderDetailIds' => $orderDetailIds,
-                    'manufactuerId' => $manufacturer->id_manufacturer,
+                    'manufacturerId' => $manufacturer->id_manufacturer,
                 ]);
 
             }
