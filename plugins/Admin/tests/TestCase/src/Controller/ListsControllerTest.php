@@ -43,6 +43,8 @@ class ListsControllerTest extends AppCakeTestCase
     public function testAccessOrderListPageAndDownloadableFile()
     {
         $this->commandRunner->run(['cake', 'send_order_lists', '2018-01-31']);
+        $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
+
         $listPageUrl = $this->Slug->getOrderLists().'?dateFrom=02.02.2018';
 
         $folder = new Folder(Configure::read('app.folder_order_lists').DS.'2018'.DS.'02');
@@ -62,7 +64,7 @@ class ListsControllerTest extends AppCakeTestCase
         $this->get($orderListDownloadUrl);
         $this->assertResponseOk();
         $this->assertContentType('pdf');
-        
+
         // check downloadable file as wrong manufacturer
         $this->loginAsVegetableManufacturer();
         Configure::write('Error.log', false);
