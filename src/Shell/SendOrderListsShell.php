@@ -103,7 +103,7 @@ class SendOrderListsShell extends AppShell
                 );
                 $orderDetailIds = Hash::extract($orderDetails, '{n}.id_order_detail');
 
-                $this->QueuedJobs->createJob('GenerateAndSendOrderList', [
+                $this->QueuedJobs->createJob('GenerateOrderList', [
                     'pickupDayDbFormat' => $pickupDayDbFormat,
                     'pickupDayFormated' => $pickupDayFormated,
                     'orderDetailIds' => $orderDetailIds,
