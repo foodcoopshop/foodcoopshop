@@ -14,21 +14,20 @@
  */
 
 $connection = 'default';
-$workermaxruntime = 60 * 10;
-$sleeptime = 20;
+$exitwhennothingtodo = true;
 if (php_sapi_name() == 'cli' && $_SERVER['argv'][0] && preg_match('/phpunit/', $_SERVER['argv'][0])) {
-    $workermaxruntime = 2;
-    $sleeptime = 0;
     $connection = 'test';
+    $exitwhennothingtodo = true;
 }
 
 return [
     'Queue' => [
         'maxworkers' => 1,
         'defaultworkerretries' => 2,
-        'workermaxruntime' => $workermaxruntime,
-        'sleeptime' => $sleeptime,
+        'workermaxruntime' => 60 * 10,
+        'sleeptime' => 20,
         'connection' => $connection,
+        'exitwhennothingtodo' => $exitwhennothingtodo,
     ],
 ];
 
