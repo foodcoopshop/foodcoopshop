@@ -1,4 +1,3 @@
-TRUNCATE TABLE `fcs_orders`;
 TRUNCATE TABLE `fcs_order_detail`;
 TRUNCATE TABLE `fcs_order_detail_tax`;
 TRUNCATE TABLE `fcs_payments`;
