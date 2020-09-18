@@ -23,6 +23,7 @@ use Queue\Shell\Task\QueueTaskInterface;
 
 class QueueGenerateOrderListTask extends QueueTask implements QueueTaskInterface {
 
+    use UpdateActionLogTrait;
 
     public $timeout = 30;
 
@@ -87,6 +88,9 @@ class QueueGenerateOrderListTask extends QueueTask implements QueueTaskInterface
             ]);
 
         }
+
+        $identifier = 'generate-order-list-' . $manufacturer->id_manufacturer . '-' . $pickupDayFormated;
+        $this->updateActionLog($identifier, $jobId);
 
     }
 

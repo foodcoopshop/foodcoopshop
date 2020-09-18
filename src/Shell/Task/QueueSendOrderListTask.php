@@ -22,6 +22,8 @@ use Queue\Shell\Task\QueueTaskInterface;
 class QueueSendOrderListTask extends QueueTask implements QueueTaskInterface {
 
 
+    use UpdateActionLogTrait;
+
     public $timeout = 30;
 
     public $retries = 2;
@@ -72,6 +74,9 @@ class QueueSendOrderListTask extends QueueTask implements QueueTaskInterface {
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->OrderDetail->updateOrderState(null, null, [ORDER_STATE_ORDER_PLACED], ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturer->id_manufacturer, $orderDetailIds);
+
+        $identifier = 'send-order-list-' . $manufacturer->id_manufacturer . '-' . $pickupDayFormated;
+        $this->updateActionLog($identifier, $jobId);
 
     }
 

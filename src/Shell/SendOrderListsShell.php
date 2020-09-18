@@ -162,8 +162,9 @@ class SendOrderListsShell extends AppShell
                     foreach($tmpActionLogDatas[$manufacturer->id_manufacturer] as $pickupDayDbFormat => $tmpActionLogData) {
                         $pickupDayFormated = new FrozenDate($pickupDayDbFormat);
                         $pickupDayFormated = $pickupDayFormated->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
-                        $newData = '- ' .
-                            html_entity_decode($manufacturer->name) . ': ' .
+                        $identifier = $manufacturer->id_manufacturer . '-' . $pickupDayFormated;
+                        $newData = '- <i class="far fa-file-pdf not-ok" data-identifier="generate-order-list-'.$identifier.'"></i> <i class="far fa-envelope not-ok" data-identifier="send-order-list-'.$identifier.'"></i> ';
+                        $newData .= html_entity_decode($manufacturer->name) . ': ' .
                             __('{0,plural,=1{1_product} other{#_products}}', [$tmpActionLogData['order_detail_amount_sum']]) . ' / ' .
                             Configure::read('app.numberHelper')->formatAsCurrency($tmpActionLogData['order_detail_price_sum']);
                             if ($pickupDayDbFormat != $pickupDay) {
