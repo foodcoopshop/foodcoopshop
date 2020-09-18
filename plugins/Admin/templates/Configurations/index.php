@@ -241,11 +241,6 @@ $this->element('addScript', [
         </tr>
 
         <tr>
-            <td>app.adminEmail / app.adminPassword</td>
-            <td><?php echo Configure::read('app.adminEmail'); ?> / <?php echo preg_replace("|.|", "*", Configure::read('app.adminPassword')); ?></td>
-        </tr>
-
-        <tr>
             <td>app.paymentMethods</td>
             <td><?php echo join(', ', Configure::read('app.paymentMethods')); ?></td>
         </tr>
