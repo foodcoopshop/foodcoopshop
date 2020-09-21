@@ -32,7 +32,12 @@ class AppMailer extends Mailer
         parent::__construct(null);
 
         if ($addBccBackupAddress && Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC') != '') {
-            $this->addBcc(Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC'));
+            $bccRecipients = [];
+            $bccs = explode(',', Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC'));
+            foreach ($bccs as $bcc) {
+                $bccRecipients[] = $bcc;
+            }
+            $this->addBcc($bccRecipients);
         }
     }
 
