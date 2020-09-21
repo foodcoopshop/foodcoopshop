@@ -24,7 +24,7 @@ return [
     'Queue' => [
         'maxworkers' => 1,
         'defaultworkerretries' => 2,
-        'workermaxruntime' => 300,
+        'workermaxruntime' => 180,
         'sleeptime' => 20,
         'connection' => $connection,
         'exitwhennothingtodo' => $exitwhennothingtodo,
