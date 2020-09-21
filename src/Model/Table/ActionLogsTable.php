@@ -506,7 +506,7 @@ class ActionLogsTable extends AppTable
             'text' => $text,
             'date' => is_null($time) ? Time::now() : $time
         ];
-        $this->save($this->newEntity($data2save));
+        return $this->save($this->newEntity($data2save));
     }
 
     public function getTypesForDropdown($appAuth)

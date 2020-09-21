@@ -36,6 +36,7 @@ class QueueGenerateOrderListTask extends QueueTask implements QueueTaskInterface
         $pickupDayFormated = $data['pickupDayFormated'];
         $manufacturerId = $data['manufacturerId'];
         $orderDetailIds = $data['orderDetailIds'];
+        $actionLogId = $data['actionLogId'];
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $manufacturer = $this->Manufacturer->find('all', [
@@ -85,12 +86,13 @@ class QueueGenerateOrderListTask extends QueueTask implements QueueTaskInterface
                 'orderDetailIds' => $orderDetailIds,
                 'manufacturerId' => $manufacturer->id_manufacturer,
                 'manufactuerName' => $manufacturer->name,
+                'actionLogId' => $actionLogId,
             ]);
 
         }
 
         $identifier = 'generate-order-list-' . $manufacturer->id_manufacturer . '-' . $pickupDayFormated;
-        $this->updateActionLog($identifier, $jobId);
+        $this->updateActionLog($actionLogId, $identifier, $jobId);
 
     }
 

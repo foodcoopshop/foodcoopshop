@@ -29,8 +29,6 @@ class SendOrderListsShell extends AppShell
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
 
-        $this->startTimeLogging();
-
         // $this->cronjobRunDay can is set in unit test
         if (!isset($this->args[0])) {
             $this->cronjobRunDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
@@ -79,6 +77,16 @@ class SendOrderListsShell extends AppShell
             $i++;
         }
 
+        $actionLogDatas = $this->writeActionLog($allOrderDetails, $manufacturers, $pickupDay);
+
+        $outString = '';
+        if (count($actionLogDatas) > 0) {
+            $outString .= join('<br />', $actionLogDatas) . '<br />';
+        }
+        $outString .= __('Sent_order_lists') . ': ' . count($actionLogDatas);
+
+        $actionLog = $this->ActionLog->customSave('cronjob_send_order_lists', 0, 0, '', $outString);
+
         foreach ($manufacturers as $manufacturer) {
 
             // it's possible, that - within one request - orders with different pickup days are available
@@ -109,29 +117,14 @@ class SendOrderListsShell extends AppShell
                     'orderDetailIds' => $orderDetailIds,
                     'manufacturerId' => $manufacturer->id_manufacturer,
                     'manufactuerName' => $manufacturer->name,
+                    'actionLogId' => $actionLog->id,
                 ]);
 
             }
 
         }
 
-        $actionLogDatas = $this->writeActionLog($allOrderDetails, $manufacturers, $pickupDay);
-
         $this->resetQuantityToDefaultQuantity($allOrderDetails);
-
-        $outString = '';
-        if (count($actionLogDatas) > 0) {
-            $outString .= join('<br />', $actionLogDatas) . '<br />';
-        }
-        $outString .= __('Sent_order_lists') . ': ' . count($actionLogDatas);
-
-        $this->stopTimeLogging();
-
-        $this->ActionLog->customSave('cronjob_send_order_lists', 0, 0, '', $outString . '<br />' . $this->getRuntime());
-
-        $this->out($outString);
-
-        $this->out($this->getRuntime());
 
         return true;
 

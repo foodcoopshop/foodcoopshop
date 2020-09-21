@@ -21,8 +21,9 @@ use Cake\I18n\FrozenTime;
 trait UpdateActionLogTrait
 {
 
-    public function updateActionLog($identifier, $jobId)
+    public function updateActionLog($actionLogId, $identifier, $jobId)
     {
+
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
 
         $search = 'not-ok" data-identifier="'.$identifier.'"';
@@ -30,8 +31,13 @@ trait UpdateActionLogTrait
         $now = $now->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'));
         $replace = 'ok" title="' . $now . ' / JobId: ' . $jobId . '"';
 
-        $query = 'UPDATE '.$this->ActionLog->getTable().' SET text = REPLACE(text, \'' . $search . '\', \''.$replace.'\')';
-        $this->ActionLog->getConnection()->prepare($query)->execute();
+        $query = 'UPDATE ' . $this->ActionLog->getTable() . ' SET text = REPLACE(text, :search, :replace) WHERE id = :actionLogId';
+        $params = [
+            'actionLogId' => $actionLogId,
+            'search' => $search,
+            'replace' => $replace,
+        ];
+        $this->ActionLog->getConnection()->prepare($query)->execute($params);
 
     }
 

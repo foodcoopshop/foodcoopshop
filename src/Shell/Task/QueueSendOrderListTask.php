@@ -37,6 +37,7 @@ class QueueSendOrderListTask extends QueueTask implements QueueTaskInterface {
         $manufacturerId = $data['manufacturerId'];
         $orderDetailIds = $data['orderDetailIds'];
         $pickupDayFormated = $data['pickupDayFormated'];
+        $actionLogId = $data['actionLogId'];
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $manufacturer = $this->Manufacturer->find('all', [
@@ -76,7 +77,7 @@ class QueueSendOrderListTask extends QueueTask implements QueueTaskInterface {
         $this->OrderDetail->updateOrderState(null, null, [ORDER_STATE_ORDER_PLACED], ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturer->id_manufacturer, $orderDetailIds);
 
         $identifier = 'send-order-list-' . $manufacturer->id_manufacturer . '-' . $pickupDayFormated;
-        $this->updateActionLog($identifier, $jobId);
+        $this->updateActionLog($actionLogId, $identifier, $jobId);
 
     }
 
