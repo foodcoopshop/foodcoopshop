@@ -85,6 +85,23 @@ class ManufacturersTable extends AppTable
         return $validator;
     }
 
+    public function getManufacturerByIdForSendingOrderLists($manufacturerId)
+    {
+        $manufacturer = $this->find('all', [
+            'conditions' => [
+                'Manufacturers.id_manufacturer' => $manufacturerId,
+            ],
+            'order' => [
+                'Manufacturers.name' => 'ASC',
+            ],
+            'contain' => [
+                'AddressManufacturers',
+                'Customers.AddressCustomers',
+            ],
+        ])->first();
+        return $manufacturer;
+    }
+
     public function hasManufacturerReachedTimebasedCurrencyLimit($manufacturerId)
     {
         $manufacturer = $this->find('all', [
