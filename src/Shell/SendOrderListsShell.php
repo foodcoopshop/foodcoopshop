@@ -17,9 +17,6 @@ namespace App\Shell;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\Utility\Hash;
-use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
-use App\Lib\PdfWriter\OrderListByProductPdfWriter;
-use App\Mailer\AppMailer;
 
 class SendOrderListsShell extends AppShell
 {
@@ -30,8 +27,7 @@ class SendOrderListsShell extends AppShell
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-
-        $this->startTimeLogging();
+        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
 
         // $this->cronjobRunDay can is set in unit test
         if (!isset($this->args[0])) {
@@ -81,6 +77,16 @@ class SendOrderListsShell extends AppShell
             $i++;
         }
 
+        $actionLogDatas = $this->writeActionLog($allOrderDetails, $manufacturers, $pickupDay);
+
+        $outString = '';
+        if (count($actionLogDatas) > 0) {
+            $outString .= join('<br />', $actionLogDatas) . '<br />';
+        }
+        $outString .= __('Sent_order_lists') . ': ' . count($actionLogDatas);
+
+        $actionLog = $this->ActionLog->customSave('cronjob_send_order_lists', 0, 0, '', $outString);
+
         foreach ($manufacturers as $manufacturer) {
 
             // it's possible, that - within one request - orders with different pickup days are available
@@ -105,77 +111,20 @@ class SendOrderListsShell extends AppShell
                 );
                 $orderDetailIds = Hash::extract($orderDetails, '{n}.id_order_detail');
 
-                $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();
-
-                // START generate PDF grouped by PRODUCT
-                $pdfWriter = new OrderListByProductPdfWriter();
-                $productPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
-                    $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __('product'), $currentDateForOrderLists
-                );
-                $pdfWriter->setFilename($productPdfFile);
-                $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds);
-                $pdfWriter->writeFile();
-                // END generate PDF grouped by PRODUCT
-
-                // START generate PDF grouped by CUSTOMER
-                $pdfWriter = new OrderListByCustomerPdfWriter();
-                $customerPdfFile = Configure::read('app.htmlHelper')->getOrderListLink(
-                    $manufacturer->name, $manufacturer->id_manufacturer, $pickupDayDbFormat, __('member'), $currentDateForOrderLists
-                );
-                $pdfWriter->setFilename($customerPdfFile);
-                $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $pickupDayDbFormat, [], $orderDetailIds);
-                $pdfWriter->writeFile();
-                // END generate PDF grouped by CUSTOMER
-
-                $sendEmail = $this->Manufacturer->getOptionSendOrderList($manufacturer->send_order_list);
-                $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
-
-                if ($sendEmail) {
-
-                    $email = new AppMailer();
-                    $email->viewBuilder()->setTemplate('Admin.send_order_list');
-                    $email->setTo($manufacturer->address_manufacturer->email)
-                    ->setAttachments([
-                        $productPdfFile,
-                        $customerPdfFile,
-                    ])
-                    ->setSubject(__('Order_lists_for_the_day') . ' ' . $pickupDayFormated)
-                    ->setViewVars([
-                        'manufacturer' => $manufacturer,
-                        'appAuth' => $this->AppAuth,
-                        'showManufacturerUnsubscribeLink' => true,
-                    ]);
-                    if (!empty($ccRecipients)) {
-                        $email->setCc($ccRecipients);
-                    }
-                    $email->send();
-
-                    $this->OrderDetail->updateOrderState(null, null, [ORDER_STATE_ORDER_PLACED], ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER, $manufacturer->id_manufacturer, $orderDetailIds);
-
-                }
+                $this->QueuedJobs->createJob('GenerateOrderList', [
+                    'pickupDayDbFormat' => $pickupDayDbFormat,
+                    'pickupDayFormated' => $pickupDayFormated,
+                    'orderDetailIds' => $orderDetailIds,
+                    'manufacturerId' => $manufacturer->id_manufacturer,
+                    'manufactuerName' => $manufacturer->name,
+                    'actionLogId' => $actionLog->id,
+                ]);
 
             }
 
         }
 
-
-        $actionLogDatas = $this->writeActionLog($allOrderDetails, $manufacturers, $pickupDay);
-
         $this->resetQuantityToDefaultQuantity($allOrderDetails);
-
-        $outString = '';
-        if (count($actionLogDatas) > 0) {
-            $outString .= join('<br />', $actionLogDatas) . '<br />';
-        }
-        $outString .= __('Sent_order_lists') . ': ' . count($actionLogDatas);
-
-        $this->stopTimeLogging();
-
-        $this->ActionLog->customSave('cronjob_send_order_lists', 0, 0, '', $outString . '<br />' . $this->getRuntime());
-
-        $this->out($outString);
-
-        $this->out($this->getRuntime());
 
         return true;
 
@@ -206,8 +155,9 @@ class SendOrderListsShell extends AppShell
                     foreach($tmpActionLogDatas[$manufacturer->id_manufacturer] as $pickupDayDbFormat => $tmpActionLogData) {
                         $pickupDayFormated = new FrozenDate($pickupDayDbFormat);
                         $pickupDayFormated = $pickupDayFormated->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
-                        $newData = '- ' .
-                            html_entity_decode($manufacturer->name) . ': ' .
+                        $identifier = $manufacturer->id_manufacturer . '-' . $pickupDayFormated;
+                        $newData = '- <i class="fas fa-book not-ok" data-identifier="generate-order-list-'.$identifier.'"></i> <i class="fas fa-envelope not-ok" data-identifier="send-order-list-'.$identifier.'"></i> ';
+                        $newData .= html_entity_decode($manufacturer->name) . ': ' .
                             __('{0,plural,=1{1_product} other{#_products}}', [$tmpActionLogData['order_detail_amount_sum']]) . ' / ' .
                             Configure::read('app.numberHelper')->formatAsCurrency($tmpActionLogData['order_detail_price_sum']);
                             if ($pickupDayDbFormat != $pickupDay) {

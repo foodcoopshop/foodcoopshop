@@ -160,7 +160,7 @@ class AppTable extends Table
             $emails = [$emails];
         }
         foreach ($emails as $email) {
-            $validates = Validation::email($email);
+            $validates = Validation::email($email, true);
             if (!$validates) {
                 return false;
             }
