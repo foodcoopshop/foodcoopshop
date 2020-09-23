@@ -86,7 +86,11 @@ class ConfigurationsTable extends AppTable
     public function validationFcsBackupEmailAddressBcc(Validator $validator)
     {
         $validator->allowEmptyString('value');
-        $validator->email('value', true, __('The_email_address_is_not_valid.'));
+        $validator->add('value', 'multipleEmails', [
+            'rule' => 'ruleMultipleEmails',
+            'provider' => 'table',
+            'message' => __('At_least_one_email_is_not_valid._Please_separate_multiple_with_comma_without_space.')
+        ]);
         return $validator;
     }
 

@@ -25,12 +25,19 @@ use Cake\Mailer\TransportFactory;
 class AppMailer extends Mailer
 {
 
+    public $fallbackEnabled = true;
+
     public function __construct($addBccBackupAddress = true)
     {
         parent::__construct(null);
 
         if ($addBccBackupAddress && Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC') != '') {
-            $this->addBcc(Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC'));
+            $bccRecipients = [];
+            $bccs = explode(',', Configure::read('appDb.FCS_BACKUP_EMAIL_ADDRESS_BCC'));
+            foreach ($bccs as $bcc) {
+                $bccRecipients[] = $bcc;
+            }
+            $this->addBcc($bccRecipients);
         }
     }
 
@@ -55,7 +62,7 @@ class AppMailer extends Mailer
             return $this->getTransport()->send($this->getMessage());
 
         } catch (Exception $e) {
-            if (Configure::check('app.EmailTransport.fallback')) {
+            if ($this->fallbackEnabled && Configure::check('app.EmailTransport.fallback')) {
                 // only try to reconfigure callback config once
                 if (is_null(TransportFactory::getConfig('fallback'))) {
                     TransportFactory::setConfig('fallback', Configure::read('app.EmailTransport.fallback'));

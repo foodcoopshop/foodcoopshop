@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "37b485864e84a1dcd2b2029d26d8560e",
+    "content-hash": "67a9a574e95196942167ef28920d571d",
     "packages": [
         {
             "name": "aura/intl",
@@ -413,6 +413,68 @@
                 "forum"
             ],
             "time": "2017-07-07T16:02:16+00:00"
+        },
+        {
+            "name": "dereuromark/cakephp-queue",
+            "version": "5.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dereuromark/cakephp-queue.git",
+                "reference": "d31e2616a986f1b10320c7927916dc14de67ec86"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dereuromark/cakephp-queue/zipball/d31e2616a986f1b10320c7927916dc14de67ec86",
+                "reference": "d31e2616a986f1b10320c7927916dc14de67ec86",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "^4.0.4",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "dereuromark/cakephp-ide-helper": "^1.0.0",
+                "dereuromark/cakephp-tools": "^2.0.0",
+                "fig-r/psr2r-sniffer": "dev-master",
+                "friendsofcake/search": "^6.0.0"
+            },
+            "suggest": {
+                "dereuromark/cakephp-ide-helper": "For maximum IDE support, especially around createJob() usage.",
+                "dereuromark/cakephp-tools": "For the QueueEmailTask (if you don't write your own task here). Also for admin backend.",
+                "friendsofcake/search": "For admin backend and filtering of current jobs."
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "Queue\\": "src/",
+                    "Queue\\Test\\Fixture\\": "tests/Fixture/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Scherer",
+                    "homepage": "https://www.dereuromark.de",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/dereuromark/cakephp-queue/graphs/contributors",
+                    "role": "Contributor"
+                }
+            ],
+            "description": "The Queue plugin for CakePHP provides deferred task execution.",
+            "homepage": "https://github.com/dereuromark/cakephp-queue",
+            "keywords": [
+                "background",
+                "cakephp",
+                "deferred tasks",
+                "queue"
+            ],
+            "time": "2020-07-19T14:15:57+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",

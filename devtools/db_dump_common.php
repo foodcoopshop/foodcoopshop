@@ -93,6 +93,12 @@ foreach ($result as $line) {
     echo PHP_EOL . $line;
 }
 
+$cmd = 'bash ' . $dir . 'bin/cake migrations migrate -p Queue';
+exec($cmd, $result);
+foreach ($result as $line) {
+    echo PHP_EOL . $line;
+}
+
 echo PHP_EOL . 'Dumping structure...';
 $result = array();
 $cmd = sprintf('"%1$s" --host="%2$s" --user="%3$s" --password="%4$s" --no-create-db --no-data --events --routines --skip-opt --create-options --add-drop-table --disable-keys --extended-insert --quick --set-charset --quote-names --skip-comments --skip-add-locks --single-transaction --force --result-file="%5$s" %6$s 2>&1', $mysqldump_cmd, $db_conf['host'], $db_conf['username'], $db_conf['password'], $dir . $datasource[DATASOURCE]['structure'] . '.tmp', $tmpDbName);

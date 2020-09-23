@@ -47,6 +47,9 @@ TRUNCATE TABLE `fcs_timebased_currency_order_detail`;
 TRUNCATE TABLE `fcs_timebased_currency_payments`;
 TRUNCATE TABLE `fcs_units`;
 TRUNCATE TABLE `phinxlog`;
+TRUNCATE TABLE `queue_phinxlog`;
+TRUNCATE TABLE `queue_processes`;
+TRUNCATE TABLE `queued_jobs`;
 
 /*!40000 ALTER TABLE `fcs_action_logs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_action_logs` ENABLE KEYS */;
@@ -228,6 +231,31 @@ INSERT INTO `phinxlog` VALUES
 (20200831142250,'RemoveEmailLogTable','2020-08-31 15:10:25','2020-08-31 15:10:25',0),
 (20200910091755,'AddMemberSettingUseCameraForMobileBarcodeScanning','2020-09-10 09:20:55','2020-09-10 09:20:55',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;
+INSERT INTO `queue_phinxlog` VALUES
+(20150425180802,'Init','2020-09-17 07:23:25','2020-09-17 07:23:25',0),
+(20150511062806,'Fixmissing','2020-09-17 07:23:25','2020-09-17 07:23:25',0),
+(20150911132343,'ImprovementsForMysql','2020-09-17 07:23:25','2020-09-17 07:23:25',0),
+(20161319000000,'IncreaseDataSize','2020-09-17 07:23:25','2020-09-17 07:23:25',0),
+(20161319000001,'Priority','2020-09-17 07:23:25','2020-09-17 07:23:25',0),
+(20161319000002,'Rename','2020-09-17 07:23:25','2020-09-17 07:23:25',0),
+(20161319000003,'Processes','2020-09-17 07:23:25','2020-09-17 07:23:25',0),
+(20171013131845,'AlterQueuedJobs','2020-09-17 07:23:25','2020-09-17 07:23:25',0),
+(20171013133145,'Utf8mb4Fix','2020-09-17 07:23:25','2020-09-17 07:23:25',0),
+(20171019083500,'ColumnLength','2020-09-17 07:23:25','2020-09-17 07:23:25',0),
+(20171019083501,'MigrationQueueNull','2020-09-17 07:23:25','2020-09-17 07:23:26',0),
+(20171019083502,'MigrationQueueStatus','2020-09-17 07:23:26','2020-09-17 07:23:26',0),
+(20171019083503,'MigrationQueueProcesses','2020-09-17 07:23:26','2020-09-17 07:23:26',0),
+(20171019083505,'MigrationQueueProcessesIndex','2020-09-17 07:23:26','2020-09-17 07:23:26',0),
+(20171019083506,'MigrationQueueProcessesKey','2020-09-17 07:23:26','2020-09-17 07:23:26',0);
+/*!40000 ALTER TABLE `queue_phinxlog` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `queue_processes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `queue_processes` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `queued_jobs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `queued_jobs` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
