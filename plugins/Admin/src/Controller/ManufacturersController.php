@@ -560,6 +560,9 @@ class ManufacturersController extends AdminAppController
 
         $pdfWriter = new InvoicePdfWriter();
         $pdfWriter->prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, [], '', 'xxx');
+        if (isset($pdfWriter->getData()['productResults']) && empty($pdfWriter->getData()['productResults'])) {
+            die(__d('admin', 'No_orders_within_the_given_time_range.'));
+        }
 
         if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
             return $this->response->withStringBody($pdfWriter->writeHtml());
