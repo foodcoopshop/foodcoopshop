@@ -141,8 +141,17 @@ if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
     ]);
 }
 
-if ($isOwnProfile && Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
-    echo '<a target="_blank" class="generate-my-member-card-button btn btn-outline-light" href="/admin/customers/generateMyMemberCard.pdf"><i class="far fa-address-card"></i> ' . __d('admin', 'Generate_my_member_card') . '</a>';
+if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
+    echo '<div class="sc"></div>';
+    echo '<h2 style="margin-top:20px;">' . __d('admin', 'Self_service_mode') . '</h2>';
+    if ($isOwnProfile) {
+        echo '<a target="_blank" class="generate-my-member-card-button btn btn-outline-light" href="/admin/customers/generateMyMemberCard.pdf"><i class="far fa-address-card"></i> ' . __d('admin', 'Generate_my_member_card') . '</a>';
+    }
+    echo $this->Form->control('Customers.use_camera_for_barcode_scanning', [
+        'label' => __d('admin', 'I_want_to_use_my_smartphones_camera_for_barcode_scanning.'),
+        'type' => 'checkbox',
+        'escape' => false
+    ]);
 }
 
 if ($appAuth->isSuperadmin()) {

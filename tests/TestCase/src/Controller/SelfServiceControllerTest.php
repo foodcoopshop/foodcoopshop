@@ -57,7 +57,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart(351, 1);
         $response = $this->getJsonDecodedContent();
-        $expectedErrorMessage = 'Bitte trage das entnommene Gewicht ein.';
+        $expectedErrorMessage = 'Bitte trage das entnommene Gewicht ein und klicke danach auf die Einkaufstasche.';
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
         $this->assertJsonError();
     }
@@ -68,7 +68,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->addProductToSelfServiceCart('350-15', 1, 'bla bla');
         $response = $this->getJsonDecodedContent();
-        $expectedErrorMessage = 'Bitte trage das entnommene Gewicht ein.';
+        $expectedErrorMessage = 'Bitte trage das entnommene Gewicht ein und klicke danach auf die Einkaufstasche.';
         $this->assertRegExpWithUnquotedString($expectedErrorMessage, $response->msg);
         $this->assertJsonError();
     }

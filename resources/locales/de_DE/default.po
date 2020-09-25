@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-09-10 12:07+0200\n"
-"PO-Revision-Date: 2020-09-17 10:13+0200\n"
+"POT-Creation-Date: 2020-09-15 10:44+0200\n"
+"PO-Revision-Date: 2020-09-15 10:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1098,8 +1098,11 @@ msgstr "Datenschutzerklärung"
 msgid "List_of_allergens"
 msgstr "Allergenliste"
 
-msgid "Self_service_for_stock_products"
-msgstr "Selbstbedienungs-Modus für Lagerprodukte"
+msgid "Self_service_mode"
+msgstr "Selbstbedienungs-Modus"
+
+msgid "The_product_{0}_was_added_to_your_cart."
+msgstr "Das Produkt {0} wurde in deine Einkaufstasche gelegt."
 
 msgid "Your_shopping_bag_was_empty."
 msgstr "Deine Einkaufstasche war leer."
@@ -1500,8 +1503,8 @@ msgstr "Bitte gib mindestens {0} Zeichen ein."
 msgid "Please_enter_max_{0}_characters."
 msgstr "Bitte gib maximal {0} Zeichen ein."
 
-msgid "Please_provide_a_valid_ordered_quantity_in_units."
-msgstr "Bitte trage das entnommene Gewicht ein."
+msgid "Please_provide_a_valid_ordered_quantity_in_units_and_click_on_the_add_button."
+msgstr "Bitte trage das entnommene Gewicht ein und klicke danach auf die Einkaufstasche."
 
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr "Die gewünschte Anzahl {0} ist nicht gültig."
@@ -2453,6 +2456,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Self_service_for_stock_products"
+#~ msgstr "Selbstbedienungs-Modus für Lagerprodukte"
 
 #~ msgid "The_pickup_day"
 #~ msgstr "Der Abholtag"

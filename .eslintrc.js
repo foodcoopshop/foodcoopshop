@@ -10,6 +10,7 @@ module.exports = {
         "CKEDITOR": true,
         "ClipboardJS": true,
         "foodcoopshop": true,
+        "Quagga": true,
         "slidebars": true,
         "Swiper": true
     },

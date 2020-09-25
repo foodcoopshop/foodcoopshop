@@ -29,19 +29,34 @@ $this->element('addScript', ['script' =>
 ]);
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 
-if ($this->request->getSession()->read('highlightedProductId')) {
-    $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".SelfService.initHighlightedProductId('" . $this->request->getSession()->read('highlightedProductId') . "');
-        "
+if ($isMobile && $appAuth->user('use_camera_for_barcode_scanning')) {
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace') . ".SelfService.initMobileBarcodeScanningWithCamera('.sb-toggle-left', '#content .header', " . Configure::read('app.jsNamespace') . ".SelfService.mobileScannerCallbackForProducts);".
+        Configure::read('app.jsNamespace') . ".Mobile.showSelfServiceCart();"
     ]);
+}
+
+if ($this->request->getSession()->read('highlightedProductId')) {
+
+    if ($isMobile && $appAuth->user('use_camera_for_barcode_scanning')) {
+        $this->element('addScript', [
+            'script' => Configure::read('app.jsNamespace') . ".SelfService.initHighlightedProductIdForMobileBarcodeScanning('" . $this->request->getSession()->read('highlightedProductId') . "');"
+        ]);
+    } else {
+        $this->element('addScript', [
+            'script' => Configure::read('app.jsNamespace') . ".SelfService.initHighlightedProductId('" . $this->request->getSession()->read('highlightedProductId') . "');"
+        ]);
+    }
     $this->request->getSession()->delete('highlightedProductId');
 }
 
 ?>
 
 <div class="header">
-    <h2><?php echo __('Self_service_for_stock_products'); ?></h2>
-    <h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
+    <h2><?php echo __('Self_service_mode'); ?></h2>
+    <?php if (!$isMobile) { ?>
+        <h1><span><?php echo count($products); ?> <?php echo __('found'); ?></span></h1>
+    <?php } ?>
     <?php echo $this->element('productSearch', [
         'action' => __('route_self_service'),
         'placeholder' => __('Search:_name_id_or_barcode'),
@@ -90,7 +105,7 @@ if ($this->request->getSession()->read('highlightedProductId')) {
         <i class="fas fa-check"></i> <?php echo __('Finish_pickup'); ?>
     </button>
     <?php echo $this->Form->end(); ?>
-    <?php if ($isMobile) { ?>
-        <a class="btn btn-outline-light continue-shopping" href="<?php echo Router::reverse($this->request, true); ?>";><?php echo __('Continue_shopping?')?></a>
+    <?php if ($isMobile && !$appAuth->user('use_camera_for_barcode_scanning')) { ?>
+        <a class="btn btn-outline-light continue-shopping" href="<?php echo Router::reverse($this->request, true); ?>"><?php echo __('Continue_shopping?')?></a>
     <?php } ?>
 </div>

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-09-10 12:06+0200\n"
+"POT-Creation-Date: 2020-09-15 09:21+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -959,7 +959,13 @@ msgstr ""
 msgid "How_do_I_use_the_paying_with_time_module?"
 msgstr ""
 
+msgid "Self_service_mode"
+msgstr ""
+
 msgid "Generate_my_member_card"
+msgstr ""
+
+msgid "I_want_to_use_my_smartphones_camera_for_barcode_scanning."
 msgstr ""
 
 msgid "Delete_member_irrevocably?"

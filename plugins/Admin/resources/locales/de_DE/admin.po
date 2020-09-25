@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-09-10 12:06+0200\n"
-"PO-Revision-Date: 2020-09-10 12:07+0200\n"
+"POT-Creation-Date: 2020-09-15 09:21+0200\n"
+"PO-Revision-Date: 2020-09-15 09:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -960,8 +960,14 @@ msgstr "stundenabrechnungs-modul"
 msgid "How_do_I_use_the_paying_with_time_module?"
 msgstr "Wie verwende ich das Stundenabrechnungs-Modul?"
 
+msgid "Self_service_mode"
+msgstr "Selbstbedienungs-Modus"
+
 msgid "Generate_my_member_card"
 msgstr "Meine Mitgliedskarte generieren"
+
+msgid "I_want_to_use_my_smartphones_camera_for_barcode_scanning."
+msgstr "Ich möchte die Kamera meines Smartphones zum Scannen der Barcodes benutzen."
 
 msgid "Delete_member_irrevocably?"
 msgstr "Mitgliedskonto unwiderruflich löschen?"
@@ -2084,6 +2090,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Mobile_barcode_scanning_with_scan_app?"
+#~ msgstr "Mobiles Barcode-Scannen mittels Scan-App?"
 
 #~ msgid "Invoice_for_manufacturer_{0}_successfully_sent_to_{1}."
 #~ msgstr "Rechnung für Hersteller {0} erfolgreich versendet an {1}."

@@ -52,7 +52,7 @@ class SelfServiceController extends FrontendController
         $this->set('products', $products);
 
         $this->viewBuilder()->setLayout('self_service');
-        $this->set('title_for_layout', __('Self_service_for_stock_products'));
+        $this->set('title_for_layout', __('Self_service_mode'));
 
         if (!empty($this->getRequest()->getQuery('keyword')) && count($products) == 1) {
             $hashedProductId = strtolower(substr($keyword, 0, 4));
@@ -63,6 +63,15 @@ class SelfServiceController extends FrontendController
                 if (!empty($result['msg'])) {
                     $this->Flash->error($result['msg']);
                     $this->request->getSession()->write('highlightedProductId', $products[0]['id_product']); // sic! no attributeId needed!
+                } else {
+                    $imgString = '';
+                    $imgSrc = Configure::read('app.htmlHelper')->getProductImageSrc($products[0]['id_image'], 'home');
+                    if ($imgSrc != '') {
+                        $imgString .= '<br /><img src="'.$imgSrc.'" />';
+                    }
+                    $this->Flash->success(__('The_product_{0}_was_added_to_your_cart.', [
+                        '<b>' . $products[0]['name'] . '</b>'
+                    ]) . $imgString);
                 }
                 $this->redirect(Configure::read('app.slugHelper')->getSelfService());
                 return;

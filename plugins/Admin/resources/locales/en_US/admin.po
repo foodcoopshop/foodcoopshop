@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-09-10 12:06+0200\n"
-"PO-Revision-Date: 2020-09-10 12:07+0200\n"
+"POT-Creation-Date: 2020-09-15 09:21+0200\n"
+"PO-Revision-Date: 2020-09-15 09:21+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -960,8 +960,14 @@ msgstr "paying-with-time-module"
 msgid "How_do_I_use_the_paying_with_time_module?"
 msgstr "How do I use the paying-with-time-module?"
 
+msgid "Self_service_mode"
+msgstr "Self-service mode"
+
 msgid "Generate_my_member_card"
 msgstr "Generate my member card"
+
+msgid "I_want_to_use_my_smartphones_camera_for_barcode_scanning."
+msgstr "I want to use my smartphone's camera for barcode scanning."
 
 msgid "Delete_member_irrevocably?"
 msgstr "Delete account irrevocably?"
@@ -2084,6 +2090,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Mobile_barcode_scanning_with_scan_app?"
+#~ msgstr "Mobile barcode scanning with scan app?"
 
 #~ msgid "Invoice_for_manufacturer_{0}_successfully_sent_to_{1}."
 #~ msgstr "Invoice for manufacturer {0} successfully sent to {1}."

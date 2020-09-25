@@ -29,6 +29,7 @@
     }
     body.self_services #content {
        border-right: none;
+       display: none;
     }
     .self-service .product-wrapper {
        padding-left: 10px;
@@ -96,17 +97,53 @@
     }
     .self-service .header {
        position: static;
+       height: 50px;
     }
     body.self_services #responsive-header .left-wrapper {
-       margin-top: 21px;
+       margin-top: 10px;
        margin-left: 2px;
        float: left;
     }
+    body.customers.login #responsive-header .left-wrapper {
+        display: none;
+    }
+    body.customers.login #camera,
+    body.self_services #camera {
+        width: 90%;
+        height: auto;
+        overflow: hidden;
+        padding-left: 10%;
+        display: none;
+        margin-bottom: 5px;
+        clear: both;
+    }
+    body.customers.login video,
+    body.customers.login canvas,
+    body.self_services video,
+    body.self_services canvas {
+        max-width: 100%;
+        width: 100%;
+    }
+    body.customers.login canvas.drawing,
+    body.customers.login canvas.drawingBuffer,
+    body.self_services canvas.drawing,
+    body.self_services canvas.drawingBuffer {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    body.customers.login #responsive-header i.fa-circle-notch,
+    body.self_services #responsive-header i.fa-circle-notch {
+        margin-top: 12px;
+        margin-left: 5px;
+    }
+    body.customers.login #responsive-header .btn-camera {
+        margin-top: 5px;
+        margin-left: 5px;
+        float: left;
+    }
     body.self_services #responsive-header .responsive-cart span.sum {
         margin-right: 5px;
-    }
-    body.self_services #responsive-header .left-wrapper .user-name-wrapper {
-       display: none;
     }
     body.self_services #responsive-header .logo-wrapper {
        float: left;

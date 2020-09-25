@@ -14,6 +14,7 @@
     "install": "bash ../bin/cake npm_post_install"
   },
   "dependencies": {
+    "@ericblade/quagga2": "^1.2.2",
     "@fortawesome/fontawesome-free": "^5.14.0",
     "blueimp-file-upload": "^10.31.0",
     "bootstrap": "^4.5.2",
@@ -33,7 +34,8 @@
     "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
     "swiper": "6.1.2",
-    "tooltipster": "^4.2.8"
+    "tooltipster": "^4.2.8",
+    "webrtc-adapter": "^7.7.0"
   },
   "devDependencies": {
     "eslint": "^7.7.0"
