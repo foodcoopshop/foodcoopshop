@@ -84,7 +84,7 @@ foodcoopshop.SelfService = {
     },
 
     mobileScannerCallbackForProducts : function(result) {
-          var redirectUrl = '/selbstbedienung?keyword=' + result.codeResult.code;
+          var redirectUrl = '/' + foodcoopshop.LocalizedJs.helper.routeSelfService + '?keyword=' + result.codeResult.code;
           document.location.href = redirectUrl;
     },
 
