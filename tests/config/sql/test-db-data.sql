@@ -50,6 +50,7 @@ TRUNCATE TABLE `phinxlog`;
 TRUNCATE TABLE `queue_phinxlog`;
 TRUNCATE TABLE `queue_processes`;
 TRUNCATE TABLE `queued_jobs`;
+TRUNCATE TABLE `queued_tasks`;
 
 /*!40000 ALTER TABLE `fcs_action_logs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_action_logs` ENABLE KEYS */;
@@ -170,7 +171,8 @@ INSERT INTO `fcs_configuration` VALUES
 (587,1,'FCS_CASHLESS_PAYMENT_ADD_TYPE','Art der Eintragung der Guthaben-Aufladungen<br /><div class=\"small\">Wie gelangen die Guthaben-Aufladungen vom Bankkonto in den FoodCoopShop?</div>','manual','dropdown',145,'de_DE','2020-02-11 10:13:10','2020-02-11 10:13:10'),
 (588,1,'FCS_SHOW_NEW_PRODUCTS_ON_HOME','Neue Produkte auch auf der Startseite anzeigen?','1','boolean',22,'de_DE','2020-04-15 09:42:06','2020-04-15 09:42:06'),
 (589,1,'FCS_FEEDBACK_TO_PRODUCTS_ENABLED','Feedback-Funktion für Produkte aktiviert?<br /><div class=\"small\">Mitglieder können Feedback zu bestellten Produkte verfassen.</div>','1','boolean',320,'de_DE','2020-06-19 09:03:00','2020-06-19 09:03:00'),
-(590,1,'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY','Mitglied kann Abholtag beim Bestellen selbst auswählen.','0','readonly',59,'de_DE','2020-07-06 10:34:48','2020-07-06 10:34:48');
+(590,1,'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY','Mitglied kann Abholtag beim Bestellen selbst auswählen.','0','readonly',59,'de_DE','2020-07-06 10:34:48','2020-07-06 10:34:48'),
+(591,1,'FCS_SHOW_NEW_PRODUCTS_ON_HOME','Neue Produkte auch auf der Startseite anzeigen?','1','boolean',22,'de_DE','2020-09-25 10:03:09','2020-09-25 10:03:09');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -357,32 +359,32 @@ INSERT INTO `fcs_units` VALUES
 
 /*!40000 ALTER TABLE `phinxlog` DISABLE KEYS */;
 INSERT INTO `phinxlog` VALUES
-(20200404145856,'RemoveV2Migrations','2020-04-04 15:01:16','2020-04-04 15:01:16',0),
-(20200415073329,'ShowNewProductsOnHome','2020-04-15 07:42:06','2020-04-15 07:42:06',0),
-(20200501192722,'EnableCashlessPaymentAddTypeConfiguration','2020-05-01 19:30:21','2020-05-01 19:30:21',0),
-(20200618063024,'AddProductFeedback','2020-06-19 07:02:59','2020-06-19 07:03:00',0),
-(20200703072605,'CustomerCanSelectPickupDay','2020-07-06 08:34:48','2020-07-06 08:34:48',0),
-(20200831142250,'RemoveEmailLogTable','2020-08-31 15:10:33','2020-08-31 15:10:33',0).
+(20200404145856,'RemoveV2Migrations','2020-04-04 15:01:12','2020-04-04 15:01:12',0),
+(20200415073329,'ShowNewProductsOnHome','2020-04-15 07:42:02','2020-04-15 07:42:02',0),
+(20200501192722,'EnableCashlessPaymentAddTypeConfiguration','2020-05-01 19:30:17','2020-05-01 19:30:17',0),
+(20200618063024,'AddProductFeedback','2020-06-19 07:02:54','2020-06-19 07:02:55',0),
+(20200703072605,'CustomerCanSelectPickupDay','2020-07-06 08:34:44','2020-07-06 08:34:44',0),
+(20200831142250,'RemoveEmailLogTable','2020-08-31 15:10:29','2020-08-31 15:10:29',0),
 (20200910091755,'AddMemberSettingUseCameraForMobileBarcodeScanning','2020-09-10 09:21:00','2020-09-10 09:21:00',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;
 INSERT INTO `queue_phinxlog` VALUES
-(20150425180802,'Init','2020-09-17 07:23:37','2020-09-17 07:23:37',0),
-(20150511062806,'Fixmissing','2020-09-17 07:23:37','2020-09-17 07:23:37',0),
-(20150911132343,'ImprovementsForMysql','2020-09-17 07:23:37','2020-09-17 07:23:37',0),
-(20161319000000,'IncreaseDataSize','2020-09-17 07:23:37','2020-09-17 07:23:37',0),
-(20161319000001,'Priority','2020-09-17 07:23:37','2020-09-17 07:23:37',0),
-(20161319000002,'Rename','2020-09-17 07:23:37','2020-09-17 07:23:37',0),
-(20161319000003,'Processes','2020-09-17 07:23:37','2020-09-17 07:23:37',0),
-(20171013131845,'AlterQueuedJobs','2020-09-17 07:23:37','2020-09-17 07:23:37',0),
-(20171013133145,'Utf8mb4Fix','2020-09-17 07:23:37','2020-09-17 07:23:37',0),
-(20171019083500,'ColumnLength','2020-09-17 07:23:37','2020-09-17 07:23:37',0),
-(20171019083501,'MigrationQueueNull','2020-09-17 07:23:37','2020-09-17 07:23:38',0),
-(20171019083502,'MigrationQueueStatus','2020-09-17 07:23:38','2020-09-17 07:23:38',0),
-(20171019083503,'MigrationQueueProcesses','2020-09-17 07:23:38','2020-09-17 07:23:38',0),
-(20171019083505,'MigrationQueueProcessesIndex','2020-09-17 07:23:38','2020-09-17 07:23:38',0),
-(20171019083506,'MigrationQueueProcessesKey','2020-09-17 07:23:38','2020-09-17 07:23:38',0);
+(20150425180802,'Init','2020-09-17 07:23:31','2020-09-17 07:23:31',0),
+(20150511062806,'Fixmissing','2020-09-17 07:23:31','2020-09-17 07:23:31',0),
+(20150911132343,'ImprovementsForMysql','2020-09-17 07:23:31','2020-09-17 07:23:31',0),
+(20161319000000,'IncreaseDataSize','2020-09-17 07:23:31','2020-09-17 07:23:31',0),
+(20161319000001,'Priority','2020-09-17 07:23:31','2020-09-17 07:23:31',0),
+(20161319000002,'Rename','2020-09-17 07:23:31','2020-09-17 07:23:31',0),
+(20161319000003,'Processes','2020-09-17 07:23:31','2020-09-17 07:23:31',0),
+(20171013131845,'AlterQueuedJobs','2020-09-17 07:23:31','2020-09-17 07:23:31',0),
+(20171013133145,'Utf8mb4Fix','2020-09-17 07:23:31','2020-09-17 07:23:31',0),
+(20171019083500,'ColumnLength','2020-09-17 07:23:31','2020-09-17 07:23:32',0),
+(20171019083501,'MigrationQueueNull','2020-09-17 07:23:32','2020-09-17 07:23:32',0),
+(20171019083502,'MigrationQueueStatus','2020-09-17 07:23:32','2020-09-17 07:23:32',0),
+(20171019083503,'MigrationQueueProcesses','2020-09-17 07:23:32','2020-09-17 07:23:32',0),
+(20171019083505,'MigrationQueueProcessesIndex','2020-09-17 07:23:32','2020-09-17 07:23:32',0),
+(20171019083506,'MigrationQueueProcessesKey','2020-09-17 07:23:32','2020-09-17 07:23:32',0);
 /*!40000 ALTER TABLE `queue_phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_processes` DISABLE KEYS */;
@@ -390,6 +392,9 @@ INSERT INTO `queue_phinxlog` VALUES
 
 /*!40000 ALTER TABLE `queued_jobs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `queued_jobs` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `queued_tasks` DISABLE KEYS */;
+/*!40000 ALTER TABLE `queued_tasks` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

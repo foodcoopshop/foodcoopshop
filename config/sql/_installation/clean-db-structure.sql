@@ -634,6 +634,28 @@ CREATE TABLE `queued_jobs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `queued_tasks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `queued_tasks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `job_type` varchar(45) NOT NULL,
+  `data` text,
+  `job_group` varchar(255) DEFAULT NULL,
+  `reference` varchar(255) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `notbefore` datetime DEFAULT NULL,
+  `fetched` datetime DEFAULT NULL,
+  `completed` datetime DEFAULT NULL,
+  `progress` float DEFAULT NULL,
+  `failed` int(11) NOT NULL DEFAULT '0',
+  `failure_message` text,
+  `workerkey` varchar(45) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `priority` int(3) NOT NULL DEFAULT '5',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

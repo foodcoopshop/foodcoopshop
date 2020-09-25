@@ -50,6 +50,7 @@ TRUNCATE TABLE `phinxlog`;
 TRUNCATE TABLE `queue_phinxlog`;
 TRUNCATE TABLE `queue_processes`;
 TRUNCATE TABLE `queued_jobs`;
+TRUNCATE TABLE `queued_tasks`;
 
 /*!40000 ALTER TABLE `fcs_action_logs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_action_logs` ENABLE KEYS */;
@@ -256,6 +257,9 @@ INSERT INTO `queue_phinxlog` VALUES
 
 /*!40000 ALTER TABLE `queued_jobs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `queued_jobs` ENABLE KEYS */;
+
+/*!40000 ALTER TABLE `queued_tasks` DISABLE KEYS */;
+/*!40000 ALTER TABLE `queued_tasks` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
