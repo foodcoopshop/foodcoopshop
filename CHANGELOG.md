@@ -5,6 +5,9 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ## Unveröffentlicht [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.1.0...develop)
 
+### Neue Funktionen
+- Selbsbedienungs-Modus: Beim Einkaufen mit dem Handy kann man nun direkt mit dem Smartphone (ganz ohne App) die Barcodes scannen. [I#557](https://github.com/foodcoopshop/foodcoopshop/issues/557) / [PR#563](https://github.com/foodcoopshop/foodcoopshop/pull/563) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+
 ### Bugfixes / Optimierungen
 - Bestelllisten- und Rechnungsversand benötigen nun keinen HttpClient mehr. EmailTrait wird in allen Tests verwendet und EmailLogs wurde entfernt. [I#410](https://github.com/foodcoopshop/foodcoopshop/issues/410) / [PR#553](https://github.com/foodcoopshop/foodcoopshop/pull/553) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - CI-Umstellung von Travis auf Github Actions [PR#556](https://github.com/foodcoopshop/foodcoopshop/pull/556) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
