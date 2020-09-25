@@ -30,8 +30,9 @@ $this->element('addScript', ['script' =>
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 
 if ($isMobile && $appAuth->user('use_camera_for_barcode_scanning')) {
-    $this->element('addScript', [
-        'script' => Configure::read('app.jsNamespace') . ".SelfService.initMobileBarcodeScanningWithCamera();"
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace') . ".SelfService.initMobileBarcodeScanningWithCamera('.sb-toggle-left', '#content .header', " . Configure::read('app.jsNamespace') . ".SelfService.mobileScannerCallbackForProducts);".
+        Configure::read('app.jsNamespace') . ".Mobile.showSelfServiceCart();"
     ]);
 }
 

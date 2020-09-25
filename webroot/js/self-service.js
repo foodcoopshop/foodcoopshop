@@ -26,17 +26,22 @@ foodcoopshop.SelfService = {
         this.initDepositPayment();
     },
 
-    initMobileBarcodeScanningWithCamera : function() {
+    initMobileBarcodeScanningWithCamera : function(afterElementForLoader, afterElementForCamera, callback) {
 
         if (!this.isMobileBarcodeScanningSupported) {
             alert('mobile_barcode_scanning_not_supported');
             return;
         }
 
-        foodcoopshop.Mobile.showSelfServiceCart();
+        if ($('#camera').length > 0) {
+            Quagga.stop();
+            $('#camera').remove();
+            return;
+        }
 
-        $('#content .header').after($('<div />').attr('id', 'camera'));
-        foodcoopshop.SelfService.showLoader();
+        $(afterElementForCamera).after($('<div />').attr('id', 'camera'));
+        foodcoopshop.SelfService.hideLoader();
+        foodcoopshop.SelfService.showLoader(afterElementForLoader);
 
         Quagga.init({
             inputStream : {
@@ -66,15 +71,25 @@ foodcoopshop.SelfService = {
           Quagga.onDetected(function(result) {
               Quagga.stop();
               foodcoopshop.SelfService.hideLoader();
-              foodcoopshop.SelfService.showLoader();
-              var redirectUrl = '/selbstbedienung?keyword=' + result.codeResult.code;
-              document.location.href = redirectUrl;
+              foodcoopshop.SelfService.showLoader(afterElementForLoader);
+              callback(result);
           });
 
     },
 
-    showLoader : function() {
-        $('#responsive-header .sb-toggle-left').after($('<i />').addClass('fa fa-circle-notch fa-spin fa-2x'));
+    mobileScannerCallbackForLogin : function(result) {
+        var loginForm = $('#LoginForm');
+        loginForm.find('#barcode').val(result.codeResult.code);
+        foodcoopshop.SelfService.submitForm(loginForm, 'fa-sign-in-alt');
+    },
+
+    mobileScannerCallbackForProducts : function(result) {
+          var redirectUrl = '/selbstbedienung?keyword=' + result.codeResult.code;
+          document.location.href = redirectUrl;
+    },
+
+    showLoader : function(afterElementForLoader) {
+        $('#responsive-header ' + afterElementForLoader).after($('<i />').addClass('fa fa-circle-notch fa-spin fa-2x'));
     },
 
     hideLoader: function() {
@@ -108,6 +123,17 @@ foodcoopshop.SelfService = {
         );
 
         barcodeInputField.focus();
+
+        var cameraButton = $('<a/>').
+        addClass('btn').
+        addClass('btn-camera').
+        addClass('btn-success').
+        attr('href', 'javascript:void(0);').
+        html('<i class="fas fa-camera fa-2x"></i>').
+        on('click', function() {
+            foodcoopshop.SelfService.initMobileBarcodeScanningWithCamera('.btn-camera', '#login-form h1', foodcoopshop.SelfService.mobileScannerCallbackForLogin);
+        });
+        $('#responsive-header .sb-toggle-left').after(cameraButton);
 
     },
 
