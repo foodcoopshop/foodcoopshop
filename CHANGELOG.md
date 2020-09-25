@@ -7,7 +7,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 
 ### Herzlichen Dank an alle beteiligten Personen
 * <img src="https://github.com/AndreasEgger.png" width="20"> [AndreasEgger](https://github.com/AndreasEgger)
-* <img src="https://github.com/mantensteiner.png" width="20"> [mrothauer](https://github.com/mantensteiner)
+* <img src="https://github.com/mantensteiner.png" width="20"> [mantensteiner](https://github.com/mantensteiner)
 * <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
 
 ### Neue Funktionen
