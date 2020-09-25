@@ -259,7 +259,7 @@ CREATE TABLE `fcs_manufacturer` (
   `is_private` int(11) unsigned NOT NULL DEFAULT '0',
   `uid_number` varchar(30) NOT NULL DEFAULT '',
   `additional_text_for_invoice` mediumtext NOT NULL,
-  `iban` varchar(20) NOT NULL DEFAULT '',
+  `iban` varchar(22) NOT NULL DEFAULT '',
   `bic` varchar(11) NOT NULL DEFAULT '',
   `bank_name` varchar(255) NOT NULL DEFAULT '',
   `firmenbuchnummer` varchar(20) NOT NULL DEFAULT '',
