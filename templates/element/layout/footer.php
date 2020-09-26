@@ -29,7 +29,7 @@ use Cake\I18n\I18n;
 
     if ($isMobile) {
         echo '<div class="is-mobile-detector"></div>';
-        echo $this->Html->script(['/node_modules/slidebars/dist/slidebars']);
+        echo $this->Html->script(['/node_modules/slidebars/dist/slidebars.min']);
 
         // add script BEFORE all scripts that are loaded in views (block)
         echo $this->MyHtml->scriptBlock(
@@ -38,9 +38,9 @@ use Cake\I18n\I18n;
         );
     }
 
-    echo $this->Html->script('/node_modules/bootstrap/dist/js/bootstrap.js');
-    echo $this->Html->script('/node_modules/bootstrap-select/dist/js/bootstrap-select.js');
-    echo $this->Html->script('/node_modules/components-jqueryui/jquery-ui.js');
+    echo $this->Html->script('/node_modules/bootstrap/dist/js/bootstrap.min.js');
+    echo $this->Html->script('/node_modules/bootstrap-select/dist/js/bootstrap-select.min.js');
+    echo $this->Html->script('/node_modules/components-jqueryui/jquery-ui.min.js');
     echo $this->Html->script('/node_modules/bootstrap-select/dist/js/i18n/defaults-'.I18n::getLocale().'.js');
 
     $scripts = $this->fetch('script');

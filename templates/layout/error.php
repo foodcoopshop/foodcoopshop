@@ -77,7 +77,7 @@ use Cake\Core\Configure;
     echo $this->element('localizedJavascript');
     // do not use AssetCompressPlugin here (not loaded for errors!)
     echo $this->Html->script([
-        '/node_modules/jquery/dist/jquery.js',
+        '/node_modules/jquery/dist/jquery.min.js',
         '/node_modules/jquery-backstretch/jquery.backstretch.js',
         'helper.js',
     ]);
