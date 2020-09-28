@@ -18,6 +18,7 @@ namespace App\Shell;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
+use Cake\Filesystem\File;
 use Cake\I18n\Number;
 
 class BackupDatabaseShell extends AppShell
@@ -47,9 +48,20 @@ class BackupDatabaseShell extends AppShell
             }
         }
 
+        $configFile = TMP . 'mysql.txt';
+        $configFileObject = new File($configFile);
+        $configFileContent = '[mysqldump]
+host=%host%
+user=%user%
+password="%password%"';
+        $configFileContent = str_replace(['%host%', '%user%', '%password%'], [$dbConfig['host'], $dbConfig['username'], $dbConfig['password']], $configFileContent);
+        $configFileObject->write($configFileContent);
+
         $cmdString = Configure::read('app.mysqlDumpCommand');
-        $cmdString .= " -u " . $dbConfig['username'] . " -p'" . $dbConfig['password'] . "' --allow-keywords " . " --add-drop-table --complete-insert --quote-names " . $dbConfig['database'] . " > " . $backupdir . DS . $filename;
+        $cmdString .= " --defaults-file=" . $configFile . " --allow-keywords --add-drop-table --complete-insert --quote-names " . $dbConfig['database'] . " > " . $backupdir . DS . $filename;
         exec($cmdString);
+
+        $configFileObject->delete();
 
         // START zip and file sql file
         $zip = new \ZipArchive();
