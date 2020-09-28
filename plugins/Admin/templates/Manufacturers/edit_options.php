@@ -96,7 +96,7 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
     echo '<div class="sc"></div>';
 
     echo $this->Form->control('Manufacturers.send_order_list_cc', [
-        'label' => __d('admin', 'CC_recipient_for_order_lists').' <span class="after small">'.__d('admin', 'Separate_multiple_emails_with_comma').'</span>',
+        'label' => __d('admin', 'CC_recipient_for_order_lists').' <span class="after small">'.__d('admin', 'Separate_multiple_emails_with_comma.').' '.__d('admin', 'Only_works_if_order_lists_by_email_is_checked.').'</span>',
         'escape' => false
     ]);
 

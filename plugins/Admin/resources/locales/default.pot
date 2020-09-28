@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-09-15 09:21+0200\n"
+"POT-Creation-Date: 2020-09-28 08:42+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1241,7 +1241,10 @@ msgstr ""
 msgid "CC_recipient_for_order_lists"
 msgstr ""
 
-msgid "Separate_multiple_emails_with_comma"
+msgid "Separate_multiple_emails_with_comma."
+msgstr ""
+
+msgid "Only_works_if_order_lists_by_email_is_checked."
 msgstr ""
 
 msgid "Invoices_by_email"

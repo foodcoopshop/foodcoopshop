@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-09-15 09:21+0200\n"
+"POT-Creation-Date: 2020-09-28 08:42+0200\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1283,8 +1283,13 @@ msgstr "otrzymywać zamówienia drogą mailową."
 msgid "CC_recipient_for_order_lists"
 msgstr "Odbiorcy DW dla list zamówień"
 
-msgid "Separate_multiple_emails_with_comma"
+#, fuzzy
+msgid "Separate_multiple_emails_with_comma."
 msgstr "Wiele adresów email oddzielamy przecinkiem"
+
+#, fuzzy
+msgid "Only_works_if_order_lists_by_email_is_checked."
+msgstr "Listy zamówień wg email"
 
 #, fuzzy
 msgid "Invoices_by_email"
