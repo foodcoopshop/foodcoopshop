@@ -22,7 +22,7 @@ class ProductCardsPdfWriter extends PdfWriter
     public function __construct()
     {
         $this->plugin = 'Admin';
-        $this->setPdfLibrary(new BarCodeTcpdf());
+        $this->setPdfLibrary(new BarCodeTcpdf('L'));
     }
 
 }

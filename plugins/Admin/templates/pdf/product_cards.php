@@ -25,7 +25,7 @@ foreach($products as $product) {
     if ($pairRecord) {
         $pdf->table .= '<tr>';
     }
-    $pdf->table .= '<td style="width:240px;">'; // roughly 85,60mm x 53,98mm
+    $pdf->table .= '<td style="width:375px;">'; // roughly 85,60mm x 53,98mm
     $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0">';
 
     // START ROW logo and name block
@@ -40,10 +40,10 @@ foreach($products as $product) {
 
     // START ROW barcode and product image
     $pdf->table .= '<tr>';
-    $pdf->table .= '<td style="width:120px;">';
+    $pdf->table .= '<td style="width:255px;">';
     $barcodeObject = new TCPDFBarcode($product->bar_code, 'C39');
     //https://stackoverflow.com/a/54520065/2100184
-    $imgBase64Encoded = base64_encode($barcodeObject->getBarcodePngData(1.3, 102));
+    $imgBase64Encoded = base64_encode($barcodeObject->getBarcodePngData(1.3, 108));
     // move barcode to bottom
     $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="font-size:6px;"></td></tr></table>';
     $pdf->table .= '<img src="@' . preg_replace('#^data:image/[^;]+;base64,#', '', $imgBase64Encoded) . '">';
@@ -53,7 +53,7 @@ foreach($products as $product) {
     $pdf->table .= '<td style="width:100px;" align="right">';
 
     if ($product->image) {
-        $srcProductImage = $this->Html->getProductImageSrc($product->image->id_image, 'home');
+        $srcProductImage = $this->Html->getProductImageSrc($product->image->id_image, 'thickbox');
         $srcProductImage = $this->Html->removeTimestampFromFile($srcProductImage);
         $largeImageExists = preg_match('/de-default/', $srcProductImage);
         if (!$largeImageExists) {
@@ -61,10 +61,10 @@ foreach($products as $product) {
             $fileinfos = getimagesize($productImage);
             $ratio = $fileinfos[1] / $fileinfos[0];
             $productImageBase64Encoded = base64_encode(file_get_contents($productImage));
-            $height = 68;
+            $height = 100;
             $width = $height / $ratio;
             // move image to bottom
-            $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="font-size:3px;"></td></tr></table>';
+            $pdf->table .= '<table border="0" cellspacing="0" cellpadding="0"><tr><td style="font-size:12px;"></td></tr></table>';
             $pdf->table .= '<img style="width:'.$width.'px;height:'.$height.'px;" src="@' . preg_replace('#^data:image/[^;]+;base64,#', '', $productImageBase64Encoded) . '">';
         }
     }
