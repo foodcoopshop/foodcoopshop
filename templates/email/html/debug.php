@@ -13,7 +13,9 @@
  * @link          https://www.foodcoopshop.com
  */
 
-echo '<b>RequestUri</b>:' .$_SERVER['REQUEST_URI'].'<br /><br />';
+if (isset($_SERVER['REQUEST_URI'])) {
+    echo '<b>RequestUri</b>:' .$_SERVER['REQUEST_URI'].'<br /><br />';
+}
 
 if (!empty($_SERVER['HTTP_REFERER'])) {
     echo '<b>Referer</b>:' .$_SERVER['HTTP_REFERER'].'<br /><br />';
