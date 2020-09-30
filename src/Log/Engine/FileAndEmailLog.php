@@ -65,6 +65,7 @@ class FileAndEmailLog extends FileLog
             '{"id_customer":{"_required":',
             '{"id_customer":{"numeric":',
             '{"name":{"_empty":"Bitte gib einen Namen ein."',
+            '{"quantity":{"_empty":"Bitte gib eine Zahl zwischen -5.000'
         ];
         $ignoredExceptionsRegex = '/('.join('|', $ignoredPatterns).')/';
         if (preg_match($ignoredExceptionsRegex, $message)) {
