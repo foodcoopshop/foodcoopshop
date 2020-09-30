@@ -85,7 +85,7 @@ class ManufacturersTable extends AppTable
         return $validator;
     }
 
-    public function getManufacturerByIdForSendingOrderLists($manufacturerId)
+    public function getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId)
     {
         $manufacturer = $this->find('all', [
             'conditions' => [

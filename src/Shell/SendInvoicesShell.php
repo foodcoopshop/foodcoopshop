@@ -14,7 +14,6 @@
  */
 namespace App\Shell;
 
-use App\Lib\PdfWriter\InvoicePdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\I18n\Time;
@@ -31,8 +30,6 @@ class SendInvoicesShell extends AppShell
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-
-        $this->startTimeLogging();
 
         // $this->cronjobRunDay can is set in unit test
         if (!isset($this->args[0])) {
@@ -96,24 +93,71 @@ class SendInvoicesShell extends AppShell
             $i++;
         }
 
-        // 5) check if manufacturers have open order details and send email
-        $i = 0;
+        // 5) write action log
         $outString = $dateFrom . ' ' . __('to_(time_context)') . ' ' . $dateTo . '<br />';
+        $actionLogDatas = $this->getActionLogData($manufacturers);
+        if ($actionLogDatas == '') {
+            $outString .= __('Generated_invoices') . ': 0';
+        }
+        $outString .= $actionLogDatas;
+        $actionLog = $this->ActionLog->customSave('cronjob_send_invoices', 0, 0, '', $outString, new Time($this->cronjobRunDay));
+        $this->out($outString);
+
+        // 6) trigger queue invoice generation
+        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
+        foreach ($manufacturers as $manufacturer) {
+            if (!empty($manufacturer->current_order_count)) {
+                $this->QueuedJobs->createJob('GenerateInvoice', [
+                    'invoiceNumber' => $manufacturer->invoiceNumber,
+                    'invoicePdfFile' => $manufacturer->invoicePdfFile,
+                    'manufacturerId' => $manufacturer->id_manufacturer,
+                    'manufactuerName' => $manufacturer->name,
+                    'actionLogId' => $actionLog->id,
+                    'dateFrom' => $dateFrom,
+                    'dateTo' => $dateTo,
+                ]);
+            }
+        }
+
+        // 7) send email to accounting employee
+        $accountingEmail = Configure::read('appDb.FCS_ACCOUNTING_EMAIL');
+        if ($accountingEmail != '') {
+            $email = new AppMailer();
+            $email->viewBuilder()->setTemplate('Admin.accounting_information_invoices_sent');
+            $email->setTo($accountingEmail)
+                ->setSubject(__('Invoices_for_{0}_have_been_sent', [Configure::read('app.timeHelper')->getLastMonthNameAndYear()]))
+                ->setViewVars([
+                'dateFrom' => $dateFrom,
+                'dateTo' => $dateTo,
+                'cronjobRunDay' => $this->cronjobRunDay
+                ])
+                ->send();
+        }
+
+        return true;
+
+    }
+
+    protected function getActionLogData($manufacturers)
+    {
 
         $tableData = '';
         $sumPrice = 0;
+        $i = 0;
+        $outString = '';
 
         foreach ($manufacturers as $manufacturer) {
 
             $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
-            $invoiceNumber = $this->Manufacturer->Invoices->getNextInvoiceNumber($manufacturer->invoices);
-            $invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink(
-                $manufacturer->name, $manufacturer->id_manufacturer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $invoiceNumber
+            $manufacturer->invoiceNumber = $this->Manufacturer->Invoices->getNextInvoiceNumber($manufacturer->invoices);
+            $manufacturer->invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink(
+                $manufacturer->name, $manufacturer->id_manufacturer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $manufacturer->invoiceNumber
             );
-            $invoiceLink = '/admin/lists/getInvoice?file=' . str_replace(Configure::read('app.folder_invoices'), '', $invoicePdfFile);
+            $invoiceLink = '/admin/lists/getInvoice?file=' . str_replace(Configure::read('app.folder_invoices'), '', $manufacturer->invoicePdfFile);
 
             if (!empty($manufacturer->current_order_count)) {
 
+                $identifier = $manufacturer->id_manufacturer;
                 $price = $manufacturer->order_detail_price_sum;
                 $sumPrice += $price;
                 $variableMemberFeeAsString = '';
@@ -127,66 +171,22 @@ class SendInvoicesShell extends AppShell
                 $productString = __('{0,plural,=1{1_product} other{#_products}}', [$manufacturer->order_detail_amount_sum]);
                 $tableData .= '<tr>';
                 $tableData .= '<td>' . html_entity_decode($manufacturer->name) . '</td>';
-                $tableData .= '<td>' . $invoiceNumber . '</td>';
-                $tableData .= '<td>' . ($sendInvoice ? __('yes') : __('no')) . '</td>';
+                $tableData .= '<td>' . $manufacturer->invoiceNumber . '</td>';
+                $tableData .= '<td>' . ($sendInvoice ? '<i class="fas fa-envelope not-ok" data-identifier="send-invoice-'.$identifier.'"></i>' : '') . '</td>';
                 $tableData .= '<td>' . $productString . '</td>';
                 $tableData .= '<td align="right"><b>' . Configure::read('app.numberHelper')->formatAsCurrency($price) . '</b>'.$variableMemberFeeAsString.'</td>';
                 $tableData .= '<td>';
-                    $tableData .= Configure::read('app.htmlHelper')->link(
-                        '<i class="fas fa-arrow-right ok"></i>',
-                        $invoiceLink,
-                        [
-                            'class' => 'btn btn-outline-light',
-                            'target' => '_blank',
-                            'escape' => false
-                        ]
+                $tableData .= Configure::read('app.htmlHelper')->link(
+                    '<i class="fas fa-arrow-right not-ok" data-identifier="generate-invoice-'.$identifier.'"></i>',
+                    $invoiceLink,
+                    [
+                        'class' => 'btn btn-outline-light',
+                        'target' => '_blank',
+                        'escape' => false
+                    ]
                     );
                 $tableData .= '</td>';
                 $tableData .= '</tr>';
-
-                $validOrderStates = [
-                    ORDER_STATE_ORDER_PLACED,
-                    ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
-                ];
-
-                $invoiceDate = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'));
-                $invoicePeriod = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
-
-                $pdfWriter = new InvoicePdfWriter();
-                $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $dateFrom, $dateTo, $invoiceNumber, $validOrderStates, $invoicePeriod, $invoiceDate);
-                $pdfWriter->setFilename($invoicePdfFile);
-                $pdfWriter->writeFile();
-
-                $invoice2save = [
-                    'id_manufacturer' => $manufacturer->id_manufacturer,
-                    'send_date' => Time::now(),
-                    'invoice_number' => (int) $invoiceNumber,
-                    'user_id' => 0,
-                ];
-                $this->Manufacturer->Invoices->save(
-                    $this->Manufacturer->Invoices->newEntity($invoice2save)
-                );
-
-                $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
-
-                $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, Configure::read('app.htmlHelper')->getOrderStateBilled(), $manufacturer->id_manufacturer);
-
-                if ($sendInvoice) {
-                    $email = new AppMailer();
-                    $email->viewBuilder()->setTemplate('Admin.send_invoice');
-                    $email->setTo($manufacturer->address_manufacturer->email)
-                    ->setAttachments([
-                        $invoicePdfFile
-                    ])
-                    ->setSubject(__('Invoice_number_abbreviataion_{0}_{1}', [$invoiceNumber, $invoicePeriodMonthAndYear]))
-                    ->setViewVars([
-                        'manufacturer' => $manufacturer,
-                        'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
-                        'appAuth' => $this->AppAuth,
-                        'showManufacturerUnsubscribeLink' => true
-                    ]);
-                    $email->send();
-                }
 
                 $i ++;
 
@@ -205,36 +205,14 @@ class SendInvoicesShell extends AppShell
             $outString .= '</tr>';
             $outString .= $tableData;
             $outString .= '<tr><td colspan="4" align="right">'.__('Total_sum').'</td><td align="right"><b>'.Configure::read('app.numberHelper')->formatAsCurrency($sumPrice).'</b></td><td></td></tr>';
+            $outString .= '<tr><td colspan="4" align="right">'.__('Generated_invoices').'</td><td align="right"><b>'.$i.'</b></td><td></td></tr>';
             $outString .= '</table>';
         }
 
-        // START send email to accounting employee
-        $accountingEmail = Configure::read('appDb.FCS_ACCOUNTING_EMAIL');
-        if ($accountingEmail != '') {
-            $email = new AppMailer();
-            $email->viewBuilder()->setTemplate('Admin.accounting_information_invoices_sent');
-            $email->setTo($accountingEmail)
-                ->setSubject(__('Invoices_for_{0}_have_been_sent', [Configure::read('app.timeHelper')->getLastMonthNameAndYear()]))
-                ->setViewVars([
-                'dateFrom' => $dateFrom,
-                'dateTo' => $dateTo,
-                'cronjobRunDay' => $this->cronjobRunDay
-                ])
-                ->send();
-        }
-        // END send email to accounting employee
 
-        $outString .= __('Generated_invoices') . ': ' . $i;
-
-        $this->stopTimeLogging();
-
-        $this->ActionLog->customSave('cronjob_send_invoices', 0, 0, '', $outString . '<br />' . $this->getRuntime(), new Time($this->cronjobRunDay));
-
-        $this->out($outString);
-
-        $this->out($this->getRuntime());
-
-        return true;
+        return $outString;
 
     }
+
+
 }

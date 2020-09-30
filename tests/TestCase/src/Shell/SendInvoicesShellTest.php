@@ -60,6 +60,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $this->changeManufacturer($milkManufacturerId, 'send_invoice', 0);
 
         $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11 10:20:30']);
+        $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
 
         $orderDetails = $this->OrderDetail->find('all')->toArray();
         foreach($orderDetails as $orderDetail) {
@@ -71,16 +72,16 @@ class SendInvoicesShellTest extends AppCakeTestCase
         }
 
         $this->assertMailCount(4);
-        $this->assertMailSentWithAt(1, 'Rechnung Nr. 0001, ' . Configure::read('app.timeHelper')->getLastMonthNameAndYear(), 'originalSubject');
+        $this->assertMailSentWithAt(2, 'Rechnung Nr. 0001, ' . Configure::read('app.timeHelper')->getLastMonthNameAndYear(), 'originalSubject');
         $this->assertMailContainsAttachment('2018-03-11_Demo-Gemuese-Hersteller_5_Rechnung_0001_FoodCoop-Test.pdf');
-        $this->assertMailSentToAt(1, Configure::read('test.loginEmailMeatManufacturer'));
+        $this->assertMailSentToAt(2, Configure::read('test.loginEmailMeatManufacturer'));
 
         $this->loginAsSuperadmin(); //should still be logged in as superadmin but is not...
         $this->get($this->Slug->getActionLogsList() . '?dateFrom=11.03.2018&dateTo=11.03.2018');
         $this->assertResponseContains('4,09 €</b> (10%)');
         $this->assertResponseContains('0,62 €</b>');
         $this->assertResponseContains('11.03.2018 10:20:30');
-        $this->assertResponseContains('<td>nein</td>');
+        $this->assertResponseContains('<td>0001</td><td></td>');
 
         $this->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'invoiceWithVariableMemberFee.html');
@@ -94,13 +95,15 @@ class SendInvoicesShellTest extends AppCakeTestCase
 
         $this->prepareSendInvoices();
         $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11 10:20:30']);
+        $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
         $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11 10:20:30']); // sic! run again
+        $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
 
         // no additional (would be 8) emails should be sent if called twice on same day
         $this->assertMailCount(6);
-        $this->assertMailSentWithAt(4, 'Rechnungen für '.$this->Time->getLastMonthNameAndYear().' wurden verschickt', 'originalSubject');
-        $this->assertMailContainsAt(4, 'dateFrom=11.03.2018');
-        $this->assertMailSentToAt(4, Configure::read('test.loginEmailSuperadmin'));
+        $this->assertMailSentWithAt(1, 'Rechnungen für '.$this->Time->getLastMonthNameAndYear().' wurden verschickt', 'originalSubject');
+        $this->assertMailContainsAt(1, 'dateFrom=11.03.2018');
+        $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
 
     }
 

@@ -39,7 +39,7 @@ class QueueGenerateOrderListTask extends QueueTask implements QueueTaskInterface
         $actionLogId = $data['actionLogId'];
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderLists($manufacturerId);
+        $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
 
         $currentDateForOrderLists = Configure::read('app.timeHelper')->getCurrentDateTimeForFilename();
 
