@@ -144,6 +144,7 @@ class SendInvoicesShell extends AppShell
         $tableData = '';
         $sumPrice = 0;
         $i = 0;
+        $outString = '';
 
         foreach ($manufacturers as $manufacturer) {
 
