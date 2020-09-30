@@ -40,7 +40,7 @@ class QueueSendOrderListTask extends QueueTask implements QueueTaskInterface {
         $actionLogId = $data['actionLogId'];
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderLists($manufacturerId);
+        $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
 
         $ccRecipients = $this->Manufacturer->getOptionSendOrderListCc($manufacturer->send_order_list_cc);
 

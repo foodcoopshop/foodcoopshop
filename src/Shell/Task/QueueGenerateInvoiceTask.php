@@ -2,6 +2,7 @@
 namespace App\Shell\Task;
 
 use App\Lib\PdfWriter\InvoicePdfWriter;use Cake\Core\Configure;
+use Cake\I18n\Time;
 use Queue\Shell\Task\QueueTask;
 use Queue\Shell\Task\QueueTaskInterface;
 
@@ -29,6 +30,54 @@ class QueueGenerateInvoiceTask extends QueueTask implements QueueTaskInterface {
 
     public function run(array $data, $jobId) : void
     {
+
+        $manufacturerId = $data['manufacturerId'];
+        $invoicePdfFile = $data['invoicePdfFile'];
+        $invoiceNumber = $data['invoiceNumber'];
+        $actionLogId = $data['actionLogId'];
+        $dateFrom = $data['dateFrom'];
+        $dateTo = $data['dateTo'];
+
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
+
+        $validOrderStates = [
+            ORDER_STATE_ORDER_PLACED,
+            ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER,
+        ];
+
+        $invoiceDate = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'));
+        $invoicePeriod = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
+
+        $pdfWriter = new InvoicePdfWriter();
+        $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $dateFrom, $dateTo, $invoiceNumber, $validOrderStates, $invoicePeriod, $invoiceDate);
+        $pdfWriter->setFilename($invoicePdfFile);
+        $pdfWriter->writeFile();
+
+        $invoice2save = [
+            'id_manufacturer' => $manufacturer->id_manufacturer,
+            'send_date' => Time::now(),
+            'invoice_number' => (int) $invoiceNumber,
+            'user_id' => 0,
+        ];
+        $this->Manufacturer->Invoices->save(
+            $this->Manufacturer->Invoices->newEntity($invoice2save)
+        );
+
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->OrderDetail->updateOrderState($dateFrom, $dateTo, $validOrderStates, Configure::read('app.htmlHelper')->getOrderStateBilled(), $manufacturer->id_manufacturer);
+
+        $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
+        if ($sendInvoice) {
+            $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
+            $this->QueuedJobs->createJob('SendInvoice', [
+                'invoiceNumber' => $invoiceNumber,
+                'invoicePdfFile' => $invoicePdfFile,
+                'manufacturerId' => $manufacturer->id_manufacturer,
+                'manufactuerName' => $manufacturer->name,
+                'actionLogId' => $actionLogId,
+            ]);
+        }
 
     }
 

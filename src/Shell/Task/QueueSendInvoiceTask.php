@@ -2,6 +2,7 @@
 namespace App\Shell\Task;
 
 use App\Mailer\AppMailer;
+use Cake\Core\Configure;
 use Queue\Shell\Task\QueueTask;
 use Queue\Shell\Task\QueueTaskInterface;
 
@@ -31,7 +32,29 @@ class QueueSendInvoiceTask extends QueueTask implements QueueTaskInterface {
     public function run(array $data, $jobId) : void
     {
 
-        
+        $manufacturerId = $data['manufacturerId'];
+        $invoicePdfFile = $data['invoicePdfFile'];
+        $invoiceNumber = $data['invoiceNumber'];
+
+        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
+
+        $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
+
+        $email = new AppMailer();
+        $email->viewBuilder()->setTemplate('Admin.send_invoice');
+        $email->setTo($manufacturer->address_manufacturer->email)
+        ->setAttachments([
+            $invoicePdfFile
+        ])
+        ->setSubject(__('Invoice_number_abbreviataion_{0}_{1}', [$invoiceNumber, $invoicePeriodMonthAndYear]))
+        ->setViewVars([
+            'manufacturer' => $manufacturer,
+            'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
+            'showManufacturerUnsubscribeLink' => true
+        ]);
+        $email->send();
+
     }
 
 }
