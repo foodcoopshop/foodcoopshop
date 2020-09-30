@@ -77,7 +77,7 @@ class SendOrderListsShell extends AppShell
             $i++;
         }
 
-        $actionLogDatas = $this->writeActionLog($allOrderDetails, $manufacturers, $pickupDay);
+        $actionLogDatas = $this->getActionLogData($allOrderDetails, $manufacturers, $pickupDay);
 
         $outString = '';
         if (count($actionLogDatas) > 0) {
@@ -136,7 +136,7 @@ class SendOrderListsShell extends AppShell
      * prepare action log string is complicated because of
      * @see https://github.com/foodcoopshop/foodcoopshop/issues/408
      */
-    protected function writeActionLog($orderDetails, $manufacturers, $pickupDay): array
+    protected function getActionLogData($orderDetails, $manufacturers, $pickupDay): array
     {
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');

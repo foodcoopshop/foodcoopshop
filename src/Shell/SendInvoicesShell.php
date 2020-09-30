@@ -93,12 +93,57 @@ class SendInvoicesShell extends AppShell
             $i++;
         }
 
-        // 5) check if manufacturers have open order details and send email
-        $i = 0;
+        // 5) write action log
         $outString = $dateFrom . ' ' . __('to_(time_context)') . ' ' . $dateTo . '<br />';
+        $actionLogDatas = $this->getActionLogData($manufacturers);
+        if ($actionLogDatas == '') {
+            $outString .= __('Generated_invoices') . ': 0';
+        }
+        $outString .= $actionLogDatas;
+        $actionLog = $this->ActionLog->customSave('cronjob_send_invoices', 0, 0, '', $outString, new Time($this->cronjobRunDay));
+        $this->out($outString);
+
+        // 6) trigger queue invoice generation
+        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
+        foreach ($manufacturers as $manufacturer) {
+            if (!empty($manufacturer->current_order_count)) {
+                $this->QueuedJobs->createJob('GenerateInvoice', [
+                    'invoiceNumber' => $manufacturer->invoiceNumber,
+                    'invoicePdfFile' => $manufacturer->invoicePdfFile,
+                    'manufacturerId' => $manufacturer->id_manufacturer,
+                    'manufactuerName' => $manufacturer->name,
+                    'actionLogId' => $actionLog->id,
+                    'dateFrom' => $dateFrom,
+                    'dateTo' => $dateTo,
+                ]);
+            }
+        }
+
+        // 7) send email to accounting employee
+        $accountingEmail = Configure::read('appDb.FCS_ACCOUNTING_EMAIL');
+        if ($accountingEmail != '') {
+            $email = new AppMailer();
+            $email->viewBuilder()->setTemplate('Admin.accounting_information_invoices_sent');
+            $email->setTo($accountingEmail)
+                ->setSubject(__('Invoices_for_{0}_have_been_sent', [Configure::read('app.timeHelper')->getLastMonthNameAndYear()]))
+                ->setViewVars([
+                'dateFrom' => $dateFrom,
+                'dateTo' => $dateTo,
+                'cronjobRunDay' => $this->cronjobRunDay
+                ])
+                ->send();
+        }
+
+        return true;
+
+    }
+
+    protected function getActionLogData($manufacturers)
+    {
 
         $tableData = '';
         $sumPrice = 0;
+        $i = 0;
 
         foreach ($manufacturers as $manufacturer) {
 
@@ -130,14 +175,14 @@ class SendInvoicesShell extends AppShell
                 $tableData .= '<td>' . $productString . '</td>';
                 $tableData .= '<td align="right"><b>' . Configure::read('app.numberHelper')->formatAsCurrency($price) . '</b>'.$variableMemberFeeAsString.'</td>';
                 $tableData .= '<td>';
-                    $tableData .= Configure::read('app.htmlHelper')->link(
-                        '<i class="fas fa-arrow-right not-ok" data-identifier="generate-invoice-'.$identifier.'"></i>',
-                        $invoiceLink,
-                        [
-                            'class' => 'btn btn-outline-light',
-                            'target' => '_blank',
-                            'escape' => false
-                        ]
+                $tableData .= Configure::read('app.htmlHelper')->link(
+                    '<i class="fas fa-arrow-right not-ok" data-identifier="generate-invoice-'.$identifier.'"></i>',
+                    $invoiceLink,
+                    [
+                        'class' => 'btn btn-outline-light',
+                        'target' => '_blank',
+                        'escape' => false
+                    ]
                     );
                 $tableData .= '</td>';
                 $tableData .= '</tr>';
@@ -159,45 +204,14 @@ class SendInvoicesShell extends AppShell
             $outString .= '</tr>';
             $outString .= $tableData;
             $outString .= '<tr><td colspan="4" align="right">'.__('Total_sum').'</td><td align="right"><b>'.Configure::read('app.numberHelper')->formatAsCurrency($sumPrice).'</b></td><td></td></tr>';
+            $outString .= '<tr><td colspan="4" align="right">'.__('Generated_invoices').'</td><td align="right"><b>'.$i.'</b></td><td></td></tr>';
             $outString .= '</table>';
         }
 
-        $outString .= __('Generated_invoices') . ': ' . $i;
-        $actionLog = $this->ActionLog->customSave('cronjob_send_invoices', 0, 0, '', $outString, new Time($this->cronjobRunDay));
-        $this->out($outString);
 
-        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
-        foreach ($manufacturers as $manufacturer) {
-            if (!empty($manufacturer->current_order_count)) {
-                $this->QueuedJobs->createJob('GenerateInvoice', [
-                    'invoiceNumber' => $manufacturer->invoiceNumber,
-                    'invoicePdfFile' => $manufacturer->invoicePdfFile,
-                    'manufacturerId' => $manufacturer->id_manufacturer,
-                    'manufactuerName' => $manufacturer->name,
-                    'actionLogId' => $actionLog->id,
-                    'dateFrom' => $dateFrom,
-                    'dateTo' => $dateTo,
-                ]);
-            }
-        }
-
-        // START send email to accounting employee
-        $accountingEmail = Configure::read('appDb.FCS_ACCOUNTING_EMAIL');
-        if ($accountingEmail != '') {
-            $email = new AppMailer();
-            $email->viewBuilder()->setTemplate('Admin.accounting_information_invoices_sent');
-            $email->setTo($accountingEmail)
-                ->setSubject(__('Invoices_for_{0}_have_been_sent', [Configure::read('app.timeHelper')->getLastMonthNameAndYear()]))
-                ->setViewVars([
-                'dateFrom' => $dateFrom,
-                'dateTo' => $dateTo,
-                'cronjobRunDay' => $this->cronjobRunDay
-                ])
-                ->send();
-        }
-        // END send email to accounting employee
-
-        return true;
+        return $outString;
 
     }
+
+
 }
