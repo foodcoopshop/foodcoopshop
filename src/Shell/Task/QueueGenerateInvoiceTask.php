@@ -1,7 +1,8 @@
 <?php
 namespace App\Shell\Task;
 
-use App\Lib\PdfWriter\InvoicePdfWriter;use Cake\Core\Configure;
+use App\Lib\PdfWriter\InvoicePdfWriter;
+use Cake\Core\Configure;
 use Cake\I18n\Time;
 use Queue\Shell\Task\QueueTask;
 use Queue\Shell\Task\QueueTaskInterface;
