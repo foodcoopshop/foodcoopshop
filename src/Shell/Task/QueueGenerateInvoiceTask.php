@@ -79,6 +79,9 @@ class QueueGenerateInvoiceTask extends QueueTask implements QueueTaskInterface {
             ]);
         }
 
+        $identifier = 'generate-invoice-' . $manufacturer->id_manufacturer;
+        $this->updateActionLog($actionLogId, $identifier, $jobId);
+
     }
 
 }

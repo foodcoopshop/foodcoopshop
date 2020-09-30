@@ -81,7 +81,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $this->assertResponseContains('4,09 €</b> (10%)');
         $this->assertResponseContains('0,62 €</b>');
         $this->assertResponseContains('11.03.2018 10:20:30');
-        $this->assertResponseContains('<td>nein</td>');
+        $this->assertResponseContains('<td>0001</td><td></td>');
 
         $this->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'invoiceWithVariableMemberFee.html');

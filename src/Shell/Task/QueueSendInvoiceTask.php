@@ -35,6 +35,7 @@ class QueueSendInvoiceTask extends QueueTask implements QueueTaskInterface {
         $manufacturerId = $data['manufacturerId'];
         $invoicePdfFile = $data['invoicePdfFile'];
         $invoiceNumber = $data['invoiceNumber'];
+        $actionLogId = $data['actionLogId'];
 
         $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
         $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
@@ -54,6 +55,9 @@ class QueueSendInvoiceTask extends QueueTask implements QueueTaskInterface {
             'showManufacturerUnsubscribeLink' => true
         ]);
         $email->send();
+
+        $identifier = 'send-invoice-' . $manufacturer->id_manufacturer;
+        $this->updateActionLog($actionLogId, $identifier, $jobId);
 
     }
 

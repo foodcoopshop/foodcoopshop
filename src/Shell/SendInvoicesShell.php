@@ -111,6 +111,7 @@ class SendInvoicesShell extends AppShell
 
             if (!empty($manufacturer->current_order_count)) {
 
+                $identifier = $manufacturer->id_manufacturer;
                 $price = $manufacturer->order_detail_price_sum;
                 $sumPrice += $price;
                 $variableMemberFeeAsString = '';
@@ -125,12 +126,12 @@ class SendInvoicesShell extends AppShell
                 $tableData .= '<tr>';
                 $tableData .= '<td>' . html_entity_decode($manufacturer->name) . '</td>';
                 $tableData .= '<td>' . $manufacturer->invoiceNumber . '</td>';
-                $tableData .= '<td>' . ($sendInvoice ? __('yes') : __('no')) . '</td>';
+                $tableData .= '<td>' . ($sendInvoice ? '<i class="fas fa-envelope not-ok" data-identifier="send-invoice-'.$identifier.'"></i>' : '') . '</td>';
                 $tableData .= '<td>' . $productString . '</td>';
                 $tableData .= '<td align="right"><b>' . Configure::read('app.numberHelper')->formatAsCurrency($price) . '</b>'.$variableMemberFeeAsString.'</td>';
                 $tableData .= '<td>';
                     $tableData .= Configure::read('app.htmlHelper')->link(
-                        '<i class="fas fa-arrow-right ok"></i>',
+                        '<i class="fas fa-arrow-right not-ok" data-identifier="generate-invoice-'.$identifier.'"></i>',
                         $invoiceLink,
                         [
                             'class' => 'btn btn-outline-light',
