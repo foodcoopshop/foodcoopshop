@@ -73,33 +73,33 @@ if ($appAuth->Cart->getProducts() !== null) {
             }
         }
 
-        if ($appAuth->user() && $this->Html->paymentIsCashless()) {
-            if ($appAuth->isInstantOrderMode()) {
-                $this->element('addScript', ['script' =>
-                    Configure::read('app.jsNamespace').".ModalInstantOrderCancel.init();"
-                ]);
-                echo '<p class="instant-order-customer-info">';
-                    echo __('This_order_will_be_placed_for_{0}.', ['<b>'.$this->request->getSession()->read('Auth.instantOrderCustomer')->name.'</b>']);
-                    if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
-                        echo ' ' . __('Only_stock_products_are_shown.');
-                    }
-                echo '<b><a class="btn btn-outline-light" href="javascript:void(0);">'.__('Cancel_instant_order?').'</a></b>';
-                echo '</p>';
+        if ($appAuth->isInstantOrderMode()) {
+            $this->element('addScript', ['script' =>
+                Configure::read('app.jsNamespace').".ModalInstantOrderCancel.init();"
+            ]);
+            echo '<p class="instant-order-customer-info">';
+                echo __('This_order_will_be_placed_for_{0}.', ['<b>'.$this->request->getSession()->read('Auth.instantOrderCustomer')->name.'</b>']);
+                if (Configure::read('appDb.FCS_SHOW_NON_STOCK_PRODUCTS_IN_INSTANT_ORDERS')) {
+                    echo ' ' . __('Only_stock_products_are_shown.');
+                }
+            echo '<b><a class="btn btn-outline-light" href="javascript:void(0);">'.__('Cancel_instant_order?').'</a></b>';
+            echo '</p>';
 
-            }
-            $class = ['payment'];
-            if ($creditBalance < 0) { // set in FrontendController
-                $class[] = 'negative';
-            }
-            echo '<div class="credit-balance-wrapper">';
-              echo '<p><b><a href="'.$this->Slug->getMyCreditBalance().'">'.__('Your_credit_balance').'</a></b><b class="'.implode(' ', $class).'">'.$this->Number->formatAsCurrency($creditBalance).'</b></p>';
-            if ($shoppingLimitReached) {
-                echo '<p><b class="negative">'.__('You_reached_the_order_limit_{0}_please_add_credit.',[$this->Number->formatAsCurrency(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE'))]).'</b></p>';
-                echo '<p><a class="btn btn-success" href="'.$this->Slug->getMyCreditBalance().'">';
-                echo __('Add_credit');
-                echo '</a></p>';
-            }
+            if ($appAuth->user() && $this->Html->paymentIsCashless()) {
+                $class = ['payment'];
+                if ($creditBalance < 0) { // set in FrontendController
+                    $class[] = 'negative';
+                }
+                echo '<div class="credit-balance-wrapper">';
+                  echo '<p><b><a href="'.$this->Slug->getMyCreditBalance().'">'.__('Your_credit_balance').'</a></b><b class="'.implode(' ', $class).'">'.$this->Number->formatAsCurrency($creditBalance).'</b></p>';
+                    if ($shoppingLimitReached) {
+                        echo '<p><b class="negative">'.__('You_reached_the_order_limit_{0}_please_add_credit.',[$this->Number->formatAsCurrency(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE'))]).'</b></p>';
+                        echo '<p><a class="btn btn-success" href="'.$this->Slug->getMyCreditBalance().'">';
+                        echo __('Add_credit');
+                        echo '</a></p>';
+                    }
                 echo '</div>';
+            }
         }
         ?>
 
