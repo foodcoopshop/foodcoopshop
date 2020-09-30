@@ -126,6 +126,8 @@ class SendOrderListsShell extends AppShell
 
         $this->resetQuantityToDefaultQuantity($allOrderDetails);
 
+        $this->out($outString);
+
         return true;
 
     }
