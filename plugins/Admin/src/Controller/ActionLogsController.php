@@ -130,10 +130,10 @@ class ActionLogsController extends AdminAppController
         ]);
         $actionLogs = $this->paginate($query, [
             'sortableFields' => [
-                'ActionLogs.type', 'ActionLogs.date', 'ActionLogs.text', 'Customers.' . Configure::read('app.customerMainNamePart')
+                'ActionLogs.id', 'ActionLogs.type', 'ActionLogs.date', 'ActionLogs.text', 'Customers.' . Configure::read('app.customerMainNamePart')
             ],
             'order' => [
-                'ActionLogs.date' => 'DESC'
+                'ActionLogs.id' => 'DESC',
             ]
         ])->toArray();
         foreach ($actionLogs as $actionLog) {
