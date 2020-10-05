@@ -29,11 +29,19 @@ $this->element('addScript', ['script' =>
 ]);
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 
-if ($isMobile && $appAuth->user('use_camera_for_barcode_scanning')) {
-    $this->element('addScript', ['script' =>
-        Configure::read('app.jsNamespace') . ".SelfService.initMobileBarcodeScanningWithCamera('.sb-toggle-left', '#content .header', " . Configure::read('app.jsNamespace') . ".SelfService.mobileScannerCallbackForProducts);".
-        Configure::read('app.jsNamespace') . ".Mobile.showSelfServiceCart();"
-    ]);
+if ($isMobile) {
+    if ($appAuth->user('use_camera_for_barcode_scanning')) {
+        $this->element('addScript', ['script' =>
+            Configure::read('app.jsNamespace') . ".SelfService.initMobileBarcodeScanningWithCamera('.sb-toggle-left', '#content .header', " . Configure::read('app.jsNamespace') . ".SelfService.mobileScannerCallbackForProducts);".
+            Configure::read('app.jsNamespace') . ".Mobile.showSelfServiceCart();"
+        ]);
+    } else {
+        $js = Configure::read('app.jsNamespace').".Mobile.hideSelfServiceCart();";
+        if (!empty($_POST)) {
+            $js = Configure::read('app.jsNamespace').".Mobile.showSelfServiceCart();";
+        }
+        $this->element('addScript', ['script' => $js]);
+    }
 }
 
 if ($this->request->getSession()->read('highlightedProductId')) {
