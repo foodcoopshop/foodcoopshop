@@ -201,11 +201,11 @@ class ProductsTable extends AppTable
             }
             $deliveryDayAsWeekdayInEnglish = strtolower(date('l', strtotime($pickupDay)));
             $nthDeliveryDayOfThisMonth = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($currentDay . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
-            if ($nthDeliveryDayOfThisMonth < $pickupDay) {
-                $pickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($currentDay . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of next month'));
-            } else {
-                $pickupDay = $nthDeliveryDayOfThisMonth;
+
+            while($nthDeliveryDayOfThisMonth < $pickupDay) {
+                $nthDeliveryDayOfThisMonth = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($nthDeliveryDayOfThisMonth . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of next month'));
             }
+            $pickupDay = $nthDeliveryDayOfThisMonth;
         }
 
         if ($product->delivery_rhythm_type == 'individual') {
