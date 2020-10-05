@@ -234,6 +234,24 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
+    public function testCalculatePickupDayRespectingDeliveryRhythmFirstFridayWithSendOrderListDaySunday()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'month',
+                    'delivery_rhythm_count' => '1',
+                    'is_stock_product' => '0',
+                    'delivery_rhythm_send_order_list_weekday' => 1,
+                    'delivery_rhythm_first_delivery_day' => new FrozenDate('2020-10-02')
+                ]
+            ),
+            'currentDay' => '2020-09-28',
+            'result' => '2020-11-06'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+
     public function testCalculatePickupDayRespectingDeliveryRhythm2WeekA()
     {
         $data = [
