@@ -108,6 +108,46 @@ class PaymentsTable extends AppTable
         return $paymentSum;
     }
 
+    public function getManufacturerDepositSumEmptyGlassesByCalendarWeek()
+    {
+        $conditions = $this->getManufacturerDepositConditions();
+        $conditions['Payments.text'] = 'empty_glasses';
+
+        $query = $this->find('all', [
+            'conditions' => $conditions
+        ]);
+
+        $formattedDate = 'DATE_FORMAT(Payments.date_add, "%Y-%u")';
+        $query->select([
+            'YearWeek' => $formattedDate,
+            'SumAmount' => $query->func()->sum('Payments.amount')
+        ]);
+        $query->group($formattedDate);
+        $result = $query->toArray();
+
+        return $result;
+    }
+
+    public function getCustomerDepositSumByCalendarWeek()
+    {
+        $query = $this->find('all', [
+            'conditions' => [
+                'Payments.status' => APP_ON,
+                'Payments.type' => 'deposit',
+                'Payments.id_manufacturer' => 0,
+            ]
+        ]);
+        $formattedDate = 'DATE_FORMAT(Payments.date_add, "%Y-%u")';
+        $query->select([
+            'YearWeek' => $formattedDate,
+            'SumAmount' => $query->func()->sum('Payments.amount')
+        ]);
+        $query->group($formattedDate);
+        $result = $query->toArray();
+
+        return $result;
+    }
+
     /**
      * @return float
      */
