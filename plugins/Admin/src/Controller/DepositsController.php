@@ -84,9 +84,22 @@ class DepositsController extends AdminAppController
             $week->YearWeekPrepared = str_replace('-', 'W', $week->YearWeek);
         }
 
-        $firstWeek = strtotime($customerDepositSumByCalendarWeek[0]->YearWeekPrepared);
-        if (strtotime($customerDepositSumByCalendarWeek[0]->YearWeekPrepared) > strtotime($manufacturerDepositSumEmptyGlassesByCalendarWeek[0]->YearWeekPrepared)) {
+        if (empty($manufacturerDepositSumEmptyGlassesByCalendarWeek) && empty($customerDepositSumByCalendarWeek)) {
+            return;
+        }
+
+        if (empty($customerDepositSumByCalendarWeek)) {
             $firstWeek = strtotime($manufacturerDepositSumEmptyGlassesByCalendarWeek[0]->YearWeekPrepared);
+        }
+        if (empty($manufacturerDepositSumEmptyGlassesByCalendarWeek)) {
+            $firstWeek = strtotime($customerDepositSumByCalendarWeek[0]->YearWeekPrepared);
+        }
+
+        if (!isset($firstWeek)) {
+            $firstWeek = strtotime($customerDepositSumByCalendarWeek[0]->YearWeekPrepared);
+            if (strtotime($customerDepositSumByCalendarWeek[0]->YearWeekPrepared) > strtotime($manufacturerDepositSumEmptyGlassesByCalendarWeek[0]->YearWeekPrepared)) {
+                $firstWeek = strtotime($manufacturerDepositSumEmptyGlassesByCalendarWeek[0]->YearWeekPrepared);
+            }
         }
 
         $allCalendarWeeksUntilNow = Configure::read('app.timeHelper')->getAllCalendarWeeksUntilNow($firstWeek);
