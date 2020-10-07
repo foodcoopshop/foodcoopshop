@@ -25,6 +25,9 @@ class DepositsController extends AdminAppController
     public function isAuthorized($user)
     {
         switch ($this->getRequest()->getParam('action')) {
+            case 'overviewDiagram':
+                return $this->AppAuth->isSuperadmin();
+                break;
             case 'index':
             case 'detail':
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
@@ -52,6 +55,23 @@ class DepositsController extends AdminAppController
             $manufacturerId = $this->manufacturerId;
         }
         return $manufacturerId;
+    }
+
+    public function overviewDiagram()
+    {
+        $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
+        if (! empty($this->getRequest()->getQuery('dateFrom'))) {
+            $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
+        }
+        $this->set('dateFrom', $dateFrom);
+
+        $dateTo = Configure::read('app.timeHelper')->getLastDayOfThisYear();
+        if (! empty($this->getRequest()->getQuery('dateTo'))) {
+            $dateTo = h($this->getRequest()->getQuery('dateTo'));
+        }
+        $this->set('dateTo', $dateTo);
+
+        $this->set('title_for_layout', __d('admin', 'Deposit_overview'));
     }
 
     public function myIndex()

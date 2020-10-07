@@ -487,14 +487,21 @@ class MyHtmlHelper extends HtmlHelper
             $tabs[] = [
                 'name' => $paymentText,
                 'url' => Configure::read('app.slugHelper')->getReport($key),
-                'key' => $key
+                'key' => $key,
             ];
         }
         $tabs[] = [
             'name' => __('Credit_and_deposit_balance'),
             'url' => Configure::read('app.slugHelper')->getCreditBalanceSum(),
-            'key' => 'credit_balance_sum'
+            'key' => 'credit_balance_sum',
         ];
+        if (1) {
+            $tabs[] = [
+                'name' => __('Deposit_overview'),
+                'url' => Configure::read('app.slugHelper')->getDepositOverviewDiagram(),
+                'key' => 'deposit_overview',
+            ];
+        }
         return $tabs;
     }
 

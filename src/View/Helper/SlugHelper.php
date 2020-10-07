@@ -121,6 +121,11 @@ class SlugHelper extends Helper
         return $url;
     }
 
+    public function getDepositOverviewDiagram()
+    {
+        return '/admin/deposits/overview_diagram';
+    }
+
     public function getDepositDetail($manufacturerId, $monthAndYear)
     {
         $url = '/admin/deposits/detail/'.$monthAndYear;
