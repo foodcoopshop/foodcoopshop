@@ -219,9 +219,16 @@ class MyTimeHelper extends TimeHelper
 
     public function getCalendarWeeks($firstWeek, $lastWeek, $year)
     {
+        $firstWeek = (int) $firstWeek;
+        $lastWeek = (int) $lastWeek;
+
         $result = [];
         while($firstWeek <= $lastWeek) {
-            $result[] = $year. '-' . (int) $firstWeek;
+            $firstWeekAsString = $firstWeek;
+            if ($firstWeek < 10) {
+                $firstWeekAsString = '0' . $firstWeek;
+            }
+            $result[] = $year. '-' . $firstWeekAsString;
             $firstWeek++;
         }
         return $result;

@@ -75,13 +75,17 @@ class DepositsController extends AdminAppController
 
         $this->Payment = $this->getTableLocator()->get('Payments');
         $manufacturerDepositSumEmptyGlassesByCalendarWeek = $this->Payment->getManufacturerDepositSumEmptyGlassesByCalendarWeek();
+        $preparedManufacturerData = [];
         foreach($manufacturerDepositSumEmptyGlassesByCalendarWeek as $week) {
             $week->YearWeekPrepared = str_replace('-', 'W', $week->YearWeek);
+            $preparedManufacturerData[$week->YearWeek] = $week->SumAmount;
         }
 
         $customerDepositSumByCalendarWeek = $this->Payment->getCustomerDepositSumByCalendarWeek();
+        $preparedCustomerData = [];
         foreach($customerDepositSumByCalendarWeek as $week) {
             $week->YearWeekPrepared = str_replace('-', 'W', $week->YearWeek);
+            $preparedCustomerData[$week->YearWeek] = $week->SumAmount;
         }
 
         if (empty($manufacturerDepositSumEmptyGlassesByCalendarWeek) && empty($customerDepositSumByCalendarWeek)) {
@@ -103,16 +107,14 @@ class DepositsController extends AdminAppController
         }
 
         $allCalendarWeeksUntilNow = Configure::read('app.timeHelper')->getAllCalendarWeeksUntilNow($firstWeek);
-        /*
         $preparedData = [];
         foreach($allCalendarWeeksUntilNow as $calendarWeek) {
             $preparedData[$calendarWeek] = [
-                'manufacturer' => $manufacturerDepositSumEmptyGlassesByCalendarWeek->SumAmount,
-                'customer' => $customerDepositSumByCalendarWeek->SumAmount,
+                'customer' => $preparedCustomerData[$calendarWeek] ?? $preparedCustomerData[$calendarWeek] ?? 0,
+                'manufacturer' => $preparedManufacturerData[$calendarWeek] ?? $preparedManufacturerData[$calendarWeek] ?? 0,
             ];
         }
-        pr($preparedData);
-        */
+        $this->set('preparedData', $preparedData);
 
     }
 
