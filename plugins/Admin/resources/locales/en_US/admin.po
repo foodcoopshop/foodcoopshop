@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-09-28 08:42+0200\n"
-"PO-Revision-Date: 2020-09-28 08:43+0200\n"
+"POT-Creation-Date: 2020-10-08 10:33+0200\n"
+"PO-Revision-Date: 2020-10-08 10:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -176,6 +176,9 @@ msgstr "Sum of compensation payments for manufacturers"
 
 msgid "Credit_and_deposit_balance"
 msgstr "Credit and deposit balance"
+
+msgid "Deposit_overview"
+msgstr "Deposit overview"
 
 msgid "Deposit_account"
 msgstr "Deposit account"
@@ -1056,6 +1059,27 @@ msgstr "Returned deposit"
 msgid "Your_deposit_balance"
 msgstr "Your deposit balance"
 
+msgid "docs_route_infos_for_success"
+msgstr "infos-for-success"
+
+msgid "Taken_back_empty_glasses_of_all_manufacturers"
+msgstr "Taken back empty glasses of all manufacturers"
+
+msgid "per_week"
+msgstr "per week"
+
+msgid "Returned_deposit_of_all_members"
+msgstr "Returned deposit of all members"
+
+msgid "Difference"
+msgstr "Difference"
+
+msgid "Difference_per_year"
+msgstr "Difference per year"
+
+msgid "Reserved_for_compensation_payments"
+msgstr "Reserved for compensation payments"
+
 msgid "Pickup_day"
 msgstr "Pickup day"
 
@@ -1562,9 +1586,6 @@ msgstr "New?"
 
 msgid "Delivery_rhythm"
 msgstr "Delivery rhythm"
-
-msgid "docs_route_infos_for_success"
-msgstr "infos-for-success"
 
 msgid "Added_on"
 msgstr "Added on"

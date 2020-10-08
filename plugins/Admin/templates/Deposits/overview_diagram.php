@@ -50,8 +50,8 @@ $this->element('addScript', [
         ".json_encode($xAxisData1LineChart).",
         ".json_encode($xAxisData2LineChart).",
         ".json_encode($yAxisDataLineChart).",
-        'Pfand-Rücknahmen aller Hersteller pro Woche',
-        'Pfand-Rückgaben aller Mitglieder pro Woche'
+        '".__d('admin', 'Taken_back_empty_glasses_of_all_manufacturers') . " " . __d('admin', 'per_week') . "',
+        '".__d('admin', 'Returned_deposit_of_all_members') . " " . __d('admin', 'per_week') . "'
     );"
 ]);
 ?>
@@ -60,16 +60,13 @@ $this->element('addScript', [
 
 <p style="margin-top:30px;">
     <?php
-        echo 'Pfand-Rückgaben aller Mitglieder: <b>' . $this->Number->formatAsCurrency($customerDepositSum) . '</b><br />';
-        echo 'Pfand-Rücknahmen aller Hersteller: <b>' . $this->Number->formatAsCurrency($manufacturerDepositSum) . '</b><br />';
-        echo 'Differenz zwischen Pfand-Rückgaben und Pfand-Rücknahmen: <b class="'.($depositDelta < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($depositDelta) . '</b><br />';
-        echo '<br /><b>Differenz pro Jahr</b><br />';
+        echo __d('admin', 'Returned_deposit_of_all_members').': <b>' . $this->Number->formatAsCurrency($customerDepositSum) . '</b><br />';
+        echo __d('admin', 'Taken_back_empty_glasses_of_all_manufacturers').': <b>' . $this->Number->formatAsCurrency($manufacturerDepositSum) . '</b><br />';
+        echo __d('admin', 'Difference').': <b class="'.($depositDelta < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($depositDelta) . '</b><br />';
+        echo '<br /><b>'.__d('admin', 'Difference_per_year').'</b><br />';
         foreach($yearlyDeltas as $year => $yearlyDelta) {
             echo $year . ': <b class="'.($yearlyDelta < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($yearlyDelta) . '</b><br />';
         }
-
-        echo '<br />Für Ausgleichszahlungen reserviert: <b class="'.($paymentDepositDelta < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($paymentDepositDelta) . '</b><br />';
-
-
+        echo '<br />'.__d('admin', 'Reserved_for_compensation_payments').': <b class="'.($paymentDepositDelta < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($paymentDepositDelta) . '</b><br />';
     ?>
 </p>

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-09-15 10:44+0200\n"
-"PO-Revision-Date: 2020-09-15 10:45+0200\n"
+"POT-Creation-Date: 2020-10-08 10:32+0200\n"
+"PO-Revision-Date: 2020-10-08 10:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1764,14 +1764,11 @@ msgstr "Abhol-Erinnerung für"
 msgid "to_(time_context)"
 msgstr "bis"
 
-msgid "yes"
-msgstr "ja"
+msgid "Generated_invoices"
+msgstr "Generierte Rechnungen"
 
-msgid "no"
-msgstr "nein"
-
-msgid "Invoice_number_abbreviataion_{0}_{1}"
-msgstr "Rechnung Nr. {0}, {1}"
+msgid "Invoices_for_{0}_have_been_sent"
+msgstr "Rechnungen für {0} wurden verschickt"
 
 msgid "Invoice_number_abbreviation"
 msgstr "Re. Nr."
@@ -1782,20 +1779,17 @@ msgstr "Versendet"
 msgid "Products"
 msgstr "Produkte"
 
-msgid "Invoices_for_{0}_have_been_sent"
-msgstr "Rechnungen für {0} wurden verschickt"
-
-msgid "Generated_invoices"
-msgstr "Generierte Rechnungen"
+msgid "Sent_order_lists"
+msgstr "Verschickte Bestelllisten"
 
 msgid "member"
 msgstr "Mitglied"
 
+msgid "Invoice_number_abbreviataion_{0}_{1}"
+msgstr "Rechnung Nr. {0}, {1}"
+
 msgid "Order_lists_for_the_day"
 msgstr "Bestellungen für den"
-
-msgid "Sent_order_lists"
-msgstr "Verschickte Bestelllisten"
 
 msgid "Customer_adds_payment_manually"
 msgstr "Mitglieder tragen die Guthaben-Aufladungen selbst ein"
@@ -1829,6 +1823,12 @@ msgstr "jeden letzten {0} im Monat"
 
 msgid "bulk_order"
 msgstr "Sammelbestellung"
+
+msgid "yes"
+msgstr "ja"
+
+msgid "no"
+msgstr "nein"
 
 msgid "Deleted_Email_Address"
 msgstr "Gelöschte E-Mail-Adresse"
@@ -1877,6 +1877,9 @@ msgstr "Superadmin"
 
 msgid "Credit_and_deposit_balance"
 msgstr "Guthaben- und Pfand-Saldo"
+
+msgid "Deposit_overview"
+msgstr "Pfand-Übersicht"
 
 msgid "Payment_type_credit_upload"
 msgstr "Guthaben-Aufladung"

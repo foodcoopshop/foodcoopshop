@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-09-28 08:42+0200\n"
+"POT-Creation-Date: 2020-10-08 10:33+0200\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -181,6 +181,10 @@ msgstr "Suma rekompensat kaucji dla producentów"
 #, fuzzy
 msgid "Credit_and_deposit_balance"
 msgstr "Twoje saldo wkładów"
+
+#, fuzzy
+msgid "Deposit_overview"
+msgstr "Zwrot wkładu"
 
 msgid "Deposit_account"
 msgstr "Konto kaucji"
@@ -1093,6 +1097,30 @@ msgstr "Zwrócony wkład"
 msgid "Your_deposit_balance"
 msgstr "Twoje saldo wkładów"
 
+#, fuzzy
+msgid "docs_route_infos_for_success"
+msgstr "products"
+
+#, fuzzy
+msgid "Taken_back_empty_glasses_of_all_manufacturers"
+msgstr "Idź do ustawień producenta"
+
+msgid "per_week"
+msgstr ""
+
+#, fuzzy
+msgid "Returned_deposit_of_all_members"
+msgstr "Zwrócony wkład"
+
+msgid "Difference"
+msgstr ""
+
+msgid "Difference_per_year"
+msgstr ""
+
+msgid "Reserved_for_compensation_payments"
+msgstr ""
+
 msgid "Pickup_day"
 msgstr "Dzień odbioru"
 
@@ -1614,10 +1642,6 @@ msgstr "Nowy?"
 #, fuzzy
 msgid "Delivery_rhythm"
 msgstr "początek"
-
-#, fuzzy
-msgid "docs_route_infos_for_success"
-msgstr "products"
 
 msgid "Added_on"
 msgstr "Dodane w dniu"

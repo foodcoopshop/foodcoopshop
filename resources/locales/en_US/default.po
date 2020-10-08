@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-09-15 10:44+0200\n"
-"PO-Revision-Date: 2020-09-15 10:45+0200\n"
+"POT-Creation-Date: 2020-10-08 10:32+0200\n"
+"PO-Revision-Date: 2020-10-08 10:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1764,14 +1764,11 @@ msgstr "Pickup reminder for"
 msgid "to_(time_context)"
 msgstr "to"
 
-msgid "yes"
-msgstr "yes"
+msgid "Generated_invoices"
+msgstr "Generated invoices"
 
-msgid "no"
-msgstr "no"
-
-msgid "Invoice_number_abbreviataion_{0}_{1}"
-msgstr "Invoice nº {0}, {1}"
+msgid "Invoices_for_{0}_have_been_sent"
+msgstr "Invoices for {0} have been sent"
 
 msgid "Invoice_number_abbreviation"
 msgstr "Invoice nº"
@@ -1782,20 +1779,17 @@ msgstr "Sent"
 msgid "Products"
 msgstr "Products"
 
-msgid "Invoices_for_{0}_have_been_sent"
-msgstr "Invoices for {0} have been sent"
-
-msgid "Generated_invoices"
-msgstr "Generated invoices"
+msgid "Sent_order_lists"
+msgstr "Sent order lists"
 
 msgid "member"
 msgstr "Member"
 
+msgid "Invoice_number_abbreviataion_{0}_{1}"
+msgstr "Invoice nº {0}, {1}"
+
 msgid "Order_lists_for_the_day"
 msgstr "Order lists for"
-
-msgid "Sent_order_lists"
-msgstr "Sent order lists"
 
 msgid "Customer_adds_payment_manually"
 msgstr "Members add their payments manually"
@@ -1829,6 +1823,12 @@ msgstr "every last {0} of a month"
 
 msgid "bulk_order"
 msgstr "bulk order"
+
+msgid "yes"
+msgstr "yes"
+
+msgid "no"
+msgstr "no"
 
 msgid "Deleted_Email_Address"
 msgstr "Deleted e-mail address"
@@ -1877,6 +1877,9 @@ msgstr "Superadmin"
 
 msgid "Credit_and_deposit_balance"
 msgstr "Credit and deposit balance"
+
+msgid "Deposit_overview"
+msgstr "Deposit overview"
 
 msgid "Payment_type_credit_upload"
 msgstr "Credit upload"
