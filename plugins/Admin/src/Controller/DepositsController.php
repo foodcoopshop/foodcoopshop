@@ -112,8 +112,10 @@ class DepositsController extends AdminAppController
         $yAxisDataLineChart= [];
         $manufacturerDepositSum = 0;
         $customerDepositSum = 0;
+        $yearlyDeltas = [];
         foreach($allCalendarWeeksUntilNow as $calendarWeek) {
 
+            $year = explode('-', $calendarWeek)[0];
             $yAxisDataLineChart[] = $calendarWeek;
 
             $manufacturerDeposit = $preparedManufacturerData[$calendarWeek] ?? $preparedManufacturerData[$calendarWeek] ?? 0;
@@ -123,6 +125,9 @@ class DepositsController extends AdminAppController
             $customerDeposit = $preparedCustomerData[$calendarWeek] ?? $preparedCustomerData[$calendarWeek] ?? 0;
             $xAxisData2LineChart[]= $customerDeposit;
             $customerDepositSum += $customerDeposit;
+
+            @$yearlyDeltas[$year] += $manufacturerDeposit - $customerDeposit;
+
         }
 
         $this->set('xAxisData1LineChart', $xAxisData1LineChart);
@@ -132,7 +137,7 @@ class DepositsController extends AdminAppController
         $this->set('manufacturerDepositSum', $manufacturerDepositSum);
         $this->set('customerDepositSum', $customerDepositSum);
         $this->set('depositDelta', $manufacturerDepositSum - $customerDepositSum);
-
+        $this->set('yearlyDeltas', $yearlyDeltas);
 
     }
 

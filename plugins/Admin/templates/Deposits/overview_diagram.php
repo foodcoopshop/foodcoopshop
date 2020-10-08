@@ -50,8 +50,8 @@ $this->element('addScript', [
         ".json_encode($xAxisData1LineChart).",
         ".json_encode($xAxisData2LineChart).",
         ".json_encode($yAxisDataLineChart).",
-        'Pfand-Rücknahmen aller Hersteller je Woche',
-        'Pfand-Rückgaben aller Mitglieder je Woche'
+        'Pfand-Rücknahmen aller Hersteller pro Woche',
+        'Pfand-Rückgaben aller Mitglieder pro Woche'
     );"
 ]);
 ?>
@@ -62,6 +62,11 @@ $this->element('addScript', [
     <?php
         echo 'Pfand-Rückgaben aller Mitglieder gesamt: <b>' . $this->Number->formatAsCurrency($customerDepositSum) . '</b><br />';
         echo 'Pfand-Rücknahmen aller Hersteller gesamt: <b>' . $this->Number->formatAsCurrency($manufacturerDepositSum) . '</b><br />';
-        echo 'Differenz: <b>' . $this->Number->formatAsCurrency($depositDelta) . '</b>';
+        echo 'Differenz: <b class="'.($depositDelta < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($depositDelta) . '</b><br /><br />';
+        echo '<b>Differenz pro Jahr</b><br />';
+        foreach($yearlyDeltas as $year => $yearlyDelta) {
+            echo $year . ': <b class="'.($yearlyDelta < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($yearlyDelta) . '</b><br />';
+        }
+
     ?>
 </p>
