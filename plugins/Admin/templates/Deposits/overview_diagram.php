@@ -62,7 +62,7 @@ $this->element('addScript', [
     <?php
         echo 'Pfand-Rückgaben aller Mitglieder gesamt: <b>' . $this->Number->formatAsCurrency($customerDepositSum) . '</b><br />';
         echo 'Pfand-Rücknahmen aller Hersteller gesamt: <b>' . $this->Number->formatAsCurrency($manufacturerDepositSum) . '</b><br />';
-        echo 'Differenz: <b class="'.($depositDelta < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($depositDelta) . '</b><br /><br />';
+        echo 'Differenz gesamt: <b class="'.($depositDelta < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($depositDelta) . '</b><br /><br />';
         echo '<b>Differenz pro Jahr</b><br />';
         foreach($yearlyDeltas as $year => $yearlyDelta) {
             echo $year . ': <b class="'.($yearlyDelta < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($yearlyDelta) . '</b><br />';
