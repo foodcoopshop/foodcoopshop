@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-08 10:33+0200\n"
+"POT-Creation-Date: 2020-10-08 15:28+0200\n"
 "PO-Revision-Date: 2020-10-08 10:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -366,7 +366,11 @@ msgstr "for"
 msgid "Deposit_take_back"
 msgstr "Deposit take back"
 
-msgid "was_added_successfully:_{0}"
+msgid "for_the"
+msgstr ""
+
+#, fuzzy
+msgid "was_added_successfully_{0}:_{1}"
 msgstr "was added successfully: {0}"
 
 msgid "The_amount_was_added_to_the_credit_system_of_{0}_and_can_be_deleted_there."

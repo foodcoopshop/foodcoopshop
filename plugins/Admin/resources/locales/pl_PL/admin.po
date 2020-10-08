@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-08 10:33+0200\n"
+"POT-Creation-Date: 2020-10-08 15:28+0200\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -386,7 +386,11 @@ msgstr "za"
 msgid "Deposit_take_back"
 msgstr "Odbiór kaucji"
 
-msgid "was_added_successfully:_{0}"
+msgid "for_the"
+msgstr ""
+
+#, fuzzy
+msgid "was_added_successfully_{0}:_{1}"
 msgstr "został dodany pomyślnie: {0}"
 
 #, fuzzy

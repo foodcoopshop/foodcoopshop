@@ -7,7 +7,6 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\I18n\FrozenDate;
 use Cake\I18n\Time;
-use Cake\Log\Log;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use App\Lib\Error\Exception\InvalidParameterException;
@@ -347,9 +346,16 @@ class PaymentsController extends AdminAppController
         }
 
         $dateAddForEntity = Time::now();
+        $paymentPastDate = false;
         if ($dateAdd > 0) {
             $dateAddForEntity = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), Configure::read('app.timeHelper')->formatToDbFormatDate($dateAdd));
+            $paymentPastDate = true;
         }
+        if ($dateAddForEntity->isToday()) {
+            $paymentPastDate = false;
+            $dateAddForEntity = Time::now(); // always save time for today, even if it's explicitely passed
+        }
+
 
         // add entry in table payments
         $entity = $this->Payment->newEntity(
@@ -369,7 +375,15 @@ class PaymentsController extends AdminAppController
         $newPayment = $this->Payment->save($entity);
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $message .= ' ' . __d('admin', 'was_added_successfully:_{0}', ['<b>' . Configure::read('app.numberHelper')->formatAsCurrency($amount).'</b>']);
+
+        $paymentPastDateMessage = '';
+        if ($type == 'deposit' && $paymentPastDate) {
+            $paymentPastDateMessage = ' ' . __d('admin', 'for_the') . ' <b>' . $dateAddForEntity->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '</b>';
+        }
+        $message .= ' ' . __d('admin', 'was_added_successfully_{0}:_{1}', [
+            $paymentPastDateMessage,
+            '<b>' . Configure::read('app.numberHelper')->formatAsCurrency($amount).'</b>',
+        ]);
 
         if ($type == 'member_fee') {
             $message .= ', ' . __d('admin', 'for') . ' ' . Configure::read('app.htmlHelper')->getMemberFeeTextForFrontend($text);

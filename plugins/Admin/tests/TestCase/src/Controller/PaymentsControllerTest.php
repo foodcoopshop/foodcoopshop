@@ -6,6 +6,7 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
+use Cake\I18n\Time;
 use Laminas\Diactoros\UploadedFile;
 use Cake\TestSuite\EmailTrait;
 
@@ -158,7 +159,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         );
     }
 
-    public function testAddDepositToManufacturerEmptyGlasses()
+    public function testAddDepositToManufacturerEmptyGlassesWithoutDate()
     {
         $this->addDepositToManufacturer(
             'empty_glasses',
@@ -166,16 +167,31 @@ class PaymentsControllerTest extends AppCakeTestCase
         );
     }
 
-    public function testAddDepositToManufacturerEmptyGlassesWithPastDate()
+    public function testAddDepositToManufacturerEmptyGlassesWithDateToday()
     {
-        $this->addDepositToManufacturer(
+        $today = date(Configure::read('DateFormat.DateShortAlt'), strtotime(Configure::read('app.timeHelper')->getCurrentDateForDatabase()));
+        $payment = $this->addDepositToManufacturer(
             'empty_glasses',
             'Pfand-Rücknahme (Leergebinde) für Demo Fleisch-Hersteller wurde erfolgreich eingetragen: <b>10,00 €',
-            '12.12.2018',
+            $today,
         );
+        $this->assertNotEquals('00:00:00', $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('TimeShortWithSeconds')));
+        $this->assertEquals($today, $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')));
     }
 
-    public function testAddDepositToManufacturerEmptyGlassesWithFutureDate()
+    public function testAddDepositToManufacturerEmptyGlassesWithDatePast()
+    {
+        $dateAdd = '12.12.2018';
+        $payment = $this->addDepositToManufacturer(
+            'empty_glasses',
+            'Pfand-Rücknahme (Leergebinde) für Demo Fleisch-Hersteller wurde erfolgreich für den <b>'.$dateAdd.'</b> eingetragen: <b>10,00 €',
+            $dateAdd,
+        );
+        $this->assertEquals('00:00:00', $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('TimeShortWithSeconds')));
+        $this->assertEquals($dateAdd, $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')));
+    }
+
+    public function testAddDepositToManufacturerEmptyGlassesWithDateFuture()
     {
         $this->loginAsSuperadmin();
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
@@ -298,7 +314,7 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     }
 
-    private function addDepositToManufacturer($depositText, $actionLogText, $dateAdd = 0)
+    private function addDepositToManufacturer($depositText, $actionLogText, $dateAdd = null)
     {
         $this->Customer = $this->getTableLocator()->get('Customers');
 
@@ -317,10 +333,6 @@ class PaymentsControllerTest extends AppCakeTestCase
         ])->first();
 
         $this->assertEquals(1, $payment->status);
-        $this->assertEquals($amountToAdd, $payment->amount);
-        if ($dateAdd != 0) {
-            $this->assertEquals($dateAdd, $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')));
-        }
         $manufacturerDepositSum = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, false);
         $this->assertEquals($amountToAdd, $manufacturerDepositSum[0]['sumDepositReturned']);
         $this->assertActionLogRecord(
@@ -328,8 +340,8 @@ class PaymentsControllerTest extends AppCakeTestCase
             'payment_deposit_manufacturer_added',
             'payments',
             $actionLogText,
-            $dateAdd,
         );
+        return $payment;
     }
 
     private function addPaymentAndAssertIncreasedCreditBalance($customerId, $amountToAdd, $paymentType)
