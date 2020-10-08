@@ -149,23 +149,23 @@ foodcoopshop.AppChart = {
                     data: xAxisData1,
                     label: xAxisData1Label,
                     fill: false,
-                    borderColor: 'rgba(113,159,65,.5)',
+                    borderColor: 'rgba(113,159,65,.7)',
                     pointBorderColor: 'rgba(113,159,65,1)',
                     pointBackgroundColor: 'rgba(113,159,65,1)',
-                    pointRadius: 0,
+                    pointRadius: 1,
                     tension: 0,
-                    borderWidth: 2
+                    borderWidth: 1
                 },
                 {
                     data: xAxisData2,
                     label: xAxisData2Label,
                     fill: false,
-                    borderColor: 'rgba(106,90,205,.5)',
+                    borderColor: 'rgba(106,90,205,.7)',
                     pointBorderColor: 'rgba(106,90,205,1)',
                     pointBackgroundColor: 'rgba(106,90,205,1)',
-                    pointRadius: 0,
+                    pointRadius: 1,
                     tension: 0,
-                    borderWidth: 2
+                    borderWidth: 1
                 }
             ]
         };

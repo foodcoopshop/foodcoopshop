@@ -50,8 +50,8 @@ $this->element('addScript', [
         ".json_encode($xAxisData1LineChart).",
         ".json_encode($xAxisData2LineChart).",
         ".json_encode($yAxisDataLineChart).",
-        'Pfand-Rücknahmen aller Hersteller pro Woche',
-        'Pfand-Rückgaben aller Mitglieder pro Woche'
+        'Pfand-Rücknahmen aller Hersteller je Woche',
+        'Pfand-Rückgaben aller Mitglieder je Woche'
     );"
 ]);
 ?>
