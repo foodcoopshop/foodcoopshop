@@ -60,13 +60,16 @@ $this->element('addScript', [
 
 <p style="margin-top:30px;">
     <?php
-        echo 'Pfand-Rückgaben aller Mitglieder gesamt: <b>' . $this->Number->formatAsCurrency($customerDepositSum) . '</b><br />';
-        echo 'Pfand-Rücknahmen aller Hersteller gesamt: <b>' . $this->Number->formatAsCurrency($manufacturerDepositSum) . '</b><br />';
-        echo 'Differenz gesamt: <b class="'.($depositDelta < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($depositDelta) . '</b><br /><br />';
-        echo '<b>Differenz pro Jahr</b><br />';
+        echo 'Pfand-Rückgaben aller Mitglieder: <b>' . $this->Number->formatAsCurrency($customerDepositSum) . '</b><br />';
+        echo 'Pfand-Rücknahmen aller Hersteller: <b>' . $this->Number->formatAsCurrency($manufacturerDepositSum) . '</b><br />';
+        echo 'Differenz zwischen Pfand-Rückgaben und Pfand-Rücknahmen: <b class="'.($depositDelta < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($depositDelta) . '</b><br />';
+        echo '<br /><b>Differenz pro Jahr</b><br />';
         foreach($yearlyDeltas as $year => $yearlyDelta) {
             echo $year . ': <b class="'.($yearlyDelta < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($yearlyDelta) . '</b><br />';
         }
+
+        echo '<br />Für Ausgleichszahlungen reserviert: <b class="'.($paymentDepositDelta < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($paymentDepositDelta) . '</b><br />';
+
 
     ?>
 </p>
