@@ -107,14 +107,32 @@ class DepositsController extends AdminAppController
         }
 
         $allCalendarWeeksUntilNow = Configure::read('app.timeHelper')->getAllCalendarWeeksUntilNow($firstWeek);
-        $preparedData = [];
+        $xAxisData1LineChart = [];
+        $xAxisData2LineChart = [];
+        $yAxisDataLineChart= [];
+        $manufacturerDepositSum = 0;
+        $customerDepositSum = 0;
         foreach($allCalendarWeeksUntilNow as $calendarWeek) {
-            $preparedData[$calendarWeek] = [
-                'customer' => $preparedCustomerData[$calendarWeek] ?? $preparedCustomerData[$calendarWeek] ?? 0,
-                'manufacturer' => $preparedManufacturerData[$calendarWeek] ?? $preparedManufacturerData[$calendarWeek] ?? 0,
-            ];
+
+            $yAxisDataLineChart[] = $calendarWeek;
+
+            $manufacturerDeposit = $preparedManufacturerData[$calendarWeek] ?? $preparedManufacturerData[$calendarWeek] ?? 0;
+            $xAxisData1LineChart[] = $manufacturerDeposit;
+            $manufacturerDepositSum += $manufacturerDeposit;
+
+            $customerDeposit = $preparedCustomerData[$calendarWeek] ?? $preparedCustomerData[$calendarWeek] ?? 0;
+            $xAxisData2LineChart[]= $customerDeposit;
+            $customerDepositSum += $customerDeposit;
         }
-        $this->set('preparedData', $preparedData);
+
+        $this->set('xAxisData1LineChart', $xAxisData1LineChart);
+        $this->set('xAxisData2LineChart', $xAxisData2LineChart);
+        $this->set('yAxisDataLineChart', $yAxisDataLineChart);
+
+        $this->set('manufacturerDepositSum', $manufacturerDepositSum);
+        $this->set('customerDepositSum', $customerDepositSum);
+        $this->set('depositDelta', $manufacturerDepositSum - $customerDepositSum);
+
 
     }
 

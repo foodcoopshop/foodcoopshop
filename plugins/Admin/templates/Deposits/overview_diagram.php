@@ -40,4 +40,28 @@ echo $this->element('reportNavTabs', [
     'dateTo' => $dateTo,
 ]);
 
+if (!isset($xAxisData1LineChart)) {
+    return;
+}
+
+$this->element('addScript', [
+    'script' =>
+    Configure::read('app.jsNamespace') . ".AppChart.initLineChartDepositOverview(
+        ".json_encode($xAxisData1LineChart).",
+        ".json_encode($xAxisData2LineChart).",
+        ".json_encode($yAxisDataLineChart).",
+        'Pfand-Rücknahmen aller Hersteller pro Woche',
+        'Pfand-Rückgaben aller Mitglieder pro Woche'
+    );"
+]);
 ?>
+
+<canvas id="myLineChart" width="1000" height="500" style="margin-top:30px;"></canvas>
+
+<p style="margin-top:30px;">
+    <?php
+        echo 'Pfand-Rückgaben aller Mitglieder gesamt: <b>' . $this->Number->formatAsCurrency($customerDepositSum) . '</b><br />';
+        echo 'Pfand-Rücknahmen aller Hersteller gesamt: <b>' . $this->Number->formatAsCurrency($manufacturerDepositSum) . '</b><br />';
+        echo 'Differenz: <b>' . $this->Number->formatAsCurrency($depositDelta) . '</b>';
+    ?>
+</p>

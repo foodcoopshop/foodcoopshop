@@ -140,6 +140,49 @@ foodcoopshop.AppChart = {
 
     },
 
+    initLineChartDepositOverview : function(xAxisData1, xAxisData2, yAxisData, xAxisData1Label, xAxisData2Label) {
+
+        var lineChartData = {
+            labels: yAxisData,
+            datasets: [
+                {
+                    data: xAxisData1,
+                    label: xAxisData1Label,
+                    fill: false,
+                    borderColor: 'rgba(113,159,65,.5)',
+                    pointBorderColor: 'rgba(113,159,65,1)',
+                    pointBackgroundColor: 'rgba(113,159,65,1)',
+                    pointRadius: 0,
+                    tension: 0,
+                    borderWidth: 2
+                },
+                {
+                    data: xAxisData2,
+                    label: xAxisData2Label,
+                    fill: false,
+                    borderColor: 'rgba(106,90,205,.5)',
+                    pointBorderColor: 'rgba(106,90,205,1)',
+                    pointBackgroundColor: 'rgba(106,90,205,1)',
+                    pointRadius: 0,
+                    tension: 0,
+                    borderWidth: 2
+                }
+            ]
+        };
+
+        var lineChartOptions = this.lineChartOptions;
+        lineChartOptions.legend.display = true;
+
+        var ctx = $('#myLineChart').get(0).getContext('2d');
+        var myNewChart = new Chart(ctx, {
+            responsive : true,
+            type: 'line',
+            data: lineChartData,
+            options: lineChartOptions
+        });
+
+    },
+
     initBarChart : function(xAxisData, yAxisData) {
 
         var barChartData = {
