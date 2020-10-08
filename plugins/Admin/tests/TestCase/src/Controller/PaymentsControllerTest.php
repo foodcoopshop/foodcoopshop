@@ -175,6 +175,16 @@ class PaymentsControllerTest extends AppCakeTestCase
         );
     }
 
+    public function testAddDepositToManufacturerEmptyGlassesWithFutureDate()
+    {
+        $this->loginAsSuperadmin();
+        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
+        $dateAdd = '01.01.2099';
+        $jsonDecodedContent = $this->addPayment(0, 30, 'deposit', $manufacturerId, 'empty_glasses', $dateAdd);
+        $this->assertEquals(0, $jsonDecodedContent->status);
+        $this->assertEquals('Das Datum darf nicht in der Zukunft liegen.', $jsonDecodedContent->msg);
+    }
+
     public function testAddDepositToManufacturerMoney()
     {
         $this->addDepositToManufacturer(
@@ -364,6 +374,7 @@ class PaymentsControllerTest extends AppCakeTestCase
      * @param string $type
      * @param int $manufacturerId optional
      * @param string $text optional
+     * @param date $dateAdd optional
      * @return string
      */
     private function addPayment($customerId, $amount, $type, $manufacturerId = 0, $text = '', $dateAdd = 0)

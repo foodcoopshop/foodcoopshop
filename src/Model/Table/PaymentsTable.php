@@ -2,7 +2,9 @@
 
 namespace App\Model\Table;
 
+use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
+use Cake\I18n\Time;
 use Cake\Validation\Validator;
 
 /**
@@ -50,6 +52,18 @@ class PaymentsTable extends AppTable
         $validator->notEmptyString('amount', __('Please_enter_a_number.'));
         $validator->numeric('amount', __('Please_enter_a_correct_number.'));
         $validator->greaterThanOrEqual('amount', 0.01, __('The_amount_(money)_needs_to_be_greater_than_0.'));
+        $validator->allowEmptyDate('date_add');
+        $validator->add('date_add', 'allowed-only-today-or-before', [
+            'rule' => function ($value, $context) {
+                $formattedValue = date(Configure::read('DateFormat.DatabaseAlt'), strtotime($value));
+                if ($formattedValue >Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
+                    return false;
+                }
+                return true;
+            },
+            'message' => __('The_date_must_not_be_a_future_date.'),
+        ]);
+
         return $validator;
     }
 

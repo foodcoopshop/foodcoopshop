@@ -7,6 +7,7 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\I18n\FrozenDate;
 use Cake\I18n\Time;
+use Cake\Log\Log;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
 use App\Lib\Error\Exception\InvalidParameterException;
@@ -198,7 +199,6 @@ class PaymentsController extends AdminAppController
     public function add()
     {
         $this->RequestHandler->renderAs($this, 'json');
-
         $type = trim($this->getRequest()->getData('type'));
         if (! in_array($type, [
             'product',
@@ -222,9 +222,14 @@ class PaymentsController extends AdminAppController
         $amount = $this->getRequest()->getData('amount');
         $amount = Configure::read('app.numberHelper')->parseFloatRespectingLocale($amount);
 
+        $dateAdd = $this->getRequest()->getData('dateAdd');
+
         try {
             $entity = $this->Payment->newEntity(
-                ['amount' => $amount],
+                [
+                    'amount' => $amount,
+                    'date_add' => $dateAdd,
+                ],
                 ['validate' => 'add']
             );
             if ($entity->hasErrors()) {
@@ -341,7 +346,6 @@ class PaymentsController extends AdminAppController
             }
         }
 
-        $dateAdd = $this->getRequest()->getData('dateAdd');
         $dateAddForEntity = Time::now();
         if ($dateAdd > 0) {
             $dateAddForEntity = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), Configure::read('app.timeHelper')->formatToDbFormatDate($dateAdd));
