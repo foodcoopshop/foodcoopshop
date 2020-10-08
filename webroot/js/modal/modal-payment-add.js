@@ -103,6 +103,7 @@ foodcoopshop.ModalPaymentAdd = {
 
         var amount = $(modalSelector + ' #payments-amount').val();
         var type = $(modalSelector + ' input[name="Payments[type]"]').val();
+        var dateAddDomElement = $(modalSelector + ' input[name="Payments[date_add]"]');
         var customerIdDomElement = $(modalSelector + ' input[name="Payments[customerId]"]');
         var manufacturerIdDomElement = $(modalSelector + ' input[name="Payments[manufacturerId]"]');
 
@@ -160,7 +161,8 @@ foodcoopshop.ModalPaymentAdd = {
             text: text,
             months_range: months_range,
             customerId: customerIdDomElement.length > 0 ? customerIdDomElement.val() : 0,
-            manufacturerId: manufacturerIdDomElement.length > 0 ? manufacturerIdDomElement.val() : 0
+            manufacturerId: manufacturerIdDomElement.length > 0 ? manufacturerIdDomElement.val() : 0,
+            dateAdd: dateAddDomElement.length > 0 ? dateAddDomElement.val() : 0,
         }, {
             onOk: function (data) {
                 document.location.reload();
@@ -174,11 +176,20 @@ foodcoopshop.ModalPaymentAdd = {
     },
 
     getOpenHandler : function(modalSelector, form) {
+
         $(modalSelector).modal();
         $(modalSelector).addClass('add-payment-form');
         $(modalSelector + ' .modal-body').append(form.html());
+
+        // avoid double id in dom
+        form.remove();
+
         $(modalSelector + ' input[type="number"]').focus();
         foodcoopshop.Helper.changeInputNumberToTextForEdge();
+
+        foodcoopshop.Helper.initDatepicker();
+        $(modalSelector).find('input.datepicker').datepicker({  maxDate: '0'});
+
     }
 
 };

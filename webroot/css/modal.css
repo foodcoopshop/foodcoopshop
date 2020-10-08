@@ -111,6 +111,9 @@ body.iframe_start_page {
     display: block;
     font-weight: bold;
 }
+.modal.add-payment-form .datepicker {
+    text-align: right;
+}
 .modal.add-payment-form .input.number {
     text-align: center;
 }

@@ -341,22 +341,28 @@ class PaymentsController extends AdminAppController
             }
         }
 
+        $dateAdd = $this->getRequest()->getData('dateAdd');
+        $dateAddForEntity = Time::now();
+        if ($dateAdd > 0) {
+            $dateAddForEntity = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), Configure::read('app.timeHelper')->formatToDbFormatDate($dateAdd));
+        }
+
         // add entry in table payments
-        $newPayment = $this->Payment->save(
-            $this->Payment->newEntity(
-                [
-                    'status' => APP_ON,
-                    'type' => $type,
-                    'id_customer' => $customerId,
-                    'id_manufacturer' => isset($manufacturerId) ? $manufacturerId : 0,
-                    'date_add' => Time::now(),
-                    'date_changed' => Time::now(),
-                    'amount' => $amount,
-                    'text' => $text,
-                    'created_by' => $this->AppAuth->getUserId(),
-                ]
-            )
+        $entity = $this->Payment->newEntity(
+            [
+                'status' => APP_ON,
+                'type' => $type,
+                'id_customer' => $customerId,
+                'id_manufacturer' => isset($manufacturerId) ? $manufacturerId : 0,
+                'date_add' => $dateAddForEntity,
+                'date_changed' => Time::now(),
+                'amount' => $amount,
+                'text' => $text,
+                'created_by' => $this->AppAuth->getUserId(),
+            ]
         );
+
+        $newPayment = $this->Payment->save($entity);
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $message .= ' ' . __d('admin', 'was_added_successfully:_{0}', ['<b>' . Configure::read('app.numberHelper')->formatAsCurrency($amount).'</b>']);
