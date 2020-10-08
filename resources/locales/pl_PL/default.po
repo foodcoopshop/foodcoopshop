@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-08 10:32+0200\n"
+"POT-Creation-Date: 2020-10-08 14:55+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2207,6 +2207,9 @@ msgstr "Podaj poprawny numer."
 # The amount needs to be greater than 0.
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr "Ilość musi być większa od 0."
+
+msgid "The_date_must_not_be_a_future_date."
+msgstr ""
 
 # Please enter a correct number.
 #, fuzzy

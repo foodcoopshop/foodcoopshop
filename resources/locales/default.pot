@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-08 10:32+0200\n"
+"POT-Creation-Date: 2020-10-08 14:55+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1635,6 +1635,9 @@ msgid "Please_enter_a_correct_number."
 msgstr ""
 
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
+msgstr ""
+
+msgid "The_date_must_not_be_a_future_date."
 msgstr ""
 
 msgid "Please_enter_a_correct_amount."

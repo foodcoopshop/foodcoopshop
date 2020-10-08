@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-08 10:32+0200\n"
-"PO-Revision-Date: 2020-10-08 10:36+0200\n"
+"POT-Creation-Date: 2020-10-08 14:55+0200\n"
+"PO-Revision-Date: 2020-10-08 14:55+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1637,6 +1637,9 @@ msgstr "Bitte gib eine korrekte Zahl ein."
 
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr "Der Betrag muss größer als 0 sein."
+
+msgid "The_date_must_not_be_a_future_date."
+msgstr "Das Datum darf nicht in der Zukunft liegen."
 
 msgid "Please_enter_a_correct_amount."
 msgstr "Bitte gib einen korrekten Betrag ein."
