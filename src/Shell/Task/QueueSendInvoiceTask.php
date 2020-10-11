@@ -43,6 +43,7 @@ class QueueSendInvoiceTask extends QueueTask implements QueueTaskInterface {
         $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
 
         $email = new AppMailer();
+        $email->fallbackEnabled = false;
         $email->viewBuilder()->setTemplate('Admin.send_invoice');
         $email->setTo($manufacturer->address_manufacturer->email)
         ->setAttachments([
