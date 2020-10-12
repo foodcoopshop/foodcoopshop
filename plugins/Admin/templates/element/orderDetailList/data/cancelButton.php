@@ -17,7 +17,7 @@ if ($groupBy == '') {
     echo '<td style="text-align:center;">';
         if ($editRecordAllowed) {
             echo $this->Html->link(
-                '<i class="fas fa-times-circle not-ok"></i>',
+                '<i class="fas fa-times-circle neutral"></i>',
                 'javascript:void(0);',
                 [
                     'class' => 'btn btn-outline-light delete-order-detail',
