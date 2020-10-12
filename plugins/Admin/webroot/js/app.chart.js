@@ -140,7 +140,7 @@ foodcoopshop.AppChart = {
 
     },
 
-    initLineChartDepositOverview : function(xAxisData1, xAxisData2, yAxisData, xAxisData1Label, xAxisData2Label) {
+    initLineChartDepositOverview : function(xAxisData1, xAxisData2, xAxisData3, yAxisData, xAxisData1Label, xAxisData2Label, xAxisData3Label) {
 
         var lineChartData = {
             labels: yAxisData,
@@ -163,6 +163,17 @@ foodcoopshop.AppChart = {
                     borderColor: 'rgba(106,90,205,.7)',
                     pointBorderColor: 'rgba(106,90,205,1)',
                     pointBackgroundColor: 'rgba(106,90,205,1)',
+                    pointRadius: 1,
+                    tension: 0,
+                    borderWidth: 1
+                },
+                {
+                    data: xAxisData3,
+                    label: xAxisData3Label,
+                    fill: false,
+                    borderColor: 'rgba(255,165,0,.7)',
+                    pointBorderColor: 'rgba(255,165,0,1)',
+                    pointBackgroundColor: 'rgba(255,165,0,1)',
                     pointRadius: 1,
                     tension: 0,
                     borderWidth: 1

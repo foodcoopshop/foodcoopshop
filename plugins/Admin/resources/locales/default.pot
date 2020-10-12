@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-08 15:28+0200\n"
+"POT-Creation-Date: 2020-10-12 11:50+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1073,13 +1073,28 @@ msgstr ""
 msgid "Returned_deposit_of_all_members"
 msgstr ""
 
+msgid "Compensation_payments_for_all_manufacturers"
+msgstr ""
+
+msgid "Year"
+msgstr ""
+
+msgid "Difference_returned_deposit_and_taken_back_deposit"
+msgstr ""
+
+msgid "Compensation_payments"
+msgstr ""
+
 msgid "Difference"
 msgstr ""
 
-msgid "Difference_per_year"
+msgid "Sum"
 msgstr ""
 
 msgid "Reserved_for_compensation_payments"
+msgstr ""
+
+msgid "Difference_to_open_deposit_demands"
 msgstr ""
 
 msgid "Pickup_day"
@@ -1527,9 +1542,6 @@ msgid "There_is_no_{0}_available."
 msgstr ""
 
 msgid "Delete_payment?"
-msgstr ""
-
-msgid "Sum"
 msgstr ""
 
 msgid "Back_to_member_overview"

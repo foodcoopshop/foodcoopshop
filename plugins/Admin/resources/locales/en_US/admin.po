@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-08 15:28+0200\n"
-"PO-Revision-Date: 2020-10-08 10:37+0200\n"
+"POT-Creation-Date: 2020-10-12 11:50+0200\n"
+"PO-Revision-Date: 2020-10-12 11:57+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -367,11 +367,10 @@ msgid "Deposit_take_back"
 msgstr "Deposit take back"
 
 msgid "for_the"
-msgstr ""
+msgstr "for the"
 
-#, fuzzy
 msgid "was_added_successfully_{0}:_{1}"
-msgstr "was added successfully: {0}"
+msgstr "was added successfully {0}: {1}"
 
 msgid "The_amount_was_added_to_the_credit_system_of_{0}_and_can_be_deleted_there."
 msgstr "The amount was added to the credit system of {0} and can be deleted there."
@@ -1075,14 +1074,29 @@ msgstr "per week"
 msgid "Returned_deposit_of_all_members"
 msgstr "Returned deposit of all members"
 
+msgid "Compensation_payments_for_all_manufacturers"
+msgstr "Compensation payments for all manufacturers"
+
+msgid "Year"
+msgstr "Year"
+
+msgid "Difference_returned_deposit_and_taken_back_deposit"
+msgstr "Difference returned deposit and taken back empty glasses"
+
+msgid "Compensation_payments"
+msgstr "Compensation payments"
+
 msgid "Difference"
 msgstr "Difference"
 
-msgid "Difference_per_year"
-msgstr "Difference per year"
+msgid "Sum"
+msgstr "Sum"
 
 msgid "Reserved_for_compensation_payments"
 msgstr "Reserved for compensation payments"
+
+msgid "Difference_to_open_deposit_demands"
+msgstr "Difference to open deposit demands"
 
 msgid "Pickup_day"
 msgstr "Pickup day"
@@ -1530,9 +1544,6 @@ msgstr "There is no {0} available."
 
 msgid "Delete_payment?"
 msgstr "Delete payment?"
-
-msgid "Sum"
-msgstr "Sum"
 
 msgid "Back_to_member_overview"
 msgstr "Back to member overview"

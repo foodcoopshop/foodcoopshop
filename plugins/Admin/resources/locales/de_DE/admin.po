@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-08 15:28+0200\n"
-"PO-Revision-Date: 2020-10-08 15:29+0200\n"
+"POT-Creation-Date: 2020-10-12 11:50+0200\n"
+"PO-Revision-Date: 2020-10-12 11:52+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1074,14 +1074,29 @@ msgstr "pro Woche"
 msgid "Returned_deposit_of_all_members"
 msgstr "Pfand-Rückgaben aller Mitglieder"
 
+msgid "Compensation_payments_for_all_manufacturers"
+msgstr "Pfand-Ausgleichszahlungen für alle Hersteller"
+
+msgid "Year"
+msgstr "Jahr"
+
+msgid "Difference_returned_deposit_and_taken_back_deposit"
+msgstr "Differenz Pfand-Rücknahmen und Pfand-Rückgaben"
+
+msgid "Compensation_payments"
+msgstr "Ausgleichszahlungen"
+
 msgid "Difference"
 msgstr "Differenz"
 
-msgid "Difference_per_year"
-msgstr "Differenz pro Jahr"
+msgid "Sum"
+msgstr "Summe"
 
 msgid "Reserved_for_compensation_payments"
 msgstr "Reserviert für Ausgleichszahlungen"
+
+msgid "Difference_to_open_deposit_demands"
+msgstr "Differenz zwischen reservierten Ausgleichszahlungen und offenen Pfand-Forderungen"
 
 msgid "Pickup_day"
 msgstr "Abholtag"
@@ -1529,9 +1544,6 @@ msgstr "Es wurde noch kein {0} erfasst."
 
 msgid "Delete_payment?"
 msgstr "Zahlung löschen?"
-
-msgid "Sum"
-msgstr "Summe"
 
 msgid "Back_to_member_overview"
 msgstr "Zurück zur Mitglieder-Übersicht"

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-08 15:28+0200\n"
+"POT-Creation-Date: 2020-10-12 11:50+0200\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1116,13 +1116,30 @@ msgstr ""
 msgid "Returned_deposit_of_all_members"
 msgstr "Zwrócony wkład"
 
+#, fuzzy
+msgid "Compensation_payments_for_all_manufacturers"
+msgstr "Suma rekompensat kaucji dla producentów"
+
+msgid "Year"
+msgstr ""
+
+#, fuzzy
+msgid "Difference_returned_deposit_and_taken_back_deposit"
+msgstr "Usunąć zwrot wkładu?"
+
+msgid "Compensation_payments"
+msgstr ""
+
 msgid "Difference"
 msgstr ""
 
-msgid "Difference_per_year"
-msgstr ""
+msgid "Sum"
+msgstr "Suma"
 
 msgid "Reserved_for_compensation_payments"
+msgstr ""
+
+msgid "Difference_to_open_deposit_demands"
 msgstr ""
 
 msgid "Pickup_day"
@@ -1583,9 +1600,6 @@ msgstr "Żaden {0} nie jest dostępny."
 
 msgid "Delete_payment?"
 msgstr "Usunąć płatność?"
-
-msgid "Sum"
-msgstr "Suma"
 
 msgid "Back_to_member_overview"
 msgstr "Wróć do przeglądu członków"

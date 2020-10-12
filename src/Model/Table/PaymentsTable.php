@@ -6,6 +6,7 @@ use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
 use Cake\Validation\Validator;
+use App\Lib\Error\Exception\InvalidParameterException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -122,10 +123,13 @@ class PaymentsTable extends AppTable
         return $paymentSum;
     }
 
-    public function getManufacturerDepositSumEmptyGlassesByCalendarWeek()
+    public function getManufacturerDepositSumByCalendarWeekAndType($type)
     {
+        if (!in_array($type, ['empty_glasses', 'money'])) {
+            throw new InvalidParameterException('wrong type: was ' . $type);
+        }
         $conditions = $this->getManufacturerDepositConditions();
-        $conditions['Payments.text'] = 'empty_glasses';
+        $conditions['Payments.text'] = $type;
 
         $query = $this->find('all', [
             'conditions' => $conditions

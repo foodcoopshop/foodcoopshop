@@ -74,11 +74,18 @@ class DepositsController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Deposit_overview'));
 
         $this->Payment = $this->getTableLocator()->get('Payments');
-        $manufacturerDepositSumEmptyGlassesByCalendarWeek = $this->Payment->getManufacturerDepositSumEmptyGlassesByCalendarWeek();
-        $preparedManufacturerData = [];
+        $manufacturerDepositSumEmptyGlassesByCalendarWeek = $this->Payment->getManufacturerDepositSumByCalendarWeekAndType('empty_glasses');
+        $preparedManufacturerEmptyGlassesData = [];
         foreach($manufacturerDepositSumEmptyGlassesByCalendarWeek as $week) {
             $week->YearWeekPrepared = str_replace('-', 'W', $week->YearWeek);
-            $preparedManufacturerData[$week->YearWeek] = $week->SumAmount;
+            $preparedManufacturerEmptyGlassesData[$week->YearWeek] = $week->SumAmount;
+        }
+
+        $manufacturerDepositSumMoneyByCalendarWeek = $this->Payment->getManufacturerDepositSumByCalendarWeekAndType('money');
+        $preparedManufacturerMoneyData = [];
+        foreach($manufacturerDepositSumMoneyByCalendarWeek as $week) {
+            $week->YearWeekPrepared = str_replace('-', 'W', $week->YearWeek);
+            $preparedManufacturerMoneyData[$week->YearWeek] = $week->SumAmount;
         }
 
         $customerDepositSumByCalendarWeek = $this->Payment->getCustomerDepositSumByCalendarWeek();
@@ -109,36 +116,66 @@ class DepositsController extends AdminAppController
         $allCalendarWeeksUntilNow = Configure::read('app.timeHelper')->getAllCalendarWeeksUntilNow($firstWeek);
         $xAxisData1LineChart = [];
         $xAxisData2LineChart = [];
+        $xAxisData3LineChart = [];
         $yAxisDataLineChart= [];
-        $manufacturerDepositSum = 0;
+        $manufacturerEmptyGlassesSum = 0;
+        $manufacturerMoneySum = 0;
         $customerDepositSum = 0;
-        $yearlyDeltas = [];
+        $yearlyManufacturerEmptyGlasses = [];
+        $yearlyManufacturerMoney = [];
+        $yearlyCustomerDeposit = [];
+        $yearlyDepositDeltas = [];
+        $yearlyOverallDeltas = [];
+        $years = [];
+
         foreach($allCalendarWeeksUntilNow as $calendarWeek) {
 
             $year = explode('-', $calendarWeek)[0];
+            $years[] = $year;
+
             $yAxisDataLineChart[] = $calendarWeek;
 
-            $manufacturerDeposit = $preparedManufacturerData[$calendarWeek] ?? $preparedManufacturerData[$calendarWeek] ?? 0;
-            $xAxisData1LineChart[] = $manufacturerDeposit;
-            $manufacturerDepositSum += $manufacturerDeposit;
+            $manufacturerEmptyGlasses = $preparedManufacturerEmptyGlassesData[$calendarWeek] ?? $preparedManufacturerEmptyGlassesData[$calendarWeek] ?? 0;
+            $xAxisData1LineChart[] = $manufacturerEmptyGlasses;
+            $manufacturerEmptyGlassesSum += $manufacturerEmptyGlasses;
 
             $customerDeposit = $preparedCustomerData[$calendarWeek] ?? $preparedCustomerData[$calendarWeek] ?? 0;
             $xAxisData2LineChart[]= $customerDeposit;
             $customerDepositSum += $customerDeposit;
 
-            @$yearlyDeltas[$year] += $manufacturerDeposit - $customerDeposit;
+            $manufacturerMoney = $preparedManufacturerMoneyData[$calendarWeek] ?? $preparedManufacturerMoneyData[$calendarWeek] ?? 0;
+            $xAxisData3LineChart[] = $manufacturerMoney;
+            $manufacturerMoneySum += $manufacturerMoney;
+
+            @$yearlyManufacturerEmptyGlasses[$year] += $manufacturerEmptyGlasses;
+            @$yearlyManufacturerMoney[$year] += $manufacturerMoney;
+            @$yearlyCustomerDeposit[$year] += $customerDeposit;
+            $depositsDelta = $manufacturerEmptyGlasses - $customerDeposit;
+            @$yearlyDepositDeltas[$year] += $depositsDelta;
+            @$yearlyOverallDeltas[$year] += $depositsDelta - $manufacturerMoney;
 
         }
 
         $this->set('xAxisData1LineChart', $xAxisData1LineChart);
         $this->set('xAxisData2LineChart', $xAxisData2LineChart);
+        $this->set('xAxisData3LineChart', $xAxisData3LineChart);
         $this->set('yAxisDataLineChart', $yAxisDataLineChart);
 
-        $this->set('manufacturerDepositSum', $manufacturerDepositSum);
+        $this->set('manufacturerEmptyGlassesSum', $manufacturerEmptyGlassesSum);
+        $this->set('manufacturerMoneySum', $manufacturerMoneySum);
         $this->set('customerDepositSum', $customerDepositSum);
-        $depositDelta = $manufacturerDepositSum - $customerDepositSum;
-        $this->set('depositDelta', $depositDelta);
-        $this->set('yearlyDeltas', $yearlyDeltas);
+        $depositDeltaSum = $manufacturerEmptyGlassesSum - $customerDepositSum;
+        $this->set('depositDeltaSum', $depositDeltaSum);
+        $overallDeltaSum = $depositDeltaSum - $manufacturerMoneySum;
+        $this->set('overallDeltaSum', $overallDeltaSum);
+
+        $this->set('yearlyManufacturerEmptyGlasses', $yearlyManufacturerEmptyGlasses);
+        $this->set('yearlyManufacturerMoney', $yearlyManufacturerMoney);
+        $this->set('yearlyCustomerDeposit', $yearlyCustomerDeposit);
+        $this->set('yearlyDepositDeltas', $yearlyDepositDeltas);
+        $this->set('yearlyOverallDeltas', $yearlyOverallDeltas);
+
+        $this->set('years', array_unique($years));
 
         $this->Cutomers = $this->getTableLocator()->get('Customers');
         $paymentDepositDelta = $this->Customer->getDepositBalanceForCustomers(APP_ON);
@@ -146,6 +183,9 @@ class DepositsController extends AdminAppController
         $paymentDepositDelta += $this->Customer->getDepositBalanceForDeletedCustomers();
         $paymentDepositDelta = $paymentDepositDelta * -1;
         $this->set('paymentDepositDelta', $paymentDepositDelta);
+
+        $differenceToOpenDepositDemands = $overallDeltaSum + $paymentDepositDelta;
+        $this->set('differenceToOpenDepositDemands', $differenceToOpenDepositDemands);
 
     }
 
