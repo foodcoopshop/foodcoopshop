@@ -255,31 +255,54 @@ class OrderDetailsTable extends AppTable
     }
 
     /**
-     * @param int $manufacturerId
-     * @param boolean $groupByMonth
+     * @param int $manufacturerId (false, int)
+     * @param boolean $groupBy (false, 'month', 'year')
      * @return array
      */
-    public function getDepositSum($manufacturerId, $groupByMonth)
+    public function getDepositSum($manufacturerId, $groupBy)
     {
 
+        $params = [
+            'depositForManufacturersStartDate' => Configure::read('app.depositForManufacturersStartDate'),
+        ];
+
         $sql =  'SELECT SUM(od.deposit) as sumDepositDelivered ';
-        if ($groupByMonth) {
-            $sql .= ', DATE_FORMAT(od.pickup_day, \'%Y-%c\') as monthAndYear ';
+
+        switch($groupBy) {
+            case 'month':
+                $sql .= ', DATE_FORMAT(od.pickup_day, \'%Y-%c\') as monthAndYear ';
+                break;
+            case 'year':
+                $sql .= ', DATE_FORMAT(od.pickup_day, \'%Y\') as Year ';
+                break;
+            default:
+                break;
         }
+
         $sql .= 'FROM '.$this->tablePrefix.'order_detail od ';
         $sql .= 'LEFT JOIN '.$this->tablePrefix.'product p ON p.id_product = od.product_id ';
-        $sql .= 'WHERE p.id_manufacturer = :manufacturerId ';
-        $sql .= 'AND DATE_FORMAT(od.pickup_day, \'%Y-%m-%d\') >= :depositForManufacturersStartDate ';
-        if ($groupByMonth) {
-            $sql .= 'GROUP BY monthAndYear ';
-            $sql .= 'ORDER BY monthAndYear DESC;';
-        } else {
-            $sql .= 'ORDER BY od.pickup_day DESC;';
+        $sql .= 'WHERE 1 ';
+
+        if ($manufacturerId > 0) {
+            $sql .= 'AND p.id_manufacturer = :manufacturerId ';
+            $params['manufacturerId'] = $manufacturerId;
         }
-        $params = [
-            'manufacturerId' => $manufacturerId,
-            'depositForManufacturersStartDate' => Configure::read('app.depositForManufacturersStartDate')
-        ];
+
+        $sql .= 'AND DATE_FORMAT(od.pickup_day, \'%Y-%m-%d\') >= :depositForManufacturersStartDate ';
+
+        switch($groupBy) {
+            case 'month':
+                $sql .= 'GROUP BY monthAndYear ';
+                $sql .= 'ORDER BY monthAndYear DESC;';
+                break;
+            case 'year':
+                $sql .= 'GROUP BY Year ';
+                $sql .= 'ORDER BY Year DESC;';
+                break;
+            default:
+                $sql .= 'ORDER BY od.pickup_day DESC;';
+                break;
+        }
 
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute($params);

@@ -39,6 +39,38 @@ echo $this->element('reportNavTabs', [
     'dateFrom' => $dateFrom,
     'dateTo' => $dateTo,
 ]);
+?>
+
+<?php
+    echo '<table class="list no-clone-last-row" style="width:615px;margin-top:10px;">';
+    echo '<tr>';
+        echo '<th>' . __d('admin', 'Year') . '</th>';
+        echo '<th style="text-align:right;">' . __d('admin', 'Delivered_deposit') . '</th>';
+        echo '<th style="text-align:right;">' . __d('admin', 'Taken_back_empty_glasses') . '</th>';
+        echo '<th style="text-align:right;;">' . __d('admin', 'Compensation_payments') . '</th>';
+        echo '<th style="text-align:right;">' . __d('admin', 'Open_deposit_demands') . '</th>';
+    echo '</tr>';
+    foreach($years as $year) {
+        echo '<tr>';
+            echo '<td style="width:50px;">' . $year . '</td>';
+            echo '<td style="text-align:right;;" class="'.($yearlyDepositsDelivered[$year] < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($yearlyDepositsDelivered[$year]) . '</td>';
+            echo '<td style="text-align:right;" class="'.($yearlyManufacturerEmptyGlasses[$year] < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($yearlyManufacturerEmptyGlasses[$year]) . '</td>';
+            echo '<td style="text-align:right;" class="'.($yearlyManufacturerMoney[$year] < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($yearlyManufacturerMoney[$year]) . '</td>';
+            echo '<td style="text-align:right;" class="'.($yearlyOverallDeltas[$year] < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($yearlyOverallDeltas[$year]) . '</td>';
+        echo '</tr>';
+    }
+    echo '<tr>';
+        echo '<td><b>' . __d('admin', 'Sum') . '</b></td>';
+        echo '<td style="text-align:right;"><b class="'.($depositsDeliveredSum < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($depositsDeliveredSum) . '</b></td>';
+        echo '<td style="text-align:right;"><b class="'.($manufacturerEmptyGlassesSum < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($manufacturerEmptyGlassesSum) . '</b></td>';
+        echo '<td style="text-align:right;"><b class="'.($manufacturerMoneySum < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($manufacturerMoneySum) . '</b></td>';
+        echo '<td style="text-align:right;"><b class="'.($overallDeltaSum < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($overallDeltaSum) . '</b></td>';
+    echo '</tr>';
+    echo '</table>';
+
+echo '<br />'.__d('admin', 'Reserved_for_compensation_payments').': <b class="'.($paymentDepositDelta < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($paymentDepositDelta) . '</b>';
+echo '<br />'.__d('admin', 'Difference_to_open_deposit_demands').': <b class="'.($differenceToOpenDepositDemands < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($differenceToOpenDepositDemands) . '</b>';
+
 
 if (!isset($xAxisData1LineChart)) {
     return;
@@ -59,38 +91,3 @@ $this->element('addScript', [
 ?>
 
 <canvas id="myLineChart" width="1000" height="500" style="margin-top:30px;"></canvas>
-
-<p style="margin-top:30px;">
-    <?php
-        echo '<table class="list no-clone-last-row" style="width:615px;">';
-        echo '<tr>';
-            echo '<th>' . __d('admin', 'Year') . '</th>';
-            echo '<th style="text-align:right;color:rgb(113,159,65);">' . __d('admin', 'Taken_back_empty_glasses_of_all_manufacturers') . '</th>';
-            echo '<th style="text-align:right;color:rgb(106,90,205);">' . __d('admin', 'Returned_deposit_of_all_members') . '</th>';
-            echo '<th style="text-align:right;">' . __d('admin', 'Difference_returned_deposit_and_taken_back_deposit') . '</th>';
-            echo '<th style="text-align:right;color:rgb(255,165,0);">' . __d('admin', 'Compensation_payments') . '</th>';
-            echo '<th style="text-align:right;">' . __d('admin', 'Difference') . '</th>';
-        echo '</tr>';
-        foreach($years as $year) {
-            echo '<tr>';
-                echo '<td style="width:50px;">' . $year . '</td>';
-                echo '<td style="text-align:right;color:rgb(113,159,65);" class="'.($yearlyManufacturerEmptyGlasses[$year] < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($yearlyManufacturerEmptyGlasses[$year]) . '</td>';
-                echo '<td style="text-align:right;color:rgb(106,90,205);" class="'.($yearlyCustomerDeposit[$year] < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($yearlyCustomerDeposit[$year]) . '</td>';
-                echo '<td style="text-align:right;" class="'.($yearlyDepositDeltas[$year] < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($yearlyDepositDeltas[$year]) . '</td>';
-                echo '<td style="text-align:right;color:rgb(255,165,0);" class="'.($yearlyManufacturerMoney[$year] < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($yearlyManufacturerMoney[$year]) . '</td>';
-                echo '<td style="text-align:right;font-weight:bold;" class="'.($yearlyOverallDeltas[$year] < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($yearlyOverallDeltas[$year]) . '</td>';
-            echo '</tr>';
-        }
-        echo '<tr>';
-            echo '<td><b>' . __d('admin', 'Sum') . '</b></td>';
-            echo '<td style="text-align:right;color:rgb(113,159,65);"><b class="'.($manufacturerEmptyGlassesSum < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($manufacturerEmptyGlassesSum) . '</b></td>';
-            echo '<td style="text-align:right;color:rgb(106,90,205);"><b class="'.($customerDepositSum < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($customerDepositSum) . '</b></td>';
-            echo '<td style="text-align:right;"><b class="'.($depositDeltaSum < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($depositDeltaSum) . '</b></td>';
-            echo '<td style="text-align:right;color:rgb(255,165,0);"><b class="'.($manufacturerMoneySum < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($manufacturerMoneySum) . '</b></td>';
-            echo '<td style="text-align:right;"><b class="'.($overallDeltaSum < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($overallDeltaSum) . '</b></td>';
-        echo '</tr>';
-        echo '</table>';
-        echo '<br />'.__d('admin', 'Reserved_for_compensation_payments').': <b class="'.($paymentDepositDelta < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($paymentDepositDelta) . '</b>';
-        echo '<br />'.__d('admin', 'Difference_to_open_deposit_demands').': <b class="'.($differenceToOpenDepositDemands < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($differenceToOpenDepositDemands) . '</b>';
-    ?>
-</p>

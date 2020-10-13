@@ -95,6 +95,9 @@ class DepositsController extends AdminAppController
             $preparedCustomerData[$week->YearWeek] = $week->SumAmount;
         }
 
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $depositsDeliveredByYear = $this->OrderDetail->getDepositSum(false, 'year');
+
         if (empty($manufacturerDepositSumEmptyGlassesByCalendarWeek) && empty($customerDepositSumByCalendarWeek)) {
             return;
         }
@@ -124,6 +127,7 @@ class DepositsController extends AdminAppController
         $yearlyManufacturerEmptyGlasses = [];
         $yearlyManufacturerMoney = [];
         $yearlyCustomerDeposit = [];
+        $yearlyDepositsDelivered = [];
         $yearlyDepositDeltas = [];
         $yearlyOverallDeltas = [];
         $years = [];
@@ -150,10 +154,20 @@ class DepositsController extends AdminAppController
             @$yearlyManufacturerEmptyGlasses[$year] += $manufacturerEmptyGlasses;
             @$yearlyManufacturerMoney[$year] += $manufacturerMoney;
             @$yearlyCustomerDeposit[$year] += $customerDeposit;
+
             $depositsDelta = $manufacturerEmptyGlasses - $customerDeposit;
             @$yearlyDepositDeltas[$year] += $depositsDelta;
-            @$yearlyOverallDeltas[$year] += $depositsDelta - $manufacturerMoney;
 
+            @$yearlyOverallDeltas[$year] += $manufacturerEmptyGlasses + $manufacturerMoney;
+
+        }
+
+        $depositsDeliveredSum = 0;
+        foreach($depositsDeliveredByYear as $depositDelivered) {
+            $year = $depositDelivered['Year'];
+            @$yearlyDepositsDelivered[$year] = $depositDelivered['sumDepositDelivered'];
+            @$yearlyOverallDeltas[$year] -= $depositDelivered['sumDepositDelivered'];
+            $depositsDeliveredSum += $depositDelivered['sumDepositDelivered'];
         }
 
         $this->set('xAxisData1LineChart', $xAxisData1LineChart);
@@ -164,14 +178,18 @@ class DepositsController extends AdminAppController
         $this->set('manufacturerEmptyGlassesSum', $manufacturerEmptyGlassesSum);
         $this->set('manufacturerMoneySum', $manufacturerMoneySum);
         $this->set('customerDepositSum', $customerDepositSum);
+        $this->set('depositsDeliveredSum', $depositsDeliveredSum);
+
         $depositDeltaSum = $manufacturerEmptyGlassesSum - $customerDepositSum;
         $this->set('depositDeltaSum', $depositDeltaSum);
-        $overallDeltaSum = $depositDeltaSum - $manufacturerMoneySum;
+
+        $overallDeltaSum = ($depositsDeliveredSum - $manufacturerEmptyGlassesSum - $manufacturerMoneySum) * -1;
         $this->set('overallDeltaSum', $overallDeltaSum);
 
         $this->set('yearlyManufacturerEmptyGlasses', $yearlyManufacturerEmptyGlasses);
         $this->set('yearlyManufacturerMoney', $yearlyManufacturerMoney);
         $this->set('yearlyCustomerDeposit', $yearlyCustomerDeposit);
+        $this->set('yearlyDepositsDelivered', $yearlyDepositsDelivered);
         $this->set('yearlyDepositDeltas', $yearlyDepositDeltas);
         $this->set('yearlyOverallDeltas', $yearlyOverallDeltas);
 
@@ -229,7 +247,7 @@ class DepositsController extends AdminAppController
         $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
         $this->set('orderStates', $orderStates);
 
-        $depositsDelivered = $this->OrderDetail->getDepositSum($manufacturerId, true);
+        $depositsDelivered = $this->OrderDetail->getDepositSum($manufacturerId, 'month');
         $depositsReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, true);
 
         $monthsAndYear = Configure::read('app.timeHelper')->getAllMonthsUntilThisYear(date('Y'), 2016);
