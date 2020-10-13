@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-08 14:55+0200\n"
-"PO-Revision-Date: 2020-10-08 14:56+0200\n"
+"POT-Creation-Date: 2020-10-13 16:25+0200\n"
+"PO-Revision-Date: 2020-10-13 16:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1878,8 +1878,8 @@ msgstr "Admin"
 msgid "Superadmin"
 msgstr "Superadmin"
 
-msgid "Credit_and_deposit_balance"
-msgstr "Credit and deposit balance"
+msgid "Credit_overview"
+msgstr "Credit overview"
 
 msgid "Deposit_overview"
 msgstr "Deposit overview"
@@ -2462,6 +2462,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Credit_and_deposit_balance"
+#~ msgstr "Credit and deposit balance"
 
 #~ msgid "Self_service_for_stock_products"
 #~ msgstr "Self-service for stock products"

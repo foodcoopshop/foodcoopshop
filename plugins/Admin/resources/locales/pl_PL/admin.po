@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-12 11:50+0200\n"
+"POT-Creation-Date: 2020-10-13 16:23+0200\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -929,9 +929,6 @@ msgstr ""
 msgid "Included_deposit"
 msgstr "Zawiera kaucję"
 
-msgid "Of_the_{0}_on_the_credit_account_{1}_are_reserved_for_deposit_compensation_payments._As_long_as_this_amount_is_negative_money_for_deposit_compensation_payments_is_available."
-msgstr "{1} (z {0} na koncie kredytowym) zarezerwowano na poczet rekompensat kaucji. Dopóki kwota jest ujemna, są środki na rekompensaty."
-
 msgid "docs_route_members"
 msgstr "members"
 
@@ -1106,31 +1103,16 @@ msgid "docs_route_infos_for_success"
 msgstr "products"
 
 #, fuzzy
-msgid "Taken_back_empty_glasses_of_all_manufacturers"
-msgstr "Idź do ustawień producenta"
-
-msgid "per_week"
-msgstr ""
-
-#, fuzzy
-msgid "Returned_deposit_of_all_members"
-msgstr "Zwrócony wkład"
-
-#, fuzzy
-msgid "Compensation_payments_for_all_manufacturers"
+msgid "Deposit_overview_for_all_manufacturers"
 msgstr "Suma rekompensat kaucji dla producentów"
 
 msgid "Year"
 msgstr ""
 
-#, fuzzy
-msgid "Difference_returned_deposit_and_taken_back_deposit"
-msgstr "Usunąć zwrot wkładu?"
-
 msgid "Compensation_payments"
 msgstr ""
 
-msgid "Difference"
+msgid "Open_deposit_demands"
 msgstr ""
 
 msgid "Sum"
@@ -1141,6 +1123,20 @@ msgstr ""
 
 msgid "Difference_to_open_deposit_demands"
 msgstr ""
+
+msgid "Deposit_diagram:_Data_per_week"
+msgstr ""
+
+msgid "Deposit_diagram_explanation_text."
+msgstr ""
+
+#, fuzzy
+msgid "Empty_glasses_returned_by_manufacturer"
+msgstr "Zwrócono puste opakowanie"
+
+#, fuzzy
+msgid "Returned_deposit_by_member"
+msgstr "Zwrócony wkład"
 
 msgid "Pickup_day"
 msgstr "Dzień odbioru"
@@ -2216,6 +2212,17 @@ msgstr "Wagi dostarczonych produktów mogą ulec zmianie, więc cena również m
 #, fuzzy
 msgid "Product_ID"
 msgstr "Produkt"
+
+#~ msgid "Of_the_{0}_on_the_credit_account_{1}_are_reserved_for_deposit_compensation_payments._As_long_as_this_amount_is_negative_money_for_deposit_compensation_payments_is_available."
+#~ msgstr "{1} (z {0} na koncie kredytowym) zarezerwowano na poczet rekompensat kaucji. Dopóki kwota jest ujemna, są środki na rekompensaty."
+
+#, fuzzy
+#~ msgid "Taken_back_empty_glasses_of_all_manufacturers"
+#~ msgstr "Idź do ustawień producenta"
+
+#, fuzzy
+#~ msgid "Difference_returned_deposit_and_taken_back_deposit"
+#~ msgstr "Usunąć zwrot wkładu?"
 
 #~ msgid "Invoice_for_manufacturer_{0}_successfully_sent_to_{1}."
 #~ msgstr "Faktura dla dostawy {0} została wysłana do {1}."

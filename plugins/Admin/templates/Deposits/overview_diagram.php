@@ -42,11 +42,14 @@ echo $this->element('reportNavTabs', [
 ?>
 
 <?php
+
+    echo '<h2 style="margin-top:10px;">' . __d('admin', 'Deposit_overview_for_all_manufacturers') . '</h2>';
+
     echo '<table class="list no-clone-last-row" style="width:615px;margin-top:10px;">';
     echo '<tr>';
         echo '<th>' . __d('admin', 'Year') . '</th>';
         echo '<th style="text-align:right;">' . __d('admin', 'Delivered_deposit') . '</th>';
-        echo '<th style="text-align:right;">' . __d('admin', 'Taken_back_empty_glasses') . '</th>';
+        echo '<th style="text-align:right;">' . __d('admin', 'Empty_glasses_returned') . '</th>';
         echo '<th style="text-align:right;;">' . __d('admin', 'Compensation_payments') . '</th>';
         echo '<th style="text-align:right;">' . __d('admin', 'Open_deposit_demands') . '</th>';
     echo '</tr>';
@@ -76,6 +79,8 @@ if (!isset($xAxisData1LineChart)) {
     return;
 }
 
+echo '<h2 style="margin-top:30px;">' . __d('admin', 'Deposit_diagram:_Data_per_week') . '</h2>';
+echo '<p>'.__d('admin', 'Deposit_diagram_explanation_text.') . '</p>';
 $this->element('addScript', [
     'script' =>
     Configure::read('app.jsNamespace') . ".AppChart.initLineChartDepositOverview(
@@ -83,9 +88,9 @@ $this->element('addScript', [
         ".json_encode($xAxisData2LineChart).",
         ".json_encode($xAxisData3LineChart).",
         ".json_encode($yAxisDataLineChart).",
-        '".__d('admin', 'Taken_back_empty_glasses_of_all_manufacturers') . " " . __d('admin', 'per_week') . "',
-        '".__d('admin', 'Returned_deposit_of_all_members') . " " . __d('admin', 'per_week') . "',
-        '".__d('admin', 'Compensation_payments_for_all_manufacturers') . " " . __d('admin', 'per_week') . "'
+        '".__d('admin', 'Empty_glasses_returned_by_manufacturer') . "',
+        '".__d('admin', 'Returned_deposit_by_member') . "',
+        '".__d('admin', 'Compensation_payments') . "'
     );"
 ]);
 ?>

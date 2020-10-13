@@ -123,12 +123,9 @@ class DepositsController extends AdminAppController
         $yAxisDataLineChart= [];
         $manufacturerEmptyGlassesSum = 0;
         $manufacturerMoneySum = 0;
-        $customerDepositSum = 0;
         $yearlyManufacturerEmptyGlasses = [];
         $yearlyManufacturerMoney = [];
-        $yearlyCustomerDeposit = [];
         $yearlyDepositsDelivered = [];
-        $yearlyDepositDeltas = [];
         $yearlyOverallDeltas = [];
         $years = [];
 
@@ -145,7 +142,6 @@ class DepositsController extends AdminAppController
 
             $customerDeposit = $preparedCustomerData[$calendarWeek] ?? $preparedCustomerData[$calendarWeek] ?? 0;
             $xAxisData2LineChart[]= $customerDeposit;
-            $customerDepositSum += $customerDeposit;
 
             $manufacturerMoney = $preparedManufacturerMoneyData[$calendarWeek] ?? $preparedManufacturerMoneyData[$calendarWeek] ?? 0;
             $xAxisData3LineChart[] = $manufacturerMoney;
@@ -153,10 +149,6 @@ class DepositsController extends AdminAppController
 
             @$yearlyManufacturerEmptyGlasses[$year] += $manufacturerEmptyGlasses;
             @$yearlyManufacturerMoney[$year] += $manufacturerMoney;
-            @$yearlyCustomerDeposit[$year] += $customerDeposit;
-
-            $depositsDelta = $manufacturerEmptyGlasses - $customerDeposit;
-            @$yearlyDepositDeltas[$year] += $depositsDelta;
 
             @$yearlyOverallDeltas[$year] += $manufacturerEmptyGlasses + $manufacturerMoney;
 
@@ -177,20 +169,14 @@ class DepositsController extends AdminAppController
 
         $this->set('manufacturerEmptyGlassesSum', $manufacturerEmptyGlassesSum);
         $this->set('manufacturerMoneySum', $manufacturerMoneySum);
-        $this->set('customerDepositSum', $customerDepositSum);
         $this->set('depositsDeliveredSum', $depositsDeliveredSum);
-
-        $depositDeltaSum = $manufacturerEmptyGlassesSum - $customerDepositSum;
-        $this->set('depositDeltaSum', $depositDeltaSum);
 
         $overallDeltaSum = ($depositsDeliveredSum - $manufacturerEmptyGlassesSum - $manufacturerMoneySum) * -1;
         $this->set('overallDeltaSum', $overallDeltaSum);
 
         $this->set('yearlyManufacturerEmptyGlasses', $yearlyManufacturerEmptyGlasses);
         $this->set('yearlyManufacturerMoney', $yearlyManufacturerMoney);
-        $this->set('yearlyCustomerDeposit', $yearlyCustomerDeposit);
         $this->set('yearlyDepositsDelivered', $yearlyDepositsDelivered);
-        $this->set('yearlyDepositDeltas', $yearlyDepositDeltas);
         $this->set('yearlyOverallDeltas', $yearlyOverallDeltas);
 
         $this->set('years', array_unique($years));

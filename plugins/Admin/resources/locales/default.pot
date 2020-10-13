@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-12 11:50+0200\n"
+"POT-Creation-Date: 2020-10-13 16:23+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -896,9 +896,6 @@ msgstr ""
 msgid "Included_deposit"
 msgstr ""
 
-msgid "Of_the_{0}_on_the_credit_account_{1}_are_reserved_for_deposit_compensation_payments._As_long_as_this_amount_is_negative_money_for_deposit_compensation_payments_is_available."
-msgstr ""
-
 msgid "docs_route_members"
 msgstr ""
 
@@ -1064,28 +1061,16 @@ msgstr ""
 msgid "docs_route_infos_for_success"
 msgstr ""
 
-msgid "Taken_back_empty_glasses_of_all_manufacturers"
-msgstr ""
-
-msgid "per_week"
-msgstr ""
-
-msgid "Returned_deposit_of_all_members"
-msgstr ""
-
-msgid "Compensation_payments_for_all_manufacturers"
+msgid "Deposit_overview_for_all_manufacturers"
 msgstr ""
 
 msgid "Year"
 msgstr ""
 
-msgid "Difference_returned_deposit_and_taken_back_deposit"
-msgstr ""
-
 msgid "Compensation_payments"
 msgstr ""
 
-msgid "Difference"
+msgid "Open_deposit_demands"
 msgstr ""
 
 msgid "Sum"
@@ -1095,6 +1080,18 @@ msgid "Reserved_for_compensation_payments"
 msgstr ""
 
 msgid "Difference_to_open_deposit_demands"
+msgstr ""
+
+msgid "Deposit_diagram:_Data_per_week"
+msgstr ""
+
+msgid "Deposit_diagram_explanation_text."
+msgstr ""
+
+msgid "Empty_glasses_returned_by_manufacturer"
+msgstr ""
+
+msgid "Returned_deposit_by_member"
 msgstr ""
 
 msgid "Pickup_day"

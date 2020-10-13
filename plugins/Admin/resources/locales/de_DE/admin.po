@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-12 11:50+0200\n"
-"PO-Revision-Date: 2020-10-12 11:52+0200\n"
+"POT-Creation-Date: 2020-10-13 16:23+0200\n"
+"PO-Revision-Date: 2020-10-13 16:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -897,9 +897,6 @@ msgstr "Summe Guthaben"
 msgid "Included_deposit"
 msgstr "Davon Pfand"
 
-msgid "Of_the_{0}_on_the_credit_account_{1}_are_reserved_for_deposit_compensation_payments._As_long_as_this_amount_is_negative_money_for_deposit_compensation_payments_is_available."
-msgstr "Von den {0} auf dem Guthaben-Konto sind {1} für Pfand-Ausgleichszahlungen reserviert. Solange der Pfand-Betrag negativ ist, ist Geld für die Pfand-Ausgleichszahlungen vorhanden."
-
 msgid "docs_route_members"
 msgstr "mitglieder"
 
@@ -1065,29 +1062,17 @@ msgstr "Dein Pfand-Kontostand"
 msgid "docs_route_infos_for_success"
 msgstr "wichtige-infos-zum-gelingen"
 
-msgid "Taken_back_empty_glasses_of_all_manufacturers"
-msgstr "Pfand-Rücknahmen aller Hersteller"
-
-msgid "per_week"
-msgstr "pro Woche"
-
-msgid "Returned_deposit_of_all_members"
-msgstr "Pfand-Rückgaben aller Mitglieder"
-
-msgid "Compensation_payments_for_all_manufacturers"
-msgstr "Pfand-Ausgleichszahlungen für alle Hersteller"
+msgid "Deposit_overview_for_all_manufacturers"
+msgstr "Pfand-Übersicht für alle Hersteller"
 
 msgid "Year"
 msgstr "Jahr"
 
-msgid "Difference_returned_deposit_and_taken_back_deposit"
-msgstr "Differenz Pfand-Rücknahmen und Pfand-Rückgaben"
-
 msgid "Compensation_payments"
 msgstr "Ausgleichszahlungen"
 
-msgid "Difference"
-msgstr "Differenz"
+msgid "Open_deposit_demands"
+msgstr "Offene Pfand-Forderungen"
 
 msgid "Sum"
 msgstr "Summe"
@@ -1097,6 +1082,18 @@ msgstr "Reserviert für Ausgleichszahlungen"
 
 msgid "Difference_to_open_deposit_demands"
 msgstr "Differenz zwischen reservierten Ausgleichszahlungen und offenen Pfand-Forderungen"
+
+msgid "Deposit_diagram:_Data_per_week"
+msgstr "Pfand-Grafik: Daten pro Woche"
+
+msgid "Deposit_diagram_explanation_text."
+msgstr "Die grüne und blaue Linie sollte (etwas zeitversetzt) immer in etwa gleich sein. Pfand-Rücknahmen und Ausgleichszahlungen können zeitlich korrigiert werden: Eintragung im Pfandkonto des jeweiligen Herstellers löschen und mit korrigiertem Datum erneut eintragen."
+
+msgid "Empty_glasses_returned_by_manufacturer"
+msgstr "Pfand-Rücknahmen (Hersteller)"
+
+msgid "Returned_deposit_by_member"
+msgstr "Pfand-Rückgaben (Mitglieder)"
 
 msgid "Pickup_day"
 msgstr "Abholtag"
@@ -2129,6 +2126,21 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Of_the_{0}_on_the_credit_account_{1}_are_reserved_for_deposit_compensation_payments._As_long_as_this_amount_is_negative_money_for_deposit_compensation_payments_is_available."
+#~ msgstr "Von den {0} auf dem Guthaben-Konto sind {1} für Pfand-Ausgleichszahlungen reserviert. Solange der Pfand-Betrag negativ ist, ist Geld für die Pfand-Ausgleichszahlungen vorhanden."
+
+#~ msgid "Taken_back_empty_glasses_of_all_manufacturers"
+#~ msgstr "Pfand-Rücknahmen aller Hersteller"
+
+#~ msgid "per_week"
+#~ msgstr "pro Woche"
+
+#~ msgid "Difference_returned_deposit_and_taken_back_deposit"
+#~ msgstr "Differenz Pfand-Rücknahmen und Pfand-Rückgaben"
+
+#~ msgid "Difference"
+#~ msgstr "Differenz"
 
 #~ msgid "Mobile_barcode_scanning_with_scan_app?"
 #~ msgstr "Mobiles Barcode-Scannen mittels Scan-App?"
