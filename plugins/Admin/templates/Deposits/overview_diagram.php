@@ -39,11 +39,15 @@ echo $this->element('reportNavTabs', [
     'dateFrom' => $dateFrom,
     'dateTo' => $dateTo,
 ]);
-?>
 
-<?php
 
     echo '<h2 style="margin-top:10px;">' . __d('admin', 'Deposit_overview_for_all_manufacturers') . '</h2>';
+
+    if (!isset($xAxisData1LineChart)) {
+        $deposit = __d('admin', 'deposit');
+        echo '<p>'.__d('admin', 'There_is_no_{0}_available.', [$deposit]) . '</p>';
+        return;
+    }
 
     echo '<table class="list no-clone-last-row" style="width:615px;margin-top:10px;">';
     echo '<tr>';
@@ -75,10 +79,6 @@ echo $this->element('reportNavTabs', [
 echo '<br />'.__d('admin', 'Reserved_for_compensation_payments').': <b class="'.($paymentDepositDelta < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($paymentDepositDelta) . '</b>';
 echo '<br />'.__d('admin', 'Difference_to_open_deposit_demands').': <b class="'.($differenceToOpenDepositDemands < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($differenceToOpenDepositDemands) . '</b>';
 
-
-if (!isset($xAxisData1LineChart)) {
-    return;
-}
 
 echo '<h2 style="margin-top:30px;">' . __d('admin', 'Deposit_diagram:_Data_per_week') . '</h2>';
 echo '<p>'.__d('admin', 'Deposit_diagram_explanation_text.') . '</p>';
