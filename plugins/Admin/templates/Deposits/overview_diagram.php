@@ -56,7 +56,8 @@ echo $this->element('reportNavTabs', [
     foreach($years as $year) {
         echo '<tr>';
             echo '<td style="width:50px;">' . $year . '</td>';
-            echo '<td style="text-align:right;;" class="'.($yearlyDepositsDelivered[$year] < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($yearlyDepositsDelivered[$year]) . '</td>';
+            $depositDelivered = $yearlyDepositsDelivered[$year] ?? 0;
+            echo '<td style="text-align:right;;" class="'.($depositDelivered < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($depositDelivered) . '</td>';
             echo '<td style="text-align:right;" class="'.($yearlyManufacturerEmptyGlasses[$year] < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($yearlyManufacturerEmptyGlasses[$year]) . '</td>';
             echo '<td style="text-align:right;" class="'.($yearlyManufacturerMoney[$year] < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($yearlyManufacturerMoney[$year]) . '</td>';
             echo '<td style="text-align:right;" class="'.($yearlyOverallDeltas[$year] < 0 ? 'negative' : '').'">' . $this->Number->formatAsCurrency($yearlyOverallDeltas[$year]) . '</td>';
