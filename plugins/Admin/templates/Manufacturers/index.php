@@ -79,7 +79,6 @@ echo '<tr class="sort">';
 echo '</tr>';
 $i = 0;
 $sumProductCount = 0;
-$sumDeposit = 0;
 $sumTimebasedCurrency = null;
 foreach ($manufacturers as $manufacturer) {
     $i ++;
@@ -152,7 +151,6 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '<td>';
     if ($manufacturer->sum_deposit_delivered > 0) {
-        $sumDeposit += $manufacturer->deposit_credit_balance;
         $depositCreditBalanceClasses = [];
         if ($manufacturer->deposit_credit_balance < 0) {
             $depositCreditBalanceClasses[] = 'negative';
@@ -276,11 +274,7 @@ echo '<tr>';
 echo '<td colspan="2"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '<td><b>' . $sumProductCount . '</b></td>';
 $colspan = 8;
-echo '<td>';
-    if ($sumDeposit <> 0) {
-        echo '<b class="' . ($sumDeposit < 0 ? 'negative' : '') . '">'.$this->Number->formatAsCurrency($sumDeposit) . '</b>';
-    }
-echo '</td>';
+echo '<td></td>';
 
 if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
     $colspan ++;

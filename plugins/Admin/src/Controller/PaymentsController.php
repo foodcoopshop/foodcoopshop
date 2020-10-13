@@ -198,7 +198,6 @@ class PaymentsController extends AdminAppController
     public function add()
     {
         $this->RequestHandler->renderAs($this, 'json');
-
         $type = trim($this->getRequest()->getData('type'));
         if (! in_array($type, [
             'product',
@@ -222,9 +221,14 @@ class PaymentsController extends AdminAppController
         $amount = $this->getRequest()->getData('amount');
         $amount = Configure::read('app.numberHelper')->parseFloatRespectingLocale($amount);
 
+        $dateAdd = $this->getRequest()->getData('dateAdd');
+
         try {
             $entity = $this->Payment->newEntity(
-                ['amount' => $amount],
+                [
+                    'amount' => $amount,
+                    'date_add' => $dateAdd,
+                ],
                 ['validate' => 'add']
             );
             if ($entity->hasErrors()) {
@@ -341,25 +345,45 @@ class PaymentsController extends AdminAppController
             }
         }
 
+        $dateAddForEntity = Time::now();
+        $paymentPastDate = false;
+        if ($dateAdd > 0) {
+            $dateAddForEntity = FrozenDate::createFromFormat(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), Configure::read('app.timeHelper')->formatToDbFormatDate($dateAdd));
+            $paymentPastDate = true;
+        }
+        if ($dateAddForEntity->isToday()) {
+            $paymentPastDate = false;
+            $dateAddForEntity = Time::now(); // always save time for today, even if it's explicitely passed
+        }
+
+
         // add entry in table payments
-        $newPayment = $this->Payment->save(
-            $this->Payment->newEntity(
-                [
-                    'status' => APP_ON,
-                    'type' => $type,
-                    'id_customer' => $customerId,
-                    'id_manufacturer' => isset($manufacturerId) ? $manufacturerId : 0,
-                    'date_add' => Time::now(),
-                    'date_changed' => Time::now(),
-                    'amount' => $amount,
-                    'text' => $text,
-                    'created_by' => $this->AppAuth->getUserId(),
-                ]
-            )
+        $entity = $this->Payment->newEntity(
+            [
+                'status' => APP_ON,
+                'type' => $type,
+                'id_customer' => $customerId,
+                'id_manufacturer' => isset($manufacturerId) ? $manufacturerId : 0,
+                'date_add' => $dateAddForEntity,
+                'date_changed' => Time::now(),
+                'amount' => $amount,
+                'text' => $text,
+                'created_by' => $this->AppAuth->getUserId(),
+            ]
         );
 
+        $newPayment = $this->Payment->save($entity);
+
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $message .= ' ' . __d('admin', 'was_added_successfully:_{0}', ['<b>' . Configure::read('app.numberHelper')->formatAsCurrency($amount).'</b>']);
+
+        $paymentPastDateMessage = '';
+        if ($type == 'deposit' && $paymentPastDate) {
+            $paymentPastDateMessage = ' ' . __d('admin', 'for_the') . ' <b>' . $dateAddForEntity->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '</b>';
+        }
+        $message .= ' ' . __d('admin', 'was_added_successfully_{0}:_{1}', [
+            $paymentPastDateMessage,
+            '<b>' . Configure::read('app.numberHelper')->formatAsCurrency($amount).'</b>',
+        ]);
 
         if ($type == 'member_fee') {
             $message .= ', ' . __d('admin', 'for') . ' ' . Configure::read('app.htmlHelper')->getMemberFeeTextForFrontend($text);

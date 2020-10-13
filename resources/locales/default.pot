@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-09-15 10:44+0200\n"
+"POT-Creation-Date: 2020-10-13 16:25+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1637,6 +1637,9 @@ msgstr ""
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr ""
 
+msgid "The_date_must_not_be_a_future_date."
+msgstr ""
+
 msgid "Please_enter_a_correct_amount."
 msgstr ""
 
@@ -1763,13 +1766,10 @@ msgstr ""
 msgid "to_(time_context)"
 msgstr ""
 
-msgid "yes"
+msgid "Generated_invoices"
 msgstr ""
 
-msgid "no"
-msgstr ""
-
-msgid "Invoice_number_abbreviataion_{0}_{1}"
+msgid "Invoices_for_{0}_have_been_sent"
 msgstr ""
 
 msgid "Invoice_number_abbreviation"
@@ -1781,19 +1781,16 @@ msgstr ""
 msgid "Products"
 msgstr ""
 
-msgid "Invoices_for_{0}_have_been_sent"
-msgstr ""
-
-msgid "Generated_invoices"
+msgid "Sent_order_lists"
 msgstr ""
 
 msgid "member"
 msgstr ""
 
-msgid "Order_lists_for_the_day"
+msgid "Invoice_number_abbreviataion_{0}_{1}"
 msgstr ""
 
-msgid "Sent_order_lists"
+msgid "Order_lists_for_the_day"
 msgstr ""
 
 msgid "Customer_adds_payment_manually"
@@ -1827,6 +1824,12 @@ msgid "every_last_{0}_of_a_month"
 msgstr ""
 
 msgid "bulk_order"
+msgstr ""
+
+msgid "yes"
+msgstr ""
+
+msgid "no"
 msgstr ""
 
 msgid "Deleted_Email_Address"
@@ -1874,7 +1877,10 @@ msgstr ""
 msgid "Superadmin"
 msgstr ""
 
-msgid "Credit_and_deposit_balance"
+msgid "Credit_overview"
+msgstr ""
+
+msgid "Deposit_overview"
 msgstr ""
 
 msgid "Payment_type_credit_upload"

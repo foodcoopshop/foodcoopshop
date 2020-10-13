@@ -20,6 +20,7 @@ return [
         'DateNTimeShort2' => 'dd.MM.yy HH:mm',
         'DateNTimeLongWithSecs' => 'dd.MM.y HH:mm:ss',
         'TimeShort' => 'HH:mm',
+        'TimeShortWithSeconds' => 'HH:mm:ss',
         'DateForDatepicker' => 'dd.mm.yy',
         'Year' => 'Y',
         'DateShortAlt' => 'd.m.Y'

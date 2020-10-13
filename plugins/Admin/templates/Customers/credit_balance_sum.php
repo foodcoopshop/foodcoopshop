@@ -61,15 +61,10 @@ echo '<tr>';
         echo '<b>' . $this->Number->formatAsCurrency($sums['credit_balance']) . '</b>';
     echo '</td>';
     echo '<td class="' . ($sums['deposit_delta'] < 0 ? 'negative' : '') . '">';
-        echo '<b>' . $this->Number->formatAsCurrency($sums['deposit_delta']) . ' *</b>';
+        echo '<b>' . $this->Number->formatAsCurrency($sums['deposit_delta']) . '</b>';
     echo '</td>';
 echo '</tr>';
 
 echo '</table>';
 
-echo '<p style="padding:5px;">
-          * '.__d('admin', 'Of_the_{0}_on_the_credit_account_{1}_are_reserved_for_deposit_compensation_payments._As_long_as_this_amount_is_negative_money_for_deposit_compensation_payments_is_available.', [
-            $this->Number->formatAsCurrency($sums['credit_balance']),
-            $this->Number->formatAsCurrency($sums['deposit_delta'])
-      ]).'</p>';
 ?>

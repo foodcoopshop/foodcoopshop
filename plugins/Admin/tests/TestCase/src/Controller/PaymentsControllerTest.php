@@ -6,6 +6,7 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
+use Cake\I18n\Time;
 use Laminas\Diactoros\UploadedFile;
 use Cake\TestSuite\EmailTrait;
 
@@ -158,12 +159,46 @@ class PaymentsControllerTest extends AppCakeTestCase
         );
     }
 
-    public function testAddDepositToManufacturerEmptyGlasses()
+    public function testAddDepositToManufacturerEmptyGlassesWithoutDate()
     {
         $this->addDepositToManufacturer(
             'empty_glasses',
             'Pfand-Rücknahme (Leergebinde) für Demo Fleisch-Hersteller wurde erfolgreich eingetragen: <b>10,00 €'
         );
+    }
+
+    public function testAddDepositToManufacturerEmptyGlassesWithDateToday()
+    {
+        $today = date(Configure::read('DateFormat.DateShortAlt'), strtotime(Configure::read('app.timeHelper')->getCurrentDateForDatabase()));
+        $payment = $this->addDepositToManufacturer(
+            'empty_glasses',
+            'Pfand-Rücknahme (Leergebinde) für Demo Fleisch-Hersteller wurde erfolgreich eingetragen: <b>10,00 €',
+            $today,
+        );
+        $this->assertNotEquals('00:00:00', $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('TimeShortWithSeconds')));
+        $this->assertEquals($today, $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')));
+    }
+
+    public function testAddDepositToManufacturerEmptyGlassesWithDatePast()
+    {
+        $dateAdd = '12.12.2018';
+        $payment = $this->addDepositToManufacturer(
+            'empty_glasses',
+            'Pfand-Rücknahme (Leergebinde) für Demo Fleisch-Hersteller wurde erfolgreich für den <b>'.$dateAdd.'</b> eingetragen: <b>10,00 €',
+            $dateAdd,
+        );
+        $this->assertEquals('00:00:00', $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('TimeShortWithSeconds')));
+        $this->assertEquals($dateAdd, $payment->date_add->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')));
+    }
+
+    public function testAddDepositToManufacturerEmptyGlassesWithDateFuture()
+    {
+        $this->loginAsSuperadmin();
+        $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
+        $dateAdd = '01.01.2099';
+        $jsonDecodedContent = $this->addPayment(0, 30, 'deposit', $manufacturerId, 'empty_glasses', $dateAdd);
+        $this->assertEquals(0, $jsonDecodedContent->status);
+        $this->assertEquals('Das Datum darf nicht in der Zukunft liegen.', $jsonDecodedContent->msg);
     }
 
     public function testAddDepositToManufacturerMoney()
@@ -279,7 +314,7 @@ class PaymentsControllerTest extends AppCakeTestCase
 
     }
 
-    private function addDepositToManufacturer($depositText, $ActionLogText)
+    private function addDepositToManufacturer($depositText, $actionLogText, $dateAdd = null)
     {
         $this->Customer = $this->getTableLocator()->get('Customers');
 
@@ -290,17 +325,23 @@ class PaymentsControllerTest extends AppCakeTestCase
         $manufacturerDepositSum = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, false);
         $this->assertEmpty($manufacturerDepositSum[0]['sumDepositReturned']);
 
-        $jsonDecodedContent = $this->addPayment(0, $amountToAdd, 'deposit', $manufacturerId, $depositText);
-        $this->assertEquals(1, $jsonDecodedContent->status);
-        $this->assertEquals($amountToAdd, $jsonDecodedContent->amount);
+        $jsonDecodedContent = $this->addPayment(0, $amountToAdd, 'deposit', $manufacturerId, $depositText, $dateAdd);
+        $payment = $this->Payment->find('all', [
+            'conditions' => [
+                'Payments.id' =>  $jsonDecodedContent->paymentId,
+            ]
+        ])->first();
+
+        $this->assertEquals(1, $payment->status);
         $manufacturerDepositSum = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, false);
         $this->assertEquals($amountToAdd, $manufacturerDepositSum[0]['sumDepositReturned']);
         $this->assertActionLogRecord(
             Configure::read('test.superadminId'),
             'payment_deposit_manufacturer_added',
             'payments',
-            $ActionLogText
+            $actionLogText,
         );
+        return $payment;
     }
 
     private function addPaymentAndAssertIncreasedCreditBalance($customerId, $amountToAdd, $paymentType)
@@ -345,16 +386,18 @@ class PaymentsControllerTest extends AppCakeTestCase
      * @param string $type
      * @param int $manufacturerId optional
      * @param string $text optional
+     * @param date $dateAdd optional
      * @return string
      */
-    private function addPayment($customerId, $amount, $type, $manufacturerId = 0, $text = '')
+    private function addPayment($customerId, $amount, $type, $manufacturerId = 0, $text = '', $dateAdd = 0)
     {
         $this->ajaxPost('/admin/payments/add', [
             'customerId' => $customerId,
             'amount' => $amount,
             'type' => $type,
             'manufacturerId' => $manufacturerId,
-            'text' => $text
+            'text' => $text,
+            'dateAdd' => $dateAdd,
         ]);
         return $this->getJsonDecodedContent();
     }

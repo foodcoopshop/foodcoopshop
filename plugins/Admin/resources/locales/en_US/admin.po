@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-09-28 08:42+0200\n"
-"PO-Revision-Date: 2020-09-28 08:43+0200\n"
+"POT-Creation-Date: 2020-10-13 16:23+0200\n"
+"PO-Revision-Date: 2020-10-13 16:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -176,6 +176,9 @@ msgstr "Sum of compensation payments for manufacturers"
 
 msgid "Credit_and_deposit_balance"
 msgstr "Credit and deposit balance"
+
+msgid "Deposit_overview"
+msgstr "Deposit overview"
 
 msgid "Deposit_account"
 msgstr "Deposit account"
@@ -363,8 +366,11 @@ msgstr "for"
 msgid "Deposit_take_back"
 msgstr "Deposit take back"
 
-msgid "was_added_successfully:_{0}"
-msgstr "was added successfully: {0}"
+msgid "for_the"
+msgstr "for the"
+
+msgid "was_added_successfully_{0}:_{1}"
+msgstr "was added successfully {0}: {1}"
 
 msgid "The_amount_was_added_to_the_credit_system_of_{0}_and_can_be_deleted_there."
 msgstr "The amount was added to the credit system of {0} and can be deleted there."
@@ -891,9 +897,6 @@ msgstr "Sum of credits"
 msgid "Included_deposit"
 msgstr "Included deposit"
 
-msgid "Of_the_{0}_on_the_credit_account_{1}_are_reserved_for_deposit_compensation_payments._As_long_as_this_amount_is_negative_money_for_deposit_compensation_payments_is_available."
-msgstr "{1} (of {0} on the credit account) are reserved for deposit compensation payments. As long as this amount is negative, there is money available for compensation payments."
-
 msgid "docs_route_members"
 msgstr "members"
 
@@ -1055,6 +1058,42 @@ msgstr "Returned deposit"
 
 msgid "Your_deposit_balance"
 msgstr "Your deposit balance"
+
+msgid "docs_route_infos_for_success"
+msgstr "infos-for-success"
+
+msgid "Deposit_overview_for_all_manufacturers"
+msgstr "Deposit overview for all manufacturers"
+
+msgid "Year"
+msgstr "Year"
+
+msgid "Compensation_payments"
+msgstr "Compensation payments"
+
+msgid "Open_deposit_demands"
+msgstr "Open deposit demands"
+
+msgid "Sum"
+msgstr "Sum"
+
+msgid "Reserved_for_compensation_payments"
+msgstr "Reserved for compensation payments"
+
+msgid "Difference_to_open_deposit_demands"
+msgstr "Difference to open deposit demands"
+
+msgid "Deposit_diagram:_Data_per_week"
+msgstr ""
+
+msgid "Deposit_diagram_explanation_text."
+msgstr ""
+
+msgid "Empty_glasses_returned_by_manufacturer"
+msgstr "Empty glasses returned by manufacturer"
+
+msgid "Returned_deposit_by_member"
+msgstr "Returned deposit by member"
 
 msgid "Pickup_day"
 msgstr "Pickup day"
@@ -1503,9 +1542,6 @@ msgstr "There is no {0} available."
 msgid "Delete_payment?"
 msgstr "Delete payment?"
 
-msgid "Sum"
-msgstr "Sum"
-
 msgid "Back_to_member_overview"
 msgstr "Back to member overview"
 
@@ -1562,9 +1598,6 @@ msgstr "New?"
 
 msgid "Delivery_rhythm"
 msgstr "Delivery rhythm"
-
-msgid "docs_route_infos_for_success"
-msgstr "infos-for-success"
 
 msgid "Added_on"
 msgstr "Added on"
@@ -2093,6 +2126,21 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Of_the_{0}_on_the_credit_account_{1}_are_reserved_for_deposit_compensation_payments._As_long_as_this_amount_is_negative_money_for_deposit_compensation_payments_is_available."
+#~ msgstr "{1} (of {0} on the credit account) are reserved for deposit compensation payments. As long as this amount is negative, there is money available for compensation payments."
+
+#~ msgid "Taken_back_empty_glasses_of_all_manufacturers"
+#~ msgstr "Taken back empty glasses of all manufacturers"
+
+#~ msgid "per_week"
+#~ msgstr "per week"
+
+#~ msgid "Difference_returned_deposit_and_taken_back_deposit"
+#~ msgstr "Difference returned deposit and taken back empty glasses"
+
+#~ msgid "Difference"
+#~ msgstr "Difference"
 
 #~ msgid "Mobile_barcode_scanning_with_scan_app?"
 #~ msgstr "Mobile barcode scanning with scan app?"

@@ -180,6 +180,60 @@ class MyTimeHelper extends TimeHelper
         return $nextDeliveryDays;
     }
 
+    /**
+     * In ISO-8601 specification, it says that December 28th is always in the last week of its year.
+     * https://stackoverflow.com/questions/3319386/php-get-last-week-number-in-year
+     */
+    public function getLastCalendarWeekOfYear($year)
+    {
+        return date('W', strtotime($year . '-12-28'));
+    }
+
+    public function getAllCalendarWeeksUntilNow($timestampStart)
+    {
+
+        $startCalendarWeek = date('W', $timestampStart);
+        $startYear = date('Y', $timestampStart);
+        $currentYear = date('Y');
+        $allYears = array_reverse($this->getAllYearsUntilThisYear($currentYear, $startYear));
+        $currentCalendarWeek = date('W');
+
+        $result = [];
+        foreach($allYears as $year)
+        {
+            switch($year) {
+                case $startYear:
+                    $result = array_merge($result, $this->getCalendarWeeks($startCalendarWeek, $this->getLastCalendarWeekOfYear($startYear), $year));
+                    break;
+                case $currentYear:
+                    $result = array_merge($result, $this->getCalendarWeeks(1, $currentCalendarWeek, $year));
+                    break;
+                default:
+                    $result = array_merge($result, $this->getCalendarWeeks(1, $this->getLastCalendarWeekOfYear($year), $year));
+                    break;
+            }
+        }
+
+        return $result;
+    }
+
+    public function getCalendarWeeks($firstWeek, $lastWeek, $year)
+    {
+        $firstWeek = (int) $firstWeek;
+        $lastWeek = (int) $lastWeek;
+
+        $result = [];
+        while($firstWeek <= $lastWeek) {
+            $firstWeekAsString = $firstWeek;
+            if ($firstWeek < 10) {
+                $firstWeekAsString = '0' . $firstWeek;
+            }
+            $result[] = $year. '-' . $firstWeekAsString;
+            $firstWeek++;
+        }
+        return $result;
+    }
+
     public function getDbFormattedPickupDayByDbFormattedDate($date, $sendOrderListsWeekday = null, $deliveryRhythmType = null, $deliveryRhythmCount = null)
     {
         if (is_null($sendOrderListsWeekday)) {

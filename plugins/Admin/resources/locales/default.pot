@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-09-28 08:42+0200\n"
+"POT-Creation-Date: 2020-10-13 16:23+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -174,6 +174,9 @@ msgid "Sum_of_deposit_compensation_payments_for_manufactures"
 msgstr ""
 
 msgid "Credit_and_deposit_balance"
+msgstr ""
+
+msgid "Deposit_overview"
 msgstr ""
 
 msgid "Deposit_account"
@@ -362,7 +365,10 @@ msgstr ""
 msgid "Deposit_take_back"
 msgstr ""
 
-msgid "was_added_successfully:_{0}"
+msgid "for_the"
+msgstr ""
+
+msgid "was_added_successfully_{0}:_{1}"
 msgstr ""
 
 msgid "The_amount_was_added_to_the_credit_system_of_{0}_and_can_be_deleted_there."
@@ -890,9 +896,6 @@ msgstr ""
 msgid "Included_deposit"
 msgstr ""
 
-msgid "Of_the_{0}_on_the_credit_account_{1}_are_reserved_for_deposit_compensation_payments._As_long_as_this_amount_is_negative_money_for_deposit_compensation_payments_is_available."
-msgstr ""
-
 msgid "docs_route_members"
 msgstr ""
 
@@ -1053,6 +1056,42 @@ msgid "Returned_deposit"
 msgstr ""
 
 msgid "Your_deposit_balance"
+msgstr ""
+
+msgid "docs_route_infos_for_success"
+msgstr ""
+
+msgid "Deposit_overview_for_all_manufacturers"
+msgstr ""
+
+msgid "Year"
+msgstr ""
+
+msgid "Compensation_payments"
+msgstr ""
+
+msgid "Open_deposit_demands"
+msgstr ""
+
+msgid "Sum"
+msgstr ""
+
+msgid "Reserved_for_compensation_payments"
+msgstr ""
+
+msgid "Difference_to_open_deposit_demands"
+msgstr ""
+
+msgid "Deposit_diagram:_Data_per_week"
+msgstr ""
+
+msgid "Deposit_diagram_explanation_text."
+msgstr ""
+
+msgid "Empty_glasses_returned_by_manufacturer"
+msgstr ""
+
+msgid "Returned_deposit_by_member"
 msgstr ""
 
 msgid "Pickup_day"
@@ -1502,9 +1541,6 @@ msgstr ""
 msgid "Delete_payment?"
 msgstr ""
 
-msgid "Sum"
-msgstr ""
-
 msgid "Back_to_member_overview"
 msgstr ""
 
@@ -1560,9 +1596,6 @@ msgid "New?"
 msgstr ""
 
 msgid "Delivery_rhythm"
-msgstr ""
-
-msgid "docs_route_infos_for_success"
 msgstr ""
 
 msgid "Added_on"

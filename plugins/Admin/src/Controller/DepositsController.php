@@ -25,6 +25,9 @@ class DepositsController extends AdminAppController
     public function isAuthorized($user)
     {
         switch ($this->getRequest()->getParam('action')) {
+            case 'overviewDiagram':
+                return $this->AppAuth->isSuperadmin();
+                break;
             case 'index':
             case 'detail':
                 return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
@@ -52,6 +55,141 @@ class DepositsController extends AdminAppController
             $manufacturerId = $this->manufacturerId;
         }
         return $manufacturerId;
+    }
+
+    public function overviewDiagram()
+    {
+        $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfThisYear();
+        if (! empty($this->getRequest()->getQuery('dateFrom'))) {
+            $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
+        }
+        $this->set('dateFrom', $dateFrom);
+
+        $dateTo = Configure::read('app.timeHelper')->getLastDayOfThisYear();
+        if (! empty($this->getRequest()->getQuery('dateTo'))) {
+            $dateTo = h($this->getRequest()->getQuery('dateTo'));
+        }
+        $this->set('dateTo', $dateTo);
+
+        $this->set('title_for_layout', __d('admin', 'Deposit_overview'));
+
+        $this->Payment = $this->getTableLocator()->get('Payments');
+        $manufacturerDepositSumEmptyGlassesByCalendarWeek = $this->Payment->getManufacturerDepositSumByCalendarWeekAndType('empty_glasses');
+        $preparedManufacturerEmptyGlassesData = [];
+        foreach($manufacturerDepositSumEmptyGlassesByCalendarWeek as $week) {
+            $week->YearWeekPrepared = str_replace('-', 'W', $week->YearWeek);
+            $preparedManufacturerEmptyGlassesData[$week->YearWeek] = $week->SumAmount;
+        }
+
+        $manufacturerDepositSumMoneyByCalendarWeek = $this->Payment->getManufacturerDepositSumByCalendarWeekAndType('money');
+        $preparedManufacturerMoneyData = [];
+        foreach($manufacturerDepositSumMoneyByCalendarWeek as $week) {
+            $week->YearWeekPrepared = str_replace('-', 'W', $week->YearWeek);
+            $preparedManufacturerMoneyData[$week->YearWeek] = $week->SumAmount;
+        }
+
+        $customerDepositSumByCalendarWeek = $this->Payment->getCustomerDepositSumByCalendarWeek();
+        $preparedCustomerData = [];
+        foreach($customerDepositSumByCalendarWeek as $week) {
+            $week->YearWeekPrepared = str_replace('-', 'W', $week->YearWeek);
+            $preparedCustomerData[$week->YearWeek] = $week->SumAmount;
+        }
+
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $depositsDeliveredByYear = $this->OrderDetail->getDepositSum(false, 'year');
+
+        if (empty($manufacturerDepositSumEmptyGlassesByCalendarWeek) && empty($customerDepositSumByCalendarWeek)) {
+            return;
+        }
+
+        if (empty($customerDepositSumByCalendarWeek)) {
+            $firstWeek = strtotime($manufacturerDepositSumEmptyGlassesByCalendarWeek[0]->YearWeekPrepared);
+        }
+        if (empty($manufacturerDepositSumEmptyGlassesByCalendarWeek)) {
+            $firstWeek = strtotime($customerDepositSumByCalendarWeek[0]->YearWeekPrepared);
+        }
+
+        if (!isset($firstWeek)) {
+            $firstWeek = strtotime($customerDepositSumByCalendarWeek[0]->YearWeekPrepared);
+            if (strtotime($customerDepositSumByCalendarWeek[0]->YearWeekPrepared) > strtotime($manufacturerDepositSumEmptyGlassesByCalendarWeek[0]->YearWeekPrepared)) {
+                $firstWeek = strtotime($manufacturerDepositSumEmptyGlassesByCalendarWeek[0]->YearWeekPrepared);
+            }
+        }
+
+        $allCalendarWeeksUntilNow = Configure::read('app.timeHelper')->getAllCalendarWeeksUntilNow($firstWeek);
+        $xAxisData1LineChart = [];
+        $xAxisData2LineChart = [];
+        $xAxisData3LineChart = [];
+        $yAxisDataLineChart= [];
+        $manufacturerEmptyGlassesSum = 0;
+        $manufacturerMoneySum = 0;
+        $yearlyManufacturerEmptyGlasses = [];
+        $yearlyManufacturerMoney = [];
+        $yearlyDepositsDelivered = [];
+        $yearlyOverallDeltas = [];
+        $years = [];
+
+        foreach($allCalendarWeeksUntilNow as $calendarWeek) {
+
+            $year = explode('-', $calendarWeek)[0];
+            $years[] = $year;
+
+            $yAxisDataLineChart[] = $calendarWeek;
+
+            $manufacturerEmptyGlasses = $preparedManufacturerEmptyGlassesData[$calendarWeek] ?? $preparedManufacturerEmptyGlassesData[$calendarWeek] ?? 0;
+            $xAxisData1LineChart[] = $manufacturerEmptyGlasses;
+
+            $customerDeposit = $preparedCustomerData[$calendarWeek] ?? $preparedCustomerData[$calendarWeek] ?? 0;
+            $xAxisData2LineChart[]= $customerDeposit;
+
+            $manufacturerMoney = $preparedManufacturerMoneyData[$calendarWeek] ?? $preparedManufacturerMoneyData[$calendarWeek] ?? 0;
+            $xAxisData3LineChart[] = $manufacturerMoney;
+
+            @$yearlyManufacturerEmptyGlasses[$year] += $manufacturerEmptyGlasses;
+            @$yearlyManufacturerMoney[$year] += $manufacturerMoney;
+
+            @$yearlyOverallDeltas[$year] += $manufacturerEmptyGlasses + $manufacturerMoney;
+
+        }
+
+        $depositsDeliveredSum = 0;
+        foreach($depositsDeliveredByYear as $depositDelivered) {
+            $year = $depositDelivered['Year'];
+            @$yearlyDepositsDelivered[$year] = $depositDelivered['sumDepositDelivered'];
+            @$yearlyOverallDeltas[$year] -= $depositDelivered['sumDepositDelivered'];
+        }
+
+        $this->set('xAxisData1LineChart', $xAxisData1LineChart);
+        $this->set('xAxisData2LineChart', $xAxisData2LineChart);
+        $this->set('xAxisData3LineChart', $xAxisData3LineChart);
+        $this->set('yAxisDataLineChart', $yAxisDataLineChart);
+
+        $manufacturerEmptyGlassesSum = array_sum($preparedManufacturerEmptyGlassesData);
+        $this->set('manufacturerEmptyGlassesSum', $manufacturerEmptyGlassesSum);
+        $manufacturerMoneySum = array_sum($preparedManufacturerMoneyData);
+        $this->set('manufacturerMoneySum', $manufacturerMoneySum);
+        $depositsDeliveredSum = array_sum($yearlyDepositsDelivered);
+        $this->set('depositsDeliveredSum', $depositsDeliveredSum);
+        $overallDeltaSum = ($depositsDeliveredSum - $manufacturerEmptyGlassesSum - $manufacturerMoneySum) * -1;
+        $this->set('overallDeltaSum', $overallDeltaSum);
+
+        $this->set('yearlyManufacturerEmptyGlasses', $yearlyManufacturerEmptyGlasses);
+        $this->set('yearlyManufacturerMoney', $yearlyManufacturerMoney);
+        $this->set('yearlyDepositsDelivered', $yearlyDepositsDelivered);
+        $this->set('yearlyOverallDeltas', $yearlyOverallDeltas);
+
+        $this->set('years', array_unique($years));
+
+        $this->Cutomers = $this->getTableLocator()->get('Customers');
+        $paymentDepositDelta = $this->Customer->getDepositBalanceForCustomers(APP_ON);
+        $paymentDepositDelta += $this->Customer->getDepositBalanceForCustomers(APP_OFF);
+        $paymentDepositDelta += $this->Customer->getDepositBalanceForDeletedCustomers();
+        $paymentDepositDelta = $paymentDepositDelta * -1 - $manufacturerMoneySum;
+        $this->set('paymentDepositDelta', $paymentDepositDelta);
+
+        $differenceToOpenDepositDemands = $overallDeltaSum + $paymentDepositDelta;
+        $this->set('differenceToOpenDepositDemands', $differenceToOpenDepositDemands);
+
     }
 
     public function myIndex()
@@ -94,7 +232,7 @@ class DepositsController extends AdminAppController
         $orderStates = Configure::read('app.htmlHelper')->getOrderStateIds();
         $this->set('orderStates', $orderStates);
 
-        $depositsDelivered = $this->OrderDetail->getDepositSum($manufacturerId, true);
+        $depositsDelivered = $this->OrderDetail->getDepositSum($manufacturerId, 'month');
         $depositsReturned = $this->Payment->getMonthlyDepositSumByManufacturer($manufacturerId, true);
 
         $monthsAndYear = Configure::read('app.timeHelper')->getAllMonthsUntilThisYear(date('Y'), 2016);

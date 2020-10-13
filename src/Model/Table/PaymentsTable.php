@@ -2,8 +2,11 @@
 
 namespace App\Model\Table;
 
+use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
+use Cake\I18n\Time;
 use Cake\Validation\Validator;
+use App\Lib\Error\Exception\InvalidParameterException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -50,6 +53,18 @@ class PaymentsTable extends AppTable
         $validator->notEmptyString('amount', __('Please_enter_a_number.'));
         $validator->numeric('amount', __('Please_enter_a_correct_number.'));
         $validator->greaterThanOrEqual('amount', 0.01, __('The_amount_(money)_needs_to_be_greater_than_0.'));
+        $validator->allowEmptyDate('date_add');
+        $validator->add('date_add', 'allowed-only-today-or-before', [
+            'rule' => function ($value, $context) {
+                $formattedValue = date(Configure::read('DateFormat.DatabaseAlt'), strtotime($value));
+                if ($formattedValue >Configure::read('app.timeHelper')->getCurrentDateForDatabase()) {
+                    return false;
+                }
+                return true;
+            },
+            'message' => __('The_date_must_not_be_a_future_date.'),
+        ]);
+
         return $validator;
     }
 
@@ -106,6 +121,49 @@ class PaymentsTable extends AppTable
         ]);
 
         return $paymentSum;
+    }
+
+    public function getManufacturerDepositSumByCalendarWeekAndType($type)
+    {
+        if (!in_array($type, ['empty_glasses', 'money'])) {
+            throw new InvalidParameterException('wrong type: was ' . $type);
+        }
+        $conditions = $this->getManufacturerDepositConditions();
+        $conditions['Payments.text'] = $type;
+
+        $query = $this->find('all', [
+            'conditions' => $conditions
+        ]);
+
+        $formattedDate = 'DATE_FORMAT(Payments.date_add, "%Y-%u")';
+        $query->select([
+            'YearWeek' => $formattedDate,
+            'SumAmount' => $query->func()->sum('Payments.amount')
+        ]);
+        $query->group($formattedDate);
+        $result = $query->toArray();
+
+        return $result;
+    }
+
+    public function getCustomerDepositSumByCalendarWeek()
+    {
+        $query = $this->find('all', [
+            'conditions' => [
+                'Payments.status' => APP_ON,
+                'Payments.type' => 'deposit',
+                'Payments.id_manufacturer' => 0,
+            ]
+        ]);
+        $formattedDate = 'DATE_FORMAT(Payments.date_add, "%Y-%u")';
+        $query->select([
+            'YearWeek' => $formattedDate,
+            'SumAmount' => $query->func()->sum('Payments.amount')
+        ]);
+        $query->group($formattedDate);
+        $result = $query->toArray();
+
+        return $result;
     }
 
     /**

@@ -953,3 +953,8 @@ i.fa-fw.far.fa-money-bill-alt {
 .cke_emoji-panel {
     z-index: 10000000001 ! important;
 }
+
+body.deposits.overview_diagram table th,
+body.deposits.overview_diagram table td {
+    text-align: right;
+}

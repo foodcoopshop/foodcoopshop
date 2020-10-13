@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-09-15 10:44+0200\n"
+"POT-Creation-Date: 2020-10-13 16:25+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2208,6 +2208,9 @@ msgstr "Podaj poprawny numer."
 msgid "The_amount_(money)_needs_to_be_greater_than_0."
 msgstr "Ilość musi być większa od 0."
 
+msgid "The_date_must_not_be_a_future_date."
+msgstr ""
+
 # Please enter a correct number.
 #, fuzzy
 msgid "Please_enter_a_correct_amount."
@@ -2380,18 +2383,13 @@ msgstr "Przypomnienie o odbiorze dla"
 msgid "to_(time_context)"
 msgstr "do"
 
-# yes
-msgid "yes"
-msgstr "tak"
+# Generated invoices
+msgid "Generated_invoices"
+msgstr "Wygenerowane faktury"
 
-# no
-msgid "no"
-msgstr "nie"
-
-# Invoice nº
-#, fuzzy
-msgid "Invoice_number_abbreviataion_{0}_{1}"
-msgstr "Faktura nr"
+# Invoices for {0} have been sent
+msgid "Invoices_for_{0}_have_been_sent"
+msgstr "Faktury dla {0} zostały wysłane"
 
 # Invoice nº
 msgid "Invoice_number_abbreviation"
@@ -2405,27 +2403,24 @@ msgstr "Wysłane"
 msgid "Products"
 msgstr "Produkty"
 
-# Invoices for {0} have been sent
-msgid "Invoices_for_{0}_have_been_sent"
-msgstr "Faktury dla {0} zostały wysłane"
-
-# Generated invoices
-msgid "Generated_invoices"
-msgstr "Wygenerowane faktury"
+# Sent order lists
+msgid "Sent_order_lists"
+msgstr "Wysłane listy zamówień"
 
 # Member
 #, fuzzy
 msgid "member"
 msgstr "Członek"
 
+# Invoice nº
+#, fuzzy
+msgid "Invoice_number_abbreviataion_{0}_{1}"
+msgstr "Faktura nr"
+
 # Send order list day
 #, fuzzy
 msgid "Order_lists_for_the_day"
 msgstr "Dzień wysyłki list zamówień"
-
-# Sent order lists
-msgid "Sent_order_lists"
-msgstr "Wysłane listy zamówień"
 
 msgid "Customer_adds_payment_manually"
 msgstr ""
@@ -2467,6 +2462,14 @@ msgstr "w każdy(ą) ostatni(ą) {0} miesiąca"
 
 msgid "bulk_order"
 msgstr ""
+
+# yes
+msgid "yes"
+msgstr "tak"
+
+# no
+msgid "no"
+msgstr "nie"
 
 # Deleted e-mail address
 msgid "Deleted_Email_Address"
@@ -2530,8 +2533,15 @@ msgstr "Admin"
 msgid "Superadmin"
 msgstr "Superadmin"
 
-msgid "Credit_and_deposit_balance"
-msgstr ""
+# Order overview
+#, fuzzy
+msgid "Credit_overview"
+msgstr "Przegląd zamówień"
+
+# Order overview
+#, fuzzy
+msgid "Deposit_overview"
+msgstr "Przegląd zamówień"
 
 # Credit upload
 msgid "Payment_type_credit_upload"

@@ -46,6 +46,7 @@ if (isset($manufacturerId)) {
             echo '</div>';
         }
     }
+
 }
 
 echo $this->Form->control('Payments.amount', [
@@ -53,6 +54,15 @@ echo $this->Form->control('Payments.amount', [
     'type' => 'number',
     'step' => '0.01'
 ]);
+
+if (isset($manufacturerId)) {
+    echo $this->Form->control('Payments.date_add', [
+        'label' => __d('admin', 'Date'),
+        'type' => 'text',
+        'value' => date($this->Time->getI18Format('DateShortAlt'), $this->Time->getCurrentDay()),
+        'class' => 'datepicker',
+    ]);
+}
 
 echo $this->Form->hidden('Payments.type', [
     'value' => 'deposit'
