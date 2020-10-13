@@ -14,8 +14,8 @@
     "install": "bash ../bin/cake npm_post_install"
   },
   "dependencies": {
-    "@ericblade/quagga2": "^1.2.2",
-    "@fortawesome/fontawesome-free": "^5.15.0",
+    "@ericblade/quagga2": "^1.2.4",
+    "@fortawesome/fontawesome-free": "^5.15.1",
     "blueimp-file-upload": "^10.31.0",
     "bootstrap": "^4.5.2",
     "bootstrap-select": "^1.13.18",
@@ -33,12 +33,12 @@
     "popper.js": "^1.16.1",
     "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
-    "swiper": "6.3.2",
+    "swiper": "6.3.3",
     "tooltipster": "^4.2.8",
     "uglify-es": "^3.3.9",
     "webrtc-adapter": "^7.7.0"
   },
   "devDependencies": {
-    "eslint": "^7.10.0"
+    "eslint": "^7.11.0"
   }
 }
