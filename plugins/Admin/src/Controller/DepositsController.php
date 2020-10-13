@@ -181,7 +181,7 @@ class DepositsController extends AdminAppController
         $paymentDepositDelta = $this->Customer->getDepositBalanceForCustomers(APP_ON);
         $paymentDepositDelta += $this->Customer->getDepositBalanceForCustomers(APP_OFF);
         $paymentDepositDelta += $this->Customer->getDepositBalanceForDeletedCustomers();
-        $paymentDepositDelta = $paymentDepositDelta * -1;
+        $paymentDepositDelta = $paymentDepositDelta * -1 - $manufacturerMoneySum;
         $this->set('paymentDepositDelta', $paymentDepositDelta);
 
         $differenceToOpenDepositDemands = $overallDeltaSum + $paymentDepositDelta;
