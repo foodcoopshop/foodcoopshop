@@ -91,7 +91,7 @@ foreach ($orderDetails as $od) {
         $pdf->table .= '<td width="' . $widths[2] . '">' . $orderDetail->product->manufacturer->name . '</td>';
 
         $priceStyle = '';
-        if (!empty($orderDetail->order_detail_unit)) {
+        if (!empty($orderDetail->order_detail_unit) && !$orderDetail->order_detail_unit->mark_as_saved) {
             $priceStyle = ' background-color:#cecece;';
         }
 
@@ -103,7 +103,7 @@ foreach ($orderDetails as $od) {
             $timebasedCurrencyOrderDetailInList = true;
         }
 
-        if (!empty($orderDetail->order_detail_unit)) {
+        if (!empty($orderDetail->order_detail_unit) && !$orderDetail->order_detail_unit->mark_as_saved) {
             $pdf->table .= ' *';
             $usesQuantityInUnits++;
         }
