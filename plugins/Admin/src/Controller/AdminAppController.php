@@ -73,7 +73,7 @@ class AdminAppController extends AppController
             }
             $image->widen($thumbSize);
             $thumbsFileName = $thumbsPath . DS . $imageId . $options['suffix'] . '.' . $extension;
-            $image->save($thumbsFileName);
+            $image->save($thumbsFileName, 100);
         }
 
         return $imageId . $options['suffix'] . '.' . $extension;
