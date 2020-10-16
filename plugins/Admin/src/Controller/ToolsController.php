@@ -82,12 +82,16 @@ class ToolsController extends AdminAppController
         $upload->moveTo(WWW_ROOT . $filenameWithPath);
 
         Image::make(WWW_ROOT . $filenameWithPath)
-            ->widen($this->getMaxTmpUploadFileSize())
-            ->save(WWW_ROOT . $filenameWithPath);
-            $this->set([
-                'status' => 1,
-                'filename' => $filenameWithPath,
-            ]);
+            ->widen($this->getMaxTmpUploadFileSize(), function ($constraint) {
+                // prevent upsizing
+                $constraint->upsize();
+            })
+            ->save(WWW_ROOT . $filenameWithPath, 100);
+
+        $this->set([
+            'status' => 1,
+            'filename' => $filenameWithPath,
+        ]);
         $this->viewBuilder()->setOption('serialize', ['status', 'filename']);
     }
 
@@ -131,8 +135,8 @@ class ToolsController extends AdminAppController
         }
 
         Image::make($uploadedFile)
-        ->rotate($directionInDegrees)
-            ->save($uploadedFile);
+            ->rotate($directionInDegrees)
+            ->save($uploadedFile, 100);
 
         $rotatedImageSrc = $this->getRequest()->getData('filename') . '?' . StringComponent::createRandomString(3);
 

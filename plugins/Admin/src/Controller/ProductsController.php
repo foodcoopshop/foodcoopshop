@@ -361,7 +361,7 @@ class ProductsController extends AdminAppController
             }
             $physicalImage->widen($thumbSize);
             $thumbsFileName = $thumbsPath . DS . $image->id_image . $options['suffix'] . '.' . $extension;
-            $physicalImage->save($thumbsFileName);
+            $physicalImage->save($thumbsFileName, 100);
         }
 
         $actionLogMessage = __d('admin', 'A_new_image_was_uploaded_to_product_{0}_from_manufacturer_{1}.', [
