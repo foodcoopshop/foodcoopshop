@@ -611,6 +611,7 @@ class CartsControllerTest extends AppCakeTestCase
     {
         $reducedMaxPercentage = 15;
         $this->prepareTimebasedCurrencyConfiguration($reducedMaxPercentage);
+        $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', -1000);
 
         $this->loginAsSuperadmin();
         $this->fillCart();
