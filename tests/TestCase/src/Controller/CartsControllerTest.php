@@ -96,6 +96,14 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
+    public function testAddProductWithoutCredit()
+    {
+        $this->loginAsCustomer();;
+        $response = $this->addProductToCart($this->productId1, 1);
+        $this->assertRegExpWithUnquotedString('Um das Produkt zu bestellen, lade bitte dein Guthaben auf.', $response->msg);
+        $this->assertJsonError();
+    }
+
     public function testAddProductDeliveryRhythmIndividualOrderNotPossibleAnyMore()
     {
         $this->loginAsSuperadmin();
