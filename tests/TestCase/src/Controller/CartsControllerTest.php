@@ -104,7 +104,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addProductToCart($this->productId1, 1);
         $this->assertJsonOk();
         $response = $this->addProductToCart($this->productId1, 4);
-        $this->assertRegExpWithUnquotedString('Bitte lade wieder Guthaben (aktuell 5,00 €) auf, es muss mindestens 10,00 € betragen.', $response->msg);
+        $this->assertRegExpWithUnquotedString('Bitte lade wieder Guthaben (aktuell 13,18 €) auf, es muss mindestens 10,00 € betragen.', $response->msg);
         $this->assertJsonError();
     }
 
