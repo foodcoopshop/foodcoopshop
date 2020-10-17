@@ -239,9 +239,6 @@ class FrontendController extends AppController
             $creditBalance = $this->AppAuth->getCreditBalance();
             $this->set('creditBalance', $creditBalance);
 
-            $shoppingLimitReached = !$this->AppAuth->isInstantOrderMode() && Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') != - 1 && $creditBalance < Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') * - 1;
-            $this->set('shoppingLimitReached', $shoppingLimitReached);
-
             $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
             $futureOrderDetails = $this->OrderDetail->getGroupedFutureOrdersByCustomerId($this->AppAuth->getUserId());
             $this->set('futureOrderDetails', $futureOrderDetails);

@@ -148,12 +148,6 @@ foodcoopshop.Mobile = {
             }
         });
 
-        var shoppingLimitReachedInfo = $('#cart .inner .credit-balance-wrapper .negative:not(.payment)').length;
-        if (shoppingLimitReachedInfo > 0) {
-            $('#' + headerId).append('<span class="negative shopping-limit-reached-info"><b>' + foodcoopshop.LocalizedJs.mobile.shoppingLimitReached + '</b></span>');
-        }
-
-
         // button renaming
         $('.entity-wrapper .btn').html('<i class="fa fa-lg fa-shopping-bag"></i>');
 
@@ -260,11 +254,6 @@ foodcoopshop.Mobile = {
         cartButton.removeClass('btn btn-success');
         cartButton.html('<span class="sum">' + foodcoopshop.Helper.formatFloatAsCurrency(0) + '</span><i class="fas fa-shopping-cart fa-2x"></i>');
         $('#' + headerId).append(cartButton);
-
-        var shoppingLimitReachedInfo = $('#cart .inner .credit-balance-wrapper .negative:not(.payment)').length;
-        if (shoppingLimitReachedInfo > 0) {
-            $('#' + headerId).append('<span class="negative shopping-limit-reached-info"><b>' + foodcoopshop.LocalizedJs.mobile.shoppingLimitReached + '</b></span>');
-        }
 
         $('#' + headerId).append($('#header .logo-wrapper'));
 

@@ -112,7 +112,6 @@ class LocalizedController extends Controller
                 'news' => __('News'),
                 'pages' => __('Pages'),
                 'routeAllCategories' => Configure::read('app.slugHelper')->getAllProducts(),
-                'shoppingLimitReached' => __('Shopping_limit_reached'),
                 'show' => __('Show'),
                 'showAllProducts' => __('Show_all_products')
             ],

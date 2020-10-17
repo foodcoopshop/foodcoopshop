@@ -27,7 +27,6 @@ if ($hideButton) {
         $availableQuantity = $stockAvailableQuantity - $stockAvailableQuantityLimit;
     }
     if (((($product['is_stock_product'] && $product['stock_management_enabled']) || !$stockAvailableAlwaysAvailable) && $availableQuantity <= 0)
-        || (isset($shoppingLimitReached) && $shoppingLimitReached)
         || $deliveryBreakEnabled) {
         $this->element('addScript', ['script' =>
             Configure::read('app.jsNamespace') . ".Helper.disableButton($('#btn-cart-".$productId."'));"
