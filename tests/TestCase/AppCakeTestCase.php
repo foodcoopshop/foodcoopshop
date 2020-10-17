@@ -312,6 +312,29 @@ abstract class AppCakeTestCase extends TestCase
         return $this->getJsonDecodedContent();
     }
 
+    /**
+     * @param int $customerId
+     * @param int $amount - strange behavior: posting a string '64,32' leads to '64.32' in controller
+     * @param string $type
+     * @param int $manufacturerId optional
+     * @param string $text optional
+     * @param date $dateAdd optional
+     * @return string
+     */
+    protected function addPayment($customerId, $amount, $type, $manufacturerId = 0, $text = '', $dateAdd = 0)
+    {
+        $this->ajaxPost('/admin/payments/add', [
+            'customerId' => $customerId,
+            'amount' => $amount,
+            'type' => $type,
+            'manufacturerId' => $manufacturerId,
+            'text' => $text,
+            'dateAdd' => $dateAdd,
+        ]);
+        return $this->getJsonDecodedContent();
+    }
+
+
     protected function changeManufacturer($manufacturerId, $field, $value)
     {
         $query = 'UPDATE ' . $this->Manufacturer->getTable().' SET '.$field.' = :value WHERE id_manufacturer = :manufacturerId';

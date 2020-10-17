@@ -109,10 +109,10 @@ class CartProductsTable extends AppTable
         }
 
         if (Configure::read('app.htmlHelper')->paymentIsCashless() && !$appAuth->isInstantOrderMode()) {
-            $grossPrice = $this->Products->getGrossPrice($product->id_product, $product->price);
+            $grossPrice = $this->Products->getGrossPrice($product->id_product, $product->price) * $amount;
             if (!$appAuth->hasEnoughCreditForProduct($grossPrice)) {
                 $message = __('Please_add_credit_({0})_(minimal_credit_is_{1}).', [
-                    Configure::read('app.numberHelper')->formatAsCurrency($appAuth->getCreditBalanceWithCurrentCart()),
+                    Configure::read('app.numberHelper')->formatAsCurrency($appAuth->getCreditBalanceMinusCurrentCartSum()),
                     Configure::read('app.numberHelper')->formatAsCurrency(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')),
                 ]);
                 return [

@@ -82,15 +82,15 @@ class AppAuthComponent extends AuthComponent
         return $dropdownData;
     }
 
-    public function getCreditBalanceWithCurrentCart()
+    public function getCreditBalanceMinusCurrentCartSum()
     {
-        return $this->getCreditBalance() + $this->getCart()['CartProductSum'];
+        return $this->getCreditBalance() - $this->getCart()['CartProductSum'];
     }
 
     public function hasEnoughCreditForProduct($grossPrice)
     {
         $hasEnoughCreditForProduct =
-            $this->getCreditBalanceWithCurrentCart() -
+            $this->getCreditBalanceMinusCurrentCartSum() -
             Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')
             >= $grossPrice;
         return $hasEnoughCreditForProduct;
