@@ -108,6 +108,21 @@ class CartProductsTable extends AppTable
             ];
         }
 
+        if (Configure::read('app.htmlHelper')->paymentIsCashless() && !$appAuth->isInstantOrderMode()) {
+            $grossPrice = $this->Products->getGrossPrice($product->id_product, $product->price);
+            if (!$appAuth->hasEnoughCreditForProduct($grossPrice)) {
+                $message = __('Please_add_credit_({0})_(minimal_credit_is_{1}).', [
+                    Configure::read('app.numberHelper')->formatAsCurrency($appAuth->getCreditBalanceWithCurrentCart()),
+                    Configure::read('app.numberHelper')->formatAsCurrency(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')),
+                ]);
+                return [
+                    'status' => 0,
+                    'msg' => $message,
+                    'productId' => $initialProductId,
+                ];
+            }
+        }
+
         // stock available check for product
         $availableQuantity = $product->stock_available->quantity;
         if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
