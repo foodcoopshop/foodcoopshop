@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-13 16:25+0200\n"
-"PO-Revision-Date: 2020-10-13 16:26+0200\n"
+"POT-Creation-Date: 2020-10-17 21:39+0200\n"
+"PO-Revision-Date: 2020-10-17 21:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -503,9 +503,6 @@ msgstr "Manufacturers"
 
 msgid "Pages"
 msgstr "Pages"
-
-msgid "Shopping_limit_reached"
-msgstr "Shopping limit reached"
 
 msgid "Show"
 msgstr "Show"
@@ -1512,6 +1509,9 @@ msgstr "The desired amount {0} is not valid."
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "The product with id {0} does not exist."
 
+msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
+msgstr "You ran out of credit {0} please add new credit (minimal {1})."
+
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "The attribute does not exist: {0}"
 
@@ -2127,12 +2127,6 @@ msgstr "Only stock products are shown."
 msgid "Your_credit_balance"
 msgstr "Your credit balance"
 
-msgid "You_reached_the_order_limit_{0}_please_add_credit."
-msgstr "You reached the order limit of {0}. Please add credit."
-
-msgid "Add_credit"
-msgstr "Add credit"
-
 msgid "Value_added_tax"
 msgstr "Value added tax"
 
@@ -2462,6 +2456,15 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Shopping_limit_reached"
+#~ msgstr "Shopping limit reached"
+
+#~ msgid "You_reached_the_order_limit_{0}_please_add_credit."
+#~ msgstr "You reached the order limit of {0}. Please add credit."
+
+#~ msgid "Add_credit"
+#~ msgstr "Add credit"
 
 #~ msgid "Credit_and_deposit_balance"
 #~ msgstr "Credit and deposit balance"

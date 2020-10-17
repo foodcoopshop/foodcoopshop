@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-13 16:23+0200\n"
+"POT-Creation-Date: 2020-10-17 21:39+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1064,6 +1064,12 @@ msgstr ""
 msgid "Deposit_overview_for_all_manufacturers"
 msgstr ""
 
+msgid "deposit"
+msgstr ""
+
+msgid "There_is_no_{0}_available."
+msgstr ""
+
 msgid "Year"
 msgstr ""
 
@@ -1533,9 +1539,6 @@ msgid "Comment"
 msgstr ""
 
 msgid "Add_transfered_member_fee"
-msgstr ""
-
-msgid "There_is_no_{0}_available."
 msgstr ""
 
 msgid "Delete_payment?"

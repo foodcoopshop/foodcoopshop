@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-13 16:23+0200\n"
+"POT-Creation-Date: 2020-10-17 21:39+0200\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1106,6 +1106,13 @@ msgstr "products"
 msgid "Deposit_overview_for_all_manufacturers"
 msgstr "Suma rekompensat kaucji dla producentów"
 
+#, fuzzy
+msgid "deposit"
+msgstr "Kaucja"
+
+msgid "There_is_no_{0}_available."
+msgstr "Żaden {0} nie jest dostępny."
+
 msgid "Year"
 msgstr ""
 
@@ -1590,9 +1597,6 @@ msgstr "Komentarz"
 
 msgid "Add_transfered_member_fee"
 msgstr "Dodaj przekazaną opłatę członkowską"
-
-msgid "There_is_no_{0}_available."
-msgstr "Żaden {0} nie jest dostępny."
 
 msgid "Delete_payment?"
 msgstr "Usunąć płatność?"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-13 16:25+0200\n"
+"POT-Creation-Date: 2020-10-17 21:39+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -501,9 +501,6 @@ msgid "Manufacturers"
 msgstr ""
 
 msgid "Pages"
-msgstr ""
-
-msgid "Shopping_limit_reached"
 msgstr ""
 
 msgid "Show"
@@ -1511,6 +1508,9 @@ msgstr ""
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr ""
 
+msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
+msgstr ""
+
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr ""
 
@@ -2124,12 +2124,6 @@ msgid "Only_stock_products_are_shown."
 msgstr ""
 
 msgid "Your_credit_balance"
-msgstr ""
-
-msgid "You_reached_the_order_limit_{0}_please_add_credit."
-msgstr ""
-
-msgid "Add_credit"
 msgstr ""
 
 msgid "Value_added_tax"

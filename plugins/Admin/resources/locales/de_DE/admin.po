@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-13 16:23+0200\n"
+"POT-Creation-Date: 2020-10-17 21:39+0200\n"
 "PO-Revision-Date: 2020-10-13 16:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1065,6 +1065,13 @@ msgstr "wichtige-infos-zum-gelingen"
 msgid "Deposit_overview_for_all_manufacturers"
 msgstr "Pfand-Übersicht für alle Hersteller"
 
+#, fuzzy
+msgid "deposit"
+msgstr "Pfand"
+
+msgid "There_is_no_{0}_available."
+msgstr "Es wurde noch kein {0} erfasst."
+
 msgid "Year"
 msgstr "Jahr"
 
@@ -1535,9 +1542,6 @@ msgstr "Kommentar"
 
 msgid "Add_transfered_member_fee"
 msgstr "Eingezahlten Mitgliedsbeitrag eintragen"
-
-msgid "There_is_no_{0}_available."
-msgstr "Es wurde noch kein {0} erfasst."
 
 msgid "Delete_payment?"
 msgstr "Zahlung löschen?"

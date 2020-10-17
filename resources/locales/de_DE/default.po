@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-13 16:25+0200\n"
-"PO-Revision-Date: 2020-10-13 16:25+0200\n"
+"POT-Creation-Date: 2020-10-17 21:39+0200\n"
+"PO-Revision-Date: 2020-10-17 21:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -503,9 +503,6 @@ msgstr "Hersteller"
 
 msgid "Pages"
 msgstr "Seiten"
-
-msgid "Shopping_limit_reached"
-msgstr "Guthaben-Limit erreicht"
 
 msgid "Show"
 msgstr "Anzeigen"
@@ -1512,6 +1509,9 @@ msgstr "Die gewünschte Anzahl {0} ist nicht gültig."
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "Das Produkt mit der ID {0} ist nicht vorhanden."
 
+msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
+msgstr "Bitte lade wieder Guthaben ({0}) auf, es muss mindestens {1} betragen."
+
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "Die Variante existiert nicht: {0}"
 
@@ -2127,12 +2127,6 @@ msgstr "Es werden nur Lagerprodukte angezeigt."
 msgid "Your_credit_balance"
 msgstr "Dein Guthaben"
 
-msgid "You_reached_the_order_limit_{0}_please_add_credit."
-msgstr "Du hast das Bestelllimit von {0} erreicht. Bitte lade vor dem Bestellen neues Guthaben auf."
-
-msgid "Add_credit"
-msgstr "Guthaben aufladen"
-
 msgid "Value_added_tax"
 msgstr "Umsatzsteuer"
 
@@ -2462,6 +2456,15 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Shopping_limit_reached"
+#~ msgstr "Guthaben-Limit erreicht"
+
+#~ msgid "You_reached_the_order_limit_{0}_please_add_credit."
+#~ msgstr "Du hast das Bestelllimit von {0} erreicht. Bitte lade vor dem Bestellen neues Guthaben auf."
+
+#~ msgid "Add_credit"
+#~ msgstr "Guthaben aufladen"
 
 #~ msgid "Credit_and_deposit_balance"
 #~ msgstr "Guthaben- und Pfand-Saldo"
