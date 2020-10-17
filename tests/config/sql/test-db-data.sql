@@ -135,7 +135,7 @@ INSERT INTO `fcs_configuration` VALUES
 (546,1,'FCS_REGISTRATION_INFO_TEXT','Info-Text beim Registrierungsformular<br /><div class=\"small\">Beim Registrierungsformlar wird unterhalb der E-Mail-Adresse dieser Text angezeigt.</div>','Um bei uns zu bestellen musst du Vereinsmitglied sein.','textarea_big',160,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (547,1,'FCS_SHOW_PRODUCTS_FOR_GUESTS','Produkte für nicht eingeloggte Mitglieder sichtbar?','0','boolean',20,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (548,1,'FCS_DEFAULT_NEW_MEMBER_ACTIVE','Neue Mitglieder automatisch aktivieren?','0','boolean',50,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
-(549,1,'FCS_MINIMAL_CREDIT_BALANCE','Höhe des Bestell-Limits, ab dem den Mitgliedern kein Bestellen mehr möglich ist.<br /><div class=\"small\">Z.B.: \"100\" für 100 € im Minus. 0 bedeutet \"kein Bestell-Limit\".</div>','100','number',125,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
+(549,1,'FCS_MINIMAL_CREDIT_BALANCE','Bis zu welchem Guthaben-Betrag sollen Bestellungen möglich sein?','-100','number',125,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (550,1,'FCS_BANK_ACCOUNT_DATA','Bankverbindung für die Guthaben-Einzahlungen\".','Guthaben-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878','text',130,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (551,1,'FCS_MEMBER_FEE_BANK_ACCOUNT_DATA','Bankverbindung für die Mitgliedsbeitrags-Einzahlungen\".','MB-Konto Testbank / IBAN: AT65 5645 4154 8748 8999 / BIC: ABC87878','text',140,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
 (552,1,'FCS_DELIVERY_DETAILS_FOR_MANUFACTURERS','Zusätzliche Liefer-Informationen für die Hersteller<br /><div class=\"small\">wird in den Bestell-Listen nach dem Lieferdatum angezeigt.</div>',', 15:00 bis 17:00 Uhr','text',120,'de_DE','2017-07-26 13:19:19','2017-07-26 13:19:19'),
@@ -366,7 +366,8 @@ INSERT INTO `phinxlog` VALUES
 (20200703072605,'CustomerCanSelectPickupDay','2020-07-06 08:34:44','2020-07-06 08:34:44',0),
 (20200831142250,'RemoveEmailLogTable','2020-08-31 15:10:29','2020-08-31 15:10:29',0),
 (20200910091755,'AddMemberSettingUseCameraForMobileBarcodeScanning','2020-09-10 09:21:00','2020-09-10 09:21:00',0),
-(20200925073919,'GermanIbanFix','2020-09-25 08:12:53','2020-09-25 08:12:53',0);
+(20200925073919,'GermanIbanFix','2020-09-25 08:12:53','2020-09-25 08:12:53',0),
+(20201017182431,'AdaptMinimalCreditBalance','2020-10-17 18:38:11','2020-10-17 18:38:11',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;
