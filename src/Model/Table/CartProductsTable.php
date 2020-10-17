@@ -108,6 +108,20 @@ class CartProductsTable extends AppTable
             ];
         }
 
+        // stock available check for product
+        $availableQuantity = $product->stock_available->quantity;
+        if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
+            $availableQuantity = $product->stock_available->quantity - $product->stock_available->quantity_limit;
+        }
+        if ((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$product->stock_available->always_available) && $attributeId == 0 && $availableQuantity < $combinedAmount && $amount > 0) {
+            $message = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}.', ['<b>' . $combinedAmount . '</b>', '<b>' . $product->name . '</b>', $availableQuantity]);
+            return [
+                'status' => 0,
+                'msg' => $message,
+                'productId' => $initialProductId
+            ];
+        }
+
         if (Configure::read('app.htmlHelper')->paymentIsCashless() && !$appAuth->isInstantOrderMode()) {
             $grossPrice = $this->Products->getGrossPrice($product->id_product, $product->price) * $amount;
             if (!$appAuth->hasEnoughCreditForProduct($grossPrice)) {
@@ -121,20 +135,6 @@ class CartProductsTable extends AppTable
                     'productId' => $initialProductId,
                 ];
             }
-        }
-
-        // stock available check for product
-        $availableQuantity = $product->stock_available->quantity;
-        if ($product->is_stock_product && $product->manufacturer->stock_management_enabled) {
-            $availableQuantity = $product->stock_available->quantity - $product->stock_available->quantity_limit;
-        }
-        if ((($product->is_stock_product && $product->manufacturer->stock_management_enabled) || !$product->stock_available->always_available) && $attributeId == 0 && $availableQuantity < $combinedAmount && $amount > 0) {
-            $message = __('The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}.', ['<b>' . $combinedAmount . '</b>', '<b>' . $product->name . '</b>', $availableQuantity]);
-            return [
-                'status' => 0,
-                'msg' => $message,
-                'productId' => $initialProductId
-            ];
         }
 
         // check if passed optional product/attribute relation exists
