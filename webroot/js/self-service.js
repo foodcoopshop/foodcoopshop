@@ -201,9 +201,17 @@ foodcoopshop.SelfService = {
     initCartErrors: function (cartErrors) {
         cartErrors = $.parseJSON(cartErrors);
         for (var key in cartErrors) {
-            var productContainer = $('#cart .product.' + key);
-            productContainer.addClass('error');
-            productContainer.after('<ul class="error-message ' + key + '"><li>' + cartErrors[key].join('</li><li>') + '</li></ul>');
+            var container;
+            var errorMessageString = '<ul class="error-message ' + key + '"><li>' + cartErrors[key].join('</li><li>') + '</li></ul>';
+            if (key == 'global') {
+                container = $('#SelfServiceForm');
+                container.addClass('error');
+                container.prepend(errorMessageString);
+            } else {
+                container = $('#cart .product.' + key);
+                container.addClass('error');
+                container.after(errorMessageString);
+            }
         }
     },
 

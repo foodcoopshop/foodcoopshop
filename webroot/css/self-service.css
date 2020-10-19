@@ -33,6 +33,7 @@ body.self_services #content {
 .self-service .right-box {
     position: fixed;
     left: 611px;
+    width: 305px;
     top: 0;
     overflow-y: auto;
     background-color: #fff;
@@ -214,8 +215,10 @@ body.customers.login .footer .right-wrapper .btn-add-deposit {
 .self-service ul.error-message {
     padding: 5px;
     float: left;
-    font-size: 12px;
     line-height: 14px;
+}
+.self-service .error-message {
+    font-size: 12px;
 }
 .self-service #cancellation-terms,
 .self-service #general-terms-and-conditions {
