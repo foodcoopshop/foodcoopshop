@@ -1048,10 +1048,14 @@ body.carts.detail .cart:not(#cart) .product.error span ,
 body.carts.detail .cart:not(#cart) .product.error a {
     color: #fff;
 }
-body.carts.detail .cart:not(#cart) ul.error-message {
+body.carts.detail .cart:not(#cart) ul.error-message.global {
+    padding: 10px;
+    margin: 0;
+}
+body.carts.detail .cart:not(#cart) ul.error-message:not(.global) {
     width: 102%;
-    padding: 15px 10px 10px 40px;
     float: left;
+    padding: 15px 10px 10px 40px;
     margin-left: -10px;
     margin-top: -10px;
 }
