@@ -442,7 +442,6 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
-
         $this->finishCart(0, 0);
         $this->assertResponseContains('Bitte akzeptiere die AGB.');
         $this->assertResponseContains('Bitte akzeptiere die Information über das Rücktrittsrecht und dessen Ausschluss.');
@@ -453,9 +452,19 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $this->fillCart();
         $this->checkCartStatus();
-
         $this->finishCart(1, 1, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, adfasfd sa');
         $this->assertResponseContains('Bitte gib maximal 500 Zeichen ein.');
+    }
+
+    public function testFinishCartWithMinimalCreditBalanceCheck()
+    {
+        $this->loginAsCustomer();
+        $this->fillCart();
+        $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
+        $this->finishCart(1,1);
+        $this->assertResponseContains('Bitte lade neues Guthaben auf.');
+        $this->assertResponseContains('-6,14');
+        $this->assertMailCount(0);
     }
 
     public function testFinishOrderWithComment()
@@ -571,14 +580,11 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testFinishOrderStockNotificationsDisabled()
     {
-
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'send_product_sold_out_limit_reached_for_manufacturer', 0);
         $this->changeManufacturer($manufacturerId, 'send_product_sold_out_limit_reached_for_contact_person', 0);
-
         $this->loginAsSuperadmin();
         $this->placeOrderWithStockProducts();
-
         $this->assertMailCount(1);
     }
 
