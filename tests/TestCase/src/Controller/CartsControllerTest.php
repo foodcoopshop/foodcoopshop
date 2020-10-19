@@ -103,7 +103,11 @@ class CartsControllerTest extends AppCakeTestCase
         $this->addPayment(Configure::read('test.customerId'), 15, 'product');
         $this->addProductToCart($this->productId1, 1);
         $this->assertJsonOk();
+        // test product without attribute
         $response = $this->addProductToCart($this->productId1, 8);
+        $this->assertRegExpWithUnquotedString('Bitte lade neues Guthaben auf, dein Guthaben abzüglich Warenkorb beträgt <b>13,18 €</b>. Du kannst bis <b>0,00 €</b> bestellen.', $response->msg);
+        // test product with attribute
+        $response = $this->addProductToCart($this->productId2, 14);
         $this->assertRegExpWithUnquotedString('Bitte lade neues Guthaben auf, dein Guthaben abzüglich Warenkorb beträgt <b>13,18 €</b>. Du kannst bis <b>0,00 €</b> bestellen.', $response->msg);
         $this->assertJsonError();
     }
