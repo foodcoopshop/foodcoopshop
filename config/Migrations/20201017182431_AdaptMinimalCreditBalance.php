@@ -31,7 +31,7 @@ class AdaptMinimalCreditBalance extends AbstractMigration
             $newValue = 0;
         }
         if($oldValue->value == 0) {
-            $newValue = -500;
+            $newValue = -1000;
         }
 
         $sql = "UPDATE fcs_configuration SET
