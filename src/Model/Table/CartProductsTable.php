@@ -126,8 +126,8 @@ class CartProductsTable extends AppTable
             $grossPrice = $this->Products->getGrossPrice($product->id_product, $product->price) * $amount;
             if (!$appAuth->hasEnoughCreditForProduct($grossPrice)) {
                 $message = __('Please_add_credit_({0})_(minimal_credit_is_{1}).', [
-                    Configure::read('app.numberHelper')->formatAsCurrency($appAuth->getCreditBalanceMinusCurrentCartSum()),
-                    Configure::read('app.numberHelper')->formatAsCurrency(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')),
+                    '<b>'.Configure::read('app.numberHelper')->formatAsCurrency($appAuth->getCreditBalanceMinusCurrentCartSum()).'</b>',
+                    '<b>'.Configure::read('app.numberHelper')->formatAsCurrency(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')).'</b>',
                 ]);
                 return [
                     'status' => 0,

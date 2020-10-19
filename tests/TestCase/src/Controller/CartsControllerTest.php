@@ -98,13 +98,13 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddProductWithoutCredit()
     {
-        $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 10);
+        $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
         $this->loginAsCustomer();
         $this->addPayment(Configure::read('test.customerId'), 15, 'product');
         $this->addProductToCart($this->productId1, 1);
         $this->assertJsonOk();
-        $response = $this->addProductToCart($this->productId1, 4);
-        $this->assertRegExpWithUnquotedString('Bitte lade wieder Guthaben (aktuell 13,18 €) auf, es muss mindestens 10,00 € betragen.', $response->msg);
+        $response = $this->addProductToCart($this->productId1, 8);
+        $this->assertRegExpWithUnquotedString('Bitte lade neues Guthaben auf, dein Guthaben abzüglich Warenkorb beträgt <b>13,18 €</b>. Du kannst bis <b>0,00 €</b> bestellen.', $response->msg);
         $this->assertJsonError();
     }
 
