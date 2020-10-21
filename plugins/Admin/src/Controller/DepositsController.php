@@ -136,13 +136,13 @@ class DepositsController extends AdminAppController
 
             $yAxisDataLineChart[] = $calendarWeek;
 
-            $manufacturerEmptyGlasses = $preparedManufacturerEmptyGlassesData[$calendarWeek] ?? $preparedManufacturerEmptyGlassesData[$calendarWeek] ?? 0;
+            $manufacturerEmptyGlasses = $preparedManufacturerEmptyGlassesData[$calendarWeek] ?? 0;
             $xAxisData1LineChart[] = $manufacturerEmptyGlasses;
 
-            $customerDeposit = $preparedCustomerData[$calendarWeek] ?? $preparedCustomerData[$calendarWeek] ?? 0;
+            $customerDeposit = $preparedCustomerData[$calendarWeek] ?? 0;
             $xAxisData2LineChart[]= $customerDeposit;
 
-            $manufacturerMoney = $preparedManufacturerMoneyData[$calendarWeek] ?? $preparedManufacturerMoneyData[$calendarWeek] ?? 0;
+            $manufacturerMoney = $preparedManufacturerMoneyData[$calendarWeek] ?? 0;
             $xAxisData3LineChart[] = $manufacturerMoney;
 
             @$yearlyManufacturerEmptyGlasses[$year] += $manufacturerEmptyGlasses;
