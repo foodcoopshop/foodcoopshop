@@ -2866,20 +2866,20 @@
     "packages-dev": [
         {
             "name": "cakephp/cakephp-codesniffer",
-            "version": "4.2.2",
+            "version": "4.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp-codesniffer.git",
-                "reference": "5308726fb068533727cc4309a5d9cb7d86b7841d"
+                "reference": "ea268e9fea27ac70b42b0051537e65feeb002511"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp-codesniffer/zipball/5308726fb068533727cc4309a5d9cb7d86b7841d",
-                "reference": "5308726fb068533727cc4309a5d9cb7d86b7841d",
+                "url": "https://api.github.com/repos/cakephp/cakephp-codesniffer/zipball/ea268e9fea27ac70b42b0051537e65feeb002511",
+                "reference": "ea268e9fea27ac70b42b0051537e65feeb002511",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2",
+                "php": ">=7.2.0",
                 "slevomat/coding-standard": "^6.3.6",
                 "squizlabs/php_codesniffer": "~3.5.5"
             },
@@ -2908,7 +2908,7 @@
                 "codesniffer",
                 "framework"
             ],
-            "time": "2020-07-20T16:16:52+00:00"
+            "time": "2020-10-14T20:27:39+00:00"
         },
         {
             "name": "cakephp/debug_kit",
@@ -2972,16 +2972,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "1.10.13",
+            "version": "1.10.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "47c841ba3b2d3fc0b4b13282cf029ea18b66d78b"
+                "reference": "547c9ee73fe26c77af09a0ea16419176b1cdbd12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/47c841ba3b2d3fc0b4b13282cf029ea18b66d78b",
-                "reference": "47c841ba3b2d3fc0b4b13282cf029ea18b66d78b",
+                "url": "https://api.github.com/repos/composer/composer/zipball/547c9ee73fe26c77af09a0ea16419176b1cdbd12",
+                "reference": "547c9ee73fe26c77af09a0ea16419176b1cdbd12",
                 "shasum": ""
             },
             "require": {
@@ -3062,7 +3062,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-09T09:46:34+00:00"
+            "time": "2020-10-13T13:59:09+00:00"
         },
         {
             "name": "composer/semver",
@@ -4025,16 +4025,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.49",
+            "version": "0.12.50",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "9a6136c2b39d5214da78de37128d5fe08e5d5b05"
+                "reference": "b8248f9c81265af75d6d969ca3252aaf3e998f3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9a6136c2b39d5214da78de37128d5fe08e5d5b05",
-                "reference": "9a6136c2b39d5214da78de37128d5fe08e5d5b05",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b8248f9c81265af75d6d969ca3252aaf3e998f3a",
+                "reference": "b8248f9c81265af75d6d969ca3252aaf3e998f3a",
                 "shasum": ""
             },
             "require": {
@@ -4077,7 +4077,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-12T14:10:44+00:00"
+            "time": "2020-10-16T12:22:23+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -4379,16 +4379,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.4.1",
+            "version": "9.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "1f09a12726593737e8a228ebb1c8647305d07c41"
+                "reference": "3866b2eeeed21b1b099c4bc0b7a1690ac6fd5baa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1f09a12726593737e8a228ebb1c8647305d07c41",
-                "reference": "1f09a12726593737e8a228ebb1c8647305d07c41",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3866b2eeeed21b1b099c4bc0b7a1690ac6fd5baa",
+                "reference": "3866b2eeeed21b1b099c4bc0b7a1690ac6fd5baa",
                 "shasum": ""
             },
             "require": {
@@ -4474,7 +4474,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-11T07:41:19+00:00"
+            "time": "2020-10-19T09:23:29+00:00"
         },
         {
             "name": "psy/psysh",
