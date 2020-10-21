@@ -80,15 +80,21 @@ class MenuHelper extends Helper
         }
         $tmpMenuItem = '<li' . (!empty($liClass) ? ' class="' . join(' ', $liClass).'"' : '').'>';
 
-            $tmpMenuItem .= $this->renderMenuElement($item['slug'], $item['name'], @$item['options']['style'], @$item['options']['class'], @$item['options']['fa-icon']);
+            $tmpMenuItem .= $this->renderMenuElement(
+                $item['slug'],
+                $item['name'],
+                $item['options']['style'] ?? '',
+                $item['options']['class'] ?? [],
+                $item['options']['fa-icon'] ?? ''
+            );
 
-        if (!empty($item['children'])) {
-            $tmpMenuItem .= '<ul>';
-            foreach ($item['children'] as $index => $child) {
-                $tmpMenuItem .= $this->buildMenuItem($child, $index);
+            if (!empty($item['children'])) {
+                $tmpMenuItem .= '<ul>';
+                foreach ($item['children'] as $index => $child) {
+                    $tmpMenuItem .= $this->buildMenuItem($child, $index);
+                }
+                $tmpMenuItem .= '</ul>';
             }
-            $tmpMenuItem .= '</ul>';
-        }
 
         $tmpMenuItem .= '</li>';
 
@@ -123,7 +129,7 @@ class MenuHelper extends Helper
         if ($fontAwesomeIconClass != '') {
             $class[] = 'has-icon';
         }
-        $fontAwesomeIconString = '<i class="fas '.@$fontAwesomeIconClass.'"></i>';
+        $fontAwesomeIconString = '<i class="fas ' . ($fontAwesomeIconClass ?? '') . '"></i>';
 
         $classString = '';
         if (!empty($class)) {
