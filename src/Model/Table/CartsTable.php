@@ -268,9 +268,16 @@ class CartsTable extends AppTable
             if (!is_null($customerSelectedPickupDay)) {
                 $pickupDay = $customerSelectedPickupDay;
             }
-            @$preparedCartProducts[$pickupDay]['CartDepositSum'] += $cartProduct['deposit'];
-            @$preparedCartProducts[$pickupDay]['CartProductSum'] += $cartProduct['price'];
-            @$preparedCartProducts[$pickupDay]['Products'][] = $cartProduct;
+            if (!isset($preparedCartProducts[$pickupDay])) {
+                $preparedCartProducts[$pickupDay] = [
+                    'CartDepositSum' => 0,
+                    'CartProductSum' => 0,
+                    'Products' => [],
+                ];
+            }
+            $preparedCartProducts[$pickupDay]['CartDepositSum'] += $cartProduct['deposit'] ?? 0;
+            $preparedCartProducts[$pickupDay]['CartProductSum'] += $cartProduct['price'] ?? 0;
+            $preparedCartProducts[$pickupDay]['Products'][] = $cartProduct ?? 0;
         }
         $cart['CartProducts'] = $preparedCartProducts;
         return $cart;

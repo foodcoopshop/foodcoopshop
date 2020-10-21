@@ -255,7 +255,10 @@ class OrderDetailsController extends AdminAppController
 
         $preparedOrderDetails = [];
         foreach($orderDetails as $orderDetail) {
-            @$preparedOrderDetails[$orderDetail->id_customer][] = $orderDetail;
+            if (!isset($preparedOrderDetails[$orderDetail->id_customer])) {
+                $preparedOrderDetails[$orderDetail->id_customer] = [];
+            }
+            $preparedOrderDetails[$orderDetail->id_customer][] = $orderDetail;
         }
 
         $pdfWriter = new OrderDetailsPdfWriter();
@@ -435,25 +438,29 @@ class OrderDetailsController extends AdminAppController
             'amount' => 0,
             'price' => 0,
             'deposit' => 0,
-            'units' => [],
+            'units' => [
+                'g' => 0,
+                'kg' => 0,
+                'l' => 0,
+            ],
             'reduced_price' => 0
         ];
         foreach($orderDetails as $orderDetail) {
-            @$sums['records_count']++;
+            $sums['records_count']++;
             if ($groupBy == '') {
-                @$sums['price'] += $orderDetail->total_price_tax_incl;
-                @$sums['amount'] += $orderDetail->product_amount;
-                @$sums['deposit'] += $orderDetail->deposit;
+                $sums['price'] += $orderDetail->total_price_tax_incl;
+                $sums['amount'] += $orderDetail->product_amount;
+                $sums['deposit'] += $orderDetail->deposit;
             } else {
-                @$sums['price'] += $orderDetail['sum_price'];
-                @$sums['amount'] += $orderDetail['sum_amount'];
+                $sums['price'] += $orderDetail['sum_price'];
+                $sums['amount'] += $orderDetail['sum_amount'];
                 if ($groupBy == 'manufacturer') {
-                    @$sums['reduced_price'] += $orderDetail['reduced_price'];
+                    $sums['reduced_price'] += $orderDetail['reduced_price'];
                 }
-                @$sums['deposit'] += $orderDetail['sum_deposit'];
+                $sums['deposit'] += $orderDetail['sum_deposit'];
             }
             if (!empty($orderDetail->order_detail_unit)) {
-                @$sums['units'][$orderDetail->order_detail_unit->unit_name] += $orderDetail->order_detail_unit->product_quantity_in_units;
+                $sums['units'][$orderDetail->order_detail_unit->unit_name] += $orderDetail->order_detail_unit->product_quantity_in_units;
             }
             if (!empty($orderDetail->timebased_currency_order_detail) || !empty($orderDetail['timebased_currency_order_detail_seconds_sum'])) {
                 $timebasedCurrencyOrderDetailInList = true;

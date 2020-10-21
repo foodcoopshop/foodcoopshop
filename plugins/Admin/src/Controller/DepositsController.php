@@ -145,18 +145,33 @@ class DepositsController extends AdminAppController
             $manufacturerMoney = $preparedManufacturerMoneyData[$calendarWeek] ?? 0;
             $xAxisData3LineChart[] = $manufacturerMoney;
 
-            @$yearlyManufacturerEmptyGlasses[$year] += $manufacturerEmptyGlasses;
-            @$yearlyManufacturerMoney[$year] += $manufacturerMoney;
+            if (!isset($yearlyManufacturerEmptyGlasses[$year])) {
+                $yearlyManufacturerEmptyGlasses[$year] = 0;
+            }
+            if (!isset($yearlyManufacturerMoney[$year])) {
+                $yearlyManufacturerMoney[$year] = 0;
+            }
+            if (!isset($yearlyOverallDeltas[$year])) {
+                $yearlyOverallDeltas[$year] = 0;
+            }
+            $yearlyManufacturerEmptyGlasses[$year] += $manufacturerEmptyGlasses;
+            $yearlyManufacturerMoney[$year] += $manufacturerMoney;
 
-            @$yearlyOverallDeltas[$year] += $manufacturerEmptyGlasses + $manufacturerMoney;
+            $yearlyOverallDeltas[$year] += $manufacturerEmptyGlasses + $manufacturerMoney;
 
         }
 
         $depositsDeliveredSum = 0;
         foreach($depositsDeliveredByYear as $depositDelivered) {
             $year = $depositDelivered['Year'];
-            @$yearlyDepositsDelivered[$year] = $depositDelivered['sumDepositDelivered'];
-            @$yearlyOverallDeltas[$year] -= $depositDelivered['sumDepositDelivered'];
+            if (!isset($yearlyDepositsDelivered[$year])) {
+                $yearlyDepositsDelivered[$year] = 0;
+            }
+            if (!isset($yearlyOverallDeltas[$year])) {
+                $yearlyOverallDeltas[$year] = 0;
+            }
+            $yearlyDepositsDelivered[$year] = $depositDelivered['sumDepositDelivered'];
+            $yearlyOverallDeltas[$year] -= $depositDelivered['sumDepositDelivered'];
         }
 
         $this->set('xAxisData1LineChart', $xAxisData1LineChart);

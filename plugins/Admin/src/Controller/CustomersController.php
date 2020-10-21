@@ -649,11 +649,15 @@ class CustomersController extends AdminAppController
 
         $this->set('customers', $customers);
 
-        $sums = [];
+        $sums = [
+            'credit_balance' => 0,
+            'deposit_delta' => 0,
+            'product_delta' => 0,
+        ];
         foreach($customers as $customer) {
-            @$sums['credit_balance'] += $customer['credit_balance'];
-            @$sums['deposit_delta'] += $customer['payment_deposit_delta'];
-            @$sums['product_delta'] += $customer['payment_product_delta'];
+            $sums['credit_balance'] += $customer['credit_balance'] ?? 0;
+            $sums['deposit_delta'] += $customer['payment_deposit_delta'] ?? 0;
+            $sums['product_delta'] += $customer['payment_product_delta'] ?? 0;
         }
         $this->set('sums', $sums);
 
