@@ -36,7 +36,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
 
     public function testAddPaymentLoggedOut()
     {
-        $this->addPayment(Configure::read('test.customerId'), 1800, 0);
+        $this->addTimebasedCurrencyPayment(Configure::read('test.customerId'), 1800, 0);
         $this->assertResponseCode(403);
     }
 
@@ -113,7 +113,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
     private function createPayment($hours)
     {
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.meatManufacturerId'));
-        $this->addPayment(Configure::read('test.customerId'), $hours * 3600, $manufacturerId);
+        $this->addTimebasedCurrencyPayment(Configure::read('test.customerId'), $hours * 3600, $manufacturerId);
     }
 
     /**
@@ -123,7 +123,7 @@ class TimebasedCurrencyPaymentsControllerTest extends AppCakeTestCase
      * @param string $text optional
      * @return string
      */
-    private function addPayment($customerId, $seconds, $manufacturerId, $text = '')
+    private function addTimebasedCurrencyPayment($customerId, $seconds, $manufacturerId, $text = '')
     {
         $this->ajaxPost($this->Slug->getTimebasedCurrencyPaymentAdd($customerId), [
             'seconds' => $seconds,

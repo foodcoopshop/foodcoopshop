@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-13 16:23+0200\n"
+"POT-Creation-Date: 2020-10-17 21:39+0200\n"
 "PO-Revision-Date: 2020-10-13 16:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1065,6 +1065,13 @@ msgstr "infos-for-success"
 msgid "Deposit_overview_for_all_manufacturers"
 msgstr "Deposit overview for all manufacturers"
 
+#, fuzzy
+msgid "deposit"
+msgstr "Deposit"
+
+msgid "There_is_no_{0}_available."
+msgstr "There is no {0} available."
+
 msgid "Year"
 msgstr "Year"
 
@@ -1535,9 +1542,6 @@ msgstr "Comment"
 
 msgid "Add_transfered_member_fee"
 msgstr "Add transfered member fee"
-
-msgid "There_is_no_{0}_available."
-msgstr "There is no {0} available."
 
 msgid "Delete_payment?"
 msgstr "Delete payment?"

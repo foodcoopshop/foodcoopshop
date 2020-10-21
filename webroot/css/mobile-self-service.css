@@ -66,6 +66,7 @@
        float: left;
        position: static;
        display: none;
+       width: 100%;
        margin-top: 10px;
        padding-bottom: 20px;
     }

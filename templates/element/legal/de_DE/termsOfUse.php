@@ -79,11 +79,7 @@ use Cake\Core\Configure;
 <p>6.1. Sämtliche Leistungen werden von einem Guthabenkonto abgebucht. Das Guthabenkonto wird vom Betreiber verwaltet, der Nutzer kann jederzeit auf das Guthabenkonto Beträge einbezahlen.
 
 <?php
-if (Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') == 0) {
-    echo 'Auch bei einem negativen Kontostand sind weitere Bestellungen möglich.';
-} else {
-    echo 'Bis zu einem Kontostand von ' . $this->MyNumber->formatAsCurrency(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE') * -1) . ' sind weitere Bestellungen möglich.';
-}
+    echo 'Bis zu einem Kontostand von ' . $this->MyNumber->formatAsCurrency(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')) . ' sind weitere Bestellungen möglich.';
 ?>
 
 <p>6.2. Durch die Bezahlung der einzelnen Waren ermächtigt der Nutzer den Betreiber, nach Abgabe der Bestellung den jeweils angegebenen Betrag an den Hersteller zu bezahlen.</p>

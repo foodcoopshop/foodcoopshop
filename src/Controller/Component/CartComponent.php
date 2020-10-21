@@ -198,7 +198,6 @@ class CartComponent extends Component
         foreach ($this->getProducts() as $cartProduct) {
             $ids = $this->Product->getProductIdAndAttributeId($cartProduct['productId']);
             if ($cartProduct['amount'] == 0) {
-                Log::error('amount of cart productId ' . $ids['productId'] . ' (attributeId : ' . $ids['attributeId'] . ') was 0 and therefore removed from cart');
                 $cartProductTable = FactoryLocator::get('Table')->get('CartProducts');
                 $cartProductTable->remove($ids['productId'], $ids['attributeId'], $this->getCartId());
                 $productWithAmount0Found = true;
@@ -212,6 +211,17 @@ class CartComponent extends Component
         // END check if no amount is 0
 
         $cartErrors = [];
+
+        if (Configure::read('app.htmlHelper')->paymentIsCashless() && !$this->AppAuth->isInstantOrderMode()) {
+            if ($this->AppAuth->getCreditBalanceMinusCurrentCartSum() < Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')) {
+                $message = __('Please_add_credit_({0})_(minimal_credit_is_{1}).', [
+                    '<b>'.Configure::read('app.numberHelper')->formatAsCurrency($this->AppAuth->getCreditBalanceMinusCurrentCartSum()).'</b>',
+                    '<b>'.Configure::read('app.numberHelper')->formatAsCurrency(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')).'</b>',
+                ]);
+                $cartErrors['global'][] = $message;
+            }
+        }
+
         $orderDetails2save = [];
         $products = [];
         $stockAvailable2saveData = [];

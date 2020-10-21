@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-13 16:25+0200\n"
+"POT-Creation-Date: 2020-10-17 21:39+0200\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -669,10 +669,6 @@ msgstr "Producenci"
 # Pages
 msgid "Pages"
 msgstr "Strony"
-
-# Shopping limit reached
-msgid "Shopping_limit_reached"
-msgstr "Limit zakupowy osiągnięty"
 
 # Show
 msgid "Show"
@@ -2038,6 +2034,9 @@ msgstr "Wymagana ilość {0} jest nieprawidłowa."
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "Produkt o id {0} nie istnieje."
 
+msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
+msgstr ""
+
 # The attribute does not exist: {0}
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "Atrybut nie istnieje: {0}"
@@ -2862,14 +2861,6 @@ msgstr "Wyłącznie produkty magazynowane są widoczne."
 msgid "Your_credit_balance"
 msgstr "Twoje saldo kredytowe"
 
-# You reached the order limit of {0}. Please add credit.
-msgid "You_reached_the_order_limit_{0}_please_add_credit."
-msgstr "Osiągnąłeś limit zamówień ({0}). Uzupełnij kredyt."
-
-# Add credit
-msgid "Add_credit"
-msgstr "Dodaj kredyt"
-
 # Value added tax
 msgid "Value_added_tax"
 msgstr "VAT"
@@ -3317,6 +3308,18 @@ msgstr "złożone w dniu"
 # The prices include the VAT.
 msgid "Prices_are_including_vat."
 msgstr "Ceny zawierają podatek VAT."
+
+# Shopping limit reached
+#~ msgid "Shopping_limit_reached"
+#~ msgstr "Limit zakupowy osiągnięty"
+
+# You reached the order limit of {0}. Please add credit.
+#~ msgid "You_reached_the_order_limit_{0}_please_add_credit."
+#~ msgstr "Osiągnąłeś limit zamówień ({0}). Uzupełnij kredyt."
+
+# Add credit
+#~ msgid "Add_credit"
+#~ msgstr "Dodaj kredyt"
 
 # Is the product a stock product?
 #, fuzzy

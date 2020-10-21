@@ -55,6 +55,21 @@ class CartProductsTable extends AppTable
         return $result;
     }
 
+    public function validateMinimalCreditBalance($appAuth, $productId, $price, $amount, $initialProductId)
+    {
+        $result = true;
+        if (Configure::read('app.htmlHelper')->paymentIsCashless() && !$appAuth->isInstantOrderMode()) {
+            $grossPrice = $this->Products->getGrossPrice($productId, $price) * $amount;
+            if (!$appAuth->hasEnoughCreditForProduct($grossPrice)) {
+                $result = __('Please_add_credit_({0})_(minimal_credit_is_{1}).', [
+                    '<b>'.Configure::read('app.numberHelper')->formatAsCurrency($appAuth->getCreditBalanceMinusCurrentCartSum()).'</b>',
+                    '<b>'.Configure::read('app.numberHelper')->formatAsCurrency(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')).'</b>',
+                ]);
+            }
+        }
+        return $result;
+    }
+
     /**
      * @param int $productId
      * @param int $attributeId
@@ -122,6 +137,15 @@ class CartProductsTable extends AppTable
             ];
         }
 
+        $result = $this->validateMinimalCreditBalance($appAuth, $product->id_product, $product->price, $amount, $initialProductId);
+        if ($result !== true) {
+            return [
+                'status' => 0,
+                'msg' => $result,
+                'productId' => $initialProductId,
+            ];
+        }
+
         // check if passed optional product/attribute relation exists
         if ($attributeId > 0) {
             $attributeIdFound = false;
@@ -141,6 +165,15 @@ class CartProductsTable extends AppTable
                             'status' => 0,
                             'msg' => $message,
                             'productId' => $initialProductId
+                        ];
+                    }
+
+                    $result = $this->validateMinimalCreditBalance($appAuth, $product->id_product, $attribute->price, $amount, $initialProductId);
+                    if ($result !== true) {
+                        return [
+                            'status' => 0,
+                            'msg' => $result,
+                            'productId' => $initialProductId,
                         ];
                     }
 
