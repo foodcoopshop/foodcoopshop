@@ -57,8 +57,8 @@ class ListsControllerTest extends AppCakeTestCase
         $this->get($listPageUrl);
         $this->assertResponseContains('<b>1</b> Datensatz');
         $this->assertResponseContains('<td>Demo Fleisch-Hersteller</td>');
-        $this->assertResponseNotRegExp('<td>Demo Gemüse-Hersteller</td>');
-        $this->assertResponseNotRegExp('<td>Demo Milch-Hersteller</td>');
+        $this->assertResponseNotContains('<td>Demo Gemüse-Hersteller</td>');
+        $this->assertResponseNotContains('<td>Demo Milch-Hersteller</td>');
 
         // check downloadable file as correct manufacturer
         $this->get($orderListDownloadUrl);

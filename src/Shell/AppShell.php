@@ -29,7 +29,6 @@ class AppShell extends Shell
     {
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        error_reporting(0); // disable all error messages
     }
 
     public function startTimeLogging()
