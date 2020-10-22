@@ -316,7 +316,7 @@ class MyHtmlHelper extends HtmlHelper
         }
         $imprintLines[] = $address;
         if (!($manufacturer->address_manufacturer->postcode == '' || $manufacturer->address_manufacturer->city == '')) {
-            $imprintLines[] = @$manufacturer->address_manufacturer->postcode . ' ' . @$manufacturer->address_manufacturer->city;
+            $imprintLines[] = $manufacturer->address_manufacturer->postcode . ' ' . $manufacturer->address_manufacturer->city;
         }
         if ($manufacturer->address_manufacturer->phone_mobile != '') {
             if ($outputType == 'html') {

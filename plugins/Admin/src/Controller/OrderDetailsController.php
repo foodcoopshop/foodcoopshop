@@ -1104,7 +1104,10 @@ class OrderDetailsController extends AdminAppController
                     ]
                 );
                 $this->OrderDetail->save($entity);
-                @$customers[$orderDetail->id_customer][] = $orderDetail;
+                if (!isset($customers[$orderDetail->id_customer])) {
+                    $customers[$orderDetail->id_customer] = [];
+                }
+                $customers[$orderDetail->id_customer][] = $orderDetail;
             }
 
             foreach($customers as $orderDetails) {

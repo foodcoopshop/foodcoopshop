@@ -80,17 +80,21 @@ class SendInvoicesShell extends AppShell
         // 3) add up the order detail by manufacturer
         $manufacturerOrders = [];
         foreach ($orderDetails as $orderDetail) {
-            @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_amount_sum'] += $orderDetail->product_amount;
-            @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_price_sum'] += $orderDetail->total_price_tax_incl;
+            if (!isset($manufacturerOrders[$orderDetail->product->id_manufacturer])) {
+                $manufacturerOrders[$orderDetail->product->id_manufacturer] = [
+                    'order_detail_amount_sum' => 0,
+                    'order_detail_price_sum' => 0,
+                ];
+            }
+            $manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_amount_sum'] += $orderDetail->product_amount;
+            $manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_price_sum'] += $orderDetail->total_price_tax_incl;
         }
 
         // 4) merge the order detail count with the manufacturers array
-        $i = 0;
         foreach ($manufacturers as $manufacturer) {
-            $manufacturer->current_order_count = $manufacturerOrders[$manufacturer->id_manufacturer];
-            $manufacturer->order_detail_amount_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_amount_sum'];
-            $manufacturer->order_detail_price_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_price_sum'];
-            $i++;
+            $manufacturer->current_order_count = $manufacturerOrders[$manufacturer->id_manufacturer] ?? 0;
+            $manufacturer->order_detail_amount_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_amount_sum'] ?? 0;
+            $manufacturer->order_detail_price_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_price_sum'] ?? 0;
         }
 
         // 5) write action log

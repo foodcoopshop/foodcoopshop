@@ -38,9 +38,16 @@ class ListTcpdf extends AppTcpdf
         $taxRates = [];
         foreach($results as $result)
         {
-            @$taxRates[$result['TaxRate']]['sum_price_excl'] += $result['OrderDetailPriceExcl'];
-            @$taxRates[$result['TaxRate']]['sum_tax'] += $result['OrderDetailTaxAmount'];
-            @$taxRates[$result['TaxRate']]['sum_price_incl'] += $result['OrderDetailPriceIncl'];
+            if (!isset($taxRates[$result['TaxRate']])) {
+                $taxRates[$result['TaxRate']] = [
+                    'sum_price_excl' => 0,
+                    'sum_tax' => 0,
+                    'sum_price_incl' => 0,
+                ];
+            }
+            $taxRates[$result['TaxRate']]['sum_price_excl'] += $result['OrderDetailPriceExcl'];
+            $taxRates[$result['TaxRate']]['sum_tax'] += $result['OrderDetailTaxAmount'];
+            $taxRates[$result['TaxRate']]['sum_price_incl'] += $result['OrderDetailPriceIncl'];
         }
 
         if (count($taxRates) == 1) {
@@ -142,7 +149,10 @@ class ListTcpdf extends AppTcpdf
             $taxSum += $tax;
 
             if ($result['OrderDetailUnitQuantityInUnits'] != '') {
-                @$unitSum[$result['OrderDetailUnitUnitName']] += $result['OrderDetailUnitProductQuantityInUnits'];
+                if (!isset($unitSum[$result['OrderDetailUnitUnitName']])) {
+                    $unitSum[$result['OrderDetailUnitUnitName']] = 0;
+                }
+                $unitSum[$result['OrderDetailUnitUnitName']] += $result['OrderDetailUnitProductQuantityInUnits'];
             }
 
             if (! $onlyShowSums) {

@@ -63,18 +63,23 @@ class SendOrderListsShell extends AppShell
         // 3) add up the order detail by manufacturer
         $manufacturerOrders = [];
         foreach ($allOrderDetails as $orderDetail) {
-            @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_details'][] = $orderDetail;
-            @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_amount_sum'] += $orderDetail->product_amount;
-            @$manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_price_sum'] += $orderDetail->total_price_tax_incl;
+            if (!isset($manufacturerOrders[$orderDetail->product->id_manufacturer])) {
+                $manufacturerOrders[$orderDetail->product->id_manufacturer] = [
+                    'order_details' => [],
+                    'order_detail_amount_sum' => 0,
+                    'order_detail_price_sum' => 0,
+                ];
+            }
+            $manufacturerOrders[$orderDetail->product->id_manufacturer]['order_details'][] = $orderDetail;
+            $manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_amount_sum'] += $orderDetail->product_amount;
+            $manufacturerOrders[$orderDetail->product->id_manufacturer]['order_detail_price_sum'] += $orderDetail->total_price_tax_incl;
         }
 
         // 4) merge the order detail count with the manufacturers array
-        $i = 0;
         foreach ($manufacturers as $manufacturer) {
-            $manufacturer->order_details = $manufacturerOrders[$manufacturer->id_manufacturer]['order_details'];
-            $manufacturer->order_detail_amount_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_amount_sum'];
-            $manufacturer->order_detail_price_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_price_sum'];
-            $i++;
+            $manufacturer->order_details = $manufacturerOrders[$manufacturer->id_manufacturer]['order_details'] ?? [];
+            $manufacturer->order_detail_amount_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_amount_sum'] ?? 0;
+            $manufacturer->order_detail_price_sum = $manufacturerOrders[$manufacturer->id_manufacturer]['order_detail_price_sum'] ?? 0;
         }
 
         $actionLogDatas = $this->getActionLogData($allOrderDetails, $manufacturers, $pickupDay);
@@ -94,9 +99,11 @@ class SendOrderListsShell extends AppShell
             // @see https://github.com/foodcoopshop/foodcoopshop/issues/408
             $groupedOrderDetails = [];
             foreach($manufacturer['order_details'] as $orderDetail) {
-                @$groupedOrderDetails[$orderDetail->pickup_day->i18nFormat(
-                    Configure::read('app.timeHelper')->getI18Format('Database')
-                )][] = $orderDetail;
+                $formattedPickupDay = $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
+                if (!isset($groupedOrderDetails[$formattedPickupDay])) {
+                    $groupedOrderDetails[$formattedPickupDay] = [];
+                }
+                $groupedOrderDetails[$formattedPickupDay][] = $orderDetail;
             }
             foreach($groupedOrderDetails as $pickupDayDbFormat => $orderDetails) {
 
@@ -145,8 +152,17 @@ class SendOrderListsShell extends AppShell
         foreach($orderDetails as $orderDetail) {
             $orderDetailPickupDay = $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
             $manufacturerId = $orderDetail->product->id_manufacturer;
-            @$tmpActionLogDatas[$manufacturerId][$orderDetailPickupDay]['order_detail_amount_sum'] += $orderDetail->product_amount;
-            @$tmpActionLogDatas[$manufacturerId][$orderDetailPickupDay]['order_detail_price_sum'] += $orderDetail->total_price_tax_incl;
+            if (!isset($tmpActionLogDatas[$manufacturerId])) {
+                $tmpActionLogDatas[$manufacturerId] = [];
+            }
+            if (!isset($tmpActionLogDatas[$manufacturerId][$orderDetailPickupDay])) {
+                $tmpActionLogDatas[$manufacturerId][$orderDetailPickupDay] = [
+                    'order_detail_amount_sum' => 0,
+                    'order_detail_price_sum' => 0,
+                ];
+            }
+            $tmpActionLogDatas[$manufacturerId][$orderDetailPickupDay]['order_detail_amount_sum'] += $orderDetail->product_amount;
+            $tmpActionLogDatas[$manufacturerId][$orderDetailPickupDay]['order_detail_price_sum'] += $orderDetail->total_price_tax_incl;
         }
         $actionLogDatas = [];
         foreach ($manufacturers as $manufacturer) {
