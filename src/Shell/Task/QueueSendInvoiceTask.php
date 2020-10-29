@@ -44,7 +44,7 @@ class QueueSendInvoiceTask extends QueueTask implements QueueTaskInterface {
 
         $email = new AppMailer();
         $email->fallbackEnabled = false;
-        $email->viewBuilder()->setTemplate('Admin.send_invoice');
+        $email->viewBuilder()->setTemplate('Admin.send_invoice_retail_mode_disabled');
         $email->setTo($manufacturer->address_manufacturer->email)
         ->setAttachments([
             $invoicePdfFile

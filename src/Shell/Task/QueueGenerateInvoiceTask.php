@@ -1,7 +1,7 @@
 <?php
 namespace App\Shell\Task;
 
-use App\Lib\PdfWriter\InvoicePdfWriter;
+use App\Lib\PdfWriter\InvoiceRetailModeDisabledPdfWriter;
 use Cake\Core\Configure;
 use Cake\I18n\Time;
 use Queue\Shell\Task\QueueTask;
@@ -50,7 +50,7 @@ class QueueGenerateInvoiceTask extends QueueTask implements QueueTaskInterface {
         $invoiceDate = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'));
         $invoicePeriod = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
 
-        $pdfWriter = new InvoicePdfWriter();
+        $pdfWriter = new InvoiceRetailModeDisabledPdfWriter();
         $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $dateFrom, $dateTo, $invoiceNumber, $validOrderStates, $invoicePeriod, $invoiceDate);
         $pdfWriter->setFilename($invoicePdfFile);
         $pdfWriter->writeFile();

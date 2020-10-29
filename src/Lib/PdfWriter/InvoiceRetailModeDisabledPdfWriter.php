@@ -18,7 +18,7 @@ use App\Lib\Pdf\ListTcpdf;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 
-class InvoicePdfWriter extends PdfWriter
+class InvoiceRetailModeDisabledPdfWriter extends PdfWriter
 {
 
     use SetSumTrait;

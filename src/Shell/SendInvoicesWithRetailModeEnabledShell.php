@@ -27,7 +27,7 @@ class SendInvoicesWithRetailModeEnabledShell extends AppShell
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
+        $this->Customer = $this->getTableLocator()->get('Customers');
 
         // $this->cronjobRunDay can is set in unit test
         if (!isset($this->args[0])) {
