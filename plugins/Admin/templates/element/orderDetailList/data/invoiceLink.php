@@ -24,7 +24,8 @@ if ($groupBy == 'customer' && Configure::read('appDb.FCS_RETAIL_MODE_ENABLED') &
             '/admin/customers/getInvoice.pdf?customerId=' . $orderDetail['customer_id'] . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo,
             [
                 'escape' => false,
-                'class' => 'btn btn-outline-light'
+                'class' => 'btn btn-outline-light',
+                'target' => '_blank',
             ]
         );
     echo '</td>';
