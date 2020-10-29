@@ -18,6 +18,7 @@ use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Console\CommandRunner;
+use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 
 class SendInvoicesWithRetailModeEnabledShellTest extends AppCakeTestCase
@@ -35,9 +36,16 @@ class SendInvoicesWithRetailModeEnabledShellTest extends AppCakeTestCase
         $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
-    public function testA()
+    public function testContentOfInvoice()
     {
         $this->assertTrue(true);
+        return;
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.customerId');
+        $this->get('/admin/customers/getInvoice.pdf?customerId='.$customerId.'&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoice.html');
+        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
+        $this->assertResponseContains($expectedResult);
     }
 
 }
