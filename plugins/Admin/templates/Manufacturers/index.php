@@ -74,7 +74,9 @@ echo '<tr class="sort">';
         echo '<th>%</th>';
     }
     echo '<th></th>';
-    echo '<th></th>';
+    if (!Configure::read('appDb.FCS_RETAIL_MODE_ENABLED')) {
+        echo '<th></th>';
+    }
     echo '<th></th>';
 echo '</tr>';
 $i = 0;
@@ -247,10 +249,12 @@ foreach ($manufacturers as $manufacturer) {
     ]);
     echo '</td>';
 
-    echo '<td>';
-    echo $this->Html->link(__d('admin', 'Test_invoice'), '/admin/manufacturers/getInvoice.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo, [
-        'target' => '_blank'
-    ]);
+    if (!Configure::read('appDb.FCS_RETAIL_MODE_ENABLED')) {
+        echo '<td>';
+        echo $this->Html->link(__d('admin', 'Test_invoice'), '/admin/manufacturers/getInvoice.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo, [
+            'target' => '_blank'
+        ]);
+    }
     echo '</td>';
     echo '<td style="width: 29px;">';
     if ($manufacturer->active) {
