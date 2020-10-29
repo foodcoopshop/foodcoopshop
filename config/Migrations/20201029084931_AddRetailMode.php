@@ -22,7 +22,8 @@ class AddRetailMode extends AbstractMigration
         $sql = "INSERT INTO `fcs_cronjobs` (`id`, `name`, `time_interval`, `day_of_month`, `weekday`, `not_before_time`, `active`) VALUES (NULL, 'SendInvoicesWithRetailModeEnabledShell', 'week', NULL, 'Saturday', '10:00:00', '0');";
         $this->execute($sql);
 
-        $sql = "UPDATE fcs_cronjobs SET name = 'SendInvoicesWithRetailModeEnabledShell' WHERE name = 'SendInvoices';";
+        $sql = "UPDATE fcs_cronjobs SET name = 'SendInvoicesWithRetailModeDisabledShell' WHERE name = 'SendInvoices';";
+        $this->execute($sql);
 
     }
 }
