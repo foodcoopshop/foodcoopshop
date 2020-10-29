@@ -172,7 +172,8 @@ INSERT INTO `fcs_configuration` VALUES
 (588,1,'FCS_SHOW_NEW_PRODUCTS_ON_HOME','Neue Produkte auch auf der Startseite anzeigen?','1','boolean',22,'de_DE','2020-04-15 09:42:06','2020-04-15 09:42:06'),
 (589,1,'FCS_FEEDBACK_TO_PRODUCTS_ENABLED','Feedback-Funktion für Produkte aktiviert?<br /><div class=\"small\">Mitglieder können Feedback zu bestellten Produkte verfassen.</div>','1','boolean',320,'de_DE','2020-06-19 09:03:00','2020-06-19 09:03:00'),
 (590,1,'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY','Mitglied kann Abholtag beim Bestellen selbst auswählen.','0','readonly',59,'de_DE','2020-07-06 10:34:48','2020-07-06 10:34:48'),
-(591,1,'FCS_SHOW_NEW_PRODUCTS_ON_HOME','Neue Produkte auch auf der Startseite anzeigen?','1','boolean',22,'de_DE','2020-09-25 10:03:09','2020-09-25 10:03:09');
+(591,1,'FCS_SHOW_NEW_PRODUCTS_ON_HOME','Neue Produkte auch auf der Startseite anzeigen?','1','boolean',22,'de_DE','2020-09-25 10:03:09','2020-09-25 10:03:09'),
+(592,1,'FCS_RETAIL_MODE_ENABLED','Einzelhandels-Modus aktiviert?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/einzelhandel\" target=\"_blank\">Infos zur Verwendung im Einzelhandel</a></div>','0','readonly',58,'de_DE','2020-10-29 10:06:50','2020-10-29 10:06:50');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -367,7 +368,8 @@ INSERT INTO `phinxlog` VALUES
 (20200831142250,'RemoveEmailLogTable','2020-08-31 15:10:29','2020-08-31 15:10:29',0),
 (20200910091755,'AddMemberSettingUseCameraForMobileBarcodeScanning','2020-09-10 09:21:00','2020-09-10 09:21:00',0),
 (20200925073919,'GermanIbanFix','2020-09-25 08:12:53','2020-09-25 08:12:53',0),
-(20201017182431,'AdaptMinimalCreditBalance','2020-10-17 18:38:11','2020-10-17 18:38:11',0);
+(20201017182431,'AdaptMinimalCreditBalance','2020-10-17 18:38:11','2020-10-17 18:38:11',0),
+(20201029084931,'AddRetailMode','2020-10-29 09:06:50','2020-10-29 09:06:50',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;
