@@ -6,6 +6,7 @@ use Cake\Auth\DefaultPasswordHasher;
 use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
+use Cake\ORM\Query;
 use Cake\Utility\Security;
 use Cake\Validation\Validator;
 
@@ -199,6 +200,27 @@ class CustomersTable extends AppTable
         $this->getAssociation('PaidCashlessOrderDetails')->setConditions([
             'PaidCashlessOrderDetails.order_state IN (' . join(',', Configure::read('app.htmlHelper')->getOrderStatesCashless()). ')'
         ]);
+    }
+
+    public function getDataForInvoice($customerId, $dateFrom, $dateTo, $validOrderStates)
+    {
+        $customer = $this->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $customerId,
+            ],
+            'contain' => [
+                'AddressCustomers',
+                'ActiveOrderDetails' => function (Query $q) use ($dateFrom, $dateTo) {
+                    return $q->where([
+                        'DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
+                        'DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\''
+                    ]);
+                },
+                'ActiveOrderDetails.OrderDetailTaxes',
+                'ActiveOrderDetails.OrderDetailUnits',
+            ]
+        ])->first();
+        return $customer;
     }
 
     public function getPersonalTransactionCode($customerId): string

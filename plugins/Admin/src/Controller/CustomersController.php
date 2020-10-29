@@ -2,6 +2,7 @@
 namespace Admin\Controller;
 
 use App\Lib\Error\Exception\InvalidParameterException;
+use App\Lib\PdfWriter\InvoiceRetailModeEnabledPdfWriter;
 use App\Lib\PdfWriter\MyMemberCardPdfWriter;
 use App\Lib\PdfWriter\MemberCardsPdfWriter;
 use App\Lib\PdfWriter\TermsOfUsePdfWriter;
@@ -662,6 +663,44 @@ class CustomersController extends AdminAppController
         $this->set('sums', $sums);
 
         $this->set('title_for_layout', __d('admin', 'Credit_and_deposit_balance'));
+    }
+
+    public function getInvoice()
+    {
+        $customerId = h($this->getRequest()->getQuery('customerId'));
+        $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
+        $dateTo = h($this->getRequest()->getQuery('dateTo'));
+
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $customerId,
+            ],
+        ])->first();
+
+        if (empty($customer)) {
+            throw new NotFoundException();
+        }
+
+        $newInvoiceNumber = 'xxx';
+
+        $pdfWriter = new InvoiceRetailModeEnabledPdfWriter();
+        $pdfWriter->prepareAndSetData($customerId, $dateFrom, $dateTo, $newInvoiceNumber, [], '', 'xxx');
+        if (isset($pdfWriter->getData()['results']) && empty($pdfWriter->getData()['results'])) {
+            die(__d('admin', 'No_orders_within_the_given_time_range.'));
+        }
+
+        if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
+            return $this->response->withStringBody($pdfWriter->writeHtml());
+        }
+
+        $invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink($customer->name, $customerId, date('Y-m-d'), $newInvoiceNumber);
+        $invoicePdfFile = explode(DS, $invoicePdfFile);
+        $invoicePdfFile = end($invoicePdfFile);
+        $invoicePdfFile = substr($invoicePdfFile, 11);
+        $invoicePdfFile = $this->request->getQuery('dateFrom'). '-' . $this->request->getQuery('dateTo') . '-' . $invoicePdfFile;
+        $pdfWriter->setFilename($invoicePdfFile);
+
+        die($pdfWriter->writeInline());
     }
 
     public function index()

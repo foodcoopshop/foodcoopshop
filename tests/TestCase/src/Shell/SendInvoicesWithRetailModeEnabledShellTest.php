@@ -38,10 +38,9 @@ class SendInvoicesWithRetailModeEnabledShellTest extends AppCakeTestCase
 
     public function testContentOfInvoice()
     {
-        $this->assertTrue(true);
-        return;
+        $this->changeConfiguration('FCS_RETAIL_MODE_ENABLED', 1);
         $this->loginAsSuperadmin();
-        $customerId = Configure::read('test.customerId');
+        $customerId = Configure::read('test.superadminId');
         $this->get('/admin/customers/getInvoice.pdf?customerId='.$customerId.'&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoice.html');
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
