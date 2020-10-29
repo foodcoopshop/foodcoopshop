@@ -18,7 +18,7 @@ use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\I18n\Time;
 
-class SendInvoicesShell extends AppShell
+class SendInvoicesWithRetailModeDisabledShell extends AppShell
 {
 
     public $cronjobRunDay;

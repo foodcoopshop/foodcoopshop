@@ -18,5 +18,11 @@ class AddRetailMode extends AbstractMigration
         }
         $sql = "INSERT INTO `fcs_configuration` (`id_configuration`, `active`, `name`, `text`, `value`, `type`, `position`, `locale`, `date_add`, `date_upd`) VALUES (NULL, '1', 'FCS_RETAIL_MODE_ENABLED', '".$text."', '0', 'readonly', '58', '".I18n::getLocale()."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
         $this->execute($sql);
+
+        $sql = "INSERT INTO `fcs_cronjobs` (`id`, `name`, `time_interval`, `day_of_month`, `weekday`, `not_before_time`, `active`) VALUES (NULL, 'SendInvoicesWithRetailModeEnabledShell', 'week', NULL, 'Saturday', '10:00:00', '0');";
+        $this->execute($sql);
+
+        $sql = "UPDATE fcs_cronjobs SET name = 'SendInvoicesWithRetailModeEnabledShell' WHERE name = 'SendInvoices';";
+
     }
 }
