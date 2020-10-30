@@ -17,12 +17,11 @@ $pdf->setTextHelper($this->Text);
 $pdf->SetLeftMargin(12);
 $pdf->AddPage();
 
-
 $html = '<h2>'.__d('admin', 'Invoice').'</h2>';
 $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->Ln(7);
 
-$html = '<table border="1" cellspacing="0" cellpadding="7"><tr>';
+$html = '<table border="0" cellspacing="0" cellpadding="0"><tr>';
 $html .= '<td width="300">';
     $html .= '<p>';
         $html .= $result->name . '<br />';
@@ -31,8 +30,8 @@ $html .= '<td width="300">';
 $html .= '</td>';
 
 $html .= '<td width="230" align="right">';
-    $html .= '<h2>'.__d('admin', 'Invoice_number_abbreviation').': ' . $newInvoiceNumber . '</h2>';
-    $html .= '<h3>'.__d('admin', 'Invoice_date').': ' . $invoiceDate . '</h3>';
+    $html .= '<p style="font-weight:bold;">'.__d('admin', 'Invoice_number_abbreviation').': ' . $newInvoiceNumber . '<br />';
+    $html .= __d('admin', 'Invoice_date').': ' . $invoiceDate . '</p>';
     $html .= '</td>';
 $html .= '</tr></table>';
 
