@@ -211,10 +211,15 @@ class CustomersTable extends AppTable
             'contain' => [
                 'AddressCustomers',
                 'ActiveOrderDetails' => function (Query $q) use ($dateFrom, $dateTo) {
-                    return $q->where([
+                    $q->where([
                         'DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
                         'DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\''
                     ]);
+                    $q->order([
+                        'ActiveOrderDetails.product_name' => 'ASC',
+                        'ActiveOrderDetails.id_order_detail' => 'ASC',
+                    ]);
+                    return $q;
                 },
                 'ActiveOrderDetails.OrderDetailTaxes',
                 'ActiveOrderDetails.OrderDetailUnits',
