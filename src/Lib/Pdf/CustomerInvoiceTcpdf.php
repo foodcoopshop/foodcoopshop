@@ -22,7 +22,11 @@ class CustomerInvoiceTcpdf extends AppTcpdf
 
     public $headerRight;
 
+    public $replaceEuroSign = false;
+
     public $infoTextForFooter = '';
+
+    public $headers = [];
 
     public function __construct($orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false, $pdfa = false)
     {
@@ -30,6 +34,80 @@ class CustomerInvoiceTcpdf extends AppTcpdf
         $this->SetTopMargin(43);
         $this->SetRightMargin(0);
         $this->SetFontSize(10);
+
+        $this->headers = [
+            [
+                'name' => __('Amount'),
+                'align' => 'right',
+                'width' => 33,
+            ],
+            [
+                'name' => __('Product'),
+                'align' => 'left',
+                'width' => 226,
+            ],
+            [
+                'name' => __('Price_excl.'),
+                'align' => 'right',
+                'width' => 55,
+            ],
+            [
+                'name' => __('VAT'),
+                'align' => 'right',
+                'width' => 55,
+            ],
+            [
+                'name' => __('Tax_rate'),
+                'align' => 'right',
+                'width' => 45,
+            ],
+            [
+                'name' => __('Price_incl.'),
+                'align' => 'right',
+                'width' => 58,
+            ],
+            [
+                'name' => __('Delivery_day'),
+                'align' => 'right',
+                'width' => 58,
+            ],
+        ];
+
+    }
+
+    public function prepareTableHeader()
+    {
+
+        $this->table = '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
+
+        foreach($this->headers as $header) {
+            $this->table .= '<th style="font-weight:bold;background-color:#cecece" align="' . $header['align'] . '" width="' . $header['width'] . '">' . $header['name'] . '</th>';
+        }
+        $this->table .= '</tr></thead>';
+    }
+
+    public function prepareTableData($result)
+    {
+        foreach($result->active_order_details as $orderDetail) {
+
+            $taxRate = $orderDetail->tax->rate ?? 0;
+            if ($taxRate != intval($taxRate)) {
+                $formattedTaxRate = Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 1);
+            } else {
+                $formattedTaxRate = Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 0);
+            }
+
+            $this->table .= '<tr style="font-weight:normal;">';
+                $this->table .= '<td align="' . $this->headers[0]['align'] . '" width="' . $this->headers[0]['width'] . '">' . $orderDetail->product_amount . 'x</td>';
+                $this->table .= '<td align="' . $this->headers[1]['align'] . '" width="' . $this->headers[1]['width'] . '">' . $orderDetail->product_name . '</td>';
+                $this->table .= '<td align="' . $this->headers[2]['align'] . '" width="' . $this->headers[2]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_excl) . '</td>';
+                $this->table .= '<td align="' . $this->headers[3]['align'] . '" width="' . $this->headers[3]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->order_detail_tax->total_amount) . '</td>';
+                $this->table .= '<td align="' . $this->headers[4]['align'] . '" width="' . $this->headers[4]['width'] . '">' . $formattedTaxRate  . '%' . '</td>';
+                $this->table .= '<td align="' . $this->headers[5]['align'] . '" width="' . $this->headers[5]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_incl) . '</td>';
+                $this->table .= '<td align="' . $this->headers[6]['align'] . '" width="' . $this->headers[6]['width'] . '">' . $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '</td>';
+            $this->table .= '</tr>';
+        }
+
     }
 
     /**

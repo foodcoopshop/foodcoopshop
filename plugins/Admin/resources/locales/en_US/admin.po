@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-17 21:39+0200\n"
-"PO-Revision-Date: 2020-10-13 16:24+0200\n"
+"POT-Creation-Date: 2020-10-30 10:23+0100\n"
+"PO-Revision-Date: 2020-10-30 10:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -177,6 +177,9 @@ msgstr "Sum of compensation payments for manufacturers"
 msgid "Credit_and_deposit_balance"
 msgstr "Credit and deposit balance"
 
+msgid "No_orders_within_the_given_time_range."
+msgstr "No orders within the given time range"
+
 msgid "Deposit_overview"
 msgstr "Deposit overview"
 
@@ -221,9 +224,6 @@ msgstr "The settings of manufacturer {0} have been changed."
 
 msgid "Your_settings_have_been_changed."
 msgstr "Your settings have been changed."
-
-msgid "No_orders_within_the_given_time_range."
-msgstr "No orders within the given time range"
 
 msgid "No_member_found_with_id_{0}."
 msgstr "No member found with id {0}."
@@ -1065,8 +1065,7 @@ msgstr "infos-for-success"
 msgid "Deposit_overview_for_all_manufacturers"
 msgstr "Deposit overview for all manufacturers"
 
-#, fuzzy
-msgid "deposit"
+msgid "Deposit"
 msgstr "Deposit"
 
 msgid "There_is_no_{0}_available."
@@ -1380,9 +1379,6 @@ msgstr "0 means: global limit of {0} is used."
 
 msgid "Pickup_days"
 msgstr "Pickup days"
-
-msgid "Deposit"
-msgstr "Deposit"
 
 msgid "Stock_products"
 msgstr "Stock products"
@@ -1737,6 +1733,9 @@ msgstr "Click to cancel product"
 
 msgid "Click_to_change_member"
 msgstr "Click to change member"
+
+msgid "Invoice"
+msgstr "Invoice"
 
 msgid "Add_product_feedback"
 msgstr "Give the manufacturer feedback for the product"
@@ -2130,6 +2129,10 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#, fuzzy
+#~ msgid "deposit"
+#~ msgstr "Deposit"
 
 #~ msgid "Of_the_{0}_on_the_credit_account_{1}_are_reserved_for_deposit_compensation_payments._As_long_as_this_amount_is_negative_money_for_deposit_compensation_payments_is_available."
 #~ msgstr "{1} (of {0} on the credit account) are reserved for deposit compensation payments. As long as this amount is negative, there is money available for compensation payments."

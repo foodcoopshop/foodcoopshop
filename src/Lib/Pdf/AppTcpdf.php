@@ -23,6 +23,8 @@ abstract class AppTcpdf extends TCPDF
 
     public $table = '';
 
+    public $replaceEuroSign = true;
+
     public $logoPath = ROOT . DS . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg';
 
     public $textHelper;
@@ -43,7 +45,9 @@ abstract class AppTcpdf extends TCPDF
 
         // in generate_order_confirmation.ctp::88 $this->MyNumber->formatAsCurrency leads to empty output
         // but in all other pdfs it works. this workaround helps
-        $html = preg_replace('/€/', '&euro;', $html);
+        if ($this->replaceEuroSign) {
+            $html = preg_replace('/€/', '&euro;', $html);
+        }
         $this->html .= $html;
         parent::writeHTML($html, $ln, $fill, $reseth, $cell, $align);
     }

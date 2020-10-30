@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-17 21:39+0200\n"
-"PO-Revision-Date: 2020-10-19 09:23+0200\n"
+"POT-Creation-Date: 2020-10-30 11:04+0100\n"
+"PO-Revision-Date: 2020-10-30 11:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -158,6 +158,9 @@ msgstr "Neue Produkte"
 
 msgid "Search"
 msgstr "Suche"
+
+msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
+msgstr "Bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt {0}, du kannst bis {1} bestellen."
 
 msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
 msgstr "Die gewünschte Anzahl {0} des Produktes {1} ist leider nicht mehr verfügbar. Verfügbare Menge: {2}"
@@ -1107,6 +1110,24 @@ msgstr "Deine Einkaufstasche war leer."
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
 
+msgid "Price_excl."
+msgstr "Preis exkl."
+
+msgid "VAT"
+msgstr "USt."
+
+msgid "VAT_rate"
+msgstr "Steuersatz"
+
+msgid "Price_incl."
+msgstr "Preis inkl."
+
+msgid "Generated_on_{0}"
+msgstr "Generiert am {0}"
+
+msgid "Page_{0}_of_{1}"
+msgstr "Seite {0} von {1}"
+
 msgid "Tax_rates_overview_table"
 msgstr "Übersichtstabelle nach Steuersatz"
 
@@ -1125,12 +1146,6 @@ msgstr "Summe Preis inkl."
 msgid "Deleted_member"
 msgstr "Gelöschtes Mitglied"
 
-msgid "Price_excl."
-msgstr "Preis exkl."
-
-msgid "VAT"
-msgstr "USt."
-
 msgid "Order_day"
 msgstr "Bestelltag"
 
@@ -1142,12 +1157,6 @@ msgstr "Preis nach Gewicht"
 
 msgid "Total_sum"
 msgstr "Gesamtsumme"
-
-msgid "Generated_on_{0}"
-msgstr "Generiert am {0}"
-
-msgid "Page_{0}_of_{1}"
-msgstr "Seite {0} von {1}"
 
 msgid "You_are_not_signed_in."
 msgstr "Du bist nicht angemeldet."
@@ -1508,9 +1517,6 @@ msgstr "Die gewünschte Anzahl {0} ist nicht gültig."
 
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "Das Produkt mit der ID {0} ist nicht vorhanden."
-
-msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
-msgstr "Bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt {0}, du kannst bis {1} bestellen."
 
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "Die Variante existiert nicht: {0}"

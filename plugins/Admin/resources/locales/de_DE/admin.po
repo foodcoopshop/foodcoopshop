@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-17 21:39+0200\n"
-"PO-Revision-Date: 2020-10-13 16:23+0200\n"
+"POT-Creation-Date: 2020-10-30 10:23+0100\n"
+"PO-Revision-Date: 2020-10-30 10:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -177,6 +177,9 @@ msgstr "Summe der geleisteten Pfand-Ausgleichszahlungen für Hersteller"
 msgid "Credit_and_deposit_balance"
 msgstr "Guthaben- und Pfand-Saldo"
 
+msgid "No_orders_within_the_given_time_range."
+msgstr "Keine offenen Bestellungen im angegebenen Zeitraum."
+
 msgid "Deposit_overview"
 msgstr "Pfand-Übersicht"
 
@@ -221,9 +224,6 @@ msgstr "Die Einstellungen des Herstellers {0} wurden erfolgreich gespeichert."
 
 msgid "Your_settings_have_been_changed."
 msgstr "Deine Einstellungen wurden erfolgreich gespeichert."
-
-msgid "No_orders_within_the_given_time_range."
-msgstr "Keine offenen Bestellungen im angegebenen Zeitraum."
 
 msgid "No_member_found_with_id_{0}."
 msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
@@ -1065,8 +1065,7 @@ msgstr "wichtige-infos-zum-gelingen"
 msgid "Deposit_overview_for_all_manufacturers"
 msgstr "Pfand-Übersicht für alle Hersteller"
 
-#, fuzzy
-msgid "deposit"
+msgid "Deposit"
 msgstr "Pfand"
 
 msgid "There_is_no_{0}_available."
@@ -1380,9 +1379,6 @@ msgstr "0 bedeutet: globales Limit von {0} wird verwendet."
 
 msgid "Pickup_days"
 msgstr "Abholtage"
-
-msgid "Deposit"
-msgstr "Pfand"
 
 msgid "Stock_products"
 msgstr "Lagerprodukte"
@@ -1737,6 +1733,9 @@ msgstr "Zum Stornieren des Produktes anklicken"
 
 msgid "Click_to_change_member"
 msgstr "Zum Umbuchen auf ein anderes Mitglied anklicken"
+
+msgid "Invoice"
+msgstr "Rechnung"
 
 msgid "Add_product_feedback"
 msgstr "Gib dem Hersteller Feedback zum Produkt"
@@ -2130,6 +2129,10 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#, fuzzy
+#~ msgid "deposit"
+#~ msgstr "Pfand"
 
 #~ msgid "Of_the_{0}_on_the_credit_account_{1}_are_reserved_for_deposit_compensation_payments._As_long_as_this_amount_is_negative_money_for_deposit_compensation_payments_is_available."
 #~ msgstr "Von den {0} auf dem Guthaben-Konto sind {1} für Pfand-Ausgleichszahlungen reserviert. Solange der Pfand-Betrag negativ ist, ist Geld für die Pfand-Ausgleichszahlungen vorhanden."

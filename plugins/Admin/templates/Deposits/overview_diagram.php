@@ -43,7 +43,7 @@ echo $this->element('reportNavTabs', [
 echo '<h2 style="margin-top:10px;">' . __d('admin', 'Deposit_overview_for_all_manufacturers') . '</h2>';
 
     if (!isset($xAxisData1LineChart)) {
-        $deposit = __d('admin', 'deposit');
+        $deposit = __d('admin', 'Deposit');
         echo '<p>'.__d('admin', 'There_is_no_{0}_available.', [$deposit]) . '</p>';
         return;
     }

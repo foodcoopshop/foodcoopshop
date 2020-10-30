@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-17 21:39+0200\n"
+"POT-Creation-Date: 2020-10-30 10:23+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -176,6 +176,9 @@ msgstr ""
 msgid "Credit_and_deposit_balance"
 msgstr ""
 
+msgid "No_orders_within_the_given_time_range."
+msgstr ""
+
 msgid "Deposit_overview"
 msgstr ""
 
@@ -219,9 +222,6 @@ msgid "The_settings_of_manufacturer_{0}_have_been_changed."
 msgstr ""
 
 msgid "Your_settings_have_been_changed."
-msgstr ""
-
-msgid "No_orders_within_the_given_time_range."
 msgstr ""
 
 msgid "No_member_found_with_id_{0}."
@@ -1064,7 +1064,7 @@ msgstr ""
 msgid "Deposit_overview_for_all_manufacturers"
 msgstr ""
 
-msgid "deposit"
+msgid "Deposit"
 msgstr ""
 
 msgid "There_is_no_{0}_available."
@@ -1377,9 +1377,6 @@ msgid "Zero_means_no_limit_and_global_limit_of_{0}_is_used."
 msgstr ""
 
 msgid "Pickup_days"
-msgstr ""
-
-msgid "Deposit"
 msgstr ""
 
 msgid "Stock_products"
@@ -1734,6 +1731,9 @@ msgid "Click_to_cancel_product"
 msgstr ""
 
 msgid "Click_to_change_member"
+msgstr ""
+
+msgid "Invoice"
 msgstr ""
 
 msgid "Add_product_feedback"

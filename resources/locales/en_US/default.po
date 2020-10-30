@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-17 21:39+0200\n"
-"PO-Revision-Date: 2020-10-19 09:10+0200\n"
+"POT-Creation-Date: 2020-10-30 11:05+0100\n"
+"PO-Revision-Date: 2020-10-30 11:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -158,6 +158,9 @@ msgstr "New products"
 
 msgid "Search"
 msgstr "Search"
+
+msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
+msgstr "Please add new credit, your credit minus cart equals {0}. You can place orders until {1}."
 
 msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
 msgstr "The desired amount {0} of the product {1} is not available any more. Available amount: {2}"
@@ -1107,11 +1110,26 @@ msgstr "Your shopping bag was empty."
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
 
-msgid "Tax_rates_overview_table"
-msgstr "Tax rates overview table"
+msgid "Price_excl."
+msgstr "Price excl."
+
+msgid "VAT"
+msgstr "VAT"
 
 msgid "Tax_rate"
 msgstr "Tax rate"
+
+msgid "Price_incl."
+msgstr "Price incl."
+
+msgid "Generated_on_{0}"
+msgstr "Generated on {0}"
+
+msgid "Page_{0}_of_{1}"
+msgstr "Page {0} of {1}"
+
+msgid "Tax_rates_overview_table"
+msgstr "Tax rates overview table"
 
 msgid "Sum_price_excl."
 msgstr "Sum price excl."
@@ -1125,12 +1143,6 @@ msgstr "Sum price incl."
 msgid "Deleted_member"
 msgstr "Deleted member"
 
-msgid "Price_excl."
-msgstr "Price excl."
-
-msgid "VAT"
-msgstr "VAT"
-
 msgid "Order_day"
 msgstr "Order day"
 
@@ -1142,12 +1154,6 @@ msgstr "Price per weight"
 
 msgid "Total_sum"
 msgstr "Total sum"
-
-msgid "Generated_on_{0}"
-msgstr "Generated on {0}"
-
-msgid "Page_{0}_of_{1}"
-msgstr "Page {0} of {1}"
 
 msgid "You_are_not_signed_in."
 msgstr "Your are not signed in."
@@ -1508,9 +1514,6 @@ msgstr "The desired amount {0} is not valid."
 
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "The product with id {0} does not exist."
-
-msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
-msgstr "Please add new credit, your credit minus cart equals {0}. You can place orders until {1}."
 
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "The attribute does not exist: {0}"
@@ -2456,6 +2459,10 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#, fuzzy
+#~ msgid "VAT_rate"
+#~ msgstr "Tax rate"
 
 #~ msgid "Shopping_limit_reached"
 #~ msgstr "Shopping limit reached"

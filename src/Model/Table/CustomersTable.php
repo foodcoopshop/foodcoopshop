@@ -218,6 +218,7 @@ class CustomersTable extends AppTable
                 },
                 'ActiveOrderDetails.OrderDetailTaxes',
                 'ActiveOrderDetails.OrderDetailUnits',
+                'ActiveOrderDetails.Taxes',
             ]
         ])->first();
         return $customer;

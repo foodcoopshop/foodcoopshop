@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-17 21:39+0200\n"
+"POT-Creation-Date: 2020-10-30 11:05+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -156,6 +156,9 @@ msgid "New_products"
 msgstr ""
 
 msgid "Search"
+msgstr ""
+
+msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
 msgstr ""
 
 msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
@@ -1106,10 +1109,25 @@ msgstr ""
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr ""
 
-msgid "Tax_rates_overview_table"
+msgid "Price_excl."
+msgstr ""
+
+msgid "VAT"
 msgstr ""
 
 msgid "Tax_rate"
+msgstr ""
+
+msgid "Price_incl."
+msgstr ""
+
+msgid "Generated_on_{0}"
+msgstr ""
+
+msgid "Page_{0}_of_{1}"
+msgstr ""
+
+msgid "Tax_rates_overview_table"
 msgstr ""
 
 msgid "Sum_price_excl."
@@ -1124,12 +1142,6 @@ msgstr ""
 msgid "Deleted_member"
 msgstr ""
 
-msgid "Price_excl."
-msgstr ""
-
-msgid "VAT"
-msgstr ""
-
 msgid "Order_day"
 msgstr ""
 
@@ -1140,12 +1152,6 @@ msgid "Price_per_weight"
 msgstr ""
 
 msgid "Total_sum"
-msgstr ""
-
-msgid "Generated_on_{0}"
-msgstr ""
-
-msgid "Page_{0}_of_{1}"
 msgstr ""
 
 msgid "You_are_not_signed_in."
@@ -1506,9 +1512,6 @@ msgid "The_desired_amount_{0}_is_not_valid."
 msgstr ""
 
 msgid "Product_with_id_{0}_does_not_exist."
-msgstr ""
-
-msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
 msgstr ""
 
 msgid "The_attribute_does_not_exist:_{0}"

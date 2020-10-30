@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-17 21:39+0200\n"
+"POT-Creation-Date: 2020-10-30 11:05+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -210,6 +210,9 @@ msgstr "Nowe produkty"
 # Search
 msgid "Search"
 msgstr "Szukaj"
+
+msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
+msgstr ""
 
 # The desired amount {0} of the product {1} is not available any more. Available amount: {2}
 msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
@@ -1490,13 +1493,35 @@ msgstr "Twój koszyk był pusty."
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informacja-o-prawie-do-odstapienia"
 
-# Tax rates overview table
-msgid "Tax_rates_overview_table"
-msgstr "Tabela stawek podatkowych"
+# Price excl.
+msgid "Price_excl."
+msgstr "Cena z wyłączeniem"
+
+# VAT
+msgid "VAT"
+msgstr "VAT"
 
 # Tax rate
 msgid "Tax_rate"
 msgstr "Stawka podatkowa"
+
+# Price excl.
+#, fuzzy
+msgid "Price_incl."
+msgstr "Cena z wyłączeniem"
+
+# Generated invoices
+#, fuzzy
+msgid "Generated_on_{0}"
+msgstr "Wygenerowane faktury"
+
+# Page {0} of {1}
+msgid "Page_{0}_of_{1}"
+msgstr "Strona {0} z {1}"
+
+# Tax rates overview table
+msgid "Tax_rates_overview_table"
+msgstr "Tabela stawek podatkowych"
 
 # Sum price incl.
 #, fuzzy
@@ -1516,14 +1541,6 @@ msgstr "Suma cen łącznie z"
 msgid "Deleted_member"
 msgstr "Usunąć członka?"
 
-# Price excl.
-msgid "Price_excl."
-msgstr "Cena z wyłączeniem"
-
-# VAT
-msgid "VAT"
-msgstr "VAT"
-
 # Order day
 msgid "Order_day"
 msgstr "Dzień zamówienia"
@@ -1539,15 +1556,6 @@ msgstr "Cena za wagę"
 # Total sum
 msgid "Total_sum"
 msgstr "Suma łącznie"
-
-# Generated invoices
-#, fuzzy
-msgid "Generated_on_{0}"
-msgstr "Wygenerowane faktury"
-
-# Page {0} of {1}
-msgid "Page_{0}_of_{1}"
-msgstr "Strona {0} z {1}"
 
 # Your are not signed in.
 msgid "You_are_not_signed_in."
@@ -2033,9 +2041,6 @@ msgstr "Wymagana ilość {0} jest nieprawidłowa."
 # The product with id {0} does not exist.
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "Produkt o id {0} nie istnieje."
-
-msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
-msgstr ""
 
 # The attribute does not exist: {0}
 msgid "The_attribute_does_not_exist:_{0}"
@@ -3308,6 +3313,11 @@ msgstr "złożone w dniu"
 # The prices include the VAT.
 msgid "Prices_are_including_vat."
 msgstr "Ceny zawierają podatek VAT."
+
+# Tax rate
+#, fuzzy
+#~ msgid "VAT_rate"
+#~ msgstr "Stawka podatkowa"
 
 # Shopping limit reached
 #~ msgid "Shopping_limit_reached"

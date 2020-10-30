@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-17 21:39+0200\n"
+"POT-Creation-Date: 2020-10-30 10:23+0100\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -182,6 +182,9 @@ msgstr "Suma rekompensat kaucji dla producentów"
 msgid "Credit_and_deposit_balance"
 msgstr "Twoje saldo wkładów"
 
+msgid "No_orders_within_the_given_time_range."
+msgstr "Brak zamówień w wybranym okresie"
+
 #, fuzzy
 msgid "Deposit_overview"
 msgstr "Zwrot wkładu"
@@ -228,9 +231,6 @@ msgstr "Ustawienia producenta {0} zostały zmienione."
 
 msgid "Your_settings_have_been_changed."
 msgstr "Twoje ustawienia zostały zmienione."
-
-msgid "No_orders_within_the_given_time_range."
-msgstr "Brak zamówień w wybranym okresie"
 
 msgid "No_member_found_with_id_{0}."
 msgstr "Nie znaleziono członka o id {0}."
@@ -1106,8 +1106,7 @@ msgstr "products"
 msgid "Deposit_overview_for_all_manufacturers"
 msgstr "Suma rekompensat kaucji dla producentów"
 
-#, fuzzy
-msgid "deposit"
+msgid "Deposit"
 msgstr "Kaucja"
 
 msgid "There_is_no_{0}_available."
@@ -1434,9 +1433,6 @@ msgstr "0 oznacza, że limit globalny {0} został zużyty."
 
 msgid "Pickup_days"
 msgstr "Dni odbioru"
-
-msgid "Deposit"
-msgstr "Kaucja"
 
 msgid "Stock_products"
 msgstr "Produkty magazynowane"
@@ -1800,6 +1796,10 @@ msgstr "Kliknij aby anulować produkt"
 #, fuzzy
 msgid "Click_to_change_member"
 msgstr "Kliknij aby zmienić cenę"
+
+#, fuzzy
+msgid "Invoice"
+msgstr "Data faktury"
 
 #, fuzzy
 msgid "Add_product_feedback"
@@ -2216,6 +2216,10 @@ msgstr "Wagi dostarczonych produktów mogą ulec zmianie, więc cena również m
 #, fuzzy
 msgid "Product_ID"
 msgstr "Produkt"
+
+#, fuzzy
+#~ msgid "deposit"
+#~ msgstr "Kaucja"
 
 #~ msgid "Of_the_{0}_on_the_credit_account_{1}_are_reserved_for_deposit_compensation_payments._As_long_as_this_amount_is_negative_money_for_deposit_compensation_payments_is_available."
 #~ msgstr "{1} (z {0} na koncie kredytowym) zarezerwowano na poczet rekompensat kaucji. Dopóki kwota jest ujemna, są środki na rekompensaty."
