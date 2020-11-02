@@ -64,6 +64,8 @@ class SendInvoicesWithRetailModeEnabledShellTest extends AppCakeTestCase
         $statement->execute($params);
 
         $this->get('/admin/customers/getInvoice.pdf?customerId='.$customerId.'&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
+//         pr($this->_response);
+//         exit;
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoice.html');
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
