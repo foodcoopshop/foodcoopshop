@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-02 11:25+0100\n"
+"POT-Creation-Date: 2020-11-02 16:07+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1510,6 +1510,15 @@ msgstr "Stawka podatkowa"
 msgid "Price_incl."
 msgstr "Cena z wyłączeniem"
 
+# Delivered weight
+#, fuzzy
+msgid "Delivered_deposit"
+msgstr "Dostarczona waga"
+
+# Deposit return
+msgid "Payment_type_deposit_return"
+msgstr "Zwrot kaucji"
+
 # Total sum
 msgid "Total_sum"
 msgstr "Suma łącznie"
@@ -2554,10 +2563,6 @@ msgstr "Przesyłanie kredytu"
 # Payback
 msgid "Payment_type_payback"
 msgstr "Zwrot"
-
-# Deposit return
-msgid "Payment_type_deposit_return"
-msgstr "Zwrot kaucji"
 
 # Member fee
 msgid "Payment_type_member_fee"

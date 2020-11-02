@@ -109,31 +109,31 @@ class CustomerInvoiceTcpdf extends AppTcpdf
                 $this->table .= '<td align="' . $this->headers[6]['align'] . '" width="' . $this->headers[6]['width'] . '">' . $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '</td>';
             $this->table .= '</tr>';
 
-            // ordered deposit
-            if ($orderDetail->deposit > 0) {
-                $this->table .= '<tr style="font-weight:normal;font-style:italic;">';
-                    $this->table .= '<td align="' . $this->headers[0]['align'] . '" width="' . $this->headers[0]['width'] . '"></td>';
-                    $this->table .= '<td align="' . $this->headers[1]['align'] . '" width="' . $this->headers[1]['width'] . '">+ ' . __('Deposit') . '</td>';
-                    $this->table .= '<td align="' . $this->headers[2]['align'] . '" width="' . $this->headers[2]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->deposit_net) . '</td>';
-                    $this->table .= '<td align="' . $this->headers[3]['align'] . '" width="' . $this->headers[3]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->deposit_tax) . '</td>';
-                    $this->table .= '<td align="' . $this->headers[4]['align'] . '" width="' . $this->headers[4]['width'] . '">' . '20%' . '</td>';
-                    $this->table .= '<td align="' . $this->headers[5]['align'] . '" width="' . $this->headers[5]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->deposit) . '</td>';
-                    $this->table .= '<td align="' . $this->headers[6]['align'] . '" width="' . $this->headers[6]['width'] . '">' . $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '</td>';
-                $this->table .= '</tr>';
-            }
+        }
 
+        // ordered deposit
+        if ($result->ordered_deposit['deposit_incl'] != 0) {
+            $this->table .= '<tr style="font-weight:normal;font-style:italic;">';
+                $this->table .= '<td align="' . $this->headers[0]['align'] . '" width="' . $this->headers[0]['width'] . '">'.$result->ordered_deposit['deposit_amount'].'x</td>';
+                $this->table .= '<td align="' . $this->headers[1]['align'] . '" width="' . $this->headers[1]['width'] . '">' . __('Delivered_deposit') . '</td>';
+                $this->table .= '<td align="' . $this->headers[2]['align'] . '" width="' . $this->headers[2]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_excl']) . '</td>';
+                $this->table .= '<td align="' . $this->headers[3]['align'] . '" width="' . $this->headers[3]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_tax']) . '</td>';
+                $this->table .= '<td align="' . $this->headers[4]['align'] . '" width="' . $this->headers[4]['width'] . '">' . '20%' . '</td>';
+                $this->table .= '<td align="' . $this->headers[5]['align'] . '" width="' . $this->headers[5]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_incl']) . '</td>';
+                $this->table .= '<td align="' . $this->headers[6]['align'] . '" width="' . $this->headers[6]['width'] . '"></td>';
+            $this->table .= '</tr>';
         }
 
         // returned deposit
-        foreach($result->returned_deposits as $returnedDeposit) {
+        if ($result->returned_deposit['deposit_incl'] != 0) {
             $this->table .= '<tr style="font-weight:normal;font-style:italic;">';
-                $this->table .= '<td align="' . $this->headers[0]['align'] . '" width="' . $this->headers[0]['width'] . '"></td>';
-                $this->table .= '<td align="' . $this->headers[1]['align'] . '" width="' . $this->headers[1]['width'] . '">- ' . __('Payment_type_deposit_return') . '</td>';
-                $this->table .= '<td align="' . $this->headers[2]['align'] . '" width="' . $this->headers[2]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($returnedDeposit['deposit_net']) . '</td>';
-                $this->table .= '<td align="' . $this->headers[3]['align'] . '" width="' . $this->headers[3]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($returnedDeposit['deposit_tax']) . '</td>';
+                $this->table .= '<td align="' . $this->headers[0]['align'] . '" width="' . $this->headers[0]['width'] . '">'.$result->returned_deposit['deposit_amount'].'x</td>';
+                $this->table .= '<td align="' . $this->headers[1]['align'] . '" width="' . $this->headers[1]['width'] . '">' . __('Payment_type_deposit_return') . '</td>';
+                $this->table .= '<td align="' . $this->headers[2]['align'] . '" width="' . $this->headers[2]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_excl']) . '</td>';
+                $this->table .= '<td align="' . $this->headers[3]['align'] . '" width="' . $this->headers[3]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_tax']) . '</td>';
                 $this->table .= '<td align="' . $this->headers[4]['align'] . '" width="' . $this->headers[4]['width'] . '">' . '20%' . '</td>';
-                $this->table .= '<td align="' . $this->headers[5]['align'] . '" width="' . $this->headers[5]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($returnedDeposit['deposit']) . '</td>';
-                $this->table .= '<td align="' . $this->headers[6]['align'] . '" width="' . $this->headers[6]['width'] . '">' . $returnedDeposit['date_add']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '</td>';
+                $this->table .= '<td align="' . $this->headers[5]['align'] . '" width="' . $this->headers[5]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_incl']) . '</td>';
+                $this->table .= '<td align="' . $this->headers[6]['align'] . '" width="' . $this->headers[6]['width'] . '"></td>';
             $this->table .= '</tr>';
         }
 

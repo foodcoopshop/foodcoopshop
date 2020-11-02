@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-02 11:25+0100\n"
-"PO-Revision-Date: 2020-10-30 11:07+0100\n"
+"POT-Creation-Date: 2020-11-02 16:07+0100\n"
+"PO-Revision-Date: 2020-11-02 16:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1122,6 +1122,12 @@ msgstr "Steuersatz"
 msgid "Price_incl."
 msgstr "Preis inkl."
 
+msgid "Delivered_deposit"
+msgstr "Pfand geliefert"
+
+msgid "Payment_type_deposit_return"
+msgstr "Pfand-Rückgabe"
+
 msgid "Total_sum"
 msgstr "Gesamtsumme"
 
@@ -1892,9 +1898,6 @@ msgstr "Guthaben-Aufladung"
 
 msgid "Payment_type_payback"
 msgstr "Rückzahlung"
-
-msgid "Payment_type_deposit_return"
-msgstr "Pfand-Rückgabe"
 
 msgid "Payment_type_member_fee"
 msgstr "Mitgliedsbeitrag"

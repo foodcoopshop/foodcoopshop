@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-02 11:25+0100\n"
+"POT-Creation-Date: 2020-11-02 16:07+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1121,6 +1121,12 @@ msgstr ""
 msgid "Price_incl."
 msgstr ""
 
+msgid "Delivered_deposit"
+msgstr ""
+
+msgid "Payment_type_deposit_return"
+msgstr ""
+
 msgid "Total_sum"
 msgstr ""
 
@@ -1890,9 +1896,6 @@ msgid "Payment_type_credit_upload"
 msgstr ""
 
 msgid "Payment_type_payback"
-msgstr ""
-
-msgid "Payment_type_deposit_return"
 msgstr ""
 
 msgid "Payment_type_member_fee"

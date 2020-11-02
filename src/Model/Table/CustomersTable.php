@@ -228,22 +228,26 @@ class CustomersTable extends AppTable
         ])->first();
 
         $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
+        $orderedDeposit = $returnedDeposit = ['deposit_incl' => 0, 'deposit_excl' => 0, 'deposit_tax' => 0, 'deposit_amount' => 0];
         foreach($customer->active_order_details as $orderDetail) {
-            $orderDetail->deposit_net = $orderDetailTable->getDepositNet($orderDetail->deposit, $orderDetail->product_amount);
-            $orderDetail->deposit_tax = $orderDetailTable->getDepositTax($orderDetail->deposit, $orderDetail->product_amount);
+            if ($orderDetail->deposit > 0) {
+                $orderedDeposit['deposit_incl'] += $orderDetail->deposit;
+                $orderedDeposit['deposit_excl'] += $orderDetailTable->getDepositNet($orderDetail->deposit, $orderDetail->product_amount);
+                $orderedDeposit['deposit_tax'] += $orderDetailTable->getDepositTax($orderDetail->deposit, $orderDetail->product_amount);
+                $orderedDeposit['deposit_amount'] += $orderDetail->product_amount;
+            }
         }
-        $returnedDeposits = [];
+        $customer->ordered_deposit = $orderedDeposit;
+
         $paymentsTable = FactoryLocator::get('Table')->get('Payments');
         $deposits = $paymentsTable->getCustomerDepositNotBilled($customerId);
-        foreach($deposits as $returnedDeposit) {
-            $returnedDeposits[] = [
-                'deposit' => $returnedDeposit->amount * -1,
-                'deposit_net' => $orderDetailTable->getDepositNet($returnedDeposit->amount, 1) * -1,
-                'deposit_tax' => $orderDetailTable->getDepositTax($returnedDeposit->amount, 1) * -1,
-                'date_add' => $returnedDeposit->date_add,
-            ];
+        foreach($deposits as $deposit) {
+            $returnedDeposit['deposit_incl'] += $deposit->amount * -1;
+            $returnedDeposit['deposit_excl'] += $orderDetailTable->getDepositNet($deposit->amount, 1) * -1;
+            $returnedDeposit['deposit_tax'] += $orderDetailTable->getDepositTax($deposit->amount, 1) * -1;
+            $returnedDeposit['deposit_amount']++;
         }
-        $customer->returned_deposits = $returnedDeposits;
+        $customer->returned_deposit = $returnedDeposit;
         return $customer;
     }
 
