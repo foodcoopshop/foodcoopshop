@@ -100,13 +100,17 @@ class CustomerInvoiceTcpdf extends AppTcpdf
 
             // products
             $this->table .= '<tr style="font-weight:normal;">';
-                $this->table .= '<td align="' . $this->headers[0]['align'] . '" width="' . $this->headers[0]['width'] . '">' . $orderDetail->product_amount . 'x</td>';
-                $this->table .= '<td align="' . $this->headers[1]['align'] . '" width="' . $this->headers[1]['width'] . '">' . $orderDetail->product_name . '</td>';
-                $this->table .= '<td align="' . $this->headers[2]['align'] . '" width="' . $this->headers[2]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_excl) . '</td>';
-                $this->table .= '<td align="' . $this->headers[3]['align'] . '" width="' . $this->headers[3]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->order_detail_tax->total_amount) . '</td>';
-                $this->table .= '<td align="' . $this->headers[4]['align'] . '" width="' . $this->headers[4]['width'] . '">' . $formattedTaxRate  . '%' . '</td>';
-                $this->table .= '<td align="' . $this->headers[5]['align'] . '" width="' . $this->headers[5]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_incl) . '</td>';
-                $this->table .= '<td align="' . $this->headers[6]['align'] . '" width="' . $this->headers[6]['width'] . '">' . $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '</td>';
+                $this->renderTableRow(
+                    [
+                        $orderDetail->product_amount . 'x',
+                        $orderDetail->product_name,
+                        Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_excl),
+                        Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->order_detail_tax->total_amount),
+                        $formattedTaxRate  . '%',
+                        Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_incl),
+                        $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')),
+                    ]
+                );
             $this->table .= '</tr>';
 
         }
@@ -114,26 +118,34 @@ class CustomerInvoiceTcpdf extends AppTcpdf
         // ordered deposit
         if ($result->ordered_deposit['deposit_incl'] != 0) {
             $this->table .= '<tr style="font-weight:normal;font-style:italic;">';
-                $this->table .= '<td align="' . $this->headers[0]['align'] . '" width="' . $this->headers[0]['width'] . '">'.$result->ordered_deposit['deposit_amount'].'x</td>';
-                $this->table .= '<td align="' . $this->headers[1]['align'] . '" width="' . $this->headers[1]['width'] . '">' . __('Delivered_deposit') . '</td>';
-                $this->table .= '<td align="' . $this->headers[2]['align'] . '" width="' . $this->headers[2]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_excl']) . '</td>';
-                $this->table .= '<td align="' . $this->headers[3]['align'] . '" width="' . $this->headers[3]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_tax']) . '</td>';
-                $this->table .= '<td align="' . $this->headers[4]['align'] . '" width="' . $this->headers[4]['width'] . '">' . '20%' . '</td>';
-                $this->table .= '<td align="' . $this->headers[5]['align'] . '" width="' . $this->headers[5]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_incl']) . '</td>';
-                $this->table .= '<td align="' . $this->headers[6]['align'] . '" width="' . $this->headers[6]['width'] . '"></td>';
+                $this->renderTableRow(
+                    [
+                        $result->ordered_deposit['deposit_amount'] . 'x',
+                        __('Delivered_deposit'),
+                        Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_excl']),
+                        Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_tax']),
+                        '20%',
+                        Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_incl']),
+                        '',
+                    ]
+                );
             $this->table .= '</tr>';
         }
 
         // returned deposit
         if ($result->returned_deposit['deposit_incl'] != 0) {
             $this->table .= '<tr style="font-weight:normal;font-style:italic;">';
-                $this->table .= '<td align="' . $this->headers[0]['align'] . '" width="' . $this->headers[0]['width'] . '">'.$result->returned_deposit['deposit_amount'].'x</td>';
-                $this->table .= '<td align="' . $this->headers[1]['align'] . '" width="' . $this->headers[1]['width'] . '">' . __('Payment_type_deposit_return') . '</td>';
-                $this->table .= '<td align="' . $this->headers[2]['align'] . '" width="' . $this->headers[2]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_excl']) . '</td>';
-                $this->table .= '<td align="' . $this->headers[3]['align'] . '" width="' . $this->headers[3]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_tax']) . '</td>';
-                $this->table .= '<td align="' . $this->headers[4]['align'] . '" width="' . $this->headers[4]['width'] . '">' . '20%' . '</td>';
-                $this->table .= '<td align="' . $this->headers[5]['align'] . '" width="' . $this->headers[5]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_incl']) . '</td>';
-                $this->table .= '<td align="' . $this->headers[6]['align'] . '" width="' . $this->headers[6]['width'] . '"></td>';
+                $this->renderTableRow(
+                    [
+                        $result->returned_deposit['deposit_amount'] . 'x',
+                        __('Payment_type_deposit_return'),
+                        Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_excl']),
+                        Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_tax']),
+                        '20%',
+                        Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_incl']),
+                        '',
+                    ]
+                );
             $this->table .= '</tr>';
         }
 
@@ -148,6 +160,15 @@ class CustomerInvoiceTcpdf extends AppTcpdf
             $this->table .= '<td align="' . $this->headers[6]['align'] . '" width="' . $this->headers[6]['width'] . '"></td>';
         $this->table .= '</tr>';
 
+    }
+
+    private function renderTableRow($values)
+    {
+        $i = 0;
+        foreach($values as $value) {
+            $this->table .= '<td align="' . $this->headers[$i]['align'] . '" width="' . $this->headers[$i]['width'] . '">' . $value . '</td>';
+            $i++;
+        }
     }
 
     /**
