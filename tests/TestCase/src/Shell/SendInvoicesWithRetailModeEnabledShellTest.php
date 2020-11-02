@@ -51,10 +51,12 @@ class SendInvoicesWithRetailModeEnabledShellTest extends AppCakeTestCase
 
         // add product with price pre unit
         $productIdA = 347; // forelle
+        $productIdB = '348-11'; // rindfleisch + attribute
         $this->addProductToCart($productIdA, 1);
+        $this->addProductToCart($productIdB, 3);
         $this->finishCart(1, 1, '', null, $pickupDay);
 
-        $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN(4);';
+        $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN(4,5);';
         $params = [
             'pickupDay' => $pickupDay,
         ];
