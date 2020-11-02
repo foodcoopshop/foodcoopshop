@@ -50,7 +50,7 @@ abstract class OrderDetailsControllerTestCase extends AppCakeTestCase
         $reducedMaxPercentage = 15;
         $this->prepareTimebasedCurrencyConfiguration($reducedMaxPercentage);
         $this->loginAsSuperadmin();
-        $this->addProductToCart(344, 1); // addProductToCart needs to be called twice!
+        $this->addProductToCart(344, 1);
         $this->addProductToCart(346, 2);
         $this->finishCart(1, 1, '', '352');
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
