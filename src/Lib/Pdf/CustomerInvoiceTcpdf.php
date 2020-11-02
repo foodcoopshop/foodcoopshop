@@ -133,7 +133,7 @@ class CustomerInvoiceTcpdf extends AppTcpdf
                 $this->table .= '<td align="' . $this->headers[3]['align'] . '" width="' . $this->headers[3]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($returnedDeposit['deposit_tax']) . '</td>';
                 $this->table .= '<td align="' . $this->headers[4]['align'] . '" width="' . $this->headers[4]['width'] . '">' . '20%' . '</td>';
                 $this->table .= '<td align="' . $this->headers[5]['align'] . '" width="' . $this->headers[5]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($returnedDeposit['deposit']) . '</td>';
-                $this->table .= '<td align="' . $this->headers[6]['align'] . '" width="' . $this->headers[6]['width'] . '">' . $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '</td>';
+                $this->table .= '<td align="' . $this->headers[6]['align'] . '" width="' . $this->headers[6]['width'] . '">' . $returnedDeposit['date_add']->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')) . '</td>';
             $this->table .= '</tr>';
         }
 

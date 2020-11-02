@@ -240,6 +240,7 @@ class CustomersTable extends AppTable
                 'deposit' => $returnedDeposit->amount * -1,
                 'deposit_net' => $orderDetailTable->getDepositNet($returnedDeposit->amount, 1) * -1,
                 'deposit_tax' => $orderDetailTable->getDepositTax($returnedDeposit->amount, 1) * -1,
+                'date_add' => $returnedDeposit->date_add,
             ];
         }
         $customer->returned_deposits = $returnedDeposits;
