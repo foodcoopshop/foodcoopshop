@@ -227,6 +227,14 @@ class CustomersTable extends AppTable
             ]
         ])->first();
 
+        // prepare correct weight if price per unit was used
+        foreach($customer->active_order_details as $orderDetail) {
+            if (!empty($orderDetail->order_detail_unit)) {
+                $orderDetail->product_name .= ', ' . Configure::read('app.numberHelper')->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) . $orderDetail->order_detail_unit->unit_name;
+            }
+        }
+
+        // prepare delivered deposit
         $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
         $orderedDeposit = $returnedDeposit = ['deposit_incl' => 0, 'deposit_excl' => 0, 'deposit_tax' => 0, 'deposit_amount' => 0];
         foreach($customer->active_order_details as $orderDetail) {
@@ -239,6 +247,7 @@ class CustomersTable extends AppTable
         }
         $customer->ordered_deposit = $orderedDeposit;
 
+        // prepare returned deposit
         $paymentsTable = FactoryLocator::get('Table')->get('Payments');
         $deposits = $paymentsTable->getCustomerDepositNotBilled($customerId);
         foreach($deposits as $deposit) {

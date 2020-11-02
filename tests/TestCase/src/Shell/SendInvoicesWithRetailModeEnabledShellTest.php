@@ -38,11 +38,28 @@ class SendInvoicesWithRetailModeEnabledShellTest extends AppCakeTestCase
 
     public function testContentOfInvoice()
     {
+
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+
+        $pickupDay = '2018-02-02';
+
         $this->changeConfiguration('FCS_RETAIL_MODE_ENABLED', 1);
         $this->loginAsSuperadmin();
 
         $customerId = Configure::read('test.superadminId');
-        $this->addPayment($customerId, 2, 'deposit', 0, '', '2018-02-01');
+        $this->addPayment($customerId, 2, 'deposit', 0, '', $pickupDay);
+
+        // add product with price pre unit
+        $productIdA = 347; // forelle
+        $this->addProductToCart($productIdA, 1);
+        $this->finishCart(1, 1, '', null, $pickupDay);
+
+        $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN(4);';
+        $params = [
+            'pickupDay' => $pickupDay,
+        ];
+        $statement = $this->dbConnection->prepare($query);
+        $statement->execute($params);
 
         $this->get('/admin/customers/getInvoice.pdf?customerId='.$customerId.'&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoice.html');
