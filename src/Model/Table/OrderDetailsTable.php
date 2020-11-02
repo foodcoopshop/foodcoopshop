@@ -114,8 +114,8 @@ class OrderDetailsTable extends AppTable
     public function getDepositTax($depositGross, $amount)
     {
         $vat = 0.2;
-        $depositTax = round($depositGross / $amount, 2);
-        $depositTax = round($depositTax / (1 + $vat), 2);
+        $depositGrossPerPiece = round($depositGross / $amount, 2);
+        $depositTax = $depositGrossPerPiece - round($depositGrossPerPiece / (1 + $vat), 2);
         $depositTax = $depositTax * $amount;
         return $depositTax;
     }
