@@ -106,10 +106,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
     private function preparePricePerUnitOrder()
     {
         $productIdA = 347; // forelle
-
-        $this->addProductToCart($productIdA, 1);
-        $this->addProductToCart($productIdA, 1); // addProductToCart needs to be called twice!
-
+        $this->addProductToCart($productIdA, 2);
         $this->finishCart(1, 1);
         $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
         $cart = $this->getCartById($cartId);
