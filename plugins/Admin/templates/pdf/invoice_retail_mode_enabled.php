@@ -38,5 +38,5 @@ $html .= '</tr></table>';
 $pdf->writeHTML($html, true, false, true, false, '');
 
 $pdf->prepareTableHeader();
-$pdf->prepareTableData($result);
+$pdf->prepareTableData($result, $sumPriceExcl, $sumPriceIncl, $sumTax);
 $pdf->renderTable();

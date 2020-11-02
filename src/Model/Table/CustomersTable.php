@@ -226,6 +226,12 @@ class CustomersTable extends AppTable
                 'ActiveOrderDetails.Taxes',
             ]
         ])->first();
+
+        $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
+        foreach($customer->active_order_details as $orderDetail) {
+            $orderDetail->deposit_net = $orderDetailTable->getDepositNet($orderDetail->deposit, $orderDetail->product_amount);
+            $orderDetail->deposit_tax = $orderDetailTable->getDepositTax($orderDetail->deposit, $orderDetail->product_amount);
+        }
         return $customer;
     }
 

@@ -39,9 +39,9 @@ class InvoiceRetailModeEnabledPdfWriter extends PdfWriter
         $sumPriceExcl = 0;
         $sumTax = 0;
         foreach ($result->active_order_details as $orderDetail) {
-            $sumPriceIncl += $orderDetail->total_price_tax_incl;
-            $sumPriceExcl += $orderDetail->total_price_tax_excl;
-            $sumTax += $orderDetail->order_detail_tax->total_amount;
+            $sumPriceIncl += $orderDetail->total_price_tax_incl + $orderDetail->deposit;
+            $sumPriceExcl += $orderDetail->total_price_tax_excl + $orderDetail->deposit_net;
+            $sumTax += $orderDetail->order_detail_tax->total_amount + $orderDetail->deposit_tax;
         }
 
         $this->setData([
