@@ -25,5 +25,8 @@ class AddRetailMode extends AbstractMigration
         $sql = "UPDATE fcs_cronjobs SET name = 'SendInvoicesWithRetailModeDisabled' WHERE name = 'SendInvoices';";
         $this->execute($sql);
 
+        $sql = "ALTER TABLE `fcs_payments` ADD `invoice_id` INT(10) UNSIGNED NOT NULL DEFAULT NULL AFTER `transaction_text`;";
+        $this->execute($sql);
+
     }
 }

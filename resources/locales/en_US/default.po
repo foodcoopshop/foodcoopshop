@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-30 11:05+0100\n"
+"POT-Creation-Date: 2020-11-02 11:25+0100\n"
 "PO-Revision-Date: 2020-10-30 11:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1122,6 +1122,9 @@ msgstr "Tax rate"
 msgid "Price_incl."
 msgstr "Price incl."
 
+msgid "Total_sum"
+msgstr "Total sum"
+
 msgid "Generated_on_{0}"
 msgstr "Generated on {0}"
 
@@ -1151,9 +1154,6 @@ msgstr "Deleted member"
 
 msgid "Price_per_weight"
 msgstr "Price per weight"
-
-msgid "Total_sum"
-msgstr "Total sum"
 
 msgid "You_are_not_signed_in."
 msgstr "Your are not signed in."

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-30 11:05+0100\n"
+"POT-Creation-Date: 2020-11-02 11:25+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1510,6 +1510,10 @@ msgstr "Stawka podatkowa"
 msgid "Price_incl."
 msgstr "Cena z wyłączeniem"
 
+# Total sum
+msgid "Total_sum"
+msgstr "Suma łącznie"
+
 # Generated invoices
 #, fuzzy
 msgid "Generated_on_{0}"
@@ -1552,10 +1556,6 @@ msgstr "Usuń członka"
 # Price per weight
 msgid "Price_per_weight"
 msgstr "Cena za wagę"
-
-# Total sum
-msgid "Total_sum"
-msgstr "Suma łącznie"
 
 # Your are not signed in.
 msgid "You_are_not_signed_in."

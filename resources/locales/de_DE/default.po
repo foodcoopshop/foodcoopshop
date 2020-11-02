@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-30 11:04+0100\n"
+"POT-Creation-Date: 2020-11-02 11:25+0100\n"
 "PO-Revision-Date: 2020-10-30 11:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1116,11 +1116,14 @@ msgstr "Preis exkl."
 msgid "VAT"
 msgstr "USt."
 
-msgid "VAT_rate"
+msgid "Tax_rate"
 msgstr "Steuersatz"
 
 msgid "Price_incl."
 msgstr "Preis inkl."
+
+msgid "Total_sum"
+msgstr "Gesamtsumme"
 
 msgid "Generated_on_{0}"
 msgstr "Generiert am {0}"
@@ -1130,9 +1133,6 @@ msgstr "Seite {0} von {1}"
 
 msgid "Tax_rates_overview_table"
 msgstr "Übersichtstabelle nach Steuersatz"
-
-msgid "Tax_rate"
-msgstr "Steuersatz"
 
 msgid "Sum_price_excl."
 msgstr "Summe Preis exkl."
@@ -1154,9 +1154,6 @@ msgstr "Gelöschtes Mitglied"
 
 msgid "Price_per_weight"
 msgstr "Preis nach Gewicht"
-
-msgid "Total_sum"
-msgstr "Gesamtsumme"
 
 msgid "You_are_not_signed_in."
 msgstr "Du bist nicht angemeldet."
@@ -2462,6 +2459,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "VAT_rate"
+#~ msgstr "Steuersatz"
 
 #~ msgid "Shopping_limit_reached"
 #~ msgstr "Guthaben-Limit erreicht"

@@ -232,6 +232,17 @@ class CustomersTable extends AppTable
             $orderDetail->deposit_net = $orderDetailTable->getDepositNet($orderDetail->deposit, $orderDetail->product_amount);
             $orderDetail->deposit_tax = $orderDetailTable->getDepositTax($orderDetail->deposit, $orderDetail->product_amount);
         }
+        $returnedDeposits = [];
+        $paymentsTable = FactoryLocator::get('Table')->get('Payments');
+        $deposits = $paymentsTable->getCustomerDepositNotBilled($customerId);
+        foreach($deposits as $returnedDeposit) {
+            $returnedDeposits[] = [
+                'deposit' => $returnedDeposit->amount * -1,
+                'deposit_net' => $orderDetailTable->getDepositNet($returnedDeposit->amount, 1) * -1,
+                'deposit_tax' => $orderDetailTable->getDepositTax($returnedDeposit->amount, 1) * -1,
+            ];
+        }
+        $customer->returned_deposits = $returnedDeposits;
         return $customer;
     }
 

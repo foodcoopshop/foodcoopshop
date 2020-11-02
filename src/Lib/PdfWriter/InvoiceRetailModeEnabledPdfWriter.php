@@ -44,6 +44,12 @@ class InvoiceRetailModeEnabledPdfWriter extends PdfWriter
             $sumTax += $orderDetail->order_detail_tax->total_amount + $orderDetail->deposit_tax;
         }
 
+        foreach($result->returned_deposits as $returnedDeposit) {
+            $sumPriceIncl += $returnedDeposit['deposit'];
+            $sumPriceExcl += $returnedDeposit['deposit_net'];
+            $sumTax += $returnedDeposit['deposit_tax'];
+        }
+
         $this->setData([
             'result' => $result,
             'sumPriceIncl' => $sumPriceIncl,

@@ -387,6 +387,7 @@ CREATE TABLE `fcs_payments` (
   `date_changed` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_transaction_add` datetime DEFAULT NULL,
   `transaction_text` mediumtext,
+  `invoice_id` int(10) unsigned NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '1',
   `approval` tinyint(4) NOT NULL DEFAULT '0',
   `approval_comment` mediumtext,
