@@ -257,6 +257,43 @@ class CustomersTable extends AppTable
             $returnedDeposit['deposit_amount']++;
         }
         $customer->returned_deposit = $returnedDeposit;
+
+        // prepare tax sums
+        $taxRates = [];
+        $defaultArray = [
+            'sum_price_excl' => 0,
+            'sum_tax' => 0,
+            'sum_price_incl' => 0,
+        ];
+        foreach($customer->active_order_details as $orderDetail) {
+            if (empty($orderDetail->tax)) {
+                $taxRate = 0;
+            } else {
+                $taxRate = $orderDetail->tax->rate;
+            }
+            if (!isset($taxRates[$taxRate])) {
+                $taxRates[$taxRate] = $defaultArray;
+            }
+            $taxRates[$taxRate]['sum_price_excl'] += $orderDetail->total_price_tax_excl;
+            $taxRates[$taxRate]['sum_tax'] += $orderDetail->order_detail_tax->total_amount;
+            $taxRates[$taxRate]['sum_price_incl'] += $orderDetail->total_price_tax_incl;
+        }
+
+        $depositVatRate = 20.00;
+        if (!isset($taxRates[$depositVatRate])) {
+            $taxRates[$depositVatRate] = $defaultArray;
+        }
+        $taxRates[$depositVatRate]['sum_price_excl'] += $orderedDeposit['deposit_excl'] + $returnedDeposit['deposit_excl'];
+        $taxRates[$depositVatRate]['sum_tax'] += $orderedDeposit['deposit_tax'] + $returnedDeposit['deposit_tax'];
+        $taxRates[$depositVatRate]['sum_price_incl'] += $orderedDeposit['deposit_incl'] + $returnedDeposit['deposit_incl'];
+
+        ksort($taxRates);
+
+        if (count($taxRates) == 1) {
+            $taxRates = false;
+        }
+        $customer->tax_rates = $taxRates;
+
         return $customer;
     }
 

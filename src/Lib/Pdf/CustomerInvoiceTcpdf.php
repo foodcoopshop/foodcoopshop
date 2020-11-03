@@ -20,6 +20,8 @@ use Cake\I18n\FrozenTime;
 class CustomerInvoiceTcpdf extends AppTcpdf
 {
 
+    use TaxSumTableTrait;
+
     public $headerRight;
 
     public $replaceEuroSign = false;

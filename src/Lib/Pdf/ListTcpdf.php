@@ -20,6 +20,8 @@ use Cake\I18n\FrozenTime;
 class ListTcpdf extends AppTcpdf
 {
 
+    use TaxSumTableTrait;
+
     public $headerRight;
 
     public $infoTextForFooter = '';
@@ -32,7 +34,7 @@ class ListTcpdf extends AppTcpdf
         $this->SetFontSize(10);
     }
 
-    public function renderTaxRatesTable($results)
+    public function prepareTaxSumData($results)
     {
 
         $taxRates = [];
@@ -55,42 +57,8 @@ class ListTcpdf extends AppTcpdf
 
         ksort($taxRates);
 
-        $taxRatesTableColumnWidth = 85;
+        return $taxRates;
 
-        $this->Ln(3);
-        $html = '<p><b>'.__('Tax_rates_overview_table').'</b></p>';
-        $this->Ln(3);
-        $this->writeHTML($html, true, false, true, false, '');
-
-        $html = '<table border="1" cellspacing="0" cellpadding="1" style="font-size:8px">';
-
-        $html .= '<tr style="font-weight:bold;background-color:#cecece">';
-        $html .= '<th align="right" width="'.$taxRatesTableColumnWidth.'">'.__('Tax_rate').'</th>';
-        $html .= '<th align="right" width="'.$taxRatesTableColumnWidth.'">'.__('Sum_price_excl.').'</th>';
-        $html .= '<th align="right" width="'.$taxRatesTableColumnWidth.'">'.__('Sum_tax').'</th>';
-        $html .= '<th align="right" width="'.$taxRatesTableColumnWidth.'">'.__('Sum_price_incl.').'</th>';
-        $html .= '</tr>';
-
-        foreach($taxRates as $taxRate => $data) {
-            $html .= '<tr>';
-            $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">';
-            if ($taxRate != intval($taxRate)) {
-                $formattedTaxRate = Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 1);
-            } else {
-                $formattedTaxRate = Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 0);
-            }
-            $html .= $formattedTaxRate . '%';
-            $html .= '</td>';
-            $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. Configure::read('app.numberHelper')->formatAsDecimal($data['sum_price_excl']) . '</td>';
-            $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. Configure::read('app.numberHelper')->formatAsDecimal($data['sum_tax']) . '</td>';
-            $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. Configure::read('app.numberHelper')->formatAsDecimal($data['sum_price_incl']) . '</td>';
-            $html .= '</tr>';
-        }
-
-        $html .= '</table>';
-
-        $this->Ln(3);
-        $this->writeHTML($html, true, false, true, false, '');
     }
 
     public function renderDetailedOrderList($results, $widths, $headers, $groupType, $onlyShowSums = false)
