@@ -36,8 +36,7 @@ class ListTcpdf extends AppTcpdf
     {
 
         $taxRates = [];
-        foreach($results as $result)
-        {
+        foreach($results as $result) {
             if (!isset($taxRates[$result['TaxRate']])) {
                 $taxRates[$result['TaxRate']] = [
                     'sum_price_excl' => 0,
