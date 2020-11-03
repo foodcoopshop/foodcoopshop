@@ -193,6 +193,10 @@ $this->element('addScript', [
                 continue;
             }
 
+            if (in_array($configuration->name, ['FCS_DEPOSIT_TAX_RATE', 'FCS_INVOICE_HEADER_TEXT']) && !Configure::read('appDb.FCS_RETAIL_MODE_ENABLED')) {
+                continue;
+            }
+
             echo '<tr>';
 
                 echo '<td class="first">';
