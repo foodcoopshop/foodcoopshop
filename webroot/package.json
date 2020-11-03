@@ -33,12 +33,12 @@
     "popper.js": "^1.16.1",
     "scrolltofixed": "^1.0.6",
     "slidebars": "^2.0.2",
-    "swiper": "6.3.4",
+    "swiper": "6.3.5",
     "tooltipster": "^4.2.8",
     "uglify-es": "^3.3.9",
     "webrtc-adapter": "^7.7.0"
   },
   "devDependencies": {
-    "eslint": "^7.11.0"
+    "eslint": "^7.12.1"
   }
 }
