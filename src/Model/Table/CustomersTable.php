@@ -271,6 +271,7 @@ class CustomersTable extends AppTable
             } else {
                 $taxRate = $orderDetail->tax->rate;
             }
+            $taxRate = Configure::read('app.numberHelper')->formatTaxRate($taxRate);
             if (!isset($taxRates[$taxRate])) {
                 $taxRates[$taxRate] = $defaultArray;
             }
@@ -279,7 +280,9 @@ class CustomersTable extends AppTable
             $taxRates[$taxRate]['sum_price_incl'] += $orderDetail->total_price_tax_incl;
         }
 
-        $depositVatRate = 20.00;
+        $depositVatRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
+        $depositVatRate = Configure::read('app.numberHelper')->formatTaxRate($depositVatRate);
+
         if (!isset($taxRates[$depositVatRate])) {
             $taxRates[$depositVatRate] = $defaultArray;
         }

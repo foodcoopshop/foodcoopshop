@@ -164,7 +164,7 @@ class ListTcpdf extends AppTcpdf
 
                 if (in_array(__('VAT'), $headers)) {
                     $indexForWidth ++;
-                    $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($tax) . ' (' . ($taxRate != intval($taxRate) ? Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 1) : Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 0)) . '%)</td>';
+                    $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($tax) . ' (' . Configure::read('app.numberHelper')->formatTaxRate($taxRate) . '%)</td>';
                 }
 
                 $indexForWidth ++;
@@ -254,7 +254,7 @@ class ListTcpdf extends AppTcpdf
             $colspan --;
             $taxRateString = '';
             if ($detailsHidden) {
-                $taxRateString = ' (' . ($taxRate != intval($taxRate) ? Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 1) : Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 0)) . '%)';
+                $taxRateString = ' (' . Configure::read('app.numberHelper')->formatTaxRate($taxRate) . '%)';
             }
             $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($taxSum) . $taxRateString . '</td>';
             $indexForWidth ++;

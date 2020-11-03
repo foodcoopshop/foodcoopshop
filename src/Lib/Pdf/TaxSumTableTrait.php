@@ -46,12 +46,10 @@ trait TaxSumTableTrait
         foreach($taxRates as $taxRate => $data) {
             $html .= '<tr>';
             $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">';
-            if ($taxRate != intval($taxRate)) {
-                $formattedTaxRate = Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 1);
-            } else {
-                $formattedTaxRate = Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 0);
-            }
+
+            $formattedTaxRate = Configure::read('app.numberHelper')->formatTaxRate($taxRate);
             $html .= $formattedTaxRate . '%';
+
             $html .= '</td>';
             $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. Configure::read('app.numberHelper')->formatAsCurrency($data['sum_price_excl']) . '</td>';
             $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. Configure::read('app.numberHelper')->formatAsCurrency($data['sum_tax']) . '</td>';

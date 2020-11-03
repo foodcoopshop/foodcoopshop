@@ -94,11 +94,7 @@ class CustomerInvoiceTcpdf extends AppTcpdf
         foreach($result->active_order_details as $orderDetail) {
 
             $taxRate = $orderDetail->tax->rate ?? 0;
-            if ($taxRate != intval($taxRate)) {
-                $formattedTaxRate = Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 1);
-            } else {
-                $formattedTaxRate = Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 0);
-            }
+            $formattedTaxRate = Configure::read('app.numberHelper')->formatTaxRate($taxRate);
 
             // products
             $this->table .= '<tr style="font-weight:normal;">';
@@ -117,6 +113,9 @@ class CustomerInvoiceTcpdf extends AppTcpdf
 
         }
 
+        $depositTaxRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
+        $formattedDepositTaxRate = Configure::read('app.numberHelper')->formatTaxRate($depositTaxRate);
+
         // ordered deposit
         if ($result->ordered_deposit['deposit_incl'] != 0) {
             $this->table .= '<tr style="font-weight:normal;font-style:italic;">';
@@ -126,7 +125,7 @@ class CustomerInvoiceTcpdf extends AppTcpdf
                         __('Delivered_deposit'),
                         Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_excl']),
                         Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_tax']),
-                        '20%',
+                        $formattedDepositTaxRate . '%',
                         Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_incl']),
                         '',
                     ]
@@ -143,7 +142,7 @@ class CustomerInvoiceTcpdf extends AppTcpdf
                         __('Payment_type_deposit_return'),
                         Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_excl']),
                         Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_tax']),
-                        '20%',
+                        $formattedDepositTaxRate . '%',
                         Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_incl']),
                         '',
                     ]
@@ -184,8 +183,7 @@ class CustomerInvoiceTcpdf extends AppTcpdf
         $this->MultiCell(50, 0, '<img src="' . $this->logoPath . '">', 0, 'L', 0, 0, '', '', true, null, true);
         $this->setFontSize(10);
 
-        $convertedHeaderRight = '<br />'.Configure::read('appDb.FCS_APP_NAME').'<br />'.Configure::read('appDb.FCS_APP_ADDRESS').'<br />'.Configure::read('appDb.FCS_APP_EMAIL');
-        $convertedHeaderRight = Configure::read('app.htmlHelper')->prepareDbTextForPDF($convertedHeaderRight);
+        $convertedHeaderRight = Configure::read('app.htmlHelper')->prepareDbTextForPDF(Configure::read('appDb.FCS_INVOICE_HEADER_TEXT'));
 
         // add additional line break on top if short address
         $lineCount = substr_count($convertedHeaderRight, "\n");

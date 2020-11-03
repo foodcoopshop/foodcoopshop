@@ -188,6 +188,7 @@ $this->element('addScript', [
 
         <?php
         foreach ($configurations as $configuration) {
+
             if ($configuration->type != 'readonly') {
                 continue;
             }
