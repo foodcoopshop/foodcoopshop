@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-30 10:23+0100\n"
+"POT-Creation-Date: 2020-11-03 10:51+0100\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2206,6 +2206,9 @@ msgstr "Kwóta, która zostanie przelana na twoje konto bankowe"
 
 msgid "Detail_view"
 msgstr "Widok szczegółowy"
+
+msgid "{0}_thanks_you_for_your_purchase!"
+msgstr ""
 
 msgid "Total"
 msgstr ""

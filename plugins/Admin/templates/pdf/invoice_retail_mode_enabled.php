@@ -13,6 +13,8 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
 $pdf->setTextHelper($this->Text);
 $pdf->SetLeftMargin(12);
 $pdf->AddPage();
@@ -40,3 +42,7 @@ $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->prepareTableHeader();
 $pdf->prepareTableData($result, $sumPriceExcl, $sumPriceIncl, $sumTax);
 $pdf->renderTable();
+
+$pdf->Ln(3);
+$html = '<p>'.__d('admin', '{0}_thanks_you_for_your_purchase!', [Configure::read('appDb.FCS_APP_NAME')]).'</p>';
+$pdf->writeHTML($html, true, false, true, false, '');

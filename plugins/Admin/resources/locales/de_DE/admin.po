@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-30 10:23+0100\n"
-"PO-Revision-Date: 2020-10-30 10:24+0100\n"
+"POT-Creation-Date: 2020-11-03 10:51+0100\n"
+"PO-Revision-Date: 2020-11-03 10:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -2120,6 +2120,9 @@ msgstr "Betrag, der auf dein Konto überwiesen wird"
 
 msgid "Detail_view"
 msgstr "Detailübersicht"
+
+msgid "{0}_thanks_you_for_your_purchase!"
+msgstr "{0} sagt Danke für Deinen Einkauf!"
 
 msgid "Total"
 msgstr "Gesamt"
