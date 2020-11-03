@@ -21,7 +21,7 @@ use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 
-class SendInvoicesWithRetailModeEnabledShellTest extends AppCakeTestCase
+class SendInvoicesToMembersShellTest extends AppCakeTestCase
 {
 
     use AppIntegrationTestTrait;
@@ -43,7 +43,7 @@ class SendInvoicesWithRetailModeEnabledShellTest extends AppCakeTestCase
 
         $pickupDay = '2018-02-02';
 
-        $this->changeConfiguration('FCS_RETAIL_MODE_ENABLED', 1);
+        $this->changeConfiguration('FCS_BULK_INVOICE_MODE', 1);
         $this->loginAsSuperadmin();
 
         $customerId = Configure::read('test.superadminId');

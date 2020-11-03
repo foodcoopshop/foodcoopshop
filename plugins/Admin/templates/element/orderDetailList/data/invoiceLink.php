@@ -15,7 +15,7 @@
 
 use Cake\Core\Configure;
 
-if ($groupBy == 'customer' && Configure::read('appDb.FCS_RETAIL_MODE_ENABLED') && $appAuth->isSuperadmin()) {
+if ($groupBy == 'customer' && Configure::read('appDb.FCS_BULK_INVOICE_MODE') && $appAuth->isSuperadmin()) {
     $dateFrom = $pickupDay[0];
     $dateTo = count($pickupDay) == 2 ? $pickupDay[1] : $dateFrom;
     echo '<td>';

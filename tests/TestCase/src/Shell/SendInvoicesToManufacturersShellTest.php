@@ -21,7 +21,7 @@ use Cake\Core\Configure;
 use Cake\Console\CommandRunner;
 use Cake\TestSuite\EmailTrait;
 
-class SendInvoicesWithRetailModeDisabledShellTest extends AppCakeTestCase
+class SendInvoicesToManufacturersShellTest extends AppCakeTestCase
 {
 
     use AppIntegrationTestTrait;
@@ -59,7 +59,7 @@ class SendInvoicesWithRetailModeDisabledShellTest extends AppCakeTestCase
         $milkManufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.milkManufacturerId'));
         $this->changeManufacturer($milkManufacturerId, 'send_invoice', 0);
 
-        $this->commandRunner->run(['cake', 'send_invoices_with_retail_mode_disabled', '2018-03-11 10:20:30']);
+        $this->commandRunner->run(['cake', 'send_invoices_to_manufacturers', '2018-03-11 10:20:30']);
         $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
 
         $orderDetails = $this->OrderDetail->find('all')->toArray();
@@ -94,9 +94,9 @@ class SendInvoicesWithRetailModeDisabledShellTest extends AppCakeTestCase
     {
 
         $this->prepareSendInvoices();
-        $this->commandRunner->run(['cake', 'send_invoices_with_retail_mode_disabled', '2018-03-11 10:20:30']);
+        $this->commandRunner->run(['cake', 'send_invoices_to_manufacturers', '2018-03-11 10:20:30']);
         $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
-        $this->commandRunner->run(['cake', 'send_invoices_with_retail_mode_disabled', '2018-03-11 10:20:30']); // sic! run again
+        $this->commandRunner->run(['cake', 'send_invoices_to_manufacturers', '2018-03-11 10:20:30']); // sic! run again
         $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
 
         // no additional (would be 8) emails should be sent if called twice on same day

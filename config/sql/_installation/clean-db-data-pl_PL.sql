@@ -132,7 +132,7 @@ INSERT INTO `fcs_configuration` VALUES
 (588,1,'FCS_SHOW_NEW_PRODUCTS_ON_HOME','Show new products on home?','1','boolean',220,'pl_PL','2020-04-15 09:42:02','2020-04-15 09:42:02'),
 (589,1,'FCS_FEEDBACK_TO_PRODUCTS_ENABLED','Are members allowed to write feedback to products?','1','boolean',3200,'pl_PL','2020-06-19 09:02:55','2020-06-19 09:02:55'),
 (590,1,'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY','Pickup day can be selected by member on order confirmation.','0','readonly',590,'pl_PL','2020-07-06 10:34:44','2020-07-06 10:34:44'),
-(591,1,'FCS_RETAIL_MODE_ENABLED','Retail mode activated?.','0','readonly',580,'pl_PL','2020-10-29 10:06:45','2020-10-29 10:06:45'),
+(591,1,'FCS_BULK_INVOICE_MODE','Retail mode activated?.','0','readonly',580,'pl_PL','2020-10-29 10:06:45','2020-10-29 10:06:45'),
 (592,1,'FCS_DEPOSIT_TAX_RATE','VAT for deposit','20.00','readonly',581,'pl_PL','2020-11-03 15:24:06','2020-11-03 15:24:06'),
 (593,1,'FCS_INVOICE_HEADER_TEXT','Header text for invoices to members','','readonly',582,'pl_PL','2020-11-03 15:24:01','2020-11-03 15:24:01');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
@@ -146,9 +146,9 @@ INSERT INTO `fcs_cronjobs` VALUES
 (2,'CheckCreditBalance','week',NULL,'Friday','22:30:00',1),
 (3,'EmailOrderReminder','week',NULL,'Monday','18:00:00',1),
 (4,'PickupReminder','week',NULL,'Monday','09:00:00',1),
-(5,'SendInvoicesWithRetailModeDisabled','month',11,NULL,'10:30:00',1),
+(5,'SendInvoicesToManufacturers','month',11,NULL,'10:30:00',1),
 (6,'SendOrderLists','day',NULL,NULL,'04:30:00',1),
-(7,'SendInvoicesWithRetailModeEnabledS','week',NULL,'Saturday','10:00:00',0);
+(7,'SendInvoicesToMembersS','week',NULL,'Saturday','10:00:00',0);
 /*!40000 ALTER TABLE `fcs_cronjobs` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;

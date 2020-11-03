@@ -74,7 +74,7 @@ echo '<tr class="sort">';
         echo '<th>%</th>';
     }
     echo '<th></th>';
-    if (!Configure::read('appDb.FCS_RETAIL_MODE_ENABLED')) {
+    if (!Configure::read('appDb.FCS_BULK_INVOICE_MODE')) {
         echo '<th></th>';
     }
     echo '<th></th>';
@@ -249,7 +249,7 @@ foreach ($manufacturers as $manufacturer) {
     ]);
     echo '</td>';
 
-    if (!Configure::read('appDb.FCS_RETAIL_MODE_ENABLED')) {
+    if (!Configure::read('appDb.FCS_BULK_INVOICE_MODE')) {
         echo '<td>';
         echo $this->Html->link(__d('admin', 'Test_invoice'), '/admin/manufacturers/getInvoice.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo, [
             'target' => '_blank'

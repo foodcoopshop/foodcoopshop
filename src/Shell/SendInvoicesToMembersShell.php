@@ -16,7 +16,7 @@ namespace App\Shell;
 
 use Cake\Core\Configure;
 
-class SendInvoicesWithRetailModeEnabledShell extends AppShell
+class SendInvoicesToMembersShell extends AppShell
 {
 
     public $cronjobRunDay;

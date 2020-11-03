@@ -34,7 +34,7 @@ if (count($pickupDay) == 1) {
     echo '<th>'.__d('admin', 'Picked_up').'</th>';
 }
 
-if (Configure::read('appDb.FCS_RETAIL_MODE_ENABLED') && $appAuth->isSuperadmin()) {
+if (Configure::read('appDb.FCS_BULK_INVOICE_MODE') && $appAuth->isSuperadmin()) {
     echo '<th>'.__d('admin', 'Invoice').'</th>';
 }
 
