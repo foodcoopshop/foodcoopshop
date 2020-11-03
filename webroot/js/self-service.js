@@ -45,35 +45,35 @@ foodcoopshop.SelfService = {
 
         Quagga.init({
             inputStream : {
-                name : "Live",
-                type : "LiveStream",
+                name : 'Live',
+                type : 'LiveStream',
                 target: document.querySelector('#camera'),
             },
             numOfWorkers: navigator.hardwareConcurrency,
             decoder : {
-                readers : ["code_39_reader"]
+                readers : ['code_39_reader']
             },
-          }, function(err) {
-              if (err) {
-                  console.log(err);
-                  return;
-              }
+        }, function(err) {
+            if (err) {
+                console.log(err);
+                return;
+            }
 
-              Quagga.start();
+            Quagga.start();
 
-              $('#camera').animate({
-                  height: 'toggle'
-              }, 150);
-              foodcoopshop.SelfService.hideLoader();
+            $('#camera').animate({
+                height: 'toggle'
+            }, 150);
+            foodcoopshop.SelfService.hideLoader();
 
-          });
-          Quagga.offDetected();
-          Quagga.onDetected(function(result) {
-              Quagga.stop();
-              foodcoopshop.SelfService.hideLoader();
-              foodcoopshop.SelfService.showLoader(afterElementForLoader);
-              callback(result);
-          });
+        });
+        Quagga.offDetected();
+        Quagga.onDetected(function(result) {
+            Quagga.stop();
+            foodcoopshop.SelfService.hideLoader();
+            foodcoopshop.SelfService.showLoader(afterElementForLoader);
+            callback(result);
+        });
 
     },
 
@@ -84,8 +84,8 @@ foodcoopshop.SelfService = {
     },
 
     mobileScannerCallbackForProducts : function(result) {
-          var redirectUrl = '/' + foodcoopshop.LocalizedJs.helper.routeSelfService + '?keyword=' + result.codeResult.code;
-          document.location.href = redirectUrl;
+        var redirectUrl = '/' + foodcoopshop.LocalizedJs.helper.routeSelfService + '?keyword=' + result.codeResult.code;
+        document.location.href = redirectUrl;
     },
 
     showLoader : function(afterElementForLoader) {
@@ -125,14 +125,14 @@ foodcoopshop.SelfService = {
         barcodeInputField.focus();
 
         var cameraButton = $('<a/>').
-        addClass('btn').
-        addClass('btn-camera').
-        addClass('btn-success').
-        attr('href', 'javascript:void(0);').
-        html('<i class="fas fa-camera fa-2x"></i>').
-        on('click', function() {
-            foodcoopshop.SelfService.initMobileBarcodeScanningWithCamera('.btn-camera', '#login-form h1', foodcoopshop.SelfService.mobileScannerCallbackForLogin);
-        });
+            addClass('btn').
+            addClass('btn-camera').
+            addClass('btn-success').
+            attr('href', 'javascript:void(0);').
+            html('<i class="fas fa-camera fa-2x"></i>').
+            on('click', function() {
+                foodcoopshop.SelfService.initMobileBarcodeScanningWithCamera('.btn-camera', '#login-form h1', foodcoopshop.SelfService.mobileScannerCallbackForLogin);
+            });
         $('#responsive-header .sb-toggle-left').after(cameraButton);
 
     },
