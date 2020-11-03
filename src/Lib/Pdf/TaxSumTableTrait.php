@@ -53,9 +53,9 @@ trait TaxSumTableTrait
             }
             $html .= $formattedTaxRate . '%';
             $html .= '</td>';
-            $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. Configure::read('app.numberHelper')->formatAsDecimal($data['sum_price_excl']) . '</td>';
-            $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. Configure::read('app.numberHelper')->formatAsDecimal($data['sum_tax']) . '</td>';
-            $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. Configure::read('app.numberHelper')->formatAsDecimal($data['sum_price_incl']) . '</td>';
+            $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. Configure::read('app.numberHelper')->formatAsCurrency($data['sum_price_excl']) . '</td>';
+            $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. Configure::read('app.numberHelper')->formatAsCurrency($data['sum_tax']) . '</td>';
+            $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. Configure::read('app.numberHelper')->formatAsCurrency($data['sum_price_incl']) . '</td>';
             $html .= '</tr>';
         }
 
