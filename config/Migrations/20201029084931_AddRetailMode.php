@@ -16,11 +16,13 @@ class AddRetailMode extends AbstractMigration
             case 'de_DE':
                 $textA = 'Einzelhandels-Modus aktiviert?<br /><div class="small"><a href="https://foodcoopshop.github.io/de/einzelhandel" target="_blank">Infos zur Verwendung im Einzelhandel</a></div>';
                 $textB = 'Umsatzsteuersatz für Pfand';
+                $valueB = '20,00';
                 $textC = 'Header-Text für Rechnungen an Mitglieder';
                 break;
             default:
                 $textA = 'Retail mode activated?.';
                 $textB = 'VAT for deposit';
+                $valueB = '20.00';
                 $textC = 'Header text for invoices to members';
                 break;
         }
@@ -28,7 +30,7 @@ class AddRetailMode extends AbstractMigration
         $sql = "INSERT INTO `fcs_configuration` (`id_configuration`, `active`, `name`, `text`, `value`, `type`, `position`, `locale`, `date_add`, `date_upd`) VALUES (NULL, '1', 'FCS_RETAIL_MODE_ENABLED', '".$textA."', '0', 'readonly', '580', '".I18n::getLocale()."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
         $this->execute($sql);
 
-        $sql = "INSERT INTO `fcs_configuration` (`id_configuration`, `active`, `name`, `text`, `value`, `type`, `position`, `locale`, `date_add`, `date_upd`) VALUES (NULL, '1', 'FCS_DEPOSIT_TAX_RATE', '".$textB."', '20', 'readonly', '581', '".I18n::getLocale()."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+        $sql = "INSERT INTO `fcs_configuration` (`id_configuration`, `active`, `name`, `text`, `value`, `type`, `position`, `locale`, `date_add`, `date_upd`) VALUES (NULL, '1', 'FCS_DEPOSIT_TAX_RATE', '".$textB."', '".$valueB."', 'readonly', '581', '".I18n::getLocale()."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
         $this->execute($sql);
 
         $sql = "INSERT INTO `fcs_configuration` (`id_configuration`, `active`, `name`, `text`, `value`, `type`, `position`, `locale`, `date_add`, `date_upd`) VALUES (NULL, '1', 'FCS_INVOICE_HEADER_TEXT', '".$textC."', '', 'readonly', '582', '".I18n::getLocale()."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";

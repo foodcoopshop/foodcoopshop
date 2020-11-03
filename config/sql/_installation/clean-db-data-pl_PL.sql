@@ -133,8 +133,8 @@ INSERT INTO `fcs_configuration` VALUES
 (589,1,'FCS_FEEDBACK_TO_PRODUCTS_ENABLED','Are members allowed to write feedback to products?','1','boolean',3200,'pl_PL','2020-06-19 09:02:55','2020-06-19 09:02:55'),
 (590,1,'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY','Pickup day can be selected by member on order confirmation.','0','readonly',590,'pl_PL','2020-07-06 10:34:44','2020-07-06 10:34:44'),
 (591,1,'FCS_RETAIL_MODE_ENABLED','Retail mode activated?.','0','readonly',580,'pl_PL','2020-10-29 10:06:45','2020-10-29 10:06:45'),
-(592,1,'FCS_DEPOSIT_TAX_RATE','VAT for deposit','20,00','readonly',581,'pl_PL','2020-11-03 15:24:06','2020-11-03 15:24:06'),
-(593,1,'FCS_INVOICE_HEADER_TEXT','Header text for invoices to members','','readonly',582,'en_US','2020-11-03 15:24:01','2020-11-03 15:24:01');
+(592,1,'FCS_DEPOSIT_TAX_RATE','VAT for deposit','20.00','readonly',581,'pl_PL','2020-11-03 15:24:06','2020-11-03 15:24:06'),
+(593,1,'FCS_INVOICE_HEADER_TEXT','Header text for invoices to members','','readonly',582,'pl_PL','2020-11-03 15:24:01','2020-11-03 15:24:01');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
