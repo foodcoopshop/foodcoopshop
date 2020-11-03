@@ -389,7 +389,7 @@ foodcoopshop.Helper = {
 
     initSlider: function () {
 
-        var selector = '#slider'
+        var selector = '#slider';
         var hasOnlyOneSlide = $(selector).find('.swiper-slide').length == 1;
         if (hasOnlyOneSlide) {
             return;

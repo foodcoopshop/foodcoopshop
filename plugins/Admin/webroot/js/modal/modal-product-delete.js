@@ -27,7 +27,7 @@ foodcoopshop.ModalProductDelete = {
         button.on('click', function () {
 
             var productIds = foodcoopshop.Admin.getSelectedProductIds();
-            var title = productIds.length == 1 ? foodcoopshop.LocalizedJs.admin.DeleteProduct : foodcoopshop.LocalizedJs.admin.DeleteProducts
+            var title = productIds.length == 1 ? foodcoopshop.LocalizedJs.admin.DeleteProduct : foodcoopshop.LocalizedJs.admin.DeleteProducts;
 
             var html = '<p style="margin-top: 10px;">';
             if (productIds.length == 1) {

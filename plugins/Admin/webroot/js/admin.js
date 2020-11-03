@@ -352,7 +352,7 @@ foodcoopshop.Admin = {
         elementToAttach.data('product-unit-object', $.parseJSON(productUnitObject));
     },
 
-   getParentLocation: function() {
+    getParentLocation: function() {
         var url = (window.location != window.parent.location)
             ? document.referrer
             : document.location.href;
