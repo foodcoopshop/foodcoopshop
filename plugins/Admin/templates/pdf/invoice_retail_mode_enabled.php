@@ -16,7 +16,7 @@
 use Cake\Core\Configure;
 
 $pdf->setTextHelper($this->Text);
-$pdf->SetLeftMargin(12);
+$pdf->infoTextForFooter = __d('admin', 'Invoice_number_abbreviation').': ' . $newInvoiceNumber;
 $pdf->AddPage();
 
 $html = '<h2>'.__d('admin', 'Invoice').'</h2>';
@@ -24,7 +24,7 @@ $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->Ln(7);
 
 $html = '<table border="0" cellspacing="0" cellpadding="0"><tr>';
-$html .= '<td width="300">';
+$html .= '<td width="272">';
     $html .= '<p>';
         $html .= $result->name . '<br />';
         $html .= strip_tags($this->Html->getCustomerAddress($result), '<br>') . '<br />';

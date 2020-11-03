@@ -33,8 +33,9 @@ class CustomerInvoiceTcpdf extends AppTcpdf
     public function __construct($orientation = 'P', $unit = 'mm', $format = 'A4', $unicode = true, $encoding = 'UTF-8', $diskcache = false, $pdfa = false)
     {
         parent::__construct($orientation, $unit, $format, $unicode, $encoding, $diskcache, $pdfa);
-        $this->SetTopMargin(43);
+        $this->SetTopMargin(48);
         $this->SetRightMargin(0);
+        $this->SetLeftMargin(18);
         $this->SetFontSize(10);
 
         $this->headers = [
@@ -46,7 +47,7 @@ class CustomerInvoiceTcpdf extends AppTcpdf
             [
                 'name' => __('Product'),
                 'align' => 'left',
-                'width' => 226,
+                'width' => 197,
             ],
             [
                 'name' => __('Price_excl.'),
