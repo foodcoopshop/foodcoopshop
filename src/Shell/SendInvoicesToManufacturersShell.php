@@ -111,7 +111,7 @@ class SendInvoicesToManufacturersShell extends AppShell
         $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
         foreach ($manufacturers as $manufacturer) {
             if (!empty($manufacturer->current_order_count)) {
-                $this->QueuedJobs->createJob('GenerateInvoice', [
+                $this->QueuedJobs->createJob('GenerateInvoiceForManufacturer', [
                     'invoiceNumber' => $manufacturer->invoiceNumber,
                     'invoicePdfFile' => $manufacturer->invoicePdfFile,
                     'manufacturerId' => $manufacturer->id_manufacturer,

@@ -273,7 +273,7 @@ if ($groupBy != 'customer') {
     if (count($pickupDay) == 1) {
         echo '<td></td>';
     }
-    if (Configure::read('appDb.FCS_BULK_INVOICE_MODE') && $appAuth->isSuperadmin()) {
+    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $appAuth->isSuperadmin()) {
         echo '<td></td>';
     }
 }

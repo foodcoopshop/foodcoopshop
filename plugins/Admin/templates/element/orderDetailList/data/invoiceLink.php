@@ -15,12 +15,12 @@
 
 use Cake\Core\Configure;
 
-if ($groupBy == 'customer' && Configure::read('appDb.FCS_BULK_INVOICE_MODE') && $appAuth->isSuperadmin()) {
+if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $appAuth->isSuperadmin()) {
     $dateFrom = $pickupDay[0];
     $dateTo = count($pickupDay) == 2 ? $pickupDay[1] : $dateFrom;
     echo '<td>';
         echo $this->Html->link(
-            '<i class="fas fa-fw fa-file-invoice"></i> ' . __d('admin', 'Invoice'),
+            '<i class="fas fa-fw fa-file-invoice"></i> ' . __d('admin', 'Test_invoice'),
             '/admin/customers/getInvoice.pdf?customerId=' . $orderDetail['customer_id'] . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo,
             [
                 'escape' => false,

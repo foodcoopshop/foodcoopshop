@@ -21,7 +21,7 @@ use Queue\Shell\Task\QueueTaskInterface;
  * @link          https://www.foodcoopshop.com
  */
 
-class QueueGenerateInvoiceTask extends QueueTask implements QueueTaskInterface {
+class QueueGenerateInvoiceForManufacturerTask extends QueueTask implements QueueTaskInterface {
 
     use UpdateActionLogTrait;
 
@@ -71,7 +71,7 @@ class QueueGenerateInvoiceTask extends QueueTask implements QueueTaskInterface {
         $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
         if ($sendInvoice) {
             $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
-            $this->QueuedJobs->createJob('SendInvoice', [
+            $this->QueuedJobs->createJob('SendInvoiceToManufacturer', [
                 'invoiceNumber' => $invoiceNumber,
                 'invoicePdfFile' => $invoicePdfFile,
                 'manufacturerId' => $manufacturer->id_manufacturer,

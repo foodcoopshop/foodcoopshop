@@ -193,7 +193,7 @@ $this->element('addScript', [
                 continue;
             }
 
-            if (in_array($configuration->name, ['FCS_DEPOSIT_TAX_RATE', 'FCS_INVOICE_HEADER_TEXT']) && !Configure::read('appDb.FCS_BULK_INVOICE_MODE')) {
+            if (in_array($configuration->name, ['FCS_DEPOSIT_TAX_RATE', 'FCS_INVOICE_HEADER_TEXT']) && !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
                 continue;
             }
 

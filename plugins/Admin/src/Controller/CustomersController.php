@@ -2,7 +2,7 @@
 namespace Admin\Controller;
 
 use App\Lib\Error\Exception\InvalidParameterException;
-use App\Lib\PdfWriter\InvoiceToMemberPdfWriter;
+use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
 use App\Lib\PdfWriter\MyMemberCardPdfWriter;
 use App\Lib\PdfWriter\MemberCardsPdfWriter;
 use App\Lib\PdfWriter\TermsOfUsePdfWriter;
@@ -683,7 +683,7 @@ class CustomersController extends AdminAppController
 
         $newInvoiceNumber = 'xxx';
 
-        $pdfWriter = new InvoiceToMemberPdfWriter();
+        $pdfWriter = new InvoiceToCustomerPdfWriter();
         $pdfWriter->prepareAndSetData($customerId, $dateFrom, $dateTo, $newInvoiceNumber, [], '', 'xxx');
         if (isset($pdfWriter->getData()['results']) && empty($pdfWriter->getData()['results'])) {
             die(__d('admin', 'No_orders_within_the_given_time_range.'));

@@ -20,7 +20,7 @@ use Queue\Shell\Task\QueueTaskInterface;
  * @link          https://www.foodcoopshop.com
  */
 
-class QueueSendInvoiceTask extends QueueTask implements QueueTaskInterface {
+class QueueSendInvoiceToManufacturerTask extends QueueTask implements QueueTaskInterface {
 
 
     use UpdateActionLogTrait;

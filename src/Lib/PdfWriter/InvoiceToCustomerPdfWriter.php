@@ -18,7 +18,7 @@ use App\Lib\Pdf\CustomerInvoiceTcpdf;
 use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 
-class InvoiceToMemberPdfWriter extends PdfWriter
+class InvoiceToCustomerPdfWriter extends PdfWriter
 {
 
     public $Customer;

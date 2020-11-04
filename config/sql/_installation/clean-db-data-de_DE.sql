@@ -132,7 +132,7 @@ INSERT INTO `fcs_configuration` VALUES
 (588,1,'FCS_SHOW_NEW_PRODUCTS_ON_HOME','Neue Produkte auch auf der Startseite anzeigen?','1','boolean',220,'de_DE','2020-04-15 09:41:54','2020-04-15 09:41:54'),
 (589,1,'FCS_FEEDBACK_TO_PRODUCTS_ENABLED','Feedback-Funktion für Produkte aktiviert?<br /><div class=\"small\">Mitglieder können Feedback zu bestellten Produkte verfassen.</div>','1','boolean',3200,'de_DE','2020-06-19 09:02:46','2020-06-19 09:02:46'),
 (590,1,'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY','Mitglied kann Abholtag beim Bestellen selbst auswählen.','0','readonly',590,'de_DE','2020-07-06 10:34:35','2020-07-06 10:34:35'),
-(591,1,'FCS_BULK_INVOICE_MODE','Einzelhandels-Modus aktiviert?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/einzelhandel\" target=\"_blank\">Infos zur Verwendung im Einzelhandel</a></div>','0','readonly',580,'de_DE','2020-10-29 10:06:34','2020-10-29 10:06:34'),
+(591,1,'FCS_SEND_INVOICES_TO_CUSTOMERS','Einzelhandels-Modus aktiviert?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/einzelhandel\" target=\"_blank\">Infos zur Verwendung im Einzelhandel</a></div>','0','readonly',580,'de_DE','2020-10-29 10:06:34','2020-10-29 10:06:34'),
 (592,1,'FCS_DEPOSIT_TAX_RATE','Umsatzsteuersatz für Pfand','20,00','readonly',581,'de_DE','2020-11-03 15:23:55','2020-11-03 15:23:55'),
 (593,1,'FCS_INVOICE_HEADER_TEXT','Header-Text für Rechnungen an Mitglieder','','readonly',582,'de_DE','2020-11-03 15:23:55','2020-11-03 15:23:55');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
@@ -148,7 +148,7 @@ INSERT INTO `fcs_cronjobs` VALUES
 (4,'PickupReminder','week',NULL,'Monday','09:00:00',1),
 (5,'SendInvoicesToManufacturers','month',11,NULL,'10:30:00',1),
 (6,'SendOrderLists','day',NULL,NULL,'04:30:00',1),
-(7,'SendInvoicesToMembers','week',NULL,'Saturday','10:00:00',0);
+(7,'SendInvoicesToCustomers','week',NULL,'Saturday','10:00:00',0);
 /*!40000 ALTER TABLE `fcs_cronjobs` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_customer` DISABLE KEYS */;
