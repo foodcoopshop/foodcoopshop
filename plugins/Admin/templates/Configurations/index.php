@@ -292,6 +292,11 @@ $this->element('addScript', [
             <td><?php echo Configure::read('app.isBlogFeatureEnabled') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>
 
+        <tr>
+            <td>app.sendEmailWhenOrderDetailQuantityOrPriceChanged</td>
+            <td><?php echo Configure::read('app.sendEmailWhenOrderDetailQuantityOrPriceChanged') ?  __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
         <?php
         if ($this->elementExists('latestGitCommit')) {
             echo '<tr>';
