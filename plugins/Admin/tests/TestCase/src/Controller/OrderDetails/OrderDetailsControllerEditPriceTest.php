@@ -84,6 +84,14 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
         $this->assertOrderDetailProductPriceChangedEmails(0, $expectedToEmails, $expectedCcEmails);
     }
 
+    public function testEditOrderDetailPriceAsSuperadminEmailDisabledWithConfig()
+    {
+        Configure::write('app.sendEmailWhenOrderDetailQuantityOrPriceChanged', false);
+        $this->loginAsSuperadmin();
+        $this->editOrderDetailPrice($this->orderDetailIdA, $this->newPrice, $this->editPriceReason);
+        $this->assertMailCount(0);
+    }
+
     public function testEditOrderDetailPriceIfPriceWasZero()
     {
         $this->loginAsSuperadmin();
