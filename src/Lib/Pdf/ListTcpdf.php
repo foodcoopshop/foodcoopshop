@@ -125,9 +125,10 @@ class ListTcpdf extends AppTcpdf
             $customerName = $result['CustomerName'] ?? __('Deleted_member');
             $taxRate = $result['TaxRate'];
             $showPricePerUnitSign = false;
+            $showUnitSum = false;
 
             if ($groupType == 'customer' && isset($lastCustomerName) && $lastCustomerName != $customerName) {
-                $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastCustomerName, $lastUnitSum, $lastTaxRate, $showPricePerUnitMessage);
+                $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastCustomerName, $lastUnitSum, $lastTaxRate, $showPricePerUnitMessage, $showUnitSum);
                 // reset everything
                 $amountSum = $priceExclSum = $taxSum = $priceInclSum = 0;
                 $showPricePerUnitMessage = false;
@@ -135,7 +136,8 @@ class ListTcpdf extends AppTcpdf
             }
 
             if ($groupType == 'product' && isset($lastProductName) && ($lastProductName != $productName || $lastTaxRate != $taxRate)) {
-                $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastProductName, $lastUnitSum, $lastTaxRate, $showPricePerUnitMessage);
+                $showUnitSum = true;
+                $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastProductName, $lastUnitSum, $lastTaxRate, $showPricePerUnitMessage, $showUnitSum);
                 // reset everything
                 $amountSum = $priceExclSum = $taxSum = $priceInclSum = 0;
                 $showPricePerUnitMessage = false;
@@ -227,10 +229,12 @@ class ListTcpdf extends AppTcpdf
             // very last row
             if ($i + 1 == count($results)) {
                 if ($groupType == 'customer') {
-                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $customerName, $unitSum, $taxRate, $showPricePerUnitMessage);
+                    $showUnitSum = false;
+                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $customerName, $unitSum, $taxRate, $showPricePerUnitMessage, $showUnitSum);
                 }
                 if ($groupType == 'product') {
-                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $productName, $unitSum, $taxRate, $showPricePerUnitMessage);
+                    $showUnitSum = true;
+                    $this->getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $productName, $unitSum, $taxRate, $showPricePerUnitMessage, $showUnitSum);
                 }
             }
 
@@ -244,7 +248,7 @@ class ListTcpdf extends AppTcpdf
         }
     }
 
-    private function getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastObjectName, $unitSum, $taxRate = '', $showPricePerUnitMessage=false)
+    private function getInvoiceGenerateSum($amountSum, $priceExclSum, $taxSum, $priceInclSum, $headers, $widths, $lastObjectName, $unitSum, $taxRate = '', $showPricePerUnitMessage=false, $showUnitSum=false)
     {
         $colspan = $this->getCorrectColspan($headers);
 
@@ -267,7 +271,7 @@ class ListTcpdf extends AppTcpdf
         $indexForWidth ++;
 
         $unitSumString = '';
-        if ($detailsHidden) {
+        if ($showUnitSum) {
             $unitSumString = Configure::read('app.pricePerUnitHelper')->getStringFromUnitSums($unitSum, ', ');
             if ($unitSumString != '') {
                 $unitSumString = ', ' . $unitSumString;

@@ -339,13 +339,20 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->assertEquals($defaultQuantity, $product2->product_attributes[0]->stock_available->quantity);
     }
 
-    public function testContentOfOrderList()
+    public function testContentOfOrderListWithoutPricePerUnit()
     {
         $this->loginAsSuperadmin();
+
         $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderList.html');
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByProductWithoutPricePerUnit.html');
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
+
+        $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=4&pickupDay=02.02.2018&outputType=html');
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByCustomerWithoutPricePerUnit.html');
+        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
+        $this->assertResponseContains($expectedResult);
+
     }
 
     public function testSendOrderListWithCustomerCanSelectPickupDay()
@@ -377,6 +384,57 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->assertMailContainsAt(0, 'im Anhang findest du zwei Bestelllisten');
         $this->assertEquals(2, count(TestEmailTransport::getMessages()[0]->getAttachments()));
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailVegetableManufacturer'));
+
+    }
+
+    public function testContentOfOrderListWithPricePerUnit()
+    {
+
+        $productIdA = '351';
+        $productIdB = '350-15';
+        $productIdC = '346';
+
+        $this->loginAsCustomer();
+        $this->addProductToCart($productIdA, 1);
+        $this->addProductToCart($productIdB, 1);
+        $this->addProductToCart($productIdC, 2);
+        $this->finishCart();
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
+        $cartA = $this->getCartById($cartId);
+
+        $this->loginAsSuperadmin();
+        $this->addProductToCart($productIdA, 2);
+        $this->addProductToCart($productIdB, 5);
+        $this->addProductToCart($productIdC, 1);
+        $this->finishCart();
+        $cartId = Configure::read('app.htmlHelper')->getCartIdFromCartFinishedUrl($this->_response->getHeaderLine('Location'));
+        $cartB = $this->getCartById($cartId);
+
+        $pickupDay = '2019-02-22';
+
+        foreach([$cartA, $cartB] as $cart) {
+            foreach($cart->cart_products as $cartProduct) {
+                $orderDetailId = $cartProduct->order_detail->id_order_detail;
+                $this->OrderDetail->save(
+                    $this->OrderDetail->patchEntity(
+                        $this->OrderDetail->get($orderDetailId),
+                        [
+                            'pickup_day' => new FrozenDate($pickupDay),
+                        ]
+                    )
+                );
+            }
+        }
+
+        $this->get('/admin/manufacturers/getOrderListByProduct.pdf?manufacturerId=5&pickupDay=22.02.2019&outputType=html');
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByProductWithPricePerUnit.html');
+        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
+        $this->assertResponseContains($expectedResult);
+
+        $this->get('/admin/manufacturers/getOrderListByCustomer.pdf?manufacturerId=5&pickupDay=22.02.2019&outputType=html');
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'orderListByCustomerWithPricePerUnit.html');
+        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
+        $this->assertResponseContains($expectedResult);
 
     }
 
