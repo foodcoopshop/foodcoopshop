@@ -107,6 +107,11 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
             'escape' => false
         ]);
         echo '<div class="sc"></div>';
+    } else {
+        // avoid "Cannot convert value of type `boolean` to integer"
+        echo $this->Form->control('Manufacturers.send_invoice', [
+            'type' => 'hidden',
+        ]);
     }
 
     echo $this->Form->control('Manufacturers.send_ordered_product_deleted_notification', [
