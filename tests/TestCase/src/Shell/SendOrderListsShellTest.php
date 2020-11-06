@@ -420,6 +420,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
                         $this->OrderDetail->get($orderDetailId),
                         [
                             'pickup_day' => new FrozenDate($pickupDay),
+                            'created' => new FrozenDate('2020-11-05'),
                         ]
                     )
                 );
