@@ -74,9 +74,7 @@ echo '<tr class="sort">';
         echo '<th>%</th>';
     }
     echo '<th></th>';
-    if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-        echo '<th></th>';
-    }
+    echo '<th></th>';
     echo '<th></th>';
 echo '</tr>';
 $i = 0;
@@ -249,13 +247,12 @@ foreach ($manufacturers as $manufacturer) {
     ]);
     echo '</td>';
 
-    if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-        echo '<td>';
-        echo $this->Html->link(__d('admin', 'Test_invoice'), '/admin/manufacturers/getInvoice.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo, [
-            'target' => '_blank'
-        ]);
-    }
+    echo '<td>';
+    echo $this->Html->link(__d('admin', 'Test_invoice'), '/admin/manufacturers/getInvoice.pdf?manufacturerId=' . $manufacturer->id_manufacturer . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo, [
+        'target' => '_blank'
+    ]);
     echo '</td>';
+
     echo '<td style="width: 29px;">';
     if ($manufacturer->active) {
         $manufacturerLink = $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name);
