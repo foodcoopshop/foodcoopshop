@@ -20,7 +20,7 @@ if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOM
     $dateTo = count($pickupDay) == 2 ? $pickupDay[1] : $dateFrom;
     echo '<td>';
         echo $this->Html->link(
-            '<i class="fas fa-fw fa-file-invoice"></i> ' . __d('admin', 'Test_invoice'),
+            '<i class="fas fa-fw ok fa-file-invoice"></i> ' . __d('admin', 'Invoice'),
             '/admin/customers/getInvoice.pdf?customerId=' . $orderDetail['customer_id'] . '&dateFrom=' . $dateFrom . '&dateTo=' . $dateTo,
             [
                 'escape' => false,
