@@ -60,10 +60,9 @@ class AddRetailMode extends AbstractMigration
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             ALTER TABLE `fcs_invoices_tax`
               ADD PRIMARY KEY (`id`),
-              ADD KEY `invoice_id` (`invoice_id`),
+              ADD KEY `invoice_id` (`invoice_id`);
             ALTER TABLE `fcs_invoices_tax`
               MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-            COMMIT;
             ";
         $this->execute($sql);
 
