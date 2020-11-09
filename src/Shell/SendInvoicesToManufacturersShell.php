@@ -153,7 +153,7 @@ class SendInvoicesToManufacturersShell extends AppShell
         foreach ($manufacturers as $manufacturer) {
 
             $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
-            $manufacturer->invoiceNumber = $this->Manufacturer->Invoices->getNextInvoiceNumber($manufacturer->invoices);
+            $manufacturer->invoiceNumber = $this->Manufacturer->Invoices->getNextInvoiceNumberForManufacturer($manufacturer->invoices);
             $manufacturer->invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink(
                 $manufacturer->name, $manufacturer->id_manufacturer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $manufacturer->invoiceNumber
             );

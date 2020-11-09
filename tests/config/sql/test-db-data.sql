@@ -27,6 +27,7 @@ TRUNCATE TABLE `fcs_customer`;
 TRUNCATE TABLE `fcs_deposits`;
 TRUNCATE TABLE `fcs_images`;
 TRUNCATE TABLE `fcs_invoices`;
+TRUNCATE TABLE `fcs_invoices_tax`;
 TRUNCATE TABLE `fcs_manufacturer`;
 TRUNCATE TABLE `fcs_order_detail`;
 TRUNCATE TABLE `fcs_order_detail_feedbacks`;
@@ -215,6 +216,9 @@ INSERT INTO `fcs_images` VALUES
 /*!40000 ALTER TABLE `fcs_invoices` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_invoices` ENABLE KEYS */;
 
+/*!40000 ALTER TABLE `fcs_invoices_tax` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_invoices_tax` ENABLE KEYS */;
+
 /*!40000 ALTER TABLE `fcs_manufacturer` DISABLE KEYS */;
 INSERT INTO `fcs_manufacturer` VALUES
 (4,'Demo Fleisch-Hersteller','<p>tests</p>\r\n','','2014-05-14 13:23:02','2015-05-15 13:31:41',1,0,'','','','','','','','','','',NULL,0,1,1,2,'testfcs1@mailinator.com,testfcs2@mailinator.com',NULL,NULL,NULL,1,NULL,0,30,100,0,0,0,''),
@@ -371,7 +375,8 @@ INSERT INTO `phinxlog` VALUES
 (20200910091755,'AddMemberSettingUseCameraForMobileBarcodeScanning','2020-09-10 09:21:00','2020-09-10 09:21:00',0),
 (20200925073919,'GermanIbanFix','2020-09-25 08:12:53','2020-09-25 08:12:53',0),
 (20201017182431,'AdaptMinimalCreditBalance','2020-10-17 18:38:11','2020-10-17 18:38:11',0),
-(20201029084931,'AddRetailMode','2020-10-29 09:06:50','2020-10-29 09:06:50',0);
+(20201029084931,'AddRetailMode','2020-10-29 09:06:50','2020-10-29 09:06:50',0),
+(20201029084932,'AddRetailMode','2020-11-09 10:31:46','2020-11-09 10:31:47',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

@@ -17,13 +17,23 @@ namespace App\Model\Table;
  */
 class InvoicesTable extends AppTable
 {
-    public function getNextInvoiceNumber($invoices)
+
+    public function initialize(array $config): void
+    {
+        parent::initialize($config);
+        $this->addBehavior('Timestamp');
+        $this->hasOne('InvoicesTaxes', [
+            'foreignKey' => 'id_invoice',
+        ]);
+    }
+
+    public function getNextInvoiceNumberForManufacturer($invoices)
     {
         $invoiceNumber = 1;
         if (! empty($invoices)) {
             $invoiceNumber = $invoices[0]->invoice_number + 1;
         }
-        $newInvoiceNumber = $this->formatInvoiceNumber($invoiceNumber);
+        $newInvoiceNumber = $this->formatInvoiceNumberForManufacturer($invoiceNumber);
         return $newInvoiceNumber;
     }
 
@@ -31,7 +41,7 @@ class InvoicesTable extends AppTable
      * turns eg 24 into 0024
      * @param int $invoiceNumber
      */
-    private function formatInvoiceNumber($invoiceNumber)
+    private function formatInvoiceNumberForManufacturer($invoiceNumber)
     {
         return str_pad($invoiceNumber, 4, '0', STR_PAD_LEFT);
     }

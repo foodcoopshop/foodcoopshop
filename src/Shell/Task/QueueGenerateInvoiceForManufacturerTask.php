@@ -57,7 +57,6 @@ class QueueGenerateInvoiceForManufacturerTask extends QueueTask implements Queue
 
         $invoice2save = [
             'id_manufacturer' => $manufacturer->id_manufacturer,
-            'send_date' => Time::now(),
             'invoice_number' => (int) $invoiceNumber,
             'user_id' => 0,
         ];

@@ -240,10 +240,25 @@ CREATE TABLE `fcs_invoices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_manufacturer` int(10) unsigned NOT NULL DEFAULT '0',
   `invoice_number` int(10) unsigned NOT NULL DEFAULT '0',
-  `send_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `id_customer` int(10) unsigned NOT NULL DEFAULT '0',
+  `paid_in_cash` tinyint(4) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fcs_invoices_tax`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fcs_invoices_tax` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `invoice_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `tax_rate` double(20,6) NOT NULL DEFAULT '0.000000',
+  `total_price_tax_excl` double(20,6) NOT NULL DEFAULT '0.000000',
+  `total_price_tax` double(20,6) NOT NULL DEFAULT '0.000000',
+  `total_price_tax_incl` double(20,6) NOT NULL DEFAULT '0.000000',
+  PRIMARY KEY (`id`),
+  KEY `invoice_id` (`invoice_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_manufacturer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
