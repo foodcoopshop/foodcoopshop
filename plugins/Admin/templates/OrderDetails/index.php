@@ -44,6 +44,12 @@ use Cake\Core\Configure;
         ]);
     }
 
+    if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $appAuth->isSuperadmin()) {
+        $this->element('addScript', [
+            'script' => Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomer.init();"
+        ]);
+    }
+
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
         $this->element('addScript', [
             'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.timebased-currency-time-element');"

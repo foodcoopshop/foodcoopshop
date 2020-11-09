@@ -232,6 +232,9 @@ class LocalizedController extends Controller
                 'AddProductFeedback' => __('Add_product_feedback'),
                 'AddProductFeedbackExplanationText0' => __('Add_product_feedback_explanation_text_{0}.'),
                 'ChangeDeliveryRhythmForMultipleProductsTip' => __('Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button.'),
+                'GenerateInvoice' => __('Generate_invoice'),
+                'ReallyGenerateInvoiceFor0' => __('Really_generate_invoice_for_0'),
+                'ShowPreview' => __('Show_preview'),
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),

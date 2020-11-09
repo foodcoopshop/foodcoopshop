@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-02 16:07+0100\n"
-"PO-Revision-Date: 2020-11-02 16:08+0100\n"
+"POT-Creation-Date: 2020-11-09 19:17+0100\n"
+"PO-Revision-Date: 2020-11-09 19:17+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -846,6 +846,15 @@ msgstr "Dein Feedback wird dem Hersteller {0} nach dem Speichern automatisch per
 msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
 msgstr "Du kannst den Lieferrhythmus von mehreren Produkten gleichzeitig ändern, indem du sie links auswählst und auf den Button ganz unten klickst."
 
+msgid "Generate_invoice"
+msgstr "Rechnung generieren"
+
+msgid "Really_generate_invoice_for_0"
+msgstr "Möchtest du wirklich die Rechnung für {0} generieren?"
+
+msgid "Show_preview"
+msgstr "Vorschau anzeigen"
+
 msgid "Were_the_products_picked_up?"
 msgstr "Wurden die Produkte abgeholt?"
 
@@ -1137,18 +1146,6 @@ msgstr "Generiert am {0}"
 msgid "Page_{0}_of_{1}"
 msgstr "Seite {0} von {1}"
 
-msgid "Tax_rates_overview_table"
-msgstr "Übersichtstabelle nach Steuersatz"
-
-msgid "Sum_price_excl."
-msgstr "Summe Preis exkl."
-
-msgid "Sum_tax"
-msgstr "Summe Steuer"
-
-msgid "Sum_price_incl."
-msgstr "Summe Preis inkl."
-
 msgid "Deleted_member"
 msgstr "Gelöschtes Mitglied"
 
@@ -1160,6 +1157,18 @@ msgstr "Gelöschtes Mitglied"
 
 msgid "Price_per_weight"
 msgstr "Preis nach Gewicht"
+
+msgid "Tax_rates_overview_table"
+msgstr "Übersichtstabelle nach Steuersatz"
+
+msgid "Sum_price_excl."
+msgstr "Summe Preis exkl."
+
+msgid "Sum_tax"
+msgstr "Summe Steuer"
+
+msgid "Sum_price_incl."
+msgstr "Summe Preis inkl."
 
 msgid "You_are_not_signed_in."
 msgstr "Du bist nicht angemeldet."
@@ -2462,6 +2471,10 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#, fuzzy
+#~ msgid "Generate_invoice_for_customer"
+#~ msgstr "Generierte Rechnungen"
 
 #~ msgid "VAT_rate"
 #~ msgstr "Steuersatz"

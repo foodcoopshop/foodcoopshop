@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-03 10:51+0100\n"
+"POT-Creation-Date: 2020-11-09 19:09+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2072,16 +2072,19 @@ msgstr ""
 msgid "Your_contact_person"
 msgstr ""
 
-msgid "conveyed_for"
-msgstr ""
-
 msgid "Invoice_number_abbreviation"
 msgstr ""
 
-msgid "Orders_from"
+msgid "Invoice_date"
 msgstr ""
 
-msgid "Invoice_date"
+msgid "{0}_thanks_you_for_your_purchase!"
+msgstr ""
+
+msgid "conveyed_for"
+msgstr ""
+
+msgid "Orders_from"
 msgstr ""
 
 msgid "Price_excl."
@@ -2118,9 +2121,6 @@ msgid "Amount_that_will_be_transferred_to_your_bank_account"
 msgstr ""
 
 msgid "Detail_view"
-msgstr ""
-
-msgid "{0}_thanks_you_for_your_purchase!"
 msgstr ""
 
 msgid "Total"

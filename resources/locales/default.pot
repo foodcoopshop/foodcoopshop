@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-02 16:07+0100\n"
+"POT-Creation-Date: 2020-11-09 19:17+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -845,6 +845,15 @@ msgstr ""
 msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
 msgstr ""
 
+msgid "Generate_invoice"
+msgstr ""
+
+msgid "Really_generate_invoice_for_0"
+msgstr ""
+
+msgid "Show_preview"
+msgstr ""
+
 msgid "Were_the_products_picked_up?"
 msgstr ""
 
@@ -1136,18 +1145,6 @@ msgstr ""
 msgid "Page_{0}_of_{1}"
 msgstr ""
 
-msgid "Tax_rates_overview_table"
-msgstr ""
-
-msgid "Sum_price_excl."
-msgstr ""
-
-msgid "Sum_tax"
-msgstr ""
-
-msgid "Sum_price_incl."
-msgstr ""
-
 msgid "Deleted_member"
 msgstr ""
 
@@ -1158,6 +1155,18 @@ msgid "Deleted_Member"
 msgstr ""
 
 msgid "Price_per_weight"
+msgstr ""
+
+msgid "Tax_rates_overview_table"
+msgstr ""
+
+msgid "Sum_price_excl."
+msgstr ""
+
+msgid "Sum_tax"
+msgstr ""
+
+msgid "Sum_price_incl."
 msgstr ""
 
 msgid "You_are_not_signed_in."

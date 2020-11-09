@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-02 16:07+0100\n"
+"POT-Creation-Date: 2020-11-09 19:17+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1138,6 +1138,21 @@ msgstr "Dodać nowy produkt?"
 msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
 msgstr ""
 
+# Generated invoices
+#, fuzzy
+msgid "Generate_invoice"
+msgstr "Wygenerowane faktury"
+
+# Generated invoices
+#, fuzzy
+msgid "Really_generate_invoice_for_0"
+msgstr "Wygenerowane faktury"
+
+# Show more
+#, fuzzy
+msgid "Show_preview"
+msgstr "Pokaż więcej"
+
 # Were the products picked up?
 msgid "Were_the_products_picked_up?"
 msgstr "Czy produkty zostały odebrane?"
@@ -1532,23 +1547,6 @@ msgstr "Wygenerowane faktury"
 msgid "Page_{0}_of_{1}"
 msgstr "Strona {0} z {1}"
 
-# Tax rates overview table
-msgid "Tax_rates_overview_table"
-msgstr "Tabela stawek podatkowych"
-
-# Sum price incl.
-#, fuzzy
-msgid "Sum_price_excl."
-msgstr "Suma cen łącznie z"
-
-# Sum tax
-msgid "Sum_tax"
-msgstr "Suma podatków"
-
-# Sum price incl.
-msgid "Sum_price_incl."
-msgstr "Suma cen łącznie z"
-
 # Deleted member?
 #, fuzzy
 msgid "Deleted_member"
@@ -1565,6 +1563,23 @@ msgstr "Usuń członka"
 # Price per weight
 msgid "Price_per_weight"
 msgstr "Cena za wagę"
+
+# Tax rates overview table
+msgid "Tax_rates_overview_table"
+msgstr "Tabela stawek podatkowych"
+
+# Sum price incl.
+#, fuzzy
+msgid "Sum_price_excl."
+msgstr "Suma cen łącznie z"
+
+# Sum tax
+msgid "Sum_tax"
+msgstr "Suma podatków"
+
+# Sum price incl.
+msgid "Sum_price_incl."
+msgstr "Suma cen łącznie z"
 
 # Your are not signed in.
 msgid "You_are_not_signed_in."
@@ -3318,6 +3333,11 @@ msgstr "złożone w dniu"
 # The prices include the VAT.
 msgid "Prices_are_including_vat."
 msgstr "Ceny zawierają podatek VAT."
+
+# Generated invoices
+#, fuzzy
+#~ msgid "Generate_invoice_for_customer"
+#~ msgstr "Wygenerowane faktury"
 
 # Tax rate
 #, fuzzy
