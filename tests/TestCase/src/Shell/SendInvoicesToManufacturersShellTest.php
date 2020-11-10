@@ -34,6 +34,7 @@ class SendInvoicesToManufacturersShellTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->prepareSendingInvoices();
         $this->Cart = $this->getTableLocator()->get('Carts');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
