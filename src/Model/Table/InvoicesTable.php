@@ -128,12 +128,24 @@ class InvoicesTable extends AppTable
 
     }
 
-    /**
-     * format: 2020-000001
-     */
-    public function getNextInvoiceNumberForCustomer($invoices)
+    public function getNextInvoiceNumberForCustomer($currentYear, $invoices)
     {
-        return $this->formatInvoiceNumberForCustomer();
+
+        $increasingNumberOfLastInvoice = 1;
+
+        if (! empty($invoices)) {
+            $explodedInvoiceNumber = explode('-', $invoices[0]->invoice_number);
+            $yearOfLastInvoice = $explodedInvoiceNumber[0];
+            if ($currentYear == $yearOfLastInvoice) {
+                $increasingNumberOfLastInvoice = (int) $explodedInvoiceNumber[1] + 1;
+            }
+        }
+
+        $newIncreasingInvoiceNumber = $this->formatInvoiceNumberWithLeadingZeros($increasingNumberOfLastInvoice, 6);
+
+        $newInvoiceNumber = $currentYear . '-' . $newIncreasingInvoiceNumber;
+        return $newInvoiceNumber;
+
     }
 
     public function getNextInvoiceNumberForManufacturer($invoices)
@@ -142,22 +154,16 @@ class InvoicesTable extends AppTable
         if (! empty($invoices)) {
             $invoiceNumber = $invoices[0]->invoice_number + 1;
         }
-        $newInvoiceNumber = $this->formatInvoiceNumberForManufacturer($invoiceNumber);
+        $newInvoiceNumber = $this->formatInvoiceNumberWithLeadingZeros($invoiceNumber, 4);
         return $newInvoiceNumber;
-    }
-
-    private function formatInvoiceNumberForCustomer()
-    {
-        return '2020-00001';
     }
 
     /**
      * turns eg 24 into 0024
-     * @param int $invoiceNumber
      */
-    private function formatInvoiceNumberForManufacturer($invoiceNumber)
+    private function formatInvoiceNumberWithLeadingZeros($invoiceNumber, $zeroCount)
     {
-        return str_pad($invoiceNumber, 4, '0', STR_PAD_LEFT);
+        return str_pad($invoiceNumber, $zeroCount, '0', STR_PAD_LEFT);
     }
 
 }
