@@ -725,10 +725,12 @@ class CustomersController extends AdminAppController
         $newInvoiceDate = 'xx.xx.xxxx';
 
         $pdfWriter = new InvoiceToCustomerPdfWriter();
-        $pdfWriter->prepareAndSetData($customerId, $paidInCash, $newInvoiceNumber, $newInvoiceDate);
-        if (isset($pdfWriter->getData()['results']) && empty($pdfWriter->getData()['results'])) {
+        $data = $this->Customer->Invoices->getDataForCustomerInvoice($customerId);
+        if (empty($data)) {
             die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }
+
+        $pdfWriter->prepareAndSetData($data, $paidInCash, $newInvoiceNumber, $newInvoiceDate);
 
         if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
             return $this->response->withStringBody($pdfWriter->writeHtml());

@@ -124,6 +124,28 @@ class InvoicesTable extends AppTable
         }
         $customer->tax_rates = $taxRates;
 
+        // prepare sums
+        $sumPriceIncl = 0;
+        $sumPriceExcl = 0;
+        $sumTax = 0;
+        foreach ($customer->active_order_details as $orderDetail) {
+            $sumPriceIncl += $orderDetail->total_price_tax_incl;
+            $sumPriceExcl += $orderDetail->total_price_tax_excl;
+            $sumTax += $orderDetail->order_detail_tax->total_amount;
+        }
+
+        $sumPriceIncl += $customer->ordered_deposit['deposit_incl'];
+        $sumPriceExcl += $customer->ordered_deposit['deposit_excl'];
+        $sumTax += $customer->ordered_deposit['deposit_tax'];
+
+        $sumPriceIncl += $customer->returned_deposit['deposit_incl'];
+        $sumPriceExcl += $customer->returned_deposit['deposit_excl'];
+        $sumTax += $customer->returned_deposit['deposit_tax'];
+
+        $customer->sumPriceIncl = $sumPriceIncl;
+        $customer->sumPriceExcl = $sumPriceExcl;
+        $customer->sumTax = $sumTax;
+
         return $customer;
 
     }

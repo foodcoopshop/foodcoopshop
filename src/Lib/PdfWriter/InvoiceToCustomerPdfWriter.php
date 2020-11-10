@@ -29,39 +29,17 @@ class InvoiceToCustomerPdfWriter extends PdfWriter
         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
     }
 
-    public function prepareAndSetData($customerId, $paidInCash, $newInvoiceNumber, $invoiceDate)
+    public function prepareAndSetData($data, $paidInCash, $newInvoiceNumber, $invoiceDate)
     {
-
-        $result = $this->Invoice->getDataForCustomerInvoice($customerId);
-
-        $sumPriceIncl = 0;
-        $sumPriceExcl = 0;
-        $sumTax = 0;
-        foreach ($result->active_order_details as $orderDetail) {
-            $sumPriceIncl += $orderDetail->total_price_tax_incl;
-            $sumPriceExcl += $orderDetail->total_price_tax_excl;
-            $sumTax += $orderDetail->order_detail_tax->total_amount;
-        }
-
-        $sumPriceIncl += $result->ordered_deposit['deposit_incl'];
-        $sumPriceExcl += $result->ordered_deposit['deposit_excl'];
-        $sumTax += $result->ordered_deposit['deposit_tax'];
-
-        $sumPriceIncl += $result->returned_deposit['deposit_incl'];
-        $sumPriceExcl += $result->returned_deposit['deposit_excl'];
-        $sumTax += $result->returned_deposit['deposit_tax'];
-
         $this->setData([
-            'result' => $result,
-            'sumPriceIncl' => $sumPriceIncl,
-            'sumPriceExcl' => $sumPriceExcl,
-            'sumTax' => $sumTax,
+            'result' => $data,
+            'sumPriceIncl' => $data->sumPriceIncl,
+            'sumPriceExcl' => $data->sumPriceExcl,
+            'sumTax' => $data->sumTax,
             'newInvoiceNumber' => $newInvoiceNumber,
             'invoiceDate' => $invoiceDate,
             'paidInCash' => $paidInCash,
-            'customer' => $result,
         ]);
-
     }
 
 }
