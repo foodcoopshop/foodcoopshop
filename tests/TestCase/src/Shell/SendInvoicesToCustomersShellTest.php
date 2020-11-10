@@ -55,11 +55,15 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
 
     public function testSendInvoices()
     {
+
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->loginAsSuperadmin();
 
         $customerId = Configure::read('test.superadminId');
         $this->prepareOrdersAndPayments($customerId);
+
+        $this->commandRunner->run(['cake', 'send_invoices_to_customers', '2018-02-02 10:20:30']);
+        $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
 
     }
 

@@ -26,7 +26,6 @@ class SendInvoicesToCustomersShell extends AppShell
         parent::main();
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->Customer = $this->getTableLocator()->get('Customers');
 
         // $this->cronjobRunDay can is set in unit test
@@ -36,10 +35,6 @@ class SendInvoicesToCustomersShell extends AppShell
             $this->cronjobRunDay = $this->args[0];
         }
 
-        $dateFrom = Configure::read('app.timeHelper')->getFirstDayOfLastMonth($this->cronjobRunDay);
-        $dateTo = Configure::read('app.timeHelper')->getLastDayOfLastMonth($this->cronjobRunDay);
-
     }
-
 
 }
