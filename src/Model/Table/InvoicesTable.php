@@ -128,6 +128,14 @@ class InvoicesTable extends AppTable
 
     }
 
+    /**
+     * format: 2020-000001
+     */
+    public function getNextInvoiceNumberForCustomer($invoices)
+    {
+        return $this->formatInvoiceNumberForCustomer();
+    }
+
     public function getNextInvoiceNumberForManufacturer($invoices)
     {
         $invoiceNumber = 1;
@@ -136,6 +144,11 @@ class InvoicesTable extends AppTable
         }
         $newInvoiceNumber = $this->formatInvoiceNumberForManufacturer($invoiceNumber);
         return $newInvoiceNumber;
+    }
+
+    private function formatInvoiceNumberForCustomer()
+    {
+        return '2020-00001';
     }
 
     /**

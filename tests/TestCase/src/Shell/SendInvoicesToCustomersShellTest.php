@@ -39,15 +39,34 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
     public function testContentOfInvoice()
     {
 
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-
-        $pickupDay = '2018-02-02';
-
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
         $this->loginAsSuperadmin();
 
         $customerId = Configure::read('test.superadminId');
-        $this->addPayment($customerId, 2, 'deposit', 0, '', $pickupDay);
+        $this->prepareOrdersAndPayments($customerId);
+
+        $this->get('/admin/customers/getInvoice.pdf?customerId='.$customerId.'&paidInCash=1&outputType=html');
+//         pr($this->_response);
+//         exit;
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoice.html');
+        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
+        $this->assertResponseContains($expectedResult);
+    }
+
+    public function testSendInvoices()
+    {
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+        $this->loginAsSuperadmin();
+
+        $customerId = Configure::read('test.superadminId');
+        $this->prepareOrdersAndPayments($customerId);
+
+    }
+
+    protected function prepareOrdersAndPayments($customerId)
+    {
+
+        $pickupDay = '2018-02-02';
 
         // add product with price pre unit
         $productIdA = 347; // forelle
@@ -56,6 +75,7 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->addProductToCart($productIdB, 3);
         $this->finishCart(1, 1, '', null, $pickupDay);
 
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN(4,5);';
         $params = [
             'pickupDay' => $pickupDay,
@@ -63,12 +83,8 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $statement = $this->dbConnection->prepare($query);
         $statement->execute($params);
 
-        $this->get('/admin/customers/getInvoice.pdf?customerId='.$customerId.'&paidInCash=1&outputType=html');
-//         pr($this->_response);
-//         exit;
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoice.html');
-        $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
-        $this->assertResponseContains($expectedResult);
+        $this->addPayment($customerId, 2, 'deposit', 0, '', $pickupDay);
+
     }
 
 }

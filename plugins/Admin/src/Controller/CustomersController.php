@@ -665,6 +665,47 @@ class CustomersController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Credit_and_deposit_balance'));
     }
 
+    public function sendInvoice()
+    {
+
+        $customerId = h($this->getRequest()->getQuery('customerId'));
+        $paidInCash = h($this->getRequest()->getQuery('paidInCash'));
+
+        // TODO only fetch last invoice
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $customerId,
+            ],
+            'contain' => [
+                'Invoices',
+            ],
+        ])->first();
+
+        if (empty($customer)) {
+            throw new Exception('customer not found');
+        }
+
+        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
+
+        // TODO generate action log
+        $actionLogId = 1;
+
+        $invoiceNumber = $this->Customer->Invoices->getNextInvoiceNumberForCustomer($customer->invoices);
+        $invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink(
+            $customer->name, $customerId, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $invoiceNumber
+        );
+
+        $this->QueuedJobs->createJob('GenerateInvoiceForManufacturer', [
+            'invoiceNumber' => $invoiceNumber,
+            'invoicePdfFile' => $invoicePdfFile,
+            'customerId' => $customerId,
+            'customerName' => $customer->name,
+            'actionLogId' => $actionLogId,
+            'paidInCash' => $paidInCash,
+        ]);
+
+    }
+
     public function getInvoice()
     {
         $customerId = h($this->getRequest()->getQuery('customerId'));
