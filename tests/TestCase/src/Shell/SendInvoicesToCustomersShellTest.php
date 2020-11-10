@@ -63,7 +63,7 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $statement = $this->dbConnection->prepare($query);
         $statement->execute($params);
 
-        $this->get('/admin/customers/getInvoice.pdf?customerId='.$customerId.'&outputType=html');
+        $this->get('/admin/customers/getInvoice.pdf?customerId='.$customerId.'&paidInCash=1&outputType=html');
 //         pr($this->_response);
 //         exit;
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoice.html');

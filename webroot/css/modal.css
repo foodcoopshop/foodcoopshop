@@ -277,3 +277,6 @@ body.iframe_start_page {
 #modal-invoice-for-customer .modal-dialog {
     max-width: 520px;
 }
+#modal-invoice-for-customer .checkbox input[type="checkbox"] {
+    float: left;
+}

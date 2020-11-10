@@ -15,7 +15,6 @@
 namespace App\Lib\PdfWriter;
 
 use App\Lib\Pdf\CustomerInvoiceTcpdf;
-use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 
 class InvoiceToCustomerPdfWriter extends PdfWriter
@@ -30,10 +29,10 @@ class InvoiceToCustomerPdfWriter extends PdfWriter
         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
     }
 
-    public function prepareAndSetData($customerId, $dateFrom, $dateTo, $newInvoiceNumber, $validOrderStates, $period, $invoiceDate)
+    public function prepareAndSetData($customerId, $paidInCash, $newInvoiceNumber, $validOrderStates, $period, $invoiceDate)
     {
 
-        $result = $this->Invoice->getDataForCustomerInvoice($customerId, $dateFrom, $dateTo, $validOrderStates);
+        $result = $this->Invoice->getDataForCustomerInvoice($customerId);
 
         $sumPriceIncl = 0;
         $sumPriceExcl = 0;
@@ -60,8 +59,7 @@ class InvoiceToCustomerPdfWriter extends PdfWriter
             'newInvoiceNumber' => $newInvoiceNumber,
             'period' => $period,
             'invoiceDate' => $invoiceDate,
-            'dateFrom' => date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(str_replace('/', '-', $dateFrom))),
-            'dateTo' => date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'), strtotime(str_replace('/', '-', $dateTo))),
+            'paidInCash' => $paidInCash,
             'customer' => $result,
         ]);
 

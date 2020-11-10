@@ -48,3 +48,9 @@ $pdf->renderTaxSumTable($result->tax_rates);
 $pdf->Ln(3);
 $html = '<p>'.__d('admin', '{0}_thanks_you_for_your_purchase!', [Configure::read('appDb.FCS_APP_NAME')]).'</p>';
 $pdf->writeHTML($html, true, false, true, false, '');
+
+if ($paidInCash) {
+    $pdf->Ln(3);
+    $html = '<p>'.__d('admin', 'Paid_in_cash_on_{0}.', [$invoiceDate]).'</p>';
+    $pdf->writeHTML($html, true, false, true, false, '');
+}

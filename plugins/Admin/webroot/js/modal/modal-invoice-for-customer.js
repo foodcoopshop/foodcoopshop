@@ -20,15 +20,32 @@ foodcoopshop.ModalInvoiceForCustomer = {
         });
     },
 
+    getHtml : function(customerName) {
+        var html = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyGenerateInvoiceFor0.replaceI18n(0, '<b>' + customerName + '</b>') + '</p>';
+        html += '<div class="field-wrapper">';
+        html += '<label class="checkbox">';
+        html += '<input type="checkbox" name="dialogInvoiceForCustomerPaidInCash" id="dialogInvoiceForCustomerPaidInCash" />';
+        html += ' ' + foodcoopshop.LocalizedJs.admin.PaidInCash + '?';
+        html += '</label>';
+        html += '</div>';
+        return html;
+    },
+
     getCloseHandler : function(modalSelector) {
         $(modalSelector).remove();
     },
 
     getSuccessHandler : function(modalSelector, customerId) {
-        window.open('/admin/customers/getInvoice.pdf?customerId=' + customerId);
+        var paidInCash = foodcoopshop.ModalInvoiceForCustomer.getPaidInCashValue();
+        window.open('/admin/customers/getInvoice.pdf?customerId=' + customerId + '&paidInCash=' + paidInCash);
         var successButton = foodcoopshop.Modal.getSuccessButton(modalSelector);
         foodcoopshop.Helper.removeSpinnerFromButton(successButton, 'fa-check');
         foodcoopshop.Helper.enableButton(successButton);
+    },
+
+    getPaidInCashValue: function() {
+        var paidInCash = $('#dialogInvoiceForCustomerPaidInCash:checked').length > 0 ? 1 : 0;
+        return paidInCash;
     },
 
     getOpenHandler : function(button, modalSelector) {
@@ -47,7 +64,7 @@ foodcoopshop.ModalInvoiceForCustomer = {
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
             foodcoopshop.LocalizedJs.admin.GenerateInvoice,
-            '<p>' + foodcoopshop.LocalizedJs.admin.ReallyGenerateInvoiceFor0.replaceI18n(0, '<b>' + customerName + '</b>') + '</p>',
+            foodcoopshop.ModalInvoiceForCustomer.getHtml(customerName),
             buttons
         );
 

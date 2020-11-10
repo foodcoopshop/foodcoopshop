@@ -668,8 +668,7 @@ class CustomersController extends AdminAppController
     public function getInvoice()
     {
         $customerId = h($this->getRequest()->getQuery('customerId'));
-        $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
-        $dateTo = h($this->getRequest()->getQuery('dateTo'));
+        $paidInCash = h($this->getRequest()->getQuery('paidInCash'));
 
         $customer = $this->Customer->find('all', [
             'conditions' => [
@@ -684,7 +683,7 @@ class CustomersController extends AdminAppController
         $newInvoiceNumber = 'xxx';
 
         $pdfWriter = new InvoiceToCustomerPdfWriter();
-        $pdfWriter->prepareAndSetData($customerId, $dateFrom, $dateTo, $newInvoiceNumber, [], '', 'xxx');
+        $pdfWriter->prepareAndSetData($customerId, $paidInCash, $newInvoiceNumber, [], '', 'xxx');
         if (isset($pdfWriter->getData()['results']) && empty($pdfWriter->getData()['results'])) {
             die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }

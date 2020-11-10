@@ -235,6 +235,7 @@ class LocalizedController extends Controller
                 'GenerateInvoice' => __('Generate_invoice'),
                 'ReallyGenerateInvoiceFor0' => __('Really_generate_invoice_for_0'),
                 'ShowPreview' => __('Show_preview'),
+                'PaidInCash' => __('Paid_in_cash'),
             ],
             'pickupDay' => [
                 'WereTheProductsPickedUp' => __('Were_the_products_picked_up?'),
