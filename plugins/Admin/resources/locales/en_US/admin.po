@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-09 19:09+0100\n"
-"PO-Revision-Date: 2020-11-03 10:53+0100\n"
+"POT-Creation-Date: 2020-11-10 09:33+0100\n"
+"PO-Revision-Date: 2020-11-10 09:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2081,6 +2081,9 @@ msgstr "Invoice date"
 
 msgid "{0}_thanks_you_for_your_purchase!"
 msgstr "Thank you for your purchase!"
+
+msgid "Paid_in_cash_on_{0}."
+msgstr "Paid in cash on {0}."
 
 msgid "conveyed_for"
 msgstr "conveyed for"

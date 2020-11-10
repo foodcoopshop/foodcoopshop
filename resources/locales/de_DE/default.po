@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-09 19:17+0100\n"
-"PO-Revision-Date: 2020-11-09 19:17+0100\n"
+"POT-Creation-Date: 2020-11-10 09:21+0100\n"
+"PO-Revision-Date: 2020-11-10 09:21+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -854,6 +854,9 @@ msgstr "Möchtest du wirklich die Rechnung für {0} generieren?"
 
 msgid "Show_preview"
 msgstr "Vorschau anzeigen"
+
+msgid "Paid_in_cash"
+msgstr "Bar bezahlt"
 
 msgid "Were_the_products_picked_up?"
 msgstr "Wurden die Produkte abgeholt?"

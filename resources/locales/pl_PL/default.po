@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-09 19:17+0100\n"
+"POT-Creation-Date: 2020-11-10 09:21+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1152,6 +1152,9 @@ msgstr "Wygenerowane faktury"
 #, fuzzy
 msgid "Show_preview"
 msgstr "Pokaż więcej"
+
+msgid "Paid_in_cash"
+msgstr ""
 
 # Were the products picked up?
 msgid "Were_the_products_picked_up?"

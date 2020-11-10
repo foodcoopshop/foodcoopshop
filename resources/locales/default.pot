@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-09 19:17+0100\n"
+"POT-Creation-Date: 2020-11-10 09:21+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -852,6 +852,9 @@ msgid "Really_generate_invoice_for_0"
 msgstr ""
 
 msgid "Show_preview"
+msgstr ""
+
+msgid "Paid_in_cash"
 msgstr ""
 
 msgid "Were_the_products_picked_up?"
