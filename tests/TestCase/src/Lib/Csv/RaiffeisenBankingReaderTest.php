@@ -29,12 +29,9 @@ class RaiffeisenBankingReaderTest extends AppCakeTestCase
         $this->assertLogFilesForErrors();
     }
 
-    /**
-     * @deprecated This method will be removed in v3.2.
-     */
-    public function testReadV1()
+    public function testRead()
     {
-        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen-v1.csv');
+        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen.csv');
         $records = $reader->getPreparedRecords($reader->getRecords());
         foreach($records as $record) {
             $this->assertEquals(4, count($record));
@@ -46,42 +43,17 @@ class RaiffeisenBankingReaderTest extends AppCakeTestCase
         $this->assertEquals(Configure::read('test.superadminId'), $records[1]['original_id_customer']);
 
         $this->assertEquals(3, count($records));
-    }
-
-    public function testReadV2()
-    {
-        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen-v2.csv');
-        $records = $reader->getPreparedRecords($reader->getRecords());
-        foreach($records as $record) {
-            $this->assertEquals(4, count($record));
-        }
-
-        $this->assertEquals('2019-02-01 12:51:14.563000', $records[2]['date']);
-        $this->assertEquals(100, $records[2]['amount']);
-        $this->assertEquals(Configure::read('test.adminId'), $records[2]['original_id_customer']);
-        $this->assertEquals(Configure::read('test.superadminId'), $records[1]['original_id_customer']);
-
-        $this->assertEquals(3, count($records));
-    }
-
-    /**
-     * @deprecated This method will be removed in v3.2.
-     */
-    public function testCheckStructureV1Ok()
-    {
-        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen-v1.csv');
-        $this->assertTrue($reader->checkStructure());
     }
 
     public function testCheckStructureNotOk()
     {
-        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen-wrong-structure-v1.csv');
+        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen-wrong-structure.csv');
         $this->assertFalse($reader->checkStructure());
     }
 
-    public function testCheckStructureV2Ok()
+    public function testCheckStructureOk()
     {
-        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen-v2.csv');
+        $reader = RaiffeisenBankingReader::createFromPath(TESTS . 'config' . DS . 'data' . DS . 'test-data-raiffeisen.csv');
         $this->assertTrue($reader->checkStructure());
     }
 
