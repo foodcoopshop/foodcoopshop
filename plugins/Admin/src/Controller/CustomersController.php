@@ -726,7 +726,7 @@ class CustomersController extends AdminAppController
 
         $pdfWriter = new InvoiceToCustomerPdfWriter();
         $data = $this->Customer->Invoices->getDataForCustomerInvoice($customerId);
-        if (empty($data)) {
+        if (!$data->new_invoice_necessary) {
             die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }
 

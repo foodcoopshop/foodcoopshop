@@ -36,7 +36,7 @@ class InvoicesTableTest extends AppCakeTestCase
     {
         $invoice = $this->Invoice->newEmptyEntity();
         $invoice->invoice_number = '2020-000001';
-        $result = $this->Invoice->getNextInvoiceNumberForCustomer('2021', [$invoice]);
+        $result = $this->Invoice->getNextInvoiceNumberForCustomer('2021', $invoice);
         $this->assertEquals($result, '2021-000001');
     }
 
@@ -44,7 +44,7 @@ class InvoicesTableTest extends AppCakeTestCase
     {
         $invoice = $this->Invoice->newEmptyEntity();
         $invoice->invoice_number = '2020-000001';
-        $result = $this->Invoice->getNextInvoiceNumberForCustomer('2020', [$invoice]);
+        $result = $this->Invoice->getNextInvoiceNumberForCustomer('2020', $invoice);
         $this->assertEquals($result, '2020-000002');
     }
 

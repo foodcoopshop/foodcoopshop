@@ -146,17 +146,32 @@ class InvoicesTable extends AppTable
         $customer->sumPriceExcl = $sumPriceExcl;
         $customer->sumTax = $sumTax;
 
+        $customer->new_invoice_necessary = !empty($customer->active_order_details) && $customer->ordered_deposit['deposit_amount'] + $customer->returned_deposit['deposit_amount'] > 0;
+
         return $customer;
 
     }
 
-    public function getNextInvoiceNumberForCustomer($currentYear, $invoices)
+    public function getLastInvoiceForCustomer()
+    {
+        $lastInvoice = $this->find('all', [
+            'conditions' => [
+                'id_customer > 0',
+            ],
+            'order' => [
+                'id' => 'DESC'
+            ]
+        ])->first();
+        return $lastInvoice;
+    }
+
+    public function getNextInvoiceNumberForCustomer($currentYear, $lastInvoice)
     {
 
         $increasingNumberOfLastInvoice = 1;
 
-        if (! empty($invoices)) {
-            $explodedInvoiceNumber = explode('-', $invoices[0]->invoice_number);
+        if (! empty($lastInvoice)) {
+            $explodedInvoiceNumber = explode('-', $lastInvoice->invoice_number);
             $yearOfLastInvoice = $explodedInvoiceNumber[0];
             if ($currentYear == $yearOfLastInvoice) {
                 $increasingNumberOfLastInvoice = (int) $explodedInvoiceNumber[1] + 1;

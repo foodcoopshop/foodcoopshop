@@ -33,6 +33,7 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->prepareSendingInvoices();
         $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
     }
 
@@ -64,6 +65,8 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
 
         $this->commandRunner->run(['cake', 'send_invoices_to_customers', '2018-02-02 10:20:30']);
         $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
+
+        $this->assertFileExists(ROOT . DS . 'files_private' . DS . 'invoices' . DS . '2018' . DS . '02' . DS . '2018-02-02_Demo-Superadmin_92_Rechnung_2020-000001_FoodCoop-Test.pdf');
 
     }
 

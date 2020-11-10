@@ -1,6 +1,7 @@
 <?php
 namespace App\Shell\Task;
 
+use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
 use Queue\Shell\Task\QueueTask;
 use Queue\Shell\Task\QueueTaskInterface;
 
@@ -26,8 +27,26 @@ class QueueGenerateInvoiceForCustomerTask extends QueueTask implements QueueTask
 
     public $retries = 2;
 
+    public $Customer;
+
+    public $paidInCash = false;
+
     public function run(array $data, $jobId) : void
     {
+
+        $customerId = $data['customerId'];
+        $invoiceNumber = $data['invoiceNumber'];
+        $invoiceDate = $data['invoiceDate'];
+        $invoicePdfFile = $data['invoicePdfFile'];
+
+        $this->Customer = $this->getTableLocator()->get('Customers');
+
+        $pdfWriter = new InvoiceToCustomerPdfWriter();
+        $data = $this->Customer->Invoices->getDataForCustomerInvoice($customerId);
+        $pdfWriter->prepareAndSetData($data, $this->paidInCash, $invoiceNumber, $invoiceDate);
+
+        $pdfWriter->setFilename($invoicePdfFile);
+        $pdfWriter->writeFile();
 
     }
 
