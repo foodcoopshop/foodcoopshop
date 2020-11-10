@@ -29,7 +29,7 @@ class InvoiceToCustomerPdfWriter extends PdfWriter
         $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
     }
 
-    public function prepareAndSetData($customerId, $paidInCash, $newInvoiceNumber, $validOrderStates, $period, $invoiceDate)
+    public function prepareAndSetData($customerId, $paidInCash, $newInvoiceNumber, $invoiceDate)
     {
 
         $result = $this->Invoice->getDataForCustomerInvoice($customerId);
@@ -57,7 +57,6 @@ class InvoiceToCustomerPdfWriter extends PdfWriter
             'sumPriceExcl' => $sumPriceExcl,
             'sumTax' => $sumTax,
             'newInvoiceNumber' => $newInvoiceNumber,
-            'period' => $period,
             'invoiceDate' => $invoiceDate,
             'paidInCash' => $paidInCash,
             'customer' => $result,

@@ -722,9 +722,10 @@ class CustomersController extends AdminAppController
         }
 
         $newInvoiceNumber = 'xxx';
+        $newInvoiceDate = 'xx.xx.xxxx';
 
         $pdfWriter = new InvoiceToCustomerPdfWriter();
-        $pdfWriter->prepareAndSetData($customerId, $paidInCash, $newInvoiceNumber, [], '', 'xxx');
+        $pdfWriter->prepareAndSetData($customerId, $paidInCash, $newInvoiceNumber, $newInvoiceDate);
         if (isset($pdfWriter->getData()['results']) && empty($pdfWriter->getData()['results'])) {
             die(__d('admin', 'No_orders_within_the_given_time_range.'));
         }
