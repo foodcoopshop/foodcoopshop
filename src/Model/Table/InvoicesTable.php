@@ -31,7 +31,7 @@ class InvoicesTable extends AppTable
         ]);
     }
 
-    public function getDataForCustomerInvoice($customerId, $dateFrom, $dateTo, $validOrderStates)
+    public function getDataForCustomerInvoice($customerId)
     {
 
         $customersTable = FactoryLocator::get('Table')->get('Customers');
@@ -41,11 +41,7 @@ class InvoicesTable extends AppTable
             ],
             'contain' => [
                 'AddressCustomers',
-                'ActiveOrderDetails' => function (Query $q) use ($dateFrom, $dateTo) {
-                    $q->where([
-                        'DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
-                        'DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\''
-                    ]);
+                'ActiveOrderDetails' => function (Query $q) {
                     $q->order([
                         'ActiveOrderDetails.product_name' => 'ASC',
                         'ActiveOrderDetails.id_order_detail' => 'ASC',
