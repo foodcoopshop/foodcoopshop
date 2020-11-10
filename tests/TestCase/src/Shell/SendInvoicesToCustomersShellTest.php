@@ -63,10 +63,10 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $customerId = Configure::read('test.superadminId');
         $this->prepareOrdersAndPayments($customerId);
 
-        $this->commandRunner->run(['cake', 'send_invoices_to_customers', '2018-02-02 10:20:30']);
+        $this->commandRunner->run(['cake', 'send_invoices_to_customers', '2020-11-10 10:20:30']);
         $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
 
-        $this->assertFileExists(ROOT . DS . 'files_private' . DS . 'invoices' . DS . '2018' . DS . '02' . DS . '2018-02-02_Demo-Superadmin_92_Rechnung_2020-000001_FoodCoop-Test.pdf');
+        $this->assertFileExists(ROOT . DS . 'files_private' . DS . 'invoices' . DS . '2020' . DS . '11' . DS . '2020-11-10_Demo-Superadmin_92_Rechnung_2020-000001_FoodCoop-Test.pdf');
 
     }
 
