@@ -57,8 +57,6 @@ return [
         'uploadedFilesDir' => DS . 'files' . DS . 'files',
         'customerImagesDir' => ROOT . DS . 'files_private'. DS . 'customers',
         'folder_invoices' => ROOT . DS . 'files_private'. DS . 'invoices',
-        'folder_order_lists' => ROOT . DS. 'files_private' . DS .'order_lists',
-        'folder_invoices' => ROOT . DS . 'files_private'. DS . 'invoices',
         'folder_order_lists' => ROOT . DS . 'files_private' . DS .'order_lists',
 
         /**
