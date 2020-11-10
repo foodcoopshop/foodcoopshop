@@ -21,7 +21,7 @@ use Cake\Datasource\FactoryLocator;
 class InvoiceToCustomerPdfWriter extends PdfWriter
 {
 
-    public $Customer;
+    public $Invoice;
 
     public function __construct()
     {
