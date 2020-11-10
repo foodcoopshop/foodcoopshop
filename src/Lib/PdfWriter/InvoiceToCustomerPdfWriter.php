@@ -27,13 +27,13 @@ class InvoiceToCustomerPdfWriter extends PdfWriter
     {
         $this->plugin = 'Admin';
         $this->setPdfLibrary(new CustomerInvoiceTcpdf());
-        $this->Customer = FactoryLocator::get('Table')->get('Customers');
+        $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
     }
 
     public function prepareAndSetData($customerId, $dateFrom, $dateTo, $newInvoiceNumber, $validOrderStates, $period, $invoiceDate)
     {
 
-        $result = $this->Customer->getDataForInvoice($customerId, $dateFrom, $dateTo, $validOrderStates);
+        $result = $this->Invoice->getDataForCustomerInvoice($customerId, $dateFrom, $dateTo, $validOrderStates);
 
         $sumPriceIncl = 0;
         $sumPriceExcl = 0;
