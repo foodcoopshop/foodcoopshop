@@ -54,7 +54,8 @@ class SendInvoicesToCustomersShell extends AppShell
 
             if ($data->new_invoice_necessary) {
 
-                $invoiceNumber = $this->Invoice->getNextInvoiceNumberForCustomer('2020', $this->Invoice->getLastInvoiceForCustomer());
+                $year = Configure::read('app.timeHelper')->getYearFromDbDate($this->cronjobRunDay);
+                $invoiceNumber = $this->Invoice->getNextInvoiceNumberForCustomer($year, $this->Invoice->getLastInvoiceForCustomer());
                 $invoicePdfFile =  Configure::read('app.htmlHelper')->getInvoiceLink(
                     $customer->name, $customer->id_customer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $invoiceNumber
                 );
