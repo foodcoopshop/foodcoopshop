@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-10 09:33+0100\n"
-"PO-Revision-Date: 2020-11-10 09:33+0100\n"
+"POT-Creation-Date: 2020-11-11 16:36+0100\n"
+"PO-Revision-Date: 2020-11-11 16:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 msgid "Activities"
 msgstr "Aktivitäten"
@@ -177,6 +177,9 @@ msgstr "Summe der geleisteten Pfand-Ausgleichszahlungen für Hersteller"
 msgid "Credit_and_deposit_balance"
 msgstr "Guthaben- und Pfand-Saldo"
 
+msgid "The_invoice_was_generated_successfully."
+msgstr "Die Rechnung wurde erfolgreich erstellt."
+
 msgid "No_orders_within_the_given_time_range."
 msgstr "Keine offenen Bestellungen im angegebenen Zeitraum."
 
@@ -188,6 +191,9 @@ msgstr "Pfandkonto"
 
 msgid "Deposit_take_back_detail_for"
 msgstr "Pfand-Rücknahme Detail für"
+
+msgid "Invoices"
+msgstr "Rechnungen"
 
 msgid "_Order_list_filename_"
 msgstr "_Bestellliste_"
@@ -1100,6 +1106,9 @@ msgstr "Pfand-Rücknahmen (Hersteller)"
 
 msgid "Returned_deposit_by_member"
 msgstr "Pfand-Rückgaben (Mitglieder)"
+
+msgid "Download"
+msgstr ""
 
 msgid "Pickup_day"
 msgstr "Abholtag"

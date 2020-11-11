@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-10 09:33+0100\n"
+"POT-Creation-Date: 2020-11-11 16:36+0100\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -182,6 +182,10 @@ msgstr "Suma rekompensat kaucji dla producentów"
 msgid "Credit_and_deposit_balance"
 msgstr "Twoje saldo wkładów"
 
+#, fuzzy
+msgid "The_invoice_was_generated_successfully."
+msgstr "Komentarz został zmodyfikowany pomyślnie."
+
 msgid "No_orders_within_the_given_time_range."
 msgstr "Brak zamówień w wybranym okresie"
 
@@ -194,6 +198,10 @@ msgstr "Konto kaucji"
 
 msgid "Deposit_take_back_detail_for"
 msgstr "Sczegóły odbioru kaucji dla"
+
+#, fuzzy
+msgid "Invoices"
+msgstr "Data faktury"
 
 msgid "_Order_list_filename_"
 msgstr "_Lista_zamowien_"
@@ -1143,6 +1151,9 @@ msgstr "Zwrócono puste opakowanie"
 #, fuzzy
 msgid "Returned_deposit_by_member"
 msgstr "Zwrócony wkład"
+
+msgid "Download"
+msgstr ""
 
 msgid "Pickup_day"
 msgstr "Dzień odbioru"

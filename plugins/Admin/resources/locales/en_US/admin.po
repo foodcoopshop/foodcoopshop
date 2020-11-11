@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-10 09:33+0100\n"
-"PO-Revision-Date: 2020-11-10 09:34+0100\n"
+"POT-Creation-Date: 2020-11-11 16:36+0100\n"
+"PO-Revision-Date: 2020-11-11 16:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 msgid "Activities"
 msgstr "Activities"
@@ -177,6 +177,9 @@ msgstr "Sum of compensation payments for manufacturers"
 msgid "Credit_and_deposit_balance"
 msgstr "Credit and deposit balance"
 
+msgid "The_invoice_was_generated_successfully."
+msgstr "The invoice has been generated successfully."
+
 msgid "No_orders_within_the_given_time_range."
 msgstr "No orders within the given time range"
 
@@ -188,6 +191,9 @@ msgstr "Deposit account"
 
 msgid "Deposit_take_back_detail_for"
 msgstr "Deposit take back detail for"
+
+msgid "Invoices"
+msgstr "Invoices"
 
 msgid "_Order_list_filename_"
 msgstr "_Order_list_"
@@ -1100,6 +1106,9 @@ msgstr "Empty glasses returned by manufacturer"
 
 msgid "Returned_deposit_by_member"
 msgstr "Returned deposit by member"
+
+msgid "Download"
+msgstr ""
 
 msgid "Pickup_day"
 msgstr "Pickup day"

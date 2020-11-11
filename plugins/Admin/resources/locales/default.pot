@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-10 09:33+0100\n"
+"POT-Creation-Date: 2020-11-11 16:36+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -176,6 +176,9 @@ msgstr ""
 msgid "Credit_and_deposit_balance"
 msgstr ""
 
+msgid "The_invoice_was_generated_successfully."
+msgstr ""
+
 msgid "No_orders_within_the_given_time_range."
 msgstr ""
 
@@ -186,6 +189,9 @@ msgid "Deposit_account"
 msgstr ""
 
 msgid "Deposit_take_back_detail_for"
+msgstr ""
+
+msgid "Invoices"
 msgstr ""
 
 msgid "_Order_list_filename_"
@@ -1098,6 +1104,9 @@ msgid "Empty_glasses_returned_by_manufacturer"
 msgstr ""
 
 msgid "Returned_deposit_by_member"
+msgstr ""
+
+msgid "Download"
 msgstr ""
 
 msgid "Pickup_day"

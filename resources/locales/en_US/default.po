@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-10 09:21+0100\n"
-"PO-Revision-Date: 2020-11-09 19:31+0100\n"
+"POT-Creation-Date: 2020-11-11 16:36+0100\n"
+"PO-Revision-Date: 2020-11-11 16:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
@@ -856,7 +856,7 @@ msgid "Show_preview"
 msgstr "Show preview"
 
 msgid "Paid_in_cash"
-msgstr ""
+msgstr "Paid in cash"
 
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
@@ -1901,6 +1901,9 @@ msgstr "Superadmin"
 
 msgid "Credit_overview"
 msgstr "Credit overview"
+
+msgid "Invoices"
+msgstr "Rechnungen"
 
 msgid "Deposit_overview"
 msgstr "Deposit overview"
