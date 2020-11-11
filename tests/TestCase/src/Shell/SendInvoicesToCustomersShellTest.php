@@ -69,8 +69,8 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->commandRunner->run(['cake', 'send_invoices_to_customers', $cronjobRunDay]);
         $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
 
-        $pdfFilename = DS . 'files_private' . DS . 'invoices' . DS . '2020' . DS . '11' . DS . '2020-11-10_Demo-Superadmin_92_Rechnung_2020-000001_FoodCoop-Test.pdf';
-        $this->assertFileExists(ROOT . $pdfFilename);
+        $pdfFilename = DS . '2020' . DS . '11' . DS . '2020-11-10_Demo-Superadmin_92_Rechnung_2020-000001_FoodCoop-Test.pdf';
+        $this->assertFileExists(Configure::read('app.folder_invoices') . $pdfFilename);
 
         $this->Invoice = $this->getTableLocator()->get('Invoices');
         $invoice = $this->Invoice->find('all', [

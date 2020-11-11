@@ -96,7 +96,7 @@ class QueueGenerateInvoiceForCustomerTask extends QueueTask implements QueueTask
     private function saveInvoice($data, $invoiceNumber, $invoicePdfFile, $currentDay)
     {
 
-        $invoicePdfFileForDatabase = str_replace(ROOT, '', $invoicePdfFile);
+        $invoicePdfFileForDatabase = str_replace(Configure::read('app.folder_invoices'), '', $invoicePdfFile);
         $invoicePdfFileForDatabase = str_replace('\\', '/', $invoicePdfFileForDatabase);
 
         $invoiceData = [

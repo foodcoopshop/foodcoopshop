@@ -25,6 +25,9 @@ class InvoicesTable extends AppTable
     public function initialize(array $config): void
     {
         parent::initialize($config);
+        $this->belongsTo('Customers', [
+            'foreignKey' => 'id_customer',
+        ]);
         $this->hasMany('InvoiceTaxes', [
             'foreignKey' => 'invoice_id',
         ]);
