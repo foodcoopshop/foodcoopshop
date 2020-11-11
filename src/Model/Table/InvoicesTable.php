@@ -188,7 +188,7 @@ class InvoicesTable extends AppTable
     {
         $invoiceNumber = 1;
         if (! empty($invoices)) {
-            $invoiceNumber = $invoices[0]->invoice_number + 1;
+            $invoiceNumber = (int) $invoices[0]->invoice_number + 1;
         }
         $newInvoiceNumber = $this->formatInvoiceNumberWithLeadingZeros($invoiceNumber, 4);
         return $newInvoiceNumber;
