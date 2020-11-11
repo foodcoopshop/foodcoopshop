@@ -53,6 +53,9 @@ class InvoicesController extends AdminAppController
                 'InvoiceTaxes',
                 'Customers',
             ],
+            'conditions' => [
+                'Invoices.id_customer > 0',
+            ],
             'order' => [
                 'Invoices.id' => 'DESC'
             ]

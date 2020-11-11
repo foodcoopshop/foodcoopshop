@@ -43,6 +43,11 @@ echo $this->element('reportNavTabs', [
     'dateTo' => $dateTo,
 ]);
 
+if (empty($invoices)) {
+    echo 'no invoices yet';
+    return;
+}
+
 foreach($invoices as $invoice) {
     echo '<p style="margin-bottom:10px;">';
         echo $invoice->invoice_number . ' - ' . $invoice->customer->name . ' - ';
