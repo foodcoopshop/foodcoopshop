@@ -26,10 +26,8 @@ class SendInvoicesToCustomersShell extends AppShell
     {
         parent::main();
 
-        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $this->Payment = $this->getTableLocator()->get('Payments');
         $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
 
         // $this->cronjobRunDay can is set in unit test
@@ -65,59 +63,17 @@ class SendInvoicesToCustomersShell extends AppShell
                 $customer->name, $customer->id_customer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $invoiceNumber
             );
 
-            $newInvoice = $this->saveInvoice($data, $invoiceNumber, $invoicePdfFile);
-            $this->linkReturnedDepositWithInvoice($data, $newInvoice->id);
-
             $this->QueuedJobs->createJob('GenerateInvoiceForCustomer', [
                 'customerId' => $customer->id_customer,
                 'customerName' => $customer->name,
                 'invoiceNumber' => $invoiceNumber,
                 'invoiceDate' => $invoiceDate,
+                'cronjobRunDay' => $this->cronjobRunDay,
                 'invoicePdfFile' => $invoicePdfFile,
+                'paidInCash' => false,
             ]);
 
         }
-
-    }
-
-    private function linkReturnedDepositWithInvoice($data, $invoiceId)
-    {
-        foreach($data->returned_deposit['entities'] as $payment) {
-            $paymentEntity = $this->Payment->patchEntity($payment, [
-                'invoice_id' => $invoiceId,
-            ]);
-            $this->Payment->save($paymentEntity);
-        }
-    }
-
-    private function saveInvoice($data, $invoiceNumber, $invoicePdfFile)
-    {
-
-        $invoicePdfFileForDatabase = str_replace(ROOT, '', $invoicePdfFile);
-        $invoicePdfFileForDatabase = str_replace('\\', '/', $invoicePdfFileForDatabase);
-
-        $invoiceData = [
-            'id_customer' => $data->id_customer,
-            'invoice_number' => $invoiceNumber,
-            'filename' => $invoicePdfFileForDatabase,
-            'created' => new FrozenDate($this->cronjobRunDay),
-            'invoice_taxes' => [],
-        ];
-        foreach($data->tax_rates as $taxRate => $values) {
-            $invoiceData['invoice_taxes'][] = [
-                'tax_rate' => $taxRate,
-                'total_price_tax_excl' => $values['sum_price_excl'],
-                'total_price_tax_incl' => $values['sum_price_incl'],
-                'total_price_tax' => $values['sum_tax'],
-            ];
-        }
-        $invoiceEntity = $this->Invoice->newEntity($invoiceData);
-
-        $newInvoice = $this->Invoice->save($invoiceEntity, [
-            'associated' => 'InvoiceTaxes'
-        ]);
-
-        return $newInvoice;
 
     }
 

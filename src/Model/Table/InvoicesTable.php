@@ -119,9 +119,6 @@ class InvoicesTable extends AppTable
 
         ksort($taxRates);
 
-        if (count($taxRates) == 1) {
-            $taxRates = false;
-        }
         $customer->tax_rates = $taxRates;
 
         // prepare sums
@@ -146,8 +143,7 @@ class InvoicesTable extends AppTable
         $customer->sumPriceExcl = $sumPriceExcl;
         $customer->sumTax = $sumTax;
 
-        $customer->new_invoice_necessary = !empty($customer->active_order_details) && $customer->ordered_deposit['deposit_amount'] + $customer->returned_deposit['deposit_amount'] > 0;
-
+        $customer->new_invoice_necessary = !empty($customer->active_order_details) || $customer->ordered_deposit['deposit_amount'] < 0 || $customer->returned_deposit['deposit_amount'] > 0;
         return $customer;
 
     }

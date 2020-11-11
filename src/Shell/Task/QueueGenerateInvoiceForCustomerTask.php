@@ -2,6 +2,8 @@
 namespace App\Shell\Task;
 
 use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
+use Cake\Core\Configure;
+use Cake\I18n\FrozenDate;
 use Queue\Shell\Task\QueueTask;
 use Queue\Shell\Task\QueueTaskInterface;
 
@@ -29,7 +31,11 @@ class QueueGenerateInvoiceForCustomerTask extends QueueTask implements QueueTask
 
     public $Customer;
 
-    public $paidInCash = false;
+    public $Invoice;
+
+    public $OrderDetail;
+
+    public $Payment;
 
     public function run(array $data, $jobId) : void
     {
@@ -38,15 +44,77 @@ class QueueGenerateInvoiceForCustomerTask extends QueueTask implements QueueTask
         $invoiceNumber = $data['invoiceNumber'];
         $invoiceDate = $data['invoiceDate'];
         $invoicePdfFile = $data['invoicePdfFile'];
+        $paidInCash = $data['paidInCash'];
+        $cronjobRunDay = $data['cronjobRunDay'];
 
         $this->Customer = $this->getTableLocator()->get('Customers');
+        $this->Invoice = $this->getTableLocator()->get('Invoices');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->Payment = $this->getTableLocator()->get('Payments');
 
         $pdfWriter = new InvoiceToCustomerPdfWriter();
         $data = $this->Customer->Invoices->getDataForCustomerInvoice($customerId);
-        $pdfWriter->prepareAndSetData($data, $this->paidInCash, $invoiceNumber, $invoiceDate);
-
+        $pdfWriter->prepareAndSetData($data, $paidInCash, $invoiceNumber, $invoiceDate);
         $pdfWriter->setFilename($invoicePdfFile);
         $pdfWriter->writeFile();
+
+        $newInvoice = $this->saveInvoice($data, $invoiceNumber, $invoicePdfFile, $cronjobRunDay);
+        $this->linkReturnedDepositWithInvoice($data, $newInvoice->id);
+        $this->updateOrderDetailOrderState($data);
+
+    }
+
+    private function updateOrderDetailOrderState($data)
+    {
+        foreach($data->active_order_details as $orderDetail) {
+            $patchedEntity = $this->OrderDetail->patchEntity(
+                $orderDetail,
+                [
+                    'order_state' => Configure::read('app.htmlHelper')->getOrderStateBilled(),
+                ]
+            );
+            $this->OrderDetail->save($patchedEntity);
+        }
+    }
+
+    private function linkReturnedDepositWithInvoice($data, $invoiceId)
+    {
+        foreach($data->returned_deposit['entities'] as $payment) {
+            $paymentEntity = $this->Payment->patchEntity($payment, [
+                'invoice_id' => $invoiceId,
+            ]);
+            $this->Payment->save($paymentEntity);
+        }
+    }
+
+    private function saveInvoice($data, $invoiceNumber, $invoicePdfFile, $cronjobRunDay)
+    {
+
+        $invoicePdfFileForDatabase = str_replace(ROOT, '', $invoicePdfFile);
+        $invoicePdfFileForDatabase = str_replace('\\', '/', $invoicePdfFileForDatabase);
+
+        $invoiceData = [
+            'id_customer' => $data->id_customer,
+            'invoice_number' => $invoiceNumber,
+            'filename' => $invoicePdfFileForDatabase,
+            'created' => new FrozenDate($cronjobRunDay),
+            'invoice_taxes' => [],
+        ];
+        foreach($data->tax_rates as $taxRate => $values) {
+            $invoiceData['invoice_taxes'][] = [
+                'tax_rate' => $taxRate,
+                'total_price_tax_excl' => $values['sum_price_excl'],
+                'total_price_tax_incl' => $values['sum_price_incl'],
+                'total_price_tax' => $values['sum_tax'],
+            ];
+        }
+        $invoiceEntity = $this->Invoice->newEntity($invoiceData);
+
+        $newInvoice = $this->Invoice->save($invoiceEntity, [
+            'associated' => 'InvoiceTaxes'
+        ]);
+
+        return $newInvoice;
 
     }
 

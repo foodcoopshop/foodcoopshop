@@ -100,6 +100,13 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
             $this->assertEquals($payment->id_invoice, 1);
         }
 
+        // call again
+        $this->commandRunner->run(['cake', 'send_invoices_to_customers', $cronjobRunDay]);
+        $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
+
+        $this->assertEquals(1, count($this->Invoice->find('all')->toArray()));
+
+
     }
 
     protected function doAssertInvoiceTaxes($data, $taxRate, $excl, $tax, $incl)
