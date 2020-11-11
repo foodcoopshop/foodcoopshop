@@ -3,6 +3,7 @@ namespace App\Shell\Task;
 
 use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
 use Cake\Core\Configure;
+use Cake\Core\Exception\Exception;
 use Cake\I18n\FrozenDate;
 use Queue\Shell\Task\QueueTask;
 use Queue\Shell\Task\QueueTaskInterface;
@@ -50,6 +51,9 @@ class QueueGenerateInvoiceForCustomerTask extends QueueTask implements QueueTask
         $this->Payment = $this->getTableLocator()->get('Payments');
 
         $data = $this->Customer->Invoices->getDataForCustomerInvoice($customerId);
+        if (!$data->new_invoice_necessary) {
+            throw new Exception('safety check if data available - should always be checked before triggering this queue');
+        }
 
         $invoiceDate = (new FrozenDate($currentDay))->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
 

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-11 16:36+0100\n"
+"POT-Creation-Date: 2020-11-11 16:57+0100\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -182,12 +182,12 @@ msgstr "Suma rekompensat kaucji dla producentów"
 msgid "Credit_and_deposit_balance"
 msgstr "Twoje saldo wkładów"
 
+msgid "No_data_available_to_generate_an_invoice."
+msgstr ""
+
 #, fuzzy
 msgid "The_invoice_was_generated_successfully."
 msgstr "Komentarz został zmodyfikowany pomyślnie."
-
-msgid "No_orders_within_the_given_time_range."
-msgstr "Brak zamówień w wybranym okresie"
 
 #, fuzzy
 msgid "Deposit_overview"
@@ -239,6 +239,9 @@ msgstr "Ustawienia producenta {0} zostały zmienione."
 
 msgid "Your_settings_have_been_changed."
 msgstr "Twoje ustawienia zostały zmienione."
+
+msgid "No_orders_within_the_given_time_range."
+msgstr "Brak zamówień w wybranym okresie"
 
 msgid "No_member_found_with_id_{0}."
 msgstr "Nie znaleziono członka o id {0}."

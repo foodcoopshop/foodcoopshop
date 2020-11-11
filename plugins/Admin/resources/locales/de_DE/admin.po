@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-11 16:36+0100\n"
-"PO-Revision-Date: 2020-11-11 16:36+0100\n"
+"POT-Creation-Date: 2020-11-11 16:57+0100\n"
+"PO-Revision-Date: 2020-11-11 16:57+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -177,11 +177,11 @@ msgstr "Summe der geleisteten Pfand-Ausgleichszahlungen für Hersteller"
 msgid "Credit_and_deposit_balance"
 msgstr "Guthaben- und Pfand-Saldo"
 
+msgid "No_data_available_to_generate_an_invoice."
+msgstr "Zum Erstellen einer Rechnung sind keine Daten vorhanden."
+
 msgid "The_invoice_was_generated_successfully."
 msgstr "Die Rechnung wurde erfolgreich erstellt."
-
-msgid "No_orders_within_the_given_time_range."
-msgstr "Keine offenen Bestellungen im angegebenen Zeitraum."
 
 msgid "Deposit_overview"
 msgstr "Pfand-Übersicht"
@@ -230,6 +230,9 @@ msgstr "Die Einstellungen des Herstellers {0} wurden erfolgreich gespeichert."
 
 msgid "Your_settings_have_been_changed."
 msgstr "Deine Einstellungen wurden erfolgreich gespeichert."
+
+msgid "No_orders_within_the_given_time_range."
+msgstr "Keine offenen Bestellungen im angegebenen Zeitraum."
 
 msgid "No_member_found_with_id_{0}."
 msgstr "Es wurde kein Mitglied mit der Id {0} gefunden."
@@ -1108,7 +1111,7 @@ msgid "Returned_deposit_by_member"
 msgstr "Pfand-Rückgaben (Mitglieder)"
 
 msgid "Download"
-msgstr ""
+msgstr "Download"
 
 msgid "Pickup_day"
 msgstr "Abholtag"

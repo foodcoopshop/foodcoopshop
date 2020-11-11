@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-11 16:36+0100\n"
-"PO-Revision-Date: 2020-11-11 16:37+0100\n"
+"POT-Creation-Date: 2020-11-11 16:57+0100\n"
+"PO-Revision-Date: 2020-11-11 16:58+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -177,11 +177,11 @@ msgstr "Sum of compensation payments for manufacturers"
 msgid "Credit_and_deposit_balance"
 msgstr "Credit and deposit balance"
 
+msgid "No_data_available_to_generate_an_invoice."
+msgstr "No data available to generate an invoice."
+
 msgid "The_invoice_was_generated_successfully."
 msgstr "The invoice has been generated successfully."
-
-msgid "No_orders_within_the_given_time_range."
-msgstr "No orders within the given time range"
 
 msgid "Deposit_overview"
 msgstr "Deposit overview"
@@ -230,6 +230,9 @@ msgstr "The settings of manufacturer {0} have been changed."
 
 msgid "Your_settings_have_been_changed."
 msgstr "Your settings have been changed."
+
+msgid "No_orders_within_the_given_time_range."
+msgstr "No orders within the given time range"
 
 msgid "No_member_found_with_id_{0}."
 msgstr "No member found with id {0}."
@@ -1108,7 +1111,7 @@ msgid "Returned_deposit_by_member"
 msgstr "Returned deposit by member"
 
 msgid "Download"
-msgstr ""
+msgstr "Download"
 
 msgid "Pickup_day"
 msgstr "Pickup day"
