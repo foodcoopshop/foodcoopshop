@@ -26,8 +26,8 @@ TRUNCATE TABLE `fcs_cronjobs`;
 TRUNCATE TABLE `fcs_customer`;
 TRUNCATE TABLE `fcs_deposits`;
 TRUNCATE TABLE `fcs_images`;
+TRUNCATE TABLE `fcs_invoice_taxes`;
 TRUNCATE TABLE `fcs_invoices`;
-TRUNCATE TABLE `fcs_invoices_tax`;
 TRUNCATE TABLE `fcs_manufacturer`;
 TRUNCATE TABLE `fcs_order_detail`;
 TRUNCATE TABLE `fcs_order_detail_feedbacks`;
@@ -161,11 +161,11 @@ INSERT INTO `fcs_cronjobs` VALUES
 /*!40000 ALTER TABLE `fcs_images` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_images` ENABLE KEYS */;
 
+/*!40000 ALTER TABLE `fcs_invoice_taxes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_invoice_taxes` ENABLE KEYS */;
+
 /*!40000 ALTER TABLE `fcs_invoices` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_invoices` ENABLE KEYS */;
-
-/*!40000 ALTER TABLE `fcs_invoices_tax` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fcs_invoices_tax` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_manufacturer` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_manufacturer` ENABLE KEYS */;

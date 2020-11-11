@@ -239,7 +239,7 @@ DROP TABLE IF EXISTS `fcs_invoices`;
 CREATE TABLE `fcs_invoices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_manufacturer` int(10) unsigned NOT NULL DEFAULT '0',
-  `invoice_number` int(10) unsigned NOT NULL DEFAULT '0',
+  `invoice_number` varchar(14) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id_customer` int(10) unsigned NOT NULL DEFAULT '0',
   `paid_in_cash` tinyint(4) unsigned DEFAULT '0',
@@ -249,10 +249,10 @@ CREATE TABLE `fcs_invoices` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `fcs_invoices_tax`;
+DROP TABLE IF EXISTS `fcs_invoice_taxes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fcs_invoices_tax` (
+CREATE TABLE `fcs_invoice_taxes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `invoice_id` int(10) unsigned NOT NULL DEFAULT '0',
   `tax_rate` double(20,6) NOT NULL DEFAULT '0.000000',

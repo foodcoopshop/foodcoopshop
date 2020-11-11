@@ -19,6 +19,7 @@ use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
+use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
 
 class SendInvoicesToCustomersShellTest extends AppCakeTestCase
@@ -63,10 +64,49 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $customerId = Configure::read('test.superadminId');
         $this->prepareOrdersAndPayments($customerId);
 
-        $this->commandRunner->run(['cake', 'send_invoices_to_customers', '2020-11-10 10:20:30']);
+        $cronjobRunDay = '2020-11-10 10:20:30';
+
+        $this->commandRunner->run(['cake', 'send_invoices_to_customers', $cronjobRunDay]);
         $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
 
-        $this->assertFileExists(ROOT . DS . 'files_private' . DS . 'invoices' . DS . '2020' . DS . '11' . DS . '2020-11-10_Demo-Superadmin_92_Rechnung_2020-000001_FoodCoop-Test.pdf');
+        $pdfFilename = DS . 'files_private' . DS . 'invoices' . DS . '2020' . DS . '11' . DS . '2020-11-10_Demo-Superadmin_92_Rechnung_2020-000001_FoodCoop-Test.pdf';
+        $this->assertFileExists(ROOT . $pdfFilename);
+
+        $this->Invoice = $this->getTableLocator()->get('Invoices');
+        $invoice = $this->Invoice->find('all', [
+            'conditions' => [
+                'Invoices.id_customer' => $customerId,
+            ],
+            'contain' => [
+                'InvoiceTaxes',
+            ],
+        ])->first();
+
+        $this->assertEquals($invoice->id, 1);
+        $this->assertEquals($invoice->id_manufacturer, 0);
+        $this->assertEquals($invoice->created, new FrozenDate($cronjobRunDay));
+        $this->assertEquals($invoice->invoice_number, '2020-000001');
+        $this->assertEquals($invoice->filename, str_replace('\\', '/', $pdfFilename));
+
+        $this->assertEquals($invoice->invoice_taxes[0]->tax_rate, 0);
+        $this->assertEquals($invoice->invoice_taxes[0]->total_price_tax_excl, 4.54);
+        $this->assertEquals($invoice->invoice_taxes[0]->total_price_tax, 0);
+        $this->assertEquals($invoice->invoice_taxes[0]->total_price_tax_incl, 4.54);
+
+        $this->assertEquals($invoice->invoice_taxes[1]->tax_rate, 10);
+        $this->assertEquals($invoice->invoice_taxes[1]->total_price_tax_excl, 33.69);
+        $this->assertEquals($invoice->invoice_taxes[1]->total_price_tax, 3.38);
+        $this->assertEquals($invoice->invoice_taxes[1]->total_price_tax_incl, 37.07);
+
+        $this->assertEquals($invoice->invoice_taxes[2]->tax_rate, 13);
+        $this->assertEquals($invoice->invoice_taxes[2]->total_price_tax_excl, 0.55);
+        $this->assertEquals($invoice->invoice_taxes[2]->total_price_tax, 0.07);
+        $this->assertEquals($invoice->invoice_taxes[2]->total_price_tax_incl, 0.62);
+
+        $this->assertEquals($invoice->invoice_taxes[3]->tax_rate, 20);
+        $this->assertEquals($invoice->invoice_taxes[3]->total_price_tax_excl, -0.83);
+        $this->assertEquals($invoice->invoice_taxes[3]->total_price_tax, -0.17);
+        $this->assertEquals($invoice->invoice_taxes[3]->total_price_tax_incl, -1.00);
 
     }
 

@@ -50,18 +50,18 @@ class AddRetailMode extends AbstractMigration
             ALTER TABLE `fcs_invoices` CHANGE `user_id` `id_customer` INT(10) UNSIGNED NOT NULL DEFAULT '0';
             UPDATE `fcs_invoices` SET id_customer = 0;
             ALTER TABLE `fcs_invoices` ADD `paid_in_cash` TINYINT(4) UNSIGNED NULL DEFAULT '0' AFTER `id_customer`;
-            CREATE TABLE `fcs_invoices_tax` (
+            CREATE TABLE `fcs_invoice_taxes` (
               `id` int(11) NOT NULL,
               `invoice_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
               `tax_rate` double(20,6) NOT NULL DEFAULT '0.000000',
-              `total_price_tax_excl` double(20,6) NOT NULL DEFAULT '0.000000',
+              `total_price_excl` double(20,6) NOT NULL DEFAULT '0.000000',
               `total_price_tax` double(20,6) NOT NULL DEFAULT '0.000000',
               `total_price_tax_incl` double(20,6) NOT NULL DEFAULT '0.000000'
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            ALTER TABLE `fcs_invoices_tax`
+            ALTER TABLE `fcs_invoice_taxes`
               ADD PRIMARY KEY (`id`),
               ADD KEY `invoice_id` (`invoice_id`);
-            ALTER TABLE `fcs_invoices_tax`
+            ALTER TABLE `fcs_invoice_taxes`
               MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
             ";
         $this->execute($sql);
@@ -72,6 +72,10 @@ class AddRetailMode extends AbstractMigration
             ALTER TABLE `fcs_invoices` ADD `pdf_status` datetime DEFAULT NULL AFTER `email_status`;
         ";
         $this->execute($sql);
+
+        $sql = "ALTER TABLE `fcs_invoices` CHANGE `invoice_number` `invoice_number` VARCHAR(14) NOT NULL DEFAULT '0';";
+        $this->execute($sql);
+
 
     }
 }

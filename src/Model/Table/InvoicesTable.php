@@ -25,9 +25,8 @@ class InvoicesTable extends AppTable
     public function initialize(array $config): void
     {
         parent::initialize($config);
-        $this->addBehavior('Timestamp');
-        $this->hasOne('InvoicesTaxes', [
-            'foreignKey' => 'id_invoice',
+        $this->hasMany('InvoiceTaxes', [
+            'foreignKey' => 'invoice_id',
         ]);
     }
 
