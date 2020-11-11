@@ -52,48 +52,56 @@ class SendInvoicesToCustomersShell extends AppShell
 
             $data = $this->Customer->Invoices->getDataForCustomerInvoice($customer->id_customer);
 
-            if ($data->new_invoice_necessary) {
-
-                $year = Configure::read('app.timeHelper')->getYearFromDbDate($this->cronjobRunDay);
-                $invoiceNumber = $this->Invoice->getNextInvoiceNumberForCustomer($year, $this->Invoice->getLastInvoiceForCustomer());
-                $invoicePdfFile =  Configure::read('app.htmlHelper')->getInvoiceLink(
-                    $customer->name, $customer->id_customer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $invoiceNumber
-                );
-                $invoicePdfFileForDatabase = str_replace(ROOT, '', $invoicePdfFile);
-                $invoicePdfFileForDatabase = str_replace('\\', '/', $invoicePdfFileForDatabase);
-
-                $invoiceData = [
-                    'id_customer' => $data->id_customer,
-                    'invoice_number' => $invoiceNumber,
-                    'filename' => $invoicePdfFileForDatabase,
-                    'created' => new FrozenDate($this->cronjobRunDay),
-                    'invoice_taxes' => [],
-                ];
-                foreach($data->tax_rates as $taxRate => $values) {
-                    $invoiceData['invoice_taxes'][] = [
-                        'tax_rate' => $taxRate,
-                        'total_price_tax_excl' => $values['sum_price_excl'],
-                        'total_price_tax_incl' => $values['sum_price_incl'],
-                        'total_price_tax' => $values['sum_tax'],
-                    ];
-                }
-                $invoiceEntity = $this->Invoice->newEntity($invoiceData);
-
-                $this->Invoice->save($invoiceEntity, [
-                    'associated' => 'InvoiceTaxes'
-                ]);
-
-                $this->QueuedJobs->createJob('GenerateInvoiceForCustomer', [
-                    'customerId' => $customer->id_customer,
-                    'customerName' => $customer->name,
-                    'invoiceNumber' => $invoiceNumber,
-                    'invoiceDate' => (new FrozenDate($this->cronjobRunDay))->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')),
-                    'invoicePdfFile' => $invoicePdfFile,
-                ]);
-
+            if (!$data->new_invoice_necessary) {
+                continue;
             }
 
+            $year = Configure::read('app.timeHelper')->getYearFromDbDate($this->cronjobRunDay);
+            $invoiceNumber = $this->Invoice->getNextInvoiceNumberForCustomer($year, $this->Invoice->getLastInvoiceForCustomer());
+            $invoicePdfFile =  Configure::read('app.htmlHelper')->getInvoiceLink(
+                $customer->name, $customer->id_customer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $invoiceNumber
+            );
+
+            $this->saveInvoice($data, $invoiceNumber, $invoicePdfFile);
+
+            $this->QueuedJobs->createJob('GenerateInvoiceForCustomer', [
+                'customerId' => $customer->id_customer,
+                'customerName' => $customer->name,
+                'invoiceNumber' => $invoiceNumber,
+                'invoiceDate' => (new FrozenDate($this->cronjobRunDay))->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')),
+                'invoicePdfFile' => $invoicePdfFile,
+            ]);
+
         }
+
+    }
+
+    private function saveInvoice($data, $invoiceNumber, $invoicePdfFile)
+    {
+
+        $invoicePdfFileForDatabase = str_replace(ROOT, '', $invoicePdfFile);
+        $invoicePdfFileForDatabase = str_replace('\\', '/', $invoicePdfFileForDatabase);
+
+        $invoiceData = [
+            'id_customer' => $data->id_customer,
+            'invoice_number' => $invoiceNumber,
+            'filename' => $invoicePdfFileForDatabase,
+            'created' => new FrozenDate($this->cronjobRunDay),
+            'invoice_taxes' => [],
+        ];
+        foreach($data->tax_rates as $taxRate => $values) {
+            $invoiceData['invoice_taxes'][] = [
+                'tax_rate' => $taxRate,
+                'total_price_tax_excl' => $values['sum_price_excl'],
+                'total_price_tax_incl' => $values['sum_price_incl'],
+                'total_price_tax' => $values['sum_tax'],
+            ];
+        }
+        $invoiceEntity = $this->Invoice->newEntity($invoiceData);
+
+        $this->Invoice->save($invoiceEntity, [
+            'associated' => 'InvoiceTaxes'
+        ]);
 
     }
 

@@ -88,26 +88,19 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->assertEquals($invoice->invoice_number, '2020-000001');
         $this->assertEquals($invoice->filename, str_replace('\\', '/', $pdfFilename));
 
-        $this->assertEquals($invoice->invoice_taxes[0]->tax_rate, 0);
-        $this->assertEquals($invoice->invoice_taxes[0]->total_price_tax_excl, 4.54);
-        $this->assertEquals($invoice->invoice_taxes[0]->total_price_tax, 0);
-        $this->assertEquals($invoice->invoice_taxes[0]->total_price_tax_incl, 4.54);
+        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[0], 0, 4.54, 0, 4.54);
+        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[1], 10, 33.69, 3.38, 37.07);
+        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[2], 13, 0.55, 0.07, 0.62);
+        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[3], 20, -0.83, -0.17, -1.00);
 
-        $this->assertEquals($invoice->invoice_taxes[1]->tax_rate, 10);
-        $this->assertEquals($invoice->invoice_taxes[1]->total_price_tax_excl, 33.69);
-        $this->assertEquals($invoice->invoice_taxes[1]->total_price_tax, 3.38);
-        $this->assertEquals($invoice->invoice_taxes[1]->total_price_tax_incl, 37.07);
+    }
 
-        $this->assertEquals($invoice->invoice_taxes[2]->tax_rate, 13);
-        $this->assertEquals($invoice->invoice_taxes[2]->total_price_tax_excl, 0.55);
-        $this->assertEquals($invoice->invoice_taxes[2]->total_price_tax, 0.07);
-        $this->assertEquals($invoice->invoice_taxes[2]->total_price_tax_incl, 0.62);
-
-        $this->assertEquals($invoice->invoice_taxes[3]->tax_rate, 20);
-        $this->assertEquals($invoice->invoice_taxes[3]->total_price_tax_excl, -0.83);
-        $this->assertEquals($invoice->invoice_taxes[3]->total_price_tax, -0.17);
-        $this->assertEquals($invoice->invoice_taxes[3]->total_price_tax_incl, -1.00);
-
+    protected function doAssertInvoiceTaxes($data, $taxRate, $excl, $tax, $incl)
+    {
+        $this->assertEquals($data->tax_rate, $taxRate);
+        $this->assertEquals($data->total_price_tax_excl, $excl);
+        $this->assertEquals($data->total_price_tax, $tax);
+        $this->assertEquals($data->total_price_tax_incl, $incl);
     }
 
     protected function prepareOrdersAndPayments($customerId)
