@@ -29,6 +29,7 @@ class SendInvoicesToCustomersShell extends AppShell
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Invoice = $this->getTableLocator()->get('Invoices');
+        $this->Payment = $this->getTableLocator()->get('Payments');
         $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
 
         // $this->cronjobRunDay can is set in unit test
@@ -37,6 +38,8 @@ class SendInvoicesToCustomersShell extends AppShell
         } else {
             $this->cronjobRunDay = $this->args[0];
         }
+
+        $invoiceDate = (new FrozenDate($this->cronjobRunDay))->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
 
         $this->Customer->dropManufacturersInNextFind();
         $customers = $this->Customer->find('all', [
@@ -50,7 +53,7 @@ class SendInvoicesToCustomersShell extends AppShell
 
         foreach($customers as $customer) {
 
-            $data = $this->Customer->Invoices->getDataForCustomerInvoice($customer->id_customer);
+            $data = $this->Invoice->getDataForCustomerInvoice($customer->id_customer);
 
             if (!$data->new_invoice_necessary) {
                 continue;
@@ -62,18 +65,29 @@ class SendInvoicesToCustomersShell extends AppShell
                 $customer->name, $customer->id_customer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $invoiceNumber
             );
 
-            $this->saveInvoice($data, $invoiceNumber, $invoicePdfFile);
+            $newInvoice = $this->saveInvoice($data, $invoiceNumber, $invoicePdfFile);
+            $this->linkReturnedDepositWithInvoice($data, $newInvoice->id);
 
             $this->QueuedJobs->createJob('GenerateInvoiceForCustomer', [
                 'customerId' => $customer->id_customer,
                 'customerName' => $customer->name,
                 'invoiceNumber' => $invoiceNumber,
-                'invoiceDate' => (new FrozenDate($this->cronjobRunDay))->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')),
+                'invoiceDate' => $invoiceDate,
                 'invoicePdfFile' => $invoicePdfFile,
             ]);
 
         }
 
+    }
+
+    private function linkReturnedDepositWithInvoice($data, $invoiceId)
+    {
+        foreach($data->returned_deposit['entities'] as $payment) {
+            $paymentEntity = $this->Payment->patchEntity($payment, [
+                'invoice_id' => $invoiceId,
+            ]);
+            $this->Payment->save($paymentEntity);
+        }
     }
 
     private function saveInvoice($data, $invoiceNumber, $invoicePdfFile)
@@ -99,9 +113,11 @@ class SendInvoicesToCustomersShell extends AppShell
         }
         $invoiceEntity = $this->Invoice->newEntity($invoiceData);
 
-        $this->Invoice->save($invoiceEntity, [
+        $newInvoice = $this->Invoice->save($invoiceEntity, [
             'associated' => 'InvoiceTaxes'
         ]);
+
+        return $newInvoice;
 
     }
 

@@ -91,7 +91,14 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->doAssertInvoiceTaxes($invoice->invoice_taxes[0], 0, 4.54, 0, 4.54);
         $this->doAssertInvoiceTaxes($invoice->invoice_taxes[1], 10, 33.69, 3.38, 37.07);
         $this->doAssertInvoiceTaxes($invoice->invoice_taxes[2], 13, 0.55, 0.07, 0.62);
-        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[3], 20, -0.83, -0.17, -1.00);
+        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[3], 20, -3.50, -0.70, -4.20);
+
+        $this->Payment = $this->getTableLocator()->get('Payments');
+        $payments = $this->Payment->getCustomerDepositNotBilled($customerId);
+
+        foreach($payments as $payment) {
+            $this->assertEquals($payment->id_invoice, 1);
+        }
 
     }
 
@@ -123,7 +130,8 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $statement = $this->dbConnection->prepare($query);
         $statement->execute($params);
 
-        $this->addPayment($customerId, 2, 'deposit', 0, '', $pickupDay);
+        $this->addPayment($customerId, 2.0, 'deposit', 0, '', $pickupDay);
+        $this->addPayment($customerId, 3.2, 'deposit', 0, '', $pickupDay);
 
     }
 

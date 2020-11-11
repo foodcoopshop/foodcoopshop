@@ -62,7 +62,7 @@ class InvoicesTable extends AppTable
 
         // prepare delivered deposit
         $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
-        $orderedDeposit = $returnedDeposit = ['deposit_incl' => 0, 'deposit_excl' => 0, 'deposit_tax' => 0, 'deposit_amount' => 0];
+        $orderedDeposit = $returnedDeposit = ['deposit_incl' => 0, 'deposit_excl' => 0, 'deposit_tax' => 0, 'deposit_amount' => 0, 'entities' => []];
         foreach($customer->active_order_details as $orderDetail) {
             if ($orderDetail->deposit > 0) {
                 $orderedDeposit['deposit_incl'] += $orderDetail->deposit;
@@ -81,6 +81,7 @@ class InvoicesTable extends AppTable
             $returnedDeposit['deposit_excl'] += $orderDetailTable->getDepositNet($deposit->amount, 1) * -1;
             $returnedDeposit['deposit_tax'] += $orderDetailTable->getDepositTax($deposit->amount, 1) * -1;
             $returnedDeposit['deposit_amount']++;
+            $returnedDeposit['entities'][] = $deposit;
         }
         $customer->returned_deposit = $returnedDeposit;
 
