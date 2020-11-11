@@ -69,9 +69,10 @@ foodcoopshop.ModalInvoiceForCustomer = {
         );
 
         $(modalSelector + ' .generate-invoice-button').on('click', function() {
-            //foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-file-invoice');
-            //foodcoopshop.Helper.disableButton($(this));
-            alert('not yet implemented');
+            foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-file-invoice');
+            foodcoopshop.Helper.disableButton($(this));
+            var paidInCash = foodcoopshop.ModalInvoiceForCustomer.getPaidInCashValue();
+            document.location.href = '/admin/customers/sendInvoice.pdf?customerId=' + customerId + '&paidInCash=' + paidInCash;
         });
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {

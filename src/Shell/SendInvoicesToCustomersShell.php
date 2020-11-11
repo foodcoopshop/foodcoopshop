@@ -15,7 +15,6 @@
 namespace App\Shell;
 
 use Cake\Core\Configure;
-use Cake\I18n\FrozenDate;
 
 class SendInvoicesToCustomersShell extends AppShell
 {
@@ -37,8 +36,6 @@ class SendInvoicesToCustomersShell extends AppShell
             $this->cronjobRunDay = $this->args[0];
         }
 
-        $invoiceDate = (new FrozenDate($this->cronjobRunDay))->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
-
         $this->Customer->dropManufacturersInNextFind();
         $customers = $this->Customer->find('all', [
             'conditions' => [
@@ -57,19 +54,10 @@ class SendInvoicesToCustomersShell extends AppShell
                 continue;
             }
 
-            $year = Configure::read('app.timeHelper')->getYearFromDbDate($this->cronjobRunDay);
-            $invoiceNumber = $this->Invoice->getNextInvoiceNumberForCustomer($year, $this->Invoice->getLastInvoiceForCustomer());
-            $invoicePdfFile =  Configure::read('app.htmlHelper')->getInvoiceLink(
-                $customer->name, $customer->id_customer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $invoiceNumber
-            );
-
             $this->QueuedJobs->createJob('GenerateInvoiceForCustomer', [
                 'customerId' => $customer->id_customer,
                 'customerName' => $customer->name,
-                'invoiceNumber' => $invoiceNumber,
-                'invoiceDate' => $invoiceDate,
-                'cronjobRunDay' => $this->cronjobRunDay,
-                'invoicePdfFile' => $invoicePdfFile,
+                'currentDay' => $this->cronjobRunDay,
                 'paidInCash' => false,
             ]);
 

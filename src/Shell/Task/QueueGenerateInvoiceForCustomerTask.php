@@ -41,24 +41,30 @@ class QueueGenerateInvoiceForCustomerTask extends QueueTask implements QueueTask
     {
 
         $customerId = $data['customerId'];
-        $invoiceNumber = $data['invoiceNumber'];
-        $invoiceDate = $data['invoiceDate'];
-        $invoicePdfFile = $data['invoicePdfFile'];
         $paidInCash = $data['paidInCash'];
-        $cronjobRunDay = $data['cronjobRunDay'];
+        $currentDay = $data['currentDay'];
 
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Invoice = $this->getTableLocator()->get('Invoices');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->Payment = $this->getTableLocator()->get('Payments');
 
-        $pdfWriter = new InvoiceToCustomerPdfWriter();
         $data = $this->Customer->Invoices->getDataForCustomerInvoice($customerId);
+
+        $invoiceDate = (new FrozenDate($currentDay))->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
+
+        $year = Configure::read('app.timeHelper')->getYearFromDbDate($currentDay);
+        $invoiceNumber = $this->Invoice->getNextInvoiceNumberForCustomer($year, $this->Invoice->getLastInvoiceForCustomer());
+        $invoicePdfFile =  Configure::read('app.htmlHelper')->getInvoiceLink(
+            $data->name, $data->id_customer, Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay), $invoiceNumber
+        );
+
+        $pdfWriter = new InvoiceToCustomerPdfWriter();
         $pdfWriter->prepareAndSetData($data, $paidInCash, $invoiceNumber, $invoiceDate);
         $pdfWriter->setFilename($invoicePdfFile);
         $pdfWriter->writeFile();
 
-        $newInvoice = $this->saveInvoice($data, $invoiceNumber, $invoicePdfFile, $cronjobRunDay);
+        $newInvoice = $this->saveInvoice($data, $invoiceNumber, $invoicePdfFile, $currentDay);
         $this->linkReturnedDepositWithInvoice($data, $newInvoice->id);
         $this->updateOrderDetailOrderState($data);
 
@@ -87,7 +93,7 @@ class QueueGenerateInvoiceForCustomerTask extends QueueTask implements QueueTask
         }
     }
 
-    private function saveInvoice($data, $invoiceNumber, $invoicePdfFile, $cronjobRunDay)
+    private function saveInvoice($data, $invoiceNumber, $invoicePdfFile, $currentDay)
     {
 
         $invoicePdfFileForDatabase = str_replace(ROOT, '', $invoicePdfFile);
@@ -97,7 +103,7 @@ class QueueGenerateInvoiceForCustomerTask extends QueueTask implements QueueTask
             'id_customer' => $data->id_customer,
             'invoice_number' => $invoiceNumber,
             'filename' => $invoicePdfFileForDatabase,
-            'created' => new FrozenDate($cronjobRunDay),
+            'created' => new FrozenDate($currentDay),
             'invoice_taxes' => [],
         ];
         foreach($data->tax_rates as $taxRate => $values) {

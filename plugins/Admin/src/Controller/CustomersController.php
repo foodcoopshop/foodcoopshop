@@ -671,13 +671,9 @@ class CustomersController extends AdminAppController
         $customerId = h($this->getRequest()->getQuery('customerId'));
         $paidInCash = h($this->getRequest()->getQuery('paidInCash'));
 
-        // TODO only fetch last invoice
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId,
-            ],
-            'contain' => [
-                'Invoices',
             ],
         ])->first();
 
@@ -687,22 +683,17 @@ class CustomersController extends AdminAppController
 
         $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
 
-        // TODO generate action log
-        $actionLogId = 1;
+        $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
 
-        $invoiceNumber = $this->Customer->Invoices->getNextInvoiceNumberForCustomer($customer->invoices);
-        $invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink(
-            $customer->name, $customerId, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $invoiceNumber
-        );
-
-        $this->QueuedJobs->createJob('GenerateInvoiceForManufacturer', [
-            'invoiceNumber' => $invoiceNumber,
-            'invoicePdfFile' => $invoicePdfFile,
-            'customerId' => $customerId,
+        $this->QueuedJobs->createJob('GenerateInvoiceForCustomer', [
+            'customerId' => $customer->id_customer,
             'customerName' => $customer->name,
-            'actionLogId' => $actionLogId,
+            'currentDay' => $currentDay,
             'paidInCash' => $paidInCash,
         ]);
+
+        $this->Flash->success(__d('admin', 'The_invoice_was_generated_successfully.'));
+        $this->redirect($this->referer());
 
     }
 
