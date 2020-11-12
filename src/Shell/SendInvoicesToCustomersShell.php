@@ -48,7 +48,7 @@ class SendInvoicesToCustomersShell extends AppShell
 
         foreach($customers as $customer) {
 
-            $data = $this->Invoice->getDataForCustomerInvoice($customer->id_customer);
+            $data = $this->Invoice->getDataForCustomerInvoice($customer->id_customer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay));
 
             if (!$data->new_invoice_necessary) {
                 continue;

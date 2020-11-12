@@ -47,7 +47,7 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $customerId = Configure::read('test.superadminId');
         $this->prepareOrdersAndPayments($customerId);
 
-        $this->get('/admin/customers/getInvoice.pdf?customerId='.$customerId.'&paidInCash=1&outputType=html');
+        $this->get('/admin/customers/getInvoice.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
 //         pr($this->_response);
 //         exit;
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoice.html');
@@ -55,7 +55,7 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->assertResponseContains($expectedResult);
     }
 
-    public function testSendInvoices()
+    public function testSendInvoicesWithExcludedFutureOrder()
     {
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
@@ -64,12 +64,21 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $customerId = Configure::read('test.superadminId');
         $this->prepareOrdersAndPayments($customerId);
 
-        $cronjobRunDay = '2020-11-10 10:20:30';
+        $cronjobRunDay = '2018-02-02 10:20:30';
+
+        // move one order detail in future - must be excluded from invoice
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN(1);';
+        $params = [
+            'pickupDay' => '2018-02-09',
+        ];
+        $statement = $this->dbConnection->prepare($query);
+        $statement->execute($params);
 
         $this->commandRunner->run(['cake', 'send_invoices_to_customers', $cronjobRunDay]);
         $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
 
-        $pdfFilename = DS . '2020' . DS . '11' . DS . '2020-11-10_Demo-Superadmin_92_Rechnung_2020-000001_FoodCoop-Test.pdf';
+        $pdfFilename = DS . '2018' . DS . '02' . DS . '2018-02-02_Demo-Superadmin_92_Rechnung_2018-000001_FoodCoop-Test.pdf';
         $this->assertFileExists(Configure::read('app.folder_invoices') . $pdfFilename);
 
         $this->Invoice = $this->getTableLocator()->get('Invoices');
@@ -85,13 +94,13 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->assertEquals($invoice->id, 1);
         $this->assertEquals($invoice->id_manufacturer, 0);
         $this->assertEquals($invoice->created, new FrozenDate($cronjobRunDay));
-        $this->assertEquals($invoice->invoice_number, '2020-000001');
+        $this->assertEquals($invoice->invoice_number, '2018-000001');
         $this->assertEquals($invoice->filename, str_replace('\\', '/', $pdfFilename));
 
         $this->doAssertInvoiceTaxes($invoice->invoice_taxes[0], 0, 4.54, 0, 4.54);
-        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[1], 10, 33.69, 3.38, 37.07);
+        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[1], 10, 32.04, 3.21, 35.25);
         $this->doAssertInvoiceTaxes($invoice->invoice_taxes[2], 13, 0.55, 0.07, 0.62);
-        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[3], 20, -3.50, -0.70, -4.20);
+        $this->doAssertInvoiceTaxes($invoice->invoice_taxes[3], 20, -3.92, -0.78, -4.70);
 
         $this->Payment = $this->getTableLocator()->get('Payments');
         $payments = $this->Payment->getCustomerDepositNotBilled($customerId);

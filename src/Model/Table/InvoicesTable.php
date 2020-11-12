@@ -3,6 +3,7 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
+use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\FactoryLocator;
 use Cake\ORM\Query;
 
@@ -33,7 +34,7 @@ class InvoicesTable extends AppTable
         ]);
     }
 
-    public function getDataForCustomerInvoice($customerId)
+    public function getDataForCustomerInvoice($customerId, $currentDay)
     {
 
         $customersTable = FactoryLocator::get('Table')->get('Customers');
@@ -43,7 +44,14 @@ class InvoicesTable extends AppTable
             ],
             'contain' => [
                 'AddressCustomers',
-                'ActiveOrderDetails' => function (Query $q) {
+                'ActiveOrderDetails' => function (Query $q) use ($currentDay) {
+                    $q->where(function (QueryExpression $exp, Query $q) use ($currentDay) {
+                        return $exp->addCase(
+                            [
+                                $q->newExpr()->lte('DATE_FORMAT(ActiveOrderDetails.pickup_day, \'%Y-%m-%d\')', $currentDay),
+                            ],
+                        );
+                    });
                     $q->order([
                         'ActiveOrderDetails.product_name' => 'ASC',
                         'ActiveOrderDetails.id_order_detail' => 'ASC',

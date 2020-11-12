@@ -50,7 +50,7 @@ class QueueGenerateInvoiceForCustomerTask extends QueueTask implements QueueTask
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->Payment = $this->getTableLocator()->get('Payments');
 
-        $data = $this->Customer->Invoices->getDataForCustomerInvoice($customerId);
+        $data = $this->Customer->Invoices->getDataForCustomerInvoice($customerId, Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay));
         if (!$data->new_invoice_necessary) {
             throw new Exception('safety check if data available - should always be checked before triggering this queue');
         }

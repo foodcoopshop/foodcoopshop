@@ -523,7 +523,7 @@ class OrderDetailsController extends AdminAppController
                 if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
                     $this->Invoice = $this->getTableLocator()->get('Invoices');
                     foreach($preparedOrderDetails as &$orderDetail) {
-                        $orderDetail['invoiceData'] = $this->Invoice->getDataForCustomerInvoice($orderDetail['customer_id']);
+                        $orderDetail['invoiceData'] = $this->Invoice->getDataForCustomerInvoice($orderDetail['customer_id'], Configure::read('app.timeHelper')->getCurrentDateForDatabase());
                     }
                 }
                 $sortField = $this->getSortFieldForGroupedOrderDetails('name');

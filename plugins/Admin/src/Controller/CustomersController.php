@@ -683,7 +683,7 @@ class CustomersController extends AdminAppController
 
         $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
 
-        $data = $this->Customer->Invoices->getDataForCustomerInvoice($customer->id_customer);
+        $data = $this->Customer->Invoices->getDataForCustomerInvoice($customer->id_customer, Configure::read('app.timeHelper')->getCurrentDataForDatabase());
         if (!$data->new_invoice_necessary) {
             $this->Flash->success(__d('admin', 'No_data_available_to_generate_an_invoice.'));
             $this->redirect($this->referer());
@@ -709,6 +709,11 @@ class CustomersController extends AdminAppController
         $customerId = h($this->getRequest()->getQuery('customerId'));
         $paidInCash = h($this->getRequest()->getQuery('paidInCash'));
 
+        $currentDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+        if (!empty($this->getRequest()->getQuery('currentDay'))) {
+            $currentDay = $this->getRequest()->getQuery('currentDay');
+        }
+
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId,
@@ -723,7 +728,7 @@ class CustomersController extends AdminAppController
         $newInvoiceDate = 'xx.xx.xxxx';
 
         $pdfWriter = new InvoiceToCustomerPdfWriter();
-        $data = $this->Customer->Invoices->getDataForCustomerInvoice($customerId);
+        $data = $this->Customer->Invoices->getDataForCustomerInvoice($customerId, $currentDay);
         if (!$data->new_invoice_necessary) {
             die(__d('admin', 'No_data_available_to_generate_an_invoice.'));
         }
