@@ -15,7 +15,7 @@ foodcoopshop.ModalInvoiceForCustomer = {
 
     init : function() {
         var modalSelector = '#modal-invoice-for-customer';
-        $('a.invoice-for-customer-button').on('click', function () {
+        $('a.invoice-for-customer-button:not(.disabled)').on('click', function () {
             foodcoopshop.ModalInvoiceForCustomer.getOpenHandler($(this), modalSelector);
         });
     },
