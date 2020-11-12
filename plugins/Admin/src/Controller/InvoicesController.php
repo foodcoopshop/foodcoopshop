@@ -67,32 +67,4 @@ class InvoicesController extends AdminAppController
 
     }
 
-    public function getInvoice()
-    {
-        $filenameWithPath = Configure::read('app.folder_invoices') . DS . h($this->getRequest()->getQuery('file'));
-        return $this->getFile($filenameWithPath);
-    }
-
-    /**
-     * invoices and order lists are not stored in webroot
-     */
-    private function getFile($filenameWithPath)
-    {
-
-        $this->disableAutoRender();
-
-        $filenameWithPath = str_replace(DS.DS, '/', $filenameWithPath);
-        $filenameWithPath = str_replace(DS, '/', $filenameWithPath);
-        $explodedString = explode('/', $filenameWithPath);
-
-        $filenameWithoutPath = $explodedString[count($explodedString) - 1 ];
-
-        $this->response = $this->response->withType('pdf');
-        $this->response = $this->response->withFile(
-            $filenameWithPath,
-            );
-        $this->response = $this->response->withHeader('Content-Disposition', 'inline; filename="' . $filenameWithoutPath . '"');
-
-        return $this->response;
-    }
 }

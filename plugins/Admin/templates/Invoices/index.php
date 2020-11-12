@@ -53,7 +53,7 @@ foreach($invoices as $invoice) {
         echo $invoice->invoice_number . ' - ' . $invoice->customer->name . ' - ';
         echo $this->Html->link(
             __d('admin', 'Download'),
-            '/admin/invoices/getInvoice?file=' . $invoice->filename,
+            '/admin/lists/getInvoice?file=' . $invoice->filename,
             [
                 'target' => '_blank',
             ]
