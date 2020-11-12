@@ -665,7 +665,7 @@ class CustomersController extends AdminAppController
         $this->set('title_for_layout', __d('admin', 'Credit_and_deposit_balance'));
     }
 
-    public function sendInvoice()
+    public function generateInvoice()
     {
 
         $customerId = h($this->getRequest()->getQuery('customerId'));
@@ -704,7 +704,7 @@ class CustomersController extends AdminAppController
 
     }
 
-    public function getInvoice()
+    public function previewInvoice()
     {
         $customerId = h($this->getRequest()->getQuery('customerId'));
         $paidInCash = h($this->getRequest()->getQuery('paidInCash'));

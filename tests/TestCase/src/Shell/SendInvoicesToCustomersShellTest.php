@@ -47,7 +47,7 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $customerId = Configure::read('test.superadminId');
         $this->prepareOrdersAndPayments($customerId);
 
-        $this->get('/admin/customers/getInvoice.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
+        $this->get('/admin/customers/previewInvoice.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
 //         pr($this->_response);
 //         exit;
         $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'customerInvoice.html');
