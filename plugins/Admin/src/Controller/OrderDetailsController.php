@@ -445,6 +445,7 @@ class OrderDetailsController extends AdminAppController
             ],
             'reduced_price' => 0
         ];
+
         foreach($orderDetails as $orderDetail) {
             $sums['records_count']++;
             if ($groupBy == '') {
@@ -519,6 +520,12 @@ class OrderDetailsController extends AdminAppController
         switch ($groupBy) {
             case 'customer':
                 $preparedOrderDetails = $this->OrderDetail->prepareOrderDetailsGroupedByCustomer($orderDetails);
+                if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+                    $this->Invoice = $this->getTableLocator()->get('Invoices');
+                    foreach($preparedOrderDetails as &$orderDetail) {
+                        $orderDetail['invoiceData'] = $this->Invoice->getDataForCustomerInvoice($orderDetail['customer_id']);
+                    }
+                }
                 $sortField = $this->getSortFieldForGroupedOrderDetails('name');
                 break;
             case 'manufacturer':
