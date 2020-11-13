@@ -48,21 +48,62 @@ if (empty($invoices)) {
     return;
 }
 
-foreach($invoices as $invoice) {
-    echo '<p style="margin-bottom:10px;">';
-        echo $invoice->invoice_number . ' - ' . $invoice->customer->name . ' - ';
-        echo $this->Html->link(
-            __d('admin', 'Download'),
-            '/admin/lists/getInvoice?file=' . $invoice->filename,
-            [
-                'target' => '_blank',
-            ]
-        );
-        echo '<br />';
-        foreach($invoice->invoice_taxes as $invoiceTax) {
-            echo $invoiceTax->tax_rate . '%: ' . $invoiceTax->total_price_tax_incl . '<br />';
-        }
-    echo '</p>';
-}
+
+echo '<table style="margin-top:20px;" class="list no-clone-last-row">';
+
+    echo '<tr class="sort">';
+        echo '<th>' . $this->Paginator->sort('Invoice.invoice_number', __d('admin', 'Invoice_number_abbreviation')) . '</th>';
+        echo '<th>' . $this->Paginator->sort('Invoice.created', __d('admin', 'Invoice_date')) . '</th>';
+        echo '<th>' . $this->Paginator->sort('Invoice.customer.name.', __d('admin', 'Name')) . '</th>';
+        echo '<th>' . __d('admin', 'Sum') . '</th>';
+        echo '<th>' . $this->Paginator->sort('Invoice.paid_in_cash.', __d('admin', 'Paid_in_cash')) . '</th>';
+        echo '<th>' . $this->Paginator->sort('Invoice.filename.', __d('admin', 'Download')) . '</th>';
+    echo '</tr>';
+
+    foreach($invoices as $invoice) {
+
+        echo '<tr class="data" data-invoice-id="'.$invoice->id.'">';
+
+            echo '<td>';
+                echo $invoice->invoice_number;
+            echo '</td>';
+
+            echo '<td>';
+                echo $invoice->created->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2'));
+            echo '</td>';
+
+            echo '<td>';
+                echo $invoice->customer->name;
+            echo '</td>';
+
+            echo '<td>';
+                $sumPriceIncl = 0;
+                foreach($invoice->invoice_taxes as $invoiceTax) {
+                    $sumPriceIncl += $invoiceTax->total_price_tax_incl;
+                }
+                echo $this->Number->formatAsCurrency($sumPriceIncl);
+            echo '</td>';
+
+            echo '<td>';
+                echo $invoice->paid_in_cash ? '<i class="fa fa-check ok"></i>' : '<i class="fa fa-times-circle ok"></i>';
+            echo '</td>';
+
+            echo '<td>';
+                echo $this->Html->link(
+                    '<i class="fas fa-arrow-right not-ok"></i>',
+                    '/admin/lists/getInvoice?file=' . $invoice->filename,
+                    [
+                        'class' => 'btn btn-outline-light',
+                        'target' => '_blank',
+                        'escape' => false
+                    ],
+                );
+            echo '</td>';
+
+        echo '</tr>';
+
+    }
+
+echo '</table>';
 
 ?>
