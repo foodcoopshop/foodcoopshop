@@ -29,7 +29,7 @@ use Cake\Core\Configure;
 
             <p><?php echo __d('admin', 'Please_find_your_current_invoice_attached.'); ?></p>
 
-            <p><b><?php echo __d('admin', '{0}_thanks_you_for_your_purchase!', [Configure::read('appDb.FCS_APP_NAME')]); ?></b></p>
+            <p><?php echo __d('admin', '{0}_thanks_you_for_your_purchase!', [Configure::read('appDb.FCS_APP_NAME')]); ?></p>
 
         </td>
 
