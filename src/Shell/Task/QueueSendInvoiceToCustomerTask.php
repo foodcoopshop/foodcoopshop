@@ -2,6 +2,8 @@
 namespace App\Shell\Task;
 
 use App\Mailer\AppMailer;
+use Cake\Datasource\FactoryLocator;
+use Cake\I18n\Time;
 use Queue\Shell\Task\QueueTask;
 use Queue\Shell\Task\QueueTaskInterface;
 
@@ -27,13 +29,7 @@ class QueueSendInvoiceToCustomerTask extends QueueTask implements QueueTaskInter
 
     public $retries = 2;
 
-    public $Customer;
-
     public $Invoice;
-
-    public $OrderDetail;
-
-    public $Payment;
 
     public function run(array $data, $jobId) : void
     {
@@ -43,6 +39,7 @@ class QueueSendInvoiceToCustomerTask extends QueueTask implements QueueTaskInter
         $invoicePdfFile = $data['invoicePdfFile'];
         $invoiceNumber = $data['invoiceNumber'];
         $invoiceDate = $data['invoiceDate'];
+        $invoiceId = $data['invoiceId'];
 
         $email = new AppMailer();
         $email->fallbackEnabled = false;
@@ -56,6 +53,13 @@ class QueueSendInvoiceToCustomerTask extends QueueTask implements QueueTaskInter
             'customerName' => $customerName,
         ]);
         $email->send();
+
+        $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
+        $invoiceEntity = $this->Invoice->patchEntity(
+            $this->Invoice->get($invoiceId), [
+            'email_status' => Time::now(),
+        ]);
+        $this->Invoice->save($invoiceEntity);
 
     }
 

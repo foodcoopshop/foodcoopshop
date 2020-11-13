@@ -66,6 +66,7 @@ class GenerateInvoiceToCustomer
             'invoicePdfFile' => $invoicePdfFile,
             'invoiceNumber' => $invoiceNumber,
             'invoiceDate' => $invoiceDate,
+            'invoiceId' => $newInvoice->id,
         ]);
 
     }
