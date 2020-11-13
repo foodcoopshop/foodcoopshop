@@ -21,7 +21,6 @@ use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
-use Cake\TestSuite\TestEmailTransport;
 
 class SendInvoicesToCustomersShellTest extends AppCakeTestCase
 {
