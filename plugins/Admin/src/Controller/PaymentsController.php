@@ -613,6 +613,7 @@ class PaymentsController extends AdminAppController
                     'text' => $text,
                     'payment_id' => $payment->id,
                     'approval' => $payment->approval,
+                    'invoice_id' => $payment->invoice_id,
                     'approval_comment' => $payment->approval_comment
                 ];
             }
