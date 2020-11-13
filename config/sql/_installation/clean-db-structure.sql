@@ -245,7 +245,6 @@ CREATE TABLE `fcs_invoices` (
   `paid_in_cash` tinyint(4) unsigned DEFAULT '0',
   `filename` varchar(512) NOT NULL DEFAULT '',
   `email_status` datetime DEFAULT NULL,
-  `pdf_status` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;

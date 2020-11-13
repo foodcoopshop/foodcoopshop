@@ -69,7 +69,6 @@ class AddRetailMode extends AbstractMigration
         $sql = "
             ALTER TABLE `fcs_invoices` ADD `filename` varchar(512) NOT NULL DEFAULT '' AFTER `paid_in_cash`;
             ALTER TABLE `fcs_invoices` ADD `email_status` datetime DEFAULT NULL AFTER `filename`;
-            ALTER TABLE `fcs_invoices` ADD `pdf_status` datetime DEFAULT NULL AFTER `email_status`;
         ";
         $this->execute($sql);
 
