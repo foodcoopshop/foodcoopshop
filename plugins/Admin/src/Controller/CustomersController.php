@@ -682,7 +682,7 @@ class CustomersController extends AdminAppController
             throw new Exception('customer not found');
         }
 
-        $data = $this->Customer->Invoices->getDataForCustomerInvoice($customer->id_customer, Configure::read('app.timeHelper')->getCurrentDataForDatabase());
+        $data = $this->Customer->Invoices->getDataForCustomerInvoice($customer->id_customer, Configure::read('app.timeHelper')->getCurrentDateForDatabase());
         if (!$data->new_invoice_necessary) {
             $this->Flash->success(__d('admin', 'No_data_available_to_generate_an_invoice.'));
             $this->redirect($this->referer());
