@@ -75,6 +75,5 @@ class AddRetailMode extends AbstractMigration
         $sql = "ALTER TABLE `fcs_invoices` CHANGE `invoice_number` `invoice_number` VARCHAR(14) NOT NULL DEFAULT '0';";
         $this->execute($sql);
 
-
     }
 }
