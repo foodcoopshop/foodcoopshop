@@ -12,14 +12,27 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+use Cake\Core\Configure;
+
 ?>
 <?php echo $this->element('email/tableHead'); ?>
 <tbody>
 
     <tr>
         <td style="font-weight: bold; font-size: 18px; padding-bottom: 20px;">
-                <?php echo __d('admin', 'Hello'); ?> <?php echo $customer->firstname; ?>,
+                <?php echo __d('admin', 'Hello'); ?> <?php echo $customerName; ?>,
             </td>
+    </tr>
+
+    <tr>
+        <td>
+
+            <p><?php echo __d('admin', 'Please_find_your_current_invoice_attached.'); ?></p>
+
+            <p><b><?php echo __d('admin', '{0}_thanks_you_for_your_purchase!', [Configure::read('appDb.FCS_APP_NAME')]); ?></b></p>
+
+        </td>
+
     </tr>
 
 </tbody>

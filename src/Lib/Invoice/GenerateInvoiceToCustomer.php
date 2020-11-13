@@ -1,13 +1,4 @@
 <?php
-namespace App\Shell\Task;
-
-use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
-use Cake\Core\Configure;
-use Cake\Core\Exception\Exception;
-use Cake\I18n\FrozenDate;
-use Queue\Shell\Task\QueueTask;
-use Queue\Shell\Task\QueueTaskInterface;
-
 /**
  * FoodCoopShop - The open source software for your foodcoop
  *
@@ -21,36 +12,27 @@ use Queue\Shell\Task\QueueTaskInterface;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
+namespace App\Lib\Invoice;
 
-class QueueGenerateInvoiceForCustomerTask extends QueueTask implements QueueTaskInterface {
+use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
+use Cake\Core\Configure;
+use Cake\Core\Exception\Exception;
+use Cake\Datasource\FactoryLocator;
+use Cake\I18n\FrozenDate;
 
-    use UpdateActionLogTrait;
+class GenerateInvoiceToCustomer
+{
 
-    public $timeout = 30;
-
-    public $retries = 2;
-
-    public $Customer;
-
-    public $Invoice;
-
-    public $OrderDetail;
-
-    public $Payment;
-
-    public function run(array $data, $jobId) : void
+    public function run($data, $currentDay, $paidInCash)
     {
 
-        $customerId = $data['customerId'];
-        $paidInCash = $data['paidInCash'];
-        $currentDay = $data['currentDay'];
+        $this->Customer = FactoryLocator::get('Table')->get('Customers');
+        $this->Invoice = FactoryLocator::get('Table')->get('Invoices');
+        $this->OrderDetail = FactoryLocator::get('Table')->get('OrderDetails');
+        $this->Payment = FactoryLocator::get('Table')->get('Payments');
+        $this->QueuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
 
-        $this->Customer = $this->getTableLocator()->get('Customers');
-        $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $this->Payment = $this->getTableLocator()->get('Payments');
-
-        $data = $this->Customer->Invoices->getDataForCustomerInvoice($customerId, Configure::read('app.timeHelper')->formatToDbFormatDate($currentDay));
+        $data = $this->Customer->Invoices->getDataForCustomerInvoice($data->id_customer, $currentDay);
         if (!$data->new_invoice_necessary) {
             throw new Exception('safety check if data available - should always be checked before triggering this queue');
         }
@@ -71,6 +53,14 @@ class QueueGenerateInvoiceForCustomerTask extends QueueTask implements QueueTask
         $newInvoice = $this->saveInvoice($data, $invoiceNumber, $invoicePdfFile, $currentDay);
         $this->linkReturnedDepositWithInvoice($data, $newInvoice->id);
         $this->updateOrderDetailOrderState($data);
+
+        $this->QueuedJobs->createJob('SendInvoiceToCustomer', [
+            'customerName' => $data->name,
+            'customerEmail' => $data->email,
+            'invoicePdfFile' => $invoicePdfFile,
+            'invoiceNumber' => $invoiceNumber,
+            'invoiceDate' => $invoiceDate,
+        ]);
 
     }
 
@@ -129,4 +119,3 @@ class QueueGenerateInvoiceForCustomerTask extends QueueTask implements QueueTask
     }
 
 }
-?>

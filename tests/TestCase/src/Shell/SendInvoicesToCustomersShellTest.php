@@ -21,6 +21,7 @@ use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
+use Cake\TestSuite\TestEmailTransport;
 
 class SendInvoicesToCustomersShellTest extends AppCakeTestCase
 {
@@ -78,8 +79,9 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->commandRunner->run(['cake', 'send_invoices_to_customers', $cronjobRunDay]);
         $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
 
-        $pdfFilename = DS . '2018' . DS . '02' . DS . '2018-02-02_Demo-Superadmin_92_Rechnung_2018-000001_FoodCoop-Test.pdf';
-        $this->assertFileExists(Configure::read('app.folder_invoices') . $pdfFilename);
+        $pdfFilenameWithoutPath = '2018-02-02_Demo-Superadmin_92_Rechnung_2018-000001_FoodCoop-Test.pdf';
+        $pdfFilenameWithPath = DS . '2018' . DS . '02' . DS . $pdfFilenameWithoutPath;
+        $this->assertFileExists(Configure::read('app.folder_invoices') . $pdfFilenameWithPath);
 
         $this->Invoice = $this->getTableLocator()->get('Invoices');
         $invoice = $this->Invoice->find('all', [
@@ -95,7 +97,7 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->assertEquals($invoice->id_manufacturer, 0);
         $this->assertEquals($invoice->created, new FrozenDate($cronjobRunDay));
         $this->assertEquals($invoice->invoice_number, '2018-000001');
-        $this->assertEquals($invoice->filename, str_replace('\\', '/', $pdfFilename));
+        $this->assertEquals($invoice->filename, str_replace('\\', '/', $pdfFilenameWithPath));
 
         $this->doAssertInvoiceTaxes($invoice->invoice_taxes[0], 0, 4.54, 0, 4.54);
         $this->doAssertInvoiceTaxes($invoice->invoice_taxes[1], 10, 32.04, 3.21, 35.25);
@@ -108,6 +110,10 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         foreach($payments as $payment) {
             $this->assertEquals($payment->id_invoice, 1);
         }
+
+        $this->assertMailCount(2);
+        $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
+        $this->assertMailContainsAttachment($pdfFilenameWithoutPath);
 
         // call again
         $this->commandRunner->run(['cake', 'send_invoices_to_customers', $cronjobRunDay]);

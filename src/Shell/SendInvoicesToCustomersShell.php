@@ -14,6 +14,7 @@
  */
 namespace App\Shell;
 
+use App\Lib\Invoice\GenerateInvoiceToCustomer;
 use Cake\Core\Configure;
 
 class SendInvoicesToCustomersShell extends AppShell
@@ -27,7 +28,7 @@ class SendInvoicesToCustomersShell extends AppShell
 
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Invoice = $this->getTableLocator()->get('Invoices');
-        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
+        $invoiceToCustomer = new GenerateInvoiceToCustomer();
 
         // $this->cronjobRunDay can is set in unit test
         if (!isset($this->args[0])) {
@@ -54,12 +55,7 @@ class SendInvoicesToCustomersShell extends AppShell
                 continue;
             }
 
-            $this->QueuedJobs->createJob('GenerateInvoiceForCustomer', [
-                'customerId' => $customer->id_customer,
-                'customerName' => $customer->name,
-                'currentDay' => $this->cronjobRunDay,
-                'paidInCash' => false,
-            ]);
+            $invoiceToCustomer->run($data, $this->cronjobRunDay, false);
 
         }
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-11 16:57+0100\n"
+"POT-Creation-Date: 2020-11-13 09:27+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2051,6 +2051,12 @@ msgstr ""
 msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
 msgstr ""
 
+msgid "Please_find_your_current_invoice_attached."
+msgstr ""
+
+msgid "{0}_thanks_you_for_your_purchase!"
+msgstr ""
+
 msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
 msgstr ""
 
@@ -2088,9 +2094,6 @@ msgid "Invoice_number_abbreviation"
 msgstr ""
 
 msgid "Invoice_date"
-msgstr ""
-
-msgid "{0}_thanks_you_for_your_purchase!"
 msgstr ""
 
 msgid "Paid_in_cash_on_{0}."

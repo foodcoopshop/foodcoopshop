@@ -2,6 +2,7 @@
 namespace Admin\Controller;
 
 use App\Lib\Error\Exception\InvalidParameterException;
+use App\Lib\Invoice\GenerateInvoiceToCustomer;
 use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
 use App\Lib\PdfWriter\MyMemberCardPdfWriter;
 use App\Lib\PdfWriter\MemberCardsPdfWriter;
@@ -681,7 +682,7 @@ class CustomersController extends AdminAppController
             throw new Exception('customer not found');
         }
 
-        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
+        $invoiceToCustomer = new GenerateInvoiceToCustomer();
 
         $data = $this->Customer->Invoices->getDataForCustomerInvoice($customer->id_customer, Configure::read('app.timeHelper')->getCurrentDataForDatabase());
         if (!$data->new_invoice_necessary) {
@@ -691,13 +692,7 @@ class CustomersController extends AdminAppController
         }
 
         $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
-
-        $this->QueuedJobs->createJob('GenerateInvoiceForCustomer', [
-            'customerId' => $customer->id_customer,
-            'customerName' => $customer->name,
-            'currentDay' => $currentDay,
-            'paidInCash' => $paidInCash,
-        ]);
+        $invoiceToCustomer->run($data, $currentDay, $paidInCash);
 
         $this->Flash->success(__d('admin', 'The_invoice_was_generated_successfully.'));
         $this->redirect($this->referer());

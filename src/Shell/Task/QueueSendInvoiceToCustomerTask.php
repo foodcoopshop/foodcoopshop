@@ -2,7 +2,6 @@
 namespace App\Shell\Task;
 
 use App\Mailer\AppMailer;
-use Cake\Core\Configure;
 use Queue\Shell\Task\QueueTask;
 use Queue\Shell\Task\QueueTaskInterface;
 
@@ -20,7 +19,7 @@ use Queue\Shell\Task\QueueTaskInterface;
  * @link          https://www.foodcoopshop.com
  */
 
-class QueueSendInvoiceToManufacturerTask extends QueueTask implements QueueTaskInterface {
+class QueueSendInvoiceToCustomerTask extends QueueTask implements QueueTaskInterface {
 
     use UpdateActionLogTrait;
 
@@ -28,36 +27,35 @@ class QueueSendInvoiceToManufacturerTask extends QueueTask implements QueueTaskI
 
     public $retries = 2;
 
+    public $Customer;
+
+    public $Invoice;
+
+    public $OrderDetail;
+
+    public $Payment;
+
     public function run(array $data, $jobId) : void
     {
 
-        $manufacturerId = $data['manufacturerId'];
+        $customerName = $data['customerName'];
+        $customerEmail = $data['customerEmail'];
         $invoicePdfFile = $data['invoicePdfFile'];
         $invoiceNumber = $data['invoiceNumber'];
-        $actionLogId = $data['actionLogId'];
-
-        $this->Manufacturer = $this->getTableLocator()->get('Manufacturers');
-        $manufacturer = $this->Manufacturer->getManufacturerByIdForSendingOrderListsOrInvoice($manufacturerId);
-
-        $invoicePeriodMonthAndYear = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
+        $invoiceDate = $data['invoiceDate'];
 
         $email = new AppMailer();
         $email->fallbackEnabled = false;
-        $email->viewBuilder()->setTemplate('Admin.send_invoice_to_manufacturer');
-        $email->setTo($manufacturer->address_manufacturer->email)
+        $email->viewBuilder()->setTemplate('Admin.send_invoice_to_customer');
+        $email->setTo($customerEmail)
         ->setAttachments([
             $invoicePdfFile,
         ])
-        ->setSubject(__('Invoice_number_abbreviataion_{0}_{1}', [$invoiceNumber, $invoicePeriodMonthAndYear]))
+        ->setSubject(__('Invoice_number_abbreviataion_{0}_{1}', [$invoiceNumber, $invoiceDate]))
         ->setViewVars([
-            'manufacturer' => $manufacturer,
-            'invoicePeriodMonthAndYear' => $invoicePeriodMonthAndYear,
-            'showManufacturerUnsubscribeLink' => true
+            'customerName' => $customerName,
         ]);
         $email->send();
-
-        $identifier = 'send-invoice-' . $manufacturer->id_manufacturer;
-        $this->updateActionLog($actionLogId, $identifier, $jobId);
 
     }
 

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-11 16:57+0100\n"
-"PO-Revision-Date: 2020-11-11 16:58+0100\n"
+"POT-Creation-Date: 2020-11-13 09:27+0100\n"
+"PO-Revision-Date: 2020-11-13 09:29+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2052,6 +2052,12 @@ msgstr "Please do not forget that you have products to pick up on {0}."
 msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
 msgstr "As you placed your order earlier than {0} days ago, you get this reminder."
 
+msgid "Please_find_your_current_invoice_attached."
+msgstr "Please find your current invoice attached."
+
+msgid "{0}_thanks_you_for_your_purchase!"
+msgstr "Thank you for your purchase!"
+
 msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
 msgstr "this invoice contains all products that have been delivered in {0}."
 
@@ -2090,9 +2096,6 @@ msgstr "Invoice nº"
 
 msgid "Invoice_date"
 msgstr "Invoice date"
-
-msgid "{0}_thanks_you_for_your_purchase!"
-msgstr "Thank you for your purchase!"
 
 msgid "Paid_in_cash_on_{0}."
 msgstr "Paid in cash on {0}."

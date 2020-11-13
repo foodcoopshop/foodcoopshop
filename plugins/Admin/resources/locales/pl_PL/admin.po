@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-11 16:57+0100\n"
+"POT-Creation-Date: 2020-11-13 09:27+0100\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2140,6 +2140,12 @@ msgstr "Nie zapomnij, że masz produkty do odbioru w {0}."
 msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
 msgstr "Otrzymujesz to przypomnienie ponieważ twoje zamówienie zostało złożone wcześniej niż {0} dni temu."
 
+msgid "Please_find_your_current_invoice_attached."
+msgstr ""
+
+msgid "{0}_thanks_you_for_your_purchase!"
+msgstr ""
+
 msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
 msgstr "ta faktura zawiera wszystkie produkty, które zostały dostarczone dnia {0}."
 
@@ -2178,9 +2184,6 @@ msgstr "Faktura nr"
 
 msgid "Invoice_date"
 msgstr "Data faktury"
-
-msgid "{0}_thanks_you_for_your_purchase!"
-msgstr ""
 
 #, fuzzy
 msgid "Paid_in_cash_on_{0}."
