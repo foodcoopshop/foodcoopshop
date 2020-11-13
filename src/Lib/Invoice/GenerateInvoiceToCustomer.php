@@ -23,6 +23,12 @@ use Cake\I18n\FrozenDate;
 class GenerateInvoiceToCustomer
 {
 
+    public $Customer;
+    public $Invoice;
+    public $OrderDetail;
+    public $Payment;
+    public $QueuedJobs;
+
     public function run($data, $currentDay, $paidInCash)
     {
 
