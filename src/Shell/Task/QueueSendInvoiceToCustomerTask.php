@@ -23,8 +23,6 @@ use Queue\Shell\Task\QueueTaskInterface;
 
 class QueueSendInvoiceToCustomerTask extends QueueTask implements QueueTaskInterface {
 
-    use UpdateActionLogTrait;
-
     public $timeout = 30;
 
     public $retries = 2;
