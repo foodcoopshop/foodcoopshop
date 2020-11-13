@@ -682,8 +682,6 @@ class CustomersController extends AdminAppController
             throw new Exception('customer not found');
         }
 
-        $invoiceToCustomer = new GenerateInvoiceToCustomer();
-
         $data = $this->Customer->Invoices->getDataForCustomerInvoice($customer->id_customer, Configure::read('app.timeHelper')->getCurrentDataForDatabase());
         if (!$data->new_invoice_necessary) {
             $this->Flash->success(__d('admin', 'No_data_available_to_generate_an_invoice.'));
@@ -692,6 +690,8 @@ class CustomersController extends AdminAppController
         }
 
         $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
+
+        $invoiceToCustomer = new GenerateInvoiceToCustomer();
         $invoiceToCustomer->run($data, $currentDay, $paidInCash);
 
         $this->Flash->success(__d('admin', 'The_invoice_was_generated_successfully.'));
