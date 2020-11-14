@@ -85,7 +85,7 @@ echo '<table style="margin-top:20px;" class="list no-clone-last-row">';
             echo '</td>';
 
             echo '<td>';
-                echo $invoice->paid_in_cash ? '<i class="fa fa-check ok"></i>' : '<i class="fa fa-times-circle ok"></i>';
+                echo $invoice->paid_in_cash ? __d('admin', 'yes') : __d('admin', 'no');
             echo '</td>';
 
             echo '<td>';
