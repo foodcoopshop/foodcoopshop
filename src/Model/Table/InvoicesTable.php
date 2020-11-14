@@ -38,6 +38,13 @@ class InvoicesTable extends AppTable
     {
 
         $customersTable = FactoryLocator::get('Table')->get('Customers');
+
+        // defining sort outside of contain overrides exiting key "created" (which is what we want here)
+        $customersTable->getAssociation('ActiveOrderDetails')->setSort([
+            'ActiveOrderDetails.product_name' => 'ASC',
+            'ActiveOrderDetails.id_order_detail' => 'ASC',
+        ]);
+
         $customer = $customersTable->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId,
@@ -52,10 +59,6 @@ class InvoicesTable extends AppTable
                             ],
                         );
                     });
-                    $q->order([
-                        'ActiveOrderDetails.product_name' => 'ASC',
-                        'ActiveOrderDetails.id_order_detail' => 'ASC',
-                    ]);
                     return $q;
                 },
                 'ActiveOrderDetails.OrderDetailTaxes',
