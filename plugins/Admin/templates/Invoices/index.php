@@ -55,8 +55,11 @@ echo '<table style="margin-top:20px;" class="list no-clone-last-row">';
         echo '<th>' . $this->Paginator->sort('Invoice.invoice_number', __d('admin', 'Invoice_number_abbreviation')) . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoice.created', __d('admin', 'Invoice_date')) . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoice.customer.name.', __d('admin', 'Name')) . '</th>';
-        echo '<th>' . __d('admin', 'Sum') . '</th>';
+        echo '<th>' . __d('admin', 'Sum_excl_tax') . '</th>';
+        echo '<th>' . __d('admin', 'Sum_tax') . '</th>';
+        echo '<th>' . __d('admin', 'Sum_incl_tax') . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoice.paid_in_cash.', __d('admin', 'Paid_in_cash')) . '</th>';
+        echo '<th>' . $this->Paginator->sort('Invoice.email_status.', __d('admin', 'Email_sent')) . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoice.filename.', __d('admin', 'Download')) . '</th>';
     echo '</tr>';
 
@@ -77,6 +80,22 @@ echo '<table style="margin-top:20px;" class="list no-clone-last-row">';
             echo '</td>';
 
             echo '<td>';
+            $sumPriceExcl = 0;
+                foreach($invoice->invoice_taxes as $invoiceTax) {
+                    $sumPriceExcl += $invoiceTax->total_price_tax_excl;
+                }
+                echo $this->Number->formatAsCurrency($sumPriceExcl);
+            echo '</td>';
+
+            echo '<td>';
+                $sumTax = 0;
+                foreach($invoice->invoice_taxes as $invoiceTax) {
+                    $sumTax += $invoiceTax->total_price_tax;
+                }
+                echo $this->Number->formatAsCurrency($sumTax);
+            echo '</td>';
+
+            echo '<td>';
                 $sumPriceIncl = 0;
                 foreach($invoice->invoice_taxes as $invoiceTax) {
                     $sumPriceIncl += $invoiceTax->total_price_tax_incl;
@@ -86,6 +105,14 @@ echo '<table style="margin-top:20px;" class="list no-clone-last-row">';
 
             echo '<td>';
                 echo $invoice->paid_in_cash ? __d('admin', 'yes') : __d('admin', 'no');
+            echo '</td>';
+
+            echo '<td>';
+                if (is_null($invoice->email_status)) {
+                    echo '<i class="fa fa-times-circle"></i>';
+                } else {
+                    echo $invoice->email_status->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2'));
+                }
             echo '</td>';
 
             echo '<td>';

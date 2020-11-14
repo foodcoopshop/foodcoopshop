@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-13 09:27+0100\n"
+"POT-Creation-Date: 2020-11-14 20:38+0100\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -183,6 +183,9 @@ msgid "Credit_and_deposit_balance"
 msgstr "Twoje saldo wkładów"
 
 msgid "No_data_available_to_generate_an_invoice."
+msgstr ""
+
+msgid "Download"
 msgstr ""
 
 #, fuzzy
@@ -1155,8 +1158,28 @@ msgstr "Zwrócono puste opakowanie"
 msgid "Returned_deposit_by_member"
 msgstr "Zwrócony wkład"
 
-msgid "Download"
+msgid "Invoice_number_abbreviation"
+msgstr "Faktura nr"
+
+msgid "Invoice_date"
+msgstr "Data faktury"
+
+msgid "Sum_excl_tax"
 msgstr ""
+
+msgid "Sum_tax"
+msgstr ""
+
+msgid "Sum_incl_tax"
+msgstr ""
+
+#, fuzzy
+msgid "Paid_in_cash"
+msgstr "Zapłacone przez wszystkich członków w {0}"
+
+#, fuzzy
+msgid "Email_sent"
+msgstr "Mail został wysłany do {0}."
 
 msgid "Pickup_day"
 msgstr "Dzień odbioru"
@@ -2179,12 +2202,6 @@ msgstr "W celu zalogowania się proszę użyć adresu email z tej wiadomości. A
 msgid "Your_contact_person"
 msgstr "Twoja osoba kontaktowa"
 
-msgid "Invoice_number_abbreviation"
-msgstr "Faktura nr"
-
-msgid "Invoice_date"
-msgstr "Data faktury"
-
 #, fuzzy
 msgid "Paid_in_cash_on_{0}."
 msgstr "Zapłacone przez wszystkich członków w {0}"
@@ -2264,10 +2281,6 @@ msgstr "Produkt"
 
 #~ msgid "Order_lists_for_the_day"
 #~ msgstr "Listy zamówień dla"
-
-#, fuzzy
-#~ msgid "Email_sent_to:{0}"
-#~ msgstr "Mail został wysłany do {0}."
 
 #, fuzzy
 #~ msgid "Feedback_to_product"

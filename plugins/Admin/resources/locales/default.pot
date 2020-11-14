@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-13 09:27+0100\n"
+"POT-Creation-Date: 2020-11-14 20:38+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -177,6 +177,9 @@ msgid "Credit_and_deposit_balance"
 msgstr ""
 
 msgid "No_data_available_to_generate_an_invoice."
+msgstr ""
+
+msgid "Download"
 msgstr ""
 
 msgid "The_invoice_was_generated_successfully."
@@ -1109,7 +1112,25 @@ msgstr ""
 msgid "Returned_deposit_by_member"
 msgstr ""
 
-msgid "Download"
+msgid "Invoice_number_abbreviation"
+msgstr ""
+
+msgid "Invoice_date"
+msgstr ""
+
+msgid "Sum_excl_tax"
+msgstr ""
+
+msgid "Sum_tax"
+msgstr ""
+
+msgid "Sum_incl_tax"
+msgstr ""
+
+msgid "Paid_in_cash"
+msgstr ""
+
+msgid "Email_sent"
 msgstr ""
 
 msgid "Pickup_day"
@@ -2088,12 +2109,6 @@ msgid "For_signing_in_please_use_the_email_address_of_this_message._If_you_want_
 msgstr ""
 
 msgid "Your_contact_person"
-msgstr ""
-
-msgid "Invoice_number_abbreviation"
-msgstr ""
-
-msgid "Invoice_date"
 msgstr ""
 
 msgid "Paid_in_cash_on_{0}."
