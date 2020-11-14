@@ -56,7 +56,7 @@ class GenerateInvoiceToCustomer
         $pdfWriter->setFilename($invoicePdfFile);
         $pdfWriter->writeFile();
 
-        $newInvoice = $this->saveInvoice($data, $invoiceNumber, $invoicePdfFile, $currentDay);
+        $newInvoice = $this->saveInvoice($data, $invoiceNumber, $invoicePdfFile, $currentDay, $paidInCash);
         $this->linkReturnedDepositWithInvoice($data, $newInvoice->id);
         $this->updateOrderDetailOrderState($data);
 
@@ -94,7 +94,7 @@ class GenerateInvoiceToCustomer
         }
     }
 
-    private function saveInvoice($data, $invoiceNumber, $invoicePdfFile, $currentDay)
+    private function saveInvoice($data, $invoiceNumber, $invoicePdfFile, $currentDay, $paidInCash)
     {
 
         $invoicePdfFileForDatabase = str_replace(Configure::read('app.folder_invoices'), '', $invoicePdfFile);
@@ -105,6 +105,7 @@ class GenerateInvoiceToCustomer
             'invoice_number' => $invoiceNumber,
             'filename' => $invoicePdfFileForDatabase,
             'created' => new FrozenDate($currentDay),
+            'paid_in_cash' => $paidInCash,
             'invoice_taxes' => [],
         ];
         foreach($data->tax_rates as $taxRate => $values) {
