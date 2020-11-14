@@ -48,14 +48,23 @@ class InvoicesController extends AdminAppController
 
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Invoice = $this->getTableLocator()->get('Invoices');
+
+        $conditions = [
+            'Invoices.id_customer > 0',
+            'DATE_FORMAT(Invoices.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
+            'DATE_FORMAT(Invoices.created, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
+        ];
+
+        if ($customerId != '') {
+            $conditions['Invoices.id_customer'] = $customerId;
+        }
+
         $invoices = $this->Invoice->find('all', [
             'contain' => [
                 'InvoiceTaxes',
                 'Customers',
             ],
-            'conditions' => [
-                'Invoices.id_customer > 0',
-            ],
+            'conditions' => $conditions,
             'order' => [
                 'Invoices.id' => 'DESC'
             ]
