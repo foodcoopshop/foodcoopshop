@@ -97,7 +97,7 @@ echo '<table style="margin-top:20px;" class="list no-clone-last-row">';
 
             echo '<td>';
                 if (is_null($invoice->email_status)) {
-                    echo '<i class="fa fa-times-circle"></i>';
+                    echo '<i class="fa fa-times-circle not-ok"></i>';
                 } else {
                     echo $invoice->email_status->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2'));
                 }
