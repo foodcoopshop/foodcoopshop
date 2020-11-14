@@ -215,7 +215,11 @@ h2.info2 {
 #flashMessage img {
     height: 50px;
 }
-
+#flashMessage .btn-flash-message {
+    float: left;
+    margin-top: 6px;
+    width: 48%;
+}
 .vertical.menu {
     width: 145px;
     background: #efefef;

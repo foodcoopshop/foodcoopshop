@@ -69,6 +69,8 @@ class GenerateInvoiceToCustomer
             'invoiceId' => $newInvoice->id,
         ]);
 
+        return $newInvoice;
+
     }
 
     private function updateOrderDetailOrderState($data)

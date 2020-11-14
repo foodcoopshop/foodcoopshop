@@ -692,9 +692,20 @@ class CustomersController extends AdminAppController
         $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
 
         $invoiceToCustomer = new GenerateInvoiceToCustomer();
-        $invoiceToCustomer->run($data, $currentDay, $paidInCash);
+        $newInvoice = $invoiceToCustomer->run($data, $currentDay, $paidInCash);
 
-        $this->Flash->success(__d('admin', 'The_invoice_was_generated_successfully.'));
+        $linkToInvoice = Configure::read('app.htmlHelper')->link(
+            __d('admin', 'Download'),
+            '/admin/lists/getInvoice?file=' . $newInvoice->filename,
+            [
+                'class' => 'btn btn-outline-light btn-flash-message',
+                'target' => '_blank',
+                'escape' => false
+            ],
+        );
+        $this->Flash->success(
+            __d('admin', 'The_invoice_was_generated_successfully.') . ' ' . $linkToInvoice,
+        );
         $this->redirect($this->referer());
 
     }
