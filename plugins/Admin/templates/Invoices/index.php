@@ -80,27 +80,15 @@ echo '<table style="margin-top:20px;" class="list no-clone-last-row">';
             echo '</td>';
 
             echo '<td>';
-            $sumPriceExcl = 0;
-                foreach($invoice->invoice_taxes as $invoiceTax) {
-                    $sumPriceExcl += $invoiceTax->total_price_tax_excl;
-                }
-                echo $this->Number->formatAsCurrency($sumPriceExcl);
+                echo $this->Number->formatAsCurrency($invoice->sum_price_excl);
             echo '</td>';
 
             echo '<td>';
-                $sumTax = 0;
-                foreach($invoice->invoice_taxes as $invoiceTax) {
-                    $sumTax += $invoiceTax->total_price_tax;
-                }
-                echo $this->Number->formatAsCurrency($sumTax);
+                echo $this->Number->formatAsCurrency($invoice->sum_tax);
             echo '</td>';
 
             echo '<td>';
-                $sumPriceIncl = 0;
-                foreach($invoice->invoice_taxes as $invoiceTax) {
-                    $sumPriceIncl += $invoiceTax->total_price_tax_incl;
-                }
-                echo $this->Number->formatAsCurrency($sumPriceIncl);
+                echo $this->Number->formatAsCurrency($invoice->sum_price_incl);
             echo '</td>';
 
             echo '<td>';
