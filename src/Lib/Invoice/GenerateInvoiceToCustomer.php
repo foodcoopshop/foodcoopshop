@@ -38,7 +38,7 @@ class GenerateInvoiceToCustomer
         $this->Payment = FactoryLocator::get('Table')->get('Payments');
         $this->QueuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
 
-        $data = $this->Customer->Invoices->getDataForCustomerInvoice($data->id_customer, $currentDay);
+        $data = $this->Invoice->getDataForCustomerInvoice($data->id_customer, $currentDay);
         if (!$data->new_invoice_necessary) {
             throw new Exception('safety check if data available - should always be checked before triggering this queue');
         }
