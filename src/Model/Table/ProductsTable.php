@@ -86,7 +86,7 @@ class ProductsTable extends AppTable
                     return in_array($context['data']['delivery_rhythm_count'], [1,2,4]);
                 }
                 if ($value == 'month') {
-                    return in_array($context['data']['delivery_rhythm_count'], [1,0]);
+                    return in_array($context['data']['delivery_rhythm_count'], [0,1,2,3,4]);
                 }
                 if ($value == 'individual') {
                     return in_array($context['data']['delivery_rhythm_count'], [0]);
@@ -194,6 +194,15 @@ class ProductsTable extends AppTable
             switch($product->delivery_rhythm_count) {
                 case '1':
                     $ordinal = 'first';
+                    break;
+                case '2':
+                    $ordinal = 'second';
+                    break;
+                case '3':
+                    $ordinal = 'third';
+                    break;
+                case '4':
+                    $ordinal = 'fourth';
                     break;
                 case '0':
                     $ordinal = 'last';
