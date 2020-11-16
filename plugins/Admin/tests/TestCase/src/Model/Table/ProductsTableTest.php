@@ -337,7 +337,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function testCalculatePickupDayRespectingDeliveryRhythm1MonthA()
+    public function testCalculatePickupDayRespectingDeliveryRhythmFirstWeekdayOfMonthA()
     {
         $data = [
             'product' => $this->Product->newEntity(
@@ -353,7 +353,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function testCalculatePickupDayRespectingDeliveryRhythm1MonthB()
+    public function testCalculatePickupDayRespectingDeliveryRhythmFirstWeekdayOfMonthB()
     {
         $data = [
             'product' => $this->Product->newEntity(
@@ -369,7 +369,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function testCalculatePickupDayRespectingDeliveryRhythm0MonthA()
+    public function testCalculatePickupDayRespectingDeliveryRhythmLastWeekdayOfMonthA()
     {
         $data = [
             'product' => $this->Product->newEntity(
@@ -385,7 +385,7 @@ class ProductsTableTest extends AppCakeTestCase
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
 
-    public function testCalculatePickupDayRespectingDeliveryRhythm0MonthB()
+    public function testCalculatePickupDayRespectingDeliveryRhythmLastWeekdayOfMonthB()
     {
         $data = [
             'product' => $this->Product->newEntity(
@@ -397,6 +397,54 @@ class ProductsTableTest extends AppCakeTestCase
             ),
             'currentDay' => '2018-08-07',
             'result' => '2018-08-31'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+
+    public function testCalculatePickupDayRespectingDeliveryRhythmSecondWeekdayOfMonth()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'month',
+                    'delivery_rhythm_count' => '2',
+                    'is_stock_product' => '0',
+                ]
+            ),
+            'currentDay' => '2020-11-20',
+            'result' => '2020-12-11'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+
+    public function testCalculatePickupDayRespectingDeliveryRhythmThirdWeekdayOfMonth()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'month',
+                    'delivery_rhythm_count' => '3',
+                    'is_stock_product' => '0',
+                ]
+                ),
+            'currentDay' => '2020-11-20',
+            'result' => '2020-12-18'
+        ];
+        $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
+    }
+
+    public function testCalculatePickupDayRespectingDeliveryRhythmFourthWeekdayOfMonth()
+    {
+        $data = [
+            'product' => $this->Product->newEntity(
+                [
+                    'delivery_rhythm_type' => 'month',
+                    'delivery_rhythm_count' => '4',
+                    'is_stock_product' => '0',
+                ]
+                ),
+            'currentDay' => '2020-11-30',
+            'result' => '2020-12-25'
         ];
         $this->assertPickupDay($data['product'], $data['currentDay'], $data['result']);
     }
