@@ -21,7 +21,7 @@ use Cake\TestSuite\TestEmailTransport;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class CustomersControllerTest extends AppCakeTestCase
+class CustomersFrontendControllerTest extends AppCakeTestCase
 {
 
     use AppIntegrationTestTrait;
