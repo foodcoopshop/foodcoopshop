@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\FactoryLocator;
@@ -39,12 +40,6 @@ class InvoicesTable extends AppTable
 
         $customersTable = FactoryLocator::get('Table')->get('Customers');
 
-        // defining sort outside of contain overrides exiting key "created" (which is what we want here)
-        $customersTable->getAssociation('ActiveOrderDetails')->setSort([
-            'ActiveOrderDetails.product_name' => 'ASC',
-            'ActiveOrderDetails.id_order_detail' => 'ASC',
-        ]);
-
         $customer = $customersTable->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId,
@@ -64,8 +59,25 @@ class InvoicesTable extends AppTable
                 'ActiveOrderDetails.OrderDetailTaxes',
                 'ActiveOrderDetails.OrderDetailUnits',
                 'ActiveOrderDetails.Taxes',
+                'ActiveOrderDetails.Products.Manufacturers',
             ]
         ])->first();
+
+        // sorting by manufacturer name as third level assocition is hard (or even not possible)
+        foreach($customer->active_order_details as $orderDetail) {
+            $manufacturerName[] = StringComponent::slugify($orderDetail->product->manufacturer->name);
+            $productName[] = StringComponent::slugify($orderDetail->product_name);
+            $deliveryDay[] = $orderDetail->pickup_day;
+        }
+
+        if (!empty($customer->active_order_details)) {
+            array_multisort(
+                $manufacturerName, SORT_ASC,
+                $productName, SORT_ASC,
+                $deliveryDay, SORT_ASC,
+                $customer->active_order_details,
+            );
+        }
 
         // prepare correct weight if price per unit was used
         foreach($customer->active_order_details as $orderDetail) {
