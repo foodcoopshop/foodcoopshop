@@ -3,7 +3,7 @@
 namespace Admin\Controller;
 
 use App\Controller\Component\StringComponent;
-use App\Lib\PdfWriter\InvoicePdfWriter;
+use App\Lib\PdfWriter\InvoiceToManufacturerPdfWriter;
 use App\Lib\PdfWriter\OrderListByProductPdfWriter;
 use App\Lib\PdfWriter\OrderListByCustomerPdfWriter;
 use Cake\Core\Configure;
@@ -558,7 +558,7 @@ class ManufacturersController extends AdminAppController
 
         $newInvoiceNumber = 'xxx';
 
-        $pdfWriter = new InvoicePdfWriter();
+        $pdfWriter = new InvoiceToManufacturerPdfWriter();
         $pdfWriter->prepareAndSetData($manufacturerId, $dateFrom, $dateTo, $newInvoiceNumber, [], '', 'xxx');
         if (isset($pdfWriter->getData()['productResults']) && empty($pdfWriter->getData()['productResults'])) {
             die(__d('admin', 'No_orders_within_the_given_time_range.'));

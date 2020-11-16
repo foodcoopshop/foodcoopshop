@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-17 21:39+0200\n"
-"PO-Revision-Date: 2020-10-13 16:23+0200\n"
+"POT-Creation-Date: 2020-11-14 20:38+0100\n"
+"PO-Revision-Date: 2020-11-14 20:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 msgid "Activities"
 msgstr "Aktivitäten"
@@ -177,6 +177,15 @@ msgstr "Summe der geleisteten Pfand-Ausgleichszahlungen für Hersteller"
 msgid "Credit_and_deposit_balance"
 msgstr "Guthaben- und Pfand-Saldo"
 
+msgid "No_data_available_to_generate_an_invoice."
+msgstr "Zum Erstellen einer Rechnung sind keine Daten vorhanden."
+
+msgid "Download"
+msgstr "Download"
+
+msgid "The_invoice_was_generated_successfully."
+msgstr "Die Rechnung wurde erfolgreich erstellt."
+
 msgid "Deposit_overview"
 msgstr "Pfand-Übersicht"
 
@@ -185,6 +194,9 @@ msgstr "Pfandkonto"
 
 msgid "Deposit_take_back_detail_for"
 msgstr "Pfand-Rücknahme Detail für"
+
+msgid "Invoices"
+msgstr "Rechnungen"
 
 msgid "_Order_list_filename_"
 msgstr "_Bestellliste_"
@@ -1065,8 +1077,7 @@ msgstr "wichtige-infos-zum-gelingen"
 msgid "Deposit_overview_for_all_manufacturers"
 msgstr "Pfand-Übersicht für alle Hersteller"
 
-#, fuzzy
-msgid "deposit"
+msgid "Deposit"
 msgstr "Pfand"
 
 msgid "There_is_no_{0}_available."
@@ -1101,6 +1112,27 @@ msgstr "Pfand-Rücknahmen (Hersteller)"
 
 msgid "Returned_deposit_by_member"
 msgstr "Pfand-Rückgaben (Mitglieder)"
+
+msgid "Invoice_number_abbreviation"
+msgstr "Rechnung Nr."
+
+msgid "Invoice_date"
+msgstr "Rechnungsdatum"
+
+msgid "Sum_excl_tax"
+msgstr "Summe exkl. USt."
+
+msgid "Sum_tax"
+msgstr "Summe USt."
+
+msgid "Sum_incl_tax"
+msgstr "Summe inkl. USt."
+
+msgid "Paid_in_cash"
+msgstr "Bar bezahlt"
+
+msgid "Email_sent"
+msgstr "E-Mail versendet"
 
 msgid "Pickup_day"
 msgstr "Abholtag"
@@ -1380,9 +1412,6 @@ msgstr "0 bedeutet: globales Limit von {0} wird verwendet."
 
 msgid "Pickup_days"
 msgstr "Abholtage"
-
-msgid "Deposit"
-msgstr "Pfand"
 
 msgid "Stock_products"
 msgstr "Lagerprodukte"
@@ -1738,6 +1767,9 @@ msgstr "Zum Stornieren des Produktes anklicken"
 msgid "Click_to_change_member"
 msgstr "Zum Umbuchen auf ein anderes Mitglied anklicken"
 
+msgid "Invoice"
+msgstr "Rechnung"
+
 msgid "Add_product_feedback"
 msgstr "Gib dem Hersteller Feedback zum Produkt"
 
@@ -2041,6 +2073,12 @@ msgstr "bitte vergiss nicht, dass am {0} folgende Produkte zum Abholen bereit si
 msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
 msgstr "Du bekommst diese E-Mail, weil deine Bestellung länger als {0} Tage her ist."
 
+msgid "Please_find_your_current_invoice_attached."
+msgstr "Die aktuelle Rechnung befindet sich im Anhang."
+
+msgid "{0}_thanks_you_for_your_purchase!"
+msgstr "{0} sagt Danke für Deinen Einkauf!"
+
 msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
 msgstr "in dieser Rechnung sind alle Produkte enthalten, die im {0} geliefert wurden."
 
@@ -2074,17 +2112,14 @@ msgstr "Bitte verwende zum Einloggen die E-Mail-Adresse dieser Nachricht. Falls 
 msgid "Your_contact_person"
 msgstr "Deine Ansprechperson"
 
+msgid "Paid_in_cash_on_{0}."
+msgstr "Bar bezahlt am {0}."
+
 msgid "conveyed_for"
 msgstr "vermittelt für"
 
-msgid "Invoice_number_abbreviation"
-msgstr "Rechnung Nr."
-
 msgid "Orders_from"
 msgstr "Bestellungen vom"
-
-msgid "Invoice_date"
-msgstr "Rechnungsdatum"
 
 msgid "Price_excl."
 msgstr "Preis exkl."
@@ -2131,6 +2166,10 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 msgid "Product_ID"
 msgstr "Produkt-Nr."
 
+#, fuzzy
+#~ msgid "deposit"
+#~ msgstr "Pfand"
+
 #~ msgid "Of_the_{0}_on_the_credit_account_{1}_are_reserved_for_deposit_compensation_payments._As_long_as_this_amount_is_negative_money_for_deposit_compensation_payments_is_available."
 #~ msgstr "Von den {0} auf dem Guthaben-Konto sind {1} für Pfand-Ausgleichszahlungen reserviert. Solange der Pfand-Betrag negativ ist, ist Geld für die Pfand-Ausgleichszahlungen vorhanden."
 
@@ -2160,9 +2199,6 @@ msgstr "Produkt-Nr."
 
 #~ msgid "{0,plural,=1{1_Order_list} other{#_Order_lists}}_successfully_generated_for_manufacturer_{1}."
 #~ msgstr "{0,plural,=1{1_Bestellliste} other{#_Bestelllisten}} für Hersteller {1} erfolgreich generiert."
-
-#~ msgid "Email_sent_to:{0}"
-#~ msgstr "E-Mail wurde an {0} verschickt."
 
 #~ msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
 #~ msgstr "Du kannst den Lieferrhythmus von mehreren Produkten gleichzeitig ändern, indem du sie links auswählst und auf den Button ganz unten klickst."

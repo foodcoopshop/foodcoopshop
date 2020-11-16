@@ -21,7 +21,7 @@ use Cake\Core\Configure;
 use Cake\Console\CommandRunner;
 use Cake\TestSuite\EmailTrait;
 
-class SendInvoicesShellTest extends AppCakeTestCase
+class SendInvoicesToManufacturersShellTest extends AppCakeTestCase
 {
 
     use AppIntegrationTestTrait;
@@ -34,6 +34,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->prepareSendingInvoices();
         $this->Cart = $this->getTableLocator()->get('Carts');
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
@@ -43,7 +44,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
     {
         $this->loginAsSuperadmin();
         $this->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'invoice.html');
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'manufacturerInvoice.html');
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
     }
@@ -59,7 +60,7 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $milkManufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.milkManufacturerId'));
         $this->changeManufacturer($milkManufacturerId, 'send_invoice', 0);
 
-        $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11 10:20:30']);
+        $this->commandRunner->run(['cake', 'send_invoices_to_manufacturers', '2018-03-11 10:20:30']);
         $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
 
         $orderDetails = $this->OrderDetail->find('all')->toArray();
@@ -83,8 +84,8 @@ class SendInvoicesShellTest extends AppCakeTestCase
         $this->assertResponseContains('11.03.2018 10:20:30');
         $this->assertResponseContains('<td>0001</td><td></td>');
 
-        $this->get('/admin/manufacturers/getInvoice.pdf?manufacturerId=4&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
-        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'invoiceWithVariableMemberFee.html');
+        $this->get('/admin/manufacturers/getInvoice.pdf?manufacturerId='.$meatManufacturerId.'&dateFrom=01.02.2018&dateTo=28.02.2018&outputType=html');
+        $expectedResult = file_get_contents(TESTS . 'config' . DS . 'data' . DS . 'manufacturerInvoiceWithVariableMemberFee.html');
         $expectedResult = $this->getCorrectedLogoPathInHtmlForPdfs($expectedResult);
         $this->assertResponseContains($expectedResult);
 
@@ -94,9 +95,9 @@ class SendInvoicesShellTest extends AppCakeTestCase
     {
 
         $this->prepareSendInvoices();
-        $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11 10:20:30']);
+        $this->commandRunner->run(['cake', 'send_invoices_to_manufacturers', '2018-03-11 10:20:30']);
         $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
-        $this->commandRunner->run(['cake', 'send_invoices', '2018-03-11 10:20:30']); // sic! run again
+        $this->commandRunner->run(['cake', 'send_invoices_to_manufacturers', '2018-03-11 10:20:30']); // sic! run again
         $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
 
         // no additional (would be 8) emails should be sent if called twice on same day

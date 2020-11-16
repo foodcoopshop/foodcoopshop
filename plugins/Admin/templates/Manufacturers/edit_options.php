@@ -100,12 +100,19 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
         'escape' => false
     ]);
 
-    echo $this->Form->control('Manufacturers.send_invoice', [
-        'label' => __d('admin', 'Invoices_by_email').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' '.__d('admin', 'to_receive_his_invoice_every_month_by_email.').'</span>',
-        'type' => 'checkbox',
-        'escape' => false
-    ]);
-    echo '<div class="sc"></div>';
+    if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+        echo $this->Form->control('Manufacturers.send_invoice', [
+            'label' => __d('admin', 'Invoices_by_email').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' '.__d('admin', 'to_receive_his_invoice_every_month_by_email.').'</span>',
+            'type' => 'checkbox',
+            'escape' => false
+        ]);
+        echo '<div class="sc"></div>';
+    } else {
+        // avoid "Cannot convert value of type `boolean` to integer"
+        echo $this->Form->control('Manufacturers.send_invoice', [
+            'type' => 'hidden',
+        ]);
+    }
 
     echo $this->Form->control('Manufacturers.send_ordered_product_deleted_notification', [
         'label' => __d('admin', 'Cancellations').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' '.__d('admin', 'to_receive_an_email_on_every_cancellation.').'</span>',

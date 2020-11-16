@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-17 21:39+0200\n"
+"POT-Creation-Date: 2020-11-11 16:36+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -210,6 +210,9 @@ msgstr "Nowe produkty"
 # Search
 msgid "Search"
 msgstr "Szukaj"
+
+msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
+msgstr ""
 
 # The desired amount {0} of the product {1} is not available any more. Available amount: {2}
 msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
@@ -1135,6 +1138,24 @@ msgstr "Dodać nowy produkt?"
 msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
 msgstr ""
 
+# Generated invoices
+#, fuzzy
+msgid "Generate_invoice"
+msgstr "Wygenerowane faktury"
+
+# Generated invoices
+#, fuzzy
+msgid "Really_generate_invoice_for_0"
+msgstr "Wygenerowane faktury"
+
+# Show more
+#, fuzzy
+msgid "Show_preview"
+msgstr "Pokaż więcej"
+
+msgid "Paid_in_cash"
+msgstr ""
+
 # Were the products picked up?
 msgid "Were_the_products_picked_up?"
 msgstr "Czy produkty zostały odebrane?"
@@ -1490,32 +1511,6 @@ msgstr "Twój koszyk był pusty."
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informacja-o-prawie-do-odstapienia"
 
-# Tax rates overview table
-msgid "Tax_rates_overview_table"
-msgstr "Tabela stawek podatkowych"
-
-# Tax rate
-msgid "Tax_rate"
-msgstr "Stawka podatkowa"
-
-# Sum price incl.
-#, fuzzy
-msgid "Sum_price_excl."
-msgstr "Suma cen łącznie z"
-
-# Sum tax
-msgid "Sum_tax"
-msgstr "Suma podatków"
-
-# Sum price incl.
-msgid "Sum_price_incl."
-msgstr "Suma cen łącznie z"
-
-# Deleted member?
-#, fuzzy
-msgid "Deleted_member"
-msgstr "Usunąć członka?"
-
 # Price excl.
 msgid "Price_excl."
 msgstr "Cena z wyłączeniem"
@@ -1524,17 +1519,23 @@ msgstr "Cena z wyłączeniem"
 msgid "VAT"
 msgstr "VAT"
 
-# Order day
-msgid "Order_day"
-msgstr "Dzień zamówienia"
+# Tax rate
+msgid "Tax_rate"
+msgstr "Stawka podatkowa"
 
-# Deleted member
-msgid "Deleted_Member"
-msgstr "Usuń członka"
+# Price excl.
+#, fuzzy
+msgid "Price_incl."
+msgstr "Cena z wyłączeniem"
 
-# Price per weight
-msgid "Price_per_weight"
-msgstr "Cena za wagę"
+# Delivered weight
+#, fuzzy
+msgid "Delivered_deposit"
+msgstr "Dostarczona waga"
+
+# Deposit return
+msgid "Payment_type_deposit_return"
+msgstr "Zwrot kaucji"
 
 # Total sum
 msgid "Total_sum"
@@ -1548,6 +1549,40 @@ msgstr "Wygenerowane faktury"
 # Page {0} of {1}
 msgid "Page_{0}_of_{1}"
 msgstr "Strona {0} z {1}"
+
+# Deleted member?
+#, fuzzy
+msgid "Deleted_member"
+msgstr "Usunąć członka?"
+
+# Order day
+msgid "Order_day"
+msgstr "Dzień zamówienia"
+
+# Deleted member
+msgid "Deleted_Member"
+msgstr "Usuń członka"
+
+# Price per weight
+msgid "Price_per_weight"
+msgstr "Cena za wagę"
+
+# Tax rates overview table
+msgid "Tax_rates_overview_table"
+msgstr "Tabela stawek podatkowych"
+
+# Sum price incl.
+#, fuzzy
+msgid "Sum_price_excl."
+msgstr "Suma cen łącznie z"
+
+# Sum tax
+msgid "Sum_tax"
+msgstr "Suma podatków"
+
+# Sum price incl.
+msgid "Sum_price_incl."
+msgstr "Suma cen łącznie z"
 
 # Your are not signed in.
 msgid "You_are_not_signed_in."
@@ -2033,9 +2068,6 @@ msgstr "Wymagana ilość {0} jest nieprawidłowa."
 # The product with id {0} does not exist.
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "Produkt o id {0} nie istnieje."
-
-msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
-msgstr ""
 
 # The attribute does not exist: {0}
 msgid "The_attribute_does_not_exist:_{0}"
@@ -2537,6 +2569,9 @@ msgstr "Superadmin"
 msgid "Credit_overview"
 msgstr "Przegląd zamówień"
 
+msgid "Invoices"
+msgstr ""
+
 # Order overview
 #, fuzzy
 msgid "Deposit_overview"
@@ -2549,10 +2584,6 @@ msgstr "Przesyłanie kredytu"
 # Payback
 msgid "Payment_type_payback"
 msgstr "Zwrot"
-
-# Deposit return
-msgid "Payment_type_deposit_return"
-msgstr "Zwrot kaucji"
 
 # Member fee
 msgid "Payment_type_member_fee"
@@ -3308,6 +3339,16 @@ msgstr "złożone w dniu"
 # The prices include the VAT.
 msgid "Prices_are_including_vat."
 msgstr "Ceny zawierają podatek VAT."
+
+# Generated invoices
+#, fuzzy
+#~ msgid "Generate_invoice_for_customer"
+#~ msgstr "Wygenerowane faktury"
+
+# Tax rate
+#, fuzzy
+#~ msgid "VAT_rate"
+#~ msgstr "Stawka podatkowa"
 
 # Shopping limit reached
 #~ msgid "Shopping_limit_reached"

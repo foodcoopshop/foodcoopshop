@@ -252,6 +252,7 @@ foreach ($manufacturers as $manufacturer) {
         'target' => '_blank'
     ]);
     echo '</td>';
+
     echo '<td style="width: 29px;">';
     if ($manufacturer->active) {
         $manufacturerLink = $this->Slug->getManufacturerDetail($manufacturer->id_manufacturer, $manufacturer->name);

@@ -20,8 +20,7 @@ use Queue\Shell\Task\QueueTaskInterface;
  * @link          https://www.foodcoopshop.com
  */
 
-class QueueSendInvoiceTask extends QueueTask implements QueueTaskInterface {
-
+class QueueSendInvoiceToManufacturerTask extends QueueTask implements QueueTaskInterface {
 
     use UpdateActionLogTrait;
 
@@ -44,10 +43,10 @@ class QueueSendInvoiceTask extends QueueTask implements QueueTaskInterface {
 
         $email = new AppMailer();
         $email->fallbackEnabled = false;
-        $email->viewBuilder()->setTemplate('Admin.send_invoice');
+        $email->viewBuilder()->setTemplate('Admin.send_invoice_to_manufacturer');
         $email->setTo($manufacturer->address_manufacturer->email)
         ->setAttachments([
-            $invoicePdfFile
+            $invoicePdfFile,
         ])
         ->setSubject(__('Invoice_number_abbreviataion_{0}_{1}', [$invoiceNumber, $invoicePeriodMonthAndYear]))
         ->setViewVars([

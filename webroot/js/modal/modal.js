@@ -14,8 +14,12 @@
 
 foodcoopshop.Modal = {
 
+    getSuccessButton : function(selector) {
+        return $(selector + ' .modal-footer .btn-success');
+    },
+
     bindSuccessButton: function(selector, callback) {
-        $(selector + ' .modal-footer .btn-success').on('click', function() {
+        this.getSuccessButton(selector).on('click', function() {
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-check');
             foodcoopshop.Helper.disableButton($(this));
             callback();
@@ -23,7 +27,7 @@ foodcoopshop.Modal = {
     },
 
     resetButtons: function(selector) {
-        var successButton = $(selector + ' .modal-footer .btn-success');
+        var successButton = this.getSuccessButton(selector);
         foodcoopshop.Helper.removeSpinnerFromButton(successButton, 'fa-check');
         foodcoopshop.Helper.enableButton(successButton);
     },

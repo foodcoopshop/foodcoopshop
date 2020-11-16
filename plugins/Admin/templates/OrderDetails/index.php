@@ -44,6 +44,12 @@ use Cake\Core\Configure;
         ]);
     }
 
+    if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $appAuth->isSuperadmin()) {
+        $this->element('addScript', [
+            'script' => Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomer.init();"
+        ]);
+    }
+
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
         $this->element('addScript', [
             'script' => Configure::read('app.jsNamespace') . ".Helper.initTooltip('.timebased-currency-time-element');"
@@ -189,6 +195,11 @@ foreach ($orderDetails as $orderDetail) {
         'groupBy' => $groupBy
     ]);
 
+    echo $this->element('orderDetailList/data/invoiceLink', [
+        'orderDetail' => $orderDetail,
+        'groupBy' => $groupBy,
+    ]);
+
     echo $this->element('orderDetailList/data/customer', [
         'editRecordAllowed' => $editRecordAllowed,
         'orderDetail' => $orderDetail
@@ -268,16 +279,20 @@ if ($groupBy != 'customer') {
     if (count($pickupDay) == 1) {
         echo '<td></td>';
     }
+    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $appAuth->isSuperadmin()) {
+        echo '<td></td>';
+    }
 }
 if ($groupBy == '') {
     $sumUnitsString = $this->PricePerUnit->getStringFromUnitSums($sums['units'], '<br />');
     echo '<td class="right slim"><b>' . $sumUnitsString . '</b></td>';
-    $c = 3;
+    $colspan = 3;
     if (count($pickupDay) == 2) {
-        $c = 4;
+        $colspan++;
     }
-    echo '<td colspan="'.$c.'"></td>';
+    echo '<td colspan="'.$colspan.'"></td>';
 }
+
 echo '</tr>';
 echo '</table>';
 

@@ -31,6 +31,9 @@ class OrderDetailsTable extends AppTable
         $this->belongsTo('Customers', [
             'foreignKey' => 'id_customer'
         ]);
+        $this->belongsTo('Taxes', [
+            'foreignKey' => 'id_tax'
+        ]);
         $this->hasOne('OrderDetailTaxes', [
             'foreignKey' => 'id_order_detail'
         ]);
@@ -106,6 +109,21 @@ class OrderDetailsTable extends AppTable
         }
 
         return $query;
+    }
+
+    public function getDepositTax($depositGross, $amount)
+    {
+        $vat = 0.2;
+        $depositGrossPerPiece = round($depositGross / $amount, 2);
+        $depositTax = $depositGrossPerPiece - round($depositGrossPerPiece / (1 + $vat), 2);
+        $depositTax = $depositTax * $amount;
+        return $depositTax;
+    }
+
+    public function getDepositNet($depositGross, $amount)
+    {
+        $depositNet = $depositGross - $this->getDepositTax($depositGross, $amount);
+        return $depositNet;
     }
 
     /**

@@ -37,7 +37,7 @@ class ManufacturersTable extends AppTable
         $this->hasMany('Invoices', [
             'foreignKey' => 'id_manufacturer',
             'sort' => [
-                'send_date' => 'DESC'
+                'created' => 'DESC'
             ]
         ]);
         $this->addBehavior('Timestamp');

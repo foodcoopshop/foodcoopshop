@@ -15,10 +15,12 @@
 namespace App\Lib\Pdf;
 
 use Cake\Core\Configure;
-use Cake\I18n\FrozenTime;
 
 class ListTcpdf extends AppTcpdf
 {
+
+    use FooterTrait;
+    use TaxSumTableTrait;
 
     public $headerRight;
 
@@ -32,7 +34,7 @@ class ListTcpdf extends AppTcpdf
         $this->SetFontSize(10);
     }
 
-    public function renderTaxRatesTable($results)
+    public function prepareTaxSumData($results)
     {
 
         $taxRates = [];
@@ -55,42 +57,8 @@ class ListTcpdf extends AppTcpdf
 
         ksort($taxRates);
 
-        $taxRatesTableColumnWidth = 85;
+        return $taxRates;
 
-        $this->Ln(3);
-        $html = '<p><b>'.__('Tax_rates_overview_table').'</b></p>';
-        $this->Ln(3);
-        $this->writeHTML($html, true, false, true, false, '');
-
-        $html = '<table border="1" cellspacing="0" cellpadding="1" style="font-size:8px">';
-
-        $html .= '<tr style="font-weight:bold;background-color:#cecece">';
-        $html .= '<th align="right" width="'.$taxRatesTableColumnWidth.'">'.__('Tax_rate').'</th>';
-        $html .= '<th align="right" width="'.$taxRatesTableColumnWidth.'">'.__('Sum_price_excl.').'</th>';
-        $html .= '<th align="right" width="'.$taxRatesTableColumnWidth.'">'.__('Sum_tax').'</th>';
-        $html .= '<th align="right" width="'.$taxRatesTableColumnWidth.'">'.__('Sum_price_incl.').'</th>';
-        $html .= '</tr>';
-
-        foreach($taxRates as $taxRate => $data) {
-            $html .= '<tr>';
-            $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">';
-            if ($taxRate != intval($taxRate)) {
-                $formattedTaxRate = Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 1);
-            } else {
-                $formattedTaxRate = Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 0);
-            }
-            $html .= $formattedTaxRate . '%';
-            $html .= '</td>';
-            $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. Configure::read('app.numberHelper')->formatAsDecimal($data['sum_price_excl']) . '</td>';
-            $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. Configure::read('app.numberHelper')->formatAsDecimal($data['sum_tax']) . '</td>';
-            $html .= '<td align="right" width="'.$taxRatesTableColumnWidth.'">'. Configure::read('app.numberHelper')->formatAsDecimal($data['sum_price_incl']) . '</td>';
-            $html .= '</tr>';
-        }
-
-        $html .= '</table>';
-
-        $this->Ln(3);
-        $this->writeHTML($html, true, false, true, false, '');
     }
 
     public function renderDetailedOrderList($results, $widths, $headers, $groupType, $onlyShowSums = false)
@@ -198,7 +166,7 @@ class ListTcpdf extends AppTcpdf
 
                 if (in_array(__('VAT'), $headers)) {
                     $indexForWidth ++;
-                    $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($tax) . ' (' . ($taxRate != intval($taxRate) ? Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 1) : Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 0)) . '%)</td>';
+                    $this->table .= '<td width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($tax) . ' (' . Configure::read('app.numberHelper')->formatTaxRate($taxRate) . '%)</td>';
                 }
 
                 $indexForWidth ++;
@@ -290,7 +258,7 @@ class ListTcpdf extends AppTcpdf
             $colspan --;
             $taxRateString = '';
             if ($detailsHidden) {
-                $taxRateString = ' (' . ($taxRate != intval($taxRate) ? Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 1) : Configure::read('app.numberHelper')->formatAsDecimal($taxRate, 0)) . '%)';
+                $taxRateString = ' (' . Configure::read('app.numberHelper')->formatTaxRate($taxRate) . '%)';
             }
             $this->table .= '<td align="right" width="' . $widths[$indexForWidth] . '">' . Configure::read('app.numberHelper')->formatAsDecimal($taxSum) . $taxRateString . '</td>';
             $indexForWidth ++;
@@ -390,30 +358,6 @@ class ListTcpdf extends AppTcpdf
 
         $this->SetY(36);
         $this->drawLine();
-    }
-
-    /**
-     * parent class is overriden although it's name is Header() (capital letter)
-     * php functions are case insensitive
-     */
-    public function footer()
-    {
-        $this->SetY(-19);
-        $this->drawLine();
-        $this->SetFontSize(10);
-        $this->Cell(0, 10, $this->infoTextForFooter , 0, false, 'L', 0, '', 0, false, 'T', 'M');
-        $this->Ln(4);
-        $now = new FrozenTime();
-        $textForFooterRight =
-        __('Generated_on_{0}', [
-            $now->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeLongWithSecs'))
-        ])
-        . ', ' .
-        __('Page_{0}_of_{1}', [
-            $this->getAliasNumPage(), $this->getAliasNbPages()
-        ]);
-        $this->Cell(0, 10, $textForFooterRight, 0, false, 'R', 0, '', 0, false, 'T', 'M');
-        $this->SetFontSize(12);
     }
 
 }

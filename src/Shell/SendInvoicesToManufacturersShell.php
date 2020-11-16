@@ -18,7 +18,7 @@ use App\Mailer\AppMailer;
 use Cake\Core\Configure;
 use Cake\I18n\Time;
 
-class SendInvoicesShell extends AppShell
+class SendInvoicesToManufacturersShell extends AppShell
 {
 
     public $cronjobRunDay;
@@ -111,7 +111,7 @@ class SendInvoicesShell extends AppShell
         $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
         foreach ($manufacturers as $manufacturer) {
             if (!empty($manufacturer->current_order_count)) {
-                $this->QueuedJobs->createJob('GenerateInvoice', [
+                $this->QueuedJobs->createJob('GenerateInvoiceForManufacturer', [
                     'invoiceNumber' => $manufacturer->invoiceNumber,
                     'invoicePdfFile' => $manufacturer->invoicePdfFile,
                     'manufacturerId' => $manufacturer->id_manufacturer,
@@ -153,7 +153,7 @@ class SendInvoicesShell extends AppShell
         foreach ($manufacturers as $manufacturer) {
 
             $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
-            $manufacturer->invoiceNumber = $this->Manufacturer->Invoices->getNextInvoiceNumber($manufacturer->invoices);
+            $manufacturer->invoiceNumber = $this->Manufacturer->Invoices->getNextInvoiceNumberForManufacturer($manufacturer->invoices);
             $manufacturer->invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink(
                 $manufacturer->name, $manufacturer->id_manufacturer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay), $manufacturer->invoiceNumber
             );

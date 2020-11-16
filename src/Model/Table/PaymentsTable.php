@@ -4,7 +4,6 @@ namespace App\Model\Table;
 
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
-use Cake\I18n\Time;
 use Cake\Validation\Validator;
 use App\Lib\Error\Exception\InvalidParameterException;
 
@@ -144,6 +143,20 @@ class PaymentsTable extends AppTable
         $result = $query->toArray();
 
         return $result;
+    }
+
+    public function getCustomerDepositNotBilled($customerId)
+    {
+        $payments = $this->find('all', [
+            'conditions' => [
+                'Payments.status' => APP_ON,
+                'Payments.invoice_id' => 0,
+                'Payments.type' => 'deposit',
+                'Payments.id_manufacturer' => 0,
+                'Payments.id_customer' => $customerId,
+            ]
+        ])->toArray();
+        return $payments;
     }
 
     public function getCustomerDepositSumByCalendarWeek()

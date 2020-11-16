@@ -64,6 +64,16 @@ class CustomersTable extends AppTable
                 'Payments.status' => APP_ON
             ]
         ]);
+        $this->hasMany('Invoices', [
+            'foreignKey' => 'id_customer',
+            'conditions' => [
+                'id_customer > 0',
+            ],
+            'sort' => [
+                'created' => 'DESC'
+            ]
+        ]);
+
         $this->setPrimaryKey('id_customer');
     }
 

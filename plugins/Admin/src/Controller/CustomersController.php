@@ -2,6 +2,8 @@
 namespace Admin\Controller;
 
 use App\Lib\Error\Exception\InvalidParameterException;
+use App\Lib\Invoice\GenerateInvoiceToCustomer;
+use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
 use App\Lib\PdfWriter\MyMemberCardPdfWriter;
 use App\Lib\PdfWriter\MemberCardsPdfWriter;
 use App\Lib\PdfWriter\TermsOfUsePdfWriter;
@@ -662,6 +664,95 @@ class CustomersController extends AdminAppController
         $this->set('sums', $sums);
 
         $this->set('title_for_layout', __d('admin', 'Credit_and_deposit_balance'));
+    }
+
+    public function generateInvoice()
+    {
+
+        $customerId = h($this->getRequest()->getQuery('customerId'));
+        $paidInCash = h($this->getRequest()->getQuery('paidInCash'));
+
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $customerId,
+            ],
+        ])->first();
+
+        if (empty($customer)) {
+            throw new Exception('customer not found');
+        }
+
+        $data = $this->Customer->Invoices->getDataForCustomerInvoice($customer->id_customer, Configure::read('app.timeHelper')->getCurrentDateForDatabase());
+        if (!$data->new_invoice_necessary) {
+            $this->Flash->success(__d('admin', 'No_data_available_to_generate_an_invoice.'));
+            $this->redirect($this->referer());
+            return;
+        }
+
+        $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
+
+        $invoiceToCustomer = new GenerateInvoiceToCustomer();
+        $newInvoice = $invoiceToCustomer->run($data, $currentDay, $paidInCash);
+
+        $linkToInvoice = Configure::read('app.htmlHelper')->link(
+            __d('admin', 'Download'),
+            '/admin/lists/getInvoice?file=' . $newInvoice->filename,
+            [
+                'class' => 'btn btn-outline-light btn-flash-message',
+                'target' => '_blank',
+                'escape' => false
+            ],
+        );
+        $this->Flash->success(
+            __d('admin', 'The_invoice_was_generated_successfully.') . ' ' . $linkToInvoice,
+        );
+        $this->redirect($this->referer());
+
+    }
+
+    public function previewInvoice()
+    {
+        $customerId = h($this->getRequest()->getQuery('customerId'));
+        $paidInCash = h($this->getRequest()->getQuery('paidInCash'));
+
+        $currentDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+        if (!empty($this->getRequest()->getQuery('currentDay'))) {
+            $currentDay = $this->getRequest()->getQuery('currentDay');
+        }
+
+        $customer = $this->Customer->find('all', [
+            'conditions' => [
+                'Customers.id_customer' => $customerId,
+            ],
+        ])->first();
+
+        if (empty($customer)) {
+            throw new NotFoundException();
+        }
+
+        $newInvoiceNumber = 'xxx';
+        $newInvoiceDate = 'xx.xx.xxxx';
+
+        $pdfWriter = new InvoiceToCustomerPdfWriter();
+        $data = $this->Customer->Invoices->getDataForCustomerInvoice($customerId, $currentDay);
+        if (!$data->new_invoice_necessary) {
+            die(__d('admin', 'No_data_available_to_generate_an_invoice.'));
+        }
+
+        $pdfWriter->prepareAndSetData($data, $paidInCash, $newInvoiceNumber, $newInvoiceDate);
+
+        if (!empty($this->request->getQuery('outputType')) && $this->request->getQuery('outputType') == 'html') {
+            return $this->response->withStringBody($pdfWriter->writeHtml());
+        }
+
+        $invoicePdfFile = Configure::read('app.htmlHelper')->getInvoiceLink($customer->name, $customerId, date('Y-m-d'), $newInvoiceNumber);
+        $invoicePdfFile = explode(DS, $invoicePdfFile);
+        $invoicePdfFile = end($invoicePdfFile);
+        $invoicePdfFile = substr($invoicePdfFile, 11);
+        $invoicePdfFile = $this->request->getQuery('dateFrom'). '-' . $this->request->getQuery('dateTo') . '-' . $invoicePdfFile;
+        $pdfWriter->setFilename($invoicePdfFile);
+
+        die($pdfWriter->writeInline());
     }
 
     public function index()

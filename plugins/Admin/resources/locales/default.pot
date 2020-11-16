@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-17 21:39+0200\n"
+"POT-Creation-Date: 2020-11-14 20:38+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -176,6 +176,15 @@ msgstr ""
 msgid "Credit_and_deposit_balance"
 msgstr ""
 
+msgid "No_data_available_to_generate_an_invoice."
+msgstr ""
+
+msgid "Download"
+msgstr ""
+
+msgid "The_invoice_was_generated_successfully."
+msgstr ""
+
 msgid "Deposit_overview"
 msgstr ""
 
@@ -183,6 +192,9 @@ msgid "Deposit_account"
 msgstr ""
 
 msgid "Deposit_take_back_detail_for"
+msgstr ""
+
+msgid "Invoices"
 msgstr ""
 
 msgid "_Order_list_filename_"
@@ -1064,7 +1076,7 @@ msgstr ""
 msgid "Deposit_overview_for_all_manufacturers"
 msgstr ""
 
-msgid "deposit"
+msgid "Deposit"
 msgstr ""
 
 msgid "There_is_no_{0}_available."
@@ -1098,6 +1110,27 @@ msgid "Empty_glasses_returned_by_manufacturer"
 msgstr ""
 
 msgid "Returned_deposit_by_member"
+msgstr ""
+
+msgid "Invoice_number_abbreviation"
+msgstr ""
+
+msgid "Invoice_date"
+msgstr ""
+
+msgid "Sum_excl_tax"
+msgstr ""
+
+msgid "Sum_tax"
+msgstr ""
+
+msgid "Sum_incl_tax"
+msgstr ""
+
+msgid "Paid_in_cash"
+msgstr ""
+
+msgid "Email_sent"
 msgstr ""
 
 msgid "Pickup_day"
@@ -1377,9 +1410,6 @@ msgid "Zero_means_no_limit_and_global_limit_of_{0}_is_used."
 msgstr ""
 
 msgid "Pickup_days"
-msgstr ""
-
-msgid "Deposit"
 msgstr ""
 
 msgid "Stock_products"
@@ -1736,6 +1766,9 @@ msgstr ""
 msgid "Click_to_change_member"
 msgstr ""
 
+msgid "Invoice"
+msgstr ""
+
 msgid "Add_product_feedback"
 msgstr ""
 
@@ -2039,6 +2072,12 @@ msgstr ""
 msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
 msgstr ""
 
+msgid "Please_find_your_current_invoice_attached."
+msgstr ""
+
+msgid "{0}_thanks_you_for_your_purchase!"
+msgstr ""
+
 msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
 msgstr ""
 
@@ -2072,16 +2111,13 @@ msgstr ""
 msgid "Your_contact_person"
 msgstr ""
 
+msgid "Paid_in_cash_on_{0}."
+msgstr ""
+
 msgid "conveyed_for"
 msgstr ""
 
-msgid "Invoice_number_abbreviation"
-msgstr ""
-
 msgid "Orders_from"
-msgstr ""
-
-msgid "Invoice_date"
 msgstr ""
 
 msgid "Price_excl."

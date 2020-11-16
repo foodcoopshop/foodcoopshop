@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-10-17 21:39+0200\n"
+"POT-Creation-Date: 2020-11-14 20:38+0100\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -182,6 +182,16 @@ msgstr "Suma rekompensat kaucji dla producentów"
 msgid "Credit_and_deposit_balance"
 msgstr "Twoje saldo wkładów"
 
+msgid "No_data_available_to_generate_an_invoice."
+msgstr ""
+
+msgid "Download"
+msgstr ""
+
+#, fuzzy
+msgid "The_invoice_was_generated_successfully."
+msgstr "Komentarz został zmodyfikowany pomyślnie."
+
 #, fuzzy
 msgid "Deposit_overview"
 msgstr "Zwrot wkładu"
@@ -191,6 +201,10 @@ msgstr "Konto kaucji"
 
 msgid "Deposit_take_back_detail_for"
 msgstr "Sczegóły odbioru kaucji dla"
+
+#, fuzzy
+msgid "Invoices"
+msgstr "Data faktury"
 
 msgid "_Order_list_filename_"
 msgstr "_Lista_zamowien_"
@@ -1106,8 +1120,7 @@ msgstr "products"
 msgid "Deposit_overview_for_all_manufacturers"
 msgstr "Suma rekompensat kaucji dla producentów"
 
-#, fuzzy
-msgid "deposit"
+msgid "Deposit"
 msgstr "Kaucja"
 
 msgid "There_is_no_{0}_available."
@@ -1144,6 +1157,29 @@ msgstr "Zwrócono puste opakowanie"
 #, fuzzy
 msgid "Returned_deposit_by_member"
 msgstr "Zwrócony wkład"
+
+msgid "Invoice_number_abbreviation"
+msgstr "Faktura nr"
+
+msgid "Invoice_date"
+msgstr "Data faktury"
+
+msgid "Sum_excl_tax"
+msgstr ""
+
+msgid "Sum_tax"
+msgstr ""
+
+msgid "Sum_incl_tax"
+msgstr ""
+
+#, fuzzy
+msgid "Paid_in_cash"
+msgstr "Zapłacone przez wszystkich członków w {0}"
+
+#, fuzzy
+msgid "Email_sent"
+msgstr "Mail został wysłany do {0}."
 
 msgid "Pickup_day"
 msgstr "Dzień odbioru"
@@ -1434,9 +1470,6 @@ msgstr "0 oznacza, że limit globalny {0} został zużyty."
 
 msgid "Pickup_days"
 msgstr "Dni odbioru"
-
-msgid "Deposit"
-msgstr "Kaucja"
 
 msgid "Stock_products"
 msgstr "Produkty magazynowane"
@@ -1802,6 +1835,10 @@ msgid "Click_to_change_member"
 msgstr "Kliknij aby zmienić cenę"
 
 #, fuzzy
+msgid "Invoice"
+msgstr "Data faktury"
+
+#, fuzzy
 msgid "Add_product_feedback"
 msgstr "Dodaj produkt"
 
@@ -2126,6 +2163,12 @@ msgstr "Nie zapomnij, że masz produkty do odbioru w {0}."
 msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
 msgstr "Otrzymujesz to przypomnienie ponieważ twoje zamówienie zostało złożone wcześniej niż {0} dni temu."
 
+msgid "Please_find_your_current_invoice_attached."
+msgstr ""
+
+msgid "{0}_thanks_you_for_your_purchase!"
+msgstr ""
+
 msgid "this_invoice_contains_all_products_that_have_been_delivered_in_{0}."
 msgstr "ta faktura zawiera wszystkie produkty, które zostały dostarczone dnia {0}."
 
@@ -2159,17 +2202,15 @@ msgstr "W celu zalogowania się proszę użyć adresu email z tej wiadomości. A
 msgid "Your_contact_person"
 msgstr "Twoja osoba kontaktowa"
 
+#, fuzzy
+msgid "Paid_in_cash_on_{0}."
+msgstr "Zapłacone przez wszystkich członków w {0}"
+
 msgid "conveyed_for"
 msgstr "przekazane"
 
-msgid "Invoice_number_abbreviation"
-msgstr "Faktura nr"
-
 msgid "Orders_from"
 msgstr "Zamówienia od"
-
-msgid "Invoice_date"
-msgstr "Data faktury"
 
 msgid "Price_excl."
 msgstr "Cena z wyłączeniem"
@@ -2217,6 +2258,10 @@ msgstr "Wagi dostarczonych produktów mogą ulec zmianie, więc cena również m
 msgid "Product_ID"
 msgstr "Produkt"
 
+#, fuzzy
+#~ msgid "deposit"
+#~ msgstr "Kaucja"
+
 #~ msgid "Of_the_{0}_on_the_credit_account_{1}_are_reserved_for_deposit_compensation_payments._As_long_as_this_amount_is_negative_money_for_deposit_compensation_payments_is_available."
 #~ msgstr "{1} (z {0} na koncie kredytowym) zarezerwowano na poczet rekompensat kaucji. Dopóki kwota jest ujemna, są środki na rekompensaty."
 
@@ -2236,10 +2281,6 @@ msgstr "Produkt"
 
 #~ msgid "Order_lists_for_the_day"
 #~ msgstr "Listy zamówień dla"
-
-#, fuzzy
-#~ msgid "Email_sent_to:{0}"
-#~ msgstr "Mail został wysłany do {0}."
 
 #, fuzzy
 #~ msgid "Feedback_to_product"

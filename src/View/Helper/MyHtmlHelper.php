@@ -498,7 +498,14 @@ class MyHtmlHelper extends HtmlHelper
             'url' => Configure::read('app.slugHelper')->getCreditBalanceSum(),
             'key' => 'credit_balance_sum',
         ];
-        if (1) {
+        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+            $tabs[] = [
+                'name' => __('Invoices'),
+                'url' => Configure::read('app.slugHelper')->getInvoices(),
+                'key' => 'invoices',
+            ];
+        }
+        if ($this->paymentIsCashless() && Configure::read('app.isDepositPaymentCashless')) {
             $tabs[] = [
                 'name' => __('Deposit_overview'),
                 'url' => Configure::read('app.slugHelper')->getDepositOverviewDiagram(),
@@ -739,10 +746,10 @@ class MyHtmlHelper extends HtmlHelper
         return $url;
     }
 
-    public function getInvoiceLink($manufacturerName, $manufacturerId, $invoiceDate, $invoiceNumber)
+    public function getInvoiceLink($name, $id, $invoiceDate, $invoiceNumber)
     {
         $url = Configure::read('app.folder_invoices') . DS . date('Y', strtotime($invoiceDate)) . DS . date('m', strtotime($invoiceDate)) . DS;
-        $url .= $invoiceDate . '_' . StringComponent::slugify($manufacturerName) . '_' . $manufacturerId . __('_Invoice_filename_') . $invoiceNumber . '_' . StringComponent::slugify(Configure::read('appDb.FCS_APP_NAME')) . '.pdf';
+        $url .= $invoiceDate . '_' . StringComponent::slugify($name) . '_' . $id . __('_Invoice_filename_') . $invoiceNumber . '_' . StringComponent::slugify(Configure::read('appDb.FCS_APP_NAME')) . '.pdf';
         return $url;
     }
 

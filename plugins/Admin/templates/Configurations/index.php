@@ -188,7 +188,12 @@ $this->element('addScript', [
 
         <?php
         foreach ($configurations as $configuration) {
+
             if ($configuration->type != 'readonly') {
+                continue;
+            }
+
+            if (in_array($configuration->name, ['FCS_DEPOSIT_TAX_RATE', 'FCS_INVOICE_HEADER_TEXT']) && !Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
                 continue;
             }
 

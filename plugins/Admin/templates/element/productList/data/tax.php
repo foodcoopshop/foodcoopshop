@@ -30,7 +30,7 @@ echo '<td>';
                 'escape' => false
             ]
         );
-        echo '<span class="tax-for-dialog">' . ($taxRate != intval($taxRate) ? $this->Number->formatAsDecimal($taxRate, 1) : $this->Number->formatAsDecimal($taxRate, 0)) . '%' . '</span>';
+        echo '<span class="tax-for-dialog">' . $this->Number->formatTaxRate($taxRate) . '%' . '</span>';
     }
 echo '</td>';
 

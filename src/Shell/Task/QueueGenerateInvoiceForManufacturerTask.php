@@ -1,9 +1,8 @@
 <?php
 namespace App\Shell\Task;
 
-use App\Lib\PdfWriter\InvoicePdfWriter;
+use App\Lib\PdfWriter\InvoiceToManufacturerPdfWriter;
 use Cake\Core\Configure;
-use Cake\I18n\Time;
 use Queue\Shell\Task\QueueTask;
 use Queue\Shell\Task\QueueTaskInterface;
 
@@ -21,7 +20,7 @@ use Queue\Shell\Task\QueueTaskInterface;
  * @link          https://www.foodcoopshop.com
  */
 
-class QueueGenerateInvoiceTask extends QueueTask implements QueueTaskInterface {
+class QueueGenerateInvoiceForManufacturerTask extends QueueTask implements QueueTaskInterface {
 
     use UpdateActionLogTrait;
 
@@ -50,14 +49,13 @@ class QueueGenerateInvoiceTask extends QueueTask implements QueueTaskInterface {
         $invoiceDate = date(Configure::read('app.timeHelper')->getI18Format('DateShortAlt'));
         $invoicePeriod = Configure::read('app.timeHelper')->getLastMonthNameAndYear();
 
-        $pdfWriter = new InvoicePdfWriter();
+        $pdfWriter = new InvoiceToManufacturerPdfWriter();
         $pdfWriter->prepareAndSetData($manufacturer->id_manufacturer, $dateFrom, $dateTo, $invoiceNumber, $validOrderStates, $invoicePeriod, $invoiceDate);
         $pdfWriter->setFilename($invoicePdfFile);
         $pdfWriter->writeFile();
 
         $invoice2save = [
             'id_manufacturer' => $manufacturer->id_manufacturer,
-            'send_date' => Time::now(),
             'invoice_number' => (int) $invoiceNumber,
             'user_id' => 0,
         ];
@@ -71,7 +69,7 @@ class QueueGenerateInvoiceTask extends QueueTask implements QueueTaskInterface {
         $sendInvoice = $this->Manufacturer->getOptionSendInvoice($manufacturer->send_invoice);
         if ($sendInvoice) {
             $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
-            $this->QueuedJobs->createJob('SendInvoice', [
+            $this->QueuedJobs->createJob('SendInvoiceToManufacturer', [
                 'invoiceNumber' => $invoiceNumber,
                 'invoicePdfFile' => $invoicePdfFile,
                 'manufacturerId' => $manufacturer->id_manufacturer,

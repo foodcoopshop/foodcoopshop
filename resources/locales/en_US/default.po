@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-17 21:39+0200\n"
-"PO-Revision-Date: 2020-10-19 09:10+0200\n"
+"POT-Creation-Date: 2020-11-11 16:36+0100\n"
+"PO-Revision-Date: 2020-11-11 16:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
@@ -158,6 +158,9 @@ msgstr "New products"
 
 msgid "Search"
 msgstr "Search"
+
+msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
+msgstr "Please add new credit, your credit minus cart equals {0}. You can place orders until {1}."
 
 msgid "The_desired_amount_{0}_of_the_product_{1}_is_not_available_any_more_available_amount_{2}."
 msgstr "The desired amount {0} of the product {1} is not available any more. Available amount: {2}"
@@ -843,6 +846,18 @@ msgstr "Your feedback will be sent to the manufacturer {0} after successful savi
 msgid "Tip:_Change_delivery_rhythm_for_multiple_products:_Select_checkboxes_and_click_bottom_button."
 msgstr "Tip: You can change the delivery rhythm for multiple products by selecting them. Then click the bottom button."
 
+msgid "Generate_invoice"
+msgstr "Generate invoice"
+
+msgid "Really_generate_invoice_for_0"
+msgstr "Really generate invoice for {0}?"
+
+msgid "Show_preview"
+msgstr "Show preview"
+
+msgid "Paid_in_cash"
+msgstr "Paid in cash"
+
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
 
@@ -1107,29 +1122,35 @@ msgstr "Your shopping bag was empty."
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
 
-msgid "Tax_rates_overview_table"
-msgstr "Tax rates overview table"
-
-msgid "Tax_rate"
-msgstr "Tax rate"
-
-msgid "Sum_price_excl."
-msgstr "Sum price excl."
-
-msgid "Sum_tax"
-msgstr "Sum tax"
-
-msgid "Sum_price_incl."
-msgstr "Sum price incl."
-
-msgid "Deleted_member"
-msgstr "Deleted member"
-
 msgid "Price_excl."
 msgstr "Price excl."
 
 msgid "VAT"
 msgstr "VAT"
+
+msgid "Tax_rate"
+msgstr "Tax rate"
+
+msgid "Price_incl."
+msgstr "Price incl."
+
+msgid "Delivered_deposit"
+msgstr "Delivered deposit"
+
+msgid "Payment_type_deposit_return"
+msgstr "Deposit return"
+
+msgid "Total_sum"
+msgstr "Total sum"
+
+msgid "Generated_on_{0}"
+msgstr "Generated on {0}"
+
+msgid "Page_{0}_of_{1}"
+msgstr "Page {0} of {1}"
+
+msgid "Deleted_member"
+msgstr "Deleted member"
 
 msgid "Order_day"
 msgstr "Order day"
@@ -1140,14 +1161,17 @@ msgstr "Deleted member"
 msgid "Price_per_weight"
 msgstr "Price per weight"
 
-msgid "Total_sum"
-msgstr "Total sum"
+msgid "Tax_rates_overview_table"
+msgstr "Tax rates overview table"
 
-msgid "Generated_on_{0}"
-msgstr "Generated on {0}"
+msgid "Sum_price_excl."
+msgstr "Sum price excl."
 
-msgid "Page_{0}_of_{1}"
-msgstr "Page {0} of {1}"
+msgid "Sum_tax"
+msgstr "Sum tax"
+
+msgid "Sum_price_incl."
+msgstr "Sum price incl."
 
 msgid "You_are_not_signed_in."
 msgstr "Your are not signed in."
@@ -1508,9 +1532,6 @@ msgstr "The desired amount {0} is not valid."
 
 msgid "Product_with_id_{0}_does_not_exist."
 msgstr "The product with id {0} does not exist."
-
-msgid "Please_add_credit_({0})_(minimal_credit_is_{1})."
-msgstr "Please add new credit, your credit minus cart equals {0}. You can place orders until {1}."
 
 msgid "The_attribute_does_not_exist:_{0}"
 msgstr "The attribute does not exist: {0}"
@@ -1881,6 +1902,9 @@ msgstr "Superadmin"
 msgid "Credit_overview"
 msgstr "Credit overview"
 
+msgid "Invoices"
+msgstr "Rechnungen"
+
 msgid "Deposit_overview"
 msgstr "Deposit overview"
 
@@ -1889,9 +1913,6 @@ msgstr "Credit upload"
 
 msgid "Payment_type_payback"
 msgstr "Payback"
-
-msgid "Payment_type_deposit_return"
-msgstr "Deposit return"
 
 msgid "Payment_type_member_fee"
 msgstr "Member fee"
@@ -2456,6 +2477,14 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#, fuzzy
+#~ msgid "Generate_invoice_for_customer"
+#~ msgstr "Generated invoices"
+
+#, fuzzy
+#~ msgid "VAT_rate"
+#~ msgstr "Tax rate"
 
 #~ msgid "Shopping_limit_reached"
 #~ msgstr "Shopping limit reached"
