@@ -669,6 +669,10 @@ class CustomersController extends AdminAppController
     public function generateInvoice()
     {
 
+        if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') || !$this->AppAuth->isSuperadmin()) {
+            throw new ForbiddenException();
+        }
+
         $customerId = h($this->getRequest()->getQuery('customerId'));
         $paidInCash = h($this->getRequest()->getQuery('paidInCash'));
 
@@ -712,6 +716,11 @@ class CustomersController extends AdminAppController
 
     public function previewInvoice()
     {
+
+        if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') || !$this->AppAuth->isSuperadmin()) {
+            throw new ForbiddenException();
+        }
+
         $customerId = h($this->getRequest()->getQuery('customerId'));
         $paidInCash = h($this->getRequest()->getQuery('paidInCash'));
 

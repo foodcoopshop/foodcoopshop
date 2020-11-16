@@ -16,6 +16,7 @@ namespace App\Shell;
 
 use App\Lib\Invoice\GenerateInvoiceToCustomer;
 use Cake\Core\Configure;
+use Cake\Http\Exception\ForbiddenException;
 
 class SendInvoicesToCustomersShell extends AppShell
 {
@@ -25,6 +26,10 @@ class SendInvoicesToCustomersShell extends AppShell
     public function main()
     {
         parent::main();
+
+        if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+            throw new ForbiddenException();
+        }
 
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Invoice = $this->getTableLocator()->get('Invoices');

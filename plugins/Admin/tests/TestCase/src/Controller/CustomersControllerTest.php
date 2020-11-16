@@ -29,6 +29,8 @@ class CustomersControllerTest extends AppCakeTestCase
     public function testGenerateInvoicePaidInCashSavedCorrectly()
     {
 
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+
         $this->loginAsSuperadmin();
         $customerId = Configure::read('test.superadminId');
         $paidInCash = 1;
