@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-11 16:36+0100\n"
+"POT-Creation-Date: 2020-11-17 10:37+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1511,6 +1511,9 @@ msgstr "Twój koszyk był pusty."
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informacja-o-prawie-do-odstapienia"
 
+msgid "ID"
+msgstr ""
+
 # Price excl.
 msgid "Price_excl."
 msgstr "Cena z wyłączeniem"
@@ -1518,10 +1521,6 @@ msgstr "Cena z wyłączeniem"
 # VAT
 msgid "VAT"
 msgstr "VAT"
-
-# Tax rate
-msgid "Tax_rate"
-msgstr "Stawka podatkowa"
 
 # Price excl.
 #, fuzzy
@@ -1570,6 +1569,10 @@ msgstr "Cena za wagę"
 # Tax rates overview table
 msgid "Tax_rates_overview_table"
 msgstr "Tabela stawek podatkowych"
+
+# Tax rate
+msgid "Tax_rate"
+msgstr "Stawka podatkowa"
 
 # Sum price incl.
 #, fuzzy

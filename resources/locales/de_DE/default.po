@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-11 16:36+0100\n"
+"POT-Creation-Date: 2020-11-17 10:37+0100\n"
 "PO-Revision-Date: 2020-11-13 10:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1122,14 +1122,14 @@ msgstr "Deine Einkaufstasche war leer."
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
 
+msgid "ID"
+msgstr ""
+
 msgid "Price_excl."
 msgstr "Preis exkl."
 
 msgid "VAT"
 msgstr "USt."
-
-msgid "Tax_rate"
-msgstr "Steuersatz"
 
 msgid "Price_incl."
 msgstr "Preis inkl."
@@ -1163,6 +1163,9 @@ msgstr "Preis nach Gewicht"
 
 msgid "Tax_rates_overview_table"
 msgstr "Übersichtstabelle nach Steuersatz"
+
+msgid "Tax_rate"
+msgstr "Steuersatz"
 
 msgid "Sum_price_excl."
 msgstr "Summe Preis exkl."

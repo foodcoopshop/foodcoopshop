@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-14 20:38+0100\n"
+"POT-Creation-Date: 2020-11-17 10:39+0100\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1181,6 +1181,15 @@ msgstr "Zapłacone przez wszystkich członków w {0}"
 msgid "Email_sent"
 msgstr "Mail został wysłany do {0}."
 
+msgid "Tax_overview_cash"
+msgstr ""
+
+msgid "Tax_overview_cashless"
+msgstr ""
+
+msgid "Tax_overview_total"
+msgstr ""
+
 msgid "Pickup_day"
 msgstr "Dzień odbioru"
 
@@ -1787,6 +1796,14 @@ msgstr "1 dzień wstecz"
 
 msgid "to"
 msgstr "do"
+
+#, fuzzy
+msgid "Sum_price_excl."
+msgstr "Cena z wyłączeniem"
+
+#, fuzzy
+msgid "Sum_price_incl."
+msgstr "Cena z"
 
 msgid "Order_adaptions"
 msgstr "Mod. zamówień"

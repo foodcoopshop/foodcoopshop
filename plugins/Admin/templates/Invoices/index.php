@@ -55,9 +55,9 @@ echo '<table style="margin-top:20px;" class="list no-clone-last-row">';
         echo '<th>' . $this->Paginator->sort('Invoice.invoice_number', __d('admin', 'Invoice_number_abbreviation')) . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoice.created', __d('admin', 'Invoice_date')) . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoice.customer.name.', __d('admin', 'Name')) . '</th>';
-        echo '<th>' . __d('admin', 'Sum_excl_tax') . '</th>';
-        echo '<th>' . __d('admin', 'Sum_tax') . '</th>';
-        echo '<th>' . __d('admin', 'Sum_incl_tax') . '</th>';
+        echo '<th style="text-align:right;">' . __d('admin', 'Sum_excl_tax') . '</th>';
+        echo '<th style="text-align:right;">' . __d('admin', 'Sum_tax') . '</th>';
+        echo '<th style="text-align:right;">' . __d('admin', 'Sum_incl_tax') . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoice.paid_in_cash.', __d('admin', 'Paid_in_cash')) . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoice.email_status.', __d('admin', 'Email_sent')) . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoice.filename.', __d('admin', 'Download')) . '</th>';
@@ -79,15 +79,15 @@ echo '<table style="margin-top:20px;" class="list no-clone-last-row">';
                 echo $this->Html->getNameRespectingIsDeleted($invoice->customer);
             echo '</td>';
 
-            echo '<td>';
+            echo '<td style="text-align:right;">';
                 echo $this->Number->formatAsCurrency($invoice->sum_price_excl);
             echo '</td>';
 
-            echo '<td>';
+            echo '<td style="text-align:right;">';
                 echo $this->Number->formatAsCurrency($invoice->sum_tax);
             echo '</td>';
 
-            echo '<td>';
+            echo '<td style="text-align:right;">';
                 echo $this->Number->formatAsCurrency($invoice->sum_price_incl);
             echo '</td>';
 
@@ -119,6 +119,50 @@ echo '<table style="margin-top:20px;" class="list no-clone-last-row">';
 
     }
 
+    echo '<tr style="font-weight:bold;">';
+
+        echo '<td colspan="3" style="text-align:right;">';
+            echo __d('admin', 'Total_sum');
+        echo '</td>';
+
+        echo '<td style="text-align:right;">';
+            echo $this->Number->formatAsCurrency($invoiceSums['total_sum_price_excl']);
+        echo '</td>';
+
+        echo '<td style="text-align:right;">';
+            echo $this->Number->formatAsCurrency($invoiceSums['total_sum_tax']);
+        echo '</td>';
+
+        echo '<td style="text-align:right;">';
+            echo $this->Number->formatAsCurrency($invoiceSums['total_sum_price_incl']);
+        echo '</td>';
+
+        echo '<td colspan="3">';
+        echo '</td>';
+
+    echo '</tr>';
+
+
 echo '</table>';
+
+echo '<hr />';
+
+if (!empty($taxRates['cash'])) {
+    echo '<h4>' . __d('admin', 'Tax_overview_cash') . '</h4>';
+    echo $this->element('invoice/taxSumTable', ['taxRates' => $taxRates['cash'], 'taxRatesSums' => $taxRatesSums['cash']]);
+}
+
+
+if (!empty($taxRates['cashless'])) {
+    echo '<h4>' . __d('admin', 'Tax_overview_cashless') . '</h4>';
+    echo $this->element('invoice/taxSumTable', ['taxRates' => $taxRates['cashless'], 'taxRatesSums' => $taxRatesSums['cashless']]);
+}
+
+echo '<hr />';
+
+if (!empty($taxRates['total'])) {
+    echo '<h4>' . __d('admin', 'Tax_overview_total') . '</h4>';
+    echo $this->element('invoice/taxSumTable', ['taxRates' => $taxRates['total'], 'taxRatesSums' => $taxRatesSums['total']]);
+}
 
 ?>

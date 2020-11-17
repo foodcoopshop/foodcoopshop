@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-14 20:38+0100\n"
+"POT-Creation-Date: 2020-11-17 10:39+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1133,6 +1133,15 @@ msgstr ""
 msgid "Email_sent"
 msgstr ""
 
+msgid "Tax_overview_cash"
+msgstr ""
+
+msgid "Tax_overview_cashless"
+msgstr ""
+
+msgid "Tax_overview_total"
+msgstr ""
+
 msgid "Pickup_day"
 msgstr ""
 
@@ -1719,6 +1728,12 @@ msgid "1_day_back"
 msgstr ""
 
 msgid "to"
+msgstr ""
+
+msgid "Sum_price_excl."
+msgstr ""
+
+msgid "Sum_price_incl."
 msgstr ""
 
 msgid "Order_adaptions"

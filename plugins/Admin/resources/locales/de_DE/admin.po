@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-14 20:38+0100\n"
-"PO-Revision-Date: 2020-11-14 20:39+0100\n"
+"POT-Creation-Date: 2020-11-17 10:39+0100\n"
+"PO-Revision-Date: 2020-11-17 10:40+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1134,6 +1134,15 @@ msgstr "Bar bezahlt"
 msgid "Email_sent"
 msgstr "E-Mail versendet"
 
+msgid "Tax_overview_cash"
+msgstr "Steuerübersicht bar"
+
+msgid "Tax_overview_cashless"
+msgstr "Steuerübersicht unbar"
+
+msgid "Tax_overview_total"
+msgstr "Steuerübersicht Gesamt"
+
 msgid "Pickup_day"
 msgstr "Abholtag"
 
@@ -1721,6 +1730,12 @@ msgstr "1 Tag vor"
 
 msgid "to"
 msgstr "bis"
+
+msgid "Sum_price_excl."
+msgstr "Summe Preis exkl."
+
+msgid "Sum_price_incl."
+msgstr "Summe Preis inkl."
 
 msgid "Order_adaptions"
 msgstr "Bestelländerungen"
