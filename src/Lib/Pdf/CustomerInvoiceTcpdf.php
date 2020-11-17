@@ -52,12 +52,12 @@ class CustomerInvoiceTcpdf extends AppTcpdf
             [
                 'name' => __('Product'),
                 'align' => 'left',
-                'width' => 148,
+                'width' => 142,
             ],
             [
                 'name' => __('Manufacturer'),
                 'align' => 'left',
-                'width' => 75,
+                'width' => 81,
             ],
             [
                 'name' => __('Price_excl.'),
