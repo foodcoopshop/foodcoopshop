@@ -76,7 +76,7 @@ echo '<table style="margin-top:20px;" class="list no-clone-last-row">';
             echo '</td>';
 
             echo '<td>';
-                echo $invoice->customer->name;
+                echo $this->Html->getNameRespectingIsDeleted($invoice->customer);
             echo '</td>';
 
             echo '<td>';
