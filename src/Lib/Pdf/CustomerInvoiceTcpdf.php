@@ -133,7 +133,7 @@ class CustomerInvoiceTcpdf extends AppTcpdf
                         __('Delivered_deposit'),
                         '',
                         Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_excl']),
-                        Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_tax']) . ' (' . $formattedDepositTaxRate . '%',
+                        Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_tax']) . ' (' . $formattedDepositTaxRate . '%)',
                         Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_incl']),
                         '',
                     ]
@@ -151,7 +151,7 @@ class CustomerInvoiceTcpdf extends AppTcpdf
                         __('Payment_type_deposit_return'),
                         '',
                         Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_excl']),
-                        Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_tax']) . ' (' . $formattedDepositTaxRate . '%',
+                        Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_tax']) . ' (' . $formattedDepositTaxRate . '%)',
                         Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_incl']),
                         '',
                     ]
