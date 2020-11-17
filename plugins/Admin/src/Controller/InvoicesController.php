@@ -108,9 +108,13 @@ class InvoicesController extends AdminAppController
             'total' => $defaultArray,
         ];
          foreach($invoices as $invoice) {
-            $taxRateType = $invoice->paid_in_cash ? 'cash' : 'cashless';
+
+             $taxRateType = $invoice->paid_in_cash ? 'cash' : 'cashless';
+
             foreach([$taxRateType, 'total'] as $trt) {
+
                 foreach($invoice->invoice_taxes as $invoiceTax) {
+
                     $taxRate = Configure::read('app.numberHelper')->formatTaxRate($invoiceTax->tax_rate);
                     if (!isset($taxRates[$trt][$taxRate])) {
                         $taxRates[$trt][$taxRate] = $defaultArray;
