@@ -46,15 +46,15 @@ echo $this->element('reportNavTabs', [
 echo '<table class="list no-clone-last-row">';
 
     echo '<tr class="sort">';
-        echo '<th>' . $this->Paginator->sort('Invoice.invoice_number', __d('admin', 'Invoice_number_abbreviation')) . '</th>';
-        echo '<th>' . $this->Paginator->sort('Invoice.created', __d('admin', 'Invoice_date')) . '</th>';
-        echo '<th>' . $this->Paginator->sort('Invoice.customer.name.', __d('admin', 'Name')) . '</th>';
+        echo '<th>' . $this->Paginator->sort('Invoices.invoice_number', __d('admin', 'Invoice_number_abbreviation')) . '</th>';
+        echo '<th>' . $this->Paginator->sort('Invoices.created', __d('admin', 'Invoice_date')) . '</th>';
+        echo '<th>' . $this->Paginator->sort('Customers.' . Configure::read('app.customerMainNamePart'), __d('admin', 'Name')) . '</th>';
         echo '<th style="text-align:right;">' . __d('admin', 'Sum_excl_tax') . '</th>';
         echo '<th style="text-align:right;">' . __d('admin', 'Sum_tax') . '</th>';
         echo '<th style="text-align:right;">' . __d('admin', 'Sum_incl_tax') . '</th>';
-        echo '<th>' . $this->Paginator->sort('Invoice.paid_in_cash.', __d('admin', 'Paid_in_cash')) . '</th>';
-        echo '<th>' . $this->Paginator->sort('Invoice.email_status.', __d('admin', 'Email_sent')) . '</th>';
-        echo '<th>' . $this->Paginator->sort('Invoice.filename.', __d('admin', 'Download')) . '</th>';
+        echo '<th>' . $this->Paginator->sort('Invoices.paid_in_cash', __d('admin', 'Paid_in_cash')) . '</th>';
+        echo '<th>' . $this->Paginator->sort('Invoices.email_status', __d('admin', 'Email_sent')) . '</th>';
+        echo '<th>' . __d('admin', 'Download') . '</th>';
     echo '</tr>';
 
     foreach($invoices as $invoice) {
@@ -140,8 +140,6 @@ echo '<table class="list no-clone-last-row">';
 echo '</table>';
 
 if (!empty($invoices)) {
-
-    echo '<hr />';
 
     if (!empty($taxRates['cash'])) {
         echo '<h4>' . __d('admin', 'Tax_overview_cash') . '</h4>';

@@ -59,12 +59,22 @@ class InvoicesController extends AdminAppController
             $conditions['Invoices.id_customer'] = $customerId;
         }
 
-        $invoices = $this->Invoice->find('all', [
+        $query = $this->Invoice->find('all', [
             'contain' => [
                 'InvoiceTaxes',
                 'Customers',
             ],
             'conditions' => $conditions,
+        ]);
+
+        $invoices = $this->paginate($query, [
+            'sortableFields' => [
+                'Invoices.invoice_number',
+                'Invoices.created',
+                'Customers.' . Configure::read('app.customerMainNamePart'),
+                'Invoices.paid_in_cash',
+                'Invoices.email_status',
+            ],
             'order' => [
                 'Invoices.id' => 'DESC'
             ]
