@@ -61,7 +61,9 @@ echo '<table class="list no-clone-last-row">';
 
     foreach($invoices as $invoice) {
 
-        echo '<tr class="data" data-invoice-id="'.$invoice->id.'">';
+        $isCancelled = $invoice->status == APP_DEL;
+
+        echo '<tr class="data' . ($isCancelled ? ' cancelled' : '') . '" data-invoice-id="'.$invoice->id.'">';
 
             echo '<td>';
                 echo $invoice->invoice_number;
@@ -91,9 +93,9 @@ echo '<table class="list no-clone-last-row">';
                 echo $invoice->paid_in_cash ? __d('admin', 'yes') : __d('admin', 'no');
             echo '</td>';
 
-            echo '<td>';
+            echo '<td style="text-align:center;">';
                 if (is_null($invoice->email_status)) {
-                    echo '<i class="fa fa-times-circle not-ok"></i>';
+                    echo '<i class="fa fa-times not-ok"></i>';
                 } else {
                     echo $invoice->email_status->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort2'));
                 }
@@ -112,14 +114,16 @@ echo '<table class="list no-clone-last-row">';
             echo '</td>';
 
             echo '<td style="text-align:center;">';
-                echo $this->Html->link(
-                    '<i class="fas fa-times-circle not-ok"></i>',
-                    'javascript:void(0);',
-                    [
-                        'class' => 'btn btn-outline-light invoice-for-customer-cancel-button',
-                        'escape' => false,
-                    ],
-                );
+                if (!$isCancelled) {
+                    echo $this->Html->link(
+                        '<i class="fas fa-times-circle not-ok"></i>',
+                        'javascript:void(0);',
+                        [
+                            'class' => 'btn btn-outline-light invoice-for-customer-cancel-button',
+                            'escape' => false,
+                        ],
+                    );
+                }
             echo '</td>';
 
         echo '</tr>';

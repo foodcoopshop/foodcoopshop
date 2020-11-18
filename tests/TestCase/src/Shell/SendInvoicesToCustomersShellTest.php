@@ -97,6 +97,7 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->assertEquals($invoice->created, new FrozenDate($cronjobRunDay));
         $this->assertEquals($invoice->invoice_number, '2018-000001');
         $this->assertEquals($invoice->filename, str_replace('\\', '/', $pdfFilenameWithPath));
+        $this->assertEquals($invoice->status, 1);
 
         $this->doAssertInvoiceTaxes($invoice->invoice_taxes[0], 0, 4.54, 0, 4.54);
         $this->doAssertInvoiceTaxes($invoice->invoice_taxes[1], 10, 32.04, 3.21, 35.25);

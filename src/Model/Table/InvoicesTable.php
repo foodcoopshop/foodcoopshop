@@ -61,6 +61,10 @@ class InvoicesTable extends AppTable
         ];
         foreach($invoices as $invoice) {
 
+            if ($invoice->status < APP_ON) {
+                continue;
+            }
+
             $taxRateType = $invoice->paid_in_cash ? 'cash' : 'cashless';
 
             foreach([$taxRateType, 'total'] as $trt) {

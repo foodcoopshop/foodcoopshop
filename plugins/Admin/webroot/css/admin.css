@@ -969,3 +969,6 @@ body.invoices.index table.tax-sum-table td {
 body.invoices.index h4 {
     margin-top: 20px;
 }
+body.invoices.index tr.data.cancelled {
+    text-decoration: line-through;
+}

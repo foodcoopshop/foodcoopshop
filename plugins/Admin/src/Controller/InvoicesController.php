@@ -34,6 +34,9 @@ class InvoicesController extends AdminAppController
         $invoiceId = h($this->getRequest()->getData('invoiceId'));
 
         $this->Invoice = $this->getTableLocator()->get('Invoices');
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $this->Payment = $this->getTableLocator()->get('Payments');
+
         $invoice = $this->Invoice->find('all', [
             'contain' => [
                 'OrderDetails',
@@ -47,6 +50,30 @@ class InvoicesController extends AdminAppController
 
         if (empty($invoice)) {
             throw new NotFoundException();
+        }
+
+        $invoice->status = APP_DEL;
+        $this->Invoice->save($invoice);
+
+        foreach($invoice->order_details as $orderDetail) {
+            $patchedEntity = $this->OrderDetail->patchEntity(
+                $orderDetail,
+                [
+                    'order_state' => ORDER_STATE_ORDER_PLACED,
+                    'id_invoice' => null,
+                ]
+            );
+            $this->OrderDetail->save($patchedEntity);
+        }
+
+        foreach($invoice->payments  as $payment) {
+            $patchedEntity = $this->Payment->patchEntity(
+                $payment,
+                [
+                    'invoice_id' => null,
+                ]
+            );
+            $this->Payment->save($patchedEntity);
         }
 
         $flashMessage = __d('admin', 'Invoice_number_{0}_of_{1}_was_successfully_cancelled.', [
@@ -128,11 +155,17 @@ class InvoicesController extends AdminAppController
         ];
 
         foreach($invoices as $invoice) {
+
+            if ($invoice->status < APP_ON) {
+                continue;
+            }
+
             foreach($invoice->invoice_taxes as $invoiceTax) {
                 $invoiceSums['total_sum_price_excl'] += $invoiceTax->total_price_tax_excl;
                 $invoiceSums['total_sum_tax'] += $invoiceTax->total_price_tax;
                 $invoiceSums['total_sum_price_incl'] += $invoiceTax->total_price_tax_incl;
             }
+
         }
         $this->set('invoiceSums', $invoiceSums);
 

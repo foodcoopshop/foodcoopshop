@@ -107,6 +107,7 @@ class GenerateInvoiceToCustomer
             'id_customer' => $data->id_customer,
             'invoice_number' => $invoiceNumber,
             'filename' => $invoicePdfFileForDatabase,
+            'status' => APP_ON,
             'created' => new FrozenDate($currentDay),
             'paid_in_cash' => $paidInCash,
             'invoice_taxes' => [],
