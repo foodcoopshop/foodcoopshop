@@ -12,5 +12,9 @@ class AddRetailMode2 extends AbstractMigration
 
         $sql = "ALTER TABLE `fcs_invoices` ADD `status` TINYINT(4) NOT NULL DEFAULT '0' AFTER `email_status`;";
         $this->execute($sql);
+
+        $sql = "ALTER TABLE `fcs_payments` CHANGE `invoice_id` `invoice_id` INT(10) UNSIGNED NULL DEFAULT NULL;";
+        $this->execute($sql);
+
     }
 }
