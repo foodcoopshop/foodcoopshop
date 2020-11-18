@@ -69,6 +69,7 @@ class InvoicesController extends AdminAppController
 
         $invoices = $this->paginate($query, [
             'sortableFields' => [
+                'Invoices.id',
                 'Invoices.invoice_number',
                 'Invoices.created',
                 'Customers.' . Configure::read('app.customerMainNamePart'),
