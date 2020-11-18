@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-17 10:39+0100\n"
+"POT-Creation-Date: 2020-11-18 16:22+0100\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -201,6 +201,10 @@ msgstr "Konto kaucji"
 
 msgid "Deposit_take_back_detail_for"
 msgstr "Sczegóły odbioru kaucji dla"
+
+#, fuzzy
+msgid "Invoice_number_{0}_of_{1}_was_successfully_cancelled."
+msgstr "Płatność ({0}, {1}) została usunięta pomyślnie."
 
 #, fuzzy
 msgid "Invoices"
@@ -1180,6 +1184,14 @@ msgstr "Zapłacone przez wszystkich członków w {0}"
 #, fuzzy
 msgid "Email_sent"
 msgstr "Mail został wysłany do {0}."
+
+#, fuzzy
+msgid "Cancellation"
+msgstr "Anuluj"
+
+#, fuzzy
+msgid "Total_sum"
+msgstr "Nowa suma łącznie"
 
 msgid "Tax_overview_cash"
 msgstr ""

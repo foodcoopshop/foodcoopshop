@@ -20,7 +20,8 @@ $this->element('addScript', [
         $('input.datepicker').datepicker();" .
         Configure::read('app.jsNamespace') . ".Admin.init();".
         Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');".
-        Configure::read('app.jsNamespace') . ".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 0, 1);"
+        Configure::read('app.jsNamespace') . ".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 0, 1);".
+        Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomerCancel.init();"
 ]);
 ?>
 
@@ -55,6 +56,7 @@ echo '<table class="list no-clone-last-row">';
         echo '<th>' . $this->Paginator->sort('Invoices.paid_in_cash', __d('admin', 'Paid_in_cash')) . '</th>';
         echo '<th>' . $this->Paginator->sort('Invoices.email_status', __d('admin', 'Email_sent')) . '</th>';
         echo '<th>' . __d('admin', 'Download') . '</th>';
+        echo '<th>' . __d('admin', 'Cancellation') . '</th>';
     echo '</tr>';
 
     foreach($invoices as $invoice) {
@@ -97,14 +99,25 @@ echo '<table class="list no-clone-last-row">';
                 }
             echo '</td>';
 
-            echo '<td>';
+            echo '<td style="text-align:center;">';
                 echo $this->Html->link(
-                    '<i class="fas fa-arrow-right not-ok"></i>',
+                    '<i class="fas fa-arrow-right ok"></i>',
                     '/admin/lists/getInvoice?file=' . $invoice->filename,
                     [
                         'class' => 'btn btn-outline-light',
                         'target' => '_blank',
-                        'escape' => false
+                        'escape' => false,
+                    ],
+                );
+            echo '</td>';
+
+            echo '<td style="text-align:center;">';
+                echo $this->Html->link(
+                    '<i class="fas fa-times-circle not-ok"></i>',
+                    'javascript:void(0);',
+                    [
+                        'class' => 'btn btn-outline-light invoice-for-customer-cancel-button',
+                        'escape' => false,
                     ],
                 );
             echo '</td>';
@@ -131,7 +144,7 @@ echo '<table class="list no-clone-last-row">';
             echo $this->Number->formatAsCurrency($invoiceSums['total_sum_price_incl']);
         echo '</td>';
 
-        echo '<td colspan="3">';
+        echo '<td colspan="4">';
         echo '</td>';
 
     echo '</tr>';

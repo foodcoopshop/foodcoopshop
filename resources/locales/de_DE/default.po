@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-17 10:37+0100\n"
-"PO-Revision-Date: 2020-11-13 10:56+0100\n"
+"POT-Creation-Date: 2020-11-18 16:22+0100\n"
+"PO-Revision-Date: 2020-11-18 16:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -849,7 +849,7 @@ msgstr "Du kannst den Lieferrhythmus von mehreren Produkten gleichzeitig ändern
 msgid "Generate_invoice"
 msgstr "Rechnung erstellen"
 
-msgid "Really_generate_invoice_for_0"
+msgid "Really_generate_invoice_for_{0}?"
 msgstr "Möchtest du wirklich die Rechnung für {0} erstellen?"
 
 msgid "Show_preview"
@@ -857,6 +857,12 @@ msgstr "Vorschau anzeigen"
 
 msgid "Paid_in_cash"
 msgstr "Bar bezahlt"
+
+msgid "Really_cancel_invoice_number_{0}_of_{1}?"
+msgstr "Möchtest du die Rechnung {0} von {1} wirklich stornieren?"
+
+msgid "Cancel_invoice"
+msgstr "Rechnung stornieren"
 
 msgid "Were_the_products_picked_up?"
 msgstr "Wurden die Produkte abgeholt?"

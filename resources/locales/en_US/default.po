@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-17 10:37+0100\n"
-"PO-Revision-Date: 2020-11-11 16:37+0100\n"
+"POT-Creation-Date: 2020-11-18 16:22+0100\n"
+"PO-Revision-Date: 2020-11-18 16:25+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -849,7 +849,7 @@ msgstr "Tip: You can change the delivery rhythm for multiple products by selecti
 msgid "Generate_invoice"
 msgstr "Generate invoice"
 
-msgid "Really_generate_invoice_for_0"
+msgid "Really_generate_invoice_for_{0}?"
 msgstr "Really generate invoice for {0}?"
 
 msgid "Show_preview"
@@ -857,6 +857,12 @@ msgstr "Show preview"
 
 msgid "Paid_in_cash"
 msgstr "Paid in cash"
+
+msgid "Really_cancel_invoice_number_{0}_of_{1}?"
+msgstr "Really cancel invoice {0} of {1}?"
+
+msgid "Cancel_invoice"
+msgstr "Cancel invoice"
 
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"

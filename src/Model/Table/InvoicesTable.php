@@ -33,6 +33,12 @@ class InvoicesTable extends AppTable
         $this->hasMany('InvoiceTaxes', [
             'foreignKey' => 'invoice_id',
         ]);
+        $this->hasMany('OrderDetails', [
+            'foreignKey' => 'id_invoice',
+        ]);
+        $this->hasMany('Payments', [
+            'foreignKey' => 'invoice_id',
+        ]);
     }
 
     public function getPreparedTaxRatesForSumTable($invoices)

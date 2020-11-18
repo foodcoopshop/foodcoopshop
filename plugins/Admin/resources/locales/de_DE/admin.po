@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-17 10:39+0100\n"
-"PO-Revision-Date: 2020-11-17 10:40+0100\n"
+"POT-Creation-Date: 2020-11-18 16:22+0100\n"
+"PO-Revision-Date: 2020-11-18 16:23+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -194,6 +194,9 @@ msgstr "Pfandkonto"
 
 msgid "Deposit_take_back_detail_for"
 msgstr "Pfand-Rücknahme Detail für"
+
+msgid "Invoice_number_{0}_of_{1}_was_successfully_cancelled."
+msgstr "Die Rechnung Nr. {0} von {1} wurde erfolgreich storniert."
 
 msgid "Invoices"
 msgstr "Rechnungen"
@@ -1133,6 +1136,12 @@ msgstr "Bar bezahlt"
 
 msgid "Email_sent"
 msgstr "E-Mail versendet"
+
+msgid "Cancellation"
+msgstr "Stornierung"
+
+msgid "Total_sum"
+msgstr "Gesamtsumme"
 
 msgid "Tax_overview_cash"
 msgstr "Steuerübersicht bar"

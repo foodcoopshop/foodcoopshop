@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-17 10:39+0100\n"
+"POT-Creation-Date: 2020-11-18 16:22+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -192,6 +192,9 @@ msgid "Deposit_account"
 msgstr ""
 
 msgid "Deposit_take_back_detail_for"
+msgstr ""
+
+msgid "Invoice_number_{0}_of_{1}_was_successfully_cancelled."
 msgstr ""
 
 msgid "Invoices"
@@ -1131,6 +1134,12 @@ msgid "Paid_in_cash"
 msgstr ""
 
 msgid "Email_sent"
+msgstr ""
+
+msgid "Cancellation"
+msgstr ""
+
+msgid "Total_sum"
 msgstr ""
 
 msgid "Tax_overview_cash"

@@ -3,6 +3,7 @@
 namespace Admin\Controller;
 
 use Cake\Core\Configure;
+use Cake\Http\Exception\NotFoundException;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -23,6 +24,43 @@ class InvoicesController extends AdminAppController
     public function isAuthorized($user)
     {
         return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isSuperadmin();
+    }
+
+    public function cancel()
+    {
+
+        $this->RequestHandler->renderAs($this, 'json');
+
+        $invoiceId = h($this->getRequest()->getData('invoiceId'));
+
+        $this->Invoice = $this->getTableLocator()->get('Invoices');
+        $invoice = $this->Invoice->find('all', [
+            'contain' => [
+                'OrderDetails',
+                'Payments',
+                'Customers',
+            ],
+            'conditions' => [
+                'Invoices.id' => $invoiceId,
+            ],
+        ])->first();
+
+        if (empty($invoice)) {
+            throw new NotFoundException();
+        }
+
+        $flashMessage = __d('admin', 'Invoice_number_{0}_of_{1}_was_successfully_cancelled.', [
+            '<b>' . $invoice->invoice_number . '</b>',
+            '<b>' . $invoice->customer->name . '</b>',
+        ]);
+        $this->Flash->success($flashMessage);
+
+        $this->set([
+            'status' => 1,
+            'msg' => 'ok',
+        ]);
+        $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+
     }
 
     public function index()

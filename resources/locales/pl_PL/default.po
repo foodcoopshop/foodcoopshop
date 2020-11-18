@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-17 10:37+0100\n"
+"POT-Creation-Date: 2020-11-18 16:22+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1145,7 +1145,7 @@ msgstr "Wygenerowane faktury"
 
 # Generated invoices
 #, fuzzy
-msgid "Really_generate_invoice_for_0"
+msgid "Really_generate_invoice_for_{0}?"
 msgstr "Wygenerowane faktury"
 
 # Show more
@@ -1155,6 +1155,16 @@ msgstr "Pokaż więcej"
 
 msgid "Paid_in_cash"
 msgstr ""
+
+# Do you really want to activate the member {0}?
+#, fuzzy
+msgid "Really_cancel_invoice_number_{0}_of_{1}?"
+msgstr "Na pewno chcesz aktywować członka {0}?"
+
+# Generated invoices
+#, fuzzy
+msgid "Cancel_invoice"
+msgstr "Wygenerowane faktury"
 
 # Were the products picked up?
 msgid "Were_the_products_picked_up?"

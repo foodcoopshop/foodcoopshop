@@ -46,7 +46,7 @@ use Cake\Core\Configure;
 
     if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $appAuth->isSuperadmin()) {
         $this->element('addScript', [
-            'script' => Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomer.init();"
+            'script' => Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomerAdd.init();"
         ]);
     }
 
