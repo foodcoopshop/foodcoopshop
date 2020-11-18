@@ -58,7 +58,7 @@ class GenerateInvoiceToCustomer
 
         $newInvoice = $this->saveInvoice($data, $invoiceNumber, $invoicePdfFile, $currentDay, $paidInCash);
         $this->linkReturnedDepositWithInvoice($data, $newInvoice->id);
-        $this->updateOrderDetailOrderState($data);
+        $this->updateOrderDetails($data, $newInvoice->id);
 
         $this->QueuedJobs->createJob('SendInvoiceToCustomer', [
             'customerName' => $data->name,
@@ -73,13 +73,14 @@ class GenerateInvoiceToCustomer
 
     }
 
-    private function updateOrderDetailOrderState($data)
+    private function updateOrderDetails($data, $invoiceId)
     {
         foreach($data->active_order_details as $orderDetail) {
             $patchedEntity = $this->OrderDetail->patchEntity(
                 $orderDetail,
                 [
                     'order_state' => Configure::read('app.htmlHelper')->getOrderStateBilled(),
+                    'id_invoice' => $invoiceId,
                 ]
             );
             $this->OrderDetail->save($patchedEntity);

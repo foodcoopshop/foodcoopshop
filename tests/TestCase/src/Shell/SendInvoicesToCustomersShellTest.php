@@ -114,6 +114,13 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
         $this->assertMailContainsAttachment($pdfFilenameWithoutPath);
 
+        $orderDetails = $this->OrderDetail->find('all', [
+            'conditions' => [
+                'OrderDetails.id_invoice' => $invoice->id,
+            ],
+        ])->toArray();
+        $this->assertEquals(4, count($orderDetails));
+
         // call again
         $this->commandRunner->run(['cake', 'send_invoices_to_customers', $cronjobRunDay]);
         $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);

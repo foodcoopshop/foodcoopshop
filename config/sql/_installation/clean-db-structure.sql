@@ -233,6 +233,20 @@ CREATE TABLE `fcs_images` (
   PRIMARY KEY (`id_image`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fcs_invoice_taxes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fcs_invoice_taxes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `invoice_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `tax_rate` double(20,6) NOT NULL DEFAULT '0.000000',
+  `total_price_tax_excl` double(20,6) NOT NULL DEFAULT '0.000000',
+  `total_price_tax` double(20,6) NOT NULL DEFAULT '0.000000',
+  `total_price_tax_incl` double(20,6) NOT NULL DEFAULT '0.000000',
+  PRIMARY KEY (`id`),
+  KEY `invoice_id` (`invoice_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_invoices`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -247,20 +261,6 @@ CREATE TABLE `fcs_invoices` (
   `email_status` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `fcs_invoice_taxes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `fcs_invoice_taxes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `invoice_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `tax_rate` double(20,6) NOT NULL DEFAULT '0.000000',
-  `total_price_tax_excl` double(20,6) NOT NULL DEFAULT '0.000000',
-  `total_price_tax` double(20,6) NOT NULL DEFAULT '0.000000',
-  `total_price_tax_incl` double(20,6) NOT NULL DEFAULT '0.000000',
-  PRIMARY KEY (`id`),
-  KEY `invoice_id` (`invoice_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fcs_manufacturer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -319,6 +319,7 @@ CREATE TABLE `fcs_order_detail` (
   `id_tax` int(11) unsigned DEFAULT '0',
   `deposit` decimal(10,2) NOT NULL DEFAULT '0.00',
   `id_customer` int(10) unsigned NOT NULL,
+  `id_invoice` int(10) unsigned DEFAULT NULL,
   `id_cart_product` int(10) unsigned NOT NULL,
   `order_state` tinyint(4) unsigned NOT NULL,
   `pickup_day` date NOT NULL,
