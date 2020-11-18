@@ -41,7 +41,6 @@ foodcoopshop.ModalInvoiceForCustomerCancel = {
                     document.location.reload();
                 },
                 onError: function (data) {
-                    return;
                     document.location.reload();
                 }
             }
@@ -59,7 +58,7 @@ foodcoopshop.ModalInvoiceForCustomerCancel = {
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
             foodcoopshop.LocalizedJs.admin.CancelInvoice,
-            foodcoopshop.ModalInvoiceForCustomerCancel.getHtml(customerName, invoiceNumber),
+            foodcoopshop.ModalInvoiceForCustomerCancel.getHtml(customerName, invoiceNumber)
         );
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
