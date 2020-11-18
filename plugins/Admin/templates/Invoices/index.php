@@ -43,13 +43,7 @@ echo $this->element('reportNavTabs', [
     'dateTo' => $dateTo,
 ]);
 
-if (empty($invoices)) {
-    echo 'no invoices yet';
-    return;
-}
-
-
-echo '<table style="margin-top:20px;" class="list no-clone-last-row">';
+echo '<table class="list no-clone-last-row">';
 
     echo '<tr class="sort">';
         echo '<th>' . $this->Paginator->sort('Invoice.invoice_number', __d('admin', 'Invoice_number_abbreviation')) . '</th>';
@@ -145,24 +139,28 @@ echo '<table style="margin-top:20px;" class="list no-clone-last-row">';
 
 echo '</table>';
 
-echo '<hr />';
+if (!empty($invoices)) {
 
-if (!empty($taxRates['cash'])) {
-    echo '<h4>' . __d('admin', 'Tax_overview_cash') . '</h4>';
-    echo $this->element('invoice/taxSumTable', ['taxRates' => $taxRates['cash'], 'taxRatesSums' => $taxRatesSums['cash']]);
-}
+    echo '<hr />';
+
+    if (!empty($taxRates['cash'])) {
+        echo '<h4>' . __d('admin', 'Tax_overview_cash') . '</h4>';
+        echo $this->element('invoice/taxSumTable', ['taxRates' => $taxRates['cash'], 'taxRatesSums' => $taxRatesSums['cash']]);
+    }
 
 
-if (!empty($taxRates['cashless'])) {
-    echo '<h4>' . __d('admin', 'Tax_overview_cashless') . '</h4>';
-    echo $this->element('invoice/taxSumTable', ['taxRates' => $taxRates['cashless'], 'taxRatesSums' => $taxRatesSums['cashless']]);
-}
+    if (!empty($taxRates['cashless'])) {
+        echo '<h4>' . __d('admin', 'Tax_overview_cashless') . '</h4>';
+        echo $this->element('invoice/taxSumTable', ['taxRates' => $taxRates['cashless'], 'taxRatesSums' => $taxRatesSums['cashless']]);
+    }
 
-echo '<hr />';
+    echo '<hr />';
 
-if (!empty($taxRates['total'])) {
-    echo '<h4>' . __d('admin', 'Tax_overview_total') . '</h4>';
-    echo $this->element('invoice/taxSumTable', ['taxRates' => $taxRates['total'], 'taxRatesSums' => $taxRatesSums['total']]);
+    if (!empty($taxRates['total'])) {
+        echo '<h4>' . __d('admin', 'Tax_overview_total') . '</h4>';
+        echo $this->element('invoice/taxSumTable', ['taxRates' => $taxRates['total'], 'taxRatesSums' => $taxRatesSums['total']]);
+    }
+
 }
 
 ?>
