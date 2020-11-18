@@ -35,6 +35,61 @@ class InvoicesTable extends AppTable
         ]);
     }
 
+    public function getPreparedTaxRatesForSumTable($invoices)
+    {
+
+        $defaultArray = [
+            'sum_price_excl' => 0,
+            'sum_tax' => 0,
+            'sum_price_incl' => 0,
+        ];
+        $taxRates = [
+            'cashless' => [],
+            'cash' => [],
+            'total' => [],
+        ];
+        $taxRatesSums = [
+            'cashless' => $defaultArray,
+            'cash' => $defaultArray,
+            'total' => $defaultArray,
+        ];
+        foreach($invoices as $invoice) {
+
+            $taxRateType = $invoice->paid_in_cash ? 'cash' : 'cashless';
+
+            foreach([$taxRateType, 'total'] as $trt) {
+
+                foreach($invoice->invoice_taxes as $invoiceTax) {
+
+                    $taxRate = Configure::read('app.numberHelper')->formatTaxRate($invoiceTax->tax_rate);
+                    if (!isset($taxRates[$trt][$taxRate])) {
+                        $taxRates[$trt][$taxRate] = $defaultArray;
+                    }
+                    $taxRates[$trt][$taxRate]['sum_price_excl'] += $invoiceTax->total_price_tax_excl;
+                    $taxRates[$trt][$taxRate]['sum_tax'] += $invoiceTax->total_price_tax;
+                    $taxRates[$trt][$taxRate]['sum_price_incl'] += $invoiceTax->total_price_tax_incl;
+
+                    $taxRatesSums[$trt]['sum_price_excl'] += $invoiceTax->total_price_tax_excl;
+                    $taxRatesSums[$trt]['sum_tax'] += $invoiceTax->total_price_tax;
+                    $taxRatesSums[$trt]['sum_price_incl'] += $invoiceTax->total_price_tax_incl;
+
+                }
+            }
+        }
+
+        ksort($taxRates['cashless']);
+        ksort($taxRates['cash']);
+        ksort($taxRates['total']);
+
+        $result = [
+            'taxRates' => $taxRates,
+            'taxRatesSums' => $taxRatesSums,
+        ];
+
+        return $result;
+
+    }
+
     public function getDataForCustomerInvoice($customerId, $currentDay)
     {
 
