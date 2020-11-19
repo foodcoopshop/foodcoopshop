@@ -65,9 +65,6 @@ class InvoicesControllerTest extends AppCakeTestCase
             'conditions' => [
                 'Invoices.id_customer' => $customerId,
             ],
-            'contain' => [
-                'OrderDetails',
-            ]
         ])->first();
 
         $this->ajaxPost(
@@ -89,7 +86,7 @@ class InvoicesControllerTest extends AppCakeTestCase
         $orderDetails = $this->OrderDetail->find('all', [
             'conditions' => [
                 'OrderDetails.id_invoice' => $invoice->id,
-            ]
+            ],
         ])->toArray();
         $this->assertEquals(0, count($orderDetails));
 
@@ -97,7 +94,7 @@ class InvoicesControllerTest extends AppCakeTestCase
         $payments = $this->Payment->find('all', [
             'conditions' => [
                 'Payments.invoice_id' => $invoice->id,
-            ]
+            ],
         ])->toArray();
         $this->assertEquals(0, count($payments));
 
