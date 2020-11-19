@@ -217,9 +217,8 @@ class InvoicesController extends AdminAppController
             '<b>' . $invoice->customer->name . '</b>',
         ]);
 
-        $messageString .= ' ' . __d('admin', 'Cancellation_invoice_number_{0}_of_{1}_was_generated_successfully.', [
+        $messageString .= ' ' . __d('admin', 'Cancellation_invoice_number_{0}_was_generated_successfully.', [
             '<b>' . $newInvoice->invoice_number . '</b>',
-            '<b>' . $invoice->customer->name . '</b>',
         ]);
 
         $this->Flash->success($messageString . $linkToInvoice);
