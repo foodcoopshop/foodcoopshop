@@ -71,6 +71,12 @@ class InvoicesTable extends AppTable
 
                 foreach($invoice->invoice_taxes as $invoiceTax) {
 
+                    if ($invoiceTax->total_price_tax_excl == 0
+                        && $invoiceTax->total_price_tax == 0
+                        && $invoiceTax->total_price_tax_incl == 0) {
+                        continue;
+                    }
+
                     $taxRate = Configure::read('app.numberHelper')->formatTaxRate($invoiceTax->tax_rate);
                     if (!isset($taxRates[$trt][$taxRate])) {
                         $taxRates[$trt][$taxRate] = $defaultArray;
@@ -209,6 +215,13 @@ class InvoicesTable extends AppTable
         $taxRates[$depositVatRate]['sum_price_incl'] += $orderedDeposit['deposit_incl'] + $returnedDeposit['deposit_incl'];
 
         ksort($taxRates);
+
+        // remove empty rows
+        foreach($taxRates as $key => $taxRate) {
+            if (array_sum($taxRate) == 0) {
+                unset($taxRates[$key]);
+            }
+        }
 
         $customer->tax_rates = $taxRates;
 
