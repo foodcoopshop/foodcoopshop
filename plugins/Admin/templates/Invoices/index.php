@@ -114,7 +114,9 @@ echo '<table class="list no-clone-last-row">';
             echo '</td>';
 
             echo '<td style="text-align:center;">';
-                if (!$isCancelled) {
+                if ($isCancelled) {
+                    echo __d('admin', 'yes');
+                } else {
                     echo $this->Html->link(
                         '<i class="fas fa-times-circle not-ok"></i>',
                         'javascript:void(0);',
