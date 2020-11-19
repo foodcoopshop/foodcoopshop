@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-19 15:07+0100\n"
-"PO-Revision-Date: 2020-11-19 15:07+0100\n"
+"POT-Creation-Date: 2020-11-19 16:37+0100\n"
+"PO-Revision-Date: 2020-11-19 16:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -197,6 +197,9 @@ msgstr "Die Rechnung Nr. {0} von {1} wurde erfolgreich erstellt."
 
 msgid "Invoice_number_{0}_of_{1}_was_successfully_cancelled."
 msgstr "Die Rechnung Nr. {0} von {1} wurde erfolgreich storniert."
+
+msgid "Cancellation_invoice_number_{0}_of_{1}_was_generated_successfully."
+msgstr "Die Storno-Rechnung Nr. {0} von {1} wurde erfolgreich erstellt."
 
 msgid "Invoices"
 msgstr "Rechnungen"

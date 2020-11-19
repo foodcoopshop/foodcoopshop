@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-19 15:07+0100\n"
+"POT-Creation-Date: 2020-11-19 16:37+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -195,6 +195,9 @@ msgid "Invoice_number_{0}_of_{1}_was_generated_successfully."
 msgstr ""
 
 msgid "Invoice_number_{0}_of_{1}_was_successfully_cancelled."
+msgstr ""
+
+msgid "Cancellation_invoice_number_{0}_of_{1}_was_generated_successfully."
 msgstr ""
 
 msgid "Invoices"
