@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-18 16:22+0100\n"
+"POT-Creation-Date: 2020-11-19 12:14+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1184,6 +1184,12 @@ msgstr ""
 msgid "You_are_not_signed_in."
 msgstr ""
 
+msgid "Action_Log_Invoice_added"
+msgstr ""
+
+msgid "Action_Log_Invoice_cancelled"
+msgstr ""
+
 msgid "Action_Log_Product_added"
 msgstr ""
 
@@ -1452,9 +1458,6 @@ msgid "Action_Log_Cronjob_check_credit_balance"
 msgstr ""
 
 msgid "Action_Log_Superadmin_deploy_successful"
-msgstr ""
-
-msgid "Action_Log_Superadmin_deploy_failed"
 msgstr ""
 
 msgid "Action_Log_Attribute_added"
@@ -1791,6 +1794,9 @@ msgid "tomorrow"
 msgstr ""
 
 msgid "Pickup_reminder_for"
+msgstr ""
+
+msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}_generated_successfully."
 msgstr ""
 
 msgid "to_(time_context)"

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-18 16:22+0100\n"
-"PO-Revision-Date: 2020-11-18 16:24+0100\n"
+"POT-Creation-Date: 2020-11-19 12:14+0100\n"
+"PO-Revision-Date: 2020-11-19 12:19+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1185,6 +1185,12 @@ msgstr "Summe Preis inkl."
 msgid "You_are_not_signed_in."
 msgstr "Du bist nicht angemeldet."
 
+msgid "Action_Log_Invoice_added"
+msgstr "Rechnung: erstellt"
+
+msgid "Action_Log_Invoice_cancelled"
+msgstr "Rechnung: storniert"
+
 msgid "Action_Log_Product_added"
 msgstr "Produkt: erstellt"
 
@@ -1454,9 +1460,6 @@ msgstr "Cronjob: Guthaben überprüfen"
 
 msgid "Action_Log_Superadmin_deploy_successful"
 msgstr "Superadmin: Update eingespielt"
-
-msgid "Action_Log_Superadmin_deploy_failed"
-msgstr "Superadmin: Update gescheitert"
 
 msgid "Action_Log_Attribute_added"
 msgstr "Variante: erstellt"
@@ -1793,6 +1796,9 @@ msgstr "morgen"
 
 msgid "Pickup_reminder_for"
 msgstr "Abhol-Erinnerung für"
+
+msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}_generated_successfully."
+msgstr "{0,plural,=1{Rechnung wurde} other{Rechnungen wurden}} erfolgreich erstellt."
 
 msgid "to_(time_context)"
 msgstr "bis"
@@ -2486,6 +2492,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Action_Log_Superadmin_deploy_failed"
+#~ msgstr "Superadmin: Update gescheitert"
 
 #, fuzzy
 #~ msgid "Generate_invoice_for_customer"

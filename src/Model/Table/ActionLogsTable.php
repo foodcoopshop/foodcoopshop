@@ -27,15 +27,9 @@ class ActionLogsTable extends AppTable
      *     'access' => [
      *         'manufacturer', // uncertain how that works
      *     ],
-     *     'class' => [  // classification of log entry
-     *         'info',  // for info only, default
-     *         'warn',  // warning, something should be taken care of
-     *         'fail',  // failure while doing something, must be taken care of
-     *     ],
      * ],
      */
     public $types;
-
 
     public function initialize(array $config): void
     {
@@ -73,6 +67,12 @@ class ActionLogsTable extends AppTable
     private function initTypes()
     {
         $this->types = [
+            'invoice_added' => [
+                'name' => __('Action_Log_Invoice_added'),
+            ],
+            'invoice_cancelled' => [
+                'name' => __('Action_Log_Invoice_cancelled'),
+            ],
             'product_added' => [
                 'name' => __('Action_Log_Product_added'),
                 'access' => [
@@ -459,16 +459,6 @@ class ActionLogsTable extends AppTable
                     'manufacturer'
                 ]
             ],
-            'superadmin_deploy_failed' => [
-                'name' => __('Action_Log_Superadmin_deploy_failed'),
-                'access' => [
-                    'manufacturer'
-                ],
-                'class' => [
-                    'fail',
-                ],
-            ],
-
             'attribute_added' => [
                 'name' => __('Action_Log_Attribute_added')
             ],

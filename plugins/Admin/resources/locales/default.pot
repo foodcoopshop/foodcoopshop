@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-18 16:22+0100\n"
+"POT-Creation-Date: 2020-11-19 12:12+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -176,15 +176,6 @@ msgstr ""
 msgid "Credit_and_deposit_balance"
 msgstr ""
 
-msgid "No_data_available_to_generate_an_invoice."
-msgstr ""
-
-msgid "Download"
-msgstr ""
-
-msgid "The_invoice_was_generated_successfully."
-msgstr ""
-
 msgid "Deposit_overview"
 msgstr ""
 
@@ -192,6 +183,15 @@ msgid "Deposit_account"
 msgstr ""
 
 msgid "Deposit_take_back_detail_for"
+msgstr ""
+
+msgid "No_data_available_to_generate_an_invoice."
+msgstr ""
+
+msgid "Download"
+msgstr ""
+
+msgid "Invoice_number_{0}_of_{1}_was_generated_successfully."
 msgstr ""
 
 msgid "Invoice_number_{0}_of_{1}_was_successfully_cancelled."

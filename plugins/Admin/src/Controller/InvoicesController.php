@@ -6,7 +6,6 @@ use App\Lib\Invoice\GenerateInvoiceToCustomer;
 use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
-use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
 
 /**
@@ -66,10 +65,16 @@ class InvoicesController extends AdminAppController
                 'target' => '_blank',
                 'escape' => false
             ],
-            );
-        $this->Flash->success(
-            __d('admin', 'The_invoice_was_generated_successfully.') . ' ' . $linkToInvoice,
-            );
+        );
+        $messageString = __d('admin', 'Invoice_number_{0}_of_{1}_was_generated_successfully.', [
+            '<b>' . $newInvoice->invoice_number . '</b>',
+            '<b>' . $customer   ->name . '</b>',
+        ]);
+        $this->Flash->success($messageString . ' ' . $linkToInvoice);
+
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+        $this->ActionLog->customSave('invoice_added', $this->AppAuth->getUserId(), $newInvoice->id, 'invoices', $messageString);
+
         $this->redirect($this->referer());
 
     }
@@ -175,6 +180,9 @@ class InvoicesController extends AdminAppController
             '<b>' . $invoice->customer->name . '</b>',
         ]);
         $this->Flash->success($flashMessage);
+
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+        $this->ActionLog->customSave('invoice_cancelled', $this->AppAuth->getUserId(), $invoiceId, 'invoices', $flashMessage);
 
         $this->set([
             'status' => 1,

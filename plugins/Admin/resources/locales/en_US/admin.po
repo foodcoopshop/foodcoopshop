@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-18 16:22+0100\n"
-"PO-Revision-Date: 2020-11-18 16:24+0100\n"
+"POT-Creation-Date: 2020-11-19 12:12+0100\n"
+"PO-Revision-Date: 2020-11-19 12:17+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -177,15 +177,6 @@ msgstr "Sum of compensation payments for manufacturers"
 msgid "Credit_and_deposit_balance"
 msgstr "Credit and deposit balance"
 
-msgid "No_data_available_to_generate_an_invoice."
-msgstr "No data available to generate an invoice."
-
-msgid "Download"
-msgstr "Download"
-
-msgid "The_invoice_was_generated_successfully."
-msgstr "The invoice has been generated successfully."
-
 msgid "Deposit_overview"
 msgstr "Deposit overview"
 
@@ -194,6 +185,15 @@ msgstr "Deposit account"
 
 msgid "Deposit_take_back_detail_for"
 msgstr "Deposit take back detail for"
+
+msgid "No_data_available_to_generate_an_invoice."
+msgstr "No data available to generate an invoice."
+
+msgid "Download"
+msgstr "Download"
+
+msgid "Invoice_number_{0}_of_{1}_was_generated_successfully."
+msgstr "Invoice nº {0} of {1} was generated successfully."
 
 msgid "Invoice_number_{0}_of_{1}_was_successfully_cancelled."
 msgstr "Invoice nº {0} of {1} was cancelled successfully."
@@ -2189,6 +2189,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "The_invoice_was_generated_successfully."
+#~ msgstr "The invoice has been generated successfully."
 
 #, fuzzy
 #~ msgid "deposit"

@@ -52,6 +52,7 @@ class SendInvoicesToCustomersShell extends AppShell
             ],
         ]);
 
+        $i = 0;
         foreach($customers as $customer) {
 
             $data = $this->Invoice->getDataForCustomerInvoice($customer->id_customer, Configure::read('app.timeHelper')->formatToDbFormatDate($this->cronjobRunDay));
@@ -61,8 +62,13 @@ class SendInvoicesToCustomersShell extends AppShell
             }
 
             $invoiceToCustomer->run($data, $this->cronjobRunDay, false);
+            $i++;
 
         }
+
+        $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
+        $message = __('{0,plural,=1{1_invoice_was} other{#_invoices_were}_generated_successfully.', [$i]);
+        $this->ActionLog->customSave('invoice_added', 0, 0, 'invoices', $message);
 
     }
 

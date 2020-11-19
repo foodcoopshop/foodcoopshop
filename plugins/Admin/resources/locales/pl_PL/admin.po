@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-18 16:22+0100\n"
+"POT-Creation-Date: 2020-11-19 12:12+0100\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -182,16 +182,6 @@ msgstr "Suma rekompensat kaucji dla producentów"
 msgid "Credit_and_deposit_balance"
 msgstr "Twoje saldo wkładów"
 
-msgid "No_data_available_to_generate_an_invoice."
-msgstr ""
-
-msgid "Download"
-msgstr ""
-
-#, fuzzy
-msgid "The_invoice_was_generated_successfully."
-msgstr "Komentarz został zmodyfikowany pomyślnie."
-
 #, fuzzy
 msgid "Deposit_overview"
 msgstr "Zwrot wkładu"
@@ -201,6 +191,16 @@ msgstr "Konto kaucji"
 
 msgid "Deposit_take_back_detail_for"
 msgstr "Sczegóły odbioru kaucji dla"
+
+msgid "No_data_available_to_generate_an_invoice."
+msgstr ""
+
+msgid "Download"
+msgstr ""
+
+#, fuzzy
+msgid "Invoice_number_{0}_of_{1}_was_generated_successfully."
+msgstr "Płatność ({0}, {1}) została usunięta pomyślnie."
 
 #, fuzzy
 msgid "Invoice_number_{0}_of_{1}_was_successfully_cancelled."
@@ -2286,6 +2286,10 @@ msgstr "Wagi dostarczonych produktów mogą ulec zmianie, więc cena również m
 #, fuzzy
 msgid "Product_ID"
 msgstr "Produkt"
+
+#, fuzzy
+#~ msgid "The_invoice_was_generated_successfully."
+#~ msgstr "Komentarz został zmodyfikowany pomyślnie."
 
 #, fuzzy
 #~ msgid "deposit"
