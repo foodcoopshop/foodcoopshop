@@ -17,6 +17,7 @@ use App\Application;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
+use App\Test\TestCase\Traits\PrepareInvoiceDataTrait;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
@@ -28,6 +29,7 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
     use AppIntegrationTestTrait;
     use EmailTrait;
     use LoginTrait;
+    use PrepareInvoiceDataTrait;
 
     public $commandRunner;
 
@@ -45,7 +47,7 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
 
         $customerId = Configure::read('test.superadminId');
-        $this->prepareOrdersAndPayments($customerId);
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
 
         $this->get('/admin/customers/previewInvoice.pdf?customerId='.$customerId.'&paidInCash=1&currentDay=2018-02-02&outputType=html');
 //         pr($this->_response);
@@ -62,7 +64,7 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
 
         $customerId = Configure::read('test.superadminId');
-        $this->prepareOrdersAndPayments($customerId);
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
 
         $cronjobRunDay = '2018-02-02 10:20:30';
 
@@ -136,31 +138,6 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
         $this->assertEquals($data->total_price_tax_excl, $excl);
         $this->assertEquals($data->total_price_tax, $tax);
         $this->assertEquals($data->total_price_tax_incl, $incl);
-    }
-
-    protected function prepareOrdersAndPayments($customerId)
-    {
-
-        $pickupDay = '2018-02-02';
-
-        // add product with price pre unit
-        $productIdA = 347; // forelle
-        $productIdB = '348-11'; // rindfleisch + attribute
-        $this->addProductToCart($productIdA, 1);
-        $this->addProductToCart($productIdB, 3);
-        $this->finishCart(1, 1, '', null, $pickupDay);
-
-        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
-        $query = 'UPDATE ' . $this->OrderDetail->getTable().' SET pickup_day = :pickupDay WHERE id_order_detail IN(4,5);';
-        $params = [
-            'pickupDay' => $pickupDay,
-        ];
-        $statement = $this->dbConnection->prepare($query);
-        $statement->execute($params);
-
-        $this->addPayment($customerId, 2.0, 'deposit', 0, '', $pickupDay);
-        $this->addPayment($customerId, 3.2, 'deposit', 0, '', $pickupDay);
-
     }
 
 }

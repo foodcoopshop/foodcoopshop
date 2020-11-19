@@ -20,7 +20,7 @@ use App\Test\TestCase\Traits\PrepareInvoiceDataTrait;
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-class CustomersControllerTest extends AppCakeTestCase
+class InvoicesControllerTest extends AppCakeTestCase
 {
 
     use AppIntegrationTestTrait;
@@ -28,25 +28,56 @@ class CustomersControllerTest extends AppCakeTestCase
     use LoginTrait;
     use PrepareInvoiceDataTrait;
 
-    public function testGenerateInvoicePaidInCashSavedCorrectly()
+    public function testCancel()
     {
 
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
 
         $this->loginAsSuperadmin();
         $customerId = Configure::read('test.superadminId');
-        $paidInCash = 1;
 
-        $this->generateInvoice($customerId, $paidInCash);
+        $this->generateInvoice($customerId, 0);
 
         $this->Invoice = $this->getTableLocator()->get('Invoices');
         $invoice = $this->Invoice->find('all', [
             'conditions' => [
                 'Invoices.id_customer' => $customerId,
             ],
+            'contain' => [
+                'OrderDetails',
+            ]
         ])->first();
 
-        $this->assertEquals($invoice->paid_in_cash, $paidInCash);
+        $this->ajaxPost(
+            '/admin/invoices/cancel/',
+            [
+                'invoiceId' => $invoice->id,
+            ]
+        );
+
+        $invoice = $this->Invoice->find('all', [
+            'conditions' => [
+                'Invoices.id_customer' => $customerId,
+            ],
+        ])->first();
+
+        $this->assertEquals(APP_DEL, $invoice->status);
+
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
+        $orderDetails = $this->OrderDetail->find('all', [
+            'conditions' => [
+                'OrderDetails.id_invoice' => $invoice->id,
+            ]
+        ])->toArray();
+        $this->assertEquals(0, count($orderDetails));
+
+        $this->Payment = $this->getTableLocator()->get('Payments');
+        $payments = $this->Payment->find('all', [
+            'conditions' => [
+                'Payments.invoice_id' => $invoice->id,
+            ]
+        ])->toArray();
+        $this->assertEquals(0, count($payments));
 
     }
 
