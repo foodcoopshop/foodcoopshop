@@ -29,17 +29,17 @@ foreach($taxRates as $taxRate => $data) {
             $formattedTaxRate = $this->Number->formatTaxRate($taxRate);
             $html .= $formattedTaxRate . '%';
         $html .= '</td>';
-        $html .= '<td>'. $this->Number->formatAsCurrency($data['sum_price_excl']) . '</td>';
-        $html .= '<td>'. $this->Number->formatAsCurrency($data['sum_tax']) . '</td>';
-        $html .= '<td>'. $this->Number->formatAsCurrency($data['sum_price_incl']) . '</td>';
+        $html .= '<td>'. $this->Number->formatAsDecimal($data['sum_price_excl']) . '</td>';
+        $html .= '<td>'. $this->Number->formatAsDecimal($data['sum_tax']) . '</td>';
+        $html .= '<td>'. $this->Number->formatAsDecimal($data['sum_price_incl']) . '</td>';
     $html .= '</tr>';
 }
 
 $html .= '<tr style="font-weight:bold;">';
 $html .= '<td>'.__d('admin', 'Sum').'</td>';
-$html .= '<td>'. $this->Number->formatAsCurrency($taxRatesSums['sum_price_excl']) . '</td>';
-$html .= '<td>'. $this->Number->formatAsCurrency($taxRatesSums['sum_tax']) . '</td>';
-$html .= '<td>'. $this->Number->formatAsCurrency($taxRatesSums['sum_price_incl']) . '</td>';
+$html .= '<td>'. $this->Number->formatAsDecimal($taxRatesSums['sum_price_excl']) . '</td>';
+$html .= '<td>'. $this->Number->formatAsDecimal($taxRatesSums['sum_tax']) . '</td>';
+$html .= '<td>'. $this->Number->formatAsDecimal($taxRatesSums['sum_price_incl']) . '</td>';
 
 $html .= '</tr>';
 

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-19 12:12+0100\n"
-"PO-Revision-Date: 2020-11-19 12:16+0100\n"
+"POT-Creation-Date: 2020-11-19 15:07+0100\n"
+"PO-Revision-Date: 2020-11-19 15:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1115,6 +1115,9 @@ msgstr "Pfand-Rücknahmen (Hersteller)"
 
 msgid "Returned_deposit_by_member"
 msgstr "Pfand-Rückgaben (Mitglieder)"
+
+msgid "All_amounts_in_{0}."
+msgstr "Alle Beträge in {0}."
 
 msgid "Invoice_number_abbreviation"
 msgstr "Rechnung Nr."

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-19 12:12+0100\n"
-"PO-Revision-Date: 2020-11-19 12:17+0100\n"
+"POT-Creation-Date: 2020-11-19 15:07+0100\n"
+"PO-Revision-Date: 2020-11-19 15:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1115,6 +1115,9 @@ msgstr "Empty glasses returned by manufacturer"
 
 msgid "Returned_deposit_by_member"
 msgstr "Returned deposit by member"
+
+msgid "All_amounts_in_{0}."
+msgstr "All amounts in {0}."
 
 msgid "Invoice_number_abbreviation"
 msgstr "Invoice nº"

@@ -44,6 +44,8 @@ echo $this->element('reportNavTabs', [
     'dateTo' => $dateTo,
 ]);
 
+echo '<p style="margin-top:15px;"><b>' . __d('admin', 'All_amounts_in_{0}.', [Configure::read('app.currencyName')]) . '<b></p>';
+
 echo '<table class="list no-clone-last-row">';
 
     echo '<tr class="sort">';
@@ -78,15 +80,15 @@ echo '<table class="list no-clone-last-row">';
             echo '</td>';
 
             echo '<td style="text-align:right;">';
-                echo $this->Number->formatAsCurrency($invoice->sum_price_excl);
+                echo $this->Number->formatAsDecimal($invoice->sum_price_excl);
             echo '</td>';
 
             echo '<td style="text-align:right;">';
-                echo $this->Number->formatAsCurrency($invoice->sum_tax);
+                echo $this->Number->formatAsDecimal($invoice->sum_tax);
             echo '</td>';
 
             echo '<td style="text-align:right;">';
-                echo $this->Number->formatAsCurrency($invoice->sum_price_incl);
+                echo $this->Number->formatAsDecimal($invoice->sum_price_incl);
             echo '</td>';
 
             echo '<td>';
@@ -139,15 +141,15 @@ echo '<table class="list no-clone-last-row">';
         echo '</td>';
 
         echo '<td style="text-align:right;">';
-            echo $this->Number->formatAsCurrency($invoiceSums['total_sum_price_excl']);
+            echo $this->Number->formatAsDecimal($invoiceSums['total_sum_price_excl']);
         echo '</td>';
 
         echo '<td style="text-align:right;">';
-            echo $this->Number->formatAsCurrency($invoiceSums['total_sum_tax']);
+            echo $this->Number->formatAsDecimal($invoiceSums['total_sum_tax']);
         echo '</td>';
 
         echo '<td style="text-align:right;">';
-            echo $this->Number->formatAsCurrency($invoiceSums['total_sum_price_incl']);
+            echo $this->Number->formatAsDecimal($invoiceSums['total_sum_price_incl']);
         echo '</td>';
 
         echo '<td colspan="4">';
