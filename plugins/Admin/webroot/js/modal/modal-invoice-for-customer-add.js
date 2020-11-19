@@ -37,7 +37,7 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
 
     getSuccessHandler : function(modalSelector, customerId) {
         var paidInCash = foodcoopshop.ModalInvoiceForCustomerAdd.getPaidInCashValue();
-        window.open('/admin/customers/previewInvoice.pdf?customerId=' + customerId + '&paidInCash=' + paidInCash);
+        window.open('/admin/invoices/preview.pdf?customerId=' + customerId + '&paidInCash=' + paidInCash);
         var successButton = foodcoopshop.Modal.getSuccessButton(modalSelector);
         foodcoopshop.Helper.removeSpinnerFromButton(successButton, 'fa-check');
         foodcoopshop.Helper.enableButton(successButton);
@@ -72,7 +72,7 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-exclamation-triangle');
             foodcoopshop.Helper.disableButton($(this));
             var paidInCash = foodcoopshop.ModalInvoiceForCustomerAdd.getPaidInCashValue();
-            document.location.href = '/admin/customers/generateInvoice.pdf?customerId=' + customerId + '&paidInCash=' + paidInCash;
+            document.location.href = '/admin/invoices/generate.pdf?customerId=' + customerId + '&paidInCash=' + paidInCash;
         });
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {

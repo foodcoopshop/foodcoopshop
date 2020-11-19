@@ -20,7 +20,7 @@ trait PrepareInvoiceDataTrait
 
     public function generateInvoice($customerId, $paidInCash)
     {
-        $this->get('/admin/customers/generateInvoice.pdf?customerId='.$customerId.'&paidInCash='.$paidInCash.'&currentDay=2018-02-02');
+        $this->get('/admin/invoices/generate.pdf?customerId='.$customerId.'&paidInCash='.$paidInCash.'&currentDay=2018-02-02');
     }
 
     public function prepareOrdersAndPaymentsForInvoice($customerId)

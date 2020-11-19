@@ -28,6 +28,28 @@ class InvoicesControllerTest extends AppCakeTestCase
     use LoginTrait;
     use PrepareInvoiceDataTrait;
 
+    public function testGeneratePaidInCashSavedCorrectly()
+    {
+
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+        $paidInCash = 1;
+
+        $this->generateInvoice($customerId, $paidInCash);
+
+        $this->Invoice = $this->getTableLocator()->get('Invoices');
+        $invoice = $this->Invoice->find('all', [
+            'conditions' => [
+                'Invoices.id_customer' => $customerId,
+            ],
+        ])->first();
+
+        $this->assertEquals($invoice->paid_in_cash, $paidInCash);
+
+    }
+
     public function testCancel()
     {
 
