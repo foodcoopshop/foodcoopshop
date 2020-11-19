@@ -110,7 +110,6 @@ class InvoicesTable extends AppTable
     {
 
         $customersTable = FactoryLocator::get('Table')->get('Customers');
-
         $customer = $customersTable->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId,
@@ -134,24 +133,46 @@ class InvoicesTable extends AppTable
             ]
         ])->first();
 
+        // fetch returned deposit
+        $paymentsTable = FactoryLocator::get('Table')->get('Payments');
+        $deposits = $paymentsTable->getCustomerDepositNotBilled($customerId);
+
+        $preparedData = $this->prepareDataForCustomerInvoice($customer->active_order_details, $deposits);
+
+        $customer->active_order_details = $preparedData['active_order_details'];
+        $customer->ordered_deposit = $preparedData['ordered_deposit'];
+        $customer->returned_deposit = $preparedData['returned_deposit'];
+        $customer->tax_rates = $preparedData['tax_rates'];
+        $customer->sumPriceIncl = $preparedData['sumPriceIncl'];
+        $customer->sumPriceExcl = $preparedData['sumPriceExcl'];
+        $customer->sumTax = $preparedData['sumTax'];
+        $customer->new_invoice_necessary = $preparedData['new_invoice_necessary'];
+
+        return $customer;
+
+    }
+
+    public function prepareDataForCustomerInvoice($orderDetails, $returnedDeposits)
+    {
+
         // sorting by manufacturer name as third level assocition is hard (or even not possible)
-        foreach($customer->active_order_details as $orderDetail) {
+        foreach($orderDetails as $orderDetail) {
             $manufacturerName[] = StringComponent::slugify($orderDetail->product->manufacturer->name);
             $productName[] = StringComponent::slugify($orderDetail->product_name);
             $deliveryDay[] = $orderDetail->pickup_day;
         }
 
-        if (!empty($customer->active_order_details)) {
+        if (!empty($orderDetails)) {
             array_multisort(
                 $manufacturerName, SORT_ASC,
                 $productName, SORT_ASC,
                 $deliveryDay, SORT_ASC,
-                $customer->active_order_details,
+                $orderDetails,
             );
         }
 
         // prepare correct weight if price per unit was used
-        foreach($customer->active_order_details as $orderDetail) {
+        foreach($orderDetails as $orderDetail) {
             if (!empty($orderDetail->order_detail_unit)) {
                 $orderDetail->product_name .= ', ' . Configure::read('app.numberHelper')->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) . $orderDetail->order_detail_unit->unit_name;
             }
@@ -160,7 +181,7 @@ class InvoicesTable extends AppTable
         // prepare delivered deposit
         $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
         $orderedDeposit = $returnedDeposit = ['deposit_incl' => 0, 'deposit_excl' => 0, 'deposit_tax' => 0, 'deposit_amount' => 0, 'entities' => []];
-        foreach($customer->active_order_details as $orderDetail) {
+        foreach($orderDetails as $orderDetail) {
             if ($orderDetail->deposit > 0) {
                 $orderedDeposit['deposit_incl'] += $orderDetail->deposit;
                 $orderedDeposit['deposit_excl'] += $orderDetailTable->getDepositNet($orderDetail->deposit, $orderDetail->product_amount);
@@ -168,19 +189,14 @@ class InvoicesTable extends AppTable
                 $orderedDeposit['deposit_amount'] += $orderDetail->product_amount;
             }
         }
-        $customer->ordered_deposit = $orderedDeposit;
 
-        // prepare returned deposit
-        $paymentsTable = FactoryLocator::get('Table')->get('Payments');
-        $deposits = $paymentsTable->getCustomerDepositNotBilled($customerId);
-        foreach($deposits as $deposit) {
+        foreach($returnedDeposits as $deposit) {
             $returnedDeposit['deposit_incl'] += $deposit->amount * -1;
             $returnedDeposit['deposit_excl'] += $orderDetailTable->getDepositNet($deposit->amount, 1) * -1;
             $returnedDeposit['deposit_tax'] += $orderDetailTable->getDepositTax($deposit->amount, 1) * -1;
             $returnedDeposit['deposit_amount']++;
             $returnedDeposit['entities'][] = $deposit;
         }
-        $customer->returned_deposit = $returnedDeposit;
 
         // prepare tax sums
         $taxRates = [];
@@ -189,7 +205,7 @@ class InvoicesTable extends AppTable
             'sum_tax' => 0,
             'sum_price_incl' => 0,
         ];
-        foreach($customer->active_order_details as $orderDetail) {
+        foreach($orderDetails as $orderDetail) {
             if (empty($orderDetail->tax)) {
                 $taxRate = 0;
             } else {
@@ -223,33 +239,36 @@ class InvoicesTable extends AppTable
             }
         }
 
-        $customer->tax_rates = $taxRates;
-
         // prepare sums
         $sumPriceIncl = 0;
         $sumPriceExcl = 0;
         $sumTax = 0;
-        foreach ($customer->active_order_details as $orderDetail) {
+        foreach ($orderDetails as $orderDetail) {
             $sumPriceIncl += $orderDetail->total_price_tax_incl;
             $sumPriceExcl += $orderDetail->total_price_tax_excl;
             $sumTax += $orderDetail->order_detail_tax->total_amount;
         }
 
-        $sumPriceIncl += $customer->ordered_deposit['deposit_incl'];
-        $sumPriceExcl += $customer->ordered_deposit['deposit_excl'];
-        $sumTax += $customer->ordered_deposit['deposit_tax'];
+        $sumPriceIncl += $orderedDeposit['deposit_incl'];
+        $sumPriceExcl += $orderedDeposit['deposit_excl'];
+        $sumTax += $orderedDeposit['deposit_tax'];
 
-        $sumPriceIncl += $customer->returned_deposit['deposit_incl'];
-        $sumPriceExcl += $customer->returned_deposit['deposit_excl'];
-        $sumTax += $customer->returned_deposit['deposit_tax'];
+        $sumPriceIncl += $returnedDeposit['deposit_incl'];
+        $sumPriceExcl += $returnedDeposit['deposit_excl'];
+        $sumTax += $returnedDeposit['deposit_tax'];
 
-        $customer->sumPriceIncl = $sumPriceIncl;
-        $customer->sumPriceExcl = $sumPriceExcl;
-        $customer->sumTax = $sumTax;
+        $preparedData = [
+            'active_order_details' => $orderDetails,
+            'ordered_deposit' => $orderedDeposit,
+            'returned_deposit' => $returnedDeposit,
+            'tax_rates' => $taxRates,
+            'sumPriceIncl' => $sumPriceIncl,
+            'sumPriceExcl' => $sumPriceExcl,
+            'sumTax' => $sumTax,
+            'new_invoice_necessary' => !empty($orderDetails) || $orderedDeposit['deposit_amount'] < 0 || $returnedDeposit['deposit_amount'] > 0,
+        ];
 
-        $customer->new_invoice_necessary = !empty($customer->active_order_details) || $customer->ordered_deposit['deposit_amount'] < 0 || $customer->returned_deposit['deposit_amount'] > 0;
-        return $customer;
-
+        return $preparedData;
     }
 
     public function getLastInvoiceForCustomer()
