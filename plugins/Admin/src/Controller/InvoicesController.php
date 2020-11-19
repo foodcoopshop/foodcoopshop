@@ -7,7 +7,6 @@ use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Http\Exception\NotFoundException;
-use Cake\Log\Log;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
