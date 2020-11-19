@@ -3,6 +3,7 @@
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
+use App\Test\TestCase\Traits\PrepareInvoiceDataTrait;
 use Cake\Core\Configure;
 
 /**
@@ -23,6 +24,7 @@ class InvoicesTableTest extends AppCakeTestCase
 
     use AppIntegrationTestTrait;
     use LoginTrait;
+    use PrepareInvoiceDataTrait;
 
     public $Invoice;
 
@@ -76,8 +78,7 @@ class InvoicesTableTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $customerId = Configure::read('test.superadminId');
         $paidInCash = 1;
-
-        $this->get('/admin/customers/generateInvoice.pdf?customerId='.$customerId.'&paidInCash='.$paidInCash.'&currentDay=2018-02-02');
+        $this->generateInvoice($customerId, $paidInCash);
 
         $invoices = $this->Invoice->find('all', [
             'conditions' => [
