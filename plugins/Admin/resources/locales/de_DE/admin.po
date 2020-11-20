@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-19 16:55+0100\n"
-"PO-Revision-Date: 2020-11-19 16:55+0100\n"
+"POT-Creation-Date: 2020-11-20 11:24+0100\n"
+"PO-Revision-Date: 2020-11-20 11:24+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -2102,6 +2102,9 @@ msgstr "bitte vergiss nicht, dass am {0} folgende Produkte zum Abholen bereit si
 
 msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
 msgstr "Du bekommst diese E-Mail, weil deine Bestellung länger als {0} Tage her ist."
+
+msgid "Please_find_your_cancellation_invoice_attached."
+msgstr "Deine Storno-Rechnung befindet sich im Anhang."
 
 msgid "Please_find_your_current_invoice_attached."
 msgstr "Die aktuelle Rechnung befindet sich im Anhang."

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-19 12:14+0100\n"
-"PO-Revision-Date: 2020-11-19 12:19+0100\n"
+"POT-Creation-Date: 2020-11-20 11:20+0100\n"
+"PO-Revision-Date: 2020-11-20 11:21+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1826,6 +1826,9 @@ msgstr "Mitglied"
 
 msgid "Invoice_number_abbreviataion_{0}_{1}"
 msgstr "Rechnung Nr. {0}, {1}"
+
+msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
+msgstr "Storno-Rechnung Nr. {0}, {1}"
 
 msgid "Order_lists_for_the_day"
 msgstr "Bestellungen für den"

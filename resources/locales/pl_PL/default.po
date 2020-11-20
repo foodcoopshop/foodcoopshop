@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-19 12:14+0100\n"
+"POT-Creation-Date: 2020-11-20 11:20+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2470,6 +2470,11 @@ msgstr "Członek"
 # Invoice nº
 #, fuzzy
 msgid "Invoice_number_abbreviataion_{0}_{1}"
+msgstr "Faktura nr"
+
+# Invoice nº
+#, fuzzy
+msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
 msgstr "Faktura nr"
 
 # Send order list day
