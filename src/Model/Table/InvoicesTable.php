@@ -174,7 +174,10 @@ class InvoicesTable extends AppTable
         // prepare correct weight if price per unit was used
         foreach($orderDetails as $orderDetail) {
             if (!empty($orderDetail->order_detail_unit)) {
-                $orderDetail->product_name .= ', ' . Configure::read('app.numberHelper')->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) . $orderDetail->order_detail_unit->unit_name;
+                // do not add unit a second time if cancellation invoice is rendered ($source == 'OrderDetails')
+                if ($orderDetail->getSource() == 'ActiveOrderDetails') {
+                    $orderDetail->product_name .= ', ' . Configure::read('app.numberHelper')->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) . $orderDetail->order_detail_unit->unit_name;
+                }
             }
         }
 
@@ -182,7 +185,7 @@ class InvoicesTable extends AppTable
         $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
         $orderedDeposit = $returnedDeposit = ['deposit_incl' => 0, 'deposit_excl' => 0, 'deposit_tax' => 0, 'deposit_amount' => 0, 'entities' => []];
         foreach($orderDetails as $orderDetail) {
-            if ($orderDetail->deposit > 0) {
+            if ($orderDetail->deposit != 0) {
                 $orderedDeposit['deposit_incl'] += $orderDetail->deposit;
                 $orderedDeposit['deposit_excl'] += $orderDetailTable->getDepositNet($orderDetail->deposit, $orderDetail->product_amount);
                 $orderedDeposit['deposit_tax'] += $orderDetailTable->getDepositTax($orderDetail->deposit, $orderDetail->product_amount);

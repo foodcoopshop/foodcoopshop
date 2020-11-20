@@ -38,7 +38,6 @@ class GenerateInvoiceToCustomer
         $this->Payment = FactoryLocator::get('Table')->get('Payments');
         $this->QueuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
 
-        $data = $this->Invoice->getDataForCustomerInvoice($data->id_customer, $currentDay);
         if (!$data->new_invoice_necessary) {
             throw new Exception('safety check if data available - should always be checked before triggering this queue');
         }
@@ -76,24 +75,21 @@ class GenerateInvoiceToCustomer
     private function updateOrderDetails($data, $invoiceId)
     {
         foreach($data->active_order_details as $orderDetail) {
-            $patchedEntity = $this->OrderDetail->patchEntity(
-                $orderDetail,
-                [
-                    'order_state' => Configure::read('app.htmlHelper')->getOrderStateBilled(),
-                    'id_invoice' => $invoiceId,
-                ]
-            );
-            $this->OrderDetail->save($patchedEntity);
+            $orderDetail->total_price_tax_excl = $orderDetail->getOriginal('total_price_tax_excl');
+            $orderDetail->total_price_tax_incl = $orderDetail->getOriginal('total_price_tax_incl');
+            $orderDetail->deposit = $orderDetail->getOriginal('deposit');
+            $orderDetail->order_state = Configure::read('app.htmlHelper')->getOrderStateBilled();
+            $orderDetail->id_invoice = $invoiceId;
+            $this->OrderDetail->save($orderDetail);
         }
     }
 
     private function linkReturnedDepositWithInvoice($data, $invoiceId)
     {
         foreach($data->returned_deposit['entities'] as $payment) {
-            $paymentEntity = $this->Payment->patchEntity($payment, [
-                'invoice_id' => $invoiceId,
-            ]);
-            $this->Payment->save($paymentEntity);
+            $payment->amount = $payment->getOriginal('amount');
+            $payment->invoice_id = $invoiceId;
+            $this->Payment->save($payment);
         }
     }
 

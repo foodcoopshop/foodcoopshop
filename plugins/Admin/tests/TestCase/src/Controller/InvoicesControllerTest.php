@@ -58,6 +58,7 @@ class InvoicesControllerTest extends AppCakeTestCase
         $this->loginAsSuperadmin();
         $customerId = Configure::read('test.superadminId');
 
+        $this->prepareOrdersAndPaymentsForInvoice($customerId);
         $this->generateInvoice($customerId, 0);
 
         $this->Invoice = $this->getTableLocator()->get('Invoices');

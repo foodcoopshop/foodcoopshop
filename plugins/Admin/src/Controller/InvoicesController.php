@@ -179,12 +179,28 @@ class InvoicesController extends AdminAppController
             $this->Payment->save($patchedEntity);
         }
 
+        $cancellationFactor = -1;
+        foreach($invoice->payments as $payment) {
+            $payment->amount *= $cancellationFactor;
+        }
+
+        foreach($invoice->order_details as $orderDetail) {
+            $orderDetail->total_price_tax_excl *= $cancellationFactor;
+            $orderDetail->total_price_tax_incl *= $cancellationFactor;
+            $orderDetail->deposit *= $cancellationFactor;
+            $orderDetail->order_detail_tax->unit_amount *= $cancellationFactor;
+            $orderDetail->order_detail_tax->total_amount *= $cancellationFactor;
+        }
+
         $invoiceData = $this->Invoice->prepareDataForCustomerInvoice($invoice->order_details, $invoice->payments);
 
         $customer = $this->Customer->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $invoice->id_customer,
             ],
+            'contain' => [
+                'AddressCustomers',
+            ]
         ])->first();
 
         $customer->id_customer = $invoice->customer->id_customer;
