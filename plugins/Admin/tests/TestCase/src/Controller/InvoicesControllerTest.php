@@ -1,8 +1,10 @@
 <?php
 
+use App\Application;
 use App\Test\TestCase\AppCakeTestCase;
 use App\Test\TestCase\Traits\AppIntegrationTestTrait;
 use App\Test\TestCase\Traits\LoginTrait;
+use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
 use App\Test\TestCase\Traits\PrepareInvoiceDataTrait;
@@ -27,6 +29,8 @@ class InvoicesControllerTest extends AppCakeTestCase
     use EmailTrait;
     use LoginTrait;
     use PrepareInvoiceDataTrait;
+
+    public $commandRunner;
 
     public function testGeneratePaidInCashSavedCorrectly()
     {
@@ -53,6 +57,7 @@ class InvoicesControllerTest extends AppCakeTestCase
     public function testCancel()
     {
 
+        $this->commandRunner = new CommandRunner(new Application(ROOT . '/config'));
         $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
 
         $this->loginAsSuperadmin();
@@ -75,6 +80,7 @@ class InvoicesControllerTest extends AppCakeTestCase
                 'invoiceId' => $invoice->id,
             ]
         );
+        $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
 
         $invoice = $this->Invoice->find('all', [
             'conditions' => [
@@ -99,6 +105,11 @@ class InvoicesControllerTest extends AppCakeTestCase
             ],
         ])->toArray();
         $this->assertEquals(0, count($payments));
+
+        $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
+        $formattedCurrentDay = Configure::read('app.timeHelper')->formatToDateShort($currentDay);
+        $this->assertMailSentWithAt(1, 'Rechnung Nr. 2020-000001, ' . $formattedCurrentDay, 'originalSubject');
+        $this->assertMailSentWithAt(2, 'Storno-Rechnung Nr. 2020-000002, ' . $formattedCurrentDay, 'originalSubject');
 
     }
 

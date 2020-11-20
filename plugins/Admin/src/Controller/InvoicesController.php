@@ -199,6 +199,7 @@ class InvoicesController extends AdminAppController
         $customer->sumPriceExcl = $invoiceData['sumPriceExcl'];
         $customer->sumTax = $invoiceData['sumTax'];
         $customer->new_invoice_necessary = true;
+        $customer->is_cancellation_invoice = true;
 
         $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
 

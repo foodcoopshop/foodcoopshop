@@ -147,6 +147,7 @@ class InvoicesTable extends AppTable
         $customer->sumPriceExcl = $preparedData['sumPriceExcl'];
         $customer->sumTax = $preparedData['sumTax'];
         $customer->new_invoice_necessary = $preparedData['new_invoice_necessary'];
+        $customer->is_cancellation_invoice = false;
 
         return $customer;
 

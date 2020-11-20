@@ -60,6 +60,7 @@ class GenerateInvoiceToCustomer
         $this->updateOrderDetails($data, $newInvoice->id);
 
         $this->QueuedJobs->createJob('SendInvoiceToCustomer', [
+            'isCancellationInvoice' => $data->is_cancellation_invoice,
             'customerName' => $data->name,
             'customerEmail' => $data->email,
             'invoicePdfFile' => $invoicePdfFile,

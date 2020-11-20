@@ -38,15 +38,23 @@ class QueueSendInvoiceToCustomerTask extends QueueTask implements QueueTaskInter
         $invoiceNumber = $data['invoiceNumber'];
         $invoiceDate = $data['invoiceDate'];
         $invoiceId = $data['invoiceId'];
+        $isCancellationInvoice = $data['isCancellationInvoice'];
+
+        $subject = __('Invoice_number_abbreviataion_{0}_{1}', [$invoiceNumber, $invoiceDate]);
+        $emailTemplate = 'Admin.send_invoice_to_customer';
+        if ($isCancellationInvoice) {
+            $emailTemplate = 'Admin.send_cancellation_invoice_to_customer';
+            $subject = __('Cancellation_invoice_number_abbreviataion_{0}_{1}', [$invoiceNumber, $invoiceDate]);
+        }
 
         $email = new AppMailer();
         $email->fallbackEnabled = false;
-        $email->viewBuilder()->setTemplate('Admin.send_invoice_to_customer');
+        $email->viewBuilder()->setTemplate($emailTemplate);
         $email->setTo($customerEmail)
         ->setAttachments([
             $invoicePdfFile,
         ])
-        ->setSubject(__('Invoice_number_abbreviataion_{0}_{1}', [$invoiceNumber, $invoiceDate]))
+        ->setSubject($subject)
         ->setViewVars([
             'customerName' => $customerName,
         ]);
