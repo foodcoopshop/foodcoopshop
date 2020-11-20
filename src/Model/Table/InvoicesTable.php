@@ -39,6 +39,10 @@ class InvoicesTable extends AppTable
         $this->hasMany('Payments', [
             'foreignKey' => 'invoice_id',
         ]);
+        $this->belongsTo('CancellationInvoices', [
+            'className' => 'Invoices',
+            'foreignKey' => 'cancellation_invoice_id',
+        ]);
     }
 
     public function getPreparedTaxRatesForSumTable($invoices)
@@ -60,10 +64,6 @@ class InvoicesTable extends AppTable
             'total' => $defaultArray,
         ];
         foreach($invoices as $invoice) {
-
-            if ($invoice->status < APP_ON) {
-                continue;
-            }
 
             $taxRateType = $invoice->paid_in_cash ? 'cash' : 'cashless';
 

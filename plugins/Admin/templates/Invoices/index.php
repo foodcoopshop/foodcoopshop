@@ -63,9 +63,7 @@ echo '<table class="list no-clone-last-row">';
 
     foreach($invoices as $invoice) {
 
-        $isCancelled = $invoice->status == APP_DEL;
-
-        echo '<tr class="data' . ($isCancelled ? ' cancelled' : '') . '" data-invoice-id="'.$invoice->id.'">';
+        echo '<tr class="data' . (!empty($invoice->cancellation_invoice) ? ' cancelled' : '') . '" data-invoice-id="'.$invoice->id.'">';
 
             echo '<td>';
                 echo $invoice->invoice_number;
@@ -116,8 +114,9 @@ echo '<table class="list no-clone-last-row">';
             echo '</td>';
 
             echo '<td style="text-align:center;">';
-                if ($isCancelled) {
-                    echo __d('admin', 'yes');
+
+                if (!empty($invoice->cancellation_invoice)) {
+                    echo $invoice->cancellation_invoice->invoice_number;
                 } else {
                     echo $this->Html->link(
                         '<i class="fas fa-times-circle not-ok"></i>',

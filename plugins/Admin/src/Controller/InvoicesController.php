@@ -155,28 +155,15 @@ class InvoicesController extends AdminAppController
             throw new NotFoundException();
         }
 
-        $invoice->status = APP_DEL;
-        $this->Invoice->save($invoice);
-
         foreach($invoice->order_details as $orderDetail) {
-            $patchedEntity = $this->OrderDetail->patchEntity(
-                $orderDetail,
-                [
-                    'order_state' => ORDER_STATE_ORDER_PLACED,
-                    'id_invoice' => null,
-                ]
-            );
-            $this->OrderDetail->save($patchedEntity);
+            $orderDetail->orderState = ORDER_STATE_ORDER_PLACED;
+            $orderDetail->id_invoice = null;
+            $this->OrderDetail->save($orderDetail);
         }
 
         foreach($invoice->payments  as $payment) {
-            $patchedEntity = $this->Payment->patchEntity(
-                $payment,
-                [
-                    'invoice_id' => null,
-                ]
-            );
-            $this->Payment->save($patchedEntity);
+            $payment->invoice_id = null;
+            $this->Payment->save($orderDetail);
         }
 
         $cancellationFactor = -1;
@@ -217,6 +204,10 @@ class InvoicesController extends AdminAppController
 
         $invoiceToCustomer = new GenerateInvoiceToCustomer();
         $newInvoice = $invoiceToCustomer->run($customer, $currentDay, $invoice->paid_in_cash);
+
+        $invoice->status = APP_DEL;
+        $invoice->cancellation_invoice_id = $newInvoice->id;
+        $this->Invoice->save($invoice);
 
         $linkToInvoice = Configure::read('app.htmlHelper')->link(
             __d('admin', 'Download'),
@@ -288,6 +279,7 @@ class InvoicesController extends AdminAppController
             'contain' => [
                 'InvoiceTaxes',
                 'Customers',
+                'CancellationInvoices',
             ],
             'conditions' => $conditions,
         ]);
@@ -315,17 +307,11 @@ class InvoicesController extends AdminAppController
         ];
 
         foreach($invoices as $invoice) {
-
-            if ($invoice->status < APP_ON) {
-                continue;
-            }
-
             foreach($invoice->invoice_taxes as $invoiceTax) {
                 $invoiceSums['total_sum_price_excl'] += $invoiceTax->total_price_tax_excl;
                 $invoiceSums['total_sum_tax'] += $invoiceTax->total_price_tax;
                 $invoiceSums['total_sum_price_incl'] += $invoiceTax->total_price_tax_incl;
             }
-
         }
         $this->set('invoiceSums', $invoiceSums);
 

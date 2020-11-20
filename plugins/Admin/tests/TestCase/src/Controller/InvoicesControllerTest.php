@@ -82,7 +82,7 @@ class InvoicesControllerTest extends AppCakeTestCase
             ],
         ])->first();
 
-        $this->assertEquals(APP_DEL, $invoice->status);
+        $this->assertEquals(2, $invoice->cancellation_invoice_id);
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->find('all', [
