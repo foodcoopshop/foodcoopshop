@@ -93,6 +93,10 @@ class InvoicesTable extends AppTable
             }
         }
 
+        $taxRates['cashless'] = $this->clearZeroArray($taxRates['cashless']);
+        $taxRates['cash'] = $this->clearZeroArray($taxRates['cash']);
+        $taxRates['total'] = $this->clearZeroArray($taxRates['total']);
+
         ksort($taxRates['cashless']);
         ksort($taxRates['cash']);
         ksort($taxRates['total']);
@@ -104,6 +108,16 @@ class InvoicesTable extends AppTable
 
         return $result;
 
+    }
+
+    private function clearZeroArray($taxRates)
+    {
+        foreach($taxRates as $key => $taxRate) {
+            if (array_sum($taxRate) == 0) {
+                unset($taxRates[$key]);
+            }
+        }
+        return $taxRates;
     }
 
     public function getDataForCustomerInvoice($customerId, $currentDay)
@@ -236,12 +250,7 @@ class InvoicesTable extends AppTable
 
         ksort($taxRates);
 
-        // remove empty rows
-        foreach($taxRates as $key => $taxRate) {
-            if (array_sum($taxRate) == 0) {
-                unset($taxRates[$key]);
-            }
-        }
+        $taxRates = $this->clearZeroArray($taxRates);
 
         // prepare sums
         $sumPriceIncl = 0;
