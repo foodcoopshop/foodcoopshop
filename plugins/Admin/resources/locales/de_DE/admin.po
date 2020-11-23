@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-23 14:58+0100\n"
-"PO-Revision-Date: 2020-11-23 14:59+0100\n"
+"POT-Creation-Date: 2020-11-23 15:11+0100\n"
+"PO-Revision-Date: 2020-11-23 15:11+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -201,8 +201,8 @@ msgstr "Die Rechnung Nr. {0} von {1} wurde erfolgreich storniert."
 msgid "Cancellation_invoice_number_{0}_was_generated_successfully."
 msgstr "Die Storno-Rechnung Nr. {0} wurde erfolgreich erstellt."
 
-msgid "Invoices"
-msgstr "Rechnungen"
+msgid "Journal"
+msgstr "Journal"
 
 msgid "_Order_list_filename_"
 msgstr "_Bestellliste_"
@@ -2201,6 +2201,9 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
+
+#~ msgid "Invoices"
+#~ msgstr "Rechnungen"
 
 #~ msgid "Invoice_number_abbreviation_of_cancelled_invoice"
 #~ msgstr "Stornierte Rechnung Nr."

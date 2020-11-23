@@ -318,7 +318,7 @@ class InvoicesController extends AdminAppController
         $this->set('invoiceSums', $invoiceSums);
 
         $this->set('customersForDropdown', $this->Customer->getForDropdown());
-        $this->set('title_for_layout', __d('admin', 'Invoices'));
+        $this->set('title_for_layout', __d('admin', 'Journal'));
 
         $preparedTaxRates = $this->Invoice->getPreparedTaxRatesForSumTable($invoices);
         $this->set('taxRates', $preparedTaxRates['taxRates']);

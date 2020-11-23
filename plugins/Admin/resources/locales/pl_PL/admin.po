@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-23 14:58+0100\n"
+"POT-Creation-Date: 2020-11-23 15:11+0100\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -210,9 +210,8 @@ msgstr "Płatność ({0}, {1}) została usunięta pomyślnie."
 msgid "Cancellation_invoice_number_{0}_was_generated_successfully."
 msgstr "Płatność ({0}, {1}) została usunięta pomyślnie."
 
-#, fuzzy
-msgid "Invoices"
-msgstr "Data faktury"
+msgid "Journal"
+msgstr ""
 
 msgid "_Order_list_filename_"
 msgstr "_Lista_zamowien_"
@@ -2302,6 +2301,10 @@ msgstr "Wagi dostarczonych produktów mogą ulec zmianie, więc cena również m
 #, fuzzy
 msgid "Product_ID"
 msgstr "Produkt"
+
+#, fuzzy
+#~ msgid "Invoices"
+#~ msgstr "Data faktury"
 
 #, fuzzy
 #~ msgid "Invoice_number_abbreviation_of_cancelled_invoice"

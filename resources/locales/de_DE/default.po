@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-20 11:20+0100\n"
-"PO-Revision-Date: 2020-11-20 11:21+0100\n"
+"POT-Creation-Date: 2020-11-23 15:10+0100\n"
+"PO-Revision-Date: 2020-11-23 15:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1920,8 +1920,8 @@ msgstr "Superadmin"
 msgid "Credit_overview"
 msgstr "Guthaben-Übersicht"
 
-msgid "Invoices"
-msgstr "Rechnungen"
+msgid "Journal"
+msgstr "Journal"
 
 msgid "Deposit_overview"
 msgstr "Pfand-Übersicht"
@@ -2495,6 +2495,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Invoices"
+#~ msgstr "Rechnungen"
 
 #~ msgid "Action_Log_Superadmin_deploy_failed"
 #~ msgstr "Superadmin: Update gescheitert"

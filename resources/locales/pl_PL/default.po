@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-20 11:20+0100\n"
+"POT-Creation-Date: 2020-11-23 15:10+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2598,7 +2598,7 @@ msgstr "Superadmin"
 msgid "Credit_overview"
 msgstr "Przegląd zamówień"
 
-msgid "Invoices"
+msgid "Journal"
 msgstr ""
 
 # Order overview

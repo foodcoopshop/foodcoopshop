@@ -498,18 +498,18 @@ class MyHtmlHelper extends HtmlHelper
             'url' => Configure::read('app.slugHelper')->getCreditBalanceSum(),
             'key' => 'credit_balance_sum',
         ];
-        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-            $tabs[] = [
-                'name' => __('Invoices'),
-                'url' => Configure::read('app.slugHelper')->getInvoices(),
-                'key' => 'invoices',
-            ];
-        }
         if ($this->paymentIsCashless() && Configure::read('app.isDepositPaymentCashless')) {
             $tabs[] = [
                 'name' => __('Deposit_overview'),
                 'url' => Configure::read('app.slugHelper')->getDepositOverviewDiagram(),
                 'key' => 'deposit_overview',
+            ];
+        }
+        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+            $tabs[] = [
+                'name' => __('Journal'),
+                'url' => Configure::read('app.slugHelper')->getInvoices(),
+                'key' => 'invoices',
             ];
         }
         return $tabs;
