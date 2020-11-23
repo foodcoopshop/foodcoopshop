@@ -179,7 +179,7 @@ class InvoicesController extends AdminAppController
             $orderDetail->order_detail_tax->total_amount *= $cancellationFactor;
         }
 
-        $invoiceData = $this->Invoice->prepareDataForCustomerInvoice($invoice->order_details, $invoice->payments);
+        $invoiceData = $this->Invoice->prepareDataForCustomerInvoice($invoice->order_details, $invoice->payments, $invoice);
 
         $customer = $this->Customer->find('all', [
             'conditions' => [
@@ -198,6 +198,7 @@ class InvoicesController extends AdminAppController
         $customer->sumPriceIncl = $invoiceData['sumPriceIncl'];
         $customer->sumPriceExcl = $invoiceData['sumPriceExcl'];
         $customer->sumTax = $invoiceData['sumTax'];
+        $customer->cancelledInvoice = $invoiceData['cancelledInvoice'];
         $customer->new_invoice_necessary = true;
         $customer->is_cancellation_invoice = true;
 

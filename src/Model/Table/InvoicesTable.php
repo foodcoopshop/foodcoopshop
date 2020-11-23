@@ -137,7 +137,7 @@ class InvoicesTable extends AppTable
         $paymentsTable = FactoryLocator::get('Table')->get('Payments');
         $deposits = $paymentsTable->getCustomerDepositNotBilled($customerId);
 
-        $preparedData = $this->prepareDataForCustomerInvoice($customer->active_order_details, $deposits);
+        $preparedData = $this->prepareDataForCustomerInvoice($customer->active_order_details, $deposits, null);
 
         $customer->active_order_details = $preparedData['active_order_details'];
         $customer->ordered_deposit = $preparedData['ordered_deposit'];
@@ -153,7 +153,7 @@ class InvoicesTable extends AppTable
 
     }
 
-    public function prepareDataForCustomerInvoice($orderDetails, $returnedDeposits)
+    public function prepareDataForCustomerInvoice($orderDetails, $returnedDeposits, $cancelledInvoice)
     {
 
         // sorting by manufacturer name as third level assocition is hard (or even not possible)
@@ -269,6 +269,7 @@ class InvoicesTable extends AppTable
             'sumPriceIncl' => $sumPriceIncl,
             'sumPriceExcl' => $sumPriceExcl,
             'sumTax' => $sumTax,
+            'cancelledInvoice' => $cancelledInvoice,
             'new_invoice_necessary' => !empty($orderDetails) || $orderedDeposit['deposit_amount'] < 0 || $returnedDeposit['deposit_amount'] > 0,
         ];
 

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-20 11:24+0100\n"
-"PO-Revision-Date: 2020-11-20 11:24+0100\n"
+"POT-Creation-Date: 2020-11-23 14:58+0100\n"
+"PO-Revision-Date: 2020-11-23 14:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2145,6 +2145,9 @@ msgstr "For signing in please use the email address of this message. If you want
 msgid "Your_contact_person"
 msgstr "Your contact person"
 
+msgid "Cancellation_invoice"
+msgstr "Cancellation invoice"
+
 msgid "Paid_in_cash_on_{0}."
 msgstr "Paid in cash on {0}."
 
@@ -2198,6 +2201,9 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Invoice_number_abbreviation_of_cancelled_invoice"
+#~ msgstr "Cancelled invoice nº"
 
 #~ msgid "The_invoice_was_generated_successfully."
 #~ msgstr "The invoice has been generated successfully."

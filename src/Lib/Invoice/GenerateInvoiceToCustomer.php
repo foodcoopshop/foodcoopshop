@@ -119,9 +119,11 @@ class GenerateInvoiceToCustomer
         $invoiceEntity = $this->Invoice->newEntity($invoiceData);
 
         $newInvoice = $this->Invoice->save($invoiceEntity, [
-            'associated' => 'InvoiceTaxes'
+            'associated' => [
+                'InvoiceTaxes',
+            ],
         ]);
-
+        
         return $newInvoice;
 
     }
