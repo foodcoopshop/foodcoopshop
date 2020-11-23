@@ -43,6 +43,10 @@ class InvoicesTable extends AppTable
             'className' => 'Invoices',
             'foreignKey' => 'cancellation_invoice_id',
         ]);
+        $this->hasOne('CancelledInvoices', [
+            'className' => 'Invoices',
+            'foreignKey' => 'cancellation_invoice_id',
+        ]);
     }
 
     public function getPreparedTaxRatesForSumTable($invoices)

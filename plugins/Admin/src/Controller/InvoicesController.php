@@ -282,6 +282,7 @@ class InvoicesController extends AdminAppController
                 'InvoiceTaxes',
                 'Customers',
                 'CancellationInvoices',
+                'CancelledInvoices',
             ],
             'conditions' => $conditions,
         ]);

@@ -117,6 +117,8 @@ echo '<table class="list no-clone-last-row">';
 
                 if (!empty($invoice->cancellation_invoice)) {
                     echo $invoice->cancellation_invoice->invoice_number;
+                } else if (!empty($invoice->cancelled_invoice)) {
+                    // do not show cancel button if invoice is a cancellation invoice
                 } else {
                     echo $this->Html->link(
                         '<i class="fas fa-times-circle not-ok"></i>',
