@@ -96,17 +96,24 @@ class InvoicesControllerTest extends AppCakeTestCase
         );
         $this->commandRunner->run(['cake', 'queue', 'runworker', '-q']);
 
-        $invoice = $this->Invoice->find('all', [
+        $invoices = $this->Invoice->find('all', [
             'conditions' => [
                 'Invoices.id_customer' => $customerId,
             ],
-        ])->first();
-        $this->assertEquals(2, $invoice->cancellation_invoice_id);
+            'contain' =>
+                'InvoiceTaxes',
+            ],
+        )->toArray();
+        $this->assertEquals(2, $invoices[0]->cancellation_invoice_id);
+
+        $this->assertEquals($invoices[0]->sum_price_incl * -1, $invoices[1]->sum_price_incl);
+        $this->assertEquals($invoices[0]->sum_price_excl * -1, $invoices[1]->sum_price_excl);
+        $this->assertEquals($invoices[0]->sum_tax * -1, $invoices[1]->sum_tax);
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $orderDetails = $this->OrderDetail->find('all', [
             'conditions' => [
-                'OrderDetails.id_invoice' => $invoice->id,
+                'OrderDetails.id_invoice' => $invoices[0]->id,
             ],
         ])->toArray();
         $this->assertEquals(0, count($orderDetails));
@@ -132,7 +139,7 @@ class InvoicesControllerTest extends AppCakeTestCase
 
         $payments = $this->Payment->find('all', [
             'conditions' => [
-                'Payments.invoice_id' => $invoice->id,
+                'Payments.invoice_id' => $invoices[0]->id,
             ],
         ])->toArray();
         $this->assertEquals(0, count($payments));
