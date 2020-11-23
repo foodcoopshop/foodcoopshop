@@ -76,9 +76,8 @@ class GenerateInvoiceToCustomer
     private function updateOrderDetails($data, $invoiceId)
     {
         foreach($data->active_order_details as $orderDetail) {
-            $orderDetail->total_price_tax_excl = $orderDetail->getOriginal('total_price_tax_excl');
-            $orderDetail->total_price_tax_incl = $orderDetail->getOriginal('total_price_tax_incl');
-            $orderDetail->deposit = $orderDetail->getOriginal('deposit');
+            // important to get a fresh order detail entity as price fields could be changed for cancellation invoices
+            $orderDetail = $this->OrderDetail->get($orderDetail->id_order_detail);
             $orderDetail->order_state = Configure::read('app.htmlHelper')->getOrderStateBilled();
             $orderDetail->id_invoice = $invoiceId;
             $this->OrderDetail->save($orderDetail);
@@ -88,7 +87,8 @@ class GenerateInvoiceToCustomer
     private function linkReturnedDepositWithInvoice($data, $invoiceId)
     {
         foreach($data->returned_deposit['entities'] as $payment) {
-            $payment->amount = $payment->getOriginal('amount');
+            // important to get a fresh payment entity as amount field could be changed for cancellation invoices
+            $payment = $this->Payment->get($payment->id);
             $payment->invoice_id = $invoiceId;
             $this->Payment->save($payment);
         }
