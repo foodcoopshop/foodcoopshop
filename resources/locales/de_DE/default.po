@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-11 16:36+0100\n"
-"PO-Revision-Date: 2020-11-13 10:56+0100\n"
+"POT-Creation-Date: 2020-11-23 15:10+0100\n"
+"PO-Revision-Date: 2020-11-23 15:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -849,7 +849,7 @@ msgstr "Du kannst den Lieferrhythmus von mehreren Produkten gleichzeitig ändern
 msgid "Generate_invoice"
 msgstr "Rechnung erstellen"
 
-msgid "Really_generate_invoice_for_0"
+msgid "Really_generate_invoice_for_{0}?"
 msgstr "Möchtest du wirklich die Rechnung für {0} erstellen?"
 
 msgid "Show_preview"
@@ -857,6 +857,12 @@ msgstr "Vorschau anzeigen"
 
 msgid "Paid_in_cash"
 msgstr "Bar bezahlt"
+
+msgid "Really_cancel_invoice_number_{0}_of_{1}?"
+msgstr "Möchtest du die Rechnung {0} von {1} wirklich stornieren?"
+
+msgid "Cancel_invoice"
+msgstr "Rechnung stornieren"
 
 msgid "Were_the_products_picked_up?"
 msgstr "Wurden die Produkte abgeholt?"
@@ -1122,14 +1128,14 @@ msgstr "Deine Einkaufstasche war leer."
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
 
+msgid "ID"
+msgstr ""
+
 msgid "Price_excl."
 msgstr "Preis exkl."
 
 msgid "VAT"
 msgstr "USt."
-
-msgid "Tax_rate"
-msgstr "Steuersatz"
 
 msgid "Price_incl."
 msgstr "Preis inkl."
@@ -1164,6 +1170,9 @@ msgstr "Preis nach Gewicht"
 msgid "Tax_rates_overview_table"
 msgstr "Übersichtstabelle nach Steuersatz"
 
+msgid "Tax_rate"
+msgstr "Steuersatz"
+
 msgid "Sum_price_excl."
 msgstr "Summe Preis exkl."
 
@@ -1175,6 +1184,12 @@ msgstr "Summe Preis inkl."
 
 msgid "You_are_not_signed_in."
 msgstr "Du bist nicht angemeldet."
+
+msgid "Action_Log_Invoice_added"
+msgstr "Rechnung: erstellt"
+
+msgid "Action_Log_Invoice_cancelled"
+msgstr "Rechnung: storniert"
 
 msgid "Action_Log_Product_added"
 msgstr "Produkt: erstellt"
@@ -1445,9 +1460,6 @@ msgstr "Cronjob: Guthaben überprüfen"
 
 msgid "Action_Log_Superadmin_deploy_successful"
 msgstr "Superadmin: Update eingespielt"
-
-msgid "Action_Log_Superadmin_deploy_failed"
-msgstr "Superadmin: Update gescheitert"
 
 msgid "Action_Log_Attribute_added"
 msgstr "Variante: erstellt"
@@ -1785,6 +1797,9 @@ msgstr "morgen"
 msgid "Pickup_reminder_for"
 msgstr "Abhol-Erinnerung für"
 
+msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}_generated_successfully."
+msgstr "{0,plural,=1{Rechnung wurde} other{Rechnungen wurden}} erfolgreich erstellt."
+
 msgid "to_(time_context)"
 msgstr "bis"
 
@@ -1811,6 +1826,9 @@ msgstr "Mitglied"
 
 msgid "Invoice_number_abbreviataion_{0}_{1}"
 msgstr "Rechnung Nr. {0}, {1}"
+
+msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
+msgstr "Storno-Rechnung Nr. {0}, {1}"
 
 msgid "Order_lists_for_the_day"
 msgstr "Bestellungen für den"
@@ -1902,8 +1920,8 @@ msgstr "Superadmin"
 msgid "Credit_overview"
 msgstr "Guthaben-Übersicht"
 
-msgid "Invoices"
-msgstr "Rechnungen"
+msgid "Journal"
+msgstr "Journal"
 
 msgid "Deposit_overview"
 msgstr "Pfand-Übersicht"
@@ -2477,6 +2495,12 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Invoices"
+#~ msgstr "Rechnungen"
+
+#~ msgid "Action_Log_Superadmin_deploy_failed"
+#~ msgstr "Superadmin: Update gescheitert"
 
 #, fuzzy
 #~ msgid "Generate_invoice_for_customer"

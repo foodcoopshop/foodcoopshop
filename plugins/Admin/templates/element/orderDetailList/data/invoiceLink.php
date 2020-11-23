@@ -22,7 +22,7 @@ if ($groupBy == 'customer' && Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOM
             'javascript:void(0);',
             [
                 'escape' => false,
-                'class' => 'btn btn-outline-light invoice-for-customer-button ' . (!$orderDetail['invoiceData']->new_invoice_necessary ? 'disabled' : ''),
+                'class' => 'btn btn-outline-light invoice-for-customer-add-button ' . (!$orderDetail['invoiceData']->new_invoice_necessary ? 'disabled' : ''),
             ]
         );
     echo '</td>';

@@ -2,6 +2,7 @@
 
 namespace App\Model\Table;
 
+use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\FactoryLocator;
@@ -32,19 +33,95 @@ class InvoicesTable extends AppTable
         $this->hasMany('InvoiceTaxes', [
             'foreignKey' => 'invoice_id',
         ]);
+        $this->hasMany('OrderDetails', [
+            'foreignKey' => 'id_invoice',
+        ]);
+        $this->hasMany('Payments', [
+            'foreignKey' => 'invoice_id',
+        ]);
+        $this->belongsTo('CancellationInvoices', [
+            'className' => 'Invoices',
+            'foreignKey' => 'cancellation_invoice_id',
+        ]);
+        $this->hasOne('CancelledInvoices', [
+            'className' => 'Invoices',
+            'foreignKey' => 'cancellation_invoice_id',
+        ]);
+    }
+
+    public function getPreparedTaxRatesForSumTable($invoices)
+    {
+
+        $defaultArray = [
+            'sum_price_excl' => 0,
+            'sum_tax' => 0,
+            'sum_price_incl' => 0,
+        ];
+        $taxRates = [
+            'cashless' => [],
+            'cash' => [],
+            'total' => [],
+        ];
+        $taxRatesSums = [
+            'cashless' => $defaultArray,
+            'cash' => $defaultArray,
+            'total' => $defaultArray,
+        ];
+        foreach($invoices as $invoice) {
+
+            $taxRateType = $invoice->paid_in_cash ? 'cash' : 'cashless';
+
+            foreach([$taxRateType, 'total'] as $trt) {
+
+                foreach($invoice->invoice_taxes as $invoiceTax) {
+
+                    $taxRate = Configure::read('app.numberHelper')->formatTaxRate($invoiceTax->tax_rate);
+                    if (!isset($taxRates[$trt][$taxRate])) {
+                        $taxRates[$trt][$taxRate] = $defaultArray;
+                    }
+                    $taxRates[$trt][$taxRate]['sum_price_excl'] += $invoiceTax->total_price_tax_excl;
+                    $taxRates[$trt][$taxRate]['sum_tax'] += $invoiceTax->total_price_tax;
+                    $taxRates[$trt][$taxRate]['sum_price_incl'] += $invoiceTax->total_price_tax_incl;
+
+                    $taxRatesSums[$trt]['sum_price_excl'] += $invoiceTax->total_price_tax_excl;
+                    $taxRatesSums[$trt]['sum_tax'] += $invoiceTax->total_price_tax;
+                    $taxRatesSums[$trt]['sum_price_incl'] += $invoiceTax->total_price_tax_incl;
+
+                }
+            }
+        }
+
+        $taxRates['cashless'] = $this->clearZeroArray($taxRates['cashless']);
+        $taxRates['cash'] = $this->clearZeroArray($taxRates['cash']);
+        $taxRates['total'] = $this->clearZeroArray($taxRates['total']);
+
+        ksort($taxRates['cashless']);
+        ksort($taxRates['cash']);
+        ksort($taxRates['total']);
+
+        $result = [
+            'taxRates' => $taxRates,
+            'taxRatesSums' => $this->clearZeroArray($taxRatesSums),
+        ];
+
+        return $result;
+
+    }
+
+    private function clearZeroArray($taxRates)
+    {
+        foreach($taxRates as $key => $taxRate) {
+            if (array_sum($taxRate) == 0) {
+                unset($taxRates[$key]);
+            }
+        }
+        return $taxRates;
     }
 
     public function getDataForCustomerInvoice($customerId, $currentDay)
     {
 
         $customersTable = FactoryLocator::get('Table')->get('Customers');
-
-        // defining sort outside of contain overrides exiting key "created" (which is what we want here)
-        $customersTable->getAssociation('ActiveOrderDetails')->setSort([
-            'ActiveOrderDetails.product_name' => 'ASC',
-            'ActiveOrderDetails.id_order_detail' => 'ASC',
-        ]);
-
         $customer = $customersTable->find('all', [
             'conditions' => [
                 'Customers.id_customer' => $customerId,
@@ -64,40 +141,78 @@ class InvoicesTable extends AppTable
                 'ActiveOrderDetails.OrderDetailTaxes',
                 'ActiveOrderDetails.OrderDetailUnits',
                 'ActiveOrderDetails.Taxes',
+                'ActiveOrderDetails.Products.Manufacturers',
             ]
         ])->first();
 
+        // fetch returned deposit
+        $paymentsTable = FactoryLocator::get('Table')->get('Payments');
+        $deposits = $paymentsTable->getCustomerDepositNotBilled($customerId);
+
+        $preparedData = $this->prepareDataForCustomerInvoice($customer->active_order_details, $deposits, null);
+
+        $customer->active_order_details = $preparedData['active_order_details'];
+        $customer->ordered_deposit = $preparedData['ordered_deposit'];
+        $customer->returned_deposit = $preparedData['returned_deposit'];
+        $customer->tax_rates = $preparedData['tax_rates'];
+        $customer->sumPriceIncl = $preparedData['sumPriceIncl'];
+        $customer->sumPriceExcl = $preparedData['sumPriceExcl'];
+        $customer->sumTax = $preparedData['sumTax'];
+        $customer->new_invoice_necessary = $preparedData['new_invoice_necessary'];
+        $customer->is_cancellation_invoice = false;
+
+        return $customer;
+
+    }
+
+    public function prepareDataForCustomerInvoice($orderDetails, $returnedDeposits, $cancelledInvoice)
+    {
+
+        // sorting by manufacturer name as third level assocition is hard (or even not possible)
+        foreach($orderDetails as $orderDetail) {
+            $manufacturerName[] = StringComponent::slugify($orderDetail->product->manufacturer->name);
+            $productName[] = StringComponent::slugify($orderDetail->product_name);
+            $deliveryDay[] = $orderDetail->pickup_day;
+        }
+
+        if (!empty($orderDetails)) {
+            array_multisort(
+                $manufacturerName, SORT_ASC,
+                $productName, SORT_ASC,
+                $deliveryDay, SORT_ASC,
+                $orderDetails,
+            );
+        }
+
         // prepare correct weight if price per unit was used
-        foreach($customer->active_order_details as $orderDetail) {
+        foreach($orderDetails as $orderDetail) {
             if (!empty($orderDetail->order_detail_unit)) {
-                $orderDetail->product_name .= ', ' . Configure::read('app.numberHelper')->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) . $orderDetail->order_detail_unit->unit_name;
+                // do not add unit a second time if cancellation invoice is rendered ($source == 'OrderDetails')
+                if ($orderDetail->getSource() == 'ActiveOrderDetails') {
+                    $orderDetail->product_name .= ', ' . Configure::read('app.numberHelper')->formatUnitAsDecimal($orderDetail->order_detail_unit->product_quantity_in_units) . $orderDetail->order_detail_unit->unit_name;
+                }
             }
         }
 
         // prepare delivered deposit
         $orderDetailTable = FactoryLocator::get('Table')->get('OrderDetails');
         $orderedDeposit = $returnedDeposit = ['deposit_incl' => 0, 'deposit_excl' => 0, 'deposit_tax' => 0, 'deposit_amount' => 0, 'entities' => []];
-        foreach($customer->active_order_details as $orderDetail) {
-            if ($orderDetail->deposit > 0) {
+        foreach($orderDetails as $orderDetail) {
+            if ($orderDetail->deposit != 0) {
                 $orderedDeposit['deposit_incl'] += $orderDetail->deposit;
                 $orderedDeposit['deposit_excl'] += $orderDetailTable->getDepositNet($orderDetail->deposit, $orderDetail->product_amount);
                 $orderedDeposit['deposit_tax'] += $orderDetailTable->getDepositTax($orderDetail->deposit, $orderDetail->product_amount);
                 $orderedDeposit['deposit_amount'] += $orderDetail->product_amount;
             }
         }
-        $customer->ordered_deposit = $orderedDeposit;
 
-        // prepare returned deposit
-        $paymentsTable = FactoryLocator::get('Table')->get('Payments');
-        $deposits = $paymentsTable->getCustomerDepositNotBilled($customerId);
-        foreach($deposits as $deposit) {
+        foreach($returnedDeposits as $deposit) {
             $returnedDeposit['deposit_incl'] += $deposit->amount * -1;
             $returnedDeposit['deposit_excl'] += $orderDetailTable->getDepositNet($deposit->amount, 1) * -1;
             $returnedDeposit['deposit_tax'] += $orderDetailTable->getDepositTax($deposit->amount, 1) * -1;
             $returnedDeposit['deposit_amount']++;
             $returnedDeposit['entities'][] = $deposit;
         }
-        $customer->returned_deposit = $returnedDeposit;
 
         // prepare tax sums
         $taxRates = [];
@@ -106,7 +221,7 @@ class InvoicesTable extends AppTable
             'sum_tax' => 0,
             'sum_price_incl' => 0,
         ];
-        foreach($customer->active_order_details as $orderDetail) {
+        foreach($orderDetails as $orderDetail) {
             if (empty($orderDetail->tax)) {
                 $taxRate = 0;
             } else {
@@ -133,33 +248,39 @@ class InvoicesTable extends AppTable
 
         ksort($taxRates);
 
-        $customer->tax_rates = $taxRates;
+        $taxRates = $this->clearZeroArray($taxRates);
 
         // prepare sums
         $sumPriceIncl = 0;
         $sumPriceExcl = 0;
         $sumTax = 0;
-        foreach ($customer->active_order_details as $orderDetail) {
+        foreach ($orderDetails as $orderDetail) {
             $sumPriceIncl += $orderDetail->total_price_tax_incl;
             $sumPriceExcl += $orderDetail->total_price_tax_excl;
             $sumTax += $orderDetail->order_detail_tax->total_amount;
         }
 
-        $sumPriceIncl += $customer->ordered_deposit['deposit_incl'];
-        $sumPriceExcl += $customer->ordered_deposit['deposit_excl'];
-        $sumTax += $customer->ordered_deposit['deposit_tax'];
+        $sumPriceIncl += $orderedDeposit['deposit_incl'];
+        $sumPriceExcl += $orderedDeposit['deposit_excl'];
+        $sumTax += $orderedDeposit['deposit_tax'];
 
-        $sumPriceIncl += $customer->returned_deposit['deposit_incl'];
-        $sumPriceExcl += $customer->returned_deposit['deposit_excl'];
-        $sumTax += $customer->returned_deposit['deposit_tax'];
+        $sumPriceIncl += $returnedDeposit['deposit_incl'];
+        $sumPriceExcl += $returnedDeposit['deposit_excl'];
+        $sumTax += $returnedDeposit['deposit_tax'];
 
-        $customer->sumPriceIncl = $sumPriceIncl;
-        $customer->sumPriceExcl = $sumPriceExcl;
-        $customer->sumTax = $sumTax;
+        $preparedData = [
+            'active_order_details' => $orderDetails,
+            'ordered_deposit' => $orderedDeposit,
+            'returned_deposit' => $returnedDeposit,
+            'tax_rates' => $taxRates,
+            'sumPriceIncl' => $sumPriceIncl,
+            'sumPriceExcl' => $sumPriceExcl,
+            'sumTax' => $sumTax,
+            'cancelledInvoice' => $cancelledInvoice,
+            'new_invoice_necessary' => !empty($orderDetails) || $orderedDeposit['deposit_amount'] < 0 || $returnedDeposit['deposit_amount'] > 0,
+        ];
 
-        $customer->new_invoice_necessary = !empty($customer->active_order_details) || $customer->ordered_deposit['deposit_amount'] < 0 || $customer->returned_deposit['deposit_amount'] > 0;
-        return $customer;
-
+        return $preparedData;
     }
 
     public function getLastInvoiceForCustomer()

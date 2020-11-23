@@ -1,6 +1,10 @@
 <?php
 
 use App\Test\TestCase\AppCakeTestCase;
+use App\Test\TestCase\Traits\AppIntegrationTestTrait;
+use App\Test\TestCase\Traits\LoginTrait;
+use App\Test\TestCase\Traits\PrepareInvoiceDataTrait;
+use Cake\Core\Configure;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -17,6 +21,10 @@ use App\Test\TestCase\AppCakeTestCase;
  */
 class InvoicesTableTest extends AppCakeTestCase
 {
+
+    use AppIntegrationTestTrait;
+    use LoginTrait;
+    use PrepareInvoiceDataTrait;
 
     public $Invoice;
 
@@ -60,6 +68,93 @@ class InvoicesTableTest extends AppCakeTestCase
         $invoice->invoice_number = '0001';
         $result = $this->Invoice->getNextInvoiceNumberForManufacturer([$invoice]);
         $this->assertEquals($result, '0002');
+    }
+
+    public function testGetPreparedTaxRatesForSumTable()
+    {
+
+        $this->changeConfiguration('FCS_SEND_INVOICES_TO_CUSTOMERS', 1);
+
+        $this->loginAsSuperadmin();
+        $customerId = Configure::read('test.superadminId');
+        $paidInCash = 1;
+        $this->generateInvoice($customerId, $paidInCash);
+
+        $invoices = $this->Invoice->find('all', [
+            'conditions' => [
+                'Invoices.id_customer' => $customerId,
+            ],
+            'contain' => [
+                'InvoiceTaxes',
+            ]
+        ])->toArray();
+
+        $result = $this->Invoice->getPreparedTaxRatesForSumTable($invoices);
+
+        $expected = [
+            'taxRates' => [
+                'cashless' => [],
+                'cash' => [
+                    '0' => [
+                        'sum_price_excl' => 4.54,
+                        'sum_tax' => 0,
+                        'sum_price_incl' => 4.54,
+                    ],
+                    '10' => [
+                        'sum_price_excl' => 1.65,
+                        'sum_tax' => 0.17,
+                        'sum_price_incl' => 1.82,
+                    ],
+                    '13' => [
+                        'sum_price_excl' => 0.55,
+                        'sum_tax' => 0.07,
+                        'sum_price_incl' => 0.62,
+                    ],
+                    '20' => [
+                        'sum_price_excl' => 0.84,
+                        'sum_tax' => 0.16,
+                        'sum_price_incl' => 1,
+                    ],
+                ],
+                'total' => [
+                    '0' => [
+                        'sum_price_excl' => 4.54,
+                        'sum_tax' => 0,
+                        'sum_price_incl' => 4.54,
+                    ],
+                    '10' => [
+                        'sum_price_excl' => 1.65,
+                        'sum_tax' => 0.17,
+                        'sum_price_incl' => 1.82,
+                    ],
+                    '13' => [
+                        'sum_price_excl' => 0.55,
+                        'sum_tax' => 0.07,
+                        'sum_price_incl' => 0.62,
+                    ],
+                    '20' => [
+                        'sum_price_excl' => 0.84,
+                        'sum_tax' => 0.16,
+                        'sum_price_incl' => 1,
+                    ],
+                ]
+            ],
+            'taxRatesSums' => [
+                'cash' => [
+                    'sum_price_excl' => 7.58,
+                    'sum_tax' => 0.4,
+                    'sum_price_incl' => 7.98,
+                ],
+                'total' => [
+                    'sum_price_excl' => 7.58,
+                    'sum_tax' => 0.4,
+                    'sum_price_incl' => 7.98,
+                ],
+            ],
+        ];
+
+        $this->assertEquals($result, $expected);
+
     }
 
 }

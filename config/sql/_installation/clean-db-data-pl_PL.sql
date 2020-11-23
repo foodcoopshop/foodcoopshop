@@ -161,6 +161,9 @@ INSERT INTO `fcs_cronjobs` VALUES
 /*!40000 ALTER TABLE `fcs_images` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_images` ENABLE KEYS */;
 
+/*!40000 ALTER TABLE `fcs_invoice_taxes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fcs_invoice_taxes` ENABLE KEYS */;
+
 /*!40000 ALTER TABLE `fcs_invoices` DISABLE KEYS */;
 /*!40000 ALTER TABLE `fcs_invoices` ENABLE KEYS */;
 
@@ -238,7 +241,8 @@ INSERT INTO `phinxlog` VALUES
 (20200910091755,'AddMemberSettingUseCameraForMobileBarcodeScanning','2020-09-10 09:21:00','2020-09-10 09:21:00',0),
 (20200925073919,'GermanIbanFix','2020-09-25 08:12:47','2020-09-25 08:12:47',0),
 (20201017182431,'AdaptMinimalCreditBalance','2020-10-17 18:38:05','2020-10-17 18:38:05',0),
-(20201029084931,'AddRetailMode','2020-10-29 09:06:45','2020-10-29 09:06:45',0);
+(20201029084931,'AddRetailMode','2020-10-29 09:06:45','2020-10-29 09:06:45',0),
+(20201118084516,'AddRetailMode2','2020-11-18 08:47:43','2020-11-18 08:47:43',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

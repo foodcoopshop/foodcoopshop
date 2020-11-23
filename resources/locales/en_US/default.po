@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-11 16:36+0100\n"
-"PO-Revision-Date: 2020-11-11 16:37+0100\n"
+"POT-Creation-Date: 2020-11-23 15:10+0100\n"
+"PO-Revision-Date: 2020-11-23 15:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -849,7 +849,7 @@ msgstr "Tip: You can change the delivery rhythm for multiple products by selecti
 msgid "Generate_invoice"
 msgstr "Generate invoice"
 
-msgid "Really_generate_invoice_for_0"
+msgid "Really_generate_invoice_for_{0}?"
 msgstr "Really generate invoice for {0}?"
 
 msgid "Show_preview"
@@ -857,6 +857,12 @@ msgstr "Show preview"
 
 msgid "Paid_in_cash"
 msgstr "Paid in cash"
+
+msgid "Really_cancel_invoice_number_{0}_of_{1}?"
+msgstr "Really cancel invoice {0} of {1}?"
+
+msgid "Cancel_invoice"
+msgstr "Cancel invoice"
 
 msgid "Were_the_products_picked_up?"
 msgstr "Were the products picked up?"
@@ -1122,14 +1128,14 @@ msgstr "Your shopping bag was empty."
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informationen-ueber-Ruecktrittsrecht"
 
+msgid "ID"
+msgstr ""
+
 msgid "Price_excl."
 msgstr "Price excl."
 
 msgid "VAT"
 msgstr "VAT"
-
-msgid "Tax_rate"
-msgstr "Tax rate"
 
 msgid "Price_incl."
 msgstr "Price incl."
@@ -1164,6 +1170,9 @@ msgstr "Price per weight"
 msgid "Tax_rates_overview_table"
 msgstr "Tax rates overview table"
 
+msgid "Tax_rate"
+msgstr "Tax rate"
+
 msgid "Sum_price_excl."
 msgstr "Sum price excl."
 
@@ -1175,6 +1184,12 @@ msgstr "Sum price incl."
 
 msgid "You_are_not_signed_in."
 msgstr "Your are not signed in."
+
+msgid "Action_Log_Invoice_added"
+msgstr "Invoice: Added"
+
+msgid "Action_Log_Invoice_cancelled"
+msgstr "Invoice: Cancelled"
 
 msgid "Action_Log_Product_added"
 msgstr "Product: Added"
@@ -1445,9 +1460,6 @@ msgstr "Cronjob: Credit balances checked"
 
 msgid "Action_Log_Superadmin_deploy_successful"
 msgstr "Superadmin: Deploy successful"
-
-msgid "Action_Log_Superadmin_deploy_failed"
-msgstr "Superadmin: Deploy failed"
 
 msgid "Action_Log_Attribute_added"
 msgstr "Attribute: created"
@@ -1785,6 +1797,9 @@ msgstr "tomorrow"
 msgid "Pickup_reminder_for"
 msgstr "Pickup reminder for"
 
+msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}_generated_successfully."
+msgstr "{0,plural,=1{invoice was} other{invoices were}} generated successfully."
+
 msgid "to_(time_context)"
 msgstr "to"
 
@@ -1811,6 +1826,9 @@ msgstr "Member"
 
 msgid "Invoice_number_abbreviataion_{0}_{1}"
 msgstr "Invoice nº {0}, {1}"
+
+msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
+msgstr "Cancellation invoice nº {0}, {1}"
 
 msgid "Order_lists_for_the_day"
 msgstr "Order lists for"
@@ -1902,8 +1920,8 @@ msgstr "Superadmin"
 msgid "Credit_overview"
 msgstr "Credit overview"
 
-msgid "Invoices"
-msgstr "Rechnungen"
+msgid "Journal"
+msgstr "Journal"
 
 msgid "Deposit_overview"
 msgstr "Deposit overview"
@@ -2477,6 +2495,12 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Invoices"
+#~ msgstr "Rechnungen"
+
+#~ msgid "Action_Log_Superadmin_deploy_failed"
+#~ msgstr "Superadmin: Deploy failed"
 
 #, fuzzy
 #~ msgid "Generate_invoice_for_customer"

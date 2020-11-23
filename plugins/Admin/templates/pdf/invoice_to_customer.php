@@ -19,7 +19,13 @@ $pdf->setTextHelper($this->Text);
 $pdf->infoTextForFooter = __d('admin', 'Invoice_number_abbreviation').': ' . $newInvoiceNumber;
 $pdf->AddPage();
 
-$html = '<h2>'.__d('admin', 'Invoice').'</h2>';
+$html = '<h2>';
+if ($result->cancelledInvoice) {
+    $html .= __d('admin', 'Cancellation_invoice');
+} else {
+    $html .=__d('admin', 'Invoice');
+}
+$html .= '</h2>';
 $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->Ln(7);
 
@@ -32,8 +38,11 @@ $html .= '<td width="272">';
 $html .= '</td>';
 
 $html .= '<td width="230" align="right">';
-    $html .= '<p style="font-weight:bold;">'.__d('admin', 'Invoice_number_abbreviation').': ' . $newInvoiceNumber . '<br />';
-    $html .= __d('admin', 'Invoice_date').': ' . $invoiceDate . '</p>';
+    $html .= '<p style="font-weight:bold;">'.__d('admin', 'Invoice_number_abbreviation').': ' . $newInvoiceNumber;
+    if ($result->cancelledInvoice) {
+        $html .= '<br />' . __d('admin', 'Cancellation_invoice') . ' ' .  __d('admin', 'for') .': ' . $result->cancelledInvoice->invoice_number . '<br />';
+    }
+    $html .= '<br />' . __d('admin', 'Invoice_date').': ' . $invoiceDate . '</p>';
     $html .= '</td>';
 $html .= '</tr></table>';
 
@@ -45,11 +54,13 @@ $pdf->renderTable();
 
 $pdf->renderTaxSumTable($result->tax_rates);
 
-$pdf->Ln(3);
-$html = '<p>'.__d('admin', '{0}_thanks_you_for_your_purchase!', [Configure::read('appDb.FCS_APP_NAME')]).'</p>';
-$pdf->writeHTML($html, true, false, true, false, '');
+if (!$result->cancelledInvoice) {
+    $pdf->Ln(3);
+    $html = '<p>'.__d('admin', '{0}_thanks_you_for_your_purchase!', [Configure::read('appDb.FCS_APP_NAME')]).'</p>';
+    $pdf->writeHTML($html, true, false, true, false, '');
+}
 
-if ($paidInCash) {
+if (!$result->cancelledInvoice && $paidInCash) {
     $pdf->Ln(3);
     $html = '<p>'.__d('admin', 'Paid_in_cash_on_{0}.', [$invoiceDate]).'</p>';
     $pdf->writeHTML($html, true, false, true, false, '');

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-14 20:38+0100\n"
+"POT-Creation-Date: 2020-11-23 15:11+0100\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -182,16 +182,6 @@ msgstr "Suma rekompensat kaucji dla producentów"
 msgid "Credit_and_deposit_balance"
 msgstr "Twoje saldo wkładów"
 
-msgid "No_data_available_to_generate_an_invoice."
-msgstr ""
-
-msgid "Download"
-msgstr ""
-
-#, fuzzy
-msgid "The_invoice_was_generated_successfully."
-msgstr "Komentarz został zmodyfikowany pomyślnie."
-
 #, fuzzy
 msgid "Deposit_overview"
 msgstr "Zwrot wkładu"
@@ -202,9 +192,26 @@ msgstr "Konto kaucji"
 msgid "Deposit_take_back_detail_for"
 msgstr "Sczegóły odbioru kaucji dla"
 
+msgid "No_data_available_to_generate_an_invoice."
+msgstr ""
+
+msgid "Download"
+msgstr ""
+
 #, fuzzy
-msgid "Invoices"
-msgstr "Data faktury"
+msgid "Invoice_number_{0}_of_{1}_was_generated_successfully."
+msgstr "Płatność ({0}, {1}) została usunięta pomyślnie."
+
+#, fuzzy
+msgid "Invoice_number_{0}_of_{1}_was_successfully_cancelled."
+msgstr "Płatność ({0}, {1}) została usunięta pomyślnie."
+
+#, fuzzy
+msgid "Cancellation_invoice_number_{0}_was_generated_successfully."
+msgstr "Płatność ({0}, {1}) została usunięta pomyślnie."
+
+msgid "Journal"
+msgstr ""
 
 msgid "_Order_list_filename_"
 msgstr "_Lista_zamowien_"
@@ -1158,6 +1165,10 @@ msgstr "Zwrócono puste opakowanie"
 msgid "Returned_deposit_by_member"
 msgstr "Zwrócony wkład"
 
+#, fuzzy
+msgid "All_amounts_in_{0}."
+msgstr "Kwota w {0}"
+
 msgid "Invoice_number_abbreviation"
 msgstr "Faktura nr"
 
@@ -1180,6 +1191,23 @@ msgstr "Zapłacone przez wszystkich członków w {0}"
 #, fuzzy
 msgid "Email_sent"
 msgstr "Mail został wysłany do {0}."
+
+#, fuzzy
+msgid "Cancellation"
+msgstr "Anuluj"
+
+#, fuzzy
+msgid "Total_sum"
+msgstr "Nowa suma łącznie"
+
+msgid "Tax_overview_cash"
+msgstr ""
+
+msgid "Tax_overview_cashless"
+msgstr ""
+
+msgid "Tax_overview_total"
+msgstr ""
 
 msgid "Pickup_day"
 msgstr "Dzień odbioru"
@@ -1788,6 +1816,14 @@ msgstr "1 dzień wstecz"
 msgid "to"
 msgstr "do"
 
+#, fuzzy
+msgid "Sum_price_excl."
+msgstr "Cena z wyłączeniem"
+
+#, fuzzy
+msgid "Sum_price_incl."
+msgstr "Cena z"
+
 msgid "Order_adaptions"
 msgstr "Mod. zamówień"
 
@@ -2163,6 +2199,10 @@ msgstr "Nie zapomnij, że masz produkty do odbioru w {0}."
 msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
 msgstr "Otrzymujesz to przypomnienie ponieważ twoje zamówienie zostało złożone wcześniej niż {0} dni temu."
 
+#, fuzzy
+msgid "Please_find_your_cancellation_invoice_attached."
+msgstr "Więcej informacji można znaleźć w {0}."
+
 msgid "Please_find_your_current_invoice_attached."
 msgstr ""
 
@@ -2201,6 +2241,10 @@ msgstr "W celu zalogowania się proszę użyć adresu email z tej wiadomości. A
 
 msgid "Your_contact_person"
 msgstr "Twoja osoba kontaktowa"
+
+#, fuzzy
+msgid "Cancellation_invoice"
+msgstr "Anuluj"
 
 #, fuzzy
 msgid "Paid_in_cash_on_{0}."
@@ -2257,6 +2301,18 @@ msgstr "Wagi dostarczonych produktów mogą ulec zmianie, więc cena również m
 #, fuzzy
 msgid "Product_ID"
 msgstr "Produkt"
+
+#, fuzzy
+#~ msgid "Invoices"
+#~ msgstr "Data faktury"
+
+#, fuzzy
+#~ msgid "Invoice_number_abbreviation_of_cancelled_invoice"
+#~ msgstr "Faktura nr"
+
+#, fuzzy
+#~ msgid "The_invoice_was_generated_successfully."
+#~ msgstr "Komentarz został zmodyfikowany pomyślnie."
 
 #, fuzzy
 #~ msgid "deposit"

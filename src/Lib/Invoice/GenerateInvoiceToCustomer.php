@@ -38,7 +38,6 @@ class GenerateInvoiceToCustomer
         $this->Payment = FactoryLocator::get('Table')->get('Payments');
         $this->QueuedJobs = FactoryLocator::get('Table')->get('Queue.QueuedJobs');
 
-        $data = $this->Customer->Invoices->getDataForCustomerInvoice($data->id_customer, $currentDay);
         if (!$data->new_invoice_necessary) {
             throw new Exception('safety check if data available - should always be checked before triggering this queue');
         }
@@ -58,9 +57,10 @@ class GenerateInvoiceToCustomer
 
         $newInvoice = $this->saveInvoice($data, $invoiceNumber, $invoicePdfFile, $currentDay, $paidInCash);
         $this->linkReturnedDepositWithInvoice($data, $newInvoice->id);
-        $this->updateOrderDetailOrderState($data);
+        $this->updateOrderDetails($data, $newInvoice->id);
 
         $this->QueuedJobs->createJob('SendInvoiceToCustomer', [
+            'isCancellationInvoice' => $data->is_cancellation_invoice,
             'customerName' => $data->name,
             'customerEmail' => $data->email,
             'invoicePdfFile' => $invoicePdfFile,
@@ -73,26 +73,24 @@ class GenerateInvoiceToCustomer
 
     }
 
-    private function updateOrderDetailOrderState($data)
+    private function updateOrderDetails($data, $invoiceId)
     {
         foreach($data->active_order_details as $orderDetail) {
-            $patchedEntity = $this->OrderDetail->patchEntity(
-                $orderDetail,
-                [
-                    'order_state' => Configure::read('app.htmlHelper')->getOrderStateBilled(),
-                ]
-            );
-            $this->OrderDetail->save($patchedEntity);
+            // important to get a fresh order detail entity as price fields could be changed for cancellation invoices
+            $orderDetail = $this->OrderDetail->get($orderDetail->id_order_detail);
+            $orderDetail->order_state = Configure::read('app.htmlHelper')->getOrderStateBilled();
+            $orderDetail->id_invoice = $invoiceId;
+            $this->OrderDetail->save($orderDetail);
         }
     }
 
     private function linkReturnedDepositWithInvoice($data, $invoiceId)
     {
         foreach($data->returned_deposit['entities'] as $payment) {
-            $paymentEntity = $this->Payment->patchEntity($payment, [
-                'invoice_id' => $invoiceId,
-            ]);
-            $this->Payment->save($paymentEntity);
+            // important to get a fresh payment entity as amount field could be changed for cancellation invoices
+            $payment = $this->Payment->get($payment->id);
+            $payment->invoice_id = $invoiceId;
+            $this->Payment->save($payment);
         }
     }
 
@@ -121,9 +119,11 @@ class GenerateInvoiceToCustomer
         $invoiceEntity = $this->Invoice->newEntity($invoiceData);
 
         $newInvoice = $this->Invoice->save($invoiceEntity, [
-            'associated' => 'InvoiceTaxes'
+            'associated' => [
+                'InvoiceTaxes',
+            ],
         ]);
-
+        
         return $newInvoice;
 
     }

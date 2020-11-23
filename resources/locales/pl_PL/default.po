@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-11 16:36+0100\n"
+"POT-Creation-Date: 2020-11-23 15:10+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1145,7 +1145,7 @@ msgstr "Wygenerowane faktury"
 
 # Generated invoices
 #, fuzzy
-msgid "Really_generate_invoice_for_0"
+msgid "Really_generate_invoice_for_{0}?"
 msgstr "Wygenerowane faktury"
 
 # Show more
@@ -1155,6 +1155,16 @@ msgstr "Pokaż więcej"
 
 msgid "Paid_in_cash"
 msgstr ""
+
+# Do you really want to activate the member {0}?
+#, fuzzy
+msgid "Really_cancel_invoice_number_{0}_of_{1}?"
+msgstr "Na pewno chcesz aktywować członka {0}?"
+
+# Generated invoices
+#, fuzzy
+msgid "Cancel_invoice"
+msgstr "Wygenerowane faktury"
 
 # Were the products picked up?
 msgid "Were_the_products_picked_up?"
@@ -1511,6 +1521,9 @@ msgstr "Twój koszyk był pusty."
 msgid "Filename_Information-about-right-of-withdrawal"
 msgstr "Informacja-o-prawie-do-odstapienia"
 
+msgid "ID"
+msgstr ""
+
 # Price excl.
 msgid "Price_excl."
 msgstr "Cena z wyłączeniem"
@@ -1518,10 +1531,6 @@ msgstr "Cena z wyłączeniem"
 # VAT
 msgid "VAT"
 msgstr "VAT"
-
-# Tax rate
-msgid "Tax_rate"
-msgstr "Stawka podatkowa"
 
 # Price excl.
 #, fuzzy
@@ -1571,6 +1580,10 @@ msgstr "Cena za wagę"
 msgid "Tax_rates_overview_table"
 msgstr "Tabela stawek podatkowych"
 
+# Tax rate
+msgid "Tax_rate"
+msgstr "Stawka podatkowa"
+
 # Sum price incl.
 #, fuzzy
 msgid "Sum_price_excl."
@@ -1587,6 +1600,16 @@ msgstr "Suma cen łącznie z"
 # Your are not signed in.
 msgid "You_are_not_signed_in."
 msgstr "Nie jesteś zalogowany."
+
+# Slider: Added
+#, fuzzy
+msgid "Action_Log_Invoice_added"
+msgstr "Suwak: Dodano"
+
+# Ordered product: Cancelled
+#, fuzzy
+msgid "Action_Log_Invoice_cancelled"
+msgstr "Zamówiony produkt: Anulowano"
 
 # Product: Added
 msgid "Action_Log_Product_added"
@@ -1952,10 +1975,6 @@ msgstr "Cronjob: Sprawdzono salda kredytowe"
 # Superadmin: Deploy successful
 msgid "Action_Log_Superadmin_deploy_successful"
 msgstr "Superadmin: Wdrożenie pomyślnie"
-
-# Superadmin: Deploy failed
-msgid "Action_Log_Superadmin_deploy_failed"
-msgstr "Superadmin: Wdrożenie nieudane"
 
 # Attribute: created
 msgid "Action_Log_Attribute_added"
@@ -2410,6 +2429,11 @@ msgstr "jutro"
 msgid "Pickup_reminder_for"
 msgstr "Przypomnienie o odbiorze dla"
 
+# Account created successfully
+#, fuzzy
+msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}_generated_successfully."
+msgstr "Konto zostało utworzone pomyślnie"
+
 # to
 msgid "to_(time_context)"
 msgstr "do"
@@ -2446,6 +2470,11 @@ msgstr "Członek"
 # Invoice nº
 #, fuzzy
 msgid "Invoice_number_abbreviataion_{0}_{1}"
+msgstr "Faktura nr"
+
+# Invoice nº
+#, fuzzy
+msgid "Cancellation_invoice_number_abbreviataion_{0}_{1}"
 msgstr "Faktura nr"
 
 # Send order list day
@@ -2569,7 +2598,7 @@ msgstr "Superadmin"
 msgid "Credit_overview"
 msgstr "Przegląd zamówień"
 
-msgid "Invoices"
+msgid "Journal"
 msgstr ""
 
 # Order overview
@@ -3339,6 +3368,10 @@ msgstr "złożone w dniu"
 # The prices include the VAT.
 msgid "Prices_are_including_vat."
 msgstr "Ceny zawierają podatek VAT."
+
+# Superadmin: Deploy failed
+#~ msgid "Action_Log_Superadmin_deploy_failed"
+#~ msgstr "Superadmin: Wdrożenie nieudane"
 
 # Generated invoices
 #, fuzzy

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-14 20:38+0100\n"
+"POT-Creation-Date: 2020-11-23 15:11+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -176,15 +176,6 @@ msgstr ""
 msgid "Credit_and_deposit_balance"
 msgstr ""
 
-msgid "No_data_available_to_generate_an_invoice."
-msgstr ""
-
-msgid "Download"
-msgstr ""
-
-msgid "The_invoice_was_generated_successfully."
-msgstr ""
-
 msgid "Deposit_overview"
 msgstr ""
 
@@ -194,7 +185,22 @@ msgstr ""
 msgid "Deposit_take_back_detail_for"
 msgstr ""
 
-msgid "Invoices"
+msgid "No_data_available_to_generate_an_invoice."
+msgstr ""
+
+msgid "Download"
+msgstr ""
+
+msgid "Invoice_number_{0}_of_{1}_was_generated_successfully."
+msgstr ""
+
+msgid "Invoice_number_{0}_of_{1}_was_successfully_cancelled."
+msgstr ""
+
+msgid "Cancellation_invoice_number_{0}_was_generated_successfully."
+msgstr ""
+
+msgid "Journal"
 msgstr ""
 
 msgid "_Order_list_filename_"
@@ -1112,6 +1118,9 @@ msgstr ""
 msgid "Returned_deposit_by_member"
 msgstr ""
 
+msgid "All_amounts_in_{0}."
+msgstr ""
+
 msgid "Invoice_number_abbreviation"
 msgstr ""
 
@@ -1131,6 +1140,21 @@ msgid "Paid_in_cash"
 msgstr ""
 
 msgid "Email_sent"
+msgstr ""
+
+msgid "Cancellation"
+msgstr ""
+
+msgid "Total_sum"
+msgstr ""
+
+msgid "Tax_overview_cash"
+msgstr ""
+
+msgid "Tax_overview_cashless"
+msgstr ""
+
+msgid "Tax_overview_total"
 msgstr ""
 
 msgid "Pickup_day"
@@ -1721,6 +1745,12 @@ msgstr ""
 msgid "to"
 msgstr ""
 
+msgid "Sum_price_excl."
+msgstr ""
+
+msgid "Sum_price_incl."
+msgstr ""
+
 msgid "Order_adaptions"
 msgstr ""
 
@@ -2072,6 +2102,9 @@ msgstr ""
 msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
 msgstr ""
 
+msgid "Please_find_your_cancellation_invoice_attached."
+msgstr ""
+
 msgid "Please_find_your_current_invoice_attached."
 msgstr ""
 
@@ -2109,6 +2142,9 @@ msgid "For_signing_in_please_use_the_email_address_of_this_message._If_you_want_
 msgstr ""
 
 msgid "Your_contact_person"
+msgstr ""
+
+msgid "Cancellation_invoice"
 msgstr ""
 
 msgid "Paid_in_cash_on_{0}."

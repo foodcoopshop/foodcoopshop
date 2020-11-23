@@ -11,12 +11,12 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-foodcoopshop.ModalInvoiceForCustomer = {
+foodcoopshop.ModalInvoiceForCustomerAdd = {
 
     init : function() {
-        var modalSelector = '#modal-invoice-for-customer';
-        $('a.invoice-for-customer-button:not(.disabled)').on('click', function () {
-            foodcoopshop.ModalInvoiceForCustomer.getOpenHandler($(this), modalSelector);
+        var modalSelector = '#modal-invoice-for-customer-add';
+        $('a.invoice-for-customer-add-button:not(.disabled)').on('click', function () {
+            foodcoopshop.ModalInvoiceForCustomerAdd.getOpenHandler($(this), modalSelector);
         });
     },
 
@@ -36,8 +36,8 @@ foodcoopshop.ModalInvoiceForCustomer = {
     },
 
     getSuccessHandler : function(modalSelector, customerId) {
-        var paidInCash = foodcoopshop.ModalInvoiceForCustomer.getPaidInCashValue();
-        window.open('/admin/customers/previewInvoice.pdf?customerId=' + customerId + '&paidInCash=' + paidInCash);
+        var paidInCash = foodcoopshop.ModalInvoiceForCustomerAdd.getPaidInCashValue();
+        window.open('/admin/invoices/preview.pdf?customerId=' + customerId + '&paidInCash=' + paidInCash);
         var successButton = foodcoopshop.Modal.getSuccessButton(modalSelector);
         foodcoopshop.Helper.removeSpinnerFromButton(successButton, 'fa-check');
         foodcoopshop.Helper.enableButton(successButton);
@@ -64,23 +64,23 @@ foodcoopshop.ModalInvoiceForCustomer = {
         foodcoopshop.Modal.appendModalToDom(
             modalSelector,
             foodcoopshop.LocalizedJs.admin.GenerateInvoice,
-            foodcoopshop.ModalInvoiceForCustomer.getHtml(customerName),
+            foodcoopshop.ModalInvoiceForCustomerAdd.getHtml(customerName),
             buttons
         );
 
         $(modalSelector + ' .generate-invoice-button').on('click', function() {
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-exclamation-triangle');
             foodcoopshop.Helper.disableButton($(this));
-            var paidInCash = foodcoopshop.ModalInvoiceForCustomer.getPaidInCashValue();
-            document.location.href = '/admin/customers/generateInvoice.pdf?customerId=' + customerId + '&paidInCash=' + paidInCash;
+            var paidInCash = foodcoopshop.ModalInvoiceForCustomerAdd.getPaidInCashValue();
+            document.location.href = '/admin/invoices/generate.pdf?customerId=' + customerId + '&paidInCash=' + paidInCash;
         });
 
         foodcoopshop.Modal.bindSuccessButton(modalSelector, function() {
-            foodcoopshop.ModalInvoiceForCustomer.getSuccessHandler(modalSelector, customerId);
+            foodcoopshop.ModalInvoiceForCustomerAdd.getSuccessHandler(modalSelector, customerId);
         });
 
         $(modalSelector).on('hidden.bs.modal', function (e) {
-            foodcoopshop.ModalInvoiceForCustomer.getCloseHandler(modalSelector);
+            foodcoopshop.ModalInvoiceForCustomerAdd.getCloseHandler(modalSelector);
         });
 
         $(modalSelector).modal();

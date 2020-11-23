@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-14 20:38+0100\n"
-"PO-Revision-Date: 2020-11-14 20:39+0100\n"
+"POT-Creation-Date: 2020-11-23 15:11+0100\n"
+"PO-Revision-Date: 2020-11-23 15:11+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -177,15 +177,6 @@ msgstr "Sum of compensation payments for manufacturers"
 msgid "Credit_and_deposit_balance"
 msgstr "Credit and deposit balance"
 
-msgid "No_data_available_to_generate_an_invoice."
-msgstr "No data available to generate an invoice."
-
-msgid "Download"
-msgstr "Download"
-
-msgid "The_invoice_was_generated_successfully."
-msgstr "The invoice has been generated successfully."
-
 msgid "Deposit_overview"
 msgstr "Deposit overview"
 
@@ -195,8 +186,23 @@ msgstr "Deposit account"
 msgid "Deposit_take_back_detail_for"
 msgstr "Deposit take back detail for"
 
-msgid "Invoices"
-msgstr "Invoices"
+msgid "No_data_available_to_generate_an_invoice."
+msgstr "No data available to generate an invoice."
+
+msgid "Download"
+msgstr "Download"
+
+msgid "Invoice_number_{0}_of_{1}_was_generated_successfully."
+msgstr "Invoice nº {0} of {1} was generated successfully."
+
+msgid "Invoice_number_{0}_of_{1}_was_successfully_cancelled."
+msgstr "Invoice nº {0} of {1} was cancelled successfully."
+
+msgid "Cancellation_invoice_number_{0}_was_generated_successfully."
+msgstr "Cancellation invoice nº {0} was generated successfully."
+
+msgid "Journal"
+msgstr "Journal"
 
 msgid "_Order_list_filename_"
 msgstr "_Order_list_"
@@ -1113,6 +1119,9 @@ msgstr "Empty glasses returned by manufacturer"
 msgid "Returned_deposit_by_member"
 msgstr "Returned deposit by member"
 
+msgid "All_amounts_in_{0}."
+msgstr "All amounts in {0}."
+
 msgid "Invoice_number_abbreviation"
 msgstr "Invoice nº"
 
@@ -1133,6 +1142,21 @@ msgstr "Paid in cash"
 
 msgid "Email_sent"
 msgstr "E-mail sent"
+
+msgid "Cancellation"
+msgstr "Cancellation"
+
+msgid "Total_sum"
+msgstr "Total sum"
+
+msgid "Tax_overview_cash"
+msgstr "Tax overview cash"
+
+msgid "Tax_overview_cashless"
+msgstr "Tax overview cashless"
+
+msgid "Tax_overview_total"
+msgstr "Tax overview total"
 
 msgid "Pickup_day"
 msgstr "Pickup day"
@@ -1722,6 +1746,12 @@ msgstr "1 day back"
 msgid "to"
 msgstr "to"
 
+msgid "Sum_price_excl."
+msgstr "Sum price excl."
+
+msgid "Sum_price_incl."
+msgstr "Sum price incl."
+
 msgid "Order_adaptions"
 msgstr "Order adaptions"
 
@@ -2073,6 +2103,9 @@ msgstr "Please do not forget that you have products to pick up on {0}."
 msgid "As_your_order_is_longer_than_{0}_days_ago_you_get_this_reminder."
 msgstr "As you placed your order earlier than {0} days ago, you get this reminder."
 
+msgid "Please_find_your_cancellation_invoice_attached."
+msgstr "Please find your cancellation invoice attached."
+
 msgid "Please_find_your_current_invoice_attached."
 msgstr "Please find your current invoice attached."
 
@@ -2111,6 +2144,9 @@ msgstr "For signing in please use the email address of this message. If you want
 
 msgid "Your_contact_person"
 msgstr "Your contact person"
+
+msgid "Cancellation_invoice"
+msgstr "Cancellation invoice"
 
 msgid "Paid_in_cash_on_{0}."
 msgstr "Paid in cash on {0}."
@@ -2165,6 +2201,15 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
+
+#~ msgid "Invoices"
+#~ msgstr "Invoices"
+
+#~ msgid "Invoice_number_abbreviation_of_cancelled_invoice"
+#~ msgstr "Cancelled invoice nº"
+
+#~ msgid "The_invoice_was_generated_successfully."
+#~ msgstr "The invoice has been generated successfully."
 
 #, fuzzy
 #~ msgid "deposit"

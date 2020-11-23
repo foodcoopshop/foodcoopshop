@@ -40,29 +40,34 @@ class CustomerInvoiceTcpdf extends AppTcpdf
 
         $this->headers = [
             [
-                'name' => __('Amount'),
+                'name' => '',
                 'align' => 'right',
-                'width' => 33,
+                'width' => 18,
+            ],
+            [
+                'name' => __('ID'),
+                'align' => 'right',
+                'width' => 42,
             ],
             [
                 'name' => __('Product'),
                 'align' => 'left',
-                'width' => 197,
+                'width' => 142,
+            ],
+            [
+                'name' => __('Manufacturer'),
+                'align' => 'left',
+                'width' => 81,
             ],
             [
                 'name' => __('Price_excl.'),
                 'align' => 'right',
-                'width' => 55,
+                'width' => 58,
             ],
             [
                 'name' => __('VAT'),
                 'align' => 'right',
-                'width' => 55,
-            ],
-            [
-                'name' => __('Tax_rate'),
-                'align' => 'right',
-                'width' => 45,
+                'width' => 58,
             ],
             [
                 'name' => __('Price_incl.'),
@@ -72,7 +77,7 @@ class CustomerInvoiceTcpdf extends AppTcpdf
             [
                 'name' => __('Delivery_day'),
                 'align' => 'right',
-                'width' => 58,
+                'width' => 48,
             ],
         ];
 
@@ -102,10 +107,11 @@ class CustomerInvoiceTcpdf extends AppTcpdf
                 $this->renderTableRow(
                     [
                         $orderDetail->product_amount . 'x',
+                        $orderDetail->product_id  . ($orderDetail->product_attribute_id > 0 ? '-' . $orderDetail->product_attribute_id : ''),
                         $orderDetail->product_name,
+                        $this->textHelper->truncate($orderDetail->product->manufacturer->name, 18),
                         Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_excl),
-                        Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->order_detail_tax->total_amount),
-                        $formattedTaxRate  . '%',
+                        Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->order_detail_tax->total_amount) . ' (' . $formattedTaxRate  . '%)',
                         Configure::read('app.numberHelper')->formatAsCurrency($orderDetail->total_price_tax_incl),
                         $orderDetail->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateLong2')),
                     ]
@@ -123,10 +129,11 @@ class CustomerInvoiceTcpdf extends AppTcpdf
                 $this->renderTableRow(
                     [
                         $result->ordered_deposit['deposit_amount'] . 'x',
+                        '',
                         __('Delivered_deposit'),
+                        '',
                         Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_excl']),
-                        Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_tax']),
-                        $formattedDepositTaxRate . '%',
+                        Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_tax']) . ' (' . $formattedDepositTaxRate . '%)',
                         Configure::read('app.numberHelper')->formatAsCurrency($result->ordered_deposit['deposit_incl']),
                         '',
                     ]
@@ -140,10 +147,11 @@ class CustomerInvoiceTcpdf extends AppTcpdf
                 $this->renderTableRow(
                     [
                         $result->returned_deposit['deposit_amount'] . 'x',
+                        '',
                         __('Payment_type_deposit_return'),
+                        '',
                         Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_excl']),
-                        Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_tax']),
-                        $formattedDepositTaxRate . '%',
+                        Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_tax']) . ' (' . $formattedDepositTaxRate . '%)',
                         Configure::read('app.numberHelper')->formatAsCurrency($result->returned_deposit['deposit_incl']),
                         '',
                     ]
@@ -154,12 +162,13 @@ class CustomerInvoiceTcpdf extends AppTcpdf
         // total sum
         $this->table .= '<tr style="font-size:12px;">';
             $this->table .= '<td align="' . $this->headers[0]['align'] . '" width="' . $this->headers[0]['width'] . '"></td>';
-            $this->table .= '<td style="font-weight:bold;" align="' . $this->headers[1]['align'] . '" width="' . $this->headers[1]['width'] . '">' . __('Total_sum') . '</td>';
-            $this->table .= '<td align="' . $this->headers[2]['align'] . '" width="' . $this->headers[2]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($sumPriceExcl) . '</td>';
-            $this->table .= '<td align="' . $this->headers[3]['align'] . '" width="' . $this->headers[3]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($sumTax) . '</td>';
-            $this->table .= '<td align="' . $this->headers[4]['align'] . '" width="' . $this->headers[4]['width'] . '"></td>';
-            $this->table .= '<td style="font-weight:bold;"  align="' . $this->headers[5]['align'] . '" width="' . $this->headers[5]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($sumPriceIncl) . '</td>';
-            $this->table .= '<td align="' . $this->headers[6]['align'] . '" width="' . $this->headers[6]['width'] . '"></td>';
+            $this->table .= '<td align="' . $this->headers[1]['align'] . '" width="' . $this->headers[1]['width'] . '"></td>';
+            $this->table .= '<td style="font-weight:bold;" align="' . $this->headers[2]['align'] . '" width="' . $this->headers[2]['width'] . '">' . __('Total_sum') . '</td>';
+            $this->table .= '<td align="' . $this->headers[3]['align'] . '" width="' . $this->headers[3]['width'] . '"></td>';
+            $this->table .= '<td align="' . $this->headers[4]['align'] . '" width="' . $this->headers[4]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($sumPriceExcl) . '</td>';
+            $this->table .= '<td align="' . $this->headers[5]['align'] . '" width="' . $this->headers[5]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($sumTax) . '</td>';
+            $this->table .= '<td style="font-weight:bold;"  align="' . $this->headers[6]['align'] . '" width="' . $this->headers[6]['width'] . '">' . Configure::read('app.numberHelper')->formatAsCurrency($sumPriceIncl) . '</td>';
+            $this->table .= '<td align="' . $this->headers[7]['align'] . '" width="' . $this->headers[7]['width'] . '"></td>';
         $this->table .= '</tr>';
 
     }
