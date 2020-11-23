@@ -107,11 +107,6 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
             'escape' => false
         ]);
         echo '<div class="sc"></div>';
-    } else {
-        // avoid "Cannot convert value of type `boolean` to integer"
-        echo $this->Form->control('Manufacturers.send_invoice', [
-            'type' => 'hidden',
-        ]);
     }
 
     echo $this->Form->control('Manufacturers.send_ordered_product_deleted_notification', [
@@ -121,12 +116,14 @@ echo '<h2>'.__d('admin', 'Visibility_of_the_products').'</h2>';
     ]);
     echo '<div class="sc"></div>';
 
-    echo $this->Form->control('Manufacturers.send_ordered_product_price_changed_notification', [
-        'label' => __d('admin', 'Adaptions_of_price_and_weight_of_ordered_products').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' '.__d('admin', 'to_receive_an_email_on_every_adaption_of_price_or_weight_of_a_ordered_product.').'</span>',
-        'type' => 'checkbox',
-        'escape' => false
-    ]);
-    echo '<div class="sc"></div>';
+    if (Configure::read('app.sendEmailWhenOrderDetailQuantityOrPriceChanged')) {
+        echo $this->Form->control('Manufacturers.send_ordered_product_price_changed_notification', [
+            'label' => __d('admin', 'Adaptions_of_price_and_weight_of_ordered_products').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' '.__d('admin', 'to_receive_an_email_on_every_adaption_of_price_or_weight_of_a_ordered_product.').'</span>',
+            'type' => 'checkbox',
+            'escape' => false
+        ]);
+        echo '<div class="sc"></div>';
+    }
 
     echo $this->Form->control('Manufacturers.send_ordered_product_amount_changed_notification', [
         'label' => __d('admin', 'Adaptions_of_the_ordered_amount').' <span class="after small">'.($appAuth->isManufacturer() ? __d('admin', 'I_want') : __d('admin', 'The_manufacturer_wants')) . ' ' . __d('admin', 'to_receive_an_email_on_every_adaption_of_the_amount_of_a_ordered_product.').'</span>',
