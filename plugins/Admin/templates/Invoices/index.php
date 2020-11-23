@@ -63,7 +63,7 @@ echo '<table class="list no-clone-last-row">';
 
     foreach($invoices as $invoice) {
 
-        echo '<tr class="data' . (!empty($invoice->cancellation_invoice) ? ' cancelled' : '') . '" data-invoice-id="'.$invoice->id.'">';
+        echo '<tr class="data" data-invoice-id="'.$invoice->id.'">';
 
             echo '<td>';
                 echo $invoice->invoice_number;
@@ -118,7 +118,7 @@ echo '<table class="list no-clone-last-row">';
                 if (!empty($invoice->cancellation_invoice)) {
                     echo $invoice->cancellation_invoice->invoice_number;
                 } else if (!empty($invoice->cancelled_invoice)) {
-                    // do not show cancel button if invoice is a cancellation invoice
+                    echo $invoice->cancelled_invoice->invoice_number;
                 } else {
                     echo $this->Html->link(
                         '<i class="fas fa-times-circle not-ok"></i>',

@@ -75,12 +75,6 @@ class InvoicesTable extends AppTable
 
                 foreach($invoice->invoice_taxes as $invoiceTax) {
 
-                    if ($invoiceTax->total_price_tax_excl == 0
-                        && $invoiceTax->total_price_tax == 0
-                        && $invoiceTax->total_price_tax_incl == 0) {
-                        continue;
-                    }
-
                     $taxRate = Configure::read('app.numberHelper')->formatTaxRate($invoiceTax->tax_rate);
                     if (!isset($taxRates[$trt][$taxRate])) {
                         $taxRates[$trt][$taxRate] = $defaultArray;
