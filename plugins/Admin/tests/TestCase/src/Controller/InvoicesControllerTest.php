@@ -7,6 +7,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
+use Cake\Utility\Hash;
 use App\Test\TestCase\Traits\PrepareInvoiceDataTrait;
 
 /**
@@ -72,7 +73,20 @@ class InvoicesControllerTest extends AppCakeTestCase
             'conditions' => [
                 'Invoices.id_customer' => $customerId,
             ],
+            'contain' => [
+                'OrderDetails',
+                'InvoiceTaxes',
+            ],
         ])->first();
+        $orderDetailIds = Hash::extract($invoice, 'order_details.{n}.id_order_detail');
+
+        $this->Payment = $this->getTableLocator()->get('Payments');
+        $payments = $this->Payment->find('all', [
+            'conditions' => [
+                'Payments.invoice_id' => $invoice->id,
+            ],
+        ])->toArray();
+        $paymentIds = Hash::extract($payments, '{n}.id');
 
         $this->ajaxPost(
             '/admin/invoices/cancel/',
@@ -87,7 +101,6 @@ class InvoicesControllerTest extends AppCakeTestCase
                 'Invoices.id_customer' => $customerId,
             ],
         ])->first();
-
         $this->assertEquals(2, $invoice->cancellation_invoice_id);
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
@@ -98,13 +111,42 @@ class InvoicesControllerTest extends AppCakeTestCase
         ])->toArray();
         $this->assertEquals(0, count($orderDetails));
 
-        $this->Payment = $this->getTableLocator()->get('Payments');
+        $orderDetails = $this->OrderDetail->find('all', [
+            'conditions' => [
+                'OrderDetails.id_order_detail IN' => $orderDetailIds,
+            ],
+            'contain' => [
+                'OrderDetailTaxes',
+            ],
+        ])->toArray();
+        $this->assertEquals(5, count($orderDetails));
+
+        foreach($orderDetails as $orderDetail) {
+            $this->assertTrue($orderDetail->total_price_tax_excl >= 0);
+            $this->assertTrue($orderDetail->total_price_tax_incl >= 0);
+            if (!empty($orderDetail->order_detail_tax)) {
+                $this->assertTrue($orderDetail->order_detail_tax->unit_amount >= 0);
+                $this->assertTrue($orderDetail->order_detail_tax->total_amount >= 0);
+            }
+        }
+
         $payments = $this->Payment->find('all', [
             'conditions' => [
                 'Payments.invoice_id' => $invoice->id,
             ],
         ])->toArray();
         $this->assertEquals(0, count($payments));
+
+        $payments = $this->Payment->find('all', [
+            'conditions' => [
+                'Payments.id IN' => $paymentIds,
+            ],
+        ])->toArray();
+        $this->assertEquals(2, count($payments));
+
+        foreach($payments as $payment) {
+            $this->assertTrue($payment->amount >= 0);
+        }
 
         $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
         $formattedCurrentDay = Configure::read('app.timeHelper')->formatToDateShort($currentDay);
