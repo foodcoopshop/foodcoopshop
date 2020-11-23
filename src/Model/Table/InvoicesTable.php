@@ -101,7 +101,7 @@ class InvoicesTable extends AppTable
 
         $result = [
             'taxRates' => $taxRates,
-            'taxRatesSums' => $taxRatesSums,
+            'taxRatesSums' => $this->clearZeroArray($taxRatesSums),
         ];
 
         return $result;

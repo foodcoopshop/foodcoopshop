@@ -140,11 +140,6 @@ class InvoicesTableTest extends AppCakeTestCase
                 ]
             ],
             'taxRatesSums' => [
-                'cashless' => [
-                    'sum_price_excl' => 0,
-                    'sum_tax' => 0,
-                    'sum_price_incl' => 0,
-                ],
                 'cash' => [
                     'sum_price_excl' => 7.58,
                     'sum_tax' => 0.4,
