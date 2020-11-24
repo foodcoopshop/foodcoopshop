@@ -67,7 +67,7 @@ class SendInvoicesToCustomersShell extends AppShell
         }
 
         $this->ActionLog = $this->getTableLocator()->get('ActionLogs');
-        $message = __('{0,plural,=1{1_invoice_was} other{#_invoices_were}_generated_successfully.', [$i]);
+        $message = __('{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully.', [$i]);
         $this->ActionLog->customSave('invoice_added', 0, 0, 'invoices', $message);
 
     }

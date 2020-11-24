@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-23 15:10+0100\n"
+"POT-Creation-Date: 2020-11-24 11:09+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1796,7 +1796,7 @@ msgstr ""
 msgid "Pickup_reminder_for"
 msgstr ""
 
-msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}_generated_successfully."
+msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
 msgstr ""
 
 msgid "to_(time_context)"
@@ -1919,10 +1919,10 @@ msgstr ""
 msgid "Credit_overview"
 msgstr ""
 
-msgid "Journal"
+msgid "Deposit_overview"
 msgstr ""
 
-msgid "Deposit_overview"
+msgid "Journal"
 msgstr ""
 
 msgid "Payment_type_credit_upload"

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-23 15:10+0100\n"
+"POT-Creation-Date: 2020-11-24 11:09+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2431,7 +2431,7 @@ msgstr "Przypomnienie o odbiorze dla"
 
 # Account created successfully
 #, fuzzy
-msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}_generated_successfully."
+msgid "{0,plural,=1{1_invoice_was} other{#_invoices_were}}_generated_successfully."
 msgstr "Konto zostało utworzone pomyślnie"
 
 # to
@@ -2598,13 +2598,13 @@ msgstr "Superadmin"
 msgid "Credit_overview"
 msgstr "Przegląd zamówień"
 
-msgid "Journal"
-msgstr ""
-
 # Order overview
 #, fuzzy
 msgid "Deposit_overview"
 msgstr "Przegląd zamówień"
+
+msgid "Journal"
+msgstr ""
 
 # Credit upload
 msgid "Payment_type_credit_upload"
