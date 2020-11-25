@@ -59,7 +59,6 @@ foreach ($orderDetails as $od) {
 
     $sumPrice = 0;
     $sumDeposit = 0;
-    $sumQuantity = 0;
     $usesQuantityInUnits = 0;
     $timebasedCurrencyOrderDetailInList = false;
     $i = 1;
