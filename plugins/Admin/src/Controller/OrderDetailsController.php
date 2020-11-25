@@ -229,7 +229,10 @@ class OrderDetailsController extends AdminAppController
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, '', '', '', $pickupDay, '', '');
         $contain = $odParams['contain'];
-        $contain[] = 'OrderDetailTaxes';
+        if (Configure::read('app.showTaxSumTableOnOrderDetailPdf')) {
+            $contain[] = 'OrderDetailTaxes';
+            $contain[] = 'Taxes';
+        }
         $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
             'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
         ]);
@@ -262,29 +265,35 @@ class OrderDetailsController extends AdminAppController
             $preparedOrderDetails[$orderDetail->id_customer][] = $orderDetail;
         }
 
-
         if (Configure::read('app.showTaxSumTableOnOrderDetailPdf')) {
 
-            $taxRates = $this->OrderDetail->getTaxSums($orderDetails);
+            $taxRates = [];
 
             $depositVatRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
             $depositVatRate = Configure::read('app.numberHelper')->formatTaxRate($depositVatRate);
 
-            $defaultArray = [
-                'sum_price_excl' => 0,
-                'sum_tax' => 0,
-                'sum_price_incl' => 0,
-            ];
-            foreach($orderDetails as $orderDetail) {
-                if (!isset($taxRates[$depositVatRate])) {
-                    $taxRates[$depositVatRate] = $defaultArray;
-                }
-                $taxRates[$depositVatRate]['sum_price_excl'] += $this->OrderDetail->getDepositNet($orderDetail->deposit, $orderDetail->product_amount);
-                $taxRates[$depositVatRate]['sum_tax'] += $this->OrderDetail->getDepositTax($orderDetail->deposit, $orderDetail->product_amount);
-                $taxRates[$depositVatRate]['sum_price_incl'] += $orderDetail->deposit;
-            }
+            foreach($preparedOrderDetails as $customerId => $orderDetails) {
 
-            $this->OrderDetail->clearZeroArray($taxRates);
+                $taxRates[$customerId] = $this->OrderDetail->getTaxSums($orderDetails);
+                $defaultArray = [
+                    'sum_price_excl' => 0,
+                    'sum_tax' => 0,
+                    'sum_price_incl' => 0,
+                ];
+
+                foreach($orderDetails as $orderDetail) {
+                    if (!isset($taxRates[$customerId][$depositVatRate])) {
+                        $taxRates[$customerId][$depositVatRate] = $defaultArray;
+                    }
+                    $taxRates[$customerId][$depositVatRate]['sum_price_excl'] += $this->OrderDetail->getDepositNet($orderDetail->deposit, $orderDetail->product_amount);
+                    $taxRates[$customerId][$depositVatRate]['sum_tax'] += $this->OrderDetail->getDepositTax($orderDetail->deposit, $orderDetail->product_amount);
+                    $taxRates[$customerId][$depositVatRate]['sum_price_incl'] += $orderDetail->deposit;
+                }
+
+                $taxRates[$customerId] = $this->OrderDetail->clearZeroArray($taxRates[$customerId]);
+                ksort($taxRates[$customerId]);
+
+            }
 
         }
 

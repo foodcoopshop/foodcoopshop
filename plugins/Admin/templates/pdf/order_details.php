@@ -160,7 +160,7 @@ foreach ($orderDetails as $od) {
     }
 
     if (Configure::read('app.showTaxSumTableOnOrderDetailPdf')) {
-        $pdf->renderTaxSumTable($taxRates);
+        $pdf->renderTaxSumTable($taxRates[$orderDetail->id_customer]);
     }
 
     if ($j < count($orderDetails)) {
