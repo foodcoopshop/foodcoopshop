@@ -262,7 +262,26 @@ class OrderDetailsController extends AdminAppController
             $preparedOrderDetails[$orderDetail->id_customer][] = $orderDetail;
         }
 
-        $taxRates = $this->OrderDetail->getTaxSumsIncludingOrderedDeposit($orderDetails);
+        $taxRates = $this->OrderDetail->getTaxSums($orderDetails);
+
+        $depositVatRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
+        $depositVatRate = Configure::read('app.numberHelper')->formatTaxRate($depositVatRate);
+
+        $defaultArray = [
+            'sum_price_excl' => 0,
+            'sum_tax' => 0,
+            'sum_price_incl' => 0,
+        ];
+        foreach($orderDetails as $orderDetail) {
+            if (!isset($taxRates[$depositVatRate])) {
+                $taxRates[$depositVatRate] = $defaultArray;
+            }
+            $taxRates[$depositVatRate]['sum_price_excl'] += $this->OrderDetail->getDepositNet($orderDetail->deposit, $orderDetail->product_amount);
+            $taxRates[$depositVatRate]['sum_tax'] += $this->OrderDetail->getDepositTax($orderDetail->deposit, $orderDetail->product_amount);
+            $taxRates[$depositVatRate]['sum_price_incl'] += $orderDetail->deposit;
+        }
+
+        $this->OrderDetail->clearZeroArray($taxRates);
 
         $pdfWriter = new OrderDetailsPdfWriter();
         $pdfWriter->setData([

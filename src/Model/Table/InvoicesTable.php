@@ -108,16 +108,6 @@ class InvoicesTable extends AppTable
 
     }
 
-    private function clearZeroArray($taxRates)
-    {
-        foreach($taxRates as $key => $taxRate) {
-            if (array_sum($taxRate) == 0) {
-                unset($taxRates[$key]);
-            }
-        }
-        return $taxRates;
-    }
-
     public function getDataForCustomerInvoice($customerId, $currentDay)
     {
 
@@ -219,7 +209,7 @@ class InvoicesTable extends AppTable
             'sum_tax' => 0,
             'sum_price_incl' => 0,
         ];
-        $taxRates = $orderDetailTable->getTaxSumsIncludingOrderedDeposit($orderDetails);
+        $taxRates = $orderDetailTable->getTaxSums($orderDetails);
 
         $depositVatRate = Configure::read('app.numberHelper')->parseFloatRespectingLocale(Configure::read('appDb.FCS_DEPOSIT_TAX_RATE'));
         $depositVatRate = Configure::read('app.numberHelper')->formatTaxRate($depositVatRate);

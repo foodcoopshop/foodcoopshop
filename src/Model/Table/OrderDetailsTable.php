@@ -111,7 +111,7 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
-    public function getTaxSumsIncludingOrderedDeposit($orderDetails)
+    public function getTaxSums($orderDetails)
     {
         $taxRates = [];
         $defaultArray = [
