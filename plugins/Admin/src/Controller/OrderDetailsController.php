@@ -229,6 +229,7 @@ class OrderDetailsController extends AdminAppController
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $odParams = $this->OrderDetail->getOrderDetailParams($this->AppAuth, '', '', '', $pickupDay, '', '');
         $contain = $odParams['contain'];
+        $contain[] = 'OrderDetailTaxes';
         $this->OrderDetail->getAssociation('PickupDayEntities')->setConditions([
             'PickupDayEntities.pickup_day' => Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay[0])
         ]);
@@ -261,10 +262,13 @@ class OrderDetailsController extends AdminAppController
             $preparedOrderDetails[$orderDetail->id_customer][] = $orderDetail;
         }
 
+        $taxRates = $this->OrderDetail->getTaxSumsIncludingOrderedDeposit($orderDetails);
+
         $pdfWriter = new OrderDetailsPdfWriter();
         $pdfWriter->setData([
             'orderDetails' => $preparedOrderDetails,
             'appAuth' => $this->AppAuth,
+            'taxRates' => $taxRates,
         ]);
         die($pdfWriter->writeInline());
     }

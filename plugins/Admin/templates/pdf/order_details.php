@@ -152,11 +152,15 @@ foreach ($orderDetails as $od) {
         $pdf->writeHTML($html, true, false, true, false, '');
     }
 
-    $pdf->Ln(5);
+    $pdf->Ln(2);
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE') && Configure::read('app.manufacturerComponensationInfoText') != '') {
         $html = '<p>'.Configure::read('app.manufacturerComponensationInfoText').'</p>';
         $pdf->writeHTML($html, true, false, true, false, '');
         $pdf->Ln(2);
+    }
+
+    if (Configure::read('app.showTaxSumTableOnOrderDetailPdf')) {
+        $pdf->renderTaxSumTable($taxRates);
     }
 
     if ($j < count($orderDetails)) {
