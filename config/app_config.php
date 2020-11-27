@@ -96,6 +96,7 @@ return [
         'showPaymentInfoText' => true,
         'showManufacturerListAndDetailPage' => true,
         'showPickupPlaceInfo' => true,
+        'showTaxSumTableOnOrderDetailPdf' => false,
 
         /**
          * id of the category "all products"

@@ -58,6 +58,16 @@ class AppTable extends Table
         return $validator;
     }
 
+    public function clearZeroArray($array)
+    {
+        foreach($array as $key => $value) {
+            if (array_sum($value) == 0) {
+                unset($array[$key]);
+            }
+        }
+        return $array;
+    }
+
     public function noDeliveryDaysOrdersExist ($value, $context) {
 
         $manufacturerId = null;
