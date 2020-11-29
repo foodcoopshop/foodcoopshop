@@ -551,7 +551,8 @@ body.superadmin .product-wrapper .heading h4 {
     margin-right: 4px;
 }
 .product-wrapper .amount-switcher-minus .fas {
-    margin-right: 4px;
+    margin-left: 4px;
+    display: none;
 }
 .product-wrapper .amount-switcher-plus .fas {
     margin-left: 4px;

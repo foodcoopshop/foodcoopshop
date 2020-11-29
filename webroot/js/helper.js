@@ -181,6 +181,12 @@ foodcoopshop.Helper = {
                     result = max;
                 }
             }
+            var amountSwitcherMinus = $(this).closest('.amount-wrapper').find('.amount-switcher-minus .fas');
+            if (result > 1) {
+                amountSwitcherMinus.show();
+            } else {
+                amountSwitcherMinus.hide();
+            }
             inputField.val(result);
         });
     },
