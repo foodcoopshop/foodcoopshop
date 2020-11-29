@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-23 15:11+0100\n"
+"POT-Creation-Date: 2020-11-29 22:36+0100\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -305,6 +305,9 @@ msgstr "Mail został wysłany do {0}."
 #, fuzzy
 msgid "The_delivered_quantity_is_not_valid."
 msgstr "Konto zostało aktywowane."
+
+msgid "The_new_price_would_be_{0}_for_{1}_please_check_the_unit."
+msgstr ""
 
 msgid "The_weight_of_the_ordered_product_{0}_(amount_{1})_was_successfully_apapted_from_{2}_to_{3}."
 msgstr "Waga zamówionego produktu {0} (ilość {1}) została zmodyfikowana z {2} na {3}."
