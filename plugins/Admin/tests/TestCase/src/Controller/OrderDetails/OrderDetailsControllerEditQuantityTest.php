@@ -113,6 +113,17 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertMailCount(1);
     }
 
+    public function testEditOrderDetailQuantityAsSuperadminUserUsedWrongUnit()
+    {
+        $this->loginAsSuperadmin();
+        $cart = $this->preparePricePerUnitOrder();
+        $orderDetailId = $cart->cart_products[0]->order_detail->id_order_detail;
+        $this->editOrderDetailQuantity($orderDetailId, 0.7, false);
+        $this->assertEquals($this->getJsonDecodedContent()->msg, 'Der neue Preis wäre <b>0,01 €</b> für <b>0,7 g</b>. Bitte überprüfe die Einheit.');
+        $this->editOrderDetailQuantity($orderDetailId, 800000, false);
+        $this->assertEquals($this->getJsonDecodedContent()->msg, 'Der neue Preis wäre <b>12.000,00 €</b> für <b>800.000 g</b>. Bitte überprüfe die Einheit.');
+    }
+
     private function preparePricePerUnitOrder()
     {
         $productIdA = 347; // forelle
