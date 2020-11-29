@@ -19,11 +19,19 @@ foodcoopshop.Modal = {
     },
 
     bindSuccessButton: function(selector, callback) {
+
         this.getSuccessButton(selector).on('click', function() {
             foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-check');
             foodcoopshop.Helper.disableButton($(this));
             callback();
         });
+
+        $(selector).on('keypress', function(e) {
+            if (e.which === 13) {
+                foodcoopshop.Modal.getSuccessButton(selector).trigger('click');
+            }
+        });
+
     },
 
     resetButtons: function(selector) {
