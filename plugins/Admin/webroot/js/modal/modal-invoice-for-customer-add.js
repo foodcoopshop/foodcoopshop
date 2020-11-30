@@ -24,7 +24,7 @@ foodcoopshop.ModalInvoiceForCustomerAdd = {
         var html = '<p>' + foodcoopshop.LocalizedJs.admin.ReallyGenerateInvoiceFor0.replaceI18n(0, '<b>' + customerName + '</b>') + '</p>';
         html += '<div class="field-wrapper">';
         html += '<label class="checkbox">';
-        html += '<input type="checkbox" name="dialogInvoiceForCustomerPaidInCash" id="dialogInvoiceForCustomerPaidInCash" />';
+        html += '<input type="checkbox" checked="checked" name="dialogInvoiceForCustomerPaidInCash" id="dialogInvoiceForCustomerPaidInCash" />';
         html += ' ' + foodcoopshop.LocalizedJs.admin.PaidInCash + '?';
         html += '</label>';
         html += '</div>';
