@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-24 11:09+0100\n"
+"POT-Creation-Date: 2020-12-01 12:14+0100\n"
 "PO-Revision-Date: 2020-11-24 11:14+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2304,9 +2304,6 @@ msgstr "New"
 msgid "More_infos_to_product_{0}"
 msgstr "More infos to product {0}"
 
-msgid "Last_order_day"
-msgstr "Last order day"
-
 msgid "Instant_order"
 msgstr "Instant order"
 
@@ -2495,6 +2492,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Last_order_day"
+#~ msgstr "Last order day"
 
 #~ msgid "Invoices"
 #~ msgstr "Rechnungen"
