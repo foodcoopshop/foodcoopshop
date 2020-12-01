@@ -39,6 +39,6 @@
     "webrtc-adapter": "^7.7.0"
   },
   "devDependencies": {
-    "eslint": "^7.13.0"
+    "eslint": "^7.14.0"
   }
 }
