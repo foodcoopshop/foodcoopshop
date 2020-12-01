@@ -95,7 +95,7 @@ if ($product['description'] != '') {
                 && $this->Time->getSendOrderListsWeekday() == $product['delivery_rhythm_send_order_list_weekday']
                 )) {
                     echo '<span class="last-order-day">';
-                    echo '<br />' . __('Order_possible_until') . ': ' . $this->Time->getDateFormattedWithWeekday($lastOrderDay);
+                    echo '<br />' . __('Order_possible_until') . ': ' . $this->Time->getDateFormattedWithWeekday(strtotime($lastOrderDay));
                     echo '</span>';
             }
 

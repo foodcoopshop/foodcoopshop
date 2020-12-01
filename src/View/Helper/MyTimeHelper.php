@@ -91,7 +91,7 @@ class MyTimeHelper extends TimeHelper
         $weekdayAsNameInEnglish = $this->getWeekdayName($lastOrderWeekday);
         I18n::setLocale($tmpLocale);
         $result = strtotime('last ' . $weekdayAsNameInEnglish, strtotime($nextDeliveryDay));
-
+        $result = date(Configure::read('DateFormat.DatabaseAlt'), $result);
         return $result;
 
     }
