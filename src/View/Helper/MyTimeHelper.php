@@ -77,17 +77,28 @@ class MyTimeHelper extends TimeHelper
         return Configure::read('DateFormat.' . $formatString);
     }
 
-    public function getLastOrderDay($nextDeliveryDay, $deliveryRhythmType, $deliveryRhythmCount, $deliveryRhythmSendOrderListWeekday)
+    public function getLastOrderDay($nextDeliveryDay, $deliveryRhythmType, $deliveryRhythmCount, $deliveryRhythmSendOrderListWeekday, $deliveryRhythmOrderPossibleUntil)
     {
+
         $result = '';
-        if (!($deliveryRhythmType == 'weekly' && $deliveryRhythmCount == 1) && $deliveryRhythmType != 'individual') {
-            $lastOrderWeekday = $this->getNthWeekdayBeforeWeekday(1, $deliveryRhythmSendOrderListWeekday);
-            $tmpLocale = I18n::getLocale();
-            I18n::setLocale('en_US');
-            $weekdayAsNameInEnglish = $this->getWeekdayName($lastOrderWeekday);
-            I18n::setLocale($tmpLocale);
-            $result = strtotime('last ' . $weekdayAsNameInEnglish, strtotime($nextDeliveryDay));
+        if ($deliveryRhythmType == 'week'
+            && $deliveryRhythmCount == 1
+            && $this->getSendOrderListsWeekday() == $deliveryRhythmSendOrderListWeekday
+            ) {
+               return $result;
         }
+
+        if ($deliveryRhythmType == 'individual') {
+            $result = strtotime($deliveryRhythmOrderPossibleUntil);
+            return $result;
+        }
+
+        $lastOrderWeekday = $this->getNthWeekdayBeforeWeekday(1, $deliveryRhythmSendOrderListWeekday);
+        $tmpLocale = I18n::getLocale();
+        I18n::setLocale('en_US');
+        $weekdayAsNameInEnglish = $this->getWeekdayName($lastOrderWeekday);
+        I18n::setLocale($tmpLocale);
+        $result = strtotime('last ' . $weekdayAsNameInEnglish, strtotime($nextDeliveryDay));
         return $result;
     }
 
