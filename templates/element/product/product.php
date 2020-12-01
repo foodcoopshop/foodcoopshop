@@ -79,16 +79,25 @@ if ($product['description'] != '') {
 }
 
     if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
-        if (!($product['stock_management_enabled'] && $product['is_stock_product']) && $product['delivery_rhythm_type'] == 'individual' && !$this->Time->isDatabaseDateNotSet($product['delivery_rhythm_order_possible_until'])) {
+
+        if (!($product['stock_management_enabled'] && $product['is_stock_product'])
+            && $product['delivery_rhythm_type'] == 'individual' && !$this->Time->isDatabaseDateNotSet($product['delivery_rhythm_order_possible_until'])
+            ) {
             echo '<br />' . __('Order_possible_until') . ': ' . $this->Time->getDateFormattedWithWeekday(strtotime($product['delivery_rhythm_order_possible_until']));
         }
 
-        if (!$appAuth->isInstantOrderMode() && !($product['stock_management_enabled'] && $product['is_stock_product']) && $product['delivery_rhythm_type'] != 'individual' && $this->Time->getSendOrderListsWeekday() != $product['delivery_rhythm_send_order_list_weekday']) {
-            echo '<span class="last-order-day">';
-                echo __('Last_order_day') . ': <b>' . $this->Time->getWeekdayName(
-                    $this->Time->getNthWeekdayBeforeWeekday(1, $product['delivery_rhythm_send_order_list_weekday'])
-                ) . '</b> ' . __('midnight');
-            echo '</span>';
+        if (!$appAuth->isInstantOrderMode() && !($product['stock_management_enabled'] && $product['is_stock_product'])) {
+            $lastOrderDay = $this->Time->getLastOrderDay(
+                $product['next_delivery_day'],
+                $product['delivery_rhythm_type'],
+                $product['delivery_rhythm_count'],
+                $product['delivery_rhythm_send_order_list_weekday'],
+            );
+            if ($lastOrderDay != '') {
+                echo '<span class="last-order-day">';
+	                echo '<br />' . __('Order_possible_until') . ': ' . $this->Time->getDateFormattedWithWeekday($lastOrderDay);
+                echo '</span>';
+            }
         }
 
         if (!$appAuth->isSelfServiceModeByUrl()) {
