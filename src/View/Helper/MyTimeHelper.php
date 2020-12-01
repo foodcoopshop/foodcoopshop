@@ -82,15 +82,15 @@ class MyTimeHelper extends TimeHelper
 
         if ($deliveryRhythmType == 'individual') {
             $result = strtotime($deliveryRhythmOrderPossibleUntil);
-            return $result;
+        } else {
+            $lastOrderWeekday = $this->getNthWeekdayBeforeWeekday(1, $deliveryRhythmSendOrderListWeekday);
+            $tmpLocale = I18n::getLocale();
+            I18n::setLocale('en_US');
+            $weekdayAsNameInEnglish = $this->getWeekdayName($lastOrderWeekday);
+            I18n::setLocale($tmpLocale);
+            $result = strtotime('last ' . $weekdayAsNameInEnglish, strtotime($nextDeliveryDay));
         }
 
-        $lastOrderWeekday = $this->getNthWeekdayBeforeWeekday(1, $deliveryRhythmSendOrderListWeekday);
-        $tmpLocale = I18n::getLocale();
-        I18n::setLocale('en_US');
-        $weekdayAsNameInEnglish = $this->getWeekdayName($lastOrderWeekday);
-        I18n::setLocale($tmpLocale);
-        $result = strtotime('last ' . $weekdayAsNameInEnglish, strtotime($nextDeliveryDay));
         $result = date(Configure::read('DateFormat.DatabaseAlt'), $result);
         return $result;
 
