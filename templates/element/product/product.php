@@ -81,6 +81,7 @@ if ($product['description'] != '') {
     if (!Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
 
         if (!$appAuth->isInstantOrderMode() && !($product['stock_management_enabled'] && $product['is_stock_product'])) {
+
             $lastOrderDay = $this->Time->getLastOrderDay(
                 $product['next_delivery_day'],
                 $product['delivery_rhythm_type'],
@@ -88,11 +89,16 @@ if ($product['description'] != '') {
                 $product['delivery_rhythm_send_order_list_weekday'],
                 $product['delivery_rhythm_order_possible_until'],
             );
-            if ($lastOrderDay != '') {
-                echo '<span class="last-order-day">';
+
+            if (!($product['delivery_rhythm_type'] == 'week'
+                && $product['delivery_rhythm_count'] == 1
+                && $this->Time->getSendOrderListsWeekday() == $product['delivery_rhythm_send_order_list_weekday']
+                )) {
+                    echo '<span class="last-order-day">';
                     echo '<br />' . __('Order_possible_until') . ': ' . $this->Time->getDateFormattedWithWeekday($lastOrderDay);
-                echo '</span>';
+                    echo '</span>';
             }
+
         }
 
         if (!$appAuth->isSelfServiceModeByUrl()) {

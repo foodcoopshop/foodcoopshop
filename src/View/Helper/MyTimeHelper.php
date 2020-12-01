@@ -80,14 +80,6 @@ class MyTimeHelper extends TimeHelper
     public function getLastOrderDay($nextDeliveryDay, $deliveryRhythmType, $deliveryRhythmCount, $deliveryRhythmSendOrderListWeekday, $deliveryRhythmOrderPossibleUntil)
     {
 
-        $result = '';
-        if ($deliveryRhythmType == 'week'
-            && $deliveryRhythmCount == 1
-            && $this->getSendOrderListsWeekday() == $deliveryRhythmSendOrderListWeekday
-            ) {
-               return $result;
-        }
-
         if ($deliveryRhythmType == 'individual') {
             $result = strtotime($deliveryRhythmOrderPossibleUntil);
             return $result;
@@ -99,7 +91,9 @@ class MyTimeHelper extends TimeHelper
         $weekdayAsNameInEnglish = $this->getWeekdayName($lastOrderWeekday);
         I18n::setLocale($tmpLocale);
         $result = strtotime('last ' . $weekdayAsNameInEnglish, strtotime($nextDeliveryDay));
+
         return $result;
+
     }
 
     public function getLastDayOfGivenMonth($monthAndYear)
