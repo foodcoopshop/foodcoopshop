@@ -273,7 +273,7 @@ foreach ($customers as $customer) {
 }
 
 echo '<tr>';
-echo '<td colspan="5"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
+echo '<td colspan="6"><b>' . $i . '</b> '.__d('admin', '{0,plural,=1{record} other{records}}', $i).'</td>';
 echo '<td style="text-align:right"><b>' . $this->Number->formatAsDecimal($sumOrderDetailsCount, 0) . '</b></td>';
 if ($this->Html->paymentIsCashless()) {
     echo '<td></td>';
@@ -284,7 +284,7 @@ if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
 if (Configure::read('app.emailOrderReminderEnabled')) {
     echo '<td><b>' . $sumEmailReminders . '</b></td>';
 }
-echo '<td colspan="4"></td>';
+echo '<td colspan="3"></td>';
 echo '</tr>';
 
 echo '</table>';
