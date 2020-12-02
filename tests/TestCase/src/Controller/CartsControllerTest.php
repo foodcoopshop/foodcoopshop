@@ -18,6 +18,7 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
+use Cake\TestSuite\TestEmailTransport;
 
 class CartsControllerTest extends AppCakeTestCase
 {
@@ -509,6 +510,10 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertMailContainsAttachment('Bestelluebersicht.pdf');
         $this->assertMailContainsAttachment('Allgemeine-Geschaeftsbedingungen.pdf');
 
+        $this->assertMailContainsHtmlAt(0, 'Artischocke : Stück');
+        $this->assertMailContainsHtmlAt(0, 'Knoblauch : 100 g');
+        $this->assertMailContainsHtmlAt(0, 'Milch : 0,5l');
+
         $this->logout();
     }
 
@@ -745,6 +750,9 @@ class CartsControllerTest extends AppCakeTestCase
 
         $this->assertEquals($orderDetailB->order_detail_tax->unit_amount, 0.91);
         $this->assertEquals($orderDetailB->order_detail_tax->total_amount, 2.73);
+
+        $this->assertMailContainsHtmlAt(0, 'Forelle : Stück, je ca. 350 g');
+        $this->assertMailContainsHtmlAt(0, 'Rindfleisch : je ca. 0,5 kg');
 
     }
 
