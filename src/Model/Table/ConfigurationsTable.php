@@ -58,7 +58,7 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
 
-    public function validationFcsAppMailer(Validator $validator)
+    public function validationFcsAppEmail(Validator $validator)
     {
         $validator->notEmptyString('value', __('Please_enter_an_email_address.'));
         $validator->email('value', true, __('The_email_address_is_not_valid.'));
