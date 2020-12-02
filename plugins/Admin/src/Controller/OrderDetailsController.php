@@ -829,19 +829,21 @@ class OrderDetailsController extends AdminAppController
 
         if (!$doNotChangePrice) {
             $newProductPrice = round($oldOrderDetail->order_detail_unit->price_incl_per_unit / $oldOrderDetail->order_detail_unit->unit_amount * $productQuantity, 2);
-            $toleranceFactor = 100;
-            $oldToNewQuantityRelation = $productQuantity / $oldOrderDetail->order_detail_unit->product_quantity_in_units;
-            if ($oldToNewQuantityRelation < 1 / $toleranceFactor || $oldToNewQuantityRelation > $toleranceFactor) {
-                $message = __d('admin', 'The_new_price_would_be_{0}_for_{1}_please_check_the_unit.', [
-                    '<b>' . Configure::read('app.numberHelper')->formatAsCurrency($newProductPrice) . '</b>',
-                    '<b>' . Configure::read('app.numberHelper')->formatUnitAsDecimal($productQuantity) . ' ' . $oldOrderDetail->order_detail_unit->unit_name . '</b>',
-                ]);
-                $this->set([
-                    'status' => 0,
-                    'msg' => $message,
-                ]);
-                $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
-                return;
+            if ($oldOrderDetail->order_detail_unit->product_quantity_in_units > 0) {
+                $toleranceFactor = 100;
+                $oldToNewQuantityRelation = $productQuantity / $oldOrderDetail->order_detail_unit->product_quantity_in_units;
+                if ($oldToNewQuantityRelation < 1 / $toleranceFactor || $oldToNewQuantityRelation > $toleranceFactor) {
+                    $message = __d('admin', 'The_new_price_would_be_{0}_for_{1}_please_check_the_unit.', [
+                        '<b>' . Configure::read('app.numberHelper')->formatAsCurrency($newProductPrice) . '</b>',
+                        '<b>' . Configure::read('app.numberHelper')->formatUnitAsDecimal($productQuantity) . ' ' . $oldOrderDetail->order_detail_unit->unit_name . '</b>',
+                    ]);
+                    $this->set([
+                        'status' => 0,
+                        'msg' => $message,
+                    ]);
+                    $this->viewBuilder()->setOption('serialize', ['status', 'msg']);
+                    return;
+                }
             }
             $newOrderDetail = $this->changeOrderDetailPriceDepositTax($object, $newProductPrice, $object->product_amount);
             $this->changeTimebasedCurrencyOrderDetailPrice($object, $oldOrderDetail, $newProductPrice, $object->product_amount);
