@@ -259,7 +259,7 @@ foodcoopshop.Helper = {
                     centeredSlides: true,
                     slidesPerView: 1,
                     initialSlide: 0,
-                    spaceBetween: 7
+                    spaceBetween: 6
                 }
             }
         });
