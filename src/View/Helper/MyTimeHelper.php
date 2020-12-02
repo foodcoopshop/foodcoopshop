@@ -3,6 +3,7 @@
 namespace App\View\Helper;
 
 use Cake\Core\Configure;
+use Cake\I18n\I18n;
 use Cake\I18n\Time;
 use Cake\View\Helper\TimeHelper;
 
@@ -74,6 +75,25 @@ class MyTimeHelper extends TimeHelper
     public function getI18Format($formatString)
     {
         return Configure::read('DateFormat.' . $formatString);
+    }
+
+    public function getLastOrderDay($nextDeliveryDay, $deliveryRhythmType, $deliveryRhythmCount, $deliveryRhythmSendOrderListWeekday, $deliveryRhythmOrderPossibleUntil)
+    {
+
+        if ($deliveryRhythmType == 'individual') {
+            $result = strtotime($deliveryRhythmOrderPossibleUntil);
+        } else {
+            $lastOrderWeekday = $this->getNthWeekdayBeforeWeekday(1, $deliveryRhythmSendOrderListWeekday);
+            $tmpLocale = I18n::getLocale();
+            I18n::setLocale('en_US');
+            $weekdayAsNameInEnglish = $this->getWeekdayName($lastOrderWeekday);
+            I18n::setLocale($tmpLocale);
+            $result = strtotime('last ' . $weekdayAsNameInEnglish, strtotime($nextDeliveryDay));
+        }
+
+        $result = date(Configure::read('DateFormat.DatabaseAlt'), $result);
+        return $result;
+
     }
 
     public function getLastDayOfGivenMonth($monthAndYear)

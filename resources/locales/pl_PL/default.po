@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-24 11:09+0100\n"
+"POT-Creation-Date: 2020-12-01 12:14+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -3111,10 +3111,6 @@ msgstr "Nowy"
 msgid "More_infos_to_product_{0}"
 msgstr "Więcej informacji o produkcie {0}"
 
-# Last order day
-msgid "Last_order_day"
-msgstr "Ostatni dzień zamówień"
-
 # Instant order
 msgid "Instant_order"
 msgstr "Zamówienie błyskawiczne"
@@ -3368,6 +3364,10 @@ msgstr "złożone w dniu"
 # The prices include the VAT.
 msgid "Prices_are_including_vat."
 msgstr "Ceny zawierają podatek VAT."
+
+# Last order day
+#~ msgid "Last_order_day"
+#~ msgstr "Ostatni dzień zamówień"
 
 # Superadmin: Deploy failed
 #~ msgid "Action_Log_Superadmin_deploy_failed"
