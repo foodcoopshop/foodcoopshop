@@ -39,10 +39,6 @@
 .modal-header {
     cursor: move;
 }
-.modal-body {
-    max-height: calc(100vh - 120px);
-    overflow-y: auto;
-}
 .modal #flashMessage {
     left: 0;
     right: 0;
@@ -156,6 +152,9 @@ body.iframe_start_page {
     font-size: 16px;
 }
 #modal-image .modal-body {
+    max-height: calc(100vh - 120px);
+    min-height: 400px;
+    overflow-y: auto;
     text-align: center;
 }
 #modal-image .modal-dialog img {
