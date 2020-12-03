@@ -1188,7 +1188,8 @@ body.blog_posts.detail #inner-content ul {
 body.blog_posts.detail .blog-wrapper {
     margin-top: 10px;
 }
-body.categories.detail .blog-wrapper {
+body.categories.detail .blog-wrapper,
+body.categories.new_product .blog-wrapper {
     height: 255px;
     overflow-y: auto;
 }
