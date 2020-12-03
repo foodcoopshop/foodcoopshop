@@ -66,7 +66,7 @@ foreach($customers as $customer) {
             $pdf->table .= '<td style="width:10px;"></td>'; //spacer between barcode and customer image
             // move user image to bottom
             $pdf->table .= '<td style="width:100px;" align="right">';
-                $customerImage = Configure::read('app.customerImagesDir') . DS . $customer->id_customer . '-xxl.jpg';
+                $customerImage = Configure::read('app.customerImagesDir') . DS . $customer->id_customer . '-large.jpg';
                 if (file_exists($customerImage)) {
                     $fileinfos = getimagesize($customerImage);
                     $ratio = $fileinfos[1] / $fileinfos[0];
