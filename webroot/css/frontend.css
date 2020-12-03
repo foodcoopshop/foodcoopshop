@@ -548,10 +548,10 @@ body.superadmin .product-wrapper .heading h4 {
 }
 .product-wrapper .amount-wrapper .left-of-input {
     float: left;
-    margin-right: 4px;
+    margin-right: 3px;
 }
 .product-wrapper .amount-switcher-minus .fas {
-    margin-left: 4px;
+    margin-left: 3px;
     display: none;
 }
 .product-wrapper .amount-switcher-plus .fas {
