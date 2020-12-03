@@ -31,7 +31,7 @@ echo '<div class="product-wrapper" id="product-wrapper-' . $product['id_product'
         $srcLargeImage = $this->Html->getProductImageSrc($product['id_image'], 'thickbox');
         $largeImageExists = preg_match('/de-default/', $srcLargeImage);
 if (!$largeImageExists) {
-    echo '<a class="open-with-modal" href=javascript:void(0); data-modal-title="' . h($product['name']) . '" data-modal-image="'.$srcLargeImage.'">';
+    echo '<a class="open-with-modal" href=javascript:void(0); data-modal-title="' . h($product['name'] . ', ' . $product['ManufacturersName']) . '" data-modal-image="'.$srcLargeImage.'">';
 }
 echo '<img class="lazyload" data-src="' . $this->Html->getProductImageSrc($product['id_image'], 'home'). '" />';
 if (!$largeImageExists) {

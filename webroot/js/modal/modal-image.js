@@ -52,8 +52,9 @@ foodcoopshop.ModalImage = {
         var image = $('<img />');
         image.attr('src', button.data('modal-image'));
         $(modalSelector + ' .modal-body').append(image);
-
         $(modalSelector + ' .modal-title').html(button.data('modal-title'));
+        $(modalSelector + ' .modal-dialog').addClass('modal-dialog-centered');
+
     }
 
 };

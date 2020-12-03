@@ -39,6 +39,10 @@
 .modal-header {
     cursor: move;
 }
+.modal-body {
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
 .modal #flashMessage {
     left: 0;
     right: 0;
@@ -151,8 +155,13 @@ body.iframe_start_page {
 #modal-text h3 {
     font-size: 16px;
 }
+#modal-image .modal-body {
+    text-align: center;
+}
 #modal-image .modal-dialog img {
-    width: 100%;
+    width: auto;
+    max-width: 766px;
+    max-height: calc(100vh - 154px);
 }
 #modal-product-add input[type="text"],
 #modal-product-name-edit input[type="text"] {
