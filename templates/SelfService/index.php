@@ -27,6 +27,13 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".ModalText.init('.input.checkbox label a.open-with-modal');".
     Configure::read('app.jsNamespace').".Cart.initCartFinish();"
 ]);
+
+if (!$isMobile && Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) {
+    $this->element('addScript', ['script' =>
+        Configure::read('app.jsNamespace').".SelfService.initAutoLogout();"
+    ]);
+}
+
 echo $this->element('timebasedCurrency/addProductTooltip', ['selectorClass' => 'timebased-currency-product-info']);
 
 if ($isMobile) {

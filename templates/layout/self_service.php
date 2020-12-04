@@ -34,7 +34,10 @@ echo $this->element('layout/header');
             <?php
                 $logoutButton = $this->Menu->getAuthMenuElement($appAuth);
                 if ($appAuth->user()) { ?>
-                    <a class="btn btn-success <?php echo join(' ', $logoutButton['options']['class']); ?>" href="<?php echo $logoutButton['slug']; ?>"><i class="fas fa-fw fa-sign-out-alt"></i><?php echo $logoutButton['name']; ?></a> <span class="user-name-wrapper"><?php echo $appAuth->getUserName(); ?> - </span><?php echo str_replace('X', '<span class="auto-logout-timer"></span>', __('Auto_logout_in_X_sec')); ?>
+                    <a class="btn btn-success <?php echo join(' ', $logoutButton['options']['class']); ?>" href="<?php echo $logoutButton['slug']; ?>"><i class="fas fa-fw fa-sign-out-alt"></i><?php echo $logoutButton['name']; ?></a> <span class="user-name-wrapper"><?php echo $appAuth->getUserName(); ?>
+                    <?php if (Configure::read('app.selfServiceModeAutoLogoutDesktopEnabled')) { ?>
+                         - </span><?php echo str_replace('X', '<span class="auto-logout-timer"></span>', __('Auto_logout_in_X_sec')); ?>
+                    <?php } ?>
             <?php } ?>
         </div>
         <div class="right-wrapper">

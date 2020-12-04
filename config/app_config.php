@@ -97,6 +97,7 @@ return [
         'showManufacturerListAndDetailPage' => true,
         'showPickupPlaceInfo' => true,
         'showTaxSumTableOnOrderDetailPdf' => false,
+        'selfServiceModeAutoLogoutDesktopEnabled' => true,
 
         /**
          * id of the category "all products"
