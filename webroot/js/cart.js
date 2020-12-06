@@ -442,7 +442,7 @@ foodcoopshop.Cart = {
         }
         var unityHtml = '<span class="unity">';
         if (orderedQuantityInUnits) {
-            unityHtml += orderedQuantityInUnits.toLocaleString() + ' ' + unitName;
+            unityHtml += parseFloat(orderedQuantityInUnits).toLocaleString() + ' ' + unitName;
         } else {
             unityHtml += unity;
         }
