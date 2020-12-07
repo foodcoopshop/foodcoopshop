@@ -17,6 +17,7 @@ namespace App\Lib\Pdf;
 use App\Lib\OutputFilter\OutputFilter;
 use Cake\Core\Configure;
 use TCPDF;
+use App\Controller\Component\StringComponent;
 
 abstract class AppTcpdf extends TCPDF
 {
@@ -38,6 +39,8 @@ abstract class AppTcpdf extends TCPDF
 
     public function writeHTML($html, $ln=true, $fill=false, $reseth=false, $cell=false, $align='')
     {
+
+        $html = StringComponent::removeEmojis($html);
 
         if (Configure::check('app.outputStringReplacements')) {
             $html = OutputFilter::replace($html, Configure::read('app.outputStringReplacements'));
