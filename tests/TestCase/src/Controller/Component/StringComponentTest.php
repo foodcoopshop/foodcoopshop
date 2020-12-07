@@ -27,6 +27,25 @@ class StringComponentTest extends AppCakeTestCase
         // do not import database - no database needed for this test
     }
 
+    public function testRemoveEmojis()
+    {
+        $tests = [
+            [
+                'text' => 'Test ❤ hello',
+                'expected' => 'Test  hello'
+            ],
+            [
+                'text' => 'Test 🎃 hello',
+                'expected' => 'Test  hello'
+            ],
+        ];
+
+        foreach ($tests as $test) {
+            $result = StringComponent::removeEmojis($test['text']);
+            $this->assertEquals($test['expected'], $result);
+        }
+    }
+
     public function testSlugify()
     {
         $tests = [
