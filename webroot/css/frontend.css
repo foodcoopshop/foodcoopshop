@@ -597,7 +597,7 @@ body.manufacturers.detail .blog-wrapper .more-link {
     margin-bottom: 20px;
     float: left;
 }
-body.manufacturers.detail h2 {
+body.manufacturers.detail #inner-content h2 {
     border-top: 1px solid #d6d4d4;
     padding-top: 15px;
     float: left;
