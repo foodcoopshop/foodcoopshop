@@ -137,7 +137,26 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        $result = $this->validateMinimalCreditBalance($appAuth, $product->id_product, $product->price, $amount, $initialProductId);
+        $unitObject = $product->unit_product;
+        if ($attributeId > 0) {
+            foreach ($product->product_attributes as $attribute) {
+                if ($attribute->id_product_attribute == $attributeId) {
+                    $unitObject = isset($attribute->unit_product_attribute) ? $attribute->unit_product_attribute : null;
+                    continue;
+                }
+            }
+        }
+
+        $cartTable = FactoryLocator::get('Table')->get('Carts');
+        $prices = $cartTable->getPricesRespectingPricePerUnit(
+            $product->id_product,
+            $product->price,
+            $unitObject,
+            $amount,
+            $orderedQuantityInUnits == -1 ? null : $orderedQuantityInUnits,
+        );
+
+        $result = $this->validateMinimalCreditBalance($appAuth, $product->id_product, $prices['gross'], $amount, $initialProductId);
         if ($result !== true) {
             return [
                 'status' => 0,
@@ -168,7 +187,7 @@ class CartProductsTable extends AppTable
                         ];
                     }
 
-                    $result = $this->validateMinimalCreditBalance($appAuth, $product->id_product, $attribute->price, $amount, $initialProductId);
+                    $result = $this->validateMinimalCreditBalance($appAuth, $product->id_product, $prices['gross'], $amount, $initialProductId);
                     if ($result !== true) {
                         return [
                             'status' => 0,

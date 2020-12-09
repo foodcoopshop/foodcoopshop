@@ -98,6 +98,8 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddProductWithoutCredit()
     {
+        $this->Payment = $this->getTableLocator()->get('Payments');
+        $this->dbConnection->execute('DELETE FROM ' . $this->Payment->getTable().' WHERE id = 2');
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
         $this->loginAsCustomer();
         $this->addPayment(Configure::read('test.customerId'), 15, 'product');
@@ -116,7 +118,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function testAddProductWithPricePerUnitWithoutCredit()
     {
         $this->Payment = $this->getTableLocator()->get('Payments');
-        $this->dbConnection->execute('DELETE FROM ' . $this->Payment->getTable().' WHERE id = 1');
+        $this->dbConnection->execute('DELETE FROM ' . $this->Payment->getTable().' WHERE id = 2');
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
         $this->loginAsCustomer();
         // test product without attribute
@@ -319,7 +321,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddTooManyAttributes()
     {
-        $this->loginAsSuperadmin();
+        $this->loginAsCustomer();
         $amount = 1;
         $this->addProductToCart($this->productId2, $amount);
         $this->addTooManyProducts($this->productId2, 48, 1, 'Die gewünschte Anzahl <b>49</b> der Variante <b>0,5l</b> des Produktes <b>Milch</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 19', 0);
@@ -474,7 +476,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testFinishCartWithMinimalCreditBalanceCheck()
     {
-        $this->loginAsCustomer();
+        $this->loginAsAdmin();
         $this->fillCart();
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
         $this->finishCart(1,1);
@@ -611,7 +613,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function testFinishOrderStockNotificationsEnabled()
     {
 
-        $this->loginAsSuperadmin();
+        $this->loginAsCustomer();
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'stock_management_enabled', true);
 
@@ -644,7 +646,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->prepareTimebasedCurrencyConfiguration($reducedMaxPercentage);
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', -1000);
 
-        $this->loginAsSuperadmin();
+        $this->loginAsCustomer();
         $this->fillCart();
 
         // bratwürstel, manufacturerId 4
