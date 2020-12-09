@@ -18,7 +18,6 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
-use Cake\TestSuite\TestEmailTransport;
 
 class CartsControllerTest extends AppCakeTestCase
 {
@@ -110,6 +109,22 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
         // test product with attribute
         $response = $this->addProductToCart($this->productId2, 14);
+        $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
+        $this->assertJsonError();
+    }
+
+    public function testAddProductWithPricePerUnitWithoutCredit()
+    {
+        $this->Payment = $this->getTableLocator()->get('Payments');
+        $this->dbConnection->execute('DELETE FROM ' . $this->Payment->getTable().' WHERE id = 1');
+        $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
+        $this->loginAsCustomer();
+        // test product without attribute
+        $response = $this->addProductToCart(347, 1);
+        $errorMessage = 'Bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
+        $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
+        // test product with attribute
+        $response = $this->addProductToCart('348-11', 1);
         $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
         $this->assertJsonError();
     }
