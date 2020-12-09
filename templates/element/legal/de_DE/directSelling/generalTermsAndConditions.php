@@ -21,9 +21,9 @@ use Cake\Core\Configure;
 
 <p><?php echo $this->Html->getPlatformOwnerForLegalTexts(); ?></p>
 
-<h2>1. Geltung dieser AGB</h2>
+<h2>1. Geltung</h2>
 
-<p>1.1. Für alle gegenwärtigen und zukünftigen Leistungen, die der Betreiber im Rahmen dieser Internet-Dienstleistung unter der Domain <?php echo Configure::read('app.cakeServerName'); ?> für seine Nutzer erbringt (im Folgenden gemeinsam kurz: die Leistung), gelten ausschließlich die nachfolgenden Bedingungen.</p>
+<p>1.1. Für alle gegenwärtigen und zukünftigen Leistungen, die der Betreiber im Rahmen seiner Internet-Dienstleistung unter der Domain <?php echo Configure::read('app.cakeServerName'); ?> für seine Nutzer erbringt (im Folgenden gemeinsam kurz: die Leistung), gelten ausschließlich die nachfolgenden Bedingungen.</p>
 
 <p>1.2. Geschäftsbedingungen des Nutzers kommen nicht zur Anwendung.</p>
 
@@ -58,7 +58,7 @@ wird bei der Abholung bar bezahlt
 
 <p>5.2. Der Lieferant wird von den alternativen Streitbeilegungsstellen "Online-Streitbeilegung" (https://webgate.ec.europa.eu/odr) sowie "Internetombudsmann" (www.ombudsmann.at) erfasst. Wenn der Vertragspartner ein Verbraucher ist, haben diese auf den genannten Plattformen die Möglichkeit, außergerichtliche Streitbeilegung durch eine unparteiische Schlichtungsstelle in Anspruch zu nehmen.</p>
 
-<p>Die E-Mailadresse des Hersteller ergibt sich aus dem Impressum.</p>
+<p>Die E-Mail-Adresse des Hersteller ergibt sich aus dem Impressum.</p>
 
 <h2>6. Schlussbestimmungen</h2>
 
