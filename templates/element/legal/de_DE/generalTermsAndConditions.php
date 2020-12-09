@@ -17,11 +17,15 @@ use Cake\Core\Configure;
 ?>
 <h1>Allgemeine Geschäftsbedingungen</h1>
 
+<h2>Betreiber der Plattform</h2>
+
+<p><?php echo $this->Html->getPlatformOwnerForLegalTexts(); ?></p>
+
 <h2>1. Geltung dieser AGB</h2>
 
-<p>1.1. Für alle gegenwärtigen und zukünftigen Lieferungen und sonstige Leistungen, die der Lieferant im Rahmen dieser Plattform, erreichbar unter der Domain <?php echo Configure::read('app.cakeServerName'); ?>, für seine Kunden erbringt (im Folgenden gemeinsam kurz: die Leistung), gelten ausschließlich die nachfolgenden Bedingungen (im Folgenden kurz: der Vertragspartner).</p>
+<p>1.1. Für alle gegenwärtigen und zukünftigen Leistungen, die der Betreiber im Rahmen dieser Internet-Dienstleistung unter der Domain <?php echo Configure::read('app.cakeServerName'); ?> für seine Nutzer erbringt (im Folgenden gemeinsam kurz: die Leistung), gelten ausschließlich die nachfolgenden Bedingungen.</p>
 
-<p>1.2. Geschäftsbedingungen des Vertragspartners kommen nicht zur Anwendung.</p>
+<p>1.2. Geschäftsbedingungen des Nutzers kommen nicht zur Anwendung.</p>
 
 <h2>2. Leistungen und Entgelte</h2>
 

@@ -19,21 +19,7 @@ use Cake\Core\Configure;
 
 <h2>Betreiber der Plattform</h2>
 
-<p>
-    <?php
-    if (Configure::read('appDb.FCS_PLATFORM_OWNER') != '') {
-        echo Configure::read('appDb.FCS_PLATFORM_OWNER');
-    } else {
-        echo Configure::read('appDb.FCS_APP_NAME');
-        echo '<br />'.$this->MyHtml->getAddressFromAddressConfiguration();
-        if (Configure::read('appDb.FCS_APP_ADDITIONAL_DATA') != '') {
-            echo '<br />' . Configure::read('appDb.FCS_APP_ADDITIONAL_DATA');
-        }
-    }
-    ?>
-</p>
-
-<p>(im Folgenden kurz: Betreiber)</p>
+<p><?php echo $this->Html->getPlatformOwnerForLegalTexts(); ?></p>
 
 <h2>1. Geltung der Nutzungsbedingungen</h2>
 
