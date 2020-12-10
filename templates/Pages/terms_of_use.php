@@ -19,7 +19,7 @@ $this->element('addScript', ['script' =>
     Configure::read('app.jsNamespace').".Helper.init();"
 ]);
 if ($appAuth->isManufacturer()) {
-    echo $this->element('legal/'.I18n::getLocale().'/termsOfUseForManufacturers');
+    echo $this->element('legal/'.I18n::getLocale().'/' . $this->Html->getLegalTextsSubfolder() . '/termsOfUseForManufacturers');
 } else {
-    echo $this->element('legal/'.I18n::getLocale().'/termsOfUse');
+    echo $this->element('legal/'.I18n::getLocale().'/' . $this->Html->getLegalTextsSubfolder() . '/termsOfUse');
 }

@@ -210,6 +210,10 @@ foodcoopshop.Admin = {
         return row.find('td.is-stock-product').length > 0 && row.find('td.is-stock-product').html().match('fa-check');
     },
 
+    initCopyTableContentToClipboard: function() {
+
+    },
+
     initCopySelectedCustomerEmailsToClipboard: function() {
 
         var btnSelector = '.btn-clipboard';

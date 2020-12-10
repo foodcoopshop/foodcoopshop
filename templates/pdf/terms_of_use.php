@@ -24,5 +24,5 @@ $pdf->infoTextForFooter = $title;
 
 $pdf->AddPage();
 
-$html = $this->element('legal/'.I18n::getLocale().'/termsOfUse');
+$html = $this->element('legal/'.I18n::getLocale(). '/' . $this->Html->getLegalTextsSubfolder() . '/termsOfUse');
 $pdf->writeHTML($html, true, false, true, false, '');
