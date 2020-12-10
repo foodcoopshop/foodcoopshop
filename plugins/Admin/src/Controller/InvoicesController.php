@@ -32,7 +32,9 @@ class InvoicesController extends AdminAppController
     public function downloadAsZipFile()
     {
 
-        $invoiceIds = $this->request->getQuery('invoiceIds');
+        $invoiceIds = h($this->request->getQuery('invoiceIds'));
+        $invoiceIds = explode(',', $invoiceIds);
+
         if (empty($invoiceIds)) {
             throw new NotFoundException();
         }
