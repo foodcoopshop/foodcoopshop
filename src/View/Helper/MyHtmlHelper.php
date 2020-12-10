@@ -34,6 +34,15 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
 
+    public function getLegalTextsSubfolder()
+    {
+        $subfolder = 'directSelling';
+        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+            $subfolder = 'retail';
+        }
+        return $subfolder;
+    }
+
     public function getPlatformOwnerForLegalTexts()
     {
         $result = '';

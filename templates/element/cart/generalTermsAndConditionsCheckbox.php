@@ -21,13 +21,7 @@ if (!Configure::read('app.generalTermsAndConditionsEnabled')) {
 }
 
 echo '<div id="general-terms-and-conditions" class="hide">';
-    $generalTermsAndConditionsTemplate = 'legal/'.I18n::getLocale() . '/';
-    if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
-        $generalTermsAndConditionsTemplate .= 'retail';
-    } else {
-        $generalTermsAndConditionsTemplate .= 'directSelling';
-    }
-    $generalTermsAndConditionsTemplate .= '/generalTermsAndConditions';
+    $generalTermsAndConditionsTemplate = 'legal/'.I18n::getLocale() . '/' . $this->Html->getLegalTextsSubfolder() . '/generalTermsAndConditions';
     echo $this->element($generalTermsAndConditionsTemplate);
 echo '</div>';
 
