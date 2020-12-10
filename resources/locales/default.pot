@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-01 12:14+0100\n"
+"POT-Creation-Date: 2020-12-10 11:43+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -807,6 +807,9 @@ msgid "{0}_email_addresses_have_been_copied_successfully_to_your_clipboard."
 msgstr ""
 
 msgid "1_email_address_has_been_copied_successfully_to_your_clipboard."
+msgstr ""
+
+msgid "Copied_successfully_to_your_clipboard."
 msgstr ""
 
 msgid "The_reason_for_changing_the_member_is_mandatory."

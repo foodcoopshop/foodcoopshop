@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-01 12:14+0100\n"
-"PO-Revision-Date: 2020-11-24 11:15+0100\n"
+"POT-Creation-Date: 2020-12-10 11:43+0100\n"
+"PO-Revision-Date: 2020-12-10 11:44+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -809,6 +809,9 @@ msgstr "{0} E-Mail-Adressen wurden erfolgreich in deine Zwischenablage kopiert."
 
 msgid "1_email_address_has_been_copied_successfully_to_your_clipboard."
 msgstr "Eine E-Mail-Adresse wurde erfolgreich in deine Zwischenablage kopiert."
+
+msgid "Copied_successfully_to_your_clipboard."
+msgstr "Das Kopieren in die Zwischenablage war erfolgreich."
 
 msgid "The_reason_for_changing_the_member_is_mandatory."
 msgstr "Der Grund für die Änderung des Mitglieds ist ein Pflichtfeld."

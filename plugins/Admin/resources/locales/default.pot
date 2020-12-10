@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-11-29 22:36+0100\n"
+"POT-Creation-Date: 2020-12-10 11:43+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1124,6 +1124,9 @@ msgstr ""
 msgid "All_amounts_in_{0}."
 msgstr ""
 
+msgid "Copy_to_clipboard"
+msgstr ""
+
 msgid "Invoice_number_abbreviation"
 msgstr ""
 
@@ -1860,9 +1863,6 @@ msgid "Your_code_has_been_copied_successfully_into_the_clipboard."
 msgstr ""
 
 msgid "Please_add_this_code_to_your_transaction:_{0}"
-msgstr ""
-
-msgid "Copy_to_clipboard"
 msgstr ""
 
 msgid "Order_list_grouped_by"

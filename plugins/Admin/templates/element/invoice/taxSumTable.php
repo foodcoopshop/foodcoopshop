@@ -14,7 +14,17 @@
  */
 
 
-$html = '<table class="list tax-sum-table">';
+$html = $this->Html->link(
+    '<i class="far fa-clipboard"></i>',
+    'javascript:void(0)',
+    [
+        'class' => 'btn btn-outline-light btn-clipboard-table',
+        'title' => __d('admin', 'Copy_to_clipboard'),
+        'style' => 'margin-right:5px;float:left;',
+        'escape' => false,
+    ]
+);
+$html .= '<table class="list tax-sum-table">';
 
 $html .= '<tr>';
     $html .= '<th>'.__d('admin', 'Tax_rate').'</th>';

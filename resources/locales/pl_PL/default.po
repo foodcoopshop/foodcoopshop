@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-01 12:14+0100\n"
+"POT-Creation-Date: 2020-12-10 11:43+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1088,6 +1088,11 @@ msgstr "adresy mailowe ({0}) zostały pomyślnie skopiowane do schowka."
 
 # One email address has been copied successfully to your clipboard.
 msgid "1_email_address_has_been_copied_successfully_to_your_clipboard."
+msgstr "Adres mailowy został pomyślnie skopiowany do schowka."
+
+# One email address has been copied successfully to your clipboard.
+#, fuzzy
+msgid "Copied_successfully_to_your_clipboard."
 msgstr "Adres mailowy został pomyślnie skopiowany do schowka."
 
 msgid "The_reason_for_changing_the_member_is_mandatory."

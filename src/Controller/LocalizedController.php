@@ -220,6 +220,7 @@ class LocalizedController extends Controller
                 'product' => __('product'),
                 'EmailAddressesSuccessfullyCopiedToClipboard' => __('{0}_email_addresses_have_been_copied_successfully_to_your_clipboard.'),
                 'OneEmailAddressSuccessfullyCopiedToClipboard' => __('1_email_address_has_been_copied_successfully_to_your_clipboard.'),
+                'SuccessfullyCopiedToClipboard' => __('Copied_successfully_to_your_clipboard.'),
                 'ChangeMemberReasonIsMandatory' => __('The_reason_for_changing_the_member_is_mandatory.'),
                 'WhyIsMemberEdited' => __('Why_is_the_member_edited?'),
                 'ChangeMember' => __('Change_member'),

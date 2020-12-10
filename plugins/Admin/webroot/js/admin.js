@@ -212,6 +212,20 @@ foodcoopshop.Admin = {
 
     initCopyTableContentToClipboard: function() {
 
+        var clipboard = new ClipboardJS(
+            '.btn-clipboard-table',
+            {
+                target: function(trigger) {
+                    return trigger.nextElementSibling;
+                }
+            }
+        );
+
+        clipboard.on('success', function(e) {
+            foodcoopshop.Helper.showSuccessMessage(foodcoopshop.LocalizedJs.admin.SuccessfullyCopiedToClipboard);
+            e.clearSelection();
+        });
+
     },
 
     initCopySelectedCustomerEmailsToClipboard: function() {

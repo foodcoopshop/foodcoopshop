@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-29 22:36+0100\n"
+"POT-Creation-Date: 2020-12-10 11:43+0100\n"
 "PO-Revision-Date: 2020-11-29 22:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1125,6 +1125,9 @@ msgstr "Returned deposit by member"
 msgid "All_amounts_in_{0}."
 msgstr "All amounts in {0}."
 
+msgid "Copy_to_clipboard"
+msgstr "Copy to clipboard"
+
 msgid "Invoice_number_abbreviation"
 msgstr "Invoice nº"
 
@@ -1862,9 +1865,6 @@ msgstr "Your code has been copied successfully into the clipboard."
 
 msgid "Please_add_this_code_to_your_transaction:_{0}"
 msgstr "Please add this code to your transaction: {0}"
-
-msgid "Copy_to_clipboard"
-msgstr "Copy to clipboard"
 
 msgid "Order_list_grouped_by"
 msgstr "Order list grouped by"
