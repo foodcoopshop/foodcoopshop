@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-10 11:43+0100\n"
-"PO-Revision-Date: 2020-11-29 22:37+0100\n"
+"POT-Creation-Date: 2020-12-10 21:09+0100\n"
+"PO-Revision-Date: 2020-12-10 21:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -185,6 +185,9 @@ msgstr "Pfandkonto"
 
 msgid "Deposit_take_back_detail_for"
 msgstr "Pfand-Rücknahme Detail für"
+
+msgid "Invoices"
+msgstr "Rechnungen"
 
 msgid "No_data_available_to_generate_an_invoice."
 msgstr "Zum Erstellen einer Rechnung sind keine Daten vorhanden."
@@ -1124,6 +1127,9 @@ msgstr "Pfand-Rückgaben (Mitglieder)"
 
 msgid "All_amounts_in_{0}."
 msgstr "Alle Beträge in {0}."
+
+msgid "Download_invoices"
+msgstr "Rechnungen downloaden"
 
 msgid "Copy_to_clipboard"
 msgstr "In die Zwischenablage kopieren"
@@ -2204,9 +2210,6 @@ msgstr "Das tatsächlich gelieferte Gewicht wird evtl. noch angepasst, d. h. der
 
 msgid "Product_ID"
 msgstr "Produkt-Nr."
-
-#~ msgid "Invoices"
-#~ msgstr "Rechnungen"
 
 #~ msgid "Invoice_number_abbreviation_of_cancelled_invoice"
 #~ msgstr "Stornierte Rechnung Nr."

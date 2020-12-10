@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-10 11:43+0100\n"
+"POT-Creation-Date: 2020-12-10 21:09+0100\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -191,6 +191,10 @@ msgstr "Konto kaucji"
 
 msgid "Deposit_take_back_detail_for"
 msgstr "Sczegóły odbioru kaucji dla"
+
+#, fuzzy
+msgid "Invoices"
+msgstr "Data faktury"
 
 msgid "No_data_available_to_generate_an_invoice."
 msgstr ""
@@ -1171,6 +1175,9 @@ msgstr "Zwrócony wkład"
 #, fuzzy
 msgid "All_amounts_in_{0}."
 msgstr "Kwota w {0}"
+
+msgid "Download_invoices"
+msgstr ""
 
 msgid "Copy_to_clipboard"
 msgstr ""
@@ -2304,10 +2311,6 @@ msgstr "Wagi dostarczonych produktów mogą ulec zmianie, więc cena również m
 #, fuzzy
 msgid "Product_ID"
 msgstr "Produkt"
-
-#, fuzzy
-#~ msgid "Invoices"
-#~ msgstr "Data faktury"
 
 #, fuzzy
 #~ msgid "Invoice_number_abbreviation_of_cancelled_invoice"
