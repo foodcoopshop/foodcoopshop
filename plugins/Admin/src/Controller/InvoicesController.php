@@ -32,19 +32,28 @@ class InvoicesController extends AdminAppController
     public function downloadAsZipFile()
     {
 
-        $invoiceIds = h($this->request->getQuery('invoiceIds'));
-        $invoiceIds = explode(',', $invoiceIds);
+        $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
+        $dateTo = h($this->getRequest()->getQuery('dateTo'));
+        $customerId = h($this->getRequest()->getQuery('customerId'));
 
-        if (empty($invoiceIds)) {
-            throw new NotFoundException();
+        $conditions = [
+            'Invoices.id_customer > 0',
+            'DATE_FORMAT(Invoices.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
+            'DATE_FORMAT(Invoices.created, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
+        ];
+
+        if ($customerId != '') {
+            $conditions['Invoices.id_customer'] = $customerId;
         }
 
         $this->Invoice = $this->getTableLocator()->get('Invoices');
         $invoices = $this->Invoice->find('all', [
-            'conditions' => [
-                'Invoices.id IN' => $invoiceIds,
-            ],
+            'conditions' => $conditions,
         ]);
+
+        if (empty($invoices)) {
+            throw new NotFoundException();
+        }
 
         $zipFilename = __d('admin', 'Invoices') . '.zip';
 
