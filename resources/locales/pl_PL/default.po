@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-10 11:43+0100\n"
+"POT-Creation-Date: 2020-12-10 11:50+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1092,7 +1092,7 @@ msgstr "Adres mailowy został pomyślnie skopiowany do schowka."
 
 # One email address has been copied successfully to your clipboard.
 #, fuzzy
-msgid "Copied_successfully_to_your_clipboard."
+msgid "The_table_content_was_copied_successfully_to_your_clipboard."
 msgstr "Adres mailowy został pomyślnie skopiowany do schowka."
 
 msgid "The_reason_for_changing_the_member_is_mandatory."
@@ -3369,6 +3369,11 @@ msgstr "złożone w dniu"
 # The prices include the VAT.
 msgid "Prices_are_including_vat."
 msgstr "Ceny zawierają podatek VAT."
+
+# One email address has been copied successfully to your clipboard.
+#, fuzzy
+#~ msgid "Copied_successfully_to_your_clipboard."
+#~ msgstr "Adres mailowy został pomyślnie skopiowany do schowka."
 
 # Last order day
 #~ msgid "Last_order_day"

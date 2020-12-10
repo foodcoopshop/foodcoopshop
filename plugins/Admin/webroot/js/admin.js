@@ -222,7 +222,7 @@ foodcoopshop.Admin = {
         );
 
         clipboard.on('success', function(e) {
-            foodcoopshop.Helper.showSuccessMessage(foodcoopshop.LocalizedJs.admin.SuccessfullyCopiedToClipboard);
+            foodcoopshop.Helper.showSuccessMessage(foodcoopshop.LocalizedJs.admin.SuccessfullyCopiedTableContentToClipboard);
             e.clearSelection();
         });
 

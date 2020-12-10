@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-10 11:43+0100\n"
-"PO-Revision-Date: 2020-12-10 11:44+0100\n"
+"POT-Creation-Date: 2020-12-10 11:50+0100\n"
+"PO-Revision-Date: 2020-12-10 11:50+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -810,8 +810,8 @@ msgstr "{0} email addresses have been copied successfully to your clipboard."
 msgid "1_email_address_has_been_copied_successfully_to_your_clipboard."
 msgstr "One email address has been copied successfully to your clipboard."
 
-msgid "Copied_successfully_to_your_clipboard."
-msgstr "Copying to your clipboard was successful."
+msgid "The_table_content_was_copied_successfully_to_your_clipboard."
+msgstr "The table content was copied successfully to your clipboard."
 
 msgid "The_reason_for_changing_the_member_is_mandatory."
 msgstr "The reason for changing the member is mandatory."
@@ -2495,6 +2495,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Copied_successfully_to_your_clipboard."
+#~ msgstr "Copying to your clipboard was successful."
 
 #~ msgid "Last_order_day"
 #~ msgstr "Last order day"

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-10 11:43+0100\n"
-"PO-Revision-Date: 2020-12-10 11:44+0100\n"
+"POT-Creation-Date: 2020-12-10 11:50+0100\n"
+"PO-Revision-Date: 2020-12-10 11:50+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -810,8 +810,8 @@ msgstr "{0} E-Mail-Adressen wurden erfolgreich in deine Zwischenablage kopiert."
 msgid "1_email_address_has_been_copied_successfully_to_your_clipboard."
 msgstr "Eine E-Mail-Adresse wurde erfolgreich in deine Zwischenablage kopiert."
 
-msgid "Copied_successfully_to_your_clipboard."
-msgstr "Das Kopieren in die Zwischenablage war erfolgreich."
+msgid "The_table_content_was_copied_successfully_to_your_clipboard."
+msgstr "Der Inhalt der Tabelle wurde erfolgreich in deine Zwischenablage kopiert."
 
 msgid "The_reason_for_changing_the_member_is_mandatory."
 msgstr "Der Grund für die Änderung des Mitglieds ist ein Pflichtfeld."
@@ -2495,6 +2495,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Copied_successfully_to_your_clipboard."
+#~ msgstr "Das Kopieren in die Zwischenablage war erfolgreich."
 
 #~ msgid "Last_order_day"
 #~ msgstr "Bestellschluss"
