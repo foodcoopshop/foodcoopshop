@@ -27,7 +27,12 @@ foodcoopshop.Admin = {
 
     initDownloadInvoicesAsZipFile : function() {
         $('.btn-download-invoices-as-zip-file').on('click', function() {
-            alert('not yet ready');
+            var invoiceIds = [];
+            $('table.invoices-table tr.data').each(function() {
+                invoiceIds.push($(this).data('invoice-id'));
+            });
+            var url = '/admin/invoices/download-as-zip-file/?invoiceIds=' + invoiceIds.join(',');
+            window.open(url);
         });
     },
 

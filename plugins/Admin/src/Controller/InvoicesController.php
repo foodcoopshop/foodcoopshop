@@ -29,8 +29,48 @@ class InvoicesController extends AdminAppController
         return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isSuperadmin();
     }
 
-    public function downloadInvoicesAsZipFile()
+    public function downloadAsZipFile()
     {
+
+        $invoiceIds = $this->request->getQuery('invoiceIds');
+        if (empty($invoiceIds)) {
+            throw new NotFoundException();
+        }
+
+        $this->Invoice = $this->getTableLocator()->get('Invoices');
+        $invoices = $this->Invoice->find('all', [
+            'conditions' => [
+                'Invoices.id IN' => $invoiceIds,
+            ],
+        ]);
+
+        $zipFilename = __d('admin', 'Invoices') . '.zip';
+
+        $zip = new \ZipArchive();
+        $tmpZipFilePath = TMP . $zipFilename;
+        if (file_exists($tmpZipFilePath)) {
+            unlink($tmpZipFilePath);
+        }
+        $zip->open($tmpZipFilePath, \ZipArchive::CREATE);
+
+        foreach($invoices as $invoice) {
+            $invoiceFileWithPath = Configure::read('app.folder_invoices') . DS . $invoice->filename;
+            $zip->addFile($invoiceFileWithPath, substr($invoice->filename, 1));
+        }
+
+        $zip->close();
+
+        $this->disableAutoRender();
+
+        $this->response = $this->response->withType('zip');
+        $this->response = $this->response->withFile($tmpZipFilePath);
+        $this->response = $this->response->withHeader('Content-Disposition', 'inline; filename="' . $zipFilename . '"');
+
+        if (file_exists($tmpZipFilePath)) {
+            unlink($tmpZipFilePath);
+        }
+
+        return $this->response;
 
     }
 
