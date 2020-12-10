@@ -15,12 +15,12 @@
 
 
 $html = $this->Html->link(
-    '<i class="far fa-clipboard"></i>',
+    '<i class="far fa-fw fa-clipboard"></i>',
     'javascript:void(0)',
     [
         'class' => 'btn btn-outline-light btn-clipboard-table',
         'title' => __d('admin', 'Copy_to_clipboard'),
-        'style' => 'margin-right:5px;float:left;',
+        'style' => 'margin-right:3px;float:left;',
         'escape' => false,
     ]
 );

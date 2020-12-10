@@ -29,6 +29,11 @@ class InvoicesController extends AdminAppController
         return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isSuperadmin();
     }
 
+    public function downloadInvoicesAsZipFile()
+    {
+
+    }
+
     public function generate()
     {
 

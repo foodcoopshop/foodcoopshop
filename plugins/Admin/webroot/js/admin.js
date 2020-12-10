@@ -25,6 +25,12 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
 
+    initDownloadInvoicesAsZipFile : function() {
+        $('.btn-download-invoices-as-zip-file').on('click', function() {
+            alert('not yet ready');
+        });
+    },
+
     disableSelectpickerItems : function (selector, ids) {
         $(selector).find('option').each(function () {
             var currentId = parseInt($(this).val());
