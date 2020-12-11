@@ -764,7 +764,9 @@ class CartComponent extends Component
             $email->addAttachments([__('Filename_Right-of-withdrawal-information-and-form').'.pdf' => ['data' => $this->generateRightOfWithdrawalInformationAndForm($cart, $products), 'mimetype' => 'application/pdf']]);
         }
 
-        $email->addAttachments([__('Filename_Order-confirmation').'.pdf' => ['data' => $this->generateOrderConfirmation($cart), 'mimetype' => 'application/pdf']]);
+        if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+            $email->addAttachments([__('Filename_Order-confirmation').'.pdf' => ['data' => $this->generateOrderConfirmation($cart), 'mimetype' => 'application/pdf']]);
+        }
         if (Configure::read('app.generalTermsAndConditionsEnabled')) {
             $generalTermsAndConditionsFiles = [];
             $uniqueManufacturers = $this->getUniqueManufacturers();
