@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-10 11:50+0100\n"
+"POT-Creation-Date: 2020-12-11 09:48+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -3359,7 +3359,8 @@ msgid "Order_overview"
 msgstr "Przegląd zamówień"
 
 # Order of
-msgid "Order_of"
+#, fuzzy
+msgid "Order"
 msgstr "Zamówienie"
 
 # placed on

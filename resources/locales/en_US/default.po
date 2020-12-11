@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-10 11:50+0100\n"
+"POT-Creation-Date: 2020-12-11 09:48+0100\n"
 "PO-Revision-Date: 2020-12-10 11:50+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2487,7 +2487,8 @@ msgstr "Strike out unwanted items."
 msgid "Order_overview"
 msgstr "Order overview"
 
-msgid "Order_of"
+#, fuzzy
+msgid "Order"
 msgstr "Order of"
 
 msgid "placed_on"

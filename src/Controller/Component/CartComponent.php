@@ -9,7 +9,6 @@ use App\Mailer\AppMailer;
 use Cake\Controller\Component;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
-use Cake\Log\Log;
 use Cake\Datasource\FactoryLocator;
 
 /**

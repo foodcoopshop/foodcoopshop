@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-10 21:09+0100\n"
+"POT-Creation-Date: 2020-12-11 09:48+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1253,21 +1253,6 @@ msgstr ""
 msgid "Will_be_shown_on_the_manufacturer_profile."
 msgstr ""
 
-msgid "Bank_account_data"
-msgstr ""
-
-msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
-msgstr ""
-
-msgid "Bank"
-msgstr ""
-
-msgid "IBAN"
-msgstr ""
-
-msgid "BIC"
-msgstr ""
-
 msgid "Company_data"
 msgstr ""
 
@@ -1761,6 +1746,21 @@ msgid "Sum_price_excl."
 msgstr ""
 
 msgid "Sum_price_incl."
+msgstr ""
+
+msgid "Bank_account_data"
+msgstr ""
+
+msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
+msgstr ""
+
+msgid "Bank"
+msgstr ""
+
+msgid "IBAN"
+msgstr ""
+
+msgid "BIC"
 msgstr ""
 
 msgid "Order_adaptions"
