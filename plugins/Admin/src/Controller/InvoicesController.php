@@ -36,19 +36,9 @@ class InvoicesController extends AdminAppController
         $dateTo = h($this->getRequest()->getQuery('dateTo'));
         $customerId = h($this->getRequest()->getQuery('customerId'));
 
-        $conditions = [
-            'Invoices.id_customer > 0',
-            'DATE_FORMAT(Invoices.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
-            'DATE_FORMAT(Invoices.created, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
-        ];
-
-        if ($customerId != '') {
-            $conditions['Invoices.id_customer'] = $customerId;
-        }
-
         $this->Invoice = $this->getTableLocator()->get('Invoices');
         $invoices = $this->Invoice->find('all', [
-            'conditions' => $conditions,
+            'conditions' => $this->getInvoiceConditions($dateFrom, $dateTo, $customerId),
         ]);
 
         if (empty($invoices)) {
@@ -323,16 +313,6 @@ class InvoicesController extends AdminAppController
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Invoice = $this->getTableLocator()->get('Invoices');
 
-        $conditions = [
-            'Invoices.id_customer > 0',
-            'DATE_FORMAT(Invoices.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
-            'DATE_FORMAT(Invoices.created, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
-        ];
-
-        if ($customerId != '') {
-            $conditions['Invoices.id_customer'] = $customerId;
-        }
-
         $query = $this->Invoice->find('all', [
             'contain' => [
                 'InvoiceTaxes',
@@ -340,7 +320,7 @@ class InvoicesController extends AdminAppController
                 'CancellationInvoices',
                 'CancelledInvoices',
             ],
-            'conditions' => $conditions,
+            'conditions' => $this->getInvoiceConditions($dateFrom, $dateTo, $customerId),
         ]);
 
         $invoices = $this->paginate($query, [
@@ -380,6 +360,23 @@ class InvoicesController extends AdminAppController
         $preparedTaxRates = $this->Invoice->getPreparedTaxRatesForSumTable($invoices);
         $this->set('taxRates', $preparedTaxRates['taxRates']);
         $this->set('taxRatesSums', $preparedTaxRates['taxRatesSums']);
+
+    }
+
+    private function getInvoiceConditions($dateFrom, $dateTo, $customerId)
+    {
+
+        $conditions = [
+            'Invoices.id_customer > 0',
+            'DATE_FORMAT(Invoices.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
+            'DATE_FORMAT(Invoices.created, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
+        ];
+
+        if ($customerId != '') {
+            $conditions['Invoices.id_customer'] = $customerId;
+        }
+
+        return $conditions;
 
     }
 
