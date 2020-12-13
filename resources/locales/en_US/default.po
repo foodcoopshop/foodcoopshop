@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-11 09:48+0100\n"
-"PO-Revision-Date: 2020-12-10 11:50+0100\n"
+"POT-Creation-Date: 2020-12-13 19:19+0100\n"
+"PO-Revision-Date: 2020-12-13 19:19+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1506,11 +1506,11 @@ msgstr "The mobile number is not valid."
 msgid "The_phone_number_is_not_valid."
 msgstr "The phone number is not valid."
 
-msgid "Please_enter_the_first_name_of_the_invoice_holder."
-msgstr "Please enter the first name of the invoice holder."
+msgid "Please_enter_the_first_name."
+msgstr "Please enter the first name."
 
-msgid "Please_enter_the_last_name_of_the_invoice_holder."
-msgstr "Please enter the last name of the invoice holder."
+msgid "Please_enter_the_last_name."
+msgstr "Please enter the last name."
 
 msgid "Please_enter_an_email_address."
 msgstr "Please enter an email address."
@@ -2496,6 +2496,12 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "Please_enter_the_first_name_of_the_invoice_holder."
+#~ msgstr "Please enter the first name of the invoice holder."
+
+#~ msgid "Please_enter_the_last_name_of_the_invoice_holder."
+#~ msgstr "Please enter the last name of the invoice holder."
 
 #~ msgid "Copied_successfully_to_your_clipboard."
 #~ msgstr "Copying to your clipboard was successful."

@@ -76,8 +76,8 @@ class ManufacturersControllerTest extends AppCakeTestCase
         $this->assertResponseContains('Bitte gib einen gültigen IBAN ein.');
         $this->assertResponseContains('Bitte gib einen gültigen BIC ein.');
         $this->assertResponseContains('Ein anderes Mitglied oder ein anderer Hersteller verwendet diese E-Mail-Adresse bereits.');
-        $this->assertResponseContains('Bitte gib den Vornamen des Rechnungsempfängers an.');
-        $this->assertResponseContains('Bitte gib den Nachnamen des Rechnungsempfängers an.');
+        $this->assertResponseContains('Bitte gib den Vornamen an.');
+        $this->assertResponseContains('Bitte gib den Nachnamen an.');
 
         // set proper data and post again
         $manufacturerData['Manufacturers']['iban'] = 'AT193357281080332578';

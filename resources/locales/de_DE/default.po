@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-11 09:48+0100\n"
-"PO-Revision-Date: 2020-12-11 09:48+0100\n"
+"POT-Creation-Date: 2020-12-13 19:19+0100\n"
+"PO-Revision-Date: 2020-12-13 19:19+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1506,11 +1506,11 @@ msgstr "Die Handynummer ist nicht gültig."
 msgid "The_phone_number_is_not_valid."
 msgstr "Die Telefonnummer ist nicht gültig."
 
-msgid "Please_enter_the_first_name_of_the_invoice_holder."
-msgstr "Bitte gib den Vornamen des Rechnungsempfängers an."
+msgid "Please_enter_the_first_name."
+msgstr "Bitte gib den Vornamen an."
 
-msgid "Please_enter_the_last_name_of_the_invoice_holder."
-msgstr "Bitte gib den Nachnamen des Rechnungsempfängers an."
+msgid "Please_enter_the_last_name."
+msgstr "Bitte gib den Nachnamen an."
 
 msgid "Please_enter_an_email_address."
 msgstr "Bitte gib eine E-Mail-Adresse an."
@@ -2495,6 +2495,12 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Please_enter_the_first_name_of_the_invoice_holder."
+#~ msgstr "Bitte gib den Vornamen des Rechnungsempfängers an."
+
+#~ msgid "Please_enter_the_last_name_of_the_invoice_holder."
+#~ msgstr "Bitte gib den Nachnamen des Rechnungsempfängers an."
 
 #~ msgid "Copied_successfully_to_your_clipboard."
 #~ msgstr "Das Kopieren in die Zwischenablage war erfolgreich."

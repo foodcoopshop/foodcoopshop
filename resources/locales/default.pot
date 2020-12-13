@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-11 09:48+0100\n"
+"POT-Creation-Date: 2020-12-13 19:19+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1505,10 +1505,10 @@ msgstr ""
 msgid "The_phone_number_is_not_valid."
 msgstr ""
 
-msgid "Please_enter_the_first_name_of_the_invoice_holder."
+msgid "Please_enter_the_first_name."
 msgstr ""
 
-msgid "Please_enter_the_last_name_of_the_invoice_holder."
+msgid "Please_enter_the_last_name."
 msgstr ""
 
 msgid "Please_enter_an_email_address."
