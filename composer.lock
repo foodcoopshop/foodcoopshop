@@ -58,16 +58,16 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "4.1.6",
+            "version": "4.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "d8c526bb3e5640235282d189fb071e9c800b4f49"
+                "reference": "bba723770e6f8861ce5117650251f5848033193e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/d8c526bb3e5640235282d189fb071e9c800b4f49",
-                "reference": "d8c526bb3e5640235282d189fb071e9c800b4f49",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/bba723770e6f8861ce5117650251f5848033193e",
+                "reference": "bba723770e6f8861ce5117650251f5848033193e",
                 "shasum": ""
             },
             "require": {
@@ -157,7 +157,7 @@
                 "issues": "https://github.com/cakephp/cakephp/issues",
                 "source": "https://github.com/cakephp/cakephp"
             },
-            "time": "2020-11-08T02:26:32+00:00"
+            "time": "2020-12-13T00:27:30+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -1018,22 +1018,22 @@
         },
         {
             "name": "league/csv",
-            "version": "9.6.1",
+            "version": "9.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/csv.git",
-                "reference": "634322df4aed210fdfbb7c94e434dc860da733d9"
+                "reference": "f28da6e483bf979bac10e2add384c90ae9983e4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/csv/zipball/634322df4aed210fdfbb7c94e434dc860da733d9",
-                "reference": "634322df4aed210fdfbb7c94e434dc860da733d9",
+                "url": "https://api.github.com/repos/thephpleague/csv/zipball/f28da6e483bf979bac10e2add384c90ae9983e4e",
+                "reference": "f28da6e483bf979bac10e2add384c90ae9983e4e",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-mbstring": "*",
-                "php": "^7.2.5"
+                "php": ">=7.2.5"
             },
             "require-dev": {
                 "ext-curl": "*",
@@ -1098,7 +1098,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-09-05T08:40:12+00:00"
+            "time": "2020-12-10T19:40:30+00:00"
         },
         {
             "name": "markstory/asset_compress",
@@ -3473,22 +3473,22 @@
         },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
-            "version": "v0.7.0",
+            "version": "v0.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Dealerdirect/phpcodesniffer-composer-installer.git",
-                "reference": "e8d808670b8f882188368faaf1144448c169c0b7"
+                "reference": "fe390591e0241955f22eb9ba327d137e501c771c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/e8d808670b8f882188368faaf1144448c169c0b7",
-                "reference": "e8d808670b8f882188368faaf1144448c169c0b7",
+                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/fe390591e0241955f22eb9ba327d137e501c771c",
+                "reference": "fe390591e0241955f22eb9ba327d137e501c771c",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0 || ^2.0",
                 "php": ">=5.3",
-                "squizlabs/php_codesniffer": "^2 || ^3 || 4.0.x-dev"
+                "squizlabs/php_codesniffer": "^2.0 || ^3.0 || ^4.0"
             },
             "require-dev": {
                 "composer/composer": "*",
@@ -3539,7 +3539,7 @@
                 "issues": "https://github.com/dealerdirect/phpcodesniffer-composer-installer/issues",
                 "source": "https://github.com/dealerdirect/phpcodesniffer-composer-installer"
             },
-            "time": "2020-06-25T14:57:39+00:00"
+            "time": "2020-12-07T18:04:37+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -4276,16 +4276,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.58",
+            "version": "0.12.61",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "2a4847df6047b30af28854ed9dc95304cdb56ae5"
+                "reference": "2096111b454b018ba6edcd4852b54a78e4ccbeca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/2a4847df6047b30af28854ed9dc95304cdb56ae5",
-                "reference": "2a4847df6047b30af28854ed9dc95304cdb56ae5",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/2096111b454b018ba6edcd4852b54a78e4ccbeca",
+                "reference": "2096111b454b018ba6edcd4852b54a78e4ccbeca",
                 "shasum": ""
             },
             "require": {
@@ -4316,7 +4316,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.58"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.61"
             },
             "funding": [
                 {
@@ -4332,7 +4332,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-29T13:32:03+00:00"
+            "time": "2020-12-13T10:04:03+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
