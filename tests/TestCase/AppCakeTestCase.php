@@ -383,6 +383,11 @@ abstract class AppCakeTestCase extends TestCase
         $this->prepareSendingOrderListsOrInvoices(Configure::read('app.folder_invoices'));
     }
 
+    protected function resetSuperadminCreditBalance() {
+        $this->Payment = $this->getTableLocator()->get('Payments');
+        $this->dbConnection->execute('DELETE FROM ' . $this->Payment->getTable().' WHERE id = 2');
+    }
+
     private function prepareSendingOrderListsOrInvoices($contentFolder)
     {
         $folder = new Folder();

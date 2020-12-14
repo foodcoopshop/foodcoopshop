@@ -98,8 +98,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddProductWithoutCredit()
     {
-        $this->Payment = $this->getTableLocator()->get('Payments');
-        $this->dbConnection->execute('DELETE FROM ' . $this->Payment->getTable().' WHERE id = 2');
+        $this->resetSuperadminCreditBalance();
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
         $this->loginAsCustomer();
         $this->addPayment(Configure::read('test.customerId'), 15, 'product');
@@ -117,8 +116,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddProductWithPricePerUnitWithoutCredit()
     {
-        $this->Payment = $this->getTableLocator()->get('Payments');
-        $this->dbConnection->execute('DELETE FROM ' . $this->Payment->getTable().' WHERE id = 2');
+        $this->resetSuperadminCreditBalance();
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
         $this->loginAsCustomer();
         // test product without attribute

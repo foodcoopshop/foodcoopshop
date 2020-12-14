@@ -80,6 +80,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
     public function testProfileImagePrivacyForDeletedMember()
     {
+        $this->resetSuperadminCreditBalance();
         $profileImageTargetFilename = $this->setUpProfileImageTests();
         $imageSrc = '/photos/profile-images/customers/' . $profileImageTargetFilename;
 
