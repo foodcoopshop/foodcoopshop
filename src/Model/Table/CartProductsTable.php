@@ -187,15 +187,6 @@ class CartProductsTable extends AppTable
                         ];
                     }
 
-                    $result = $this->validateMinimalCreditBalance($appAuth, $product->id_product, $prices['gross'], $amount, $initialProductId);
-                    if ($result !== true) {
-                        return [
-                            'status' => 0,
-                            'msg' => $result,
-                            'productId' => $initialProductId,
-                        ];
-                    }
-
                     $result = $this->validateQuantityInUnitsForSelfServiceMode($appAuth, $attribute, 'unit_product_attribute', $orderedQuantityInUnits, $initialProductId);
                     if ($result !== true) {
                         return [
