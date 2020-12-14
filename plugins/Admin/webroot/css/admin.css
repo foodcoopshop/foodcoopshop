@@ -958,6 +958,9 @@ body.deposits.overview_diagram table th,
 body.deposits.overview_diagram table td {
     text-align: right;
 }
+body.invoices.index table.invoices-table {
+    width: 1008px;
+}
 body.invoices.index table.tax-sum-table {
     width: 480px;
 }

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-29 22:36+0100\n"
-"PO-Revision-Date: 2020-11-29 22:37+0100\n"
+"POT-Creation-Date: 2020-12-11 09:48+0100\n"
+"PO-Revision-Date: 2020-12-10 21:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -185,6 +185,9 @@ msgstr "Deposit account"
 
 msgid "Deposit_take_back_detail_for"
 msgstr "Deposit take back detail for"
+
+msgid "Invoices"
+msgstr "Invoices"
 
 msgid "No_data_available_to_generate_an_invoice."
 msgstr "No data available to generate an invoice."
@@ -1125,6 +1128,12 @@ msgstr "Returned deposit by member"
 msgid "All_amounts_in_{0}."
 msgstr "All amounts in {0}."
 
+msgid "Download_invoices"
+msgstr "Download invoices"
+
+msgid "Copy_to_clipboard"
+msgstr "Copy to clipboard"
+
 msgid "Invoice_number_abbreviation"
 msgstr "Invoice nº"
 
@@ -1244,21 +1253,6 @@ msgstr "To save long description please press save and then edit the manufacture
 
 msgid "Will_be_shown_on_the_manufacturer_profile."
 msgstr "Will be shown on the manufacturer's profile page."
-
-msgid "Bank_account_data"
-msgstr "Bank account data"
-
-msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
-msgstr "is kept private and is only used to transfer money to your bank account."
-
-msgid "Bank"
-msgstr "Ban"
-
-msgid "IBAN"
-msgstr "IBAN"
-
-msgid "BIC"
-msgstr "BIC"
 
 msgid "Company_data"
 msgstr "Company data"
@@ -1755,6 +1749,21 @@ msgstr "Sum price excl."
 msgid "Sum_price_incl."
 msgstr "Sum price incl."
 
+msgid "Bank_account_data"
+msgstr "Bank account data"
+
+msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
+msgstr "is kept private and is only used to transfer money to your bank account."
+
+msgid "Bank"
+msgstr "Ban"
+
+msgid "IBAN"
+msgstr "IBAN"
+
+msgid "BIC"
+msgstr "BIC"
+
 msgid "Order_adaptions"
 msgstr "Order adaptions"
 
@@ -1862,9 +1871,6 @@ msgstr "Your code has been copied successfully into the clipboard."
 
 msgid "Please_add_this_code_to_your_transaction:_{0}"
 msgstr "Please add this code to your transaction: {0}"
-
-msgid "Copy_to_clipboard"
-msgstr "Copy to clipboard"
 
 msgid "Order_list_grouped_by"
 msgstr "Order list grouped by"
@@ -2204,9 +2210,6 @@ msgstr "The delivered weight will eventually be adapted, so the price can change
 
 msgid "Product_ID"
 msgstr "ProductID"
-
-#~ msgid "Invoices"
-#~ msgstr "Invoices"
 
 #~ msgid "Invoice_number_abbreviation_of_cancelled_invoice"
 #~ msgstr "Cancelled invoice nº"

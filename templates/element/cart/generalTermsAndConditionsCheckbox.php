@@ -21,7 +21,8 @@ if (!Configure::read('app.generalTermsAndConditionsEnabled')) {
 }
 
 echo '<div id="general-terms-and-conditions" class="hide">';
-    echo $this->element('legal/'.I18n::getLocale().'/generalTermsAndConditions');
+    $generalTermsAndConditionsTemplate = 'legal/'.I18n::getLocale() . '/' . $this->Html->getLegalTextsSubfolder() . '/generalTermsAndConditions';
+    echo $this->element($generalTermsAndConditionsTemplate);
 echo '</div>';
 
 $initialGeneralTermsAndConditionLink = '<a href="javascript:void(0);" class="open-with-modal" data-element-selector="#general-terms-and-conditions">'.__('general_terms_and_conditions').'</a>';

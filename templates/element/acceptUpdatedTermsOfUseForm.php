@@ -33,11 +33,11 @@ $this->element('addScript', ['script' =>
     <form action="<?php echo $this->Slug->getAcceptTermsOfUse(); ?>" id="AcceptTermsOfUseForm" method="post" accept-charset="utf-8">
         <?php
             echo '<div id="terms-of-use" class="hide">';
-        if ($appAuth->isManufacturer()) {
-            echo $this->element('legal/'.I18n::getLocale().'/termsOfUseForManufacturers');
-        } else {
-            echo $this->element('legal/'.I18n::getLocale().'/termsOfUse');
-        }
+           if ($appAuth->isManufacturer()) {
+            echo $this->element('legal/'.I18n::getLocale() . '/' . $this->Html->getLegalTextsSubfolder() . '/termsOfUseForManufacturers');
+           } else {
+            echo $this->element('legal/'.I18n::getLocale() . '/' . $this->Html->getLegalTextsSubfolder() . '/termsOfUse');
+           }
             echo '</div>';
             echo $this->Form->control('Customers.terms_of_use_accepted_date_checkbox', [
                 'label' => __('I_accept_the_{0}.', ['<b>' . $termsOfUseTermsLink . '</b>']),

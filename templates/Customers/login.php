@@ -125,7 +125,7 @@ $this->element('addScript', ['script' =>
 
                       if (Configure::read('app.termsOfUseEnabled')) {
                           echo '<div id="terms-of-use" class="hide">';
-                            echo $this->element('legal/'.I18n::getLocale().'/termsOfUse');
+                            echo $this->element('legal/' . I18n::getLocale() . '/' . $this->Html->getLegalTextsSubfolder() . '/termsOfUse');
                           echo '</div>';
                           $termsOfUseLink = '<a href="javascript:void(0);" data-element-selector="#terms-of-use">'.__('terms_of_use').'</a>';
                           echo $this->Form->control('Customers.terms_of_use_accepted_date_checkbox', [
