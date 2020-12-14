@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-11-29 22:36+0100\n"
+"POT-Creation-Date: 2020-12-11 09:48+0100\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -191,6 +191,10 @@ msgstr "Konto kaucji"
 
 msgid "Deposit_take_back_detail_for"
 msgstr "Sczegóły odbioru kaucji dla"
+
+#, fuzzy
+msgid "Invoices"
+msgstr "Data faktury"
 
 msgid "No_data_available_to_generate_an_invoice."
 msgstr ""
@@ -1172,6 +1176,12 @@ msgstr "Zwrócony wkład"
 msgid "All_amounts_in_{0}."
 msgstr "Kwota w {0}"
 
+msgid "Download_invoices"
+msgstr ""
+
+msgid "Copy_to_clipboard"
+msgstr ""
+
 msgid "Invoice_number_abbreviation"
 msgstr "Faktura nr"
 
@@ -1298,21 +1308,6 @@ msgstr ""
 
 msgid "Will_be_shown_on_the_manufacturer_profile."
 msgstr "Będzie widoczne na stronie profilowej producenta."
-
-msgid "Bank_account_data"
-msgstr "Dane konta bankowego"
-
-msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
-msgstr "nie jest widoczne publicznie. Będzie używane wyłącznie do przelewów na twoje konto bankowe."
-
-msgid "Bank"
-msgstr "Ban"
-
-msgid "IBAN"
-msgstr "IBAN"
-
-msgid "BIC"
-msgstr "BIC"
 
 msgid "Company_data"
 msgstr "Dane firmy"
@@ -1827,6 +1822,21 @@ msgstr "Cena z wyłączeniem"
 msgid "Sum_price_incl."
 msgstr "Cena z"
 
+msgid "Bank_account_data"
+msgstr "Dane konta bankowego"
+
+msgid "are_not_visible_in_public_and_are_only_used_for_transferring_your_proceeds."
+msgstr "nie jest widoczne publicznie. Będzie używane wyłącznie do przelewów na twoje konto bankowe."
+
+msgid "Bank"
+msgstr "Ban"
+
+msgid "IBAN"
+msgstr "IBAN"
+
+msgid "BIC"
+msgstr "BIC"
+
 msgid "Order_adaptions"
 msgstr "Mod. zamówień"
 
@@ -1939,9 +1949,6 @@ msgid "Your_code_has_been_copied_successfully_into_the_clipboard."
 msgstr "Twoje konto zostało usunięte pomyślnie."
 
 msgid "Please_add_this_code_to_your_transaction:_{0}"
-msgstr ""
-
-msgid "Copy_to_clipboard"
 msgstr ""
 
 msgid "Order_list_grouped_by"
@@ -2304,10 +2311,6 @@ msgstr "Wagi dostarczonych produktów mogą ulec zmianie, więc cena również m
 #, fuzzy
 msgid "Product_ID"
 msgstr "Produkt"
-
-#, fuzzy
-#~ msgid "Invoices"
-#~ msgstr "Data faktury"
 
 #, fuzzy
 #~ msgid "Invoice_number_abbreviation_of_cancelled_invoice"

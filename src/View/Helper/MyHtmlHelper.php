@@ -34,6 +34,30 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $config);
     }
 
+    public function getLegalTextsSubfolder()
+    {
+        $subfolder = 'directSelling';
+        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+            $subfolder = 'retail';
+        }
+        return $subfolder;
+    }
+
+    public function getPlatformOwnerForLegalTexts()
+    {
+        $result = '';
+        if (Configure::read('appDb.FCS_PLATFORM_OWNER') != '') {
+            $result .= Configure::read('appDb.FCS_PLATFORM_OWNER');
+        } else {
+            $result .= Configure::read('appDb.FCS_APP_NAME');
+            $result .= '<br />'.$this->getAddressFromAddressConfiguration();
+            if (Configure::read('appDb.FCS_APP_ADDITIONAL_DATA') != '') {
+                $result .= '<br />' . Configure::read('appDb.FCS_APP_ADDITIONAL_DATA');
+            }
+        }
+        return $result;
+    }
+
     public function removeTimestampFromFile($file) {
         $file = explode('?', $file);
         return $file[0];

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-01 12:14+0100\n"
-"PO-Revision-Date: 2020-11-24 11:15+0100\n"
+"POT-Creation-Date: 2020-12-13 19:19+0100\n"
+"PO-Revision-Date: 2020-12-13 19:19+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -810,6 +810,9 @@ msgstr "{0} E-Mail-Adressen wurden erfolgreich in deine Zwischenablage kopiert."
 msgid "1_email_address_has_been_copied_successfully_to_your_clipboard."
 msgstr "Eine E-Mail-Adresse wurde erfolgreich in deine Zwischenablage kopiert."
 
+msgid "The_table_content_was_copied_successfully_to_your_clipboard."
+msgstr "Der Inhalt der Tabelle wurde erfolgreich in deine Zwischenablage kopiert."
+
 msgid "The_reason_for_changing_the_member_is_mandatory."
 msgstr "Der Grund für die Änderung des Mitglieds ist ein Pflichtfeld."
 
@@ -1503,11 +1506,11 @@ msgstr "Die Handynummer ist nicht gültig."
 msgid "The_phone_number_is_not_valid."
 msgstr "Die Telefonnummer ist nicht gültig."
 
-msgid "Please_enter_the_first_name_of_the_invoice_holder."
-msgstr "Bitte gib den Vornamen des Rechnungsempfängers an."
+msgid "Please_enter_the_first_name."
+msgstr "Bitte gib den Vornamen an."
 
-msgid "Please_enter_the_last_name_of_the_invoice_holder."
-msgstr "Bitte gib den Nachnamen des Rechnungsempfängers an."
+msgid "Please_enter_the_last_name."
+msgstr "Bitte gib den Nachnamen an."
 
 msgid "Please_enter_an_email_address."
 msgstr "Bitte gib eine E-Mail-Adresse an."
@@ -2484,14 +2487,23 @@ msgstr "Unzutreffendes streichen"
 msgid "Order_overview"
 msgstr "Bestellübersicht"
 
-msgid "Order_of"
-msgstr "Bestellung vom"
+msgid "Order"
+msgstr "Bestellung"
 
 msgid "placed_on"
 msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Please_enter_the_first_name_of_the_invoice_holder."
+#~ msgstr "Bitte gib den Vornamen des Rechnungsempfängers an."
+
+#~ msgid "Please_enter_the_last_name_of_the_invoice_holder."
+#~ msgstr "Bitte gib den Nachnamen des Rechnungsempfängers an."
+
+#~ msgid "Copied_successfully_to_your_clipboard."
+#~ msgstr "Das Kopieren in die Zwischenablage war erfolgreich."
 
 #~ msgid "Last_order_day"
 #~ msgstr "Bestellschluss"

@@ -23,6 +23,7 @@ return [
     'das neue Mitglied' => 'der neue Kunde',
     'ein neues Mitglied' => 'einen neuen Kunden',
     'von allen Mitgliedern' => 'von allen Kunden',
+    'von Mitgliedern' => 'von Kunden',
     's Mitgliedskontos' => 's Kundenkontos',
     'Mitgliedskonto' => 'Kundenkonto',
     'chtest du das Mitglied' => 'chtest du den Kunden',

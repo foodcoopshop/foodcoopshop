@@ -33,10 +33,19 @@ $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->infoTextForFooter = __('Information_about_right_of_withdrawal');
 
 if (!empty($manufacturers)) {
+
+    $firstPageRendered = false;
+
     foreach ($manufacturers as $manufacturer) {
+
         $i = 0;
 
+        if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $firstPageRendered) {
+            continue;
+        }
+
         foreach ($manufacturer as $product) {
+
             if ($i > 0) {
                 continue;
             }
@@ -53,7 +62,12 @@ if (!empty($manufacturers)) {
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(8);
 
-            $html = $this->Html->getManufacturerImprint($product->manufacturer, 'pdf', true);
+            if (Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+                $html = Configure::read('appDb.FCS_INVOICE_HEADER_TEXT');
+                $firstPageRendered = true;
+            } else {
+                $html = $this->Html->getManufacturerImprint($product->manufacturer, 'pdf', true);
+            }
             $pdf->writeHTML($html, true, false, true, false, '');
             $pdf->Ln(4);
 
@@ -96,6 +110,9 @@ if (!empty($manufacturers)) {
             $pdf->writeHTML($html, true, false, true, false, '');
 
             $i++;
+
         }
+
     }
+
 }

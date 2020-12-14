@@ -26,7 +26,7 @@ return [
     'mit dem jeweiligen Hersteller' => 'mit dem Hersteller',
     'Der jeweilige Hersteller' => 'Der Hersteller',
     'Unsere Produzenten können leider ab und zu' => 'Wir können leider ab und zu',
-    '<p>4.3 Die E-Mailadresse des jeweiligen Herstellers ergibt sich aus dessen Impressum.</p>' => '',
+    '<p>4.3 Die E-Mail-Adresse des jeweiligen Herstellers ergibt sich aus dessen Impressum.</p>' => '',
     '_FOODCOOPSHOP_' => '_HOFLADEN_ONLINE_',
     'href="https://foodcoopshop.github.io/(.*)"' => 'href="https://www.hofladen-online.at/hilfe" data-url="/$1"',
     'https://foodcoopshop.github.io/de/produkte"' => 'https://www.hofladen-online.at/hilfe"',

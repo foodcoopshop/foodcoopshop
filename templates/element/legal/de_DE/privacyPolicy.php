@@ -12,29 +12,14 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-use App\Controller\Component\StringComponent;
 use Cake\Core\Configure;
-
 ?>
 
 <h1>Datenschutzerklärung</h1>
 
-<h2>1. Verantwortlicher</h2>
+<h2>1. Verantwortlicher (Betreiber)</h2>
 
-<p>
-    <?php
-    if (Configure::read('appDb.FCS_PLATFORM_OWNER') != '') {
-        echo Configure::read('appDb.FCS_PLATFORM_OWNER');
-    } else {
-        echo Configure::read('appDb.FCS_APP_NAME');
-        echo '<br />' . $this->MyHtml->getAddressFromAddressConfiguration();
-        echo '<br />' . __('Email').': ' . StringComponent::hideEmail($this->Html->getEmailFromAddressConfiguration());
-        if (Configure::read('appDb.FCS_APP_ADDITIONAL_DATA') != '') {
-            echo '<br />' . Configure::read('appDb.FCS_APP_ADDITIONAL_DATA');
-        }
-    }
-    ?>
-</p>
+<p><?php echo $this->Html->getPlatformOwnerForLegalTexts(); ?></p>
 
 <h3>Kontaktdaten des Datenschutzbeauftragten</h3>
 
@@ -105,7 +90,7 @@ Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
 <h3>3.3 Verwendung von Cookies</h3>
 <p><b>3.3.1 Beschreibung und Umfang der Datenverarbeitung</b></p>
 <p>Bei Cookies handelt es sich um Textdateien, die im Internetbrowser bzw. vom Internetbrowser auf dem Computersystem des Nutzers gespeichert werden. Ruft ein Nutzer eine Webseite auf, so kann ein Cookie auf dem Betriebssystem des Nutzers gespeichert werden. Dieses Cookie enthält eine charakteristische Zeichenfolge, die eine eindeutige Identifizierung des Browsers beim erneuten Aufrufen der Webseite ermöglicht.</p>
-<p>Wir setzen eigene Cookies ein, um festzustellen, ob Sie eingeloggt sind (nur bei Mitgliedern).</p>
+<p>Wir setzen eigene Cookies ein, um festzustellen, ob Sie eingeloggt sind.</p>
 <p>Die auf diese Weise erhobenen Daten der Nutzer werden durch technische Vorkehrungen pseudonymisiert. Daher ist eine Zuordnung der Daten zum aufrufenden Nutzer nicht mehr möglich. Die Daten werden nicht gemeinsam mit sonstigen personenbezogenen Daten der Nutzer gespeichert.</p>
 <p>Beim Login in den internen Bereich unserer Webseite wird vom Nutzer durch das Aktivieren der Checkbox „Angemeldet bleiben und Cookie akzeptieren“ eine Einwilligung zur Verwendung von Cookies zum Zweck der Log-In-Wiedererkennung eingeholt. In diesem Zusammenhang erfolgt auch ein Hinweis auf diese Datenschutzerklärung.</p>
 <p><b>3.3.2 Rechtsgrundlage für die Datenverarbeitung</b></p>
@@ -138,30 +123,47 @@ Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
 </ul>
 <?php } ?>
 
-<h3>3.4 Verwaltung der Benutzer (Mitglieder) und der Bestellungen</h3>
+<h3>3.4 Verwaltung von Mitgliedern, Herstellern und Bestellungen</h3>
 <p><b>3.4.1 Beschreibung und Umfang der Datenverarbeitung</b></p>
-<p>Zur Abwicklung der Bestellungen ist es notwendig, die Mitglieder als Benutzer in der Software anzulegen, damit diese dann ihre jeweiligen Bestellungen zusammenstellen und absenden können.</p>
-<p>Folgende Daten werden hierbei verarbeitet:</p>
+<p>Zur Abwicklung der Bestellungen ist es notwendig, Mitglieder und Hersteller als Benutzer in der Software anzulegen, damit die Mitglieder ihre jeweiligen Bestellungen zusammenstellen und diese automatisiert an die Hersteller verschickt werden können.</p>
+<p>Folgende Daten werden hierbei für die Mitglieder verarbeitet:</p>
 <ul>
   <li>Persönliche Daten (Vorname, Nachname)</li>
   <li>Adressdaten (PLZ, Ort, Straße, Hausnummer)</li>
   <li>Kontaktdaten (Telefonnummer, E-Mail-Adresse)</li>
   <li>Mitgliedsdaten (Mitgliedsnummer)</li>
-  <li>Bestelldaten (Zeitpunkt der Bestellung, bestellte Artikel inkl. Menge, gewählte Hersteller, etc.)</li>
+  <li>Bestelldaten (Zeitpunkt der Bestellung, bestellte Produkte inkl. Menge und Preis, gewählte Hersteller, etc.)</li>
   <li>Finanzdaten (Rechnungsdaten, Guthaben und Überweisungen zu den Bestellungen, etc.)</li>
   <li>Bildaufzeichnungsdaten (optionales Profilfoto)</li>
-  <li>Anwender-/Benutzerdaten (Benutzername, Hashwert des Passworts [nicht für andere auslesbar!], Benutzerrollen, Benutzerrechte, etc.)</li>
+  <li>Anwender-/Benutzerdaten (Benutzername, Hashwert des Passworts - nicht für andere auslesbar! - , Benutzerrollen, Benutzerrechte, etc.)</li>
 </ul>
+
+<p>Für Hersteller werden weiters folgende Daten verarbeitet:</p>
+<ul>
+  <li>Firmendaten (UID-Nr, Firmenbuch-Nr, etc.)</li>
+  <li>Profildaten (Logo, Beschreibung)</li>
+  <li>Name des Herstellers sowie Profildaten sind auf der Webseite des Betreibers öffentlich einsehbar (sofern diese Funktion aktiviert ist).</li>
+</ul>
+
 <p><b>3.4.2 Rechtsgrundlage für die Datenverarbeitung</b></p>
 <p>Rechtsgrundlage für die Verarbeitung der Daten im Zuge der Verwaltung der Bestellungen ist Art. 6 Abs. 1 lit. b DSGVO.</p>
 <p><b>3.4.3 Zweck der Datenverarbeitung</b></p>
 <p>Die Verarbeitung der personenbezogenen Daten dient uns zur Administration der Benutzer (Mitglieder), der Hersteller und zur Abwicklung der Bestellungen und zur dafür notwendigen Kommunikation.</p>
+
+<p>Zur Ermöglichung einer personalisierten Lieferung (z.B. werden Produkte vom Hersteller vorgepackt und mit dem Namen des Mitglieds versehen) wird der Name des bestellenden Mitglieds an den Hersteller weitergeleitet.</p>
+<p>Der Betreiber vereinbart mit den Herstellern eine Vereinbarung zur Auftragsverarbeitung, welche die Hersteller anhält, die DSGVO-Richtlinien einzuhalten.</p>
+<p>Der Betreiber kontrolliert, überwacht aber haftet nicht für die Art und Weise, in der Hersteller die zur Verfügung gestellten Daten verarbeiten.</p>
+
 <p><b>3.4.4 Dauer der Speicherung</b></p>
 <p>Die personenbezogene Verarbeitung erfolgt für die Dauer der Registrierung plus 40 Monate nach Vertragsbeendigung.</p>
 <p>Nach Ablauf dieser Frist wird jedenfalls der Personenbezug gelöscht.</p>
 <p>Danach erfolgt eine personenbezogene Datenverarbeitung von Finanzdaten noch bis zum Ende der gesetzlichen Aufbewahrungspflicht (derzeit grundsätzlich 7 Jahre).</p>
+
 <p><b>3.4.5 Widerspruchs- und Beseitigungsmöglichkeit</b></p>
 <p>Die Verarbeitung der Daten zur Verwaltung der Mitglieder und der Bestellungen ist für die Vertragserfüllung zwingend erforderlich. Es besteht folglich seitens des Nutzers keine Widerspruchsmöglichkeit außer der Beendigung des Vertragsverhältnisses.</p>
 <p>Mitglieder können ihr Benutzerprofil der eingesetzten Software nicht eigenständig löschen, die Löschung muss bei einem Administrator angefragt werden.</p>
 <p>Daten, die für eine etwaige weiteregehende Vertragserfüllung notwendig sind, werden dabei jedoch nicht gelöscht.</p>
 <p>Daten, für welche eine gesetzliche Aufbewahrungsfrist gilt, werden dabei für die Dauer dieser Frist jedoch nicht gelöscht.</p>
+
+<p><b>3.4.6 Auskunftsrecht</b></p>
+<p>Das Mitglied hat jederzeit das Recht auf kostenlose Auskunft.</p>

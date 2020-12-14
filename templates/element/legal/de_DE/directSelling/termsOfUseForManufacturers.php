@@ -19,23 +19,9 @@ use Cake\Core\Configure;
 
 <h2>Betreiber der Plattform</h2>
 
-<p>
-    <?php
-    if (Configure::read('appDb.FCS_PLATFORM_OWNER') != '') {
-        echo Configure::read('appDb.FCS_PLATFORM_OWNER');
-    } else {
-        echo Configure::read('appDb.FCS_APP_NAME');
-        echo '<br />'.$this->MyHtml->getAddressFromAddressConfiguration();
-        if (Configure::read('appDb.FCS_APP_ADDITIONAL_DATA') != '') {
-            echo '<br />' . Configure::read('appDb.FCS_APP_ADDITIONAL_DATA');
-        }
-    }
-    ?>
-</p>
+<p><?php echo $this->Html->getPlatformOwnerForLegalTexts(); ?></p>
 
-<p>(im Folgenden kurz: Betreiber)</p>
-
-<h2>1. Geltung der Nutzungsbedingungen</h2>
+<h2>1. Geltung</h2>
 
 <p>1.1. Für alle gegenwärtigen und zukünftigen Leistungen, die der Betreiber im Rahmen ihrer Internet-Dienstleistung unter der Domain <?php echo Configure::read('app.cakeServerName'); ?> für den Hersteller erbringt (im Folgenden gemeinsam kurz: die Leistung), gelten ausschließlich die nachfolgenden Bedingungen.</p>
 

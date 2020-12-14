@@ -21,7 +21,9 @@ $this->element('addScript', [
         Configure::read('app.jsNamespace') . ".Admin.init();".
         Configure::read('app.jsNamespace') . ".Admin.selectMainMenuAdmin('".__d('admin', 'Website_administration')."', '".__d('admin', 'Financial_reports')."');".
         Configure::read('app.jsNamespace') . ".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 0, 1);".
-        Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomerCancel.init();"
+        Configure::read('app.jsNamespace') . ".ModalInvoiceForCustomerCancel.init();".
+        Configure::read('app.jsNamespace') . ".Admin.initCopyTableContentToClipboard();".
+        Configure::read('app.jsNamespace') . ".Admin.initDownloadInvoicesAsZipFile();"
 ]);
 ?>
 
@@ -44,9 +46,30 @@ echo $this->element('reportNavTabs', [
     'dateTo' => $dateTo,
 ]);
 
-echo '<p style="margin-top:15px;"><b>' . __d('admin', 'All_amounts_in_{0}.', [Configure::read('app.currencyName')]) . '<b></p>';
+echo '<p style="margin-top:15px;"><b>' . __d('admin', 'All_amounts_in_{0}.', [Configure::read('app.currencyName')]) . '</b></p>';
 
-echo '<table class="list no-clone-last-row">';
+echo $this->Html->link(
+    '<i class="fas fa-fw fa-download"></i>',
+    'javascript:void(0)',
+    [
+        'class' => 'btn btn-outline-light btn-download-invoices-as-zip-file',
+        'title' => __d('admin', 'Download_invoices'),
+        'style' => 'margin-right:3px;float:left;margin-bottom:3px;',
+        'escape' => false,
+    ]
+);
+echo $this->Html->link(
+    '<i class="far fa-fw fa-clipboard"></i>',
+    'javascript:void(0)',
+    [
+        'class' => 'btn btn-outline-light btn-clipboard-table',
+        'title' => __d('admin', 'Copy_to_clipboard'),
+        'style' => ';clear:both;margin-right:3px;float:left;',
+        'escape' => false,
+    ]
+);
+
+echo '<table class="list invoices-table no-clone-last-row">';
 
     echo '<tr class="sort">';
         echo '<th>' . $this->Paginator->sort('Invoices.invoice_number', __d('admin', 'Invoice_number_abbreviation')) . '</th>';

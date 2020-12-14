@@ -29,6 +29,52 @@ class InvoicesController extends AdminAppController
         return Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS') && $this->AppAuth->isSuperadmin();
     }
 
+    public function downloadAsZipFile()
+    {
+
+        $dateFrom = h($this->getRequest()->getQuery('dateFrom'));
+        $dateTo = h($this->getRequest()->getQuery('dateTo'));
+        $customerId = h($this->getRequest()->getQuery('customerId'));
+
+        $this->Invoice = $this->getTableLocator()->get('Invoices');
+        $invoices = $this->Invoice->find('all', [
+            'conditions' => $this->getInvoiceConditions($dateFrom, $dateTo, $customerId),
+        ]);
+
+        if (empty($invoices)) {
+            throw new NotFoundException();
+        }
+
+        $zipFilename = __d('admin', 'Invoices') . '.zip';
+
+        $zip = new \ZipArchive();
+        $tmpZipFilePath = TMP . $zipFilename;
+        if (file_exists($tmpZipFilePath)) {
+            unlink($tmpZipFilePath);
+        }
+        $zip->open($tmpZipFilePath, \ZipArchive::CREATE);
+
+        foreach($invoices as $invoice) {
+            $invoiceFileWithPath = Configure::read('app.folder_invoices') . DS . $invoice->filename;
+            $zip->addFile($invoiceFileWithPath, substr($invoice->filename, 1));
+        }
+
+        $zip->close();
+
+        $this->disableAutoRender();
+
+        $this->response = $this->response->withType('zip');
+        $this->response = $this->response->withFile($tmpZipFilePath);
+        $this->response = $this->response->withHeader('Content-Disposition', 'inline; filename="' . $zipFilename . '"');
+
+        if (file_exists($tmpZipFilePath)) {
+            unlink($tmpZipFilePath);
+        }
+
+        return $this->response;
+
+    }
+
     public function generate()
     {
 
@@ -267,16 +313,6 @@ class InvoicesController extends AdminAppController
         $this->Customer = $this->getTableLocator()->get('Customers');
         $this->Invoice = $this->getTableLocator()->get('Invoices');
 
-        $conditions = [
-            'Invoices.id_customer > 0',
-            'DATE_FORMAT(Invoices.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
-            'DATE_FORMAT(Invoices.created, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
-        ];
-
-        if ($customerId != '') {
-            $conditions['Invoices.id_customer'] = $customerId;
-        }
-
         $query = $this->Invoice->find('all', [
             'contain' => [
                 'InvoiceTaxes',
@@ -284,7 +320,7 @@ class InvoicesController extends AdminAppController
                 'CancellationInvoices',
                 'CancelledInvoices',
             ],
-            'conditions' => $conditions,
+            'conditions' => $this->getInvoiceConditions($dateFrom, $dateTo, $customerId),
         ]);
 
         $invoices = $this->paginate($query, [
@@ -324,6 +360,23 @@ class InvoicesController extends AdminAppController
         $preparedTaxRates = $this->Invoice->getPreparedTaxRatesForSumTable($invoices);
         $this->set('taxRates', $preparedTaxRates['taxRates']);
         $this->set('taxRatesSums', $preparedTaxRates['taxRatesSums']);
+
+    }
+
+    private function getInvoiceConditions($dateFrom, $dateTo, $customerId)
+    {
+
+        $conditions = [
+            'Invoices.id_customer > 0',
+            'DATE_FORMAT(Invoices.created, \'%Y-%m-%d\') >= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateFrom) . '\'',
+            'DATE_FORMAT(Invoices.created, \'%Y-%m-%d\') <= \'' . Configure::read('app.timeHelper')->formatToDbFormatDate($dateTo) . '\'',
+        ];
+
+        if ($customerId != '') {
+            $conditions['Invoices.id_customer'] = $customerId;
+        }
+
+        return $conditions;
 
     }
 

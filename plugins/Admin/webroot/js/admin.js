@@ -25,6 +25,13 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
 
+    initDownloadInvoicesAsZipFile : function() {
+        $('.btn-download-invoices-as-zip-file').on('click', function() {
+            var url = '/admin/invoices/download-as-zip-file/?dateFrom=' + $('input[name="dateFrom"]').val() + '&dateTo=' + $('input[name="dateTo"]').val() + '&customerId=' + $('#customerid').val();
+            window.open(url);
+        });
+    },
+
     disableSelectpickerItems : function (selector, ids) {
         $(selector).find('option').each(function () {
             var currentId = parseInt($(this).val());
@@ -208,6 +215,24 @@ foodcoopshop.Admin = {
             row = row.prevAll('.main-product').first();
         }
         return row.find('td.is-stock-product').length > 0 && row.find('td.is-stock-product').html().match('fa-check');
+    },
+
+    initCopyTableContentToClipboard: function() {
+
+        var clipboard = new ClipboardJS(
+            '.btn-clipboard-table',
+            {
+                target: function(trigger) {
+                    return trigger.nextElementSibling;
+                }
+            }
+        );
+
+        clipboard.on('success', function(e) {
+            foodcoopshop.Helper.showSuccessMessage(foodcoopshop.LocalizedJs.admin.SuccessfullyCopiedTableContentToClipboard);
+            e.clearSelection();
+        });
+
     },
 
     initCopySelectedCustomerEmailsToClipboard: function() {

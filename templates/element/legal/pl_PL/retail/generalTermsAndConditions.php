@@ -12,20 +12,5 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-use Cake\Core\Configure;
-
 ?>
-<h1>Terms of use for manufacturers</h1>
-
-<h2>Platform owner</h2>
-
-<p>
-    <?php
-    if (Configure::read('appDb.FCS_PLATFORM_OWNER') != '') {
-        echo Configure::read('appDb.FCS_PLATFORM_OWNER');
-    } else {
-        echo Configure::read('appDb.FCS_APP_NAME');
-        echo '<br />'.$this->MyHtml->getAddressFromAddressConfiguration();
-    }
-    ?>
-</p>
+<h1>Regulamin</h1>
