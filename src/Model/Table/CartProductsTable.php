@@ -55,13 +55,13 @@ class CartProductsTable extends AppTable
         return $result;
     }
 
-    public function validateMinimalCreditBalance($appAuth, $productId, $price, $amount, $initialProductId)
+    public function validateMinimalCreditBalance($appAuth, $productId, $grossPrice, $amount, $initialProductId)
     {
         $result = true;
         if (Configure::read('app.htmlHelper')->paymentIsCashless() && !$appAuth->isInstantOrderMode()) {
-            $grossPrice = $this->Products->getGrossPrice($productId, $price) * $amount;
             if (!$appAuth->hasEnoughCreditForProduct($grossPrice)) {
-                $result = __('Please_add_credit_({0})_(minimal_credit_is_{1}).', [
+                $result = __('The_product_worth_{0}_cannot_be_added_to_your_cart_please_add_credit_({1})_(minimal_credit_is_{2}).', [
+                    '<b>'.Configure::read('app.numberHelper')->formatAsCurrency($grossPrice).'</b>',
                     '<b>'.Configure::read('app.numberHelper')->formatAsCurrency($appAuth->getCreditBalanceMinusCurrentCartSum()).'</b>',
                     '<b>'.Configure::read('app.numberHelper')->formatAsCurrency(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')).'</b>',
                 ]);

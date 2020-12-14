@@ -106,9 +106,10 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertJsonOk();
         // test product without attribute
         $response = $this->addProductToCart($this->productId1, 8);
-        $errorMessage = 'Bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>13,18 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
+        $errorMessage = 'Das Produkt um <b>14,56 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>13,18 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
         $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
         // test product with attribute
+        $errorMessage = 'Das Produkt um <b>14,42 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>13,18 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
         $response = $this->addProductToCart($this->productId2, 14);
         $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
         $this->assertJsonError();
@@ -121,9 +122,10 @@ class CartsControllerTest extends AppCakeTestCase
         $this->loginAsCustomer();
         // test product without attribute
         $response = $this->addProductToCart(347, 1);
-        $errorMessage = 'Bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
+        $errorMessage = 'Das Produkt um <b>5,25 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
         $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
         // test product with attribute
+        $errorMessage = 'Das Produkt um <b>10,00 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
         $response = $this->addProductToCart('348-11', 1);
         $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
         $this->assertJsonError();
