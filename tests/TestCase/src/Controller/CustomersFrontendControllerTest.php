@@ -331,6 +331,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
     public function testDeleteOk()
     {
+        $this->resetSuperadminCreditBalance();
         $this->loginAsSuperadmin();
         $this->ajaxPost('/admin/customers/delete/' . Configure::read('test.customerId'), [
             'referer' => '/'
