@@ -138,10 +138,16 @@ class CartProductsTable extends AppTable
         }
 
         $unitObject = $product->unit_product;
+        $price = $product->price;
+
         if ($attributeId > 0) {
             foreach ($product->product_attributes as $attribute) {
                 if ($attribute->id_product_attribute == $attributeId) {
-                    $unitObject = isset($attribute->unit_product_attribute) ? $attribute->unit_product_attribute : null;
+                    $unitObject = null;
+                    $price = $attribute->price;
+                    if (isset($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                        $unitObject =  $attribute->unit_product_attribute;
+                    }
                     continue;
                 }
             }
@@ -150,7 +156,7 @@ class CartProductsTable extends AppTable
         $cartTable = FactoryLocator::get('Table')->get('Carts');
         $prices = $cartTable->getPricesRespectingPricePerUnit(
             $product->id_product,
-            $product->price,
+            $price,
             $unitObject,
             $amount,
             $orderedQuantityInUnits == -1 ? null : $orderedQuantityInUnits,

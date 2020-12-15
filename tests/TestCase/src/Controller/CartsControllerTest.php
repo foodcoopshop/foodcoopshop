@@ -106,7 +106,7 @@ class CartsControllerTest extends AppCakeTestCase
         $errorMessage = 'Das Produkt um <b>14,56 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
         $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
         // test product with attribute
-        $errorMessage = 'Das Produkt um <b>14,42 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
+        $errorMessage = 'Das Produkt um <b>8,68 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
         $response = $this->addProductToCart($this->productId2, 14);
         $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
         $this->assertJsonError();
