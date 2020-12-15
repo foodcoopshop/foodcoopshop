@@ -5,11 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-<<<<<<< HEAD
-"POT-Creation-Date: 2020-12-14 11:01+0100\n"
-=======
 "POT-Creation-Date: 2020-12-15 16:18+0100\n"
->>>>>>> refs/heads/develop
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
