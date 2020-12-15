@@ -851,6 +851,11 @@ foodcoopshop.Helper = {
                 $(this).remove();
             });
         });
+        $(document).one('keydown', function(event) {
+            if (event.keyCode == 27) {
+                $('#flashMessage a.closer').trigger('click');
+            }
+        });
     },
 
     showFlashMessage: function (message, type) {
