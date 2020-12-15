@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-14 11:01+0100\n"
+"POT-Creation-Date: 2020-12-15 16:18+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -3250,6 +3250,11 @@ msgstr "Kwota obciąży saldo kredytowe."
 # You can find a detailed list of your ordered products in the attached order confirmation.
 msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
 msgstr "Szczegółową listę zamówionych produktów można znaleźć w załączonym potwierdzeniu zamówienia."
+
+# I accept the {0} and accept that this is not valid for perishable goods.
+#, fuzzy
+msgid "The_information_about_right_of_withdrawal_is_mandatory_but_it_is_not_valid_for_perishable_goods."
+msgstr "Akceptuję {0} i rozumiem, że nie dotyczy to towarów łatwo psujących się."
 
 # thank you for order from {0}.
 #, fuzzy

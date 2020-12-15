@@ -5,7 +5,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2020-12-14 11:01+0100\n"
+=======
+"POT-Creation-Date: 2020-12-15 16:18+0100\n"
+>>>>>>> refs/heads/develop
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2403,6 +2407,9 @@ msgid "The_amount_was_reduced_from_your_credit_balance."
 msgstr ""
 
 msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
+msgstr ""
+
+msgid "The_information_about_right_of_withdrawal_is_mandatory_but_it_is_not_valid_for_perishable_goods."
 msgstr ""
 
 msgid "thank_you_for_your_purchase."
