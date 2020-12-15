@@ -52,7 +52,7 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
         $this->finishCart();
         $this->logout();
 
-        $this->resetSuperadminCreditBalance();
+        $this->resetCustomerCreditBalance();
         $this->commandRunner->run(['cake', 'check_credit_balance']);
 
         $this->assertMailCount(2);
@@ -69,7 +69,7 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
         $this->finishCart();
         $this->logout();
 
-        $this->resetSuperadminCreditBalance();
+        $this->resetCustomerCreditBalance();
         $this->changeConfiguration('FCS_CASHLESS_PAYMENT_ADD_TYPE', ConfigurationsTable::CASHLESS_PAYMENT_ADD_TYPE_LIST_UPLOAD);
 
         $this->Payment = $this->getTableLocator()->get('Payments');

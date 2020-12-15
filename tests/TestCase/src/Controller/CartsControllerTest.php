@@ -98,18 +98,15 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddProductWithoutCredit()
     {
-        $this->resetSuperadminCreditBalance();
+        $this->resetCustomerCreditBalance();
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
         $this->loginAsCustomer();
-        $this->addPayment(Configure::read('test.customerId'), 15, 'product');
-        $this->addProductToCart($this->productId1, 1);
-        $this->assertJsonOk();
         // test product without attribute
         $response = $this->addProductToCart($this->productId1, 8);
-        $errorMessage = 'Das Produkt um <b>14,56 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>13,18 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
+        $errorMessage = 'Das Produkt um <b>14,56 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
         $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
         // test product with attribute
-        $errorMessage = 'Das Produkt um <b>14,42 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>13,18 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
+        $errorMessage = 'Das Produkt um <b>14,42 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
         $response = $this->addProductToCart($this->productId2, 14);
         $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
         $this->assertJsonError();
@@ -117,7 +114,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddProductWithPricePerUnitWithoutCredit()
     {
-        $this->resetSuperadminCreditBalance();
+        $this->resetCustomerCreditBalance();
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
         $this->loginAsCustomer();
         // test product without attribute
