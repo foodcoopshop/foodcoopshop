@@ -110,8 +110,17 @@ if ($appAuth->Cart->getProducts() !== null) {
 
         <div class="sc"></div>
 
-        <?php if ($showCartDetailButton) { ?>
-        <p><a class="btn btn-success" href="<?php echo $this->Slug->getCartDetail(); ?>">
+        <?php
+            if ($showCartDetailButton) {
+                $this->element('addScript', ['script' => "
+                    $('.btn-cart-detail').on('click', function () {
+                        foodcoopshop.Helper.disableButton($(this));
+                        foodcoopshop.Helper.addSpinnerToButton($(this), 'fa-shopping-cart');
+                    });"
+                ]);
+        ?>
+
+        <p><a class="btn btn-success btn-cart-detail" href="<?php echo $this->Slug->getCartDetail(); ?>">
             <i class="fas fa-shopping-cart fa-lg"></i> <?php echo __('Show_cart_button'); ?>
         </a></p>
         <?php } ?>

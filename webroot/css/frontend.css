@@ -1189,7 +1189,8 @@ body.blog_posts.detail .blog-wrapper {
     margin-top: 10px;
 }
 body.categories.detail .blog-wrapper,
-body.categories.new_product .blog-wrapper {
+body.categories.new_product .blog-wrapper,
+body.categories.search .blog-wrapper {
     height: 255px;
     overflow-y: auto;
 }
