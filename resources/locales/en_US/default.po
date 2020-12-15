@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-13 19:19+0100\n"
-"PO-Revision-Date: 2020-12-13 19:19+0100\n"
+"POT-Creation-Date: 2020-12-15 16:18+0100\n"
+"PO-Revision-Date: 2020-12-15 16:19+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -2403,6 +2403,9 @@ msgstr "The amount was reduced from your credit balance."
 msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
 msgstr "You can find a detailed list of your ordered products in the attached order confirmation."
 
+msgid "The_information_about_right_of_withdrawal_is_mandatory_but_it_is_not_valid_for_perishable_goods."
+msgstr "The information about right of withdrawal is mandatory but it is not valid for perishable goods."
+
 msgid "thank_you_for_your_purchase."
 msgstr "thank you for your purchase."
 
@@ -2487,9 +2490,8 @@ msgstr "Strike out unwanted items."
 msgid "Order_overview"
 msgstr "Order overview"
 
-#, fuzzy
 msgid "Order"
-msgstr "Order of"
+msgstr "Order"
 
 msgid "placed_on"
 msgstr "placed on"

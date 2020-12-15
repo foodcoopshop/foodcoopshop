@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-13 19:19+0100\n"
-"PO-Revision-Date: 2020-12-13 19:19+0100\n"
+"POT-Creation-Date: 2020-12-15 16:18+0100\n"
+"PO-Revision-Date: 2020-12-15 16:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -2401,7 +2401,10 @@ msgid "The_amount_was_reduced_from_your_credit_balance."
 msgstr "Der Betrag wurde von deinem Guthaben abgebucht."
 
 msgid "You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation."
-msgstr "Eine detaillierte Auflistung deiner Bestellung findest du in der angehängten Bestellübersicht (PDF). Die Informationen zum Rücktrittsrecht sind gesetzlich vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen."
+msgstr "Eine detaillierte Auflistung deiner Bestellung findest du in der angehängten Bestellübersicht (PDF)."
+
+msgid "The_information_about_right_of_withdrawal_is_mandatory_but_it_is_not_valid_for_perishable_goods."
+msgstr "Die Informationen zum Rücktrittsrecht sind gesetzlich vorgeschrieben, das Rücktrittsrecht für verderbliche Waren ist allerdings ausgeschlossen."
 
 msgid "thank_you_for_your_purchase."
 msgstr "Danke für deinen Einkauf."

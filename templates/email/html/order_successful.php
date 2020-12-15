@@ -96,7 +96,12 @@ foreach($cart['CartProducts'] as $pickupDay => $cartProducts) {
 
         <?php if (Configure::read('app.generalTermsAndConditionsEnabled') && Configure::read('app.rightOfWithdrawalEnabled')) { ?>
             <tr><td style="font-size:12px;">
-                <?php echo __('You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation.'); ?>
+                <?php
+                    if (!Configure::read('appDb.FCS_SEND_INVOICES_TO_CUSTOMERS')) {
+                        echo __('You_can_find_a_detailed_list_of_your_order_in_the_attached_order_confirmation.') . ' ';
+                    }
+                    echo __('The_information_about_right_of_withdrawal_is_mandatory_but_it_is_not_valid_for_perishable_goods.');
+                ?>
             </td></tr>
         <?php } ?>
 
