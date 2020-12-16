@@ -150,7 +150,7 @@ class PaymentsTable extends AppTable
         $payments = $this->find('all', [
             'conditions' => [
                 'Payments.status' => APP_ON,
-                'Payments.invoice_id IS NULL',
+                '(Payments.invoice_id IS NULL OR Payments.invoice_id = 0)',
                 'Payments.type' => 'deposit',
                 'Payments.id_manufacturer' => 0,
                 'Payments.id_customer' => $customerId,

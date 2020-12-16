@@ -153,7 +153,7 @@ if (count($payments) == 0) {
         if ($appAuth->isSuperadmin()) {
             $deletablePaymentTypes[] = 'payback';
         }
-        if (in_array($payment['type'], $deletablePaymentTypes) && $payment['approval'] != APP_ON && is_null($payment['invoice_id'])) {
+        if (in_array($payment['type'], $deletablePaymentTypes) && $payment['approval'] != APP_ON && (is_null($payment['invoice_id']) || $payment['invoice_id'] == 0)) {
             echo $this->Html->link(
                 '<i class="fas fa-times-circle not-ok"></i>',
                 'javascript:void(0);',
