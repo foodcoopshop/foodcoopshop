@@ -44,7 +44,7 @@ class CartProductsTable extends AppTable
         $this->addBehavior('Timestamp');
     }
 
-    public function validateQuantityInUnitsForSelfServiceMode($appAuth, $object, $unitObject, $orderedQuantityInUnits, $initialProductId)
+    public function validateQuantityInUnitsForSelfServiceMode($appAuth, $object, $unitObject, $orderedQuantityInUnits)
     {
         $result = true;
         if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED') && ($appAuth->isSelfServiceModeByReferer() || $appAuth->isSelfServiceModeByUrl())) {
@@ -55,13 +55,13 @@ class CartProductsTable extends AppTable
         return $result;
     }
 
-    public function validateMinimalCreditBalance($appAuth, $productId, $price, $amount, $initialProductId)
+    public function validateMinimalCreditBalance($appAuth, $grossPrice)
     {
         $result = true;
         if (Configure::read('app.htmlHelper')->paymentIsCashless() && !$appAuth->isInstantOrderMode()) {
-            $grossPrice = $this->Products->getGrossPrice($productId, $price) * $amount;
             if (!$appAuth->hasEnoughCreditForProduct($grossPrice)) {
-                $result = __('Please_add_credit_({0})_(minimal_credit_is_{1}).', [
+                $result = __('The_product_worth_{0}_cannot_be_added_to_your_cart_please_add_credit_({1})_(minimal_credit_is_{2}).', [
+                    '<b>'.Configure::read('app.numberHelper')->formatAsCurrency($grossPrice).'</b>',
                     '<b>'.Configure::read('app.numberHelper')->formatAsCurrency($appAuth->getCreditBalanceMinusCurrentCartSum()).'</b>',
                     '<b>'.Configure::read('app.numberHelper')->formatAsCurrency(Configure::read('appDb.FCS_MINIMAL_CREDIT_BALANCE')).'</b>',
                 ]);
@@ -137,7 +137,32 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        $result = $this->validateMinimalCreditBalance($appAuth, $product->id_product, $product->price, $amount, $initialProductId);
+        $unitObject = $product->unit_product;
+        $price = $product->price;
+
+        if ($attributeId > 0) {
+            foreach ($product->product_attributes as $attribute) {
+                if ($attribute->id_product_attribute == $attributeId) {
+                    $unitObject = null;
+                    $price = $attribute->price;
+                    if (isset($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
+                        $unitObject =  $attribute->unit_product_attribute;
+                    }
+                    continue;
+                }
+            }
+        }
+
+        $cartTable = FactoryLocator::get('Table')->get('Carts');
+        $prices = $cartTable->getPricesRespectingPricePerUnit(
+            $product->id_product,
+            $price,
+            $unitObject,
+            $amount,
+            $orderedQuantityInUnits == -1 ? null : $orderedQuantityInUnits,
+        );
+
+        $result = $this->validateMinimalCreditBalance($appAuth, $prices['gross']);
         if ($result !== true) {
             return [
                 'status' => 0,
@@ -168,16 +193,7 @@ class CartProductsTable extends AppTable
                         ];
                     }
 
-                    $result = $this->validateMinimalCreditBalance($appAuth, $product->id_product, $attribute->price, $amount, $initialProductId);
-                    if ($result !== true) {
-                        return [
-                            'status' => 0,
-                            'msg' => $result,
-                            'productId' => $initialProductId,
-                        ];
-                    }
-
-                    $result = $this->validateQuantityInUnitsForSelfServiceMode($appAuth, $attribute, 'unit_product_attribute', $orderedQuantityInUnits, $initialProductId);
+                    $result = $this->validateQuantityInUnitsForSelfServiceMode($appAuth, $attribute, 'unit_product_attribute', $orderedQuantityInUnits);
                     if ($result !== true) {
                         return [
                             'status' => 0,
@@ -244,7 +260,7 @@ class CartProductsTable extends AppTable
             ];
         }
 
-        $result = $this->validateQuantityInUnitsForSelfServiceMode($appAuth, $product, 'unit_product', $orderedQuantityInUnits, $initialProductId);
+        $result = $this->validateQuantityInUnitsForSelfServiceMode($appAuth, $product, 'unit_product', $orderedQuantityInUnits);
         if ($result !== true) {
             return [
                 'status' => 0,

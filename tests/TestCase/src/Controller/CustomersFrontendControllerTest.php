@@ -80,6 +80,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
     public function testProfileImagePrivacyForDeletedMember()
     {
+        $this->resetCustomerCreditBalance();
         $profileImageTargetFilename = $this->setUpProfileImageTests();
         $imageSrc = '/photos/profile-images/customers/' . $profileImageTargetFilename;
 
@@ -330,6 +331,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
 
     public function testDeleteOk()
     {
+        $this->resetCustomerCreditBalance();
         $this->loginAsSuperadmin();
         $this->ajaxPost('/admin/customers/delete/' . Configure::read('test.customerId'), [
             'referer' => '/'

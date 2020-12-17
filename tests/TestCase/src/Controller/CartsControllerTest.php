@@ -18,7 +18,6 @@ use App\Test\TestCase\Traits\LoginTrait;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenDate;
 use Cake\TestSuite\EmailTrait;
-use Cake\TestSuite\TestEmailTransport;
 
 class CartsControllerTest extends AppCakeTestCase
 {
@@ -99,17 +98,32 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddProductWithoutCredit()
     {
+        $this->resetCustomerCreditBalance();
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
         $this->loginAsCustomer();
-        $this->addPayment(Configure::read('test.customerId'), 15, 'product');
-        $this->addProductToCart($this->productId1, 1);
-        $this->assertJsonOk();
         // test product without attribute
         $response = $this->addProductToCart($this->productId1, 8);
-        $errorMessage = 'Bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>13,18 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
+        $errorMessage = 'Das Produkt um <b>14,56 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
         $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
         // test product with attribute
+        $errorMessage = 'Das Produkt um <b>8,68 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
         $response = $this->addProductToCart($this->productId2, 14);
+        $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
+        $this->assertJsonError();
+    }
+
+    public function testAddProductWithPricePerUnitWithoutCredit()
+    {
+        $this->resetCustomerCreditBalance();
+        $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
+        $this->loginAsCustomer();
+        // test product without attribute
+        $response = $this->addProductToCart(347, 1);
+        $errorMessage = 'Das Produkt um <b>5,25 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
+        $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
+        // test product with attribute
+        $errorMessage = 'Das Produkt um <b>10,00 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
+        $response = $this->addProductToCart('348-11', 1);
         $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
         $this->assertJsonError();
     }
@@ -304,7 +318,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testAddTooManyAttributes()
     {
-        $this->loginAsSuperadmin();
+        $this->loginAsCustomer();
         $amount = 1;
         $this->addProductToCart($this->productId2, $amount);
         $this->addTooManyProducts($this->productId2, 48, 1, 'Die gewünschte Anzahl <b>49</b> der Variante <b>0,5l</b> des Produktes <b>Milch</b> ist leider nicht mehr verfügbar. Verfügbare Menge: 19', 0);
@@ -459,7 +473,7 @@ class CartsControllerTest extends AppCakeTestCase
 
     public function testFinishCartWithMinimalCreditBalanceCheck()
     {
-        $this->loginAsCustomer();
+        $this->loginAsAdmin();
         $this->fillCart();
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
         $this->finishCart(1,1);
@@ -596,7 +610,7 @@ class CartsControllerTest extends AppCakeTestCase
     public function testFinishOrderStockNotificationsEnabled()
     {
 
-        $this->loginAsSuperadmin();
+        $this->loginAsCustomer();
         $manufacturerId = $this->Customer->getManufacturerIdByCustomerId(Configure::read('test.vegetableManufacturerId'));
         $this->changeManufacturer($manufacturerId, 'stock_management_enabled', true);
 
@@ -629,7 +643,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->prepareTimebasedCurrencyConfiguration($reducedMaxPercentage);
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', -1000);
 
-        $this->loginAsSuperadmin();
+        $this->loginAsCustomer();
         $this->fillCart();
 
         // bratwürstel, manufacturerId 4

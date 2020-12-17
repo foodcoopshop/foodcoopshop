@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2020-12-15 16:18+0100\n"
-"PO-Revision-Date: 2020-12-15 16:18+0100\n"
+"PO-Revision-Date: 2020-12-15 16:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1541,6 +1541,9 @@ msgstr "Bitte gib maximal {0} Zeichen ein."
 
 msgid "Please_provide_a_valid_ordered_quantity_in_units_and_click_on_the_add_button."
 msgstr "Bitte trage das entnommene Gewicht ein und klicke danach auf die Einkaufstasche."
+
+msgid "The_product_worth_{0}_cannot_be_added_to_your_cart_please_add_credit_({1})_(minimal_credit_is_{2})."
+msgstr "Das Produkt um {0} kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt {1}, du kannst bis {2} bestellen."
 
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr "Die gewünschte Anzahl {0} ist nicht gültig."

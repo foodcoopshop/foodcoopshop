@@ -315,6 +315,57 @@ class CartsTable extends AppTable
         return $count;
     }
 
+    public function getPricesRespectingPricePerUnit($productId, $netPricePerPiece, $unitProduct, $amount, $orderedQuantityInUnits)
+    {
+
+        $productsTable = FactoryLocator::get('Table')->get('Products');
+
+        if ((!empty($unitProduct) && !$unitProduct->price_per_unit_enabled ) || is_null($unitProduct)) {
+
+            $grossPricePerPiece = $productsTable->getGrossPrice($productId, $netPricePerPiece);
+            $grossPrice = $grossPricePerPiece * $amount;
+            $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $amount) * $amount;
+
+            $prices = [
+                'net_per_piece' => $netPricePerPiece,
+                'gross_per_piece' => $grossPricePerPiece,
+                'gross' => $grossPrice,
+                'net' => $grossPrice - $tax,
+                'tax' => $tax,
+            ];
+
+        } else {
+
+            $priceInclPerUnit = $unitProduct->price_incl_per_unit;
+            $unitAmount = $unitProduct->amount;
+
+            $quantityInUnitsForPrice = $unitProduct->quantity_in_units;
+            if (!is_null($orderedQuantityInUnits)) {
+                $quantityInUnitsForPrice = $orderedQuantityInUnits;
+            }
+
+            $grossPricePerPiece = round($priceInclPerUnit * $quantityInUnitsForPrice / $unitAmount, 2);
+            $netPricePerPiece = round($productsTable->getNetPrice($productId, $grossPricePerPiece), 2);
+            $grossPrice = $grossPricePerPiece * $amount;
+            if (!is_null($orderedQuantityInUnits)) {
+                $grossPrice = $grossPricePerPiece;
+            }
+
+            $tax = ($grossPricePerPiece - $netPricePerPiece) * $amount;
+
+            $prices = [
+                'net_per_piece' => $netPricePerPiece,
+                'gross_per_piece' => $grossPricePerPiece,
+                'gross' => $grossPrice,
+                'net' => $grossPrice - $tax,
+                'tax' => $tax,
+            ];
+
+        }
+
+        return $prices;
+    }
+
     /**
      * @param CartProductsTable $cartProduct
      * @return array
@@ -322,13 +373,14 @@ class CartsTable extends AppTable
     private function prepareMainProduct($appAuth, $cartProduct)
     {
 
-        $productsTable = FactoryLocator::get('Table')->get('Products');
-
-        $netPricePerPiece = $cartProduct->product->price;
-        $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $netPricePerPiece);
-        $grossPrice = $grossPricePerPiece * $cartProduct->amount;
-        $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $cartProduct->amount) * $cartProduct->amount;
         $orderedQuantityInUnits = isset($cartProduct->cart_product_unit) ? $cartProduct->cart_product_unit->ordered_quantity_in_units : null;
+        $prices = $this->getPricesRespectingPricePerUnit(
+            $cartProduct->id_product,
+            $cartProduct->product->price,
+            $cartProduct->product->unit_product,
+            $cartProduct->amount,
+            $orderedQuantityInUnits,
+        );
 
         $productData = [
             'cartProductId' => $cartProduct->id_cart_product,
@@ -337,9 +389,9 @@ class CartsTable extends AppTable
             'amount' => $cartProduct->amount,
             'manufacturerId' => $cartProduct->product->id_manufacturer,
             'manufacturerName' => $cartProduct->product->manufacturer->name,
-            'price' => $grossPrice,
-            'priceExcl' => $grossPrice - $tax,
-            'tax' => $tax,
+            'price' => $prices['gross'],
+            'priceExcl' => $prices['net'],
+            'tax' => $prices['tax'],
             'pickupDay' => $cartProduct->pickup_day,
             'isStockProduct' => $cartProduct->product->is_stock_product
         ];
@@ -362,22 +414,10 @@ class CartsTable extends AppTable
             $unitAmount = $cartProduct->product->unit_product->amount;
             $priceInclPerUnit = $cartProduct->product->unit_product->price_incl_per_unit;
 
-            $quantityInUnitsForPrice = $cartProduct->product->unit_product->quantity_in_units;
             if (!is_null($orderedQuantityInUnits)) {
-                $quantityInUnitsForPrice = $orderedQuantityInUnits;
-                $productData['orderedQuantityInUnits'] = $orderedQuantityInUnits; // for cart only
+                $productData['orderedQuantityInUnits'] = $orderedQuantityInUnits;
             }
 
-            $newPriceIncl = round($priceInclPerUnit * $quantityInUnitsForPrice / $unitAmount, 2);
-            $netPricePerPiece = round($productsTable->getNetPrice($cartProduct->id_product, $newPriceIncl), 2);
-            $price = $newPriceIncl * $cartProduct->amount;
-            if (!is_null($orderedQuantityInUnits)) {
-                $price = $newPriceIncl;
-            }
-            $tax = ($newPriceIncl - $netPricePerPiece) * $cartProduct->amount;
-            $productData['price'] = $price;
-            $productData['tax'] = $tax;
-            $productData['priceExcl'] = $price - $tax;
             if ($unity != '') {
                 $unity .= ', ';
             }
@@ -402,7 +442,7 @@ class CartsTable extends AppTable
         $productData['unitAmount'] = $unitAmount;
         $productData['priceInclPerUnit'] = $priceInclPerUnit;
 
-        $productData = $this->addTimebasedCurrencyProductData($appAuth, $productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece);
+        $productData = $this->addTimebasedCurrencyProductData($appAuth, $productData, $cartProduct, $prices['gross_per_piece'], $prices['net_per_piece']);
 
         return $productData;
 
@@ -415,13 +455,14 @@ class CartsTable extends AppTable
     private function prepareProductAttribute($appAuth, $cartProduct)
     {
 
-        $productsTable = FactoryLocator::get('Table')->get('Products');
-
-        $netPricePerPiece = $cartProduct->product_attribute->price;
-        $grossPricePerPiece = $productsTable->getGrossPrice($cartProduct->id_product, $netPricePerPiece);
-        $grossPrice = $grossPricePerPiece * $cartProduct->amount;
-        $tax = $productsTable->getUnitTax($grossPrice, $netPricePerPiece, $cartProduct->amount) * $cartProduct->amount;
         $orderedQuantityInUnits = isset($cartProduct->cart_product_unit) ? $cartProduct->cart_product_unit->ordered_quantity_in_units : null;
+        $prices = $this->getPricesRespectingPricePerUnit(
+            $cartProduct->id_product,
+            $cartProduct->product_attribute->price,
+            $cartProduct->product_attribute->unit_product_attribute ? $cartProduct->product_attribute->unit_product_attribute : null,
+            $cartProduct->amount,
+            $orderedQuantityInUnits,
+        );
 
         $productData = [
             'cartProductId' => $cartProduct->id_cart_product,
@@ -430,9 +471,9 @@ class CartsTable extends AppTable
             'amount' => $cartProduct->amount,
             'manufacturerId' => $cartProduct->product->id_manufacturer,
             'manufacturerName' => $cartProduct->product->manufacturer->name,
-            'price' => $grossPrice,
-            'priceExcl' => $grossPrice - $tax,
-            'tax' => $tax,
+            'price' => $prices['gross'],
+            'priceExcl' => $prices['net'],
+            'tax' => $prices['tax'],
             'pickupDay' => $cartProduct->pickup_day,
             'isStockProduct' => $cartProduct->product->is_stock_product
         ];
@@ -457,23 +498,10 @@ class CartsTable extends AppTable
             $unitAmount = $cartProduct->product_attribute->unit_product_attribute->amount;
             $priceInclPerUnit = $cartProduct->product_attribute->unit_product_attribute->price_incl_per_unit;
 
-            $quantityInUnitsForPrice = $cartProduct->product_attribute->unit_product_attribute->quantity_in_units;
             if (!is_null($orderedQuantityInUnits)) {
-                $quantityInUnitsForPrice = $orderedQuantityInUnits;
-                $productData['orderedQuantityInUnits'] = $orderedQuantityInUnits; // for cart only
+                $productData['orderedQuantityInUnits'] = $orderedQuantityInUnits;
             }
 
-            $newPriceIncl = round($priceInclPerUnit * $quantityInUnitsForPrice / $unitAmount, 2);
-            $netPricePerPiece = round($productsTable->getNetPrice($cartProduct->id_product, $newPriceIncl), 2);
-            $price = $newPriceIncl * $cartProduct->amount;
-
-            if (!is_null($orderedQuantityInUnits)) {
-                $price = $newPriceIncl;
-            }
-
-            $productData['price'] =  $price;
-            $productData['priceExcl'] =  $netPricePerPiece * $cartProduct->amount;
-            $productData['tax'] = ($newPriceIncl - $netPricePerPiece) * $cartProduct->amount;
             $unity = Configure::read('app.pricePerUnitHelper')->getQuantityInUnitsStringForAttributes(
                 $cartProduct->product_attribute->product_attribute_combination->attribute->name,
                 $cartProduct->product_attribute->product_attribute_combination->attribute->can_be_used_as_unit,
@@ -501,7 +529,7 @@ class CartsTable extends AppTable
         $productData['unitAmount'] = $unitAmount;
         $productData['priceInclPerUnit'] = $priceInclPerUnit;
 
-        $productData = $this->addTimebasedCurrencyProductData($appAuth, $productData, $cartProduct, $grossPricePerPiece, $netPricePerPiece);
+        $productData = $this->addTimebasedCurrencyProductData($appAuth, $productData, $cartProduct, $prices['gross_per_piece'], $prices['net_per_piece']);
 
         return $productData;
 

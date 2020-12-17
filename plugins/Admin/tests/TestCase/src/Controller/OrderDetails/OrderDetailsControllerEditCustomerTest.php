@@ -51,6 +51,7 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
 
     public function testEditOrderDetailCustomerAsSuperadminPartedIn2And5WithUnits()
     {
+        $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', -200);
         $this->loginAsSuperadmin();
         $productId = '347'; // forelle
         $amount = 7;

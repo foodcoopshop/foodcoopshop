@@ -2087,6 +2087,9 @@ msgstr "Wprowadź najwyżej {0} znaków."
 msgid "Please_provide_a_valid_ordered_quantity_in_units_and_click_on_the_add_button."
 msgstr "Podaj wartość."
 
+msgid "The_product_worth_{0}_cannot_be_added_to_your_cart_please_add_credit_({1})_(minimal_credit_is_{2})."
+msgstr ""
+
 # The desired amount {0} is not valid.
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr "Wymagana ilość {0} jest nieprawidłowa."

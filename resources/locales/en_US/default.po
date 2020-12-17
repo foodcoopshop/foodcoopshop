@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2020-12-15 16:18+0100\n"
-"PO-Revision-Date: 2020-12-15 16:19+0100\n"
+"PO-Revision-Date: 2020-12-15 16:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1541,6 +1541,9 @@ msgstr "Please enter maximal {0} characters."
 
 msgid "Please_provide_a_valid_ordered_quantity_in_units_and_click_on_the_add_button."
 msgstr "Please provide the taken weight and then click on the shopping bag button."
+
+msgid "The_product_worth_{0}_cannot_be_added_to_your_cart_please_add_credit_({1})_(minimal_credit_is_{2})."
+msgstr "The product ({0}) can't be added to your cart. Please add new credit, your credit minus cart equals {1}. You can place orders until {2}."
 
 msgid "The_desired_amount_{0}_is_not_valid."
 msgstr "The desired amount {0} is not valid."

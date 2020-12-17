@@ -297,8 +297,8 @@ class PaymentsControllerTest extends AppCakeTestCase
 
         $this->assertFlashMessage('Ein Datensatz wurde erfolgreich importiert.');
         $payments = $this->Payment->find('all')->toArray();
-        $newPayment = $payments[1];
-        $this->assertEquals(2, count($payments));
+        $newPayment = $payments[2];
+        $this->assertEquals(3, count($payments));
         $this->assertEquals($newPaymentCustomerId, $newPayment->id_customer);
         $this->assertEquals('product', $newPayment->type);
         $this->assertEquals($newPaymentContent, $newPayment->transaction_text);
