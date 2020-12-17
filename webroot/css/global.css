@@ -213,7 +213,9 @@ h2.info2 {
     color: #fff ! important;
 }
 #flashMessage img {
-    height: 50px;
+    height: 200px;
+    float: left;
+    margin-top: 5px;
 }
 #flashMessage .btn-flash-message {
     float: left;

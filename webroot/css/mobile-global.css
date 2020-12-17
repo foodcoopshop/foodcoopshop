@@ -91,6 +91,9 @@
         z-index: 100000 ! important;
         transform: inherit ! important;
     }
+    #flashMessage img {
+        height: 100px;
+    }
     .ui-dialog-content #flashMessage {
         left: 50% ! important;
     }

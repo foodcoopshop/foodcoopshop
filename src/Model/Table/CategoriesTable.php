@@ -172,7 +172,8 @@ class CategoriesTable extends AppTable
 
             $params['keywordLike'] = '%' . $keyword . '%';
             $params['keyword'] = $keyword;
-            $sql .= " AND (Products.name LIKE :keywordLike OR Products.description_short LIKE :keywordLike OR Products.id_product = :keyword ";
+            // use id_product LIKE and not = because barcode search "SELECT * FROM fcs_product WHERE id_product LIKE '1a1b0000'" would find product with ID 1
+            $sql .= " AND (Products.name LIKE :keywordLike OR Products.description_short LIKE :keywordLike OR Products.id_product LIKE :keyword ";
 
             if (Configure::read('appDb.FCS_SELF_SERVICE_MODE_FOR_STOCK_PRODUCTS_ENABLED')) {
                 $params['barcodeIdentifier'] = strtolower(substr($keyword, 0, 4));

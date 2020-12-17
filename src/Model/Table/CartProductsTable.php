@@ -246,7 +246,7 @@ class CartProductsTable extends AppTable
             }
         }
 
-        if (!$appAuth->isInstantOrderMode() && !$appAuth->isSelfServiceModeByReferer() && $this->Products->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $product->next_delivery_day)) {
+        if (!$appAuth->isInstantOrderMode() && !$appAuth->isSelfServiceModeByUrl() && !$appAuth->isSelfServiceModeByReferer() && $this->Products->deliveryBreakEnabled(Configure::read('appDb.FCS_NO_DELIVERY_DAYS_GLOBAL'), $product->next_delivery_day)) {
             $message = __('{0}_has_activated_the_delivery_break_and_product_{1}_cannot_be_ordered.',
                 [
                     Configure::read('appDb.FCS_APP_NAME'),
