@@ -22,7 +22,14 @@ if (!empty($sliders)) {
     echo '<div id="slider">';
         echo '<div class="swiper-wrapper">';
         foreach ($sliders as $slider) {
-            echo '<img class="swiper-slide" width="908" src="'.$this->Html->getSliderImageSrc($slider->image).'" />';
+            $class = ' class="swiper-slide transistion"';
+            if ($slider->link != '') {
+                echo '<a ' . $class . ' href="' . h($slider->link) . '">';
+            }
+            echo '<img ' . ($slider->link == '' ? $class : '') . ' width="908" src="'.$this->Html->getSliderImageSrc($slider->image).'" />';
+            if ($slider->link != '') {
+                echo '</a>';
+            }
         }
         echo '</div>';
     echo '</div>';

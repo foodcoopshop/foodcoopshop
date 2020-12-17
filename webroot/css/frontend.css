@@ -121,6 +121,9 @@ body.categories.detail div.description-wrapper {
     margin-bottom: -5px;
     z-index: 200;
 }
+#slider a.swiper-slide:hover {
+    opacity: 0.8;
+}
 #slider .swiper-button-next,
 #slider .swiper-button-prev {
     text-shadow: 2px 2px 5px #d6d4d4;
