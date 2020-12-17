@@ -19,8 +19,11 @@ if ($manufacturerId == 'all') {
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
         echo $this->Html->link(
             $product->manufacturer->name,
-            $this->Slug->getProductAdmin($product->id_manufacturer)
-            );
+            $this->Slug->getProductAdmin($product->id_manufacturer),
+            [
+                'escape' => false,
+            ]
+        );
     }
     echo '</td>';
 }
