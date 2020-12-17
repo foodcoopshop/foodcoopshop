@@ -363,8 +363,8 @@ foodcoopshop.Helper = {
     },
 
     changeOutgoingLinksTargetToBlank: function () {
-        $('a[href^="http://"]:not(".do-not-change-to-target-blank"):not([href^="' + window.location.host + '"])').attr('target', '_blank');
-        $('a[href^="https://"]:not(".do-not-change-to-target-blank"):not([href^="' + window.location.host + '"])').attr('target', '_blank');
+        $('a[href^="http://"]:not(".do-not-change-to-target-blank"):not([href*="' + window.location.host + '"])').attr('target', '_blank');
+        $('a[href^="https://"]:not(".do-not-change-to-target-blank"):not([href*="' + window.location.host + '"])').attr('target', '_blank');
     },
 
     inIframe: function () {
