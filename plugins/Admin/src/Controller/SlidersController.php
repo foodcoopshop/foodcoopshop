@@ -130,7 +130,7 @@ class SlidersController extends AdminAppController
         ]);
         $sliders = $this->paginate($query, [
             'sortableFields' => [
-                'Sliders.position', 'Sliders.active'
+                'Sliders.position', 'Sliders.active', 'Sliders.link'
             ],
             'order' => [
                 'Sliders.position' => 'ASC'

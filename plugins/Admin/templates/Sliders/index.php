@@ -48,6 +48,7 @@ echo '<tr class="sort">';
 echo '<th class="hide">ID</th>';
 echo '<th></th>';
 echo '<th>'.__d('admin', 'Image').'</th>';
+echo '<th>' . $this->Paginator->sort('Sliders.link', __d('admin', 'Link')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Sliders.position', __d('admin', 'Rank')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Sliders.active', __d('admin', 'Active')) . '</th>';
 echo '</tr>';
@@ -81,6 +82,21 @@ foreach ($sliders as $slider) {
 
     echo '<td align="center" style="background-color: #fff;">';
     echo '<img width="500" src="' . $this->Html->getSliderImageSrc($slider->image) . '" />';
+    echo '</td>';
+
+    echo '<td align="center">';
+        if ($slider->link != '') {
+            echo $this->Html->link(
+                '<i class="fas fa-link ok"></i>',
+                $slider->link,
+                [
+                    'class' => 'btn btn-outline-light',
+                    'target' => '_blank',
+                    'title' => $slider->link,
+                    'escape' => false
+                ]
+            );
+        }
     echo '</td>';
 
     echo '<td align="center">';
