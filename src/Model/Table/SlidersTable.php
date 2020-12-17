@@ -36,16 +36,25 @@ class SlidersTable extends AppTable
         return $validator;
     }
 
-    public function getForHome()
+    public function getForHome($appAuth)
     {
+
+        $conditions = [
+            'Sliders.active' => APP_ON
+        ];
+
+        if (! $appAuth->user()) {
+            $conditions['Sliders.is_private'] = APP_OFF;
+        }
+
         $slides = $this->find('all', [
-            'conditions' => [
-                'Sliders.active' => APP_ON
-            ],
+            'conditions' => $conditions,
             'order' => [
                 'Sliders.position' => 'ASC'
             ]
         ]);
+
         return $slides;
+
     }
 }

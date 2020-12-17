@@ -26,8 +26,9 @@ class SlidersController extends AdminAppController
         $this->Slider = $this->getTableLocator()->get('Sliders');
         $slider = $this->Slider->newEntity(
             [
+                'is_private' => APP_ON,
                 'active' => APP_ON,
-                'position' => 10
+                'position' => 10,
             ],
             ['validate' => false]
         );
@@ -130,7 +131,7 @@ class SlidersController extends AdminAppController
         ]);
         $sliders = $this->paginate($query, [
             'sortableFields' => [
-                'Sliders.position', 'Sliders.active', 'Sliders.link'
+                'Sliders.position', 'Sliders.active', 'Sliders.link', 'Sliders.is_private'
             ],
             'order' => [
                 'Sliders.position' => 'ASC'

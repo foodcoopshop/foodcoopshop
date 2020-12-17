@@ -87,7 +87,7 @@ class PagesController extends FrontendController
         $this->set('title_for_layout', __('Welcome'));
 
         $this->Slider = $this->getTableLocator()->get('Sliders');
-        $sliders = $this->Slider->getForHome();
+        $sliders = $this->Slider->getForHome($this->AppAuth);
         $this->set('sliders', $sliders);
 
         $newProducts = [];

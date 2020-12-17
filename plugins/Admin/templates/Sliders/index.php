@@ -50,6 +50,7 @@ echo '<th></th>';
 echo '<th>'.__d('admin', 'Image').'</th>';
 echo '<th>' . $this->Paginator->sort('Sliders.link', __d('admin', 'Link')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Sliders.position', __d('admin', 'Rank')) . '</th>';
+echo '<th>' . $this->Paginator->sort('Sliders.is_private', __d('admin', 'Only_for_members')) . '</th>';
 echo '<th>' . $this->Paginator->sort('Sliders.active', __d('admin', 'Active')) . '</th>';
 echo '</tr>';
 
@@ -101,6 +102,12 @@ foreach ($sliders as $slider) {
 
     echo '<td align="center">';
     echo $slider->position;
+    echo '</td>';
+
+    echo '<td align="center">';
+    if ($slider->is_private == 1) {
+        echo '<i class="fas fa-check-circle ok"></i>';
+    }
     echo '</td>';
 
     echo '<td align="center">';

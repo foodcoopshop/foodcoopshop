@@ -81,11 +81,15 @@ echo $this->Form->control('Sliders.link', [
 echo $this->Form->control('Sliders.position', [
     'class' => 'short',
     'label' => __d('admin', 'Rank'),
-    'type' => 'text'
+    'type' => 'text',
+]);
+echo $this->Form->control('Sliders.is_private', [
+    'label' => __d('admin', 'Only_for_members').'?',
+    'type' => 'checkbox',
 ]);
 echo $this->Form->control('Sliders.active', [
     'label' => __d('admin', 'Active').'?',
-    'type' => 'checkbox'
+    'type' => 'checkbox',
 ]);
 
 if ($this->request->getRequestTarget() != $this->Slug->getSliderAdd()) {
