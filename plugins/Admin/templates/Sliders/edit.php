@@ -75,6 +75,9 @@ echo '</div>';
 echo $this->Form->hidden('Sliders.tmp_image');
 echo '</div>';
 
+echo $this->Form->control('Sliders.link', [
+    'label' => __d('admin', 'Linked_to'),
+]);
 echo $this->Form->control('Sliders.position', [
     'class' => 'short',
     'label' => __d('admin', 'Rank'),

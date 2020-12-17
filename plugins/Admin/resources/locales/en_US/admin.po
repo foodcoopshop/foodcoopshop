@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-11 09:48+0100\n"
-"PO-Revision-Date: 2020-12-10 21:10+0100\n"
+"POT-Creation-Date: 2020-12-17 11:27+0100\n"
+"PO-Revision-Date: 2020-12-17 11:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1670,6 +1670,9 @@ msgstr "Slider image"
 
 msgid "Width"
 msgstr "Width"
+
+msgid "Linked_to"
+msgstr "Linked to"
 
 msgid "Rank"
 msgstr "Rank"

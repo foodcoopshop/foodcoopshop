@@ -202,7 +202,7 @@ INSERT INTO `fcs_cronjobs` VALUES
 
 /*!40000 ALTER TABLE `fcs_sliders` DISABLE KEYS */;
 INSERT INTO `fcs_sliders` VALUES
-(6,'demo-slider.jpg',0,1);
+(6,'demo-slider.jpg',NULL,0,1);
 /*!40000 ALTER TABLE `fcs_sliders` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_stock_available` DISABLE KEYS */;
@@ -243,7 +243,8 @@ INSERT INTO `phinxlog` VALUES
 (20201017182431,'AdaptMinimalCreditBalance','2020-10-17 18:38:00','2020-10-17 18:38:00',0),
 (20201029084931,'AddRetailMode','2020-10-29 09:06:39','2020-10-29 09:06:39',0),
 (20201118084516,'AddRetailMode2','2020-11-18 08:47:37','2020-11-18 08:47:37',0),
-(20201213120713,'AddRetailMode3','2020-12-13 12:14:01','2020-12-13 12:14:01',0);
+(20201213120713,'AddRetailMode3','2020-12-13 12:14:01','2020-12-13 12:14:01',0),
+(20201217101514,'SliderWithLink','2020-12-17 10:26:36','2020-12-17 10:26:37',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;
