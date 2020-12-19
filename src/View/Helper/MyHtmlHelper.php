@@ -511,6 +511,9 @@ class MyHtmlHelper extends HtmlHelper
     {
         $tabs = [];
         foreach($this->getPaymentTexts() as $key => $paymentText) {
+            if ($key == 'deposit' && !Configure::read('app.isDepositEnabled')) {
+                continue;
+            }
             $tabs[] = [
                 'name' => $paymentText,
                 'url' => Configure::read('app.slugHelper')->getReport($key),
@@ -544,10 +547,8 @@ class MyHtmlHelper extends HtmlHelper
         $paymentTexts = [
             'product' => __('Payment_type_credit_upload'),
             'payback' => __('Payment_type_payback'),
+            'deposit' => __('Payment_type_deposit_return'),
         ];
-        if (Configure::read('app.isDepositEnabled')) {
-            $paymentTexts['deposit'] = __('Payment_type_deposit_return');
-        }
         if (Configure::read('app.memberFeeEnabled')) {
             $paymentTexts['member_fee'] = __('Payment_type_member_fee');
         }
