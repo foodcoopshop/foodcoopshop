@@ -278,7 +278,7 @@ if ($groupBy != 'customer') {
     }
     echo '<td class="right"><b>' . $sumDepositString . '</b></td>';
 } else {
-    if (Configure::read('app.isDepositPaymentCashless')) {
+    if (Configure::read('app.isDepositEnabled') && Configure::read('app.isDepositPaymentCashless')) {
         echo '<td></td>';
     }
     if (count($pickupDay) == 1) {

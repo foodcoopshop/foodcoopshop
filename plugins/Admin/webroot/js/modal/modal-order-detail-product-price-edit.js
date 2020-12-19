@@ -107,12 +107,12 @@ foodcoopshop.ModalOrderDetailProductPriceEdit = {
         var productPriceField = $(modalSelector + ' #dialogOrderDetailProductPricePrice');
 
         $(modalSelector + ' #dialogOrderDetailProductPriceOrderDetailId').val(orderDetailId);
-        $(modalSelector + ' label[for="dialogOrderDetailProductPricePrice"]').html('<b>' + row.find('td:nth-child(4) a.name-for-dialog').text() + '</b> <span style="font-weight:normal;">(' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td:nth-child(9) span.customer-name-for-dialog').text() + ')');
+        $(modalSelector + ' label[for="dialogOrderDetailProductPricePrice"]').html('<b>' + row.find('td:nth-child(4) a.name-for-dialog').text() + '</b> <span style="font-weight:normal;">(' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td.customer-field span.customer-name-for-dialog').text() + ')');
 
         var productTimebasedCurrencyPriceField;
 
         $(modalSelector + ' .price-per-unit-info-text').remove();
-        if (row.find('td:nth-child(8)').html() != '') {
+        if (row.find('td.quantity-field').html() != '') {
             productTimebasedCurrencyPriceField = $(modalSelector + ' #dialogOrderDetailProductPricePrice').before('<b class="price-per-unit-info-text">' + foodcoopshop.LocalizedJs.admin.ExplainationTextApdaptPriceFormApaptWeight + '</b>');
         }
 

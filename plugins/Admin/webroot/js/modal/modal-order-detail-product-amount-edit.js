@@ -107,7 +107,7 @@ foodcoopshop.ModalOrderDetailProductAmountEdit = {
         $(modalSelector + ' #dialogOrderDetailProductAmountOrderDetailId').val(row.find('td:nth-child(2)').html());
         var infoTextForEditProductAmount = '<p><b>' + row.find('td:nth-child(4) a.name-for-dialog').text() + '</b>';
         infoTextForEditProductAmount += ' (' + foodcoopshop.LocalizedJs.admin.orderedBy + ' ';
-        infoTextForEditProductAmount += row.find('td:nth-child(9) span.customer-name-for-dialog').html() + ')</p>';
+        infoTextForEditProductAmount += row.find('td.customer-field span.customer-name-for-dialog').html() + ')</p>';
         $(modalSelector + ' .modal-body').prepend(infoTextForEditProductAmount);
 
         $(modalSelector).modal();

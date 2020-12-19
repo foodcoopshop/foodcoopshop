@@ -14,7 +14,7 @@
  */
 
 if ($groupBy == '') {
-    echo '<td>';
+    echo '<td class="customer-field">';
     if (
         $editRecordAllowed
         && ($appAuth->isAdmin() || $appAuth->isSuperadmin())

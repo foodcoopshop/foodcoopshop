@@ -98,7 +98,7 @@ foodcoopshop.ModalOrderDetailProductCustomerEdit = {
         $(modalSelector + ' #dialogOrderDetailEditCustomerOrderDetailId').val(orderDetailId);
 
         var infoText = foodcoopshop.LocalizedJs.admin.ToWhichMemberShouldTheOrderedProduct0Of1BeAssignedTo.replace(/\{0\}/, '<b>' + row.find('td:nth-child(4) a.name-for-dialog').text() + '</b>');
-        infoText = infoText.replace(/\{1\}/, '<b>' + row.find('td:nth-child(9) span.customer-name-for-dialog').html() + '</b>');
+        infoText = infoText.replace(/\{1\}/, '<b>' + row.find('td.customer-field span.customer-name-for-dialog').html() + '</b>');
         $(modalSelector + ' label[for="dialogOrderDetailEditCustomerId"]').html('<span style="font-weight:normal;">' + infoText + '</span>');
 
         var amount = row.find('.product-amount-for-dialog').html();
