@@ -151,8 +151,8 @@ foreach ($orderDetails as $od) {
             }
 
             $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
-                $pdf->table .= '<td colspan="'.(Configure::read('app.isDepositEnabled') ? 3 : 2) . '" style="font-size:10px;font-weight:bold;text-align:right;" width="' . ($widths[0] + $widths[1] + $widths[2]) . '">'.__d('admin', 'Total').'</td>';
-                $pdf->table .= '<td colspan="'.(Configure::read('app.isDepositEnabled') ? 2 : 1) . '" style="font-size:10px;font-weight:bold;text-align:'.(Configure::read('app.isDepositEnabled') ? 'center' : 'right') . ';" width="' . ($widths[3] + $widths[4]) . '">' . $this->Number->formatAsCurrency($sumPrice + $sumDeposit) . '</td>';
+                $pdf->table .= '<td colspan="3" style="font-size:10px;font-weight:bold;text-align:right;" width="' . ($widths[0] + $widths[1] + $widths[2]) . '">'.__d('admin', 'Total').'</td>';
+                $pdf->table .= '<td colspan="' . (Configure::read('app.isDepositEnabled') ? 2 : 1) . '" style="font-size:10px;font-weight:bold;text-align:' . (Configure::read('app.isDepositEnabled') ? 'center' : 'right') . ';" width="' . ($widths[3] + $widths[4]) . '">' . $this->Number->formatAsCurrency($sumPrice + $sumDeposit) . '</td>';
             $pdf->table .= '</tr>';
         }
 
