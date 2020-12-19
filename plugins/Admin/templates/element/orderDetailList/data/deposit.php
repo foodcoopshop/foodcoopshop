@@ -15,7 +15,7 @@
 
 use Cake\Core\Configure;
 
-if ($groupBy == 'customer' && Configure::read('app.isDepositPaymentCashless')) {
+if ($groupBy == 'customer' && Configure::read('app.isDepositEnabled') && Configure::read('app.isDepositPaymentCashless')) {
     echo '<td'.(!$isMobile ? ' style="width: 144px;"' : '').'>';
     if (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders')) {
         echo $this->element('addDepositPaymentOverlay', [

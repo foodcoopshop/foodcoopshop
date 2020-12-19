@@ -24,12 +24,17 @@ use Cake\Core\Configure;
             Configure::read('app.jsNamespace').".Admin.init();" .
             Configure::read('app.jsNamespace').".Helper.setCakeServerName('" . Configure::read('app.cakeServerName') . "');" .
             Configure::read('app.jsNamespace').".Helper.setIsManufacturer(" . $appAuth->isManufacturer() . ");" .
-            Configure::read('app.jsNamespace').".ModalPaymentAdd.initDepositInList();" .
             Configure::read('app.jsNamespace').".Admin.selectMainMenuAdmin('".__d('admin', 'Orders')."');" .
             Configure::read('app.jsNamespace').".Admin.initProductDropdown(" . ($productId != '' ? $productId : '0') . ", " . ($manufacturerId != '' ? $manufacturerId : '0') . ");".
             Configure::read('app.jsNamespace').".Admin.initCustomerDropdown(" . ($customerId != '' ? $customerId : '0') . ", 0, 1);
         "
     ]);
+
+    if (Configure::read('app.isDepositEnabled')) {
+        $this->element('addScript', [
+            'script' => Configure::read('app.jsNamespace').".ModalPaymentAdd.initDepositInList();"
+        ]);
+    }
 
     if ($groupBy == '') {
         $this->element('addScript', [
@@ -87,7 +92,7 @@ use Cake\Core\Configure;
             <?php echo $this->Form->control('groupBy', ['type'=>'select', 'label' =>'', 'empty' => __d('admin', 'Group_by...'), 'options' => $groupByForDropdown, 'default' => $groupBy]);?>
             <div class="right">
             <?php
-            if (Configure::read('app.isDepositPaymentCashless') && $groupBy == '' && $customerId > 0 && count($orderDetails) > 0 && (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'))) {
+            if (Configure::read('app.isDepositEnabled') && Configure::read('app.isDepositPaymentCashless') && $groupBy == '' && $customerId > 0 && count($orderDetails) > 0 && (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders'))) {
                 echo '<div class="add-payment-deposit-button-wrapper">';
                     echo $this->element('addDepositPaymentOverlay', [
                         'buttonText' => (!$isMobile ? __d('admin', 'Deposit_return') : ''),
