@@ -3,10 +3,12 @@ name: FoodCoopShop CI
 on:
   push:
     paths-ignore:
-      - '**.md'
+      - '*.md'
+      - '*.js'
   pull_request:
     paths-ignore:
-      - '**.md'
+      - '*.md'
+      - '*.js'
   
 jobs:
   ci:
