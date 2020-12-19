@@ -166,7 +166,9 @@ use Cake\Core\Configure;
         echo '<th>'.__d('admin', 'Price').'</th>';
         echo '<th style="width:70px;">' . $this->Paginator->sort('Taxes.rate', __d('admin', 'Tax_rate')) . '</th>';
         echo '<th class="center" style="width:69px;">' . $this->Paginator->sort('Products.created', __d('admin', 'New?')) . '</th>';
-        echo '<th>'.__d('admin', 'Deposit').'</th>';
+        if (Configure::read('app.isDepositEnabled')) {
+            echo '<th>'.__d('admin', 'Deposit').'</th>';
+        }
         echo '<th>' . $this->Paginator->sort('Products.delivery_rhythm_type', __d('admin', 'Delivery_rhythm')) . '</th>';
         echo '<th>' . $this->Paginator->sort('Products.active', __d('admin', 'Status')) . '</th>';
         echo '<th style="width:29px;"></th>';

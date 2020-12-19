@@ -13,6 +13,12 @@
  * @link          https://www.foodcoopshop.com
  */
 
+use Cake\Core\Configure;
+
+if (!Configure::read('app.isDepositEnabled')) {
+    return false;
+}
+
 echo '<td>';
     if (empty($product->product_attributes)) {
         echo '<div class="table-cell-wrapper deposit">';
