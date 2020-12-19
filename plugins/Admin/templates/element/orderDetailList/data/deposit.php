@@ -33,7 +33,7 @@ if ($groupBy == 'customer' && Configure::read('app.isDepositEnabled') && Configu
     echo '</td>';
 }
 
-if ($groupBy != 'customer') {
+if ($groupBy != 'customer' && Configure::read('app.isDepositEnabled')) {
     echo '<td class="right">';
     if ($groupBy == '') {
         if ($orderDetail->deposit > 0) {
