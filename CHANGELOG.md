@@ -30,6 +30,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Fehlerhafte Gewichtsänderungen (z.B. 700 kg statt 700 g) können nun nicht mehr getätigt werden. [I590](https://github.com/foodcoopshop/foodcoopshop/issues/590) / [PR#593](https://github.com/foodcoopshop/foodcoopshop/pull/593) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Zur besseren Übersicht wird das "Bestellbar bis"-Datum jetzt bei jedem Produkt angezeigt. Außer bei Produkten mit wöchentlichem Lieferrhythmus und Standard-Bestellschluss. [I585](https://github.com/foodcoopshop/foodcoopshop/issues/585) / [PR#594](https://github.com/foodcoopshop/foodcoopshop/pull/594) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Produktbilder im Hochformat werden jetzt in der Lightbox besser dargestellt. [I579](https://github.com/foodcoopshop/foodcoopshop/issues/579) / [PR#596](https://github.com/foodcoopshop/foodcoopshop/pull/596) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
+- Das Pfand-System kann jetzt komplett deaktiviert werden. [I604](https://github.com/foodcoopshop/foodcoopshop/issues/604) / [PR#607](https://github.com/foodcoopshop/foodcoopshop/pull/607) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ## v3.1.0 / 2020-09-07 [View changes](https://github.com/foodcoopshop/foodcoopshop/compare/v3.0.2...v3.1.0)
 
