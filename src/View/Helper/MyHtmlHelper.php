@@ -522,7 +522,7 @@ class MyHtmlHelper extends HtmlHelper
             'url' => Configure::read('app.slugHelper')->getCreditBalanceSum(),
             'key' => 'credit_balance_sum',
         ];
-        if ($this->paymentIsCashless() && Configure::read('app.isDepositPaymentCashless')) {
+        if (Configure::read('app.isDepositEnabled') && $this->paymentIsCashless() && Configure::read('app.isDepositPaymentCashless')) {
             $tabs[] = [
                 'name' => __('Deposit_overview'),
                 'url' => Configure::read('app.slugHelper')->getDepositOverviewDiagram(),
@@ -544,8 +544,10 @@ class MyHtmlHelper extends HtmlHelper
         $paymentTexts = [
             'product' => __('Payment_type_credit_upload'),
             'payback' => __('Payment_type_payback'),
-            'deposit' => __('Payment_type_deposit_return')
         ];
+        if (Configure::read('app.isDepositEnabled')) {
+            $paymentTexts['deposit'] = __('Payment_type_deposit_return');
+        }
         if (Configure::read('app.memberFeeEnabled')) {
             $paymentTexts['member_fee'] = __('Payment_type_member_fee');
         }

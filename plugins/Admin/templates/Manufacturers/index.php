@@ -61,7 +61,9 @@ echo '<tr class="sort">';
     echo '<th>Logo</th>';
     echo '<th>' . $this->Paginator->sort('Manufacturers.name', __d('admin', 'Name')) . '</th>';
     echo '<th style="width:83px;">'.__d('admin', 'Products').'</th>';
-    echo '<th>'.__d('admin', 'Deposit').'</th>';
+    if (Configure::read('app.isDepositEnabled')) {
+        echo '<th>'.__d('admin', 'Deposit').'</th>';
+    }
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
         echo '<th>' . $this->Paginator->sort('Manufacturers.timebased_currency_enabled', Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME')) . '</th>';
     }
@@ -149,24 +151,26 @@ foreach ($manufacturers as $manufacturer) {
 
     echo '</td>';
 
-    echo '<td>';
-    if ($manufacturer->sum_deposit_delivered > 0) {
-        $depositCreditBalanceClasses = [];
-        if ($manufacturer->deposit_credit_balance < 0) {
-            $depositCreditBalanceClasses[] = 'negative';
+    if (Configure::read('app.isDepositEnabled')) {
+        echo '<td>';
+        if ($manufacturer->sum_deposit_delivered > 0) {
+            $depositCreditBalanceClasses = [];
+            if ($manufacturer->deposit_credit_balance < 0) {
+                $depositCreditBalanceClasses[] = 'negative';
+            }
+            $depositCreditBalanceHtml = '<span class="'.implode(' ', $depositCreditBalanceClasses).'">' . $this->Number->formatAsCurrency($manufacturer->deposit_credit_balance);
+            echo $this->Html->link(
+                __d('admin', 'Deposit') . ':&nbsp;' . $depositCreditBalanceHtml,
+                $this->Slug->getDepositList($manufacturer->id_manufacturer),
+                [
+                    'class' => 'btn btn-outline-light',
+                    'title' => __d('admin', 'Show_deposit_account'),
+                    'escape' => false
+                ]
+            );
         }
-        $depositCreditBalanceHtml = '<span class="'.implode(' ', $depositCreditBalanceClasses).'">' . $this->Number->formatAsCurrency($manufacturer->deposit_credit_balance);
-        echo $this->Html->link(
-            __d('admin', 'Deposit') . ':&nbsp;' . $depositCreditBalanceHtml,
-            $this->Slug->getDepositList($manufacturer->id_manufacturer),
-            [
-                'class' => 'btn btn-outline-light',
-                'title' => __d('admin', 'Show_deposit_account'),
-                'escape' => false
-            ]
-        );
+        echo '</td>';
     }
-    echo '</td>';
 
     if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
         echo '<td>';

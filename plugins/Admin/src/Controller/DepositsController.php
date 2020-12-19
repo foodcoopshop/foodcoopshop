@@ -26,18 +26,18 @@ class DepositsController extends AdminAppController
     {
         switch ($this->getRequest()->getParam('action')) {
             case 'overviewDiagram':
-                return $this->AppAuth->isSuperadmin();
+                return Configure::read('app.isDepositEnabled') && $this->AppAuth->isSuperadmin();
                 break;
             case 'index':
             case 'detail':
-                return $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
+                return Configure::read('app.isDepositEnabled') && $this->AppAuth->isSuperadmin() || $this->AppAuth->isAdmin();
                 break;
             case 'myIndex':
             case 'myDetail':
-                return $this->AppAuth->isManufacturer();
+                return Configure::read('app.isDepositEnabled') && $this->AppAuth->isManufacturer();
                 break;
             default:
-                return $this->AppAuth->isManufacturer();
+                return Configure::read('app.isDepositEnabled') && $this->AppAuth->isManufacturer();
                 break;
         }
     }
