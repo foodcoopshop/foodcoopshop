@@ -16,7 +16,6 @@
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
 
-// START debug error page
 if (Configure::read('debug')) :
     $this->layout = 'dev_error';
     $this->assign('title', $message);
@@ -36,10 +35,6 @@ if (Configure::read('debug')) :
 <?php endif; ?>
 <?= $this->element('auto_table_warning') ?>
 <?php
-if (extension_loaded('xdebug')) :
-    xdebug_print_function_stack();
-endif;
-
 $this->end();
 endif;
 
