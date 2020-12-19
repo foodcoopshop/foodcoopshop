@@ -24,7 +24,9 @@ if (Configure::read('app.showManufacturerListAndDetailPage')) {
     $priceColspan++;
 }
 $columns[] = __('Price');
-$columns[] = __('Deposit');
+if ($depositSum > 0) {
+    $columns[] = __('Deposit');
+}
 
 if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) {
     $columns[] = Configure::read('appDb.FCS_TIMEBASED_CURRENCY_NAME');
@@ -110,13 +112,15 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
                 ?>
             </td>
 
-            <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
-                <?php
-                    if ($product['deposit'] > 0) {
-                        echo $this->MyNumber->formatAsCurrency($product['deposit']);
-                    }
-                ?>
-            </td>
+            <?php if ($depositSum > 0) { ?>
+                <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
+                    <?php
+                        if ($product['deposit'] > 0) {
+                            echo $this->MyNumber->formatAsCurrency($product['deposit']);
+                        }
+                    ?>
+                </td>
+            <?php } ?>
 
             <?php if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
                 <td valign="middle" align="right" style="border:1px solid #d6d4d4;">
@@ -132,32 +136,34 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
 
     <?php } ?>
 
-     <tr>
-        <td style="border:1px solid #d6d4d4;" colspan="<?php echo $priceColspan; ?>"></td>
-        <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;"><?php echo $this->MyNumber->formatAsCurrency($productSum); ?></td>
+    <?php if ($depositSum > 0) { ?>
+        <tr>
+            <td style="border:1px solid #d6d4d4;" colspan="<?php echo $priceColspan; ?>"></td>
+            <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;"><?php echo $this->MyNumber->formatAsCurrency($productSum); ?></td>
 
-        <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;">
-            <?php
-            if ($depositSum > 0) {
-                echo $this->MyNumber->formatAsCurrency($depositSum);
-            }
-            ?>
-        </td>
-
-        <?php if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
             <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;">
                 <?php
-                    echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($appAuth->Cart->getTimebasedCurrencySecondsSum());
+                if ($depositSum > 0) {
+                    echo $this->MyNumber->formatAsCurrency($depositSum);
+                }
                 ?>
             </td>
-        <?php } ?>
 
-    </tr>
+            <?php if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCustomer()) { ?>
+                <td align="right" style="font-weight:bold;border:1px solid #d6d4d4;">
+                    <?php
+                        echo $this->TimebasedCurrency->formatSecondsToTimebasedCurrency($appAuth->Cart->getTimebasedCurrencySecondsSum());
+                    ?>
+                </td>
+            <?php } ?>
+
+        </tr>
+    <?php } ?>
 
     <tr>
         <td style="background-color:#fbfbfb;border:1px solid #d6d4d4;" colspan="2"></td>
         <td align="right" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;"><?php echo __('Total'); ?></td>
-        <td align="center" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;" colspan="2">
+        <td align="<?php echo ($depositSum > 0 ? 'center' : 'right'); ?>" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;" colspan="<?php echo ($depositSum > 0 ? 2 : 1); ?>">
             <?php
                 echo $this->MyNumber->formatAsCurrency($productAndDepositSum);
             ?>
