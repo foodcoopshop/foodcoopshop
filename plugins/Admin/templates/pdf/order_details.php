@@ -35,19 +35,26 @@ foreach ($orderDetails as $od) {
     $pdf->Ln(5);
 
     $widths = [
-        45,
+        35,
         220,
         150,
-        45,
-        45
+        55,
     ];
+
     $headers = [
         __d('admin', 'Amount'),
         __d('admin', 'Product'),
         __d('admin', 'Manufacturer'),
         __d('admin', 'Price'),
-        __d('admin', 'Deposit')
     ];
+
+    if (Configure::read('app.isDepositEnabled')) {
+        $widths[4] = 45;
+        $headers[] = __d('admin', 'Deposit');
+    } else {
+        $widths[1] = 265;
+        $widths[4] = 0;
+    }
 
     $pdf->table .= '<table style="font-size:8px" cellspacing="0" cellpadding="1" border="1"><thead><tr>';
 
@@ -71,7 +78,7 @@ foreach ($orderDetails as $od) {
         if ($orderDetail['product_amount'] > 1) {
             $quantityStyle = ' background-color:#cecece;';
         }
-        $pdf->table .= '<td style="' . $quantityStyle . 'text-align: center;"; width="' . $widths[0] . '">' . $orderDetail->product_amount . 'x</td>';
+        $pdf->table .= '<td style="' . $quantityStyle . 'text-align:center;"; width="' . $widths[0] . '">' . $orderDetail->product_amount . 'x</td>';
 
         $unity = '';
         if (!empty($orderDetail->order_detail_unit)) {
@@ -94,7 +101,7 @@ foreach ($orderDetails as $od) {
             $priceStyle = ' background-color:#cecece;';
         }
 
-        $pdf->table .= '<td style="' . $priceStyle . 'text-align: right"; width="' . $widths[3] . '">';
+        $pdf->table .= '<td style="' . $priceStyle . 'text-align:right"; width="' . $widths[3] . '">';
         $pdf->table .= $this->Number->formatAsCurrency($orderDetail->total_price_tax_incl);
 
         if (!empty($orderDetail->timebased_currency_order_detail)) {
@@ -106,36 +113,46 @@ foreach ($orderDetails as $od) {
             $pdf->table .= ' *';
             $usesQuantityInUnits++;
         }
+
         $pdf->table .= '</td>';
-        $deposit = $orderDetail->deposit;
-        if ($deposit > 0) {
-            $sumDeposit += $deposit;
-            $deposit = $this->Number->formatAsCurrency($deposit);
-        } else {
-            $deposit = '';
+
+        if (Configure::read('app.isDepositEnabled')) {
+            $deposit = $orderDetail->deposit;
+            if ($deposit > 0) {
+                $sumDeposit += $deposit;
+                $deposit = $this->Number->formatAsCurrency($deposit);
+            } else {
+                $deposit = '';
+            }
+            $pdf->table .= '<td style="text-align: right"; width="' . $widths[4] . '">' . $deposit . '</td>';
         }
-        $pdf->table .= '<td style="text-align: right"; width="' . $widths[4] . '">' . $deposit . '</td>';
 
         $sumPrice += $orderDetail['total_price_tax_incl'];
 
         $pdf->table .= '</tr>';
 
         if ($i == count($od)) {
-            $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
-                $pdf->table .= '<td width="' . $widths[0] . '"></td>';
-                $pdf->table .= '<td width="' . $widths[1] . '"></td>';
-                $pdf->table .= '<td width="' . $widths[2] . '"></td>';
-                $pdf->table .= '<td style="text-align:right;font-weight:bold;" width="' . $widths[3] . '">' . $this->Number->formatAsCurrency($sumPrice) . '</td>';
-            if ($sumDeposit > 0) {
-                $sumDepositAsString = $this->Number->formatAsCurrency($sumDeposit);
-            } else {
-                $sumDepositAsString = '';
+
+            if (Configure::read('app.isDepositEnabled')) {
+                $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
+                    $pdf->table .= '<td width="' . $widths[0] . '"></td>';
+                    $pdf->table .= '<td width="' . $widths[1] . '"></td>';
+                    $pdf->table .= '<td width="' . $widths[2] . '"></td>';
+                    $pdf->table .= '<td style="text-align:right;font-weight:bold;" width="' . $widths[3] . '">' . $this->Number->formatAsCurrency($sumPrice) . '</td>';
+
+                    if ($sumDeposit > 0) {
+                        $sumDepositAsString = $this->Number->formatAsCurrency($sumDeposit);
+                    } else {
+                        $sumDepositAsString = '';
+                    }
+
+                    $pdf->table .= '<td style="text-align:right;font-weight:bold;" width="' . $widths[4] . '">' . $sumDepositAsString . '</td>';
+                $pdf->table .= '</tr>';
             }
-                $pdf->table .= '<td style="text-align:right;font-weight:bold;" width="' . $widths[4] . '">' . $sumDepositAsString . '</td>';
-            $pdf->table .= '</tr>';
+
             $pdf->table .= '<tr style="font-weight:normal;background-color:#ffffff;">';
-                $pdf->table .= '<td colspan="3" style="font-size:10px;font-weight:bold;text-align:right;" width="' . ($widths[0] + $widths[1] + $widths[2]) . '">'.__d('admin', 'Total').'</td>';
-                $pdf->table .= '<td colspan="2" style="font-size:10px;font-weight:bold;text-align:center;" width="' . ($widths[3] + $widths[4]) . '">' . $this->Number->formatAsCurrency($sumPrice + $sumDeposit) . '</td>';
+                $pdf->table .= '<td colspan="'.(Configure::read('app.isDepositEnabled') ? 3 : 2) . '" style="font-size:10px;font-weight:bold;text-align:right;" width="' . ($widths[0] + $widths[1] + $widths[2]) . '">'.__d('admin', 'Total').'</td>';
+                $pdf->table .= '<td colspan="'.(Configure::read('app.isDepositEnabled') ? 2 : 1) . '" style="font-size:10px;font-weight:bold;text-align:'.(Configure::read('app.isDepositEnabled') ? 'center' : 'right') . ';" width="' . ($widths[3] + $widths[4]) . '">' . $this->Number->formatAsCurrency($sumPrice + $sumDeposit) . '</td>';
             $pdf->table .= '</tr>';
         }
 
