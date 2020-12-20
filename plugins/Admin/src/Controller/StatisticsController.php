@@ -106,6 +106,11 @@ class StatisticsController extends AdminAppController
 
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $monthlySumProducts = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturerId, $year);
+        if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
+            $monthlySumProducts->where([
+                'OrderDetails.product_id NOT IN' => explode(',', Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS'))
+            ]);
+        }
         if (empty($monthlySumProducts->toArray())) {
             $this->set('xAxisData', []);
             return;

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-17 11:27+0100\n"
+"POT-Creation-Date: 2020-12-20 19:52+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1692,6 +1692,9 @@ msgid "Average_turnover_for_months_where_products_were_delivered:_{0}"
 msgstr ""
 
 msgid "Variable_member_fee_is_included_in_turnover."
+msgstr ""
+
+msgid "Member_fee_products_are_excluded_from_statistics."
 msgstr ""
 
 msgid "Tax_rates_can_not_be_changed."
