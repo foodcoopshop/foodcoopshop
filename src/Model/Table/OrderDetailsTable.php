@@ -84,6 +84,33 @@ class OrderDetailsTable extends AppTable
         return $query;
     }
 
+    public function getMemberFee($customerId)
+    {
+
+        $productIds = Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS');
+        if ($productIds != '') {
+            $query = $this->find('all', [
+                'conditions' => [
+                    'OrderDetails.id_customer' => $customerId,
+                    'OrderDetails.product_id IN' => explode(',', Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS')),
+                ]
+            ]);
+            $query->select([
+                'SumPriceIncl' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
+            ]);
+            $query->group('OrderDetails.id_customer');
+            $result = $query->toArray();
+
+            if (isset($result[0])) {
+                return $result[0]['SumPriceIncl'];
+            }
+
+        }
+
+        return 0;
+
+    }
+
     public function getOrderDetailsForSendingOrderLists($pickupDay, $cronjobRunDay, $customerCanSelectPickupDay)
     {
         $query = $this->find('all', [

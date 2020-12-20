@@ -751,6 +751,7 @@ class CustomersController extends AdminAppController
                     $customer->timebased_currency_credit_balance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customer->id_customer);
                 }
             }
+            $customer->member_fee = $this->OrderDetail->getMemberFee($customer->id_customer);
             $customer->order_detail_count = count($customer->valid_order_details);
             if (!empty($validOrderDetailsConditions) && $customer->order_detail_count == 0) {
                 unset($customers[$i]);
