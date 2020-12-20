@@ -135,7 +135,8 @@ INSERT INTO `fcs_configuration` VALUES
 (590,1,'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY','Mitglied kann Abholtag beim Bestellen selbst auswählen.','0','readonly',590,'de_DE','2020-07-06 10:34:35','2020-07-06 10:34:35'),
 (591,1,'FCS_SEND_INVOICES_TO_CUSTOMERS','Einzelhandels-Modus aktiviert?<br /><div class=\"small\"><a href=\"https://foodcoopshop.github.io/de/einzelhandel\" target=\"_blank\">Infos zur Verwendung im Einzelhandel</a></div>','0','readonly',580,'de_DE','2020-10-29 10:06:34','2020-10-29 10:06:34'),
 (592,1,'FCS_DEPOSIT_TAX_RATE','Umsatzsteuersatz für Pfand','20,00','readonly',581,'de_DE','2020-11-03 15:23:55','2020-11-03 15:23:55'),
-(593,1,'FCS_INVOICE_HEADER_TEXT','Header-Text für Rechnungen an Mitglieder','','readonly',582,'de_DE','2020-11-03 15:23:55','2020-11-03 15:23:55');
+(593,1,'FCS_INVOICE_HEADER_TEXT','Header-Text für Rechnungen an Mitglieder','','readonly',582,'de_DE','2020-11-03 15:23:55','2020-11-03 15:23:55'),
+(594,1,'FCS_MEMBER_FEE_PRODUCTS','Welche Produkte werden als Mitgliedsbeitrag verwendet?','','multiple_dropdown',3300,'de_DE','2020-12-20 19:26:10','2020-12-20 19:26:10');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -244,7 +245,8 @@ INSERT INTO `phinxlog` VALUES
 (20201029084931,'AddRetailMode','2020-10-29 09:06:34','2020-10-29 09:06:34',0),
 (20201118084516,'AddRetailMode2','2020-11-18 08:47:32','2020-11-18 08:47:32',0),
 (20201213120713,'AddRetailMode3','2020-12-13 12:13:56','2020-12-13 12:13:56',0),
-(20201217101514,'SliderWithLink','2020-12-17 10:26:31','2020-12-17 10:26:31',0);
+(20201217101514,'SliderWithLink','2020-12-17 10:26:31','2020-12-17 10:26:31',0),
+(20201220182015,'ImproveMemberFeeAdministration','2020-12-20 18:26:10','2020-12-20 18:26:10',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;
