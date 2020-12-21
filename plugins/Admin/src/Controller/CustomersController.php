@@ -697,9 +697,9 @@ class CustomersController extends AdminAppController
         }
         $this->set('dateTo', $dateTo);
 
-        $year = date('Y');
-        if (in_array('year', array_keys($this->getRequest()->getQueryParams())) && empty($this->getRequest()->getQuery('year'))) {
-            $year = h($this->getRequest()->getQuery('year'));
+        $year = h($this->getRequest()->getQuery('year'));
+        if (!in_array('year', array_keys($this->getRequest()->getQueryParams()))) {
+            $year = date('Y');
         }
         $this->set('year', $year);
 
