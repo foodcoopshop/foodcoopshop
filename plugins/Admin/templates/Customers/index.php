@@ -72,7 +72,7 @@ if (Configure::read('app.emailOrderReminderEnabled')) {
 echo '<th>' . $this->Paginator->sort('Customers.date_add',  __d('admin', 'Register_date')) . '</th>';
 echo '<th>'.__d('admin', 'Last_pickup_day').'</th>';
 if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
-    echo '<th>'.__d('admin', 'Member_fee').'</th>';
+    echo '<th>' . $this->Paginator->sort('Customers.member_fee', __d('admin', 'Member_fee')) . '</th>';
 }
 echo '<th>'.__d('admin', 'Comment_abbreviation').'</th>';
 echo '</tr>';
