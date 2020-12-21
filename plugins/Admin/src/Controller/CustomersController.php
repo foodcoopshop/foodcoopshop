@@ -772,7 +772,6 @@ class CustomersController extends AdminAppController
             $customers = Hash::sort($customers, '{n}.member_fee', $this->getRequest()->getQuery('direction'));
         }
 
-
         $this->set('customers', $customers);
 
         $this->set('title_for_layout', __d('admin', 'Members'));

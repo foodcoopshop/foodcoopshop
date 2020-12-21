@@ -90,7 +90,9 @@ class OrderDetailsTable extends AppTable
     {
 
         $productIds = Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS');
+
         if ($productIds != '') {
+
             $conditions = [
                 'OrderDetails.id_customer' => $customerId,
                 'OrderDetails.product_id IN' => explode(',', Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS')),
