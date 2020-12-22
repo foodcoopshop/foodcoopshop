@@ -94,8 +94,8 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
 
         var row = button.closest('tr');
         var orderDetailId = row.find('td:nth-child(2)').html();
-        var unitName = row.find('td:nth-child(8) span.unit-name').html().trim();
-        var quantity = row.find('td:nth-child(8) span.quantity-in-units').html();
+        var unitName = row.find('td.quantity-field span.unit-name').html().trim();
+        var quantity = row.find('td.quantity-field span.quantity-in-units').html();
         var quantityInUnitsField = $(modalSelector + ' #dialogOrderDetailProductQuantityQuantity');
 
         quantityInUnitsField.val(foodcoopshop.Helper.getStringAsFloat(quantity));
@@ -117,7 +117,7 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
             newHtml = quantityString.html().replace(regExpDeliveredTotalWeight, foodcoopshop.LocalizedJs.admin.DeliveredWeight);
         }
         quantityString.html(newHtml);
-        label += foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td:nth-child(9) span.customer-name-for-dialog').html() + ')';
+        label += foodcoopshop.LocalizedJs.admin.orderedBy + ' ' + row.find('td.customer-field span.customer-name-for-dialog').html() + ')';
         $(modalSelector + ' label[for="dialogOrderDetailProductQuantityQuantity"]').html(label);
 
         var stepValue = '0.001';
@@ -130,7 +130,7 @@ foodcoopshop.ModalOrderDetailProductQuantityEdit = {
         quantityInUnitsField.attr('step', stepValue);
         quantityInUnitsField.attr('min', minValue);
 
-        var pricePerUnitBaseInfo = row.find('td:nth-child(8) span.price-per-unit-base-info').html();
+        var pricePerUnitBaseInfo = row.find('td.quantity-field span.price-per-unit-base-info').html();
         $(modalSelector + ' li.price-per-unit-base-info').html(foodcoopshop.LocalizedJs.admin.BasePrice + ': ' + pricePerUnitBaseInfo);
 
         $(modalSelector).modal();

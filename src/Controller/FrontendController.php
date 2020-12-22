@@ -45,6 +45,10 @@ class FrontendController extends AppController
             $product['tax'] = $grossPrice - $product['price'];
             $product['is_new'] = $this->Product->isNew($product['created']);
 
+            if (!Configure::read('app.isDepositEnabled')) {
+                $product['deposit'] = 0;
+            }
+
             if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY') || $this->AppAuth->isInstantOrderMode() || $this->AppAuth->isSelfServiceModeByUrl()) {
                 $product['next_delivery_day'] = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
             } else {
@@ -104,7 +108,7 @@ class FrontendController extends AppController
                     'always_available' => $attribute->stock_available->always_available,
                 ];
                 $preparedAttributes['DepositProductAttributes'] = [
-                    'deposit' => !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0
+                    'deposit' => Configure::read('app.isDepositEnabled') && !empty($attribute->deposit_product_attribute) ? $attribute->deposit_product_attribute->deposit : 0
                 ];
                 $preparedAttributes['ProductAttributeCombinations'] = [
                     'Attributes' => [

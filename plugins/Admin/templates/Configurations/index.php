@@ -261,6 +261,11 @@ $this->element('addScript', [
         </tr>
 
         <tr>
+            <td>app.isDepositEnabled</td>
+            <td><?php echo Configure::read('app.isDepositEnabled') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
+        </tr>
+
+        <tr>
             <td>app.isDepositPaymentCashless</td>
             <td><?php echo Configure::read('app.isDepositPaymentCashless') ? __d('admin', 'yes') : __d('admin', 'no'); ?></td>
         </tr>

@@ -14,7 +14,7 @@
  */
 
 if ($groupBy == '') {
-    echo '<td class="right ' . ($orderDetail->quantityInUnitsNotYetChanged && $editRecordAllowed ? 'not-available' : '') . '">';
+    echo '<td class="quantity-field right ' . ($orderDetail->quantityInUnitsNotYetChanged && $editRecordAllowed ? 'not-available' : '') . '">';
     if (!empty($orderDetail->order_detail_unit)) {
         if ($editRecordAllowed) {
             echo $this->Html->link(

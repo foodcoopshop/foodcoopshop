@@ -147,7 +147,7 @@ if (count($payments) == 0) {
 
         echo '<td style="text-align:center;">';
         $deletablePaymentTypes = ['product'];
-        if (!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders')) {
+        if ((!$appAuth->isCustomer() || Configure::read('app.isCustomerAllowedToModifyOwnOrders')) && Configure::read('app.isDepositEnabled')) {
             $deletablePaymentTypes[] = 'deposit';
         }
         if ($appAuth->isSuperadmin()) {

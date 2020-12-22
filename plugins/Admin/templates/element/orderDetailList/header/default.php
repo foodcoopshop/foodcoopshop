@@ -31,9 +31,11 @@ echo '<th class="right">';
     echo $this->Paginator->sort('OrderDetails.total_price_tax_incl', __d('admin', 'Price'));
 echo '</th>';
 
-echo '<th class="right">';
-    echo $this->Paginator->sort('OrderDetails.deposit', __d('admin', 'Deposit'));
-echo '</th>';
+if (Configure::read('app.isDepositEnabled')) {
+    echo '<th class="right">';
+        echo $this->Paginator->sort('OrderDetails.deposit', __d('admin', 'Deposit'));
+    echo '</th>';
+}
 
 echo '<th class="right">';
     echo $this->Paginator->sort('OrderDetailUnits.product_quantity_in_units', __d('admin', 'Weight'));

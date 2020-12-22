@@ -40,7 +40,7 @@ foodcoopshop.ModalOrderDetailDelete = {
             infoText += '<ul>';
             for (var i in orderDetailIds) {
                 var dataRow = $('#delete-order-detail-' + orderDetailIds[i]).closest('tr');
-                infoText += '<li>' + dataRow.find('td:nth-child(4) a.name-for-dialog').text() + ' / ' + dataRow.find('td:nth-child(9) span.customer-name-for-dialog').html() + '</li>';
+                infoText += '<li>' + dataRow.find('td:nth-child(4) a.name-for-dialog').text() + ' / ' + dataRow.find('td.customer-field span.customer-name-for-dialog').html() + '</li>';
             }
             infoText += '</ul>';
 

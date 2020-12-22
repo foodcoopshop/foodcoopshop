@@ -397,7 +397,7 @@ class CartsTable extends AppTable
         ];
 
         $deposit = 0;
-        if (!empty($cartProduct->product->deposit_product->deposit)) {
+        if (Configure::read('app.isDepositEnabled') && !empty($cartProduct->product->deposit_product->deposit)) {
             $deposit = $cartProduct->product->deposit_product->deposit * $cartProduct->amount;
         }
         $productData['deposit'] = $deposit;
@@ -479,7 +479,7 @@ class CartsTable extends AppTable
         ];
 
         $deposit = 0;
-        if (!empty($cartProduct->product_attribute->deposit_product_attribute->deposit)) {
+        if (Configure::read('app.isDepositEnabled') && !empty($cartProduct->product_attribute->deposit_product_attribute->deposit)) {
             $deposit = $cartProduct->product_attribute->deposit_product_attribute->deposit * $cartProduct->amount;
         }
         $productData['deposit'] = $deposit;
