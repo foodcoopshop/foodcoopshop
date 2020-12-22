@@ -101,7 +101,7 @@ $this->element('addScript', [
                         echo $configuration->value;
                         break;
                     case 'dropdown':
-                        echo $this->Configuration->getConfigurationDropdownOption($configuration->name, $configuration->value);
+                        echo $this->Configuration->getConfigurationDropdownOption($configuration->name, $configuration->value, $appAuth);
                         break;
                     case 'multiple_dropdown':
                         echo $this->Configuration->getConfigurationMultipleDropdownOptions($configuration->name, $configuration->value);

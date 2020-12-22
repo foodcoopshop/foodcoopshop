@@ -3,6 +3,8 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
+use Cake\Database\Query;
+use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\FactoryLocator;
 use Cake\Validation\Validator;
 
@@ -82,6 +84,45 @@ class OrderDetailsTable extends AppTable
             ]
         ]);
         return $query;
+    }
+
+    public function getMemberFee($customerId, $year)
+    {
+
+        $productIds = Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS');
+
+        if ($productIds != '') {
+
+            $conditions = [
+                'OrderDetails.id_customer' => $customerId,
+                'OrderDetails.product_id IN' => explode(',', Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS')),
+            ];
+            $query = $this->find('all', [
+                'conditions' => $conditions,
+            ]);
+            if ($year != '') {
+                $query->where(function (QueryExpression $exp, Query $q) use ($year) {
+                    return $exp->addCase(
+                        [
+                            $q->newExpr()->eq('DATE_FORMAT(OrderDetails.pickup_day, \'%Y\')', $year),
+                        ],
+                    );
+                });
+            }
+            $query->select([
+                'SumPriceIncl' => $query->func()->sum('OrderDetails.total_price_tax_incl'),
+            ]);
+            $query->group('OrderDetails.id_customer');
+            $result = $query->toArray();
+
+            if (isset($result[0])) {
+                return $result[0]['SumPriceIncl'];
+            }
+
+        }
+
+        return 0;
+
     }
 
     public function getOrderDetailsForSendingOrderLists($pickupDay, $cronjobRunDay, $customerCanSelectPickupDay)

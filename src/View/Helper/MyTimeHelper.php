@@ -23,11 +23,11 @@ use Cake\View\Helper\TimeHelper;
 class MyTimeHelper extends TimeHelper
 {
 
-    public function getAllYearsUntilThisYear($thisYear, $firstYear)
+    public function getAllYearsUntilThisYear($thisYear, $firstYear, $labelPrefix='')
     {
         $years = [];
         while($thisYear >= $firstYear) {
-            $years[$thisYear] = $thisYear;
+            $years[$thisYear] = $labelPrefix . $thisYear;
             $thisYear--;
         }
         return $years;

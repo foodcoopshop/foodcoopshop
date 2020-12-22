@@ -84,6 +84,9 @@ if ($manufacturerId == 'all') {
     if (Configure::read('appDb.FCS_USE_VARIABLE_MEMBER_FEE')) {
         echo '<br />' . __d('admin', 'Variable_member_fee_is_included_in_turnover.');
     }
+    if ($manufacturerId == 'all' && Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
+        echo '<br />' . __d('admin', 'Member_fee_products_are_excluded_from_statistics.');
+    }
 ?></p>
 
 <canvas id="myBarChart" width="1000" height="500" style="margin-top:10px;"></canvas>

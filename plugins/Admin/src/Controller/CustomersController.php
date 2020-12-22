@@ -12,6 +12,7 @@ use Cake\Core\Exception\Exception;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Exception\ForbiddenException;
+use Cake\Utility\Hash;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -696,6 +697,14 @@ class CustomersController extends AdminAppController
         }
         $this->set('dateTo', $dateTo);
 
+        $year = h($this->getRequest()->getQuery('year'));
+        if (!in_array('year', array_keys($this->getRequest()->getQueryParams()))) {
+            $year = date('Y');
+        }
+        $this->set('year', $year);
+
+        $this->set('years', Configure::read('app.timeHelper')->getAllYearsUntilThisYear(date('Y'), 2017, __d('admin', 'Member_fee') . ' '));
+
         $conditions = [];
         if ($active != 'all') {
             $conditions = [
@@ -729,7 +738,7 @@ class CustomersController extends AdminAppController
 
         $customers = $this->paginate($query, [
             'sortableFields' => [
-                'Customers.' . Configure::read('app.customerMainNamePart'), 'Customers.id_default_group', 'Customers.id_customer', 'Customers.email', 'Customers.active', 'Customers.email_order_reminder', 'Customers.date_add', 'Customers.timebased_currency_enabled'
+                'Customers.' . Configure::read('app.customerMainNamePart'), 'Customers.id_default_group', 'Customers.id_customer', 'Customers.email', 'Customers.active', 'Customers.email_order_reminder', 'Customers.date_add', 'Customers.timebased_currency_enabled',
             ],
             'order' => [
                 'Customers.' . Configure::read('app.customerMainNamePart') => 'ASC'
@@ -751,11 +760,16 @@ class CustomersController extends AdminAppController
                     $customer->timebased_currency_credit_balance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customer->id_customer);
                 }
             }
+            $customer->member_fee = $this->OrderDetail->getMemberFee($customer->id_customer, $year);
             $customer->order_detail_count = count($customer->valid_order_details);
             if (!empty($validOrderDetailsConditions) && $customer->order_detail_count == 0) {
                 unset($customers[$i]);
             }
             $i ++;
+        }
+
+        if (in_array('sort', array_keys($this->getRequest()->getQueryParams())) && $this->getRequest()->getQuery('sort') == 'Customers.member_fee') {
+            $customers = Hash::sort($customers, '{n}.member_fee', $this->getRequest()->getQuery('direction'));
         }
 
         $this->set('customers', $customers);

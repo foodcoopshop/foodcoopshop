@@ -319,9 +319,6 @@ td span.description-for-dialog {
     width: 35px;
     text-align: center;
 }
-#customers-list .bootstrap-select {
-    width: 100px ! important;
-}
 input.datepicker {
     width: 110px;
     text-align: center;
@@ -333,13 +330,11 @@ input.datepicker {
     font-family: 'Open Sans';
 }
 
-
 #content ul.help-text-wrapper li {
     margin-left: 20px;
     margin-top: 0px;
     list-style: disc;
 }
-
 .last-n-days-dropdown,
 .categories-checkboxes,
 .tax-dropdown-wrapper,
