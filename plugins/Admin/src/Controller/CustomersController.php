@@ -768,9 +768,6 @@ class CustomersController extends AdminAppController
             }
             $customer->last_order_date = $this->OrderDetail->getLastOrderDate($customer->id_customer);
             $customer->member_fee = $this->OrderDetail->getMemberFee($customer->id_customer, $year);
-            if (empty($customer->valid_order_details)) {
-                unset($customers[$i]);
-            }
             $i ++;
         }
 
