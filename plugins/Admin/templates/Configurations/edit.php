@@ -83,7 +83,7 @@ switch ($configuration->type) {
         echo $this->Form->control('Configurations.value', [
             'type' => 'select',
             'label' => $label,
-            'options' => $this->Configuration->getConfigurationDropdownOptions($configuration->name),
+            'options' => $this->Configuration->getConfigurationDropdownOptions($configuration->name, $appAuth),
             'escape' => false
         ]);
         break;
@@ -101,7 +101,7 @@ switch ($configuration->type) {
             'multiple' => true,
             'data-val' => $value,
             'label' => $label,
-            'options' => $this->Configuration->getConfigurationDropdownOptions($configuration->name),
+            'options' => $this->Configuration->getConfigurationDropdownOptions($configuration->name, $appAuth),
             'escape' => false
         ]);
         break;

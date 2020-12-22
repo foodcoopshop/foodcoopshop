@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-17 11:27+0100\n"
-"PO-Revision-Date: 2020-12-17 11:28+0100\n"
+"POT-Creation-Date: 2020-12-20 19:52+0100\n"
+"PO-Revision-Date: 2020-12-20 19:53+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -1694,6 +1694,9 @@ msgstr "Average turnover for months where products were delivered: {0}"
 
 msgid "Variable_member_fee_is_included_in_turnover."
 msgstr "The variable member fee is included in turnover."
+
+msgid "Member_fee_products_are_excluded_from_statistics."
+msgstr "Member fee products are excluded from this statistics."
 
 msgid "Tax_rates_can_not_be_changed."
 msgstr "Tax rates can not be changed."

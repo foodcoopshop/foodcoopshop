@@ -135,7 +135,8 @@ INSERT INTO `fcs_configuration` VALUES
 (590,1,'FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY','Pickup day can be selected by member on order confirmation.','0','readonly',590,'pl_PL','2020-07-06 10:34:44','2020-07-06 10:34:44'),
 (591,1,'FCS_SEND_INVOICES_TO_CUSTOMERS','Retail mode activated?.','0','readonly',580,'pl_PL','2020-10-29 10:06:45','2020-10-29 10:06:45'),
 (592,1,'FCS_DEPOSIT_TAX_RATE','VAT for deposit','20.00','readonly',581,'pl_PL','2020-11-03 15:24:06','2020-11-03 15:24:06'),
-(593,1,'FCS_INVOICE_HEADER_TEXT','Header text for invoices to members','','readonly',582,'pl_PL','2020-11-03 15:24:01','2020-11-03 15:24:01');
+(593,1,'FCS_INVOICE_HEADER_TEXT','Header text for invoices to members','','readonly',582,'pl_PL','2020-11-03 15:24:01','2020-11-03 15:24:01'),
+(594,1,'FCS_MEMBER_FEE_PRODUCTS','Which products are used as member fee product?<div class="small">The selected products are the basis for the column Member Fee in the members adminstration and are not shown in the turnover statistics.</div>','','multiple_dropdown',3300,'pl_PL','2020-12-20 19:26:21','2020-12-20 19:26:21');
 /*!40000 ALTER TABLE `fcs_configuration` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `fcs_cronjob_logs` DISABLE KEYS */;
@@ -244,7 +245,8 @@ INSERT INTO `phinxlog` VALUES
 (20201029084931,'AddRetailMode','2020-10-29 09:06:45','2020-10-29 09:06:45',0),
 (20201118084516,'AddRetailMode2','2020-11-18 08:47:43','2020-11-18 08:47:43',0),
 (20201213120713,'AddRetailMode3','2020-12-13 12:14:06','2020-12-13 12:14:06',0),
-(20201217101514,'SliderWithLink','2020-12-17 10:26:42','2020-12-17 10:26:42',0);
+(20201217101514,'SliderWithLink','2020-12-17 10:26:42','2020-12-17 10:26:42',0),
+(20201220182015,'ImproveMemberFeeAdministration','2020-12-20 18:26:21','2020-12-20 18:26:21',0);
 /*!40000 ALTER TABLE `phinxlog` ENABLE KEYS */;
 
 /*!40000 ALTER TABLE `queue_phinxlog` DISABLE KEYS */;

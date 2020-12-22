@@ -4,6 +4,8 @@ namespace App\View\Helper;
 
 use App\Model\Table\ConfigurationsTable;
 use Cake\Core\Configure;
+use Cake\Datasource\FactoryLocator;
+use Cake\Utility\Hash;
 use Cake\View\Helper;
 
 /**
@@ -21,7 +23,7 @@ use Cake\View\Helper;
  */
 class ConfigurationHelper extends Helper
 {
-    public function getConfigurationDropdownOptions($name)
+    public function getConfigurationDropdownOptions($name, $appAuth)
     {
         switch ($name) {
             case 'FCS_SHOW_PRODUCTS_FOR_GUESTS':
@@ -56,6 +58,10 @@ class ConfigurationHelper extends Helper
             case 'FCS_CASHLESS_PAYMENT_ADD_TYPE':
                 return $this->getCashlessPaymentAddTypeOptions();
                 break;
+            case 'FCS_MEMBER_FEE_PRODUCTS':
+                $productModel = FactoryLocator::get('Table')->get('Products');
+                return $productModel->getForDropdown($appAuth, 0);
+                break;
         }
     }
 
@@ -72,9 +78,9 @@ class ConfigurationHelper extends Helper
         ];
     }
 
-    public function getConfigurationDropdownOption($name, $value)
+    public function getConfigurationDropdownOption($name, $value, $appAuth)
     {
-        return self::getConfigurationDropdownOptions($name)[$value];
+        return self::getConfigurationDropdownOptions($name, $appAuth)[$value];
     }
 
     public function getConfigurationMultipleDropdownOptions($name, $value)
@@ -83,6 +89,16 @@ class ConfigurationHelper extends Helper
             case 'FCS_NO_DELIVERY_DAYS_GLOBAL':
                 $formattedAndCleanedDeliveryDays = Configure::read('app.htmlHelper')->getFormattedAndCleanedDeliveryDays($value);
                 return join(', ', $formattedAndCleanedDeliveryDays);
+                break;
+            case 'FCS_MEMBER_FEE_PRODUCTS':
+                $value = explode(',', $value);
+                $productModel = FactoryLocator::get('Table')->get('Products');
+                $products = $productModel->find('all', [
+                    'conditions' => [
+                        'Products.id_product IN' => $value,
+                    ]
+                ])->toArray();
+                return join(', ', Hash::extract($products, '{n}.name'));
                 break;
         }
     }

@@ -104,8 +104,18 @@ class StatisticsController extends AdminAppController
 
         $this->set('years', Configure::read('app.timeHelper')->getAllYearsUntilThisYear(date('Y'), 2014));
 
+        $excludeMemberFeeCondition = [];
+        if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
+            $excludeMemberFeeCondition = [
+                'OrderDetails.product_id NOT IN' => explode(',', Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS'))
+            ];
+        }
+
         $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $monthlySumProducts = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturerId, $year);
+        if (!empty($excludeMemberFeeCondition)) {
+            $monthlySumProducts->where($excludeMemberFeeCondition);
+        }
         if (empty($monthlySumProducts->toArray())) {
             $this->set('xAxisData', []);
             return;
@@ -195,6 +205,9 @@ class StatisticsController extends AdminAppController
             foreach($manufacturers as $manufacturer) {
 
                 $monthlySumProductsQuery = $this->OrderDetail->getMonthlySumProductByManufacturer($manufacturer->id_manufacturer, $year);
+                if (!empty($excludeMemberFeeCondition)) {
+                    $monthlySumProductsQuery->where($excludeMemberFeeCondition);
+                }
                 $monthlySumProducts = 0;
                 foreach($monthlySumProductsQuery as $monthlySum) {
                     $monthlySumProducts += $monthlySum->SumTotalPaid;

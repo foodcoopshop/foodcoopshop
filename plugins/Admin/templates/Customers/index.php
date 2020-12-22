@@ -32,6 +32,15 @@ use Cake\Core\Configure;
         <?php echo $this->Form->create(null, ['type' => 'get']); ?>
             <?php echo $this->Form->control('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'default' => isset($active) ? $active : '']); ?>
             <?php echo __d('admin', 'Last_pickup_day'); ?> <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
+            <?php
+                echo $this->Form->control('year', [
+                    'type' => 'select',
+                    'label' => '',
+                    'empty' => __d('admin', 'Member_fee') . ' - ' . __d('admin', 'Show_all_years'),
+                    'options' => $years,
+                    'default' => $year != '' ? $year : ''
+                ]);
+            ?>
             <div class="right">
                 <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_members'))]); ?>
             </div>
@@ -62,6 +71,9 @@ if (Configure::read('app.emailOrderReminderEnabled')) {
 }
 echo '<th>' . $this->Paginator->sort('Customers.date_add',  __d('admin', 'Register_date')) . '</th>';
 echo '<th>'.__d('admin', 'Last_pickup_day').'</th>';
+if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
+    echo '<th>' . $this->Paginator->sort('Customers.member_fee', __d('admin', 'Member_fee')) . '</th>';
+}
 echo '<th>'.__d('admin', 'Comment_abbreviation').'</th>';
 echo '</tr>';
 
@@ -255,6 +267,12 @@ foreach ($customers as $customer) {
         }
     echo '</td>';
 
+    if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
+        echo '<td style="text-align:right;">';
+            echo $this->Number->formatAsCurrency($customer->member_fee);
+        echo '</td>';
+    }
+
     echo '<td style="padding-left: 11px;">';
         $commentText = $customer->address_customer->comment != '' ? $customer->address_customer->comment : __d('admin', 'Add_comment');
         echo $this->Html->link(
@@ -284,7 +302,11 @@ if (Configure::read('appDb.FCS_TIMEBASED_CURRENCY_ENABLED')) {
 if (Configure::read('app.emailOrderReminderEnabled')) {
     echo '<td><b>' . $sumEmailReminders . '</b></td>';
 }
-echo '<td colspan="3"></td>';
+$colspan = 3;
+if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
+    $colspan = 4;
+}
+echo '<td colspan="'.$colspan.'"></td>';
 echo '</tr>';
 
 echo '</table>';
