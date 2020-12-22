@@ -109,8 +109,10 @@ foreach ($customers as $customer) {
                 ]
             );
         }
-        if ($customer->order_detail_count <= 25) {
-            $customerName = '<i class="fas fa-carrot" title="'.__d('admin', 'Newbie_only_{0}_products_ordered.', [$customer->order_detail_count]).'"></i> ' . $customerName;
+        if ($customer->valid_order_details[0]->valid_order_detail_count <= 25) {
+            $customerName = '<i class="fas fa-carrot" title="'.__d('admin', 'Newbie_only_{0}_products_ordered.', [
+                $customer->valid_order_details[0]->valid_order_detail_count
+            ]).'"></i> ' . $customerName;
         }
 
         echo '<span class="name">' . $this->Html->link($customerName, '/admin/order-details?&pickupDay[]='.Configure::read('app.timeHelper')->formatToDateShort('2014-01-01').'&pickupDay[]=' . Configure::read('app.timeHelper')->formatToDateShort('2022-12-31') . '&customerId=' . $customer->id_customer . '&sort=OrderDetails.pickup_day&direction=desc', [
@@ -193,8 +195,8 @@ foreach ($customers as $customer) {
     echo '</td>';
 
     echo '<td style="text-align:right">';
-        echo $this->Number->formatAsDecimal($customer->order_detail_count, 0);
-        $sumOrderDetailsCount += $customer->order_detail_count;
+        echo $this->Number->formatAsDecimal($customer->valid_order_details[0]->valid_order_detail_count, 0);
+        $sumOrderDetailsCount += $customer->valid_order_details[0]->valid_order_detail_count;
     echo '</td>';
 
     if ($this->Html->paymentIsCashless()) {
@@ -262,8 +264,8 @@ foreach ($customers as $customer) {
     echo '</td>';
 
     echo '<td>';
-        if (!empty($customer->valid_order_details)) {
-            echo $customer->valid_order_details[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateShort'));
+        if (!empty($customer->last_order_date)) {
+            echo $customer->last_order_date->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateShort'));
         }
     echo '</td>';
 

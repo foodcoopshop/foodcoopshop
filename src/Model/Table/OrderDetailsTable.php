@@ -73,6 +73,19 @@ class OrderDetailsTable extends AppTable
         return $validator;
     }
 
+    public function getLastOrderDate($customerId)
+    {
+        $query = $this->find('all', [
+            'conditions' => [
+                'OrderDetails.id_customer' => $customerId,
+            ],
+            'order' => [
+                'OrderDetails.pickup_day' => 'DESC'
+            ]
+        ])->first();
+        return $query;
+    }
+
     public function getOrderDetailsForOrderListPreview($pickupDay)
     {
         $query = $this->find('all', [

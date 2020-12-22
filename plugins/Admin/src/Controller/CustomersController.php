@@ -12,6 +12,7 @@ use Cake\Core\Exception\Exception;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Exception\ForbiddenException;
+use Cake\ORM\Query;
 use Cake\Utility\Hash;
 
 /**
@@ -187,8 +188,8 @@ class CustomersController extends AdminAppController
                 [
                     'id_default_group' => $groupId
                 ]
-            )
-        );
+                )
+            );
 
         $messageString = __d('admin', 'The_group_of_the_member_{0}_was_changed_to_{1}.', [
             '<b>' . $oldCustomer->name . '</b>',
@@ -226,7 +227,7 @@ class CustomersController extends AdminAppController
             [
                 'validate' => 'changePassword'
             ]
-        );
+            );
 
         if ($customer->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
@@ -239,8 +240,8 @@ class CustomersController extends AdminAppController
                     [
                         'passwd' => $ph->hash($this->getRequest()->getData('Customers.passwd_1'))
                     ]
-                )
-            );
+                    )
+                );
 
             if ($this->AppAuth->isManufacturer()) {
                 $message = __d('admin', 'The_manufacturer_{0}_has_changed_his_password.', ['<b>' . $this->AppAuth->getManufacturerName() . '</b>']);
@@ -444,7 +445,7 @@ class CustomersController extends AdminAppController
                     'AddressCustomers'
                 ]
             ]
-        );
+            );
 
         if ($customer->hasErrors()) {
             $this->Flash->error(__d('admin', 'Errors_while_saving!'));
@@ -458,7 +459,7 @@ class CustomersController extends AdminAppController
                         'AddressCustomers'
                     ]
                 ]
-            );
+                );
 
             if (!empty($this->getRequest()->getData('Customers.tmp_image'))) {
                 $this->saveUploadedImage($customer->id_customer, $this->getRequest()->getData('Customers.tmp_image'), Configure::read('app.htmlHelper')->getCustomerThumbsPath(), Configure::read('app.customerImageSizes'));
@@ -520,8 +521,8 @@ class CustomersController extends AdminAppController
                 [
                     'active' => $status
                 ]
-            )
-        );
+                )
+            );
 
         $message = __d('admin', 'The_member_{0}_has_been_deactivated_succesfully.', ['<b>' . $customer->name . '</b>']);
         $actionLogType = 'customer_set_inactive';
@@ -536,12 +537,12 @@ class CustomersController extends AdminAppController
             $email = new AppMailer();
             $email->viewBuilder()->setTemplate('customer_activated');
             $email->setTo($customer->email)
-                ->setSubject(__d('admin', 'Your_account_was_activated'))
-                ->setViewVars([
+            ->setSubject(__d('admin', 'Your_account_was_activated'))
+            ->setViewVars([
                 'appAuth' => $this->AppAuth,
                 'data' => $customer,
                 'newPassword' => $newPassword
-                ]);
+            ]);
 
             if (Configure::read('app.termsOfUseEnabled')) {
                 $email->addAttachments([__d('admin', 'Filename_Terms-of-use').'.pdf' => ['data' => $this->generateTermsOfUsePdf($customer), 'mimetype' => 'application/pdf']]);
@@ -582,8 +583,8 @@ class CustomersController extends AdminAppController
                 [
                     'comment' => $customerComment
                 ]
-            )
-        );
+                )
+            );
 
         $this->Flash->success(__d('admin', 'The_comment_was_changed_successfully.'));
 
@@ -729,10 +730,15 @@ class CustomersController extends AdminAppController
             'conditions' => $conditions,
             'contain' => [
                 'AddressCustomers', // to make exclude happen using dropManufacturersInNextFind
-                'ValidOrderDetails' => [
-                    'conditions' => $validOrderDetailsConditions,
-                    'sort' => ['ValidOrderDetails.pickup_day' => 'DESC']
-                ]
+                'ValidOrderDetails' => function (Query $query) use($validOrderDetailsConditions) {
+                    $query->select([
+                        'valid_order_detail_count' => $query->func()->count('ValidOrderDetails.id_order_detail'),
+                        'ValidOrderDetails.id_customer',
+                    ])
+                    ->group(['ValidOrderDetails.id_customer'])
+                    ->where($validOrderDetailsConditions);
+                    return $query;
+                }
             ]
         ]);
 
@@ -760,9 +766,9 @@ class CustomersController extends AdminAppController
                     $customer->timebased_currency_credit_balance = $this->TimebasedCurrencyOrderDetail->getCreditBalance(null, $customer->id_customer);
                 }
             }
+            $customer->last_order_date = $this->OrderDetail->getLastOrderDate($customer->id_customer);
             $customer->member_fee = $this->OrderDetail->getMemberFee($customer->id_customer, $year);
-            $customer->order_detail_count = count($customer->valid_order_details);
-            if (!empty($validOrderDetailsConditions) && $customer->order_detail_count == 0) {
+            if (empty($customer->valid_order_details)) {
                 unset($customers[$i]);
             }
             $i ++;
