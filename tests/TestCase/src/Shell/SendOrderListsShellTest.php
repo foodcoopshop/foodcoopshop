@@ -88,7 +88,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
             Configure::read('app.timeHelper')->getI18Format('DateLong2')
         );
 
-        $this->assertMailSentWithAt(1, 'Bestellungen für den ' . $pickupDayFormated, 'originalSubject');
+        $this->assertMailSubjectContainsAt(1, 'Bestellungen für den ' . $pickupDayFormated);
         $this->assertMailContainsAt(1, 'im Anhang findest du zwei Bestelllisten');
 
         $pickupDayFormated = new FrozenDate($pickupDay);
@@ -118,7 +118,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
             Configure::read('app.timeHelper')->getI18Format('DateLong2')
         );
 
-        $this->assertMailSentWithAt(1, 'Bestellungen für den ' . $pickupDayFormated, 'originalSubject');
+        $this->assertMailSubjectContainsAt(1, 'Bestellungen für den ' . $pickupDayFormated);
         $this->assertMailContainsAt(1, 'im Anhang findest du zwei Bestelllisten');
 
         $this->assertEquals(2, count(TestEmailTransport::getMessages()[1]->getAttachments()));
@@ -147,7 +147,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
             Configure::read('app.timeHelper')->getI18Format('DateLong2')
             );
 
-        $this->assertMailSentWithAt(1, 'Bestellungen für den ' . $pickupDayFormated, 'originalSubject');
+        $this->assertMailSubjectContainsAt(1, 'Bestellungen für den ' . $pickupDayFormated);
         $this->assertMailContainsAt(1, 'im Anhang findest du zwei Bestelllisten');
 
         $this->assertEquals(2, count(TestEmailTransport::getMessages()[1]->getAttachments()));
@@ -252,12 +252,12 @@ class SendOrderListsShellTest extends AppCakeTestCase
 
         $this->assertMailCount(3);
 
-        $this->assertMailSentWithAt(1, 'Bestellungen für den 04.10.2019', 'originalSubject');
+        $this->assertMailSubjectContainsAt(1, 'Bestellungen für den 04.10.2019');
         $this->assertMailContainsAt(1, 'im Anhang findest du zwei Bestelllisten');
         $this->assertEquals(2, count(TestEmailTransport::getMessages()[1]->getAttachments()));
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailVegetableManufacturer'));
 
-        $this->assertMailSentWithAt(2, 'Bestellungen für den 11.10.2019', 'originalSubject');
+        $this->assertMailSubjectContainsAt(2, 'Bestellungen für den 11.10.2019');
         $this->assertMailContainsAt(2, 'im Anhang findest du zwei Bestelllisten');
         $this->assertEquals(2, count(TestEmailTransport::getMessages()[2]->getAttachments()));
         $this->assertMailSentToAt(2, Configure::read('test.loginEmailVegetableManufacturer'));
@@ -380,7 +380,7 @@ class SendOrderListsShellTest extends AppCakeTestCase
         $this->assertOrderDetailState($orderDetailId, ORDER_STATE_ORDER_LIST_SENT_TO_MANUFACTURER);
 
         $this->assertMailCount(1);
-        $this->assertMailSentWithAt(0, 'Bestellungen für den 05.08.2020', 'originalSubject');
+        $this->assertMailSubjectContainsAt(0, 'Bestellungen für den 05.08.2020');
         $this->assertMailContainsAt(0, 'im Anhang findest du zwei Bestelllisten');
         $this->assertEquals(2, count(TestEmailTransport::getMessages()[0]->getAttachments()));
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailVegetableManufacturer'));

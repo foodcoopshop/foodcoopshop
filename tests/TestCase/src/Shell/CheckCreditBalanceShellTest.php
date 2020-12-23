@@ -56,7 +56,7 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
         $this->commandRunner->run(['cake', 'check_credit_balance']);
 
         $this->assertMailCount(2);
-        $this->assertMailSentWithAt(1, 'Dein Guthaben ist aufgebraucht', 'originalSubject');
+        $this->assertMailSubjectContainsAt(1, 'Dein Guthaben ist aufgebraucht');
         $this->assertMailContainsHtmlAt(1, 'Vergiss bitte nicht, diesen Betrag <b>in unser Guthaben-System einzutragen</b>, da es ansonsten zwar auf unserem Bankkonto gutgeschrieben ist, aber nicht in deinem Guthaben-System aufscheint.');
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailCustomer'));
 
@@ -84,7 +84,7 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
 
         $this->commandRunner->run(['cake', 'check_credit_balance']);
         $this->assertMailCount(2);
-        $this->assertMailSentWithAt(1, 'Dein Guthaben ist aufgebraucht', 'originalSubject');
+        $this->assertMailSubjectContainsAt(1, 'Dein Guthaben ist aufgebraucht');
         $this->assertMailContainsHtmlAt(1, 'Es wurden alle Überweisungen bis zum 03.07.2018 20:00 berücksichtigt.');
         $this->assertMailContainsHtmlAt(1, 'Bitte überweise bald wieder ein neues Guthaben auf unser Konto und vergiss nicht, deinen persönlichen Überweisungscode anzugeben: <b>7E5D5EBD</b>');
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailCustomer'));

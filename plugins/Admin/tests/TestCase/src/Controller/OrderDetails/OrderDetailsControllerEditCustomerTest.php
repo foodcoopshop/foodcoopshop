@@ -44,7 +44,7 @@ class OrderDetailsControllerEditCustomerTest extends OrderDetailsControllerTestC
             $this->assertMailContainsHtmlAt($i, 'Das bestellte Produkt <b>Artischocke : Stück</b> wurde erfolgreich von Demo Superadmin auf das Mitglied <b>Demo Admin</b> umgebucht.');
             $this->assertMailContainsHtmlAt($i, $this->editCustomerReason);
             $this->assertMailSentToAt($i, $recipient);
-            $this->assertMailSentWithAt($i, 'Auf ein anderes Mitglied umgebucht: Artischocke : Stück', 'originalSubject');
+            $this->assertMailSubjectContainsAt($i, 'Auf ein anderes Mitglied umgebucht: Artischocke : Stück');
             $i++;
         }
     }

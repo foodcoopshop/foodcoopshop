@@ -446,7 +446,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals(1, count($pickupDayEntity));
         $this->assertEquals($pickupDay, $pickupDayEntity[0]->pickup_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database')));
 
-        $this->assertMailSentWithAt(0, 'Bestellbestätigung', 'originalSubject');
+        $this->assertMailSubjectContainsAt(0, 'Bestellbestätigung');
         $this->assertMailContainsHtmlAt(0, 'Abholtag: <b> ' . $this->Time->getDateFormattedWithWeekday(strtotime($pickupDay)) . '</b>');
         $this->assertMailContainsHtmlAt(0, 'Kommentar: "<b>' . $comment . '</b>"');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
@@ -516,7 +516,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertEquals($cart['Cart']['id_cart'], 3, 'cake cart id wrong');
         $this->assertEquals([], $cart['CartProducts'], 'cake cart products not empty');
 
-        $this->assertMailSentWithAt(0, 'Bestellbestätigung', 'originalSubject');
+        $this->assertMailSubjectContainsAt(0, 'Bestellbestätigung');
         $this->assertMailContainsHtmlAt(0, 'Hallo Demo Superadmin,');
         $this->assertMailContainsHtmlAt(0, 'Kommentar: "<b>' . $pickupDayComment . '</b>"');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
@@ -617,7 +617,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->placeOrderWithStockProducts();
 
         // check email to manufacturer
-        $this->assertMailSentWithAt(0, 'Lagerstand für Produkt "Lagerprodukt mit Varianten : 0,5 kg": 0', 'originalSubject');
+        $this->assertMailSubjectContainsAt(0, 'Lagerstand für Produkt "Lagerprodukt mit Varianten : 0,5 kg": 0');
         $this->assertMailContainsHtmlAt(0, 'Lagerstand: <b>0</b>');
         $this->assertMailContainsHtmlAt(0, 'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailVegetableManufacturer'));
@@ -626,7 +626,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailAdmin'));
 
         // check email to manufacturer
-        $this->assertMailSentWithAt(2, 'Lagerstand für Produkt "Lagerprodukt": -1', 'originalSubject');
+        $this->assertMailSubjectContainsAt(2, 'Lagerstand für Produkt "Lagerprodukt": -1');
         $this->assertMailContainsHtmlAt(2, 'Lagerstand: <b>-1</b>');
         $this->assertMailContainsHtmlAt(2, 'Bestellungen möglich bis zu einem Lagerstand von: <b>-5</b>');
         $this->assertMailSentToAt(2, Configure::read('test.loginEmailVegetableManufacturer'));
@@ -806,7 +806,7 @@ class CartsControllerTest extends AppCakeTestCase
         }
 
         $this->assertMailCount(2);
-        $this->assertMailSentWithAt(0, 'Benachrichtigung über Sofort-Bestellung', 'originalSubject');
+        $this->assertMailSubjectContainsAt(0, 'Benachrichtigung über Sofort-Bestellung');
         $this->assertMailContainsHtmlAt(0, 'Milch : 0,5l');
         $this->assertMailContainsHtmlAt(0, 'Hallo Demo,');
         $this->assertMailContainsHtmlAt(0, '1,86');

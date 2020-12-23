@@ -48,7 +48,7 @@ class OrderDetailsControllerEditQuantityTest extends OrderDetailsControllerTestC
         $this->assertEquals(0.55, $changedOrderDetails[0]->order_detail_tax->unit_amount);
         $this->assertEquals(1.10, $changedOrderDetails[0]->order_detail_tax->total_amount);
 
-        $this->assertMailSentWithAt(1, 'Gewicht angepasst für "Forelle : Stück": 800,584 g', 'originalSubject');
+        $this->assertMailSubjectContainsAt(1, 'Gewicht angepasst für "Forelle : Stück": 800,584 g');
         $this->assertMailContainsHtmlAt(1, '800,584 g');
         $this->assertMailContainsHtmlAt(1, 'Demo Superadmin');
         $this->assertMailContainsHtmlAt(1, 'Der Basis-Preis beträgt 1,50 € / 100 g');

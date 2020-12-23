@@ -309,7 +309,7 @@ class PaymentsControllerTest extends AppCakeTestCase
         $this->assertEquals(Configure::read('test.superadminId'), $newPayment->created_by);
 
         $this->assertMailCount(1);
-        $this->assertMailSentWithAt(0, 'Deine Überweisung (200,00 €) wurde ins Guthaben-System übernommen.', 'originalSubject');
+        $this->assertMailSubjectContainsAt(0, 'Deine Überweisung (200,00 €) wurde ins Guthaben-System übernommen.');
 
     }
 
