@@ -1279,7 +1279,7 @@ class ProductsTable extends AppTable
             if ($imageFromRemoteServer == 'no-image') {
                 continue;
             }
-            $remoteFile = @file_get_contents($imageFromRemoteServer);
+            $remoteFile = file_exists($imageFromRemoteServer) && file_get_contents($imageFromRemoteServer);
             if (!$remoteFile) {
                 throw new InvalidParameterException('image not found: ' . $imageFromRemoteServer);
             }
