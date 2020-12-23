@@ -136,6 +136,9 @@
     .sb-left a i:before {
         padding-right: 5px;
     }
+    #modal-image .modal-body {
+        min-height: auto;
+    }
     #modal-image .modal-dialog img {
         max-width: 100%;
     }
