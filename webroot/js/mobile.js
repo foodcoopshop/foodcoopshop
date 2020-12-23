@@ -252,7 +252,7 @@ foodcoopshop.Mobile = {
         var cartButton = $('#cart .inner .btn-success');
         cartButton.addClass('responsive-cart');
         cartButton.removeClass('btn btn-success');
-        cartButton.html('<span class="sum">' + foodcoopshop.Helper.formatFloatAsCurrency(0) + '</span><i class="fas fa-shopping-cart fa-2x"></i>');
+        cartButton.html('<span class="sum">' + foodcoopshop.Helper.formatFloatAsCurrency(0) + '</span><i class="fas fa-shopping-cart fa-2x fa-fw"></i>');
         $('#' + headerId).append(cartButton);
 
         $('#' + headerId).append($('#header .logo-wrapper'));
