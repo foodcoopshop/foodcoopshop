@@ -76,6 +76,8 @@ class MyHtmlHelper extends HtmlHelper
     public function getDeliveryRhythmString($isStockProduct, $deliveryRhythmType, $deliveryRhythmCount)
     {
 
+        $deliveryRhythmCount = (int) $deliveryRhythmCount;
+
         if ($isStockProduct) {
             $deliveryRhythmType = 'week';
             $deliveryRhythmCount = 1;
