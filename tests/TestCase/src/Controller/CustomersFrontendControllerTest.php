@@ -120,7 +120,7 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->get($this->Slug->getActivateNewPassword($customer->activate_new_password_code));
         $this->assertFlashMessage('Dein neues Passwort wurde erfolgreich aktiviert und du bist bereits eingeloggt.');
 
-        $this->assertMailSentWithAt(0, 'Neues Passwort für FoodCoop Test', 'originalSubject');
+        $this->assertMailSubjectContainsAt(0, 'Neues Passwort für FoodCoop Test');
         $this->assertMailContainsHtmlAt(0, 'Bitte klicke auf folgenden Link, um dein neues Passwort zu aktivieren');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailCustomer'));
 
@@ -193,12 +193,12 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_DEFAULT_NEW_MEMBER_ACTIVE', 0);
         $this->saveAndCheckValidCustomer($data, $email);
 
-        $this->assertMailSentWithAt(0, 'Willkommen', 'originalSubject');
+        $this->assertMailSubjectContainsAt(0, 'Willkommen');
         $this->assertMailContainsHtmlAt(0, 'war erfolgreich!');
         $this->assertMailContainsHtmlAt(0, 'Dein Mitgliedskonto ist zwar erstellt, aber noch nicht aktiviert.');
         $this->assertMailSentToAt(0, $email);
 
-        $this->assertMailSentWithAt(1, 'Neue Registrierung: John Doe', 'originalSubject');
+        $this->assertMailSubjectContainsAt(1, 'Neue Registrierung: John Doe');
         $this->assertMailContainsHtmlAt(1, 'Es gab gerade eine neue Registrierung: <b>John Doe</b>');
         $this->assertMailSentToAt(1, 'fcs-demo-superadmin@mailinator.com');
 
@@ -208,12 +208,12 @@ class CustomersFrontendControllerTest extends AppCakeTestCase
         $email = 'new-foodcoopshop-member-2@mailinator.com';
         $this->saveAndCheckValidCustomer($data, $email);
 
-        $this->assertMailSentWithAt(2, 'Willkommen', 'originalSubject');
+        $this->assertMailSubjectContainsAt(2, 'Willkommen');
         $this->assertMailContainsHtmlAt(2, 'war erfolgreich!');
         $this->assertMailContainsHtmlAt(2, 'Zum Bestellen kannst du dich hier einloggen:');
         $this->assertMailSentToAt(2, $email);
 
-        $this->assertMailSentWithAt(3, 'Neue Registrierung: John Doe', 'originalSubject');
+        $this->assertMailSubjectContainsAt(3, 'Neue Registrierung: John Doe');
         $this->assertMailContainsHtmlAt(3, 'Es gab gerade eine neue Registrierung: <b>John Doe</b>');
         $this->assertMailSentToAt(3, 'fcs-demo-superadmin@mailinator.com');
 

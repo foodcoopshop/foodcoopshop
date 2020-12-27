@@ -64,7 +64,7 @@ class PickupReminderShellTest extends AppCakeTestCase
         $this->commandRunner->run(['cake', 'pickup_reminder', '2018-03-10']);
 
         $this->assertMailCount(1);
-        $this->assertMailSentWithAt(0, 'Abhol-Erinnerung für Freitag, 16.03.2018', 'originalSubject');
+        $this->assertMailSubjectContainsAt(0, 'Abhol-Erinnerung für Freitag, 16.03.2018');
         $this->assertMailContainsHtmlAt(0, '<li>1x Beuschl, Demo Fleisch-Hersteller</li>');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
 

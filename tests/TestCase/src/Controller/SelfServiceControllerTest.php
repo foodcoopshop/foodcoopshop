@@ -119,7 +119,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
 
         $this->assertMailCount(1);
 
-        $this->assertMailSentWithAt(0, 'Dein Einkauf' , 'originalSubject');
+        $this->assertMailSubjectContainsAt(0, 'Dein Einkauf');
         $this->assertMailContainsHtmlAt(0, 'Artischocke');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
 
@@ -150,7 +150,7 @@ class SelfServiceControllerTest extends AppCakeTestCase
         }
 
         $this->assertMailCount(1);
-        $this->assertMailSentWithAt(0, 'Dein Einkauf' , 'originalSubject');
+        $this->assertMailSubjectContainsAt(0, 'Dein Einkauf');
         $this->assertMailContainsHtmlAt(0, 'Lagerprodukt mit Varianten : 1,5 kg');
         $this->assertMailContainsHtmlAt(0, 'Lagerprodukt 2 : 0,5 kg');
         $this->assertMailContainsHtmlAt(0, '15,00 €');

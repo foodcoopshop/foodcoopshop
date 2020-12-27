@@ -111,7 +111,7 @@ class OrderDetailsControllerEditPriceTest extends OrderDetailsControllerTestCase
 
     private function assertOrderDetailProductPriceChangedEmails($emailIndex, $expectedToEmails, $expectedCcEmails)
     {
-        $this->assertMailSentWithAt($emailIndex, 'Preis angepasst: Artischocke : Stück', 'originalSubject');
+        $this->assertMailSubjectContainsAt($emailIndex, 'Preis angepasst: Artischocke : Stück');
         $this->assertMailContainsHtmlAt($emailIndex, 'Der Preis des Produktes <b>Artischocke : Stück</b> wurde erfolgreich angepasst.');
         $this->assertMailContainsHtmlAt($emailIndex, $this->editPriceReason);
         $this->assertMailContainsHtmlAt($emailIndex, $this->newPrice);

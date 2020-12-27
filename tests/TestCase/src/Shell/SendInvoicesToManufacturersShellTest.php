@@ -73,7 +73,7 @@ class SendInvoicesToManufacturersShellTest extends AppCakeTestCase
         }
 
         $this->assertMailCount(4);
-        $this->assertMailSentWithAt(2, 'Rechnung Nr. 0001, ' . Configure::read('app.timeHelper')->getLastMonthNameAndYear(), 'originalSubject');
+        $this->assertMailSubjectContainsAt(2, 'Rechnung Nr. 0001, ' . Configure::read('app.timeHelper')->getLastMonthNameAndYear());
         $this->assertMailContainsAttachment('2018-03-11_Demo-Gemuese-Hersteller_5_Rechnung_0001_FoodCoop-Test.pdf');
         $this->assertMailSentToAt(2, Configure::read('test.loginEmailMeatManufacturer'));
 
@@ -102,7 +102,7 @@ class SendInvoicesToManufacturersShellTest extends AppCakeTestCase
 
         // no additional (would be 8) emails should be sent if called twice on same day
         $this->assertMailCount(6);
-        $this->assertMailSentWithAt(1, 'Rechnungen für '.$this->Time->getLastMonthNameAndYear().' wurden verschickt', 'originalSubject');
+        $this->assertMailSubjectContainsAt(1, 'Rechnungen für '.$this->Time->getLastMonthNameAndYear().' wurden verschickt');
         $this->assertMailContainsAt(1, 'dateFrom=11.03.2018');
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailSuperadmin'));
 

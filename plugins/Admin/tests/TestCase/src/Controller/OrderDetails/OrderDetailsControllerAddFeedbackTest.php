@@ -48,7 +48,7 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
         $mailIndex = 0;
         $this->assertMailSentToAt($mailIndex, Configure::read('test.loginEmailVegetableManufacturer'));
         $this->assertMailContainsHtmlAt($mailIndex, $this->orderDetailFeedback);
-        $this->assertMailSentWithAt($mailIndex, 'Demo Superadmin hat ein Feedback zum Produkt "Artischocke : Stück" verfasst.', 'originalSubject');
+        $this->assertMailSubjectContainsAt($mailIndex, 'Demo Superadmin hat ein Feedback zum Produkt "Artischocke : Stück" verfasst.');
     }
 
     public function testAddFeedbackAsCustomerForbidden()
@@ -85,7 +85,7 @@ class OrderDetailsControllerAddFeedbackTest extends OrderDetailsControllerTestCa
         $mailIndex = 0;
         $this->assertMailSentToAt($mailIndex, Configure::read('test.loginEmailVegetableManufacturer'));
         $this->assertMailContainsHtmlAt($mailIndex, $this->orderDetailFeedback);
-        $this->assertMailSentWithAt($mailIndex, 'Demo Mitglied hat ein Feedback zum Produkt "Artischocke : Stück" verfasst.', 'originalSubject');
+        $this->assertMailSubjectContainsAt($mailIndex, 'Demo Mitglied hat ein Feedback zum Produkt "Artischocke : Stück" verfasst.');
     }
 
     private function addFeedbackToOrderDetail($orderDetailId, $orderDetailFeedback)

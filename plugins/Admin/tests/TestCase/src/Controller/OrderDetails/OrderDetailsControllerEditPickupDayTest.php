@@ -53,7 +53,7 @@ class OrderDetailsControllerEditPickupDayTest extends OrderDetailsControllerTest
         $this->assertMailContainsHtmlAt(0, 'Neuer Abholtag : <b>Freitag, 07.09.2018</b>');
         $this->assertMailContainsHtmlAt(0, 'Alter Abholtag: Freitag, 02.02.2018');
         $this->assertMailSentToAt(0, Configure::read('test.loginEmailSuperadmin'));
-        $this->assertMailSentWithAt(0, 'Der Abholtag deiner Bestellung wurde geändert auf: Freitag, 07.09.2018', 'originalSubject');
+        $this->assertMailSubjectContainsAt(0, 'Der Abholtag deiner Bestellung wurde geändert auf: Freitag, 07.09.2018');
     }
 
     private function editPickupDayOfOrderDetails($orderDetailIds, $pickupDay, $reason)
