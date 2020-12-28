@@ -33,14 +33,16 @@ use Cake\Core\Configure;
             <?php echo $this->Form->control('active', ['type' => 'select', 'label' => '', 'options' => $this->MyHtml->getActiveStates(), 'default' => isset($active) ? $active : '']); ?>
             <?php echo __d('admin', 'Last_pickup_day'); ?> <?php echo $this->element('dateFields', ['dateFrom' => $dateFrom, 'dateTo' => $dateTo, 'nameFrom' => 'dateFrom', 'nameTo' => 'dateTo']); ?>
             <?php
-                echo $this->Form->control('year', [
-                    'type' => 'select',
-                    'label' => '',
-                    'empty' => __d('admin', 'Member_fee') . ' - ' . __d('admin', 'Show_all_years'),
-                    'options' => $years,
-                    'default' => $year != '' ? $year : ''
-                ]);
-            ?>
+                if (Configure::read('appDb.FCS_MEMBER_FEE_PRODUCTS') != '') {
+                    echo $this->Form->control('year', [
+                        'type' => 'select',
+                        'label' => '',
+                        'empty' => __d('admin', 'Member_fee') . ' - ' . __d('admin', 'Show_all_years'),
+                        'options' => $years,
+                        'default' => $year != '' ? $year : ''
+                    ]);
+                }
+                ?>
             <div class="right">
                 <?php echo $this->element('headerIcons', ['helperLink' => $this->Html->getDocsUrl(__d('admin', 'docs_route_members'))]); ?>
             </div>
