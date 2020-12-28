@@ -1,4 +1,4 @@
-# Changelog v1
+# Changelog v1.x
 
 Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwendet [Semantic Versioning](http://semver.org/).
 
