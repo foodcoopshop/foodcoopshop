@@ -2,6 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 
 /**
@@ -26,8 +27,13 @@ class Product extends Entity
 
     protected function _getNextDeliveryDay()
     {
-        $productTable = FactoryLocator::get('Table')->get('Products');
-        return $productTable->calculatePickupDayRespectingDeliveryRhythm($this);
+        if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
+            $pickupDay = Configure::read('app.timeHelper')->getCurrentDateForDatabase();
+        } else {
+            $productTable = FactoryLocator::get('Table')->get('Products');
+            $pickupDay = $productTable->calculatePickupDayRespectingDeliveryRhythm($this);
+        }
+        return $pickupDay;
     }
 
 }
