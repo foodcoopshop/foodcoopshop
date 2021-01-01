@@ -157,8 +157,9 @@ class InvoicesControllerTest extends AppCakeTestCase
 
         $currentDay = Configure::read('app.timeHelper')->getCurrentDateTimeForDatabase();
         $formattedCurrentDay = Configure::read('app.timeHelper')->formatToDateShort($currentDay);
-        $this->assertMailSubjectContainsAt(1, 'Rechnung Nr. 2020-000001, ' . $formattedCurrentDay);
-        $this->assertMailSubjectContainsAt(2, 'Storno-Rechnung Nr. 2020-000002, ' . $formattedCurrentDay);
+        $currentYear = date('Y', strtotime($currentDay));
+        $this->assertMailSubjectContainsAt(1, 'Rechnung Nr. ' . $currentYear . '-000001, ' . $formattedCurrentDay);
+        $this->assertMailSubjectContainsAt(2, 'Storno-Rechnung Nr. ' . $currentYear . '-000002, ' . $formattedCurrentDay);
 
     }
 
