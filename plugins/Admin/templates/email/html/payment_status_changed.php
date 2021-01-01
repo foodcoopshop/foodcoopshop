@@ -48,7 +48,7 @@ use Cake\Core\Configure;
 
             <p>
                 <?php echo __d('admin', 'Here_you_find_the_link_to_add_the_credit:'); ?><br />
-                <a href="<?php echo Configure::read('app.cakeServerName').'/admin/payments/product'; ?>"><?php echo Configure::read('app.cakeServerName').'/admin/payments/product'; ?></a>
+                <a href="<?php echo Configure::read('app.cakeServerName') . $this->Slug->getMyCreditBalance(); ?>"><?php echo Configure::read('app.cakeServerName') . $this->Slug->getMyCreditBalance(); ?></a>
             </p>
 
         </td>
