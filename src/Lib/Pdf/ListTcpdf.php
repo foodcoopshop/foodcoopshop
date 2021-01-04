@@ -344,17 +344,16 @@ class ListTcpdf extends AppTcpdf
         $this->setFontSize(10);
 
         $convertedHeaderRight = '<br />'.Configure::read('appDb.FCS_APP_NAME').'<br />'.Configure::read('appDb.FCS_APP_ADDRESS').'<br />'.Configure::read('appDb.FCS_APP_EMAIL');
-        $convertedHeaderRight = Configure::read('app.htmlHelper')->prepareDbTextForPDF($convertedHeaderRight);
 
         // add additional line break on top if short address
         $lineCount = substr_count($convertedHeaderRight, "\n");
         if ($lineCount < 5) {
-            $convertedHeaderRight = "\n" . $convertedHeaderRight;
+            $convertedHeaderRight = '<br />' . $convertedHeaderRight;
         }
 
         $this->headerRight = $convertedHeaderRight;
 
-        $this->MultiCell(145 - $this->lMargin, 0, $this->headerRight, 0, 'R', 0, 1, '', '', true);
+        $this->MultiCell(145 - $this->lMargin, 0, $this->headerRight, 0, 'R', 0, 1, '', '', true, null, true);
 
         $this->SetY(36);
         $this->drawLine();

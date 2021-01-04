@@ -404,13 +404,6 @@ class MyHtmlHelper extends HtmlHelper
         return Configure::read('appDb.FCS_APP_EMAIL');
     }
 
-    public function prepareDbTextForPDF($string)
-    {
-        $string = self::br2nl($string);
-        $string = html_entity_decode($string);
-        return $string;
-    }
-
     public function getMenuTypes()
     {
         return [

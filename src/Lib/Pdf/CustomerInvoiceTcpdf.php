@@ -193,17 +193,17 @@ class CustomerInvoiceTcpdf extends AppTcpdf
         $this->MultiCell(50, 0, '<img src="' . $this->logoPath . '">', 0, 'L', 0, 0, '', '', true, null, true);
         $this->setFontSize(10);
 
-        $convertedHeaderRight = Configure::read('app.htmlHelper')->prepareDbTextForPDF(Configure::read('appDb.FCS_INVOICE_HEADER_TEXT'));
+        $convertedHeaderRight = Configure::read('appDb.FCS_INVOICE_HEADER_TEXT');
 
         // add additional line break on top if short address
         $lineCount = substr_count($convertedHeaderRight, "\n");
         if ($lineCount < 5) {
-            $convertedHeaderRight = "\n" . $convertedHeaderRight;
+            $convertedHeaderRight = '<br />' . $convertedHeaderRight;
         }
 
         $this->headerRight = $convertedHeaderRight;
 
-        $this->MultiCell(145 - $this->lMargin, 0, $this->headerRight, 0, 'R', 0, 1, '', '', true);
+        $this->MultiCell(145 - $this->lMargin, 0, $this->headerRight, 0, 'R', 0, 1, '', '', true, null, true);
 
         $this->SetY(36);
         $this->drawLine();
