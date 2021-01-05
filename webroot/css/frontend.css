@@ -1224,8 +1224,7 @@ body.customers.registration_successful #inner-content h2.further-news {
     margin-bottom: 0;
 }
 #inner-content ul,
-#info-box ul,
-#flashMessage ul {
+#info-box ul {
   padding-left: 10px;
   margin-left: 10px;
   margin-top: 10px;
@@ -1234,9 +1233,6 @@ body.customers.registration_successful #inner-content h2.further-news {
 #info-box li {
     list-style-type: disc;
     line-height: 23px;
-}
-#flashMessage li {
-    list-style-type: disc;
 }
 #info-box li {
     line-height: 19px;

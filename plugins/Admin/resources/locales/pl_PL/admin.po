@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-20 19:52+0100\n"
+"POT-Creation-Date: 2021-01-05 11:51+0100\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -181,6 +181,9 @@ msgstr "Suma rekompensat kaucji dla producentów"
 #, fuzzy
 msgid "Credit_and_deposit_balance"
 msgstr "Twoje saldo wkładów"
+
+msgid "Member_fee"
+msgstr "Opłata członkowska"
 
 #, fuzzy
 msgid "Deposit_overview"
@@ -365,6 +368,16 @@ msgstr "Produkt został zmodyfikowany poprawnie."
 msgid "The_pickup_day_comment_of_{0}_was_changed:"
 msgstr "Komentarz {0} do dnia odbioru został zmieniony:"
 
+#, fuzzy
+msgid "The_customer_{0}_still_has_{1,plural,=1{1_product} other{#_products}}_with_unchanged_weight."
+msgstr "{0,plural,=1{1 produkt} other{# produkty}}"
+
+msgid "The_following_customers_still_have_products_with_unchanged_weight:"
+msgstr ""
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr "{0,plural,=1{1 produkt} other{# produkty}}"
+
 msgid "Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled."
 msgstr "Product {0} (manufacturer: {1}, price {2}) from {2} was successfully cancelled."
 
@@ -436,9 +449,6 @@ msgstr "Płatność ({0}, {1}) została usunięta pomyślnie."
 
 msgid "The_payment_({0}_{1})_of_{2}_was_removed_successfully."
 msgstr "Płatność ({0}, {1}) z {2} została usunięta pomyślnie."
-
-msgid "Member_fee"
-msgstr "Opłata członkowska"
 
 msgid "Credit"
 msgstr ""
@@ -1044,6 +1054,10 @@ msgstr "Usunąć nieodwracalnie konto?"
 msgid "Last_pickup_day"
 msgstr "Ostatni dzień odbioru"
 
+#, fuzzy
+msgid "Show_all_years"
+msgstr "Pokaż wszystkie zamówienia od {0}"
+
 msgid "Group"
 msgstr "Grupa"
 
@@ -1509,9 +1523,6 @@ msgstr "Otw. zam."
 msgid "Settings_abbreviation"
 msgstr "Ust."
 
-msgid "{0,plural,=1{1_product} other{#_products}}"
-msgstr "{0,plural,=1{1 produkt} other{# produkty}}"
-
 msgid "Show_all_products_from_{0}"
 msgstr "Pokaż wszystkie produkty od {0}"
 
@@ -1747,10 +1758,6 @@ msgstr "Pozycja"
 
 msgid "Delete_slider_image?"
 msgstr "Usunąć obraz suwaka?"
-
-#, fuzzy
-msgid "Show_all_years"
-msgstr "Pokaż wszystkie zamówienia od {0}"
 
 #, fuzzy
 msgid "No_turnover_available."

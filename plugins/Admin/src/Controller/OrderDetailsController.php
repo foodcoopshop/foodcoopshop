@@ -1340,23 +1340,71 @@ class OrderDetailsController extends AdminAppController
         $this->RequestHandler->renderAs($this, 'json');
 
         $customerIds = $this->getRequest()->getData('customerIds');
-        $state = $this->getRequest()->getData('state');
+        $state = (int) $this->getRequest()->getData('state');
         $pickupDay = $this->getRequest()->getData('pickupDay');
         $pickupDay = Configure::read('app.timeHelper')->formatToDbFormatDate($pickupDay);
 
+        $this->OrderDetail = $this->getTableLocator()->get('OrderDetails');
         $this->PickupDay = $this->getTableLocator()->get('PickupDays');
         $this->PickupDay->setPrimaryKey(['customer_id', 'pickup_day']);
 
+        $errorMessages = [];
         foreach($customerIds as $customerId) {
+
+            if ($state) {
+
+                $orderDetailsWithUnchangedWeight = $this->OrderDetail->find('all', [
+                    'conditions' => [
+                        'OrderDetails.id_customer' => $customerId,
+                        'OrderDetails.pickup_day' => $pickupDay,
+                        'OrderDetailUnits.mark_as_saved' => APP_OFF,
+                    ],
+                    'contain' => [
+                        'OrderDetailUnits',
+                        'Customers',
+                    ]
+                ])->toArray();
+
+                if (count($orderDetailsWithUnchangedWeight) > 0) {
+                    $errorMessages[] = [
+                        'customerName' => $orderDetailsWithUnchangedWeight[0]->customer->name,
+                        'orderDetailsWithUnchangedWeight' => count($orderDetailsWithUnchangedWeight),
+                    ];
+                }
+
+            }
+
             $result = $this->PickupDay->insertOrUpdate(
                 [
                     'customer_id' => $customerId,
                     'pickup_day' => $pickupDay
                 ],
                 [
-                    'products_picked_up' => $state
+                    'products_picked_up' => $state,
                 ]
             );
+        }
+
+        if (!empty($errorMessages)) {
+            if (count($errorMessages) == 1) {
+                $message = __d('admin', 'The_customer_{0}_still_has_{1,plural,=1{1_product} other{#_products}}_with_unchanged_weight.', [
+                    '<b>' . $errorMessages[0]['customerName'] . '</b>',
+                    $errorMessages[0]['orderDetailsWithUnchangedWeight'],
+                ]);
+            } else {
+                $message = __d('admin', 'The_following_customers_still_have_products_with_unchanged_weight:');
+                $message .= '<ul>';
+                foreach($errorMessages as $errorMessage) {
+                    $message .= '<li>';
+                        $message .= '<b>' . $errorMessage['customerName'] . '</b>: ';
+                        $message .= __d('admin', '{0,plural,=1{1_product} other{#_products}}', [
+                            $errorMessage['orderDetailsWithUnchangedWeight'],
+                        ]);
+                    $message .= '</li>';
+                }
+                $message .= '</ul>';
+            }
+            $this->Flash->error($message);
         }
 
         $message = '';

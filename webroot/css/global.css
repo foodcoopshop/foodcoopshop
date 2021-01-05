@@ -222,6 +222,14 @@ h2.info2 {
     margin-top: 6px;
     width: 48%;
 }
+#flashMessage ul {
+  padding-left: 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+#flashMessage li {
+    list-style-type: disc;
+}
 .vertical.menu {
     width: 145px;
     background: #efefef;

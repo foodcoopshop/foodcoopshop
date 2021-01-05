@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-20 19:52+0100\n"
+"POT-Creation-Date: 2021-01-05 11:51+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -176,6 +176,9 @@ msgstr ""
 msgid "Credit_and_deposit_balance"
 msgstr ""
 
+msgid "Member_fee"
+msgstr ""
+
 msgid "Deposit_overview"
 msgstr ""
 
@@ -344,6 +347,15 @@ msgstr ""
 msgid "The_pickup_day_comment_of_{0}_was_changed:"
 msgstr ""
 
+msgid "The_customer_{0}_still_has_{1,plural,=1{1_product} other{#_products}}_with_unchanged_weight."
+msgstr ""
+
+msgid "The_following_customers_still_have_products_with_unchanged_weight:"
+msgstr ""
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr ""
+
 msgid "Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled."
 msgstr ""
 
@@ -408,9 +420,6 @@ msgid "The_payment_({0}_{1})_was_removed_successfully."
 msgstr ""
 
 msgid "The_payment_({0}_{1})_of_{2}_was_removed_successfully."
-msgstr ""
-
-msgid "Member_fee"
 msgstr ""
 
 msgid "Credit"
@@ -1001,6 +1010,9 @@ msgstr ""
 msgid "Last_pickup_day"
 msgstr ""
 
+msgid "Show_all_years"
+msgstr ""
+
 msgid "Group"
 msgstr ""
 
@@ -1445,9 +1457,6 @@ msgstr ""
 msgid "Settings_abbreviation"
 msgstr ""
 
-msgid "{0,plural,=1{1_product} other{#_products}}"
-msgstr ""
-
 msgid "Show_all_products_from_{0}"
 msgstr ""
 
@@ -1677,9 +1686,6 @@ msgid "Rank"
 msgstr ""
 
 msgid "Delete_slider_image?"
-msgstr ""
-
-msgid "Show_all_years"
 msgstr ""
 
 msgid "No_turnover_available."

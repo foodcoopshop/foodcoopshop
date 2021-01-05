@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-20 19:52+0100\n"
-"PO-Revision-Date: 2020-12-20 19:54+0100\n"
+"POT-Creation-Date: 2021-01-05 11:51+0100\n"
+"PO-Revision-Date: 2021-01-05 11:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -177,6 +177,9 @@ msgstr "Summe der geleisteten Pfand-Ausgleichszahlungen für Hersteller"
 msgid "Credit_and_deposit_balance"
 msgstr "Guthaben- und Pfand-Saldo"
 
+msgid "Member_fee"
+msgstr "Mitgliedsbeitrag"
+
 msgid "Deposit_overview"
 msgstr "Pfand-Übersicht"
 
@@ -345,6 +348,15 @@ msgstr "Danke für dein Feedback! Es wurde erfolgreich gespeichert und an {0} ve
 msgid "The_pickup_day_comment_of_{0}_was_changed:"
 msgstr "Der Abholtag-Kommentar des Mitglieds {0} wurde geändert: "
 
+msgid "The_customer_{0}_still_has_{1,plural,=1{1_product} other{#_products}}_with_unchanged_weight."
+msgstr "Das Gewicht wurde bei {1,plural,=1{1 Produkt} other{# Produkten}}</b> noch nicht angepasst. Mitglied: {0}"
+
+msgid "The_following_customers_still_have_products_with_unchanged_weight:"
+msgstr "Bei folgenden Mitgliedern wurde bei den Produkten das Gewicht noch nicht angepasst."
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr "{0,plural,=1{1 Produkt} other{# Produkte}}"
+
 msgid "Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled."
 msgstr "Produkt {0} (Hersteller: {1}, Preis: {2}) vom {3} wurde erfolgreich storniert."
 
@@ -410,9 +422,6 @@ msgstr "Die Zahlung ({0}, {1}) wurde erfolgreich gelöscht."
 
 msgid "The_payment_({0}_{1})_of_{2}_was_removed_successfully."
 msgstr "Die Zahlung ({0}, {1}) von {2} wurde erfolgreich gelöscht."
-
-msgid "Member_fee"
-msgstr "Mitgliedsbeitrag"
 
 msgid "Credit"
 msgstr "Guthaben"
@@ -1002,6 +1011,9 @@ msgstr "Mitgliedskonto unwiderruflich löschen?"
 msgid "Last_pickup_day"
 msgstr "Letzter Abholtag"
 
+msgid "Show_all_years"
+msgstr "Alle Jahre anzeigen"
+
 msgid "Group"
 msgstr "Gruppe"
 
@@ -1446,9 +1458,6 @@ msgstr "OB"
 msgid "Settings_abbreviation"
 msgstr "Opt."
 
-msgid "{0,plural,=1{1_product} other{#_products}}"
-msgstr "{0,plural,=1{1 Produkt} other{# Produkte}}"
-
 msgid "Show_all_products_from_{0}"
 msgstr "Alle Produkte von {0} anzeigen"
 
@@ -1679,9 +1688,6 @@ msgstr "Reihenfolge"
 
 msgid "Delete_slider_image?"
 msgstr "Slideshow-Bild löschen?"
-
-msgid "Show_all_years"
-msgstr "Alle Jahre anzeigen"
 
 msgid "No_turnover_available."
 msgstr "Kein Umsatz vorhanden."
