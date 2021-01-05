@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-12-20 19:52+0100\n"
-"PO-Revision-Date: 2020-12-20 19:53+0100\n"
+"POT-Creation-Date: 2021-01-05 11:51+0100\n"
+"PO-Revision-Date: 2021-01-05 12:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -177,6 +177,9 @@ msgstr "Sum of compensation payments for manufacturers"
 msgid "Credit_and_deposit_balance"
 msgstr "Credit and deposit balance"
 
+msgid "Member_fee"
+msgstr "Member fee"
+
 msgid "Deposit_overview"
 msgstr "Deposit overview"
 
@@ -345,6 +348,15 @@ msgstr "Thanks for your feedback! It was successfully saved and sent to {0}."
 msgid "The_pickup_day_comment_of_{0}_was_changed:"
 msgstr "The pickup day comment {0} was changed:"
 
+msgid "The_customer_{0}_still_has_{1,plural,=1{1_product} other{#_products}}_with_unchanged_weight."
+msgstr "The member {0} still has {1,plural,=1{1_product} other{#_products}} with unchanged weight."
+
+msgid "The_following_customers_still_have_products_with_unchanged_weight:"
+msgstr "The following customers still have products with unchanged weight:"
+
+msgid "{0,plural,=1{1_product} other{#_products}}"
+msgstr "{0,plural,=1{1 product} other{# products}}"
+
 msgid "Product_{0}_from_manufacturer_{1}_with_a_price_of_{2}_ordered_on_{3}_was_successfully_cancelled."
 msgstr "Product {0} (manufacturer: {1}, price {2}) from {2} was successfully cancelled."
 
@@ -410,9 +422,6 @@ msgstr "The payment ({0}, {1}) was removed successfully."
 
 msgid "The_payment_({0}_{1})_of_{2}_was_removed_successfully."
 msgstr "The payment ({0}, {1}) of {2} was removed successfully."
-
-msgid "Member_fee"
-msgstr "Member fee"
 
 msgid "Credit"
 msgstr "Credit"
@@ -1002,6 +1011,9 @@ msgstr "Delete account irrevocably?"
 msgid "Last_pickup_day"
 msgstr "Last pickup day"
 
+msgid "Show_all_years"
+msgstr "Show all years"
+
 msgid "Group"
 msgstr "Group"
 
@@ -1446,9 +1458,6 @@ msgstr "Oo"
 msgid "Settings_abbreviation"
 msgstr "Set."
 
-msgid "{0,plural,=1{1_product} other{#_products}}"
-msgstr "{0,plural,=1{1 product} other{# products}}"
-
 msgid "Show_all_products_from_{0}"
 msgstr "Show all products from {0}"
 
@@ -1679,9 +1688,6 @@ msgstr "Rank"
 
 msgid "Delete_slider_image?"
 msgstr "Delete slider image?"
-
-msgid "Show_all_years"
-msgstr "Show all years"
 
 msgid "No_turnover_available."
 msgstr "No turnover available."
