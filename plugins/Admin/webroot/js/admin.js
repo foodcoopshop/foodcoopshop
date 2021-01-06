@@ -25,6 +25,33 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
 
+    initKeepSelectedCheckbox : function(preselectedOrderDetailIds) {
+
+        if (preselectedOrderDetailIds) {
+            preselectedOrderDetailIds = $.parseJSON(preselectedOrderDetailIds);
+            for (var i in preselectedOrderDetailIds) {
+                $('#row-marker-' + preselectedOrderDetailIds[i]).trigger('click');
+            };
+        }
+
+        $('.row-marker').on('click', function() {
+            foodcoopshop.Helper.ajaxCall(
+                '/admin/order-details/keep-selected-checkbox',
+                {
+                    'selectedOrderDetailIds' : foodcoopshop.Admin.getSelectedOrderDetailIds(),
+                    'unselectedOrderDetailIds' : foodcoopshop.Admin.getUnselectedOrderDetailIds(),
+                },
+                {
+                    onOk: function (data) {
+                    },
+                    onError: function (data) {
+                        console.log(data.msg);
+                    }
+            });
+        });
+
+    },
+
     initDownloadInvoicesAsZipFile : function() {
         $('.btn-download-invoices-as-zip-file').on('click', function() {
             var url = '/admin/invoices/download-as-zip-file/?dateFrom=' + $('input[name="dateFrom"]').val() + '&dateTo=' + $('input[name="dateTo"]').val() + '&customerId=' + $('#customerid').val();
@@ -65,6 +92,15 @@ foodcoopshop.Admin = {
             }
         });
         return rowMarkerAll;
+    },
+
+    getUnselectedOrderDetailIds : function() {
+        var orderDetailIds = [];
+        $('table.list').find('input.row-marker[type="checkbox"]').not(':checked').each(function () {
+            var orderDetailId = $(this).closest('tr').find('td:nth-child(2)').html();
+            orderDetailIds.push(orderDetailId);
+        });
+        return orderDetailIds;
     },
 
     getSelectedOrderDetailIds : function() {

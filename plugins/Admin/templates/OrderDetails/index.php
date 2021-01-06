@@ -40,6 +40,7 @@ use Cake\Core\Configure;
         $this->element('addScript', [
             'script' =>
             Configure::read('app.jsNamespace').".Helper.initTooltip('.product-feedback-button');" .
+            Configure::read('app.jsNamespace').".Admin.initKeepSelectedCheckbox(".($this->request->getSession()->check('SelectedOrderDetailIds') ? "'" . json_encode($this->request->getSession()->read('SelectedOrderDetailIds')) . "'" : null) . ");" .
             Configure::read('app.jsNamespace').".ModalOrderDetailDelete.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailFeedbackAdd.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailProductPriceEdit.init();" .
@@ -159,7 +160,8 @@ foreach ($orderDetails as $orderDetail) {
     echo '<tr class="data ' . (!empty($rowClasses) ? implode(' ', $rowClasses) : '') . '">';
 
     echo $this->element('rowMarker/rowMarker', [
-        'show' => $editRecordAllowed
+        'show' => $editRecordAllowed,
+        'id' => $orderDetail->id_order_detail ?? '',
     ]);
 
     echo $this->element('orderDetailList/data/id', [
