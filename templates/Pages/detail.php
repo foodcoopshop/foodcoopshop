@@ -51,3 +51,5 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
 }
 
 echo $page->content;
+
+echo '<p><i>'.__('Modified_on'). ' ' . $page->modified->i18nFormat(Configure::read('app.timeHelper')->getI18Format('DateNTimeShort')).'</p>';
