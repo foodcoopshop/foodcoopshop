@@ -40,7 +40,6 @@ use Cake\Core\Configure;
         $this->element('addScript', [
             'script' =>
             Configure::read('app.jsNamespace').".Helper.initTooltip('.product-feedback-button');" .
-            Configure::read('app.jsNamespace').".Admin.initKeepSelectedCheckbox(".($this->request->getSession()->check('SelectedOrderDetailIds') ? "'" . json_encode($this->request->getSession()->read('SelectedOrderDetailIds')) . "'" : null) . ");" .
             Configure::read('app.jsNamespace').".ModalOrderDetailDelete.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailFeedbackAdd.init();" .
             Configure::read('app.jsNamespace').".ModalOrderDetailProductPriceEdit.init();" .
@@ -356,3 +355,12 @@ echo $this->TimebasedCurrency->getOrderInformationText($timebasedCurrencyOrderDe
     <div class="sc"></div>
 
 </div>
+<?php
+    if ($groupBy == '') {
+        $this->element('addScript', [
+            'script' =>
+            // needs to be rendered after button js
+            Configure::read('app.jsNamespace').".Admin.initKeepSelectedCheckbox();"
+        ]);
+    }
+?>

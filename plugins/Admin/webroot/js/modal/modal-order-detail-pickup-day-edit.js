@@ -80,7 +80,24 @@ foodcoopshop.ModalOrderDetailPickupDayEdit = {
             },
             {
                 onOk: function (data) {
+
+                    var cookieName = 'SelectedOrderDetailIds';
+                    var preselectedOrderDetailIds = Cookies.get(cookieName);
+                    if (preselectedOrderDetailIds) {
+                        preselectedOrderDetailIds = $.parseJSON(preselectedOrderDetailIds);
+                    }
+                    var selectedOrderDetailIds = preselectedOrderDetailIds;
+                    var unselectedOrderDetailIds = orderDetailIds;
+                    for (var index in unselectedOrderDetailIds) {
+                        var removeId = unselectedOrderDetailIds[index];
+                        selectedOrderDetailIds = $.grep(selectedOrderDetailIds, function(value) {
+                            return value != removeId;
+                        });
+                    }
+                    Cookies.set(cookieName, selectedOrderDetailIds, { expires: 1 });
+
                     document.location.reload();
+
                 },
                 onError: function (data) {
                     foodcoopshop.Modal.appendFlashMessage(modalSelector, data.msg);

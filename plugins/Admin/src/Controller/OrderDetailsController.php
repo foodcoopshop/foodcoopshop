@@ -145,41 +145,6 @@ class OrderDetailsController extends AdminAppController
         return $sortDirection;
     }
 
-    public function keepSelectedCheckbox()
-    {
-        $this->RequestHandler->renderAs($this, 'json');
-
-        $selectedOrderDetailIds = $this->getRequest()->getData('selectedOrderDetailIds');
-        $unselectedOrderDetailIds = $this->getRequest()->getData('unselectedOrderDetailIds');
-
-        $combinedOrderDetailIds = $selectedOrderDetailIds;
-        $allSelectedOrderDetails = $this->request->getSession()->read('SelectedOrderDetailIds');
-        if (is_array($allSelectedOrderDetails) && is_array($selectedOrderDetailIds)) {
-            $combinedOrderDetailIds = array_merge($selectedOrderDetailIds, $allSelectedOrderDetails);
-        }
-
-        if (!empty($combinedOrderDetailIds)) {
-            $combinedOrderDetailIds = array_unique($combinedOrderDetailIds);
-        }
-
-        if (is_array($unselectedOrderDetailIds) && is_array($combinedOrderDetailIds)) {
-            foreach($combinedOrderDetailIds as $index => $orderDetailId) {
-                if (in_array($orderDetailId, $unselectedOrderDetailIds)) {
-                    unset($combinedOrderDetailIds[$index]);
-                }
-            }
-        }
-
-        $this->request->getSession()->write('SelectedOrderDetailIds', $combinedOrderDetailIds);
-
-        $this->set([
-            'status' => 1,
-            'msg' => 'ok',
-            'orderDetailIds' => $combinedOrderDetailIds,
-        ]);
-        $this->viewBuilder()->setOption('serialize', ['status', 'msg', 'orderDetailIds']);
-    }
-
     /**
      * Helper method if invoices was already generated but tax was wrong
      *
@@ -1209,17 +1174,6 @@ class OrderDetailsController extends AdminAppController
                     $customers[$orderDetail->id_customer] = [];
                 }
                 $customers[$orderDetail->id_customer][] = $orderDetail;
-            }
-
-            // remove changed order details from preselected ones
-            $allSelectedOrderDetails = $this->request->getSession()->read('SelectedOrderDetailIds');
-            if (!empty($allSelectedOrderDetails)) {
-                foreach($allSelectedOrderDetails as $index => $orderDetailId) {
-                    if (in_array($orderDetailId, $orderDetailIds)) {
-                        unset($allSelectedOrderDetails[$index]);
-                    }
-                }
-                $this->request->getSession()->write('SelectedOrderDetailIds', $allSelectedOrderDetails);
             }
 
             foreach($customers as $orderDetails) {

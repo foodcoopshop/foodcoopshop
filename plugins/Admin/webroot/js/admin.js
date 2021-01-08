@@ -25,29 +25,36 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
 
-    initKeepSelectedCheckbox : function(preselectedOrderDetailIds) {
+    initKeepSelectedCheckbox : function() {
 
+        var cookieName = 'SelectedOrderDetailIds';
+        var preselectedOrderDetailIds = Cookies.get(cookieName);
         if (preselectedOrderDetailIds) {
             preselectedOrderDetailIds = $.parseJSON(preselectedOrderDetailIds);
-            for (var i in preselectedOrderDetailIds) {
-                $('#row-marker-' + preselectedOrderDetailIds[i]).trigger('click');
-            };
+        }
+        for (var i in preselectedOrderDetailIds) {
+            $('#row-marker-' + preselectedOrderDetailIds[i]).trigger('click');
         }
 
         $('.row-marker').on('click', function() {
-            foodcoopshop.Helper.ajaxCall(
-                '/admin/order-details/keep-selected-checkbox',
-                {
-                    'selectedOrderDetailIds' : foodcoopshop.Admin.getSelectedOrderDetailIds(),
-                    'unselectedOrderDetailIds' : foodcoopshop.Admin.getUnselectedOrderDetailIds(),
-                },
-                {
-                    onOk: function (data) {
-                    },
-                    onError: function (data) {
-                        console.log(data.msg);
-                    }
-            });
+
+            var selectedOrderDetailIds = foodcoopshop.Admin.getSelectedOrderDetailIds();
+
+            if (preselectedOrderDetailIds) {
+                selectedOrderDetailIds = $.merge(preselectedOrderDetailIds, selectedOrderDetailIds);
+            }
+            selectedOrderDetailIds = foodcoopshop.Helper.unique(selectedOrderDetailIds);
+
+            var unselectedOrderDetailIds = foodcoopshop.Admin.getUnselectedOrderDetailIds();
+            for (var index in unselectedOrderDetailIds) {
+                var removeId = unselectedOrderDetailIds[index];
+                selectedOrderDetailIds = $.grep(selectedOrderDetailIds, function(value) {
+                    return value != removeId;
+                });
+            }
+
+            Cookies.set(cookieName, selectedOrderDetailIds, { expires: 1 });
+
         });
 
     },
