@@ -9,6 +9,7 @@ module.exports = {
         "Chart": true,
         "CKEDITOR": true,
         "ClipboardJS": true,
+        "Cookies": true,
         "foodcoopshop": true,
         "Quagga": true,
         "slidebars": true,

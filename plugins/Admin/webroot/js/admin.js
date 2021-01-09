@@ -25,6 +25,40 @@ foodcoopshop.Admin = {
         foodcoopshop.Helper.initScrolltopButton();
     },
 
+    initKeepSelectedCheckbox : function() {
+
+        var cookieName = 'SelectedOrderDetailIds';
+        var preselectedOrderDetailIds = Cookies.get(cookieName);
+        if (preselectedOrderDetailIds) {
+            preselectedOrderDetailIds = $.parseJSON(preselectedOrderDetailIds);
+        }
+        for (var i in preselectedOrderDetailIds) {
+            $('#row-marker-' + preselectedOrderDetailIds[i]).trigger('click');
+        }
+
+        $('.row-marker').on('click', function() {
+
+            var selectedOrderDetailIds = foodcoopshop.Admin.getSelectedOrderDetailIds();
+
+            if (preselectedOrderDetailIds) {
+                selectedOrderDetailIds = $.merge(preselectedOrderDetailIds, selectedOrderDetailIds);
+            }
+            selectedOrderDetailIds = foodcoopshop.Helper.unique(selectedOrderDetailIds);
+
+            var unselectedOrderDetailIds = foodcoopshop.Admin.getUnselectedOrderDetailIds();
+            for (var index in unselectedOrderDetailIds) {
+                var removeId = unselectedOrderDetailIds[index];
+                selectedOrderDetailIds = $.grep(selectedOrderDetailIds, function(value) {
+                    return value != removeId;
+                });
+            }
+
+            Cookies.set(cookieName, selectedOrderDetailIds, { expires: 1 });
+
+        });
+
+    },
+
     initDownloadInvoicesAsZipFile : function() {
         $('.btn-download-invoices-as-zip-file').on('click', function() {
             var url = '/admin/invoices/download-as-zip-file/?dateFrom=' + $('input[name="dateFrom"]').val() + '&dateTo=' + $('input[name="dateTo"]').val() + '&customerId=' + $('#customerid').val();
@@ -65,6 +99,15 @@ foodcoopshop.Admin = {
             }
         });
         return rowMarkerAll;
+    },
+
+    getUnselectedOrderDetailIds : function() {
+        var orderDetailIds = [];
+        $('table.list').find('input.row-marker[type="checkbox"]').not(':checked').each(function () {
+            var orderDetailId = $(this).closest('tr').find('td:nth-child(2)').html();
+            orderDetailIds.push(orderDetailId);
+        });
+        return orderDetailIds;
     },
 
     getSelectedOrderDetailIds : function() {

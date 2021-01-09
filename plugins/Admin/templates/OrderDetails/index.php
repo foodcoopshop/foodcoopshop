@@ -159,7 +159,8 @@ foreach ($orderDetails as $orderDetail) {
     echo '<tr class="data ' . (!empty($rowClasses) ? implode(' ', $rowClasses) : '') . '">';
 
     echo $this->element('rowMarker/rowMarker', [
-        'show' => $editRecordAllowed
+        'show' => $editRecordAllowed,
+        'id' => $orderDetail->id_order_detail ?? '',
     ]);
 
     echo $this->element('orderDetailList/data/id', [
@@ -354,3 +355,12 @@ echo $this->TimebasedCurrency->getOrderInformationText($timebasedCurrencyOrderDe
     <div class="sc"></div>
 
 </div>
+<?php
+    if ($groupBy == '') {
+        $this->element('addScript', [
+            'script' =>
+            // needs to be rendered after button js
+            Configure::read('app.jsNamespace').".Admin.initKeepSelectedCheckbox();"
+        ]);
+    }
+?>

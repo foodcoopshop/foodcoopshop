@@ -15,7 +15,7 @@
 
 echo '<td style="text-align: center;">';
 if ($show) {
-    echo '<input type="checkbox" class="row-marker" />';
+    echo '<input ' . (isset($id) ? 'id="row-marker-' . $id . '"' : '') . ' type="checkbox" class="row-marker" />';
 }
 echo '</td>';
 ?>
