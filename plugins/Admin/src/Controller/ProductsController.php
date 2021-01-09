@@ -1206,7 +1206,7 @@ class ProductsController extends AdminAppController
 
         $manufacturerId = '';
         if (! empty($this->getRequest()->getQuery('manufacturerId'))) {
-            $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
+            $manufacturerId = (int) h($this->getRequest()->getQuery('manufacturerId'));
         }
 
         // always filter by manufacturer id so that no other products than the own are shown
