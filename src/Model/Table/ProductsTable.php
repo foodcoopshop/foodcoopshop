@@ -1282,7 +1282,7 @@ class ProductsTable extends AppTable
 
             if (filter_var($imageFromRemoteServer, FILTER_VALIDATE_URL)) {
                 $fileHeaders = get_headers($imageFromRemoteServer);
-                if($fileHeaders[0] == 'HTTP/1.1 404 Not Found') {
+                if(isset($fileHeaders[0]) && $fileHeaders[0] == 'HTTP/1.1 404 Not Found') {
                     throw new InvalidParameterException('remote image not existing: ' . $imageFromRemoteServer);
                 }
             } else {
