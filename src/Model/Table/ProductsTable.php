@@ -4,6 +4,7 @@ namespace App\Model\Table;
 
 use App\Controller\Component\StringComponent;
 use App\Lib\Error\Exception\InvalidParameterException;
+use App\Lib\RemoteFile\RemoteFile;
 use Cake\Core\Configure;
 use Cake\Filesystem\Folder;
 use Cake\Datasource\FactoryLocator;
@@ -1281,8 +1282,7 @@ class ProductsTable extends AppTable
             }
 
             if (filter_var($imageFromRemoteServer, FILTER_VALIDATE_URL)) {
-                $fileHeaders = get_headers($imageFromRemoteServer);
-                if(isset($fileHeaders[0]) && $fileHeaders[0] == 'HTTP/1.1 404 Not Found') {
+                if (!RemoteFile::exists($imageFromRemoteServer)) {
                     throw new InvalidParameterException('remote image not existing: ' . $imageFromRemoteServer);
                 }
             } else {
