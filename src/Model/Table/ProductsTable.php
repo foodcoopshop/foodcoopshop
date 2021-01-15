@@ -1279,10 +1279,19 @@ class ProductsTable extends AppTable
             if ($imageFromRemoteServer == 'no-image') {
                 continue;
             }
-            $remoteFile = file_get_contents($imageFromRemoteServer);
-            if (!$remoteFile) {
-                throw new InvalidParameterException('image not found: ' . $imageFromRemoteServer);
+
+            if (filter_var($imageFromRemoteServer, FILTER_VALIDATE_URL)) {
+                $fileHeaders = get_headers($imageFromRemoteServer);
+                if($fileHeaders[0] == 'HTTP/1.1 404 Not Found') {
+                    throw new InvalidParameterException('remote image not existing: ' . $imageFromRemoteServer);
+                }
+            } else {
+                $remoteImage = file_exists($imageFromRemoteServer);
+                if (!$remoteImage) {
+                    throw new InvalidParameterException('local image not existing: ' . $imageFromRemoteServer);
+                }
             }
+
             $imageSize = getimagesize($imageFromRemoteServer);
             if ($imageSize === false) {
                 throw new InvalidParameterException('file is not not an image: ' . $imageFromRemoteServer);
