@@ -721,7 +721,7 @@ foodcoopshop.SyncProductData = {
     },
 
     onProductDataUpdated : function (response) {
-        $('#modal-sync-product-data').remove();
+        foodcoopshop.Modal.destroy($('#modal-sync-product-data'));
         var flashMessage = '<b>' + response.app.name + '</b>: ' + response.msg;
         foodcoopshop.Helper.showOrAppendSuccessMessage(flashMessage);
         foodcoopshop.SyncProductData.tmpFlashMessage = flashMessage;

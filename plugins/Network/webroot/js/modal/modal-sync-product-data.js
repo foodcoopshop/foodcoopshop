@@ -51,7 +51,7 @@ foodcoopshop.ModalSyncProductData = {
     },
 
     getCloseHandler : function(modalSelector) {
-        $(modalSelector).remove();
+        foodcoopshop.Modal.destroy(modalSelector);
     },
 
     getSuccessHandler : function(postData) {
