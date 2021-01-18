@@ -14,6 +14,7 @@
  */
 use Cake\Core\Configure;
 
+$beforeTotalPriceColspan = 1;
 $priceColspan = 2;
 $columns = [
     __('Amount'),
@@ -21,6 +22,7 @@ $columns = [
 ];
 if (Configure::read('app.showManufacturerListAndDetailPage')) {
     $columns[] = __('Manufacturer');
+    $beforeTotalPriceColspan++;
     $priceColspan++;
 }
 $columns[] = __('Price');
@@ -161,7 +163,7 @@ if (!$appAuth->isInstantOrderMode() && $appAuth->isTimebasedCurrencyEnabledForCu
     <?php } ?>
 
     <tr>
-        <td style="background-color:#fbfbfb;border:1px solid #d6d4d4;" colspan="2"></td>
+        <td style="background-color:#fbfbfb;border:1px solid #d6d4d4;" colspan="<?php echo $beforeTotalPriceColspan; ?>"></td>
         <td align="right" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;"><?php echo __('Total'); ?></td>
         <td align="<?php echo ($depositSum > 0 ? 'center' : 'right'); ?>" style="font-size:18px;font-weight:bold;background-color:#fbfbfb;border:1px solid #d6d4d4;" colspan="<?php echo ($depositSum > 0 ? 2 : 1); ?>">
             <?php
