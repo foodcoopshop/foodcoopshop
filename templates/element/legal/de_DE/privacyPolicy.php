@@ -97,19 +97,28 @@ Web: <a href="https://www.dsb.gv.at" target="_blank">https://www.dsb.gv.at</a>
 <p>Die Rechtsgrundlage für die Verarbeitung personenbezogener Daten unter Verwendung von Cookies ist Art. 6 Abs. 1 lit. a DSGVO.</p>
 <p><b>3.3.3 Zweck der Datenverarbeitung</b></p>
 <p>Der Zweck der Verwendung von Cookies ist, die Nutzung von Webseiten für die Nutzer zu vereinfachen und sicherer zu gestalten. Einige Funktionen unserer Internetseite können ohne den Einsatz von Cookies nicht angeboten werden. Für diese ist es erforderlich, dass der Browser auch nach einem Seitenwechsel wiedererkannt wird.</p>
-<p>Für folgende Anwendungen benötigen wir Cookies:</p>
-<p>(1) Log-In-Wiedererkennung für den internen Bereich der Webseite</p>
-<p>Die durch Cookies erhobenen Nutzerdaten werden nicht zur Erstellung von Nutzerprofilen verwendet.</p>
+<p>Die durch Cookies erhobenen Nutzerdaten werden <b>nicht zur Erstellung von Nutzerprofilen verwendet</b>.</p>
 <p><b>3.3.4 Dauer der Speicherung, Widerspruchs- und Beseitigungsmöglichkeit</b></p>
 <p>Cookies werden auf dem Rechner des Nutzers gespeichert und von diesem an unsere Seite übermittelt. Daher haben Sie als Nutzer auch die volle Kontrolle über die Verwendung von Cookies. Durch eine Änderung der Einstellungen in Ihrem Internetbrowser können Sie die Übertragung von Cookies deaktivieren oder einschränken. Bereits gespeicherte Cookies können jederzeit gelöscht werden. Dies kann auch automatisiert erfolgen. Werden Cookies für unsere Webseite deaktiviert, können möglicherweise nicht mehr alle Funktionen der Webseite vollumfänglich genutzt werden.</p>
-<p><b>3.3.5 Liste der Cookies</b></p>
+<p><a name="cookies"><b>3.3.5 Liste der Cookies</b></a></p>
 <p>Eigene Cookies:</p>
 <ul>
     <li>
-    remember_me<br />
-    Dauer: 30 Tage<br />
-    Zweck: Speichert, ob der Benutzer die Log-In-Wiedererkennungsfunktion "Angemeldet bleiben" verwendet.
+        remember_me<br />
+        Dauer: 30 Tage<br />
+        Zweck: Speichert, ob der Benutzer die Log-In-Wiedererkennungsfunktion "Angemeldet bleiben" verwendet.
     </li>
+    <li>
+        SelectedOrderDetailIds<br />
+        Dauer: 1 Tag<br />
+        Zweck: Speichert, welche Produkte bereits kontrolliert wurden.
+    </li>
+    <li>
+        fcs-cookie-banner<br />
+        Dauer: 1 Jahr<br />
+        Zweck: Speichert, ob die Cookies aktzeptiert wurden.
+    </li>
+
 </ul>
 
 <?php if (Configure::read('appDb.FCS_FOODCOOPS_MAP_ENABLED')) { ?>

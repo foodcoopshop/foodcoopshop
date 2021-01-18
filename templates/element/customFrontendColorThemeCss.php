@@ -40,7 +40,8 @@ use Cake\Core\Configure;
     #manufacturers-menu li.header,
     h2.info,
     #flashMessage.success,
-    .modal-header {
+    .modal-header,
+    .cookieConsentWrapper {
         background-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
     }
 

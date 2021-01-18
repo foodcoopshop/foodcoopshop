@@ -32,6 +32,11 @@
     #inner-content iframe {
         width: 100% ! important;
     }
+    .cookieConsentWrapper {
+        left: 2% ! important;
+        bottom: 1% ! important;
+        width: 96% ! important;
+    }
     body.categories.detail #inner-content h2,
     body.carts.order_successful #inner-content h2,
     body.customers.registration_successful #inner-content h2 {

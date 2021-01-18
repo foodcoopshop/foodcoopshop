@@ -23,6 +23,7 @@ foodcoopshop.Helper = {
         this.initMenu();
         foodcoopshop.ModalLogout.init();
         this.changeOutgoingLinksTargetToBlank();
+        this.initCookieBanner();
         if (!this.isMobile()) {
             this.initWindowResize();
             this.initScrolltopButton();
@@ -30,6 +31,17 @@ foodcoopshop.Helper = {
             this.adaptionsForHorizontalScrolling();
             this.showContent();
         }
+    },
+
+    initCookieBanner() {
+        var options = {
+            cookieName: 'fcs-cookie-banner',
+            heading: foodcoopshop.LocalizedJs.helper.ThisPageUsesCookies,
+            showEditIcon: false,
+            acceptLabel: foodcoopshop.LocalizedJs.helper.AcceptCookies,
+            description: foodcoopshop.LocalizedJs.helper.CookiesExplainationText,
+        };
+        GdprConsent.attachBanner(document.body, options);
     },
 
     initMenuAutoHide : function() {

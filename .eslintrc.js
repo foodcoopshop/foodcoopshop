@@ -11,6 +11,7 @@ module.exports = {
         "ClipboardJS": true,
         "Cookies": true,
         "foodcoopshop": true,
+        "GdprConsent": true,
         "Quagga": true,
         "slidebars": true,
         "Swiper": true
