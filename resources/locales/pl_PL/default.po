@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-15 16:18+0100\n"
+"POT-Creation-Date: 2021-01-18 10:25+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -628,6 +628,15 @@ msgstr "Pokaż mniej"
 # Close
 msgid "Close"
 msgstr "Zamknij"
+
+msgid "This_page_uses_cookies"
+msgstr ""
+
+msgid "Cookies_explaination_text"
+msgstr ""
+
+msgid "Accept_cookies"
+msgstr ""
 
 # Remove products from cart
 msgid "Empty_cart"

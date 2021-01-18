@@ -90,7 +90,10 @@ class LocalizedController extends Controller
                 'CurrencyName' => Configure::read('app.currencyName'),
                 'ShowMore' => __('Show_more'),
                 'ShowLess' => __('Show_less'),
-                'Close' => __('Close')
+                'Close' => __('Close'),
+                'ThisPageUsesCookies' => __('This_page_uses_cookies'),
+                'CookiesExplainationText' => __('Cookies_explaination_text'),
+                'AcceptCookies' => __('Accept_cookies'),
             ],
             'cart' => [
                 'routeCart' => __('route_cart'),

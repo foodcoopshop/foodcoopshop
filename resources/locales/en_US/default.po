@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-12-15 16:18+0100\n"
-"PO-Revision-Date: 2020-12-19 21:55+0100\n"
+"POT-Creation-Date: 2021-01-18 10:25+0100\n"
+"PO-Revision-Date: 2021-01-18 10:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -473,6 +473,15 @@ msgstr "Show less"
 
 msgid "Close"
 msgstr "Close"
+
+msgid "This_page_uses_cookies"
+msgstr "This page uses cookies"
+
+msgid "Cookies_explaination_text"
+msgstr "Please accept the cookies. Read more about it in our <a href=\"/privacy-policy\">privacy policy</a>."
+
+msgid "Accept_cookies"
+msgstr "Accept cookies"
 
 msgid "Empty_cart"
 msgstr "Remove products from cart"

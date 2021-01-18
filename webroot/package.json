@@ -14,6 +14,7 @@
     "install": "bash ../bin/cake npm_post_install"
   },
   "dependencies": {
+    "@beyonk/gdpr-cookie-consent-banner": "^7.0.1",
     "@ericblade/quagga2": "^1.2.6",
     "@fortawesome/fontawesome-free": "^5.15.1",
     "blueimp-file-upload": "^10.31.0",

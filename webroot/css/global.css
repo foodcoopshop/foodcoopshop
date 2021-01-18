@@ -539,3 +539,28 @@ tr.selected td > div > i.far {
     width: 98%;
     left: 1% ! important;
 }
+
+.cookieConsentWrapper button[type="button"].cookieConsent__Button {
+    display: none;
+}
+.cookieConsentWrapper {
+    box-shadow: 0px -3px 3px 0px rgba(0, 0, 0, 0.15);
+    width: 330px;
+    bottom: 5px ! important;
+    left: 5px ! important;
+}
+.cookieConsentWrapper .cookieConsent {
+    flex-direction: column;
+}
+.cookieConsentWrapper .cookieConsent__Left a {
+    color: #fff ! important;
+    text-decoration: underline ! important;
+}
+.cookieConsentWrapper .cookieConsent__Right {
+    margin-top: 15px;
+}
+.cookieConsentWrapper .cookieConsent__Right button {
+    padding: 10px 30px;
+    margin-left: 0;
+    margin-bottom: 0;
+}
