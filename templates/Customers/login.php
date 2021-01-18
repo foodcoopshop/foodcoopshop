@@ -45,14 +45,11 @@ $this->element('addScript', ['script' =>
         $this->element('addScript', ['script' =>
             Configure::read('app.jsNamespace').".ModalText.init('.remember-me-wrapper a');"
         ]);
-        echo '<div id="privacy-policy" class="hide">';
-            echo $this->element('legal/'.I18n::getLocale().'/privacyPolicy');
-        echo '</div>';
 
         echo '<div class="remember-me-wrapper">';
             echo $this->Form->control('remember_me', [
                 'type' => 'checkbox',
-                'label' => __('Stay_signed_in').'<br /><small>'.__('and').' <a data-element-selector="#privacy-policy" href="javascript:void(0);" class="open-with-modal">'.__('accept_cookie').'</a></small>',
+                'label' => __('Stay_signed_in'),
                 'escape' => false
             ]);
         echo '</div>';
