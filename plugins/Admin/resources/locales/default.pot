@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-01-05 11:51+0100\n"
+"POT-Creation-Date: 2021-01-19 11:38+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1985,7 +1985,7 @@ msgstr ""
 msgid "Thank_you_very_much_for_your_work!"
 msgstr ""
 
-msgid "your_credit_is_used_up_and_equals_{0}."
+msgid "your_current_credit_equals_{0}."
 msgstr ""
 
 msgid "Please_soon_transfer_new_credit_to_our_bank_account."

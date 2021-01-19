@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-01-18 10:25+0100\n"
-"PO-Revision-Date: 2021-01-18 10:56+0100\n"
+"POT-Creation-Date: 2021-01-19 11:33+0100\n"
+"PO-Revision-Date: 2021-01-19 11:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1791,8 +1791,8 @@ msgstr "Sekunden"
 msgid "Database_backup_successful"
 msgstr "Datenbank-Backup erfolgreich"
 
-msgid "Your_credit_is_used_up"
-msgstr "Dein Guthaben ist aufgebraucht"
+msgid "Please_add_credit."
+msgstr "Bitte lade dein Guthaben auf"
 
 msgid "Sum"
 msgstr "Summe"
@@ -2081,12 +2081,6 @@ msgstr "Passwort"
 
 msgid "Stay_signed_in"
 msgstr "Angemeldet bleiben"
-
-msgid "and"
-msgstr "und"
-
-msgid "accept_cookie"
-msgstr "Cookie akzeptieren"
 
 msgid "Forgot_password?"
 msgstr "Passwort vergessen?"
@@ -2510,6 +2504,15 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Your_credit_is_used_up"
+#~ msgstr "Dein Guthaben ist aufgebraucht"
+
+#~ msgid "and"
+#~ msgstr "und"
+
+#~ msgid "accept_cookie"
+#~ msgstr "Cookie akzeptieren"
 
 #~ msgid "Please_enter_the_first_name_of_the_invoice_holder."
 #~ msgstr "Bitte gib den Vornamen des Rechnungsempfängers an."

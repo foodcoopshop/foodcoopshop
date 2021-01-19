@@ -101,6 +101,13 @@ class ConfigurationsTable extends AppTable
         return $validator;
     }
 
+    public function validationFcsCheckCreditBalanceLimit(Validator $validator)
+    {
+        $validator->numeric('value', __('Decimals_are_not_allowed.'));
+        $validator = $this->getNumberRangeValidator($validator, 'value', 0, 500);
+        return $validator;
+    }
+
     public function validationFcsNoDeliveryDaysGlobal(Validator $validator)
     {
         $validator->allowEmptyString('value');

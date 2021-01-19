@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-01-18 10:25+0100\n"
+"POT-Creation-Date: 2021-01-19 11:33+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2420,9 +2420,10 @@ msgstr "sekundy"
 msgid "Database_backup_successful"
 msgstr "Wykonano backup bazy danych"
 
-# Your credit is used up
-msgid "Your_credit_is_used_up"
-msgstr "Twój kredyt został wykorzystany"
+# Increase your credit
+#, fuzzy
+msgid "Please_add_credit."
+msgstr "Zwiększ swój kredyt"
 
 # Sum
 msgid "Sum"
@@ -2812,12 +2813,6 @@ msgstr "Hasło"
 # Stay signed in
 msgid "Stay_signed_in"
 msgstr "Pozostań zalogowany"
-
-msgid "and"
-msgstr ""
-
-msgid "accept_cookie"
-msgstr ""
 
 # Forgot password?
 msgid "Forgot_password?"
@@ -3389,6 +3384,10 @@ msgstr "złożone w dniu"
 # The prices include the VAT.
 msgid "Prices_are_including_vat."
 msgstr "Ceny zawierają podatek VAT."
+
+# Your credit is used up
+#~ msgid "Your_credit_is_used_up"
+#~ msgstr "Twój kredyt został wykorzystany"
 
 # Please enter the first name of the invoice holder.
 #~ msgid "Please_enter_the_first_name_of_the_invoice_holder."
