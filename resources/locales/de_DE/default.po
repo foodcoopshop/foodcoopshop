@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-01-20 09:12+0100\n"
-"PO-Revision-Date: 2021-01-20 09:12+0100\n"
+"POT-Creation-Date: 2021-01-20 09:35+0100\n"
+"PO-Revision-Date: 2021-01-20 09:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1722,11 +1722,23 @@ msgstr "Das Datum für den Bestelllisten-Versand ist nicht gültig."
 msgid "The_send_order_list_day_field_needs_to_be_between_order_possible_until_date_and_first_delivery_day."
 msgstr "Das Datum für den Bestellisten-Versand muss zwischen Bestellbar-bis-Datum und dem Liefertag liegen."
 
-msgid "The_first_delivery_day_needs_to_be_a_last_{0}_of_the_month."
-msgstr "Der erste Liefertag muss ein letzter {0} im Monat sein."
+msgid "first_for_weekday"
+msgstr "erster"
 
-msgid "The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month."
-msgstr "Der erste Liefertag muss ein erster {0} im Monat sein."
+msgid "second_for_weekday"
+msgstr "zweiter"
+
+msgid "third_for_weekday"
+msgstr "dritter"
+
+msgid "fourth_for_weekday"
+msgstr "vierter"
+
+msgid "last_for_weekday"
+msgstr "letzter"
+
+msgid "The_first_delivery_day_needs_to_be_a_{0}_{1}_of_the_month."
+msgstr "Der erste Liefertag muss ein {0} {1} im Monat sein."
 
 msgid "deleted"
 msgstr "gelöscht"
@@ -2504,6 +2516,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month."
+#~ msgstr "Der erste Liefertag muss ein erster {0} im Monat sein."
 
 #~ msgid "Your_credit_is_used_up"
 #~ msgstr "Dein Guthaben ist aufgebraucht"

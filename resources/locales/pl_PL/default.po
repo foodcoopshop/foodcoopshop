@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-01-20 09:12+0100\n"
-"PO-Revision-Date: 2020-05-14 10:09+0200\n"
+"POT-Creation-Date: 2021-01-20 09:35+0100\n"
+"PO-Revision-Date: 2021-01-20 09:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: pl_PL\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.2\n"
 "X-Poedit-Bookmarks: 725,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 # Access denied, please sign in.
@@ -2328,13 +2328,35 @@ msgstr "Wartość pola \"data wysyłki list zamówień\" jest nieprawidłowa."
 msgid "The_send_order_list_day_field_needs_to_be_between_order_possible_until_date_and_first_delivery_day."
 msgstr "Wartość pola \"data wysyłki list zamówień\" musi zawierać się pomiędzy \"zamówienia możliwe do\", a dniem dostawy."
 
-# The first delivery day needs to be a last {0} of the month.
-msgid "The_first_delivery_day_needs_to_be_a_last_{0}_of_the_month."
-msgstr "Pierwszym dniem dostaw musi być ostatni {0} w miesiącu."
+# Last order weekday
+#, fuzzy
+msgid "first_for_weekday"
+msgstr "Ostatni dzień zamówień"
 
-# The first delivery day needs to be a first {0} of the month.
-msgid "The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month."
-msgstr "Pierwszym dniem dostaw musi być pierwszy {0} w miesiącu."
+# Last order weekday
+#, fuzzy
+msgid "second_for_weekday"
+msgstr "Ostatni dzień zamówień"
+
+# Last order weekday
+#, fuzzy
+msgid "third_for_weekday"
+msgstr "Ostatni dzień zamówień"
+
+# Last order weekday
+#, fuzzy
+msgid "fourth_for_weekday"
+msgstr "Ostatni dzień zamówień"
+
+# Last order weekday
+#, fuzzy
+msgid "last_for_weekday"
+msgstr "Ostatni dzień zamówień"
+
+# The first delivery day needs to be a last {0} of the month.
+#, fuzzy
+msgid "The_first_delivery_day_needs_to_be_a_{0}_{1}_of_the_month."
+msgstr "Pierwszym dniem dostaw musi być ostatni {0} w miesiącu."
 
 # delete
 #, fuzzy
@@ -3384,6 +3406,10 @@ msgstr "złożone w dniu"
 # The prices include the VAT.
 msgid "Prices_are_including_vat."
 msgstr "Ceny zawierają podatek VAT."
+
+# The first delivery day needs to be a first {0} of the month.
+#~ msgid "The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month."
+#~ msgstr "Pierwszym dniem dostaw musi być pierwszy {0} w miesiącu."
 
 # Your credit is used up
 #~ msgid "Your_credit_is_used_up"

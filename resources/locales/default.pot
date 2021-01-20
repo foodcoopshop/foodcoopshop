@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-01-20 09:12+0100\n"
+"POT-Creation-Date: 2021-01-20 09:35+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1721,10 +1721,22 @@ msgstr ""
 msgid "The_send_order_list_day_field_needs_to_be_between_order_possible_until_date_and_first_delivery_day."
 msgstr ""
 
-msgid "The_first_delivery_day_needs_to_be_a_last_{0}_of_the_month."
+msgid "first_for_weekday"
 msgstr ""
 
-msgid "The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month."
+msgid "second_for_weekday"
+msgstr ""
+
+msgid "third_for_weekday"
+msgstr ""
+
+msgid "fourth_for_weekday"
+msgstr ""
+
+msgid "last_for_weekday"
+msgstr ""
+
+msgid "The_first_delivery_day_needs_to_be_a_{0}_{1}_of_the_month."
 msgstr ""
 
 msgid "deleted"

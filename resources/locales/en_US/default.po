@@ -3,9 +3,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-01-20 09:12+0100\n"
-"PO-Revision-Date: 2021-01-20 09:12+0100\n"
+"POT-Creation-Date: 2021-01-20 09:35+0100\n"
+"PO-Revision-Date: 2021-01-20 09:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -14,6 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.2\n"
+"Project-Id-Version: \n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
@@ -1722,11 +1722,23 @@ msgstr "The field \"send order list date\" is not valid."
 msgid "The_send_order_list_day_field_needs_to_be_between_order_possible_until_date_and_first_delivery_day."
 msgstr "The field \"send order list date\" needs to be between \"order possible until\" and the delivery day."
 
-msgid "The_first_delivery_day_needs_to_be_a_last_{0}_of_the_month."
-msgstr "The first delivery day needs to be a last {0} of the month."
+msgid "first_for_weekday"
+msgstr "first"
 
-msgid "The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month."
-msgstr "The first delivery day needs to be a first {0} of the month."
+msgid "second_for_weekday"
+msgstr "second"
+
+msgid "third_for_weekday"
+msgstr "third"
+
+msgid "fourth_for_weekday"
+msgstr "fourth"
+
+msgid "last_for_weekday"
+msgstr "last"
+
+msgid "The_first_delivery_day_needs_to_be_a_{0}_{1}_of_the_month."
+msgstr "The first delivery day needs to be a {0} {1} of the month."
 
 msgid "deleted"
 msgstr "deleted"
@@ -2504,6 +2516,9 @@ msgstr "placed on"
 
 msgid "Prices_are_including_vat."
 msgstr "The prices include the VAT."
+
+#~ msgid "The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month."
+#~ msgstr "The first delivery day needs to be a first {0} of the month."
 
 #~ msgid "Your_credit_is_used_up"
 #~ msgstr "Your credit is used up"
