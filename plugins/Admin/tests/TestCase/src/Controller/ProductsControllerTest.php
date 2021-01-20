@@ -169,6 +169,51 @@ class ProductsControllerTest extends AppCakeTestCase
         $this->assertJsonError();
     }
 
+    public function testEditDeliveryRhythmOkSecondOfMonth()
+    {
+        $this->loginAsSuperadmin();
+        $this->changeProductDeliveryRhythm(346, '2-month', '08.01.2021');
+        $this->assertJsonOk();
+    }
+
+    public function testEditDeliveryRhythmInvalidSecondOfMonth()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->changeProductDeliveryRhythm(346, '2-month', '19.03.2021');
+        $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein zweiter Freitag im Monat sein.', $response->msg);
+        $this->assertJsonError();
+    }
+
+    public function testEditDeliveryRhythmOkThirdOfMonth()
+    {
+        $this->loginAsSuperadmin();
+        $this->changeProductDeliveryRhythm(346, '3-month', '15.01.2021');
+        $this->assertJsonOk();
+    }
+
+    public function testEditDeliveryRhythmInvalidThirdOfMonth()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->changeProductDeliveryRhythm(346, '3-month', '08.01.2021');
+        $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein dritter Freitag im Monat sein.', $response->msg);
+        $this->assertJsonError();
+    }
+
+    public function testEditDeliveryRhythmOkFourthOfMonth()
+    {
+        $this->loginAsSuperadmin();
+        $this->changeProductDeliveryRhythm(346, '4-month', '22.01.2021');
+        $this->assertJsonOk();
+    }
+
+    public function testEditDeliveryRhythmInvalidFourthOfMonth()
+    {
+        $this->loginAsSuperadmin();
+        $response = $this->changeProductDeliveryRhythm(346, '4-month', '15.01.2021');
+        $this->assertRegExpWithUnquotedString('Der erste Liefertag muss ein vierter Freitag im Monat sein.', $response->msg);
+        $this->assertJsonError();
+    }
+
     public function testEditDeliveryRhythmOkLastOfMonth()
     {
         $this->loginAsSuperadmin();

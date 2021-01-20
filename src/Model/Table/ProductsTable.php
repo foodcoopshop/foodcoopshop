@@ -109,8 +109,8 @@ class ProductsTable extends AppTable
             },
             'message' => __('The_order_possible_until_field_needs_to_be_smaller_than_the_delivery_date.')
         ]);
-        $validator = $this->getLastOrFirstDayOfMonthValidator($validator, 'delivery_rhythm_first_delivery_day', 'first');
-        $validator = $this->getLastOrFirstDayOfMonthValidator($validator, 'delivery_rhythm_first_delivery_day', 'last');
+        $validator = $this->getCorrectDayOfMonthValidator($validator, 'delivery_rhythm_first_delivery_day');
+        $validator = $this->getCorrectDayOfMonthValidator($validator, 'delivery_rhythm_first_delivery_day');
         $validator = $this->getAllowOnlyOneWeekdayValidator($validator, 'delivery_rhythm_first_delivery_day', __('The_first_delivery_day'));
         $validator->range('delivery_rhythm_send_order_list_weekday', [0, 6], __('Please_enter_a_number_between_{0}_and_{1}.', [0, 6]));
         $validator->allowEmptyString('delivery_rhythm_send_order_list_day');
@@ -128,30 +128,56 @@ class ProductsTable extends AppTable
         return $validator;
     }
 
-    private function getLastOrFirstDayOfMonthValidator(Validator $validator, $field, $firstOrLast)
+    private function getCorrectDayOfMonthValidator(Validator $validator, $field)
     {
-        $checkedCountValue = 0;
-        $deliveryWeekdayName = Configure::read('app.timeHelper')->getWeekdayName(Configure::read('app.timeHelper')->getDeliveryWeekday());
-        $message = __('The_first_delivery_day_needs_to_be_a_last_{0}_of_the_month.', [$deliveryWeekdayName]);
-        if ($firstOrLast == 'first') {
-            $checkedCountValue = 1;
-            $message = __('The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month.', [$deliveryWeekdayName]);
-        }
-        $validator->add($field, 'allow-only-' . $firstOrLast . '-weekday-of-month', [
-            'rule' => function ($value, $context) use ($checkedCountValue, $firstOrLast) {
-                if ($context['data']['delivery_rhythm_type'] == 'month' && $context['data']['delivery_rhythm_count'] == $checkedCountValue) {
-                    $originalLocale = I18n::getLocale();
-                    I18n::setLocale('en_US');
-                    $deliveryDayAsWeekdayInEnglish = strtolower(Configure::read('app.timeHelper')->getWeekdayName(Configure::read('app.timeHelper')->getDeliveryWeekday()));
-                    I18n::setLocale($originalLocale);
-                    $firstDayOfMonth = Configure::read('app.timeHelper')->formatToDbFormatDate($value . ' ' . $firstOrLast . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month');
-                    if ($firstDayOfMonth != $value) {
-                        return false;
+        $validator->add($field, 'allow-only-correct-weekday-of-month', [
+
+            'rule' => function ($value, $context) {
+
+                if ($context['data']['delivery_rhythm_type'] == 'month') {
+
+                    switch($context['data']['delivery_rhythm_count']) {
+                        case '1':
+                            $ordinal = 'first';
+                            $ordinalForWeekday = __('first_for_weekday');
+                            break;
+                        case '2':
+                            $ordinal = 'second';
+                            $ordinalForWeekday = __('second_for_weekday');
+                            break;
+                        case '3':
+                            $ordinal = 'third';
+                            $ordinalForWeekday = __('third_for_weekday');
+                            break;
+                        case '4':
+                            $ordinal = 'fourth';
+                            $ordinalForWeekday = __('fourth_for_weekday');
+                            break;
+                        case '0':
+                            $ordinal = 'last';
+                            $ordinalForWeekday = __('last_for_weekday');
+                            break;
                     }
+
+                    $deliveryDayAsWeekdayInEnglish = strtolower(date('l', strtotime($context['data']['delivery_rhythm_first_delivery_day'])));
+                    $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($context['data']['delivery_rhythm_first_delivery_day'] . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
+
+                    $deliveryWeekdayName = Configure::read('app.timeHelper')->getWeekdayName(Configure::read('app.timeHelper')->getDeliveryWeekday());
+                    $message = __('The_first_delivery_day_needs_to_be_a_{0}_{1}_of_the_month.', [
+                        $ordinalForWeekday,
+                        $deliveryWeekdayName,
+                    ]);
+
+                    if ($calculatedPickupDay != $value) {
+                        return $message;
+                    }
+
                 }
+
                 return true;
-            },
-            'message' => $message
+
+            }
+
         ]);
         return $validator;
     }
