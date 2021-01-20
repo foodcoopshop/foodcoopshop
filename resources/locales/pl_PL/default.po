@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2021-01-20 09:35+0100\n"
-"PO-Revision-Date: 2020-05-14 10:09+0200\n"
+"PO-Revision-Date: 2021-01-20 09:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: pl_PL\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.2\n"
 "X-Poedit-Bookmarks: 725,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 # Access denied, please sign in.
@@ -2442,9 +2442,10 @@ msgstr "sekundy"
 msgid "Database_backup_successful"
 msgstr "Wykonano backup bazy danych"
 
-# Your credit is used up
-msgid "Your_credit_is_used_up"
-msgstr "Twój kredyt został wykorzystany"
+# Increase your credit
+#, fuzzy
+msgid "Please_add_credit"
+msgstr "Zwiększ swój kredyt"
 
 # Sum
 msgid "Sum"
@@ -3409,6 +3410,10 @@ msgstr "Ceny zawierają podatek VAT."
 # The first delivery day needs to be a first {0} of the month.
 #~ msgid "The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month."
 #~ msgstr "Pierwszym dniem dostaw musi być pierwszy {0} w miesiącu."
+
+# Your credit is used up
+#~ msgid "Your_credit_is_used_up"
+#~ msgstr "Twój kredyt został wykorzystany"
 
 # Please enter the first name of the invoice holder.
 #~ msgid "Please_enter_the_first_name_of_the_invoice_holder."

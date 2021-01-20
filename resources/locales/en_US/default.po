@@ -3,9 +3,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2021-01-20 09:35+0100\n"
-"PO-Revision-Date: 2021-01-20 09:42+0100\n"
+"PO-Revision-Date: 2021-01-20 09:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: en_US\n"
@@ -14,6 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.2\n"
+"Project-Id-Version: \n"
 
 msgid "Access_denied_please_sign_in."
 msgstr "Access denied, please sign in."
@@ -1803,8 +1803,8 @@ msgstr "seconds"
 msgid "Database_backup_successful"
 msgstr "Database backup successful"
 
-msgid "Your_credit_is_used_up"
-msgstr "Your credit is used up"
+msgid "Please_add_credit"
+msgstr "Please add credit"
 
 msgid "Sum"
 msgstr "Sum"
@@ -2519,6 +2519,9 @@ msgstr "The prices include the VAT."
 
 #~ msgid "The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month."
 #~ msgstr "The first delivery day needs to be a first {0} of the month."
+
+#~ msgid "Your_credit_is_used_up"
+#~ msgstr "Your credit is used up"
 
 #~ msgid "and"
 #~ msgstr "and"

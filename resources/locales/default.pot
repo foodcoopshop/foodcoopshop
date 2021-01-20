@@ -1802,7 +1802,7 @@ msgstr ""
 msgid "Database_backup_successful"
 msgstr ""
 
-msgid "Your_credit_is_used_up"
+msgid "Please_add_credit"
 msgstr ""
 
 msgid "Sum"

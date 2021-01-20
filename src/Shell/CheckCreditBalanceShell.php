@@ -74,7 +74,7 @@ class CheckCreditBalanceShell extends AppShell
                 $personalTransactionCode = $this->Customer->getPersonalTransactionCode($customer->id_customer);
             }
 
-            if ($delta < 0) {
+            if ($delta < Configure::read('appDb.FCS_CHECK_CREDIT_BALANCE_LIMIT')) {
                 $i ++;
                 $deltaSum -= $delta;
                 $delta = Configure::read('app.numberHelper')->formatAsCurrency($delta);
@@ -82,7 +82,7 @@ class CheckCreditBalanceShell extends AppShell
                 $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('Admin.check_credit_balance');
                 $email->setTo($customer->email)
-                    ->setSubject(__('Your_credit_is_used_up'))
+                    ->setSubject(__('Please_add_credit'))
                     ->setViewVars([
                     'customer' => $customer,
                     'delta' => $delta,
