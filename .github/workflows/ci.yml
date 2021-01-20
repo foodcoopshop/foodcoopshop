@@ -14,7 +14,7 @@ on:
   
 jobs:
   ci:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
@@ -40,7 +40,9 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-            
+        env:
+          update: true #forces minor release update
+                      
       - uses: actions/checkout@v2
                     
       - name: Setup DB
