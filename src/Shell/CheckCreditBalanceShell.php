@@ -82,7 +82,7 @@ class CheckCreditBalanceShell extends AppShell
                 $email = new AppMailer();
                 $email->viewBuilder()->setTemplate('Admin.check_credit_balance');
                 $email->setTo($customer->email)
-                    ->setSubject(__('Please_add_credit.'))
+                    ->setSubject(__('Please_add_credit'))
                     ->setViewVars([
                     'customer' => $customer,
                     'delta' => $delta,

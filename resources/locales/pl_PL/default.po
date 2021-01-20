@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-01-19 11:33+0100\n"
+"POT-Creation-Date: 2021-01-20 09:12+0100\n"
 "PO-Revision-Date: 2020-05-14 10:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2422,7 +2422,7 @@ msgstr "Wykonano backup bazy danych"
 
 # Increase your credit
 #, fuzzy
-msgid "Please_add_credit."
+msgid "Please_add_credit"
 msgstr "Zwiększ swój kredyt"
 
 # Sum
