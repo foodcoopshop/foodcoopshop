@@ -733,11 +733,10 @@ class ProductsTable extends AppTable
      * @param array $products
      * @return array $preparedProducts
      */
-    public function getProductsForBackend($appAuth, $productIds, $manufacturerId, $active, $categoryId = '', $isQuantityMinFilterSet = 0, $isPriceZero = 0, $addProductNameToAttributes = false, $controller = null)
+    public function getProductsForBackend($appAuth, $productIds, $manufacturerId, $active, $categoryId = '', $isQuantityMinFilterSet = false, $isPriceZero = false, $addProductNameToAttributes = false, $controller = null)
     {
 
         $conditions = [];
-
         if ($manufacturerId != 'all') {
             $conditions['Products.id_manufacturer'] = $manufacturerId;
         } else {
@@ -755,11 +754,11 @@ class ProductsTable extends AppTable
             $conditions['Products.active >'] = APP_DEL;
         }
 
-        if ($isQuantityMinFilterSet != '') {
+        if ($isQuantityMinFilterSet) {
             $conditions[] = $this->getIsQuantityMinFilterSetCondition();
         }
 
-        if ($isPriceZero != '') {
+        if ($isPriceZero) {
             $conditions[] = $this->getIsPriceZeroCondition();
         }
 

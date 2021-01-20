@@ -259,7 +259,7 @@ class SyncsController extends AppController
     private function getLocalSyncProducts($syncDomains)
     {
         $this->Product = $this->getTableLocator()->get('Products');
-        $products = $this->Product->getProductsForBackend($this->AppAuth, '', $this->AppAuth->getManufacturerId(), 'all', '', 0, 0, true);
+        $products = $this->Product->getProductsForBackend($this->AppAuth, '', $this->AppAuth->getManufacturerId(), 'all', '', false, false, true);
 
         $indexes2Remove = [
           'DepositProducts',

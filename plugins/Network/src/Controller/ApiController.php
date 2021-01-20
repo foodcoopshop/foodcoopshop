@@ -411,7 +411,7 @@ class ApiController extends Controller
         $variableMemberFee = $this->Manufacturer->getOptionVariableMemberFee(
             $this->AppAuth->manufacturer->variable_member_fee
         );
-        $preparedProducts = $this->Product->getProductsForBackend($this->AppAuth, '', $this->AppAuth->getManufacturerId(), 'all', '', 0, 0, true);
+        $preparedProducts = $this->Product->getProductsForBackend($this->AppAuth, '', $this->AppAuth->getManufacturerId(), 'all', '', false, false, true);
 
         $this->set([
             'app' => [

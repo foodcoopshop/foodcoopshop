@@ -8,7 +8,6 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Filesystem\Folder;
 use Cake\Core\Configure;
-use Cake\Core\Exception\Exception;
 use Cake\Http\Exception\ForbiddenException;
 use Intervention\Image\ImageManagerStatic as Image;
 use Cake\I18n\FrozenTime;
@@ -164,9 +163,9 @@ class ProductsController extends AdminAppController
             if (!empty($errors)) {
                 $errorString = '<ul><li>' . join('</li><li>', $errors) . '</li></ul>';
                 $errorString .= __d('admin', 'Please_try_again_as_soon_as_the_next_invoice_has_been_generated.');
-                throw new Exception($errorString);
+                throw new \Exception($errorString);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
 
@@ -211,7 +210,7 @@ class ProductsController extends AdminAppController
         }
 
         $this->Product = $this->getTableLocator()->get('Products');
-        $products = $this->Product->getProductsForBackend($this->AppAuth, $productIds, 'all', 'all', '', 0, 0, true);
+        $products = $this->Product->getProductsForBackend($this->AppAuth, $productIds, 'all', 'all', '', false, false, true);
 
         $preparedProducts = [];
         foreach($products as &$product) {
@@ -1206,7 +1205,10 @@ class ProductsController extends AdminAppController
 
         $manufacturerId = '';
         if (! empty($this->getRequest()->getQuery('manufacturerId'))) {
-            $manufacturerId = (int) h($this->getRequest()->getQuery('manufacturerId'));
+            $manufacturerId = h($this->getRequest()->getQuery('manufacturerId'));
+            if ($manufacturerId != 'all') {
+                $manufacturerId = (int) $manufacturerId;
+            }
         }
 
         // always filter by manufacturer id so that no other products than the own are shown
@@ -1227,15 +1229,15 @@ class ProductsController extends AdminAppController
         }
         $this->set('categoryId', $categoryId);
 
-        $isQuantityMinFilterSet = 0; // default value
+        $isQuantityMinFilterSet = false; // default value
         if (!empty($this->getRequest()->getQuery('isQuantityMinFilterSet'))) {
-            $isQuantityMinFilterSet = h($this->getRequest()->getQuery('isQuantityMinFilterSet'));
+            $isQuantityMinFilterSet = (bool) h($this->getRequest()->getQuery('isQuantityMinFilterSet'));
         }
         $this->set('isQuantityMinFilterSet', $isQuantityMinFilterSet);
 
         $isPriceZero = 0; // default value
         if (!empty($this->getRequest()->getQuery('isPriceZero'))) {
-            $isPriceZero = h($this->getRequest()->getQuery('isPriceZero'));
+            $isPriceZero = (bool) h($this->getRequest()->getQuery('isPriceZero'));
         }
         $this->set('isPriceZero', $isPriceZero);
 
@@ -1258,7 +1260,7 @@ class ProductsController extends AdminAppController
         $this->Tax = $this->getTableLocator()->get('Taxes');
         $this->set('taxesForDropdown', $this->Tax->getForDropdown());
 
-        if ($manufacturerId > 0) {
+        if (is_int($manufacturerId)) {
             $manufacturer = $this->Manufacturer->find('all', [
                 'conditions' => [
                     'Manufacturers.id_manufacturer' => $manufacturerId
