@@ -55,6 +55,7 @@ $this->element('addScript', [
                 'FCS_BANK_ACCOUNT_DATA',
                 'FCS_MINIMAL_CREDIT_BALANCE',
                 'FCS_CASHLESS_PAYMENT_ADD_TYPE',
+                'FCS_CHECK_CREDIT_BALANCE_LIMIT',
             ])) {
                 continue;
             }

@@ -23,7 +23,13 @@ use Cake\Core\Configure;
     <tr>
         <td>
 
-            <p><?php echo __d('admin', 'your_credit_is_used_up_and_equals_{0}.', ['<b style="color: #f3515c;">'.$delta.'</b>']); ?></p>
+            <p>
+                <?php
+                    echo __d('admin', 'your_current_credit_equals_{0}.', [
+                        '<b style="color: #f3515c;">'.$delta.'</b>',
+                    ]);
+                ?>
+            </p>
 
             <?php if (Configure::read('app.configurationHelper')->isCashlessPaymentTypeManual()) { ?>
                 <p><?php echo __d('admin', 'Please_soon_transfer_new_credit_to_our_bank_account.'); ?></p>

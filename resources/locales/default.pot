@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-01-18 10:25+0100\n"
+"POT-Creation-Date: 2021-01-20 09:12+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1790,7 +1790,7 @@ msgstr ""
 msgid "Database_backup_successful"
 msgstr ""
 
-msgid "Your_credit_is_used_up"
+msgid "Please_add_credit"
 msgstr ""
 
 msgid "Sum"
@@ -2079,12 +2079,6 @@ msgid "Password"
 msgstr ""
 
 msgid "Stay_signed_in"
-msgstr ""
-
-msgid "and"
-msgstr ""
-
-msgid "accept_cookie"
 msgstr ""
 
 msgid "Forgot_password?"

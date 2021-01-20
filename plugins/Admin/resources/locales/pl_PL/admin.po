@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-01-05 11:51+0100\n"
+"POT-Creation-Date: 2021-01-19 11:38+0100\n"
 "PO-Revision-Date: 2020-09-15 09:13+0200\n"
 "Last-Translator: Patryk Sobczak <firerain.tgz@gmail.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -2072,7 +2072,7 @@ msgstr "(Linki działają wyłącznie u superadminów)."
 msgid "Thank_you_very_much_for_your_work!"
 msgstr "Bardzo dziękujemy za wykonaną pracę!"
 
-msgid "your_credit_is_used_up_and_equals_{0}."
+msgid "your_current_credit_equals_{0}."
 msgstr ""
 
 #, fuzzy
