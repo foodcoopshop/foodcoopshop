@@ -16,9 +16,9 @@
   "dependencies": {
     "@beyonk/gdpr-cookie-consent-banner": "^7.0.1",
     "@ericblade/quagga2": "^1.2.6",
-    "@fortawesome/fontawesome-free": "^5.15.1",
+    "@fortawesome/fontawesome-free": "^5.15.2",
     "blueimp-file-upload": "^10.31.0",
-    "bootstrap": "^4.5.3",
+    "bootstrap": "^4.6.0",
     "bootstrap-select": "^1.13.18",
     "chart.js": "^2.9.4",
     "chart.piecelabel.js": "^0.15.0",
@@ -41,6 +41,6 @@
     "webrtc-adapter": "^7.7.0"
   },
   "devDependencies": {
-    "eslint": "^7.17.0"
+    "eslint": "^7.18.0"
   }
 }
