@@ -210,12 +210,16 @@ class ProductsTable extends AppTable
                     break;
             }
             $deliveryDayAsWeekdayInEnglish = strtolower(date('l', strtotime($pickupDay)));
-            $nthDeliveryDayOfThisMonth = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($currentDay . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
+            $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($currentDay . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of this month'));
 
-            while($nthDeliveryDayOfThisMonth < $pickupDay) {
-                $nthDeliveryDayOfThisMonth = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($nthDeliveryDayOfThisMonth . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of next month'));
+            if (!is_null($product->delivery_rhythm_first_delivery_day)) {
+                $calculatedPickupDay = $product->delivery_rhythm_first_delivery_day->i18nFormat(Configure::read('app.timeHelper')->getI18Format('Database'));
             }
-            $pickupDay = $nthDeliveryDayOfThisMonth;
+
+            while($calculatedPickupDay < $pickupDay) {
+                $calculatedPickupDay = date(Configure::read('app.timeHelper')->getI18Format('DatabaseAlt'), strtotime($calculatedPickupDay . ' ' . $ordinal . ' ' . $deliveryDayAsWeekdayInEnglish . ' of next month'));
+            }
+            $pickupDay = $calculatedPickupDay;
         }
 
         if ($product->delivery_rhythm_type == 'individual') {
