@@ -9,7 +9,6 @@ use Cake\I18n\FrozenTime;
 use Cake\Console\CommandRunner;
 use Cake\Core\Configure;
 use Cake\TestSuite\EmailTrait;
-use Cake\TestSuite\TestEmailTransport;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
@@ -58,7 +57,7 @@ class CheckCreditBalanceShellTest extends AppCakeTestCase
 
         $this->assertMailCount(2);
         $this->assertMailSubjectContainsAt(1, 'Bitte lade dein Guthaben auf');
-        $this->assertMailContainsHtmlAt(1, ' dein aktuelles Guthaben beträgt <b style="color: #f3515c;">-46,40 €</b>');
+        $this->assertMailContainsHtmlAt(1, ' dein aktuelles Guthaben beträgt <b>-46,40 €</b>');
         $this->assertMailContainsHtmlAt(1, 'Vergiss bitte nicht, diesen Betrag <b>in unser Guthaben-System einzutragen</b>, da es ansonsten zwar auf unserem Bankkonto gutgeschrieben ist, aber nicht in deinem Guthaben-System aufscheint.');
         $this->assertMailSentToAt(1, Configure::read('test.loginEmailCustomer'));
 

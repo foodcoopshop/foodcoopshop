@@ -26,7 +26,7 @@ use Cake\Core\Configure;
             <p>
                 <?php
                     echo __d('admin', 'your_current_credit_equals_{0}.', [
-                        '<b style="color: #f3515c;">'.$delta.'</b>',
+                        '<b>'.$delta.'</b>',
                     ]);
                 ?>
             </p>
