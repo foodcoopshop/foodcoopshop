@@ -32,10 +32,13 @@ class CheckCreditBalanceShell extends AppShell
         $this->startTimeLogging();
 
         $this->Customer->dropManufacturersInNextFind();
+        $conditions = [
+            'Customers.active' => 1
+        ];
+        $conditions[] = $this->Customer->getConditionToExcludeHostingUser();
+
         $customers = $this->Customer->find('all', [
-            'conditions' => [
-                'Customers.active' => 1
-            ],
+            'conditions' => $conditions,
             'contain' => [
                 'AddressCustomers' // to make exclude happen using dropManufacturersInNextFind
             ]
