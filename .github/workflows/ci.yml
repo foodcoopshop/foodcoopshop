@@ -18,11 +18,7 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        php-version: ['7.4']
-        experimental: [false]
-        #include:
-        # - php-version: '8.0'
-        #   experimental: true  
+        php-version: ['7.4', '8.0']
     services:
       mysql:
         image: mysql:5.7
