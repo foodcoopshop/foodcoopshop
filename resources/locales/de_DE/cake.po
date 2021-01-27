@@ -1,11 +1,11 @@
 # LANGUAGE translation of CakePHP Application
 # Copyright YEAR NAME <EMAIL@ADDRESS>
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2018-06-11 18:16+0200\n"
-"PO-Revision-Date: 2018-06-11 18:17+0200\n"
+"PO-Revision-Date: 2021-01-27 14:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: EMAIL@ADDRESS\n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.4.2\n"
 
 msgid "You are not authorized to access that location."
 msgstr ""
@@ -164,7 +164,7 @@ msgid "The count does not match {0}{1}"
 msgstr ""
 
 msgid "and"
-msgstr ""
+msgstr "und"
 
 msgid "This field is required"
 msgstr ""
