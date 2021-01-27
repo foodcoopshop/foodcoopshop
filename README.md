@@ -46,7 +46,7 @@ The software can be used with any modern web browser, tablet or smartphone. It's
 ## Requirements
 * Server with **shell access** and **cronjobs**
 * Apache with `mod_rewrite`
-* PHP >= 7.4
+* PHP >= 7.4 (PHP 8.0 is supported)
 * PHP intl extension INTL_ICU_VERSION >= 50.1
 * PHP ZipArchive class
 * MySQL >= 5.7.7 (to support utf8mb4)
