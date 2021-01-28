@@ -22,7 +22,7 @@
     "bootstrap-select": "^1.13.18",
     "chart.js": "^2.9.4",
     "chart.piecelabel.js": "^0.15.0",
-    "ckeditor4": "^4.15.1",
+    "ckeditor4": "^4.16.0",
     "clipboard": "^2.0.6",
     "components-jqueryui": "~1.12",
     "jquery": "^3.5.1",
