@@ -305,7 +305,7 @@ body.customers.new_password_request .input {
 #LoginForm .remember-me-wrapper label {
     float: right;
     padding-left: 130px;
-    line-height: 14px ! important;
+    line-height: 20px ! important;
     margin-top: -5px;
     width: 275px;
     text-align: left;
