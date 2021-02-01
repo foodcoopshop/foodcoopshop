@@ -14,7 +14,6 @@
 foodcoopshop.AppChart = {
 
     barChartOptions : {
-        tension : 0.3,
         datasetStrokeWidth : 1,
         scaleOverride: true,
         scaleStartValue: 0,
@@ -121,6 +120,7 @@ foodcoopshop.AppChart = {
         var lineChartData = {
             labels: xAxisData,
             datasets: [{
+                lineTension : 0.15,
                 data: yAxisData,
                 fill: false,
                 borderColor: 'rgba(113,159,65,.5)',
