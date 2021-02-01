@@ -3,7 +3,6 @@
 namespace App\Model\Table;
 
 use Cake\Core\Configure;
-use Cake\Core\Exception\Exception;
 use Cake\I18n\I18n;
 use App\Lib\Error\Exception\InvalidParameterException;
 use Cake\I18n\Time;
@@ -114,7 +113,7 @@ class CronjobsTable extends AppTable
         try {
             $success = $shell->main();
             $success = $success !== true ? 0 : 1;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $success = 1;
             if (get_class($e) != 'Cake\Network\Exception\SocketException') {
                 $success = 0;
