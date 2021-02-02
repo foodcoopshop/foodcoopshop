@@ -5,7 +5,6 @@ namespace Admin\Controller;
 use App\Lib\Invoice\GenerateInvoiceToCustomer;
 use App\Lib\PdfWriter\InvoiceToCustomerPdfWriter;
 use Cake\Core\Configure;
-use Cake\Core\Exception\Exception;
 use Cake\Http\Exception\NotFoundException;
 
 /**
@@ -88,7 +87,7 @@ class InvoicesController extends AdminAppController
         ])->first();
 
         if (empty($customer)) {
-            throw new Exception('customer not found');
+            throw new \Exception('customer not found');
         }
 
         $invoiceData = $this->Customer->Invoices->getDataForCustomerInvoice($customer->id_customer, Configure::read('app.timeHelper')->getCurrentDateForDatabase());

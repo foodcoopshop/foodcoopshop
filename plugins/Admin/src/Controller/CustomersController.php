@@ -8,7 +8,6 @@ use App\Lib\PdfWriter\TermsOfUsePdfWriter;
 use App\Mailer\AppMailer;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Core\Configure;
-use Cake\Core\Exception\Exception;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Exception\ForbiddenException;
@@ -339,9 +338,9 @@ class CustomersController extends AdminAppController
 
             if (!empty($errors)) {
                 $errorString = '<ul><li>' . join('</li><li>', $errors) . '</li></ul>';
-                throw new Exception($errorString);
+                throw new \Exception($errorString);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return $this->sendAjaxError($e);
         }
 
