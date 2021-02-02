@@ -14,10 +14,10 @@
  */
 
 return [
-    'Version FoodCoopShop' => 'Version Hofladen-Online',
-    'in den FoodCoopShop' => 'in Hofladen-Online',
+    'Version FoodCoopShop' => 'Version Hofladen Online',
+    'in den FoodCoopShop' => 'in Hofladen Online',
     'foodcoopshop.com' => 'hofladen-online.at',
-    'FoodCoopShop' => 'Hofladen-Online',
+    'FoodCoopShop' => 'Hofladen Online',
     'Foodcoop Software' => 'Software für Direktvermarkter',
     '<h2>Betreiber der Plattform</h2>' => '<h2>Betreiber der Plattform (= Hersteller)</h2>',
     'im Folgenden kurz: Betreiber' => 'im Folgenden kurz: Betreiber bzw. Hersteller',
