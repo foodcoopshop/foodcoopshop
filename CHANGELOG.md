@@ -10,6 +10,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 * <img src="https://github.com/mantensteiner.png" width="20"> [mantensteiner](https://github.com/mantensteiner)
 * <img src="https://github.com/markuskoban.png" width="20"> [markuskoban](https://github.com/markuskoban)
 * <img src="https://github.com/mrothauer.png" width="20"> [mrothauer](https://github.com/mrothauer)
+* <img src="https://github.com/reicharm.png" width="20"> [reicharm](https://github.com/reicharm)
 
 ### Neue Funktionen
 - Das neue Modul zur Erstellung von Kunden-Rechnungen ermöglicht die Verwendung der Software im Einzelhandel. [Zur Online-Doku](https://foodcoopshop.github.io/de/dorfladen-online.html). [I#572](https://github.com/foodcoopshop/foodcoopshop/issues/572) / [PR#580](https://github.com/foodcoopshop/foodcoopshop/pull/580) / [PR#584](https://github.com/foodcoopshop/foodcoopshop/pull/584) / [PR#599](https://github.com/foodcoopshop/foodcoopshop/pull/599) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
@@ -22,6 +23,7 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Slideshow-Bilder auf der Startseite können jetzt verlinkt und außerdem auch "nur für Mitglieder" angezeigt werden. [I#600](https://github.com/foodcoopshop/foodcoopshop/issues/600) / [PR#606](https://github.com/foodcoopshop/foodcoopshop/pull/606) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Die Verwaltung der Mitgliedsbeiträge ist nun stark vereinfacht. [Zur Online-Doku](https://foodcoopshop.github.io/de/mitgliedsbeitraege.html). [I#471](https://github.com/foodcoopshop/foodcoopshop/issues/471) / [PR#608](https://github.com/foodcoopshop/foodcoopshop/pull/608) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Die Software läuft jetzt auf PHP 8.0.
+- Das individuelle Farbschema wird jetzt auch im Admin-Bereich angewendet. [I#613](https://github.com/foodcoopshop/foodcoopshop/issues/613) / [PR#630](https://github.com/foodcoopshop/foodcoopshop/pull/630) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
 ### Bugfixes / Optimierungen
 - Bestelllisten- und Rechnungsversand benötigen keinen HttpClient mehr, sie sind außerdem jetzt mit einer Queue implementiert. Die PDFs werden einzeln generiert, versendet und bei einem Fehler automatisch wiederholt. Außerdem basieren alle Tests nun auf EmailTrait, die Entity "EmailLog" wurde entfernt. [I#410](https://github.com/foodcoopshop/foodcoopshop/issues/410) / [I#560](https://github.com/foodcoopshop/foodcoopshop/issues/560) / [I#562](https://github.com/foodcoopshop/foodcoopshop/issues/562) / [PR#561](https://github.com/foodcoopshop/foodcoopshop/pull/561) / [PR#566](https://github.com/foodcoopshop/foodcoopshop/pull/566) / [PR#553](https://github.com/foodcoopshop/foodcoopshop/pull/553) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
