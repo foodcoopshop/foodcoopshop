@@ -57,7 +57,8 @@ use Cake\Core\Configure;
     #footer i.fab, #footer i.far, #footer i.fas,
     a.btn.edit-shortcut-button,
     a.btn.prev-button i, a.btn.next-button i,
-    .product-wrapper .price-asterisk {
+    .product-wrapper .price-asterisk,
+    i.fa.ok, i.fas.ok, i.far.ok {
         color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
     }
 

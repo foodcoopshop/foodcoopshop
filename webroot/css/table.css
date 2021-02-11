@@ -29,11 +29,8 @@ table.list tr.selected {
     background-color: #719f41 ! important;
     color: white ! important;
 }
-table.list tr.paid {
-    background-color: blue;
-}
 table.list tr.selected a:not(.btn) {
-    color: white;
+    color: white ! important;
 }
 /* click on checkbox should overwrite hover */
 body.order_details table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover {

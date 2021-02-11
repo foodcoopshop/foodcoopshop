@@ -27,12 +27,14 @@ a:not([href]):not([tabindex]),a:not([href]):not([tabindex]):hover, a:not([href])
 
 table.list a:not(.btn),
 body.admin form .input a:not(.btn),
-body.admin.modal-open a:not(.btn) {
+body.admin.modal-open a:not(.btn),
+body.admin h2 span a {
     color: #333 ! important;
     text-decoration: underline ! important;
 }
 body.admin form .input a:not(.btn):hover,
-body.admin.modal-open a:not(.btn):hover {
+body.admin.modal-open a:not(.btn):hover,
+body.admin h2 span a:hover {
     text-decoration: none ! important;
 }
 .btn-success:active {
@@ -123,7 +125,9 @@ button,
     color: #fff;
 }
 .btn-warning:hover,
-.btn-warning:active {
+.btn-warning:active,
+.btn-warning:focus,
+.btn-warning:active:focus {
     color: #fff ! important;
     background-color: #ec971f ! important;
     border-color: #d58512 ! important;
@@ -452,11 +456,6 @@ pre {
 a.btn.btn-success:hover i.gold,
 i.gold {
   color: #FFD700 ! important;
-}
-i.fa.ok,
-i.fas.ok,
-i.far.ok {
-    color: #719f41;
 }
 i.fa.not-ok,
 i.fas.not-ok,
