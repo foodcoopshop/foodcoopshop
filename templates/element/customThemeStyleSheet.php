@@ -20,11 +20,11 @@ use Cake\Core\Configure;
 <style>
 
     ::selection {
-      background: <?php echo Configure::read('app.customFrontendColorTheme'); ?>; /* WebKit/Blink Browsers */
+      background: <?php echo Configure::read('app.customThemeMainColor'); ?>; /* WebKit/Blink Browsers */
       color: #fff;
     }
     ::-moz-selection {
-      background: <?php echo Configure::read('app.customFrontendColorTheme'); ?>; /* Gecko Browsers */
+      background: <?php echo Configure::read('app.customThemeMainColor'); ?>; /* Gecko Browsers */
       color: #fff;
     }
 
@@ -42,7 +42,7 @@ use Cake\Core\Configure;
     #flashMessage.success,
     .modal-header,
     .cookieConsentWrapper {
-        background-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
+        background-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
     }
 
     h1,
@@ -58,39 +58,39 @@ use Cake\Core\Configure;
     a.btn.edit-shortcut-button,
     a.btn.prev-button i, a.btn.next-button i,
     .product-wrapper .price-asterisk {
-        color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
+        color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
     }
 
     .blog-wrapper .swiper-button-prev,
     .blog-wrapper .swiper-button-next,
     body.blog_posts.detail #inner-content h2.further-news,
     body.customers.registration_successful #inner-content h2.further-news {
-        color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
+        color: <?php echo Configure::read('app.customThemeMainColor'); ?> ! important;
     }
 
     .btn-success,
     .btn-success:active:hover,
     #flashMessage.success {
-        border-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
+        border-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
     }
 
     .btn-success:hover,
     .btn-success:focus,
     .btn-success:active,
     .btn-success.disabled {
-        background-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
-        border-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
+        background-color: <?php echo Configure::read('app.customThemeMainColor'); ?> ! important;
+        border-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
     }
     .btn-success:focus:active,
     .bootstrap-select .dropdown-item.active,
     .bootstrap-select .dropdown-item:active {
-        background-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
+        background-color: <?php echo Configure::read('app.customThemeMainColor'); ?> ! important;
     }
     .vertical.menu a {
         color: #333333;
     }
     body.customers.login #self-service {
-        box-shadow: inset 0 0 3em <?php echo Configure::read('app.customFrontendColorTheme'); ?>;
+        box-shadow: inset 0 0 3em <?php echo Configure::read('app.customThemeMainColor'); ?>;
     }
 
     <?php if ($isMobile) { ?>
@@ -98,7 +98,7 @@ use Cake\Core\Configure;
             #responsive-header a,
             body.self_services #responsive-header i.fa-circle-notch,
             :not(button)> i.fas:not(.fa-star):not(.fa-circle-notch):not(.fa-tags):not(.fa-shopping-bag):not(.fa-minus-circle):not(.fa-plus-circle) {
-                color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
+                color: <?php echo Configure::read('app.customThemeMainColor'); ?> ! important;
             }
             body.self_services #responsive-header a:not(.responsive-cart):not(.btn-flash-message),
             .sb-slidebar i.fas:not(.gold),
@@ -109,15 +109,15 @@ use Cake\Core\Configure;
             }
             .sb-slidebar,
             .sb-right h3 {
-                background-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
+                background-color: <?php echo Configure::read('app.customThemeMainColor'); ?> ! important;
             }
             .sb-left li.header, .sb-left a:hover, .sb-left a.active,
             .sb-left a:hover i.fas:not(.gold), .sb-left a.active i.fas:not(.gold):not(.fa-pencil-alt) {
                 background-color: #fff;
-                color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
+                color: <?php echo Configure::read('app.customThemeMainColor'); ?> ! important;
             }
             .sb-right .inner {
-                border-color: <?php echo Configure::read('app.customFrontendColorTheme'); ?> ! important;
+                border-color: <?php echo Configure::read('app.customThemeMainColor'); ?> ! important;
             }
         }
     <?php } ?>

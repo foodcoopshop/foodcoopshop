@@ -24,6 +24,17 @@ a:not([href]):not([tabindex]),a:not([href]):not([tabindex]):hover, a:not([href])
   color: #009335;
   text-decoration: none ! important;
 }
+
+table.list a:not(.btn),
+body.admin form .input a:not(.btn),
+body.admin.modal-open a:not(.btn) {
+    color: #333 ! important;
+    text-decoration: underline ! important;
+}
+body.admin form .input a:not(.btn):hover,
+body.admin.modal-open a:not(.btn):hover {
+    text-decoration: none ! important;
+}
 .btn-success:active {
     border-color: transparent;
 }

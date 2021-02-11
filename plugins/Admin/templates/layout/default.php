@@ -43,11 +43,12 @@ use Cake\Utility\Inflector;
     if ($isMobile) {
         echo $this->Html->css(['/node_modules/slidebars/dist/slidebars', 'mobile-global', 'Admin.mobile']);
     }
+    echo $this->element('customThemeStyleSheet');
     echo $this->element('layout/customHeader');
     ?>
 
 </head>
-<body class="<?php echo Inflector::tableize($this->name); ?> <?php echo Inflector::singularize(Inflector::tableize($this->request->getParam('action'))); ?>">
+<body class="admin <?php echo Inflector::tableize($this->name); ?> <?php echo Inflector::singularize(Inflector::tableize($this->request->getParam('action'))); ?>">
 
     <div id="container">
 

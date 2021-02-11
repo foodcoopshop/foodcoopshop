@@ -18,7 +18,7 @@ use Cake\Core\Configure;
 <!DOCTYPE html>
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <meta name="theme-color" content="<?php echo Configure::read('app.customFrontendColorTheme'); ?>">
+    <meta name="theme-color" content="<?php echo Configure::read('app.customThemeMainColor'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Error - <?php echo Configure::read('appDb.FCS_APP_NAME'); ?></title>

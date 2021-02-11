@@ -33,7 +33,7 @@ if (! defined('PHPUNIT_COMPOSER_INSTALL') && ! defined('__PHPUNIT_PHAR__')) {
 <html lang="<?php echo strtolower(str_replace('_', '-', I18n::getLocale())); ?>">
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <meta name="theme-color" content="<?php echo Configure::read('app.customFrontendColorTheme'); ?>">
+    <meta name="theme-color" content="<?php echo Configure::read('app.customThemeMainColor'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title><?php echo $title_for_layout; ?> - <?php echo Configure::read('appDb.FCS_APP_NAME'); ?></title>
@@ -54,7 +54,7 @@ if (! defined('PHPUNIT_COMPOSER_INSTALL') && ! defined('__PHPUNIT_PHAR__')) {
         if (Configure::read('appDb.FCS_CUSTOMER_CAN_SELECT_PICKUP_DAY')) {
             echo $this->Html->css(['customer-can-select-pickup-day']);
         }
-        echo $this->element('customFrontendColorThemeCss');
+        echo $this->element('customThemeStyleSheet');
         echo $this->element('layout/customHeader');
    ?>
 

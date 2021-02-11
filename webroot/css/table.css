@@ -48,6 +48,9 @@ body:not(.order_details) table.list:not(.no-hover) tr:not(:last-child):not(:firs
 table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover a:not(.icon-with-text):not(.btn) {
     color: white ! important;
 }
+table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover a:not(.icon-with-text):not(.btn):hover {
+    text-decoration: none ! important;
+}
 table.list tr.custom-odd {
     background-color: #EBEBEB;
 }
