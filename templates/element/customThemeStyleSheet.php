@@ -103,24 +103,33 @@ use Cake\Core\Configure;
         @media only screen and (max-device-width: 768px) {
             #responsive-header a,
             body.self_services #responsive-header i.fa-circle-notch,
-            :not(button)> i.fas:not(.fa-star):not(.fa-circle-notch):not(.fa-tags):not(.fa-shopping-bag):not(.fa-minus-circle):not(.fa-plus-circle) {
+            body:not(.admin):not(button) > i.fas:not(.fa-star):not(.fa-circle-notch):not(.fa-tags):not(.fa-shopping-bag):not(.fa-minus-circle):not(.fa-plus-circle) {
                 color: <?php echo Configure::read('app.customThemeMainColor'); ?> ! important;
             }
             body.self_services #responsive-header a:not(.responsive-cart):not(.btn-flash-message),
-            .sb-slidebar i.fas:not(.gold),
-            .sb-slidebar i.fas.fa-tags,
-            .sb-slidebar i.fas.fa-shopping-bag,
+            body:not(.admin):not(button) .sb-slidebar i.fas:not(.gold),
+            body:not(.admin):not(button) .sb-slidebar i.fas.fa-tags,
+            body:not(.admin):not(button) .sb-slidebar i.fas.fa-shopping-bag,
             a.btn i.fas:not(.fa-plus-circle):not(.fa-minus-circle):not(.fa-times-circle):not(.gold):not(.fa-pencil-alt):not(.fa-circle-notch):not(.fa-arrow-circle-left):not(.fa-arrow-circle-right) {
                 color: #fff ! important;
             }
-            .sb-slidebar,
-            .sb-right h3 {
+            body:not(.admin) .sb-slidebar,
+            body:not(.admin) .sb-right h3 {
                 background-color: <?php echo Configure::read('app.customThemeMainColor'); ?> ! important;
             }
-            .sb-left li.header, .sb-left a:hover, .sb-left a.active,
-            .sb-left a:hover i.fas:not(.gold), .sb-left a.active i.fas:not(.gold):not(.fa-pencil-alt) {
+            .sb-left li.header,
+            .sb-left a:hover, .sb-left a.active,
+            .sb-left a:hover i.fas:not(.gold),
+            .sb-left a.active i.fas:not(.gold):not(.fa-pencil-alt) {
                 background-color: #fff;
                 color: <?php echo Configure::read('app.customThemeMainColor'); ?> ! important;
+            }
+            body.admin .sb-left li.header,
+            body.admin .sb-left a:hover, .sb-left a.active,
+            body.admin .sb-left a:hover i.fas:not(.gold),
+            body.admin .sb-left a.active i.fas:not(.gold):not(.fa-pencil-alt) {
+                background-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
+                color: #fff ! important;
             }
             .sb-right .inner {
                 border-color: <?php echo Configure::read('app.customThemeMainColor'); ?> ! important;
