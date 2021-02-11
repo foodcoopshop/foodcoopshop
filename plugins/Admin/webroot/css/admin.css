@@ -271,20 +271,9 @@ body.products.index td.status {
   text-align: center;
 }
 #filter-loader i {
-  animation:reload-loader-animation 10s infinite, fa-spin 2s infinite linear;
-  -moz-animation:reload-loader-animation 10s infinite, fa-spin 2s infinite linear; /* Firefox */
-  -webkit-animation:reload-loader-animation 10s infinite, fa-spin 2s infinite linear; /* Safari and Chrome */
-  color: #719f41;
-}
-@-moz-keyframes reload-loader-animation /* Firefox */ {
-    0% {color:#719f41;}
-    50% {color:orange;}
-    100% {color:#719f41;}
-}
-@-webkit-keyframes reload-loader-animation /* Safari and Chrome */ {
-    0% {color:#719f41;}
-    50% {color:orange;}
-    100% {color:#719f41;}
+  animation:10s infinite, fa-spin 2s infinite linear;
+  -moz-animation:10s infinite, fa-spin 2s infinite linear; /* Firefox */
+  -webkit-animation:10s infinite, fa-spin 2s infinite linear; /* Safari and Chrome */
 }
 td.right,
 th.right {
