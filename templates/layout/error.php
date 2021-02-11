@@ -40,6 +40,9 @@ use Cake\Core\Configure;
         if ($isMobile) {
             echo $this->Html->css(['mobile-error']);
         }
+
+        echo $this->element('customThemeStyleSheet');
+
     ?>
 
 </head>
