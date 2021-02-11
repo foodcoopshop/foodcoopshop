@@ -949,9 +949,6 @@ body.carts.detail #CartsDetailForm {
 #inner-content .next-button {
     float: right;
 }
-body.carts.detail .cart:not(#cart) span.amount .btn {
-    color: #719f41;
-}
 body.carts.detail .cart:not(#cart) span.right .delete {
     margin-top: 0px;
     margin-left: 5px;

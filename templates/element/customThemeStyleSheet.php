@@ -58,7 +58,8 @@ use Cake\Core\Configure;
     a.btn.edit-shortcut-button,
     a.btn.prev-button i, a.btn.next-button i,
     .product-wrapper .price-asterisk,
-    i.fa.ok, i.fas.ok, i.far.ok {
+    i.fa.ok, i.fas.ok, i.far.ok,
+    body.carts.detail .cart:not(#cart) span.amount .btn {
         color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
     }
 
