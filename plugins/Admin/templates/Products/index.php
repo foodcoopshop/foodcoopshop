@@ -99,7 +99,7 @@ use Cake\Core\Configure;
                         'script' => Configure::read('app.jsNamespace') . ".ModalProductAdd.init();"
                     ]);
                     echo '<div id="add-product-button-wrapper" class="add-button-wrapper">';
-                    echo $this->Html->link('<i class="fas fa-plus-circle"></i> ' . __d('admin', 'Add_product'), 'javascript:void(0);', [
+                    echo $this->Html->link('<i class="fas fa-plus-circle ok"></i> ' . __d('admin', 'Add_product'), 'javascript:void(0);', [
                         'class' => 'btn btn-outline-light',
                         'escape' => false
                     ]);

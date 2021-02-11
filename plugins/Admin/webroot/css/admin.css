@@ -187,12 +187,6 @@ span.product-declaration-header {
   float: right;
   margin-left: 5px;
 }
-span.is-declaration-ok-wrapper .fa-check,
-td.is-stock-product .fa-check,
-td.delivery-rhythm .fa-check,
-td.amount i.always-available {
-  color: #719f41;
-}
 td.is-stock-product i.fas.no-button {
     margin-left: 5px;
 }

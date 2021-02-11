@@ -62,7 +62,7 @@ foreach ($categories as $category) {
     if ($category->active == 1) {
         echo '<i class="fas fa-check-circle ok"></i>';
     } else {
-        echo '<i class="fas fa-minus-circle not-ok"></i>';
+        echo '<i class="fas fa-minus-circle ok"></i>';
     }
     echo '</td>';
 

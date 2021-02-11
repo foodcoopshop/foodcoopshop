@@ -13,4 +13,4 @@
  * @link          https://www.foodcoopshop.com
  */
 ?>
-<a class="btn btn-outline-light" title="<?php echo __('Print'); ?>" href="javascript:window.print();"><i class="fas fa-print"></i></a>
+<a class="btn btn-outline-light" title="<?php echo __('Print'); ?>" href="javascript:window.print();"><i class="fas fa-print ok"></i></a>

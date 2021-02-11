@@ -32,7 +32,7 @@ use Cake\Utility\Hash;
         <div class="right">
             <?php
             echo '<div id="add-attribute-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fas fa-plus-circle"></i> '.__d('admin', 'Add_attribute').'', $this->Slug->getAttributeAdd(), [
+            echo $this->Html->link('<i class="fas fa-plus-circle ok"></i> '.__d('admin', 'Add_attribute').'', $this->Slug->getAttributeAdd(), [
                 'class' => 'btn btn-outline-light',
                 'escape' => false
             ]);
@@ -97,7 +97,7 @@ foreach ($attributes as $attribute) {
 
     echo '<td style="width:300px;">';
     if (! empty($attribute->combination_product['online'])) {
-        echo $this->Html->link('<i class="fas fa-plus-circle"></i> '.__d('admin', 'Associated_products').' (' . count($attribute->combination_product['online']) . ')', 'javascript:void(0);', [
+        echo $this->Html->link('<i class="fas fa-plus-circle ok"></i> '.__d('admin', 'Associated_products').' (' . count($attribute->combination_product['online']) . ')', 'javascript:void(0);', [
             'class' => 'toggle-link',
             'title' => __d('admin', 'Show_associated_products'),
             'escape' => false
@@ -108,7 +108,7 @@ foreach ($attributes as $attribute) {
 
     echo '<td style="width:300px;">';
     if (! empty($attribute->combination_product['offline'])) {
-        echo $this->Html->link('<i class="fas fa-plus-circle"></i> '.__d('admin', 'Associated_products').' (' . count($attribute->combination_product['offline']) . ')', 'javascript:void(0);', [
+        echo $this->Html->link('<i class="fas fa-plus-circle ok"></i> '.__d('admin', 'Associated_products').' (' . count($attribute->combination_product['offline']) . ')', 'javascript:void(0);', [
             'class' => 'toggle-link',
             'title' => __d('admin', 'Show_associated_products'),
             'escape' => false
