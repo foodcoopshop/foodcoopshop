@@ -186,9 +186,9 @@ class MyHtmlHelper extends HtmlHelper
 
     public function getFontAwesomeIconForCurrencyName($currencySymbol)
     {
-        $currencyIcon = 'fas fa-fw fa-'.strtolower(Configure::read('app.currencyName')).'-sign';
+        $currencyIcon = 'fas fa-fw ok fa-'.strtolower(Configure::read('app.currencyName')).'-sign';
         if (Configure::read('app.currencyName') == '') {
-            $currencyIcon = 'fa-fw far fa-money-bill-alt';
+            $currencyIcon = 'fa-fw ok far fa-money-bill-alt';
         }
         return $currencyIcon;
     }
