@@ -30,7 +30,6 @@
         min-height: initial ! important;
     }
     .sb-slidebar {
-        background-color: #719f41;
         z-index: 99990;
     }
     .sb-left #product-search {

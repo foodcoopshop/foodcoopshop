@@ -25,17 +25,14 @@
     background: rgba(0,100,0,0.3);
     padding: 10px 15px;
     margin-bottom: 10px;
-    border: 1px solid #006400;
     border-radius: 3px;
     border-image: url('../img/mini-upload-form/border-image.png') 25 repeat;
     text-align: center;
     font-size:16px;
     font-weight:bold;
-    color:#006400;
 }
 
 .drop a.upload-button {
-    background-color:#719f41;
     padding:12px 26px;
     color:#fff;
     font-size:14px;

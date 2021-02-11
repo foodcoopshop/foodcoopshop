@@ -145,7 +145,6 @@ body.categories.detail div.description-wrapper {
     padding: 5px;
     font-size: 17px;
     padding-left: 10px;
-    background-color: #719f41;
     color: #fff;
     border-bottom: 1px solid #dfdfdf;
 }
@@ -179,7 +178,6 @@ body.categories.detail div.description-wrapper {
 }
 #main-menu li a:hover,
 #main-menu li a.active {
-    background-color: #719f41;
     color: #fff;
 }
 #main-menu ul li a:hover,
@@ -211,7 +209,6 @@ body.categories.detail div.description-wrapper {
     margin-right: 2px;
 }
 #main-menu li ul li a {
-    background-color: #719f41;
     color: #fff;
     margin-right: 15px;
     margin-top: 0px;
@@ -358,7 +355,6 @@ h1 {
     padding-bottom: 10px;
 }
 a.button {
-    background-color: #719f41;
     border-radius: 5px;
     color: #fff;
     padding: 7px 10px;
@@ -414,9 +410,6 @@ body.superadmin .product-wrapper .heading h4 {
 .blog-post-wrapper div.first-column img,
 .manufacturer-wrapper div.first-column img {
     width: 148px;
-}
-.product-wrapper div.first-column span.fa-stack i.fa-square {
-    color: #719f41;
 }
 .product-wrapper div.first-column span.fa-stack i.fa-star {
     color: #fff;
@@ -508,7 +501,6 @@ body.superadmin .product-wrapper .heading h4 {
 }
 .product-wrapper .price,
 .product-wrapper .price-asterisk {
-    color: #719f41;
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 5px;
@@ -516,8 +508,6 @@ body.superadmin .product-wrapper .heading h4 {
 }
 .product-wrapper .price-asterisk {
     margin-bottom: 0;
-}
-.product-wrapper .price-asterisk {
     margin-left: 5px;
 }
 .product-wrapper .additional-price-info {
@@ -707,7 +697,6 @@ body.manufacturers.detail .imprint {
 }
 .box h3 {
     color: #fff;
-    background-color: #719f41;
     padding: 10px;
     font-size: 18px;
     margin: 0;
@@ -1127,7 +1116,6 @@ a.blog-post-wrapper h3 {
     font-weight: bold;
     line-height: 17px;
     margin-bottom: 5px;
-    color: #719f41;
     width: 100%;
     float: left;
     padding-top: 10px;

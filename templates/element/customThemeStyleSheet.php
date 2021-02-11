@@ -41,7 +41,8 @@ use Cake\Core\Configure;
     h2.info,
     #flashMessage.success,
     .modal-header,
-    .cookieConsentWrapper {
+    .cookieConsentWrapper,
+    .drop a.upload-button {
         background-color: <?php echo Configure::read('app.customThemeMainColor'); ?>;
     }
 
@@ -67,7 +68,8 @@ use Cake\Core\Configure;
     .blog-wrapper .swiper-button-prev,
     .blog-wrapper .swiper-button-next,
     body.blog_posts.detail #inner-content h2.further-news,
-    body.customers.registration_successful #inner-content h2.further-news {
+    body.customers.registration_successful #inner-content h2.further-news,
+    a.btn-arrow:hover {
         color: <?php echo Configure::read('app.customThemeMainColor'); ?> ! important;
     }
 
@@ -86,7 +88,8 @@ use Cake\Core\Configure;
     }
     .btn-success:focus:active,
     .bootstrap-select .dropdown-item.active,
-    .bootstrap-select .dropdown-item:active {
+    .bootstrap-select .dropdown-item:active,
+    table.list tr.selected {
         background-color: <?php echo Configure::read('app.customThemeMainColor'); ?> ! important;
     }
     .vertical.menu a {

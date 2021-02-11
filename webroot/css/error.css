@@ -33,9 +33,6 @@ body {
     margin-top: 110px;
 }
 #content h1,
-#content form {
-    text-align: left;
-}
 #container {
     width: auto;
     margin: 0 auto;
@@ -52,7 +49,6 @@ body {
     display: block;
     padding: 10px;
 }
-
 h2 {
     font-size: 18px;
     background: #fff;
@@ -61,38 +57,4 @@ h2 {
     margin: 0 auto;
     line-height: 20px;
     border-radius: 5px;
-}
-
-#login-form {
-    margin-top: 20px;
-}
-#login-form form {
-    background-color: #719f41;
-    border-color: #719f41;
-}
-#login-form .input label {
-    color: #fff;
-}
-#login-form h1 {
-    border: none;
-    color: #fff;
-    background-color: #719f41;
-}
-#login-form form a,
-#login-form form label {
-    color: #fff;
-}
-#login-form form a:hover {
-    color: #d6d4d4;
-}
-#login-form form button {
-    margin-top: -10px;
-}
-#flashMessage {
-    width: 375px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    margin-left: -188px;
-    opacity: 1;
-    left: 50%;
 }
