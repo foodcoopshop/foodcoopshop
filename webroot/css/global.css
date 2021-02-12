@@ -30,7 +30,7 @@ a:not([href]):not([tabindex]):focus {
 
 table.list a:not(.btn),
 body.admin form .input a:not(.btn),
-body.admin.modal-open a:not(.btn):not(.upload-button),
+body.admin.modal-open .modal a:not(.btn):not(.upload-button),
 body.admin h2 span a,
 .tooltipster-box .tooltipster-content a {
     color: #333 ! important;
