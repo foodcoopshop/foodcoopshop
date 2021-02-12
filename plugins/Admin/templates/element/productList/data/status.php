@@ -26,7 +26,9 @@ echo '<td class="status">';
                 'escape' => false
             ]
         );
-    } else {
+    }
+
+    if ($product->active == 0) {
         echo $this->Html->link(
             '<i class="fas fa-minus-circle ok"></i>',
             'javascript:void(0);',
