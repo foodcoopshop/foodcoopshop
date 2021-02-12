@@ -156,7 +156,7 @@ return [
 
         'implementedLocales' => ['de_DE', 'en_US', 'pl_PL'],
 
-        // allows to use another color theme for the frontend, can be any valid css color code
+        // must be a valid 6-digit hex code
         'customThemeMainColor' => '#719f41',
 
         'isBlogFeatureEnabled' => true,
