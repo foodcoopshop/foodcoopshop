@@ -832,7 +832,7 @@ body.slider.index table.list {
     height: 155px;
 }
 body.payments tr.last-row-of-year td {
-    border-top-width: 5px;
+    border-top-width: 3px;
     border-top-color: #a8a8a8;
     border-top-style: solid;
 }
