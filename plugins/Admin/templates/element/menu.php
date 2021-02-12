@@ -29,14 +29,14 @@ $actionLogsMenuElement = [
     'slug' => $this->Slug->getActionLogsList(),
     'name' => __d('admin', 'Activities'),
     'options' => [
-        'fa-icon' => 'fa-fw ok ok fa-eye'
+        'fa-icon' => 'fa-fw fa-eye'
     ]
 ];
 $changedOrderedProductsMenuElement = [
     'slug' => $this->Slug->getActionLogsList().'/index/?types[]=order_detail_cancelled&types[]=order_detail_product_price_changed&types[]=order_detail_product_quantity_changed&types[]=order_detail_product_amount_changed&types[]=order_detail_customer_changed',
     'name' => __d('admin', 'Order_adaptions'),
     'options' => [
-        'fa-icon' => 'fa-fw ok fa-times'
+        'fa-icon' => 'fa-fw fa-times'
     ]
 ];
 if ($this->Html->paymentIsCashless() && Configure::read('app.isDepositPaymentCashless')) {
@@ -52,42 +52,42 @@ $orderListsMenuElement = [
     'slug' => $this->Slug->getOrderLists(),
     'name' => __d('admin', 'Order_lists'),
     'options' => [
-        'fa-icon' => 'fa-fw ok fa-book'
+        'fa-icon' => 'fa-fw fa-book'
     ]
 ];
 $orderDetailsGroupedByCustomerMenuElement = [
     'slug' => $this->Slug->getOrderDetailsList().'?groupBy=customer',
     'name' => __d('admin', 'Orders'),
     'options' => [
-        'fa-icon' => 'fa-fw ok fa-shopping-cart'
+        'fa-icon' => 'fa-fw fa-shopping-cart'
     ]
 ];
 $customerProfileMenuElement = [
     'slug' => $this->Slug->getCustomerProfile(),
     'name' => __d('admin', 'My_data'),
     'options' => [
-        'fa-icon' => 'fa-fw ok fa-home'
+        'fa-icon' => 'fa-fw fa-home'
     ]
 ];
 $changePasswordMenuElement = [
     'slug' => $this->Slug->getChangePassword(),
     'name' => __d('admin', 'Change_password'),
     'options' => [
-        'fa-icon' => 'fa-fw ok fa-key'
+        'fa-icon' => 'fa-fw fa-key'
     ]
 ];
 $blogPostsMenuElement = [
     'slug' => $this->Slug->getBlogPostListAdmin(),
     'name' => __d('admin', 'Blog_posts'),
     'options' => [
-        'fa-icon' => 'fa-fw ok fa-file-alt'
+        'fa-icon' => 'fa-fw fa-file-alt'
     ]
 ];
 $homepageAdministrationElement = [
     'slug' => $this->Slug->getPagesListAdmin(),
     'name' => __d('admin', 'Website_administration'),
     'options' => [
-        'fa-icon' => 'fa-fw ok fa-pencil-alt'
+        'fa-icon' => 'fa-fw fa-pencil-alt'
     ]
 ];
 $menu = [];
@@ -101,7 +101,7 @@ $menu[] = [
     'slug' => $this->Slug->getHome(),
     'name' => __d('admin', 'Home'),
     'options' => [
-        'fa-icon' => 'fa-fw ok fa-home'
+        'fa-icon' => 'fa-fw fa-home'
     ]
 ];
 
@@ -136,14 +136,14 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         'slug' => '/admin/manufacturers',
         'name' => __d('admin', 'Manufacturers'),
         'options' => [
-            'fa-icon' => 'fa-fw ok fa-leaf'
+            'fa-icon' => 'fa-fw fa-leaf'
         ]
     ];
     $manufacturerMenu['children'][] = [
         'slug' => $this->Slug->getProductAdmin(),
         'name' => __d('admin', 'Products'),
         'options' => [
-            'fa-icon' => 'fa-fw ok fa-tags'
+            'fa-icon' => 'fa-fw fa-tags'
         ]
     ];
 
@@ -152,7 +152,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             'slug' => $this->Slug->getDepositList(),
             'name' => __d('admin', 'Deposit_account'),
             'options' => [
-                'fa-icon' => 'fa-fw ok fa-recycle'
+                'fa-icon' => 'fa-fw fa-recycle'
             ]
         ];
     }
@@ -162,7 +162,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             'slug' => $this->Slug->getStatistics(),
             'name' => __d('admin', 'Turnover_statistics'),
             'options' => [
-                'fa-icon' => 'fa-fw ok fa-chart-bar'
+                'fa-icon' => 'fa-fw fa-chart-bar'
             ]
         ];
     }
@@ -173,7 +173,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         'slug' => $this->Slug->getCustomerListAdmin(),
         'name' => __d('admin', 'Members'),
         'options' => [
-            'fa-icon' => 'fa-fw ok fa-user'
+            'fa-icon' => 'fa-fw fa-user'
         ]
     ];
     $menu[] = $actionLogsMenuElement;
@@ -195,7 +195,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         'slug' => $this->Slug->getPagesListAdmin(),
         'name' => __d('admin', 'Pages'),
         'options' => [
-            'fa-icon' => 'fa-fw ok fa-pencil-alt'
+            'fa-icon' => 'fa-fw fa-pencil-alt'
         ]
     ];
 
@@ -203,21 +203,21 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
         'slug' => $this->Slug->getCategoriesList(),
         'name' => __d('admin', 'Categories'),
         'options' => [
-            'fa-icon' => 'fa-fw ok fa-list'
+            'fa-icon' => 'fa-fw fa-list'
         ]
     ];
     $homepageAdministrationElement['children'][] = [
         'slug' => $this->Slug->getAttributesList(),
         'name' => __d('admin', 'Attributes'),
         'options' => [
-            'fa-icon' => 'fa-fw ok fa-chevron-circle-right'
+            'fa-icon' => 'fa-fw fa-chevron-circle-right'
         ]
     ];
     $homepageAdministrationElement['children'][] = [
         'slug' => $this->Slug->getSlidersList(),
         'name' => __d('admin', 'Slideshow'),
         'options' => [
-            'fa-icon' => 'fa-fw ok fa-image'
+            'fa-icon' => 'fa-fw fa-image'
         ]
     ];
 
@@ -226,7 +226,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             'slug' => $this->Slug->getTaxesList(),
             'name' => __d('admin', 'Tax_rates'),
             'options' => [
-                'fa-icon' => 'fa-fw ok fa-percent'
+                'fa-icon' => 'fa-fw fa-percent'
             ]
         ];
         $reportSlug = null;
@@ -241,7 +241,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
                 'slug' => $reportSlug,
                 'name' => __d('admin', 'Financial_reports'),
                 'options' => [
-                    'fa-icon' => 'fa-fw ok fa-money-bill-alt'
+                    'fa-icon' => 'fa-fw fa-money-bill-alt'
                 ]
             ];
         }
@@ -249,7 +249,7 @@ if ($appAuth->isSuperadmin() || $appAuth->isAdmin()) {
             'slug' => $this->Slug->getConfigurationsList(),
             'name' => __d('admin', 'Configurations'),
             'options' => [
-                'fa-icon' => 'fa-fw ok fa-cogs'
+                'fa-icon' => 'fa-fw fa-cogs'
             ]
         ];
     }
@@ -262,7 +262,7 @@ if ($appAuth->isManufacturer()) {
         'slug' => $this->Slug->getOrderDetailsList(),
         'name' => __d('admin', 'Orders'),
         'options' => [
-            'fa-icon' => 'fa-fw ok fa-shopping-cart'
+            'fa-icon' => 'fa-fw fa-shopping-cart'
         ]
     ];
     $orderDetailsMenuElement['children'][] = $changedOrderedProductsMenuElement;
@@ -272,21 +272,21 @@ if ($appAuth->isManufacturer()) {
         'slug' => $this->Slug->getProductAdmin(),
         'name' => __d('admin', 'My_products'),
         'options' => [
-            'fa-icon' => 'fa-fw ok fa-tags'
+            'fa-icon' => 'fa-fw fa-tags'
         ]
     ];
     $profileMenu = [
         'slug' => $this->Slug->getManufacturerProfile(),
         'name' => __d('admin', 'My_profile'),
         'options' => [
-            'fa-icon' => 'fa-fw ok fa-home'
+            'fa-icon' => 'fa-fw fa-home'
         ]
     ];
     $optionsMenu = [
         'slug' => $this->Slug->getManufacturerMyOptions(),
         'name' => __d('admin', 'Configurations'),
         'options' => [
-            'fa-icon' => 'fa-fw ok fa-cogs'
+            'fa-icon' => 'fa-fw fa-cogs'
         ]
     ];
     if (date('Y-m-d') > Configure::read('app.depositForManufacturersStartDate')) {
@@ -297,7 +297,7 @@ if ($appAuth->isManufacturer()) {
                 'slug' => $this->Slug->getMyDepositList(),
                 'name' => __d('admin', 'Deposit_account'),
                 'options' => [
-                    'fa-icon' => 'fa-fw ok fa-recycle'
+                    'fa-icon' => 'fa-fw fa-recycle'
                 ]
             ];
         }
@@ -318,7 +318,7 @@ if ($appAuth->isManufacturer()) {
         'slug' => $this->Slug->getMyStatistics(),
         'name' => __d('admin', 'Turnover_statistics'),
         'options' => [
-            'fa-icon' => 'fa-fw ok fa-chart-bar'
+            'fa-icon' => 'fa-fw fa-chart-bar'
         ]
     ];
 }
