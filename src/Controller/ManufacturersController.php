@@ -9,8 +9,6 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\NotFoundException;
 
 /**
- * ManufacturersController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License

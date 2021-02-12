@@ -10,8 +10,6 @@ use Cake\Utility\Security;
 use Cviebrock\DiscoursePHP\SSOHelper as SSOHelper;
 
 /**
- * PagesController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License

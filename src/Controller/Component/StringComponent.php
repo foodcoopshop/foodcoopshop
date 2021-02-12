@@ -5,8 +5,6 @@ use Cake\Controller\Component;
 use Cake\Utility\Text;
 
 /**
- * StringComponent
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License

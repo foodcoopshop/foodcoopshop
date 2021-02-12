@@ -8,8 +8,6 @@ use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 
 /**
- * CategoriesController
- *
  * FoodCoopShop - The open source software for your foodcoop
  *
  * Licensed under The MIT License
