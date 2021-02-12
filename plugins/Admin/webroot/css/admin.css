@@ -77,12 +77,6 @@ body.taxes.edit #flashMessage {
     background-color: #fff;
     padding: 2px 2px 2px 1px;
     border-left: 5px solid #efefef;
-    background: linear-gradient(-75deg, #ffffff 0%, #ffffff 50%, #B3CC9A 100%);
-    background: -moz-linear-gradient(-75deg, #ffffff 0%, #ffffff 50%, #B3CC9A 100%);
-    background: -webkit-linear-gradient(-75deg, #ffffff 0%, #ffffff 50%, #B3CC9A 100%);
-    background: -ms-linear-gradient(-75deg, #ffffff 0%, #ffffff 50%, #B3CC9A 100%);
-    background: -o-linear-gradient(-75deg, #ffffff 0%, #ffffff 50%, #B3CC9A 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#B3CC9A,GradientType=1);
     border-bottom-right-radius: 15px;
     position: relative;
 }

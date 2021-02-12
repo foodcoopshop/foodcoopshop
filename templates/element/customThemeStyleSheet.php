@@ -98,6 +98,14 @@ use Cake\Core\Configure;
     body.customers.login #self-service {
         box-shadow: inset 0 0 3em <?php echo Configure::read('app.customThemeMainColor'); ?>;
     }
+    body.admin #content {
+        background: linear-gradient(-75deg, #ffffff 0%, #ffffff 50%, <?php echo Configure::read('app.customThemeMainColor'); ?> 100%);
+        background: -moz-linear-gradient(-75deg, #ffffff 0%, #ffffff 50%, <?php echo Configure::read('app.customThemeMainColor'); ?> 100%);
+        background: -webkit-linear-gradient(-75deg, #ffffff 0%, #ffffff 50%, <?php echo Configure::read('app.customThemeMainColor'); ?> 100%);
+        background: -ms-linear-gradient(-75deg, #ffffff 0%, #ffffff 50%, <?php echo Configure::read('app.customThemeMainColor'); ?> 100%);
+        background: -o-linear-gradient(-75deg, #ffffff 0%, #ffffff 50%, <?php echo Configure::read('app.customThemeMainColor'); ?> 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=<?php echo Configure::read('app.customThemeMainColor'); ?>,GradientType=1);
+    }
 
     <?php if ($isMobile) { ?>
         @media only screen and (max-device-width: 768px) {
