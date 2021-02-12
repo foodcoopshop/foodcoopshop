@@ -238,7 +238,7 @@ class StatisticsController extends AdminAppController
                 if ($opacity < 20) {
                     $opacity = 20;
                 }
-                $backgroundColorPieChart[] = 'rgba(113,159,65,0.'.$opacity.')';
+                $backgroundColorPieChart[] = Configure::read('app.customThemeMainColor') . dechex($opacity * 2.56);
             }
 
             // start retrieving data for pie chart

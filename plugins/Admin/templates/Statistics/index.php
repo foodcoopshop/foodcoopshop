@@ -61,6 +61,7 @@ if (empty($xAxisDataBarChart)) {
 
 $this->element('addScript', [
     'script' =>
+    Configure::read('app.jsNamespace') . ".AppChart.setColor('" . Configure::read('app.customThemeMainColor') . "');" .
     Configure::read('app.jsNamespace') . ".AppChart.initBarChart(".json_encode($xAxisDataBarChart).", ".json_encode($yAxisDataBarChart).");"
 ]);
 if ($year == '' && count($xAxisDataLineChart) > 1) {
