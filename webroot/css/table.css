@@ -74,8 +74,7 @@ span.negative {
     color: red ! important;
 }
 table.list tr:hover td.negative,
-tr:hover b.negative,
-tr:hover span.negative {
+tr:hover b.negative {
     color: #fff ! important;
 }
 table.list td.slim {
