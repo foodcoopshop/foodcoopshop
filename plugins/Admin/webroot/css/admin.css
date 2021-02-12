@@ -836,6 +836,9 @@ body.payments tr.last-row-of-year td {
     border-top-color: #a8a8a8;
     border-top-style: solid;
 }
+body.payments.overview #content i.ok {
+    color: #fff ! important;
+}
 body.payments i.payment-approval,
 body.reports.payment i.payment-approval {
     float: left;
