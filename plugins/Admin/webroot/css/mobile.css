@@ -76,7 +76,6 @@ form.fcs-form .bootstrap-select, /* sic! necessary for bootstrap selects within 
     background-color: #fff;
 }
 .sb-left li.header, .sb-left a:hover, .sb-left a.active {
-    background-color: #719F42;
     color: #fff ! important;
 }
 .sb-left img.logo {
