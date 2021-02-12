@@ -36,7 +36,6 @@ foodcoopshop.AppChart = {
                 gridLines: {
                     display: false
                 },
-                maxBarThickness: 40,
                 ticks: {
                     autoSkip: false,
                     maxRotation: 90,
@@ -135,7 +134,7 @@ foodcoopshop.AppChart = {
                 pointRadius: 5
             }]
         };
-console.log(lineChartData);
+
         var ctx = $('#myLineChart').get(0).getContext('2d');
         var myNewChart = new Chart(ctx, {
             responsive : true,
@@ -206,6 +205,7 @@ console.log(lineChartData);
             labels: xAxisData,
             datasets: [{
                 data: yAxisData,
+                maxBarThickness: 40,
                 backgroundColor: this.color + 'B3', //.7 alpha
                 hoverBackgroundColor: this.color + '80' //.5 alpha
             }]
