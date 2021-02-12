@@ -134,6 +134,9 @@ body.self_services #content {
     height: 66px;
     border-top: 1px solid #d6d4d4;
 }
+.self-service .footer i.ok {
+    color: #fff;
+}
 .self-service .header {
     background: #fff;
     position: fixed;
