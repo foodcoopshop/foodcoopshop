@@ -4,7 +4,6 @@ namespace App\Controller\Component;
 
 use Cake\Controller\Component\AuthComponent;
 use Cake\Core\Configure;
-use Cake\Core\Exception\Exception;
 use Cake\Datasource\FactoryLocator;
 
 /**
@@ -145,7 +144,7 @@ class AppAuthComponent extends AuthComponent
     public function getManufacturerId()
     {
         if (! $this->isManufacturer()) {
-            throw new Exception('logged user is no manufacturer');
+            throw new \Exception('logged user is no manufacturer');
         }
 
         if (! empty($this->manufacturer)) {
@@ -158,7 +157,7 @@ class AppAuthComponent extends AuthComponent
     public function getManufacturerName()
     {
         if (! $this->isManufacturer()) {
-            throw new Exception('logged user is no manufacturer');
+            throw new \Exception('logged user is no manufacturer');
         }
 
         if (! empty($this->manufacturer)) {
