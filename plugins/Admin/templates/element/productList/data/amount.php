@@ -43,7 +43,7 @@ echo '<td class="amount ' . (!$available ? 'not-available' : '') . '">';
         $elementsToRender = [];
 
         if (!($product->is_stock_product && $product->manufacturer->stock_management_enabled) && $product->stock_available->always_available) {
-            $elementsToRender[] = '<i class="always-available fas fa-infinity" title="'.__d('admin', 'This_product_is_always_available.').'"></i>';
+            $elementsToRender[] = '<i class="always-available fas fa-infinity ok" title="'.__d('admin', 'This_product_is_always_available.').'"></i>';
         }
 
         $elementsToRender[] =

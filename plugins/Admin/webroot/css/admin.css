@@ -77,12 +77,6 @@ body.taxes.edit #flashMessage {
     background-color: #fff;
     padding: 2px 2px 2px 1px;
     border-left: 5px solid #efefef;
-    background: linear-gradient(-75deg, #ffffff 0%, #ffffff 50%, #B3CC9A 100%);
-    background: -moz-linear-gradient(-75deg, #ffffff 0%, #ffffff 50%, #B3CC9A 100%);
-    background: -webkit-linear-gradient(-75deg, #ffffff 0%, #ffffff 50%, #B3CC9A 100%);
-    background: -ms-linear-gradient(-75deg, #ffffff 0%, #ffffff 50%, #B3CC9A 100%);
-    background: -o-linear-gradient(-75deg, #ffffff 0%, #ffffff 50%, #B3CC9A 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#B3CC9A,GradientType=1);
     border-bottom-right-radius: 15px;
     position: relative;
 }
@@ -187,12 +181,6 @@ span.product-declaration-header {
   float: right;
   margin-left: 5px;
 }
-span.is-declaration-ok-wrapper .fa-check,
-td.is-stock-product .fa-check,
-td.delivery-rhythm .fa-check,
-td.amount i.always-available {
-  color: #719f41;
-}
 td.is-stock-product i.fas.no-button {
     margin-left: 5px;
 }
@@ -277,20 +265,9 @@ body.products.index td.status {
   text-align: center;
 }
 #filter-loader i {
-  animation:reload-loader-animation 10s infinite, fa-spin 2s infinite linear;
-  -moz-animation:reload-loader-animation 10s infinite, fa-spin 2s infinite linear; /* Firefox */
-  -webkit-animation:reload-loader-animation 10s infinite, fa-spin 2s infinite linear; /* Safari and Chrome */
-  color: #719f41;
-}
-@-moz-keyframes reload-loader-animation /* Firefox */ {
-    0% {color:#719f41;}
-    50% {color:orange;}
-    100% {color:#719f41;}
-}
-@-webkit-keyframes reload-loader-animation /* Safari and Chrome */ {
-    0% {color:#719f41;}
-    50% {color:orange;}
-    100% {color:#719f41;}
+  animation:10s infinite, fa-spin 2s infinite linear;
+  -moz-animation:10s infinite, fa-spin 2s infinite linear; /* Firefox */
+  -webkit-animation:10s infinite, fa-spin 2s infinite linear; /* Safari and Chrome */
 }
 td.right,
 th.right {
@@ -654,9 +631,6 @@ h2 span {
     font-size: 12px;
     color: #333;
 }
-h2.info {
-    background-color: #719f41;
-}
 .fcs-form h2:not(:nth-of-type(1)) {
     margin-top: 25px;
 }
@@ -784,11 +758,8 @@ a.btn-arrow {
     display: inline-block;
     position: absolute;
     top: 7px;
-    color: #ccc;
+    color: #ccc ! important;
     width: 15px;
-}
-a.btn-arrow:hover {
-    color: #719f41;
 }
 a.btn-previous-day {
     right: 92px;
@@ -861,8 +832,8 @@ body.slider.index table.list {
     height: 155px;
 }
 body.payments tr.last-row-of-year td {
-    border-top-width: 2px;
-    border-top-color: #719f41;
+    border-top-width: 5px;
+    border-top-color: #a8a8a8;
     border-top-style: solid;
 }
 body.payments i.payment-approval,

@@ -19,16 +19,34 @@
 a {
     color: #333;
 }
-a:not(.btn), a:not(.btn):visited, a:not(.btn):active,
-a:not([href]):not([tabindex]),a:not([href]):not([tabindex]):hover, a:not([href]):not([tabindex]):focus {
-  color: #009335;
+a:not(.btn),
+a:not(.btn):visited,
+a:not(.btn):active,
+a:not([href]):not([tabindex]),
+a:not([href]):not([tabindex]):hover,
+a:not([href]):not([tabindex]):focus {
   text-decoration: none ! important;
+}
+
+table.list a:not(.btn),
+body.admin form .input a:not(.btn),
+body.admin.modal-open .modal a:not(.btn):not(.upload-button),
+body.admin h2 span a,
+.tooltipster-box .tooltipster-content a {
+    color: #333 ! important;
+    text-decoration: underline ! important;
+}
+body.admin table.list a:not(.btn):hover,
+body.admin form .input a:not(.btn):hover,
+body.admin.modal-open a:not(.btn):hover,
+body.admin h2 span a:hover,
+.tooltipster-box .tooltipster-content a:hover {
+    text-decoration: none ! important;
 }
 .btn-success:active {
     border-color: transparent;
 }
 a:not(.btn):hover {
-  color: #006400;
   text-decoration: none;
 }
 h4 {
@@ -51,21 +69,6 @@ button,
 .btn-danger:focus:active,
 .btn-warning:focus:active {
     opacity: 1;
-}
-.btn-success:focus,
-.btn-success:active,
-.btn-success:focus:active {
-    background-color: #719f41 ! important;
-}
-.btn-success:hover,
-.btn-success:focus,
-.btn-success:active,
-.btn-success.disabled {
-  background-color: #719f41;
-  border-color: #719f41;
-}
-.btn-success {
-    background-color: #719f41;
 }
 .btn-outline-light {
     color: #333;
@@ -112,7 +115,9 @@ button,
     color: #fff;
 }
 .btn-warning:hover,
-.btn-warning:active {
+.btn-warning:active,
+.btn-warning:focus,
+.btn-warning:active:focus {
     color: #fff ! important;
     background-color: #ec971f ! important;
     border-color: #d58512 ! important;
@@ -128,7 +133,6 @@ button,
 }
 h1 {
     font-size: 26px;
-    color: #719f41;
     margin-bottom: 10px;
     margin-top: 0;
     font-weight: normal;
@@ -141,7 +145,6 @@ h1 span {
 }
 h2 {
     font-size: 26px;
-    color: #719f41;
     margin-bottom: 10px;
     margin-top: 0;
     font-weight: normal;
@@ -161,9 +164,6 @@ h2.info2 {
 h2.warning {
     background-color: #f3515c;
 }
-h2.info2 {
-    background-color: orange;
-}
 #installation-logo {
     border-radius: 10px;
 }
@@ -172,7 +172,6 @@ h2.info2 {
     top: 48px;
     left: 445px;
     padding: 7px;
-    border: 1px solid #009335;
     width: 350px;
     opacity: 0.9;
     border-radius: 5px;
@@ -199,7 +198,6 @@ h2.info2 {
     border-color: #f3515c;
 }
 #flashMessage.success {
-    background: #009335;
     color: #fff;
 }
 #flashMessage.success .error {
@@ -248,16 +246,12 @@ h2.info2 {
     width: 100%;
     position: relative;
 }
-.vertical.menu span.additional-info {
-  color: #009335;
-}
 .vertical.menu a:hover,
 .vertical.menu a:hover i,
 .vertical.menu a:hover span.additional-info,
 .vertical.menu a.active,
 .vertical.menu a.active i,
 .vertical.menu a.active span.additional-info {
-    background-color: #719f41;
     color: #fff ! important;
 }
 .vertical.menu a i.fas {
@@ -265,7 +259,6 @@ h2.info2 {
     position: absolute;
     left: 5px;
     top: 7px;
-    color: #009335;
 }
 .vertical.menu li.has-icon a,
 .vertical.menu li a.has-icon,
@@ -442,11 +435,6 @@ a.btn.btn-success:hover i.gold,
 i.gold {
   color: #FFD700 ! important;
 }
-i.fa.ok,
-i.fas.ok,
-i.far.ok {
-    color: #719f41;
-}
 i.fa.not-ok,
 i.fas.not-ok,
 i.far.not-ok {
@@ -457,12 +445,15 @@ i.fas.neutral,
 i.far.neutral {
     color: #b7b0b0;
 }
-tr.selected td > i.fas,
-tr.selected td > i.far,
-tr.selected td > span > i.fas,
-tr.selected td > span > i.far,
-tr.selected td > div > i.fas,
-tr.selected td > div > i.far {
+
+tr.selected > td > i.fas, tr:hover > td > i.fas,
+tr.selected > td > i.far, tr:hover > td > i.far,
+tr.selected > td > span > i.fas, tr:hover > td > span > i.fas,
+tr.selected > td > span > i.far, tr:hover > td > span > i.far,
+tr.selected > td > a.toggle-link > i.fas, tr:hover > td > a.toggle-link > i.fas,
+tr.selected > td > a.toggle-link > i.far, tr:hover > td > a.toggle-link > i.far,
+tr.selected > td > div > i.fas, tr:hover > td > div > i.fas,
+tr.selected > td > div > i.far, tr:hover > td > div > i.far {
     color: #fff;
 }
 .tooltipster-sidetip.tooltipster-light .tooltipster-box {
@@ -486,10 +477,6 @@ tr.selected td > div > i.far {
 .bootstrap-select .form-control:focus {
     box-shadow: inherit;
     border-color: #dfdfdf ! important;
-}
-.bootstrap-select .dropdown-item.active,
-.bootstrap-select .dropdown-item:active {
-    background-color: #009335 ! important; /* bootstrap overwrite */
 }
 .bootstrap-select .dropdown-item.active span,
 .bootstrap-select .dropdown-item:active span {

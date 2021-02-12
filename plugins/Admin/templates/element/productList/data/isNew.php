@@ -19,7 +19,7 @@ echo '<td>';
     if (! empty($product->product_attributes) || isset($product->product_attributes)) {
         if (! $product->is_new) {
             echo $this->Html->link(
-                '<i class="fas fa-minus-circle not-ok"></i>'  . ' ' . __d('admin', 'New'),
+                '<i class="fas fa-minus-circle ok"></i>'  . ' ' . __d('admin', 'New'),
                 'javascript:void(0);',
                 [
                     'class' => 'btn btn-outline-light product-new-status-edit product-new-status-edit-active',

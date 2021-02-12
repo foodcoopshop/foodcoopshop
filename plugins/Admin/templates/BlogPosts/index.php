@@ -46,7 +46,7 @@ use Cake\Core\Configure;
             <div class="right">
                 <?php
                 echo '<div id="add-blog-post-button-wrapper" class="add-button-wrapper">';
-                echo $this->Html->link('<i class="fas fa-plus-circle"></i> '.__d('admin', 'Add_blog_post').'', $this->Slug->getBlogPostAdd(), [
+                echo $this->Html->link('<i class="fas fa-plus-circle ok"></i> '.__d('admin', 'Add_blog_post').'', $this->Slug->getBlogPostAdd(), [
                     'class' => 'btn btn-outline-light',
                     'escape' => false
                 ]);

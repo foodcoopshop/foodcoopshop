@@ -31,7 +31,7 @@ use Cake\Core\Configure;
         <div class="right">
             <?php
             echo '<div id="add-tax-button-wrapper" class="add-button-wrapper">';
-            echo $this->Html->link('<i class="fas fa-plus-circle"></i> '.__d('admin', 'Add_tax_rate').'', $this->Slug->getTaxAdd(), [
+            echo $this->Html->link('<i class="fas fa-plus-circle ok"></i> '.__d('admin', 'Add_tax_rate').'', $this->Slug->getTaxAdd(), [
                 'class' => 'btn btn-outline-light',
                 'escape' => false
             ]);

@@ -30,7 +30,6 @@
         min-height: initial ! important;
     }
     .sb-slidebar {
-        background-color: #719f41;
         z-index: 99990;
     }
     .sb-left #product-search {
@@ -112,9 +111,9 @@
     .sb-left li.footer {
         word-break: break-word;
     }
-    .sb-left li.header,
-    .sb-left a:hover,
-    .sb-left a.active {
+    body:not(.admin) .sb-left li.header,
+    body:not(.admin) .sb-left a:hover,
+    body:not(.admin) .sb-left a.active {
         background-color: #777;
     }
     .sb-left li.header {

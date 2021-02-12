@@ -177,9 +177,6 @@
         z-index: 9999 ! important;
         position: fixed ! important;
     }
-    #responsive-header a {
-        color: #719f41 ! important;
-    }
     #responsive-header .logo {
         height: 50px ! important;
         float: left ! important;
@@ -257,7 +254,6 @@
      */
     .sb-right h3 {
         font-size: 16px ! important;
-        background-color: #719f41 ! important;
         margin-top: 0px ! important;
         margin-bottom: 5px ! important;
         color: #fff ! important;
@@ -266,7 +262,6 @@
     .sb-right .inner {
         background: #fff ! important;
         padding: 5px ! important;
-        border-left: 1px solid #719f41 ! important;
     }
     .sb-right .inner ul {
        padding-left: 10px;

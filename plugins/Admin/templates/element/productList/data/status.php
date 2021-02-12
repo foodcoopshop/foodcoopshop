@@ -28,9 +28,9 @@ echo '<td class="status">';
         );
     }
 
-    if ($product->active == '') {
+    if ($product->active == 0) {
         echo $this->Html->link(
-            '<i class="fas fa-minus-circle not-ok"></i>',
+            '<i class="fas fa-minus-circle ok"></i>',
             'javascript:void(0);',
             [
                 'class' => 'btn btn-outline-light set-status-to-active product-status-edit',

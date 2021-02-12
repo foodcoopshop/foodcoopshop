@@ -149,7 +149,7 @@ class MenuHelper extends Helper
                 $userName = $appAuth->getManufacturerName();
             }
             if ($this->getView()->getPlugin() != '') {
-                $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out') . '<br /><span>'.$userName.'</span>', 'options' => ['fa-icon' => 'fa-fw fa-sign-out-alt', 'class' => ['logout-button']]];
+                $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out') . '<br /><span>'.$userName.'</span>', 'options' => ['fa-icon' => 'fa-fw ok fa-sign-out-alt', 'class' => ['logout-button']]];
             } else {
                 $menuElement = ['slug' => 'javascript:void(0);', 'name' => __('Sign_out'), 'options' => ['class' => ['logout-button']]];
             }

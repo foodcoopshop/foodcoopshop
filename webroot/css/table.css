@@ -26,27 +26,26 @@ table.list tr {
   vertical-align: top;
 }
 table.list tr.selected {
-    background-color: #719f41 ! important;
     color: white ! important;
 }
-table.list tr.paid {
-    background-color: blue;
-}
 table.list tr.selected a:not(.btn) {
-    color: white;
+    color: white ! important;
 }
 /* click on checkbox should overwrite hover */
 body.order_details table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover {
-  background-color: orange;
+  background-color: #a8a8a8;
   color: white;
 }
 body:not(.order_details) table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover {
-  background-color: orange ! important;
+  background-color: #a8a8a8 ! important;
   color: white;
 }
 
 table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover a:not(.icon-with-text):not(.btn) {
     color: white ! important;
+}
+table.list:not(.no-hover) tr:not(:last-child):not(:first-child):hover a:not(.icon-with-text):not(.btn):hover {
+    text-decoration: none ! important;
 }
 table.list tr.custom-odd {
     background-color: #EBEBEB;
@@ -73,6 +72,10 @@ table.list td.negative,
 b.negative,
 span.negative {
     color: red ! important;
+}
+table.list tr:hover td.negative,
+tr:hover b.negative {
+    color: #fff ! important;
 }
 table.list td.slim {
     line-height: 15px;

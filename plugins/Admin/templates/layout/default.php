@@ -21,7 +21,7 @@ use Cake\Utility\Inflector;
 <html lang="<?php echo strtolower(str_replace('_', '-', I18n::getLocale())); ?>">
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <meta name="theme-color" content="#719f41">
+    <meta name="theme-color" content="<?php echo Configure::read('app.customThemeMainColor'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -43,11 +43,12 @@ use Cake\Utility\Inflector;
     if ($isMobile) {
         echo $this->Html->css(['/node_modules/slidebars/dist/slidebars', 'mobile-global', 'Admin.mobile']);
     }
+    echo $this->element('customThemeStyleSheet');
     echo $this->element('layout/customHeader');
     ?>
 
 </head>
-<body class="<?php echo Inflector::tableize($this->name); ?> <?php echo Inflector::singularize(Inflector::tableize($this->request->getParam('action'))); ?>">
+<body class="admin <?php echo Inflector::tableize($this->name); ?> <?php echo Inflector::singularize(Inflector::tableize($this->request->getParam('action'))); ?>">
 
     <div id="container">
 

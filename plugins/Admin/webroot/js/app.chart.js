@@ -13,6 +13,8 @@
  */
 foodcoopshop.AppChart = {
 
+    color: '#cccccc', // default color
+
     barChartOptions : {
         datasetStrokeWidth : 1,
         scaleOverride: true,
@@ -115,6 +117,10 @@ foodcoopshop.AppChart = {
         }
     },
 
+    setColor : function(color) {
+        this.color = color;
+    },
+
     initLineChart : function(xAxisData, yAxisData) {
 
         var lineChartData = {
@@ -123,13 +129,13 @@ foodcoopshop.AppChart = {
                 lineTension : 0.15,
                 data: yAxisData,
                 fill: false,
-                borderColor: 'rgba(113,159,65,.5)',
-                pointBorderColor: 'rgba(113,159,65,1)',
-                pointBackgroundColor: 'rgba(113,159,65,1)',
+                borderColor: this.color + '80', //.5 alpha
+                pointBorderColor: this.color,
+                pointBackgroundColor: this.color,
                 pointRadius: 5
             }]
         };
-
+console.log(lineChartData);
         var ctx = $('#myLineChart').get(0).getContext('2d');
         var myNewChart = new Chart(ctx, {
             responsive : true,
@@ -149,9 +155,9 @@ foodcoopshop.AppChart = {
                     data: xAxisData1,
                     label: xAxisData1Label,
                     fill: false,
-                    borderColor: 'rgba(113,159,65,.7)',
-                    pointBorderColor: 'rgba(113,159,65,1)',
-                    pointBackgroundColor: 'rgba(113,159,65,1)',
+                    borderColor: this.color + 'B3', //.7 alpha,
+                    pointBorderColor: this.color,
+                    pointBackgroundColor: this.color,
                     pointRadius: 1,
                     tension: 0,
                     borderWidth: 1
@@ -200,8 +206,8 @@ foodcoopshop.AppChart = {
             labels: xAxisData,
             datasets: [{
                 data: yAxisData,
-                backgroundColor: 'rgba(113,159,65,.7)',
-                hoverBackgroundColor: 'rgba(113,159,65,.5)'
+                backgroundColor: this.color + 'B3', //.7 alpha
+                hoverBackgroundColor: this.color + '80' //.5 alpha
             }]
         };
 
@@ -222,7 +228,7 @@ foodcoopshop.AppChart = {
                 data: dataPieChart,
                 borderColor: '#fff',
                 backgroundColor: backgroundColorPieChart,
-                hoverBackgroundColor: 'rgba(113,159,65,1)',
+                hoverBackgroundColor: this.color,
                 borderWidth: 1,
             }],
             labels: labelsPieChart,
