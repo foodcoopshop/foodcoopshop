@@ -27,7 +27,7 @@ $this->element('addScript', [
     </div>
 </div>
 
-<p>
+<p style="padding-top:10px;">
     <b><?php echo __d('admin', 'Bank_account_data'); ?>: </b><?php echo Configure::read('appDb.FCS_BANK_ACCOUNT_DATA'); ?><br />
 </p>
 <?php echo $this->element('payment/personalTransactionCode', ['personalTransactionCode' => $personalTransactionCode]); ?>
