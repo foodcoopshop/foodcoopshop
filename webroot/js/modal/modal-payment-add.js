@@ -68,7 +68,7 @@ foodcoopshop.ModalPaymentAdd = {
 
     init : function() {
 
-        $('#add-payment-button-wrapper .btn-success').on('click', function () {
+        $('#add-payment-button-wrapper .btn-add-payment').on('click', function () {
 
             var form = $('.add-payment-form');
             var heading = form.find('h3');

@@ -33,13 +33,13 @@ use Cake\Core\Configure;
         </div>
     </div>
 
-    <p><b><?php echo __d('admin', 'Bank_account_data'); ?>: </b><?php echo $extraInfo; ?></p>
+    <p style="padding-top:10px;"><b><?php echo __d('admin', 'Bank_account_data'); ?>: </b><?php echo $extraInfo; ?></p>
 
 <?php
 
 echo '<div id="add-payment-button-wrapper">';
 echo $this->Html->link('<i class="fas ' . $icon . '"></i> ' . $buttonText, 'javascript:void(0);', [
-    'class' => 'btn btn-success',
+    'class' => 'btn btn-outline-light btn-add-payment',
     'escape' => false
 ]);
 echo '<div id="add-payment-form" class="add-payment-form">';
