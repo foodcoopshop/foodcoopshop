@@ -31,12 +31,12 @@
 * self-service mode for stock products
 * beautiful turnover charts
 
-The software can be used with any modern web browser, tablet or smartphone. It's available in **German**, **English** and **Polish**.
+The software can be used with any modern web browser, tablet or smartphone. It's available in **German** and **English**.
 
 ## Links
 * [Crowdfunding for new features](https://www.foodcoopshop.com/crowdfunding-weiterentwicklung)
 * [Official homepage](https://www.foodcoopshop.com/)
-* Demo version in [German](https://demo-de.foodcoopshop.com), [English](https://demo-en.foodcoopshop.com) and [Polish](https://demo-pl.foodcoopshop.com)
+* Demo version in [German](https://demo-de.foodcoopshop.com) and [English](https://demo-en.foodcoopshop.com)
 * [Software documentation](https://foodcoopshop.github.io)
 * [Facebook](https://facebook.com/FoodCoopShop) / [List of users](https://foodcoopshop.github.io/en/foodcoops) / [Map of users](http://umap.openstreetmap.fr/en/map/verbreitung-foodcoopshop_211165)
 

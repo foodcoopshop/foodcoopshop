@@ -154,7 +154,7 @@ return [
          */
         'termsOfUseLastUpdate' => '2016-11-28',
 
-        'implementedLocales' => ['de_DE', 'en_US', 'pl_PL'],
+        'implementedLocales' => ['de_DE', 'en_US'],
 
         // must be a valid 6-digit hex code
         'customThemeMainColor' => '#719f41',
