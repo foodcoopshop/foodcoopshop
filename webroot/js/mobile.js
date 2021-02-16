@@ -242,7 +242,7 @@ foodcoopshop.Mobile = {
 
         var infoButton = $('<a/>');
         infoButton.addClass('open-with-modal');
-        infoButton.attr('href', 'javscript:void(0);');
+        infoButton.attr('href', 'javascript:void(0);');
         infoButton.data('element-selector', '#right-info-box-text');
         infoButton.html('<i class="fas fa-info-circle fa-2x"></i>');
         $('#' + headerId).append(infoButton);
