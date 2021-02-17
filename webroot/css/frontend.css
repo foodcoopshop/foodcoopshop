@@ -1164,6 +1164,9 @@ body.manufacturers.detail .manufacturer-infos a.edit-shortcut-button {
     right: 3px;
     position: absolute;
 }
+body.manufacturers.detail .manufacturer-infos a.edit-shortcut-button {
+    top: -16px;
+}
 .product-wrapper .second-column a.edit-shortcut-button {
   position: absolute;
   top: 0;

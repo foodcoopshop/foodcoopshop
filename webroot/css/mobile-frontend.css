@@ -164,6 +164,10 @@
     body.manufacturers.detail .manufacturer-infos {
         clear: both ! important;
     }
+    body.manufacturers.detail .manufacturer-infos a.edit-shortcut-button {
+        top: -3px;
+    }
+
     #content {
         padding: 0 ! important;
         margin-top: 50px ! important;
