@@ -56,8 +56,11 @@ class GenerateInvoiceToCustomer
         $pdfWriter->writeFile();
 
         $newInvoice = $this->saveInvoice($data, $invoiceNumber, $invoicePdfFile, $currentDay, $paidInCash);
-        $this->linkReturnedDepositWithInvoice($data, $newInvoice->id);
-        $this->updateOrderDetails($data, $newInvoice->id);
+
+        if (!$data->is_cancellation_invoice) {
+            $this->linkReturnedDepositWithInvoice($data, $newInvoice->id);
+            $this->updateOrderDetails($data, $newInvoice->id);
+        }
 
         $this->QueuedJobs->createJob('SendInvoiceToCustomer', [
             'isCancellationInvoice' => $data->is_cancellation_invoice,
@@ -123,7 +126,7 @@ class GenerateInvoiceToCustomer
                 'InvoiceTaxes',
             ],
         ]);
-        
+
         return $newInvoice;
 
     }

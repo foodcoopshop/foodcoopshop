@@ -120,7 +120,11 @@ class SendInvoicesToCustomersShellTest extends AppCakeTestCase
                 'OrderDetails.id_invoice' => $invoice->id,
             ],
         ])->toArray();
+
         $this->assertEquals(4, count($orderDetails));
+        foreach($orderDetails as $orderDetail) {
+            $this->assertEquals($orderDetail->order_state, ORDER_STATE_BILLED_CASHLESS);
+        }
 
         // call again
         $this->commandRunner->run(['cake', 'send_invoices_to_customers', $cronjobRunDay]);

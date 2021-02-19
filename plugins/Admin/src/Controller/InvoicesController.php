@@ -201,14 +201,14 @@ class InvoicesController extends AdminAppController
         }
 
         foreach($invoice->order_details as $orderDetail) {
-            $orderDetail->orderState = ORDER_STATE_ORDER_PLACED;
+            $orderDetail->order_state = ORDER_STATE_ORDER_PLACED;
             $orderDetail->id_invoice = null;
             $this->OrderDetail->save($orderDetail);
         }
 
         foreach($invoice->payments  as $payment) {
             $payment->invoice_id = null;
-            $this->Payment->save($orderDetail);
+            $this->Payment->save($payment);
         }
 
         $cancellationFactor = -1;
@@ -222,6 +222,7 @@ class InvoicesController extends AdminAppController
             $orderDetail->deposit *= $cancellationFactor;
             $orderDetail->order_detail_tax->unit_amount *= $cancellationFactor;
             $orderDetail->order_detail_tax->total_amount *= $cancellationFactor;
+            $orderDetail->id_invoice = null;
         }
 
         $invoiceData = $this->Invoice->prepareDataForCustomerInvoice($invoice->order_details, $invoice->payments, $invoice);
