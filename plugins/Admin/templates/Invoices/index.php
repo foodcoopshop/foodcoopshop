@@ -144,7 +144,7 @@ echo '<table class="list invoices-table no-clone-last-row">';
                     echo $invoice->cancelled_invoice->invoice_number;
                 } else {
                     echo $this->Html->link(
-                        '<i class="fas fa-times-circle not-ok"></i>',
+                        '<i class="fas fa-times-circle neutral"></i>',
                         'javascript:void(0);',
                         [
                             'class' => 'btn btn-outline-light invoice-for-customer-cancel-button',
