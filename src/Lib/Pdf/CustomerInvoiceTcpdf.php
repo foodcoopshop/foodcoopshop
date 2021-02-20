@@ -195,10 +195,10 @@ class CustomerInvoiceTcpdf extends AppTcpdf
 
         $convertedHeaderRight = Configure::read('appDb.FCS_INVOICE_HEADER_TEXT');
 
-        // add additional line break on top if short address
-        $lineCount = substr_count($convertedHeaderRight, "\n");
+        // add additional line break(s) on top
+        $lineCount = substr_count($convertedHeaderRight, '<br />');
         if ($lineCount < 5) {
-            $convertedHeaderRight = '<br />' . $convertedHeaderRight;
+            $convertedHeaderRight = str_repeat('<br />', 5 - $lineCount) . $convertedHeaderRight;
         }
 
         $this->headerRight = $convertedHeaderRight;
