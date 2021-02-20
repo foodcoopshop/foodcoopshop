@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-01-20 09:35+0100\n"
-"PO-Revision-Date: 2021-01-20 09:52+0100\n"
+"POT-Creation-Date: 2021-02-20 22:41+0100\n"
+"PO-Revision-Date: 2021-02-20 22:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -2265,8 +2265,8 @@ msgstr "Neue Datei hochladen"
 msgid "Search_PC"
 msgstr "PC durchsuchen"
 
-msgid "Other_initiaives_working_with_FoodCoopShop"
-msgstr "Weitere Initiativen, die mit FoodCoopShop arbeiten"
+msgid "Other_initiatives"
+msgstr "Weitere Initiativen"
 
 msgid "Map_with_all_Austrian_foodocops"
 msgstr "Aktuelle Karte mit <b>allen</b> österreichischen Foodcoops"
@@ -2516,6 +2516,9 @@ msgstr "getätigt am"
 
 msgid "Prices_are_including_vat."
 msgstr "Die Preise verstehen sich inklusive Umsatzsteuer."
+
+#~ msgid "Other_initiaives_working_with_FoodCoopShop"
+#~ msgstr "Weitere Initiativen, die mit FoodCoopShop arbeiten"
 
 #~ msgid "The_first_delivery_day_needs_to_be_a_first_{0}_of_the_month."
 #~ msgstr "Der erste Liefertag muss ein erster {0} im Monat sein."

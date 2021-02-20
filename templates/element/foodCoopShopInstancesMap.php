@@ -12,12 +12,9 @@
  * @copyright     Copyright (c) Mario Rothauer, https://www.rothauer-it.com
  * @link          https://www.foodcoopshop.com
  */
-?>
-
-<?php
 
 echo '<h1 style="float:left;' . (!$isFirstElement ? 'margin-top:20px;' : '') . '">';
-    echo __('Other_initiaives_working_with_FoodCoopShop');
+    echo __('Other_initiatives');
 echo '</h1>';
 
 ?>
