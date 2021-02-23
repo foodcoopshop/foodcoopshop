@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2021-01-19 11:38+0100\n"
-"PO-Revision-Date: 2021-01-19 11:38+0100\n"
+"POT-Creation-Date: 2021-02-23 15:33+0100\n"
+"PO-Revision-Date: 2021-02-23 15:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -1823,6 +1823,9 @@ msgstr "Zum Umbuchen auf ein anderes Mitglied anklicken"
 
 msgid "Invoice"
 msgstr "Rechnung"
+
+msgid "Invoice_cannot_be_generated"
+msgstr "Keine Rechnung erstellbar"
 
 msgid "Add_product_feedback"
 msgstr "Gib dem Hersteller Feedback zum Produkt"
