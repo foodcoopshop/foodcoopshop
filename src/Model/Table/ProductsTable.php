@@ -10,7 +10,6 @@ use Cake\Filesystem\Folder;
 use Cake\Datasource\FactoryLocator;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
-use Cake\I18n\I18n;
 
 /**
  * FoodCoopShop - The open source software for your foodcoop
