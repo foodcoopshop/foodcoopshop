@@ -487,7 +487,7 @@ class CartsControllerTest extends AppCakeTestCase
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
         $this->finishCart(1,1);
         $this->assertResponseContains('Bitte lade neues Guthaben auf.');
-        $this->assertResponseContains('-6,14');
+        $this->assertResponseContains('-8,64');
         $this->assertMailCount(0);
     }
 
