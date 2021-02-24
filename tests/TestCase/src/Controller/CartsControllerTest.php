@@ -101,13 +101,22 @@ class CartsControllerTest extends AppCakeTestCase
         $this->resetCustomerCreditBalance();
         $this->changeConfiguration('FCS_MINIMAL_CREDIT_BALANCE', 0);
         $this->loginAsCustomer();
-        // test product without attribute
+        // test product without attribute and deposit
         $response = $this->addProductToCart($this->productId1, 8);
-        $errorMessage = 'Das Produkt um <b>14,56 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
+        $errorMessage = 'Das Produkt um <b>15,06 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
         $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
-        // test product with attribute
-        $errorMessage = 'Das Produkt um <b>8,68 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
+        // test product without attribute and NO deposit
+        $response = $this->addProductToCart($this->productId3, 1);
+        $errorMessage = 'Das Produkt um <b>0,64 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
+        $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
+        // test product with attribute and deposit
+        $errorMessage = 'Das Produkt um <b>9,18 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
         $response = $this->addProductToCart($this->productId2, 14);
+        $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
+        $this->assertJsonError();
+        // test product with attribute and NO deposit
+        $errorMessage = 'Das Produkt um <b>10,00 €</b> kann nicht in den Warenkorb gelegt werden, bitte lade neues Guthaben auf.<br />Dein Guthaben abzüglich Warenkorb beträgt <b>0,00 €</b>, du kannst bis <b>0,00 €</b> bestellen.';
+        $response = $this->addProductToCart('348-11', 1);
         $this->assertRegExpWithUnquotedString($errorMessage, $response->msg);
         $this->assertJsonError();
     }
