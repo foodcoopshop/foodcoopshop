@@ -83,7 +83,7 @@ class AppAuthComponent extends AuthComponent
 
     public function getCreditBalanceMinusCurrentCartSum()
     {
-        return $this->getCreditBalance() - $this->getCart()['CartProductSum'];
+        return $this->getCreditBalance() - $this->getCart()['CartProductSum'] - $this->getCart()['CartDepositSum'];
     }
 
     public function hasEnoughCreditForProduct($grossPrice)

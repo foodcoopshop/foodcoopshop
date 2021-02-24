@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-01-19 11:38+0100\n"
+"POT-Creation-Date: 2021-02-23 15:33+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -1821,6 +1821,9 @@ msgid "Click_to_change_member"
 msgstr ""
 
 msgid "Invoice"
+msgstr ""
+
+msgid "Invoice_cannot_be_generated"
 msgstr ""
 
 msgid "Add_product_feedback"
