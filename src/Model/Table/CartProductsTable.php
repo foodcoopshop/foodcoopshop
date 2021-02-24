@@ -97,10 +97,12 @@ class CartProductsTable extends AppTable
                 'Products.id_product' => (int) $productId
             ],
             'contain' => [
+                'DepositProducts',
                 'Manufacturers',
                 'StockAvailables',
                 'ProductAttributes',
                 'UnitProducts',
+                'ProductAttributes.DepositProductAttributes',
                 'ProductAttributes.StockAvailables',
                 'ProductAttributes.ProductAttributeCombinations.Attributes',
                 'ProductAttributes.UnitProductAttributes'
@@ -138,12 +140,14 @@ class CartProductsTable extends AppTable
         }
 
         $unitObject = $product->unit_product;
+        $depositObject = $product->deposit_product;
         $price = $product->price;
 
         if ($attributeId > 0) {
             foreach ($product->product_attributes as $attribute) {
                 if ($attribute->id_product_attribute == $attributeId) {
                     $unitObject = null;
+                    $depositObject = $attribute->deposit_product_attribute;
                     $price = $attribute->price;
                     if (isset($attribute->unit_product_attribute) && $attribute->unit_product_attribute->price_per_unit_enabled) {
                         $unitObject =  $attribute->unit_product_attribute;
@@ -160,9 +164,10 @@ class CartProductsTable extends AppTable
             $unitObject,
             $amount,
             $orderedQuantityInUnits == -1 ? null : $orderedQuantityInUnits,
+            $depositObject,
         );
 
-        $result = $this->validateMinimalCreditBalance($appAuth, $prices['gross']);
+        $result = $this->validateMinimalCreditBalance($appAuth, $prices['gross_with_deposit']);
         if ($result !== true) {
             return [
                 'status' => 0,
