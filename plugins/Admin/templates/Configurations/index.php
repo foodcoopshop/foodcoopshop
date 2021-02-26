@@ -356,7 +356,7 @@ $this->element('addScript', [
         </tr>
 
         <tr>
-            <td><?php echo __d('admin', 'Default_image_for_manufacturer,_width:'); ?> 125x125<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/manufacturers/de-default-medium_default.jpg</td>
+            <td><?php echo __d('admin', 'Default_image_for_manufacturer,_width:'); ?> 150x150<br /><?php echo Configure::read('app.cakeServerName'); ?>/files/images/manufacturers/de-default-medium_default.jpg</td>
             <td><img src="/files/images/manufacturers/de-default-medium_default.jpg" /></td>
         </tr>
 
