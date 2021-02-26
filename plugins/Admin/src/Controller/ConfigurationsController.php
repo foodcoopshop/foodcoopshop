@@ -181,7 +181,7 @@ class ConfigurationsController extends AdminAppController
         ->setSubject(__d('admin', 'Test_email'))
         ->viewBuilder()->setTemplate('send_test_email_template');
         $email->setAttachments([
-                WWW_ROOT . DS . 'files' . DS . 'images' . DS. 'logo.jpg'
+                WWW_ROOT . DS . 'files' . DS . 'images' . DS . Configure::read('app.logoFileName'),
             ])
             ->send();
         $this->set('success', $success);

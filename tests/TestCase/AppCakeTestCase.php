@@ -370,7 +370,7 @@ abstract class AppCakeTestCase extends TestCase
 
     protected function getCorrectedLogoPathInHtmlForPdfs($html)
     {
-        return preg_replace('/\{\{logoPath\}\}/', ROOT . DS . 'webroot' . DS . 'files' . DS . 'images' . DS . 'logo-pdf.jpg', $html);
+        return preg_replace('/\{\{logoPath\}\}/', ROOT . DS . 'webroot' . DS . 'files' . DS . 'images' . DS . Configure::read('app.logoFileNameForPdfs'), $html);
     }
 
     protected function prepareSendingOrderLists()
