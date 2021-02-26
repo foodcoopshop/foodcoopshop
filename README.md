@@ -20,7 +20,7 @@
 </p>
 
 <h3 align="center">
-  <a href="https://www.foodcoopshop.com">Official Homepage</a>
+  <a href="https://www.foodcoopshop.com">Official Website</a>
   <span> · </span>
   <a href="https://foodcoopshop.github.io">Docs</a>
   <span> · </span>
@@ -28,7 +28,7 @@
   <span> · </span>
   <a href="https://demo-de.foodcoopshop.com">German Demo</a>
   <span> · </span>
-  <a href="https://demo-ne.foodcoopshop.com">English Demo</a>
+  <a href="https://demo-en.foodcoopshop.com">English Demo</a>
   <span> · </span>
   <a href="https://foodcoopshop.github.io/en/foodcoops">Users</a>
 </h3>
@@ -56,10 +56,10 @@
 * PHP needs to be able to call mysqldump with exec() for database backups
 
 ## ❗ Legal information
-* Before installing please read the legal information in [German](https://foodcoopshop.github.io/de/rechtliches) or [English](https://foodcoopshop.github.io/en/legal-information).
+Before installing don't forget to read the legal information in [German](https://foodcoopshop.github.io/de/rechtliches) or [English](https://foodcoopshop.github.io/en/legal-information).
 
 ## 🤖 Self-hosting / developing
-* Our [installation guide](https://foodcoopshop.github.io/en/installation-guide) helps you.
+Our [installation guide](https://foodcoopshop.github.io/en/installation-guide) helps you.
 
 ## 😎 Maintainer
 [Mario Rothauer](https://github.com/mrothauer) started the project in 2014 and maintains it.
