@@ -117,4 +117,4 @@ Das Format basiert auf [keepachangelog.com](http://keepachangelog.com) und verwe
 - Neue Kategorien waren nicht mehr alfabetisch sortiert. [I#458](https://github.com/foodcoopshop/foodcoopshop/issues/458) / [PR#459](https://github.com/foodcoopshop/foodcoopshop/pull/459) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 - Legacy-Code von FCS v2 wurde entfernt. [PR#468](https://github.com/foodcoopshop/foodcoopshop/pull/468) <a href="https://github.com/mrothauer"><img src="https://github.com/mrothauer.png" width="20"></a>
 
-[Zum Changelog von FoodCoopShop v2.x](CHANGELOG-v2.md)
+[Zum Changelog von FoodCoopShop v2.x](devtools/CHANGELOG-v2.md)
